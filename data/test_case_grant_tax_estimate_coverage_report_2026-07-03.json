@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_test_case_grant_tax_coverage_report.v1",
-  "generatedAt": "2026-07-04T00:27:00.718Z",
+  "generatedAt": "2026-07-04T01:04:57.816Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json",
     "packages": "data/opportunity_incentive_calculation_packages_v2.json",
@@ -15,24 +15,24 @@
     },
     "matchedV2PackageEvaluationCount": 560,
     "runtimeInclusionStatusCounts": {
-      "not_user_facing_default": 337,
+      "included": 259,
       "low_confidence": 20,
       "no_calculable_value": 72,
+      "not_user_facing_default": 93,
       "source_inaccessible_repair_failure": 39,
       "non_monetary_workflow": 12,
       "custom_quote_estimate": 12,
-      "no_supported_effect_amount": 9,
-      "included": 10,
-      "human_review_required": 47,
+      "no_supported_effect_amount": 12,
+      "human_review_required": 39,
       "legacy_rule_preferred": 2
     },
     "outcomeClassCounts": {
-      "computed_but_suppressed": 284,
-      "suppressed_without_amount": 120,
+      "calculated_and_included": 259,
+      "suppressed_without_amount": 118,
       "source_or_package_blocked": 123,
+      "computed_but_suppressed": 34,
       "non_monetary_workflow": 12,
-      "calculated_zero_or_no_supported_amount": 9,
-      "calculated_and_included": 10,
+      "calculated_zero_or_no_supported_amount": 12,
       "legacy_rule_preferred": 2
     },
     "packageEffectTypeCounts": {
@@ -45,8 +45,8 @@
       "tax_rate_preference": 1,
       "tax_exemption": 3
     },
-    "runtimeIncludedPackageCount": 10,
-    "computedButSuppressedPackageCount": 284,
+    "runtimeIncludedPackageCount": 259,
+    "computedButSuppressedPackageCount": 34,
     "missingEvidenceOrInputPackageCount": 0,
     "taxOpportunityPackageCountInDatabase": 3,
     "taxOpportunityPackageCountMatchedByTestCases": 2,
@@ -62,24 +62,24 @@
   "grantAndIncentivePackageOutcomes": {
     "count": 525,
     "outcomeClassCounts": {
-      "computed_but_suppressed": 284,
-      "suppressed_without_amount": 116,
+      "calculated_and_included": 259,
+      "suppressed_without_amount": 114,
       "source_or_package_blocked": 103,
+      "computed_but_suppressed": 34,
       "non_monetary_workflow": 1,
-      "calculated_zero_or_no_supported_amount": 9,
-      "calculated_and_included": 10,
+      "calculated_zero_or_no_supported_amount": 12,
       "legacy_rule_preferred": 2
     },
     "runtimeInclusionStatusCounts": {
-      "not_user_facing_default": 337,
+      "included": 259,
       "low_confidence": 20,
       "no_calculable_value": 57,
+      "not_user_facing_default": 93,
       "source_inaccessible_repair_failure": 34,
       "non_monetary_workflow": 1,
       "custom_quote_estimate": 12,
-      "no_supported_effect_amount": 9,
-      "included": 10,
-      "human_review_required": 43,
+      "no_supported_effect_amount": 12,
+      "human_review_required": 35,
       "legacy_rule_preferred": 2
     },
     "totalComputedAmountCents": 641933061,
@@ -90,8 +90,8 @@
         "retrofitTypeId": "ev_charger_installation",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
         "programName": "Azusa Light & Water - EV Charger Rebate",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "high",
@@ -137,7 +137,7 @@
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -2300,8 +2300,8 @@
         "retrofitTypeId": "level_2_ev_charger_installation",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
         "programName": "Azusa Light & Water - EV Charger Rebate",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "high",
@@ -2347,7 +2347,7 @@
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -2499,8 +2499,8 @@
         "retrofitTypeId": "ev_charger_installation",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
         "programName": "Azusa Light & Water - EV Charger Rebate",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "high",
@@ -2546,7 +2546,7 @@
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -3602,8 +3602,8 @@
         "retrofitTypeId": "battery_storage_system",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
         "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
@@ -3665,7 +3665,7 @@
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 100,
-        "includedInRuntimeTotals": false
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -3973,8 +3973,8 @@
         "retrofitTypeId": "high_efficiency_hvac_replacement",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
         "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
@@ -4036,7 +4036,7 @@
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 100,
-        "includedInRuntimeTotals": false
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -4131,8 +4131,8 @@
         "retrofitTypeId": "led_lighting_retrofit",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
         "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
@@ -4194,7 +4194,7 @@
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 1200,
-        "includedInRuntimeTotals": false
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -4495,8 +4495,8 @@
         "retrofitTypeId": "heat_pump_hvac_retrofit",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
         "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
@@ -4558,7 +4558,7 @@
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 35000,
-        "includedInRuntimeTotals": false
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -4653,8 +4653,8 @@
         "retrofitTypeId": "thermal_energy_storage",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
         "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
@@ -4716,7 +4716,7 @@
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 100,
-        "includedInRuntimeTotals": false
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -4968,8 +4968,8 @@
         "retrofitTypeId": "high_efficiency_motor_replacement",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
         "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
@@ -5031,7 +5031,7 @@
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 100,
-        "includedInRuntimeTotals": false
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -5039,8 +5039,8 @@
         "retrofitTypeId": "level_2_ev_charger_installation",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
         "programName": "Azusa Light & Water - EV Charger Rebate",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "high",
@@ -5086,7 +5086,7 @@
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -5094,8 +5094,8 @@
         "retrofitTypeId": "low_flow_fixture_retrofit",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
         "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
@@ -5157,7 +5157,7 @@
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 100,
-        "includedInRuntimeTotals": false
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -5165,8 +5165,8 @@
         "retrofitTypeId": "ev_charger_installation",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
         "programName": "Azusa Light & Water - EV Charger Rebate",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
+        "runtimeInclusionStatus": "included",
+        "outcomeClass": "calculated_and_included",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "high",
@@ -5212,7 +5212,7 @@
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
+        "includedInRuntimeTotals": true
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -7104,778 +7104,6 @@
     "missingEvidenceOrInputs": [],
     "computedButSuppressed": [
       {
-        "sampleUserId": "california-endowment-hq",
-        "sampleName": "california-endowment-hq",
-        "retrofitTypeId": "ev_charger_installation",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
-        "programName": "Azusa Light & Water - EV Charger Rebate",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "high",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "eligible_product_cost",
-            "canonicalInputKey": "eligible_product_cost",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "residence_identifier",
-            "canonicalInputKey": "residence_identifier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "purchase_receipt",
-            "canonicalInputKey": "purchase_receipt",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "utility_account_number",
-            "canonicalInputKey": "utility_account_number",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "california-endowment-hq",
-        "sampleName": "california-endowment-hq",
-        "retrofitTypeId": "level_2_ev_charger_installation",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
-        "programName": "Azusa Light & Water - EV Charger Rebate",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "high",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "eligible_product_cost",
-            "canonicalInputKey": "eligible_product_cost",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "residence_identifier",
-            "canonicalInputKey": "residence_identifier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "purchase_receipt",
-            "canonicalInputKey": "purchase_receipt",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "utility_account_number",
-            "canonicalInputKey": "utility_account_number",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "ev_charger_installation",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
-        "programName": "Azusa Light & Water - EV Charger Rebate",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "high",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "eligible_product_cost",
-            "canonicalInputKey": "eligible_product_cost",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "residence_identifier",
-            "canonicalInputKey": "residence_identifier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "purchase_receipt",
-            "canonicalInputKey": "purchase_receipt",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "utility_account_number",
-            "canonicalInputKey": "utility_account_number",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "battery_storage_system",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
-        "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "bwp_business_account",
-            "canonicalInputKey": "bwp_business_account",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_measure",
-            "canonicalInputKey": "selected_measure",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "canonicalInputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "invoice_and_specification_documents",
-            "canonicalInputKey": "invoice_and_specification_documents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_catalog_row",
-            "canonicalInputKey": "selected_catalog_row",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "annual_kwh_savings_for_custom_projects",
-            "canonicalInputKey": "annual_kwh_savings_for_custom_projects",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 100,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "high_efficiency_hvac_replacement",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
-        "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "bwp_business_account",
-            "canonicalInputKey": "bwp_business_account",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_measure",
-            "canonicalInputKey": "selected_measure",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "canonicalInputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "invoice_and_specification_documents",
-            "canonicalInputKey": "invoice_and_specification_documents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_catalog_row",
-            "canonicalInputKey": "selected_catalog_row",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "annual_kwh_savings_for_custom_projects",
-            "canonicalInputKey": "annual_kwh_savings_for_custom_projects",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 100,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "led_lighting_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
-        "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "bwp_business_account",
-            "canonicalInputKey": "bwp_business_account",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_measure",
-            "canonicalInputKey": "selected_measure",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "canonicalInputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "invoice_and_specification_documents",
-            "canonicalInputKey": "invoice_and_specification_documents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_catalog_row",
-            "canonicalInputKey": "selected_catalog_row",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "annual_kwh_savings_for_custom_projects",
-            "canonicalInputKey": "annual_kwh_savings_for_custom_projects",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 1200,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "heat_pump_hvac_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
-        "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "bwp_business_account",
-            "canonicalInputKey": "bwp_business_account",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_measure",
-            "canonicalInputKey": "selected_measure",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "canonicalInputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "invoice_and_specification_documents",
-            "canonicalInputKey": "invoice_and_specification_documents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_catalog_row",
-            "canonicalInputKey": "selected_catalog_row",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "annual_kwh_savings_for_custom_projects",
-            "canonicalInputKey": "annual_kwh_savings_for_custom_projects",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 35000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "thermal_energy_storage",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
-        "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "bwp_business_account",
-            "canonicalInputKey": "bwp_business_account",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_measure",
-            "canonicalInputKey": "selected_measure",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "canonicalInputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "invoice_and_specification_documents",
-            "canonicalInputKey": "invoice_and_specification_documents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_catalog_row",
-            "canonicalInputKey": "selected_catalog_row",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "annual_kwh_savings_for_custom_projects",
-            "canonicalInputKey": "annual_kwh_savings_for_custom_projects",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 100,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "high_efficiency_motor_replacement",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
-        "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "bwp_business_account",
-            "canonicalInputKey": "bwp_business_account",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_measure",
-            "canonicalInputKey": "selected_measure",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "canonicalInputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "invoice_and_specification_documents",
-            "canonicalInputKey": "invoice_and_specification_documents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_catalog_row",
-            "canonicalInputKey": "selected_catalog_row",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "annual_kwh_savings_for_custom_projects",
-            "canonicalInputKey": "annual_kwh_savings_for_custom_projects",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 100,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "level_2_ev_charger_installation",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
-        "programName": "Azusa Light & Water - EV Charger Rebate",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "high",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "eligible_product_cost",
-            "canonicalInputKey": "eligible_product_cost",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "residence_identifier",
-            "canonicalInputKey": "residence_identifier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "purchase_receipt",
-            "canonicalInputKey": "purchase_receipt",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "utility_account_number",
-            "canonicalInputKey": "utility_account_number",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "ikea-burbank",
-        "sampleName": "ikea-burbank",
-        "retrofitTypeId": "low_flow_fixture_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
-        "programName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "bwp_business_account",
-            "canonicalInputKey": "bwp_business_account",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_measure",
-            "canonicalInputKey": "selected_measure",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "canonicalInputKey": "eligible_units_tons_horsepower_linear_feet_kilolumens_or_annual_kwh_savings",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "invoice_and_specification_documents",
-            "canonicalInputKey": "invoice_and_specification_documents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "selected_catalog_row",
-            "canonicalInputKey": "selected_catalog_row",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "annual_kwh_savings_for_custom_projects",
-            "canonicalInputKey": "annual_kwh_savings_for_custom_projects",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 100,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "juniper-and-ivy-san-diego",
-        "sampleName": "juniper-and-ivy-san-diego",
-        "retrofitTypeId": "ev_charger_installation",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
-        "programName": "Azusa Light & Water - EV Charger Rebate",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "high",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "eligible_product_cost",
-            "canonicalInputKey": "eligible_product_cost",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "residence_identifier",
-            "canonicalInputKey": "residence_identifier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "purchase_receipt",
-            "canonicalInputKey": "purchase_receipt",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "utility_account_number",
-            "canonicalInputKey": "utility_account_number",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
         "sampleUserId": "juniper-and-ivy-san-diego",
         "sampleName": "juniper-and-ivy-san-diego",
         "retrofitTypeId": "ev_charger_installation",
@@ -7993,117 +7221,6 @@
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
         "computedAmountCents": 678400,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "juniper-and-ivy-san-diego",
-        "sampleName": "juniper-and-ivy-san-diego",
-        "retrofitTypeId": "high_efficiency_hvac_replacement",
-        "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:statewide_waterheating_com",
-        "programName": "Statewide Midstream Water Heating",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "participating_utility_territory",
-            "canonicalInputKey": "participating_utility_territory",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_category",
-            "canonicalInputKey": "equipment_category",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_model",
-            "canonicalInputKey": "equipment_model",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "efficiency_rating",
-            "canonicalInputKey": "efficiency_rating",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "tank_size_gallons",
-            "canonicalInputKey": "tank_size_gallons",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "input_or_output_capacity_kbtuh",
-            "canonicalInputKey": "input_or_output_capacity_kbtuh",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "affected_dwelling_units",
-            "canonicalInputKey": "affected_dwelling_units",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "collector_effective_area_square_feet",
-            "canonicalInputKey": "collector_effective_area_square_feet",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "efficiency_tier",
-            "canonicalInputKey": "efficiency_tier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "equipment_capacity",
-            "canonicalInputKey": "equipment_capacity",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_utility_territory",
-            "canonicalInputKey": "eligible_utility_territory",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 8800,
         "includedInRuntimeTotals": false
       },
       {
@@ -8227,234 +7344,200 @@
         "includedInRuntimeTotals": false
       },
       {
-        "sampleUserId": "juniper-and-ivy-san-diego",
-        "sampleName": "juniper-and-ivy-san-diego",
-        "retrofitTypeId": "level_2_ev_charger_installation",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
-        "programName": "Azusa Light & Water - EV Charger Rebate",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "high",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "eligible_product_cost",
-            "canonicalInputKey": "eligible_product_cost",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "residence_identifier",
-            "canonicalInputKey": "residence_identifier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "purchase_receipt",
-            "canonicalInputKey": "purchase_receipt",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "utility_account_number",
-            "canonicalInputKey": "utility_account_number",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "northgate-market-anaheim",
-        "sampleName": "northgate-market-anaheim",
-        "retrofitTypeId": "ev_charger_installation",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1615",
-        "programName": "Anaheim Public Utilities - Commercial Energy Efficiency Rebate Programs",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "preapproval_status",
-            "canonicalInputKey": "preapproval_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "measure_type",
-            "canonicalInputKey": "measure_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "kw_reduction",
-            "canonicalInputKey": "kw_reduction",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "ev_public_access_status",
-            "canonicalInputKey": "ev_public_access_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "ev_site_type",
-            "canonicalInputKey": "ev_site_type",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 6360000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "northgate-market-anaheim",
-        "sampleName": "northgate-market-anaheim",
-        "retrofitTypeId": "ev_charger_installation",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
-        "programName": "Azusa Light & Water - EV Charger Rebate",
-        "runtimeInclusionStatus": "not_user_facing_default",
-        "outcomeClass": "computed_but_suppressed",
-        "calculationStatus": "calculable_with_missing_inputs",
-        "sourceStatus": "accessible_or_researched",
-        "confidence": "high",
-        "missingInputs": [],
-        "defaultedInputs": [
-          {
-            "inputKey": "eligible_product_cost",
-            "canonicalInputKey": "eligible_product_cost",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "residence_identifier",
-            "canonicalInputKey": "residence_identifier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "purchase_receipt",
-            "canonicalInputKey": "purchase_receipt",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "utility_account_number",
-            "canonicalInputKey": "utility_account_number",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          }
-        ],
-        "effectTypes": [
-          "one_time_savings"
-        ],
-        "taxRelated": false,
-        "grantOrIncentiveRelated": true,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 15000,
-        "includedInRuntimeTotals": false
-      },
-      {
-        "sampleUserId": "northgate-market-anaheim",
-        "sampleName": "northgate-market-anaheim",
+        "sampleUserId": "santa-clara-university-campus",
+        "sampleName": "santa-clara-university-campus",
         "retrofitTypeId": "high_efficiency_hvac_replacement",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1615",
-        "programName": "Anaheim Public Utilities - Commercial Energy Efficiency Rebate Programs",
-        "runtimeInclusionStatus": "not_user_facing_default",
+        "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations",
+        "programName": "Energy Efficiency Grant Program for Nonprofit Organizations",
+        "runtimeInclusionStatus": "low_confidence",
         "outcomeClass": "computed_but_suppressed",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
+        "confidence": "low",
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "charger_count",
-            "canonicalInputKey": "port_count",
-            "source": "derived_or_placeholder_quantity",
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
             "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_040_santa-clara-university-campus.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "high_efficiency_hvac_replacement"
           },
           {
-            "inputKey": "preapproval_status",
-            "canonicalInputKey": "preapproval_status",
+            "inputKey": "project_scope",
+            "canonicalInputKey": "project_scope",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "measure_type",
-            "canonicalInputKey": "measure_type",
+            "inputKey": "estimated_electricity_savings",
+            "canonicalInputKey": "estimated_electricity_savings",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "kw_reduction",
-            "canonicalInputKey": "kw_reduction",
+            "inputKey": "nonprofit_status",
+            "canonicalInputKey": "nonprofit_status",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "ev_public_access_status",
-            "canonicalInputKey": "ev_public_access_status",
+            "inputKey": "svp_customer_of_record_status",
+            "canonicalInputKey": "svp_customer_of_record_status",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "ev_site_type",
-            "canonicalInputKey": "ev_site_type",
+            "inputKey": "application_period",
+            "canonicalInputKey": "application_period",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_preapproval",
+            "canonicalInputKey": "svp_preapproval",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_award_decision",
+            "canonicalInputKey": "svp_award_decision",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_description",
+            "canonicalInputKey": "project_description",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "proposed_project_timeline",
+            "canonicalInputKey": "proposed_project_timeline",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "estimated_annual_electricity_savings_kwh",
+            "canonicalInputKey": "estimated_annual_electricity_savings_kwh",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "energy_savings_calculation_source",
+            "canonicalInputKey": "energy_savings_calculation_source",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "nonprofit_tax_exempt_status",
+            "canonicalInputKey": "nonprofit_tax_exempt_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "ftb_active_exempt_status",
+            "canonicalInputKey": "ftb_active_exempt_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "facility_in_city_of_santa_clara",
+            "canonicalInputKey": "facility_in_city_of_santa_clara",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "facility_ownership_or_lease_5yr_remaining",
+            "canonicalInputKey": "facility_ownership_or_lease_5yr_remaining",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "minimum_operating_history_or_12_month_svp_bills",
+            "canonicalInputKey": "minimum_operating_history_or_12_month_svp_bills",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "has_at_least_one_full_time_employee",
+            "canonicalInputKey": "has_at_least_one_full_time_employee",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_period_deadline",
+            "canonicalInputKey": "application_period_deadline",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "purchase_and_installation_after_svp_preapproval",
+            "canonicalInputKey": "purchase_and_installation_after_svp_preapproval",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_preapproval_notice_status",
+            "canonicalInputKey": "svp_preapproval_notice_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_current_funds_available_status",
+            "canonicalInputKey": "svp_current_funds_available_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_approved_grant_funding_cents",
+            "canonicalInputKey": "svp_approved_grant_funding_cents",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -8462,21 +7545,651 @@
           }
         ],
         "effectTypes": [
-          "one_time_savings"
+          "grant_expected_value"
         ],
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 7500000,
+        "computedAmountCents": 2500000,
         "includedInRuntimeTotals": false
       },
       {
-        "sampleUserId": "northgate-market-anaheim",
-        "sampleName": "northgate-market-anaheim",
+        "sampleUserId": "santa-clara-university-campus",
+        "sampleName": "santa-clara-university-campus",
+        "retrofitTypeId": "low_flow_fixture_retrofit",
+        "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations",
+        "programName": "Energy Efficiency Grant Program for Nonprofit Organizations",
+        "runtimeInclusionStatus": "low_confidence",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_040_santa-clara-university-campus.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "low_flow_fixture_retrofit"
+          },
+          {
+            "inputKey": "project_scope",
+            "canonicalInputKey": "project_scope",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "estimated_electricity_savings",
+            "canonicalInputKey": "estimated_electricity_savings",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "nonprofit_status",
+            "canonicalInputKey": "nonprofit_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_customer_of_record_status",
+            "canonicalInputKey": "svp_customer_of_record_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_period",
+            "canonicalInputKey": "application_period",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_preapproval",
+            "canonicalInputKey": "svp_preapproval",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_award_decision",
+            "canonicalInputKey": "svp_award_decision",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_description",
+            "canonicalInputKey": "project_description",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "proposed_project_timeline",
+            "canonicalInputKey": "proposed_project_timeline",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "estimated_annual_electricity_savings_kwh",
+            "canonicalInputKey": "estimated_annual_electricity_savings_kwh",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "energy_savings_calculation_source",
+            "canonicalInputKey": "energy_savings_calculation_source",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "nonprofit_tax_exempt_status",
+            "canonicalInputKey": "nonprofit_tax_exempt_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "ftb_active_exempt_status",
+            "canonicalInputKey": "ftb_active_exempt_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "facility_in_city_of_santa_clara",
+            "canonicalInputKey": "facility_in_city_of_santa_clara",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "facility_ownership_or_lease_5yr_remaining",
+            "canonicalInputKey": "facility_ownership_or_lease_5yr_remaining",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "minimum_operating_history_or_12_month_svp_bills",
+            "canonicalInputKey": "minimum_operating_history_or_12_month_svp_bills",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "has_at_least_one_full_time_employee",
+            "canonicalInputKey": "has_at_least_one_full_time_employee",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_period_deadline",
+            "canonicalInputKey": "application_period_deadline",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "purchase_and_installation_after_svp_preapproval",
+            "canonicalInputKey": "purchase_and_installation_after_svp_preapproval",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_preapproval_notice_status",
+            "canonicalInputKey": "svp_preapproval_notice_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_current_funds_available_status",
+            "canonicalInputKey": "svp_current_funds_available_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_approved_grant_funding_cents",
+            "canonicalInputKey": "svp_approved_grant_funding_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "grant_expected_value"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 2500000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "santa-clara-university-campus",
+        "sampleName": "santa-clara-university-campus",
         "retrofitTypeId": "led_lighting_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1615",
-        "programName": "Anaheim Public Utilities - Commercial Energy Efficiency Rebate Programs",
-        "runtimeInclusionStatus": "not_user_facing_default",
+        "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations",
+        "programName": "Energy Efficiency Grant Program for Nonprofit Organizations",
+        "runtimeInclusionStatus": "low_confidence",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_040_santa-clara-university-campus.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "led_lighting_retrofit"
+          },
+          {
+            "inputKey": "project_scope",
+            "canonicalInputKey": "project_scope",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "estimated_electricity_savings",
+            "canonicalInputKey": "estimated_electricity_savings",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "nonprofit_status",
+            "canonicalInputKey": "nonprofit_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_customer_of_record_status",
+            "canonicalInputKey": "svp_customer_of_record_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_period",
+            "canonicalInputKey": "application_period",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_preapproval",
+            "canonicalInputKey": "svp_preapproval",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_award_decision",
+            "canonicalInputKey": "svp_award_decision",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_description",
+            "canonicalInputKey": "project_description",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "proposed_project_timeline",
+            "canonicalInputKey": "proposed_project_timeline",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "estimated_annual_electricity_savings_kwh",
+            "canonicalInputKey": "estimated_annual_electricity_savings_kwh",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "energy_savings_calculation_source",
+            "canonicalInputKey": "energy_savings_calculation_source",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "nonprofit_tax_exempt_status",
+            "canonicalInputKey": "nonprofit_tax_exempt_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "ftb_active_exempt_status",
+            "canonicalInputKey": "ftb_active_exempt_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "facility_in_city_of_santa_clara",
+            "canonicalInputKey": "facility_in_city_of_santa_clara",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "facility_ownership_or_lease_5yr_remaining",
+            "canonicalInputKey": "facility_ownership_or_lease_5yr_remaining",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "minimum_operating_history_or_12_month_svp_bills",
+            "canonicalInputKey": "minimum_operating_history_or_12_month_svp_bills",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "has_at_least_one_full_time_employee",
+            "canonicalInputKey": "has_at_least_one_full_time_employee",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_period_deadline",
+            "canonicalInputKey": "application_period_deadline",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "purchase_and_installation_after_svp_preapproval",
+            "canonicalInputKey": "purchase_and_installation_after_svp_preapproval",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_preapproval_notice_status",
+            "canonicalInputKey": "svp_preapproval_notice_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_current_funds_available_status",
+            "canonicalInputKey": "svp_current_funds_available_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_approved_grant_funding_cents",
+            "canonicalInputKey": "svp_approved_grant_funding_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "grant_expected_value"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 2500000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "santa-clara-university-campus",
+        "sampleName": "santa-clara-university-campus",
+        "retrofitTypeId": "air_sealing_weatherization",
+        "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:energy-efficiency-grant-program-for-nonprofit-organizations",
+        "programName": "Energy Efficiency Grant Program for Nonprofit Organizations",
+        "runtimeInclusionStatus": "low_confidence",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "low",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_040_santa-clara-university-campus.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "air_sealing_weatherization"
+          },
+          {
+            "inputKey": "project_scope",
+            "canonicalInputKey": "project_scope",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "estimated_electricity_savings",
+            "canonicalInputKey": "estimated_electricity_savings",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "nonprofit_status",
+            "canonicalInputKey": "nonprofit_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_customer_of_record_status",
+            "canonicalInputKey": "svp_customer_of_record_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_period",
+            "canonicalInputKey": "application_period",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_preapproval",
+            "canonicalInputKey": "svp_preapproval",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_award_decision",
+            "canonicalInputKey": "svp_award_decision",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_description",
+            "canonicalInputKey": "project_description",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "proposed_project_timeline",
+            "canonicalInputKey": "proposed_project_timeline",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "estimated_annual_electricity_savings_kwh",
+            "canonicalInputKey": "estimated_annual_electricity_savings_kwh",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "energy_savings_calculation_source",
+            "canonicalInputKey": "energy_savings_calculation_source",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "nonprofit_tax_exempt_status",
+            "canonicalInputKey": "nonprofit_tax_exempt_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "ftb_active_exempt_status",
+            "canonicalInputKey": "ftb_active_exempt_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "facility_in_city_of_santa_clara",
+            "canonicalInputKey": "facility_in_city_of_santa_clara",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "facility_ownership_or_lease_5yr_remaining",
+            "canonicalInputKey": "facility_ownership_or_lease_5yr_remaining",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "minimum_operating_history_or_12_month_svp_bills",
+            "canonicalInputKey": "minimum_operating_history_or_12_month_svp_bills",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "has_at_least_one_full_time_employee",
+            "canonicalInputKey": "has_at_least_one_full_time_employee",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_period_deadline",
+            "canonicalInputKey": "application_period_deadline",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "purchase_and_installation_after_svp_preapproval",
+            "canonicalInputKey": "purchase_and_installation_after_svp_preapproval",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_preapproval_notice_status",
+            "canonicalInputKey": "svp_preapproval_notice_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_current_funds_available_status",
+            "canonicalInputKey": "svp_current_funds_available_status",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "svp_approved_grant_funding_cents",
+            "canonicalInputKey": "svp_approved_grant_funding_cents",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "grant_expected_value"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 2500000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "tapiz-mariposa-denver-household",
+        "sampleName": "tapiz-mariposa-denver-household",
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+        "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+        "runtimeInclusionStatus": "human_review_required",
         "outcomeClass": "computed_but_suppressed",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
@@ -8484,40 +8197,64 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "preapproval_status",
-            "canonicalInputKey": "preapproval_status",
+            "inputKey": "xcel_colorado_residential_service_type",
+            "canonicalInputKey": "xcel_colorado_residential_service_type",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "measure_type",
-            "canonicalInputKey": "measure_type",
+            "inputKey": "selected_measure",
+            "canonicalInputKey": "selected_measure",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "kw_reduction",
-            "canonicalInputKey": "kw_reduction",
+            "inputKey": "heating_or_cooling_customer_category",
+            "canonicalInputKey": "heating_or_cooling_customer_category",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "ev_public_access_status",
-            "canonicalInputKey": "ev_public_access_status",
+            "inputKey": "equipment_tier_and_tonnage_where_applicable",
+            "canonicalInputKey": "equipment_tier_and_tonnage_where_applicable",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "ev_site_type",
-            "canonicalInputKey": "ev_site_type",
+            "inputKey": "invoice_and_installation_date",
+            "canonicalInputKey": "invoice_and_installation_date",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "service_type",
+            "canonicalInputKey": "service_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_tier",
+            "canonicalInputKey": "equipment_tier",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "tons_or_eligible_cost",
+            "canonicalInputKey": "tons_or_eligible_cost",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -8530,16 +8267,16 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 7500000,
+        "computedAmountCents": 60000,
         "includedInRuntimeTotals": false
       },
       {
-        "sampleUserId": "northgate-market-anaheim",
-        "sampleName": "northgate-market-anaheim",
-        "retrofitTypeId": "level_2_ev_charger_installation",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1615",
-        "programName": "Anaheim Public Utilities - Commercial Energy Efficiency Rebate Programs",
-        "runtimeInclusionStatus": "not_user_facing_default",
+        "sampleUserId": "tapiz-mariposa-denver-household",
+        "sampleName": "tapiz-mariposa-denver-household",
+        "retrofitTypeId": "air_sealing_weatherization",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+        "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+        "runtimeInclusionStatus": "human_review_required",
         "outcomeClass": "computed_but_suppressed",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
@@ -8547,40 +8284,64 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "preapproval_status",
-            "canonicalInputKey": "preapproval_status",
+            "inputKey": "xcel_colorado_residential_service_type",
+            "canonicalInputKey": "xcel_colorado_residential_service_type",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "measure_type",
-            "canonicalInputKey": "measure_type",
+            "inputKey": "selected_measure",
+            "canonicalInputKey": "selected_measure",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "kw_reduction",
-            "canonicalInputKey": "kw_reduction",
+            "inputKey": "heating_or_cooling_customer_category",
+            "canonicalInputKey": "heating_or_cooling_customer_category",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "ev_public_access_status",
-            "canonicalInputKey": "ev_public_access_status",
+            "inputKey": "equipment_tier_and_tonnage_where_applicable",
+            "canonicalInputKey": "equipment_tier_and_tonnage_where_applicable",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "ev_site_type",
-            "canonicalInputKey": "ev_site_type",
+            "inputKey": "invoice_and_installation_date",
+            "canonicalInputKey": "invoice_and_installation_date",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "service_type",
+            "canonicalInputKey": "service_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_tier",
+            "canonicalInputKey": "equipment_tier",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "tons_or_eligible_cost",
+            "canonicalInputKey": "tons_or_eligible_cost",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -8593,49 +8354,484 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 6360000,
+        "computedAmountCents": 60000,
         "includedInRuntimeTotals": false
       },
       {
-        "sampleUserId": "northgate-market-anaheim",
-        "sampleName": "northgate-market-anaheim",
-        "retrofitTypeId": "level_2_ev_charger_installation",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22278",
-        "programName": "Azusa Light & Water - EV Charger Rebate",
-        "runtimeInclusionStatus": "not_user_facing_default",
+        "sampleUserId": "tapiz-mariposa-denver-household",
+        "sampleName": "tapiz-mariposa-denver-household",
+        "retrofitTypeId": "insulation_upgrade",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+        "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+        "runtimeInclusionStatus": "human_review_required",
         "outcomeClass": "computed_but_suppressed",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
-        "confidence": "high",
+        "confidence": "medium",
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "eligible_product_cost",
-            "canonicalInputKey": "eligible_product_cost",
+            "inputKey": "xcel_colorado_residential_service_type",
+            "canonicalInputKey": "xcel_colorado_residential_service_type",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "residence_identifier",
-            "canonicalInputKey": "residence_identifier",
+            "inputKey": "selected_measure",
+            "canonicalInputKey": "selected_measure",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "purchase_receipt",
-            "canonicalInputKey": "purchase_receipt",
+            "inputKey": "heating_or_cooling_customer_category",
+            "canonicalInputKey": "heating_or_cooling_customer_category",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "utility_account_number",
-            "canonicalInputKey": "utility_account_number",
+            "inputKey": "equipment_tier_and_tonnage_where_applicable",
+            "canonicalInputKey": "equipment_tier_and_tonnage_where_applicable",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "invoice_and_installation_date",
+            "canonicalInputKey": "invoice_and_installation_date",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "service_type",
+            "canonicalInputKey": "service_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_tier",
+            "canonicalInputKey": "equipment_tier",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "tons_or_eligible_cost",
+            "canonicalInputKey": "tons_or_eligible_cost",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 60000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "tapiz-mariposa-denver-household",
+        "sampleName": "tapiz-mariposa-denver-household",
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+        "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "xcel_colorado_residential_service_type",
+            "canonicalInputKey": "xcel_colorado_residential_service_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "selected_measure",
+            "canonicalInputKey": "selected_measure",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "heating_or_cooling_customer_category",
+            "canonicalInputKey": "heating_or_cooling_customer_category",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_tier_and_tonnage_where_applicable",
+            "canonicalInputKey": "equipment_tier_and_tonnage_where_applicable",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "invoice_and_installation_date",
+            "canonicalInputKey": "invoice_and_installation_date",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "service_type",
+            "canonicalInputKey": "service_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_tier",
+            "canonicalInputKey": "equipment_tier",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "tons_or_eligible_cost",
+            "canonicalInputKey": "tons_or_eligible_cost",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 60000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "tapiz-mariposa-denver-household",
+        "sampleName": "tapiz-mariposa-denver-household",
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+        "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "xcel_colorado_residential_service_type",
+            "canonicalInputKey": "xcel_colorado_residential_service_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "selected_measure",
+            "canonicalInputKey": "selected_measure",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "heating_or_cooling_customer_category",
+            "canonicalInputKey": "heating_or_cooling_customer_category",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_tier_and_tonnage_where_applicable",
+            "canonicalInputKey": "equipment_tier_and_tonnage_where_applicable",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "invoice_and_installation_date",
+            "canonicalInputKey": "invoice_and_installation_date",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "service_type",
+            "canonicalInputKey": "service_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_tier",
+            "canonicalInputKey": "equipment_tier",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "tons_or_eligible_cost",
+            "canonicalInputKey": "tons_or_eligible_cost",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 60000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "tapiz-mariposa-denver-household",
+        "sampleName": "tapiz-mariposa-denver-household",
+        "retrofitTypeId": "heat_pump_water_heater",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+        "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "xcel_colorado_residential_service_type",
+            "canonicalInputKey": "xcel_colorado_residential_service_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "selected_measure",
+            "canonicalInputKey": "selected_measure",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "heating_or_cooling_customer_category",
+            "canonicalInputKey": "heating_or_cooling_customer_category",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_tier_and_tonnage_where_applicable",
+            "canonicalInputKey": "equipment_tier_and_tonnage_where_applicable",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "invoice_and_installation_date",
+            "canonicalInputKey": "invoice_and_installation_date",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "service_type",
+            "canonicalInputKey": "service_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_tier",
+            "canonicalInputKey": "equipment_tier",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "tons_or_eligible_cost",
+            "canonicalInputKey": "tons_or_eligible_cost",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 60000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "tapiz-mariposa-denver-household",
+        "sampleName": "tapiz-mariposa-denver-household",
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+        "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "xcel_colorado_residential_service_type",
+            "canonicalInputKey": "xcel_colorado_residential_service_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "selected_measure",
+            "canonicalInputKey": "selected_measure",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "heating_or_cooling_customer_category",
+            "canonicalInputKey": "heating_or_cooling_customer_category",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_tier_and_tonnage_where_applicable",
+            "canonicalInputKey": "equipment_tier_and_tonnage_where_applicable",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "invoice_and_installation_date",
+            "canonicalInputKey": "invoice_and_installation_date",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "service_type",
+            "canonicalInputKey": "service_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "equipment_tier",
+            "canonicalInputKey": "equipment_tier",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "tons_or_eligible_cost",
+            "canonicalInputKey": "tons_or_eligible_cost",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 60000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "the-rose-minneapolis-household",
+        "sampleName": "the-rose-minneapolis-household",
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
+        "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "charger_type",
+            "canonicalInputKey": "measure_selection",
+            "source": "synthetic_test_case_measure_selection",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "participating_utility_confirmation",
+            "canonicalInputKey": "participating_utility_confirmation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "proof_of_purchase",
+            "canonicalInputKey": "proof_of_purchase",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "connection_status_for_chargepoint",
+            "canonicalInputKey": "connection_status_for_chargepoint",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -8652,12 +8848,177 @@
         "includedInRuntimeTotals": false
       },
       {
-        "sampleUserId": "northgate-market-anaheim",
-        "sampleName": "northgate-market-anaheim",
+        "sampleUserId": "the-rose-minneapolis-household",
+        "sampleName": "the-rose-minneapolis-household",
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
+        "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "charger_type",
+            "canonicalInputKey": "measure_selection",
+            "source": "synthetic_test_case_measure_selection",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "participating_utility_confirmation",
+            "canonicalInputKey": "participating_utility_confirmation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "proof_of_purchase",
+            "canonicalInputKey": "proof_of_purchase",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "connection_status_for_chargepoint",
+            "canonicalInputKey": "connection_status_for_chargepoint",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 15000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "the-rose-minneapolis-household",
+        "sampleName": "the-rose-minneapolis-household",
+        "retrofitTypeId": "ev_charger_installation",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
+        "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "charger_type",
+            "canonicalInputKey": "measure_selection",
+            "source": "synthetic_test_case_measure_selection",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "participating_utility_confirmation",
+            "canonicalInputKey": "participating_utility_confirmation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "proof_of_purchase",
+            "canonicalInputKey": "proof_of_purchase",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "connection_status_for_chargepoint",
+            "canonicalInputKey": "connection_status_for_chargepoint",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 15000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "the-rose-minneapolis-household",
+        "sampleName": "the-rose-minneapolis-household",
+        "retrofitTypeId": "ev_charger_installation",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
+        "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "charger_type",
+            "canonicalInputKey": "measure_selection",
+            "source": "synthetic_test_case_measure_selection",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "participating_utility_confirmation",
+            "canonicalInputKey": "participating_utility_confirmation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "proof_of_purchase",
+            "canonicalInputKey": "proof_of_purchase",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "connection_status_for_chargepoint",
+            "canonicalInputKey": "connection_status_for_chargepoint",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 15000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "the-rose-minneapolis-household",
+        "sampleName": "the-rose-minneapolis-household",
         "retrofitTypeId": "heat_pump_hvac_retrofit",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1615",
-        "programName": "Anaheim Public Utilities - Commercial Energy Efficiency Rebate Programs",
-        "runtimeInclusionStatus": "not_user_facing_default",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
+        "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
+        "runtimeInclusionStatus": "human_review_required",
         "outcomeClass": "computed_but_suppressed",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
@@ -8665,48 +9026,32 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "charger_count",
-            "canonicalInputKey": "port_count",
-            "source": "derived_or_placeholder_quantity",
+            "inputKey": "charger_type",
+            "canonicalInputKey": "measure_selection",
+            "source": "synthetic_test_case_measure_selection",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "preapproval_status",
-            "canonicalInputKey": "preapproval_status",
+            "inputKey": "participating_utility_confirmation",
+            "canonicalInputKey": "participating_utility_confirmation",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "measure_type",
-            "canonicalInputKey": "measure_type",
+            "inputKey": "proof_of_purchase",
+            "canonicalInputKey": "proof_of_purchase",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "kw_reduction",
-            "canonicalInputKey": "kw_reduction",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "ev_public_access_status",
-            "canonicalInputKey": "ev_public_access_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "ev_site_type",
-            "canonicalInputKey": "ev_site_type",
+            "inputKey": "connection_status_for_chargepoint",
+            "canonicalInputKey": "connection_status_for_chargepoint",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -8719,16 +9064,16 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 7500000,
+        "computedAmountCents": 15000,
         "includedInRuntimeTotals": false
       },
       {
-        "sampleUserId": "northgate-market-anaheim",
-        "sampleName": "northgate-market-anaheim",
-        "retrofitTypeId": "cooling_tower_controls_optimization",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1615",
-        "programName": "Anaheim Public Utilities - Commercial Energy Efficiency Rebate Programs",
-        "runtimeInclusionStatus": "not_user_facing_default",
+        "sampleUserId": "the-rose-minneapolis-household",
+        "sampleName": "the-rose-minneapolis-household",
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
+        "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
+        "runtimeInclusionStatus": "human_review_required",
         "outcomeClass": "computed_but_suppressed",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
@@ -8736,56 +9081,32 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "charger_count",
-            "canonicalInputKey": "port_count",
-            "source": "derived_or_placeholder_quantity",
+            "inputKey": "charger_type",
+            "canonicalInputKey": "measure_selection",
+            "source": "synthetic_test_case_measure_selection",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "preapproval_status",
-            "canonicalInputKey": "preapproval_status",
+            "inputKey": "participating_utility_confirmation",
+            "canonicalInputKey": "participating_utility_confirmation",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "measure_type",
-            "canonicalInputKey": "measure_type",
+            "inputKey": "proof_of_purchase",
+            "canonicalInputKey": "proof_of_purchase",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "annual_kwh_savings",
-            "canonicalInputKey": "annual_kwh_savings",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "kw_reduction",
-            "canonicalInputKey": "kw_reduction",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "ev_public_access_status",
-            "canonicalInputKey": "ev_public_access_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "ev_site_type",
-            "canonicalInputKey": "ev_site_type",
+            "inputKey": "connection_status_for_chargepoint",
+            "canonicalInputKey": "connection_status_for_chargepoint",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -8798,16 +9119,16 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 7500000,
+        "computedAmountCents": 15000,
         "includedInRuntimeTotals": false
       },
       {
-        "sampleUserId": "northgate-market-anaheim",
-        "sampleName": "northgate-market-anaheim",
-        "retrofitTypeId": "dc_fast_charger_installation",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:1615",
-        "programName": "Anaheim Public Utilities - Commercial Energy Efficiency Rebate Programs",
-        "runtimeInclusionStatus": "not_user_facing_default",
+        "sampleUserId": "the-rose-minneapolis-household",
+        "sampleName": "the-rose-minneapolis-household",
+        "retrofitTypeId": "heat_pump_water_heater",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
+        "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
+        "runtimeInclusionStatus": "human_review_required",
         "outcomeClass": "computed_but_suppressed",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
@@ -8815,48 +9136,32 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "charger_count",
-            "canonicalInputKey": "port_count",
-            "source": "derived_or_placeholder_quantity",
+            "inputKey": "charger_type",
+            "canonicalInputKey": "measure_selection",
+            "source": "synthetic_test_case_measure_selection",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "preapproval_status",
-            "canonicalInputKey": "preapproval_status",
+            "inputKey": "participating_utility_confirmation",
+            "canonicalInputKey": "participating_utility_confirmation",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "measure_type",
-            "canonicalInputKey": "measure_type",
+            "inputKey": "proof_of_purchase",
+            "canonicalInputKey": "proof_of_purchase",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "kw_reduction",
-            "canonicalInputKey": "kw_reduction",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "ev_public_access_status",
-            "canonicalInputKey": "ev_public_access_status",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "ev_site_type",
-            "canonicalInputKey": "ev_site_type",
+            "inputKey": "connection_status_for_chargepoint",
+            "canonicalInputKey": "connection_status_for_chargepoint",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -8869,7 +9174,282 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 7500000,
+        "computedAmountCents": 15000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "the-rose-minneapolis-household",
+        "sampleName": "the-rose-minneapolis-household",
+        "retrofitTypeId": "heat_pump_water_heater",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
+        "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "charger_type",
+            "canonicalInputKey": "measure_selection",
+            "source": "synthetic_test_case_measure_selection",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "participating_utility_confirmation",
+            "canonicalInputKey": "participating_utility_confirmation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "proof_of_purchase",
+            "canonicalInputKey": "proof_of_purchase",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "connection_status_for_chargepoint",
+            "canonicalInputKey": "connection_status_for_chargepoint",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 15000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "the-rose-minneapolis-household",
+        "sampleName": "the-rose-minneapolis-household",
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
+        "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "charger_type",
+            "canonicalInputKey": "measure_selection",
+            "source": "synthetic_test_case_measure_selection",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "participating_utility_confirmation",
+            "canonicalInputKey": "participating_utility_confirmation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "proof_of_purchase",
+            "canonicalInputKey": "proof_of_purchase",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "connection_status_for_chargepoint",
+            "canonicalInputKey": "connection_status_for_chargepoint",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 15000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "the-rose-minneapolis-household",
+        "sampleName": "the-rose-minneapolis-household",
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
+        "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "charger_type",
+            "canonicalInputKey": "measure_selection",
+            "source": "synthetic_test_case_measure_selection",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "participating_utility_confirmation",
+            "canonicalInputKey": "participating_utility_confirmation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "proof_of_purchase",
+            "canonicalInputKey": "proof_of_purchase",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "connection_status_for_chargepoint",
+            "canonicalInputKey": "connection_status_for_chargepoint",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 15000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "the-rose-minneapolis-household",
+        "sampleName": "the-rose-minneapolis-household",
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
+        "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "charger_type",
+            "canonicalInputKey": "measure_selection",
+            "source": "synthetic_test_case_measure_selection",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "participating_utility_confirmation",
+            "canonicalInputKey": "participating_utility_confirmation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "proof_of_purchase",
+            "canonicalInputKey": "proof_of_purchase",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "connection_status_for_chargepoint",
+            "canonicalInputKey": "connection_status_for_chargepoint",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 15000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "the-rose-minneapolis-household",
+        "sampleName": "the-rose-minneapolis-household",
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
+        "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "charger_type",
+            "canonicalInputKey": "measure_selection",
+            "source": "synthetic_test_case_measure_selection",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "participating_utility_confirmation",
+            "canonicalInputKey": "participating_utility_confirmation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "proof_of_purchase",
+            "canonicalInputKey": "proof_of_purchase",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "connection_status_for_chargepoint",
+            "canonicalInputKey": "connection_status_for_chargepoint",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "one_time_savings"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 15000,
         "includedInRuntimeTotals": false
       }
     ],

@@ -1,0 +1,346 @@
+{
+  "schemaVersion": "retrofi_computed_suppressed_source_repairs_gpt_pro.v1",
+  "generatedAt": "2026-07-04T01:00:51.221Z",
+  "sourceWorkDir": "GPT Pro Work/computed-suppressed-source-repair-2026-07-03",
+  "sourceFiles": [
+    "output_001_computed_suppressed_source_repair.md",
+    "output_002_computed_suppressed_source_repair.md",
+    "output_003_computed_suppressed_source_repair.md",
+    "output_004_computed_suppressed_source_repair.md"
+  ],
+  "repairCount": 4,
+  "counts": {
+    "researchStatusCounts": {
+      "data_verified": 1,
+      "program_changed": 2,
+      "keep_human_review": 1
+    },
+    "sourceConfidenceCounts": {
+      "high": 3,
+      "medium": 1
+    },
+    "estimateConfidenceCounts": {
+      "high": 1,
+      "low": 2,
+      "medium": 1
+    },
+    "recommendedDefaultIncludeCount": 1,
+    "recommendedHumanReviewCount": 3
+  },
+  "validationWarnings": [
+    "output_001_computed_suppressed_source_repair.md contained 324 trailing characters after the first JSON object; imported the first JSON object.",
+    "output_002_computed_suppressed_source_repair.md contained 253 trailing characters after the first JSON object; imported the first JSON object.",
+    "output_003_computed_suppressed_source_repair.md contained 179 trailing characters after the first JSON object; imported the first JSON object.",
+    "output_004_computed_suppressed_source_repair.md contained 858 trailing characters after the first JSON object; imported the first JSON object."
+  ],
+  "repairs": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2258",
+      "effectId": "effect_one_time_savings_1_3d9ac98dee224a54",
+      "programName": "East Central Energy - Residential Energy Efficiency Rebate Program",
+      "researchStatus": "data_verified",
+      "sourceConfidence": "high",
+      "estimateConfidence": "high",
+      "recommendedPatch": {
+        "includedInUserFacingTotalDefault": true,
+        "humanReviewRequired": false,
+        "humanReviewReasons": [],
+        "confidenceReasonCodes": [
+          "official_ece_2026_forms_verified",
+          "hpwh_source_repaired_to_direct_current_year_pdf",
+          "official_pdf_rows_text_readable_and_visual_checked",
+          "deterministic_measure_catalog_amounts_when_required_inputs_present",
+          "standard_first_come_funding_disclaimer",
+          "standard_post_install_verification_not_custom_quote"
+        ]
+      },
+      "verifiedMeasureRows": [
+        {
+          "measureName": "Residential Level 2 EV charger on ECE time-of-use or off-peak storage rate",
+          "amountCents": 40000,
+          "rateFormula": "$400 fixed bill credit per qualifying metered Level 2 charger",
+          "capCents": null,
+          "eligibilityNotes": "Residential home charging only; metered Level 2 charger must be on ECE time-of-use or off-peak storage; meter required outside the home; primary residence only."
+        },
+        {
+          "measureName": "Heat pump water heater",
+          "amountCents": 50000,
+          "rateFormula": "$500 fixed bill credit per qualifying unit",
+          "capCents": null,
+          "eligibilityNotes": "New ENERGY STAR rated heat pump water heater, minimum size 50 gallons per 2026 form; ECE field check or installation verification required."
+        },
+        {
+          "measureName": "Air source heat pump - ducted or hybrid, high efficiency",
+          "amountCents": 75000,
+          "rateFormula": "$750 fixed rebate",
+          "capCents": null,
+          "eligibilityNotes": "Ducted or hybrid ASHP, 5 tons or smaller, at least 14.3 SEER2 and 7.5 HSPF2; verify AHRI efficiency; ECE installation verification required."
+        },
+        {
+          "measureName": "Air source heat pump - ducted or hybrid, premium efficiency",
+          "amountCents": 100000,
+          "rateFormula": "$1,000 fixed rebate",
+          "capCents": null,
+          "eligibilityNotes": "Ducted or hybrid ASHP, 5 tons or smaller, 2026 CEE Tier 1 listed; verify AHRI efficiency; ECE installation verification required."
+        },
+        {
+          "measureName": "Air source heat pump - ductless mini-split, 1 ton or smaller",
+          "amountCents": 20000,
+          "rateFormula": "$200 fixed rebate",
+          "capCents": null,
+          "eligibilityNotes": "Ductless ASHP less than or equal to 1 ton; eligible at either 14.3 SEER2 and 7.5 HSPF2 minimum or 2026 CEE Tier 1; verify AHRI efficiency; ECE installation verification required."
+        },
+        {
+          "measureName": "Air source heat pump - ductless mini-split, greater than 1 ton",
+          "amountCents": 50000,
+          "rateFormula": "$500 fixed rebate",
+          "capCents": null,
+          "eligibilityNotes": "Ductless ASHP greater than 1 ton; eligible at either 14.3 SEER2 and 7.5 HSPF2 minimum or 2026 CEE Tier 1; verify AHRI efficiency; ECE installation verification required."
+        },
+        {
+          "measureName": "Air source heat pump - QI installation adder",
+          "amountCents": null,
+          "rateFormula": "$40 per ton additional rebate",
+          "capCents": null,
+          "eligibilityNotes": "Only add when a QI registered contractor installs the ASHP and completes required sizing, testing, and documentation; do not include unless the selected measure or quote confirms QI installation."
+        },
+        {
+          "measureName": "Ground source heat pump",
+          "amountCents": null,
+          "rateFormula": "$400 per ton",
+          "capCents": null,
+          "eligibilityNotes": "Qualifying geothermal or ground source heat pump must be ENERGY STAR listed; use heating/cooling capacity tons from invoice/form; receipt must include model number and invoice must include contractor signature; ECE installation verification required."
+        },
+        {
+          "measureName": "New ENERGY STAR refrigerator with existing unit recycling",
+          "amountCents": 7500,
+          "rateFormula": "$75 fixed rebate",
+          "capCents": null,
+          "eligibilityNotes": "New refrigerator must be ENERGY STAR rated; receipt for both new purchase and recycling of existing unit required."
+        },
+        {
+          "measureName": "New ENERGY STAR freezer with existing unit recycling",
+          "amountCents": 7500,
+          "rateFormula": "$75 fixed rebate",
+          "capCents": null,
+          "eligibilityNotes": "New freezer must be ENERGY STAR rated; receipt for both new purchase and recycling of existing unit required."
+        },
+        {
+          "measureName": "Refrigerator or freezer recycling only",
+          "amountCents": 5000,
+          "rateFormula": "$50 fixed rebate",
+          "capCents": null,
+          "eligibilityNotes": "Receipt for recycling required."
+        },
+        {
+          "measureName": "ENERGY STAR dehumidifier",
+          "amountCents": 2500,
+          "rateFormula": "$25 fixed rebate",
+          "capCents": null,
+          "eligibilityNotes": "New dehumidifier must be ENERGY STAR rated; purchase receipt required."
+        },
+        {
+          "measureName": "ENERGY STAR electric dryer",
+          "amountCents": 2500,
+          "rateFormula": "$25 fixed rebate",
+          "capCents": null,
+          "eligibilityNotes": "New electric dryer must be ENERGY STAR rated; purchase receipt required."
+        },
+        {
+          "measureName": "Wi-Fi smart thermostat",
+          "amountCents": 2500,
+          "rateFormula": "$25 fixed rebate",
+          "capCents": null,
+          "eligibilityNotes": "Wi-Fi smart thermostat purchase receipt required."
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.eastcentralenergy.com/residential-rebates",
+        "https://www.eastcentralenergy.com/programs-and-rebates",
+        "https://www.eastcentralenergy.com/rebate-rules",
+        "https://www.eastcentralenergy.com/residential-appliances",
+        "https://www.eastcentralenergy.com/electric-vehicle-charger-rebate",
+        "https://www.eastcentralenergy.com/heating-cooling-options",
+        "https://www.eastcentralenergy.com/heat-pump-water-heater",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Energy%20Services/2026%20programs%20%26%20rebates/Appliance%20Rebate_2026.pdf",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Energy%20Services/2026%20programs%20%26%20rebates/EVs_2026.pdf",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Energy%20Services/2026%20programs%20%26%20rebates/Residential%20ASHP%20Rebate%202026.pdf",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Energy%20Services/2026%20programs%20%26%20rebates/ASHP%202026.pdf",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Energy%20Services/2026%20programs%20%26%20rebates/Residential%20GSHP%20Rebate_2026.pdf",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Energy%20Services/2026%20programs%20%26%20rebates/GSHP%202026.pdf",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Energy%20Services/2026%20programs%20%26%20rebates/Residential%20HPWH%20Rebate%202026.pdf",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Energy%20Services/2025%20programs%20%26%20rebates/RES%20HPWH%20REBATE%202025%20fillable.pdf"
+      ],
+      "evidenceText": "ECE's official 2026 appliance form verifies $75 new refrigerator/freezer with recycling, $50 recycling only, $25 dehumidifier, $25 electric dryer, and $25 Wi-Fi smart thermostat rows; the same rows were visually checked in the PDF screenshot. ECE's EV page links to the 2026 EV PDF, which verifies a $400 bill credit for a metered Level 2 home charger on time-of-use or off-peak storage with an outside meter and primary-residence limitation; the PDF screenshot also matches the extracted row. ([East Central Energy][1]) ECE's 2026 ASHP application verifies $750 ducted/hybrid high-efficiency, $1,000 ducted/hybrid 2026 CEE Tier 1, $200 ductless <=1 ton, and $500 ductless >1 ton rows; ECE's ASHP info sheet separately verifies the $40/ton QI adder. ECE's 2026 GSHP application verifies $400 per ton for ENERGY STAR listed geothermal or ground source heat pumps, with contractor signature and installation verification requirements. The HPWH blocker is resolved by replacing the stale landing-page/form source with the direct official 2026 HPWH PDF: the landing page still shows a 2025 deadline and links to a 2025 form, but ECE's official 2026 HPWH PDF is accessible, text-readable, visually checked, and verifies a $500 rebate for a minimum 50 gallon ENERGY STAR heat pump water heater with field check required. ([East Central Energy][2]) ECE's general rules confirm first-come, first-served funding, current-program-year/service-area requirements, bill credit timing under $1,000, one rebate per appliance type per account, and ECE installation confirmation for ASHP, GSHP, and HPWH. ([East Central Energy][3])",
+      "reasoningNotes": "The prior human-review reason in the uploaded target concerned the heat pump water heater page not exposing the same current-year form text as other ECE measures; that is resolved for calculation-package purposes by using the direct official 2026 HPWH PDF as the authoritative source instead of the stale HPWH landing-page link. Target context reviewed from the uploaded prompt.  The rate rows are prescriptive and deterministic once RetroFi has the required selectedMeasure, unitCount, tons, equipmentTier, ENERGY STAR status, ECE account/service-area eligibility, appliance recycling status, and EV TOU/off-peak enrollment inputs. Standard funding availability, receipt, model-number, contractor-signature, ENERGY STAR/AHRI verification, and ECE installation-check requirements should remain eligibility notes or missing-input gates, but they do not require custom/quote-only review and do not justify suppressing the effect by default when the measure-catalog inputs are present.",
+      "continueFromOpportunityId": null,
+      "sourceFile": "output_001_computed_suppressed_source_repair.md"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
+      "effectId": "effect_one_time_savings_1_62e8123e06b32401",
+      "programName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
+      "researchStatus": "program_changed",
+      "sourceConfidence": "high",
+      "estimateConfidence": "low",
+      "recommendedPatch": {
+        "includedInUserFacingTotalDefault": false,
+        "humanReviewRequired": true,
+        "humanReviewReasons": [
+          "Current Grand Marais PUC 2026 sources do not support the existing Bright Energy Solutions ChargePoint/Home Flex EV charger catalog for this opportunity.",
+          "The current Grand Marais 2026 rebate summary shows EV Chargers as a separate ENERGY STAR Level 2 Connected measure with a $15 rebate, while the $150-$500 amount range applies to a separate EV Charging Rate Enrollment incentive.",
+          "The existing effect should be recoded or split before default inclusion: one effect for the $15 connected Level 2 EV charger rebate, and a separate effect for the $500 first-household/$150 additional-EV time-of-use EV charging rate enrollment incentive.",
+          "Grand Marais Google Drive source forms were accessible visually through the Drive viewer but are image-based/dynamic rather than text-readable; keep review until the source package can preserve the corrected rows and citations."
+        ],
+        "confidenceReasonCodes": [
+          "official_grand_marais_2026_source_verified_visual",
+          "program_changed_from_bright_energy_catalog",
+          "retrofi_measure_catalog_mismatch",
+          "current_local_ev_charger_rebate_is_15_dollars",
+          "ev_charging_rate_enrollment_is_separate_150_to_500_incentive",
+          "keep_human_review_recode_required",
+          "source_confidence_high",
+          "estimate_confidence_low"
+        ]
+      },
+      "verifiedMeasureRows": [
+        {
+          "measureName": "Grand Marais PUC 2026 EV Chargers - ENERGY STAR Level 2 Connected",
+          "amountCents": 1500,
+          "rateFormula": "$15 per new qualifying connected Level 2 EV charger.",
+          "capCents": null,
+          "eligibilityNotes": "Must be a new ENERGY STAR-qualified, AC-output Level 2 EV charger with connected-capable functionality. Custom or self-built chargers do not qualify. Customer must own, lease, or have ordered a battery EV or plug-in hybrid EV, and the charger must be fully installed and operational before submitting the application. Receipt/invoice or installed-charger nameplate documentation must show make, model, serial number, purchase date, and cost. This is not the $150/$500 Bright Energy Solutions ChargePoint catalog row."
+        },
+        {
+          "measureName": "Grand Marais PUC 2026 EV Charging Rate Enrollment - first qualifying household enrollment",
+          "amountCents": 50000,
+          "rateFormula": "$500 one-time incentive for an EV owner who enrolls in the Grand Marais time-of-use EV charging rate.",
+          "capCents": 50000,
+          "eligibilityNotes": "Must be a residential electric customer of Grand Marais Utilities, own a qualifying EV, commit to participate in the time-of-use EV charging rate for at least 12 months if continuing to own the EV, and have a separate meter socket installed to monitor EV charger usage. Form states one $500 enrollment incentive per household."
+        },
+        {
+          "measureName": "Grand Marais PUC 2026 EV Charging Rate Enrollment - additional qualifying EV",
+          "amountCents": 15000,
+          "rateFormula": "$150 incentive for each additional qualifying EV owned by a household participating in the Grand Marais time-of-use EV charging rate.",
+          "capCents": null,
+          "eligibilityNotes": "Applies to additional qualifying EVs under the same EV charging rate enrollment program. Requires Grand Marais residential electric customer status, qualifying EV ownership, time-of-use EV charging rate participation, and separate EV charger metering."
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://www.ci.grand-marais.mn.us/energy-efficiency",
+        "https://smmpa.com/members/grand-marais",
+        "https://drive.google.com/file/d/1lXRsbzKTzt8mZ82s9tDnP-11jKBMrE7A/view?usp=drive_link",
+        "https://drive.google.com/file/d/1bYnvywDr1jPbVfEx6Hsn3LIDjaFBQO7k/view?usp=drive_link",
+        "https://drive.google.com/file/d/1iYK9SUJ_azN3oDoEAuc4i_5R8C4ZuY36/view?usp=drive_link",
+        "https://www.brightenergysolutions.com/electric-vehicles/electric-vehicle-charging-program",
+        "https://www.brightenergysolutions.com/electric-vehicles",
+        "https://www.brightenergysolutions.com/members",
+        "https://d23r6s4dwed217.cloudfront.net/general-uploads/rebate-forms/2025-EV-Charger-fillable-with-members_2025-05-21-174218_mvgs.pdf"
+      ],
+      "evidenceText": "Grand Marais official city page says Grand Marais Public Utility and SMMPA offer rebates and directs users to SMMPA for the full rebate list; SMMPA's Grand Marais page lists 2026 Residential Rebates including an ENERGY STAR EV Chargers Form and separately lists an EV Charging Rate Enrollment Form under Residential Other Resources. ([Grand Marais][1]) The current Grand Marais 2026 rebate summary visually shows EV Chargers as ENERGY STAR Level 2 Connected with a $15 rebate and a separate EV Charging Rate Enrollment row with $150-$500. The Grand Marais 2026 EV charger application visually states REBATE = $15 per Charger and lists connected Level 2 ENERGY STAR eligibility requirements. The Grand Marais EV Charging Rate form visually states a $500 incentive for EV owners enrolling in the TOU EV charging rate and a $150 incentive for each additional qualifying EV, with one $500 enrollment incentive per household. The generic Bright Energy Solutions page still states a different $500 Wi-Fi-enabled ChargePoint Home Flex/$150 other qualifying Level 2 charger offer, but that is not the current local Grand Marais measure row verified in the 2026 Grand Marais forms. ([Bright Energy Solutions][2])",
+      "reasoningNotes": "The uploaded target package describes a Bright Energy Solutions 2026 EV charger catalog with $150-$500 amounts and existing human-review suppression.  Current Grand Marais-specific 2026 official materials show that the same $150-$500 range belongs to EV Charging Rate Enrollment, not EV charger purchase/installation, while the EV charger rebate is $15 per connected ENERGY STAR Level 2 charger. Therefore the existing effect should not be promoted into user-facing totals by default. The source blocker is not simply removable; the effect needs a source/model repair and likely a measure split.",
+      "sourceFile": "output_002_computed_suppressed_source_repair.md"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
+      "effectId": "effect_one_time_savings_1_c7bf7c257460020e",
+      "programName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
+      "researchStatus": "program_changed",
+      "sourceConfidence": "high",
+      "estimateConfidence": "low",
+      "recommendedPatch": {
+        "includedInUserFacingTotalDefault": false,
+        "humanReviewRequired": true,
+        "humanReviewReasons": [
+          "Current official Princeton/SMMPA 2026 EV charger form shows a different rebate row than RetroFi's Bright Energy Solutions catalog: $15 per qualifying ENERGY STAR Level 2 connected EV charger, not $500 for ChargePoint Home Flex or $150 for other Level 2 chargers.",
+          "The official Princeton EV charger form is rendered through Google Drive as an image rather than parsed text; a human source review should confirm the visual transcription and update the measure catalog before enabling user-facing totals.",
+          "The existing computed estimate overstates the current Princeton amount and should remain excluded until the EV charger catalog and label are replaced with the Princeton-specific 2026 row."
+        ],
+        "confidenceReasonCodes": [
+          "program_changed_official_princeton_rate_row_differs",
+          "current_catalog_amount_overstates_rebate",
+          "official_source_visual_not_text_parsed",
+          "measure_catalog_update_required_before_default_inclusion",
+          "source_confidence_high_official_princeton_smmpa_page",
+          "estimate_confidence_low_existing_estimate_invalid"
+        ]
+      },
+      "verifiedMeasureRows": [
+        {
+          "measureName": "ENERGY STAR Level 2 connected EV charger",
+          "amountCents": 1500,
+          "rateFormula": "$15 per new qualifying ENERGY STAR AC-output Level 2 EV charger with connected-capable functionality; charger must be fully installed and operational before rebate application.",
+          "capCents": null,
+          "eligibilityNotes": "Customer must have a valid Princeton Public Utilities electric account, must own, lease, or have ordered a battery EV or plug-in hybrid EV, and must submit proof of charger purchase or installed charger nameplate/model/serial information. Used, refurbished, manufacturer-provided, warranty-replacement, and repair/replacement-service chargers do not qualify. Application terms state the program is limited-funded, first-come/first-served, and may be modified or discontinued."
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://princetonutilities.com/",
+        "https://smmpa.com/members/princeton",
+        "https://www.saveenergyinprinceton.com/",
+        "https://drive.google.com/file/d/1UbqEELc7LmYy5gYgOOCVcL_DGnqDhF9T/view?usp=drive_link",
+        "https://www.brightenergysolutions.com/electric-vehicles",
+        "https://bes.chooseev.com/promos/",
+        "https://www.alputilities.com/wp-content/uploads/2026-EV-Charger-Rebate-Form.pdf",
+        "https://programs.dsireusa.org/system/program/detail/2555"
+      ],
+      "evidenceText": "Input target was the computed-but-suppressed RetroFi package. Princeton Public Utilities links its Energy Efficiency Rebates navigation to SMMPA, and the SMMPA Princeton page lists Residential Rebates for 2026 including an ENERGY STAR EV Chargers Form. ([Princeton Utilities][1]) The official Princeton Google Drive form image is titled '2026 ENERGY STAR Level 2 Connected EV Chargers Rebate Application' and states 'REBATE = $15 per Charger'; it also lists eligibility requiring a new ENERGY STAR qualified AC-output Level 2 EV charger with connected-capable functionality, full installation/operation before applying, and EV ownership/lease/order. Bright Energy Solutions pages still publish $500 for a Wi-Fi-enabled ChargePoint Home Flex connected to the local utility and $150 for a different qualifying Level 2 charger, and an MRES/Bright 2026 form contains the same $500/$150 rows, but those amounts do not match the current Princeton-specific 2026 EV charger form. ([Bright Energy Solutions][2])",
+      "reasoningNotes": "Do not remove suppression by simply trusting the existing Bright Energy Solutions measure catalog. The current official Princeton/SMMPA EV charger form indicates Princeton's 2026 row is $15 per qualifying ENERGY STAR Level 2 connected EV charger. The existing RetroFi effect label and amount range of 15000-50000 cents appear to be sourced from Bright Energy Solutions/MRES and are not valid for Princeton's current official form. Because the official Princeton row is image-rendered from Google Drive and the current catalog is materially wrong, keep human review and default exclusion until the Princeton-specific row is patched and validated.",
+      "continueFromOpportunityId": null,
+      "sourceFile": "output_003_computed_suppressed_source_repair.md"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1581",
+      "effectId": "effect_one_time_savings_1_f67a6e3d70014316",
+      "programName": "Xcel Energy - Residential Energy Efficiency Rebate Programs",
+      "researchStatus": "keep_human_review",
+      "sourceConfidence": "medium",
+      "estimateConfidence": "medium",
+      "recommendedPatch": {
+        "includedInUserFacingTotalDefault": false,
+        "humanReviewRequired": true,
+        "humanReviewReasons": [
+          "Do not remove the current source/human-review blocker yet. The $600 insulation-and-air-sealing plus heat-pump combo bonus is corroborated, but the primary Xcel Colorado heat-pump and insulation pages were not text-readable in this environment and the official rebate application is dynamic/bot-gated.",
+          "The current-looking 2025-2026 Xcel-branded rebate summary that verifies the $600 bonus and broader heat-pump rate table was found on a contractor-hosted PDF URL, not on an official xcelenergy.com PDF URL.",
+          "Checked sources conflict on the invoice-timing rule for the $600 combo bonus: current store/summary sources say within two years, while older official Xcel/Partners in Energy materials still say within six months.",
+          "Because the effect’s broader measure catalog includes heat-pump and cooling equipment rows, the original dynamic-HVAC-source review reason is not fully resolved for default user-facing inclusion."
+        ],
+        "confidenceReasonCodes": [
+          "current_bonus_amount_corrobored_by_xcel_energy_co_store",
+          "current_xcel_branded_summary_found_on_non_official_host",
+          "primary_xcel_colorado_rebate_pages_dynamic_css_error",
+          "official_rebate_application_bot_or_not",
+          "timing_terms_conflict_six_months_vs_two_years",
+          "heat_pump_cooling_catalog_rows_still_require_source_review",
+          "do_not_include_default_until_official_current_rate_table_accessible"
+        ]
+      },
+      "verifiedMeasureRows": [
+        {
+          "measureName": "Insulation and air sealing plus qualifying space-heating heat pump combo bonus",
+          "amountCents": 60000,
+          "rateFormula": "Flat $600 bonus when Xcel Energy rebate-qualifying insulation and air sealing measures are installed before a Xcel Energy rebate-qualifying space-heating heat pump within the applicable invoice-date window. Current Xcel Energy CO Store and 2025-2026 Xcel-branded summary sources state a two-year window; older official sources state six months, so manual review remains required before default inclusion.",
+          "capCents": null,
+          "eligibilityNotes": "Colorado residential Xcel Energy customer; qualifying insulation and air-sealing measures; qualifying space-heating heat pump; participating contractor and invoice/specification documentation required; program funding and terms subject to change."
+        }
+      ],
+      "sourceUrlsChecked": [
+        "https://co.my.xcelenergy.com/s/residential/home-rebates",
+        "https://co.my.xcelenergy.com/s/residential/heating-cooling",
+        "https://co.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps",
+        "https://co.my.xcelenergy.com/s/residential/home-rebates/insulation-air-sealing",
+        "https://www.poweredbyefi.org/xcelenergyco/energy-saving-home-rebates/insulation-and-air-sealing-rebates.html",
+        "https://www.poweredbyefi.org/xcelenergyco/energy-saving-home-rebates/heat-pump-rebate-information.html",
+        "https://www.xcelenergy.com/digital_application",
+        "https://xcelenergy.my.salesforce-sites.com/RebateApplication",
+        "https://www.xcelenergy.com/staticfiles/xe-responsive/Working%20With%20Us/Trade%20Partners/24-04-506_CO-Res_HVAC_OpenPrgms_app.pdf",
+        "https://royalcomforths.com/wp-content/uploads/CO_Res_Rebate_Summary_Information_Sheet-1.pdf",
+        "https://xcelenergycommunities.com/iraguideresidentsco",
+        "https://www.xcelenergy.com/company/rates_and_regulations/filings/clean_heat_plan"
+      ],
+      "evidenceText": "The target and decision-rule context came from the uploaded prompt. The Xcel Energy CO Store/Franklin Energy insulation page states that the insulation and air sealing $600 bonus applies when Xcel rebate-qualifying insulation and air sealing measures are installed before a qualifying space-heating heat pump within two years, based on invoice dates; the related heat-pump page repeats the $600 bonus and lists Colorado residential customer, participating contractor, and AHRI documentation requirements. ([Powered by EFI][1]) ([Powered by EFI][2]) A 2025-2026 Xcel-branded rebate summary effective Nov. 16, 2025 also lists the $600 bonus within two years and shows current heat-pump/weatherization rows, but that PDF was located on a contractor domain rather than an official Xcel-hosted URL. The primary Xcel Colorado heat-pump and insulation pages rendered CSS-error shells, the official digital application requires invoices/specification documents, and the Salesforce rebate application rendered Bot-or-Not. ([Xcel Energy][3]) ([Xcel Energy][4]) ([Xcel Energy][5]) ([Xcel Energy][6]) Older official Xcel/Partners in Energy materials still use a six-month timing rule for the same $600 bonus, which conflicts with the two-year rule in the current store/summary evidence. ([Xcel Energy Communities][7])",
+      "reasoningNotes": "The $600 computed amount is plausible and supported for the specific combo-bonus row, but it should not be promoted into user-facing totals by default because the current official rate table was not fully accessible on Xcel’s primary site, the best complete 2025-2026 rate summary was not found on an official Xcel URL, and the invoice-window rule is inconsistent across checked Xcel-related sources. Keep human review until an official, current Xcel-hosted source or text-readable application confirms the $600 row and timing rule.",
+      "sourceFile": "output_004_computed_suppressed_source_repair.md"
+    }
+  ]
+}

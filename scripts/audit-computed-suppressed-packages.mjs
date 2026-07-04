@@ -68,6 +68,8 @@ function collectComputedButSuppressedRows(testCases, packagesById) {
               confidenceOverall: packageEffect?.confidence?.overall ?? null,
               confidenceReasonCodes: packageEffect?.confidence?.reason_codes || [],
               humanReviewReasons: packageEffect?.repair_metadata?.human_review_reasons || [],
+              computedSuppressedSourceRepairStatus:
+                packageEffect?.repair_metadata?.computed_suppressed_source_repair?.research_status || null,
               label: packageEffect?.label || effectSummary.label || effectSummary.effectId
             },
             defaultedInputs: (summary.defaultedInputs || []).map(compactResolvedInput),
@@ -102,6 +104,7 @@ function buildUniqueTargets(rows) {
         effectConfidenceLabel: confidenceLabel(row.effect.confidenceOverall),
         confidenceReasonCodes: row.effect.confidenceReasonCodes,
         humanReviewReasons: row.effect.humanReviewReasons,
+        computedSuppressedSourceRepairStatus: row.effect.computedSuppressedSourceRepairStatus,
         label: row.effect.label,
         evaluationCount: 0,
         runtimeInclusionStatusCounts: {},
@@ -161,6 +164,27 @@ function classifyTarget(target) {
   const deterministicMethod = !["expected_value", "custom_quote", "zero_when_not_applicable"].includes(method);
   const directMonetaryClass = ["rebate", "reimbursement", "cash_grant"].includes(cashClass);
   const directMonetaryEffect = ["one_time_savings", "recurring_savings"].includes(effectType);
+  const sourceRepairStatus = target.computedSuppressedSourceRepairStatus;
+
+  if (sourceRepairStatus === "program_changed") {
+    return {
+      bucket: "needs_package_recode",
+      action:
+        "Do not include. GPT Pro found that current official source rows differ from the existing package; rebuild or split the package effect before reconsidering default inclusion.",
+      needsGptPro: false,
+      reasons: ["computed-suppressed source repair found program_changed"]
+    };
+  }
+
+  if (sourceRepairStatus === "keep_human_review") {
+    return {
+      bucket: "keep_human_review_source_blocked",
+      action:
+        "Keep suppressed. GPT Pro found partial support but unresolved official-source access or term conflicts remain.",
+      needsGptPro: false,
+      reasons: ["computed-suppressed source repair kept human review"]
+    };
+  }
 
   if (target.humanReviewRequired) reasons.push("effect is marked human_review_required");
   if (!mediumOrHighConfidence) reasons.push(`effect confidence is ${target.effectConfidenceLabel}`);
@@ -254,6 +278,9 @@ function buildReport({ auditRows, recommendations }) {
 function buildMarkdown(report) {
   const ready = report.targets.filter((target) => target.auditRecommendation.bucket === "ready_for_default_inclusion");
   const needsRepair = report.targets.filter((target) => target.auditRecommendation.bucket === "needs_source_repair_or_review");
+  const needsRecode = report.targets.filter((target) =>
+    ["needs_package_recode", "keep_human_review_source_blocked"].includes(target.auditRecommendation.bucket)
+  );
   const policy = report.targets.filter((target) =>
     ["needs_product_policy", "needs_recurring_savings_policy", "keep_suppressed_grant_ev", "manual_audit_needed"].includes(
       target.auditRecommendation.bucket
@@ -293,6 +320,10 @@ function buildMarkdown(report) {
   lines.push("");
   lines.push(targetTable(needsRepair));
   lines.push("");
+  lines.push("## Needs Package Recode Or Source Access");
+  lines.push("");
+  lines.push(targetTable(needsRecode));
+  lines.push("");
   lines.push("## Policy / Intentional Suppression");
   lines.push("");
   lines.push(targetTable(policy));
@@ -306,7 +337,10 @@ function buildMarkdown(report) {
     "- `ready_for_default_inclusion` means the audit found no human-review, low-confidence, expected-value, financing, or recurring/tariff blocker. It does not mean user inputs are perfect; many test-case amounts still use synthetic defaults that the real UI must collect or let the user override."
   );
   lines.push(
-    "- `needs_source_repair_or_review` is the only bucket that should go to GPT Pro next. Those targets have explicit human-review flags or confidence blockers."
+    "- `needs_source_repair_or_review` is the only bucket that should go to GPT Pro next. If it is empty, GPT Pro has no immediate computed-suppressed source-repair batch left."
+  );
+  lines.push(
+    "- `needs_package_recode` means GPT Pro found that the current package rows no longer match official source rows; fix the package/effect structure before promoting."
   );
   lines.push(
     "- `needs_product_policy`, `needs_recurring_savings_policy`, and `keep_suppressed_grant_ev` should stay out of upfront totals until the relevant product/calculation path is intentionally designed."
