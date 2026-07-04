@@ -231,10 +231,10 @@ export function buildV2ResolvedRuntimeContext(ctx = {}, packages = []) {
   addGrantProfileInputs({ ctx, packages, add });
   addCostAliases({ ctx, answers, add });
   addQuantityAliases({ ctx, answers, add });
-  addEnergyAliases({ ctx, answers, add });
-  addOperationalAliases({ ctx, answers, add });
   addTaxGeographyInputs({ ctx, packages, answers, add, resolvedInputs });
   addTaxProfileInputs({ ctx, packages, add });
+  addEnergyAliases({ ctx, answers, add });
+  addOperationalAliases({ ctx, answers, add });
   addMeasureSelections({ ctx, packages, answers, add });
   addSyntheticTestCaseDefaults({ ctx, packages, answers, add });
 

@@ -251698,5 +251698,859 @@
     "grantProfileDataImportedAt": "2026-07-03T22:39:56.991Z",
     "grantProfileDataSchemaVersion": "retrofi_test_case_grant_profile_repair.v1",
     "grantProfileDataSourceArtifact": "data/test_case_grant_profile_repairs_gpt_pro_2026-07-03.json"
+  },
+  {
+    "sampleUserId": "narragansett-organics-recovery-ri",
+    "description": "Synthetic privately owned organics-processing and food-waste aggregation facility in the Quonset industrial area, testing a behind-the-meter biogas CHP system that uses anaerobic-digester gas from source-separated commercial food residuals.",
+    "companyName": "Narragansett Organics Recovery LLC",
+    "website": null,
+    "organizationType": "Private taxable commercial waste and organics-processing company",
+    "organizationSize": "Single Rhode Island facility; approximately 42 employees; regional commercial food-waste and residuals customers",
+    "siteAddress": "125 Circuit Drive, North Kingstown, RI 02852",
+    "siteGeography": {
+      "stateCode": "RI",
+      "countyName": "Washington County",
+      "placeName": "North Kingstown",
+      "zip5": "02852",
+      "status": "gpt_pro_synthetic_fixture",
+      "provider": "gpt_pro"
+    },
+    "electricUtilityProvider": "Rhode Island Energy",
+    "gasUtilityProvider": "Rhode Island Energy",
+    "ownershipStatus": "Own",
+    "buildingType": "Industrial organics receiving, preprocessing, and utility-yard facility",
+    "squareFootage": 42000,
+    "primaryActivityText": "Receives packaged and unpackaged food residuals, fats/oils/grease, and food-processing byproducts; preprocesses material for anaerobic digestion; proposes to use onsite biogas for a small combined-heat-and-power generator serving process loads.",
+    "naicsCodes": [
+      "562219",
+      "562920",
+      "221117"
+    ],
+    "publicSourceNotes": "The named company, parcel, address, tax documents, and project facts are synthetic. Public context was checked only to make the Rhode Island industrial setting plausible: Quonset Business Park is publicly described as a major commercial and industrial park in North Kingstown with utility infrastructure, and North Kingstown publishes 2026 commercial and business personal property tax rates.",
+    "notes": "Designed to exercise RetroFi opportunity SOURCE_DSIRE:dsire_program_id:22798 for a taxable commercial Rhode Island biogas energy system. The fixture intentionally includes usable calculation inputs but keeps assessor confirmation pending so any estimated savings remain internal-only and excluded from default customer-facing totals.",
+    "project": {
+      "stage": "quoted"
+    },
+    "fullName": "Sample User",
+    "email": "narragansett-organics-recovery-ri@example.com",
+    "phone": "555-0261",
+    "siteTaxProfile": {
+      "schemaVersion": "retrofi_site_tax_profile_synthetic_v1",
+      "generatedAt": "2026-07-04T00:00:00.000Z",
+      "sourceArtifact": "data/ri_renewable_tax_valuation_test_case_gpt_pro_2026-07-04.json",
+      "sampleUserId": "narragansett-organics-recovery-ri",
+      "syntheticNotice": "Synthetic estimated tax profile for test fixtures; not actual tax documents.",
+      "uploadedFileCount": 5,
+      "processedFileCount": 5,
+      "taxDocumentTypes": [
+        "property_tax_bill",
+        "assessor_notice",
+        "interconnection_agreement",
+        "engineering_summary",
+        "tax_review_memo"
+      ],
+      "taxYears": [
+        "2026"
+      ],
+      "jurisdictions": [
+        "North Kingstown, RI",
+        "Rhode Island"
+      ],
+      "taxProfileFactCount": 18,
+      "opportunitySpecificTaxInputCount": 15,
+      "missingOrReviewInputCount": 7,
+      "sourceUrlsChecked": [
+        "[https://webserver.rilegislature.gov/PublicLaws/law25/law25398.htm](https://webserver.rilegislature.gov/PublicLaws/law25/law25398.htm)",
+        "[https://www.northkingstownri.gov/865/TAX-RATES](https://www.northkingstownri.gov/865/TAX-RATES)",
+        "[https://www.northkingstownri.gov/810/BUSINESS-PERSONAL-PROPERTY](https://www.northkingstownri.gov/810/BUSINESS-PERSONAL-PROPERTY)",
+        "[https://quonset.com/](https://quonset.com/)",
+        "[https://quonset.com/about-qdc/](https://quonset.com/about-qdc/)",
+        "[https://rules.sos.ri.gov/Regulations/part/880-00-00-4?reg_id=11944](https://rules.sos.ri.gov/Regulations/part/880-00-00-4?reg_id=11944)"
+      ],
+      "reasoningNotes": "Fixture created from the uploaded prompt requirements.  Public context used only for plausibility: Quonset Business Park is described as a major commercial and industrial park in North Kingstown with utility infrastructure, North Kingstown publishes 2026 commercial and business personal property tax rates, and Rhode Island Public Law 25-398 references the $5.00/kW AC tangible-property and $3.50/kW AC real-property valuation framework. ([Quonset Development Corporation][1]) ([North Kingstown][2]) ([Rhode Island General Assembly][3]) All company, parcel, tax-bill, interconnection, project-cost, counterfactual, and assessor-review facts are synthetic. The profile intentionally exercises a positive internal calculation path while keeping the opportunity gated to assessor/accountant review and excluding the estimate from customer-facing savings totals."
+    },
+    "uploadedTaxFiles": [
+      {
+        "fileId": "ri-nor-fy2026-property-tax-bill",
+        "originalFilename": "synthetic_north_kingstown_fy2026_property_tax_bill_narragansett_organics.pdf",
+        "taxDocumentType": "property_tax_bill",
+        "taxYear": 2026,
+        "jurisdiction": "North Kingstown, RI",
+        "issuingAuthority": "Town of North Kingstown Tax Assessor and Collector - synthetic fixture",
+        "syntheticNotice": "Synthetic estimated tax profile for test fixtures; not an actual tax document.",
+        "processingStatus": "processed",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "siteId": "intake_sample_narragansett-organics-recovery-ri:primary_site",
+        "uploadedAt": "2026-07-04T00:00:00.000Z",
+        "processedAt": "2026-07-04T00:00:00.000Z"
+      },
+      {
+        "fileId": "ri-nor-fy2026-assessor-notice",
+        "originalFilename": "synthetic_assessor_notice_incremental_renewable_energy_property_profile.pdf",
+        "taxDocumentType": "assessor_notice",
+        "taxYear": 2026,
+        "jurisdiction": "North Kingstown, RI",
+        "issuingAuthority": "Town of North Kingstown Tax Assessor - synthetic pending-review notice",
+        "syntheticNotice": "Synthetic estimated tax profile for test fixtures; not an actual tax document.",
+        "processingStatus": "processed",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "siteId": "intake_sample_narragansett-organics-recovery-ri:primary_site",
+        "uploadedAt": "2026-07-04T00:00:00.000Z",
+        "processedAt": "2026-07-04T00:00:00.000Z"
+      },
+      {
+        "fileId": "ri-nor-utility-interconnection-summary",
+        "originalFilename": "synthetic_rhode_island_energy_dg_interconnection_application_summary_375kw_biogas.pdf",
+        "taxDocumentType": "interconnection_agreement",
+        "taxYear": 2026,
+        "jurisdiction": "Rhode Island",
+        "issuingAuthority": "Rhode Island Energy distributed generation interconnection team - synthetic fixture",
+        "syntheticNotice": "Synthetic estimated tax profile for test fixtures; not an actual tax document.",
+        "processingStatus": "processed",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "siteId": "intake_sample_narragansett-organics-recovery-ri:primary_site",
+        "uploadedAt": "2026-07-04T00:00:00.000Z",
+        "processedAt": "2026-07-04T00:00:00.000Z"
+      },
+      {
+        "fileId": "ri-nor-biogas-engineering-summary",
+        "originalFilename": "synthetic_biogas_chp_engineering_quote_375kw_ac_narragansett_organics.pdf",
+        "taxDocumentType": "engineering_summary",
+        "taxYear": 2026,
+        "jurisdiction": "North Kingstown, RI",
+        "issuingAuthority": "Atlantic Anaerobic Systems LLC - synthetic EPC quote",
+        "syntheticNotice": "Synthetic estimated tax profile for test fixtures; not an actual tax document.",
+        "processingStatus": "processed",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "siteId": "intake_sample_narragansett-organics-recovery-ri:primary_site",
+        "uploadedAt": "2026-07-04T00:00:00.000Z",
+        "processedAt": "2026-07-04T00:00:00.000Z"
+      },
+      {
+        "fileId": "ri-nor-tax-review-memo",
+        "originalFilename": "synthetic_accountant_assessor_review_memo_ri_renewable_energy_tax_valuation.pdf",
+        "taxDocumentType": "tax_review_memo",
+        "taxYear": 2026,
+        "jurisdiction": "North Kingstown, RI",
+        "issuingAuthority": "RetroFi tax-review workflow memo - synthetic pending-review item",
+        "syntheticNotice": "Synthetic estimated tax profile for test fixtures; not an actual tax document.",
+        "processingStatus": "processed",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "siteId": "intake_sample_narragansett-organics-recovery-ri:primary_site",
+        "uploadedAt": "2026-07-04T00:00:00.000Z",
+        "processedAt": "2026-07-04T00:00:00.000Z"
+      }
+    ],
+    "taxProfileFacts": [
+      {
+        "inputKey": "state_code",
+        "value": "RI",
+        "sourceFileId": "ri-nor-fy2026-property-tax-bill",
+        "sourceStrategy": "derived_from_address",
+        "uiPlacement": "organization_profile",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "low",
+        "notes": "Derived from the synthetic North Kingstown site address."
+      },
+      {
+        "inputKey": "site_address",
+        "value": "125 Circuit Drive, North Kingstown, RI 02852",
+        "sourceFileId": "ri-nor-fy2026-property-tax-bill",
+        "sourceStrategy": "synthetic_tax_document",
+        "uiPlacement": "organization_profile",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "medium",
+        "notes": "Synthetic industrial address selected to resemble a plausible Quonset-area facility; not asserted as an actual parcel."
+      },
+      {
+        "inputKey": "municipality",
+        "value": "North Kingstown",
+        "sourceFileId": "ri-nor-fy2026-property-tax-bill",
+        "sourceStrategy": "derived_from_address",
+        "uiPlacement": "property_tax_profile",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "medium",
+        "notes": "Municipality drives local assessor review and tax-rate context."
+      },
+      {
+        "inputKey": "county",
+        "value": "Washington County",
+        "sourceFileId": "ri-nor-fy2026-property-tax-bill",
+        "sourceStrategy": "derived_from_address",
+        "uiPlacement": "organization_profile",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "low",
+        "notes": "County is included for address normalization and fixture coverage."
+      },
+      {
+        "inputKey": "ac_nameplate_capacity_kw",
+        "value": 375,
+        "sourceFileId": "ri-nor-biogas-engineering-summary",
+        "sourceStrategy": "synthetic_engineering_summary",
+        "uiPlacement": "retrofit_details",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "high",
+        "notes": "Synthetic engineering summary lists two 187.5 kW AC generator modules for a combined AC nameplate capacity of 375 kW."
+      },
+      {
+        "inputKey": "renewable_resource_type",
+        "value": "biogas from anaerobic digestion of source-separated food residuals and fats/oils/grease",
+        "sourceFileId": "ri-nor-biogas-engineering-summary",
+        "sourceStrategy": "synthetic_engineering_summary",
+        "uiPlacement": "retrofit_details",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "high",
+        "notes": "Supports matching to biomass_biogas_energy_system while preserving a review gate for statutory eligibility."
+      },
+      {
+        "inputKey": "system_use_and_tax_classification",
+        "value": "Behind-the-meter commercial renewable energy system at a taxable industrial organics-processing facility; generator, gas-conditioning skid, switchgear, and controls treated as potentially tangible property; equipment pad, conduit trenching, and site utility improvements treated as potentially real-property-related pending assessor review.",
+        "sourceFileId": "ri-nor-tax-review-memo",
+        "sourceStrategy": "synthetic_assessor_review",
+        "uiPlacement": "property_tax_profile",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "high",
+        "notes": "The value intentionally exercises both tangible_property_applicable and real_property_applicable branches, but it is not assessor-confirmed."
+      },
+      {
+        "inputKey": "municipal_exemption_or_waiver_status",
+        "value": "none_documented_synthetic_pending_review",
+        "sourceFileId": "ri-nor-tax-review-memo",
+        "sourceStrategy": "synthetic_assessor_review",
+        "uiPlacement": "property_tax_profile",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "high",
+        "notes": "Synthetic file does not include a municipal PILOT, negotiated tax agreement, exemption certificate, or waiver. RetroFi should require assessor/accountant confirmation."
+      },
+      {
+        "inputKey": "tangible_property_applicable",
+        "value": true,
+        "sourceFileId": "ri-nor-tax-review-memo",
+        "sourceStrategy": "synthetic_assessor_review",
+        "uiPlacement": "tax_profile",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "high",
+        "notes": "Fixture assumption to exercise the $5.00/kW AC tangible-property branch. Must not be treated as confirmed."
+      },
+      {
+        "inputKey": "real_property_applicable",
+        "value": true,
+        "sourceFileId": "ri-nor-tax-review-memo",
+        "sourceStrategy": "synthetic_assessor_review",
+        "uiPlacement": "tax_profile",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "high",
+        "notes": "Fixture assumption to exercise the $3.50/kW AC real-property branch. Must not be treated as confirmed."
+      },
+      {
+        "inputKey": "interconnection_agreement_date",
+        "value": "2026-03-18",
+        "sourceFileId": "ri-nor-utility-interconnection-summary",
+        "sourceStrategy": "synthetic_tax_document",
+        "uiPlacement": "retrofit_details",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "medium",
+        "notes": "Synthetic date from a distributed-generation interconnection application summary; executed final agreement remains a review item."
+      },
+      {
+        "inputKey": "interconnection_and_program_documents",
+        "value": "Synthetic Rhode Island Energy distributed-generation interconnection application summary for a 375 kW AC biogas CHP system; includes single-line diagram reference, protective relay note, export-limited operating mode, and pending witness-test/permission-to-operate checklist. No cash grant or rebate approval is included.",
+        "sourceFileId": "ri-nor-utility-interconnection-summary",
+        "sourceStrategy": "synthetic_tax_document",
+        "uiPlacement": "retrofit_details",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "medium",
+        "notes": "Useful for testing document ingestion and retrofit eligibility without implying final utility approval."
+      },
+      {
+        "inputKey": "counterfactual_ordinary_annual_property_tax_cents",
+        "value": 1413270,
+        "sourceFileId": "ri-nor-fy2026-assessor-notice",
+        "sourceStrategy": "synthetic_tax_document",
+        "uiPlacement": "admin_only",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "high",
+        "notes": "Synthetic counterfactual assumes $480,000 of incremental commercial real-property assessment at $14.94 per $1,000 and $390,000 of depreciated business personal property at $17.85 per $1,000, for $14,132.70 ordinary annual tax before applying the Rhode Island renewable-energy valuation workflow. This must be verified by the assessor or tax professional."
+      },
+      {
+        "inputKey": "local_assessor_confirmation",
+        "value": "synthetic_pending_review",
+        "sourceFileId": "ri-nor-tax-review-memo",
+        "sourceStrategy": "synthetic_assessor_review",
+        "uiPlacement": "property_tax_profile",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "high",
+        "notes": "No official assessor confirmation is claimed. The workflow should remain gated."
+      },
+      {
+        "inputKey": "farmland_forest_open_space_reclassification_status",
+        "value": "not_applicable_non_current_use_industrial_site",
+        "sourceFileId": "ri-nor-tax-review-memo",
+        "sourceStrategy": "synthetic_assessor_review",
+        "uiPlacement": "property_tax_profile",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "medium",
+        "notes": "Synthetic site is modeled as an industrial parcel, not farmland, forest, or open-space current-use land. User or assessor confirmation is still required."
+      },
+      {
+        "inputKey": "property_tax_bill_or_assessor_notice",
+        "value": "Synthetic FY2026 North Kingstown property-tax bill and assessor notice are present, but the renewable-energy statutory valuation has not been confirmed by the assessor.",
+        "sourceFileId": "ri-nor-fy2026-property-tax-bill",
+        "sourceStrategy": "synthetic_tax_document",
+        "uiPlacement": "property_tax_profile",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "high",
+        "notes": "Document fact added to test property-tax document classification and review gating."
+      },
+      {
+        "inputKey": "project_quote_or_engineering_summary",
+        "value": "Synthetic EPC quote describes a 375 kW AC biogas CHP system with generator modules, gas conditioning, heat recovery, switchgear, controls, interconnection equipment, and civil pad work.",
+        "sourceFileId": "ri-nor-biogas-engineering-summary",
+        "sourceStrategy": "synthetic_engineering_summary",
+        "uiPlacement": "retrofit_details",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "high",
+        "notes": "Document fact added to test capacity extraction and renewable-resource classification."
+      },
+      {
+        "inputKey": "assessor_tax_review_memo_status",
+        "value": "review_required_before_customer_facing_savings",
+        "sourceFileId": "ri-nor-tax-review-memo",
+        "sourceStrategy": "synthetic_assessor_review",
+        "uiPlacement": "admin_only",
+        "userOverrideAllowed": true,
+        "defaultIsSynthetic": true,
+        "confidenceImpactUntilConfirmed": "high",
+        "notes": "The synthetic review memo flags assessor/accountant confirmation as missing and should suppress user-facing savings totals."
+      }
+    ],
+    "taxExtractedValues": [
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_001",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-fy2026-property-tax-bill",
+        "fieldId": "state_code",
+        "fieldDisplayName": "state_code",
+        "value": "RI",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "low",
+        "sourceType": "derived_from_address",
+        "sourceText": "Derived from the synthetic North Kingstown site address.",
+        "sourcePath": "synthetic://ri-nor-fy2026-property-tax-bill#/fields/state_code"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_002",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-fy2026-property-tax-bill",
+        "fieldId": "site_address",
+        "fieldDisplayName": "site_address",
+        "value": "125 Circuit Drive, North Kingstown, RI 02852",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "medium",
+        "sourceType": "synthetic_tax_document",
+        "sourceText": "Synthetic industrial address selected to resemble a plausible Quonset-area facility; not asserted as an actual parcel.",
+        "sourcePath": "synthetic://ri-nor-fy2026-property-tax-bill#/fields/site_address"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_003",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-fy2026-property-tax-bill",
+        "fieldId": "municipality",
+        "fieldDisplayName": "municipality",
+        "value": "North Kingstown",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "medium",
+        "sourceType": "derived_from_address",
+        "sourceText": "Municipality drives local assessor review and tax-rate context.",
+        "sourcePath": "synthetic://ri-nor-fy2026-property-tax-bill#/fields/municipality"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_004",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-fy2026-property-tax-bill",
+        "fieldId": "county",
+        "fieldDisplayName": "county",
+        "value": "Washington County",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "low",
+        "sourceType": "derived_from_address",
+        "sourceText": "County is included for address normalization and fixture coverage.",
+        "sourcePath": "synthetic://ri-nor-fy2026-property-tax-bill#/fields/county"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_005",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-biogas-engineering-summary",
+        "fieldId": "ac_nameplate_capacity_kw",
+        "fieldDisplayName": "ac_nameplate_capacity_kw",
+        "value": 375,
+        "unit": "number",
+        "taxYear": 2026,
+        "confidence": "high",
+        "sourceType": "synthetic_engineering_summary",
+        "sourceText": "Synthetic engineering summary lists two 187.5 kW AC generator modules for a combined AC nameplate capacity of 375 kW.",
+        "sourcePath": "synthetic://ri-nor-biogas-engineering-summary#/fields/ac_nameplate_capacity_kw"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_006",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-biogas-engineering-summary",
+        "fieldId": "renewable_resource_type",
+        "fieldDisplayName": "renewable_resource_type",
+        "value": "biogas from anaerobic digestion of source-separated food residuals and fats/oils/grease",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "high",
+        "sourceType": "synthetic_engineering_summary",
+        "sourceText": "Supports matching to biomass_biogas_energy_system while preserving a review gate for statutory eligibility.",
+        "sourcePath": "synthetic://ri-nor-biogas-engineering-summary#/fields/renewable_resource_type"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_007",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-tax-review-memo",
+        "fieldId": "system_use_and_tax_classification",
+        "fieldDisplayName": "system_use_and_tax_classification",
+        "value": "Behind-the-meter commercial renewable energy system at a taxable industrial organics-processing facility; generator, gas-conditioning skid, switchgear, and controls treated as potentially tangible property; equipment pad, conduit trenching, and site utility improvements treated as potentially real-property-related pending assessor review.",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "high",
+        "sourceType": "synthetic_assessor_review",
+        "sourceText": "The value intentionally exercises both tangible_property_applicable and real_property_applicable branches, but it is not assessor-confirmed.",
+        "sourcePath": "synthetic://ri-nor-tax-review-memo#/fields/system_use_and_tax_classification"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_008",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-tax-review-memo",
+        "fieldId": "municipal_exemption_or_waiver_status",
+        "fieldDisplayName": "municipal_exemption_or_waiver_status",
+        "value": "none_documented_synthetic_pending_review",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "high",
+        "sourceType": "synthetic_assessor_review",
+        "sourceText": "Synthetic file does not include a municipal PILOT, negotiated tax agreement, exemption certificate, or waiver. RetroFi should require assessor/accountant confirmation.",
+        "sourcePath": "synthetic://ri-nor-tax-review-memo#/fields/municipal_exemption_or_waiver_status"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_009",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-tax-review-memo",
+        "fieldId": "tangible_property_applicable",
+        "fieldDisplayName": "tangible_property_applicable",
+        "value": true,
+        "unit": "boolean",
+        "taxYear": 2026,
+        "confidence": "high",
+        "sourceType": "synthetic_assessor_review",
+        "sourceText": "Fixture assumption to exercise the $5.00/kW AC tangible-property branch. Must not be treated as confirmed.",
+        "sourcePath": "synthetic://ri-nor-tax-review-memo#/fields/tangible_property_applicable"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_010",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-tax-review-memo",
+        "fieldId": "real_property_applicable",
+        "fieldDisplayName": "real_property_applicable",
+        "value": true,
+        "unit": "boolean",
+        "taxYear": 2026,
+        "confidence": "high",
+        "sourceType": "synthetic_assessor_review",
+        "sourceText": "Fixture assumption to exercise the $3.50/kW AC real-property branch. Must not be treated as confirmed.",
+        "sourcePath": "synthetic://ri-nor-tax-review-memo#/fields/real_property_applicable"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_011",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-utility-interconnection-summary",
+        "fieldId": "interconnection_agreement_date",
+        "fieldDisplayName": "interconnection_agreement_date",
+        "value": "2026-03-18",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "medium",
+        "sourceType": "synthetic_tax_document",
+        "sourceText": "Synthetic date from a distributed-generation interconnection application summary; executed final agreement remains a review item.",
+        "sourcePath": "synthetic://ri-nor-utility-interconnection-summary#/fields/interconnection_agreement_date"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_012",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-utility-interconnection-summary",
+        "fieldId": "interconnection_and_program_documents",
+        "fieldDisplayName": "interconnection_and_program_documents",
+        "value": "Synthetic Rhode Island Energy distributed-generation interconnection application summary for a 375 kW AC biogas CHP system; includes single-line diagram reference, protective relay note, export-limited operating mode, and pending witness-test/permission-to-operate checklist. No cash grant or rebate approval is included.",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "medium",
+        "sourceType": "synthetic_tax_document",
+        "sourceText": "Useful for testing document ingestion and retrofit eligibility without implying final utility approval.",
+        "sourcePath": "synthetic://ri-nor-utility-interconnection-summary#/fields/interconnection_and_program_documents"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_013",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-fy2026-assessor-notice",
+        "fieldId": "counterfactual_ordinary_annual_property_tax_cents",
+        "fieldDisplayName": "counterfactual_ordinary_annual_property_tax_cents",
+        "value": 1413270,
+        "unit": "cents",
+        "taxYear": 2026,
+        "confidence": "high",
+        "sourceType": "synthetic_tax_document",
+        "sourceText": "Synthetic counterfactual assumes $480,000 of incremental commercial real-property assessment at $14.94 per $1,000 and $390,000 of depreciated business personal property at $17.85 per $1,000, for $14,132.70 ordinary annual tax before applying the Rhode Island renewable-energy valuation workflow. This must be verified by the assessor or tax professional.",
+        "sourcePath": "synthetic://ri-nor-fy2026-assessor-notice#/fields/counterfactual_ordinary_annual_property_tax_cents"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_014",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-tax-review-memo",
+        "fieldId": "local_assessor_confirmation",
+        "fieldDisplayName": "local_assessor_confirmation",
+        "value": "synthetic_pending_review",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "high",
+        "sourceType": "synthetic_assessor_review",
+        "sourceText": "No official assessor confirmation is claimed. The workflow should remain gated.",
+        "sourcePath": "synthetic://ri-nor-tax-review-memo#/fields/local_assessor_confirmation"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_015",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-tax-review-memo",
+        "fieldId": "farmland_forest_open_space_reclassification_status",
+        "fieldDisplayName": "farmland_forest_open_space_reclassification_status",
+        "value": "not_applicable_non_current_use_industrial_site",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "medium",
+        "sourceType": "synthetic_assessor_review",
+        "sourceText": "Synthetic site is modeled as an industrial parcel, not farmland, forest, or open-space current-use land. User or assessor confirmation is still required.",
+        "sourcePath": "synthetic://ri-nor-tax-review-memo#/fields/farmland_forest_open_space_reclassification_status"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_016",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-fy2026-property-tax-bill",
+        "fieldId": "property_tax_bill_or_assessor_notice",
+        "fieldDisplayName": "property_tax_bill_or_assessor_notice",
+        "value": "Synthetic FY2026 North Kingstown property-tax bill and assessor notice are present, but the renewable-energy statutory valuation has not been confirmed by the assessor.",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "high",
+        "sourceType": "synthetic_tax_document",
+        "sourceText": "Document fact added to test property-tax document classification and review gating.",
+        "sourcePath": "synthetic://ri-nor-fy2026-property-tax-bill#/fields/property_tax_bill_or_assessor_notice"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_017",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-biogas-engineering-summary",
+        "fieldId": "project_quote_or_engineering_summary",
+        "fieldDisplayName": "project_quote_or_engineering_summary",
+        "value": "Synthetic EPC quote describes a 375 kW AC biogas CHP system with generator modules, gas conditioning, heat recovery, switchgear, controls, interconnection equipment, and civil pad work.",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "high",
+        "sourceType": "synthetic_engineering_summary",
+        "sourceText": "Document fact added to test capacity extraction and renewable-resource classification.",
+        "sourcePath": "synthetic://ri-nor-biogas-engineering-summary#/fields/project_quote_or_engineering_summary"
+      },
+      {
+        "extractedValueId": "ev_narragansett-organics-recovery-ri_018",
+        "clientIntakeId": "intake_sample_narragansett-organics-recovery-ri",
+        "fileId": "ri-nor-tax-review-memo",
+        "fieldId": "assessor_tax_review_memo_status",
+        "fieldDisplayName": "assessor_tax_review_memo_status",
+        "value": "review_required_before_customer_facing_savings",
+        "unit": "string",
+        "taxYear": 2026,
+        "confidence": "high",
+        "sourceType": "synthetic_assessor_review",
+        "sourceText": "The synthetic review memo flags assessor/accountant confirmation as missing and should suppress user-facing savings totals.",
+        "sourcePath": "synthetic://ri-nor-tax-review-memo#/fields/assessor_tax_review_memo_status"
+      }
+    ],
+    "taxOpportunitySpecificInputs": [
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "state_code",
+        "value": "RI",
+        "sourceFileId": "ri-nor-fy2026-property-tax-bill",
+        "estimateStatusIfUsed": "calculated_internal_only",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "Matches Rhode Island-specific property-tax valuation workflow."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "site_address",
+        "value": "125 Circuit Drive, North Kingstown, RI 02852",
+        "sourceFileId": "ri-nor-fy2026-property-tax-bill",
+        "estimateStatusIfUsed": "review_required",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "Synthetic site address should be user-confirmed before any jurisdiction-specific calculation is trusted."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "municipality",
+        "value": "North Kingstown",
+        "sourceFileId": "ri-nor-fy2026-property-tax-bill",
+        "estimateStatusIfUsed": "review_required",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "Municipality controls local assessor workflow and any local exemption, waiver, PILOT, or tax-agreement review."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "county",
+        "value": "Washington County",
+        "sourceFileId": "ri-nor-fy2026-property-tax-bill",
+        "estimateStatusIfUsed": "calculated_internal_only",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "County supports address context but is not sufficient to confirm eligibility."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "ac_nameplate_capacity_kw",
+        "value": 375,
+        "sourceFileId": "ri-nor-biogas-engineering-summary",
+        "estimateStatusIfUsed": "calculated_internal_only",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "Capacity may drive the internal statutory-tax calculation but must be confirmed against final engineering and interconnection documents."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "renewable_resource_type",
+        "value": "biogas from anaerobic digestion of source-separated food residuals and fats/oils/grease",
+        "sourceFileId": "ri-nor-biogas-engineering-summary",
+        "estimateStatusIfUsed": "review_required",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "Supports matching to biomass/biogas renewable-energy system; statutory treatment still requires review."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "system_use_and_tax_classification",
+        "value": "Behind-the-meter commercial renewable energy system at a taxable industrial organics-processing facility; tangible and real-property components both assumed applicable for fixture coverage pending review.",
+        "sourceFileId": "ri-nor-tax-review-memo",
+        "estimateStatusIfUsed": "review_required",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "Classification is central to the workflow and must be assessor/accountant-confirmed."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "municipal_exemption_or_waiver_status",
+        "value": "none_documented_synthetic_pending_review",
+        "sourceFileId": "ri-nor-tax-review-memo",
+        "estimateStatusIfUsed": "review_required",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "No local waiver or exemption is assumed beyond the modeled statutory valuation; confirm with local assessor."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "tangible_property_applicable",
+        "value": true,
+        "sourceFileId": "ri-nor-tax-review-memo",
+        "estimateStatusIfUsed": "calculated_internal_only",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "Fixture assumption exercises the tangible branch at 500 cents per kW AC."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "real_property_applicable",
+        "value": true,
+        "sourceFileId": "ri-nor-tax-review-memo",
+        "estimateStatusIfUsed": "calculated_internal_only",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "Fixture assumption exercises the real-property branch at 350 cents per kW AC."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "interconnection_agreement_date",
+        "value": "2026-03-18",
+        "sourceFileId": "ri-nor-utility-interconnection-summary",
+        "estimateStatusIfUsed": "review_required",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "Synthetic interconnection application date is useful for matching but not a final permission-to-operate confirmation."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "interconnection_and_program_documents",
+        "value": "Synthetic interconnection application summary, single-line diagram reference, export-limited control note, and pending witness-test checklist; no grant/rebate award included.",
+        "sourceFileId": "ri-nor-utility-interconnection-summary",
+        "estimateStatusIfUsed": "review_required",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "Document set supports eligibility review but should not create a user-facing dollar estimate."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "counterfactual_ordinary_annual_property_tax_cents",
+        "value": 1413270,
+        "sourceFileId": "ri-nor-fy2026-assessor-notice",
+        "estimateStatusIfUsed": "review_required",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "Synthetic counterfactual ordinary annual tax is required for internal savings math but cannot be trusted without a real tax bill, assessor notice, or accountant review."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "local_assessor_confirmation",
+        "value": "synthetic_pending_review",
+        "sourceFileId": "ri-nor-tax-review-memo",
+        "estimateStatusIfUsed": "review_required",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "Explicitly not confirmed. This should gate the estimate to assessor/tax review."
+      },
+      {
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "inputKey": "farmland_forest_open_space_reclassification_status",
+        "value": "not_applicable_non_current_use_industrial_site",
+        "sourceFileId": "ri-nor-tax-review-memo",
+        "estimateStatusIfUsed": "review_required",
+        "includeInUserFacingTotalBeforeConfirmation": false,
+        "notes": "Modeled as non-current-use industrial property; confirm no farmland, forest, or open-space reclassification issue exists."
+      }
+    ],
+    "taxMissingOrReviewInputs": [
+      {
+        "inputKey": "local_assessor_confirmation",
+        "label": "Local assessor confirmation of Rhode Island renewable-energy valuation treatment",
+        "reason": "No official North Kingstown assessor determination is included. The fixture only assumes treatment for test coverage.",
+        "sourceStrategy": "assessor_review",
+        "uiPlacement": "property_tax_profile"
+      },
+      {
+        "inputKey": "counterfactual_ordinary_annual_property_tax_cents",
+        "label": "Ordinary property-tax counterfactual",
+        "reason": "The counterfactual is a synthetic estimate based on assumed incremental real and personal property values. It must be replaced with actual tax-bill, assessor, or accountant-supported values.",
+        "sourceStrategy": "accountant_review",
+        "uiPlacement": "admin_only"
+      },
+      {
+        "inputKey": "tangible_property_applicable",
+        "label": "Tangible-property applicability",
+        "reason": "Generator modules, controls, switchgear, and gas-conditioning equipment are assumed to be in the tangible-property branch, but the assessor must confirm final classification.",
+        "sourceStrategy": "assessor_review",
+        "uiPlacement": "tax_profile"
+      },
+      {
+        "inputKey": "real_property_applicable",
+        "label": "Real-property applicability",
+        "reason": "Pad, conduit, and site utility work are assumed to trigger the real-property branch, but assessor review is required before relying on this classification.",
+        "sourceStrategy": "assessor_review",
+        "uiPlacement": "tax_profile"
+      },
+      {
+        "inputKey": "municipal_exemption_or_waiver_status",
+        "label": "Municipal exemption, waiver, PILOT, or tax-agreement status",
+        "reason": "The synthetic files do not include a municipal tax agreement or waiver. Confirm whether any local agreement changes the statutory valuation outcome.",
+        "sourceStrategy": "assessor_review",
+        "uiPlacement": "property_tax_profile"
+      },
+      {
+        "inputKey": "interconnection_and_program_documents",
+        "label": "Final executed interconnection and permission-to-operate package",
+        "reason": "Only a synthetic interconnection application summary is present. Final executed documents should be uploaded for a real customer.",
+        "sourceStrategy": "project_document_upload",
+        "uiPlacement": "retrofit_details"
+      },
+      {
+        "inputKey": "farmland_forest_open_space_reclassification_status",
+        "label": "Current-use land reclassification check",
+        "reason": "Fixture assumes a non-current-use industrial parcel. Confirm there is no farmland, forest, or open-space classification affected by the renewable-energy system.",
+        "sourceStrategy": "user_confirmation",
+        "uiPlacement": "property_tax_profile"
+      }
+    ],
+    "syntheticTaxDataNotice": "Synthetic RI renewable tax valuation profile for test fixtures; not an actual tax document.",
+    "taxDataGeneratedAt": "2026-07-04T00:00:00.000Z",
+    "taxDataImportedAt": "2026-07-04T02:06:26.413Z",
+    "taxDataSchemaVersion": "retrofi_ri_renewable_tax_valuation_test_case.v1",
+    "taxDataSourceArtifact": "data/ri_renewable_tax_valuation_test_case_gpt_pro_2026-07-04.json",
+    "taxExpectedInternalCalculation": {
+      "acNameplateCapacityKw": 375,
+      "tangiblePropertyApplicable": true,
+      "realPropertyApplicable": true,
+      "annualStatutoryTaxCents": 318750,
+      "counterfactualOrdinaryAnnualPropertyTaxCents": 1413270,
+      "estimatedAnnualSavingsCentsBeforeReview": 1094520,
+      "includedInUserFacingTotal": false,
+      "reviewStatus": "assessor_or_tax_review_required",
+      "calculationTrace": [
+        "Use synthetic AC nameplate capacity of 375 kW from the engineering summary.",
+        "Tangible-property branch is assumed applicable for fixture coverage: 375 kW * 500 cents = 187500 cents.",
+        "Real-property branch is assumed applicable for fixture coverage: 375 kW * 350 cents = 131250 cents.",
+        "Annual statutory tax cents = 187500 + 131250 = 318750.",
+        "Synthetic counterfactual ordinary annual property tax cents = 1413270.",
+        "Estimated annual savings before review = max(0, 1413270 - 318750) = 1094520 cents.",
+        "Because local_assessor_confirmation is synthetic_pending_review and the counterfactual is synthetic, suppress the amount from customer-facing totals."
+      ]
+    },
+    "syntheticUtilityDataNotice": "Synthetic estimated utility profile for test fixtures; not an actual bill.",
+    "utilityDataStatus": "synthetic_estimated_not_actual_bills",
+    "utilityDataConfidence": "medium",
+    "siteEnergyProfile": {
+      "siteId": "intake_sample_narragansett-organics-recovery-ri:primary_site",
+      "uploadedFileCount": 0,
+      "processedFileCount": 0,
+      "availableFieldIds": [
+        "annual_kwh",
+        "annual_therms",
+        "average_cost_per_kwh",
+        "average_cost_per_therm"
+      ],
+      "latestUtilityProvider": "Rhode Island Energy",
+      "annualKwh": 2100000,
+      "annualElectricCost": 399000,
+      "averageCostPerKwh": 0.19,
+      "utilitySummaries": [
+        {
+          "utilityCategory": "electric",
+          "uploadedFileCount": 0,
+          "processedFileCount": 0,
+          "latestUtilityProvider": "Rhode Island Energy",
+          "annualUsage": 2100000,
+          "annualCost": 399000,
+          "averageUnitCost": 0.19,
+          "usageUnit": "kWh",
+          "monthlySummaries": []
+        },
+        {
+          "utilityCategory": "gas",
+          "uploadedFileCount": 0,
+          "processedFileCount": 0,
+          "latestUtilityProvider": "Rhode Island Energy",
+          "annualUsage": 42000,
+          "annualCost": 71400,
+          "averageUnitCost": 1.7,
+          "usageUnit": "therms",
+          "monthlySummaries": []
+        }
+      ],
+      "lastUpdatedAt": "2026-07-04T00:00:00.000Z"
+    },
+    "uploadedUtilityFiles": [],
+    "utilityExtractedValues": []
   }
 ]

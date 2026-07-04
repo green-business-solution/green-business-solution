@@ -1,88 +1,89 @@
 {
   "schemaVersion": "retrofi_test_case_grant_tax_coverage_report.v1",
-  "generatedAt": "2026-07-04T01:56:02.570Z",
+  "generatedAt": "2026-07-04T02:19:06.877Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json",
     "packages": "data/opportunity_incentive_calculation_packages_v2.json",
     "localTaxWorkflows": "data/tax_local_workflow_rules.json"
   },
   "summary": {
-    "testCaseCount": 50,
-    "retrofitPreviewCount": 890,
+    "testCaseCount": 51,
+    "retrofitPreviewCount": 906,
     "previewStatusCounts": {
-      "calculated": 848,
-      "unsupported": 42
+      "calculated": 862,
+      "unsupported": 44
     },
-    "matchedV2PackageEvaluationCount": 554,
+    "matchedV2PackageEvaluationCount": 570,
     "runtimeInclusionStatusCounts": {
-      "included": 305,
+      "included": 310,
       "low_confidence": 20,
       "no_calculable_value": 72,
       "not_user_facing_default": 56,
       "source_inaccessible_repair_failure": 39,
-      "non_monetary_workflow": 12,
-      "custom_quote_estimate": 14,
-      "no_supported_effect_amount": 15,
-      "human_review_required": 19,
+      "non_monetary_workflow": 14,
+      "custom_quote_estimate": 19,
+      "no_supported_effect_amount": 16,
+      "human_review_required": 22,
       "legacy_rule_preferred": 2
     },
     "outcomeClassCounts": {
-      "calculated_and_included": 305,
-      "suppressed_without_amount": 77,
-      "source_or_package_blocked": 125,
-      "computed_but_suppressed": 18,
-      "non_monetary_workflow": 12,
-      "calculated_zero_or_no_supported_amount": 15,
+      "calculated_and_included": 310,
+      "suppressed_without_amount": 78,
+      "source_or_package_blocked": 130,
+      "computed_but_suppressed": 20,
+      "non_monetary_workflow": 14,
+      "calculated_zero_or_no_supported_amount": 16,
       "legacy_rule_preferred": 2
     },
     "packageEffectTypeCounts": {
-      "one_time_savings": 394,
-      "grant_expected_value": 77,
+      "one_time_savings": 405,
+      "grant_expected_value": 80,
       "recurring_savings": 53,
       "financing_subsidy": 2,
       "no_cash_value": 28,
       "process_value": 34,
       "tax_rate_preference": 1,
-      "tax_exemption": 3
+      "tax_exemption": 3,
+      "property_tax_valuation": 2
     },
-    "runtimeIncludedPackageCount": 305,
-    "computedButSuppressedPackageCount": 18,
+    "runtimeIncludedPackageCount": 310,
+    "computedButSuppressedPackageCount": 20,
     "missingEvidenceOrInputPackageCount": 0,
     "taxOpportunityPackageCountInDatabase": 3,
-    "taxOpportunityPackageCountMatchedByTestCases": 2,
-    "localTaxWorkflowEvaluationCount": 11,
+    "taxOpportunityPackageCountMatchedByTestCases": 3,
+    "localTaxWorkflowEvaluationCount": 12,
     "localTaxWorkflowStatusCounts": {
-      "calculated": 3,
-      "missing_inputs": 3,
+      "calculated": 5,
       "needs_tax_bill": 3,
-      "review_required": 2
+      "review_required": 3,
+      "missing_inputs": 1
     }
   },
   "topMissingInputs": [],
   "grantAndIncentivePackageOutcomes": {
-    "count": 519,
+    "count": 533,
     "outcomeClassCounts": {
-      "calculated_and_included": 305,
+      "calculated_and_included": 310,
       "suppressed_without_amount": 74,
-      "source_or_package_blocked": 105,
-      "computed_but_suppressed": 17,
+      "source_or_package_blocked": 110,
+      "computed_but_suppressed": 20,
       "non_monetary_workflow": 1,
-      "calculated_zero_or_no_supported_amount": 15,
+      "calculated_zero_or_no_supported_amount": 16,
       "legacy_rule_preferred": 2
     },
     "runtimeInclusionStatusCounts": {
-      "included": 305,
+      "included": 310,
       "low_confidence": 20,
       "no_calculable_value": 57,
       "not_user_facing_default": 56,
       "source_inaccessible_repair_failure": 34,
       "non_monetary_workflow": 1,
-      "custom_quote_estimate": 14,
-      "no_supported_effect_amount": 15,
-      "human_review_required": 15,
+      "custom_quote_estimate": 19,
+      "no_supported_effect_amount": 16,
+      "human_review_required": 18,
       "legacy_rule_preferred": 2
     },
-    "totalComputedAmountCents": 57775731,
+    "totalComputedAmountCents": 589312806,
     "sampleRows": [
       {
         "sampleUserId": "california-endowment-hq",
@@ -158,6 +159,17 @@
           }
         ],
         "defaultedInputs": [
+          {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_010_california-endowment-hq.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "ev_charger_installation"
+          },
           {
             "inputKey": "solicitation_number",
             "canonicalInputKey": "solicitation_number",
@@ -545,6 +557,17 @@
         ],
         "defaultedInputs": [
           {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_010_california-endowment-hq.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "ev_charger_installation"
+          },
+          {
             "inputKey": "requested_grant_amount_cents",
             "canonicalInputKey": "requested_grant_amount_cents",
             "source": "synthetic_test_case_default",
@@ -701,6 +724,17 @@
           }
         ],
         "defaultedInputs": [
+          {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_010_california-endowment-hq.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "ev_charger_installation"
+          },
           {
             "inputKey": "funding_lane",
             "canonicalInputKey": "funding_lane",
@@ -5298,7 +5332,7 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 480000,
+        "computedAmountCents": 678400,
         "includedInRuntimeTotals": false
       },
       {
@@ -6132,15 +6166,16 @@
     ]
   },
   "taxOpportunityPackageOutcomes": {
-    "count": 4,
+    "count": 6,
     "outcomeClassCounts": {
-      "computed_but_suppressed": 1,
-      "suppressed_without_amount": 3
+      "suppressed_without_amount": 4,
+      "non_monetary_workflow": 2
     },
     "runtimeInclusionStatusCounts": {
-      "human_review_required": 4
+      "human_review_required": 4,
+      "non_monetary_workflow": 2
     },
-    "totalComputedAmountCents": 20900,
+    "totalComputedAmountCents": 2189040,
     "sampleRows": [
       {
         "sampleUserId": "boeing-everett-factory",
@@ -6149,20 +6184,12 @@
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:381",
         "programName": "Tax Abatement for Solar Manufacturers",
         "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "computed_but_suppressed",
+        "outcomeClass": "suppressed_without_amount",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
         "missingInputs": [],
         "defaultedInputs": [
-          {
-            "inputKey": "qualifying_solar_b_and_o_classification",
-            "canonicalInputKey": "qualifying_solar_b_and_o_classification",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
           {
             "inputKey": "qualifying_activity_and_product_confirmation",
             "canonicalInputKey": "qualifying_activity_and_product_confirmation",
@@ -6190,14 +6217,6 @@
           {
             "inputKey": "gross_receipts_by_bo_classification",
             "canonicalInputKey": "gross_receipts_by_bo_classification",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "qualifying_tax_base_after_deductions_and_matc_cents",
-            "canonicalInputKey": "qualifying_tax_base_after_deductions_and_matc_cents",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -6241,8 +6260,8 @@
         ],
         "taxRelated": true,
         "grantOrIncentiveRelated": false,
-        "hasPositiveComputedAmount": true,
-        "computedAmountCents": 20900,
+        "hasPositiveComputedAmount": false,
+        "computedAmountCents": 0,
         "includedInRuntimeTotals": false
       },
       {
@@ -6258,22 +6277,6 @@
         "confidence": "medium",
         "missingInputs": [],
         "defaultedInputs": [
-          {
-            "inputKey": "approved_rerz_designation",
-            "canonicalInputKey": "approved_rerz_designation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "qualified_company_operations",
-            "canonicalInputKey": "qualified_company_operations",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
           {
             "inputKey": "approved_zone_legal_description_and_maps",
             "canonicalInputKey": "approved_zone_legal_description_and_maps",
@@ -6325,46 +6328,6 @@
           {
             "inputKey": "zone_final_year_and_phaseout_year",
             "canonicalInputKey": "zone_final_year_and_phaseout_year",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "phaseout_multiplier",
-            "canonicalInputKey": "phaseout_multiplier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_state_education_tax_cents",
-            "canonicalInputKey": "eligible_state_education_tax_cents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_real_property_tax_cents",
-            "canonicalInputKey": "eligible_real_property_tax_cents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_personal_property_tax_cents",
-            "canonicalInputKey": "eligible_personal_property_tax_cents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_local_income_tax_cents",
-            "canonicalInputKey": "eligible_local_income_tax_cents",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -6418,22 +6381,6 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "approved_rerz_designation",
-            "canonicalInputKey": "approved_rerz_designation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "qualified_company_operations",
-            "canonicalInputKey": "qualified_company_operations",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
             "inputKey": "approved_zone_legal_description_and_maps",
             "canonicalInputKey": "approved_zone_legal_description_and_maps",
             "source": "synthetic_test_case_default",
@@ -6484,46 +6431,6 @@
           {
             "inputKey": "zone_final_year_and_phaseout_year",
             "canonicalInputKey": "zone_final_year_and_phaseout_year",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "phaseout_multiplier",
-            "canonicalInputKey": "phaseout_multiplier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_state_education_tax_cents",
-            "canonicalInputKey": "eligible_state_education_tax_cents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_real_property_tax_cents",
-            "canonicalInputKey": "eligible_real_property_tax_cents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_personal_property_tax_cents",
-            "canonicalInputKey": "eligible_personal_property_tax_cents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_local_income_tax_cents",
-            "canonicalInputKey": "eligible_local_income_tax_cents",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -6577,22 +6484,6 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "approved_rerz_designation",
-            "canonicalInputKey": "approved_rerz_designation",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "qualified_company_operations",
-            "canonicalInputKey": "qualified_company_operations",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
             "inputKey": "approved_zone_legal_description_and_maps",
             "canonicalInputKey": "approved_zone_legal_description_and_maps",
             "source": "synthetic_test_case_default",
@@ -6649,46 +6540,6 @@
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "phaseout_multiplier",
-            "canonicalInputKey": "phaseout_multiplier",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_state_education_tax_cents",
-            "canonicalInputKey": "eligible_state_education_tax_cents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_real_property_tax_cents",
-            "canonicalInputKey": "eligible_real_property_tax_cents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_personal_property_tax_cents",
-            "canonicalInputKey": "eligible_personal_property_tax_cents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
-            "inputKey": "eligible_local_income_tax_cents",
-            "canonicalInputKey": "eligible_local_income_tax_cents",
-            "source": "synthetic_test_case_default",
-            "defaultIsPlaceholder": true,
-            "defaultConfidence": "low",
-            "userOverrideAllowed": true
-          },
-          {
             "inputKey": "actual_abated_tax_lines",
             "canonicalInputKey": "actual_abated_tax_lines",
             "source": "synthetic_test_case_default",
@@ -6721,28 +6572,63 @@
         "hasPositiveComputedAmount": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "narragansett-organics-recovery-ri",
+        "sampleName": "narragansett-organics-recovery-ri",
+        "retrofitTypeId": "biomass_biogas_energy_system",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "programName": "Renewable Energy Tax Valuation",
+        "runtimeInclusionStatus": "non_monetary_workflow",
+        "outcomeClass": "non_monetary_workflow",
+        "calculationStatus": "non_monetary_workflow",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [],
+        "effectTypes": [
+          "property_tax_valuation"
+        ],
+        "taxRelated": true,
+        "grantOrIncentiveRelated": false,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 1094520,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "narragansett-organics-recovery-ri",
+        "sampleName": "narragansett-organics-recovery-ri",
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+        "programName": "Renewable Energy Tax Valuation",
+        "runtimeInclusionStatus": "non_monetary_workflow",
+        "outcomeClass": "non_monetary_workflow",
+        "calculationStatus": "non_monetary_workflow",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "medium",
+        "missingInputs": [],
+        "defaultedInputs": [],
+        "effectTypes": [
+          "property_tax_valuation"
+        ],
+        "taxRelated": true,
+        "grantOrIncentiveRelated": false,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 1094520,
+        "includedInRuntimeTotals": false
       }
     ]
   },
-  "unmatchedTaxOpportunityPackages": [
-    {
-      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
-      "programName": "Renewable Energy Tax Valuation",
-      "calculationStatus": "non_monetary_workflow",
-      "effectTypes": [
-        "property_tax_valuation"
-      ]
-    }
-  ],
+  "unmatchedTaxOpportunityPackages": [],
   "localTaxWorkflowOutcomes": {
-    "count": 11,
+    "count": 12,
     "statusCounts": {
-      "calculated": 3,
-      "missing_inputs": 3,
+      "calculated": 5,
       "needs_tax_bill": 3,
-      "review_required": 2
+      "review_required": 3,
+      "missing_inputs": 1
     },
-    "totalComputedAmountCents": 1065250,
+    "totalComputedAmountCents": 2590850,
     "sampleRows": [
       {
         "sampleUserId": "ikea-burbank",
@@ -6831,16 +6717,10 @@
           ],
           "postalCode": "92806"
         },
-        "status": "missing_inputs",
-        "amountCents": 0,
+        "status": "calculated",
+        "amountCents": 330600,
         "includedInUserFacingTotal": false,
-        "missingInputs": [
-          {
-            "inputKey": "gross_receipts_cents",
-            "workflowId": "local_tax_ca_anaheim_business_license_v1",
-            "modelId": "anaheim_manufacturing_wholesale_retail_misc"
-          }
-        ],
+        "missingInputs": [],
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -6871,16 +6751,10 @@
           ],
           "postalCode": "90058"
         },
-        "status": "missing_inputs",
-        "amountCents": 0,
+        "status": "calculated",
+        "amountCents": 1195000,
         "includedInUserFacingTotal": false,
-        "missingInputs": [
-          {
-            "inputKey": "warehouse_square_feet",
-            "workflowId": "local_tax_ca_vernon_business_license_and_parcel_tax_v1",
-            "modelId": "vernon_warehouse"
-          }
-        ],
+        "missingInputs": [],
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -7249,6 +7123,77 @@
           "sb1186_fee_applies",
           "transient_occupancy_indicator"
         ]
+      },
+      {
+        "sampleUserId": "narragansett-organics-recovery-ri",
+        "sampleName": "narragansett-organics-recovery-ri",
+        "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1",
+        "taxDomain": "program_specific_property_tax",
+        "taxType": "property_tax",
+        "geography": {
+          "country": "US",
+          "stateCode": "RI",
+          "state": "RI",
+          "countyFips": null,
+          "placeGeoid": null,
+          "placeName": "North Kingstown",
+          "city": "North Kingstown",
+          "cities": [
+            "North Kingstown"
+          ],
+          "postalCode": "02852"
+        },
+        "status": "review_required",
+        "amountCents": 0,
+        "includedInUserFacingTotal": false,
+        "missingInputs": [
+          {
+            "inputKey": "ac_nameplate_capacity_kw",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "renewable_resource_type",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "municipality",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "system_use_and_tax_classification",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "municipal_exemption_or_waiver_status",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "tangible_property_applicable",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "real_property_applicable",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "counterfactual_ordinary_annual_property_tax_cents",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "local_assessor_confirmation",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          }
+        ],
+        "inferredAnswerKeys": [
+          "employee_count",
+          "filing_frequency",
+          "local_business_tax_class",
+          "lodging_business_or_short_term_rental_indicator",
+          "minimum_wage_fee_applies",
+          "parcel_count",
+          "sb1186_fee_applies",
+          "transient_occupancy_indicator"
+        ]
       }
     ]
   },
@@ -7516,7 +7461,7 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 480000,
+        "computedAmountCents": 678400,
         "includedInRuntimeTotals": false
       },
       {
@@ -7811,6 +7756,17 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_040_santa-clara-university-campus.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "high_efficiency_hvac_replacement"
+          },
+          {
             "inputKey": "project_scope",
             "canonicalInputKey": "project_scope",
             "source": "synthetic_test_case_default",
@@ -7993,7 +7949,7 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 480000,
+        "computedAmountCents": 2500000,
         "includedInRuntimeTotals": false
       },
       {
@@ -8010,6 +7966,17 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_040_santa-clara-university-campus.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "low_flow_fixture_retrofit"
+          },
+          {
             "inputKey": "project_scope",
             "canonicalInputKey": "project_scope",
             "source": "synthetic_test_case_default",
@@ -8192,7 +8159,7 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 64000,
+        "computedAmountCents": 2500000,
         "includedInRuntimeTotals": false
       },
       {
@@ -8209,6 +8176,17 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_040_santa-clara-university-campus.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "led_lighting_retrofit"
+          },
+          {
             "inputKey": "project_scope",
             "canonicalInputKey": "project_scope",
             "source": "synthetic_test_case_default",
@@ -8391,7 +8369,7 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 128340,
+        "computedAmountCents": 2500000,
         "includedInRuntimeTotals": false
       },
       {
@@ -8408,6 +8386,17 @@
         "missingInputs": [],
         "defaultedInputs": [
           {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_040_santa-clara-university-campus.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "air_sealing_weatherization"
+          },
+          {
             "inputKey": "project_scope",
             "canonicalInputKey": "project_scope",
             "source": "synthetic_test_case_default",
@@ -8590,7 +8579,7 @@
         "taxRelated": false,
         "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 96000,
+        "computedAmountCents": 2500000,
         "includedInRuntimeTotals": false
       },
       {
@@ -9250,93 +9239,205 @@
         "includedInRuntimeTotals": false
       },
       {
-        "sampleUserId": "boeing-everett-factory",
-        "sampleName": "boeing-everett-factory",
+        "sampleUserId": "narragansett-organics-recovery-ri",
+        "sampleName": "narragansett-organics-recovery-ri",
         "retrofitTypeId": "rooftop_solar_pv",
-        "opportunityId": "SOURCE_DSIRE:dsire_program_id:381",
-        "programName": "Tax Abatement for Solar Manufacturers",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:5361",
+        "programName": "Small Scale Solar Grants (Commerce RI)",
         "runtimeInclusionStatus": "human_review_required",
         "outcomeClass": "computed_but_suppressed",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
-        "confidence": "medium",
+        "confidence": "high",
         "missingInputs": [],
         "defaultedInputs": [
           {
-            "inputKey": "qualifying_solar_b_and_o_classification",
-            "canonicalInputKey": "qualifying_solar_b_and_o_classification",
+            "inputKey": "approved_system_watts",
+            "canonicalInputKey": "approved_system_watts",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "qualifying_activity_and_product_confirmation",
-            "canonicalInputKey": "qualifying_activity_and_product_confirmation",
+            "inputKey": "eligible_renewable_measure_type",
+            "canonicalInputKey": "eligible_renewable_measure_type",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "tax_period_start_date",
-            "canonicalInputKey": "tax_period_start_date",
+            "inputKey": "net_metered_direct_ownership_confirmation",
+            "canonicalInputKey": "net_metered_direct_ownership_confirmation",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "tax_period_end_date",
-            "canonicalInputKey": "tax_period_end_date",
+            "inputKey": "ref_round_approval_before_installation",
+            "canonicalInputKey": "ref_round_approval_before_installation",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "gross_receipts_by_bo_classification",
-            "canonicalInputKey": "gross_receipts_by_bo_classification",
+            "inputKey": "qualifying_ref_funded_renewable_project",
+            "canonicalInputKey": "qualifying_ref_funded_renewable_project",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "qualifying_tax_base_after_deductions_and_matc_cents",
-            "canonicalInputKey": "qualifying_tax_base_after_deductions_and_matc_cents",
+            "inputKey": "battery_storage_integration",
+            "canonicalInputKey": "battery_storage_integration",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "otherwise_applicable_b_and_o_rate_decimal",
-            "canonicalInputKey": "otherwise_applicable_b_and_o_rate_decimal",
+            "inputKey": "storage_adder_approval",
+            "canonicalInputKey": "storage_adder_approval",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "deductions_and_interstate_foreign_sales",
-            "canonicalInputKey": "deductions_and_interstate_foreign_sales",
+            "inputKey": "approved_system_dc_watts_for_pv",
+            "canonicalInputKey": "approved_system_dc_watts_for_pv",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "multiple_activities_tax_credit_treatment",
-            "canonicalInputKey": "multiple_activities_tax_credit_treatment",
+            "inputKey": "eligible_contract_price_cents_for_sdhw_if_applicable",
+            "canonicalInputKey": "eligible_contract_price_cents_for_sdhw_if_applicable",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
             "userOverrideAllowed": true
           },
           {
-            "inputKey": "annual_tax_performance_report_filed",
-            "canonicalInputKey": "annual_tax_performance_report_filed",
+            "inputKey": "rhode_island_project_and_property_ownership",
+            "canonicalInputKey": "rhode_island_project_and_property_ownership",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "ref_approval_before_installation",
+            "canonicalInputKey": "ref_approval_before_installation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_round_and_fund_availability",
+            "canonicalInputKey": "application_round_and_fund_availability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "qualifying_concurrent_ref_small_scale_renewable_project_award",
+            "canonicalInputKey": "qualifying_concurrent_ref_small_scale_renewable_project_award",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "energy_storage_eligibility",
+            "canonicalInputKey": "energy_storage_eligibility",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "connected_solutions_enrollment_or_opt_out",
+            "canonicalInputKey": "connected_solutions_enrollment_or_opt_out",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "funding_availability",
+            "canonicalInputKey": "funding_availability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "rhode_island_project_location",
+            "canonicalInputKey": "rhode_island_project_location",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_site_owner_or_landowner_agreement",
+            "canonicalInputKey": "project_site_owner_or_landowner_agreement",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "direct_ownership_project",
+            "canonicalInputKey": "direct_ownership_project",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "net_metered_project",
+            "canonicalInputKey": "net_metered_project",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "not_combined_with_renewable_energy_growth_program",
+            "canonicalInputKey": "not_combined_with_renewable_energy_growth_program",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "ref_award_letter_or_grant_agreement_confirmed",
+            "canonicalInputKey": "ref_award_letter_or_grant_agreement_confirmed",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_round_and_fund_reservation_confirmed",
+            "canonicalInputKey": "application_round_and_fund_reservation_confirmed",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "pv_tsrf_or_estimated_production_requirement_met",
+            "canonicalInputKey": "pv_tsrf_or_estimated_production_requirement_met",
             "source": "synthetic_test_case_default",
             "defaultIsPlaceholder": true,
             "defaultConfidence": "low",
@@ -9344,12 +9445,442 @@
           }
         ],
         "effectTypes": [
-          "tax_rate_preference"
+          "grant_expected_value"
         ],
-        "taxRelated": true,
-        "grantOrIncentiveRelated": false,
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
         "hasPositiveComputedAmount": true,
-        "computedAmountCents": 20900,
+        "computedAmountCents": 900000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "narragansett-organics-recovery-ri",
+        "sampleName": "narragansett-organics-recovery-ri",
+        "retrofitTypeId": "solar_water_heating_system",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:5361",
+        "programName": "Small Scale Solar Grants (Commerce RI)",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "high",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "approved_system_watts",
+            "canonicalInputKey": "approved_system_watts",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_renewable_measure_type",
+            "canonicalInputKey": "eligible_renewable_measure_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "net_metered_direct_ownership_confirmation",
+            "canonicalInputKey": "net_metered_direct_ownership_confirmation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "ref_round_approval_before_installation",
+            "canonicalInputKey": "ref_round_approval_before_installation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "qualifying_ref_funded_renewable_project",
+            "canonicalInputKey": "qualifying_ref_funded_renewable_project",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "battery_storage_integration",
+            "canonicalInputKey": "battery_storage_integration",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "storage_adder_approval",
+            "canonicalInputKey": "storage_adder_approval",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "approved_system_dc_watts_for_pv",
+            "canonicalInputKey": "approved_system_dc_watts_for_pv",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_contract_price_cents_for_sdhw_if_applicable",
+            "canonicalInputKey": "eligible_contract_price_cents_for_sdhw_if_applicable",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "rhode_island_project_and_property_ownership",
+            "canonicalInputKey": "rhode_island_project_and_property_ownership",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "ref_approval_before_installation",
+            "canonicalInputKey": "ref_approval_before_installation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_round_and_fund_availability",
+            "canonicalInputKey": "application_round_and_fund_availability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "qualifying_concurrent_ref_small_scale_renewable_project_award",
+            "canonicalInputKey": "qualifying_concurrent_ref_small_scale_renewable_project_award",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "energy_storage_eligibility",
+            "canonicalInputKey": "energy_storage_eligibility",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "connected_solutions_enrollment_or_opt_out",
+            "canonicalInputKey": "connected_solutions_enrollment_or_opt_out",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "funding_availability",
+            "canonicalInputKey": "funding_availability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "rhode_island_project_location",
+            "canonicalInputKey": "rhode_island_project_location",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_site_owner_or_landowner_agreement",
+            "canonicalInputKey": "project_site_owner_or_landowner_agreement",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "direct_ownership_project",
+            "canonicalInputKey": "direct_ownership_project",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "net_metered_project",
+            "canonicalInputKey": "net_metered_project",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "not_combined_with_renewable_energy_growth_program",
+            "canonicalInputKey": "not_combined_with_renewable_energy_growth_program",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "ref_award_letter_or_grant_agreement_confirmed",
+            "canonicalInputKey": "ref_award_letter_or_grant_agreement_confirmed",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_round_and_fund_reservation_confirmed",
+            "canonicalInputKey": "application_round_and_fund_reservation_confirmed",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "pv_tsrf_or_estimated_production_requirement_met",
+            "canonicalInputKey": "pv_tsrf_or_estimated_production_requirement_met",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "grant_expected_value"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 670000,
+        "includedInRuntimeTotals": false
+      },
+      {
+        "sampleUserId": "narragansett-organics-recovery-ri",
+        "sampleName": "narragansett-organics-recovery-ri",
+        "retrofitTypeId": "battery_storage_system",
+        "opportunityId": "SOURCE_DSIRE:dsire_program_id:5361",
+        "programName": "Small Scale Solar Grants (Commerce RI)",
+        "runtimeInclusionStatus": "human_review_required",
+        "outcomeClass": "computed_but_suppressed",
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceStatus": "accessible_or_researched",
+        "confidence": "high",
+        "missingInputs": [],
+        "defaultedInputs": [
+          {
+            "inputKey": "approved_system_watts",
+            "canonicalInputKey": "approved_system_watts",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_renewable_measure_type",
+            "canonicalInputKey": "eligible_renewable_measure_type",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "net_metered_direct_ownership_confirmation",
+            "canonicalInputKey": "net_metered_direct_ownership_confirmation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "ref_round_approval_before_installation",
+            "canonicalInputKey": "ref_round_approval_before_installation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "qualifying_ref_funded_renewable_project",
+            "canonicalInputKey": "qualifying_ref_funded_renewable_project",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "battery_storage_integration",
+            "canonicalInputKey": "battery_storage_integration",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "storage_adder_approval",
+            "canonicalInputKey": "storage_adder_approval",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "approved_system_dc_watts_for_pv",
+            "canonicalInputKey": "approved_system_dc_watts_for_pv",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "eligible_contract_price_cents_for_sdhw_if_applicable",
+            "canonicalInputKey": "eligible_contract_price_cents_for_sdhw_if_applicable",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "rhode_island_project_and_property_ownership",
+            "canonicalInputKey": "rhode_island_project_and_property_ownership",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "ref_approval_before_installation",
+            "canonicalInputKey": "ref_approval_before_installation",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_round_and_fund_availability",
+            "canonicalInputKey": "application_round_and_fund_availability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "qualifying_concurrent_ref_small_scale_renewable_project_award",
+            "canonicalInputKey": "qualifying_concurrent_ref_small_scale_renewable_project_award",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "energy_storage_eligibility",
+            "canonicalInputKey": "energy_storage_eligibility",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "connected_solutions_enrollment_or_opt_out",
+            "canonicalInputKey": "connected_solutions_enrollment_or_opt_out",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "funding_availability",
+            "canonicalInputKey": "funding_availability",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "rhode_island_project_location",
+            "canonicalInputKey": "rhode_island_project_location",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "project_site_owner_or_landowner_agreement",
+            "canonicalInputKey": "project_site_owner_or_landowner_agreement",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "direct_ownership_project",
+            "canonicalInputKey": "direct_ownership_project",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "net_metered_project",
+            "canonicalInputKey": "net_metered_project",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "not_combined_with_renewable_energy_growth_program",
+            "canonicalInputKey": "not_combined_with_renewable_energy_growth_program",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "ref_award_letter_or_grant_agreement_confirmed",
+            "canonicalInputKey": "ref_award_letter_or_grant_agreement_confirmed",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "application_round_and_fund_reservation_confirmed",
+            "canonicalInputKey": "application_round_and_fund_reservation_confirmed",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          },
+          {
+            "inputKey": "pv_tsrf_or_estimated_production_requirement_met",
+            "canonicalInputKey": "pv_tsrf_or_estimated_production_requirement_met",
+            "source": "synthetic_test_case_default",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "low",
+            "userOverrideAllowed": true
+          }
+        ],
+        "effectTypes": [
+          "grant_expected_value"
+        ],
+        "taxRelated": false,
+        "grantOrIncentiveRelated": true,
+        "hasPositiveComputedAmount": true,
+        "computedAmountCents": 900000,
         "includedInRuntimeTotals": false
       }
     ],
@@ -9571,6 +10102,17 @@
         ],
         "defaultedInputs": [
           {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_010_california-endowment-hq.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "ev_charger_installation"
+          },
+          {
             "inputKey": "requested_grant_amount_cents",
             "canonicalInputKey": "requested_grant_amount_cents",
             "source": "synthetic_test_case_default",
@@ -9727,6 +10269,17 @@
           }
         ],
         "defaultedInputs": [
+          {
+            "inputKey": "eligible_project_cost_cents",
+            "canonicalInputKey": "eligible_project_cost_cents",
+            "source": "grant_retrofit_project_input",
+            "defaultIsPlaceholder": true,
+            "defaultConfidence": "medium",
+            "userOverrideAllowed": true,
+            "sourceFileId": "output_010_california-endowment-hq.md",
+            "sourceStrategy": "synthetic_realistic_default",
+            "retrofitTypeId": "ev_charger_installation"
+          },
           {
             "inputKey": "funding_lane",
             "canonicalInputKey": "funding_lane",
@@ -13007,86 +13560,6 @@
     ],
     "localTaxNeedsInputOrReview": [
       {
-        "sampleUserId": "northgate-market-anaheim",
-        "sampleName": "northgate-market-anaheim",
-        "workflowId": "local_tax_ca_anaheim_business_license_v1",
-        "taxDomain": "local_business_tax",
-        "taxType": "business_license_tax",
-        "geography": {
-          "country": "US",
-          "stateCode": "CA",
-          "state": "CA",
-          "countyFips": null,
-          "placeGeoid": null,
-          "placeName": "Anaheim",
-          "city": "Anaheim",
-          "cities": [
-            "Anaheim"
-          ],
-          "postalCode": "92806"
-        },
-        "status": "missing_inputs",
-        "amountCents": 0,
-        "includedInUserFacingTotal": false,
-        "missingInputs": [
-          {
-            "inputKey": "gross_receipts_cents",
-            "workflowId": "local_tax_ca_anaheim_business_license_v1",
-            "modelId": "anaheim_manufacturing_wholesale_retail_misc"
-          }
-        ],
-        "inferredAnswerKeys": [
-          "employee_count",
-          "filing_frequency",
-          "local_business_tax_class",
-          "lodging_business_or_short_term_rental_indicator",
-          "minimum_wage_fee_applies",
-          "parcel_count",
-          "sb1186_fee_applies",
-          "transient_occupancy_indicator"
-        ]
-      },
-      {
-        "sampleUserId": "melissas-vernon-distribution",
-        "sampleName": "melissas-vernon-distribution",
-        "workflowId": "local_tax_ca_vernon_business_license_and_parcel_tax_v1",
-        "taxDomain": "local_business_tax_and_special_assessment",
-        "taxType": "business_license_tax",
-        "geography": {
-          "country": "US",
-          "stateCode": "CA",
-          "state": "CA",
-          "countyFips": null,
-          "placeGeoid": null,
-          "placeName": "Vernon",
-          "city": "Vernon",
-          "cities": [
-            "Vernon"
-          ],
-          "postalCode": "90058"
-        },
-        "status": "missing_inputs",
-        "amountCents": 0,
-        "includedInUserFacingTotal": false,
-        "missingInputs": [
-          {
-            "inputKey": "warehouse_square_feet",
-            "workflowId": "local_tax_ca_vernon_business_license_and_parcel_tax_v1",
-            "modelId": "vernon_warehouse"
-          }
-        ],
-        "inferredAnswerKeys": [
-          "employee_count",
-          "filing_frequency",
-          "local_business_tax_class",
-          "lodging_business_or_short_term_rental_indicator",
-          "minimum_wage_fee_applies",
-          "parcel_count",
-          "sb1186_fee_applies",
-          "transient_occupancy_indicator"
-        ]
-      },
-      {
         "sampleUserId": "zingermans-deli-ann-arbor",
         "sampleName": "zingermans-deli-ann-arbor",
         "workflowId": "property_adapter_mi_washtenaw_ann_arbor_v1",
@@ -13396,6 +13869,77 @@
           {
             "inputKey": "approved_abatement_or_rerz_documents",
             "workflowId": "property_adapter_mi_wayne_detroit_v1"
+          }
+        ],
+        "inferredAnswerKeys": [
+          "employee_count",
+          "filing_frequency",
+          "local_business_tax_class",
+          "lodging_business_or_short_term_rental_indicator",
+          "minimum_wage_fee_applies",
+          "parcel_count",
+          "sb1186_fee_applies",
+          "transient_occupancy_indicator"
+        ]
+      },
+      {
+        "sampleUserId": "narragansett-organics-recovery-ri",
+        "sampleName": "narragansett-organics-recovery-ri",
+        "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1",
+        "taxDomain": "program_specific_property_tax",
+        "taxType": "property_tax",
+        "geography": {
+          "country": "US",
+          "stateCode": "RI",
+          "state": "RI",
+          "countyFips": null,
+          "placeGeoid": null,
+          "placeName": "North Kingstown",
+          "city": "North Kingstown",
+          "cities": [
+            "North Kingstown"
+          ],
+          "postalCode": "02852"
+        },
+        "status": "review_required",
+        "amountCents": 0,
+        "includedInUserFacingTotal": false,
+        "missingInputs": [
+          {
+            "inputKey": "ac_nameplate_capacity_kw",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "renewable_resource_type",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "municipality",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "system_use_and_tax_classification",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "municipal_exemption_or_waiver_status",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "tangible_property_applicable",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "real_property_applicable",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "counterfactual_ordinary_annual_property_tax_cents",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
+          },
+          {
+            "inputKey": "local_assessor_confirmation",
+            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
           }
         ],
         "inferredAnswerKeys": [

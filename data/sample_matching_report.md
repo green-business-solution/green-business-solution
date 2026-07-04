@@ -1,12 +1,12 @@
 # Sample Matching Report
 
-Generated: 2026-07-04T01:17:47.042Z
-Matcher clock: 2026-07-04T01:17:12.834Z
+Generated: 2026-07-04T02:18:38.735Z
+Matcher clock: 2026-07-04T02:17:37.575Z
 Opportunities evaluated: 1707
 Archived opportunities skipped: 294
 Upcoming opportunities hidden: 93
-Sample users evaluated: 50
-Pairings evaluated: 85350
+Sample users evaluated: 51
+Pairings evaluated: 87057
 Opportunity incentive rules loaded: 49
 
 This is a deterministic first-pass matcher audit. It is not a human-reviewed ground-truth label set yet.
@@ -4275,6 +4275,92 @@ Common blockers across rejected/unavailable opportunities:
 - Project site state AZ does not match opportunity geography MN.: 110
 - Opportunity appears residential-only and the user profile is nonresidential.: 98
 - Project site state AZ does not match opportunity geography CO.: 74
+
+### narragansett-organics-recovery-ri
+
+Synthetic privately owned organics-processing and food-waste aggregation facility in the Quonset industrial area, testing a behind-the-meter biogas CHP system that uses anaerobic-digester gas from source-separated commercial food residuals.
+
+Normalized profile:
+```json
+{
+  "organizationTypes": [
+    "commercial"
+  ],
+  "stateCode": "RI",
+  "zip5": "02852",
+  "utility": {
+    "selfReportedName": "Rhode Island Energy",
+    "distributionUtilityId": "UTIL_RI_ENERGY",
+    "territoryCandidates": [
+      "UTIL_RI_ENERGY"
+    ],
+    "verificationStatus": "self_reported_unverified",
+    "customerClass": null
+  },
+  "ownershipRelationship": "owner",
+  "buildingTypes": [
+    "industrial_manufacturing"
+  ],
+  "squareFootage": {
+    "value": 42000,
+    "raw": 42000,
+    "parsingStatus": "parsed"
+  }
+}
+```
+
+Status counts:
+```json
+{
+  "eligible": 11,
+  "ineligible": 1696
+}
+```
+
+Eligible matches:
+- eligible / 100: USDA - Biorefinery, Renewable Chemical, and Biobased Product Manufacturing Assistance Program (SOURCE_DSIRE:dsire_program_id:5313)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible / 100: USDA - Rural Energy for America Program (REAP) Loan Guarantees (SOURCE_DSIRE:dsire_program_id:2511)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible / 100: Renewable Energy Growth Program (SOURCE_DSIRE:dsire_program_id:5523)
+  - matched: Opportunity appears active.; Project site state RI matches opportunity geography.; Self-reported utility matches Rhode Island Energy.
+- eligible / 100: Rhode Island Energy (Electric) Commercial and Industrial Rebate Program (SOURCE_DSIRE:dsire_program_id:5756)
+  - matched: Opportunity appears active.; Project site state RI matches opportunity geography.; Self-reported utility matches Rhode Island Energy.
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Personal) (SOURCE_DSIRE:dsire_program_id:22475)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible / 100: Renewable Energy Tax Valuation (SOURCE_DSIRE:dsire_program_id:22798)
+  - matched: Opportunity appears active.; Project site state RI matches opportunity geography.; Utility provider is not applicable to this opportunity.
+- eligible / 100: U.S. Department of Energy - Loan Guarantee Program (SOURCE_DSIRE:dsire_program_id:3071)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible / 100: Modified Accelerated Cost-Recovery System (MACRS) (SOURCE_DSIRE:dsire_program_id:676)
+  - matched: Opportunity appears rolling or no-deadline.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible / 100: Alternative Fuel Vehicle Refueling Property Tax Credit (Corporate) (SOURCE_DSIRE:dsire_program_id:22474)
+  - matched: Opportunity appears active.; Opportunity appears nationwide.; Utility provider is not applicable to this opportunity.
+- eligible / 100: Rhode Island Energy (Electric) - Small Business Energy Efficiency Program (SOURCE_DSIRE:dsire_program_id:3023)
+  - matched: Opportunity appears active.; Project site state RI matches opportunity geography.; Self-reported utility matches Rhode Island Energy.
+- eligible / 100: Small Scale Solar Grants (Commerce RI) (SOURCE_DSIRE:dsire_program_id:5361)
+  - matched: Opportunity appears rolling or no-deadline.; Project site state RI matches opportunity geography.; Utility provider is not applicable to this opportunity.
+
+Common next questions:
+
+Common unresolved requirements among promising matches:
+
+Retrofit types inferred from promising matches:
+- Biomass / biogas energy system: 5
+- Ground-source / geothermal heat pump: 3
+- Energy audit: 2
+- EV charger installation: 2
+- High-efficiency HVAC replacement: 2
+- LED lighting retrofit: 2
+- Rooftop solar PV: 2
+- Solar water heating system: 2
+
+Common blockers across rejected/unavailable opportunities:
+- User site or facility type (industrial_manufacturing) does not match broad_residential eligibility.: 552
+- User site or facility type (industrial_manufacturing) does not match broad_commercial eligibility.: 362
+- Project site state RI does not match opportunity geography CA.: 176
+- Project site state RI does not match opportunity geography MN.: 110
+- Opportunity appears residential-only and the user profile is nonresidential.: 98
 
 ## Immediate Iteration Targets
 

@@ -223,6 +223,15 @@ export const UTILITY_ALIASES = {
     "richland energy services",
     "city of richland energy services"
   ],
+  UTIL_RI_ENERGY: [
+    "rhode island energy",
+    "rhode island energy electric",
+    "rhode island energy (electric)",
+    "rhode island energy gas",
+    "rhode island energy (gas)",
+    "rhode island energy d/b/a ppl",
+    "rhode island energy d/b/a ppl formerly national grid"
+  ],
   UTIL_WEST_PENN_POWER: [
     "west penn power",
     "west penn power company"
@@ -283,6 +292,7 @@ export const UTILITY_DISPLAY_NAMES = {
   UTIL_MLGW: "Memphis Light, Gas and Water",
   UTIL_PENINSULA_LIGHT: "Peninsula Light Company",
   UTIL_RICHLAND_ENERGY_SERVICES: "Richland Energy Services",
+  UTIL_RI_ENERGY: "Rhode Island Energy",
   UTIL_WEST_PENN_POWER: "West Penn Power",
   UTIL_CONCORD_MLP: "Concord Municipal Light Plant"
 };

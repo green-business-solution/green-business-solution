@@ -1,9 +1,9 @@
 {
   "schemaVersion": "retrofit-opportunity-index-v1",
   "taxonomyVersion": "retrofit-taxonomy-2026-06-25-v1",
-  "generatedAt": "2026-07-04T01:17:40.263Z",
-  "matchingNow": "2026-07-04T01:17:12.834Z",
-  "opportunityCount": 1517,
+  "generatedAt": "2026-07-04T02:18:01.960Z",
+  "matchingNow": "2026-07-04T02:17:37.575Z",
+  "opportunityCount": 1707,
   "totalOpportunityRecordCount": 2096,
   "archivedOpportunityCount": 294,
   "retrofitCount": 85,
@@ -7833,7 +7833,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 796,
+      "opportunityCount": 797,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
@@ -10567,6 +10567,20 @@
           "state": "OR",
           "programType": "Rebate Program",
           "administrator": "Consumers Power, Inc.",
+          "confidence": 0.68,
+          "matchBasis": "canonical_technology_fallback",
+          "matchedTerms": []
+        },
+        {
+          "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:controls-program",
+          "opportunityName": "Controls Program",
+          "sourceName": "Silicon Valley Power Business Programs",
+          "sourceUrl": "https://www.siliconvalleypower.com/businesses/rebates",
+          "websiteUrl": "https://www.siliconvalleypower.com/businesses/rebates",
+          "applicationUrl": "https://www.siliconvalleypower.com/home/showpublisheddocument/74366/638868860247070000",
+          "state": "CA",
+          "programType": "rebate",
+          "administrator": "Silicon Valley Power",
           "confidence": 0.68,
           "matchBasis": "canonical_technology_fallback",
           "matchedTerms": []
@@ -59506,7 +59520,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 33,
+      "opportunityCount": 34,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3659",
@@ -59652,6 +59666,22 @@
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
             "evaporator fan"
+          ]
+        },
+        {
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4656",
+          "opportunityName": "Georgia Power -  Commercial Energy Efficiency Rebate Program",
+          "sourceName": "DSIRE",
+          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4656/georgia-power-commercial-energy-efficiency-rebate-program",
+          "websiteUrl": "https://www.georgiapower.com/business/products-programs/efficiency-maintenance/ceep.html",
+          "applicationUrl": null,
+          "state": "GA",
+          "programType": "Rebate Program",
+          "administrator": "Georgia Power Company",
+          "confidence": 0.86,
+          "matchBasis": "text_or_source_technology",
+          "matchedTerms": [
+            "electronically commutated motor"
           ]
         },
         {
@@ -60063,7 +60093,7 @@
       "typicalBillTypes": [
         "electric"
       ],
-      "opportunityCount": 26,
+      "opportunityCount": 27,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:3654",
@@ -60092,6 +60122,23 @@
           "state": "IN",
           "programType": "utility business prescriptive rebate, custom incentive, direct install, commissioning, demand response, and EV program",
           "administrator": "AES Indiana",
+          "confidence": 0.86,
+          "matchBasis": "text_or_source_technology",
+          "matchedTerms": [
+            "anti sweat heater",
+            "anti-sweat heater"
+          ]
+        },
+        {
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:4971",
+          "opportunityName": "Alliant Energy Interstate Power and Light - Commercial and Industrial Energy Efficiency Rebate Program",
+          "sourceName": "DSIRE",
+          "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4971/alliant-energy-interstate-power-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
+          "websiteUrl": "https://www.alliantenergy.com/waystosave/rebatesandmarketplace/rebatelocatortool",
+          "applicationUrl": null,
+          "state": "IA",
+          "programType": "Rebate Program",
+          "administrator": "Alliant Energy-IP&L",
           "confidence": 0.86,
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
@@ -79019,7 +79066,7 @@
         "electric",
         "gas"
       ],
-      "opportunityCount": 40,
+      "opportunityCount": 41,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5513",
@@ -79102,6 +79149,22 @@
           "matchBasis": "text_or_source_technology",
           "matchedTerms": [
             "combined heat and power"
+          ]
+        },
+        {
+          "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:customer-directed-electrification-rebate",
+          "opportunityName": "Customer Directed Electrification Rebate",
+          "sourceName": "Silicon Valley Power Business Programs",
+          "sourceUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+          "websiteUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+          "applicationUrl": "https://www.siliconvalleypower.com/home/showpublisheddocument/77781/638886947877900000",
+          "state": "CA",
+          "programType": "rebate",
+          "administrator": "Silicon Valley Power",
+          "confidence": 0.86,
+          "matchBasis": "text_or_source_technology",
+          "matchedTerms": [
+            "cogeneration"
           ]
         },
         {
@@ -96055,7 +96118,7 @@
       "typicalBillTypes": [
         "water"
       ],
-      "opportunityCount": 122,
+      "opportunityCount": 124,
       "opportunities": [
         {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
@@ -96526,6 +96589,22 @@
           ]
         },
         {
+          "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:controls-program",
+          "opportunityName": "Controls Program",
+          "sourceName": "Silicon Valley Power Business Programs",
+          "sourceUrl": "https://www.siliconvalleypower.com/businesses/rebates",
+          "websiteUrl": "https://www.siliconvalleypower.com/businesses/rebates",
+          "applicationUrl": "https://www.siliconvalleypower.com/home/showpublisheddocument/74366/638868860247070000",
+          "state": "CA",
+          "programType": "rebate",
+          "administrator": "Silicon Valley Power",
+          "confidence": 0.86,
+          "matchBasis": "text_or_source_technology",
+          "matchedTerms": [
+            "fixture"
+          ]
+        },
+        {
           "opportunityId": "SOURCE_DSIRE:dsire_program_id:5136",
           "opportunityName": "Corn Belt Energy Coop - Commercial Energy Efficiency Rebate Program",
           "sourceName": "DSIRE",
@@ -96548,6 +96627,22 @@
           "sourceUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
           "websiteUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
           "applicationUrl": "https://www.siliconvalleypower.com/home/showpublisheddocument/71429/637902891309870000",
+          "state": "CA",
+          "programType": "rebate",
+          "administrator": "Silicon Valley Power",
+          "confidence": 0.86,
+          "matchBasis": "text_or_source_technology",
+          "matchedTerms": [
+            "fixture"
+          ]
+        },
+        {
+          "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:customer-directed-electrification-rebate",
+          "opportunityName": "Customer Directed Electrification Rebate",
+          "sourceName": "Silicon Valley Power Business Programs",
+          "sourceUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+          "websiteUrl": "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+          "applicationUrl": "https://www.siliconvalleypower.com/home/showpublisheddocument/77781/638886947877900000",
           "state": "CA",
           "programType": "rebate",
           "administrator": "Silicon Valley Power",
@@ -113044,7 +113139,5 @@
         }
       ]
     }
-  ],
-  "formulaInputAuditRepairAppliedAt": "2026-07-04T01:52:04.367Z",
-  "formulaInputAuditEdgeDeletionsAppliedThisRun": 6
+  ]
 }

@@ -1,11 +1,11 @@
 # Blocked And Suppressed Package Audit
 
-Generated: 2026-07-04T01:56:02.494Z
+Generated: 2026-07-04T02:19:01.902Z
 
 ## Summary
 
-- Blocked/suppressed package evaluations: 202
-- Unique package targets: 37
+- Blocked/suppressed package evaluations: 208
+- Unique package targets: 39
 - High-priority targets: 3
 - Targets needing GPT Pro/source repair: 0
 
@@ -14,12 +14,12 @@ Generated: 2026-07-04T01:56:02.494Z
 | Key | Count |
 | --- | --- |
 | keep_suppressed_ev_or_probability_gap | 15 |
-| needs_quote_or_custom_calculation_workflow | 7 |
+| needs_quote_or_custom_calculation_workflow | 8 |
 | needs_recurring_or_tariff_workflow | 7 |
 | archive_or_exclude_source_inaccessible | 3 |
 | intentional_non_cash_or_process_workflow | 2 |
+| keep_review_gated_tax_workflow | 2 |
 | needs_runtime_verification_or_document_upload | 2 |
-| keep_review_gated_tax_workflow | 1 |
 
 ## Runtime Status Counts
 
@@ -28,16 +28,16 @@ Generated: 2026-07-04T01:56:02.494Z
 | no_calculable_value | 72 |
 | not_user_facing_default | 50 |
 | source_inaccessible_repair_failure | 39 |
+| custom_quote_estimate | 19 |
 | low_confidence | 16 |
-| custom_quote_estimate | 14 |
-| human_review_required | 11 |
+| human_review_required | 12 |
 
 ## Outcome Class Counts
 
 | Key | Count |
 | --- | --- |
-| source_or_package_blocked | 125 |
-| suppressed_without_amount | 77 |
+| source_or_package_blocked | 130 |
+| suppressed_without_amount | 78 |
 
 ## Archive Or Exclude Source Inaccessible
 
@@ -58,6 +58,7 @@ Generated: 2026-07-04T01:56:02.494Z
 | Groceries, Restaurants and Food Storage Program (SOURCE_SDGE_BUSINESS:program_url:aesc_inc_com_groceries_restaurants_and_food_storage_program) | 3 | custom_quote_estimate: 3 | one_time_savings | rebate | juniper-and-ivy-san-diego | Keep suppressed until the user/quote workflow can collect custom project data. Do not send to GPT Pro unless the source formula itself is unclear. |
 | Low Income Home Energy Assistance Program (LIHEAP) (SOURCE_DSIRE:dsire_program_id:5712) | 5 | no_calculable_value: 5 | no_cash_value | unknown | boston-latin-school, ocracoke-school-island, santa-clara-university-campus | Keep suppressed until the user/quote workflow can collect custom project data. Do not send to GPT Pro unless the source formula itself is unclear. |
 | OG&E - Commercial Energy Efficiency Rebate Programs (SOURCE_DSIRE:dsire_program_id:3639) | 8 | custom_quote_estimate: 8 | one_time_savings, process_value | process_value, rebate | cherokee-ww-hastings-hospital, okc-national-memorial-museum | Keep suppressed until the user/quote workflow can collect custom project data. Do not send to GPT Pro unless the source formula itself is unclear. |
+| Rhode Island Energy (Electric) Commercial and Industrial Rebate Program (SOURCE_DSIRE:dsire_program_id:5756) | 5 | custom_quote_estimate: 5 | one_time_savings | rebate | narragansett-organics-recovery-ri | Keep suppressed until the user/quote workflow can collect custom project data. Do not send to GPT Pro unless the source formula itself is unclear. |
 
 ## Needs Runtime Verification Or Document Upload
 
@@ -90,6 +91,7 @@ Generated: 2026-07-04T01:56:02.494Z
 | Program | Evaluations | Statuses | Effects | Cash Classes | Samples | Action |
 | --- | --- | --- | --- | --- | --- | --- |
 | Renewable Energy Renaissance Zones (SOURCE_DSIRE:dsire_program_id:3216) | 3 | human_review_required: 3 | tax_exemption | tax_exemption | gm-factory-zero-detroit | Keep suppressed until tax/accountant/assessor inputs are confirmed. This is a tax workflow/input problem, not a GPT Pro source-repair blocker. |
+| Tax Abatement for Solar Manufacturers (SOURCE_DSIRE:dsire_program_id:381) | 1 | human_review_required: 1 | tax_rate_preference | tax_rate_preference | boeing-everett-factory | Keep suppressed until tax/accountant/assessor inputs are confirmed. This is a tax workflow/input problem, not a GPT Pro source-repair blocker. |
 
 ## Keep Suppressed Ev Or Probability Gap
 

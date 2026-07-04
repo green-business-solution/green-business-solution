@@ -15173,13 +15173,18 @@
       "state": "RI",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5756/rhode-island-energy-electric-commercial-and-industrial-rebate-program",
       "utilityRestrictionReview": {
-        "restrictionStatus": "unknown",
-        "requiredUtilityIds": [],
-        "requiredUtilityNames": [],
+        "restrictionStatus": "required",
+        "requiredUtilityIds": [
+          "UTIL_RI_ENERGY"
+        ],
+        "requiredUtilityNames": [
+          "Rhode Island Energy (Electric)",
+          "Rhode Island Energy"
+        ],
         "allowedSupplierIds": [],
         "rateClasses": [],
-        "customerRelationshipRequired": false,
-        "evidenceText": "Rhode Island Energy (Electric) Commercial and Industrial Rebate Program",
+        "customerRelationshipRequired": true,
+        "evidenceText": "Inferred from current official program title and reviewed Rhode Island Energy business rebate page: Rhode Island Energy (Electric) Commercial and Industrial Rebate Program.",
         "reviewMethod": "source_url_fetch_and_deterministic_corpus",
         "sourceUrlsChecked": [
           "https://programs.dsireusa.org/system/program/detail/5756/rhode-island-energy-electric-commercial-and-industrial-rebate-program",
@@ -15187,7 +15192,9 @@
         ],
         "fetchErrors": [],
         "reviewedAt": "2026-06-26T01:07:46.127Z",
-        "confidence": 0.42
+        "confidence": 0.78,
+        "repairAppliedAt": "2026-07-04T02:10:13.666Z",
+        "repairReason": "Admin RI renewable tax fixture exposed unresolved utility gate; program title and source URL identify Rhode Island Energy electric business customer scope."
       }
     },
     {

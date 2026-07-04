@@ -1,40 +1,40 @@
 {
   "schemaVersion": "retrofi_blocked_suppressed_package_audit.v1",
-  "generatedAt": "2026-07-04T01:56:02.494Z",
+  "generatedAt": "2026-07-04T02:19:01.902Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json",
     "packages": "data/opportunity_incentive_calculation_packages_v2.json"
   },
   "summary": {
-    "blockedOrSuppressedEvaluationCount": 202,
-    "uniquePackageTargetCount": 37,
+    "blockedOrSuppressedEvaluationCount": 208,
+    "uniquePackageTargetCount": 39,
     "outcomeClassCounts": {
-      "source_or_package_blocked": 125,
-      "suppressed_without_amount": 77
+      "source_or_package_blocked": 130,
+      "suppressed_without_amount": 78
     },
     "runtimeInclusionStatusCounts": {
       "no_calculable_value": 72,
       "not_user_facing_default": 50,
       "source_inaccessible_repair_failure": 39,
+      "custom_quote_estimate": 19,
       "low_confidence": 16,
-      "custom_quote_estimate": 14,
-      "human_review_required": 11
+      "human_review_required": 12
     },
     "calculationStatusCounts": {
-      "calculable_with_missing_inputs": 76,
+      "calculable_with_missing_inputs": 77,
       "no_calculable_value": 72,
       "source_inaccessible_repair_failure": 39,
-      "custom_quote_estimate": 14,
+      "custom_quote_estimate": 19,
       "estimate_from_range": 1
     },
     "recommendationCounts": {
       "keep_suppressed_ev_or_probability_gap": 15,
-      "needs_quote_or_custom_calculation_workflow": 7,
+      "needs_quote_or_custom_calculation_workflow": 8,
       "needs_recurring_or_tariff_workflow": 7,
       "archive_or_exclude_source_inaccessible": 3,
       "intentional_non_cash_or_process_workflow": 2,
-      "needs_runtime_verification_or_document_upload": 2,
-      "keep_review_gated_tax_workflow": 1
+      "keep_review_gated_tax_workflow": 2,
+      "needs_runtime_verification_or_document_upload": 2
     },
     "targetsNeedingGptProCount": 0,
     "highPriorityTargetCount": 3
@@ -306,6 +306,7 @@
         "award_probability": 10
       },
       "defaultedInputKeyCounts": {
+        "eligible_project_cost_cents": 7,
         "solicitation_number": 10,
         "requested_grant_amount": 10,
         "match_funding": 10,
@@ -2296,6 +2297,7 @@
         "award_probability": 1
       },
       "defaultedInputKeyCounts": {
+        "eligible_project_cost_cents": 1,
         "site_location": 1,
         "number_of_dc_fast_charging_ports": 1,
         "charger_power_rating": 1,
@@ -3101,6 +3103,7 @@
         "award_probability": 7
       },
       "defaultedInputKeyCounts": {
+        "eligible_project_cost_cents": 4,
         "funding_lane": 7,
         "number_and_type_of_charging_ports": 7,
         "electric_school_bus_deployment_details": 7,
@@ -3334,6 +3337,7 @@
         "award_probability": 14
       },
       "defaultedInputKeyCounts": {
+        "eligible_project_cost_cents": 4,
         "requested_grant_amount_cents": 14,
         "match_amount_cents": 14,
         "hydrogen_station_scope": 14,
@@ -5173,6 +5177,7 @@
         "conditional_award_amount": 1
       },
       "defaultedInputKeyCounts": {
+        "eligible_project_cost_cents": 1,
         "mdot_round_3_award_selection": 1,
         "non_federal_match": 1,
         "corridor_site_compliance": 1,
@@ -5313,11 +5318,11 @@
           "count": 1
         },
         {
-          "value": "mdot_round_3_award_selection",
+          "value": "eligible_project_cost_cents",
           "count": 1
         },
         {
-          "value": "mdot_round3_proposal_status",
+          "value": "mdot_round_3_award_selection",
           "count": 1
         }
       ],
@@ -5824,7 +5829,7 @@
         "process_value",
         "rebate"
       ],
-      "totalComputedAmountCentsAcrossEvaluations": 2178766,
+      "totalComputedAmountCentsAcrossEvaluations": 497115000,
       "hasPositiveComputedAmount": true,
       "missingInputKeyCounts": {},
       "defaultedInputKeyCounts": {
@@ -5885,21 +5890,21 @@
           "retrofitTypeId": "high_efficiency_hvac_replacement",
           "runtimeInclusionStatus": "custom_quote_estimate",
           "outcomeClass": "source_or_package_blocked",
-          "computedAmountCents": 540000
+          "computedAmountCents": 38250000
         },
         {
           "sampleUserId": "okc-national-memorial-museum",
           "retrofitTypeId": "led_lighting_retrofit",
           "runtimeInclusionStatus": "custom_quote_estimate",
           "outcomeClass": "source_or_package_blocked",
-          "computedAmountCents": 144383
+          "computedAmountCents": 11340000
         },
         {
           "sampleUserId": "okc-national-memorial-museum",
           "retrofitTypeId": "high_efficiency_refrigeration_equipment",
           "runtimeInclusionStatus": "custom_quote_estimate",
           "outcomeClass": "source_or_package_blocked",
-          "computedAmountCents": 225000
+          "computedAmountCents": 2565000
         }
       ],
       "topMissingInputs": [],
@@ -6164,7 +6169,7 @@
         "award_probability": 2
       },
       "defaultedInputKeyCounts": {
-        "port_count": 2,
+        "eligible_project_cost_cents": 2,
         "site_location_in_maine": 2,
         "public_level_2_charger_design": 2,
         "host_site_agreement_for_public_access_at_least_five_years": 2,
@@ -6319,11 +6324,11 @@
           "count": 2
         },
         {
-          "value": "equipment_new_unused_energy_star_ul",
+          "value": "eligible_project_cost_cents",
           "count": 2
         },
         {
-          "value": "host_site_agreement_for_public_access_at_least_five_years",
+          "value": "equipment_new_unused_energy_star_ul",
           "count": 2
         }
       ],
@@ -6383,8 +6388,6 @@
       "hasPositiveComputedAmount": false,
       "missingInputKeyCounts": {},
       "defaultedInputKeyCounts": {
-        "approved_rerz_designation": 3,
-        "qualified_company_operations": 3,
         "approved_zone_legal_description_and_maps": 3,
         "parcel_or_facility_within_approved_zone_boundary": 3,
         "local_unit_abatement_resolution": 3,
@@ -6392,11 +6395,6 @@
         "approved_zone_term_years": 3,
         "program_year": 3,
         "zone_final_year_and_phaseout_year": 3,
-        "phaseout_multiplier": 3,
-        "eligible_state_education_tax_cents": 3,
-        "eligible_real_property_tax_cents": 3,
-        "eligible_personal_property_tax_cents": 3,
-        "eligible_local_income_tax_cents": 3,
         "actual_abated_tax_lines": 3,
         "corporate_income_tax_treatment_confirmation": 3,
         "renaissance_zone_revocation_or_amendment_status": 3
@@ -6509,10 +6507,6 @@
           "count": 3
         },
         {
-          "value": "approved_rerz_designation",
-          "count": 3
-        },
-        {
           "value": "approved_zone_legal_description_and_maps",
           "count": 3
         },
@@ -6529,11 +6523,15 @@
           "count": 3
         },
         {
-          "value": "eligible_local_income_tax_cents",
+          "value": "local_unit_abatement_resolution",
           "count": 3
         },
         {
-          "value": "eligible_personal_property_tax_cents",
+          "value": "parcel_or_facility_within_approved_zone_boundary",
+          "count": 3
+        },
+        {
+          "value": "program_year",
           "count": 3
         }
       ],
@@ -6669,6 +6667,353 @@
         "action": "Keep as a non-cash/process workflow. It can be modeled later as application, interconnection, permit, technical-assistance, or no-retrofit-needed workflow value.",
         "reasons": [
           "package has no calculable cash value and is process/non-cash classified"
+        ]
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5756",
+      "programName": "Rhode Island Energy (Electric) Commercial and Industrial Rebate Program",
+      "evaluationCount": 5,
+      "outcomeClassCounts": {
+        "source_or_package_blocked": 5
+      },
+      "runtimeInclusionStatusCounts": {
+        "custom_quote_estimate": 5
+      },
+      "calculationStatusCounts": {
+        "custom_quote_estimate": 5
+      },
+      "sourceStatusCounts": {
+        "accessible_or_researched": 5
+      },
+      "packageConfidenceCounts": {
+        "low": 5
+      },
+      "retrofitTypeIds": [
+        "heat_pump_hvac_retrofit",
+        "high_efficiency_hvac_replacement",
+        "high_efficiency_refrigeration_equipment",
+        "hvac_controls_retrofit",
+        "led_lighting_retrofit"
+      ],
+      "sampleUserIds": [
+        "narragansett-organics-recovery-ri"
+      ],
+      "effectIds": [
+        "effect_one_time_savings_1_fd146a1c014a83fe"
+      ],
+      "effectTypes": [
+        "one_time_savings"
+      ],
+      "calculationMethods": [
+        "custom_quote"
+      ],
+      "valueModelKinds": [
+        "custom_quote"
+      ],
+      "cashValueClassifications": [
+        "rebate"
+      ],
+      "totalComputedAmountCentsAcrossEvaluations": 0,
+      "hasPositiveComputedAmount": false,
+      "missingInputKeyCounts": {},
+      "defaultedInputKeyCounts": {
+        "commercial_account_status": 5,
+        "measure_type": 5,
+        "fuel_or_electric_service": 5,
+        "equipment_specification": 5,
+        "participating_dealer_or_application": 5,
+        "approved_incentive": 5,
+        "current_official_rate_table": 5
+      },
+      "topHumanReviewReasons": [
+        {
+          "value": "Current official commercial HVAC/refrigeration/lighting rate rows should be extracted from the live application or PDFs before numeric estimates.",
+          "count": 5
+        }
+      ],
+      "topConfidenceReasonCodes": [
+        {
+          "value": "calculation_status_custom_quote_estimate",
+          "count": 5
+        },
+        {
+          "value": "estimate_confidence_low",
+          "count": 5
+        },
+        {
+          "value": "repair_status_custom_quote_required",
+          "count": 5
+        },
+        {
+          "value": "source_confidence_high",
+          "count": 5
+        },
+        {
+          "value": "value_model_custom_quote",
+          "count": 5
+        }
+      ],
+      "sourceRepairStatuses": [],
+      "packageMetadata": {
+        "calculationStatus": "custom_quote_estimate",
+        "sourceAccessStatus": "accessible_or_researched",
+        "confidenceOverall": 0.38,
+        "confidenceLabel": "low",
+        "statusRepairSource": "gpt_pro_incentive_formula_rate_table_repair",
+        "retrofitTypes": [
+          "heat_pump_hvac_retrofit",
+          "high_efficiency_hvac_replacement",
+          "high_efficiency_refrigeration_equipment",
+          "hvac_controls_retrofit",
+          "led_lighting_retrofit"
+        ],
+        "sourceEvidenceTypes": [
+          "gpt_pro_research_summary"
+        ]
+      },
+      "exampleRows": [
+        {
+          "sampleUserId": "narragansett-organics-recovery-ri",
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "runtimeInclusionStatus": "custom_quote_estimate",
+          "outcomeClass": "source_or_package_blocked",
+          "computedAmountCents": 0
+        },
+        {
+          "sampleUserId": "narragansett-organics-recovery-ri",
+          "retrofitTypeId": "led_lighting_retrofit",
+          "runtimeInclusionStatus": "custom_quote_estimate",
+          "outcomeClass": "source_or_package_blocked",
+          "computedAmountCents": 0
+        },
+        {
+          "sampleUserId": "narragansett-organics-recovery-ri",
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "runtimeInclusionStatus": "custom_quote_estimate",
+          "outcomeClass": "source_or_package_blocked",
+          "computedAmountCents": 0
+        }
+      ],
+      "topMissingInputs": [],
+      "topDefaultedInputs": [
+        {
+          "value": "approved_incentive",
+          "count": 5
+        },
+        {
+          "value": "commercial_account_status",
+          "count": 5
+        },
+        {
+          "value": "current_official_rate_table",
+          "count": 5
+        },
+        {
+          "value": "equipment_specification",
+          "count": 5
+        },
+        {
+          "value": "fuel_or_electric_service",
+          "count": 5
+        },
+        {
+          "value": "measure_type",
+          "count": 5
+        },
+        {
+          "value": "participating_dealer_or_application",
+          "count": 5
+        }
+      ],
+      "auditRecommendation": {
+        "bucket": "needs_quote_or_custom_calculation_workflow",
+        "priority": "medium",
+        "needsGptPro": false,
+        "action": "Keep suppressed until the user/quote workflow can collect custom project data. Do not send to GPT Pro unless the source formula itself is unclear.",
+        "reasons": [
+          "package is custom quote or custom calculation"
+        ]
+      }
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:381",
+      "programName": "Tax Abatement for Solar Manufacturers",
+      "evaluationCount": 1,
+      "outcomeClassCounts": {
+        "suppressed_without_amount": 1
+      },
+      "runtimeInclusionStatusCounts": {
+        "human_review_required": 1
+      },
+      "calculationStatusCounts": {
+        "calculable_with_missing_inputs": 1
+      },
+      "sourceStatusCounts": {
+        "accessible_or_researched": 1
+      },
+      "packageConfidenceCounts": {
+        "medium": 1
+      },
+      "retrofitTypeIds": [
+        "rooftop_solar_pv"
+      ],
+      "sampleUserIds": [
+        "boeing-everett-factory"
+      ],
+      "effectIds": [
+        "effect_tax_credit_1_1a32140c40f1afe4"
+      ],
+      "effectTypes": [
+        "tax_rate_preference"
+      ],
+      "calculationMethods": [
+        "expression"
+      ],
+      "valueModelKinds": [
+        "tax_rate_difference"
+      ],
+      "cashValueClassifications": [
+        "tax_rate_preference"
+      ],
+      "totalComputedAmountCentsAcrossEvaluations": 0,
+      "hasPositiveComputedAmount": false,
+      "missingInputKeyCounts": {},
+      "defaultedInputKeyCounts": {
+        "qualifying_activity_and_product_confirmation": 1,
+        "tax_period_start_date": 1,
+        "tax_period_end_date": 1,
+        "gross_receipts_by_bo_classification": 1,
+        "otherwise_applicable_b_and_o_rate_decimal": 1,
+        "deductions_and_interstate_foreign_sales": 1,
+        "multiple_activities_tax_credit_treatment": 1,
+        "annual_tax_performance_report_filed": 1
+      },
+      "topHumanReviewReasons": [
+        {
+          "value": "Annual tax performance report filing status can affect eligibility and repayment liability.",
+          "count": 1
+        },
+        {
+          "value": "needs_accountant_review",
+          "count": 1
+        },
+        {
+          "value": "TAX_OR_ASSESSOR_REVIEW_REQUIRED",
+          "count": 1
+        },
+        {
+          "value": "Tax-return or accountant inputs are required before estimating a dollar benefit.",
+          "count": 1
+        },
+        {
+          "value": "The ordinary B&O comparison rate and qualifying base depend on taxpayer-specific classification, deductions, and Multiple Activities Tax Credit treatment.",
+          "count": 1
+        }
+      ],
+      "topConfidenceReasonCodes": [
+        {
+          "value": "calculation_status_calculable_with_missing_inputs",
+          "count": 1
+        },
+        {
+          "value": "estimate_confidence_medium",
+          "count": 1
+        },
+        {
+          "value": "estimate_status_needs_accountant_review",
+          "count": 1
+        },
+        {
+          "value": "repair_status_calculation_package_found",
+          "count": 1
+        },
+        {
+          "value": "source_confidence_high",
+          "count": 1
+        },
+        {
+          "value": "tax_benefit_tax_rate_preference",
+          "count": 1
+        },
+        {
+          "value": "tax_package_repair_applied",
+          "count": 1
+        },
+        {
+          "value": "value_model_tax_credit",
+          "count": 1
+        }
+      ],
+      "sourceRepairStatuses": [],
+      "packageMetadata": {
+        "calculationStatus": "calculable_with_missing_inputs",
+        "sourceAccessStatus": "accessible_or_researched",
+        "confidenceOverall": 0.72,
+        "confidenceLabel": "medium",
+        "statusRepairSource": "gpt_pro_incentive_formula_rate_table_repair",
+        "retrofitTypes": [],
+        "sourceEvidenceTypes": [
+          "gpt_pro_research_summary",
+          "gpt_pro_tax_package_repair",
+          "gpt_pro_tax_rule_repair"
+        ]
+      },
+      "exampleRows": [
+        {
+          "sampleUserId": "boeing-everett-factory",
+          "retrofitTypeId": "rooftop_solar_pv",
+          "runtimeInclusionStatus": "human_review_required",
+          "outcomeClass": "suppressed_without_amount",
+          "computedAmountCents": 0
+        }
+      ],
+      "topMissingInputs": [],
+      "topDefaultedInputs": [
+        {
+          "value": "annual_tax_performance_report_filed",
+          "count": 1
+        },
+        {
+          "value": "deductions_and_interstate_foreign_sales",
+          "count": 1
+        },
+        {
+          "value": "gross_receipts_by_bo_classification",
+          "count": 1
+        },
+        {
+          "value": "multiple_activities_tax_credit_treatment",
+          "count": 1
+        },
+        {
+          "value": "otherwise_applicable_b_and_o_rate_decimal",
+          "count": 1
+        },
+        {
+          "value": "qualifying_activity_and_product_confirmation",
+          "count": 1
+        },
+        {
+          "value": "tax_period_end_date",
+          "count": 1
+        },
+        {
+          "value": "tax_period_start_date",
+          "count": 1
+        }
+      ],
+      "auditRecommendation": {
+        "bucket": "keep_review_gated_tax_workflow",
+        "priority": "medium",
+        "needsGptPro": false,
+        "action": "Keep suppressed until tax/accountant/assessor inputs are confirmed. This is a tax workflow/input problem, not a GPT Pro source-repair blocker.",
+        "reasons": [
+          "Annual tax performance report filing status can affect eligibility and repayment liability. (1)",
+          "needs_accountant_review (1)",
+          "TAX_OR_ASSESSOR_REVIEW_REQUIRED (1)",
+          "Tax-return or accountant inputs are required before estimating a dollar benefit. (1)",
+          "The ordinary B&O comparison rate and qualifying base depend on taxpayer-specific classification, deductions, and Multiple Activities Tax Credit treatment. (1)"
         ]
       }
     },

@@ -25,21 +25,7 @@ const testCases = (source.testCases || []).map((testCase) => {
       retrofitGroup,
       sampleUserId: testCase.sampleUserId,
       normalizedProfile: testCase.normalizedProfile,
-      taxContext: {
-        siteTaxProfile: testCase.siteTaxProfile || null,
-        taxProfileFacts: Array.isArray(testCase.taxProfileFacts) ? testCase.taxProfileFacts : [],
-        taxExtractedValues: Array.isArray(testCase.taxExtractedValues) ? testCase.taxExtractedValues : [],
-        taxOpportunitySpecificInputs: Array.isArray(testCase.taxOpportunitySpecificInputs)
-          ? testCase.taxOpportunitySpecificInputs
-          : [],
-        taxMissingOrReviewInputs: Array.isArray(testCase.taxMissingOrReviewInputs)
-          ? testCase.taxMissingOrReviewInputs
-          : [],
-        uploadedTaxFiles: Array.isArray(testCase.uploadedTaxFiles) ? testCase.uploadedTaxFiles : [],
-        syntheticTaxDataNotice: testCase.syntheticTaxDataNotice || null,
-        taxDataSchemaVersion: testCase.taxDataSchemaVersion || null,
-        taxDataSourceArtifact: testCase.taxDataSourceArtifact || null
-      },
+      taxContext: buildTaxContext(testCase),
       grantContext: buildGrantContext(testCase),
       calculationDate,
       opportunityIncentiveRules,
@@ -101,24 +87,89 @@ function readTaxGeographyRules(filePath) {
 }
 
 function buildGrantContext(testCase) {
+  const sourceForm = testCase.sourceForm || {};
+  const normalizedGrant = testCase.normalizedProfile?.grant || {};
   return {
-    grantProfileFacts: Array.isArray(testCase.grantProfileFacts) ? testCase.grantProfileFacts : [],
-    grantRetrofitProjectInputs: Array.isArray(testCase.grantRetrofitProjectInputs)
-      ? testCase.grantRetrofitProjectInputs
-      : [],
-    grantOpportunitySpecificInputs: Array.isArray(testCase.grantOpportunitySpecificInputs)
-      ? testCase.grantOpportunitySpecificInputs
-      : [],
-    grantMissingOrReviewInputs: Array.isArray(testCase.grantMissingOrReviewInputs)
-      ? testCase.grantMissingOrReviewInputs
-      : [],
-    grantDoNotForceQualificationReasons: Array.isArray(testCase.grantDoNotForceQualificationReasons)
-      ? testCase.grantDoNotForceQualificationReasons
-      : [],
-    syntheticGrantProfileDataNotice: testCase.syntheticGrantProfileDataNotice || null,
-    grantProfileConfidence: testCase.grantProfileConfidence || null,
-    grantProfileNotes: testCase.grantProfileNotes || null,
-    grantProfileDataSchemaVersion: testCase.grantProfileDataSchemaVersion || null,
-    grantProfileDataSourceArtifact: testCase.grantProfileDataSourceArtifact || null
+    grantProfileFacts: mergeRows(testCase.grantProfileFacts, sourceForm.grantProfileFacts, normalizedGrant.grantProfileFacts),
+    grantRetrofitProjectInputs: mergeRows(
+      testCase.grantRetrofitProjectInputs,
+      sourceForm.grantRetrofitProjectInputs,
+      normalizedGrant.grantRetrofitProjectInputs
+    ),
+    grantOpportunitySpecificInputs: mergeRows(
+      testCase.grantOpportunitySpecificInputs,
+      sourceForm.grantOpportunitySpecificInputs,
+      normalizedGrant.grantOpportunitySpecificInputs
+    ),
+    grantMissingOrReviewInputs: mergeRows(
+      testCase.grantMissingOrReviewInputs,
+      sourceForm.grantMissingOrReviewInputs,
+      normalizedGrant.grantMissingOrReviewInputs
+    ),
+    grantDoNotForceQualificationReasons: uniqueStrings(
+      testCase.grantDoNotForceQualificationReasons,
+      sourceForm.grantDoNotForceQualificationReasons,
+      normalizedGrant.grantDoNotForceQualificationReasons
+    ),
+    syntheticGrantProfileDataNotice: firstPresent(
+      testCase.syntheticGrantProfileDataNotice,
+      sourceForm.syntheticGrantProfileDataNotice,
+      normalizedGrant.syntheticGrantProfileDataNotice
+    ),
+    grantProfileConfidence: firstPresent(testCase.grantProfileConfidence, sourceForm.grantProfileConfidence, normalizedGrant.grantProfileConfidence),
+    grantProfileNotes: firstPresent(testCase.grantProfileNotes, sourceForm.grantProfileNotes, normalizedGrant.grantProfileNotes),
+    grantProfileDataSchemaVersion: firstPresent(
+      testCase.grantProfileDataSchemaVersion,
+      sourceForm.grantProfileDataSchemaVersion,
+      normalizedGrant.grantProfileDataSchemaVersion
+    ),
+    grantProfileDataSourceArtifact: firstPresent(
+      testCase.grantProfileDataSourceArtifact,
+      sourceForm.grantProfileDataSourceArtifact,
+      normalizedGrant.grantProfileDataSourceArtifact
+    )
   };
+}
+
+function buildTaxContext(testCase) {
+  const sourceForm = testCase.sourceForm || {};
+  const normalizedTax = testCase.normalizedProfile?.tax || {};
+  return {
+    siteTaxProfile: firstPresent(testCase.siteTaxProfile, sourceForm.siteTaxProfile, normalizedTax.siteTaxProfile) || null,
+    taxProfileFacts: mergeRows(testCase.taxProfileFacts, sourceForm.taxProfileFacts, normalizedTax.taxProfileFacts),
+    taxExtractedValues: mergeRows(testCase.taxExtractedValues, sourceForm.taxExtractedValues, normalizedTax.taxExtractedValues),
+    taxOpportunitySpecificInputs: mergeRows(
+      testCase.taxOpportunitySpecificInputs,
+      sourceForm.taxOpportunitySpecificInputs,
+      normalizedTax.taxOpportunitySpecificInputs
+    ),
+    taxMissingOrReviewInputs: mergeRows(
+      testCase.taxMissingOrReviewInputs,
+      sourceForm.taxMissingOrReviewInputs,
+      normalizedTax.taxMissingOrReviewInputs
+    ),
+    uploadedTaxFiles: mergeRows(testCase.uploadedTaxFiles, sourceForm.uploadedTaxFiles, normalizedTax.uploadedTaxFiles),
+    syntheticTaxDataNotice: firstPresent(testCase.syntheticTaxDataNotice, sourceForm.syntheticTaxDataNotice, normalizedTax.syntheticTaxDataNotice),
+    taxDataSchemaVersion: firstPresent(testCase.taxDataSchemaVersion, sourceForm.taxDataSchemaVersion, normalizedTax.taxDataSchemaVersion),
+    taxDataSourceArtifact: firstPresent(testCase.taxDataSourceArtifact, sourceForm.taxDataSourceArtifact, normalizedTax.taxDataSourceArtifact)
+  };
+}
+
+function mergeRows(...values) {
+  const rows = values.flatMap((value) => (Array.isArray(value) ? value : []));
+  const seen = new Set();
+  return rows.filter((row) => {
+    const key = JSON.stringify(row);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function uniqueStrings(...values) {
+  return [...new Set(values.flatMap((value) => (Array.isArray(value) ? value : [])).filter(Boolean))];
+}
+
+function firstPresent(...values) {
+  return values.find((value) => value !== undefined && value !== null && value !== "") ?? null;
 }

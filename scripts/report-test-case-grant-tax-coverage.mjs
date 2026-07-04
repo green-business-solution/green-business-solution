@@ -199,7 +199,12 @@ function inferCoverageGeography(testCase) {
   const rawAddress = site.addressStructured?.raw || "";
   const addressParts = rawAddress.split(",").map((part) => part.trim()).filter(Boolean);
   const cityFromRaw = addressParts.length >= 3 ? addressParts[1] : null;
-  const jurisdictionCities = (testCase.siteTaxProfile?.jurisdictions || [])
+  const siteTaxProfile = firstPresent(
+    testCase.siteTaxProfile,
+    testCase.sourceForm?.siteTaxProfile,
+    testCase.normalizedProfile?.tax?.siteTaxProfile
+  );
+  const jurisdictionCities = (siteTaxProfile?.jurisdictions || [])
     .flatMap((jurisdiction) => {
       const cityMatch = String(jurisdiction).match(/(?:City of|Town of|Village of)\s+([^,]+)/i);
       return cityMatch ? [cityMatch[1].trim()] : [];
@@ -222,9 +227,9 @@ function inferCoverageGeography(testCase) {
 function inferLocalTaxAnswers(testCase) {
   const answers = {};
   for (const row of [
-    ...(testCase.taxProfileFacts || []),
-    ...(testCase.taxExtractedValues || []),
-    ...(testCase.taxOpportunitySpecificInputs || [])
+    ...taxRows(testCase, "taxProfileFacts"),
+    ...taxRows(testCase, "taxExtractedValues"),
+    ...taxRows(testCase, "taxOpportunitySpecificInputs")
   ]) {
     const key = row.inputKey || row.input_key || row.fieldId || row.field_id;
     if (!key || row.value === undefined || row.value === null || row.value === "") continue;
@@ -258,6 +263,25 @@ function inferLocalTaxAnswers(testCase) {
   addIfMissing(answers, "accommodation_unit_count", inferAccommodationUnitCount(testCase), "coverage_inferred");
 
   return answers;
+}
+
+function taxRows(testCase, key) {
+  const rows = [
+    ...(Array.isArray(testCase[key]) ? testCase[key] : []),
+    ...(Array.isArray(testCase.sourceForm?.[key]) ? testCase.sourceForm[key] : []),
+    ...(Array.isArray(testCase.normalizedProfile?.tax?.[key]) ? testCase.normalizedProfile.tax[key] : [])
+  ];
+  const seen = new Set();
+  return rows.filter((row) => {
+    const dedupeKey = JSON.stringify(row);
+    if (seen.has(dedupeKey)) return false;
+    seen.add(dedupeKey);
+    return true;
+  });
+}
+
+function firstPresent(...values) {
+  return values.find((value) => value !== undefined && value !== null && value !== "") ?? null;
 }
 
 function inferLocalBusinessTaxClass(buildingTypes = []) {
@@ -378,8 +402,8 @@ function buildMarkdownReport(data) {
     "## Interpretation",
     "",
     matchedTaxCount === 0
-      ? `- The current 50 retrofit previews exercise grant/incentive packages, but they do not currently match the ${totalTaxCount} tax opportunity packages.`
-      : `- The current 50 retrofit previews now match ${matchedTaxCount} of ${totalTaxCount} tax opportunity packages.`,
+      ? `- The current ${data.summary.testCaseCount} test cases exercise grant/incentive packages, but they do not currently match the ${totalTaxCount} tax opportunity packages.`
+      : `- The current ${data.summary.testCaseCount} test cases now match ${matchedTaxCount} of ${totalTaxCount} tax opportunity packages.`,
     "- Local tax workflows can be selected for some test-case addresses after city inference, but they remain internal-only and are not part of customer-facing savings totals.",
     "- Packages classified as `computed_but_suppressed` have enough runtime inputs to produce an internal amount, but are held out because of low confidence, review flags, or default user-facing inclusion policy.",
     "- Packages classified as `source_or_package_blocked` need source/data repair or intentional archive/suppression decisions, not UI fields.",

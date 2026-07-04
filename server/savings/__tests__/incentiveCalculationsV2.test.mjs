@@ -430,6 +430,65 @@ describe("incentive calculation v2", () => {
     expect(result.totals.expectedOneTimeSavingsCents).toBe(7500);
   });
 
+  it("uses opportunity-specific AC nameplate capacity before generic system kW for property-tax valuation", () => {
+    const pkg = expressionPackage({
+      expressionId: "property_tax_valuation_formula",
+      effectType: "property_tax_valuation",
+      timing: { cadence: "annual" },
+      requiredInputs: [
+        "ac_nameplate_capacity_kw",
+        "tangible_property_applicable",
+        "real_property_applicable",
+        "counterfactual_ordinary_annual_property_tax_cents"
+      ]
+    });
+    pkg.opportunity_id = "SOURCE_DSIRE:dsire_program_id:22798";
+
+    const ctx = buildV2ResolvedRuntimeContext(
+      baseCtx({
+        answers: {
+          system_kw: { value: 64 }
+        },
+        taxOpportunitySpecificInputs: [
+          {
+            opportunityId: "SOURCE_DSIRE:dsire_program_id:22798",
+            inputKey: "ac_nameplate_capacity_kw",
+            value: 375,
+            sourceStrategy: "synthetic_engineering_summary"
+          },
+          {
+            opportunityId: "SOURCE_DSIRE:dsire_program_id:22798",
+            inputKey: "tangible_property_applicable",
+            value: true,
+            sourceStrategy: "synthetic_assessor_review"
+          },
+          {
+            opportunityId: "SOURCE_DSIRE:dsire_program_id:22798",
+            inputKey: "real_property_applicable",
+            value: true,
+            sourceStrategy: "synthetic_assessor_review"
+          },
+          {
+            opportunityId: "SOURCE_DSIRE:dsire_program_id:22798",
+            inputKey: "counterfactual_ordinary_annual_property_tax_cents",
+            value: 1413270,
+            sourceStrategy: "synthetic_tax_document"
+          }
+        ]
+      }),
+      [pkg]
+    );
+    const result = calculateV2IncentivePackage(pkg, ctx);
+
+    expect(ctx.answers.ac_nameplate_capacity_kw).toMatchObject({
+      value: 375,
+      source: "tax_opportunity_input"
+    });
+    expect(ctx.answers.system_kw).toMatchObject({ value: 64 });
+    expect(result.missingInputs).toEqual([]);
+    expect(result.totals.expectedRecurringSavingsAnnualCents).toBe(1094520);
+  });
+
   it("resolves grant profile inputs by matched opportunity and current retrofit without overriding user answers", () => {
     const ctx = buildV2ResolvedRuntimeContext(
       {

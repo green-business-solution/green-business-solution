@@ -157,7 +157,7 @@ const adminTestCases = {
   totalOpportunityRecordCount: output.totalOpportunityRecordCount,
   archivedOpportunityCount: output.archivedOpportunityCount,
   hiddenUpcomingOpportunityCount: output.hiddenUpcomingOpportunityCount,
-  sampleUserCount: existingAdminTestCases?.sampleUserCount || output.sampleUserCount,
+  sampleUserCount: adminTestCaseRows.length,
   retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
   opportunityIncentiveRuleCount: opportunityIncentiveRules.length,
   incentiveFormulaRateTableCalculationPackageCount: opportunityIncentiveCalculationPackages.length,
@@ -386,14 +386,23 @@ function buildUserReport(userProfile, results) {
 function assertNoDisallowedAdminStatuses(userProfile, grouped) {
   const disallowed = [...grouped.entries()]
     .filter(([status]) => !ADMIN_MATCH_ALLOWED_STATUSES.has(status))
-    .map(([status, rows]) => ({ status, count: rows.length }))
+    .map(([status, rows]) => ({
+      status,
+      count: rows.length,
+      examples: rows.slice(0, 5).map((row) => {
+        const unresolved = (row.unresolvedRequirements || []).slice(0, 2).join("; ");
+        return `${row.opportunityName || row.opportunityId} (${row.opportunityId})${unresolved ? ` unresolved: ${unresolved}` : ""}`;
+      })
+    }))
     .filter((row) => row.count > 0);
   if (disallowed.length === 0) return;
 
   throw new Error(
     `Admin matching fixture still has unresolved/hidden statuses for ${userProfile.sampleUserId}: ${disallowed
       .map((row) => `${row.status}=${row.count}`)
-      .join(", ")}. Run the data repair pipeline before publishing test cases.`
+      .join(", ")}. Examples: ${disallowed
+      .map((row) => `${row.status}: ${row.examples.join("; ")}`)
+      .join(" | ")}. Run the data repair pipeline before publishing test cases.`
   );
 }
 

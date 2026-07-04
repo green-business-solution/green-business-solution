@@ -1,6 +1,6 @@
 {
   "schemaVersion": "facility-eligibility-review-v1",
-  "generatedAt": "2026-06-26T05:37:26.016Z",
+  "generatedAt": "2026-07-04T02:13:52.677Z",
   "opportunityCount": 2096,
   "fetchSources": true,
   "fetchTimeoutMs": 12000,
@@ -20686,20 +20686,19 @@
       "state": "RI",
       "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22798/renewable-energy-tax-valuation",
       "facilityEligibilityReview": {
-        "eligibilityStatus": "required",
-        "eligibleBuildingTypes": [
-          "multifamily_residential",
-          "hospitality_lodging"
-        ],
-        "evidenceText": "Facility types inferred: multifamily_residential, hospitality_lodging",
-        "reviewMethod": "source_url_fetch_and_deterministic_corpus",
+        "eligibilityStatus": "not_applicable",
+        "eligibleBuildingTypes": [],
+        "evidenceText": "GPT Pro repair identifies this as a Rhode Island renewable energy property-tax valuation workflow for eligible renewable energy systems. Eligibility is driven by renewable-resource/system and tax classification, not by a building/facility type restriction.",
+        "reviewMethod": "gpt_pro_repair_reconciliation",
         "sourceUrlsChecked": [
-          "https://programs.dsireusa.org/system/program/detail/22798/renewable-energy-tax-valuation",
-          "https://tax.ri.gov/"
+          "https://rules.sos.ri.gov/regulations/part/300-00-00-2",
+          "https://webserver.rilegislature.gov/Statutes/TITLE39/39-26/39-26-5.htm",
+          "https://webserver.rilegislature.gov/Statutes/TITLE39/39-26/39-26-2.htm",
+          "https://programs.dsireusa.org/system/program/detail/22798/renewable-energy-tax-valuation"
         ],
         "fetchErrors": [],
-        "reviewedAt": "2026-06-26T05:37:26.016Z",
-        "confidence": 0.78
+        "reviewedAt": "2026-07-04T00:00:00.000Z",
+        "confidence": 0.9
       }
     },
     {
