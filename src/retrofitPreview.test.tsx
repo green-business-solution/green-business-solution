@@ -1224,6 +1224,18 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".retrofi-skeleton-line");
   });
 
+  it("keeps the full-page RetroFi loading mark visually prominent", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
+
+    expect(css).toContain("height: 104px");
+    expect(css).toContain(".retrofi-logo-loader--page .retrofi-logo-spinner");
+    expect(css).toContain("height: 118px");
+    expect(css).toContain(".retrofi-logo-loader--page .retrofi-logo-spinner-mark");
+    expect(css).toContain("height: 64px");
+  });
+
   it("uses branded dashboard, modal, and skeleton loaders instead of plain loading states", async () => {
     const fsModuleName = "node:fs";
     const { readFileSync } = await import(fsModuleName);

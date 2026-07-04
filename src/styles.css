@@ -142,10 +142,10 @@ body {
 .retrofi-loader-logo {
   border-radius: 20px;
   display: block;
-  height: 72px;
+  height: 104px;
   margin: 0 auto 22px;
   object-fit: contain;
-  width: 72px;
+  width: 104px;
 }
 
 .retrofi-loader-shell h1 {
@@ -246,6 +246,11 @@ body {
   width: 68px;
 }
 
+.retrofi-logo-loader--page .retrofi-logo-spinner {
+  height: 118px;
+  width: 118px;
+}
+
 .retrofi-logo-spinner-ring {
   animation: retrofi-spinner-rotate 0.9s linear infinite;
   border: 3px solid rgba(20, 92, 58, 0.14);
@@ -279,6 +284,11 @@ body {
 .retrofi-logo-loader--lg .retrofi-logo-spinner-mark {
   height: 34px;
   width: 34px;
+}
+
+.retrofi-logo-loader--page .retrofi-logo-spinner-mark {
+  height: 64px;
+  width: 64px;
 }
 
 .retrofi-logo-loader p {
@@ -429,8 +439,8 @@ body {
 
 @media (max-width: 900px) {
   .retrofi-loader-logo {
-    height: 64px;
-    width: 64px;
+    height: 92px;
+    width: 92px;
   }
 
   .retrofi-loader-shell h1 {
@@ -448,8 +458,8 @@ body {
   }
 
   .retrofi-loader-logo {
-    height: 56px;
-    width: 56px;
+    height: 78px;
+    width: 78px;
   }
 
   .retrofi-loader-shell h1 {
@@ -462,6 +472,16 @@ body {
 
   .retrofi-progress-track {
     width: min(260px, calc(100vw - 88px));
+  }
+
+  .retrofi-logo-loader--page .retrofi-logo-spinner {
+    height: 96px;
+    width: 96px;
+  }
+
+  .retrofi-logo-loader--page .retrofi-logo-spinner-mark {
+    height: 52px;
+    width: 52px;
   }
 }
 

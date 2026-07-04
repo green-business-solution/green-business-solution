@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) loading logo scale
+
+- Enlarged the full-page RetroFi loading mark while preserving compact modal/card loader sizing.
+
 ## 2026-07-04 - Codex (GPT-5) admin preview recommendation loading
 
 - Added persisted per-user retrofit recommendation caching backed by S3/runtime-state metadata, invalidated by a fingerprint of the user's current intake/test data.
