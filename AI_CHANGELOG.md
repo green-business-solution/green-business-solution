@@ -2010,6 +2010,7 @@
 - Recoded the Grand Marais PUC and Princeton PUC residential EV charger v2 packages from stale Bright Energy Solutions $150-$500 assumptions to the source-backed 2026 SMMPA member-specific $15 connected Level 2 charger rebate rows, preserving Grand Marais rate-enrollment incentives as a separate gated workflow.
 # 2026-07-04
 
+- Fixed retrofit picker bill-readiness dots to infer uploaded bill categories from extracted bill fields and site energy profiles, not only explicit uploaded file rows.
 - Fixed the admin user-preview bill-data toggle so seeded test-case utility files hydrate retrofit readiness in show mode while hide mode deliberately simulates no uploaded bills.
 - Removed the selected-retrofit Requirements tab and its form-answer, missing-info, quote/tax, and upload-bill shortcuts from the customer workspace while preserving the underlying retrofit data for the prior form/profile step.
 - Removed the Process onboarding note width cap and shifted it farther left so it stays on one line inside the modal.

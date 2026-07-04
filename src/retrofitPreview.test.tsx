@@ -415,22 +415,7 @@ describe("retrofit recommendations preview", () => {
       ...liveShapedPayload,
       intake: {
         ...liveShapedPayload.intake,
-        uploadedUtilityFiles: [
-          {
-            fileId: "sample-electric",
-            clientIntakeId: "intake-1",
-            siteId: "intake-1:primary",
-            originalFilename: "sample-electric.json",
-            fileType: "unknown",
-            utilityCategory: "electric",
-            utilityProvider: "Sample Utility",
-            s3Key: "synthetic/sample-electric.json",
-            processingStatus: "processed",
-            uploadedAt: "2026-06-01T00:00:00.000Z",
-            processedAt: "2026-06-01T00:00:00.000Z",
-            errorMessage: null
-          }
-        ],
+        uploadedUtilityFiles: [],
         utilityExtractedValues: [
           {
             extractedValueId: "sample-annual-kwh",
@@ -459,7 +444,23 @@ describe("retrofit recommendations preview", () => {
           annualElectricCost: 240000,
           averageCostPerKwh: 20,
           monthlySummaries: [],
-          utilitySummaries: [],
+          utilitySummaries: [
+            {
+              utilityCategory: "electric",
+              uploadedFileCount: 0,
+              processedFileCount: 1,
+              availableFieldIds: ["annual_kwh"],
+              latestUtilityProvider: "Sample Utility",
+              latestBillingPeriodStart: "2025-01-01",
+              latestBillingPeriodEnd: "2025-12-31",
+              annualUsage: 12000,
+              annualCost: 240000,
+              averageUnitCost: 20,
+              usageUnit: "kWh",
+              monthlySummaries: [],
+              lastUpdatedAt: "2026-06-01T00:00:00.000Z"
+            }
+          ],
           lastUpdatedAt: "2026-06-01T00:00:00.000Z"
         }
       }

@@ -6054,11 +6054,7 @@ function hydrateBillUploadStateFromIntake(intake: IntakeRecord | null, baseState
     files: { ...baseState.files },
     statuses: { ...baseState.statuses }
   };
-  const uploadedCategories = new Set(
-    intake.uploadedUtilityFiles
-      .map((file) => normalizeUtilityCategoryToBillUploadStepId(file.utilityCategory))
-      .filter((stepId): stepId is BillUploadStepId => Boolean(stepId))
-  );
+  const uploadedCategories = billUploadStepIdsFromIntake(intake);
   for (const step of BILL_UPLOAD_STEPS) {
     if (uploadedCategories.has(step.id)) {
       nextState.statuses[step.id] = "uploaded";
@@ -6066,6 +6062,30 @@ function hydrateBillUploadStateFromIntake(intake: IntakeRecord | null, baseState
   }
   nextState.flowComplete = nextState.flowComplete || BILL_UPLOAD_STEPS.every((step) => nextState.statuses[step.id] === "uploaded");
   return nextState;
+}
+
+function billUploadStepIdsFromIntake(intake: IntakeRecord) {
+  const stepIds = new Set<BillUploadStepId>();
+  const addStepId = (value: UtilityCategory | string | null | undefined) => {
+    const stepId = normalizeUtilityCategoryToBillUploadStepId(value);
+    if (stepId) stepIds.add(stepId);
+  };
+  const addFieldId = (fieldId: string | null | undefined) => {
+    if (!fieldId) return;
+    addStepId((billFieldDictionaryById.get(fieldId)?.bill_type as UtilityCategory | undefined) || null);
+  };
+
+  intake.uploadedUtilityFiles.forEach((file) => addStepId(file.utilityCategory));
+  intake.utilityExtractedValues.forEach((value) => addFieldId(value.fieldId));
+  intake.siteEnergyProfile?.availableFieldIds?.forEach(addFieldId);
+  intake.siteEnergyProfile?.utilitySummaries?.forEach((summary) => {
+    if (summary.uploadedFileCount || summary.processedFileCount || summary.availableFieldIds.length) {
+      addStepId(summary.utilityCategory);
+      summary.availableFieldIds.forEach(addFieldId);
+    }
+  });
+
+  return stepIds;
 }
 
 function intakeHasUtilityBillData(intake: IntakeRecord | null | undefined) {
