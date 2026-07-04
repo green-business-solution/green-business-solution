@@ -866,10 +866,18 @@ describe("retrofit recommendations preview", () => {
     expect(workspaceSource).not.toContain("label=\"Impact note\"");
     expect(workspaceSource).not.toContain("label=\"Source\" value");
     expect(workspaceSource).not.toContain("<EstimateInfoRow label=\"Selected\"");
+    expect(workspaceSource).not.toContain("label=\"Help available\"");
     expect(workspaceSource).toContain("Scenario comparison");
+    expect(workspaceSource).toContain("scenario-view-toggle");
+    expect(workspaceSource).toContain("scenario-view-switch");
+    expect(workspaceSource).toContain("showScenarioMatrix");
     expect(workspaceSource).toContain("Key outcomes");
     expect(workspaceSource).toContain("scenario-comparison-recommended-ribbon");
     expect(workspaceSource).toContain("isRecommended");
+    expect(workspaceSource).toContain("estimate-scenario-grid");
+    expect(workspaceSource).toContain("Selected scenario details");
+    expect(workspaceSource).toContain("Edit scenario");
+    expect(workspaceSource).toContain("You can customize scenarios by including or excluding opportunities");
     expect(componentSource).toContain("One-time savings");
     expect(componentSource).toContain("Annual operating savings");
     expect(componentSource).toContain("ROI (average annual return)");
@@ -879,9 +887,6 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Lowest upfront cost");
     expect(source).toContain("Fastest payback");
     expect(source).toContain("Highest one-time & recurring savings");
-    expect(workspaceSource).not.toContain("Selected scenario details");
-    expect(workspaceSource).not.toContain("Edit scenario");
-    expect(workspaceSource).not.toContain("You can customize scenarios by including or excluding opportunities");
     expect(workspaceSource).toContain("Main impact estimate");
     expect(workspaceSource).toContain("Additional impact metrics");
     expect(workspaceSource).toContain("Certification contribution");

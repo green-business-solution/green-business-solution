@@ -6989,6 +6989,54 @@ dd {
   width: 100%;
 }
 
+.scenario-panel-title-row {
+  align-items: start;
+  gap: 16px;
+}
+
+.scenario-view-toggle {
+  align-items: center;
+  color: #24352b;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  font-weight: 800;
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.scenario-view-switch {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #b8c8bf;
+  border-radius: 999px;
+  display: inline-flex;
+  height: 30px;
+  padding: 3px;
+  transition: background 160ms ease, border-color 160ms ease;
+  width: 54px;
+}
+
+.scenario-view-switch span {
+  background: #b8c8bf;
+  border-radius: 999px;
+  display: block;
+  height: 22px;
+  transform: translateX(0);
+  transition: transform 160ms ease, background 160ms ease;
+  width: 22px;
+}
+
+.scenario-view-switch.is-on {
+  background: #0f7a4f;
+  border-color: #0f7a4f;
+}
+
+.scenario-view-switch.is-on span {
+  background: #ffffff;
+  transform: translateX(24px);
+}
+
 .scenario-comparison-scroll {
   overflow-x: auto;
   padding-bottom: 2px;
@@ -7242,6 +7290,16 @@ dd {
   display: grid;
   gap: 24px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 760px) {
+  .scenario-panel-title-row {
+    align-items: stretch;
+  }
+
+  .scenario-view-toggle {
+    justify-self: start;
+  }
 }
 
 .estimate-scenario-list-item {

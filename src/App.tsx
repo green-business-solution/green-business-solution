@@ -9415,6 +9415,7 @@ function RetrofitPreviewCardView({
   });
   const [showCalculationBreakdown, setShowCalculationBreakdown] = useState(true);
   const [expandedOpportunityIds, setExpandedOpportunityIds] = useState<Record<string, boolean>>({});
+  const [scenarioMatrixVisibleByRetrofit, setScenarioMatrixVisibleByRetrofit] = useState<Record<string, boolean>>({});
   const [applicationPrepOpportunity, setApplicationPrepOpportunity] = useState<RetrofitOpportunityPreview | null>(null);
   const [applicationPrepProfiles, setApplicationPrepProfiles] = useState<Record<string, CustomerApplicationProfileResponse>>({});
   const [applicationPrepLoading, setApplicationPrepLoading] = useState<Record<string, boolean>>({});
@@ -9791,6 +9792,7 @@ function RetrofitPreviewCardView({
   const taxBenefitsPeriodValue = financialPeriod === "monthly" ? monthlyTaxBenefitsValue : oneTimeTaxBenefits;
   const recurringSavingsPeriodValue = sumDefinedCents([operatingSavingsPeriodValue, incentiveSavingsPeriodValue, taxBenefitsPeriodValue]);
   const scenarioCards = retrofit.scenarios.slice(0, 3);
+  const showScenarioMatrix = scenarioMatrixVisibleByRetrofit[retrofit.id] ?? true;
   const scenarioImpactValue =
     billDataLocked || displayedEnvironmentalImpact.overall.displayValue === "?"
       ? "Unknown"
@@ -10190,7 +10192,6 @@ function RetrofitPreviewCardView({
                             <EstimateInfoRow label="Application process" value={opportunity.applicationProcess || "Needs source review"} />
                             {opportunity.requiredInfo.length ? <EstimateInfoRow label="Requires" value={opportunity.requiredInfo.join(", ")} /> : null}
                             <EstimateInfoRow label="Difficulty" value={capitalizeLabel(opportunity.difficulty || "unknown")} />
-                            <EstimateInfoRow label="Help available" value={opportunity.helpAvailable || "Review available next steps"} />
                             <EstimateInfoRow label="Deadline" value={opportunity.deadline || "Source unavailable"} />
                           </div>
                           <div>
@@ -10215,11 +10216,25 @@ function RetrofitPreviewCardView({
 
           {activeWorkspaceTab === "scenarios" ? (
             <section className="estimate-tab-panel estimate-scenarios-tab" data-workspace-panel="scenarios">
-              <div>
-                <h3>Scenario comparison</h3>
-                <p>Compare different combinations of opportunities and choose the one that fits your goals.</p>
+              <div className="estimate-panel-title-row scenario-panel-title-row">
+                <div>
+                  <h3>Scenario comparison</h3>
+                  <p>Compare different combinations of opportunities and choose the one that fits your goals.</p>
+                </div>
+                <div className="scenario-view-toggle" aria-label="Scenario view">
+                  <span>Cards</span>
+                  <button
+                    aria-pressed={showScenarioMatrix}
+                    className={`scenario-view-switch${showScenarioMatrix ? " is-on" : ""}`}
+                    onClick={() => setScenarioMatrixVisibleByRetrofit((current) => ({ ...current, [retrofit.id]: !showScenarioMatrix }))}
+                    type="button"
+                  >
+                    <span aria-hidden="true" />
+                  </button>
+                  <span>Table</span>
+                </div>
               </div>
-              {scenarioCards.length ? (
+              {showScenarioMatrix && scenarioCards.length ? (
                 <div className="scenario-comparison-scroll">
                   <div className="scenario-comparison-table" role="table" aria-label="Scenario comparison">
                     <div className="scenario-comparison-row scenario-comparison-header" role="row">
@@ -10274,6 +10289,65 @@ function RetrofitPreviewCardView({
                     ))}
                   </div>
                 </div>
+              ) : !showScenarioMatrix && scenarioCards.length ? (
+                <>
+                  <div className="estimate-scenario-grid">
+                    {scenarioCards.map((scenario, index) => {
+                      const selected = selectedScenario?.id === scenario.id;
+                      const included = getSelectedOpportunitiesForScenario(retrofit, scenario, selectedOpportunityIds);
+                      const excluded = (scenario.deselectedOpportunityIds || []).length;
+                      return (
+                        <button className={`estimate-scenario-card${selected ? " is-selected" : ""}`} key={scenario.id} onClick={() => onSelectScenario(scenario.id)} type="button">
+                          <div>
+                            <strong>{scenarioDisplayName(index)}</strong>
+                            {index === 0 ? <span className="estimate-preview-pill">Recommended</span> : null}
+                            <span className="estimate-scenario-check" aria-hidden="true">{selected ? "✓" : ""}</span>
+                          </div>
+                          <p>Opportunities<br /><b>{included.length} included</b> · {excluded} excluded</p>
+                          <hr />
+                          <small>Best for</small>
+                          <strong>{scenarioBestForLabel(index)}</strong>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="estimate-scenario-detail-grid">
+                    <section className="estimate-recommended-scenario-card">
+                      <div className="estimate-card-title-row">
+                        <h3>Recommended scenario</h3>
+                        <span className="estimate-preview-pill">{scenarioDisplayName(Math.max(0, scenarioCards.findIndex((scenario) => scenario.id === selectedScenario?.id)))}</span>
+                      </div>
+                      <strong>Recommendation reason</strong>
+                      <p>{selectedScenario?.estimateNotes.join(" ") || "This scenario provides a strong balance of savings and payback while including high-impact opportunities."}</p>
+                      <ul>
+                        <li>Strong one-time savings with a solid payback period.</li>
+                        <li>Includes high-impact upgrades that improve efficiency and comfort.</li>
+                        <li>Qualifies for key rebates and incentives.</li>
+                      </ul>
+                    </section>
+                    <section className="estimate-selected-scenario-card">
+                      <div className="estimate-card-title-row">
+                        <h3>Selected scenario details</h3>
+                        <button className="secondary-button small-action-button" type="button">Edit scenario</button>
+                      </div>
+                      <div className="estimate-scenario-list-grid">
+                        <div>
+                          <h4>Included opportunities ({selectedScenarioOpportunities.length})</h4>
+                          {selectedScenarioOpportunities.length ? selectedScenarioOpportunities.map((opportunity) => (
+                            <span className="estimate-scenario-list-item" key={opportunity.id}>✓ {opportunity.name} ⓘ</span>
+                          )) : <p className="compact-empty">None selected.</p>}
+                        </div>
+                        <div>
+                          <h4>Excluded opportunities ({deselectedScenarioOpportunities.length})</h4>
+                          {deselectedScenarioOpportunities.length ? deselectedScenarioOpportunities.map((opportunity) => (
+                            <span className="estimate-scenario-list-item is-excluded" key={opportunity.id}>− {opportunity.name} ⓘ</span>
+                          )) : <p className="compact-empty">None excluded.</p>}
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                  <p className="estimate-tab-note">ⓘ You can customize scenarios by including or excluding opportunities. Changes will update the comparison above.</p>
+                </>
               ) : (
                 <p className="compact-empty">No scenarios available yet.</p>
               )}
@@ -11129,7 +11203,6 @@ function OpportunityPreviewRow({
               <DetailItem label="Required information" value={opportunity.requiredInfo.join(", ") || "No additional requirements stored"} />
               <DetailItem label="Difficulty" value={capitalizeLabel(opportunity.difficulty || "unknown")} />
               <DetailItem label="Length" value={opportunity.length || "Source unavailable"} />
-              <DetailItem label="Help available" value={opportunity.helpAvailable || "Review available next steps"} />
               <DetailItem label="Deadline" value={opportunity.deadline || "Source unavailable"} />
               <DetailItem label="Program website" value={opportunity.programWebsiteUrl ? "Open program website" : "Program website not found yet"} />
               <DetailItem label="Application link" value={opportunity.applicationUrl ? "Open application" : "Application URL not found yet"} />

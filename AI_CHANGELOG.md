@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) scenario view toggle
+
+- Added a per-retrofit Scenarios tab toggle so admins can switch between the comparison matrix and the earlier scenario card/detail view.
+- Removed the remaining customer-facing "Help available" opportunity row because application help is assumed across listed opportunities.
+- Updated focused preview assertions for the dual scenario view and opportunity inventory cleanup.
+
 ## 2026-07-04 - Codex (GPT-5) selected workspace opportunity and scenario polish
 
 - Removed redundant opportunity detail rows for empty requirements, source availability, selected state, length, and impact notes from the selected retrofit Opportunity tab.
