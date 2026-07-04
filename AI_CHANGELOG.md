@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) generated test fixture archival
+
+- Moved generated sample matching and profile fixtures to the private development S3 bucket with a checksum manifest.
+- Added generated fixture upload/download tooling and wired production deploys to download ignored fixtures before building.
+- Removed generated test fixture blobs from Git tracking while leaving runtime incentive package data tracked.
+
 ## 2026-07-04 - Codex (GPT-5) selected workspace scenario matrix
 
 - Replaced the selected retrofit Scenarios tab card/detail layout with a scenario comparison matrix.

@@ -20,3 +20,8 @@ vite.config.d.ts
 
 # Raw prompt/output work packets are archived in the private development S3 bucket.
 GPT Pro Work/
+
+# Generated test fixtures are archived in the private development S3 bucket.
+public/sample_matching_test_cases.json
+data/sample_user_profiles.json
+data/retrofi_patch_profiles*.json

@@ -137,6 +137,9 @@ ARTIFACT_BUCKET="${ARTIFACT_BUCKET:-gbs-retrofi-org-artifacts-${ACCOUNT_ID}-${RE
 ENERGY_DATA_BUCKET="${GBS_ENERGY_DATA_BUCKET:-gbs-retrofi-org-energy-data-${ACCOUNT_ID}}"
 LAMBDA_CODE_KEY="lambda/gbs-api-$(date -u +%Y%m%d%H%M%S).zip"
 
+echo "Ensuring generated test fixtures are available..."
+AWS_PROFILE="${PROFILE}" AWS_REGION="${REGION}" npm run fixtures:generated:download
+
 echo "Building frontend..."
 npm run build
 
