@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import { calculateV2IncentivePackage, validateIncentiveCalculationPackageV2 } from "./incentiveCalculationsV2.mjs";
+import { buildV2FormInputFields } from "./v2InputFieldCatalog.mjs";
 import { buildV2ResolvedRuntimeContext } from "./v2InputResolution.mjs";
 
 const ALWAYS_BLOCKED_PACKAGE_STATUSES = new Set([
@@ -97,7 +98,8 @@ export function selectV2PackagesForRetrofitGroup(retrofitGroup, packages = []) {
 }
 
 function summarizePackageRuntimeStatus({ pkg, result, ctx, legacyRulePreferred }) {
-  const requiredInputs = requiredInputsForPackage(pkg);
+  const inputRequirements = inputRequirementsForPackage(pkg);
+  const requiredInputs = inputRequirements.map((input) => input.input_key).filter(Boolean);
   const missingInputs = dedupeMissingInputs(result.missingInputs || []);
   const effectSummaries = (pkg.effects || []).map((effect) => {
     const effectResult = result.effectResults.find((item) => item.effectId === effect.effect_id);
@@ -143,6 +145,7 @@ function summarizePackageRuntimeStatus({ pkg, result, ctx, legacyRulePreferred }
     runtimeInclusionStatus: "not_evaluated",
     missingInputs,
     requiredInputs,
+    formInputFields: buildV2FormInputFields({ requiredInputs, missingInputs, inputRequirements }),
     resolvedInputs,
     defaultedInputs: resolvedInputs.filter((input) => input.defaultIsPlaceholder),
     totals: result.totals,
@@ -386,7 +389,51 @@ function runtimeTiming(timing = {}) {
 }
 
 function requiredInputsForPackage(pkg) {
-  return dedupeStrings((pkg.input_requirements || []).map((input) => input.input_key).filter(Boolean));
+  return inputRequirementsForPackage(pkg).map((input) => input.input_key).filter(Boolean);
+}
+
+function inputRequirementsForPackage(pkg) {
+  const byKey = new Map();
+  const addInput = (input) => {
+    if (!input) return;
+    const normalized = normalizeInputRequirement(input);
+    if (!normalized.input_key) return;
+    const existing = byKey.get(normalized.input_key);
+    byKey.set(normalized.input_key, existing ? mergeInputRequirements(existing, normalized) : normalized);
+  };
+
+  for (const input of pkg.input_requirements || []) addInput(input);
+  for (const effect of pkg.effects || []) {
+    for (const input of effect.required_inputs || []) addInput(input);
+  }
+  return [...byKey.values()];
+}
+
+function normalizeInputRequirement(input) {
+  if (typeof input === "string") return { input_key: input, label: input, source_precedence: [] };
+  return {
+    input_key: input.input_key || input.inputKey,
+    label: input.label || input.input_key || input.inputKey,
+    value_type: input.value_type || input.valueType,
+    source_precedence: Array.isArray(input.source_precedence)
+      ? input.source_precedence
+      : Array.isArray(input.sourcePrecedence)
+        ? input.sourcePrecedence
+        : [],
+    missing_severity: input.missing_severity || input.missingSeverity,
+    required_for: input.required_for || input.requiredFor || []
+  };
+}
+
+function mergeInputRequirements(existing, incoming) {
+  return {
+    ...existing,
+    label: existing.label || incoming.label,
+    value_type: existing.value_type || incoming.value_type,
+    source_precedence: dedupeStrings([...(existing.source_precedence || []), ...(incoming.source_precedence || [])]),
+    missing_severity: existing.missing_severity || incoming.missing_severity,
+    required_for: dedupeStrings([...(existing.required_for || []), ...(incoming.required_for || [])])
+  };
 }
 
 function dedupeMissingInputs(inputs = []) {

@@ -51,6 +51,14 @@ describe("v2 runtime incentive bridge", () => {
     expect(bridge.packageSummaries[0].missingInputs).toEqual([
       { inputKey: "smart_charger_confirmed", effectId: "effect_fixed", label: "Smart charger confirmed" }
     ]);
+    expect(bridge.packageSummaries[0].formInputFields).toEqual([
+      expect.objectContaining({
+        inputKey: "smart_charger_confirmed",
+        collectionSurface: "project_quote_upload",
+        implementationStatus: "planned",
+        uploadKind: "quote_or_invoice"
+      })
+    ]);
   });
 
   it("prefers an existing legacy rule for the same opportunity to avoid double counting", () => {
@@ -202,6 +210,13 @@ describe("v2 runtime incentive bridge", () => {
 
     expect(bridge.runtimeRules).toEqual([]);
     expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("needs_quote");
+    expect(bridge.packageSummaries[0].formInputFields).toEqual([
+      expect.objectContaining({
+        inputKey: "smart_charger_confirmed",
+        collectionSurface: "project_quote_upload",
+        implementationStatus: "planned"
+      })
+    ]);
   });
 
   it("uses repaired tax metadata instead of stale non-monetary package status", () => {

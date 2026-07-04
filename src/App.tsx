@@ -880,6 +880,14 @@ type IncentiveCalculationPackageSummary = {
   includedInRuntimeTotals?: boolean;
   missingInputs?: Array<{ inputKey: string; effectId?: string | null; label?: string }>;
   requiredInputs?: string[];
+  formInputFields?: Array<{
+    inputKey: string;
+    label?: string;
+    collectionSurface?: string;
+    collectionSurfaceLabel?: string;
+    implementationStatus?: "implemented" | "planned" | string;
+    uploadKind?: string | null;
+  }>;
   resolvedInputs?: Array<{
     inputKey: string;
     canonicalInputKey?: string;
@@ -6957,7 +6965,7 @@ function buildOpportunityPreview(
   const needsUtilityConfirmation = opportunityNeedsUtilityTerritoryConfirmation(opportunity, payload);
   const sourceMissing = !(opportunity.sourceUrl || opportunity.websiteUrl || opportunity.applicationUrl);
   const packageMissingInputs = incentivePackageMissingInputs(incentivePackage);
-  const packageNeedsMoreInfo = incentivePackage?.runtimeInclusionStatus === "missing_inputs";
+  const packageNeedsMoreInfo = incentivePackageNeedsMoreInfo(incentivePackage);
   const needsMoreInfo = opportunity.unresolvedRequirements.length > 0 || packageNeedsMoreInfo || needsUtilityConfirmation || sourceMissing;
   const eligibilityStatus = needsUtilityConfirmation || sourceMissing
     ? "needs review"
@@ -7026,12 +7034,29 @@ function buildOpportunityPreview(
 }
 
 function incentivePackageMissingInputs(summary?: IncentiveCalculationPackageSummary) {
-  if (!summary || summary.runtimeInclusionStatus !== "missing_inputs") return [];
+  if (!incentivePackageNeedsMoreInfo(summary)) return [];
+  if (!summary) return [];
+  const fieldLabels = (summary?.formInputFields || [])
+    .map((field) => field.collectionSurfaceLabel || field.label || field.inputKey)
+    .filter(Boolean)
+    .map((value) => value.replace(/_/g, " "));
+  if (fieldLabels.length) return [...new Set(fieldLabels)].slice(0, 4);
+
   const labels = (summary.missingInputs || [])
     .map((input) => input.label || input.inputKey)
     .filter(Boolean)
     .map((value) => value.replace(/_/g, " "));
-  return labels.length ? labels.slice(0, 4) : ["project quote"];
+  if (labels.length) return labels.slice(0, 4);
+
+  if (summary.runtimeInclusionStatus === "needs_quote") return ["project quote or invoice"];
+  if (summary.runtimeInclusionStatus === "needs_project_scope") return ["retrofit scope"];
+  return ["project quote"];
+}
+
+function incentivePackageNeedsMoreInfo(summary?: IncentiveCalculationPackageSummary) {
+  return ["missing_inputs", "needs_quote", "needs_project_scope", "custom_quote_estimate"].includes(
+    summary?.runtimeInclusionStatus || ""
+  );
 }
 
 function incentivePackageEstimatedValue(summary?: IncentiveCalculationPackageSummary) {
@@ -7049,6 +7074,9 @@ function incentivePackageValueRule(summary?: IncentiveCalculationPackageSummary)
   if (!summary) return undefined;
   if (summary.includedInRuntimeTotals) return "Source-backed v2 incentive calculation included in estimate.";
   if (summary.runtimeInclusionStatus === "missing_inputs") return "Source-backed value exists, but project inputs are needed before estimating.";
+  if (summary.runtimeInclusionStatus === "needs_quote") return "Source-backed value exists, but a project quote, invoice, or program document is needed before estimating.";
+  if (summary.runtimeInclusionStatus === "needs_project_scope") return "Source-backed value exists, but retrofit scope or equipment details are needed before estimating.";
+  if (summary.runtimeInclusionStatus === "needs_funding_check") return "Formula is source-backed, but current funding availability needs refresh before inclusion.";
   if (summary.runtimeInclusionStatus === "legacy_rule_preferred") return "Legacy-safe extracted rule is used for this opportunity while v2 data is retained for review.";
   if (summary.runtimeInclusionStatus === "custom_quote_estimate") return "Amount depends on a custom quote or program review.";
   if (summary.runtimeInclusionStatus === "not_user_facing_default") return "Not included in totals by default under conservative estimate rules.";
@@ -7065,6 +7093,8 @@ function incentivePackageValueCap(summary?: IncentiveCalculationPackageSummary) 
 function incentivePackageEligibleCostBasis(summary?: IncentiveCalculationPackageSummary) {
   if (!summary) return "Not stored for this opportunity";
   if (summary.runtimeInclusionStatus === "custom_quote_estimate") return "Project quote or contractor estimate";
+  if (summary.runtimeInclusionStatus === "needs_quote") return "Project quote, invoice, or program document";
+  if (summary.runtimeInclusionStatus === "needs_project_scope") return "Retrofit scope and equipment details";
   if (summary.includedInRuntimeTotals) return "Eligible project cost from current estimate";
   if (summary.runtimeInclusionStatus === "missing_inputs") return "Needs project scope, quantity, or quote";
   return "Needs source review";
