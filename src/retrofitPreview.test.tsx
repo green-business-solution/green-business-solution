@@ -1,6 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
+  BILL_UPLOAD_STEPS,
   CUSTOMER_RETROFIT_UI_NAMES,
   RetrofitRecommendationsPreview,
   buildRetrofitEnvironmentalImpactPreview,
@@ -9,8 +10,13 @@ import {
   confirmSingleEstimateState,
   countScenarioSelectedOpportunities,
   customerRetrofitUiName,
+  getBillUploadResumeIndex,
+  getBillUploadStorageKey,
   getScenarioSelectedOpportunityCount,
-  getOpportunityIncludedLabel
+  getOpportunityIncludedLabel,
+  getDefaultBillUploadState,
+  isSupportedBillUploadFile,
+  sanitizeBillUploadState
 } from "./App";
 
 const liveShapedPayload = {
@@ -255,7 +261,7 @@ describe("retrofit recommendations preview", () => {
     );
 
     expect(html).toContain("Retrieve your estimates");
-    expect(html).toContain("Upload bills to continue and answer retrofit-specific questions after selecting a retrofit.");
+    expect(html).toContain("Upload your electric, water, gas, and waste bills to continue");
     expect(html).toContain("Upload bills");
     expect(html).toContain("upload-cloud-icon");
     expect(html).not.toContain(">UP<");
@@ -403,6 +409,59 @@ describe("retrofit recommendations preview", () => {
 
     const all = confirmAllEstimateState({}, preview.retrofits[0].editableAssumptions);
     expect(Object.values(all).every(Boolean)).toBe(true);
+  });
+
+  it("resumes bill upload state from the first incomplete or skipped bill and validates storage keys", () => {
+    expect(BILL_UPLOAD_STEPS.map((step) => step.id)).toEqual(["electric", "water", "gas", "waste"]);
+    expect(BILL_UPLOAD_STEPS[0].title).toBe("Upload your electric bill");
+    expect(BILL_UPLOAD_STEPS[1].title).toBe("Upload your water bill");
+    expect(getBillUploadStorageKey("profile-1", "intake-1")).toBe("retrofi.billUploadModalState:profile-1:intake-1");
+
+    const defaultState = getDefaultBillUploadState();
+    expect(getBillUploadResumeIndex(defaultState)).toBe(0);
+    expect(
+      getBillUploadResumeIndex({
+        ...defaultState,
+        statuses: {
+          electric: "uploaded",
+          water: "skipped",
+          gas: "pending",
+          waste: "pending"
+        }
+      })
+    ).toBe(1);
+    expect(
+      sanitizeBillUploadState({
+        flowComplete: true,
+        files: { electric: { name: "bill.pdf", size: 1, type: "application/pdf", uploadedAt: "2026-07-03T00:00:00.000Z" } },
+        statuses: { electric: "uploaded", water: "bogus", gas: "skipped", waste: "pending" }
+      }).statuses
+    ).toEqual({
+      electric: "uploaded",
+      water: "pending",
+      gas: "skipped",
+      waste: "pending"
+    });
+  });
+
+  it("accepts only supported bill-upload file types", () => {
+    expect(isSupportedBillUploadFile(new File(["a"], "bill.pdf", { type: "application/pdf" }))).toBe(true);
+    expect(isSupportedBillUploadFile(new File(["a"], "bill.png", { type: "image/png" }))).toBe(true);
+    expect(isSupportedBillUploadFile(new File(["a"], "bill.jpg", { type: "image/jpeg" }))).toBe(true);
+    expect(isSupportedBillUploadFile(new File(["a"], "bill.txt", { type: "text/plain" }))).toBe(false);
+  });
+
+  it("opens the bill upload modal from the retrofits page instead of routing away", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+    const handleUploadIndex = source.indexOf("function handleUploadBills()");
+    const handleEnterIndex = source.indexOf("function handleEnterDetails()");
+    const uploadHandlerSource = source.slice(handleUploadIndex, handleEnterIndex);
+
+    expect(uploadHandlerSource).toContain("setBillUploadModalOpen(true)");
+    expect(uploadHandlerSource).not.toContain("scan-energy-data");
+    expect(source).toContain("function BillUploadModal(");
   });
 
   it("keeps detailed preview features behind workspace tabs instead of removing them", async () => {

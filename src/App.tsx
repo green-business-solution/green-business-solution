@@ -1,4 +1,4 @@
-import { ChangeEvent, CSSProperties, FormEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, CSSProperties, DragEvent, FormEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { apiGet, apiPatch, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
@@ -5927,6 +5927,61 @@ const PROCESS_ONBOARDING_LINES = [
   }
 ] as const;
 
+type BillUploadStepId = "electric" | "water" | "gas" | "waste";
+type BillUploadStatus = "pending" | "uploaded" | "skipped";
+
+type BillUploadStep = {
+  completedLabel: string;
+  id: BillUploadStepId;
+  subtitle: string;
+  title: string;
+  utilityLabel: string;
+};
+
+type BillUploadFileRecord = {
+  name: string;
+  size: number;
+  type: string;
+  uploadedAt: string;
+};
+
+type BillUploadState = {
+  flowComplete: boolean;
+  files: Partial<Record<BillUploadStepId, BillUploadFileRecord>>;
+  statuses: Record<BillUploadStepId, BillUploadStatus>;
+};
+
+export const BILL_UPLOAD_STEPS: BillUploadStep[] = [
+  {
+    id: "electric",
+    utilityLabel: "Electric",
+    title: "Upload your electric bill",
+    subtitle: "Upload your latest electric utility bill to begin unlocking eligible retrofits.",
+    completedLabel: "Electric bill uploaded"
+  },
+  {
+    id: "water",
+    utilityLabel: "Water",
+    title: "Upload your water bill",
+    subtitle: "Upload your latest water utility bill to continue unlocking eligible retrofits.",
+    completedLabel: "Water bill uploaded"
+  },
+  {
+    id: "gas",
+    utilityLabel: "Gas",
+    title: "Upload your gas bill",
+    subtitle: "Upload your latest gas utility bill to continue unlocking eligible retrofits.",
+    completedLabel: "Gas bill uploaded"
+  },
+  {
+    id: "waste",
+    utilityLabel: "Additional utility",
+    title: "Upload your waste or other utility bill",
+    subtitle: "Upload any remaining utility bill to complete your estimate inputs.",
+    completedLabel: "Additional utility bill uploaded"
+  }
+];
+
 function safeStorageGet(kind: "local" | "session", key: string) {
   if (typeof window === "undefined") return null;
   try {
@@ -5955,6 +6010,90 @@ function safeStorageRemove(kind: "local" | "session", key: string) {
   } catch {
     // Ignore storage failures so onboarding never blocks recommendations.
   }
+}
+
+export function getBillUploadStorageKey(profileId: string | null | undefined, intakeId: string | null | undefined) {
+  return `retrofi.billUploadModalState:${profileId || "unknown"}:${intakeId || "unknown"}`;
+}
+
+export function getDefaultBillUploadState(): BillUploadState {
+  return {
+    flowComplete: false,
+    files: {},
+    statuses: {
+      electric: "pending",
+      water: "pending",
+      gas: "pending",
+      waste: "pending"
+    }
+  };
+}
+
+export function sanitizeBillUploadState(parsed: unknown): BillUploadState {
+  const fallback = getDefaultBillUploadState();
+  if (!parsed || typeof parsed !== "object") return fallback;
+
+  const candidate = parsed as Partial<BillUploadState> & {
+    flowComplete?: unknown;
+    files?: Partial<Record<BillUploadStepId, BillUploadFileRecord>>;
+    statuses?: Partial<Record<BillUploadStepId, BillUploadStatus>>;
+  };
+  const statuses = {
+    electric: candidate.statuses?.electric === "uploaded" || candidate.statuses?.electric === "skipped" ? candidate.statuses.electric : "pending",
+    water: candidate.statuses?.water === "uploaded" || candidate.statuses?.water === "skipped" ? candidate.statuses.water : "pending",
+    gas: candidate.statuses?.gas === "uploaded" || candidate.statuses?.gas === "skipped" ? candidate.statuses.gas : "pending",
+    waste: candidate.statuses?.waste === "uploaded" || candidate.statuses?.waste === "skipped" ? candidate.statuses.waste : "pending"
+  } as Record<BillUploadStepId, BillUploadStatus>;
+
+  const files: BillUploadState["files"] = {};
+  for (const step of BILL_UPLOAD_STEPS) {
+    const record = candidate.files?.[step.id];
+    if (record && typeof record.name === "string" && typeof record.size === "number" && typeof record.type === "string") {
+      files[step.id] = {
+        name: record.name,
+        size: record.size,
+        type: record.type,
+        uploadedAt: typeof record.uploadedAt === "string" ? record.uploadedAt : new Date().toISOString()
+      };
+    }
+  }
+
+  return {
+    flowComplete: candidate.flowComplete === true,
+    files,
+    statuses
+  };
+}
+
+export function loadBillUploadState(storageKey: string) {
+  const rawValue = safeStorageGet("local", storageKey);
+  if (!rawValue) return getDefaultBillUploadState();
+  try {
+    return sanitizeBillUploadState(JSON.parse(rawValue));
+  } catch {
+    return getDefaultBillUploadState();
+  }
+}
+
+export function storeBillUploadState(storageKey: string, state: BillUploadState) {
+  safeStorageSet("local", storageKey, JSON.stringify(state));
+}
+
+export function isSupportedBillUploadFile(file: File) {
+  const normalizedName = file.name.toLowerCase();
+  const extension = normalizedName.slice(normalizedName.lastIndexOf("."));
+  const acceptedExtensions = new Set([".pdf", ".png", ".jpg", ".jpeg"]);
+  const acceptedTypes = new Set(["application/pdf", "image/png", "image/jpeg"]);
+  return acceptedExtensions.has(extension) || acceptedTypes.has(file.type);
+}
+
+export function getBillUploadResumeIndex(state: BillUploadState) {
+  const firstIncomplete = BILL_UPLOAD_STEPS.findIndex((step) => state.statuses[step.id] !== "uploaded");
+  return firstIncomplete >= 0 ? firstIncomplete : BILL_UPLOAD_STEPS.length - 1;
+}
+
+export function getBillUploadStepSummary(state: BillUploadState) {
+  return BILL_UPLOAD_STEPS.filter((step) => state.statuses[step.id] === "uploaded");
 }
 
 export const CUSTOMER_RETROFIT_UI_NAMES: Record<string, string> = {
@@ -6966,7 +7105,10 @@ export function RetrofitRecommendationsPreview({
 }) {
   const preview = useMemo(() => buildUserRetrofitPreviewResult(payload), [payload]);
   const hasUploadedBills = Boolean(payload?.intake?.uploadedUtilityFiles?.length || payload?.intake?.utilityExtractedValues?.length);
-  const shouldMaskBillDerivedMetrics = hideBillData || !hasUploadedBills;
+  const billUploadStorageKey = useMemo(() => getBillUploadStorageKey(preview.profileId, preview.intakeId), [preview.intakeId, preview.profileId]);
+  const [billUploadModalOpen, setBillUploadModalOpen] = useState(false);
+  const [billUploadState, setBillUploadState] = useState<BillUploadState>(() => loadBillUploadState(billUploadStorageKey));
+  const shouldMaskBillDerivedMetrics = hideBillData || (!hasUploadedBills && !billUploadState.flowComplete);
   const topRetrofit = preview.retrofits[0];
   const initialScenarioIds = useMemo(() => {
     const ids: Record<string, string> = {};
@@ -7023,6 +7165,15 @@ export function RetrofitRecommendationsPreview({
     setLastAddedRetrofitId(null);
     setPickerVisibleCount(6);
   }, [preview.intakeId, preview.profileId]);
+
+  useEffect(() => {
+    setBillUploadState(loadBillUploadState(billUploadStorageKey));
+    setBillUploadModalOpen(false);
+  }, [billUploadStorageKey]);
+
+  useEffect(() => {
+    storeBillUploadState(billUploadStorageKey, billUploadState);
+  }, [billUploadState, billUploadStorageKey]);
 
   useEffect(() => {
     const postFormPreviewParam =
@@ -7100,10 +7251,8 @@ export function RetrofitRecommendationsPreview({
   }, [activeRetrofitId]);
 
   function handleUploadBills() {
-    if (typeof window !== "undefined") {
-      window.open(pathForRoute("scan-energy-data"), "_blank", "noopener,noreferrer");
-    }
-    setRefinementMessage("Upload bills to improve savings, eligibility, and payback estimates.");
+    setBillUploadModalOpen(true);
+    setRefinementMessage("Upload your utility bills to unlock detailed retrofit estimates.");
   }
 
   function handleEnterDetails() {
@@ -7196,6 +7345,11 @@ export function RetrofitRecommendationsPreview({
       setActiveRetrofitId(nextRetrofitId);
       setPendingTabRetrofitId(null);
     }
+  }
+
+  function handleBillUploadComplete(state: BillUploadState) {
+    setBillUploadState(state);
+    setRefinementMessage("Uploaded bills are now available for retrofit estimates.");
   }
 
   function resetRetrofitDraft(retrofit: RetrofitPreviewCard) {
@@ -7832,7 +7986,7 @@ function RetrofitPickerView({
         </div>
         <div>
           <h1>Retrieve your estimates</h1>
-          <p>Upload bills to continue and answer retrofit-specific questions after selecting a retrofit.</p>
+          <p>Upload your electric, water, gas, and waste bills to continue</p>
         </div>
         <button onClick={onUploadBills} type="button">Upload bills</button>
       </section>
@@ -7925,6 +8079,284 @@ function RetrofitPickerView({
         </section>
       )}
     </section>
+  );
+}
+
+function BillUploadModal({
+  isOpen,
+  onClose,
+  onComplete,
+  storageKey
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onComplete: (state: BillUploadState) => void;
+  storageKey: string;
+}) {
+  const [uploadState, setUploadState] = useState<BillUploadState>(() => loadBillUploadState(storageKey));
+  const [currentStepIndex, setCurrentStepIndex] = useState(() => getBillUploadResumeIndex(loadBillUploadState(storageKey)));
+  const [showSkipWarning, setShowSkipWarning] = useState(false);
+  const [fileError, setFileError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const nextState = loadBillUploadState(storageKey);
+    setUploadState(nextState);
+    setCurrentStepIndex(getBillUploadResumeIndex(nextState));
+    setShowSkipWarning(false);
+    setFileError(null);
+  }, [storageKey, isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
+      storeBillUploadState(storageKey, uploadState);
+    }
+  }, [isOpen, storageKey, uploadState]);
+
+  const currentStep = BILL_UPLOAD_STEPS[Math.min(currentStepIndex, BILL_UPLOAD_STEPS.length - 1)];
+  const currentStatus = uploadState.statuses[currentStep.id];
+  const uploadedStepSummaries = getBillUploadStepSummary(uploadState);
+  const currentStepUploaded = currentStatus === "uploaded";
+  const isFinalStep = currentStepIndex >= BILL_UPLOAD_STEPS.length - 1;
+  const canContinue = currentStepUploaded;
+
+  function completeWithState(nextState: BillUploadState, nextIndex: number) {
+    storeBillUploadState(storageKey, nextState);
+    setUploadState(nextState);
+    setCurrentStepIndex(nextIndex);
+  }
+
+  function handleFileUpload(file: File) {
+    if (!isSupportedBillUploadFile(file)) {
+      setFileError("Please upload a PDF, PNG, JPG, or JPEG file.");
+      return;
+    }
+
+    setFileError(null);
+    const uploadedRecord: BillUploadFileRecord = {
+      name: file.name,
+      size: file.size,
+      type: file.type || "application/octet-stream",
+      uploadedAt: new Date().toISOString()
+    };
+    const nextState = {
+      ...uploadState,
+      files: { ...uploadState.files, [currentStep.id]: uploadedRecord },
+      statuses: { ...uploadState.statuses, [currentStep.id]: "uploaded" as BillUploadStatus }
+    };
+    storeBillUploadState(storageKey, nextState);
+    setUploadState(nextState);
+  }
+
+  function handleFilesSelected(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    handleFileUpload(file);
+    event.target.value = "";
+  }
+
+  function handleDrop(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    const file = event.dataTransfer.files?.[0];
+    if (!file) return;
+    handleFileUpload(file);
+  }
+
+  function handleContinue() {
+    if (!canContinue) return;
+    const allUploaded = BILL_UPLOAD_STEPS.every((step) => uploadState.statuses[step.id] === "uploaded");
+    if (isFinalStep) {
+      const nextState = {
+        ...uploadState,
+        flowComplete: allUploaded
+      };
+      completeWithState(nextState, getBillUploadResumeIndex(nextState));
+      onComplete(nextState);
+      onClose();
+      return;
+    }
+
+    const nextIndex = Math.min(currentStepIndex + 1, BILL_UPLOAD_STEPS.length - 1);
+    setShowSkipWarning(false);
+    setFileError(null);
+    setCurrentStepIndex(nextIndex);
+  }
+
+  function handleSkipStart() {
+    setShowSkipWarning(true);
+  }
+
+  function handleSkipConfirm() {
+    const nextStatuses = {
+      ...uploadState.statuses,
+      [currentStep.id]: "skipped"
+    } as Record<BillUploadStepId, BillUploadStatus>;
+    const nextState = {
+      ...uploadState,
+      flowComplete: false,
+      statuses: nextStatuses
+    };
+    const nextIndex = Math.min(currentStepIndex + 1, BILL_UPLOAD_STEPS.length - 1);
+    completeWithState(nextState, nextIndex);
+    if (isFinalStep) {
+      onComplete(nextState);
+      onClose();
+    }
+    setShowSkipWarning(false);
+    setFileError(null);
+  }
+
+  function handleClose() {
+    setShowSkipWarning(false);
+    setFileError(null);
+    storeBillUploadState(storageKey, uploadState);
+    onClose();
+  }
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      aria-modal="true"
+      className={`bill-upload-backdrop${showSkipWarning ? " is-warning-open" : ""}`}
+      data-testid="bill-upload-modal"
+      role="dialog"
+      onDragOver={(event) => event.preventDefault()}
+      onDrop={handleDrop}
+    >
+      <section className={`bill-upload-modal${showSkipWarning ? " is-dimmed" : ""}`} aria-labelledby="bill-upload-modal-title">
+        <button aria-label="Close upload modal" className="bill-upload-close-button" onClick={handleClose} type="button">
+          <CloseIcon />
+        </button>
+
+        <div className="bill-upload-progress" aria-label="Bill upload progress">
+          {BILL_UPLOAD_STEPS.map((step, index) => {
+            const status = uploadState.statuses[step.id];
+            const isCurrent = index === currentStepIndex && status !== "uploaded";
+            return (
+              <span
+                className={`bill-upload-progress-segment is-${status}${isCurrent ? " is-current" : ""}${index === currentStepIndex && status === "uploaded" ? " is-current-uploaded" : ""}`}
+                key={step.id}
+              />
+            );
+          })}
+        </div>
+
+        <div className="bill-upload-header">
+          <h2 id="bill-upload-modal-title">{currentStep.title}</h2>
+          <p>{currentStep.subtitle}</p>
+        </div>
+
+        <div
+          className={`bill-upload-dropzone${currentStepUploaded ? " is-complete" : ""}`}
+          onClick={() => fileInputRef.current?.click()}
+          onDragOver={(event) => event.preventDefault()}
+          onDrop={handleDrop}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              fileInputRef.current?.click();
+            }
+          }}
+        >
+          <input
+            accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg"
+            aria-label="Choose file"
+            className="sr-only"
+            onChange={handleFilesSelected}
+            ref={fileInputRef}
+            type="file"
+          />
+          <div className="bill-upload-dropzone-icon" aria-hidden="true">
+            <UploadCloudIcon />
+          </div>
+          <strong>Drag and drop your file here</strong>
+          <span>or</span>
+          <button
+            className="bill-upload-file-button"
+            onClick={(event) => {
+              event.stopPropagation();
+              fileInputRef.current?.click();
+            }}
+            type="button"
+          >
+            Choose file
+          </button>
+          <small>Accepted formats: PDF, PNG, JPG</small>
+        </div>
+
+        {fileError ? <p className="bill-upload-error" role="alert">{fileError}</p> : null}
+
+        <div className="bill-upload-summary-list" aria-label="Uploaded bill summary">
+          {uploadedStepSummaries.map((step) => {
+            const file = uploadState.files[step.id];
+            return (
+              <article className="bill-upload-summary-row" key={step.id}>
+                <div>
+                  <span className="bill-upload-summary-title">
+                    <CheckIcon />
+                    {step.completedLabel}
+                  </span>
+                  <p>{file?.name || step.utilityLabel}</p>
+                </div>
+                <span className="bill-upload-complete-badge">Complete</span>
+              </article>
+            );
+          })}
+        </div>
+
+        <footer className="bill-upload-footer">
+          <button className="bill-upload-skip-button" onClick={handleSkipStart} type="button">
+            Skip for now
+          </button>
+          <button className="bill-upload-continue-button" disabled={!canContinue} onClick={handleContinue} type="button">
+            Continue
+          </button>
+        </footer>
+      </section>
+
+      {showSkipWarning ? (
+        <section className="bill-upload-warning-backdrop" aria-label="Skip upload warning" role="dialog">
+          <div className="bill-upload-warning-modal" aria-labelledby="bill-upload-warning-title">
+            <div className="bill-upload-warning-icon" aria-hidden="true">
+              <WarningIcon />
+            </div>
+            <h3 id="bill-upload-warning-title">
+              Warning: if you skip this bill, you won't be able to see eligible retrofits until the bill has been uploaded.
+            </h3>
+            <p>Are you sure you want to skip?</p>
+            <div className="bill-upload-warning-actions">
+              <button className="bill-upload-warning-secondary" onClick={() => setShowSkipWarning(false)} type="button">
+                No
+              </button>
+              <button className="bill-upload-warning-primary" onClick={handleSkipConfirm} type="button">
+                Yes
+              </button>
+            </div>
+          </div>
+        </section>
+      ) : null}
+    </div>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg className="bill-upload-close-icon" fill="none" viewBox="0 0 20 20">
+      <path d="M5 5l10 10M15 5 5 15" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
+function WarningIcon() {
+  return (
+    <svg className="bill-upload-warning-icon-svg" fill="none" viewBox="0 0 24 24">
+      <path d="M12 4.5 21 20H3L12 4.5Z" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.8" />
+      <path d="M12 9v4.5" stroke="currentColor" strokeLinecap="round" strokeWidth="1.8" />
+      <path d="M12 16.4h.01" stroke="currentColor" strokeLinecap="round" strokeWidth="2.8" />
+    </svg>
   );
 }
 

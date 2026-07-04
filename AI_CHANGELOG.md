@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-03 - Codex (GPT-5) bill upload modal overlay
+
+- Replaced the retrofits page Upload bills navigation with an in-place modal overlay that keeps the current page visible behind a dimmed background.
+- Added a four-step bill upload flow with local state persistence, drag-and-drop or click file selection, skip warning confirmation, and progress tracking for electric, water, gas, and waste/other bills.
+- Updated regression coverage for bill-upload sequencing, storage-key behavior, accepted file types, and the new modal entry point.
+
 ## 2026-07-03 - Codex (GPT-5) grant and tax estimate coverage pass
 
 - Added a repeatable 50-test-case grant/tax coverage report that classifies matched v2 package outcomes, missing expected-value evidence, unmatched tax packages, and local-tax workflow status.

@@ -2940,6 +2940,403 @@ dd {
   min-width: 0;
 }
 
+.bill-upload-backdrop {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(3px);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 24px;
+  position: fixed;
+  z-index: 135;
+}
+
+.bill-upload-modal {
+  background: #ffffff;
+  border: 1px solid rgba(191, 201, 195, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
+  box-sizing: border-box;
+  color: #07140f;
+  display: grid;
+  gap: 18px;
+  max-height: min(86vh, 760px);
+  min-height: 500px;
+  padding: 26px 28px 20px;
+  position: relative;
+  width: 748px;
+}
+
+.bill-upload-modal.is-dimmed {
+  filter: blur(0.8px) brightness(0.92);
+}
+
+.bill-upload-close-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  color: #55615b;
+  display: inline-flex;
+  height: 34px;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  right: 20px;
+  top: 18px;
+  width: 34px;
+}
+
+.bill-upload-close-button:hover {
+  background: #f3faf6;
+  color: #07140f;
+}
+
+.bill-upload-close-icon {
+  height: 18px;
+  width: 18px;
+}
+
+.bill-upload-progress {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 100%;
+  width: 100%;
+}
+
+.bill-upload-progress-segment {
+  background: #eef0ee;
+  border: 1px solid #eef0ee;
+  border-radius: 999px;
+  flex: 1 1 90px;
+  height: 10px;
+  max-width: 90px;
+  min-width: 62px;
+}
+
+.bill-upload-progress-segment.is-uploaded {
+  background: #0f7a4f;
+  border-color: #0f7a4f;
+}
+
+.bill-upload-progress-segment.is-skipped {
+  background: #f5efe1;
+  border-color: #e3c884;
+}
+
+.bill-upload-progress-segment.is-current {
+  background: #ffffff;
+  border-color: #0f7a4f;
+}
+
+.bill-upload-progress-segment.is-current-uploaded {
+  background: #0f7a4f;
+  border-color: #0f7a4f;
+}
+
+.bill-upload-header {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  text-align: center;
+}
+
+.bill-upload-header h2 {
+  color: #07140f;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.bill-upload-header p {
+  color: #55615b;
+  font-size: 15px;
+  line-height: 1.45;
+  margin: 0;
+  max-width: 560px;
+}
+
+.bill-upload-dropzone {
+  align-items: center;
+  align-self: center;
+  background: #ffffff;
+  border: 2px dashed #bfc9c3;
+  border-radius: 14px;
+  cursor: pointer;
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  min-height: 194px;
+  padding: 26px 18px 22px;
+  text-align: center;
+  width: min(84%, 620px);
+}
+
+.bill-upload-dropzone:hover,
+.bill-upload-dropzone:focus-visible {
+  background: #f3faf6;
+  border-color: #0f7a4f;
+  outline: none;
+}
+
+.bill-upload-dropzone.is-complete {
+  background: #f7fbf8;
+}
+
+.bill-upload-dropzone strong {
+  color: #07140f;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.bill-upload-dropzone span {
+  color: #66746d;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.bill-upload-dropzone small {
+  color: #8d968f;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.bill-upload-dropzone-icon {
+  align-items: center;
+  background: linear-gradient(135deg, #f1f7f2, #fbfaf4);
+  border-radius: 999px;
+  color: #0f7a4f;
+  display: inline-flex;
+  height: 56px;
+  justify-content: center;
+  width: 56px;
+}
+
+.bill-upload-dropzone-icon svg {
+  display: block;
+  height: 32px;
+  width: 32px;
+}
+
+.bill-upload-file-button {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #0f7a4f;
+  border-radius: 8px;
+  color: #0f7a4f;
+  display: inline-flex;
+  height: 38px;
+  justify-content: center;
+  min-width: 118px;
+  padding: 0 16px;
+}
+
+.bill-upload-file-button:hover {
+  background: #f3faf6;
+}
+
+.bill-upload-error {
+  color: #9a5f13;
+  font-size: 13px;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.bill-upload-summary-list {
+  display: grid;
+  gap: 10px;
+  min-height: 0;
+}
+
+.bill-upload-summary-row {
+  align-items: center;
+  border-top: 1px solid #eef0ee;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+
+.bill-upload-summary-row > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.bill-upload-summary-title {
+  align-items: center;
+  color: #07140f;
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 700;
+  gap: 8px;
+  line-height: 1.25;
+}
+
+.bill-upload-summary-title svg {
+  color: #0f7a4f;
+  height: 16px;
+  width: 16px;
+}
+
+.bill-upload-summary-row p {
+  color: #66746d;
+  font-size: 13px;
+  line-height: 1.3;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bill-upload-complete-badge {
+  background: #eaf5ef;
+  border-radius: 999px;
+  color: #0f7a4f;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+
+.bill-upload-footer {
+  align-items: center;
+  border-top: 1px solid #eef0ee;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin-top: 2px;
+  padding-top: 14px;
+}
+
+.bill-upload-skip-button,
+.bill-upload-continue-button {
+  align-items: center;
+  border-radius: 10px;
+  display: inline-flex;
+  height: 42px;
+  justify-content: center;
+  min-width: 124px;
+  padding: 0 18px;
+}
+
+.bill-upload-skip-button {
+  background: #ffffff;
+  border: 1px solid #c9d1cc;
+  color: #07140f;
+}
+
+.bill-upload-skip-button:hover {
+  background: #f6f8f7;
+}
+
+.bill-upload-continue-button {
+  background: #dfe5e1;
+  border: 1px solid #dfe5e1;
+  color: #8a9490;
+}
+
+.bill-upload-continue-button:not(:disabled) {
+  background: #0f7a4f;
+  border-color: #0f7a4f;
+  color: #ffffff;
+}
+
+.bill-upload-continue-button:not(:disabled):hover {
+  background: #0d6c46;
+}
+
+.bill-upload-warning-backdrop {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.14);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  position: absolute;
+  z-index: 1;
+}
+
+.bill-upload-warning-modal {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 18px 54px rgba(0, 0, 0, 0.22);
+  display: grid;
+  gap: 14px;
+  max-width: 420px;
+  padding: 22px 24px 20px;
+  text-align: center;
+  width: min(88%, 420px);
+}
+
+.bill-upload-warning-icon {
+  align-items: center;
+  color: #e0a112;
+  display: inline-flex;
+  height: 32px;
+  justify-content: center;
+  margin: 0 auto;
+  width: 32px;
+}
+
+.bill-upload-warning-icon-svg {
+  display: block;
+  height: 26px;
+  width: 26px;
+}
+
+.bill-upload-warning-modal h3 {
+  color: #07140f;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.bill-upload-warning-modal p {
+  color: #55615b;
+  font-size: 15px;
+  margin: 0;
+}
+
+.bill-upload-warning-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.bill-upload-warning-secondary,
+.bill-upload-warning-primary {
+  align-items: center;
+  border-radius: 8px;
+  display: inline-flex;
+  height: 38px;
+  justify-content: center;
+  min-width: 118px;
+  padding: 0 16px;
+}
+
+.bill-upload-warning-secondary {
+  background: #ffffff;
+  border: 1px solid #c9d1cc;
+  color: #07140f;
+}
+
+.bill-upload-warning-primary {
+  background: #0f7a4f;
+  border: 1px solid #0f7a4f;
+  color: #ffffff;
+}
+
+.bill-upload-warning-primary:hover {
+  background: #0d6c46;
+}
+
 @media (max-width: 1100px) {
   .process-onboarding-backdrop .process-note {
     white-space: normal;
@@ -2994,6 +3391,51 @@ dd {
     height: 54px;
     min-width: 132px;
     padding: 0 28px;
+  }
+
+  .bill-upload-modal {
+    gap: 16px;
+    max-height: calc(100vh - 32px);
+    min-height: 0;
+    padding: 22px 20px 18px;
+    width: min(94vw, 748px);
+  }
+
+  .bill-upload-dropzone {
+    min-height: 172px;
+    width: 100%;
+  }
+
+  .bill-upload-header h2 {
+    font-size: 22px;
+  }
+
+  .bill-upload-header p {
+    font-size: 14px;
+  }
+
+  .bill-upload-progress-segment {
+    min-width: 0;
+  }
+
+  .bill-upload-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bill-upload-skip-button,
+  .bill-upload-continue-button,
+  .bill-upload-warning-secondary,
+  .bill-upload-warning-primary {
+    width: 100%;
+  }
+
+  .bill-upload-warning-actions {
+    flex-direction: column;
+  }
+
+  .bill-upload-warning-modal {
+    width: min(92vw, 420px);
   }
 }
 
