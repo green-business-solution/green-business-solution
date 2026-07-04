@@ -49,6 +49,7 @@
     "matching:incentive-formula-repairs:apply": "node scripts/apply-incentive-formula-rate-table-repairs.mjs",
     "matching:v2-estimate-gpt-pro:intake": "node scripts/intake-v2-estimate-gpt-pro-outputs.mjs",
     "matching:grant-estimation-repairs:intake": "node scripts/intake-grant-estimation-repair-outputs.mjs",
+    "matching:grant-ev-gap-work-packet": "node scripts/write-grant-expected-value-gap-work-packet.mjs",
     "test": "vitest run",
     "typecheck": "tsc -b"
   },
