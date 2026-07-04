@@ -4,6 +4,7 @@
 
 - Added the three-circle retrofit readiness row to every retrofit picker card, with per-card bills/questions/estimate completion state and neutral label text.
 - Wired bill-upload hydration, retrofit-specific card-click routing, and sort grouping so complete cards rise above incomplete ones and the upload modal can open on the first missing bill.
+- Synchronized modal file-upload progress back into the preview state immediately so the readiness circles update as soon as a bill is uploaded or skipped.
 - Added focused regression coverage for readiness helpers, card ordering, rendered readiness rows, and the new modal mounting path.
 
 ## 2026-07-03 - Codex (GPT-5) bill upload modal mount fix

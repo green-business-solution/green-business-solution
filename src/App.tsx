@@ -8318,6 +8318,7 @@ function BillUploadModal({
   function completeWithState(nextState: BillUploadState, nextIndex: number) {
     storeBillUploadState(storageKey, nextState);
     setUploadState(nextState);
+    onStateChange?.(nextState);
     setCurrentStepIndex(nextIndex);
   }
 
@@ -8341,6 +8342,7 @@ function BillUploadModal({
     };
     storeBillUploadState(storageKey, nextState);
     setUploadState(nextState);
+    onStateChange?.(nextState);
   }
 
   function handleFilesSelected(event: ChangeEvent<HTMLInputElement>) {
