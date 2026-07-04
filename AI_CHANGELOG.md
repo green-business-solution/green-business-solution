@@ -1,5 +1,13 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) dashboard post-install performance data
+
+- Added a deterministic post-install dashboard performance dataset model and generator for sample test cases, including implemented retrofits, monthly performance, incentives, documents, certification records/requirements, next actions, and data-quality validation.
+- Added dashboard performance persistence through the runtime DynamoDB-style store with local fallback, plus admin/customer-safe backend endpoints for seeding, reading, listing, and deleting synthetic test-case data.
+- Added the `/admin/dashboard-performance-data` admin page for validation, seed/reseed/delete actions, dataset inspection, raw JSON copy, and direct dashboard-preview links.
+- Wired the existing four-page dashboard adapter to prefer post-install performance records for KPI, cash-flow, impact, incentive, document, certification, and next-action sections while preserving empty states for real users without performance data.
+- Added targeted generator/store/frontend tests and ran `npm run typecheck`, `npx vitest run src/retrofitPreview.test.tsx`, `npx vitest run server/dashboardPerformance/*.test.mjs`, `npx vitest run server/applicationSources/*.test.mjs`, and `npm run build`.
+
 ## 2026-07-04 - Codex (GPT-5) process note placement
 
 - Moved the process onboarding note slightly inside the modal and changed the note copy from future use to future selection.

@@ -1,4 +1,6 @@
 import crypto from "node:crypto";
+import fs from "node:fs/promises";
+import path from "node:path";
 import express from "express";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
@@ -47,6 +49,17 @@ import {
   supportedUtilityFileTypes,
   utilityUploadCategoryOptions
 } from "./energyData/parseEnergyData.mjs";
+import { buildSyntheticDashboardPostImplementationDataset } from "./dashboardPerformance/syntheticDashboardPerformance.mjs";
+import {
+  buildDashboardPerformanceSummaryResponse,
+  deleteAllSyntheticDashboardPostImplementationDatasets,
+  deleteSyntheticDashboardPostImplementationDataset,
+  getDashboardPostImplementationDatasetByTestCase,
+  listDashboardPostImplementationDatasetSummaries,
+  putDashboardPostImplementationDataset,
+  summarizeDashboardPostImplementationDataset
+} from "./dashboardPerformance/dashboardPerformanceStore.mjs";
+import { validateDashboardPostImplementationDataset } from "./dashboardPerformance/schemas.mjs";
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
 const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
@@ -58,6 +71,8 @@ const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
 const opportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
 const energyDataTable = process.env.GBS_ENERGY_DATA_TABLE || "gbs-energy-data";
 const runtimeStateTable = process.env.GBS_RUNTIME_STATE_TABLE || "gbs-runtime-state";
+const sampleMatchingTestCasesPath =
+  process.env.GBS_SAMPLE_MATCHING_TEST_CASES_PATH || path.join(process.cwd(), "public", "sample_matching_test_cases.json");
 const energyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "";
 const geocodioApiKey = process.env.GBS_GEOCODIO_API_KEY || process.env.GEOCODIO_API_KEY || "";
 const geocodioDailyLimit = parseNonNegativeInteger(
@@ -2420,6 +2435,7 @@ async function buildAdminFakeClientOptions() {
       const publicRecord = publicUser(user);
       return {
         userId: publicRecord.userId,
+        sampleUserId: user.sampleUserId || null,
         clientName: publicRecord.fullName || publicRecord.email,
         companyName: publicRecord.companyName || null,
         email: publicRecord.email,
@@ -2427,6 +2443,97 @@ async function buildAdminFakeClientOptions() {
       };
     })
     .sort((left, right) => left.clientName.localeCompare(right.clientName));
+}
+
+let sampleMatchingTestCasesCache = null;
+
+async function loadSampleMatchingTestCases() {
+  if (sampleMatchingTestCasesCache) return sampleMatchingTestCasesCache;
+  const raw = await fs.readFile(sampleMatchingTestCasesPath, "utf8");
+  const parsed = JSON.parse(raw);
+  const testCases = Array.isArray(parsed) ? parsed : parsed.testCases || [];
+  sampleMatchingTestCasesCache = testCases;
+  return testCases;
+}
+
+async function getSampleMatchingTestCase(testCaseId) {
+  const cleanId = cleanText(testCaseId);
+  const testCases = await loadSampleMatchingTestCases();
+  return testCases.find((testCase) => testCase.sampleUserId === cleanId) || null;
+}
+
+function dashboardPerformanceStoreOptions() {
+  return { db, tableName: runtimeStateTable };
+}
+
+async function seedDashboardPostImplementationDataset(testCaseId) {
+  const testCase = await getSampleMatchingTestCase(testCaseId);
+  if (!testCase) {
+    const error = new Error("Test case was not found.");
+    error.status = 404;
+    throw error;
+  }
+  const dataset = buildSyntheticDashboardPostImplementationDataset(testCase);
+  const result = await putDashboardPostImplementationDataset({
+    ...dashboardPerformanceStoreOptions(),
+    dataset
+  });
+  return {
+    dataset: result.dataset,
+    summary: summarizeDashboardPostImplementationDataset(result.dataset, { storageStatus: result.storageStatus }),
+    storageStatus: result.storageStatus,
+    warning: result.warning || null,
+    validation: validateDashboardPostImplementationDataset(result.dataset)
+  };
+}
+
+async function seedAllDashboardPostImplementationDatasets() {
+  const testCases = await loadSampleMatchingTestCases();
+  const summaries = [];
+  const warnings = [];
+  for (const testCase of testCases) {
+    const result = await seedDashboardPostImplementationDataset(testCase.sampleUserId);
+    summaries.push(result.summary);
+    if (result.warning) warnings.push(`${testCase.sampleUserId}: ${result.warning}`);
+  }
+  const summaryResponse = buildDashboardPerformanceSummaryResponse(testCases, summaries.map((summary) => ({
+      testCaseId: summary.testCaseId,
+      archetype: summary.archetype,
+      isSynthetic: summary.isSynthetic,
+      syntheticSource: summary.syntheticSource,
+      reportingPeriod: summary.reportingPeriod,
+      implementedRetrofits: Array.from({ length: summary.implementedRetrofitCount }),
+      monthlyPerformanceRecords: Array.from({ length: summary.monthlyRecordCount }),
+      incentivePerformanceRecords: Array.from({ length: summary.incentiveRecordCount }),
+      documentRecords: Array.from({ length: summary.documentRecordCount }),
+      certificationRecords: Array.from({ length: summary.certificationRecordCount }),
+      certificationRequirements: Array.from({ length: summary.certificationRequirementCount }),
+      nextBestActions: Array.from({ length: summary.nextBestActionCount }),
+      dataQuality: summary.dataQuality,
+      updatedAt: summary.updatedAt,
+      generatedAt: summary.generatedAt
+    })), { storageStatus: summaries.some((summary) => summary.storageStatus === "dynamodb") ? "dynamodb" : "local_fallback" });
+  return {
+    ...summaryResponse,
+    warnings
+  };
+}
+
+async function attachAdminDashboardPostImplementationDataset(payload, user, intake) {
+  const sampleUserId = cleanText(user?.sampleUserId || intake?.sampleUserId);
+  if (!sampleUserId || !isFakeUserRecord(user)) return payload;
+  const result = await getDashboardPostImplementationDatasetByTestCase({
+    ...dashboardPerformanceStoreOptions(),
+    testCaseId: sampleUserId
+  });
+  if (!result?.dataset) return payload;
+  return {
+    ...payload,
+    dashboardPostImplementationDataset: {
+      ...result.dataset,
+      storageStatus: result.storageStatus
+    }
+  };
 }
 
 async function loadAdminApplicationSourceOpportunityBatch({ cursor, limit }) {
@@ -3658,7 +3765,8 @@ app.get("/api/admin/client-retrofit-preview/:userId", async (req, res) => {
     }
 
     const intake = await getIntake(user.userId);
-    res.json(buildPortalRetrofitPreviewShell({ user: publicUser(user), intake, now: new Date() }));
+    const payload = buildPortalRetrofitPreviewShell({ user: publicUser(user), intake, now: new Date() });
+    res.json(await attachAdminDashboardPostImplementationDataset(payload, user, intake));
   } catch (error) {
     handleError(res, error);
   }
@@ -3687,14 +3795,121 @@ app.get("/api/admin/client-retrofit-recommendations/:userId", async (req, res) =
 
     const intake = await getIntake(user.userId);
     const retrofitTypeId = cleanText(req.query.retrofitTypeId);
-    res.json(
+    const payload =
       await buildCachedPortalRetrofitRecommendations({
         user,
         intake,
         now: new Date(),
         retrofitTypeIds: retrofitTypeId ? [retrofitTypeId] : []
-      })
-    );
+      });
+    res.json(await attachAdminDashboardPostImplementationDataset(payload, user, intake));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/dashboard-performance/test-cases", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const testCases = await loadSampleMatchingTestCases();
+    res.json(await listDashboardPostImplementationDatasetSummaries({
+      ...dashboardPerformanceStoreOptions(),
+      testCases
+    }));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/dashboard-performance/test-cases/:testCaseId", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const testCaseId = cleanText(req.params.testCaseId);
+    const existing = await getDashboardPostImplementationDatasetByTestCase({
+      ...dashboardPerformanceStoreOptions(),
+      testCaseId
+    });
+    if (!existing?.dataset) {
+      const error = new Error("Dashboard performance dataset was not found.");
+      error.status = 404;
+      throw error;
+    }
+    res.json({
+      dataset: existing.dataset,
+      summary: summarizeDashboardPostImplementationDataset(existing.dataset, { storageStatus: existing.storageStatus }),
+      storageStatus: existing.storageStatus,
+      validation: validateDashboardPostImplementationDataset(existing.dataset)
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/dashboard-performance/test-cases/:testCaseId/seed", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    res.json(await seedDashboardPostImplementationDataset(req.params.testCaseId));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/dashboard-performance/seed-all", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    res.json(await seedAllDashboardPostImplementationDatasets());
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.delete("/api/admin/dashboard-performance/test-cases/:testCaseId", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    res.json(await deleteSyntheticDashboardPostImplementationDataset({
+      ...dashboardPerformanceStoreOptions(),
+      testCaseId: req.params.testCaseId
+    }));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.delete("/api/admin/dashboard-performance", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const testCases = await loadSampleMatchingTestCases();
+    res.json(await deleteAllSyntheticDashboardPostImplementationDatasets({
+      ...dashboardPerformanceStoreOptions(),
+      testCaseIds: testCases.map((testCase) => testCase.sampleUserId)
+    }));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/dashboard-performance", async (req, res) => {
+  try {
+    const user = await requireAuthenticatedUserFromRequest(req);
+    const requestedTestCaseId = cleanText(req.query.testCaseId);
+    if (requestedTestCaseId) {
+      if (user.role !== "admin") {
+        const error = new Error("Admin access is required for test-case dashboard performance data.");
+        error.status = 403;
+        throw error;
+      }
+      const result = await getDashboardPostImplementationDatasetByTestCase({
+        ...dashboardPerformanceStoreOptions(),
+        testCaseId: requestedTestCaseId
+      });
+      res.json({ dataset: result?.dataset || null, storageStatus: result?.storageStatus || "not_found" });
+      return;
+    }
+    res.json({
+      dataset: null,
+      storageStatus: "not_configured",
+      note: "Real customer post-implementation dashboard performance records are not connected yet."
+    });
   } catch (error) {
     handleError(res, error);
   }

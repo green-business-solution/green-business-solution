@@ -1,5 +1,5 @@
 import { ChangeEvent, CSSProperties, DragEvent, FormEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { apiGet, apiPatch, apiPost } from "./api";
+import { apiDelete, apiGet, apiPatch, apiPost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
   AUTH_CREDENTIAL_STORAGE_KEY,
@@ -40,6 +40,7 @@ type UserRecord = {
   googleLinked: boolean;
   googlePicture?: string | null;
   isFakeUser: boolean;
+  sampleUserId?: string | null;
   createdAt: string;
   lastLoginAt: string | null;
 };
@@ -198,11 +199,34 @@ type PortalRetrofitRecommendationsResponse = PortalPayload & {
   generatedAt: string;
   isProgressiveShell?: boolean;
   isPartialRecommendations?: boolean;
+  dashboardPostImplementationDataset?: DashboardPostImplementationDataset | null;
   summary: {
     matchedRetrofitCount: number;
     matchedOpportunityCount: number;
   };
   retrofits: SampleRetrofitGroup[];
+};
+
+type DashboardPostImplementationDataset = {
+  schemaVersion: "dashboard-post-implementation-v1";
+  testCaseId: string;
+  businessId?: string;
+  userId?: string;
+  isSynthetic: boolean;
+  syntheticSource?: "admin_test_case_seed" | string;
+  generatedAt: string;
+  updatedAt: string;
+  storageStatus?: string;
+  reportingPeriod: { startDate: string; endDate: string; label: string };
+  properties: Array<Record<string, unknown>>;
+  implementedRetrofits: Array<Record<string, unknown>>;
+  monthlyPerformanceRecords: Array<Record<string, unknown>>;
+  incentivePerformanceRecords: Array<Record<string, unknown>>;
+  documentRecords: Array<Record<string, unknown>>;
+  certificationRecords: Array<Record<string, unknown>>;
+  certificationRequirements: Array<Record<string, unknown>>;
+  nextBestActions: Array<Record<string, unknown>>;
+  dataQuality?: { status: string; notes: string[]; warnings: string[] };
 };
 
 type PortalPreviewHint = {
@@ -5406,6 +5430,7 @@ function isAppChromeRoute(route: Route) {
     route === "portal-preview" ||
     route === "user-preview" ||
     route === "admin" ||
+    route === "admin-dashboard-performance-data" ||
     route === "admin-application-sources" ||
     route === "admin-application-profiles" ||
     route === "testcases"
@@ -7603,7 +7628,7 @@ type DashboardImplementedRetrofit = {
   propertyName: string;
   category: string;
   installedDate?: string | null;
-  implementationStatus: "operational" | "installed" | "tracking" | "completed";
+  implementationStatus: "operational" | "installed" | "tracking" | "completed" | "implemented";
   sourceStatus?: string | null;
   projectCostCents?: number | null;
   incentivesReceivedCents?: number | null;
@@ -7648,7 +7673,7 @@ type DashboardCertificationProgram = {
 type DashboardNextBestAction = {
   id: string;
   title: string;
-  category: "financial" | "impact" | "certification" | "document" | "implementation";
+  category: "financial" | "impact" | "certification" | "document" | "implementation" | "incentive" | "operations" | "measurement";
   whyItMatters: string;
   relatedRetrofitId?: string;
   estimatedCostCents?: number | null;
@@ -7657,7 +7682,7 @@ type DashboardNextBestAction = {
   certificationImpact?: string;
   creditsUnlocked?: number | null;
   documentsNeeded?: number | null;
-  difficulty?: "easy" | "medium" | "hard";
+  difficulty?: "easy" | "medium" | "hard" | "moderate" | "complex";
   timeRequired?: string;
   priorityScore: number;
   projectedOutcome: string;
@@ -8024,9 +8049,13 @@ function buildDashboardNextBestActions(implementedRetrofits: DashboardImplemente
 export function buildDashboardPerformanceData(payload: PortalRetrofitRecommendationsResponse | null, preview: UserRetrofitPreviewResult): DashboardViewModel {
   const sourceRetrofits = payload?.retrofits || [];
   const sourceById = new Map(sourceRetrofits.map((retrofit) => [retrofit.retrofitTypeId, retrofit]));
-  const implementedRetrofits = preview.retrofits
-    .map((retrofit, index) => buildImplementedRetrofitPerformance(retrofit, sourceById.get(retrofit.id), index))
-    .filter((retrofit): retrofit is DashboardImplementedRetrofit => Boolean(retrofit));
+  const postImplementationDataset = payload?.dashboardPostImplementationDataset || null;
+  const hasPostImplementationDataset = Boolean(postImplementationDataset);
+  const implementedRetrofits = postImplementationDataset
+    ? buildImplementedRetrofitsFromDashboardDataset(postImplementationDataset)
+    : preview.retrofits
+      .map((retrofit, index) => buildImplementedRetrofitPerformance(retrofit, sourceById.get(retrofit.id), index))
+      .filter((retrofit): retrofit is DashboardImplementedRetrofit => Boolean(retrofit));
 
   const projectCost = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.projectCostCents));
   const incentivesReceived = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.incentivesReceivedCents));
@@ -8047,22 +8076,32 @@ export function buildDashboardPerformanceData(payload: PortalRetrofitRecommendat
   const water = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.waterSavedPerYear));
   const waste = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.wasteReducedPerYear));
   const financialLabels = ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
-  const certifications = buildDashboardCertificationPrograms(implementedRetrofits);
-  const nextActions = buildDashboardNextBestActions(implementedRetrofits, certifications);
-  const documentRows = aggregateDashboardDocumentReadiness(implementedRetrofits);
+  const certifications = postImplementationDataset
+    ? buildDashboardCertificationProgramsFromDataset(postImplementationDataset)
+    : buildDashboardCertificationPrograms(implementedRetrofits);
+  const nextActions = postImplementationDataset
+    ? buildDashboardNextBestActionsFromDataset(postImplementationDataset)
+    : buildDashboardNextBestActions(implementedRetrofits, certifications);
+  const documentRows = postImplementationDataset
+    ? aggregateDashboardDocumentReadinessFromDataset(postImplementationDataset)
+    : aggregateDashboardDocumentReadiness(implementedRetrofits);
   const missingDocumentCount = documentRows.reduce((sum, row) => sum + row.missing, 0);
   const readinessTotal = documentRows.reduce((sum, row) => sum + row.ready + row.inReview + row.missing, 0);
   const readinessReady = documentRows.reduce((sum, row) => sum + row.ready, 0);
   const applicationReadiness = readinessTotal ? Math.round((readinessReady / readinessTotal) * 100) : null;
   const certificationProgress = averageNullableNumbers(certifications.map((program) => program.progressPercent));
-  const basisLabel = implementedRetrofits.length
-    ? implementedRetrofits.some((retrofit) => retrofit.actualAnnualSavingsCents != null)
-      ? implementedRetrofits.some((retrofit) => retrofit.estimatedAnnualSavingsCents != null && retrofit.actualAnnualSavingsCents == null)
-        ? "mixed"
-        : "actual"
-      : "modeled"
-    : "unavailable";
-  const periodLabel = "May 1, 2024 - Apr 30, 2025";
+  const basisLabel = postImplementationDataset
+    ? dashboardBasisLabelFromDataset(postImplementationDataset)
+    : implementedRetrofits.length
+      ? implementedRetrofits.some((retrofit) => retrofit.actualAnnualSavingsCents != null)
+        ? implementedRetrofits.some((retrofit) => retrofit.estimatedAnnualSavingsCents != null && retrofit.actualAnnualSavingsCents == null)
+          ? "mixed"
+          : "actual"
+        : "modeled"
+      : "unavailable";
+  const periodLabel = postImplementationDataset?.reportingPeriod?.label || "May 1, 2024 - Apr 30, 2025";
+  const cashFlowSeries = postImplementationDataset ? buildDashboardCashFlowSeriesFromDataset(postImplementationDataset) : buildDashboardSeries(annualSavings, financialLabels);
+  const impactSeries = postImplementationDataset ? buildDashboardImpactSeriesFromDataset(postImplementationDataset) : buildDashboardSeries(co2e, financialLabels);
 
   const financial: DashboardFinancialData = {
     totalProjectCostCents: projectCost,
@@ -8094,7 +8133,7 @@ export function buildDashboardPerformanceData(payload: PortalRetrofitRecommendat
       dashboardMetric("Projected 10-year savings", formatDashboardCurrencyCents(projectedTenYearSavings), "Future value", "purple", projectedTenYearSavings == null),
       dashboardMetric("Remaining before payback", formatDashboardCurrencyCents(netProjectCost != null && recoveredSoFar != null ? Math.max(netProjectCost - recoveredSoFar, 0) : null), "Projected recovery", "purple", netProjectCost == null || recoveredSoFar == null)
     ],
-    cashFlowSeries: buildDashboardSeries(annualSavings, financialLabels),
+    cashFlowSeries,
     topSavingsRetrofits: implementedRetrofits
       .map((retrofit) => ({ label: retrofit.name, value: (retrofit.actualAnnualSavingsCents ?? retrofit.estimatedAnnualSavingsCents ?? 0) / 100 }))
       .filter((item) => item.value > 0)
@@ -8125,7 +8164,7 @@ export function buildDashboardPerformanceData(payload: PortalRetrofitRecommendat
       dashboardMetric("Projected 10-year CO2e", formatDashboardNumber(co2e == null ? null : co2e * 10, "MT"), "Future impact", "purple", co2e == null),
       dashboardMetric("Next-action impact", nextActions.find((action) => action.estimatedCO2eImpact)?.projectedOutcome || "Unavailable", "Highest impact action", "purple", !nextActions.some((action) => action.estimatedCO2eImpact))
     ],
-    impactSeries: buildDashboardSeries(co2e, financialLabels),
+    impactSeries,
     impactByRetrofit: implementedRetrofits
       .map((retrofit) => ({ label: retrofit.name, value: retrofit.co2eReducedPerYear ?? 0 }))
       .filter((item) => item.value > 0)
@@ -8188,7 +8227,7 @@ export function buildDashboardPerformanceData(payload: PortalRetrofitRecommendat
       hasImplementedRetrofits: implementedRetrofits.length > 0,
       basisLabel,
       notes: implementedRetrofits.length
-        ? [`Dashboard includes ${implementedRetrofits.length} implemented/tracking retrofit record(s).`]
+        ? [`Dashboard includes ${implementedRetrofits.length} implemented/tracking retrofit record(s).${hasPostImplementationDataset ? " Synthetic admin/test-case performance data is shown for preview only." : ""}`]
         : ["No post-implementation retrofit records were found in the current payload. Dashboard sections render unavailable states until implementation data is connected."]
     }
   };
@@ -8206,6 +8245,212 @@ function aggregateDashboardDocumentReadiness(implementedRetrofits: DashboardImpl
     });
   });
   return Array.from(rows.values());
+}
+
+function dashboardDatasetRecords(dataset: DashboardPostImplementationDataset | null | undefined, key: keyof DashboardPostImplementationDataset) {
+  const value = dataset?.[key];
+  return Array.isArray(value) ? value.filter(isPlainRecord) : [];
+}
+
+function dashboardRecordString(record: Record<string, unknown>, key: string) {
+  const value = record[key];
+  return typeof value === "string" ? value : "";
+}
+
+function dashboardRecordNumber(record: Record<string, unknown>, key: string) {
+  const value = record[key];
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "string") {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  return null;
+}
+
+function normalizeDatasetImplementationStatus(value: string): DashboardImplementedRetrofit["implementationStatus"] | null {
+  const normalized = value.replace(/[_\s-]/g, "").toLowerCase();
+  if (!DASHBOARD_IMPLEMENTED_STATUSES.has(normalized)) return null;
+  if (normalized === "operational") return "operational";
+  if (normalized === "installed") return "installed";
+  if (normalized === "tracking") return "tracking";
+  if (normalized === "implemented") return "implemented";
+  return "completed";
+}
+
+function normalizeDashboardCertificationStatus(value: string): RetrofitEnvironmentalImpact["certificationContribution"][number]["status"] {
+  const normalized = value.replace(/[_\s-]/g, "").toLowerCase();
+  if (normalized === "supports" || normalized === "supported") return "Supports";
+  if (normalized === "maysupport" || normalized === "conditional") return "May support";
+  if (normalized === "needsreview" || normalized === "review") return "Needs review";
+  return "Not evaluated yet";
+}
+
+function buildImplementedRetrofitsFromDashboardDataset(dataset: DashboardPostImplementationDataset): DashboardImplementedRetrofit[] {
+  const properties = new Map(dashboardDatasetRecords(dataset, "properties").map((property) => [dashboardRecordString(property, "id"), property]));
+  const documents = dashboardDatasetRecords(dataset, "documentRecords");
+  return dashboardDatasetRecords(dataset, "implementedRetrofits")
+    .map((record): DashboardImplementedRetrofit | null => {
+      const status = normalizeDatasetImplementationStatus(dashboardRecordString(record, "status"));
+      if (!status) return null;
+      const property = properties.get(dashboardRecordString(record, "propertyId"));
+      const retrofitDocuments = documents.filter((document) => dashboardRecordString(document, "relatedRetrofitId") === dashboardRecordString(record, "id"));
+      return {
+        id: dashboardRecordString(record, "id"),
+        name: dashboardRecordString(record, "name") || dashboardRecordString(record, "retrofitId"),
+        propertyName: dashboardRecordString(property || {}, "name") || "Primary property",
+        category: dashboardRecordString(record, "category") || "Retrofit",
+        installedDate: dashboardRecordString(record, "installedDate") || null,
+        implementationStatus: status,
+        sourceStatus: dashboardRecordString(record, "status"),
+        projectCostCents: dashboardRecordNumber(record, "actualProjectCostCents"),
+        incentivesReceivedCents: dashboardRecordNumber(record, "incentivesReceivedCents"),
+        incentivesApprovedCents: dashboardRecordNumber(record, "incentivesApprovedCents"),
+        incentivesPendingCents: dashboardRecordNumber(record, "incentivesPendingCents"),
+        incentivesNotClaimedCents: dashboardRecordNumber(record, "incentivesNotClaimedCents"),
+        netCostCents: dashboardRecordNumber(record, "actualNetCostCents"),
+        estimatedAnnualSavingsCents: dashboardRecordNumber(record, "estimatedAnnualSavingsCents"),
+        actualAnnualSavingsCents: dashboardRecordNumber(record, "actualAnnualSavingsCents"),
+        actualMonthlySavingsCents: dashboardRecordNumber(record, "actualMonthlySavingsCents"),
+        paybackYears: dashboardRecordNumber(record, "actualPaybackYears"),
+        roiPercent: dashboardRecordNumber(record, "actualROI"),
+        projectedFiveYearSavingsCents: (dashboardRecordNumber(record, "actualAnnualSavingsCents") ?? dashboardRecordNumber(record, "estimatedAnnualSavingsCents")) == null
+          ? null
+          : (dashboardRecordNumber(record, "actualAnnualSavingsCents") ?? dashboardRecordNumber(record, "estimatedAnnualSavingsCents") ?? 0) * 5,
+        projectedTenYearSavingsCents: (dashboardRecordNumber(record, "actualAnnualSavingsCents") ?? dashboardRecordNumber(record, "estimatedAnnualSavingsCents")) == null
+          ? null
+          : (dashboardRecordNumber(record, "actualAnnualSavingsCents") ?? dashboardRecordNumber(record, "estimatedAnnualSavingsCents") ?? 0) * 10,
+        co2eReducedPerYear: divideNumber(dashboardRecordNumber(record, "actualCO2eReducedKgPerYear"), 1000),
+        kwhSavedPerYear: dashboardRecordNumber(record, "actualKwhSavedPerYear"),
+        thermsReducedPerYear: dashboardRecordNumber(record, "actualThermsSavedPerYear"),
+        waterSavedPerYear: dashboardRecordNumber(record, "actualWaterSavedGallonsPerYear"),
+        wasteReducedPerYear: dashboardRecordNumber(record, "actualWasteReducedPerYear"),
+        certificationsSupported: Array.isArray(record.certificationContributions)
+          ? record.certificationContributions.filter(isPlainRecord).map((item) => ({
+              program: dashboardRecordString(item, "program"),
+              status: normalizeDashboardCertificationStatus(dashboardRecordString(item, "status")),
+              detail: dashboardRecordString(item, "detail")
+            }))
+          : [],
+        documentReadiness: buildDashboardDocumentReadinessFromRecords(retrofitDocuments)
+      };
+    })
+    .filter((retrofit): retrofit is DashboardImplementedRetrofit => retrofit !== null);
+}
+
+function buildDashboardDocumentReadinessFromRecords(documents: Record<string, unknown>[]): DashboardDocumentReadiness[] {
+  const rows = new Map<string, DashboardDocumentReadiness>();
+  documents.forEach((document) => {
+    const category = capitalizeLabel(dashboardRecordString(document, "documentType") || dashboardRecordString(document, "requiredFor") || "Document");
+    const current = rows.get(category) || { category, ready: 0, inReview: 0, missing: 0 };
+    const status = dashboardRecordString(document, "status");
+    if (status === "verified" || status === "uploaded") current.ready += 1;
+    else if (status === "requested" || status === "needs_update") current.inReview += 1;
+    else current.missing += 1;
+    rows.set(category, current);
+  });
+  return Array.from(rows.values());
+}
+
+function aggregateDashboardDocumentReadinessFromDataset(dataset: DashboardPostImplementationDataset) {
+  return buildDashboardDocumentReadinessFromRecords(dashboardDatasetRecords(dataset, "documentRecords"));
+}
+
+function buildDashboardCashFlowSeriesFromDataset(dataset: DashboardPostImplementationDataset): DashboardTimePoint[] {
+  const byMonth = new Map<string, number>();
+  dashboardDatasetRecords(dataset, "monthlyPerformanceRecords").forEach((record) => {
+    const month = dashboardRecordString(record, "month");
+    if (!month) return;
+    byMonth.set(month, (byMonth.get(month) || 0) + (dashboardRecordNumber(record, "cumulativeNetBenefitCents") || 0));
+  });
+  return Array.from(byMonth.entries())
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([month, cents], index, all) => ({
+      label: monthLabel(month),
+      actual: index < all.length - 2 ? Math.round(cents / 100) : null,
+      projected: index >= all.length - 2 ? Math.round(cents / 100) : null
+    }));
+}
+
+function buildDashboardImpactSeriesFromDataset(dataset: DashboardPostImplementationDataset): DashboardTimePoint[] {
+  let cumulativeKg = 0;
+  const monthlyKg = new Map<string, number>();
+  dashboardDatasetRecords(dataset, "monthlyPerformanceRecords").forEach((record) => {
+    const month = dashboardRecordString(record, "month");
+    if (!month) return;
+    monthlyKg.set(month, (monthlyKg.get(month) || 0) + (dashboardRecordNumber(record, "actualCO2eReducedKg") || 0));
+  });
+  return Array.from(monthlyKg.entries())
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([month, kg], index, all) => {
+      cumulativeKg += kg;
+      const mt = cumulativeKg / 1000;
+      return {
+        label: monthLabel(month),
+        actual: index < all.length - 2 ? mt : null,
+        projected: index >= all.length - 2 ? mt : null
+      };
+    });
+}
+
+function monthLabel(month: string) {
+  const date = new Date(`${month}-01T12:00:00.000Z`);
+  return Number.isNaN(date.getTime()) ? month : date.toLocaleDateString("en-US", { month: "short" });
+}
+
+function buildDashboardCertificationProgramsFromDataset(dataset: DashboardPostImplementationDataset): DashboardCertificationProgram[] {
+  const requirements = dashboardDatasetRecords(dataset, "certificationRequirements");
+  return dashboardDatasetRecords(dataset, "certificationRecords").map((record) => {
+    const id = dashboardRecordString(record, "id");
+    const related = requirements.filter((requirement) => dashboardRecordString(requirement, "certificationId") === id);
+    const earned = sumNullableNumbers(related.map((requirement) => dashboardRecordNumber(requirement, "pointsEarned"))) ?? dashboardRecordNumber(record, "creditsEarned");
+    const possible = sumNullableNumbers(related.map((requirement) => dashboardRecordNumber(requirement, "pointsPossible")));
+    return {
+      id,
+      name: dashboardRecordString(record, "certificationName"),
+      progressPercent: dashboardRecordNumber(record, "progressPercent"),
+      documentReadinessPercent: dashboardRecordNumber(record, "readinessPercent"),
+      creditsEarned: earned,
+      creditsRemaining: possible == null || earned == null ? null : Math.max(0, possible - earned),
+      status: capitalizeLabel(dashboardRecordString(record, "status") || "in_progress"),
+      projectedStatus: (dashboardRecordNumber(record, "readinessPercent") || 0) >= 82 ? "Ready to Apply" : "Needs next actions"
+    };
+  });
+}
+
+function buildDashboardNextBestActionsFromDataset(dataset: DashboardPostImplementationDataset): DashboardNextBestAction[] {
+  return dashboardDatasetRecords(dataset, "nextBestActions")
+    .map((record) => {
+      const co2eKg = dashboardRecordNumber(record, "estimatedCO2eImpactKg");
+      const savings = dashboardRecordNumber(record, "estimatedSavingsCents") ?? dashboardRecordNumber(record, "estimatedValueCents");
+      return {
+        id: dashboardRecordString(record, "id"),
+        title: dashboardRecordString(record, "title"),
+        category: dashboardRecordString(record, "category") as DashboardNextBestAction["category"],
+        whyItMatters: dashboardRecordString(record, "description") || dashboardRecordString(record, "reason"),
+        relatedRetrofitId: dashboardRecordString(record, "relatedRetrofitId") || undefined,
+        estimatedCostCents: dashboardRecordNumber(record, "estimatedCostCents"),
+        estimatedSavingsCents: savings,
+        estimatedCO2eImpact: co2eKg == null ? null : co2eKg / 1000,
+        certificationImpact: dashboardRecordString(record, "certificationImpact") || undefined,
+        creditsUnlocked: dashboardRecordNumber(record, "creditsUnlocked"),
+        difficulty: (dashboardRecordString(record, "difficulty") || "moderate") as DashboardNextBestAction["difficulty"],
+        timeRequired: dashboardRecordString(record, "timeRequired") || undefined,
+        priorityScore: dashboardRecordNumber(record, "priorityScore") ?? 50,
+        projectedOutcome: co2eKg
+          ? `+${formatDashboardNumber(co2eKg / 1000, "MT CO2e / yr")}`
+          : savings
+            ? formatDashboardCurrencyCents(savings)
+            : dashboardRecordString(record, "certificationImpact") || "Readiness improved"
+      };
+    })
+    .sort((left, right) => right.priorityScore - left.priorityScore);
+}
+
+function dashboardBasisLabelFromDataset(dataset: DashboardPostImplementationDataset): DashboardViewModel["dataQuality"]["basisLabel"] {
+  if (!dataset.implementedRetrofits?.length) return "unavailable";
+  if (dataset.implementedRetrofits.some((record) => record.dataSource === "mixed")) return "mixed";
+  if (dataset.implementedRetrofits.some((record) => record.dataSource === "actual")) return "actual";
+  return "modeled";
 }
 
 export function RetrofitRecommendationsPreview({
@@ -14204,6 +14449,7 @@ const ADMIN_RETROFITS_TAB = "Retrofits";
 const ADMIN_TEST_CASES_TAB = "Test Cases";
 const ADMIN_USER_PREVIEW_TAB = "User Preview";
 const ADMIN_POST_FORM_PREVIEW_TAB = "Post Form Preview";
+const ADMIN_DASHBOARD_PERFORMANCE_TAB = "Dashboard Performance Data";
 const ADMIN_HIDDEN_DATA_TABLE_NAMES = new Set(["gbs-client-intake", "gbs-energy-data", "gbs-users"]);
 const ADMIN_TEST_CASES_DATA_PATH = "/sample_matching_test_cases.json";
 const ADMIN_RETROFIT_DATABASE_DATA_PATH = "/retrofit_opportunity_index.json";
@@ -14226,6 +14472,7 @@ function adminSectionKey(tab: string) {
   if (tab === ADMIN_APPLICATION_PROFILES_TAB) return "application-profiles";
   if (tab === ADMIN_RETROFITS_TAB) return "database:retrofits";
   if (tab === ADMIN_TEST_CASES_TAB) return "test-cases";
+  if (tab === ADMIN_DASHBOARD_PERFORMANCE_TAB) return "dashboard-performance-data";
   return tab === "Users" ? "users" : `table:${tab}`;
 }
 
@@ -14250,6 +14497,7 @@ function AdminDashboard({
     "Users",
     ADMIN_USER_PREVIEW_TAB,
     ADMIN_POST_FORM_PREVIEW_TAB,
+    ADMIN_DASHBOARD_PERFORMANCE_TAB,
     ADMIN_TEST_CASES_TAB,
     ADMIN_APPLICATION_SOURCES_TAB,
     ADMIN_APPLICATION_PROFILES_TAB,
@@ -14308,6 +14556,7 @@ function AdminDashboard({
       tab === ADMIN_TEST_CASES_TAB ||
       tab === ADMIN_APPLICATION_SOURCES_TAB ||
       tab === ADMIN_APPLICATION_PROFILES_TAB ||
+      tab === ADMIN_DASHBOARD_PERFORMANCE_TAB ||
       tab === ADMIN_OPPORTUNITIES_TAB ||
       tab === ADMIN_RETROFITS_TAB
     ) {
@@ -14377,6 +14626,7 @@ function AdminDashboard({
     if (
       activeTab !== "Users" &&
       activeTab !== ADMIN_POST_FORM_PREVIEW_TAB &&
+      activeTab !== ADMIN_DASHBOARD_PERFORMANCE_TAB &&
       activeTab !== ADMIN_TEST_CASES_TAB &&
       activeTab !== ADMIN_APPLICATION_SOURCES_TAB &&
       activeTab !== ADMIN_APPLICATION_PROFILES_TAB &&
@@ -14409,6 +14659,8 @@ function AdminDashboard({
     const nextPath =
       item === ADMIN_APPLICATION_SOURCES_TAB
         ? pathForRoute("admin-application-sources")
+        : item === ADMIN_DASHBOARD_PERFORMANCE_TAB
+          ? pathForRoute("admin-dashboard-performance-data")
         : item === ADMIN_APPLICATION_PROFILES_TAB
           ? pathForRoute("admin-application-profiles")
           : pathForRoute("admin");
@@ -14434,6 +14686,8 @@ function AdminDashboard({
         <AdminApplicationSourcesPanel credential={credential} />
       ) : activeTab === ADMIN_APPLICATION_PROFILES_TAB ? (
         <AdminApplicationProfilesPanel credential={credential} />
+      ) : activeTab === ADMIN_DASHBOARD_PERFORMANCE_TAB ? (
+        <AdminDashboardPerformanceDataPanel credential={credential} />
       ) : activeTab === ADMIN_TEST_CASES_TAB ? (
         <AdminTestCasesPanel />
       ) : activeTab === ADMIN_OPPORTUNITIES_TAB ? (
@@ -14461,8 +14715,426 @@ function AdminTestCasesStandalonePage() {
   );
 }
 
+type DashboardPerformanceSummary = {
+  testCaseId: string;
+  businessName?: string;
+  businessType?: string;
+  archetype?: string;
+  location?: string;
+  reportingPeriod?: { label?: string };
+  implementedRetrofitCount: number;
+  monthlyRecordCount: number;
+  incentiveRecordCount: number;
+  documentRecordCount: number;
+  certificationRecordCount: number;
+  certificationRequirementCount: number;
+  nextBestActionCount: number;
+  dataQuality?: { status?: string; notes?: string[]; warnings?: string[] };
+  storageStatus?: string;
+  updatedAt?: string | null;
+};
+
+type DashboardPerformanceListResponse = {
+  summaries: DashboardPerformanceSummary[];
+  totals: {
+    testCases: number;
+    withPostInstallData: number;
+    emptyCases: number;
+    implementedRetrofits: number;
+    monthlyRecords: number;
+    incentives: number;
+    documents: number;
+    certifications: number;
+    nextBestActions: number;
+  };
+  storageStatus?: string;
+  warnings?: string[];
+};
+
+type DashboardPerformanceDetailResponse = {
+  dataset: DashboardPostImplementationDataset;
+  summary: DashboardPerformanceSummary;
+  storageStatus?: string;
+  validation?: { valid?: boolean; errors?: string[]; warnings?: string[] };
+};
+
+function AdminDashboardPerformanceDataPanel({ credential }: { credential: AuthCredential | null }) {
+  const [response, setResponse] = useState<DashboardPerformanceListResponse | null>(null);
+  const [selectedDetail, setSelectedDetail] = useState<DashboardPerformanceDetailResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isMutating, setIsMutating] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+
+  const summaries = response?.summaries || [];
+  const totals =
+    response?.totals || {
+      testCases: 0,
+      withPostInstallData: 0,
+      emptyCases: 0,
+      implementedRetrofits: 0,
+      monthlyRecords: 0,
+      incentives: 0,
+      documents: 0,
+      certifications: 0,
+      nextBestActions: 0
+    };
+
+  const loadSummaries = useCallback(async () => {
+    if (!credential) {
+      setError("Sign in again to manage dashboard performance data.");
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const nextResponse = await apiGet<DashboardPerformanceListResponse>("/api/admin/dashboard-performance/test-cases", {
+        headers: adminAuthHeaders(credential)
+      });
+      setResponse(nextResponse);
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not load dashboard performance data.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [credential]);
+
+  useEffect(() => {
+    void loadSummaries();
+  }, [loadSummaries]);
+
+  async function viewDataset(testCaseId: string) {
+    if (!credential) {
+      setError("Sign in again to inspect dashboard performance data.");
+      return;
+    }
+
+    setError(null);
+    setMessage(null);
+    try {
+      const detail = await apiGet<DashboardPerformanceDetailResponse>(
+        `/api/admin/dashboard-performance/test-cases/${encodeURIComponent(testCaseId)}`,
+        { headers: adminAuthHeaders(credential) }
+      );
+      setSelectedDetail(detail);
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not load the selected dataset.");
+    }
+  }
+
+  async function seedOne(testCaseId: string) {
+    if (!credential) {
+      setError("Sign in again to seed dashboard performance data.");
+      return;
+    }
+
+    setIsMutating(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const detail = await apiPost<DashboardPerformanceDetailResponse>(
+        `/api/admin/dashboard-performance/test-cases/${encodeURIComponent(testCaseId)}/seed`,
+        adminAuthBody(credential)
+      );
+      setSelectedDetail(detail);
+      setMessage(`Seeded dashboard performance data for ${testCaseId}.`);
+      await loadSummaries();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not seed dashboard performance data.");
+    } finally {
+      setIsMutating(false);
+    }
+  }
+
+  async function seedAll() {
+    if (!credential) {
+      setError("Sign in again to seed dashboard performance data.");
+      return;
+    }
+
+    setIsMutating(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const nextResponse = await apiPost<DashboardPerformanceListResponse>(
+        "/api/admin/dashboard-performance/seed-all",
+        adminAuthBody(credential)
+      );
+      setResponse(nextResponse);
+      setMessage(`Seeded ${nextResponse.totals.withPostInstallData} populated dashboard performance datasets.`);
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not seed dashboard performance data.");
+    } finally {
+      setIsMutating(false);
+    }
+  }
+
+  async function deleteOne(testCaseId: string) {
+    if (!credential) {
+      setError("Sign in again to delete dashboard performance data.");
+      return;
+    }
+    if (!window.confirm(`Delete synthetic dashboard performance data for ${testCaseId}?`)) return;
+
+    setIsMutating(true);
+    setError(null);
+    setMessage(null);
+    try {
+      await apiDelete(`/api/admin/dashboard-performance/test-cases/${encodeURIComponent(testCaseId)}`, {
+        headers: adminAuthHeaders(credential)
+      });
+      if (selectedDetail?.summary.testCaseId === testCaseId) {
+        setSelectedDetail(null);
+      }
+      setMessage(`Deleted synthetic dashboard performance data for ${testCaseId}.`);
+      await loadSummaries();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not delete dashboard performance data.");
+    } finally {
+      setIsMutating(false);
+    }
+  }
+
+  async function deleteAll() {
+    if (!credential) {
+      setError("Sign in again to delete dashboard performance data.");
+      return;
+    }
+    if (!window.confirm("Delete all synthetic dashboard performance datasets?")) return;
+
+    setIsMutating(true);
+    setError(null);
+    setMessage(null);
+    try {
+      await apiDelete("/api/admin/dashboard-performance", {
+        headers: adminAuthHeaders(credential)
+      });
+      setSelectedDetail(null);
+      setMessage("Deleted all synthetic dashboard performance data.");
+      await loadSummaries();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not delete dashboard performance data.");
+    } finally {
+      setIsMutating(false);
+    }
+  }
+
+  function openDashboardPreview(testCaseId: string) {
+    const params = new URLSearchParams({ sampleUserId: testCaseId });
+    window.open(`${pathForRoute("user-preview")}?${params.toString()}`, "_blank", "noopener,noreferrer");
+  }
+
+  async function validateAllGeneratedData() {
+    await loadSummaries();
+    setMessage("Validated generated dashboard performance dataset summaries.");
+  }
+
+  async function copySelectedDatasetJson() {
+    if (!selectedDetail?.dataset || !navigator?.clipboard) return;
+    await navigator.clipboard.writeText(JSON.stringify(selectedDetail.dataset, null, 2));
+    setMessage("Copied selected dataset JSON.");
+  }
+
+  const selectedDataset = selectedDetail?.dataset || null;
+  const selectedValidationErrors = selectedDetail?.validation?.errors || [];
+  const selectedValidationWarnings = selectedDetail?.validation?.warnings || selectedDataset?.dataQuality?.warnings || [];
+  const monthlyCoverage = selectedDataset?.monthlyPerformanceRecords?.length
+    ? new Set(
+        selectedDataset.monthlyPerformanceRecords
+          .map((record) => (isPlainRecord(record) ? String(record.month || "") : ""))
+          .filter(Boolean)
+      ).size
+    : 0;
+
+  return (
+    <section className="admin-dashboard-performance">
+      <div className="admin-dashboard-performance-header">
+        <div>
+          <p className="eyebrow">Admin test data</p>
+          <h2>Dashboard Performance Test Data</h2>
+          <p>Seed and inspect post-implementation performance records used by admin preview dashboards.</p>
+        </div>
+        <span className="soft-badge">Storage: {response?.storageStatus || "checking"}</span>
+      </div>
+
+      {error ? <p className="error-message">{error}</p> : null}
+      {message ? <p className="success-message">{message}</p> : null}
+      {response?.warnings?.length ? (
+        <div className="admin-dashboard-performance-warning">
+          {response.warnings.map((warning) => (
+            <p key={warning}>{warning}</p>
+          ))}
+        </div>
+      ) : null}
+
+      <div className="admin-dashboard-performance-stats">
+        <article><span>Total test cases</span><strong>{totals.testCases}</strong></article>
+        <article><span>With post-install data</span><strong>{totals.withPostInstallData}</strong></article>
+        <article><span>Empty/new-user cases</span><strong>{totals.emptyCases}</strong></article>
+        <article><span>Implemented retrofits</span><strong>{totals.implementedRetrofits}</strong></article>
+        <article><span>Monthly records</span><strong>{totals.monthlyRecords}</strong></article>
+        <article><span>Incentives</span><strong>{totals.incentives}</strong></article>
+        <article><span>Documents</span><strong>{totals.documents}</strong></article>
+        <article><span>Certifications</span><strong>{totals.certifications}</strong></article>
+        <article><span>Next actions</span><strong>{totals.nextBestActions}</strong></article>
+      </div>
+
+      <div className="admin-dashboard-performance-actions">
+        <button className="secondary-button" disabled={isLoading || isMutating} onClick={() => void validateAllGeneratedData()} type="button">
+          Validate all generated data
+        </button>
+        <button className="secondary-button" disabled={isLoading || isMutating} onClick={() => void loadSummaries()} type="button">
+          Refresh from backend
+        </button>
+        <button disabled={isLoading || isMutating} onClick={() => void seedAll()} type="button">
+          {isMutating ? "Working..." : "Seed all test cases"}
+        </button>
+        <button className="secondary-button" disabled={isLoading || isMutating} onClick={() => void seedAll()} type="button">
+          Reseed all synthetic data
+        </button>
+        <button className="danger-button" disabled={isLoading || isMutating} onClick={() => void deleteAll()} type="button">
+          Delete all synthetic dashboard data
+        </button>
+      </div>
+
+      <div className="admin-dashboard-performance-table-wrap">
+        <table className="admin-dashboard-performance-table">
+          <thead>
+            <tr>
+              <th>Test case</th>
+              <th>Business type / archetype</th>
+              <th>Location</th>
+              <th>Retrofits</th>
+              <th>Monthly</th>
+              <th>Incentives</th>
+              <th>Documents</th>
+              <th>Certifications</th>
+              <th>Actions</th>
+              <th>Quality</th>
+              <th>Updated</th>
+              <th>Manage</th>
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading ? (
+              <tr><td colSpan={12}>Loading dashboard performance data...</td></tr>
+            ) : summaries.length ? (
+              summaries.map((summary) => (
+                <tr key={summary.testCaseId}>
+                  <td>
+                    <strong>{summary.businessName || summary.testCaseId}</strong>
+                    <span>{summary.testCaseId}</span>
+                  </td>
+                  <td>{[summary.businessType, summary.archetype].filter(Boolean).join(" / ") || "Unknown"}</td>
+                  <td>{summary.location || "Not provided"}</td>
+                  <td>{summary.implementedRetrofitCount}</td>
+                  <td>{summary.monthlyRecordCount}</td>
+                  <td>{summary.incentiveRecordCount}</td>
+                  <td>{summary.documentRecordCount}</td>
+                  <td>{summary.certificationRecordCount}</td>
+                  <td>{summary.nextBestActionCount}</td>
+                  <td><span className={`soft-badge quality-${summary.dataQuality?.status || "empty"}`}>{summary.dataQuality?.status || "empty"}</span></td>
+                  <td>{summary.updatedAt ? new Date(summary.updatedAt).toLocaleDateString() : "Not seeded"}</td>
+                  <td>
+                    <div className="admin-dashboard-performance-row-actions">
+                      <button className="secondary-button" onClick={() => void viewDataset(summary.testCaseId)} type="button">View</button>
+                      <button className="secondary-button" disabled={isMutating} onClick={() => void seedOne(summary.testCaseId)} type="button">Seed</button>
+                      <button className="secondary-button" onClick={() => openDashboardPreview(summary.testCaseId)} type="button">Open dashboard preview</button>
+                      <button className="danger-button" disabled={isMutating || summary.implementedRetrofitCount === 0} onClick={() => void deleteOne(summary.testCaseId)} type="button">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr><td colSpan={12}>No sample test cases were found.</td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {selectedDetail && selectedDataset ? (
+        <aside className="admin-dashboard-performance-detail">
+          <div className="admin-dashboard-performance-detail-header">
+            <div>
+              <p className="eyebrow">Dataset detail</p>
+              <h3>{selectedDetail.summary.businessName || selectedDetail.summary.testCaseId}</h3>
+              <p>{selectedDataset.reportingPeriod?.label || "Reporting period unavailable"}</p>
+            </div>
+            <button className="secondary-button" onClick={() => setSelectedDetail(null)} type="button">Close</button>
+          </div>
+
+          <div className="admin-dashboard-performance-detail-grid">
+            <article>
+              <span>Implemented retrofits</span>
+              <strong>{selectedDataset.implementedRetrofits?.length || 0}</strong>
+            </article>
+            <article>
+              <span>Monthly coverage</span>
+              <strong>{monthlyCoverage} months</strong>
+            </article>
+            <article>
+              <span>Documents</span>
+              <strong>{selectedDataset.documentRecords?.length || 0}</strong>
+            </article>
+            <article>
+              <span>Next actions</span>
+              <strong>{selectedDataset.nextBestActions?.length || 0}</strong>
+            </article>
+          </div>
+
+          <div className="admin-dashboard-performance-detail-section">
+            <h4>Implemented retrofits</h4>
+            <div className="admin-dashboard-performance-mini-table-wrap">
+              <table className="admin-dashboard-performance-mini-table">
+                <thead><tr><th>Name</th><th>Status</th><th>Actual cost</th><th>Annual savings</th><th>Payback</th></tr></thead>
+                <tbody>
+                  {(selectedDataset.implementedRetrofits || []).slice(0, 8).map((record) => {
+                    const retrofit = isPlainRecord(record) ? record : {};
+                    return (
+                      <tr key={String(retrofit.id || retrofit.retrofitId)}>
+                        <td>{String(retrofit.name || retrofit.retrofitId || "Retrofit")}</td>
+                        <td>{String(retrofit.status || "unknown")}</td>
+                        <td>{formatDashboardCurrencyCents(Number(retrofit.actualProjectCostCents) || null)}</td>
+                        <td>{formatDashboardCurrencyCents(Number(retrofit.actualAnnualSavingsCents) || null)}</td>
+                        <td>{typeof retrofit.actualPaybackYears === "number" ? `${retrofit.actualPaybackYears.toFixed(1)} yrs` : "Unavailable"}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="admin-dashboard-performance-detail-section">
+            <h4>Validation</h4>
+            {selectedValidationErrors.length || selectedValidationWarnings.length ? (
+              <ul>
+                {selectedValidationErrors.map((validationError) => <li key={validationError}>{validationError}</li>)}
+                {selectedValidationWarnings.map((warning) => <li key={warning}>{warning}</li>)}
+              </ul>
+            ) : (
+              <p>No validation warnings for this dataset.</p>
+            )}
+          </div>
+
+          <div className="admin-dashboard-performance-detail-section">
+            <div className="admin-dashboard-performance-section-heading">
+              <h4>Raw JSON preview</h4>
+              <button className="secondary-button" onClick={() => void copySelectedDatasetJson()} type="button">Copy JSON</button>
+            </div>
+            <pre className="admin-dashboard-performance-json">{JSON.stringify(selectedDataset, null, 2)}</pre>
+          </div>
+        </aside>
+      ) : null}
+    </section>
+  );
+}
+
 type UserPreviewOption = {
   userId: string;
+  sampleUserId?: string | null;
   clientName: string;
   companyName: string | null;
   email: string;
@@ -14490,10 +15162,13 @@ function AdminUserPreviewStandalonePage({
     if (typeof window === "undefined") return "";
     return new URLSearchParams(window.location.search).get("userId") || "";
   });
+  const requestedSampleUserId =
+    typeof window === "undefined" ? "" : new URLSearchParams(window.location.search).get("sampleUserId") || "";
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const selectedOption =
     previewOptions.find((option) => option.userId === selectedUserId) ||
+    previewOptions.find((option) => option.sampleUserId === requestedSampleUserId) ||
     previewOptions.find((option) => option.hasIntake) ||
     previewOptions[0] ||
     null;
@@ -14553,6 +15228,11 @@ function AdminUserPreviewStandalonePage({
     if (!selectedOption || typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     params.set("userId", selectedOption.userId);
+    if (selectedOption.sampleUserId) {
+      params.set("sampleUserId", selectedOption.sampleUserId);
+    } else {
+      params.delete("sampleUserId");
+    }
     params.set("clientName", selectedOption.clientName);
     params.set("email", selectedOption.email);
     if (selectedOption.companyName) {
@@ -14724,6 +15404,7 @@ function buildUserPreviewOptions(rows: AdminRow[]): UserPreviewOption[] {
     .filter((row) => row.user.role === "client" && row.user.isFakeUser)
     .map((row) => ({
       userId: row.user.userId,
+      sampleUserId: row.user.sampleUserId || null,
       clientName: row.user.fullName || row.intake?.contact.fullName || row.user.email,
       companyName: row.user.companyName || row.intake?.business.companyName || null,
       email: row.user.email,
@@ -18494,7 +19175,11 @@ export function App() {
     setSignInMessage(null);
     navigate(
       payload.dashboard === "admin"
-        ? route === "testcases" || route === "user-preview" || route === "admin-application-sources" || route === "admin-application-profiles"
+        ? route === "testcases" ||
+          route === "user-preview" ||
+          route === "admin-dashboard-performance-data" ||
+          route === "admin-application-sources" ||
+          route === "admin-application-profiles"
           ? route
           : "admin"
         : "portal"
@@ -18651,7 +19336,13 @@ export function App() {
     );
   }
 
-  if (effectiveRoute === "portal" || effectiveRoute === "admin" || effectiveRoute === "admin-application-sources" || effectiveRoute === "admin-application-profiles") {
+  if (
+    effectiveRoute === "portal" ||
+    effectiveRoute === "admin" ||
+    effectiveRoute === "admin-dashboard-performance-data" ||
+    effectiveRoute === "admin-application-sources" ||
+    effectiveRoute === "admin-application-profiles"
+  ) {
     if (!authPayload) {
       return (
         <SignInPage
@@ -18670,6 +19361,8 @@ export function App() {
           initialTab={
             effectiveRoute === "admin-application-sources"
               ? ADMIN_APPLICATION_SOURCES_TAB
+              : effectiveRoute === "admin-dashboard-performance-data"
+                ? ADMIN_DASHBOARD_PERFORMANCE_TAB
               : effectiveRoute === "admin-application-profiles"
                 ? ADMIN_APPLICATION_PROFILES_TAB
                 : "Users"

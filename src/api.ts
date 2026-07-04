@@ -96,3 +96,24 @@ export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
 
   return payload as T;
 }
+
+export async function apiDelete<T>(path: string, init?: RequestInit): Promise<T> {
+  let response: Response;
+
+  try {
+    response = await fetch(path, {
+      ...init,
+      method: "DELETE"
+    });
+  } catch {
+    throw new Error(unreachableApiMessage());
+  }
+
+  const payload = await parseResponsePayload(response);
+
+  if (!response.ok) {
+    throw new Error(payload.error || failedPostFallback(response.status));
+  }
+
+  return payload as T;
+}

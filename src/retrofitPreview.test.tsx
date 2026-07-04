@@ -234,6 +234,244 @@ describe("retrofit recommendations preview", () => {
     expect(dashboard.dataQuality.basisLabel).toBe("actual");
   });
 
+  it("prefers dashboard post-implementation records for performance charts and sections", () => {
+    const postInstallPayload = {
+      ...liveShapedPayload,
+      dashboardPostImplementationDataset: {
+        schemaVersion: "dashboard-post-implementation-v1",
+        testCaseId: "restaurant-case",
+        isSynthetic: true,
+        syntheticSource: "admin_test_case_seed",
+        generatedAt: "2026-06-30T12:00:00.000Z",
+        updatedAt: "2026-06-30T12:00:00.000Z",
+        reportingPeriod: {
+          startDate: "2025-07-01",
+          endDate: "2026-06-30",
+          label: "Jul 1, 2025 - Jun 30, 2026"
+        },
+        properties: [],
+        implementedRetrofits: [
+          {
+            id: "perf-led",
+            retrofitId: "led_lighting",
+            sourceEstimateId: "led_lighting",
+            name: "LED Lighting",
+            category: "Lighting",
+            status: "operational",
+            implementedDate: "2025-06-01",
+            installedDate: "2025-06-01",
+            operationalDate: "2025-07-01",
+            actualProjectCostCents: 1500000,
+            estimatedProjectCostCents: 1200000,
+            actualNetCostCents: 900000,
+            estimatedNetCostCents: 900000,
+            incentivesReceivedCents: 500000,
+            incentivesPendingCents: 75000,
+            incentivesNotClaimedCents: 25000,
+            actualAnnualSavingsCents: 840000,
+            estimatedAnnualSavingsCents: 600000,
+            actualMonthlySavingsCents: 70000,
+            energySavingsCents: 650000,
+            maintenanceSavingsCents: 120000,
+            taxBenefitCents: 70000,
+            actualPaybackYears: 1.1,
+            estimatedPaybackYears: 1.5,
+            actualROI: 93,
+            estimatedROI: 67,
+            paybackProgressPercent: 54,
+            actualKwhSavedPerYear: 42000,
+            actualThermsSavedPerYear: 0,
+            actualWaterSavedGallonsPerYear: 0,
+            actualCO2eReducedKgPerYear: 12600,
+            actualWasteReducedPerYear: 0,
+            dataSource: "synthetic_admin_test_case",
+            confidencePercent: 91,
+            measurementMethod: "Utility bill comparison",
+            baselineMethod: "Same-month prior year baseline",
+            certificationContributions: [
+              {
+                certificationId: "cert-green-business",
+                certificationName: "Green Business",
+                creditsEarned: 6,
+                creditsPossible: 10,
+                requirementIds: ["req-energy"]
+              }
+            ]
+          }
+        ],
+        monthlyPerformanceRecords: [
+          {
+            id: "month-2025-07",
+            retrofitPerformanceId: "perf-led",
+            month: "2025-07",
+            actualSavingsCents: 40000,
+            estimatedSavingsCents: 50000,
+            cumulativeSavingsCents: 40000,
+            cumulativeIncentivesReceivedCents: 500000,
+            cumulativeNetBenefitCents: -960000,
+            actualCO2eReducedKg: 900,
+            estimatedCO2eReducedKg: 800,
+            baselineElectricityKwh: 10000,
+            actualElectricityKwh: 6500,
+            estimatedElectricityKwh: 7000,
+            baselineGasTherms: 0,
+            actualGasTherms: 0,
+            estimatedGasTherms: 0,
+            baselineWaterGallons: 0,
+            actualWaterGallons: 0,
+            estimatedWaterGallons: 0,
+            dataSource: "synthetic_admin_test_case"
+          },
+          {
+            id: "month-2025-08",
+            retrofitPerformanceId: "perf-led",
+            month: "2025-08",
+            actualSavingsCents: 70000,
+            estimatedSavingsCents: 50000,
+            cumulativeSavingsCents: 110000,
+            cumulativeIncentivesReceivedCents: 500000,
+            cumulativeNetBenefitCents: -890000,
+            actualCO2eReducedKg: 1200,
+            estimatedCO2eReducedKg: 800,
+            baselineElectricityKwh: 10000,
+            actualElectricityKwh: 5800,
+            estimatedElectricityKwh: 7000,
+            baselineGasTherms: 0,
+            actualGasTherms: 0,
+            estimatedGasTherms: 0,
+            baselineWaterGallons: 0,
+            actualWaterGallons: 0,
+            estimatedWaterGallons: 0,
+            dataSource: "synthetic_admin_test_case"
+          }
+        ],
+        incentivePerformanceRecords: [
+          {
+            id: "inc-received",
+            retrofitPerformanceId: "perf-led",
+            programName: "Utility LED Rebate",
+            status: "received",
+            estimatedAmountCents: 400000,
+            approvedAmountCents: 400000,
+            receivedAmountCents: 400000,
+            pendingAmountCents: 0,
+            notClaimedAmountCents: 0,
+            dataSource: "synthetic_admin_test_case"
+          },
+          {
+            id: "inc-pending",
+            retrofitPerformanceId: "perf-led",
+            programName: "Tax credit",
+            status: "pending",
+            estimatedAmountCents: 100000,
+            approvedAmountCents: 100000,
+            receivedAmountCents: 0,
+            pendingAmountCents: 75000,
+            notClaimedAmountCents: 25000,
+            dataSource: "synthetic_admin_test_case"
+          }
+        ],
+        documentRecords: [
+          {
+            id: "doc-invoice",
+            relatedRetrofitId: "perf-led",
+            name: "Contractor invoice",
+            documentType: "invoice",
+            status: "verified",
+            requiredFor: "incentive"
+          },
+          {
+            id: "doc-photo",
+            relatedRetrofitId: "perf-led",
+            name: "Completion photo",
+            documentType: "completion_photo",
+            status: "missing",
+            requiredFor: "certification"
+          }
+        ],
+        certificationRecords: [
+          {
+            id: "cert-green-business",
+            certificationName: "Green Business",
+            certificationProvider: "Local Green Business Program",
+            status: "in_progress",
+            progressPercent: 66,
+            readinessPercent: 50,
+            completedItems: 2,
+            missingItems: 1,
+            inProgressItems: 1,
+            requiredDocuments: 2,
+            readyDocuments: 1,
+            missingDocuments: 1,
+            verifiedDocuments: 1,
+            retrofitsContributing: ["perf-led"],
+            nextActions: ["Upload completion photo"],
+            dataSource: "synthetic_admin_test_case"
+          }
+        ],
+        certificationRequirements: [
+          {
+            id: "req-energy",
+            certificationId: "cert-green-business",
+            name: "Energy efficiency evidence",
+            category: "energy",
+            status: "complete",
+            pointsEarned: 6,
+            pointsPossible: 10,
+            required: true
+          },
+          {
+            id: "req-docs",
+            certificationId: "cert-green-business",
+            name: "Photo evidence",
+            category: "documentation",
+            status: "missing",
+            pointsEarned: 0,
+            pointsPossible: 4,
+            required: true
+          }
+        ],
+        nextBestActions: [
+          {
+            id: "action-doc",
+            title: "Upload completion photo",
+            description: "Add the post-install photo needed for the rebate file.",
+            category: "document",
+            priority: "high",
+            priorityScore: 90,
+            estimatedValueCents: 75000,
+            ctaLabel: "Upload proof",
+            ctaTarget: "/dashboard/documents",
+            relatedRetrofitId: "perf-led",
+            relatedDocumentId: "doc-photo",
+            reason: "Missing proof blocks incentive closeout.",
+            status: "open",
+            dataSource: "synthetic_admin_test_case"
+          }
+        ],
+        dataQuality: { status: "complete", notes: [], warnings: [] }
+      }
+    } as any;
+
+    const preview = buildUserRetrofitPreviewResult(postInstallPayload);
+    const dashboard = buildDashboardPerformanceData(postInstallPayload, preview);
+
+    expect(dashboard.dataQuality.basisLabel).toBe("modeled");
+    expect(dashboard.periodLabel).toBe("Jul 1, 2025 - Jun 30, 2026");
+    expect(dashboard.financial.totalProjectCostCents).toBe(1500000);
+    expect(dashboard.financial.incentivesReceivedCents).toBe(500000);
+    expect(dashboard.financial.incentivesPendingCents).toBe(75000);
+    expect(dashboard.financial.incentivesNotClaimedCents).toBe(25000);
+    expect(dashboard.financial.cashFlowSeries.map((point) => point.projected)).toEqual([-9600, -8900]);
+    expect(dashboard.financial.topSavingsRetrofits[0].value).toBe(8400);
+    expect(dashboard.environmental.impactSeries.map((point) => point.projected)).toEqual([0.9, 2.1]);
+    expect(dashboard.certifications.documentReadiness.reduce((sum, row) => sum + row.ready, 0)).toBe(1);
+    expect(dashboard.certifications.documentReadiness.reduce((sum, row) => sum + row.missing, 0)).toBe(1);
+    expect(dashboard.certifications.programs[0].progressPercent).toBe(66);
+    expect(dashboard.certifications.programs[0].documentReadinessPercent).toBe(50);
+    expect(dashboard.certifications.nextActions[0].title).toBe("Upload completion photo");
+  });
+
   it("defines the post-implementation dashboard structure and source-backed empty states", async () => {
     const fsModuleName = "node:fs";
     const { readFileSync } = await import(fsModuleName);
@@ -256,6 +494,12 @@ describe("retrofit recommendations preview", () => {
     expect(mainPagesSource).not.toContain("Savings by Retrofit");
     expect(mainPagesSource).not.toContain("Gaps & Readiness");
     expect(source).toContain("Cash Flow & Incentives");
+    expect(source).toContain("AdminDashboardPerformanceDataPanel");
+    expect(source).toContain("Dashboard Performance Test Data");
+    expect(source).toContain("/api/admin/dashboard-performance/test-cases");
+    expect(source).toContain("/api/admin/dashboard-performance/seed-all");
+    expect(source).toContain("Validate all generated data");
+    expect(source).toContain("Open dashboard preview");
     expect(source).toContain("Savings by Retrofit");
     expect(source).toContain("Outlook & Equivalencies");
     expect(source).toContain("Gaps & Readiness");

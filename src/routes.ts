@@ -15,6 +15,7 @@ export type Route =
   | "portal-preview"
   | "user-preview"
   | "admin"
+  | "admin-dashboard-performance-data"
   | "admin-application-sources"
   | "admin-application-profiles"
   | "testcases";
@@ -43,6 +44,7 @@ export function routeFromPath(pathname = typeof window === "undefined" ? "/" : w
   if (pathname === "/portal") return "portal";
   if (pathname === "/portal-preview") return "portal-preview";
   if (pathname === "/user-preview") return "user-preview";
+  if (pathname === "/admin/dashboard-performance-data") return "admin-dashboard-performance-data";
   if (pathname === "/admin/application-sources") return "admin-application-sources";
   if (pathname === "/admin/application-profiles") return "admin-application-profiles";
   if (pathname === "/admin") return "admin";
@@ -57,6 +59,7 @@ export function pathForRoute(route: Route) {
   if (route === "about-trust") return "/about/trust";
   if (route === "about-contact") return "/about/contact";
   if (route === "admin-application-sources") return "/admin/application-sources";
+  if (route === "admin-dashboard-performance-data") return "/admin/dashboard-performance-data";
   if (route === "admin-application-profiles") return "/admin/application-profiles";
   if (route === "scan-results") return "/scan/results";
   if (route === "scan-energy-data") return "/scan/energy-data";
