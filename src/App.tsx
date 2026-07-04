@@ -7805,12 +7805,6 @@ export function RetrofitRecommendationsPreview({
           {activeRetrofit ? (
             <>
               <div className="retrofit-preview-list retrofit-selected-workspace">
-                <div className="selected-workspace-header">
-                  <div>
-                    <span className="soft-badge">Selected retrofit</span>
-                    <h2>{activeRetrofit.name}</h2>
-                  </div>
-                </div>
                 <RetrofitPreviewCardView
                   key={activeRetrofit.id}
                   initialWorkspaceTab={activeRetrofitInitialWorkspaceTab}
@@ -7830,36 +7824,6 @@ export function RetrofitRecommendationsPreview({
                   hideBillData={shouldMaskBillDerivedMetrics}
                 />
               </div>
-
-              <section className="next-actions-panel">
-                <div>
-                  <h2>Next-best-action checklist</h2>
-                  <p>Preview of what to apply for first, documents needed, contacts, upgrades to price out, and deadline checks.</p>
-                </div>
-                <div className="next-action-list">
-                  {preview.nextActions.map((action) => (
-                    <article className="next-action-item" key={action.id}>
-                      <div>
-                        <span className={`priority-badge ${action.priority.toLowerCase()}`}>{action.priority}</span>
-                        <h3>{action.text}</h3>
-                        <p>
-                          {action.relatedRetrofitName ? `Related retrofit: ${action.relatedRetrofitName}` : "Related retrofit: General"}
-                          {action.relatedOpportunityName ? ` · Related opportunity: ${action.relatedOpportunityName}` : ""}
-                        </p>
-                      </div>
-                      <select
-                        aria-label={`Status for ${action.text}`}
-                        onChange={(event) => setNextActionStatuses((current) => ({ ...current, [action.id]: event.target.value as NextBestAction["status"] }))}
-                        value={nextActionStatuses[action.id] || action.status}
-                      >
-                        <option>Not started</option>
-                        <option>In progress</option>
-                        <option>Done</option>
-                      </select>
-                    </article>
-                  ))}
-                </div>
-              </section>
             </>
           ) : (
             <RetrofitPickerView
@@ -9257,6 +9221,81 @@ function formatCompactCents(value: number | null | undefined) {
   }).format(amount);
 }
 
+function EstimateProgressStepper() {
+  const steps = [
+    { id: "bills", label: "Bills", complete: true, number: 1 },
+    { id: "questions", label: "Questions", complete: true, number: 2 },
+    { id: "estimate", label: "Estimate", active: true, number: 3 },
+    { id: "implementation", label: "Implementation", number: 4 },
+    { id: "application", label: "Application", number: 5 },
+    { id: "dashboard", label: "Dashboard", number: 6 }
+  ];
+
+  return (
+    <nav aria-label="Retrofit workflow progress" className="estimate-progress-stepper">
+      {steps.map((step, index) => (
+        <div className={`estimate-progress-step${step.complete ? " is-complete" : ""}${step.active ? " is-active" : ""}`} key={step.id}>
+          <span className="estimate-progress-circle">{step.complete ? "✓" : step.number}</span>
+          <span>{step.label}</span>
+          {index < steps.length - 1 ? <i aria-hidden="true" /> : null}
+        </div>
+      ))}
+    </nav>
+  );
+}
+
+function EstimateMetricCard({
+  icon,
+  label,
+  subtitle,
+  value
+}: {
+  icon: ReactNode;
+  label: string;
+  subtitle: string;
+  value: string;
+}) {
+  return (
+    <article className="estimate-metric-card">
+      <span className="estimate-card-icon" aria-hidden="true">{icon}</span>
+      <div>
+        <span>{label}</span>
+        <strong>{value}</strong>
+        <small>{subtitle}</small>
+      </div>
+    </article>
+  );
+}
+
+function EstimateInfoRow({ icon, label, value }: { icon?: ReactNode; label: string; value: string }) {
+  return (
+    <div className="estimate-info-row">
+      {icon ? <span className="estimate-info-icon" aria-hidden="true">{icon}</span> : null}
+      <strong>{label}</strong>
+      <span>{value}</span>
+    </div>
+  );
+}
+
+function EstimateMiniIcon({ children }: { children: ReactNode }) {
+  return <span className="estimate-mini-icon" aria-hidden="true">{children}</span>;
+}
+
+function EstimateImpactIllustration() {
+  return (
+    <svg className="estimate-impact-illustration" fill="none" viewBox="0 0 360 150" aria-hidden="true">
+      <path d="M14 132c40-42 79-48 117-18 26-34 67-42 112-21 33 15 65 17 103 4v35H14Z" fill="#dceee0" />
+      <path d="M157 75 207 32l50 43v57H157V75Z" fill="#98c995" />
+      <path d="M178 82h19v23h-19zM217 82h19v50h-19z" fill="#f7fbf8" />
+      <path d="M281 132V82" stroke="#79b879" strokeLinecap="round" strokeWidth="4" />
+      <path d="M281 85c20-11 30-1 27 15-3 16-16 24-27 24s-24-8-27-24c-3-16 7-26 27-15Z" fill="#a9d7a9" />
+      <path d="M111 132V91" stroke="#7ebd84" strokeLinecap="round" strokeWidth="4" />
+      <path d="M111 91c14 11 19 22 13 33-12 0-20-9-13-33ZM111 91c-14 11-19 22-13 33 12 0 20-9 13-33Z" fill="#a8d5a6" />
+      <path d="M39 64c18-11 35-9 49 6M266 41c15-7 28-5 40 5M78 42c21-15 45-13 61 6" stroke="#d2ead6" strokeLinecap="round" strokeWidth="12" />
+    </svg>
+  );
+}
+
 function RetrofitPreviewCardView({
   credential,
   initialWorkspaceTab = "overview",
@@ -9284,7 +9323,9 @@ function RetrofitPreviewCardView({
   selectedScenarioId: string;
   selectedOpportunityIds: Record<string, boolean>;
 }) {
-  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<"overview" | "financials" | "opportunities" | "environmental" | "scenarios" | "more">(initialWorkspaceTab);
+  type EstimateWorkspaceTab = "overview" | "financials" | "opportunities" | "scenarios" | "environmental" | "application" | "more";
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<EstimateWorkspaceTab>(initialWorkspaceTab);
+  const [financialPeriod, setFinancialPeriod] = useState<"monthly" | "annual">("annual");
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     why: false,
     financial: true,
@@ -9295,7 +9336,7 @@ function RetrofitPreviewCardView({
     operatingSavings: false,
     nextActions: false
   });
-  const [showCalculationBreakdown, setShowCalculationBreakdown] = useState(false);
+  const [showCalculationBreakdown, setShowCalculationBreakdown] = useState(true);
   const [expandedOpportunityIds, setExpandedOpportunityIds] = useState<Record<string, boolean>>({});
   const [applicationPrepOpportunity, setApplicationPrepOpportunity] = useState<RetrofitOpportunityPreview | null>(null);
   const [applicationPrepProfiles, setApplicationPrepProfiles] = useState<Record<string, CustomerApplicationProfileResponse>>({});
@@ -9442,9 +9483,9 @@ function RetrofitPreviewCardView({
     { key: "overview", label: "Overview" },
     { key: "financials", label: "Financials" },
     { key: "opportunities", label: "Opportunities" },
-    { key: "environmental", label: "Environmental Impact" },
     { key: "scenarios", label: "Scenarios" },
-    { key: "more", label: "More" }
+    { key: "environmental", label: "Impact" },
+    { key: "application", label: "Application Overview" }
   ] as const;
   const sectionIds = {
     financial: `${retrofit.id}-financials`,
@@ -9505,6 +9546,42 @@ function RetrofitPreviewCardView({
     retrofit.opportunities.find((opportunity) => applicationPrepProfiles[opportunity.id]?.status === "customer_ready") ||
     null;
   const hasReferenceOnlyApplicationProfile = retrofit.opportunities.some((opportunity) => applicationPrepProfiles[opportunity.id]?.status === "reference_only");
+  const referenceOnlyApplicationOpportunity = retrofit.opportunities.find((opportunity) => applicationPrepProfiles[opportunity.id]?.status === "reference_only") || null;
+  const readyApplicationProfile = readyApplicationPrepOpportunity ? applicationPrepProfiles[readyApplicationPrepOpportunity.id]?.profile || null : null;
+  const applicationOverviewOpportunity = readyApplicationPrepOpportunity || referenceOnlyApplicationOpportunity || selectedScenarioOpportunities[0] || retrofit.opportunities[0] || null;
+  const applicationOverviewStatus = applicationOverviewOpportunity ? applicationPrepProfiles[applicationOverviewOpportunity.id] : undefined;
+  const applicationOverviewProfile = applicationOverviewStatus?.profile || null;
+  const applicationOverviewIsReady = applicationOverviewStatus?.status === "customer_ready" && Boolean(applicationOverviewProfile);
+  const applicationOverviewReferenceOnly = applicationOverviewStatus?.status === "reference_only";
+  const selectedOpportunitiesTotalValue = billDataLocked
+    ? null
+    : sumDefinedCents(selectedScenarioOpportunities.map((opportunity) => opportunity.estimatedValue));
+  const upfrontSavingsValue = billDataLocked ? null : displayedUpfrontFinancialIncentive ?? selectedOpportunitiesTotalValue;
+  const oneTimeTaxBenefits = typeof retrofit.metrics.taxBenefits === "number" ? retrofit.metrics.taxBenefits : null;
+  const projectCostValue = billDataLocked ? null : retrofit.metrics.estimatedUpfrontProjectCost;
+  const netCostBeforeTaxValue = billDataLocked ? null : displayedNetCostBeforeTaxBenefits;
+  const effectiveProjectCostValue = billDataLocked ? null : retrofit.metrics.effectiveCostAfterOneTimeBenefits;
+  const annualOperatingSavingsValue = billDataLocked ? null : retrofit.metrics.recurringOperationalSavingsAnnual;
+  const monthlyOperatingSavingsValue = billDataLocked ? null : retrofit.metrics.recurringOperationalSavingsMonthly ?? centsPerMonth(annualOperatingSavingsValue);
+  const annualIncentiveSavingsValue = billDataLocked ? null : sumDefinedCents(
+    selectedIncludedOpportunities
+      .filter((opportunity) => opportunity.timing === "recurring" || opportunity.timing === "both")
+      .map((opportunity) => opportunity.estimatedValue)
+  );
+  const monthlyIncentiveSavingsValue = centsPerMonth(annualIncentiveSavingsValue);
+  const monthlyTaxBenefitsValue = centsPerMonth(oneTimeTaxBenefits);
+  const selectedScenarioLabel = selectedScenario ? formatScenarioTabLabel(selectedScenario.name) : "Balanced";
+  const overviewApplicationProfile = readyApplicationProfile || applicationOverviewProfile;
+  const overviewApplicationOpportunity = readyApplicationPrepOpportunity || applicationOverviewOpportunity;
+  const overviewApplicationUnavailable = !overviewApplicationProfile && !overviewApplicationOpportunity;
+  const estimateRightRailStatus =
+    activeWorkspaceTab === "financials"
+      ? { title: "Estimate complete", subtitle: "Review and continue" }
+      : activeWorkspaceTab === "opportunities"
+        ? { title: "Opportunities saved", subtitle: "Auto-saved just now" }
+        : activeWorkspaceTab === "environmental"
+          ? { title: "Auto-saved just now", subtitle: "All changes saved" }
+          : { title: "Estimate step in progress", subtitle: "Auto-saved just now" };
   const actionBarPrimary =
     billDataLocked
       ? "Upload bills"
@@ -9572,7 +9649,7 @@ function RetrofitPreviewCardView({
     };
   }, [credential, opportunityIdsKey, retrofit.opportunities]);
 
-  function openWorkspaceTab(tab: typeof workspaceTabs[number]["key"]) {
+  function openWorkspaceTab(tab: EstimateWorkspaceTab) {
     setActiveWorkspaceTab(tab);
     if (typeof document !== "undefined") {
       window.requestAnimationFrame(() => {
@@ -9608,6 +9685,513 @@ function RetrofitPreviewCardView({
     }
     openWorkspaceTab("opportunities");
   }
+
+  const kwhImpactResource = displayedEnvironmentalImpact.resources.find((resource) =>
+    /electricity|renewable/i.test(resource.label)
+  );
+  const thermImpactResource = displayedEnvironmentalImpact.resources.find((resource) =>
+    /gas|therm|thermal/i.test(resource.label)
+  );
+  const reductionImpactResource = displayedEnvironmentalImpact.resources.find((resource) =>
+    /energy|load/i.test(resource.label)
+  );
+  const certificationRows = [
+    {
+      program: "LEED O+M",
+      description: "Supports emissions reduction and energy performance.",
+      value:
+        displayedEnvironmentalImpact.certificationContribution.find((item) => /leed/i.test(item.program))?.detail ||
+        displayedEnvironmentalImpact.certificationContribution.find((item) => /leed/i.test(item.program))?.status ||
+        "May support"
+    },
+    {
+      program: "ENERGY STAR readiness",
+      description: "Improves operational efficiency and tracking capabilities.",
+      value:
+        displayedEnvironmentalImpact.certificationContribution.find((item) => /energy star/i.test(item.program))?.detail ||
+        "Supports score improvement"
+    },
+    {
+      program: "Green Business certification",
+      description: "Advances sustainability and environmental leadership.",
+      value:
+        displayedEnvironmentalImpact.certificationContribution.find((item) => /green business/i.test(item.program))?.detail ||
+        "Potential contribution"
+    }
+  ];
+  const financialPeriodLabel = financialPeriod === "monthly" ? "Monthly" : "Annual";
+  const operatingSavingsPeriodValue = financialPeriod === "monthly" ? monthlyOperatingSavingsValue : annualOperatingSavingsValue;
+  const incentiveSavingsPeriodValue = financialPeriod === "monthly" ? monthlyIncentiveSavingsValue : annualIncentiveSavingsValue;
+  const taxBenefitsPeriodValue = financialPeriod === "monthly" ? monthlyTaxBenefitsValue : oneTimeTaxBenefits;
+  const recurringSavingsPeriodValue = sumDefinedCents([operatingSavingsPeriodValue, incentiveSavingsPeriodValue, taxBenefitsPeriodValue]);
+  const scenarioCards = retrofit.scenarios.slice(0, 3);
+
+  return (
+    <article className="estimate-workspace-shell">
+      <EstimateProgressStepper />
+
+      <div className="estimate-workspace-layout">
+        <section className="estimate-main-card">
+          <header className="estimate-header">
+            <div className="estimate-header-left">
+              <RetrofitPickerIcon retrofit={retrofit} />
+              <div>
+                <h2>{retrofit.name}</h2>
+                <p>{retrofit.description}</p>
+              </div>
+            </div>
+            <div className="estimate-recommendation-card">
+              <span className="estimate-recommendation-icon" aria-hidden="true">✹</span>
+              <div>
+                <strong>Why this is recommended</strong>
+                <p>{retrofit.whyRecommended[0] || `${retrofit.name} fits your current profile and can improve savings, comfort, or eligibility.`}</p>
+              </div>
+            </div>
+          </header>
+
+          <nav aria-label="Estimate workspace tabs" className="estimate-tabs retrofit-workspace-tabs">
+            {workspaceTabs.map((item) => (
+              <button
+                key={item.key}
+                aria-current={activeWorkspaceTab === item.key ? "true" : undefined}
+                className={`estimate-tab workspace-tab${activeWorkspaceTab === item.key ? " is-active" : ""}`}
+                data-workspace-tab={item.key}
+                onClick={() => openWorkspaceTab(item.key)}
+                type="button"
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+
+          {activeWorkspaceTab === "overview" ? (
+            <section className="estimate-tab-panel estimate-overview-tab" data-workspace-panel="overview">
+              <div className="estimate-metric-grid">
+                <EstimateMetricCard
+                  icon={<MetricCostIcon />}
+                  label="One-time savings"
+                  value={formatEstimateCents(upfrontSavingsValue, billDataLocked ? "?" : "Estimate unavailable")}
+                  subtitle="Upfront incentives & rebates"
+                />
+                <EstimateMetricCard
+                  icon={<MetricSavingsIcon />}
+                  label="Annual operating savings"
+                  value={formatEstimateCentsPerPeriod(annualOperatingSavingsValue, "yr", billDataLocked ? "?" : "Needs bill")}
+                  subtitle="Lower energy costs"
+                />
+                <EstimateMetricCard
+                  icon={<MetricPaybackIcon />}
+                  label="Payback period"
+                  value={billDataLocked ? "?" : formatPayback(retrofit.metrics.paybackPeriodYears, "Needs quote")}
+                  subtitle="Simple payback"
+                />
+                <EstimateMetricCard
+                  icon={<MetricImpactIcon />}
+                  label="ROI"
+                  value={billDataLocked ? "?" : formatEstimatePercent(retrofit.metrics.roi, "Estimate unavailable")}
+                  subtitle="Average annual return"
+                />
+              </div>
+
+              <section className="estimate-split-summary">
+                <div>
+                  <span className="estimate-summary-check" aria-hidden="true">✓</span>
+                  <div>
+                    <strong>Selected opportunities</strong>
+                    <p><b>{selectedCount}</b> Included in this scenario</p>
+                  </div>
+                </div>
+                <div>
+                  <span className="estimate-summary-check is-document" aria-hidden="true">▤</span>
+                  <div>
+                    <strong>Current scenario</strong>
+                    <p><b>{selectedScenarioLabel}</b> Best mix of savings and payback</p>
+                  </div>
+                </div>
+              </section>
+
+              <div className="estimate-overview-lower-grid">
+                <section className="estimate-overview-card estimate-why-card">
+                  <h3>Why this is recommended</h3>
+                  <p>{retrofit.whyRecommended.join(" ") || `${retrofit.name} can improve operations while supporting your sustainability goals.`}</p>
+                  <div className="estimate-benefit-row">
+                    <span><EstimateMiniIcon>☘</EstimateMiniIcon><b>Lower monthly bills</b><small>Reduce energy use year-round.</small></span>
+                    <span><EstimateMiniIcon>◒</EstimateMiniIcon><b>Cleaner energy</b><small>Cut emissions and environmental impact.</small></span>
+                    <span><EstimateMiniIcon>⌂</EstimateMiniIcon><b>Better comfort</b><small>More consistent operation.</small></span>
+                  </div>
+                </section>
+
+                <section className="estimate-overview-card">
+                  <div className="estimate-card-title-row">
+                    <h3>Application overview</h3>
+                    <span className="estimate-preview-pill">preview</span>
+                  </div>
+                  {overviewApplicationUnavailable ? (
+                    <p className="compact-empty">Application support not available yet.</p>
+                  ) : (
+                    <div className="estimate-info-list">
+                      <EstimateInfoRow label="Pre-approval required" value={inferApplicationPreApproval(overviewApplicationProfile, overviewApplicationOpportunity)} />
+                      <EstimateInfoRow label="Deadline" value={applicationDeadlineLabel(overviewApplicationProfile, overviewApplicationOpportunity)} />
+                      <EstimateInfoRow label="Estimated time" value={applicationEstimatedTimeLabel(overviewApplicationProfile, overviewApplicationOpportunity)} />
+                      <EstimateInfoRow label="Difficulty" value={applicationDifficultyLabel(overviewApplicationProfile, overviewApplicationOpportunity)} />
+                      <EstimateInfoRow label="Level of support" value={overviewApplicationProfile ? "Guided" : "Needs review"} />
+                    </div>
+                  )}
+                </section>
+
+                <section className="estimate-overview-card">
+                  <div className="estimate-card-title-row">
+                    <h3>Impact overview</h3>
+                    <span className="estimate-preview-pill">preview</span>
+                  </div>
+                  <div className="estimate-info-list">
+                    <EstimateInfoRow label="CO₂e avoided per year" value={displayedEnvironmentalImpact.overall.displayValue === "?" ? displayedEnvironmentalImpact.overall.fallback || "Needs bills" : `${displayedEnvironmentalImpact.overall.displayValue} ${displayedEnvironmentalImpact.overall.unit}`} />
+                    <EstimateInfoRow label="kWh saved per year" value={kwhImpactResource?.displayValue || "Needs bill"} />
+                    <EstimateInfoRow label="LEED O+M" value={certificationRows[0].value} />
+                    <EstimateInfoRow label="Green Business" value={certificationRows[2].value} />
+                  </div>
+                </section>
+              </div>
+
+              <section className="estimate-financing-strip">
+                <EstimateMiniIcon>▥</EstimateMiniIcon>
+                <div>
+                  <strong>Financing options available</strong>
+                  <p>Explore loans and financing that can help make this upgrade more affordable.</p>
+                </div>
+                <button className="secondary-button" onClick={onExploreFinancing} type="button">View financing options ↗</button>
+              </section>
+            </section>
+          ) : null}
+
+          {activeWorkspaceTab === "financials" ? (
+            <section className="estimate-tab-panel estimate-financials-tab" data-workspace-panel="financials">
+              <div className="estimate-panel-title-row">
+                <h3>Financials snapshot <span aria-label="Financial information">ⓘ</span></h3>
+                <div className="financial-toggle" role="group" aria-label="Financial period">
+                  <button className={financialPeriod === "monthly" ? "is-active" : ""} onClick={() => setFinancialPeriod("monthly")} type="button">Monthly</button>
+                  <button className={financialPeriod === "annual" ? "is-active" : ""} onClick={() => setFinancialPeriod("annual")} type="button">Annual</button>
+                </div>
+              </div>
+              <div className="estimate-financial-metric-grid">
+                <EstimateMetricCard icon={<MetricCostIcon />} label="One-time savings" value={formatEstimateCents(upfrontSavingsValue, "Estimate unavailable")} subtitle="Upfront incentives & rebates" />
+                <EstimateMetricCard icon={<MetricSavingsIcon />} label={`${financialPeriodLabel} operating savings`} value={formatEstimateCentsPerPeriod(operatingSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Needs bill")} subtitle="Lower energy costs" />
+                <EstimateMetricCard icon={<MetricImpactIcon />} label={`${financialPeriodLabel} incentive savings`} value={formatEstimateCentsPerPeriod(incentiveSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Estimate unavailable")} subtitle="Ongoing incentives" />
+                <EstimateMetricCard icon={<MetricPaybackIcon />} label="Payback period" value={formatPayback(retrofit.metrics.paybackPeriodYears, "Needs quote")} subtitle="Simple payback" />
+                <EstimateMetricCard icon={<MetricImpactIcon />} label="ROI" value={formatEstimatePercent(retrofit.metrics.roi, "Estimate unavailable")} subtitle="Average annual return" />
+              </div>
+
+              <section className="estimate-financing-strip">
+                <EstimateMiniIcon>▥</EstimateMiniIcon>
+                <div>
+                  <strong>Financing options available</strong>
+                  <p>Explore loans and financing that can help make this upgrade more affordable.</p>
+                </div>
+                <button className="secondary-button" onClick={onExploreFinancing} type="button">View financing options ↗</button>
+              </section>
+
+              <section className="financial-inventory-card">
+                <h3>Financial inventory</h3>
+                <div className="financial-inventory-grid">
+                  <div>
+                    <EstimateInfoRow label="Project cost" value={formatEstimateCents(projectCostValue, "Needs quote")} />
+                    <EstimateInfoRow label="Net cost before one-time tax benefits" value={formatEstimateCents(netCostBeforeTaxValue, "Estimate unavailable")} />
+                    <EstimateInfoRow label="Effective project cost after one-time benefits" value={formatEstimateCents(effectiveProjectCostValue, "Needs tax review")} />
+                    <EstimateInfoRow label="Upfront financial incentive" value={formatEstimateCents(upfrontSavingsValue, "Estimate unavailable")} />
+                    <EstimateInfoRow label="Less selected upfront rebates or grants" value={formatEstimateCents(upfrontSavingsValue == null ? null : -Math.abs(upfrontSavingsValue), "Estimate unavailable")} />
+                    <EstimateInfoRow label="One-time tax benefits" value={formatEstimateCents(oneTimeTaxBenefits, "Needs tax review")} />
+                  </div>
+                  <div>
+                    <EstimateInfoRow label={`${financialPeriodLabel} tax benefits`} value={formatEstimateCentsPerPeriod(taxBenefitsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Needs tax review")} />
+                    <EstimateInfoRow label={`${financialPeriodLabel} operating savings`} value={formatEstimateCentsPerPeriod(operatingSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Needs bill")} />
+                    <EstimateInfoRow label={`${financialPeriodLabel} incentive savings`} value={formatEstimateCentsPerPeriod(incentiveSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Estimate unavailable")} />
+                    <EstimateInfoRow label={`Recurring ${financialPeriod} savings`} value={formatEstimateCentsPerPeriod(recurringSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Estimate unavailable")} />
+                    <EstimateInfoRow label="Selected opportunities count" value={`${selectedCount}`} />
+                    <EstimateInfoRow label="Scenario" value={selectedScenarioLabel} />
+                  </div>
+                </div>
+              </section>
+
+              <section className="financial-breakdown-card">
+                <button className="financial-breakdown-heading" onClick={() => setShowCalculationBreakdown((current) => !current)} type="button">
+                  <span>Calculation breakdown</span>
+                  <span>{showCalculationBreakdown ? "⌃" : "⌄"}</span>
+                </button>
+                {showCalculationBreakdown ? (
+                  <div className="financial-inventory-grid">
+                    <div>
+                      <h4>Upfront calculation</h4>
+                      <EstimateInfoRow label="Project cost" value={formatEstimateCents(projectCostValue, "Needs quote")} />
+                      <EstimateInfoRow label="Upfront financial incentive" value={formatEstimateCents(upfrontSavingsValue, "Estimate unavailable")} />
+                      <EstimateInfoRow label="Less selected upfront rebates or grants" value={formatEstimateCents(upfrontSavingsValue == null ? null : -Math.abs(upfrontSavingsValue), "Estimate unavailable")} />
+                      <EstimateInfoRow label="Net cost before one-time tax benefits" value={formatEstimateCents(netCostBeforeTaxValue, "Estimate unavailable")} />
+                      <EstimateInfoRow label="One-time tax benefits" value={formatEstimateCents(oneTimeTaxBenefits == null ? null : -Math.abs(oneTimeTaxBenefits), "Needs tax review")} />
+                      <EstimateInfoRow label="Effective project cost after one-time benefits" value={formatEstimateCents(effectiveProjectCostValue, "Needs tax review")} />
+                    </div>
+                    <div>
+                      <h4>{financialPeriodLabel} calculation</h4>
+                      <EstimateInfoRow label={`${financialPeriodLabel} operating savings`} value={formatEstimateCentsPerPeriod(operatingSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Needs bill")} />
+                      <EstimateInfoRow label={`${financialPeriodLabel} incentive savings`} value={formatEstimateCentsPerPeriod(incentiveSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Estimate unavailable")} />
+                      <EstimateInfoRow label={`${financialPeriodLabel} tax benefits`} value={formatEstimateCentsPerPeriod(taxBenefitsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Needs tax review")} />
+                      <EstimateInfoRow label={`Recurring ${financialPeriod} savings`} value={formatEstimateCentsPerPeriod(recurringSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Estimate unavailable")} />
+                      <EstimateInfoRow label="Payback period" value={formatPayback(retrofit.metrics.paybackPeriodYears, "Needs quote")} />
+                      <EstimateInfoRow label="ROI" value={formatEstimatePercent(retrofit.metrics.roi, "Estimate unavailable")} />
+                    </div>
+                  </div>
+                ) : null}
+              </section>
+            </section>
+          ) : null}
+
+          {activeWorkspaceTab === "opportunities" ? (
+            <section className="estimate-tab-panel estimate-opportunities-tab" data-workspace-panel="opportunities">
+              <div className="estimate-opportunity-summary-grid">
+                <EstimateMetricCard icon={<MetricImpactIcon />} label="Total opportunities" value={`${retrofit.opportunities.length}`} subtitle="Across incentives and rebates" />
+                <EstimateMetricCard icon={<MetricSavingsIcon />} label="Selected" value={`${selectedCount}`} subtitle={`Total selected value ${formatEstimateCents(selectedOpportunitiesTotalValue, "unavailable")}`} />
+              </div>
+              <div className="estimate-opportunity-accordion">
+                {retrofit.opportunities.length ? retrofit.opportunities.map((opportunity, index) => {
+                  const selected = Boolean(selectedOpportunityIds[opportunity.id]);
+                  const estimatedValueLabel = opportunity.estimatedValue != null
+                    ? formatEstimateCents(opportunity.estimatedValue)
+                    : opportunity.requiredInfo.includes("utility territory confirmation")
+                      ? "Needs utility confirmation"
+                      : "Value unavailable";
+                  const appStatus = applicationPrepProfiles[opportunity.id];
+                  const appReady = appStatus?.status === "customer_ready" && Boolean(appStatus.profile);
+                  const appReference = appStatus?.status === "reference_only";
+                  const expanded = expandedOpportunityIds[opportunity.id] ?? index === 0;
+                  return (
+                    <article className={`estimate-opportunity-row${expanded ? " is-expanded" : ""}`} key={opportunity.id}>
+                      <div className="estimate-opportunity-row-header">
+                        <label className="estimate-opportunity-select">
+                          <input checked={selected} onChange={() => onToggleOpportunity(opportunity.id)} type="checkbox" />
+                          <span>{index + 1}</span>
+                        </label>
+                        <div>
+                          <strong>{opportunity.name}</strong>
+                          <span className="soft-badge">{capitalizeLabel(opportunity.type)}</span>
+                        </div>
+                        <div className="estimate-opportunity-value">
+                          <small>{opportunity.timing === "recurring" ? "Annual value" : "Initial value"}</small>
+                          <strong>{opportunity.timing === "recurring" ? `${estimatedValueLabel}/yr` : estimatedValueLabel}</strong>
+                        </div>
+                        <button aria-label={`${expanded ? "Collapse" : "Expand"} ${opportunity.name}`} className="estimate-row-chevron" onClick={() => setExpandedOpportunityIds((current) => ({ ...current, [opportunity.id]: !expanded }))} type="button">
+                          {expanded ? "⌃" : "⌄"}
+                        </button>
+                      </div>
+                      {expanded ? (
+                        <div className="estimate-opportunity-detail-grid">
+                          <div>
+                            <EstimateInfoRow label="Opportunity description" value={opportunity.description} />
+                            <EstimateInfoRow label="Program type" value={capitalizeLabel(opportunity.type)} />
+                            <EstimateInfoRow label="Timing" value={capitalizeLabel(opportunity.timing)} />
+                            <EstimateInfoRow label="Eligible" value={capitalizeLabel(opportunity.eligibilityStatus)} />
+                            <EstimateInfoRow label="Calculation formula" value={opportunity.valueRule || "Requirements not extracted yet"} />
+                            <EstimateInfoRow label="Cap" value={opportunity.valueCap || "Needs source review"} />
+                            <EstimateInfoRow label="Eligible cost basis" value={opportunity.eligibleCostBasis || "Needs source review"} />
+                          </div>
+                          <div>
+                            <EstimateInfoRow label="Application process" value={opportunity.applicationProcess || "Needs source review"} />
+                            <EstimateInfoRow label="Requires" value={opportunity.requiredInfo.join(", ") || "Needs review"} />
+                            <EstimateInfoRow label="Difficulty" value={capitalizeLabel(opportunity.difficulty || "unknown")} />
+                            <EstimateInfoRow label="Length" value={opportunity.length || "Source unavailable"} />
+                            <EstimateInfoRow label="Help available" value={opportunity.helpAvailable || "Review available next steps"} />
+                            <EstimateInfoRow label="Deadline" value={opportunity.deadline || "Source unavailable"} />
+                            <EstimateInfoRow label="Impact note" value={opportunity.whySelected || opportunityImpactSupportedLabel(displayedEnvironmentalImpact)} />
+                          </div>
+                          <div>
+                            <EstimateInfoRow label="Certification boost" value={opportunity.certificationBoost || "Needs review"} />
+                            <EstimateInfoRow label="Selected" value={selected ? "Yes" : "No"} />
+                            <EstimateInfoRow label="Source" value={opportunity.sourceUrl ? "Available" : "Source unavailable"} />
+                            {appReady ? (
+                              <button className="secondary-button small-action-button" onClick={() => setApplicationPrepOpportunity(opportunity)} type="button">Prepare application</button>
+                            ) : appReference ? (
+                              <span className="application-prep-reference-notice">Funding exhausted — reference only</span>
+                            ) : (
+                              <span className="application-prep-availability">Application prep not available yet.</span>
+                            )}
+                            {opportunity.sourceUrl ? <a className="estimate-program-link" href={opportunity.sourceUrl} rel="noreferrer" target="_blank">View program details ↗</a> : <span className="not-included-label">Source unavailable</span>}
+                          </div>
+                        </div>
+                      ) : null}
+                    </article>
+                  );
+                }) : <p className="compact-empty">No external opportunities found yet for this retrofit.</p>}
+              </div>
+            </section>
+          ) : null}
+
+          {activeWorkspaceTab === "scenarios" ? (
+            <section className="estimate-tab-panel estimate-scenarios-tab" data-workspace-panel="scenarios">
+              <div>
+                <h3>Scenario comparison</h3>
+                <p>Compare different combinations of opportunities and choose the one that fits your goals.</p>
+              </div>
+              <div className="estimate-scenario-grid">
+                {scenarioCards.map((scenario, index) => {
+                  const selected = selectedScenario?.id === scenario.id;
+                  const included = getSelectedOpportunitiesForScenario(retrofit, scenario, selectedOpportunityIds);
+                  const excluded = (scenario.deselectedOpportunityIds || []).length;
+                  return (
+                    <button className={`estimate-scenario-card${selected ? " is-selected" : ""}`} key={scenario.id} onClick={() => onSelectScenario(scenario.id)} type="button">
+                      <div>
+                        <strong>{scenarioDisplayName(index)}</strong>
+                        {index === 0 ? <span className="estimate-preview-pill">Recommended</span> : null}
+                        <span className="estimate-scenario-check" aria-hidden="true">{selected ? "✓" : ""}</span>
+                      </div>
+                      <p>Opportunities<br /><b>{included.length} included</b> · {excluded} excluded</p>
+                      <hr />
+                      <small>Best for</small>
+                      <strong>{scenarioBestForLabel(index)}</strong>
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="estimate-scenario-detail-grid">
+                <section className="estimate-recommended-scenario-card">
+                  <div className="estimate-card-title-row">
+                    <h3>Recommended scenario</h3>
+                    <span className="estimate-preview-pill">{scenarioDisplayName(Math.max(0, scenarioCards.findIndex((scenario) => scenario.id === selectedScenario?.id)))}</span>
+                  </div>
+                  <strong>Recommendation reason</strong>
+                  <p>{selectedScenario?.estimateNotes.join(" ") || "This scenario provides a strong balance of savings and payback while including high-impact opportunities."}</p>
+                  <ul>
+                    <li>Strong one-time savings with a solid payback period.</li>
+                    <li>Includes high-impact upgrades that improve efficiency and comfort.</li>
+                    <li>Qualifies for key rebates and incentives.</li>
+                  </ul>
+                </section>
+                <section className="estimate-selected-scenario-card">
+                  <div className="estimate-card-title-row">
+                    <h3>Selected scenario details</h3>
+                    <button className="secondary-button small-action-button" type="button">Edit scenario</button>
+                  </div>
+                  <div className="estimate-scenario-list-grid">
+                    <div>
+                      <h4>Included opportunities ({selectedScenarioOpportunities.length})</h4>
+                      {selectedScenarioOpportunities.length ? selectedScenarioOpportunities.map((opportunity) => (
+                        <span className="estimate-scenario-list-item" key={opportunity.id}>✓ {opportunity.name} ⓘ</span>
+                      )) : <p className="compact-empty">None selected.</p>}
+                    </div>
+                    <div>
+                      <h4>Excluded opportunities ({deselectedScenarioOpportunities.length})</h4>
+                      {deselectedScenarioOpportunities.length ? deselectedScenarioOpportunities.map((opportunity) => (
+                        <span className="estimate-scenario-list-item is-excluded" key={opportunity.id}>− {opportunity.name} ⓘ</span>
+                      )) : <p className="compact-empty">None excluded.</p>}
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <p className="estimate-tab-note">ⓘ You can customize scenarios by including or excluding opportunities. Changes will update the comparison above.</p>
+            </section>
+          ) : null}
+
+          {activeWorkspaceTab === "environmental" ? (
+            <section className="estimate-tab-panel estimate-impact-tab" data-workspace-panel="environmental">
+              <h3>Impact overview</h3>
+              <section className="estimate-impact-hero">
+                <span className="estimate-impact-leaf" aria-hidden="true"><MetricSavingsIcon /></span>
+                <div>
+                  <span>Main impact estimate</span>
+                  <strong>{displayedEnvironmentalImpact.overall.displayValue}</strong>
+                  <b>{displayedEnvironmentalImpact.overall.displayValue === "?" ? displayedEnvironmentalImpact.overall.fallback || "Needs bills" : `${displayedEnvironmentalImpact.overall.unit} avoided / year`}</b>
+                  <p>{displayedEnvironmentalImpact.overall.subtext}</p>
+                </div>
+                <EstimateImpactIllustration />
+              </section>
+              <h3>Additional impact metrics</h3>
+              <div className="estimate-impact-metric-grid">
+                <EstimateMetricCard icon={<MetricSavingsIcon />} label="kWh saved per year" value={kwhImpactResource?.displayValue || "Needs bill"} subtitle={kwhImpactResource?.unit || "kWh/yr"} />
+                <EstimateMetricCard icon={<MetricImpactIcon />} label="Reduction in energy use" value={reductionImpactResource?.displayValue || "Needs bill"} subtitle="Compared to baseline" />
+                <EstimateMetricCard icon={<MetricSavingsIcon />} label="Therms avoided per year" value={thermImpactResource?.displayValue || "Needs gas baseline"} subtitle={thermImpactResource?.unit || "therms/yr"} />
+                <EstimateMetricCard icon={<MetricCostIcon />} label="Utility cost savings per year" value={formatEstimateCentsPerPeriod(annualOperatingSavingsValue, "yr", "Needs bill")} subtitle="USD/yr" />
+              </div>
+              <h3>Certification contribution</h3>
+              <div className="estimate-certification-list">
+                {certificationRows.map((row) => (
+                  <article className="estimate-certification-row" key={row.program}>
+                    <span className="estimate-card-icon"><MetricImpactIcon /></span>
+                    <div>
+                      <strong>{row.program}</strong>
+                      <p>{row.description}</p>
+                    </div>
+                    <b>{row.value}</b>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ) : null}
+
+          {activeWorkspaceTab === "application" ? (
+            <section className="estimate-tab-panel estimate-application-tab" data-workspace-panel="application">
+              <section className="application-overview-card">
+                <div className="estimate-card-title-row">
+                  <span className="estimate-card-icon"><MetricImpactIcon /></span>
+                  <div>
+                    <h3>Application Overview <span className="estimate-preview-pill">Preview</span></h3>
+                    <p>Here’s a preview of the program and support available for this retrofit.</p>
+                  </div>
+                </div>
+                {applicationOverviewReferenceOnly ? <p className="application-prep-reference-notice">Funding exhausted — reference only</p> : null}
+                <div className="application-overview-rows">
+                  <EstimateInfoRow label="Opportunity name" value={applicationOverviewProfile?.programName || applicationOverviewOpportunity?.name || "Application support not available yet"} />
+                  <EstimateInfoRow label="Related retrofit" value={retrofit.name} />
+                  <EstimateInfoRow label="Pre-approval required" value={inferApplicationPreApproval(applicationOverviewProfile, applicationOverviewOpportunity)} />
+                  <EstimateInfoRow label="Deadline" value={applicationDeadlineLabel(applicationOverviewProfile, applicationOverviewOpportunity)} />
+                  <EstimateInfoRow label="Estimated time" value={applicationEstimatedTimeLabel(applicationOverviewProfile, applicationOverviewOpportunity)} />
+                  <EstimateInfoRow label="Difficulty" value={applicationDifficultyLabel(applicationOverviewProfile, applicationOverviewOpportunity)} />
+                  <EstimateInfoRow label="Level of support" value={applicationOverviewIsReady ? "Guided" : "Needs review"} />
+                </div>
+                <div className="application-overview-footer">
+                  <span>ⓘ Application support and step-by-step guidance come later in the application workflow.</span>
+                  {applicationOverviewIsReady && applicationOverviewOpportunity ? (
+                    <button className="secondary-button" onClick={() => setApplicationPrepOpportunity(applicationOverviewOpportunity)} type="button">View full application support ↗</button>
+                  ) : (
+                    <button className="secondary-button" disabled type="button">
+                      {applicationOverviewReferenceOnly ? "Funding exhausted — reference only" : "Application support not available yet"}
+                    </button>
+                  )}
+                </div>
+              </section>
+            </section>
+          ) : null}
+        </section>
+
+        <aside className="estimate-right-rail" aria-label="Estimate actions">
+          <button className="estimate-primary-action" onClick={onAddToPlan} type="button">Confirm & move to next step</button>
+          <button className="estimate-secondary-action" onClick={activeWorkspaceTab === "financials" ? onAddToPlan : undefined} type="button">
+            {activeWorkspaceTab === "financials" ? "Save estimate" : "Discard changes"}
+          </button>
+          <section className="estimate-right-status-card">
+            <span className="estimate-status-check" aria-hidden="true">✓</span>
+            <div>
+              <strong>{estimateRightRailStatus.title}</strong>
+              <p>{estimateRightRailStatus.subtitle}</p>
+            </div>
+          </section>
+          {activeWorkspaceTab === "financials" ? (
+            <section className="estimate-right-status-card">
+              <span className="estimate-status-document" aria-hidden="true">⇩</span>
+              <div>
+                <strong>Download estimate</strong>
+                <p>PDF summary</p>
+              </div>
+            </section>
+          ) : null}
+        </aside>
+      </div>
+
+      {applicationPrepOpportunity ? (
+        <ApplicationPrepDrawer
+          opportunity={applicationPrepOpportunity}
+          onClose={() => setApplicationPrepOpportunity(null)}
+          profile={applicationPrepProfiles[applicationPrepOpportunity.id]?.profile || null}
+          retrofitName={retrofit.name}
+        />
+      ) : null}
+    </article>
+  );
 
   return (
     <article className="retrofit-preview-card retrofit-preview-card-active">
@@ -9772,7 +10356,7 @@ function RetrofitPreviewCardView({
           <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : retrofit.metrics.estimatedUpfrontProjectCost == null ? "Needs confirmed project quote" : "Current estimate basis"} label="Estimated upfront project cost" value={billDataLocked ? "?" : formatMaybeCents(retrofit.metrics.estimatedUpfrontProjectCost, "Needs quote")} />
           <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : displayedUpfrontFinancialIncentive == null ? "Needs selected eligible opportunity" : "Selected and included opportunities"} label="Upfront financial incentive" value={billDataLocked ? "?" : formatMaybeCents(displayedUpfrontFinancialIncentive, selectedCount ? "Not included yet" : "No selected incentives")} />
           <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : displayedNetCostBeforeTaxBenefits == null ? "Needs project cost" : "Project cost minus included incentives"} label="Net cost before tax benefits" value={billDataLocked ? "?" : formatMaybeCents(displayedNetCostBeforeTaxBenefits, "Not estimated yet")} />
-          <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : retrofit.metrics.taxBenefits == null ? "Needs tax/entity information" : "Current tax inputs"} label="Tax benefits" value={billDataLocked ? "?" : retrofit.metrics.taxBenefits == null ? "Needs tax review" : typeof retrofit.metrics.taxBenefits === "number" ? formatCents(retrofit.metrics.taxBenefits) : String(retrofit.metrics.taxBenefits)} />
+          <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : oneTimeTaxBenefits == null ? "Needs tax/entity information" : "Current tax inputs"} label="Tax benefits" value={billDataLocked ? "?" : oneTimeTaxBenefits == null ? "Needs tax review" : formatCents(oneTimeTaxBenefits)} />
           <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : retrofit.metrics.effectiveCostAfterOneTimeBenefits == null ? "Needs tax review" : "After selected one-time benefits"} label="Effective cost after one-time benefits" value={billDataLocked ? "?" : formatMaybeCents(retrofit.metrics.effectiveCostAfterOneTimeBenefits, "Needs tax review")} />
           <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : "Internal recurring savings only"} label="Recurring Operational Savings" value={billDataLocked ? "?" : formatMaybeRecurringSavings(retrofit)} />
           <PreviewMetric basis={billDataLocked ? "Upload bills to unlock detailed savings and payback." : retrofit.metrics.paybackPeriodYears == null ? "Needs quote and validated savings" : "Current cost and savings inputs"} label="Payback Period" value={billDataLocked ? "?" : formatPayback(retrofit.metrics.paybackPeriodYears)} />
@@ -10263,9 +10847,9 @@ function RetrofitPreviewCardView({
 
       {applicationPrepOpportunity ? (
         <ApplicationPrepDrawer
-          opportunity={applicationPrepOpportunity}
+          opportunity={applicationPrepOpportunity as RetrofitOpportunityPreview}
           onClose={() => setApplicationPrepOpportunity(null)}
-          profile={applicationPrepProfiles[applicationPrepOpportunity.id]?.profile || null}
+          profile={applicationPrepProfiles[applicationPrepOpportunity?.id || ""]?.profile || null}
           retrofitName={retrofit.name}
         />
       ) : null}
@@ -11184,6 +11768,72 @@ function formatMaybeRecurringSavings(retrofit: RetrofitPreviewCard) {
 function formatPayback(value: number | null | undefined, fallback = "Not estimated yet") {
   if (value == null || !Number.isFinite(value)) return fallback;
   return `${value.toFixed(value < 10 ? 1 : 0)} years`;
+}
+
+function formatEstimateCents(value: number | null | undefined, fallback = "Estimate unavailable") {
+  if (value == null || !Number.isFinite(value)) return fallback;
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0
+  }).format(value / 100);
+}
+
+function formatEstimateCentsPerPeriod(value: number | null | undefined, period: "mo" | "yr", fallback = "Estimate unavailable") {
+  const formatted = formatEstimateCents(value, fallback);
+  return formatted === fallback ? fallback : `${formatted}/${period}`;
+}
+
+function centsPerMonth(value: number | null | undefined) {
+  if (value == null || !Number.isFinite(value)) return null;
+  return Math.round(value / 12);
+}
+
+function sumDefinedCents(values: Array<number | null | undefined>) {
+  const definedValues = values.filter((value): value is number => typeof value === "number" && Number.isFinite(value));
+  if (!definedValues.length) return null;
+  return definedValues.reduce((sum, value) => sum + value, 0);
+}
+
+function formatEstimatePercent(value: string | number | null | undefined, fallback = "Estimate unavailable") {
+  const parsed = parsePercentMetric(value);
+  if (parsed == null || !Number.isFinite(parsed)) return fallback;
+  return `${parsed.toFixed(parsed < 10 && parsed % 1 !== 0 ? 1 : 0)}%`;
+}
+
+function scenarioBestForLabel(index: number) {
+  if (index === 0) return "Lowest upfront cost";
+  if (index === 1) return "Fastest payback";
+  return "Highest one-time & recurring savings";
+}
+
+function scenarioDisplayName(index: number) {
+  return `Scenario ${index + 1}`;
+}
+
+function inferApplicationPreApproval(profile: CustomerApplicationProfile | null, opportunity?: RetrofitOpportunityPreview | null) {
+  const text = [
+    ...(profile?.requiredFields || []).map((item) => `${item.label} ${item.description || ""}`),
+    ...(profile?.requiredDocuments || []).map((item) => `${item.label} ${item.description || ""}`),
+    ...(profile?.applicationSteps || []),
+    opportunity?.applicationProcess || "",
+    opportunity?.description || ""
+  ].join(" ").toLowerCase();
+  if (!text.trim()) return "Needs review";
+  if (text.includes("pre-approval") || text.includes("preapproval") || text.includes("pre approval")) return "Yes";
+  return "Needs review";
+}
+
+function applicationDeadlineLabel(profile: CustomerApplicationProfile | null, opportunity?: RetrofitOpportunityPreview | null) {
+  return profile?.deadlinesOrFundingStatus[0] || opportunity?.deadline || "Not listed";
+}
+
+function applicationEstimatedTimeLabel(profile: CustomerApplicationProfile | null, opportunity?: RetrofitOpportunityPreview | null) {
+  return opportunity?.length || (profile?.applicationSteps.length ? "20–30 minutes" : "Varies");
+}
+
+function applicationDifficultyLabel(profile: CustomerApplicationProfile | null, opportunity?: RetrofitOpportunityPreview | null) {
+  return capitalizeLabel(opportunity?.difficulty || (profile ? "needs review" : "needs review"));
 }
 
 function formatScenarioRecurringSavings(scenario: RetrofitScenarioPreview) {

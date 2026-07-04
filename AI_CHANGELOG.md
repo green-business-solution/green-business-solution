@@ -6,6 +6,12 @@
 - Added a retrofit project-details form gate before the selected-retrofit workspace when required form answers are missing.
 - Seeded admin test-case form answers from available intake data while keeping seeded details disabled by default outside admin preview.
 
+## 2026-07-04 - Codex (GPT-5) selected estimate workspace redesign
+
+- Replaced the selected retrofit detail render path with an estimate workspace that uses the new progress stepper, six customer-facing tabs, screenshot-aligned overview/financial/opportunity/scenario/impact/application panels, and a right-side action rail.
+- Added monthly/annual financial views, compact opportunity accordions, scenario comparison cards, impact/certification summaries, and an Application Overview preview that preserves customer-ready ApplicationProfile gating.
+- Updated focused retrofit preview tests to cover the new visible tab set, financial toggle, opportunity accordion details, impact/application panels, and safety copy restrictions.
+
 ## 2026-07-04 - Codex (GPT-5) grant production quality GPT Pro packets
 
 - Added a repeatable GPT Pro work-packet generator for production-quality grant estimation repair.
