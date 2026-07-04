@@ -1090,7 +1090,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Step 3: Get your opportunities, metrics, and more");
     expect(source).toContain("Step 4: Receive implementation and application support");
     expect(source).toContain("Step 5: View your dashboard");
-    expect(source).toContain("Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future use.");
+    expect(source).toContain("Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future selection.");
     expect(source).toContain("process-editor-content");
     expect(source).toContain("process-editor-title");
     expect(source).toContain("process-number");
@@ -1441,7 +1441,7 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".process-onboarding-backdrop .code-accent");
     expect(css).toContain("font-size: clamp(14px, 0.98vw, 18px)");
     expect(css).toContain("max-width: none");
-    expect(css).toContain("transform: translateX(clamp(-72px, -3.7vw, -42px))");
+    expect(css).toContain("transform: translateX(clamp(12px, 1.2vw, 24px))");
     expect(css).toContain("white-space: nowrap");
     expect(css).toContain("width: max-content");
     expect(css).toContain(".process-onboarding-modal .process-modal-footer");

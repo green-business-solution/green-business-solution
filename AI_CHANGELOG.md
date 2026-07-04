@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) process note placement
+
+- Moved the process onboarding note slightly inside the modal and changed the note copy from future use to future selection.
+
 ## 2026-07-04 - Codex (GPT-5) loading logo scale
 
 - Enlarged the full-page RetroFi loading mark while preserving compact modal/card loader sizing.

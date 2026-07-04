@@ -6024,7 +6024,7 @@ const PROCESS_ONBOARDING_LINES = [
   { id: "step5", text: "Step 5: View your dashboard" },
   {
     id: "note",
-    text: "Note: Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future use."
+    text: "Note: Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future selection."
   }
 ] as const;
 
@@ -8943,7 +8943,7 @@ function ProcessOnboardingModal({
   return (
     <div className="process-onboarding-backdrop" data-testid="process-onboarding-modal">
       <div className="sr-only" aria-live="off">
-        The Process. Step 1: Upload your bills. Step 2: Choose a retrofit and answer a few questions. Step 3: Get your opportunities, metrics, and more. Step 4: Receive implementation and application support. Step 5: View your dashboard. Note: Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future use.
+        The Process. Step 1: Upload your bills. Step 2: Choose a retrofit and answer a few questions. Step 3: Get your opportunities, metrics, and more. Step 4: Receive implementation and application support. Step 5: View your dashboard. Note: Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future selection.
       </div>
       <section
         aria-labelledby="process-onboarding-title"

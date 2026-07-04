@@ -4120,7 +4120,7 @@ dd {
   min-height: 1.4em;
   overflow-wrap: normal;
   text-wrap: normal;
-  transform: translateX(clamp(-72px, -3.7vw, -42px));
+  transform: translateX(clamp(12px, 1.2vw, 24px));
   white-space: nowrap;
   width: max-content;
 }
