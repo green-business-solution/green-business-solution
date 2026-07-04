@@ -6,6 +6,10 @@
 - Added selected-retrofit prioritized detail loading so a clicked retrofit can hydrate before the full recommendation payload finishes.
 - Added visible "loading detailed opportunities" states and background admin precompute queuing for fake-user recommendation payloads.
 
+## 2026-07-04 - Codex (GPT-5) user preview loading chrome fix
+
+- Removed the public marketing header from the authenticated app loading state for `/user-preview` and other private workspace routes so `Home/Pricing/About` navigation no longer flashes before the all-retrofits preview loads.
+
 ## 2026-07-04 - Codex (GPT-5) grant production action audit
 
 - Added grant production action buckets to the grant/tax coverage report so unresolved packages are separated into form-input gates, funding refresh needs, non-grant workflows, zero-placeholder no-calculable values, and formula repair targets.
@@ -2108,6 +2112,7 @@
 # 2026-07-04
 
 - Added a batched GPT Pro work-packet generator for the 20 grant-production repair targets, exposed v2 incentive form-field mappings in runtime summaries, and added a grant form-input audit showing all 65 `form_input_required` grant/rebate evaluations map to collection surfaces.
+- Added a shared branded RetroFi loading system with the existing `/retrofi-logo.png` asset, including page/progress, circular logo, and skeleton loaders; replaced blank/plain loading states across dashboard preview, session restore, admin tables, upload, database, and application-prep surfaces.
 - Fixed the retrofit picker bill banner and upload modal so shown test-case bills open as loaded review steps instead of reloading empty local upload state.
 - Fixed retrofit picker bill-readiness dots to infer uploaded bill categories from extracted bill fields and site energy profiles, not only explicit uploaded file rows.
 - Fixed the admin user-preview bill-data toggle so seeded test-case utility files hydrate retrofit readiness in show mode while hide mode deliberately simulates no uploaded bills.

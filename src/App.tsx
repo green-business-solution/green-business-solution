@@ -10,6 +10,7 @@ import {
   STALE_SESSION_KEYS
 } from "./config";
 import { databaseProgramMatchesSearch } from "./databaseSearch";
+import { RetroFiLogoLoader, RetroFiPageLoader, RetroFiProgressLoader, RetroFiSkeleton } from "./components/RetroFiLoader";
 import { GoogleSignInButton } from "./googleSignIn";
 import {
   BuildingOutlineIcon,
@@ -4313,20 +4314,12 @@ function DatabaseLoadingProgress({
 
   return (
     <section className="database-load-progress" aria-live="polite">
-      <div className="database-load-progress-header">
-        <span>{statusLabel}</span>
-        <strong>{percent}%</strong>
-      </div>
-      <div
-        aria-label={statusLabel}
-        aria-valuemax={100}
-        aria-valuemin={0}
-        aria-valuenow={percent}
-        className="database-progress-track"
-        role="progressbar"
-      >
-        <span style={{ width: `${percent}%` }} />
-      </div>
+      <RetroFiProgressLoader
+        indeterminate={!progress.estimatedTotal && !progress.isComplete && !hasError}
+        label={statusLabel}
+        progress={percent}
+        sublabel={scannedLabel}
+      />
       <p>
         {scannedLabel}. {progress.loadedPrograms.toLocaleString()} opportunities available so far.
       </p>
@@ -4375,7 +4368,7 @@ function DatabaseProgramDetail({ isLoading, program }: { isLoading: boolean; pro
   if (isLoading) {
     return (
       <section className="database-detail-panel">
-        <p className="empty-state">Loading program details...</p>
+        <RetroFiSkeleton variant="card" label="Loading program details" />
       </section>
     );
   }
@@ -4847,7 +4840,7 @@ function EnergyDataUploadPage({
               </article>
             </div>
             {error ? <p className="error-message">{error}</p> : null}
-            {isLoading ? <p>Loading your uploaded files…</p> : null}
+            {isLoading ? <RetroFiLogoLoader label="Loading your uploaded files..." size="md" tone="card" /> : null}
             <section className="energy-upload-results">
               <div className="energy-upload-header">
                 <h2>Uploaded files</h2>
@@ -4858,6 +4851,7 @@ function EnergyDataUploadPage({
                 </p>
               </div>
               <div className="energy-upload-records">
+                {isUploading ? <RetroFiSkeleton variant="card" label="Uploading and processing files" /> : null}
                 {(sessionPayload?.uploadedUtilityFiles || []).map((record) => {
                   const extractedValues = (sessionPayload?.utilityExtractedValues || []).filter(
                     (value) => value.fileId === record.fileId
@@ -5390,11 +5384,31 @@ function SessionRestoringPage({ navigate }: { navigate: (route: Route) => void }
   return (
     <PublicShell navigate={navigate} pageClassName="sign-in-page" showFooter={false}>
       <section className="sign-in-panel session-restoring-panel">
-        <p className="eyebrow">Session</p>
-        <h1>Loading</h1>
-        <p className="muted-message">Checking your signed-in session...</p>
+        <RetroFiLogoLoader label="Checking your signed-in session..." size="lg" tone="modal" />
       </section>
     </PublicShell>
+  );
+}
+
+function AppSessionRestoringPage() {
+  return (
+    <RetroFiPageLoader
+      label="Preparing your retrofit workspace..."
+      mode="spinner"
+      variant="retrofit"
+    />
+  );
+}
+
+function isAppChromeRoute(route: Route) {
+  return (
+    route === "portal" ||
+    route === "portal-preview" ||
+    route === "user-preview" ||
+    route === "admin" ||
+    route === "admin-application-sources" ||
+    route === "admin-application-profiles" ||
+    route === "testcases"
   );
 }
 
@@ -8613,6 +8627,17 @@ export function RetrofitRecommendationsPreview({
     }
   }
 
+  if (isLoading && !payload) {
+    const isPreviewCaseLoad = loadingMessage.toLowerCase().includes("client") || loadingMessage.toLowerCase().includes("preview");
+    return (
+      <RetroFiPageLoader
+        label={isPreviewCaseLoad ? "Loading preview case..." : "Preparing your dashboard..."}
+        sublabel={isPreviewCaseLoad ? "Preparing dashboard data for this test case" : "Building savings, incentive, impact, and certification views"}
+        variant="dashboard"
+      />
+    );
+  }
+
   return (
     <div
       className={`user-preview-shell${mobileSidebarOpen ? " is-mobile-sidebar-open" : ""}${sidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
@@ -10284,8 +10309,10 @@ function RetrofitPickerView({
       </section>
 
       {isLoading ? (
-        <section className="retrofit-picker-empty">
-          <p>{loadingMessage}</p>
+        <section className="retrofit-picker-grid" aria-label={loadingMessage}>
+          {Array.from({ length: 6 }).map((_, index) => (
+            <RetroFiSkeleton key={index} variant="retrofit-card" label="Loading retrofit recommendation" />
+          ))}
         </section>
       ) : visibleRetrofits.length ? (
         <>
@@ -12998,7 +13025,7 @@ function OpportunityPreviewRow({
           <strong>{estimatedValueLabel}</strong>
           {opportunity.sourceUrl ? <a href={opportunity.sourceUrl} rel="noreferrer" target="_blank">Open source</a> : <span>Source unavailable</span>}
           {applicationPrepLoading ? (
-            <span className="application-prep-availability">Checking application prep...</span>
+            <RetroFiLogoLoader label="Checking application prep..." size="sm" tone="card" />
           ) : applicationPrepReady ? (
             <>
               <span className="application-prep-ready-badge">Application checklist ready</span>
@@ -14159,7 +14186,7 @@ function AdminClientPortalPreviewPage({
 
           {isProfileLoading ? (
           <section className="database-detail-panel">
-            <p className="empty-state">Loading the client portal preview...</p>
+            <RetroFiLogoLoader label="Loading the client portal preview..." size="lg" tone="card" />
           </section>
           ) : (
             <ProfilePanel intake={profilePayload?.intake || null} user={previewUser} />
@@ -14676,8 +14703,14 @@ function AdminUserPreviewStandalonePage({
       ) : (
         <section className="retrofit-preview-page">
           <article className="retrofit-preview-card">
-            <h2>{isLoading ? "Loading fake test users..." : "No fake test users available"}</h2>
-            <p>The 50 promoted test-case users will appear in the dropdown after the admin user list loads.</p>
+            {isLoading ? (
+              <RetroFiLogoLoader label="Loading preview cases..." size="lg" tone="card" />
+            ) : (
+              <>
+                <h2>No fake test users available</h2>
+                <p>The 50 promoted test-case users will appear in the dropdown after the admin user list loads.</p>
+              </>
+            )}
           </article>
         </section>
       )}
@@ -14808,7 +14841,7 @@ function AdminTestCasesPanel() {
             <h2>Loading sample profile results</h2>
           </div>
         </div>
-        <p className="muted-message">Loading generated matching results...</p>
+        <RetroFiLogoLoader label="Loading generated matching results..." size="lg" tone="card" />
       </section>
     );
   }
@@ -15692,7 +15725,13 @@ function AdminUsersTable({
           <span role="columnheader">Utility data</span>
           <span role="columnheader">Created</span>
         </div>
-        {rows.length === 0 ? (
+        {isLoading && rows.length === 0 ? (
+          <div className="admin-row admin-empty-row" role="row">
+            <span role="cell">
+              <RetroFiSkeleton variant="table" rows={5} label={`Loading ${title}`} />
+            </span>
+          </div>
+        ) : rows.length === 0 ? (
           <div className="admin-row admin-empty-row" role="row">
             <span role="cell">
               <strong>{emptyMessage}</strong>
@@ -15866,7 +15905,9 @@ function AdminRetrofitDatabasePanel() {
             <span>{dataset?.taxonomyVersion || "Taxonomy"}</span>
           </div>
           <div className="database-list">
-            {filteredRetrofits.length === 0 && !isLoading ? (
+            {isLoading && filteredRetrofits.length === 0 ? (
+              <RetroFiSkeleton variant="list" rows={5} label="Loading retrofit types" />
+            ) : filteredRetrofits.length === 0 ? (
               <p className="empty-state">No retrofit types match the current search.</p>
             ) : null}
             {filteredRetrofits.map((retrofit) => (
@@ -15887,7 +15928,13 @@ function AdminRetrofitDatabasePanel() {
           </div>
         </section>
 
-        <RetrofitDatabaseDetail retrofit={selectedRetrofit} />
+        {isLoading && !selectedRetrofit ? (
+          <section className="database-detail-panel">
+            <RetroFiSkeleton variant="card" label="Loading retrofit database details" />
+          </section>
+        ) : (
+          <RetrofitDatabaseDetail retrofit={selectedRetrofit} />
+        )}
       </div>
     </section>
   );
@@ -15999,7 +16046,7 @@ function AdminDataPanel({
       <div className="data-grid">
         {isInitialLoad ? (
           <article className="data-card">
-            <p>Loading {dataTable?.name || "table data"}...</p>
+            <RetroFiSkeleton variant="table" rows={6} label={`Loading ${dataTable?.name || "table data"}`} />
           </article>
         ) : dataTable ? (
           <article className="data-card">
@@ -16381,7 +16428,7 @@ function AdminApplicationProfilesPanel({ credential }: { credential: AuthCredent
 
       <section className="application-source-table-shell">
         {isLoading && rows.length === 0 ? (
-          <p className="empty-state">Loading ApplicationProfiles...</p>
+          <RetroFiSkeleton variant="table" rows={7} label="Loading ApplicationProfiles" />
         ) : rows.length === 0 ? (
           <p className="empty-state">No ApplicationProfiles are saved yet.</p>
         ) : (
@@ -16779,7 +16826,7 @@ function AdminApplicationSourcesPanel({ credential }: { credential: AuthCredenti
 
       <section className="application-source-table-shell">
         {isLoading && rows.length === 0 ? (
-          <p className="empty-state">Loading application source audit...</p>
+          <RetroFiSkeleton variant="table" rows={7} label="Loading application source audit" />
         ) : error && rows.length === 0 ? (
           <div className="empty-state">
             <p>Could not load the application source audit.</p>
@@ -17665,10 +17712,10 @@ function OpportunityReviewPanel({
 
       <div className="opportunity-review-layout">
         <div className="opportunity-list" aria-label="Opportunity candidates">
-          {filteredRecords.length === 0 ? (
-            <p className="empty-state">
-              {isLoading ? "Loading opportunity candidates..." : "No opportunities match the current filters."}
-            </p>
+          {isLoading && filteredRecords.length === 0 ? (
+            <RetroFiSkeleton variant="list" rows={6} label="Loading opportunity candidates" />
+          ) : filteredRecords.length === 0 ? (
+            <p className="empty-state">No opportunities match the current filters.</p>
           ) : (
             filteredRecords.map((record) => (
               <button
@@ -18464,6 +18511,10 @@ export function App() {
   }
 
   if (isAuthRestoring) {
+    if (isAppChromeRoute(route)) {
+      return <AppSessionRestoringPage />;
+    }
+
     return <SessionRestoringPage navigate={navigate} />;
   }
 

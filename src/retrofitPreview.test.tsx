@@ -1,5 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import { RetroFiLogoLoader, RetroFiPageLoader, RetroFiProgressLoader, RetroFiSkeleton, clampRetroFiProgress } from "./components/RetroFiLoader";
 import {
   BILL_UPLOAD_STEPS,
   CUSTOMER_RETROFIT_UI_NAMES,
@@ -1139,6 +1140,102 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("selectedProfile?.profileId === profile.profileId ? \"is-selected\" : undefined");
     expect(css).toContain(".application-source-table tbody tr.is-selected");
     expect(css).toContain(".application-profile-detail:focus");
+  });
+
+  it("keeps the public marketing nav out of the user preview loading state", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+    const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
+
+    expect(source).toContain("function AppSessionRestoringPage");
+    expect(source).toContain("function isAppChromeRoute(route: Route)");
+    expect(source).toContain("route === \"user-preview\"");
+    expect(source).toContain("return <AppSessionRestoringPage />");
+    expect(source).toContain("return <SessionRestoringPage navigate={navigate} />");
+
+    const appRestoringSource = source.slice(
+      source.indexOf("function AppSessionRestoringPage"),
+      source.indexOf("function isAppChromeRoute")
+    );
+    expect(appRestoringSource).toContain("RetroFiPageLoader");
+    expect(appRestoringSource).not.toContain("PublicShell");
+    expect(appRestoringSource).not.toContain("PublicNav");
+    expect(appRestoringSource).not.toContain("site-nav");
+
+    expect(css).toContain(".retrofi-loader-page");
+    expect(css).toContain(".retrofi-logo-spinner");
+  });
+
+  it("renders the shared full-page loader with the RetroFi logo and dashboard status text", () => {
+    const html = renderToStaticMarkup(
+      <RetroFiPageLoader
+        label="Preparing your dashboard..."
+        sublabel="Building savings, incentive, impact, and certification views"
+        variant="dashboard"
+      />
+    );
+
+    expect(html).toContain("retrofi-loader-page");
+    expect(html).toContain("/retrofi-logo.png");
+    expect(html).toContain("Preparing your dashboard...");
+    expect(html).toContain("Building savings, incentive, impact, and certification views");
+    expect(html).toContain("role=\"status\"");
+  });
+
+  it("clamps shared progress loader values between 0 and 100", () => {
+    expect(clampRetroFiProgress(-10)).toBe(0);
+    expect(clampRetroFiProgress(62)).toBe(62);
+    expect(clampRetroFiProgress(130)).toBe(100);
+
+    const lowHtml = renderToStaticMarkup(<RetroFiProgressLoader indeterminate={false} progress={-10} />);
+    const highHtml = renderToStaticMarkup(<RetroFiProgressLoader indeterminate={false} progress={130} />);
+
+    expect(lowHtml).toContain("0%");
+    expect(highHtml).toContain("100%");
+  });
+
+  it("renders indeterminate progress without a fake percentage", () => {
+    const html = renderToStaticMarkup(<RetroFiProgressLoader indeterminate label="Preparing dashboard metrics" />);
+
+    expect(html).toContain("retrofi-progress-fill--indeterminate");
+    expect(html).not.toContain("retrofi-progress-percent");
+    expect(html).not.toContain("aria-valuenow");
+  });
+
+  it("renders compact circular logo loaders and skeleton placeholders", () => {
+    const logoHtml = renderToStaticMarkup(<RetroFiLogoLoader label="Saving..." size="sm" tone="modal" />);
+    const skeletonHtml = renderToStaticMarkup(<RetroFiSkeleton variant="chart" label="Loading chart" />);
+
+    expect(logoHtml).toContain("retrofi-logo-loader--sm");
+    expect(logoHtml).toContain("retrofi-logo-spinner-ring");
+    expect(logoHtml).toContain("Saving...");
+    expect(skeletonHtml).toContain("retrofi-skeleton-chart");
+    expect(skeletonHtml).toContain("retrofi-skeleton-chart-body");
+  });
+
+  it("defines reduced-motion rules for RetroFi loaders", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
+
+    expect(css).toContain("@media (prefers-reduced-motion: reduce)");
+    expect(css).toContain(".retrofi-logo-spinner-ring");
+    expect(css).toContain(".retrofi-skeleton-line");
+  });
+
+  it("uses branded dashboard, modal, and skeleton loaders instead of plain loading states", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+
+    expect(source).toContain("label={isPreviewCaseLoad ? \"Loading preview case...\" : \"Preparing your dashboard...\"}");
+    expect(source).toContain("Building savings, incentive, impact, and certification views");
+    expect(source).toContain("<RetroFiSkeleton key={index} variant=\"retrofit-card\"");
+    expect(source).toContain("<RetroFiLogoLoader label=\"Loading the client portal preview...\"");
+    expect(source).toContain("<RetroFiSkeleton variant=\"table\" rows={7} label=\"Loading ApplicationProfiles\"");
+    expect(source).toContain("<RetroFiLogoLoader label=\"Checking application prep...\"");
+    expect(source).toContain("No retrofit recommendations yet.");
   });
 
   it("gates customer Prepare Application V1 on approved sanitized ApplicationProfiles", async () => {
