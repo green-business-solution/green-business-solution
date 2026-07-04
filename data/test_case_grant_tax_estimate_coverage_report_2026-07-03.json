@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_test_case_grant_tax_coverage_report.v1",
-  "generatedAt": "2026-07-04T22:24:38.603Z",
+  "generatedAt": "2026-07-04T22:44:59.889Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json",
     "packages": "data/opportunity_incentive_calculation_packages_v2.json",
@@ -17,7 +17,7 @@
     "runtimeInclusionStatusCounts": {
       "included": 293,
       "needs_quote": 87,
-      "no_calculable_value": 50,
+      "no_calculable_value": 54,
       "not_user_facing_default": 49,
       "suppressed_by_policy": 1,
       "non_monetary_workflow": 14,
@@ -25,16 +25,17 @@
       "needs_funding_check": 13,
       "low_confidence": 1,
       "legacy_rule_preferred": 2,
-      "human_review_required": 6
+      "human_review_required": 2
     },
     "outcomeClassCounts": {
       "calculated_and_included": 293,
       "missing_evidence_or_inputs": 115,
       "source_or_package_blocked": 50,
-      "suppressed_without_amount": 51,
+      "suppressed_without_amount": 47,
       "computed_but_suppressed": 6,
       "non_monetary_workflow": 14,
-      "legacy_rule_preferred": 2
+      "legacy_rule_preferred": 2,
+      "not_applicable_zero_value": 4
     },
     "packageEffectTypeCounts": {
       "one_time_savings": 371,
@@ -59,6 +60,10 @@
       "funding_refresh_required": 13,
       "legacy_rule_preferred": 2
     },
+    "taxOpportunityProductionActionCounts": {
+      "not_applicable_zero_value": 4,
+      "assessor_confirmation_required": 2
+    },
     "taxOpportunityPackageCountInDatabase": 3,
     "taxOpportunityPackageCountMatchedByTestCases": 3,
     "localTaxWorkflowEvaluationCount": 12,
@@ -66,7 +71,14 @@
       "calculated": 5,
       "needs_tax_bill": 3,
       "review_required": 3,
-      "missing_inputs": 1
+      "needs_tax_return": 1
+    },
+    "localTaxWorkflowProductionActionCounts": {
+      "production_ready_internal_calculation": 5,
+      "tax_bill_upload_required": 3,
+      "not_applicable_zero_value": 2,
+      "tax_return_input_required": 1,
+      "assessor_confirmation_required": 1
     }
   },
   "topMissingInputs": [],
@@ -130,10 +142,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 15000,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -188,10 +203,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -247,10 +265,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -300,10 +321,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -359,10 +383,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -405,10 +432,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -465,10 +495,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -511,10 +544,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -569,10 +605,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -615,10 +654,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -656,10 +698,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 24960,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -702,10 +747,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -754,10 +802,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -794,10 +845,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 15000,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -848,10 +902,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 472500,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "non_grant_workflow",
-        "grantProductionReason": "The opportunity is better handled outside grant estimation."
+        "grantProductionReason": "The opportunity is better handled outside grant estimation.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -888,10 +945,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 15000,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -945,10 +1005,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1005,10 +1068,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1057,10 +1123,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1115,10 +1184,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1161,10 +1233,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1221,10 +1296,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1263,10 +1341,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 100,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1309,10 +1390,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1367,10 +1451,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1413,10 +1500,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1455,10 +1545,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 100,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1497,10 +1590,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 1200,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1543,10 +1639,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1585,10 +1684,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 100,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1637,10 +1739,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1679,10 +1784,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 35000,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1721,10 +1829,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 100,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1761,10 +1872,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 15000,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -1803,10 +1917,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 100,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -1843,10 +1960,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 15000,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -1894,10 +2014,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 678400,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "non_grant_workflow",
-        "grantProductionReason": "The opportunity is better handled outside grant estimation."
+        "grantProductionReason": "The opportunity is better handled outside grant estimation.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -1951,10 +2074,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -2011,10 +2137,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -2073,10 +2202,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "non_grant_workflow",
-        "grantProductionReason": "The opportunity is better handled outside grant estimation."
+        "grantProductionReason": "The opportunity is better handled outside grant estimation.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -2125,10 +2257,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -2168,10 +2303,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -2226,10 +2364,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -2266,10 +2407,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 234,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -2313,10 +2457,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -2360,10 +2507,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 8800,
         "includedInRuntimeTotals": true,
         "grantProductionAction": "production_ready_included",
-        "grantProductionReason": "The package already contributes a supported runtime amount."
+        "grantProductionReason": "The package already contributes a supported runtime amount.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -2408,10 +2558,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -2450,10 +2603,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -2500,10 +2656,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -2546,10 +2705,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       }
     ]
   },
@@ -7798,11 +7960,12 @@
   "taxOpportunityPackageOutcomes": {
     "count": 6,
     "outcomeClassCounts": {
-      "suppressed_without_amount": 4,
+      "not_applicable_zero_value": 4,
       "computed_but_suppressed": 2
     },
     "runtimeInclusionStatusCounts": {
-      "human_review_required": 6
+      "no_calculable_value": 4,
+      "human_review_required": 2
     },
     "totalComputedAmountCents": 2189040,
     "sampleRows": [
@@ -7812,8 +7975,8 @@
         "retrofitTypeId": "rooftop_solar_pv",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:381",
         "programName": "Tax Abatement for Solar Manufacturers",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "suppressed_without_amount",
+        "runtimeInclusionStatus": "no_calculable_value",
+        "outcomeClass": "not_applicable_zero_value",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
@@ -7844,10 +8007,13 @@
         ],
         "taxRelated": true,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": true,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": "not_applicable_zero_value",
+        "taxOpportunityProductionReason": "The package is resolved to $0 by confirmed tax gates, such as no approved designation or no qualifying tax base."
       },
       {
         "sampleUserId": "gm-factory-zero-detroit",
@@ -7855,8 +8021,8 @@
         "retrofitTypeId": "biomass_biogas_energy_system",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:3216",
         "programName": "Renewable Energy Renaissance Zones",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "suppressed_without_amount",
+        "runtimeInclusionStatus": "no_calculable_value",
+        "outcomeClass": "not_applicable_zero_value",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
@@ -7890,10 +8056,13 @@
         ],
         "taxRelated": true,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": true,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": "not_applicable_zero_value",
+        "taxOpportunityProductionReason": "The package is resolved to $0 by confirmed tax gates, such as no approved designation or no qualifying tax base."
       },
       {
         "sampleUserId": "gm-factory-zero-detroit",
@@ -7901,8 +8070,8 @@
         "retrofitTypeId": "solar_water_heating_system",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:3216",
         "programName": "Renewable Energy Renaissance Zones",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "suppressed_without_amount",
+        "runtimeInclusionStatus": "no_calculable_value",
+        "outcomeClass": "not_applicable_zero_value",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
@@ -7936,10 +8105,13 @@
         ],
         "taxRelated": true,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": true,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": "not_applicable_zero_value",
+        "taxOpportunityProductionReason": "The package is resolved to $0 by confirmed tax gates, such as no approved designation or no qualifying tax base."
       },
       {
         "sampleUserId": "gm-factory-zero-detroit",
@@ -7947,8 +8119,8 @@
         "retrofitTypeId": "battery_storage_system",
         "opportunityId": "SOURCE_DSIRE:dsire_program_id:3216",
         "programName": "Renewable Energy Renaissance Zones",
-        "runtimeInclusionStatus": "human_review_required",
-        "outcomeClass": "suppressed_without_amount",
+        "runtimeInclusionStatus": "no_calculable_value",
+        "outcomeClass": "not_applicable_zero_value",
         "calculationStatus": "calculable_with_missing_inputs",
         "sourceStatus": "accessible_or_researched",
         "confidence": "medium",
@@ -7982,10 +8154,13 @@
         ],
         "taxRelated": true,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": true,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": "not_applicable_zero_value",
+        "taxOpportunityProductionReason": "The package is resolved to $0 by confirmed tax gates, such as no approved designation or no qualifying tax base."
       },
       {
         "sampleUserId": "narragansett-organics-recovery-ri",
@@ -8017,10 +8192,13 @@
         ],
         "taxRelated": true,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 1094520,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": "assessor_confirmation_required",
+        "taxOpportunityProductionReason": "The tax rule can compute statutory treatment, but monetary savings require local assessor confirmation and counterfactual property-tax treatment."
       },
       {
         "sampleUserId": "narragansett-organics-recovery-ri",
@@ -8052,12 +8230,160 @@
         ],
         "taxRelated": true,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 1094520,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": "assessor_confirmation_required",
+        "taxOpportunityProductionReason": "The tax rule can compute statutory treatment, but monetary savings require local assessor confirmation and counterfactual property-tax treatment."
       }
     ]
+  },
+  "taxOpportunityProductionActionOutcomes": {
+    "count": 6,
+    "actionCounts": {
+      "not_applicable_zero_value": 4,
+      "assessor_confirmation_required": 2
+    },
+    "sampleRowsByAction": {
+      "not_applicable_zero_value": [
+        {
+          "sampleUserId": "boeing-everett-factory",
+          "sampleName": "boeing-everett-factory",
+          "retrofitTypeId": "rooftop_solar_pv",
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:381",
+          "programName": "Tax Abatement for Solar Manufacturers",
+          "runtimeInclusionStatus": "no_calculable_value",
+          "outcomeClass": "not_applicable_zero_value",
+          "effectTypes": [
+            "tax_rate_preference"
+          ],
+          "valueModelKinds": [
+            "tax_rate_difference"
+          ],
+          "estimateStatuses": [
+            "needs_accountant_review"
+          ],
+          "confirmedZeroTaxValue": true,
+          "computedAmountCents": 0,
+          "taxOpportunityProductionAction": "not_applicable_zero_value",
+          "taxOpportunityProductionReason": "The package is resolved to $0 by confirmed tax gates, such as no approved designation or no qualifying tax base."
+        },
+        {
+          "sampleUserId": "gm-factory-zero-detroit",
+          "sampleName": "gm-factory-zero-detroit",
+          "retrofitTypeId": "biomass_biogas_energy_system",
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3216",
+          "programName": "Renewable Energy Renaissance Zones",
+          "runtimeInclusionStatus": "no_calculable_value",
+          "outcomeClass": "not_applicable_zero_value",
+          "effectTypes": [
+            "tax_exemption"
+          ],
+          "valueModelKinds": [
+            "tax_exempt_liability"
+          ],
+          "estimateStatuses": [
+            "needs_accountant_review"
+          ],
+          "confirmedZeroTaxValue": true,
+          "computedAmountCents": 0,
+          "taxOpportunityProductionAction": "not_applicable_zero_value",
+          "taxOpportunityProductionReason": "The package is resolved to $0 by confirmed tax gates, such as no approved designation or no qualifying tax base."
+        },
+        {
+          "sampleUserId": "gm-factory-zero-detroit",
+          "sampleName": "gm-factory-zero-detroit",
+          "retrofitTypeId": "solar_water_heating_system",
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3216",
+          "programName": "Renewable Energy Renaissance Zones",
+          "runtimeInclusionStatus": "no_calculable_value",
+          "outcomeClass": "not_applicable_zero_value",
+          "effectTypes": [
+            "tax_exemption"
+          ],
+          "valueModelKinds": [
+            "tax_exempt_liability"
+          ],
+          "estimateStatuses": [
+            "needs_accountant_review"
+          ],
+          "confirmedZeroTaxValue": true,
+          "computedAmountCents": 0,
+          "taxOpportunityProductionAction": "not_applicable_zero_value",
+          "taxOpportunityProductionReason": "The package is resolved to $0 by confirmed tax gates, such as no approved designation or no qualifying tax base."
+        },
+        {
+          "sampleUserId": "gm-factory-zero-detroit",
+          "sampleName": "gm-factory-zero-detroit",
+          "retrofitTypeId": "battery_storage_system",
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:3216",
+          "programName": "Renewable Energy Renaissance Zones",
+          "runtimeInclusionStatus": "no_calculable_value",
+          "outcomeClass": "not_applicable_zero_value",
+          "effectTypes": [
+            "tax_exemption"
+          ],
+          "valueModelKinds": [
+            "tax_exempt_liability"
+          ],
+          "estimateStatuses": [
+            "needs_accountant_review"
+          ],
+          "confirmedZeroTaxValue": true,
+          "computedAmountCents": 0,
+          "taxOpportunityProductionAction": "not_applicable_zero_value",
+          "taxOpportunityProductionReason": "The package is resolved to $0 by confirmed tax gates, such as no approved designation or no qualifying tax base."
+        }
+      ],
+      "assessor_confirmation_required": [
+        {
+          "sampleUserId": "narragansett-organics-recovery-ri",
+          "sampleName": "narragansett-organics-recovery-ri",
+          "retrofitTypeId": "biomass_biogas_energy_system",
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+          "programName": "Renewable Energy Tax Valuation",
+          "runtimeInclusionStatus": "human_review_required",
+          "outcomeClass": "computed_but_suppressed",
+          "effectTypes": [
+            "property_tax_valuation"
+          ],
+          "valueModelKinds": [
+            "property_tax_valuation_formula"
+          ],
+          "estimateStatuses": [
+            "needs_property_tax_profile"
+          ],
+          "confirmedZeroTaxValue": false,
+          "computedAmountCents": 1094520,
+          "taxOpportunityProductionAction": "assessor_confirmation_required",
+          "taxOpportunityProductionReason": "The tax rule can compute statutory treatment, but monetary savings require local assessor confirmation and counterfactual property-tax treatment."
+        },
+        {
+          "sampleUserId": "narragansett-organics-recovery-ri",
+          "sampleName": "narragansett-organics-recovery-ri",
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+          "programName": "Renewable Energy Tax Valuation",
+          "runtimeInclusionStatus": "human_review_required",
+          "outcomeClass": "computed_but_suppressed",
+          "effectTypes": [
+            "property_tax_valuation"
+          ],
+          "valueModelKinds": [
+            "property_tax_valuation_formula"
+          ],
+          "estimateStatuses": [
+            "needs_property_tax_profile"
+          ],
+          "confirmedZeroTaxValue": false,
+          "computedAmountCents": 1094520,
+          "taxOpportunityProductionAction": "assessor_confirmation_required",
+          "taxOpportunityProductionReason": "The tax rule can compute statutory treatment, but monetary savings require local assessor confirmation and counterfactual property-tax treatment."
+        }
+      ]
+    }
   },
   "unmatchedTaxOpportunityPackages": [],
   "localTaxWorkflowOutcomes": {
@@ -8066,7 +8392,14 @@
       "calculated": 5,
       "needs_tax_bill": 3,
       "review_required": 3,
-      "missing_inputs": 1
+      "needs_tax_return": 1
+    },
+    "productionActionCounts": {
+      "production_ready_internal_calculation": 5,
+      "tax_bill_upload_required": 3,
+      "not_applicable_zero_value": 2,
+      "tax_return_input_required": 1,
+      "assessor_confirmation_required": 1
     },
     "totalComputedAmountCents": 2590850,
     "sampleRows": [
@@ -8093,6 +8426,8 @@
         "amountCents": 84050,
         "includedInUserFacingTotal": false,
         "missingInputs": [],
+        "localTaxProductionAction": "production_ready_internal_calculation",
+        "localTaxProductionReason": "The local tax formula calculated from source-backed rules and available test-case inputs; it remains internal-only unless confirmed.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -8127,6 +8462,8 @@
         "amountCents": 32310,
         "includedInUserFacingTotal": false,
         "missingInputs": [],
+        "localTaxProductionAction": "production_ready_internal_calculation",
+        "localTaxProductionReason": "The local tax formula calculated from source-backed rules and available test-case inputs; it remains internal-only unless confirmed.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -8161,6 +8498,8 @@
         "amountCents": 330600,
         "includedInUserFacingTotal": false,
         "missingInputs": [],
+        "localTaxProductionAction": "production_ready_internal_calculation",
+        "localTaxProductionReason": "The local tax formula calculated from source-backed rules and available test-case inputs; it remains internal-only unless confirmed.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -8195,6 +8534,8 @@
         "amountCents": 1195000,
         "includedInUserFacingTotal": false,
         "missingInputs": [],
+        "localTaxProductionAction": "production_ready_internal_calculation",
+        "localTaxProductionReason": "The local tax formula calculated from source-backed rules and available test-case inputs; it remains internal-only unless confirmed.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -8229,6 +8570,8 @@
         "amountCents": 948890,
         "includedInUserFacingTotal": false,
         "missingInputs": [],
+        "localTaxProductionAction": "production_ready_internal_calculation",
+        "localTaxProductionReason": "The local tax formula calculated from source-backed rules and available test-case inputs; it remains internal-only unless confirmed.",
         "inferredAnswerKeys": [
           "accommodation_unit_count",
           "employee_count",
@@ -8277,6 +8620,8 @@
             "workflowId": "property_adapter_mi_washtenaw_ann_arbor_v1"
           }
         ],
+        "localTaxProductionAction": "tax_bill_upload_required",
+        "localTaxProductionReason": "Final property-tax calculations require a current tax bill, parcel/APN, levy lines, or licensed bill-line source.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -8348,6 +8693,8 @@
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           }
         ],
+        "localTaxProductionAction": "not_applicable_zero_value",
+        "localTaxProductionReason": "The test-case tax facts show the required RERZ designation or qualified operations are not confirmed, so the tax benefit is zero.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -8395,6 +8742,8 @@
             "workflowId": "property_adapter_mi_wayne_detroit_v1"
           }
         ],
+        "localTaxProductionAction": "tax_bill_upload_required",
+        "localTaxProductionReason": "Final property-tax calculations require a current tax bill, parcel/APN, levy lines, or licensed bill-line source.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -8425,7 +8774,7 @@
           ],
           "postalCode": "98204"
         },
-        "status": "missing_inputs",
+        "status": "needs_tax_return",
         "amountCents": 0,
         "includedInUserFacingTotal": false,
         "missingInputs": [
@@ -8435,6 +8784,8 @@
             "modelId": "everett_bo_ordinary_rate_by_return_class_v1"
           }
         ],
+        "localTaxProductionAction": "tax_return_input_required",
+        "localTaxProductionReason": "The formula is source-backed, but the tax base must come from a business tax return, accounting system, or user/accountant entry.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -8506,6 +8857,8 @@
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           }
         ],
+        "localTaxProductionAction": "not_applicable_zero_value",
+        "localTaxProductionReason": "The test-case tax facts show the required RERZ designation or qualified operations are not confirmed, so the tax benefit is zero.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -8553,6 +8906,8 @@
             "workflowId": "property_adapter_mi_wayne_detroit_v1"
           }
         ],
+        "localTaxProductionAction": "tax_bill_upload_required",
+        "localTaxProductionReason": "Final property-tax calculations require a current tax bill, parcel/APN, levy lines, or licensed bill-line source.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -8624,6 +8979,8 @@
             "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
           }
         ],
+        "localTaxProductionAction": "assessor_confirmation_required",
+        "localTaxProductionReason": "The statutory formula is known, but customer-facing savings require assessor-confirmed applicability and counterfactual local tax treatment.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -8692,10 +9049,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -8751,10 +9111,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -8811,10 +9174,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -8869,10 +9235,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -8926,10 +9295,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -8984,10 +9356,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -9044,10 +9419,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -9102,10 +9480,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -9159,10 +9540,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -9217,10 +9601,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -9264,10 +9651,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -9312,10 +9702,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -9362,10 +9755,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -9410,10 +9806,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -9468,10 +9867,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -9528,10 +9930,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -9576,10 +9981,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "northgate-market-anaheim",
@@ -9634,10 +10042,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "northgate-market-anaheim",
@@ -9693,10 +10104,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "northgate-market-anaheim",
@@ -9753,10 +10167,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "northgate-market-anaheim",
@@ -9811,10 +10228,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "melissas-vernon-distribution",
@@ -9869,10 +10289,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "melissas-vernon-distribution",
@@ -9928,10 +10351,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "melissas-vernon-distribution",
@@ -9988,10 +10414,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "melissas-vernon-distribution",
@@ -10046,10 +10475,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "form_input_required",
-        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating."
+        "grantProductionReason": "The source-backed rule needs user, quote, bill, filing, or project-scope inputs before estimating.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       }
     ],
     "computedButSuppressed": [
@@ -10102,10 +10534,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 472500,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "non_grant_workflow",
-        "grantProductionReason": "The opportunity is better handled outside grant estimation."
+        "grantProductionReason": "The opportunity is better handled outside grant estimation.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -10153,10 +10588,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 678400,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "non_grant_workflow",
-        "grantProductionReason": "The opportunity is better handled outside grant estimation."
+        "grantProductionReason": "The opportunity is better handled outside grant estimation.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -10204,10 +10642,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 1600000,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "non_grant_workflow",
-        "grantProductionReason": "The opportunity is better handled outside grant estimation."
+        "grantProductionReason": "The opportunity is better handled outside grant estimation.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "common-ground-coop-urbana",
@@ -10243,10 +10684,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 2000,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "narragansett-organics-recovery-ri",
@@ -10278,10 +10722,13 @@
         ],
         "taxRelated": true,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 1094520,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": "assessor_confirmation_required",
+        "taxOpportunityProductionReason": "The tax rule can compute statutory treatment, but monetary savings require local assessor confirmation and counterfactual property-tax treatment."
       },
       {
         "sampleUserId": "narragansett-organics-recovery-ri",
@@ -10313,10 +10760,13 @@
         ],
         "taxRelated": true,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 1094520,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": "assessor_confirmation_required",
+        "taxOpportunityProductionReason": "The tax rule can compute statutory treatment, but monetary savings require local assessor confirmation and counterfactual property-tax treatment."
       }
     ],
     "sourceOrPackageBlocked": [
@@ -10374,10 +10824,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -10427,10 +10880,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "california-endowment-hq",
@@ -10479,10 +10935,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -10539,10 +10998,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -10591,10 +11053,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "ikea-burbank",
@@ -10643,10 +11108,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -10703,10 +11171,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -10755,10 +11226,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "juniper-and-ivy-san-diego",
@@ -10807,10 +11281,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "northgate-market-anaheim",
@@ -10866,10 +11343,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "northgate-market-anaheim",
@@ -10919,10 +11399,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "northgate-market-anaheim",
@@ -10971,10 +11454,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "melissas-vernon-distribution",
@@ -11031,10 +11517,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "melissas-vernon-distribution",
@@ -11084,10 +11573,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "melissas-vernon-distribution",
@@ -11136,10 +11628,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "fender-corona-plant",
@@ -11179,10 +11674,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "fender-corona-plant",
@@ -11236,10 +11734,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "non_grant_workflow",
-        "grantProductionReason": "The opportunity is better handled outside grant estimation."
+        "grantProductionReason": "The opportunity is better handled outside grant estimation.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "fender-corona-plant",
@@ -11279,10 +11780,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "westin-pasadena",
@@ -11339,10 +11843,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "westin-pasadena",
@@ -11391,10 +11898,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "westin-pasadena",
@@ -11443,10 +11953,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "one-community-health-midtown",
@@ -11503,10 +12016,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "one-community-health-midtown",
@@ -11555,10 +12071,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "one-community-health-midtown",
@@ -11607,10 +12126,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": true,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "zero_placeholder_no_calculable_value",
-        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0."
+        "grantProductionReason": "No defensible formula or expected-value model exists, so the grant contribution should remain $0.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       },
       {
         "sampleUserId": "santa-clara-university-campus",
@@ -11647,10 +12169,13 @@
         ],
         "taxRelated": false,
         "grantEstimateRelated": false,
+        "confirmedZeroTaxValue": false,
         "computedAmountCents": 0,
         "includedInRuntimeTotals": false,
         "grantProductionAction": "not_grant_estimation_target",
-        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target."
+        "grantProductionReason": "The row is an incentive workflow, but not a grant/rebate/reimbursement estimate target.",
+        "taxOpportunityProductionAction": null,
+        "taxOpportunityProductionReason": null
       }
     ],
     "grantProductionActions": [
@@ -17587,77 +18112,8 @@
             "workflowId": "property_adapter_mi_washtenaw_ann_arbor_v1"
           }
         ],
-        "inferredAnswerKeys": [
-          "employee_count",
-          "filing_frequency",
-          "local_business_tax_class",
-          "lodging_business_or_short_term_rental_indicator",
-          "minimum_wage_fee_applies",
-          "parcel_count",
-          "sb1186_fee_applies",
-          "transient_occupancy_indicator"
-        ]
-      },
-      {
-        "sampleUserId": "eastern-market-detroit",
-        "sampleName": "eastern-market-detroit",
-        "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1",
-        "taxDomain": "program_specific_tax_abatement",
-        "taxType": "property_income_tax_exemption",
-        "geography": {
-          "country": "US",
-          "stateCode": "MI",
-          "state": "MI",
-          "countyFips": null,
-          "placeGeoid": null,
-          "placeName": "Detroit",
-          "city": "Detroit",
-          "cities": [
-            "Detroit"
-          ],
-          "postalCode": "48207"
-        },
-        "status": "review_required",
-        "amountCents": 0,
-        "includedInUserFacingTotal": false,
-        "missingInputs": [
-          {
-            "inputKey": "approved_rerz_designation",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "qualified_company_operations",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "parcel_or_facility_within_approved_zone_boundary",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "company_current_on_state_and_local_taxes",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "phaseout_multiplier",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_state_education_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_real_property_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_personal_property_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_local_income_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          }
-        ],
+        "localTaxProductionAction": "tax_bill_upload_required",
+        "localTaxProductionReason": "Final property-tax calculations require a current tax bill, parcel/APN, levy lines, or licensed bill-line source.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -17705,6 +18161,8 @@
             "workflowId": "property_adapter_mi_wayne_detroit_v1"
           }
         ],
+        "localTaxProductionAction": "tax_bill_upload_required",
+        "localTaxProductionReason": "Final property-tax calculations require a current tax bill, parcel/APN, levy lines, or licensed bill-line source.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -17735,7 +18193,7 @@
           ],
           "postalCode": "98204"
         },
-        "status": "missing_inputs",
+        "status": "needs_tax_return",
         "amountCents": 0,
         "includedInUserFacingTotal": false,
         "missingInputs": [
@@ -17745,77 +18203,8 @@
             "modelId": "everett_bo_ordinary_rate_by_return_class_v1"
           }
         ],
-        "inferredAnswerKeys": [
-          "employee_count",
-          "filing_frequency",
-          "local_business_tax_class",
-          "lodging_business_or_short_term_rental_indicator",
-          "minimum_wage_fee_applies",
-          "parcel_count",
-          "sb1186_fee_applies",
-          "transient_occupancy_indicator"
-        ]
-      },
-      {
-        "sampleUserId": "gm-factory-zero-detroit",
-        "sampleName": "gm-factory-zero-detroit",
-        "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1",
-        "taxDomain": "program_specific_tax_abatement",
-        "taxType": "property_income_tax_exemption",
-        "geography": {
-          "country": "US",
-          "stateCode": "MI",
-          "state": "MI",
-          "countyFips": null,
-          "placeGeoid": null,
-          "placeName": "Detroit",
-          "city": "Detroit",
-          "cities": [
-            "Detroit"
-          ],
-          "postalCode": "48211"
-        },
-        "status": "review_required",
-        "amountCents": 0,
-        "includedInUserFacingTotal": false,
-        "missingInputs": [
-          {
-            "inputKey": "approved_rerz_designation",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "qualified_company_operations",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "parcel_or_facility_within_approved_zone_boundary",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "company_current_on_state_and_local_taxes",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "phaseout_multiplier",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_state_education_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_real_property_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_personal_property_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_local_income_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          }
-        ],
+        "localTaxProductionAction": "tax_return_input_required",
+        "localTaxProductionReason": "The formula is source-backed, but the tax base must come from a business tax return, accounting system, or user/accountant entry.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -17863,6 +18252,8 @@
             "workflowId": "property_adapter_mi_wayne_detroit_v1"
           }
         ],
+        "localTaxProductionAction": "tax_bill_upload_required",
+        "localTaxProductionReason": "Final property-tax calculations require a current tax bill, parcel/APN, levy lines, or licensed bill-line source.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -17934,6 +18325,8 @@
             "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
           }
         ],
+        "localTaxProductionAction": "assessor_confirmation_required",
+        "localTaxProductionReason": "The statutory formula is known, but customer-facing savings require assessor-confirmed applicability and counterfactual local tax treatment.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",

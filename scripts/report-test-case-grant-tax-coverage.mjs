@@ -82,6 +82,7 @@ for (const testCase of testCases) {
         repairedCalculationStatuses: unique(effects.map((effect) => effect.repairedCalculationStatus)),
         reasonCodes: unique(effects.flatMap((effect) => effect.reasonCodes || [])),
         humanReviewReasons: unique(effects.flatMap((effect) => effect.humanReviewReasons || [])),
+        confirmedZeroTaxValue: effects.some((effect) => effect.confirmedZeroTaxValue === true),
         taxRelated: effects.some((effect) => TAX_EFFECT_TYPES.has(effect.effectType)),
         grantOrIncentiveRelated: effects.some(isGrantOrIncentiveEffect),
         grantEstimateRelated: effects.some(isGrantEstimateEffect),
@@ -93,6 +94,9 @@ for (const testCase of testCases) {
       const grantAction = classifyGrantProductionAction(row);
       row.grantProductionAction = grantAction.action;
       row.grantProductionReason = grantAction.reason;
+      const taxAction = row.taxRelated ? classifyTaxOpportunityProductionAction(row) : null;
+      row.taxOpportunityProductionAction = taxAction?.action || null;
+      row.taxOpportunityProductionReason = taxAction?.reason || null;
       packageRows.push(row);
     }
   }
@@ -122,10 +126,12 @@ const report = {
     computedButSuppressedPackageCount: packageRows.filter((row) => row.outcomeClass === "computed_but_suppressed").length,
     missingEvidenceOrInputPackageCount: packageRows.filter((row) => row.outcomeClass === "missing_evidence_or_inputs").length,
     grantProductionActionCounts: countBy(grantProductionRows, (row) => row.grantProductionAction),
+    taxOpportunityProductionActionCounts: countBy(packageRows.filter((row) => row.taxRelated), (row) => row.taxOpportunityProductionAction),
     taxOpportunityPackageCountInDatabase: packageTaxOpportunityIds.size,
     taxOpportunityPackageCountMatchedByTestCases: matchedTaxPackageOpportunityIds.size,
     localTaxWorkflowEvaluationCount: localTaxRows.length,
-    localTaxWorkflowStatusCounts: countBy(localTaxRows, (row) => row.status)
+    localTaxWorkflowStatusCounts: countBy(localTaxRows, (row) => row.status),
+    localTaxWorkflowProductionActionCounts: countBy(localTaxRows, (row) => row.localTaxProductionAction)
   },
   topMissingInputs: topCounts(
     packageRows
@@ -135,6 +141,7 @@ const report = {
   grantAndIncentivePackageOutcomes: summarizeRows(packageRows.filter((row) => row.grantOrIncentiveRelated)),
   grantProductionActionOutcomes: summarizeGrantProductionRows(grantProductionRows),
   taxOpportunityPackageOutcomes: summarizeRows(packageRows.filter((row) => row.taxRelated)),
+  taxOpportunityProductionActionOutcomes: summarizeTaxOpportunityRows(packageRows.filter((row) => row.taxRelated)),
   unmatchedTaxOpportunityPackages: [...packageTaxOpportunityIds]
     .filter((opportunityId) => !matchedTaxPackageOpportunityIds.has(opportunityId))
     .map((opportunityId) => {
@@ -164,7 +171,9 @@ const report = {
       .filter((row) => !["production_ready_included", "not_grant_estimation_target"].includes(row.grantProductionAction))
       .map(compactGrantProductionRow)
       .slice(0, 50),
-    localTaxNeedsInputOrReview: localTaxRows.filter((row) => row.status !== "calculated").slice(0, 25)
+    localTaxNeedsInputOrReview: localTaxRows
+      .filter((row) => !["production_ready_internal_calculation", "not_applicable_zero_value"].includes(row.localTaxProductionAction))
+      .slice(0, 25)
   }
 };
 
@@ -176,11 +185,18 @@ console.log(`Wrote grant/tax coverage report: ${markdownReportPath}`);
 console.log(`Matched v2 package evaluations: ${report.summary.matchedV2PackageEvaluationCount}`);
 console.log(`Runtime inclusion statuses: ${JSON.stringify(report.summary.runtimeInclusionStatusCounts)}`);
 console.log(`Local tax workflow statuses: ${JSON.stringify(report.summary.localTaxWorkflowStatusCounts)}`);
+console.log(`Local tax production actions: ${JSON.stringify(report.summary.localTaxWorkflowProductionActionCounts)}`);
 
 function classifyPackageSummary(summary) {
   if (summary.runtimeInclusionStatus === "included") return "calculated_and_included";
   if (summary.runtimeInclusionStatus === "legacy_rule_preferred") return "legacy_rule_preferred";
   if (summary.runtimeInclusionStatus === "non_monetary_workflow") return "non_monetary_workflow";
+  if (
+    summary.runtimeInclusionStatus === "no_calculable_value" &&
+    (summary.effectSummaries || []).some((effect) => effect.confirmedZeroTaxValue === true)
+  ) {
+    return "not_applicable_zero_value";
+  }
   if (BLOCKED_RUNTIME_STATUSES.has(summary.runtimeInclusionStatus)) return "source_or_package_blocked";
 
   const hasPositiveAmount = (summary.effectSummaries || []).some((effect) => Number(effect.amountCents || 0) > 0);
@@ -219,6 +235,7 @@ function buildLocalTaxRows(testCase, workflows) {
 
   return selected.map((workflow) => {
     const result = calculateLocalTaxWorkflow(workflow, { answers });
+    const localTaxProductionDecision = classifyLocalTaxProductionAction({ workflow, result, answers });
     return {
       sampleUserId: testCase.sampleUserId,
       sampleName: testCase.name || testCase.sampleUserId,
@@ -230,6 +247,8 @@ function buildLocalTaxRows(testCase, workflows) {
       amountCents: result.amountCents || 0,
       includedInUserFacingTotal: result.includedInUserFacingTotal === true,
       missingInputs: result.missingInputs || [],
+      localTaxProductionAction: localTaxProductionDecision.action,
+      localTaxProductionReason: localTaxProductionDecision.reason,
       inferredAnswerKeys: Object.entries(answers)
         .filter(([, answer]) => answer.source === "coverage_inferred")
         .map(([key]) => key)
@@ -395,10 +414,19 @@ function summarizeGrantProductionRows(rows) {
   };
 }
 
+function summarizeTaxOpportunityRows(rows) {
+  return {
+    count: rows.length,
+    actionCounts: countBy(rows, (row) => row.taxOpportunityProductionAction),
+    sampleRowsByAction: groupSampleRows(rows.map(compactTaxOpportunityRow), (row) => row.taxOpportunityProductionAction, 12)
+  };
+}
+
 function summarizeLocalTaxRows(rows) {
   return {
     count: rows.length,
     statusCounts: countBy(rows, (row) => row.status),
+    productionActionCounts: countBy(rows, (row) => row.localTaxProductionAction),
     totalComputedAmountCents: sum(rows, (row) => row.amountCents),
     sampleRows: rows.slice(0, 50)
   };
@@ -437,6 +465,14 @@ function buildMarkdownReport(data) {
     "",
     tableFromCounts(data.summary.localTaxWorkflowStatusCounts),
     "",
+    "## Local Tax Production Action Buckets",
+    "",
+    tableFromCounts(data.summary.localTaxWorkflowProductionActionCounts),
+    "",
+    "## Tax Opportunity Production Action Buckets",
+    "",
+    tableFromCounts(data.summary.taxOpportunityProductionActionCounts),
+    "",
     "## Grant Production Action Buckets",
     "",
     tableFromCounts(data.summary.grantProductionActionCounts),
@@ -469,6 +505,8 @@ function buildMarkdownReport(data) {
       ? `- The current ${data.summary.testCaseCount} test cases exercise grant/incentive packages, but they do not currently match the ${totalTaxCount} tax opportunity packages.`
       : `- The current ${data.summary.testCaseCount} test cases now match ${matchedTaxCount} of ${totalTaxCount} tax opportunity packages.`,
     "- Local tax workflows can be selected for some test-case addresses after city inference, but they remain internal-only and are not part of customer-facing savings totals.",
+    "- Local tax rows classified as `tax_return_input_required`, `tax_bill_upload_required`, `assessor_confirmation_required`, or `program_document_required` are production input gates, not source-data repair failures.",
+    "- Tax opportunity rows classified as `not_applicable_zero_value` are resolved to $0 by current test-case facts; rows classified as `assessor_confirmation_required` need a property-tax profile or assessor confirmation before customer-facing savings.",
     "- Grant/incentive rows classified as `form_input_required` are normal production form gates, not source-data blockers.",
     "- Grant/incentive rows classified as `funding_refresh_required` need current budget/funding status automation rather than one-time formula repair.",
     "- Grant/incentive rows classified as `zero_placeholder_no_calculable_value` should contribute $0 to customer-facing grant totals unless later source research finds a defensible formula or expected-value model.",
@@ -588,6 +626,161 @@ function classifyGrantProductionAction(row) {
   };
 }
 
+function classifyTaxOpportunityProductionAction(row) {
+  if (row.includedInRuntimeTotals) {
+    return {
+      action: "production_ready_included",
+      reason: "The tax package contributes a supported runtime amount."
+    };
+  }
+
+  if (row.confirmedZeroTaxValue || (row.runtimeInclusionStatus === "no_calculable_value" && Number(row.computedAmountCents || 0) === 0)) {
+    return {
+      action: "not_applicable_zero_value",
+      reason: "The package is resolved to $0 by confirmed tax gates, such as no approved designation or no qualifying tax base."
+    };
+  }
+
+  if (row.effectTypes.includes("property_tax_valuation") || row.estimateStatuses.includes("needs_property_tax_profile")) {
+    return {
+      action: "assessor_confirmation_required",
+      reason: "The tax rule can compute statutory treatment, but monetary savings require local assessor confirmation and counterfactual property-tax treatment."
+    };
+  }
+
+  if (row.runtimeInclusionStatus === "missing_inputs" || row.missingInputs.length > 0) {
+    return {
+      action: "tax_profile_or_document_required",
+      reason: "The package needs tax profile, return, bill, or program-document fields before calculation."
+    };
+  }
+
+  if (row.runtimeInclusionStatus === "human_review_required") {
+    return {
+      action: "tax_review_required",
+      reason: "The tax package is still review-gated before a customer-facing amount can be included."
+    };
+  }
+
+  return {
+    action: "not_user_facing_tax_workflow",
+    reason: "The tax package is intentionally outside ordinary customer-facing savings totals."
+  };
+}
+
+function compactTaxOpportunityRow(row) {
+  return {
+    sampleUserId: row.sampleUserId,
+    sampleName: row.sampleName,
+    retrofitTypeId: row.retrofitTypeId,
+    opportunityId: row.opportunityId,
+    programName: row.programName,
+    runtimeInclusionStatus: row.runtimeInclusionStatus,
+    outcomeClass: row.outcomeClass,
+    effectTypes: row.effectTypes,
+    valueModelKinds: row.valueModelKinds,
+    estimateStatuses: row.estimateStatuses,
+    confirmedZeroTaxValue: row.confirmedZeroTaxValue,
+    computedAmountCents: row.computedAmountCents,
+    taxOpportunityProductionAction: row.taxOpportunityProductionAction,
+    taxOpportunityProductionReason: row.taxOpportunityProductionReason
+  };
+}
+
+function classifyLocalTaxProductionAction({ workflow, result, answers }) {
+  if (result.status === "calculated") {
+    return {
+      action: "production_ready_internal_calculation",
+      reason: "The local tax formula calculated from source-backed rules and available test-case inputs; it remains internal-only unless confirmed."
+    };
+  }
+
+  if (workflow.id.includes("rerz")) {
+    const disqualified = [
+      "approved_rerz_designation",
+      "qualified_company_operations",
+      "parcel_or_facility_within_approved_zone_boundary"
+    ].some((key) => answerBoolean(answers, key) === false);
+    if (disqualified) {
+      return {
+        action: "not_applicable_zero_value",
+        reason: "The test-case tax facts show the required RERZ designation or qualified operations are not confirmed, so the tax benefit is zero."
+      };
+    }
+    return {
+      action: "program_document_required",
+      reason: "The RERZ benefit requires approved zone documents, boundary confirmation, phaseout schedule, and eligible tax lines."
+    };
+  }
+
+  if (result.status === "needs_tax_return" || missingInputKeys(result).some(isTaxReturnInputKey)) {
+    return {
+      action: "tax_return_input_required",
+      reason: "The formula is source-backed, but the tax base must come from a business tax return, accounting system, or user/accountant entry."
+    };
+  }
+
+  if (result.status === "needs_tax_bill" || workflow.calculationStatus === "calculable_with_tax_bill") {
+    return {
+      action: "tax_bill_upload_required",
+      reason: "Final property-tax calculations require a current tax bill, parcel/APN, levy lines, or licensed bill-line source."
+    };
+  }
+
+  if (workflow.id.includes("ri_renewable_property_tax") || workflow.calculationStatus === "assessor_or_accountant_review_required") {
+    return {
+      action: "assessor_confirmation_required",
+      reason: "The statutory formula is known, but customer-facing savings require assessor-confirmed applicability and counterfactual local tax treatment."
+    };
+  }
+
+  if (result.status === "source_inaccessible") {
+    return {
+      action: "source_repair_or_archive_required",
+      reason: "The workflow source is inaccessible and should be repaired or archived before use."
+    };
+  }
+
+  return {
+    action: "tax_profile_input_required",
+    reason: "The workflow needs additional tax profile inputs before it can calculate."
+  };
+}
+
+function missingInputKeys(result) {
+  return (result.missingInputs || []).map((input) => input.inputKey).filter(Boolean);
+}
+
+function isTaxReturnInputKey(inputKey) {
+  const normalized = normalizeKeyText(inputKey);
+  return (
+    normalized.includes("gross_receipts") ||
+    normalized.includes("gross_income") ||
+    normalized.includes("taxable_receipts") ||
+    normalized.includes("taxable_sales") ||
+    normalized.includes("taxable_income") ||
+    normalized.includes("tax_return") ||
+    normalized.includes("filing")
+  );
+}
+
+function answerBoolean(answers, key) {
+  const value = answers?.[key]?.value;
+  if (typeof value === "boolean") return value;
+  const normalized = String(value ?? "").trim().toLowerCase();
+  if (["true", "yes", "y", "1", "applies", "confirmed"].includes(normalized)) return true;
+  if (["false", "no", "n", "0", "does_not_apply", "not_applicable", "none"].includes(normalized)) return false;
+  return null;
+}
+
+function normalizeKeyText(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
 function countBy(rows, keyFn) {
   return rows.reduce((counts, row) => {
     const key = keyFn(row) || "unknown";
@@ -692,10 +885,13 @@ function compactPackageOutcomeRow(row) {
     repairStatuses: row.repairStatuses,
     taxRelated: row.taxRelated,
     grantEstimateRelated: row.grantEstimateRelated,
+    confirmedZeroTaxValue: row.confirmedZeroTaxValue,
     computedAmountCents: row.computedAmountCents,
     includedInRuntimeTotals: row.includedInRuntimeTotals,
     grantProductionAction: row.grantProductionAction,
-    grantProductionReason: row.grantProductionReason
+    grantProductionReason: row.grantProductionReason,
+    taxOpportunityProductionAction: row.taxOpportunityProductionAction,
+    taxOpportunityProductionReason: row.taxOpportunityProductionReason
   };
 }
 

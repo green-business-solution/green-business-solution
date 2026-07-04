@@ -117,6 +117,7 @@ function summarizePackageRuntimeStatus({ pkg, result, ctx, legacyRulePreferred }
       hasProductionDecision: hasProductionDecisionMetadata(effect),
       reasonCodes: repairReasonCodes(effect),
       humanReviewReasons: effect.repair_metadata?.human_review_reasons || [],
+      confirmedZeroTaxValue: isConfirmedZeroTaxValue(effect, ctx),
       probabilityDiscount: Number.isFinite(effect.calculation?.probability_discount)
         ? Number(effect.calculation.probability_discount)
         : null,
@@ -159,6 +160,9 @@ function summarizePackageRuntimeStatus({ pkg, result, ctx, legacyRulePreferred }
   const hasSupportedEffectAmount = effectSummaries.some(
     (effect) => effect.runtimeEligibleForTotals && MONETARY_EFFECT_TYPES.has(effect.effectType) && Math.abs(effect.amountCents) > 0
   );
+  const hasConfirmedZeroTaxValue = effectSummaries.some(
+    (effect) => TAX_EFFECT_TYPES.has(effect.effectType) && effect.confirmedZeroTaxValue
+  );
 
   if (legacyRulePreferred) {
     summary.runtimeInclusionStatus = "legacy_rule_preferred";
@@ -170,6 +174,8 @@ function summarizePackageRuntimeStatus({ pkg, result, ctx, legacyRulePreferred }
     summary.runtimeInclusionStatus = legacyPackageBlockStatus(pkg, effectSummaries);
   } else if (confidenceLabel(pkg.confidence?.overall) === "low") {
     summary.runtimeInclusionStatus = "low_confidence";
+  } else if (hasConfirmedZeroTaxValue && !hasSupportedEffectAmount) {
+    summary.runtimeInclusionStatus = "no_calculable_value";
   } else if (hasHumanReviewRequiredEffect) {
     summary.runtimeInclusionStatus = "human_review_required";
   } else if (missingInputs.length > 0) {
@@ -241,6 +247,13 @@ function productionDecisionRuntimeStatus(effectSummaries, pkg) {
     (effect) => effect.hasProductionDecision && isGrantTaxOrRepairedCashEffect(effect)
   );
   if (!repairedGrantOrTaxEffects.length) return null;
+
+  if (
+    repairedGrantOrTaxEffects.some((effect) => effect.confirmedZeroTaxValue) &&
+    repairedGrantOrTaxEffects.every((effect) => Number(effect.amountCents || 0) === 0)
+  ) {
+    return "no_calculable_value";
+  }
 
   if (repairedGrantOrTaxEffects.some((effect) => effect.runtimeEligibleForTotals && Number(effect.amountCents || 0) > 0)) {
     return null;
@@ -369,6 +382,70 @@ function repairDisplayRecommendation(effect) {
     label: display.label || display.user_facing_label || effect.label || null,
     caveat: display.caveat || display.user_facing_caveat || null
   };
+}
+
+function isConfirmedZeroTaxValue(effect, ctx = {}) {
+  const expressionId = String(effect.calculation?.expression_id || "").trim();
+  if (!TAX_EFFECT_TYPES.has(effect.effect_type)) return false;
+
+  if (expressionId === "tax_exempt_liability") {
+    return [
+      "approved_rerz_designation",
+      "qualified_company_operations",
+      "parcel_or_facility_within_approved_zone_boundary",
+      "company_current_on_state_and_local_taxes"
+    ].some((key) => hasRuntimeAnswer(ctx, key) && booleanRuntimeAnswer(ctx, key) === false);
+  }
+
+  if (expressionId === "tax_rate_difference") {
+    if (
+      ["annual_tax_performance_report_filed", "has_washington_business_excise_tax_return"].some(
+        (key) => hasRuntimeAnswer(ctx, key) && booleanRuntimeAnswer(ctx, key) === false
+      )
+    ) {
+      return true;
+    }
+
+    const taxBase = firstNumberRuntimeAnswer(ctx, [
+      "qualifying_tax_base_after_deductions_and_matc_cents",
+      "qualifying_taxable_gross_receipts",
+      "qualifying_taxable_gross_receipts_cents"
+    ]);
+    return taxBase === 0;
+  }
+
+  return false;
+}
+
+function hasRuntimeAnswer(ctx, key) {
+  const answer = ctx.answers?.[key];
+  if (answer && answer.value !== undefined && answer.value !== null && answer.value !== "") return true;
+  return ctx[key] !== undefined && ctx[key] !== null && ctx[key] !== "";
+}
+
+function runtimeAnswerValue(ctx, key) {
+  const answer = ctx.answers?.[key];
+  if (answer && answer.value !== undefined && answer.value !== null && answer.value !== "") return answer.value;
+  if (ctx[key] !== undefined && ctx[key] !== null && ctx[key] !== "") return ctx[key];
+  return null;
+}
+
+function booleanRuntimeAnswer(ctx, key) {
+  const value = runtimeAnswerValue(ctx, key);
+  if (typeof value === "boolean") return value;
+  const normalized = String(value || "").trim().toLowerCase();
+  if (["true", "yes", "y", "1", "applies", "confirmed"].includes(normalized)) return true;
+  if (["false", "no", "n", "0", "does_not_apply", "not_applicable", "none"].includes(normalized)) return false;
+  return null;
+}
+
+function firstNumberRuntimeAnswer(ctx, keys = []) {
+  for (const key of keys) {
+    if (!hasRuntimeAnswer(ctx, key)) continue;
+    const number = Number(runtimeAnswerValue(ctx, key));
+    if (Number.isFinite(number)) return number;
+  }
+  return null;
 }
 
 function potentialAwardCents(effect) {

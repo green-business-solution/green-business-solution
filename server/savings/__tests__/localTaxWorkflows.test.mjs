@@ -74,7 +74,7 @@ describe("local tax workflows", () => {
 
     expect(noClass.status).toBe("missing_inputs");
     expect(noClass.missingInputs.map((input) => input.inputKey)).toEqual(["local_business_tax_class"]);
-    expect(missingGross.status).toBe("missing_inputs");
+    expect(missingGross.status).toBe("needs_tax_return");
     expect(missingGross.missingInputs.map((input) => input.inputKey)).toEqual(["gross_receipts_cents"]);
   });
 

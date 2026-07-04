@@ -1,6 +1,6 @@
 # Test Case Grant/Tax Estimate Coverage
 
-Generated: 2026-07-04T22:24:38.603Z
+Generated: 2026-07-04T22:44:59.889Z
 
 ## Summary
 
@@ -20,12 +20,12 @@ Generated: 2026-07-04T22:24:38.603Z
 | --- | --- |
 | included | 293 |
 | needs_quote | 87 |
-| no_calculable_value | 50 |
+| no_calculable_value | 54 |
 | not_user_facing_default | 49 |
 | needs_project_scope | 15 |
 | non_monetary_workflow | 14 |
 | needs_funding_check | 13 |
-| human_review_required | 6 |
+| human_review_required | 2 |
 | legacy_rule_preferred | 2 |
 | low_confidence | 1 |
 | suppressed_by_policy | 1 |
@@ -36,10 +36,11 @@ Generated: 2026-07-04T22:24:38.603Z
 | --- | --- |
 | calculated_and_included | 293 |
 | missing_evidence_or_inputs | 115 |
-| suppressed_without_amount | 51 |
 | source_or_package_blocked | 50 |
+| suppressed_without_amount | 47 |
 | non_monetary_workflow | 14 |
 | computed_but_suppressed | 6 |
+| not_applicable_zero_value | 4 |
 | legacy_rule_preferred | 2 |
 
 ## Local Tax Workflow Status
@@ -49,7 +50,24 @@ Generated: 2026-07-04T22:24:38.603Z
 | calculated | 5 |
 | needs_tax_bill | 3 |
 | review_required | 3 |
-| missing_inputs | 1 |
+| needs_tax_return | 1 |
+
+## Local Tax Production Action Buckets
+
+| Status | Count |
+| --- | --- |
+| production_ready_internal_calculation | 5 |
+| tax_bill_upload_required | 3 |
+| not_applicable_zero_value | 2 |
+| assessor_confirmation_required | 1 |
+| tax_return_input_required | 1 |
+
+## Tax Opportunity Production Action Buckets
+
+| Status | Count |
+| --- | --- |
+| not_applicable_zero_value | 4 |
+| assessor_confirmation_required | 2 |
 
 ## Grant Production Action Buckets
 
@@ -93,6 +111,8 @@ All tax opportunity packages were matched by at least one test-case retrofit.
 
 - The current 51 test cases now match 3 of 3 tax opportunity packages.
 - Local tax workflows can be selected for some test-case addresses after city inference, but they remain internal-only and are not part of customer-facing savings totals.
+- Local tax rows classified as `tax_return_input_required`, `tax_bill_upload_required`, `assessor_confirmation_required`, or `program_document_required` are production input gates, not source-data repair failures.
+- Tax opportunity rows classified as `not_applicable_zero_value` are resolved to $0 by current test-case facts; rows classified as `assessor_confirmation_required` need a property-tax profile or assessor confirmation before customer-facing savings.
 - Grant/incentive rows classified as `form_input_required` are normal production form gates, not source-data blockers.
 - Grant/incentive rows classified as `funding_refresh_required` need current budget/funding status automation rather than one-time formula repair.
 - Grant/incentive rows classified as `zero_placeholder_no_calculable_value` should contribute $0 to customer-facing grant totals unless later source research finds a defensible formula or expected-value model.

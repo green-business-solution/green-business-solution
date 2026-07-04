@@ -184,6 +184,32 @@ describe("v2 runtime incentive bridge", () => {
     expect(bridge.packageSummaries[0].effectSummaries[0].amountCents).toBe(100000);
   });
 
+  it("treats confirmed tax-gate disqualification as a zero-value outcome", () => {
+    const bridge = buildV2RuntimeIncentiveBridge({
+      packages: [humanReviewTaxExpressionPackage()],
+      existingLegacyRules: [],
+      ctx: ctx({
+        answers: {
+          approved_rerz_designation: { value: false },
+          qualified_company_operations: { value: false },
+          company_current_on_state_and_local_taxes: { value: true },
+          phaseout_multiplier: { value: 1 },
+          eligible_state_education_tax_cents: { value: 10000 },
+          eligible_real_property_tax_cents: { value: 20000 },
+          eligible_personal_property_tax_cents: { value: 30000 },
+          eligible_local_income_tax_cents: { value: 40000 }
+        }
+      })
+    });
+
+    expect(bridge.runtimeRules).toEqual([]);
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("no_calculable_value");
+    expect(bridge.packageSummaries[0].effectSummaries[0]).toMatchObject({
+      amountCents: 0,
+      confirmedZeroTaxValue: true
+    });
+  });
+
   it("uses repaired grant decision metadata instead of stale needs-repair package status", () => {
     const bridge = buildV2RuntimeIncentiveBridge({
       packages: [productionSuppressedGrantPackage()],

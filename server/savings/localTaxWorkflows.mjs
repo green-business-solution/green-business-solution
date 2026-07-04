@@ -48,10 +48,11 @@ export function calculateLocalTaxWorkflow(workflow, ctx = {}) {
 
   const missingInputs = missingInputsForModel(model, ctx);
   if (missingInputs.length) {
+    const status = missingInputStatusForModel(model, missingInputs);
     return {
       workflowId: workflow.id,
       modelId: model.modelId,
-      status: "missing_inputs",
+      status,
       amountCents: 0,
       includedInUserFacingTotal: false,
       missingInputs: missingInputs.map((inputKey) => ({ inputKey, workflowId: workflow.id, modelId: model.modelId })),
@@ -128,6 +129,40 @@ function equivalentClassValues(classValue) {
 
 function missingInputsForModel(model, ctx) {
   return (model.inputKeys || []).filter((inputKey) => !hasRuntimeAnswer(ctx, inputKey));
+}
+
+function missingInputStatusForModel(model, missingInputs = []) {
+  const missingText = normalizeInputText([model.modelId, model.label, ...(missingInputs || [])].join(" "));
+  if (
+    missingText.includes("gross_receipts") ||
+    missingText.includes("gross_income") ||
+    missingText.includes("taxable_receipts") ||
+    missingText.includes("taxable_sales") ||
+    missingText.includes("taxable_income") ||
+    missingText.includes("tax_return") ||
+    missingText.includes("filing")
+  ) {
+    return "needs_tax_return";
+  }
+  if (
+    missingText.includes("parcel") ||
+    missingText.includes("apn") ||
+    missingText.includes("tax_bill") ||
+    missingText.includes("levy") ||
+    missingText.includes("assessment") ||
+    missingText.includes("assessor")
+  ) {
+    return "needs_tax_bill";
+  }
+  return "missing_inputs";
+}
+
+function normalizeInputText(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
 }
 
 function calculateModel(model, ctx) {
