@@ -183,8 +183,8 @@ describe("retrofit recommendations preview", () => {
     expect(preview.retrofits[0].opportunities[0].applicationUrl).toBe("https://example.com/apply");
     expect(preview.retrofits[0].opportunities[0].programWebsiteUrl).toBeNull();
     expect(preview.retrofits[0].opportunities[0].applicationMethod).toBe("utility portal");
-    expect(preview.retrofits[0].opportunities[0].valueCap).toBe("Needs source review");
-    expect(preview.retrofits[0].opportunities[0].eligibleCostBasis).toBe("Needs project scope, quantity, or quote");
+    expect(preview.retrofits[0].opportunities[0].valueCap).toBe("No cap stored");
+    expect(preview.retrofits[0].opportunities[0].eligibleCostBasis).toBe("Not stored for this opportunity");
     expect(preview.retrofits[0].operatingSavings[0].name).toBe("Electricity Bill Savings");
     expect(preview.retrofits[0].editableAssumptions[0].label).toBe("fixture count");
     expect(preview.estimateCompletenessPercent).toBeLessThanOrEqual(65);

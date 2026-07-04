@@ -6638,20 +6638,22 @@ function buildRetrofitPreviewCard(
     scenarios: buildRetrofitScenarios(retrofit, scenarioMetrics, missingInfo),
     opportunities: retrofit.opportunities.map((opportunity) => buildOpportunityPreview(opportunity, preview, payload)),
     operatingSavings: buildOperatingSavingsPreview(retrofit, payload),
-    environmentalImpact: buildRetrofitEnvironmentalImpactPreview(retrofit, missingInfo),
+    environmentalImpact: buildRetrofitEnvironmentalImpactPreview(retrofit, missingInfo, preview),
     detailQuestions: detailQuestionsForRetrofit(retrofit)
   };
 }
 
 export function buildRetrofitEnvironmentalImpactPreview(
   retrofit: Pick<SampleRetrofitGroup, "retrofitTypeId" | "parentCategory" | "isPhysicalRetrofit">,
-  missingInfo: string[] = []
+  missingInfo: string[] = [],
+  preview: SampleSavingsPreview | null = null
 ): RetrofitEnvironmentalImpact {
   const id = retrofit.retrofitTypeId.toLowerCase();
   const parent = retrofit.parentCategory.toLowerCase();
   const isCertification = parent.includes("certification") || id.includes("certification") || id.includes("compliance") || id.includes("benchmarking");
   const isPlanning = !retrofit.isPhysicalRetrofit && !isCertification;
-  const resources = environmentalResourceFallbackRows(retrofit);
+  const modeledImpact = buildModeledEnvironmentalImpactFromSavings(retrofit, preview);
+  const resources = modeledImpact?.resources || environmentalResourceFallbackRows(retrofit);
   const missingInputs = environmentalMissingInputsForRetrofit(retrofit, missingInfo);
   const overallLabel = isCertification
     ? "Certification progress supported"
@@ -6662,28 +6664,99 @@ export function buildRetrofitEnvironmentalImpactPreview(
     ? "certification_progress"
     : isPlanning
       ? "potential_identified"
+      : modeledImpact
+        ? "avoided_emissions"
       : "not_estimated";
   const subtext = isCertification
     ? "Certification impact is not quantified until certification requirements are reviewed."
     : isPlanning
       ? "Planning items can identify impact potential, but avoided emissions depend on follow-on retrofit work."
+      : modeledImpact
+        ? "Estimated from stored savings-model utility deltas for this test case."
       : "Estimated climate impact from completing this retrofit.";
 
   return {
     overall: {
       label: overallLabel,
-      displayValue: "?",
+      displayValue: modeledImpact?.overallDisplayValue || "?",
       unit: "tCO2e/year",
-      fallback: isCertification ? "Not evaluated yet" : isPlanning ? "Needs audit scope" : "Needs bills and retrofit-specific details",
+      fallback: modeledImpact ? undefined : isCertification ? "Not evaluated yet" : isPlanning ? "Needs audit scope" : "Needs bills and retrofit-specific details",
       impactType,
-      confidence: "Needs data",
+      confidence: modeledImpact ? "Medium" : "Needs data",
       subtext,
-      basis: ["Needs bills and retrofit-specific details"]
+      basis: modeledImpact?.basis || ["Needs bills and retrofit-specific details"]
     },
     resources,
     certificationContribution: certificationContributionForRetrofit(retrofit),
-    missingInfo: missingInputs
+    missingInfo: modeledImpact ? missingInputs.filter((item) => item !== "Upload bills").slice(0, 6) : missingInputs
   };
+}
+
+const GENERIC_ELECTRIC_TCO2E_PER_KWH = 0.00039;
+
+function buildModeledEnvironmentalImpactFromSavings(
+  retrofit: Pick<SampleRetrofitGroup, "retrofitTypeId" | "parentCategory" | "isPhysicalRetrofit">,
+  preview: SampleSavingsPreview | null
+) {
+  if (preview?.status !== "calculated" || !preview.billLineDeltas?.length) return null;
+  const id = retrofit.retrofitTypeId.toLowerCase();
+  const fallbackRows = environmentalResourceFallbackRows(retrofit);
+  const electricKwhAvoided = sumBillLineDeltaAbs(preview.billLineDeltas, "annual_kwh_delta", { onlyNegative: true });
+  const exportedKwh = sumBillLineDeltaAbs(preview.billLineDeltas, "export_kwh");
+  const modeledKwh = id.includes("solar") || id.includes("renewable")
+    ? electricKwhAvoided + exportedKwh
+    : electricKwhAvoided;
+
+  if (!modeledKwh || modeledKwh <= 0) return null;
+
+  const estimatedTco2e = modeledKwh * GENERIC_ELECTRIC_TCO2E_PER_KWH;
+  const resources = fallbackRows.map((resource) => {
+    const label = resource.label.toLowerCase();
+    if (label.includes("electricity") || label.includes("renewable") || resource.unit.toLowerCase().includes("kwh")) {
+      return {
+        ...resource,
+        displayValue: formatImpactQuantity(modeledKwh),
+        confidence: "Medium" as const,
+        basis: "From stored annual kWh delta in the savings preview."
+      };
+    }
+    if (label.includes("emissions") || resource.unit.toLowerCase().includes("tco2")) {
+      return {
+        ...resource,
+        displayValue: formatImpactQuantity(estimatedTco2e, 1),
+        confidence: "Medium" as const,
+        basis: "Estimated from stored annual kWh delta using a generic electric-grid emissions factor."
+      };
+    }
+    return resource;
+  });
+
+  return {
+    overallDisplayValue: formatImpactQuantity(estimatedTco2e, 1),
+    resources,
+    basis: [
+      "Stored savingsPreview.billLineDeltas supplied the annual kWh delta.",
+      "CO2e is estimated with a generic electric-grid emissions factor until geography-specific factors are available."
+    ]
+  };
+}
+
+function sumBillLineDeltaAbs(
+  billLineDeltas: NonNullable<SampleSavingsPreview["billLineDeltas"]>,
+  canonicalField: string,
+  options: { onlyNegative?: boolean } = {}
+) {
+  return billLineDeltas
+    .filter((delta) => delta.canonicalField === canonicalField)
+    .filter((delta) => !options.onlyNegative || Number(delta.deltaValue) < 0)
+    .reduce((sum, delta) => sum + Math.abs(Number(delta.deltaValue) || 0), 0);
+}
+
+function formatImpactQuantity(value: number, maximumFractionDigits = 0) {
+  return new Intl.NumberFormat("en-US", {
+    maximumFractionDigits,
+    minimumFractionDigits: maximumFractionDigits > 0 && value < 10 ? 1 : 0
+  }).format(value);
 }
 
 function maskEnvironmentalImpactForNoBillData(impact: RetrofitEnvironmentalImpact): RetrofitEnvironmentalImpact {
@@ -6892,9 +6965,7 @@ function buildOpportunityPreview(
   const requiredInfo = [
     ...(needsUtilityConfirmation ? ["utility territory confirmation"] : []),
     ...packageMissingInputs,
-    ...(opportunity.unresolvedRequirements.length
-      ? opportunity.unresolvedRequirements.slice(0, 4)
-      : ["bills", "retrofit-specific information", "quote", "tax/entity information"])
+    ...opportunity.unresolvedRequirements.slice(0, 4)
   ];
   const includedState = includedStateFromOpportunity(isIncluded, needsMoreInfo);
   const packageEstimatedValue = incentivePackageEstimatedValue(incentivePackage);
@@ -6912,10 +6983,10 @@ function buildOpportunityPreview(
     requiredInfo: [...new Set(requiredInfo)].slice(0, 5),
     applicationProcess: opportunityApplicationProcess(opportunity),
     applicationMethod: opportunityApplicationMethod(opportunity, programType),
-    difficulty: opportunity.blockers.length > 0 ? "hard" : opportunity.unresolvedRequirements.length > 2 ? "medium" : "unknown",
+    difficulty: opportunityDifficulty(opportunity, programType),
     length: opportunityLengthLabel(opportunity),
     helpAvailable: "Full application help available in next step",
-    deadline: "Source unavailable",
+    deadline: opportunityDeadlineLabel(opportunity),
     environmentalImpactContribution: environmentalImpactLabel(programType),
     certificationBoost: certificationBoostLabel(programType),
     sourceUrl: opportunity.sourceUrl || null,
@@ -6924,7 +6995,7 @@ function buildOpportunityPreview(
     pdfUrl: null,
     contactEmail: null,
     estimatedValue: includedState === "Included in current estimate" ? packageEstimatedValue ?? preview?.upfrontSavingsCents ?? null : null,
-    valueRule: incentivePackageValueRule(incentivePackage) || opportunity.matchedReasons[0] || undefined,
+    valueRule: incentivePackageValueRule(incentivePackage),
     valueCap: incentivePackageValueCap(incentivePackage),
     eligibleCostBasis: incentivePackageEligibleCostBasis(incentivePackage),
     includedState,
@@ -6975,23 +7046,24 @@ function incentivePackageEstimatedValue(summary?: IncentiveCalculationPackageSum
 }
 
 function incentivePackageValueRule(summary?: IncentiveCalculationPackageSummary) {
-  if (!summary) return null;
+  if (!summary) return undefined;
   if (summary.includedInRuntimeTotals) return "Source-backed v2 incentive calculation included in estimate.";
   if (summary.runtimeInclusionStatus === "missing_inputs") return "Source-backed value exists, but project inputs are needed before estimating.";
   if (summary.runtimeInclusionStatus === "legacy_rule_preferred") return "Legacy-safe extracted rule is used for this opportunity while v2 data is retained for review.";
   if (summary.runtimeInclusionStatus === "custom_quote_estimate") return "Amount depends on a custom quote or program review.";
   if (summary.runtimeInclusionStatus === "not_user_facing_default") return "Not included in totals by default under conservative estimate rules.";
-  return null;
+  return undefined;
 }
 
 function incentivePackageValueCap(summary?: IncentiveCalculationPackageSummary) {
+  if (!summary) return "No cap stored";
   const totals = (summary?.totals || {}) as Record<string, unknown>;
   const cap = totals.maxBenefitCents || totals.maximumBenefitCents || totals.capCents;
   return typeof cap === "number" && Number.isFinite(cap) ? formatCents(cap) : "Needs source review";
 }
 
 function incentivePackageEligibleCostBasis(summary?: IncentiveCalculationPackageSummary) {
-  if (!summary) return "Needs project scope, quantity, or quote";
+  if (!summary) return "Not stored for this opportunity";
   if (summary.runtimeInclusionStatus === "custom_quote_estimate") return "Project quote or contractor estimate";
   if (summary.includedInRuntimeTotals) return "Eligible project cost from current estimate";
   if (summary.runtimeInclusionStatus === "missing_inputs") return "Needs project scope, quantity, or quote";
@@ -7022,8 +7094,8 @@ function opportunityApplicationMethod(
   return "unknown";
 }
 
-function opportunityHasAnyUrl(opportunity: RetrofitOpportunityPreview) {
-  return Boolean(opportunity.sourceUrl || opportunity.programWebsiteUrl || opportunity.applicationUrl || opportunity.pdfUrl);
+function opportunityHasAnyUrl(opportunity: RetrofitOpportunityPreview | null | undefined) {
+  return Boolean(opportunity?.sourceUrl || opportunity?.programWebsiteUrl || opportunity?.applicationUrl || opportunity?.pdfUrl);
 }
 
 function opportunityAffectsMetric(
@@ -7685,6 +7757,7 @@ export function RetrofitRecommendationsPreview({
     setPlanMessage(`${retrofit.name} added to your plan. Other retrofit estimates may change after this retrofit is added. Recalculation support is not available yet.`);
     if (nextRetrofitId) {
       setActiveRetrofitId(nextRetrofitId);
+      setSidebarCollapsed(true);
       setPendingTabRetrofitId(null);
     }
   }
@@ -7719,6 +7792,7 @@ export function RetrofitRecommendationsPreview({
       return;
     }
     setActiveRetrofitId(retrofitId);
+    setSidebarCollapsed(true);
   }
 
   function handleRetrofitTabClick(retrofitId: string) {
@@ -7749,7 +7823,10 @@ export function RetrofitRecommendationsPreview({
 
   function discardActiveDraftAndSwitch() {
     if (activeRetrofit) resetRetrofitDraft(activeRetrofit);
-    if (pendingTabRetrofitId) setActiveRetrofitId(pendingTabRetrofitId);
+    if (pendingTabRetrofitId) {
+      setActiveRetrofitId(pendingTabRetrofitId);
+      setSidebarCollapsed(true);
+    }
     setPendingTabRetrofitId(null);
   }
 
@@ -7788,6 +7865,7 @@ export function RetrofitRecommendationsPreview({
         onSelectRetrofit={handleSidebarRetrofitSelect}
         onShowAllRetrofits={() => {
           setActiveRetrofitId("");
+          setSidebarCollapsed(false);
           setMobileSidebarOpen(false);
         }}
         onToggleCollapsed={() => setSidebarCollapsed((current) => !current)}
@@ -9386,11 +9464,7 @@ function RetrofitPreviewCardView({
   const displayedEnvironmentalImpact = billDataLocked
     ? maskEnvironmentalImpactForNoBillData(environmentalImpact)
     : environmentalImpact;
-  const displayedUpfrontFinancialIncentive = selectedIncludedOpportunities.length > 0
-    ? billDataLocked
-      ? null
-      : retrofit.metrics.upfrontFinancialIncentive
-    : null;
+  const displayedUpfrontFinancialIncentive = billDataLocked ? null : retrofit.metrics.upfrontFinancialIncentive ?? null;
   const displayedNetCostBeforeTaxBenefits =
     billDataLocked
       ? null
@@ -9554,7 +9628,9 @@ function RetrofitPreviewCardView({
   const applicationOverviewReferenceOnly = applicationOverviewStatus?.status === "reference_only";
   const selectedOpportunitiesTotalValue = billDataLocked
     ? null
-    : sumDefinedCents(selectedScenarioOpportunities.map((opportunity) => opportunity.estimatedValue));
+    : selectedCount === 0
+      ? 0
+      : sumDefinedCents(selectedScenarioOpportunities.map((opportunity) => opportunity.estimatedValue));
   const upfrontSavingsValue = billDataLocked ? null : displayedUpfrontFinancialIncentive ?? selectedOpportunitiesTotalValue;
   const oneTimeTaxBenefits = typeof retrofit.metrics.taxBenefits === "number" ? retrofit.metrics.taxBenefits : null;
   const projectCostValue = billDataLocked ? null : retrofit.metrics.estimatedUpfrontProjectCost;
@@ -9562,11 +9638,15 @@ function RetrofitPreviewCardView({
   const effectiveProjectCostValue = billDataLocked ? null : retrofit.metrics.effectiveCostAfterOneTimeBenefits;
   const annualOperatingSavingsValue = billDataLocked ? null : retrofit.metrics.recurringOperationalSavingsAnnual;
   const monthlyOperatingSavingsValue = billDataLocked ? null : retrofit.metrics.recurringOperationalSavingsMonthly ?? centsPerMonth(annualOperatingSavingsValue);
-  const annualIncentiveSavingsValue = billDataLocked ? null : sumDefinedCents(
-    selectedIncludedOpportunities
-      .filter((opportunity) => opportunity.timing === "recurring" || opportunity.timing === "both")
-      .map((opportunity) => opportunity.estimatedValue)
-  );
+  const annualIncentiveSavingsValue = billDataLocked
+    ? null
+    : selectedIncludedOpportunities.length === 0
+      ? 0
+      : sumDefinedCents(
+          selectedIncludedOpportunities
+            .filter((opportunity) => opportunity.timing === "recurring" || opportunity.timing === "both")
+            .map((opportunity) => opportunity.estimatedValue)
+        );
   const monthlyIncentiveSavingsValue = centsPerMonth(annualIncentiveSavingsValue);
   const monthlyTaxBenefitsValue = centsPerMonth(oneTimeTaxBenefits);
   const selectedScenarioLabel = selectedScenario ? formatScenarioTabLabel(selectedScenario.name) : "Balanced";
@@ -9816,6 +9896,8 @@ function RetrofitPreviewCardView({
                     <p className="compact-empty">Application support not available yet.</p>
                   ) : (
                     <div className="estimate-info-list">
+                      <EstimateInfoRow label="Opportunity name" value={overviewApplicationProfile?.programName || overviewApplicationOpportunity?.name || "Application support not available yet"} />
+                      <EstimateInfoRow label="Related retrofit" value={retrofit.name} />
                       <EstimateInfoRow label="Pre-approval required" value={inferApplicationPreApproval(overviewApplicationProfile, overviewApplicationOpportunity)} />
                       <EstimateInfoRow label="Deadline" value={applicationDeadlineLabel(overviewApplicationProfile, overviewApplicationOpportunity)} />
                       <EstimateInfoRow label="Estimated time" value={applicationEstimatedTimeLabel(overviewApplicationProfile, overviewApplicationOpportunity)} />
@@ -9979,13 +10061,13 @@ function RetrofitPreviewCardView({
                             <EstimateInfoRow label="Program type" value={capitalizeLabel(opportunity.type)} />
                             <EstimateInfoRow label="Timing" value={capitalizeLabel(opportunity.timing)} />
                             <EstimateInfoRow label="Eligible" value={capitalizeLabel(opportunity.eligibilityStatus)} />
-                            <EstimateInfoRow label="Calculation formula" value={opportunity.valueRule || "Requirements not extracted yet"} />
+                            <EstimateInfoRow label="Calculation formula" value={opportunity.valueRule || "No calculation formula stored"} />
                             <EstimateInfoRow label="Cap" value={opportunity.valueCap || "Needs source review"} />
                             <EstimateInfoRow label="Eligible cost basis" value={opportunity.eligibleCostBasis || "Needs source review"} />
                           </div>
                           <div>
                             <EstimateInfoRow label="Application process" value={opportunity.applicationProcess || "Needs source review"} />
-                            <EstimateInfoRow label="Requires" value={opportunity.requiredInfo.join(", ") || "Needs review"} />
+                            <EstimateInfoRow label="Requires" value={opportunity.requiredInfo.join(", ") || "No additional requirements stored"} />
                             <EstimateInfoRow label="Difficulty" value={capitalizeLabel(opportunity.difficulty || "unknown")} />
                             <EstimateInfoRow label="Length" value={opportunity.length || "Source unavailable"} />
                             <EstimateInfoRow label="Help available" value={opportunity.helpAvailable || "Review available next steps"} />
@@ -10925,7 +11007,7 @@ function OpportunityPreviewRow({
               <DetailItem label="Timing" value={capitalizeLabel(opportunity.timing)} />
               <DetailItem label="Eligibility" value={capitalizeLabel(opportunity.eligibilityStatus)} />
               <DetailItem label="Estimated value" value={estimatedValueLabel} />
-              <DetailItem label="Formula/rule" value={opportunity.valueRule || "Requirements not extracted yet"} />
+              <DetailItem label="Formula/rule" value={opportunity.valueRule || "No calculation formula stored"} />
               <DetailItem label="Cap" value={opportunity.valueCap || "Needs source review"} />
               <DetailItem label="Eligible cost basis" value={opportunity.eligibleCostBasis || "Needs source review"} />
               <DetailItem label="Affects metric" value={opportunityAffectsMetric(opportunity, selected, includedLabel)} />
@@ -10936,7 +11018,7 @@ function OpportunityPreviewRow({
               <h5>Application</h5>
               <DetailItem label="Application method" value={capitalizeLabel(opportunity.applicationMethod)} />
               <DetailItem label="Application process" value={opportunity.applicationProcess || "Needs source review"} />
-              <DetailItem label="Required information" value={opportunity.requiredInfo.join(", ")} />
+              <DetailItem label="Required information" value={opportunity.requiredInfo.join(", ") || "No additional requirements stored"} />
               <DetailItem label="Difficulty" value={capitalizeLabel(opportunity.difficulty || "unknown")} />
               <DetailItem label="Length" value={opportunity.length || "Source unavailable"} />
               <DetailItem label="Help available" value={opportunity.helpAvailable || "Review available next steps"} />
@@ -11670,10 +11752,34 @@ function opportunityApplicationProcess(opportunity: SampleMatchResult) {
   return "Application process: Needs source review";
 }
 
+function opportunityDifficulty(opportunity: SampleMatchResult, programType: string): RetrofitOpportunityPreview["difficulty"] {
+  if (opportunity.blockers.length > 0) return "hard";
+  if (opportunity.unresolvedRequirements.length > 2) return "medium";
+  if (programType.includes("tax")) return "medium";
+  if (opportunity.applicationUrl || opportunity.websiteUrl || opportunity.sourceUrl) return "medium";
+  return "unknown";
+}
+
 function opportunityLengthLabel(opportunity: SampleMatchResult) {
   if (opportunity.blockers.length > 0) return "Longer review expected";
   if (opportunity.unresolvedRequirements.length > 2) return "Moderate review timeline";
+  const programType = normalizeOpportunityType(opportunity.sourceSummary?.programType);
+  if (programType.includes("tax")) return "Tax filing / accountant review";
+  if (opportunity.applicationUrl) return "Source application timeline";
+  if (opportunity.websiteUrl || opportunity.sourceUrl) return "Source review timeline";
   return "Timeline unavailable from current source data";
+}
+
+function opportunityDeadlineLabel(opportunity: SampleMatchResult) {
+  const sourceText = [
+    opportunity.matchedReasons.join(" "),
+    opportunity.sourceSummary?.programType,
+    opportunity.sourceSummary?.sourceName
+  ].join(" ");
+  const deadlineMatch = sourceText.match(/\b(?:deadline|due|through)\s*:?\s*([A-Z][A-Za-z]+\.?\s+\d{1,2},?\s+\d{4}|\d{1,2}\/\d{1,2}\/\d{2,4})/i);
+  if (deadlineMatch?.[1]) return deadlineMatch[1];
+  if (opportunity.sourceUrl || opportunity.websiteUrl || opportunity.applicationUrl) return "Not listed in source data";
+  return "Source unavailable";
 }
 
 function environmentalImpactLabel(programType: string) {
@@ -11797,8 +11903,9 @@ function inferApplicationPreApproval(profile: CustomerApplicationProfile | null,
     opportunity?.applicationProcess || "",
     opportunity?.description || ""
   ].join(" ").toLowerCase();
-  if (!text.trim()) return "Needs review";
+  if (!text.trim()) return opportunityHasAnyUrl(opportunity || null) ? "Not listed in source data" : "Needs review";
   if (text.includes("pre-approval") || text.includes("preapproval") || text.includes("pre approval")) return "Yes";
+  if (opportunity?.applicationMethod === "tax/accountant filing" || opportunityHasAnyUrl(opportunity || null)) return "Not listed in source data";
   return "Needs review";
 }
 

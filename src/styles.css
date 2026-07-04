@@ -6332,29 +6332,40 @@ dd {
 .estimate-progress-stepper {
   align-items: center;
   display: flex;
-  gap: 18px;
-  justify-content: center;
+  gap: clamp(6px, 0.9vw, 14px);
+  justify-content: stretch;
   min-width: 0;
-  overflow-x: auto;
-  padding: 8px 8px 2px;
+  overflow: hidden;
+  padding: 8px clamp(16px, 2vw, 28px) 2px;
+  width: 100%;
 }
 
 .estimate-progress-step {
   align-items: center;
   color: #1c2a22;
   display: flex;
-  flex: 0 0 auto;
-  gap: 10px;
-  font-size: 14px;
+  flex: 1 1 0;
+  gap: clamp(6px, 0.75vw, 10px);
+  font-size: clamp(12px, 0.82vw, 14px);
   font-weight: 760;
   line-height: 20px;
+  min-width: 0;
+}
+
+.estimate-progress-step > span:not(.estimate-progress-circle) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .estimate-progress-step i {
   border-top: 2px dotted #bcc9d5;
   display: block;
-  margin-left: 10px;
-  width: 74px;
+  flex: 1 1 18px;
+  margin-left: clamp(2px, 0.4vw, 8px);
+  min-width: 12px;
+  width: auto;
 }
 
 .estimate-progress-step.is-complete i,

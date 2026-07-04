@@ -6,6 +6,13 @@
 - Made the right rail compact and action-only, tightened responsive grid behavior, added defensive text wrapping, and removed tab-switch scroll jumps from the selected workspace.
 - Updated focused preview tests for the exact six-tab set, compact Application Overview, action-only right rail, and revised unconfirmed-changes modal copy.
 
+## 2026-07-04 - Codex (GPT-5) selected workspace backend value mapping
+
+- Wired selected-retrofit impact estimates to stored savings-preview bill-line deltas so modeled kWh and estimated CO2e values appear when available.
+- Preserved source-backed unknowns by changing empty opportunity/application fields to "not stored" or "not listed in source data" instead of generic blockers.
+- Treated calculated zero incentive values as real financial data so tabs show `$0` instead of "Estimate unavailable" where the backend has computed zero.
+- Auto-collapsed the retrofit sidebar after a completed card click opens the selected retrofit workspace and constrained the six-step progress row so all circles stay visible.
+
 ## 2026-07-04 - Codex (GPT-5) retrofit form gate
 
 - Added admin preview controls to hide or show seeded retrofit form details independently from bill data.
