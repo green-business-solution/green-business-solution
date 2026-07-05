@@ -1,13 +1,13 @@
 {
   "schemaVersion": "retrofi_test_case_grant_tax_coverage_report.v1",
-  "generatedAt": "2026-07-05T02:56:46.952Z",
+  "generatedAt": "2026-07-05T03:39:24.310Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json",
     "packages": "data/opportunity_incentive_calculation_packages_v2.json",
     "localTaxWorkflows": "data/tax_local_workflow_rules.json"
   },
   "summary": {
-    "testCaseCount": 51,
+    "testCaseCount": 65,
     "retrofitPreviewCount": 890,
     "previewStatusCounts": {
       "calculated": 846,
@@ -66,19 +66,19 @@
     },
     "taxOpportunityPackageCountInDatabase": 3,
     "taxOpportunityPackageCountMatchedByTestCases": 3,
-    "localTaxWorkflowEvaluationCount": 15,
+    "localTaxWorkflowEvaluationCount": 16,
     "localTaxWorkflowStatusCounts": {
-      "needs_tax_return": 3,
+      "needs_tax_return": 2,
       "calculated": 5,
+      "missing_inputs": 2,
       "needs_tax_bill": 3,
-      "missing_inputs": 1,
-      "review_required": 3
+      "review_required": 4
     },
     "localTaxWorkflowProductionActionCounts": {
       "tax_return_input_required": 3,
       "production_ready_internal_calculation": 5,
+      "tax_profile_input_required": 2,
       "tax_bill_upload_required": 3,
-      "tax_profile_input_required": 1,
       "not_applicable_zero_value": 2,
       "assessor_confirmation_required": 1
     }
@@ -8389,23 +8389,23 @@
   },
   "unmatchedTaxOpportunityPackages": [],
   "localTaxWorkflowOutcomes": {
-    "count": 15,
+    "count": 16,
     "statusCounts": {
-      "needs_tax_return": 3,
+      "needs_tax_return": 2,
       "calculated": 5,
+      "missing_inputs": 2,
       "needs_tax_bill": 3,
-      "missing_inputs": 1,
-      "review_required": 3
+      "review_required": 4
     },
     "productionActionCounts": {
       "tax_return_input_required": 3,
       "production_ready_internal_calculation": 5,
+      "tax_profile_input_required": 2,
       "tax_bill_upload_required": 3,
-      "tax_profile_input_required": 1,
       "not_applicable_zero_value": 2,
       "assessor_confirmation_required": 1
     },
-    "totalComputedAmountCents": 2590850,
+    "totalComputedAmountCents": 22566350,
     "sampleRows": [
       {
         "sampleUserId": "california-endowment-hq",
@@ -8586,16 +8586,20 @@
           ],
           "postalCode": "90058"
         },
-        "status": "calculated",
-        "amountCents": 1195000,
+        "status": "missing_inputs",
+        "amountCents": 0,
         "includedInUserFacingTotal": false,
-        "missingInputs": [],
-        "localTaxProductionAction": "production_ready_internal_calculation",
-        "localTaxProductionReason": "The local tax formula calculated from source-backed rules and available test-case inputs; it remains internal-only unless confirmed.",
+        "missingInputs": [
+          {
+            "inputKey": "local_business_tax_class",
+            "workflowId": "local_tax_ca_vernon_business_license_and_parcel_tax_v1"
+          }
+        ],
+        "localTaxProductionAction": "tax_profile_input_required",
+        "localTaxProductionReason": "The workflow needs additional tax profile inputs before it can calculate.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
-          "local_business_tax_class",
           "lodging_business_or_short_term_rental_indicator",
           "minimum_wage_fee_applies",
           "parcel_count",
@@ -8913,28 +8917,12 @@
           ],
           "postalCode": "43410"
         },
-        "status": "needs_tax_return",
-        "amountCents": 0,
+        "status": "calculated",
+        "amountCents": 21170500,
         "includedInUserFacingTotal": false,
-        "missingInputs": [
-          {
-            "inputKey": "tax_year",
-            "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
-            "modelId": "oh_cat_annual_simplified_current_exclusion"
-          },
-          {
-            "inputKey": "annual_ohio_taxable_gross_receipts_cents",
-            "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
-            "modelId": "oh_cat_annual_simplified_current_exclusion"
-          },
-          {
-            "inputKey": "oh_cat_filing_confirmation",
-            "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
-            "modelId": "oh_cat_annual_simplified_current_exclusion"
-          }
-        ],
-        "localTaxProductionAction": "tax_return_input_required",
-        "localTaxProductionReason": "The formula is source-backed, but the tax base must come from a business tax return, accounting system, or user/accountant entry.",
+        "missingInputs": [],
+        "localTaxProductionAction": "production_ready_internal_calculation",
+        "localTaxProductionReason": "The local tax formula calculated from source-backed rules and available test-case inputs; it remains internal-only unless confirmed.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -9130,6 +9118,63 @@
         ],
         "localTaxProductionAction": "assessor_confirmation_required",
         "localTaxProductionReason": "The statutory formula is known, but customer-facing savings require assessor-confirmed applicability and counterfactual local tax treatment.",
+        "inferredAnswerKeys": [
+          "employee_count",
+          "filing_frequency",
+          "local_business_tax_class",
+          "lodging_business_or_short_term_rental_indicator",
+          "minimum_wage_fee_applies",
+          "parcel_count",
+          "sb1186_fee_applies",
+          "transient_occupancy_indicator"
+        ]
+      },
+      {
+        "sampleUserId": "sf-mission-hardware-synthetic",
+        "sampleName": "sf-mission-hardware-synthetic",
+        "workflowId": "tax_gap_ca_san_francisco_business_tax_v1",
+        "taxDomain": "local_business_tax",
+        "taxType": "gross_receipts_tax",
+        "geography": {
+          "country": "US",
+          "stateCode": "CA",
+          "state": "CA",
+          "countyFips": null,
+          "placeGeoid": null,
+          "placeName": "San Francisco",
+          "city": "San Francisco",
+          "cities": [
+            "San Francisco"
+          ],
+          "postalCode": "94110"
+        },
+        "status": "review_required",
+        "amountCents": 0,
+        "includedInUserFacingTotal": false,
+        "missingInputs": [
+          {
+            "inputKey": "sf_business_activity_category",
+            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
+          },
+          {
+            "inputKey": "sf_allocated_gross_receipts_by_category",
+            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
+          },
+          {
+            "inputKey": "sf_registration_fee_schedule_amount_cents",
+            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
+          },
+          {
+            "inputKey": "sf_gross_receipts_tax_return_present",
+            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
+          },
+          {
+            "inputKey": "sf_hgr_or_overpaid_executive_tax_applicability",
+            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
+          }
+        ],
+        "localTaxProductionAction": "tax_return_input_required",
+        "localTaxProductionReason": "The formula is source-backed, but the tax base must come from a business tax return, accounting system, or user/accountant entry.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -18278,6 +18323,46 @@
         ]
       },
       {
+        "sampleUserId": "melissas-vernon-distribution",
+        "sampleName": "melissas-vernon-distribution",
+        "workflowId": "local_tax_ca_vernon_business_license_and_parcel_tax_v1",
+        "taxDomain": "local_business_tax_and_special_assessment",
+        "taxType": "business_license_tax",
+        "geography": {
+          "country": "US",
+          "stateCode": "CA",
+          "state": "CA",
+          "countyFips": null,
+          "placeGeoid": null,
+          "placeName": "Vernon",
+          "city": "Vernon",
+          "cities": [
+            "Vernon"
+          ],
+          "postalCode": "90058"
+        },
+        "status": "missing_inputs",
+        "amountCents": 0,
+        "includedInUserFacingTotal": false,
+        "missingInputs": [
+          {
+            "inputKey": "local_business_tax_class",
+            "workflowId": "local_tax_ca_vernon_business_license_and_parcel_tax_v1"
+          }
+        ],
+        "localTaxProductionAction": "tax_profile_input_required",
+        "localTaxProductionReason": "The workflow needs additional tax profile inputs before it can calculate.",
+        "inferredAnswerKeys": [
+          "employee_count",
+          "filing_frequency",
+          "lodging_business_or_short_term_rental_indicator",
+          "minimum_wage_fee_applies",
+          "parcel_count",
+          "sb1186_fee_applies",
+          "transient_occupancy_indicator"
+        ]
+      },
+      {
         "sampleUserId": "zingermans-deli-ann-arbor",
         "sampleName": "zingermans-deli-ann-arbor",
         "workflowId": "property_adapter_mi_washtenaw_ann_arbor_v1",
@@ -18459,58 +18544,6 @@
         ]
       },
       {
-        "sampleUserId": "whirlpool-clyde-operations",
-        "sampleName": "whirlpool-clyde-operations",
-        "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
-        "taxDomain": "state_business_tax",
-        "taxType": "commercial_activity_tax",
-        "geography": {
-          "country": "US",
-          "stateCode": "OH",
-          "state": "OH",
-          "countyFips": null,
-          "placeGeoid": null,
-          "placeName": "Clyde",
-          "city": "Clyde",
-          "cities": [
-            "Clyde"
-          ],
-          "postalCode": "43410"
-        },
-        "status": "needs_tax_return",
-        "amountCents": 0,
-        "includedInUserFacingTotal": false,
-        "missingInputs": [
-          {
-            "inputKey": "tax_year",
-            "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
-            "modelId": "oh_cat_annual_simplified_current_exclusion"
-          },
-          {
-            "inputKey": "annual_ohio_taxable_gross_receipts_cents",
-            "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
-            "modelId": "oh_cat_annual_simplified_current_exclusion"
-          },
-          {
-            "inputKey": "oh_cat_filing_confirmation",
-            "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
-            "modelId": "oh_cat_annual_simplified_current_exclusion"
-          }
-        ],
-        "localTaxProductionAction": "tax_return_input_required",
-        "localTaxProductionReason": "The formula is source-backed, but the tax base must come from a business tax return, accounting system, or user/accountant entry.",
-        "inferredAnswerKeys": [
-          "employee_count",
-          "filing_frequency",
-          "local_business_tax_class",
-          "lodging_business_or_short_term_rental_indicator",
-          "minimum_wage_fee_applies",
-          "parcel_count",
-          "sb1186_fee_applies",
-          "transient_occupancy_indicator"
-        ]
-      },
-      {
         "sampleUserId": "gm-factory-zero-detroit",
         "sampleName": "gm-factory-zero-detroit",
         "workflowId": "property_adapter_mi_wayne_detroit_v1",
@@ -18621,6 +18654,63 @@
         ],
         "localTaxProductionAction": "assessor_confirmation_required",
         "localTaxProductionReason": "The statutory formula is known, but customer-facing savings require assessor-confirmed applicability and counterfactual local tax treatment.",
+        "inferredAnswerKeys": [
+          "employee_count",
+          "filing_frequency",
+          "local_business_tax_class",
+          "lodging_business_or_short_term_rental_indicator",
+          "minimum_wage_fee_applies",
+          "parcel_count",
+          "sb1186_fee_applies",
+          "transient_occupancy_indicator"
+        ]
+      },
+      {
+        "sampleUserId": "sf-mission-hardware-synthetic",
+        "sampleName": "sf-mission-hardware-synthetic",
+        "workflowId": "tax_gap_ca_san_francisco_business_tax_v1",
+        "taxDomain": "local_business_tax",
+        "taxType": "gross_receipts_tax",
+        "geography": {
+          "country": "US",
+          "stateCode": "CA",
+          "state": "CA",
+          "countyFips": null,
+          "placeGeoid": null,
+          "placeName": "San Francisco",
+          "city": "San Francisco",
+          "cities": [
+            "San Francisco"
+          ],
+          "postalCode": "94110"
+        },
+        "status": "review_required",
+        "amountCents": 0,
+        "includedInUserFacingTotal": false,
+        "missingInputs": [
+          {
+            "inputKey": "sf_business_activity_category",
+            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
+          },
+          {
+            "inputKey": "sf_allocated_gross_receipts_by_category",
+            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
+          },
+          {
+            "inputKey": "sf_registration_fee_schedule_amount_cents",
+            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
+          },
+          {
+            "inputKey": "sf_gross_receipts_tax_return_present",
+            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
+          },
+          {
+            "inputKey": "sf_hgr_or_overpaid_executive_tax_applicability",
+            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
+          }
+        ],
+        "localTaxProductionAction": "tax_return_input_required",
+        "localTaxProductionReason": "The formula is source-backed, but the tax base must come from a business tax return, accounting system, or user/accountant entry.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",

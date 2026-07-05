@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) tax test-profile input updates
+
+- Added an intake script for the 19 GPT Pro tax test-profile patches, producing a normalized tax profile update artifact and report.
+- Imported synthetic tax facts/documents into generated sample fixtures, uploaded the refreshed generated fixtures to S3, and updated the generated-fixture manifest.
+- Updated the tax gap runtime readiness audit to use canonical compiled runtime input keys, raising tax candidate test-profile coverage to 19 of 19 complete internal fixtures while keeping customer-facing inclusion disabled.
+
 ## 2026-07-05 - Codex (GPT-5) remove homepage scroll sequence
 
 - Removed the planet-to-lab scroll image sequence from the homepage so the landing experience returns to the scanner hero followed directly by the normal content.

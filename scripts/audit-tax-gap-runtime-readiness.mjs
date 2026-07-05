@@ -121,7 +121,7 @@ function auditCandidate(candidate) {
     .map((profile) => {
       const geographyMatch = geographyMatchScore(targetGeography, profile.geography);
       if (geographyMatch.score < 0) return null;
-      const inputCoverage = evaluateInputCoverage(candidate, profile);
+      const inputCoverage = evaluateInputCoverage(candidate, profile, runtimeRule);
       return {
         sampleUserId: profile.sampleUserId,
         sampleName: profile.sampleName,
@@ -386,13 +386,24 @@ function decideNextAction({ candidate, matchingTestProfiles, formulaSupport, run
   };
 }
 
-function evaluateInputCoverage(candidate, profile) {
-  const requiredInputs = candidate.requiredRuntimeInputs || [];
-  const checks = requiredInputs.map((inputText) => {
-    const candidateKeys = candidateInputKeys(inputText);
+function evaluateInputCoverage(candidate, profile, runtimeRule = null) {
+  const runtimeInputRequirements = (runtimeRule?.canonicalInputRequirements || []).filter(
+    (input) => input.missingSeverity !== "optional"
+  );
+  const requiredInputs = runtimeInputRequirements.length
+    ? runtimeInputRequirements.map((input) => ({
+        inputText: input.label || input.inputKey,
+        candidateKeys: [input.inputKey].filter(Boolean)
+      }))
+    : (candidate.requiredRuntimeInputs || []).map((inputText) => ({
+        inputText,
+        candidateKeys: candidateInputKeys(inputText)
+      }));
+  const checks = requiredInputs.map((input) => {
+    const candidateKeys = input.candidateKeys;
     const presentKeys = candidateKeys.filter((key) => profile.answerKeys.has(key));
     return {
-      inputText,
+      inputText: input.inputText,
       candidateKeys,
       present: presentKeys.length > 0,
       presentKeys
@@ -527,7 +538,7 @@ function parseJurisdiction(jurisdictionText) {
     raw: text,
     state,
     countyName: countyMatch ? `${countyMatch[1].trim()} County` : null,
-    city: cityMatch?.[1]?.trim() || cityStateMatch?.[1]?.trim() || null,
+    city: countyMatch ? null : cityMatch?.[1]?.trim() || cityStateMatch?.[1]?.trim() || null,
     scope: jurisdictionScope(text, state)
   };
 }
@@ -657,7 +668,9 @@ function buildReport(audit) {
     "",
     "- The GPT Pro repairs are source-backed enough to keep as tax rule candidates, but none should enter customer-facing totals yet.",
     "- Compiled runtime support now exists for selected local workflow, sales/use exemption, and state-credit candidates; free-form GPT Pro formula text still is not executed directly.",
-    "- Matching test profiles exist for most state/local candidates, but no candidate has all required user/tax inputs present under the current canonical input-key audit.",
+    audit.counts.candidatesWithCompleteMatchedTestInputs > 0
+      ? `- ${audit.counts.candidatesWithCompleteMatchedTestInputs} candidate(s) now have at least one matching test profile with all audited runtime inputs present. These are still internal-only until runtime importer and customer-facing inclusion policy are explicitly enabled.`
+      : "- Matching test profiles exist for most state/local candidates, but no candidate has all required user/tax inputs present under the current canonical input-key audit.",
     "- Missing inputs are expected for program-document, tax-bill, tax-return, filing, assessor, and tax-profile gates; those should be represented as UI/upload requirements rather than guessed server-side."
   ];
   return `${lines.join("\n")}\n`;

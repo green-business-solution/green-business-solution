@@ -71,6 +71,7 @@
     "matching:tax-gap-repairs:intake": "node scripts/intake-tax-gap-repair-outputs.mjs",
     "matching:tax-gap-runtime:compile": "node scripts/compile-tax-gap-runtime-rules.mjs",
     "matching:tax-gap-runtime-readiness:audit": "node scripts/audit-tax-gap-runtime-readiness.mjs",
+    "matching:tax-test-profile-inputs:intake": "node scripts/intake-tax-test-profile-input-updates.mjs",
     "fixtures:generated:list": "node scripts/sync-generated-test-fixtures.mjs list",
     "fixtures:generated:upload": "node scripts/sync-generated-test-fixtures.mjs upload",
     "fixtures:generated:download": "node scripts/sync-generated-test-fixtures.mjs download",

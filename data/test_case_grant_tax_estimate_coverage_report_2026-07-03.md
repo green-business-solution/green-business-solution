@@ -1,10 +1,10 @@
 # Test Case Grant/Tax Estimate Coverage
 
-Generated: 2026-07-05T02:56:46.952Z
+Generated: 2026-07-05T03:39:24.310Z
 
 ## Summary
 
-- Test cases: 51
+- Test cases: 65
 - Retrofit previews: 890
 - Matched v2 package evaluations: 531
 - Runtime-included packages: 293
@@ -12,7 +12,7 @@ Generated: 2026-07-05T02:56:46.952Z
 - Missing evidence/input packages: 115
 - Tax opportunity packages in database: 3
 - Tax opportunity packages matched by current test cases: 3
-- Local tax workflow evaluations: 15
+- Local tax workflow evaluations: 16
 
 ## Runtime Inclusion Status
 
@@ -48,10 +48,10 @@ Generated: 2026-07-05T02:56:46.952Z
 | Status | Count |
 | --- | --- |
 | calculated | 5 |
+| review_required | 4 |
 | needs_tax_bill | 3 |
-| needs_tax_return | 3 |
-| review_required | 3 |
-| missing_inputs | 1 |
+| missing_inputs | 2 |
+| needs_tax_return | 2 |
 
 ## Local Tax Production Action Buckets
 
@@ -61,8 +61,8 @@ Generated: 2026-07-05T02:56:46.952Z
 | tax_bill_upload_required | 3 |
 | tax_return_input_required | 3 |
 | not_applicable_zero_value | 2 |
+| tax_profile_input_required | 2 |
 | assessor_confirmation_required | 1 |
-| tax_profile_input_required | 1 |
 
 ## Tax Opportunity Production Action Buckets
 
@@ -111,7 +111,7 @@ All tax opportunity packages were matched by at least one test-case retrofit.
 
 ## Interpretation
 
-- The current 51 test cases now match 3 of 3 tax opportunity packages.
+- The current 65 test cases now match 3 of 3 tax opportunity packages.
 - Local tax workflows can be selected for some test-case addresses after city inference, but they remain internal-only and are not part of customer-facing savings totals.
 - Local tax rows classified as `tax_return_input_required`, `tax_bill_upload_required`, `assessor_confirmation_required`, or `program_document_required` are production input gates, not source-data repair failures.
 - Tax opportunity rows classified as `not_applicable_zero_value` are resolved to $0 by current test-case facts; rows classified as `assessor_confirmation_required` need a property-tax profile or assessor confirmation before customer-facing savings.
