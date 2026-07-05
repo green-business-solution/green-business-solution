@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-04 - Codex (GPT-5) scenario and opportunity preview modes
+
+- Added Summary, Review, and Guided Scenarios tab modes so the selected retrofit workspace can compare scenarios through alternative card, table, and guided review layouts.
+- Added an Opportunities tab Review mode with a split-pane opportunity detail panel and include/exclude controls while preserving the existing list/accordion view.
+
 ## 2026-07-04 - Codex (GPT-5) comprehensive tax model research framework
 
 - Added a source-backed tax model framework covering runtime statuses, supported tax model kinds, source strategies, and opportunity mapping policy for future tax calculation expansion.
