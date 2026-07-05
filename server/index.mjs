@@ -66,6 +66,7 @@ import {
   readPersistentRetrofitRecommendations as readPersistentRetrofitRecommendationsFromStore,
   writePersistentRetrofitRecommendations as writePersistentRetrofitRecommendationsToStore
 } from "./retrofitRecommendationsCache.mjs";
+import { buildFixtureRetrofitRecommendationsPayload } from "./fixtureRetrofitRecommendations.mjs";
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
 const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
@@ -1712,8 +1713,20 @@ async function precomputeAdminClientRetrofitRecommendations(userIds) {
         continue;
       }
       const intake = await getIntake(user.userId);
+      const fixturePayload = buildFixtureRetrofitRecommendationsPayload({
+        user,
+        intake,
+        testCase: sampleTestCaseById.get(cleanText(user.sampleUserId)),
+        now: new Date()
+      });
+      if (fixturePayload) {
+        writeCachedRetrofitRecommendations(user, intake, fixturePayload);
+        await writePersistentRetrofitRecommendations(user, intake, fixturePayload);
+        results.push({ userId, source: "fixture", status: "ready" });
+        continue;
+      }
       await buildCachedPortalRetrofitRecommendations({ user, intake, now: new Date(), persist: true });
-      results.push({ userId, status: "ready" });
+      results.push({ userId, source: "live", status: "ready" });
     } catch (error) {
       console.warn(`[retrofit-recommendations-cache] precompute failed for ${userId}:`, error);
       results.push({ userId, status: "error" });

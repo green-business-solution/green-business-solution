@@ -15,6 +15,7 @@ import {
   readPersistentRetrofitRecommendations,
   writePersistentRetrofitRecommendations
 } from "../server/retrofitRecommendationsCache.mjs";
+import { buildFixtureRetrofitRecommendationsPayload } from "../server/fixtureRetrofitRecommendations.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const defaultProfile = process.env.AWS_PROFILE || "gbs";
@@ -26,6 +27,7 @@ const defaultOpportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-op
 const defaultRuntimeStateTable = process.env.GBS_RUNTIME_STATE_TABLE || "gbs-runtime-state";
 const defaultEnergyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "gbs-retrofi-org-energy-data-448016109714";
 const defaultTestCasesPath = path.join(repoRoot, "public", "sample_matching_test_cases.json");
+const payloadSources = new Set(["auto", "fixture", "live"]);
 
 export function parseArgs(argv) {
   const options = {
@@ -39,9 +41,11 @@ export function parseArgs(argv) {
     profile: defaultProfile,
     runtimeStateTable: defaultRuntimeStateTable,
     s3Region: defaultS3Region,
+    source: "auto",
     testCasesPath: defaultTestCasesPath,
     userIds: [],
-    usersTable: defaultUsersTable
+    usersTable: defaultUsersTable,
+    progress: true
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -58,6 +62,22 @@ export function parseArgs(argv) {
     }
     if (arg === "--force") {
       options.force = true;
+      continue;
+    }
+    if (arg === "--progress") {
+      options.progress = true;
+      continue;
+    }
+    if (arg === "--quiet") {
+      options.progress = false;
+      continue;
+    }
+    if (arg === "--source" && next) {
+      if (!payloadSources.has(next)) {
+        throw new Error(`Unknown source: ${next}. Expected one of: ${[...payloadSources].join(", ")}`);
+      }
+      options.source = next;
+      index += 1;
       continue;
     }
     if (arg === "--user-id" && next) {
@@ -138,9 +158,11 @@ export async function precomputeTestUserRetrofitRecommendations(options = {}, de
     profile: options.profile ?? defaultProfile,
     runtimeStateTable: options.runtimeStateTable || defaultRuntimeStateTable,
     s3Region: options.s3Region || defaultS3Region,
+    source: payloadSources.has(options.source) ? options.source : "auto",
     testCasesPath: options.testCasesPath || defaultTestCasesPath,
     userIds: Array.isArray(options.userIds) ? unique(options.userIds) : [],
-    usersTable: options.usersTable || defaultUsersTable
+    usersTable: options.usersTable || defaultUsersTable,
+    progress: Boolean(options.progress)
   };
 
   const credentials = dependencies.credentials || (config.profile ? fromIni({ profile: config.profile }) : undefined);
@@ -174,10 +196,20 @@ export async function precomputeTestUserRetrofitRecommendations(options = {}, de
     fakeUsers = fakeUsers.slice(0, config.limit);
   }
 
-  const opportunities = dependencies.opportunities || (await scanAll(db, config.opportunitiesTable));
+  let opportunities = dependencies.opportunities || null;
+  async function getOpportunities() {
+    if (!opportunities) {
+      logProgress(config, `Loading live opportunities from ${config.opportunitiesTable}...`);
+      opportunities = await scanAll(db, config.opportunitiesTable);
+      logProgress(config, `Loaded ${opportunities.length} live opportunities.`);
+    }
+    return opportunities;
+  }
+
   const results = [];
-  for (const user of fakeUsers) {
+  for (const [index, user] of fakeUsers.entries()) {
     const label = user.fullName || user.companyName || user.email || user.userId;
+    logProgress(config, `[${index + 1}/${fakeUsers.length}] ${label}`);
     try {
       const intake = normalizeIntakeRecord(
         dependencies.intakesByUserId?.get?.(user.userId) ||
@@ -210,12 +242,29 @@ export async function precomputeTestUserRetrofitRecommendations(options = {}, de
         }
       }
 
-      const payload = buildPortalRetrofitRecommendations({
-        user: publicUser(user),
-        intake,
-        opportunities,
-        now: new Date()
-      });
+      const fixturePayload = config.source === "live"
+        ? null
+        : buildFixtureRetrofitRecommendationsPayload({
+            user,
+            intake,
+            testCase: sampleTestCaseById.get(cleanText(user.sampleUserId)),
+            now: new Date()
+          });
+      const payloadSource = fixturePayload ? "fixture" : "live";
+
+      if (!fixturePayload && config.source === "fixture") {
+        results.push({ userId: user.userId, label, status: "missing_fixture_payload" });
+        continue;
+      }
+
+      const payload =
+        fixturePayload ||
+        buildPortalRetrofitRecommendations({
+          user: publicUser(user),
+          intake,
+          opportunities: await getOpportunities(),
+          now: new Date()
+        });
 
       if (config.dryRun) {
         results.push({
@@ -223,6 +272,7 @@ export async function precomputeTestUserRetrofitRecommendations(options = {}, de
           label,
           matchedOpportunityCount: payload.summary.matchedOpportunityCount,
           matchedRetrofitCount: payload.summary.matchedRetrofitCount,
+          source: payloadSource,
           status: "would_write"
         });
         continue;
@@ -242,6 +292,7 @@ export async function precomputeTestUserRetrofitRecommendations(options = {}, de
         label,
         matchedOpportunityCount: payload.summary.matchedOpportunityCount,
         matchedRetrofitCount: payload.summary.matchedRetrofitCount,
+        source: payloadSource,
         s3Key: writeResult?.s3Key || null,
         status: writeResult ? "written" : "write_failed"
       });
@@ -259,10 +310,11 @@ export async function precomputeTestUserRetrofitRecommendations(options = {}, de
     dryRun: config.dryRun,
     energyDataBucket: config.energyDataBucket,
     generatedAt: new Date().toISOString(),
-    opportunityRecordCount: opportunities.length,
+    liveOpportunityRecordCount: opportunities?.length || 0,
     results,
     summary: summarizeResults(results),
     skippedTaxOnlyUserCount,
+    source: config.source,
     targetUserCount: fakeUsers.length
   };
 }
@@ -456,6 +508,12 @@ const quietLogger = {
   warn() {}
 };
 
+function logProgress(config, message) {
+  if (config.progress) {
+    console.log(message);
+  }
+}
+
 function printHelp() {
   console.log(`Precompute and persist full retrofit recommendation payloads for fake/test users.
 
@@ -465,8 +523,11 @@ Usage:
 Options:
   --write                       Write S3/runtime-state cache entries. Default is dry-run.
   --force                       Recompute even when a current persisted payload already exists.
+  --source <auto|fixture|live>  Payload source. Default: auto. Fixture skips live opportunity matching when generated test-case retrofits exist.
   --user-id <id[,id]>           Limit to one or more fake user IDs.
   --limit <n>                   Limit number of fake users processed.
+  --progress                    Print per-user progress. Enabled by default for CLI runs.
+  --quiet                       Suppress progress output.
   --profile <name>              AWS profile. Default: ${defaultProfile}
   --region <region>             DynamoDB region. Default: ${defaultDataRegion}
   --s3-region <region>          S3 bucket region. Default: ${defaultS3Region}

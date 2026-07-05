@@ -6,6 +6,12 @@
 - Kept the top-right `Results` label removed and reduced the final hero promise to two deliberate lines.
 - Restyled the public navbar `Get Started` action as a translucent green liquid-glass capsule while preserving its existing route and responsive variants.
 
+## 2026-07-05 - Codex (GPT-5) fixture-backed recommendation precompute
+
+- Added a generated-fixture recommendation payload builder so fake-user retrofit recommendation caches can be written directly from sample test-case outputs.
+- Updated the standalone test-user precompute script to use fixture payloads before live matching, with source selection and progress controls.
+- Switched the admin preview precompute endpoint to persist fixture-backed payloads for mapped fake users, avoiding slow live opportunity scans during cache warming.
+
 ## 2026-07-05 - Codex (GPT-5) tax runtime preview gating
 
 - Added a recommendation-level tax runtime preview that exposes mandatory pre-opportunity tax intake fields, opportunity-display gating flags, and calculated tax benefit/liability totals.

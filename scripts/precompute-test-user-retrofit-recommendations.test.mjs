@@ -35,6 +35,48 @@ describe("precomputeTestUserRetrofitRecommendations", () => {
       "tmp/sample_matching_test_cases.json"
     );
   });
+
+  it("accepts fixture-only payload source", () => {
+    expect(parseArgs(["--source", "fixture", "--quiet"])).toMatchObject({
+      source: "fixture",
+      progress: false
+    });
+  });
+
+  it("uses fixture payloads without requiring live opportunities", async () => {
+    const users = [fakeUser("user_good", "sample_good", "Good Retrofit User")];
+    const intakesByUserId = new Map([["user_good", intake("user_good")]]);
+    const sampleTestCaseById = new Map([
+      [
+        "sample_good",
+        {
+          sampleUserId: "sample_good",
+          retrofits: [
+            {
+              retrofitTypeId: "led_lighting_retrofit",
+              opportunities: [{ opportunityId: "opp_1" }]
+            }
+          ]
+        }
+      ]
+    ]);
+
+    const result = await precomputeTestUserRetrofitRecommendations(
+      { dryRun: true, force: true, profile: "", source: "fixture", testCasesPath: "/missing-test-cases.json" },
+      { intakesByUserId, sampleTestCaseById, users }
+    );
+
+    expect(result.liveOpportunityRecordCount).toBe(0);
+    expect(result.results).toMatchObject([
+      {
+        matchedOpportunityCount: 1,
+        matchedRetrofitCount: 1,
+        source: "fixture",
+        status: "would_write",
+        userId: "user_good"
+      }
+    ]);
+  });
 });
 
 function fakeUser(userId, sampleUserId, fullName) {
