@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) remove homepage scroll sequence
+
+- Removed the planet-to-lab scroll image sequence from the homepage so the landing experience returns to the scanner hero followed directly by the normal content.
+- Deleted the generated scroll-sequence WebP frames and removed the associated canvas component and CSS.
+
 ## 2026-07-05 - Codex (GPT-5) tax gap runtime model compilation
 
 - Compiled the GPT Pro tax-gap repairs into runtime-facing tax rule records with canonical tax/user input requirements and a generated report.
@@ -28,12 +33,6 @@
 - Classified the 54 skipped tax records from the structured tax artifact into suppressed/archive records, input-gated records, and GPT Pro repair targets while keeping the 16 unsupported triage rows as policy guardrails.
 - Added a repeatable tax gap disposition/work-packet script that writes tracked disposition artifacts and creates ignored GPT Pro prompt/output files for repairable official-source gaps.
 - Generated a six-prompt GPT Pro tax gap repair batch with resolved source URLs and explicit JSON output requirements for promoting, suppressing, or input-gating each target.
-
-## 2026-07-05 - Codex (GPT-5) homepage planet-to-lab sequence
-
-- Added a generated 10-frame WebP homepage transition sequence that moves from the planet scanner hero into the futuristic RetroFi dashboard/lab scene.
-- Inserted a sticky scroll-scrubbed canvas sequence between the planet scanner hero and the next homepage section, with preloaded frames and a reduced-motion static final-frame fallback.
-- Regenerated the transition frames so the sequence begins from the completed in-app scanner hero state instead of the originally supplied starter screenshot.
 
 ## 2026-07-05 - Codex (GPT-5) structured tax model records
 

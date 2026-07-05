@@ -3016,12 +3016,6 @@ function AboutHubCard({
   );
 }
 
-const PLANET_LAB_SEQUENCE_FRAMES = Array.from(
-  { length: 10 },
-  (_, index) => `/scroll-sequences/planet-lab/frame-${String(index + 1).padStart(4, "0")}.webp`
-);
-const PLANET_LAB_SEQUENCE_FINAL_FRAME = PLANET_LAB_SEQUENCE_FRAMES[PLANET_LAB_SEQUENCE_FRAMES.length - 1];
-
 function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
   const sectionRef = useRef<HTMLElement | null>(null);
 
@@ -3153,157 +3147,6 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
   );
 }
 
-function ScrollImageSequenceTransition() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const framesRef = useRef<HTMLImageElement[]>([]);
-  const activeFrameRef = useRef(-1);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    const canvas = canvasRef.current;
-
-    if (!section || !canvas) {
-      return;
-    }
-
-    const context = canvas.getContext("2d");
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let animationFrame = 0;
-    let isDisposed = false;
-
-    const drawFrame = (frameIndex: number) => {
-      const image = framesRef.current[frameIndex];
-
-      if (!context || !image) {
-        return;
-      }
-
-      const bounds = canvas.getBoundingClientRect();
-      const width = Math.max(1, bounds.width || window.innerWidth);
-      const height = Math.max(1, bounds.height || window.innerHeight);
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-      const nextCanvasWidth = Math.round(width * pixelRatio);
-      const nextCanvasHeight = Math.round(height * pixelRatio);
-      const resized = canvas.width !== nextCanvasWidth || canvas.height !== nextCanvasHeight;
-
-      if (activeFrameRef.current === frameIndex && !resized) {
-        return;
-      }
-
-      if (resized) {
-        canvas.width = nextCanvasWidth;
-        canvas.height = nextCanvasHeight;
-      }
-
-      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      context.clearRect(0, 0, width, height);
-
-      const scale = Math.max(width / image.naturalWidth, height / image.naturalHeight);
-      const drawWidth = image.naturalWidth * scale;
-      const drawHeight = image.naturalHeight * scale;
-      const drawLeft = (width - drawWidth) / 2;
-      const drawTop = (height - drawHeight) / 2;
-
-      context.drawImage(image, drawLeft, drawTop, drawWidth, drawHeight);
-      activeFrameRef.current = frameIndex;
-    };
-
-    const updateSequence = () => {
-      animationFrame = 0;
-
-      if (!framesRef.current.length) {
-        return;
-      }
-
-      if (reducedMotionQuery.matches) {
-        section.style.setProperty("--sequence-progress", "1");
-        drawFrame(PLANET_LAB_SEQUENCE_FRAMES.length - 1);
-        return;
-      }
-
-      const scrollDistance = Math.max(1, section.offsetHeight - window.innerHeight);
-      const rawProgress = Math.min(1, Math.max(0, -section.getBoundingClientRect().top / scrollDistance));
-      const frameIndex = Math.min(
-        PLANET_LAB_SEQUENCE_FRAMES.length - 1,
-        Math.max(0, Math.round(rawProgress * (PLANET_LAB_SEQUENCE_FRAMES.length - 1)))
-      );
-
-      section.style.setProperty("--sequence-progress", rawProgress.toFixed(3));
-      drawFrame(frameIndex);
-    };
-
-    const scheduleSequenceUpdate = () => {
-      if (!animationFrame) {
-        animationFrame = window.requestAnimationFrame(updateSequence);
-      }
-    };
-
-    const loadFrames = PLANET_LAB_SEQUENCE_FRAMES.map(
-      (source) =>
-        new Promise<HTMLImageElement>((resolve, reject) => {
-          const image = new Image();
-          image.decoding = "async";
-          image.onload = () => resolve(image);
-          image.onerror = () => reject(new Error(`Unable to load sequence frame: ${source}`));
-          image.src = source;
-        })
-    );
-
-    Promise.all(loadFrames)
-      .then((frames) => {
-        if (isDisposed) {
-          return;
-        }
-
-        framesRef.current = frames;
-        section.classList.add("is-canvas-ready");
-        updateSequence();
-      })
-      .catch(() => {
-        section.classList.add("has-sequence-error");
-      });
-
-    window.addEventListener("scroll", scheduleSequenceUpdate, { passive: true });
-    window.addEventListener("resize", scheduleSequenceUpdate);
-    reducedMotionQuery.addEventListener("change", scheduleSequenceUpdate);
-
-    return () => {
-      isDisposed = true;
-      window.cancelAnimationFrame(animationFrame);
-      window.removeEventListener("scroll", scheduleSequenceUpdate);
-      window.removeEventListener("resize", scheduleSequenceUpdate);
-      reducedMotionQuery.removeEventListener("change", scheduleSequenceUpdate);
-      section.classList.remove("is-canvas-ready", "has-sequence-error");
-    };
-  }, []);
-
-  return (
-    <section aria-label="RetroFi scanner transition into results dashboard" className="scroll-sequence-transition" ref={sectionRef}>
-      <div className="scroll-sequence-sticky">
-        <canvas aria-hidden="true" className="scroll-sequence-canvas" ref={canvasRef} />
-        <img
-          alt=""
-          aria-hidden="true"
-          className="scroll-sequence-fallback scroll-sequence-fallback-start"
-          decoding="async"
-          loading="eager"
-          src={PLANET_LAB_SEQUENCE_FRAMES[0]}
-        />
-        <img
-          alt=""
-          aria-hidden="true"
-          className="scroll-sequence-fallback scroll-sequence-fallback-final"
-          decoding="async"
-          loading="lazy"
-          src={PLANET_LAB_SEQUENCE_FINAL_FRAME}
-        />
-        <div aria-hidden="true" className="scroll-sequence-atmosphere" />
-      </div>
-    </section>
-  );
-}
-
 function HomePage({
   navigate,
   publicAuth
@@ -3314,7 +3157,6 @@ function HomePage({
   return (
     <PublicShell navigate={navigate} publicAuth={publicAuth} showFooter>
       <PlanetScanHero navigate={navigate} />
-      <ScrollImageSequenceTransition />
 
       <section className="split-section problem-section">
         <div>
