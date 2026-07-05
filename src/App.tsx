@@ -3076,10 +3076,6 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
     };
   }, []);
 
-  const handleSecondaryAction = () => {
-    navigate("how-it-works");
-  };
-
   return (
     <section aria-labelledby="planet-scan-heading" className="planet-scan-section" ref={sectionRef}>
       <div className="planet-scan-sticky">
@@ -3115,25 +3111,29 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
         <div className="planet-scan-content">
           <div className="planet-scan-copy">
             <div className="planet-scan-message planet-scan-message-before">
-              <h1 id="planet-scan-heading">Find the money behind your next retrofit.</h1>
+              <h1 className="planet-scan-title planet-scan-title--before" id="planet-scan-heading">
+                <span>Find the money</span>
+                <span>behind your next</span>
+                <span>retrofit.</span>
+              </h1>
               <p className="planet-scan-subhead">
                 Billions in retrofit incentives exist while building owners lose billions to operating expenses.
               </p>
+              <button className="planet-scan-cta planet-scan-primary planet-scan-cta--before" onClick={() => navigate("scan")} type="button">
+                Get Started
+              </button>
             </div>
           </div>
 
           <div className="planet-scan-result-copy">
-            <p className="planet-scan-eyebrow">Results</p>
-            <h2>RetroFi helps you find, compare, and claim retrofit incentives.</h2>
+            <h2 className="planet-scan-title planet-scan-title--after">
+              <span>RetroFi helps you</span>
+              <span>find, compare, and claim</span>
+              <span>retrofit incentives.</span>
+            </h2>
             <p className="planet-scan-emphasis">Sustainable. Profitable. Practical.</p>
-          </div>
-
-          <div className="planet-scan-actions">
-            <button className="planet-scan-primary" onClick={() => navigate("scan")} type="button">
+            <button className="planet-scan-cta planet-scan-primary planet-scan-cta--after" onClick={() => navigate("scan")} type="button">
               Get Started
-            </button>
-            <button className="planet-scan-secondary" onClick={handleSecondaryAction} type="button">
-              See how it works
             </button>
           </div>
         </div>

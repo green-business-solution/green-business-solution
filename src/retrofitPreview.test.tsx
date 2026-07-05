@@ -1710,6 +1710,38 @@ describe("retrofit recommendations preview", () => {
     expect(solarQuestions).not.toContain("What quantity or scope is being upgraded?");
   });
 
+  it("keeps the home planet scan hero copy deterministic with one CTA per state", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const appSource = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+    const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
+    const heroStart = appSource.indexOf("function PlanetScanHero");
+    const heroEnd = appSource.indexOf("function HomePage", heroStart);
+    const heroSource = appSource.slice(heroStart, heroEnd);
+
+    expect(heroSource).toContain("<span>Find the money</span>");
+    expect(heroSource).toContain("<span>behind your next</span>");
+    expect(heroSource).toContain("<span>retrofit.</span>");
+    expect(heroSource).toContain("<span>RetroFi helps you</span>");
+    expect(heroSource).toContain("<span>find, compare, and claim</span>");
+    expect(heroSource).toContain("<span>retrofit incentives.</span>");
+    expect(heroSource).toContain("planet-scan-cta--before");
+    expect(heroSource).toContain("planet-scan-cta--after");
+    expect(heroSource).not.toContain("planet-scan-eyebrow");
+    expect(heroSource).not.toContain("See how it works");
+    expect(heroSource).not.toContain("handleSecondaryAction");
+
+    expect(css).toContain(".planet-scan-title span");
+    expect(css).toContain("left: clamp(72px, 11.5vw, 190px);");
+    expect(css).toContain("top: clamp(118px, 15.5vh, 178px);");
+    expect(css).toContain("right: clamp(72px, 8.5vw, 160px);");
+    expect(css).toContain("top: clamp(150px, 21vh, 230px);");
+    expect(css).toContain(".planet-scan-cta--after");
+    expect(css).not.toContain(".planet-scan-actions");
+    expect(css).not.toContain(".planet-scan-copy h1");
+    expect(css).not.toContain(".planet-scan-result-copy h2");
+  });
+
   it("keeps preview hover and active states readable and visually distinct", async () => {
     const fsModuleName = "node:fs";
     const { readFileSync } = await import(fsModuleName);

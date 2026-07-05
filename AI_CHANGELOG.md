@@ -6,6 +6,12 @@
 - Allowed calculated tax-gap and local-tax results to enter customer-facing totals when mandatory tax intake inputs are present, while preserving internal-only defaults for callers that do not opt into the policy.
 - Updated tax readiness and grant/tax coverage reports to reflect the mandatory-intake policy, with 7 tax candidates ready after mandatory inputs and structured-model work still required for document/assessor-only rules.
 
+## 2026-07-05 - Codex (GPT-5) homepage hero copy layout
+
+- Updated the PlanetScan homepage hero copy to use deterministic three-line headline spans in both the initial and final reveal states.
+- Moved the initial and final hero CTAs into their respective copy blocks, removed the secondary hero CTA and final "Results" eyebrow, and widened/repositioned the text blocks without changing the scroll scan logic.
+- Added source/style regression coverage for the PlanetScanHero headline/CTA structure.
+
 ## 2026-07-05 - Codex (GPT-5) tax test-profile input updates
 
 - Added an intake script for the 19 GPT Pro tax test-profile patches, producing a normalized tax profile update artifact and report.

@@ -11695,33 +11695,30 @@ body {
 }
 
 .planet-scan-content {
-  align-items: center;
-  display: grid;
-  gap: clamp(28px, 4vw, 72px);
-  grid-template-columns: minmax(280px, 0.82fr) minmax(360px, 1.25fr) minmax(250px, 0.68fr);
   height: 100%;
   margin: 0 auto;
-  max-width: 1540px;
-  padding: 116px clamp(34px, 5vw, 84px) 72px;
+  max-width: 1800px;
+  padding: 0;
   position: relative;
   width: 100%;
   z-index: 3;
 }
 
 .planet-scan-copy {
-  align-self: center;
   display: grid;
-  gap: 18px;
-  grid-column: 1;
   justify-items: start;
-  max-width: 510px;
+  left: clamp(72px, 11.5vw, 190px);
+  max-width: calc(100vw - 144px);
+  position: absolute;
+  top: clamp(118px, 15.5vh, 178px);
+  width: clamp(520px, 39vw, 680px);
 }
 
 .planet-scan-message {
   align-content: start;
   display: grid;
-  gap: 18px;
-  min-height: 430px;
+  gap: 0;
+  min-height: 0;
   will-change: clip-path, filter, opacity, transform;
 }
 
@@ -11733,69 +11730,64 @@ body {
 }
 
 .planet-scan-result-copy {
-  align-self: center;
   clip-path: inset(0 calc((1 - var(--planet-scan-reveal)) * 100%) 0 0);
   display: grid;
   filter: blur(calc((1 - var(--planet-scan-reveal)) * 8px));
-  gap: 18px;
-  grid-column: 3;
-  max-width: 460px;
+  gap: 0;
+  max-width: calc(100vw - 144px);
   opacity: var(--planet-scan-reveal);
+  position: absolute;
+  right: clamp(72px, 8.5vw, 160px);
+  text-align: left;
+  top: clamp(150px, 21vh, 230px);
   transform: translate3d(calc((1 - var(--planet-scan-reveal)) * 18px), 0, 0);
+  width: clamp(620px, 44vw, 650px);
   will-change: clip-path, filter, opacity, transform;
 }
 
-.planet-scan-eyebrow {
-  color: #8fce72;
-  font-size: 13px;
-  font-weight: 850;
-  letter-spacing: 0.18em;
+.planet-scan-title {
+  color: #f4f7f2;
   margin: 0;
-  text-transform: uppercase;
 }
 
-.planet-scan-copy h1 {
-  color: #f6faf7;
-  font-size: clamp(52px, 5.2vw, 84px);
-  letter-spacing: 0;
-  line-height: 0.97;
-  margin: 0;
-  max-width: 11.5ch;
-  text-wrap: balance;
+.planet-scan-title span {
+  display: block;
+  white-space: nowrap;
 }
 
-.planet-scan-result-copy h2 {
-  color: #f6faf7;
-  font-size: clamp(34px, 3.5vw, 58px);
-  letter-spacing: 0;
-  line-height: 1.02;
-  margin: 0;
-  text-wrap: balance;
+.planet-scan-title--before {
+  font-size: clamp(64px, 5.35vw, 92px);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 0.96;
+}
+
+.planet-scan-title--after {
+  font-size: clamp(52px, 4.35vw, 76px);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.96;
   text-shadow: 0 0 34px rgba(134, 201, 104, 0.18);
 }
 
 .planet-scan-subhead {
-  color: rgba(235, 244, 239, 0.76);
-  font-size: clamp(16px, 1.15vw, 19px);
-  line-height: 1.58;
-  margin: 0;
-  max-width: 39ch;
+  color: rgba(244, 247, 242, 0.78);
+  font-size: clamp(18px, 1.22vw, 21px);
+  font-weight: 500;
+  line-height: 1.45;
+  margin: 26px 0 0;
+  max-width: 460px;
 }
 
 .planet-scan-emphasis {
-  color: #b6e590;
-  font-size: clamp(17px, 1.25vw, 20px);
-  font-weight: 780;
-  letter-spacing: 0.02em;
-  line-height: 1.42;
-  margin: 0;
-  max-width: 35ch;
+  color: #9bdd73;
+  font-size: clamp(20px, 1.75vw, 28px);
+  font-weight: 750;
+  letter-spacing: 0;
+  line-height: 1.25;
+  margin: 26px 0 0;
+  max-width: 460px;
   text-shadow: 0 0 24px rgba(134, 201, 104, 0.28);
-}
-
-.planet-scan-result-copy .planet-scan-emphasis {
-  font-size: clamp(19px, 1.45vw, 24px);
-  max-width: none;
 }
 
 @keyframes planet-scan-sparkle {
@@ -11814,24 +11806,22 @@ body {
   }
 }
 
-.planet-scan-actions {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  grid-column: 1;
-  margin-top: 6px;
-}
-
-.public-page .planet-scan-primary,
-.public-page .planet-scan-secondary {
+.public-page .planet-scan-cta {
+  align-items: center;
   border-radius: 999px;
+  display: inline-flex;
   font-size: 15px;
   font-weight: 800;
-  min-height: 52px;
-  min-width: 220px;
+  height: 58px;
+  justify-content: center;
+  margin-top: 44px;
   padding: 0 24px;
   transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  width: 220px;
+}
+
+.planet-scan-cta--after {
+  margin-top: 36px;
 }
 
 .public-page .planet-scan-primary {
@@ -11844,18 +11834,6 @@ body {
 .public-page .planet-scan-primary:hover {
   background: #9bdb7d;
   box-shadow: 0 18px 40px rgba(52, 130, 85, 0.38);
-  transform: translateY(-1px);
-}
-
-.public-page .planet-scan-secondary {
-  background: rgba(8, 18, 15, 0.48);
-  border: 1px solid rgba(230, 247, 236, 0.34);
-  color: #f4faf6;
-}
-
-.public-page .planet-scan-secondary:hover {
-  background: rgba(22, 44, 36, 0.7);
-  border-color: rgba(230, 247, 236, 0.58);
   transform: translateY(-1px);
 }
 
@@ -11884,13 +11862,26 @@ body {
 }
 
 @media (max-width: 1180px) {
-  .planet-scan-content {
-    grid-template-columns: minmax(300px, 0.8fr) minmax(350px, 1.2fr);
+  .planet-scan-copy {
+    left: 7vw;
+    max-width: calc(100vw - 14vw);
+    top: clamp(118px, 14vh, 162px);
+    width: min(600px, calc(100vw - 14vw));
   }
 
   .planet-scan-result-copy {
-    grid-column: 2;
-    max-width: 430px;
+    max-width: calc(100vw - 12vw);
+    right: 6vw;
+    top: clamp(150px, 21vh, 210px);
+    width: min(620px, calc(100vw - 12vw));
+  }
+
+  .planet-scan-title--before {
+    font-size: clamp(56px, 7vw, 78px);
+  }
+
+  .planet-scan-title--after {
+    font-size: clamp(46px, 6vw, 64px);
   }
 
   .planet-scan-shade {
@@ -11900,7 +11891,7 @@ body {
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 768px) {
   .planet-scan-section {
     height: 185svh;
   }
@@ -11920,68 +11911,61 @@ body {
   }
 
   .planet-scan-content {
-    align-items: start;
-    display: grid;
-    gap: 18px;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    padding: 116px 22px 76px;
+    padding: 0;
   }
 
-  .planet-scan-copy,
-  .planet-scan-result-copy {
-    gap: 17px;
-    grid-column: 1;
-    grid-row: 1;
-    max-width: 520px;
+  .planet-scan-copy {
+    left: 24px;
+    max-width: none;
+    right: 24px;
+    top: 112px;
+    width: auto;
   }
 
   .planet-scan-result-copy {
-    align-self: start;
-    margin-top: 0;
+    left: 24px;
+    max-width: none;
+    right: 24px;
+    top: 130px;
+    width: auto;
   }
 
   .planet-scan-message {
-    gap: 17px;
-    min-height: 410px;
+    min-height: 0;
   }
 
-  .planet-scan-copy h1 {
-    font-size: clamp(45px, 13vw, 62px);
-    max-width: 9.5ch;
+  .planet-scan-title--before {
+    font-size: clamp(44px, 13vw, 58px);
+    line-height: 0.98;
   }
 
-  .planet-scan-result-copy h2 {
-    font-size: clamp(34px, 10vw, 50px);
-    max-width: 10.5ch;
+  .planet-scan-title--after {
+    font-size: clamp(29px, 7.2vw, 34px);
+    line-height: 0.98;
   }
 
   .planet-scan-subhead {
     font-size: 16px;
     line-height: 1.5;
-    max-width: 34ch;
+    max-width: 340px;
   }
 
   .planet-scan-emphasis {
-    font-size: 16px;
-    max-width: 31ch;
+    font-size: 18px;
+    line-height: 1.3;
+    margin-top: 20px;
   }
 
-  .planet-scan-actions {
-    align-items: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 9px;
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .public-page .planet-scan-primary,
-  .public-page .planet-scan-secondary {
+  .public-page .planet-scan-cta {
     font-size: 14px;
-    min-height: 48px;
-    min-width: 0;
+    height: 54px;
+    margin-top: 34px;
     padding: 0 18px;
+    width: 190px;
+  }
+
+  .planet-scan-cta--after {
+    margin-top: 28px;
   }
 
   .planet-scan-scroll-cue {
@@ -11990,12 +11974,12 @@ body {
 }
 
 @media (max-width: 420px) {
-  .planet-scan-copy h1 {
+  .planet-scan-title--before {
     font-size: clamp(41px, 12vw, 52px);
   }
 
-  .planet-scan-result-copy h2 {
-    font-size: clamp(31px, 9vw, 43px);
+  .planet-scan-title--after {
+    font-size: clamp(27px, 7.1vw, 30px);
   }
 
   .planet-scan-subhead {
@@ -12003,18 +11987,17 @@ body {
   }
 }
 
-@media (max-height: 780px) and (min-width: 761px) {
+@media (max-height: 780px) and (min-width: 769px) {
   .planet-scan-message {
-    gap: 14px;
-    min-height: 450px;
+    min-height: 0;
   }
 
-  .planet-scan-copy h1 {
-    font-size: clamp(48px, 4.7vw, 64px);
+  .planet-scan-title--before {
+    font-size: clamp(56px, 5vw, 74px);
   }
 
-  .planet-scan-result-copy h2 {
-    font-size: clamp(34px, 3.2vw, 48px);
+  .planet-scan-title--after {
+    font-size: clamp(46px, 4vw, 62px);
   }
 
   .planet-scan-subhead,
@@ -12048,8 +12031,7 @@ body {
     transform: none;
   }
 
-  .public-page .planet-scan-primary,
-  .public-page .planet-scan-secondary {
+  .public-page .planet-scan-cta {
     transition: none;
   }
 }
