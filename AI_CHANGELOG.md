@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) homepage planet-to-lab sequence
+
+- Added a generated 10-frame WebP homepage transition sequence that moves from the planet scanner hero into the futuristic RetroFi dashboard/lab scene.
+- Inserted a sticky scroll-scrubbed canvas sequence between the planet scanner hero and the next homepage section, with preloaded frames and a reduced-motion static final-frame fallback.
+
 ## 2026-07-05 - Codex (GPT-5) structured tax model records
 
 - Added a structured tax model record builder that converts the comprehensive GPT Pro tax research artifact into normalized source documents, source registry rows, sales/use tax import plans, tax rule records, local-option authority records, unsupported triage rows, skipped/gap records, and import validation metadata.
