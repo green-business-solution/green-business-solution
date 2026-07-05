@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) CI action and audit cleanup
+
+- Upgraded GitHub Actions workflow actions to current Node 24-backed majors for checkout, Node setup, and AWS credential configuration.
+- Updated the frontend build-tool lockfile path from Vite 7.3.5/esbuild 0.27.7 to Vite 7.3.6/esbuild 0.28.1, clearing the low-severity esbuild advisory without a Vite major upgrade.
+
 ## 2026-07-05 - Codex (GPT-5) path-routed CI and split production hosting
 
 - Added path-based production deploy routing, a GitHub Actions CI/deploy workflow, and a GitHub OIDC deploy-role CloudFormation template.
