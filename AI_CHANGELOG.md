@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) npm workspace monorepo setup
+
+- Added `apps/web` and `apps/api` workspace manifests to separate frontend/build dependencies from API Lambda runtime dependencies.
+- Updated root scripts to delegate development, build, and typecheck commands through the workspaces while preserving existing command names.
+- Switched Lambda packaging to install from the API workspace manifest so frontend build tooling is kept out of the Lambda zip.
+
 ## 2026-07-05 - Codex (GPT-5) modular production deploy cleanup
 
 - Split the production deploy script into explicit `frontend`, `api`, `infra`, and `data` targets while preserving the full deploy as the default.

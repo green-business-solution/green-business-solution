@@ -51,6 +51,9 @@ npm run typecheck
 npm run build
 ```
 
+This repository uses npm workspaces. The root commands delegate to the `apps/web` and `apps/api`
+workspace manifests while shared scripts and data tooling continue to run from the repository root.
+
 ## Production
 
 The `retrofi.org` production hosting stack is documented in [docs/production-deployment.md](./docs/production-deployment.md).

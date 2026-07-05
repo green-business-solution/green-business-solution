@@ -1,0 +1,22 @@
+{
+  "name": "@gbs/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cd ../.. && node server/index.mjs",
+    "check": "cd ../.. && node --check server/index.mjs"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "3.1073.0",
+    "@aws-sdk/client-s3": "3.1075.0",
+    "@aws-sdk/client-sesv2": "3.1079.0",
+    "@aws-sdk/credential-providers": "3.1073.0",
+    "@aws-sdk/lib-dynamodb": "3.1073.0",
+    "@aws-sdk/s3-request-presigner": "3.1075.0",
+    "express": "5.2.1",
+    "fast-xml-parser": "5.9.3",
+    "pdf-parse": "1.1.4",
+    "serverless-http": "4.0.0"
+  }
+}

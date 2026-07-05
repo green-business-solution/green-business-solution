@@ -32,7 +32,7 @@ AWS_PROFILE=gbs ./scripts/deploy-production.sh
 The script:
 
 1. Builds the Vite frontend.
-2. Packages the Express API as a Lambda zip.
+2. Packages the Express API as a Lambda zip using the `apps/api` workspace runtime dependencies.
 3. Uploads the Lambda package to an artifact S3 bucket.
 4. Ensures non-CloudFormation runtime prerequisites exist, including the runtime-state table, alert sender, and energy-data S3 bucket configuration.
 5. Deploys or updates the CloudFormation stack.
