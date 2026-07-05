@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) concise homepage and glass CTA
+
+- Shortened homepage hero, feature, process, trust, and final CTA copy so the page scans faster with fewer wrapped lines.
+- Kept the top-right `Results` label removed and reduced the final hero promise to two deliberate lines.
+- Restyled the public navbar `Get Started` action as a translucent green liquid-glass capsule while preserving its existing route and responsive variants.
+
 ## 2026-07-05 - Codex (GPT-5) tax runtime preview gating
 
 - Added a recommendation-level tax runtime preview that exposes mandatory pre-opportunity tax intake fields, opportunity-display gating flags, and calculated tax benefit/liability totals.

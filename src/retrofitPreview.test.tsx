@@ -1722,9 +1722,9 @@ describe("retrofit recommendations preview", () => {
     expect(heroSource).toContain("<span>Find the money</span>");
     expect(heroSource).toContain("<span>behind your next</span>");
     expect(heroSource).toContain("<span>retrofit.</span>");
-    expect(heroSource).toContain("<span>RetroFi helps you</span>");
-    expect(heroSource).toContain("<span>find, compare, and claim</span>");
+    expect(heroSource).toContain("<span>Find, compare, and claim</span>");
     expect(heroSource).toContain("<span>retrofit incentives.</span>");
+    expect(heroSource).not.toContain("<span>RetroFi helps you</span>");
     expect(heroSource).toContain("planet-scan-cta--before");
     expect(heroSource).toContain("planet-scan-cta--after");
     expect(heroSource).not.toContain("planet-scan-eyebrow");

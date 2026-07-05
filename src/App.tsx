@@ -3116,9 +3116,7 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
                 <span>behind your next</span>
                 <span>retrofit.</span>
               </h1>
-              <p className="planet-scan-subhead">
-                Billions in retrofit incentives exist while building owners lose billions to operating expenses.
-              </p>
+              <p className="planet-scan-subhead">Find incentives, cut operating costs, and know what to do next.</p>
               <button className="planet-scan-cta planet-scan-primary planet-scan-cta--before" onClick={() => navigate("scan")} type="button">
                 Get Started
               </button>
@@ -3127,8 +3125,7 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
 
           <div className="planet-scan-result-copy">
             <h2 className="planet-scan-title planet-scan-title--after">
-              <span>RetroFi helps you</span>
-              <span>find, compare, and claim</span>
+              <span>Find, compare, and claim</span>
               <span>retrofit incentives.</span>
             </h2>
             <p className="planet-scan-emphasis">Sustainable. Profitable. Practical.</p>
@@ -3161,17 +3158,14 @@ function HomePage({
       <section className="split-section problem-section">
         <div>
           <p className="eyebrow">The problem</p>
-          <h2>Retrofit incentives are valuable, but hard to navigate.</h2>
+          <h2>Retrofit incentives should be easier to use.</h2>
         </div>
-        <p>
-          Programs are spread across utilities, government agencies, tax rules, and financing
-          providers. RetroFi turns scattered information into a clear business roadmap.
-        </p>
+        <p>RetroFi turns scattered programs into one clear, actionable plan.</p>
       </section>
 
       <section className="content-section" id="home-opportunities">
         <SectionHeading
-          copy="RetroFi connects program matching, savings context, and a decision-ready path forward."
+          copy="Find funding, estimate value, and plan the work."
           eyebrow="Platform focus"
           title="What RetroFi helps with"
         />
@@ -3179,11 +3173,11 @@ function HomePage({
           {[
             [
               "Identify incentives",
-              "Find rebates, tax incentives, grants, and financing options that may apply to your facility.",
+              "Match your facility to rebates, grants, tax credits, and financing.",
               "incentives"
             ],
-            ["Estimate savings", "Use business and utility data to estimate savings, ROI, and payback.", "savings"],
-            ["Plan implementation", "Prioritize upgrades and understand the next steps to move forward.", "roadmap"]
+            ["Estimate savings", "See projected savings, ROI, and payback.", "savings"],
+            ["Plan implementation", "Prioritize upgrades and move forward with clear next steps.", "roadmap"]
           ].map(([title, copy, icon]) => (
             <article className="feature-card" key={title}>
               <FeatureIcon icon={icon as "incentives" | "savings" | "roadmap"} />
@@ -3196,7 +3190,7 @@ function HomePage({
 
       <section className="content-section compact">
         <SectionHeading
-          copy="The first step stays lightweight. The detailed work only starts when a site looks worth pursuing."
+          copy="Start light. Go deeper only when an opportunity is worth it."
           eyebrow="Process"
           title="How RetroFi works"
         />
@@ -3218,18 +3212,18 @@ function HomePage({
 
       <section className="trust-strip" aria-label="Trust commitments">
         {[
-          "Your information is kept private",
-          "Utility bills are used only for analysis",
-          "Built for you, not consumers",
-          "Recommendations are based on facility and program data"
+          "Private by design",
+          "Bills used only for analysis",
+          "Built for businesses",
+          "Data-backed recommendations"
         ].map((item) => (
           <span key={item}>{item}</span>
         ))}
       </section>
 
       <section className="final-cta">
-        <h2>See what opportunities your business may qualify for.</h2>
-        <p>Start with a free scan. Upgrade only if deeper analysis is worth it.</p>
+        <h2>See what your business may qualify for.</h2>
+        <p>Start free. Go deeper only when it is worth it.</p>
         <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
       </section>
     </PublicShell>
