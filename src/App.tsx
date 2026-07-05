@@ -12584,6 +12584,27 @@ function RetrofitPreviewCardView({
   const incentiveSavingsPeriodValue = financialPeriod === "monthly" ? monthlyIncentiveSavingsValue : annualIncentiveSavingsValue;
   const taxBenefitsPeriodValue = financialPeriod === "monthly" ? monthlyTaxBenefitsValue : oneTimeTaxBenefits;
   const recurringSavingsPeriodValue = sumDefinedCents([operatingSavingsPeriodValue, incentiveSavingsPeriodValue, taxBenefitsPeriodValue]);
+  const oneTimeEquationTotalCents = -(effectiveProjectCostValue ?? netCostBeforeTaxValue ?? projectCostValue ?? 0);
+  const oneTimeEquationLines: SavingsEquationLine[] = [
+    projectCostValue != null
+      ? { id: "selected-retrofit-project-cost", amountCents: -Math.abs(projectCostValue), label: "Project cost" }
+      : null,
+    upfrontSavingsValue != null && upfrontSavingsValue > 0
+      ? { id: "selected-retrofit-upfront-incentive", amountCents: Math.abs(upfrontSavingsValue), label: "Upfront financial incentive" }
+      : null,
+    oneTimeTaxBenefits != null && oneTimeTaxBenefits > 0
+      ? { id: "selected-retrofit-one-time-tax-benefits", amountCents: Math.abs(oneTimeTaxBenefits), label: "One-time tax benefits" }
+      : null
+  ].filter((line): line is SavingsEquationLine => Boolean(line));
+  const recurringMonthlyEquationTotalCents = sumDefinedCents([monthlyOperatingSavingsValue, monthlyIncentiveSavingsValue]) ?? 0;
+  const recurringMonthlyEquationLines: SavingsEquationLine[] = [
+    monthlyOperatingSavingsValue != null
+      ? { id: "selected-retrofit-monthly-operating-savings", amountCents: monthlyOperatingSavingsValue, label: "Avoided utility cost / annual" }
+      : null,
+    monthlyIncentiveSavingsValue != null && monthlyIncentiveSavingsValue > 0
+      ? { id: "selected-retrofit-monthly-incentive-savings", amountCents: monthlyIncentiveSavingsValue, label: "Recurring incentive value / annual" }
+      : null
+  ].filter((line): line is SavingsEquationLine => Boolean(line));
   const scenarioCards = retrofit.scenarios.slice(0, 3);
   const scenarioViewMode = scenarioViewModeByRetrofit[retrofit.id] ?? "table";
   const showScenarioMatrix = scenarioViewMode === "table";
@@ -13182,56 +13203,23 @@ function RetrofitPreviewCardView({
                 <button className="secondary-button" onClick={onExploreFinancing} type="button">View financing options ↗</button>
               </section>
 
-              <section className="financial-inventory-card">
-                <h3>Financial inventory</h3>
-                <div className="financial-inventory-grid">
-                  <div>
-                    <EstimateInfoRow label="Project cost" value={formatEstimateCents(projectCostValue, "Needs quote")} />
-                    <EstimateInfoRow label="Net cost before one-time tax benefits" value={formatEstimateCents(netCostBeforeTaxValue, "Estimate unavailable")} />
-                    <EstimateInfoRow label="Effective project cost after one-time benefits" value={formatEstimateCents(effectiveProjectCostValue, "Needs tax review")} />
-                    <EstimateInfoRow label="Upfront financial incentive" value={formatEstimateCents(upfrontSavingsValue, "Estimate unavailable")} />
-                    <EstimateInfoRow label="Less selected upfront rebates or grants" value={formatEstimateCents(upfrontSavingsValue == null ? null : -Math.abs(upfrontSavingsValue), "Estimate unavailable")} />
-                    <EstimateInfoRow label="One-time tax benefits" value={formatEstimateCents(oneTimeTaxBenefits, "Needs tax review")} />
-                  </div>
-                  <div>
-                    <EstimateInfoRow label={`${financialPeriodLabel} tax benefits`} value={formatEstimateCentsPerPeriod(taxBenefitsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Needs tax review")} />
-                    <EstimateInfoRow label={`${financialPeriodLabel} operating savings`} value={formatEstimateCentsPerPeriod(operatingSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Needs bill")} />
-                    <EstimateInfoRow label={`${financialPeriodLabel} incentive savings`} value={formatEstimateCentsPerPeriod(incentiveSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Estimate unavailable")} />
-                    <EstimateInfoRow label={`Recurring ${financialPeriod} savings`} value={formatEstimateCentsPerPeriod(recurringSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Estimate unavailable")} />
-                    <EstimateInfoRow label="Selected opportunities count" value={`${selectedCount}`} />
-                    <EstimateInfoRow label="Scenario" value={selectedScenarioLabel} />
-                  </div>
-                </div>
-              </section>
-
-              <section className="financial-breakdown-card">
-                <button className="financial-breakdown-heading" onClick={() => setShowCalculationBreakdown((current) => !current)} type="button">
-                  <span>Calculation breakdown</span>
-                  <span>{showCalculationBreakdown ? "⌃" : "⌄"}</span>
-                </button>
-                {showCalculationBreakdown ? (
-                  <div className="financial-inventory-grid">
-                    <div>
-                      <h4>Upfront calculation</h4>
-                      <EstimateInfoRow label="Project cost" value={formatEstimateCents(projectCostValue, "Needs quote")} />
-                      <EstimateInfoRow label="Upfront financial incentive" value={formatEstimateCents(upfrontSavingsValue, "Estimate unavailable")} />
-                      <EstimateInfoRow label="Less selected upfront rebates or grants" value={formatEstimateCents(upfrontSavingsValue == null ? null : -Math.abs(upfrontSavingsValue), "Estimate unavailable")} />
-                      <EstimateInfoRow label="Net cost before one-time tax benefits" value={formatEstimateCents(netCostBeforeTaxValue, "Estimate unavailable")} />
-                      <EstimateInfoRow label="One-time tax benefits" value={formatEstimateCents(oneTimeTaxBenefits == null ? null : -Math.abs(oneTimeTaxBenefits), "Needs tax review")} />
-                      <EstimateInfoRow label="Effective project cost after one-time benefits" value={formatEstimateCents(effectiveProjectCostValue, "Needs tax review")} />
-                    </div>
-                    <div>
-                      <h4>{financialPeriodLabel} calculation</h4>
-                      <EstimateInfoRow label={`${financialPeriodLabel} operating savings`} value={formatEstimateCentsPerPeriod(operatingSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Needs bill")} />
-                      <EstimateInfoRow label={`${financialPeriodLabel} incentive savings`} value={formatEstimateCentsPerPeriod(incentiveSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Estimate unavailable")} />
-                      <EstimateInfoRow label={`${financialPeriodLabel} tax benefits`} value={formatEstimateCentsPerPeriod(taxBenefitsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Needs tax review")} />
-                      <EstimateInfoRow label={`Recurring ${financialPeriod} savings`} value={formatEstimateCentsPerPeriod(recurringSavingsPeriodValue, financialPeriod === "monthly" ? "mo" : "yr", "Estimate unavailable")} />
-                      <EstimateInfoRow label="Payback period" value={formatPayback(retrofit.metrics.paybackPeriodYears, "Needs quote")} />
-                      <EstimateInfoRow label="ROI" value={formatEstimatePercent(retrofit.metrics.roi, "Estimate unavailable")} />
-                    </div>
-                  </div>
-                ) : null}
-              </section>
+              <div className="estimate-financial-equation-grid">
+                <SavingsEquationCard
+                  title="One-time equation"
+                  lines={oneTimeEquationLines}
+                  totalAmountCents={oneTimeEquationTotalCents}
+                  totalLabel={oneTimeEquationTotalCents >= 0 ? "One-time gain" : "Upfront cost"}
+                  emptyMessage="No one-time costs or savings calculated."
+                />
+                <SavingsEquationCard
+                  title="Recurring monthly equation"
+                  lines={recurringMonthlyEquationLines}
+                  totalAmountCents={recurringMonthlyEquationTotalCents}
+                  totalLabel={recurringMonthlyEquationTotalCents >= 0 ? "Net recurring savings" : "Net recurring fee"}
+                  emptyMessage="No recurring savings or expenses calculated."
+                  amountSuffix="/month"
+                />
+              </div>
 
               <EstimateProjectFundingChart segments={projectFundingSegments} totalCostCents={projectCostValue} />
               <EstimateOneTimeCostWaterfallChart

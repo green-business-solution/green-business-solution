@@ -7995,6 +7995,62 @@ dd {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.estimate-financial-equation-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-width: 0;
+}
+
+.estimate-financial-equation-grid .savings-equation-card {
+  background: #fbfdfb;
+  border-color: #dbe6df;
+  border-radius: 14px;
+  gap: 18px;
+  min-height: 178px;
+  padding: 20px;
+}
+
+.estimate-financial-equation-grid .savings-equation-card h4 {
+  color: #5d6a62;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.estimate-financial-equation-grid .savings-equation-list {
+  gap: 14px;
+}
+
+.estimate-financial-equation-grid .savings-equation-list li,
+.estimate-financial-equation-grid .savings-equation-total {
+  align-items: baseline;
+  gap: 28px;
+  grid-template-columns: minmax(132px, max-content) minmax(0, 1fr);
+}
+
+.estimate-financial-equation-grid .savings-equation-total {
+  margin-top: 4px;
+  padding-top: 16px;
+}
+
+.estimate-financial-equation-grid .savings-equation-list strong,
+.estimate-financial-equation-grid .savings-equation-total strong {
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+.estimate-financial-equation-grid .savings-equation-list span,
+.estimate-financial-equation-grid .savings-equation-total span {
+  color: #43534b;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.estimate-financial-equation-grid .savings-equation-total strong,
+.estimate-financial-equation-grid .savings-equation-total span {
+  font-size: 22px;
+}
+
 .estimate-metric-card {
   align-items: center;
   background: #ffffff;
@@ -10381,6 +10437,7 @@ dd {
   .estimate-impact-metric-grid,
   .estimate-split-summary,
   .estimate-opportunity-summary-grid,
+  .estimate-financial-equation-grid,
   .scenario-summary-metric-row,
   .scenario-guided-metric-grid,
   .estimate-scenario-grid {

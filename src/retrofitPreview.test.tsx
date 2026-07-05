@@ -1194,8 +1194,11 @@ describe("retrofit recommendations preview", () => {
     expect(workspaceSource).toContain("${financialPeriodLabel} operating savings");
     expect(workspaceSource).toContain("${financialPeriodLabel} incentive savings");
     expect(workspaceSource).toContain("financialPeriod === \"monthly\" ? \"mo\" : \"yr\"");
-    expect(workspaceSource).toContain("Financial inventory");
-    expect(workspaceSource).toContain("Calculation breakdown");
+    expect(workspaceSource).toContain("estimate-financial-equation-grid");
+    expect(workspaceSource).toContain("One-time equation");
+    expect(workspaceSource).toContain("Recurring monthly equation");
+    expect(workspaceSource).toContain("SavingsEquationCard");
+    expect(workspaceSource).not.toContain("Financial inventory");
     expect(workspaceSource).toContain("EstimateProjectFundingChart");
     expect(source).toContain("How your project is funded");
     expect(source).toContain("Utility rebates");

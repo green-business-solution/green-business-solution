@@ -5,6 +5,10 @@
 - Removed the planet-to-lab scroll image sequence from the homepage so the landing experience returns to the scanner hero followed directly by the normal content.
 - Deleted the generated scroll-sequence WebP frames and removed the associated canvas component and CSS.
 
+## 2026-07-05 - Codex (GPT-5) selected retrofit financial equations
+
+- Replaced the selected retrofit Financials tab inventory/breakdown lists with two equation cards for one-time project cost math and recurring monthly savings.
+
 ## 2026-07-05 - Codex (GPT-5) tax gap runtime model compilation
 
 - Compiled the GPT Pro tax-gap repairs into runtime-facing tax rule records with canonical tax/user input requirements and a generated report.
