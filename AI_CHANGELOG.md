@@ -5,6 +5,7 @@
 - Added path-based production deploy routing, a GitHub Actions CI/deploy workflow, and a GitHub OIDC deploy-role CloudFormation template.
 - Split API hosting into a dedicated `gbs-retrofi-api` stack while narrowing the existing production stack to edge/frontend resources.
 - Moved frontend and API source physically into `apps/web/src` and `apps/api/server`, removed legacy runtime-state/cache compatibility aliases, and added an architecture/resource map.
+- Made CI tests independent of ignored generated S3 fixtures and taught deploy routing to ignore test-only fixture changes.
 
 ## 2026-07-05 - Codex (GPT-5) runtime resource modularization
 

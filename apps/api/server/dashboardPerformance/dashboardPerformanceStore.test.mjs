@@ -1,4 +1,3 @@
-import fs from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import { buildSyntheticDashboardPostImplementationDataset } from "./syntheticDashboardPerformance.mjs";
 import {
@@ -7,10 +6,10 @@ import {
   listDashboardPostImplementationDatasetSummaries,
   putDashboardPostImplementationDataset
 } from "./dashboardPerformanceStore.mjs";
+import { syntheticDashboardTestCase } from "./__fixtures__/syntheticDashboardTestCase.mjs";
 
 async function buildDataset() {
-  const payload = JSON.parse(await fs.readFile(new URL("../../../../public/sample_matching_test_cases.json", import.meta.url), "utf8"));
-  return buildSyntheticDashboardPostImplementationDataset(payload.testCases[0]);
+  return buildSyntheticDashboardPostImplementationDataset(syntheticDashboardTestCase());
 }
 
 function createMockDocumentClient({ queryPageSize = 1000, scanPageSize = 1000 } = {}) {

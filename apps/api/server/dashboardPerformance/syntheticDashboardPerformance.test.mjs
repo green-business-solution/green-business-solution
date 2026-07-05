@@ -1,14 +1,14 @@
-import fs from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import { buildSyntheticDashboardPostImplementationDataset } from "./syntheticDashboardPerformance.mjs";
 import {
   DASHBOARD_POST_IMPLEMENTATION_SCHEMA_VERSION,
   validateDashboardPostImplementationDataset
 } from "./schemas.mjs";
+import { syntheticDashboardTestCase } from "./__fixtures__/syntheticDashboardTestCase.mjs";
 
 async function loadSampleTestCase(sampleUserId = "juniper-and-ivy-san-diego") {
-  const payload = JSON.parse(await fs.readFile(new URL("../../../../public/sample_matching_test_cases.json", import.meta.url), "utf8"));
-  return payload.testCases.find((testCase) => testCase.sampleUserId === sampleUserId) || payload.testCases[0];
+  const fixture = syntheticDashboardTestCase();
+  return fixture.sampleUserId === sampleUserId ? fixture : fixture;
 }
 
 describe("synthetic dashboard post-implementation generator", () => {

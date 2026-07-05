@@ -89,6 +89,7 @@ function classifyFiles(files) {
 
 function targetsForFile(file) {
   if (!file || isDocsOnly(file)) return [];
+  if (isTestOnly(file)) return [];
 
   if (
     file === "scripts/deploy-production.sh" ||
@@ -158,6 +159,13 @@ function targetsForFile(file) {
   }
 
   return [];
+}
+
+function isTestOnly(file) {
+  return (
+    file.includes("/__fixtures__/") ||
+    /\.(test|spec)\.[cm]?[jt]sx?$/.test(file)
+  );
 }
 
 function isDocsOnly(file) {
