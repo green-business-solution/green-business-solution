@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) tax gap runtime readiness audit
+
+- Added a repeatable audit for GPT Pro promoted tax-gap candidates that checks jurisdiction coverage, formula/runtime support, and required test-profile tax inputs before customer-facing inclusion.
+- Generated a tax gap runtime readiness report showing 19 promoted candidates audited, 11 with some matching test-profile coverage, 0 with complete matched test inputs, and 0 ready for direct customer-facing totals.
+- Kept repaired tax candidates excluded from customer-facing calculations until they are compiled into structured runtime rows or supported by the required tax-return, tax-bill, assessor, or program-document inputs.
+
 ## 2026-07-05 - Codex (GPT-5) selected retrofit tab order
 
 - Reordered the selected retrofit workspace tabs to show Scenarios and Opportunities before Financials, followed by Impact and Application Overview.
