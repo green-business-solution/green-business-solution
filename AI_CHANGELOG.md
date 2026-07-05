@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) tax gap disposition work packet
+
+- Classified the 54 skipped tax records from the structured tax artifact into suppressed/archive records, input-gated records, and GPT Pro repair targets while keeping the 16 unsupported triage rows as policy guardrails.
+- Added a repeatable tax gap disposition/work-packet script that writes tracked disposition artifacts and creates ignored GPT Pro prompt/output files for repairable official-source gaps.
+- Generated a six-prompt GPT Pro tax gap repair batch with resolved source URLs and explicit JSON output requirements for promoting, suppressing, or input-gating each target.
+
 ## 2026-07-05 - Codex (GPT-5) homepage planet-to-lab sequence
 
 - Added a generated 10-frame WebP homepage transition sequence that moves from the planet scanner hero into the futuristic RetroFi dashboard/lab scene.

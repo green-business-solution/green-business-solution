@@ -1,0 +1,2467 @@
+{
+  "schemaVersion": "retrofi_tax_gap_disposition.v1",
+  "generatedAt": "2026-07-05T01:25:17.763Z",
+  "sourceArtifact": "data/tax_structured_model_records_2026-07-04.json",
+  "safetyPolicy": {
+    "customerFacingSavingsCentsDefault": 0,
+    "notes": [
+      "Suppressed/archive records remain excluded from customer-facing tax totals.",
+      "Input-gated records remain excluded until user, accountant, tax bill, filing, certificate, or program-document inputs are present.",
+      "Repair targets require official-source GPT Pro follow-up before they can be promoted into tax rule records.",
+      "Unsupported triage rules are retained as policy guardrails for future import decisions."
+    ]
+  },
+  "counts": {
+    "totalSkippedRecords": 54,
+    "suppressedOrArchivedCount": 29,
+    "inputGatedCount": 2,
+    "repairTargetCount": 23,
+    "policyGuardrailCount": 16,
+    "promptBatchCount": 6
+  },
+  "suppressedOrArchivedRecords": [
+    {
+      "dispositionId": "tax_gap_suppress_7a25840793",
+      "action": "suppress_as_non_authoritative_source",
+      "skippedRecordId": "dsire_discovery_only_not_runtime_authority_v1",
+      "skipType": "source_registry_skip",
+      "jurisdiction": null,
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_001_national_source_registry_gap_fill.md",
+      "reason": "DSIRE is useful for opportunity discovery but is not the official tax agency, statute, regulation, assessor, treasurer, municipal code, form instruction, or official GIS source of record.",
+      "suppressionReasonCode": "NON_AUTHORITATIVE_SOURCE_ONLY",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_f1624464"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_f1624464",
+          "canonicalUrl": "https://programs.dsireusa.org/",
+          "sourceFiles": [
+            "output_001_national_source_registry_gap_fill.md"
+          ],
+          "sourceFamilies": [
+            "source_registry_skip"
+          ],
+          "evidenceSnippets": [
+            "DSIRE is useful for opportunity discovery but is not the official tax agency, statute, regulation, assessor, treasurer, municipal code, form instruction, or official GIS source of record."
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_cc88df212b",
+      "action": "suppress_as_non_authoritative_source",
+      "skippedRecordId": "commercial_sales_tax_rate_calculators_skip_v1",
+      "skipType": "source_registry_skip",
+      "jurisdiction": null,
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_001_national_source_registry_gap_fill.md",
+      "reason": "Commercial calculators may be accurate operationally but are not official tax-agency sources and generally do not provide source-backed evidence text for RetroFi’s public tax registry.",
+      "suppressionReasonCode": "NON_AUTHORITATIVE_SOURCE_ONLY",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_93047455",
+        "tax_source_doc_bb718e69",
+        "tax_source_doc_ea5a7c2a"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_93047455",
+          "canonicalUrl": "https://www.avalara.com/",
+          "sourceFiles": [
+            "output_001_national_source_registry_gap_fill.md"
+          ],
+          "sourceFamilies": [
+            "source_registry_skip"
+          ],
+          "evidenceSnippets": [
+            "Commercial calculators may be accurate operationally but are not official tax-agency sources and generally do not provide source-backed evidence text for RetroFi’s public tax registry."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_bb718e69",
+          "canonicalUrl": "https://www.taxjar.com/",
+          "sourceFiles": [
+            "output_001_national_source_registry_gap_fill.md"
+          ],
+          "sourceFamilies": [
+            "source_registry_skip"
+          ],
+          "evidenceSnippets": [
+            "Commercial calculators may be accurate operationally but are not official tax-agency sources and generally do not provide source-backed evidence text for RetroFi’s public tax registry."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_ea5a7c2a",
+          "canonicalUrl": "https://stripe.com/tax",
+          "sourceFiles": [
+            "output_001_national_source_registry_gap_fill.md"
+          ],
+          "sourceFamilies": [
+            "source_registry_skip"
+          ],
+          "evidenceSnippets": [
+            "Commercial calculators may be accurate operationally but are not official tax-agency sources and generally do not provide source-backed evidence text for RetroFi’s public tax registry."
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_fd480688d1",
+      "action": "suppress_as_non_authoritative_source",
+      "skippedRecordId": "tax_foundation_law_firm_accounting_firm_summaries_skip_v1",
+      "skipType": "source_registry_skip",
+      "jurisdiction": null,
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_001_national_source_registry_gap_fill.md",
+      "reason": "Secondary summaries are useful for issue spotting but can lag statutory or agency changes and cannot support calculation without official confirmation.",
+      "suppressionReasonCode": "NON_AUTHORITATIVE_SOURCE_ONLY",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_c929df87"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_c929df87",
+          "canonicalUrl": "https://taxfoundation.org/",
+          "sourceFiles": [
+            "output_001_national_source_registry_gap_fill.md"
+          ],
+          "sourceFamilies": [
+            "source_registry_skip"
+          ],
+          "evidenceSnippets": [
+            "Secondary summaries are useful for issue spotting but can lag statutory or agency changes and cannot support calculation without official confirmation."
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_73578ffdc1",
+      "action": "suppress_as_non_authoritative_source",
+      "skippedRecordId": "third_party_parcel_aggregators_skip_v1",
+      "skipType": "source_registry_skip",
+      "jurisdiction": null,
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_001_national_source_registry_gap_fill.md",
+      "reason": "Third-party parcel aggregators can be stale and are not the official source for current assessed value, tax bill, levy lines, or direct assessments.",
+      "suppressionReasonCode": "NON_AUTHORITATIVE_SOURCE_ONLY",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_6d525684",
+        "tax_source_doc_5b70c4a7"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_6d525684",
+          "canonicalUrl": "https://www.regrid.com/",
+          "sourceFiles": [
+            "output_001_national_source_registry_gap_fill.md"
+          ],
+          "sourceFamilies": [
+            "source_registry_skip"
+          ],
+          "evidenceSnippets": [
+            "Third-party parcel aggregators can be stale and are not the official source for current assessed value, tax bill, levy lines, or direct assessments."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_5b70c4a7",
+          "canonicalUrl": "https://www.netronline.com/",
+          "sourceFiles": [
+            "output_001_national_source_registry_gap_fill.md"
+          ],
+          "sourceFamilies": [
+            "source_registry_skip"
+          ],
+          "evidenceSnippets": [
+            "Third-party parcel aggregators can be stale and are not the official source for current assessed value, tax bill, levy lines, or direct assessments."
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_73e363c199",
+      "action": "suppress_as_non_authoritative_source",
+      "skippedRecordId": "unverified_local_abatement_press_releases_skip_v1",
+      "skipType": "source_registry_skip",
+      "jurisdiction": null,
+      "currentRuntimeStatus": "needs_program_documentation",
+      "sourceFile": "output_001_national_source_registry_gap_fill.md",
+      "reason": "Press releases and news articles may announce abatements or PILOTs but do not prove final approved agreement terms, eligible tax lines, phaseout schedule, or taxpayer compliance.",
+      "suppressionReasonCode": "PROGRAM_DOCUMENTS_REQUIRED",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [],
+      "sourceDocuments": []
+    },
+    {
+      "dispositionId": "tax_gap_suppress_2948fc7295",
+      "action": "suppress_from_customer_facing_tax_runtime",
+      "skippedRecordId": "sales_use_tax_ambiguous_rule_2",
+      "skipType": "sales_use_tax_ambiguous_rule",
+      "jurisdiction": "DC",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_003_sales_use_tax_exemptions_taxability.md",
+      "reason": "Official D.C. Code source found solar and cogeneration exemptions in the personal property tax chapter, not a sales/use tax exemption. D.C. sales tax exemption code section 47-2005 did not surface a matching solar sales/use exemption in this pass.",
+      "suppressionReasonCode": "WRONG_TAX_MODEL_OR_NO_GENERAL_RULE",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_3ab5a154",
+        "tax_source_doc_cb6aace7"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_3ab5a154",
+          "canonicalUrl": "https://code.dccouncil.gov/us/dc/council/code/sections/47-1508",
+          "sourceFiles": [
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "Official D.C. Code source found solar and cogeneration exemptions in the personal property tax chapter, not a sales/use tax exemption. D.C. sales tax exemption code section 47-2005 did not surface a matching solar sales/use exemption in this pass."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_cb6aace7",
+          "canonicalUrl": "https://code.dccouncil.gov/us/dc/council/code/sections/47-2005",
+          "sourceFiles": [
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "Official D.C. Code source found solar and cogeneration exemptions in the personal property tax chapter, not a sales/use tax exemption. D.C. sales tax exemption code section 47-2005 did not surface a matching solar sales/use exemption in this pass."
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_dcb95612b6",
+      "action": "archive_or_suppress_as_inactive_or_invalid",
+      "skippedRecordId": "sales_use_tax_ambiguous_rule_3",
+      "skipType": "sales_use_tax_ambiguous_rule",
+      "jurisdiction": "GA",
+      "currentRuntimeStatus": "stale_source",
+      "sourceFile": "output_003_sales_use_tax_exemptions_taxability.md",
+      "reason": "Official Georgia exemption list source identified an ENERGY STAR/WaterSense holiday from September 30, 2016 through October 2, 2016. No current 2026 source-backed Georgia retrofit sales/use exemption was established in this pass.",
+      "suppressionReasonCode": "INACTIVE_EXPIRED_REPEALED_OR_LEGALLY_INVALID",
+      "archiveCandidate": true,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_21bba160"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_21bba160",
+          "canonicalUrl": "https://dor.georgia.gov/document/document/2020-list-sales-and-use-tax-exemptions/download",
+          "sourceFiles": [
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "Official Georgia exemption list source identified an ENERGY STAR/WaterSense holiday from September 30, 2016 through October 2, 2016. No current 2026 source-backed Georgia retrofit sales/use exemption was established in this pass."
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_36c9ca111f",
+      "action": "suppress_from_customer_facing_tax_runtime",
+      "skippedRecordId": "sales_use_tax_ambiguous_rule_6",
+      "skipType": "sales_use_tax_ambiguous_rule",
+      "jurisdiction": "NY",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_003_sales_use_tax_exemptions_taxability.md",
+      "reason": "Official New York sources identified current income tax credit guidance and pending 2025 legislation proposing a sales/use tax exemption, but not an enacted current sales/use tax exemption for geothermal heat pump system sales/installations. Skip for sales/use model until enacted and published by NY Tax Department.",
+      "suppressionReasonCode": "UNSUPPORTED_OR_UNSAFE_FOR_CUSTOMER_FACING_TAX_ESTIMATE",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_13ee13fd",
+        "tax_source_doc_cf258c6e",
+        "tax_source_doc_bf95e220"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_13ee13fd",
+          "canonicalUrl": "https://www.tax.ny.gov/pit/credits/geothermal-energy-system-credit.htm",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md",
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_exemption_deduction_rule",
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "New York Tax Department instructions state the geothermal energy system credit is 25% of qualified expenditures, capped at $5,000 for systems on or before June 30, 2025 and $10,000 after July 1, 2025; the official credit page states the credit is nonrefundable and may be carried over for up to five years. ([NY Tax Department][12])",
+            "Official New York sources identified current income tax credit guidance and pending 2025 legislation proposing a sales/use tax exemption, but not an enacted current sales/use tax exemption for geothermal heat pump system sales/installations. Skip for sales/use model until enacted and published by NY Tax Department."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_cf258c6e",
+          "canonicalUrl": "https://www.tax.ny.gov/forms/current-forms/it/it267i.htm",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md",
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "state_tax_credit_exemption_deduction_rule",
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "New York Tax Department instructions state the geothermal energy system credit is 25% of qualified expenditures, capped at $5,000 for systems on or before June 30, 2025 and $10,000 after July 1, 2025; the official credit page states the credit is nonrefundable and may be carried over for up to five years. ([NY Tax Department][12])",
+            "Official New York sources identified current income tax credit guidance and pending 2025 legislation proposing a sales/use tax exemption, but not an enacted current sales/use tax exemption for geothermal heat pump system sales/installations. Skip for sales/use model until enacted and published by NY Tax Department."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_bf95e220",
+          "canonicalUrl": "https://www.nysenate.gov/legislation/bills/2025/A986",
+          "sourceFiles": [
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "Official New York sources identified current income tax credit guidance and pending 2025 legislation proposing a sales/use tax exemption, but not an enacted current sales/use tax exemption for geothermal heat pump system sales/installations. Skip for sales/use model until enacted and published by NY Tax Department."
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_7b6bf1c7c9",
+      "action": "suppress_from_customer_facing_tax_runtime",
+      "skippedRecordId": "sales_use_tax_ambiguous_rule_7",
+      "skipType": "sales_use_tax_ambiguous_rule",
+      "jurisdiction": "NY",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_003_sales_use_tax_exemptions_taxability.md",
+      "reason": "Official New York source found active proposed legislation for commercial energy storage systems equipment, while the enacted source-backed exemption in this pass covers residential energy storage systems equipment only through May 31, 2026.",
+      "suppressionReasonCode": "UNSUPPORTED_OR_UNSAFE_FOR_CUSTOMER_FACING_TAX_ESTIMATE",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_b2b093c4",
+        "tax_source_doc_d1bf0b2e"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_b2b093c4",
+          "canonicalUrl": "https://www.nysenate.gov/legislation/bills/2025/S1527/amendment/A",
+          "sourceFiles": [
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "Official New York source found active proposed legislation for commercial energy storage systems equipment, while the enacted source-backed exemption in this pass covers residential energy storage systems equipment only through May 31, 2026."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_d1bf0b2e",
+          "canonicalUrl": "https://www.tax.ny.gov/pdf/memos/sales/m24-1s.pdf",
+          "sourceFiles": [
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "sales_use_tax_exemption_taxability_rule",
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "New York Tax Department states that effective June 1, 2024 through May 31, 2026, retail sales of residential energy storage systems equipment and the service of installing these systems are exempt from state and local sales and use taxes. TSB-M-24(1)S also describes conditions for exempt electricity sales related to such equipment.",
+            "Official New York source found active proposed legislation for commercial energy storage systems equipment, while the enacted source-backed exemption in this pass covers residential energy storage systems equipment only through May 31, 2026."
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_aeb773387b",
+      "action": "suppress_from_customer_facing_tax_runtime",
+      "skippedRecordId": "sales_use_tax_ambiguous_rule_9",
+      "skipType": "sales_use_tax_ambiguous_rule",
+      "jurisdiction": "ND",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_003_sales_use_tax_exemptions_taxability.md",
+      "reason": "Official North Dakota sources found property tax exemption guidance for solar, wind, or geothermal devices, not a sales/use tax exemption. Do not model as sales/use savings.",
+      "suppressionReasonCode": "WRONG_TAX_MODEL_OR_NO_GENERAL_RULE",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_e4860bf9",
+        "tax_source_doc_16446fb4"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_e4860bf9",
+          "canonicalUrl": "https://www.tax.nd.gov/solar-wind-or-geothermal-device-property-tax-exemption",
+          "sourceFiles": [
+            "output_005_property_tax_statewide_rules.md",
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "property_tax_statewide_rule",
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "North Dakota Tax Department guidance states that solar, wind, or geothermal device property tax exemptions require a special application by February 1 and can apply for five years after installation. North Dakota Century Code section 57-02-08 limits the exemption to the directly attributable portion if another source is used.",
+            "Official North Dakota sources found property tax exemption guidance for solar, wind, or geothermal devices, not a sales/use tax exemption. Do not model as sales/use savings."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_16446fb4",
+          "canonicalUrl": "https://www.tax.nd.gov/property-tax-exemptions-credits",
+          "sourceFiles": [
+            "output_005_property_tax_statewide_rules.md",
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "property_tax_statewide_rule",
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "North Dakota Tax Department guidance states that solar, wind, or geothermal device property tax exemptions require a special application by February 1 and can apply for five years after installation. North Dakota Century Code section 57-02-08 limits the exemption to the directly attributable portion if another source is used.",
+            "Official North Dakota sources found property tax exemption guidance for solar, wind, or geothermal devices, not a sales/use tax exemption. Do not model as sales/use savings."
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_05b5c61893",
+      "action": "suppress_from_customer_facing_tax_runtime",
+      "skippedRecordId": "sales_use_tax_ambiguous_rule_10",
+      "skipType": "sales_use_tax_ambiguous_rule",
+      "jurisdiction": "TX",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_003_sales_use_tax_exemptions_taxability.md",
+      "reason": "This pass found Texas ENERGY STAR holiday and contractor taxability guidance, but not a general Texas sales/use tax exemption for residential solar equipment. Do not infer one from property tax, franchise tax, or manufacturing/electric-generation rules.",
+      "suppressionReasonCode": "WRONG_TAX_MODEL_OR_NO_GENERAL_RULE",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_a0601339",
+        "tax_source_doc_894766ed",
+        "tax_source_doc_58c6ceb1"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_a0601339",
+          "canonicalUrl": "https://comptroller.texas.gov/taxes/publications/96-1331.php",
+          "sourceFiles": [
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "sales_use_tax_exemption_taxability_rule",
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "Texas Comptroller states certain ENERGY STAR products may be purchased tax free during the annual Texas ENERGY STAR Sales Tax Holiday. The Comptroller's 2026 notice lists the May 23-25, 2026 holiday and qualifying product categories, including air conditioners up to $6,000 and refrigerators up to $2,000, plus ceiling fans, fluorescent light bulbs, dishwashers, dehumidifiers, and clothes washers.",
+            "This pass found Texas ENERGY STAR holiday and contractor taxability guidance, but not a general Texas sales/use tax exemption for residential solar equipment. Do not infer one from property tax, franchise tax, or manufacturing/electric-generation rules."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_894766ed",
+          "canonicalUrl": "https://comptroller.texas.gov/taxes/publications/94-116.php",
+          "sourceFiles": [
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "sales_use_tax_exemption_taxability_rule",
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "Texas Comptroller contractor publications state new construction labor is not taxable; contractors under lump-sum contracts pay tax on materials and do not charge customers tax, while separated contracts generally tax materials but not labor. Texas also states labor to repair or remodel residential real property is not taxable, while nonresidential repair/remodel labor is generally taxable.",
+            "This pass found Texas ENERGY STAR holiday and contractor taxability guidance, but not a general Texas sales/use tax exemption for residential solar equipment. Do not infer one from property tax, franchise tax, or manufacturing/electric-generation rules."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_58c6ceb1",
+          "canonicalUrl": "https://comptroller.texas.gov/taxes/publications/94-112.php",
+          "sourceFiles": [
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "sales_use_tax_exemption_taxability_rule",
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "Texas Comptroller contractor publications state new construction labor is not taxable; contractors under lump-sum contracts pay tax on materials and do not charge customers tax, while separated contracts generally tax materials but not labor. Texas also states labor to repair or remodel residential real property is not taxable, while nonresidential repair/remodel labor is generally taxable.",
+            "This pass found Texas ENERGY STAR holiday and contractor taxability guidance, but not a general Texas sales/use tax exemption for residential solar equipment. Do not infer one from property tax, franchise tax, or manufacturing/electric-generation rules."
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_ab07d6b04b",
+      "action": "suppress_from_customer_facing_tax_runtime",
+      "skippedRecordId": "az_renewable_energy_self_consumption_manufacturer_ioc_credit_skip_v1",
+      "skipType": "state_tax_credit_skip",
+      "jurisdiction": "AZ",
+      "currentRuntimeStatus": "needs_filing_confirmation",
+      "sourceFile": "output_004_state_tax_credits_exemptions_deductions.md",
+      "reason": "Form 351 credit is corporate-only after 2018, certificate-based, subject to investment and self-consumption requirements, and captured instructions state no credit other than carryovers for tax years after December 31, 2025.",
+      "suppressionReasonCode": "UNSUPPORTED_OR_UNSAFE_FOR_CUSTOMER_FACING_TAX_ESTIMATE",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_2a849a4a"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_2a849a4a",
+          "canonicalUrl": "https://azdor.gov/forms/tax-credits-forms/renewable-energy-investment-and-production-self-consumption-manufacturers-and",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "Arizona Form 351 instructions describe nonrefundable corporate credits, preapproval and certification, $100 million facility investment and other requirements, $5 million annual credit for five years, five-year carryforward, and no credit other than carryovers after tax years ending December 31, 2025. ([Arizona Department of Revenue][25])"
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_28a69b98e7",
+      "action": "suppress_from_customer_facing_tax_runtime",
+      "skippedRecordId": "co_enterprise_zone_renewable_energy_investment_refund_skip_v1",
+      "skipType": "state_tax_credit_skip",
+      "jurisdiction": "CO",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_004_state_tax_credits_exemptions_deductions.md",
+      "reason": "Captured official guidance limits eligible renewable energy investments to property placed in service after January 1, 2015 and before January 1, 2021, making it a carryforward or legacy-only workflow for 2026 retrofit intake.",
+      "suppressionReasonCode": "UNSUPPORTED_OR_UNSAFE_FOR_CUSTOMER_FACING_TAX_ESTIMATE",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_6ef89aec"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_6ef89aec",
+          "canonicalUrl": "https://tax.colorado.gov/enterprise-zone-tax-guide",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "Colorado DOR Enterprise Zone materials describe renewable energy investments placed in service after January 1, 2015 and before January 1, 2021, with eligible technologies and an 80% refund election subject to cap and carryforward mechanics. ([Colorado Department of Revenue][28])"
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_149c649b91",
+      "action": "archive_or_suppress_as_inactive_or_invalid",
+      "skippedRecordId": "ia_geothermal_heat_pump_tax_credit_skip_v1",
+      "skipType": "state_tax_credit_skip",
+      "jurisdiction": "IA",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_004_state_tax_credits_exemptions_deductions.md",
+      "reason": "Iowa geothermal heat pump credit does not apply to installations after December 31, 2023; current retrofit opportunities should not include it except for legacy carryforward/review.",
+      "suppressionReasonCode": "UNSUPPORTED_OR_UNSAFE_FOR_CUSTOMER_FACING_TAX_ESTIMATE",
+      "archiveCandidate": true,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_588a793d"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_588a793d",
+          "canonicalUrl": "https://www.legis.iowa.gov/docs/code/422.12N.pdf",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "Iowa Code §422.12N provides a geothermal heat pump tax credit equal to 20% of the federal residential energy efficient property credit, nonrefundable with 10-year carryforward, but states the credit does not apply to installations after December 31, 2023. ([Iowa Legislature][29])"
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_55c288b3ed",
+      "action": "archive_or_suppress_as_inactive_or_invalid",
+      "skippedRecordId": "ia_solar_energy_system_tax_credit_skip_v1",
+      "skipType": "state_tax_credit_skip",
+      "jurisdiction": "IA",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_004_state_tax_credits_exemptions_deductions.md",
+      "reason": "Iowa solar energy system credit is a legacy program not available for new residential installations after December 31, 2021; business timing is also historical. Do not include for new 2026 state incentive modeling.",
+      "suppressionReasonCode": "UNSUPPORTED_OR_UNSAFE_FOR_CUSTOMER_FACING_TAX_ESTIMATE",
+      "archiveCandidate": true,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_11ee14ee"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_11ee14ee",
+          "canonicalUrl": "https://tax.iowa.gov/",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "Captured Iowa instruction materials state the Iowa solar energy system tax credit is not available for residential installations after December 31, 2021 and business construction had to begin before January 1, 2022; use only for legacy return review. ([TAXSIM][30])"
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_3070e9cf65",
+      "action": "archive_or_suppress_as_inactive_or_invalid",
+      "skippedRecordId": "sc_solar_energy_property_credit_tc58_skip_v1",
+      "skipType": "state_tax_credit_skip",
+      "jurisdiction": "SC",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_004_state_tax_credits_exemptions_deductions.md",
+      "reason": "South Carolina nonresidential solar energy property credit was repealed for new facilities after December 31, 2024; only credits earned before repeal or existing installment/carryforward situations should be reviewed.",
+      "suppressionReasonCode": "INACTIVE_EXPIRED_REPEALED_OR_LEGALLY_INVALID",
+      "archiveCandidate": true,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_5a30d59c"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_5a30d59c",
+          "canonicalUrl": "https://dor.sc.gov/policy/advisory-opinions",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "South Carolina DOR policy materials state the solar energy property credit had a $5 million per-installation limit and five annual installments, but note the credit was repealed December 31, 2024 and new facilities may not qualify. ([South Carolina Department of Revenue][31])"
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_4ef77d25c3",
+      "action": "archive_or_suppress_as_inactive_or_invalid",
+      "skippedRecordId": "sc_energy_efficient_manufactured_home_credit_skip_v1",
+      "skipType": "state_tax_credit_skip",
+      "jurisdiction": "SC",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_004_state_tax_credits_exemptions_deductions.md",
+      "reason": "Credit expired in 2024 and should not be included for current retrofit modeling.",
+      "suppressionReasonCode": "INACTIVE_EXPIRED_REPEALED_OR_LEGALLY_INVALID",
+      "archiveCandidate": true,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_29017b1b"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_29017b1b",
+          "canonicalUrl": "https://dor.sc.gov/forms-site/Forms/TC53.pdf",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "South Carolina DOR Form TC-53 materials state the energy efficient manufactured home credit applied beginning July 1, 2009 and ending June 30, 2024; DOR credit materials identify it as expired July 1, 2024. ([South Carolina Department of Revenue][32])"
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_5a093ee6e8",
+      "action": "archive_or_suppress_as_inactive_or_invalid",
+      "skippedRecordId": "md_energy_storage_income_tax_credit_skip_v1",
+      "skipType": "state_tax_credit_skip",
+      "jurisdiction": "MD",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_004_state_tax_credits_exemptions_deductions.md",
+      "reason": "Maryland Energy Storage Income Tax Credit expired at the end of 2024 and was replaced by a grant program; do not include as a current state income tax credit.",
+      "suppressionReasonCode": "INACTIVE_EXPIRED_REPEALED_OR_LEGALLY_INVALID",
+      "archiveCandidate": true,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_9f1667cc"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_9f1667cc",
+          "canonicalUrl": "https://energy.maryland.gov/business/Pages/EnergyStorage.aspx",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "Maryland Energy Administration states the Energy Storage Income Tax Credit expired at the end of 2024 and that a successor grant replaced the concluded tax credit; prior credit examples used 30% of installed cost with residential and commercial caps. ([Maryland Energy Administration][33])"
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_27a5039fa0",
+      "action": "suppress_until_program_documents_exist",
+      "skippedRecordId": "in_renewable_property_tax_deductions_skip_v1",
+      "skipType": "state_tax_credit_skip",
+      "jurisdiction": "IN",
+      "currentRuntimeStatus": "needs_program_documentation",
+      "sourceFile": "output_004_state_tax_credits_exemptions_deductions.md",
+      "reason": "Indiana renewable property tax deductions require current repeal/effective-status confirmation by device type. Official IDEM materials state the geothermal property tax deduction is no longer offered, and available local materials indicate solar/geothermal deductions were removed; do not model without current DLGF confirmation.",
+      "suppressionReasonCode": "PROGRAM_DOCUMENTS_REQUIRED",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_fe19794c",
+        "tax_source_doc_85f6f80"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_fe19794c",
+          "canonicalUrl": "https://www.in.gov/dlgf/files/220124-Rolland-Memo-Solar-Wind-Geothermal-Hydroelectric-Deduction.pdf",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "A 2022 Indiana DLGF memo described solar, wind, geothermal, and hydroelectric property tax deductions, but current IDEM geothermal materials state Indiana no longer offers a geothermal property tax deduction under IC 6-1.1-12-35.5. Current device-by-device DLGF confirmation is required before inclusion. ([Indiana Government][35])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_85f6f80",
+          "canonicalUrl": "https://www.in.gov/idem/cleanwater/2553.htm",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "A 2022 Indiana DLGF memo described solar, wind, geothermal, and hydroelectric property tax deductions, but current IDEM geothermal materials state Indiana no longer offers a geothermal property tax deduction under IC 6-1.1-12-35.5. Current device-by-device DLGF confirmation is required before inclusion. ([Indiana Government][35])"
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_ef68f2e372",
+      "action": "archive_or_suppress_as_inactive_or_invalid",
+      "skippedRecordId": "mt_energy_conservation_installation_credit_skip_v1",
+      "skipType": "state_tax_credit_skip",
+      "jurisdiction": "MT",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_004_state_tax_credits_exemptions_deductions.md",
+      "reason": "Montana energy conservation installation credit appears repealed for tax year 2022 onward; do not include as current depreciation, deduction, or income credit.",
+      "suppressionReasonCode": "INACTIVE_EXPIRED_REPEALED_OR_LEGALLY_INVALID",
+      "archiveCandidate": true,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_9a5144dc"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_9a5144dc",
+          "canonicalUrl": "https://mtrevenue.gov/",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "Captured Montana form materials state the energy conservation installation credit was repealed for tax year 2022 and that tax year 2021 was the last year to claim it. ([TaxFormFinder][36])"
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_8153743904",
+      "action": "archive_or_suppress_as_inactive_or_invalid",
+      "skippedRecordId": "in_eliminated_solar_wind_hydro_geothermal_deductions_skip_2026_v1",
+      "skipType": "property_tax_statewide_skip",
+      "jurisdiction": "IN",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_005_property_tax_statewide_rules.md",
+      "reason": "Former Indiana solar, wind, hydropower, and geothermal property tax deductions should not be modeled as active statewide retrofit incentives because current DLGF and IDEM materials state the deductions were eliminated or are no longer offered.",
+      "suppressionReasonCode": "INACTIVE_EXPIRED_REPEALED_OR_LEGALLY_INVALID",
+      "archiveCandidate": true,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_edb5116d",
+        "tax_source_doc_56ec5eb"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_edb5116d",
+          "canonicalUrl": "https://www.in.gov/dlgf/files/2025-presentations/251217-Wood-Presentation-Solar-and-Alternative-Energy.pdf",
+          "sourceFiles": [
+            "output_005_property_tax_statewide_rules.md"
+          ],
+          "sourceFamilies": [
+            "property_tax_statewide_rule",
+            "property_tax_statewide_skip"
+          ],
+          "evidenceSnippets": [
+            "Indiana DLGF guidance states that, after December 31, 2021, the land portion of fixed property of a utility-grade solar energy installation facility is assessed at an amount not exceeding the solar land base rate for the region.",
+            "Indiana DLGF materials state both solar deductions were eliminated, and Indiana IDEM states that Indiana no longer offers a geothermal property tax deduction."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_56ec5eb",
+          "canonicalUrl": "https://www.in.gov/idem/cleanwater/information-about/geothermal-program/",
+          "sourceFiles": [
+            "output_005_property_tax_statewide_rules.md"
+          ],
+          "sourceFamilies": [
+            "property_tax_statewide_skip"
+          ],
+          "evidenceSnippets": [
+            "Indiana DLGF materials state both solar deductions were eliminated, and Indiana IDEM states that Indiana no longer offers a geothermal property tax deduction."
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_7b58301681",
+      "action": "archive_or_suppress_as_inactive_or_invalid",
+      "skippedRecordId": "mo_solar_energy_system_exemption_skip_2026_v1",
+      "skipType": "property_tax_statewide_skip",
+      "jurisdiction": "MO",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_005_property_tax_statewide_rules.md",
+      "reason": "Do not model Missouri's prior solar energy system property tax exemption without legal review because official statutory notes report that the subsection was held unconstitutional.",
+      "suppressionReasonCode": "INACTIVE_EXPIRED_REPEALED_OR_LEGALLY_INVALID",
+      "archiveCandidate": true,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [
+        "tax_source_doc_f5522fd3"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_f5522fd3",
+          "canonicalUrl": "https://revisor.mo.gov/main/OneSection.aspx?section=137.100",
+          "sourceFiles": [
+            "output_005_property_tax_statewide_rules.md"
+          ],
+          "sourceFamilies": [
+            "property_tax_statewide_skip"
+          ],
+          "evidenceSnippets": [
+            "Missouri Revised Statutes section 137.100 includes a note that the subsection exempting solar energy systems not held for resale was held unconstitutional in Johnson v. Springfield Solar 1, LLC."
+          ]
+        }
+      ]
+    },
+    {
+      "dispositionId": "tax_gap_suppress_4824e53466",
+      "action": "suppress_until_local_adoption_verified",
+      "skippedRecordId": "skip_generic_MD_9_203_or_9_242_without_local_code_v1",
+      "skipType": "local_option_skip",
+      "jurisdiction": "Maryland statewide local-option authority",
+      "currentRuntimeStatus": "needs_local_ordinance_confirmation",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "reason": "State authority alone does not establish an adopted county or municipal credit, rate, duration, or cap.",
+      "suppressionReasonCode": "LOCAL_ADOPTION_NOT_VERIFIED",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [],
+      "sourceDocuments": []
+    },
+    {
+      "dispositionId": "tax_gap_suppress_e343f58c63",
+      "action": "suppress_until_local_adoption_verified",
+      "skippedRecordId": "skip_generic_VA_58_1_3661_without_local_ordinance_v1",
+      "skipType": "local_option_skip",
+      "jurisdiction": "Virginia counties, cities, and towns without verified ordinance",
+      "currentRuntimeStatus": "needs_local_ordinance_confirmation",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "reason": "Virginia's solar exemption requires local ordinance adoption and local building-department certification.",
+      "suppressionReasonCode": "LOCAL_ADOPTION_NOT_VERIFIED",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [],
+      "sourceDocuments": []
+    },
+    {
+      "dispositionId": "tax_gap_suppress_5ee8ca562e",
+      "action": "suppress_from_customer_facing_tax_runtime",
+      "skippedRecordId": "skip_generic_NY_RPTL_487_without_optout_PILOT_assessor_check_v1",
+      "skipType": "local_option_skip",
+      "jurisdiction": "New York taxing jurisdictions outside verified local workflow",
+      "currentRuntimeStatus": "needs_assessor_confirmation",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "reason": "RPTL §487 requires opt-out and PILOT review across overlapping taxing jurisdictions and assessor confirmation of incremental assessed value.",
+      "suppressionReasonCode": "UNSUPPORTED_OR_UNSAFE_FOR_CUSTOMER_FACING_TAX_ESTIMATE",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [],
+      "sourceDocuments": []
+    },
+    {
+      "dispositionId": "tax_gap_suppress_aa7f278341",
+      "action": "archive_or_suppress_as_inactive_or_invalid",
+      "skippedRecordId": "skip_montgomery_county_MD_solar_geothermal_new_applications_v1",
+      "skipType": "local_option_skip",
+      "jurisdiction": "Montgomery County, MD",
+      "currentRuntimeStatus": "not_applicable_zero_value",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "reason": "Current Montgomery County application states solar and geothermal credits are suspended for applications received after November 8, 2012.",
+      "suppressionReasonCode": "INACTIVE_EXPIRED_REPEALED_OR_LEGALLY_INVALID",
+      "archiveCandidate": true,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [],
+      "sourceDocuments": []
+    },
+    {
+      "dispositionId": "tax_gap_suppress_2256c9f791",
+      "action": "suppress_from_customer_facing_tax_runtime",
+      "skippedRecordId": "skip_WA_city_BO_examples_for_clean_energy_local_option_family_v1",
+      "skipType": "local_option_skip",
+      "jurisdiction": "Washington city B&O examples in current local tax workflow",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "reason": "The existing Everett and Quincy rows are local business-tax workflows, not county/city clean-energy property-tax incentive adoptions; keep them in local_business_tax modules rather than county_city_local_option_incentives unless a separate clean-energy local adoption is found.",
+      "suppressionReasonCode": "UNSUPPORTED_OR_UNSAFE_FOR_CUSTOMER_FACING_TAX_ESTIMATE",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [],
+      "sourceDocuments": []
+    },
+    {
+      "dispositionId": "tax_gap_suppress_40306da952",
+      "action": "suppress_until_official_source_found",
+      "skippedRecordId": "skip_DSIRE_only_local_rows_without_official_adoption_v1",
+      "skipType": "local_option_skip",
+      "jurisdiction": "All states",
+      "currentRuntimeStatus": "source_unavailable",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "reason": "Third-party incentive summaries can identify leads, but runtime rules require official local adoption, official forms, statutes, assessor materials, or tax-bill treatment.",
+      "suppressionReasonCode": "NON_AUTHORITATIVE_SOURCE_ONLY",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [],
+      "sourceDocuments": []
+    },
+    {
+      "dispositionId": "tax_gap_suppress_b47df55136",
+      "action": "suppress_until_program_documents_exist",
+      "skippedRecordId": "skip_generic_state_tax_credits_without_current_program_formula",
+      "skipType": "business_tax_skip",
+      "jurisdiction": "multi_state",
+      "currentRuntimeStatus": "needs_program_documentation",
+      "sourceFile": "output_007_business_tax_gross_receipts_bo.md",
+      "reason": "State income/franchise credits should not be modeled from a program name alone. Require current official credit statute, form instructions, eligibility gates, credit calculation formula, carryforward/refundability/transferability rules, and tax-appetite inputs.",
+      "suppressionReasonCode": "PROGRAM_DOCUMENTS_REQUIRED",
+      "archiveCandidate": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceDocumentIds": [],
+      "sourceDocuments": []
+    }
+  ],
+  "inputGatedRecords": [
+    {
+      "dispositionId": "tax_gap_input_gate_b90bcba8c5",
+      "action": "keep_input_gate_zero_until_user_data",
+      "skippedRecordId": "skip_activity_specific_local_taxes_without_tax_profile",
+      "skipType": "business_tax_skip",
+      "jurisdiction": "multi_state",
+      "currentRuntimeStatus": "needs_tax_profile",
+      "sourceFile": "output_007_business_tax_gross_receipts_bo.md",
+      "reason": "Activity-specific taxes can be material but should not be applied to clean-energy or retrofit opportunities unless the taxpayer profile confirms the taxable activity, base, jurisdiction, and current official rate.",
+      "requiredRuntimeInputs": [
+        "taxable_activity",
+        "jurisdiction",
+        "tax_base",
+        "current_official_rate",
+        "taxpayer_tax_profile"
+      ],
+      "customerFacingSavingsCentsDefault": 0,
+      "notes": "This is not a GPT Pro source-repair target. Keep it out of customer-facing tax savings until taxpayer-specific inputs are supplied."
+    },
+    {
+      "dispositionId": "tax_gap_input_gate_bced291c61",
+      "action": "keep_input_gate_zero_until_user_data",
+      "skippedRecordId": "skip_local_business_tax_customer_facing_totals_without_tax_return_inputs",
+      "skipType": "business_tax_skip",
+      "jurisdiction": "multi_state",
+      "currentRuntimeStatus": "needs_tax_return",
+      "sourceFile": "output_007_business_tax_gross_receipts_bo.md",
+      "reason": "Even where source-backed formulas exist, local business taxes should default internal-only until taxpayer/accountant inputs confirm gross receipts, net income, apportionment, business classification, exemptions, credits, and filed-return treatment.",
+      "requiredRuntimeInputs": [
+        "tax_return_inputs",
+        "gross_receipts_or_income",
+        "business_classification",
+        "apportionment",
+        "exemptions_or_credits",
+        "filing_confirmation"
+      ],
+      "customerFacingSavingsCentsDefault": 0,
+      "notes": "This is not a GPT Pro source-repair target. Keep it out of customer-facing tax savings until taxpayer-specific inputs are supplied."
+    }
+  ],
+  "repairTargets": [
+    {
+      "dispositionId": "tax_gap_repair_79b7f474d4",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "vernon_ca_partial_local_tax_sources_skip_until_code_verified_v1",
+      "skipType": "source_registry_skip",
+      "jurisdiction": null,
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_001_national_source_registry_gap_fill.md",
+      "modelFamily": "local_business_license_or_receipts_tax",
+      "priority": "medium",
+      "promptFocus": "Verify City of Vernon official code or fee schedule formulas for business license, special parcel, warehouse, hazardous-waste, or related local taxes.",
+      "requiredOutcome": "Promote only if official formula, taxpayer class, tax base, effective date, and source URLs are verified.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_6880a218"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_6880a218",
+          "canonicalUrl": "https://www.cityofvernon.org/",
+          "sourceFiles": [
+            "output_001_national_source_registry_gap_fill.md"
+          ],
+          "sourceFamilies": [
+            "source_registry_skip"
+          ],
+          "evidenceSnippets": [
+            "Current research found official City of Vernon finance/business pages but did not verify the exact current business license, special parcel, warehouse, or hazardous-waste tax formulas from official code or fee schedule."
+          ]
+        }
+      ],
+      "originalReason": "Current research found official City of Vernon finance/business pages but did not verify the exact current business license, special parcel, warehouse, or hazardous-waste tax formulas from official code or fee schedule.",
+      "evidenceText": "",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_4d6fe746b4",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "sales_use_tax_ambiguous_rule_1",
+      "skipType": "sales_use_tax_ambiguous_rule",
+      "jurisdiction": "AL",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_003_sales_use_tax_exemptions_taxability.md",
+      "modelFamily": "tax_abatement_or_pilot",
+      "priority": "medium",
+      "promptFocus": "Determine whether Alabama has any current general retrofit sales/use exemption, or only project-specific Chapter 9B abatement workflows.",
+      "requiredOutcome": "Either promote as a source-backed abatement workflow or archive as not a general sales/use exemption.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_d4c1000",
+        "tax_source_doc_97c7380b",
+        "tax_source_doc_1cddb0db"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_d4c1000",
+          "canonicalUrl": "https://www.revenue.alabama.gov/revenue-rulings/applicability-of-alabama-sales-and-use-tax-on-a-solar-renewable-energy-generation-facility/",
+          "sourceFiles": [
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "Official Alabama sources identified fact-specific revenue rulings and project abatement frameworks rather than a general source-backed sales/use exemption for retrofit customers. Chapter 9B abatements require approved project/granting-authority documentation and should be modeled as tax_abatement_or_pilot, not a generic sales_use_tax_exemption."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_97c7380b",
+          "canonicalUrl": "https://www.revenue.alabama.gov/wp-content/uploads/2022/05/Taxincentives_Summary.pdf",
+          "sourceFiles": [
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "Official Alabama sources identified fact-specific revenue rulings and project abatement frameworks rather than a general source-backed sales/use exemption for retrofit customers. Chapter 9B abatements require approved project/granting-authority documentation and should be modeled as tax_abatement_or_pilot, not a generic sales_use_tax_exemption."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_1cddb0db",
+          "canonicalUrl": "https://www.revenue.alabama.gov/wp-content/uploads/2021/10/Form-CO-CAA-fillable.pdf",
+          "sourceFiles": [
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "Official Alabama sources identified fact-specific revenue rulings and project abatement frameworks rather than a general source-backed sales/use exemption for retrofit customers. Chapter 9B abatements require approved project/granting-authority documentation and should be modeled as tax_abatement_or_pilot, not a generic sales_use_tax_exemption."
+          ]
+        }
+      ],
+      "originalReason": "Official Alabama sources identified fact-specific revenue rulings and project abatement frameworks rather than a general source-backed sales/use exemption for retrofit customers. Chapter 9B abatements require approved project/granting-authority documentation and should be modeled as tax_abatement_or_pilot, not a generic sales_use_tax_exemption.",
+      "evidenceText": "",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_f2cf164d0d",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "sales_use_tax_ambiguous_rule_4",
+      "skipType": "sales_use_tax_ambiguous_rule",
+      "jurisdiction": "IA",
+      "currentRuntimeStatus": "source_unavailable",
+      "sourceFile": "output_003_sales_use_tax_exemptions_taxability.md",
+      "modelFamily": "sales_use_tax_exemption",
+      "priority": "high",
+      "promptFocus": "Find current official Iowa authority for any retrofit, renewable, geothermal, manufacturing, or energy-efficiency sales/use tax exemption.",
+      "requiredOutcome": "Promote only with current DOR/statute/form evidence for eligible items, certificate requirements, and labor treatment.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [],
+      "sourceDocuments": [],
+      "originalReason": "A current official Iowa DOR or statute source was not verified in this pass. Do not model until an official current source confirms eligible equipment, certificate requirements, and installation labor treatment.",
+      "evidenceText": "",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_3b6c8260a1",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "sales_use_tax_ambiguous_rule_5",
+      "skipType": "sales_use_tax_ambiguous_rule",
+      "jurisdiction": "NV",
+      "currentRuntimeStatus": "needs_program_documentation",
+      "sourceFile": "output_003_sales_use_tax_exemptions_taxability.md",
+      "modelFamily": "tax_abatement_or_pilot",
+      "priority": "high",
+      "promptFocus": "Repair Nevada partial sales/use and property-tax abatement program into source-backed project-specific workflow rules.",
+      "requiredOutcome": "Capture formula, approval process, caps, compliance audit, eligible projects, and required project documents.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_946d4bb3",
+        "tax_source_doc_7fc087eb"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_946d4bb3",
+          "canonicalUrl": "https://www.energy.nv.gov/programs/alternative-fuel/renewable-energy-tax-abatements/",
+          "sourceFiles": [
+            "output_005_property_tax_statewide_rules.md",
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "property_tax_statewide_rule",
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "The Nevada Governor's Office of Energy describes RETA as awarding partial sales/use and property tax abatements to eligible renewable energy facilities, subject to application review, hearings, and compliance. The abatement percentage and term must come from the approved project documents.",
+            "Nevada Governor's Office of Energy describes a project-application program that awards partial sales/use tax and property tax abatements after review, public hearing, and compliance audits. This is project-specific and should be modeled as an approved-project abatement workflow, not a generic point-of-sale exemption."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_7fc087eb",
+          "canonicalUrl": "https://www.energy.nv.gov/programs/renewable-energy-tax-abatement-reta-program/",
+          "sourceFiles": [
+            "output_005_property_tax_statewide_rules.md",
+            "output_003_sales_use_tax_exemptions_taxability.md"
+          ],
+          "sourceFamilies": [
+            "property_tax_statewide_rule",
+            "sales_use_tax_ambiguous_rule"
+          ],
+          "evidenceSnippets": [
+            "The Nevada Governor's Office of Energy describes RETA as awarding partial sales/use and property tax abatements to eligible renewable energy facilities, subject to application review, hearings, and compliance. The abatement percentage and term must come from the approved project documents.",
+            "Nevada Governor's Office of Energy describes a project-application program that awards partial sales/use tax and property tax abatements after review, public hearing, and compliance audits. This is project-specific and should be modeled as an approved-project abatement workflow, not a generic point-of-sale exemption."
+          ]
+        }
+      ],
+      "originalReason": "Nevada Governor's Office of Energy describes a project-application program that awards partial sales/use tax and property tax abatements after review, public hearing, and compliance audits. This is project-specific and should be modeled as an approved-project abatement workflow, not a generic point-of-sale exemption.",
+      "evidenceText": "",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_0702ef4e25",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "sales_use_tax_ambiguous_rule_8",
+      "skipType": "sales_use_tax_ambiguous_rule",
+      "jurisdiction": "NM",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_003_sales_use_tax_exemptions_taxability.md",
+      "modelFamily": "gross_receipts_or_bo_rate_preference",
+      "priority": "medium",
+      "promptFocus": "Determine whether New Mexico has source-backed gross receipts or compensating tax treatment for clean-energy or retrofit equipment.",
+      "requiredOutcome": "Route to gross receipts/compensating tax model or archive if no current official retrofit-specific rule exists.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [],
+      "sourceDocuments": [],
+      "originalReason": "New Mexico tax structure relies on gross receipts/compensating tax concepts rather than a conventional sales/use tax exemption model. No source-backed rule was normalized in this pass; route to gross_receipts_or_bo_rate_preference or unsupported model if collected.",
+      "evidenceText": "",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_5b724c7f00",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "az_renewable_energy_production_tax_credit_skip_v1",
+      "skipType": "state_tax_credit_skip",
+      "jurisdiction": "AZ",
+      "currentRuntimeStatus": "needs_filing_confirmation",
+      "sourceFile": "output_004_state_tax_credits_exemptions_deductions.md",
+      "modelFamily": "state_income_or_franchise_tax_credit",
+      "priority": "medium",
+      "promptFocus": "Verify Arizona renewable energy production tax credit current status, legacy eligibility, formulas, caps, certificates, and carryforward.",
+      "requiredOutcome": "Promote only as active/current or legacy carryforward workflow with exact tax-year gates.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_7ed55b09"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_7ed55b09",
+          "canonicalUrl": "https://azdor.gov/renewable-energy-production-tax-credit-guidelines",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "Arizona DOR guidelines require a certificate, application timing, qualified energy generator status, production and interconnection requirements, $20 million annual aggregate cap, $2 million facility cap, five-year carryforward, and first-production timing before January 1, 2021 for the captured production window. ([Arizona Department of Revenue][24])"
+          ]
+        }
+      ],
+      "originalReason": "Certificate-based production credit with facility and annual aggregate caps, legacy first-production window, and resource-specific production formulas. Needs separate certificate workflow and resource-specific production model before inclusion.",
+      "evidenceText": "Arizona DOR guidelines require a certificate, application timing, qualified energy generator status, production and interconnection requirements, $20 million annual aggregate cap, $2 million facility cap, five-year carryforward, and first-production timing before January 1, 2021 for the captured production window. ([Arizona Department of Revenue][24])",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_674b51d32a",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "co_heat_pump_systems_registered_contractor_credit_skip_v1",
+      "skipType": "state_tax_credit_skip",
+      "jurisdiction": "CO",
+      "currentRuntimeStatus": "needs_program_documentation",
+      "sourceFile": "output_004_state_tax_credits_exemptions_deductions.md",
+      "modelFamily": "state_income_or_franchise_tax_credit",
+      "priority": "high",
+      "promptFocus": "Capture current Colorado DR 1322 heat pump systems registered contractor credit formulas by technology and tax year.",
+      "requiredOutcome": "Promote with source-backed amounts, assignment/advance-payment rules, contractor registration gates, and filing inputs.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_7ef9eff6"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_7ef9eff6",
+          "canonicalUrl": "https://tax.colorado.gov/income-tax-topics-heat-pump-systems",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "Colorado DOR guidance states that starting January 1, 2024, the heat pump credit is available only to registered contractors with Colorado Energy Office registration and requires a discount separately shown on the invoice; current form tables must control the credit amount. ([Colorado Department of Revenue][26])"
+          ]
+        }
+      ],
+      "originalReason": "Active credit exists for registered contractors, but current technology-specific DR1322 formula rows were not fully captured in the research extract. Do not compute until the current tax-year form table and registration status are modeled.",
+      "evidenceText": "Colorado DOR guidance states that starting January 1, 2024, the heat pump credit is available only to registered contractors with Colorado Energy Office registration and requires a discount separately shown on the invoice; current form tables must control the credit amount. ([Colorado Department of Revenue][26])",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_c359e31338",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "co_electric_bicycle_retailer_credit_skip_v1",
+      "skipType": "state_tax_credit_skip",
+      "jurisdiction": "CO",
+      "currentRuntimeStatus": "needs_program_documentation",
+      "sourceFile": "output_004_state_tax_credits_exemptions_deductions.md",
+      "modelFamily": "state_income_or_franchise_tax_credit",
+      "priority": "medium",
+      "promptFocus": "Capture current Colorado electric bicycle retailer credit formula, eligible sale rules, assignment or advance-payment mechanics, caps, and forms.",
+      "requiredOutcome": "Promote if relevant to RetroFi user paths, otherwise suppress with official evidence.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_93338fe5"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_93338fe5",
+          "canonicalUrl": "https://tax.colorado.gov/income-tax-topics-electric-bicycle-tax-credit",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "Colorado DOR guidance states the electric bicycle credit applies for tax years beginning on or after January 1, 2024 and before January 1, 2033 for qualified retailers selling new qualified e-bikes to Colorado residents, with purchaser discount procedures; exact current credit amount must be pulled from official form instructions before modeling. ([Colorado Department of Revenue][27])"
+          ]
+        }
+      ],
+      "originalReason": "Credit is active for qualified retailers and assignment/advance payment workflows exist, but the official formula amount was not fully captured from current DOR form materials in this pass.",
+      "evidenceText": "Colorado DOR guidance states the electric bicycle credit applies for tax years beginning on or after January 1, 2024 and before January 1, 2033 for qualified retailers selling new qualified e-bikes to Colorado residents, with purchaser discount procedures; exact current credit amount must be pulled from official form instructions before modeling. ([Colorado Department of Revenue][27])",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_90d90b107c",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "ct_green_buildings_credit_skip_v1",
+      "skipType": "state_tax_credit_skip",
+      "jurisdiction": "CT",
+      "currentRuntimeStatus": "needs_program_documentation",
+      "sourceFile": "output_004_state_tax_credits_exemptions_deductions.md",
+      "modelFamily": "state_income_or_franchise_tax_credit",
+      "priority": "high",
+      "promptFocus": "Repair Connecticut green buildings credit formula, certification gates, tax-year availability, carryforward, caps, and current form status.",
+      "requiredOutcome": "Promote only if current official formula and claim mechanics exist.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_72b80b66",
+        "tax_source_doc_69cc1a65"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_72b80b66",
+          "canonicalUrl": "https://portal.ct.gov/drs/publications/special-notices/2018/sn-20181-green-buildings-tax-credit",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "Connecticut DRS Green Buildings Credit guidance states eligible construction, renovation, or rehabilitation must use Energy Star equipment and meet energy-use targets; 2025 Form CT-1120GB materials state the credit is claimed under Conn. Gen. Stat. §12-217mm and show no carryforward to 2026. Formula and certificate mechanics need full form/statute review before modeling. ([CT.gov][34])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_69cc1a65",
+          "canonicalUrl": "https://portal.ct.gov/drs/drs-forms/current-year-forms/corporation-tax-forms/2025-corporation-tax-forms",
+          "sourceFiles": [
+            "output_004_state_tax_credits_exemptions_deductions.md"
+          ],
+          "sourceFamilies": [
+            "state_tax_credit_skip"
+          ],
+          "evidenceSnippets": [
+            "Connecticut DRS Green Buildings Credit guidance states eligible construction, renovation, or rehabilitation must use Energy Star equipment and meet energy-use targets; 2025 Form CT-1120GB materials state the credit is claimed under Conn. Gen. Stat. §12-217mm and show no carryforward to 2026. Formula and certificate mechanics need full form/statute review before modeling. ([CT.gov][34])"
+          ]
+        }
+      ],
+      "originalReason": "Official sources confirm the Green Buildings Credit exists and has energy-performance requirements, but the current formula and certificate computation were not fully captured; 2025 form materials also show no carryforward to 2026, requiring tax-year-specific review.",
+      "evidenceText": "Connecticut DRS Green Buildings Credit guidance states eligible construction, renovation, or rehabilitation must use Energy Star equipment and meet energy-use targets; 2025 Form CT-1120GB materials state the credit is claimed under Conn. Gen. Stat. §12-217mm and show no carryforward to 2026. Formula and certificate mechanics need full form/statute review before modeling. ([CT.gov][34])",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_0e0972e958",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "mt_energy_production_development_abatement_skip_2026_v1",
+      "skipType": "property_tax_statewide_skip",
+      "jurisdiction": "MT",
+      "currentRuntimeStatus": "unsupported_tax_model",
+      "sourceFile": "output_005_property_tax_statewide_rules.md",
+      "modelFamily": "tax_abatement_or_pilot",
+      "priority": "medium",
+      "promptFocus": "Verify Montana energy production/development property-tax abatement status, eligible facilities, local approval rules, and formula.",
+      "requiredOutcome": "Promote as project-specific abatement workflow or archive if no current source-backed retrofit applicability exists.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_7a546a8e"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_7a546a8e",
+          "canonicalUrl": "https://archive.legmt.gov/bills/mca/title_0150/chapter_0240/part_0310/section_0110/0150-0240-0310-0110.html",
+          "sourceFiles": [
+            "output_005_property_tax_statewide_rules.md"
+          ],
+          "sourceFamilies": [
+            "property_tax_statewide_skip"
+          ],
+          "evidenceSnippets": [
+            "Montana section 15-24-3111 provides a potential abatement framework for qualifying facilities or equipment, but project eligibility, grant status, and valuation periods require local/project documentation."
+          ]
+        }
+      ],
+      "originalReason": "Montana energy production or development abatements can be project-specific and local-government dependent; model only after approved abatement documentation and applicable facility/equipment classification are collected.",
+      "evidenceText": "Montana section 15-24-3111 provides a potential abatement framework for qualifying facilities or equipment, but project eligibility, grant status, and valuation periods require local/project documentation.",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_4b7fdc1a40",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "ct_uniform_solar_capacity_tax_pa26_refresh_watch_2026_v1",
+      "skipType": "property_tax_statewide_skip",
+      "jurisdiction": "CT",
+      "currentRuntimeStatus": "needs_assessor_confirmation",
+      "sourceFile": "output_005_property_tax_statewide_rules.md",
+      "modelFamily": "property_tax_special_valuation",
+      "priority": "medium",
+      "promptFocus": "Refresh Connecticut uniform solar capacity tax against 2026 Public Act text and assessor implementation guidance.",
+      "requiredOutcome": "Confirm whether the existing medium-confidence rule should be promoted, modified, or suppressed.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_3a0f5940",
+        "tax_source_doc_c40e4544"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_3a0f5940",
+          "canonicalUrl": "https://www.cga.ct.gov/olr/Documents/year/AA/2025AA-0118_2025%20Acts%20Affecting%20Energy%20and%20Utilities.pdf",
+          "sourceFiles": [
+            "output_005_property_tax_statewide_rules.md"
+          ],
+          "sourceFamilies": [
+            "property_tax_statewide_rule",
+            "property_tax_statewide_skip"
+          ],
+          "evidenceSnippets": [
+            "Connecticut legislative summaries for 2025 describe a uniform $10,000 per MW solar capacity tax for certain photovoltaic systems over 1 MW AC with permission to operate on or after July 1, 2026. Because 2026 legislation may revise implementation details, runtime use should require current-law review.",
+            "The 2025 OLR summary establishes the $10,000 per MW concept beginning July 1, 2026, but later 2026 legislation appears relevant and should be reviewed before finalizing production implementation."
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_c40e4544",
+          "canonicalUrl": "https://www.cga.ct.gov/2026/ACT/PA/PDF/2026PA-00134-R00HB-05442-PA.PDF",
+          "sourceFiles": [
+            "output_005_property_tax_statewide_rules.md"
+          ],
+          "sourceFamilies": [
+            "property_tax_statewide_rule",
+            "property_tax_statewide_skip"
+          ],
+          "evidenceSnippets": [
+            "Connecticut legislative summaries for 2025 describe a uniform $10,000 per MW solar capacity tax for certain photovoltaic systems over 1 MW AC with permission to operate on or after July 1, 2026. Because 2026 legislation may revise implementation details, runtime use should require current-law review.",
+            "The 2025 OLR summary establishes the $10,000 per MW concept beginning July 1, 2026, but later 2026 legislation appears relevant and should be reviewed before finalizing production implementation."
+          ]
+        }
+      ],
+      "originalReason": "Connecticut's uniform solar capacity tax was included as a medium-confidence rule, but implementation should be refreshed against 2026 Public Act text and municipal assessor guidance before production use.",
+      "evidenceText": "The 2025 OLR summary establishes the $10,000 per MW concept beginning July 1, 2026, but later 2026 legislation appears relevant and should be reviewed before finalizing production implementation.",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_8c609e72a6",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "local_option_followup_1",
+      "skipType": "local_option_followup",
+      "jurisdiction": "Baltimore County, MD",
+      "currentRuntimeStatus": "needs_local_ordinance_confirmation",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "modelFamily": "property_tax_credit",
+      "priority": "high",
+      "promptFocus": "Verify Baltimore County high-performance building and high-performance home tax credit code, caps, rating definitions, forms, and active status.",
+      "requiredOutcome": "Promote with exact current formulas and required assessor/application inputs.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_1ccc4dba",
+        "tax_source_doc_5accf1bf",
+        "tax_source_doc_76924da",
+        "tax_source_doc_48562144"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_1ccc4dba",
+          "canonicalUrl": "https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-credits/performance-buildings",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "Official Baltimore County search results identify high-performance-building and high-performance-home credits using LEED or NGBS documentation; extraction of current ordinance tables and caps needs follow-up because the direct pages returned limited or inaccessible content in this pass. ([Baltimore County Government][22])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_5accf1bf",
+          "canonicalUrl": "https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-credits/performance-homes",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Official Baltimore County search results identify high-performance-building and high-performance-home credits using LEED or NGBS documentation; extraction of current ordinance tables and caps needs follow-up because the direct pages returned limited or inaccessible content in this pass. ([Baltimore County Government][22])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_76924da",
+          "canonicalUrl": "https://www.baltimorecountymd.gov/files/Documents/Law/COBAR/cobarhighperfbuildingschapter6.pdf",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Official Baltimore County search results identify high-performance-building and high-performance-home credits using LEED or NGBS documentation; extraction of current ordinance tables and caps needs follow-up because the direct pages returned limited or inaccessible content in this pass. ([Baltimore County Government][22])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_48562144",
+          "canonicalUrl": "https://www.baltimorecountymd.gov/files/Documents/Law/COBAR/cobarhighperfhomeschapter7.pdf",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Official Baltimore County search results identify high-performance-building and high-performance-home credits using LEED or NGBS documentation; extraction of current ordinance tables and caps needs follow-up because the direct pages returned limited or inaccessible content in this pass. ([Baltimore County Government][22])"
+          ]
+        }
+      ],
+      "originalReason": "Official county pages and forms indicate high-performance building and high-performance home tax credits, but exact current code rows, caps, rating-system definitions, and application status should be verified from official code/application pages before runtime modeling.",
+      "evidenceText": "Official Baltimore County search results identify high-performance-building and high-performance-home credits using LEED or NGBS documentation; extraction of current ordinance tables and caps needs follow-up because the direct pages returned limited or inaccessible content in this pass. ([Baltimore County Government][22])",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_6023f7ac0f",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "local_option_followup_2",
+      "skipType": "local_option_followup",
+      "jurisdiction": "Prince George's County, MD",
+      "currentRuntimeStatus": "needs_local_ordinance_confirmation",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "modelFamily": "property_tax_credit",
+      "priority": "high",
+      "promptFocus": "Verify Prince George's County high-performance building and green business real/personal property tax credit formulas, duration, caps, and forms.",
+      "requiredOutcome": "Promote with exact local code rows and official application requirements.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_8ce4289b",
+        "tax_source_doc_d1a0aeed"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_8ce4289b",
+          "canonicalUrl": "https://www.princegeorgescountymd.gov/departments-offices/finance/property-tax-credits/business/green-business-real-personal",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "The County page states that the Green Business credit applies to qualifying real and personal property used exclusively by a certified green business, lasts up to five consecutive tax years, and is subject to funding; Maryland §9-318(f) requires local law to provide amount and duration. ([Prince George's County][23])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_d1a0aeed",
+          "canonicalUrl": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtp&section=9-318",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "local_option_authority",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "Maryland Tax-Property §9-318(f) authorizes Prince George's County, by law, to grant a property tax credit against county property tax on real or personal property owned or leased by a certified green business, and the local law must provide eligibility, certification, amount, duration, and procedures. ([Maryland General Assembly][2])",
+            "The County page states that the Green Business credit applies to qualifying real and personal property used exclusively by a certified green business, lasts up to five consecutive tax years, and is subject to funding; Maryland §9-318(f) requires local law to provide amount and duration. ([Prince George's County][23])"
+          ]
+        }
+      ],
+      "originalReason": "The High Performance Building credit is runtime-trackable, but the Green Business real/personal property credit should receive code-level follow-up because the official page states county portion, up to five years, and funding constraints, while the specific percentage or amount is not explicit in the page text captured here.",
+      "evidenceText": "The County page states that the Green Business credit applies to qualifying real and personal property used exclusively by a certified green business, lasts up to five consecutive tax years, and is subject to funding; Maryland §9-318(f) requires local law to provide amount and duration. ([Prince George's County][23])",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_ef70fb4e7d",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "local_option_followup_3",
+      "skipType": "local_option_followup",
+      "jurisdiction": "Anne Arundel County, MD",
+      "currentRuntimeStatus": "needs_tax_bill",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "modelFamily": "property_tax_credit",
+      "priority": "medium",
+      "promptFocus": "Repair Anne Arundel County solar, geothermal, and high-performance building tax credit calculations with SDAT building/land allocation and stacking rules.",
+      "requiredOutcome": "Promote calculators only where official county and SDAT source fields are sufficient.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_f7f8d193",
+        "tax_source_doc_31cf5edc",
+        "tax_source_doc_e9ce53c8",
+        "tax_source_doc_da7651f0",
+        "tax_source_doc_9fe396f"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_f7f8d193",
+          "canonicalUrl": "https://www.aacounty.org/finance/tax-information/tax-credits-exemptions",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "verified_local_option_tax_rule",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "Anne Arundel County's tax-credit page lists a High Performance Building Property Tax Credit authorized by Maryland §9-242. The County applications include Code §4-2-311, require filing by June 1, state the credit applies to building taxes and not land for five years, and list residential and commercial percentage caps by LEED/NGBS rating level. ([Anne Arundel County Government][13])",
+            "County materials state these credits reduce County real property taxes, with high-performance credits limited to building taxes and not land, and solar/geothermal credits also limited to dwelling taxes and not land; runtime should therefore require tax-bill or assessment allocation. ([Anne Arundel County Government][24])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_31cf5edc",
+          "canonicalUrl": "https://www.aacounty.org/sites/default/files/2023-10/high-performance-building-residential.pdf",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "verified_local_option_tax_rule",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "Anne Arundel County's tax-credit page lists a High Performance Building Property Tax Credit authorized by Maryland §9-242. The County applications include Code §4-2-311, require filing by June 1, state the credit applies to building taxes and not land for five years, and list residential and commercial percentage caps by LEED/NGBS rating level. ([Anne Arundel County Government][13])",
+            "County materials state these credits reduce County real property taxes, with high-performance credits limited to building taxes and not land, and solar/geothermal credits also limited to dwelling taxes and not land; runtime should therefore require tax-bill or assessment allocation. ([Anne Arundel County Government][24])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_e9ce53c8",
+          "canonicalUrl": "https://www.aacounty.org/sites/default/files/2023-10/High-Performance-Building-Commercial.pdf",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "verified_local_option_tax_rule",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Anne Arundel County's tax-credit page lists a High Performance Building Property Tax Credit authorized by Maryland §9-242. The County applications include Code §4-2-311, require filing by June 1, state the credit applies to building taxes and not land for five years, and list residential and commercial percentage caps by LEED/NGBS rating level. ([Anne Arundel County Government][13])",
+            "County materials state these credits reduce County real property taxes, with high-performance credits limited to building taxes and not land, and solar/geothermal credits also limited to dwelling taxes and not land; runtime should therefore require tax-bill or assessment allocation. ([Anne Arundel County Government][24])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_da7651f0",
+          "canonicalUrl": "https://www.aacounty.org/sites/default/files/2023-03/Solar-Energy-Tax-Credit-Application.pdf",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "verified_local_option_tax_rule",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "Anne Arundel County's official solar application includes Code §4-2-315, defines solar energy equipment, states that a one-time credit applies to residential dwellings using solar devices, and calculates the credit as the lesser of 50% of cost net of federal and state grants or state solar credits, or $2,500; the application requires receipts and filing by June 1. ([Anne Arundel County Government][14])",
+            "County materials state these credits reduce County real property taxes, with high-performance credits limited to building taxes and not land, and solar/geothermal credits also limited to dwelling taxes and not land; runtime should therefore require tax-bill or assessment allocation. ([Anne Arundel County Government][24])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_9fe396f",
+          "canonicalUrl": "https://www.aacounty.org/sites/default/files/2023-03/Geothermal_Tax_Credit_App.pdf",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "verified_local_option_tax_rule",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "Anne Arundel County's official geothermal application includes Code §4-2-310, defines qualifying geothermal energy devices as ground-loop heating or cooling devices, states that a one-time credit applies to residential dwellings, and calculates the credit as the lesser of 50% of cost net of federal and state grants or state geothermal tax credits, or $2,500. ([Anne Arundel County Government][15])",
+            "County materials state these credits reduce County real property taxes, with high-performance credits limited to building taxes and not land, and solar/geothermal credits also limited to dwelling taxes and not land; runtime should therefore require tax-bill or assessment allocation. ([Anne Arundel County Government][24])"
+          ]
+        }
+      ],
+      "originalReason": "Solar, geothermal, and high-performance building credits are verified; follow-up should add commercial/residential calculators with SDAT building-versus-land tax allocation and annual credit-stacking rules.",
+      "evidenceText": "County materials state these credits reduce County real property taxes, with high-performance credits limited to building taxes and not land, and solar/geothermal credits also limited to dwelling taxes and not land; runtime should therefore require tax-bill or assessment allocation. ([Anne Arundel County Government][24])",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_aa1cf6b3ff",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "local_option_followup_4",
+      "skipType": "local_option_followup",
+      "jurisdiction": "New York State municipalities and school districts under RPTL §487",
+      "currentRuntimeStatus": "needs_local_ordinance_confirmation",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "modelFamily": "property_tax_exemption",
+      "priority": "high",
+      "promptFocus": "Build New York RPTL 487 opt-out/PILOT workflow using official Tax Department opt-out list and local taxing-jurisdiction requirements.",
+      "requiredOutcome": "Promote a safe workflow that identifies when assessor/PILOT confirmation is required.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_2cad5cc",
+        "tax_source_doc_eb470f85"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_2cad5cc",
+          "canonicalUrl": "https://www.tax.ny.gov/research/property/legal/localop/487opt.htm",
+          "sourceFiles": [
+            "output_009_unsupported_tax_fallback_triage.md",
+            "output_005_property_tax_statewide_rules.md",
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "property_tax_statewide_rule",
+            "local_option_authority",
+            "unsupported_tax_fallback_triage",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "New York RPTL 487 exempts the increase in assessed value attributable to eligible energy systems for fifteen years. ORPTS instructions require Form RP-487 to be filed with the assessor by the taxable status date and note local opt-out and PILOT issues.",
+            "New York RPTL §487 provides a 15-year exemption for eligible energy systems to the extent of the increase in value attributable to the system, but counties, cities, towns, villages, and school districts may opt out by local law or resolution by technology category; non-opt-out taxing jurisdictions may also require a PILOT for solar or wind systems. The New York Tax Department publishes an official opt-out list updated with records on file. ([NYSenate.gov][4])",
+            "Needs a local ordinance, resolution, assessor confirmation, or official local-option registry before calculation or user-facing savings.",
+            "RPTL §487 permits local opt-out by county, city, town, village, and school district and permits PILOT treatment for solar or wind in non-opt-out jurisdictions; the Tax Department publishes a filed opt-out list. ([NYSenate.gov][4])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_eb470f85",
+          "canonicalUrl": "https://www.nysenate.gov/legislation/laws/RPT/487",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md",
+            "output_008_abatement_pilot_special_assessment_pace.md",
+            "output_005_property_tax_statewide_rules.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "property_tax_statewide_rule",
+            "verified_local_option_tax_rule",
+            "local_option_authority",
+            "unsupported_exotic_tax_pattern",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "New York RPTL 487 exempts the increase in assessed value attributable to eligible energy systems for fifteen years. ORPTS instructions require Form RP-487 to be filed with the assessor by the taxable status date and note local opt-out and PILOT issues.",
+            "NYC DOF describes the RPTL §487 clean-energy exemption as relieving property owners of tax increases directly resulting from eligible systems for 15 years and lists solar, wind, farm-waste, micro-hydroelectric, fuel cell, micro-combined heat and power, and electric energy storage systems. RPTL §487 exempts eligible energy systems from taxation to the extent of increased value attributable to the system for 15 years and permits local opt-out and PILOT treatment in defined cases. ([New York City Government][7])",
+            "New York RPTL §487 provides a 15-year exemption for eligible energy systems to the extent of the increase in value attributable to the system, but counties, cities, towns, villages, and school districts may opt out by local law or resolution by technology category; non-opt-out taxing jurisdictions may also require a PILOT for solar or wind systems. The New York Tax Department publishes an official opt-out list updated with records on file. ([NYSenate.gov][4])",
+            "([NYSenate.gov][5])",
+            "RPTL §487 permits local opt-out by county, city, town, village, and school district and permits PILOT treatment for solar or wind in non-opt-out jurisdictions; the Tax Department publishes a filed opt-out list. ([NYSenate.gov][4])"
+          ]
+        }
+      ],
+      "originalReason": "Integrate the New York Tax Department opt-out list and a PILOT status workflow for each taxing jurisdiction. Do not assume a customer-facing exemption for non-NYC parcels without assessor approval and local opt-out/PILOT verification.",
+      "evidenceText": "RPTL §487 permits local opt-out by county, city, town, village, and school district and permits PILOT treatment for solar or wind in non-opt-out jurisdictions; the Tax Department publishes a filed opt-out list. ([NYSenate.gov][4])",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_f3c5945729",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "local_option_followup_5",
+      "skipType": "local_option_followup",
+      "jurisdiction": "Virginia localities beyond Fairfax, Arlington, Loudoun, and Prince William",
+      "currentRuntimeStatus": "needs_local_ordinance_confirmation",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "modelFamily": "property_tax_exemption",
+      "priority": "medium",
+      "promptFocus": "Verify Virginia solar exemption ordinances beyond Fairfax, Arlington, Loudoun, and Prince William, prioritizing Alexandria, Fairfax City, Richmond, and Virginia Beach.",
+      "requiredOutcome": "Promote only localities with official ordinance, certification, exemption percent, and eligible system definitions.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_b3a51442",
+        "tax_source_doc_f4c4e4ca"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_b3a51442",
+          "canonicalUrl": "https://law.lis.virginia.gov/vacode/title58.1/chapter36/section58.1-3661/",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "local_option_authority",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "Virginia Code §58.1-3661 applies only in a county, city, or town that has adopted an ordinance; the local building department certifies eligible equipment, the assessor determines value, and the exemption is computed by applying the local tax rate to the equipment value for a term not less than five years. The Virginia Administrative Code requires the solar exemption application to be made to the local building department and transmitted for assessor valuation. ([Virginia Law][3])",
+            "Virginia Code §58.1-3661 requires a county, city, or town ordinance before an owner can apply for certification and assessor valuation; the state authority alone is not runtime-ready. ([Virginia Law][3])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_f4c4e4ca",
+          "canonicalUrl": "https://law.lis.virginia.gov/admincodefull/title13/agency5/chapter200/",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "local_option_authority",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Virginia Code §58.1-3661 applies only in a county, city, or town that has adopted an ordinance; the local building department certifies eligible equipment, the assessor determines value, and the exemption is computed by applying the local tax rate to the equipment value for a term not less than five years. The Virginia Administrative Code requires the solar exemption application to be made to the local building department and transmitted for assessor valuation. ([Virginia Law][3])",
+            "Virginia Code §58.1-3661 requires a county, city, or town ordinance before an owner can apply for certification and assessor valuation; the state authority alone is not runtime-ready. ([Virginia Law][3])"
+          ]
+        }
+      ],
+      "originalReason": "State law requires a local ordinance. High-value follow-up should verify City of Alexandria, City of Fairfax, Richmond, Virginia Beach, and other Northern Virginia/Hampton Roads ordinances before creating runtime rows.",
+      "evidenceText": "Virginia Code §58.1-3661 requires a county, city, or town ordinance before an owner can apply for certification and assessor valuation; the state authority alone is not runtime-ready. ([Virginia Law][3])",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_ccfb18300a",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "local_option_followup_6",
+      "skipType": "local_option_followup",
+      "jurisdiction": "Ohio CRA municipalities and counties with sustainability bonuses",
+      "currentRuntimeStatus": "needs_local_ordinance_confirmation",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "modelFamily": "tax_abatement_or_pilot",
+      "priority": "medium",
+      "promptFocus": "Verify Ohio CRA municipalities and counties with sustainability-linked terms, caps, or bonuses, beyond the existing Cincinnati workflow.",
+      "requiredOutcome": "Promote only official local CRA rows tied to LEED, HERS, Living Building Challenge, or similar criteria.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_4bc99e6c",
+        "tax_source_doc_4ec9a325",
+        "tax_source_doc_4dc9a192"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_4bc99e6c",
+          "canonicalUrl": "https://codes.ohio.gov/ohio-revised-code/section-3735.65",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "local_option_authority",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "Ohio CRA authority requires a political subdivision to adopt a resolution describing CRA boundaries and may specify eligible classifications and residential exemption percentages; eligible owners apply for exemption from real property taxation of a percentage of new-structure assessed value or increased assessed value after remodeling. Commercial or industrial exemptions require a written agreement before construction or remodeling. ([Ohio Laws][5])",
+            "Ohio CRA authority is local-resolution based; the resolution sets boundaries and can specify eligible classifications and exemption percentages, so state CRA law alone is not a clean-energy runtime rule. ([Ohio Laws][5])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_4ec9a325",
+          "canonicalUrl": "https://codes.ohio.gov/ohio-revised-code/section-3735.66",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "local_option_authority",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Ohio CRA authority requires a political subdivision to adopt a resolution describing CRA boundaries and may specify eligible classifications and residential exemption percentages; eligible owners apply for exemption from real property taxation of a percentage of new-structure assessed value or increased assessed value after remodeling. Commercial or industrial exemptions require a written agreement before construction or remodeling. ([Ohio Laws][5])",
+            "Ohio CRA authority is local-resolution based; the resolution sets boundaries and can specify eligible classifications and exemption percentages, so state CRA law alone is not a clean-energy runtime rule. ([Ohio Laws][5])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_4dc9a192",
+          "canonicalUrl": "https://codes.ohio.gov/ohio-revised-code/section-3735.67",
+          "sourceFiles": [
+            "output_006_county_city_local_option_incentives.md"
+          ],
+          "sourceFamilies": [
+            "local_option_authority",
+            "local_option_followup"
+          ],
+          "evidenceSnippets": [
+            "Ohio CRA authority requires a political subdivision to adopt a resolution describing CRA boundaries and may specify eligible classifications and residential exemption percentages; eligible owners apply for exemption from real property taxation of a percentage of new-structure assessed value or increased assessed value after remodeling. Commercial or industrial exemptions require a written agreement before construction or remodeling. ([Ohio Laws][5])",
+            "Ohio CRA authority is local-resolution based; the resolution sets boundaries and can specify eligible classifications and exemption percentages, so state CRA law alone is not a clean-energy runtime rule. ([Ohio Laws][5])"
+          ]
+        }
+      ],
+      "originalReason": "Cincinnati has a verified sustainability-linked CRA workflow. Other Ohio CRAs should be reviewed only where official local rules explicitly tie CRA terms, caps, or bonuses to LEED, HERS, Living Building Challenge, or similar clean-energy/high-performance criteria.",
+      "evidenceText": "Ohio CRA authority is local-resolution based; the resolution sets boundaries and can specify eligible classifications and exemption percentages, so state CRA law alone is not a clean-energy runtime rule. ([Ohio Laws][5])",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_d37ae0f98e",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "skip_prince_georges_MD_green_business_amount_unverified_v1",
+      "skipType": "local_option_skip",
+      "jurisdiction": "Prince George's County, MD",
+      "currentRuntimeStatus": "needs_local_ordinance_confirmation",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "modelFamily": "property_tax_credit",
+      "priority": "high",
+      "promptFocus": "Resolve the exact Prince George's County Green Business real/personal property tax credit amount, percent, duration, cap, and code authority.",
+      "requiredOutcome": "Either merge into the Prince George's promoted rule or suppress if no official amount exists.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [],
+      "sourceDocuments": [],
+      "originalReason": "Official page verifies existence, eligible green-business concepts, and up-to-five-year duration, but the captured official page does not provide an explicit percentage or dollar amount; state law says local law supplies amount and duration.",
+      "evidenceText": "Prince George's County states that the Green Business credit applies to the County portion of property tax on eligible real or personal property for up to five years subject to funding, but Maryland §9-318(f) requires local law to specify amount and duration. ([Prince George's County][23])",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_026482ca13",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "skip_cincinnati_commercial_CRA_without_executed_agreement_v1",
+      "skipType": "local_option_skip",
+      "jurisdiction": "Cincinnati, OH",
+      "currentRuntimeStatus": "needs_program_documentation",
+      "sourceFile": "output_006_county_city_local_option_incentives.md",
+      "modelFamily": "tax_abatement_or_pilot",
+      "priority": "medium",
+      "promptFocus": "Clarify Cincinnati commercial CRA calculation boundaries, standard terms, sustainability bonuses, and which values require executed agreement documents.",
+      "requiredOutcome": "Promote only safe pre-agreement estimate rules, or keep as program-document gate.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [],
+      "sourceDocuments": [],
+      "originalReason": "Commercial CRA benefits are project-specific and require City Council approval and an executed agreement before construction; no generic customer-facing estimate should be shown without project documents.",
+      "evidenceText": "Cincinnati states the CRA agreement must be signed before construction and applications are reviewed and approved by City Council; Ohio law separately requires commercial or industrial CRA exemptions to be governed by a written agreement. ([DCEDChooseCincy][21])",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_ac74d1d25d",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "skip_wa_quincy_public_utility_tax_until_official_rate_table_accessible",
+      "skipType": "business_tax_skip",
+      "jurisdiction": "WA",
+      "currentRuntimeStatus": "source_unavailable",
+      "sourceFile": "output_007_business_tax_gross_receipts_bo.md",
+      "modelFamily": "local_business_license_or_receipts_tax",
+      "priority": "medium",
+      "promptFocus": "Verify Quincy, Washington public utility business tax rates from official code section 3.28.040 or official fee schedule.",
+      "requiredOutcome": "Promote only if current official rate table and taxable gross income base are accessible.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_8b29722a"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_8b29722a",
+          "canonicalUrl": "https://www.codepublishing.com/WA/Quincy/html/Quincy03/Quincy0328.html",
+          "sourceFiles": [
+            "output_001_national_source_registry_gap_fill.md",
+            "output_007_business_tax_gross_receipts_bo.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "county_city_local_option_incentives",
+            "business_tax_skip"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "Quincy municipal code Chapter 3.28 is the public utility business tax chapter and is published with a current-code note.",
+            "Search result identified Quincy Chapter 3.28 and formula dependency on section 3.28.040 rates, but the official page access failed; runtime treatment must be source_unavailable."
+          ]
+        }
+      ],
+      "originalReason": "An official CodePublishing result identified Quincy Municipal Code Chapter 3.28 Public Utility Business Tax and stated the tax is gross income multiplied by rates in section 3.28.040, but the official code page could not be opened for full rate verification in this research pass. Do not calculate or show customer-facing savings until the current official municipal code or return instructions provide the rate table.",
+      "evidenceText": "Search result identified Quincy Chapter 3.28 and formula dependency on section 3.28.040 rates, but the official page access failed; runtime treatment must be source_unavailable.",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_6fe87d35d5",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "skip_unverified_ca_city_business_license_rates",
+      "skipType": "business_tax_skip",
+      "jurisdiction": "CA",
+      "currentRuntimeStatus": "needs_local_ordinance_confirmation",
+      "sourceFile": "output_007_business_tax_gross_receipts_bo.md",
+      "modelFamily": "local_business_license_or_receipts_tax",
+      "priority": "medium",
+      "promptFocus": "Research official business license/gross receipts tax formulas for Burbank, Pasadena, Anaheim, Los Angeles, San Diego, Vernon, and San Francisco.",
+      "requiredOutcome": "Promote city-specific rows only where official code or fee schedules provide current formulas and business classifications.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [],
+      "sourceDocuments": [],
+      "originalReason": "California city business license taxes are local-code and fee-schedule specific. Do not extrapolate Burbank, Pasadena, Anaheim, Los Angeles, San Diego, Vernon, or San Francisco models to other cities.",
+      "evidenceText": "No official local ordinance or current adopted fee schedule was verified for unresearched cities.",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_f388a16443",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "skip_mi_rerz_customer_facing_savings_without_approved_zone_docs",
+      "skipType": "business_tax_skip",
+      "jurisdiction": "MI",
+      "currentRuntimeStatus": "needs_program_documentation",
+      "sourceFile": "output_007_business_tax_gross_receipts_bo.md",
+      "modelFamily": "tax_abatement_or_pilot",
+      "priority": "medium",
+      "promptFocus": "Repair Michigan Renewable Energy Renaissance Zone tax benefit model, including tax lines affected, phaseout, boundary/project approval, and required documents.",
+      "requiredOutcome": "Promote source-backed general workflow while keeping customer-facing amount gated by approved zone and taxpayer documents.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_da6f85d",
+        "tax_source_doc_be8d953e"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_da6f85d",
+          "canonicalUrl": "https://www.michiganbusiness.org/globalassets/documents/reports/fact-sheets/renewableenergyrenzones.pdf",
+          "sourceFiles": [
+            "output_001_national_source_registry_gap_fill.md",
+            "output_007_business_tax_gross_receipts_bo.md",
+            "output_004_state_tax_credits_exemptions_deductions.md",
+            "output_005_property_tax_statewide_rules.md",
+            "output_008_abatement_pilot_special_assessment_pace.md",
+            "output_009_unsupported_tax_fallback_triage.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "county_city_local_option_incentives",
+            "state_tax_credit_exemption_deduction_rule",
+            "property_tax_statewide_rule",
+            "unsupported_exotic_tax_pattern",
+            "unsupported_tax_fallback_triage",
+            "business_tax_skip"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "MEDC describes Renewable Energy Renaissance Zones as zones for renewable energy operations, and annual Renaissance Zone reports list zone types and official actions.",
+            "RetroFi's supplied source-backed runtime rule states Michigan Renewable Energy Renaissance Zone benefits are approved-zone and company/project-specific, apply only to designated operations within approved geographic boundaries, and require approved program documents, local approvals, compliance, and assessor or tax documentation.",
+            "Michigan Renewable Energy Renaissance Zone benefits are approved-zone and company/project-specific. The current RetroFi package correctly treats this as a workflow requiring approved zone documents, legal boundaries, local approvals, compliance, and actual abated tax lines before showing savings.",
+            "Being in a county, city, enterprise zone, renaissance zone, or reinvestment zone is only a routing fact unless official project approval and taxpayer compliance are verified.",
+            "Repair into tax_abatement_or_pilot only when official program documents identify the approved taxpayer, parcel or facility, legal boundary, tax lines affected, term, phaseout, and compliance requirements.",
+            "MEDC describes RERZ tax categories but designation and approval are project-specific; MSF involvement confirms program-specific approval requirements. ([MEDC][16])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_be8d953e",
+          "canonicalUrl": "https://www.michiganbusiness.org/about-medc/michigan-strategic-fund/",
+          "sourceFiles": [
+            "output_007_business_tax_gross_receipts_bo.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "business_tax_skip"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "MEDC describes RERZ tax categories but designation and approval are project-specific; MSF involvement confirms program-specific approval requirements. ([MEDC][16])"
+          ]
+        }
+      ],
+      "originalReason": "Renewable Energy Renaissance Zone benefits are company, project, boundary, local-unit, and tax-line specific. Customer-facing savings must remain $0 until approved zone documents, compliance status, parcel or facility boundary confirmation, phaseout multiplier, and actual eligible tax lines are available.",
+      "evidenceText": "MEDC describes RERZ tax categories but designation and approval are project-specific; MSF involvement confirms program-specific approval requirements. ([MEDC][16])",
+      "customerFacingSavingsCentsDefault": 0
+    },
+    {
+      "dispositionId": "tax_gap_repair_4a6e174401",
+      "action": "repair_with_gpt_pro",
+      "skippedRecordId": "skip_oh_cat_current_exclusion_amount_without_current_return_confirmation",
+      "skipType": "business_tax_skip",
+      "jurisdiction": "OH",
+      "currentRuntimeStatus": "needs_tax_return",
+      "sourceFile": "output_007_business_tax_gross_receipts_bo.md",
+      "modelFamily": "gross_receipts_or_bo_rate_preference",
+      "priority": "medium",
+      "promptFocus": "Verify current Ohio Commercial Activity Tax rate, exclusion, filing threshold, tax-year mechanics, and official return/instruction source.",
+      "requiredOutcome": "Promote updated CAT calculation constants if current official return/instructions support them.",
+      "acceptableFinalDispositions": [
+        "promote_to_tax_rule",
+        "suppress_archive",
+        "keep_input_gate",
+        "route_to_existing_non_tax_or_tax_model"
+      ],
+      "sourceDocumentIds": [
+        "tax_source_doc_15d3b53c",
+        "tax_source_doc_3b4fa9af"
+      ],
+      "sourceDocuments": [
+        {
+          "sourceDocumentId": "tax_source_doc_15d3b53c",
+          "canonicalUrl": "https://codes.ohio.gov/ohio-revised-code/section-5751.03",
+          "sourceFiles": [
+            "output_007_business_tax_gross_receipts_bo.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "business_tax_skip"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "ORC 5751.03 verifies the 2.6 mills rate on taxable gross receipts after the exclusion amount, but the runtime needs the current exclusion amount and return facts. ([Ohio Laws][24])"
+          ]
+        },
+        {
+          "sourceDocumentId": "tax_source_doc_3b4fa9af",
+          "canonicalUrl": "https://codes.ohio.gov/ohio-revised-code/chapter-5751",
+          "sourceFiles": [
+            "output_007_business_tax_gross_receipts_bo.md"
+          ],
+          "sourceFamilies": [
+            "citation_reference",
+            "business_tax_skip"
+          ],
+          "evidenceSnippets": [
+            "Trailing GPT Pro citation footnote preserved from source output.",
+            "ORC 5751.03 verifies the 2.6 mills rate on taxable gross receipts after the exclusion amount, but the runtime needs the current exclusion amount and return facts. ([Ohio Laws][24])"
+          ]
+        }
+      ],
+      "originalReason": "The statutory CAT rate was verified, but current-year exclusion and filing-threshold mechanics should be sourced from the current Ohio return/instructions at runtime before computing any customer-facing amount.",
+      "evidenceText": "ORC 5751.03 verifies the 2.6 mills rate on taxable gross receipts after the exclusion amount, but the runtime needs the current exclusion amount and return facts. ([Ohio Laws][24])",
+      "customerFacingSavingsCentsDefault": 0
+    }
+  ],
+  "policyGuardrailRecords": [
+    {
+      "dispositionId": "tax_gap_policy_ec616f6cae",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_01_non_tax_program_terms",
+      "classification": "non_tax_workflow",
+      "recommendedRuntimeStatus": "not_applicable_zero_value",
+      "reason": "Do not repair inside the tax engine unless an official source separately identifies a tax credit, deduction, exemption, rate preference, special valuation, abatement, or tax-line reduction.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_bb481f3664",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_02_source_unavailable_or_non_official_only",
+      "classification": "source_unavailable",
+      "recommendedRuntimeStatus": "source_unavailable",
+      "reason": "Official source discovery is required before model mapping, effective-date validation, or customer-facing savings.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_ed1e73b9ba",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_03_expired_repealed_sunset_or_archived",
+      "classification": "archive_candidate",
+      "recommendedRuntimeStatus": "suppressed",
+      "reason": "Archive or suppress unless an official extension, transition provision, or taxpayer-specific grandfathering document is found.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_3289624bfa",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_04_sales_use_supported_when_rate_taxability_basis_verified",
+      "classification": "supported_model",
+      "recommendedRuntimeStatus": "needs_tax_profile",
+      "reason": "Repair into sales_use_tax_rate or sales_use_tax_exemption only when official taxability, combined rate, address-level jurisdiction, taxable basis, and filing or certificate requirements are available.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_09aebba801",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_05_sales_use_unsupported_when_rate_or_taxability_not_verified",
+      "classification": "unsupported_tax_model",
+      "recommendedRuntimeStatus": "unsupported_tax_model",
+      "reason": "Needs source-backed taxability and rate-boundary data before it can be repaired into a sales_use_tax model.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_21ec1c7113",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_06_income_franchise_credit_or_deduction_supported_when_formula_and_return_inputs_exist",
+      "classification": "supported_model",
+      "recommendedRuntimeStatus": "needs_tax_return",
+      "reason": "Repair into state_income_or_franchise_tax_credit or depreciation_or_deduction only when formula and filing mechanics are official. Customer-facing realized value still requires tax appetite, refundability, transferability, direct pay, or return data.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_e0bc110613",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_07_federal_income_credit_or_deduction_without_retrofi_federal_model",
+      "classification": "unsupported_tax_model",
+      "recommendedRuntimeStatus": "unsupported_tax_model",
+      "reason": "Federal tax modules require separate tax-year law, basis, entity-type, recapture, prevailing-wage, domestic-content, transferability, direct-pay, and return-input modeling. Do not map federal incentives into state_income_or_franchise_tax_credit.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_cdb2efb818",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_08_gross_receipts_bo_rate_preference_supported_when_classification_and_base_verified",
+      "classification": "supported_model",
+      "recommendedRuntimeStatus": "needs_tax_return",
+      "reason": "Repair into gross_receipts_or_bo_rate_preference only when the ordinary classification, preferential classification, tax base after deductions, and return treatment are confirmed.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_b34b09dc51",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_09_property_tax_exemption_credit_valuation_supported_with_tax_bill_and_assessor",
+      "classification": "supported_model",
+      "recommendedRuntimeStatus": "needs_tax_bill",
+      "reason": "Repair into property_tax_exemption, property_tax_credit, or property_tax_special_valuation only when official formula is known. Savings remain zero until tax bill, ordinary counterfactual, assessor treatment, and filing confirmation support realized value.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_8f95e5d070",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_10_local_option_property_tax_unverified",
+      "classification": "unsupported_tax_model",
+      "recommendedRuntimeStatus": "needs_local_ordinance_confirmation",
+      "reason": "Needs a local ordinance, resolution, assessor confirmation, or official local-option registry before calculation or user-facing savings.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_b868895b29",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_11_tax_abatement_pilot_zone_supported_only_with_approved_documents",
+      "classification": "supported_model",
+      "recommendedRuntimeStatus": "needs_program_documentation",
+      "reason": "Repair into tax_abatement_or_pilot only when official program documents identify the approved taxpayer, parcel or facility, legal boundary, tax lines affected, term, phaseout, and compliance requirements.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_c3b5ecab14",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_12_local_business_license_or_receipts_tax_supported_internal_only",
+      "classification": "supported_model",
+      "recommendedRuntimeStatus": "needs_tax_profile",
+      "reason": "Repair into local_business_license_or_receipts_tax only for internal calculation unless taxpayer activity classification, local boundary, tax base, and accountant or return confirmation support user-facing value.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_eff2366f01",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_13_special_assessment_fee_surcharge_or_tax_bill_charge",
+      "classification": "unsupported_tax_model",
+      "recommendedRuntimeStatus": "unsupported_tax_model",
+      "reason": "Needs explicit supported tax type, official bill-line formula, statutory authority, jurisdiction, and ordinary counterfactual before any tax value can be modeled.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_9cc74fc749",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_14_title_says_tax_but_no_computable_tax_type_or_formula",
+      "classification": "unsupported_tax_model",
+      "recommendedRuntimeStatus": "unsupported_tax_model",
+      "reason": "Needs official source-backed tax model mapping. A tax label alone is not enough to compute or display savings.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_d3548b0f3a",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_15_conflicting_sources_ambiguous_taxpayer_classification_or_multi_tax_bundle",
+      "classification": "unsupported_tax_model",
+      "recommendedRuntimeStatus": "human_review_required",
+      "reason": "Human review must split the opportunity into one effect per tax type and resolve conflicts before any supported model is used.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    },
+    {
+      "dispositionId": "tax_gap_policy_8c1a63c4bf",
+      "action": "keep_policy_guardrail",
+      "ruleId": "tax_triage_99_catch_all_tax_related_unmapped",
+      "classification": "unsupported_tax_model",
+      "recommendedRuntimeStatus": "unsupported_tax_model",
+      "reason": "Safe fallback. Preserve opportunity for model repair, but show no customer-facing tax savings.",
+      "customerFacingValueCents": 0,
+      "notes": "This is a generic import/runtime routing guardrail, not a skipped opportunity to repair."
+    }
+  ],
+  "promptBatches": [
+    {
+      "promptId": "tax_gap_repair_001",
+      "promptFile": "prompt_001_tax_gap_repair.md",
+      "outputFile": "output_001_tax_gap_repair.md",
+      "targetIds": [
+        "vernon_ca_partial_local_tax_sources_skip_until_code_verified_v1",
+        "sales_use_tax_ambiguous_rule_1",
+        "sales_use_tax_ambiguous_rule_4",
+        "sales_use_tax_ambiguous_rule_5"
+      ]
+    },
+    {
+      "promptId": "tax_gap_repair_002",
+      "promptFile": "prompt_002_tax_gap_repair.md",
+      "outputFile": "output_002_tax_gap_repair.md",
+      "targetIds": [
+        "sales_use_tax_ambiguous_rule_8",
+        "az_renewable_energy_production_tax_credit_skip_v1",
+        "co_heat_pump_systems_registered_contractor_credit_skip_v1",
+        "co_electric_bicycle_retailer_credit_skip_v1"
+      ]
+    },
+    {
+      "promptId": "tax_gap_repair_003",
+      "promptFile": "prompt_003_tax_gap_repair.md",
+      "outputFile": "output_003_tax_gap_repair.md",
+      "targetIds": [
+        "ct_green_buildings_credit_skip_v1",
+        "mt_energy_production_development_abatement_skip_2026_v1",
+        "ct_uniform_solar_capacity_tax_pa26_refresh_watch_2026_v1",
+        "local_option_followup_1"
+      ]
+    },
+    {
+      "promptId": "tax_gap_repair_004",
+      "promptFile": "prompt_004_tax_gap_repair.md",
+      "outputFile": "output_004_tax_gap_repair.md",
+      "targetIds": [
+        "local_option_followup_2",
+        "local_option_followup_3",
+        "local_option_followup_4",
+        "local_option_followup_5"
+      ]
+    },
+    {
+      "promptId": "tax_gap_repair_005",
+      "promptFile": "prompt_005_tax_gap_repair.md",
+      "outputFile": "output_005_tax_gap_repair.md",
+      "targetIds": [
+        "local_option_followup_6",
+        "skip_prince_georges_MD_green_business_amount_unverified_v1",
+        "skip_cincinnati_commercial_CRA_without_executed_agreement_v1",
+        "skip_wa_quincy_public_utility_tax_until_official_rate_table_accessible"
+      ]
+    },
+    {
+      "promptId": "tax_gap_repair_006",
+      "promptFile": "prompt_006_tax_gap_repair.md",
+      "outputFile": "output_006_tax_gap_repair.md",
+      "targetIds": [
+        "skip_unverified_ca_city_business_license_rates",
+        "skip_mi_rerz_customer_facing_savings_without_approved_zone_docs",
+        "skip_oh_cat_current_exclusion_amount_without_current_return_confirmation"
+      ]
+    }
+  ]
+}
