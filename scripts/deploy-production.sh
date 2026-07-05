@@ -110,6 +110,7 @@ Targets:
 Environment:
   GBS_ARTIFACT_RETENTION_DAYS=${ARTIFACT_RETENTION_DAYS}
   GBS_RUNTIME_CACHE_RETENTION_DAYS=${RUNTIME_CACHE_RETENTION_DAYS}
+  GBS_DEPLOY_STATE_PREFIX=${GBS_DEPLOY_STATE_PREFIX:-deploy-state}
 EOF
 }
 
@@ -343,6 +344,29 @@ copy_data_file() {
   fi
 }
 
+hash_directory() {
+  local directory="$1"
+  (
+    cd "${directory}"
+    find . -type f | LC_ALL=C sort | while IFS= read -r file_path; do
+      shasum -a 256 "${file_path}"
+    done | shasum -a 256 | awk '{print $1}'
+  )
+}
+
+s3_object_text() {
+  local bucket="$1"
+  local key="$2"
+  aws_region s3 cp "s3://${bucket}/${key}" - 2>/dev/null | tr -d '\r\n' || true
+}
+
+put_s3_text() {
+  local bucket="$1"
+  local key="$2"
+  local value="$3"
+  printf '%s\n' "${value}" | aws_region s3 cp - "s3://${bucket}/${key}" >/dev/null
+}
+
 upload_lambda_package() {
   echo "Uploading Lambda package to s3://${ARTIFACT_BUCKET}/${LAMBDA_CODE_KEY}..."
   aws_region s3 cp "${LAMBDA_ZIP}" "s3://${ARTIFACT_BUCKET}/${LAMBDA_CODE_KEY}"
@@ -468,10 +492,23 @@ sync_frontend() {
   local frontend_bucket
   local distribution_id
   local site_url
+  local deployed_hash
   frontend_bucket="$(stack_output FrontendBucketName)"
   distribution_id="$(stack_output CloudFrontDistributionId)"
   site_url="$(stack_output SiteUrl)"
 
+  if [ -z "${FRONTEND_DIST_HASH}" ]; then
+    FRONTEND_DIST_HASH="$(hash_directory dist)"
+  fi
+
+  deployed_hash="$(s3_object_text "${frontend_bucket}" "${FRONTEND_DIST_STATE_KEY}")"
+  if [ -n "${deployed_hash}" ] && [ "${deployed_hash}" = "${FRONTEND_DIST_HASH}" ]; then
+    echo "Frontend dist hash unchanged (${FRONTEND_DIST_HASH}); skipping S3 sync and CloudFront invalidation."
+    echo "Site: ${site_url}"
+    return
+  fi
+
+  echo "Frontend dist hash: ${FRONTEND_DIST_HASH}"
   echo "Uploading frontend assets to s3://${frontend_bucket}..."
   aws_region s3 sync dist/ "s3://${frontend_bucket}/" \
     --delete \
@@ -488,6 +525,7 @@ sync_frontend() {
     --distribution-id "${distribution_id}" \
     --paths "/*" >/dev/null
 
+  put_s3_text "${frontend_bucket}" "${FRONTEND_DIST_STATE_KEY}" "${FRONTEND_DIST_HASH}"
   echo "Site: ${site_url}"
 }
 
@@ -500,8 +538,14 @@ ENERGY_DATA_BUCKET="${GBS_ENERGY_DATA_BUCKET:-gbs-retrofi-org-energy-data-${ACCO
 RUNTIME_CACHE_BUCKET="${GBS_RUNTIME_CACHE_BUCKET:-gbs-retrofi-org-runtime-cache-${ACCOUNT_ID}}"
 TEST_FIXTURES_BUCKET="${GBS_TEST_FIXTURES_BUCKET:-${GBS_GENERATED_FIXTURE_BUCKET:-gbs-retrofi-test-fixtures-${ACCOUNT_ID}-${REGION}}}"
 LAMBDA_CODE_KEY="lambda/gbs-api-$(date -u +%Y%m%d%H%M%S).zip"
+DEPLOY_STATE_PREFIX="${GBS_DEPLOY_STATE_PREFIX:-deploy-state}"
+API_PACKAGE_STATE_KEY="${DEPLOY_STATE_PREFIX}/api-package.sha256"
+FRONTEND_DIST_STATE_KEY="${DEPLOY_STATE_PREFIX}/frontend-dist.sha256"
 DEPLOYED_LAMBDA_CODE_BUCKET=""
 DEPLOYED_LAMBDA_CODE_KEY=""
+API_PACKAGE_HASH=""
+API_PACKAGE_CHANGED=0
+FRONTEND_DIST_HASH=""
 
 if [ "${RUN_CI}" -eq 1 ]; then
   deploy_github_actions_stack
@@ -517,6 +561,7 @@ fi
 
 if [ "${RUN_FRONTEND}" -eq 1 ]; then
   build_frontend
+  FRONTEND_DIST_HASH="$(hash_directory dist)"
 fi
 
 if [ "${RUN_API}" -eq 1 ]; then
@@ -525,10 +570,21 @@ fi
 
 if [ "${RUN_API}" -eq 1 ]; then
   ensure_artifact_bucket
-  upload_lambda_package
-  DEPLOYED_LAMBDA_CODE_BUCKET="${ARTIFACT_BUCKET}"
-  DEPLOYED_LAMBDA_CODE_KEY="${LAMBDA_CODE_KEY}"
-elif [ "${RUN_INFRA}" -eq 1 ]; then
+  API_PACKAGE_HASH="$(hash_directory "${LAMBDA_PACKAGE_DIR}")"
+  DEPLOYED_API_PACKAGE_HASH="$(s3_object_text "${ARTIFACT_BUCKET}" "${API_PACKAGE_STATE_KEY}")"
+  if [ -n "${DEPLOYED_API_PACKAGE_HASH}" ] && [ "${DEPLOYED_API_PACKAGE_HASH}" = "${API_PACKAGE_HASH}" ]; then
+    echo "API package hash unchanged (${API_PACKAGE_HASH}); skipping Lambda upload and API stack update."
+    RUN_API=0
+  else
+    echo "API package hash: ${API_PACKAGE_HASH}"
+    upload_lambda_package
+    DEPLOYED_LAMBDA_CODE_BUCKET="${ARTIFACT_BUCKET}"
+    DEPLOYED_LAMBDA_CODE_KEY="${LAMBDA_CODE_KEY}"
+    API_PACKAGE_CHANGED=1
+  fi
+fi
+
+if [ "${RUN_API}" -eq 0 ] && [ "${RUN_INFRA}" -eq 1 ]; then
   if api_stack_exists; then
     DEPLOYED_LAMBDA_CODE_BUCKET="$(api_stack_parameter LambdaCodeBucket)"
     DEPLOYED_LAMBDA_CODE_KEY="$(api_stack_parameter LambdaCodeKey)"
@@ -540,6 +596,9 @@ fi
 
 if [ "${RUN_API}" -eq 1 ] || [ "${RUN_INFRA}" -eq 1 ]; then
   deploy_api_stack "${DEPLOYED_LAMBDA_CODE_BUCKET}" "${DEPLOYED_LAMBDA_CODE_KEY}"
+  if [ "${API_PACKAGE_CHANGED}" -eq 1 ]; then
+    put_s3_text "${ARTIFACT_BUCKET}" "${API_PACKAGE_STATE_KEY}" "${API_PACKAGE_HASH}"
+  fi
 fi
 
 if [ "${RUN_INFRA}" -eq 1 ]; then

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) deploy hash skipping and split CI checks
+
+- Added package/dist hash state to production deploys so unchanged Lambda packages skip upload/API stack updates and unchanged frontend builds skip S3 sync/CloudFront invalidation.
+- Added a CI check selector and workflow routing so API, frontend, script, and audit checks run only when relevant to changed paths.
+- Added GitHub Actions production smoke checks for the homepage and `/api/health` after deployments.
+
 ## 2026-07-05 - Codex (GPT-5) smarter deploy routing summaries
 
 - Made production deploy target selection inspect `package-lock.json` package-level diffs so frontend build-tool changes, API runtime dependency changes, and CI/dev-only dependency changes route independently.

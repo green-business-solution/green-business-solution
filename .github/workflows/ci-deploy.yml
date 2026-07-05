@@ -28,26 +28,68 @@ jobs:
           node-version: 24
           cache: npm
 
+      - name: Select CI checks
+        id: ci-checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            base="${{ github.event.pull_request.base.sha }}"
+            head="${{ github.event.pull_request.head.sha }}"
+          else
+            base="${{ github.event.before }}"
+            head="${{ github.sha }}"
+            if [ -z "${base}" ] || [ "${base}" = "0000000000000000000000000000000000000000" ]; then
+              base="$(git rev-parse "${head}^")"
+            fi
+          fi
+          {
+            echo "base_sha=${base}"
+            echo "head_sha=${head}"
+            node scripts/select-ci-checks.mjs --format github-output "${base}" "${head}"
+          } >> "${GITHUB_OUTPUT}"
+          node scripts/select-ci-checks.mjs --format lines "${base}" "${head}"
+          node scripts/select-ci-checks.mjs --format markdown "${base}" "${head}" >> "${GITHUB_STEP_SUMMARY}"
+
       - name: Install dependencies
+        if: steps.ci-checks.outputs.has_checks == 'true'
         run: npm ci
 
       - name: Check API syntax
+        if: steps.ci-checks.outputs.api == 'true'
         run: npm run check -w @gbs/api
 
       - name: Typecheck frontend
+        if: steps.ci-checks.outputs.web == 'true'
         run: npm run typecheck
 
       - name: Build frontend
+        if: steps.ci-checks.outputs.web == 'true'
         run: npm run build
 
-      - name: Run tests
-        run: npm test
+      - name: Run API tests
+        if: steps.ci-checks.outputs.api == 'true'
+        run: npx vitest run apps/api
+
+      - name: Run frontend tests
+        if: steps.ci-checks.outputs.web == 'true'
+        run: npx vitest run apps/web
+
+      - name: Run script tests
+        if: steps.ci-checks.outputs.scripts == 'true'
+        run: npx vitest run scripts
 
       - name: Audit production dependencies
+        if: steps.ci-checks.outputs.audit == 'true'
         run: npm audit --omit=dev --audit-level=high
 
       - name: Audit Lambda runtime dependencies
+        if: steps.ci-checks.outputs.audit == 'true'
         run: npm audit --workspace @gbs/api --omit=dev --audit-level=high
+
+      - name: Skip code checks
+        if: steps.ci-checks.outputs.has_checks != 'true'
+        run: echo "No code checks selected for this change."
 
   deploy-production:
     name: Deploy production
@@ -105,3 +147,27 @@ jobs:
           GBS_DEPLOY_BASE_SHA: ${{ steps.deploy-targets.outputs.base_sha }}
           GBS_DEPLOY_HEAD_SHA: ${{ steps.deploy-targets.outputs.head_sha }}
         run: npm run deploy:production:auto
+
+      - name: Smoke test production
+        if: steps.deploy-targets.outputs.has_deploy == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "### Production smoke checks" >> "${GITHUB_STEP_SUMMARY}"
+
+          homepage_status="$(curl -fsS -o /dev/null -w "%{http_code}" https://retrofi.org/)"
+          if [ "${homepage_status}" != "200" ]; then
+            echo "Homepage returned HTTP ${homepage_status}" >&2
+            exit 1
+          fi
+          echo "- Homepage: HTTP ${homepage_status}" >> "${GITHUB_STEP_SUMMARY}"
+
+          health_payload="$(curl -fsS https://retrofi.org/api/health)"
+          HEALTH_PAYLOAD="${health_payload}" node -e '
+            const health = JSON.parse(process.env.HEALTH_PAYLOAD || "{}");
+            if (health.ok !== true) {
+              throw new Error(`Production health check failed: ${JSON.stringify(health)}`);
+            }
+            console.log(`API health OK: ${health.apiRuntimeStateTable || "unknown runtime table"}`);
+          '
+          echo "- API health: OK" >> "${GITHUB_STEP_SUMMARY}"
