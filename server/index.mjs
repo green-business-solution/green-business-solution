@@ -76,7 +76,6 @@ const profile = process.env.AWS_PROFILE ?? (isLambdaRuntime ? "" : "gbs");
 const usersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
 const opportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
-const energyDataTable = process.env.GBS_ENERGY_DATA_TABLE || "gbs-energy-data";
 const runtimeStateTable = process.env.GBS_RUNTIME_STATE_TABLE || "gbs-runtime-state";
 const sampleMatchingTestCasesPath =
   process.env.GBS_SAMPLE_MATCHING_TEST_CASES_PATH || path.join(process.cwd(), "public", "sample_matching_test_cases.json");
@@ -935,28 +934,6 @@ function publicEnergyUploadSession(userId, intake) {
     userId,
     submissionId: cleanText(intake?.submissionId),
     expiresAt: session.expiresAt
-  };
-}
-
-function publicEnergyDataRecord(record) {
-  return {
-    userId: record.userId,
-    energyDataId: record.energyDataId,
-    submissionId: record.submissionId,
-    sourceType: record.sourceType,
-    fileName: record.fileName,
-    contentType: record.contentType,
-    utilityName: record.utilityName || null,
-    uploadStatus: record.uploadStatus,
-    parseStatus: record.parseStatus,
-    parseErrors: Array.isArray(record.parseErrors) ? record.parseErrors : [],
-    coverageStart: record.coverageStart || null,
-    coverageEnd: record.coverageEnd || null,
-    accountNumberMasked: record.accountNumberMasked || null,
-    meterIds: Array.isArray(record.meterIds) ? record.meterIds : [],
-    normalizedUsage: record.normalizedUsage || { intervals: [], monthlyTotals: [] },
-    createdAt: record.createdAt,
-    updatedAt: record.updatedAt
   };
 }
 
@@ -2332,7 +2309,7 @@ function buildAdminShellPayload(admin) {
   return {
     admin: publicUser(admin),
     users: [],
-    dataTables: [usersTable, intakeTable, energyDataTable, opportunitiesTable].map((tableName) => tableSnapshot(tableName, []))
+    dataTables: [usersTable, intakeTable, opportunitiesTable].map((tableName) => tableSnapshot(tableName, []))
   };
 }
 
@@ -2748,16 +2725,6 @@ async function buildAdminTableSnapshot(tableName) {
     );
   }
 
-  if (cleanTableName === energyDataTable) {
-    const records = await scanAll(energyDataTable);
-    return tableSnapshot(
-      energyDataTable,
-      [...records]
-        .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
-        .map(publicEnergyDataRecord)
-    );
-  }
-
   if (cleanTableName === opportunitiesTable) {
     const opportunities = await scanAll(opportunitiesTable);
     const sortedOpportunities = opportunities.filter((opportunity) => isDsireOpportunityRecord(opportunity) && isVisibleOpportunity(opportunity)).sort((a, b) =>
@@ -3026,7 +2993,6 @@ app.get("/api/health", (_req, res) => {
     region: dataRegion,
     usersTable,
     intakeTable,
-    energyDataTable,
     opportunitiesTable,
     energyDataBucket: energyDataBucket || null,
     addressGeographyResolver: {
@@ -3062,7 +3028,6 @@ app.get("/api/diagnostics", async (_req, res) => {
       profile,
       usersTable,
       intakeTable,
-      energyDataTable,
       opportunitiesTable,
       energyDataBucket: energyDataBucket || null,
       addressGeographyResolver: {

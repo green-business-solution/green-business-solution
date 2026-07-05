@@ -34,10 +34,27 @@ The script:
 1. Builds the Vite frontend.
 2. Packages the Express API as a Lambda zip.
 3. Uploads the Lambda package to an artifact S3 bucket.
-4. Ensures the `gbs-energy-data` DynamoDB table exists in the data region.
+4. Ensures non-CloudFormation runtime prerequisites exist, including the runtime-state table, alert sender, and energy-data S3 bucket configuration.
 5. Deploys or updates the CloudFormation stack.
 6. Syncs `dist/` to the frontend S3 bucket.
 7. Invalidates CloudFront.
+
+The same script also supports narrower production targets:
+
+```sh
+npm run deploy:production:frontend
+npm run deploy:production:api
+npm run deploy:production:infra
+npm run deploy:production:data
+```
+
+- `frontend`: builds Vite, syncs the frontend bucket, and invalidates CloudFront.
+- `api`: packages and uploads a new Lambda zip, then deploys the stack with that Lambda artifact.
+- `infra`: deploys the CloudFormation template while reusing the existing Lambda zip.
+- `data`: ensures runtime prerequisites only.
+
+The artifact bucket has a lifecycle rule for `lambda/` package zips. The default retention is 30 days and
+can be overridden with `GBS_ARTIFACT_RETENTION_DAYS`.
 
 ## Google OAuth
 

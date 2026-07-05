@@ -58,9 +58,6 @@ Parameters:
   OpportunitiesTable:
     Type: String
     Default: gbs-opportunity-candidates
-  EnergyDataTable:
-    Type: String
-    Default: gbs-energy-data
   RuntimeStateTable:
     Type: String
     Default: gbs-runtime-state
@@ -122,7 +119,6 @@ Resources:
                 Resource:
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${UsersTable}
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${IntakeTable}
-                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${EnergyDataTable}
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${OpportunitiesTable}
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${RuntimeStateTable}
         - PolicyName: OperationalEmailAlerts
@@ -159,7 +155,6 @@ Resources:
           GBS_ENERGY_DATA_BUCKET_REGION: !Ref AWS::Region
           GBS_USERS_TABLE: !Ref UsersTable
           GBS_INTAKE_TABLE: !Ref IntakeTable
-          GBS_ENERGY_DATA_TABLE: !Ref EnergyDataTable
           GBS_OPPORTUNITIES_TABLE: !Ref OpportunitiesTable
           GBS_RUNTIME_STATE_TABLE: !Ref RuntimeStateTable
           GBS_ENERGY_DATA_BUCKET: !Ref EnergyDataBucketName

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) modular production deploy cleanup
+
+- Split the production deploy script into explicit `frontend`, `api`, `infra`, and `data` targets while preserving the full deploy as the default.
+- Added Lambda artifact bucket lifecycle cleanup for old `lambda/` package zips.
+- Removed the deleted `gbs-energy-data` DynamoDB table from deployment, API diagnostics/admin table surfaces, CloudFormation IAM/env config, and data model docs.
+
 ## 2026-07-05 - Codex (GPT-5) concise homepage and glass CTA
 
 - Shortened homepage hero, feature, process, trust, and final CTA copy so the page scans faster with fewer wrapped lines.

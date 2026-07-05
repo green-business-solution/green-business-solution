@@ -49,6 +49,10 @@ Representative fields:
 - `business`
 - `site`
 - `sustainability`
+- `energyDataUploadSession`
+- `uploadedUtilityFiles`
+- `utilityExtractedValues`
+- `siteEnergyProfile`
 - `createdAt`
 - `updatedAt`
 
@@ -65,6 +69,10 @@ Current intake form fields include:
 - Square footage, approximate accepted
 - Interested improvements: `LED`, `HVAC`, `Refrigeration`, `Solar`, `EV Charging`, `Water Efficiency`,
   `Building Controls`, or `Show Me Everything`
+
+The browser uploads original utility and Green Button files directly to the private energy-data S3 bucket
+using a presigned URL returned by the API. Parsed upload metadata and normalized bill/usage summaries are
+stored on the matching intake record; the original documents stay in S3.
 
 ### `gbs-opportunity-candidates`
 
@@ -158,38 +166,6 @@ DynamoDB row. Supported review statuses are `approved`, `rejected`, `needs_revie
 Public-table records preserve DSIRE's numeric program ID at `dsire.programId`. RSS records preserve the
 raw DSIRE program code at `dsire.programCode`; the RSS importer includes a title hash in `externalId`
 because the feed can contain repeated program codes with different titles.
-
-### `gbs-energy-data`
-
-Upload metadata and normalized energy-usage records tied to a scan submission.
-
-Primary key:
-
-- `userId` string, matching the user and intake tables
-- `energyDataId` string, unique per uploaded file
-
-Representative fields:
-
-- `submissionId`
-- `sourceType`: `bill_pdf`, `bill_image`, `green_button_xml`, or `green_button_csv`
-- `fileName`
-- `contentType`
-- `utilityName`
-- `s3Key`
-- `uploadStatus`
-- `parseStatus`
-- `parseErrors`
-- `coverageStart`
-- `coverageEnd`
-- `accountNumberMasked`
-- `meterIds`
-- `normalizedUsage`
-- `rawExtract`
-- `createdAt`
-- `updatedAt`
-
-The browser uploads files directly to a private S3 bucket using a presigned URL returned by the API. The
-API stores only metadata and parsed summaries in DynamoDB; the original documents stay in S3.
 
 ## Public DSIRE Clone
 
