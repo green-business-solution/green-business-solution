@@ -1155,6 +1155,15 @@ describe("retrofit recommendations preview", () => {
     expect(tabsSource).toContain("{ key: \"environmental\", label: \"Impact\" }");
     expect(tabsSource).toContain("{ key: \"application\", label: \"Application Overview\" }");
     expect(tabsSource.match(/label:/g)).toHaveLength(6);
+    const tabOrderIndexes = [
+      tabsSource.indexOf("{ key: \"overview\", label: \"Overview\" }"),
+      tabsSource.indexOf("{ key: \"scenarios\", label: \"Scenarios\" }"),
+      tabsSource.indexOf("{ key: \"opportunities\", label: \"Opportunities\" }"),
+      tabsSource.indexOf("{ key: \"financials\", label: \"Financials\" }"),
+      tabsSource.indexOf("{ key: \"environmental\", label: \"Impact\" }"),
+      tabsSource.indexOf("{ key: \"application\", label: \"Application Overview\" }")
+    ];
+    expect(tabOrderIndexes).toEqual([...tabOrderIndexes].sort((left, right) => left - right));
     expect(tabsSource).not.toContain("{ key: \"requirements\"");
     expect(tabsSource).not.toContain("{ key: \"more\"");
     expect(headerIndex).toBeGreaterThanOrEqual(0);

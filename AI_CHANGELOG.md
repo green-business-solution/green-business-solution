@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) selected retrofit tab order
+
+- Reordered the selected retrofit workspace tabs to show Scenarios and Opportunities before Financials, followed by Impact and Application Overview.
+
 ## 2026-07-05 - Codex (GPT-5) tax gap repair intake
 
 - Added a tax gap repair intake script that validates the six GPT Pro skipped-tax-gap output files against the work-packet manifest and disposition targets.

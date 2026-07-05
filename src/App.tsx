@@ -12455,9 +12455,9 @@ function RetrofitPreviewCardView({
   ];
   const workspaceTabs = [
     { key: "overview", label: "Overview" },
-    { key: "financials", label: "Financials" },
-    { key: "opportunities", label: "Opportunities" },
     { key: "scenarios", label: "Scenarios" },
+    { key: "opportunities", label: "Opportunities" },
+    { key: "financials", label: "Financials" },
     { key: "environmental", label: "Impact" },
     { key: "application", label: "Application Overview" }
   ] as const;
