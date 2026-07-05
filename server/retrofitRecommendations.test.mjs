@@ -125,7 +125,14 @@ describe("portal retrofit recommendations", () => {
     expect(payload.isProgressiveShell).toBe(true);
     expect(payload.summary).toMatchObject({
       matchedRetrofitCount: 2,
-      matchedOpportunityCount: 12
+      matchedOpportunityCount: 12,
+      canShowOpportunities: true,
+      taxIntakeRequiredBeforeOpportunityDisplay: false,
+      requiredTaxInputCount: 0
+    });
+    expect(payload.taxRuntimePreview).toMatchObject({
+      status: "no_applicable_tax_rules",
+      opportunityDisplayBlocked: false
     });
     expect(payload.retrofits.map((retrofit) => retrofit.retrofitTypeId)).toEqual([
       "led_lighting_retrofit",
@@ -134,6 +141,55 @@ describe("portal retrofit recommendations", () => {
     expect(payload.retrofits.every((retrofit) => retrofit.opportunities.length === 0)).toBe(true);
     expect(payload.retrofits.every((retrofit) => retrofit.savingsPreview?.status === "calculated")).toBe(true);
     expect(payload.retrofits[0].savingsPreview?.annualSavingsCents).toBeGreaterThan(0);
+  });
+
+  it("exposes mandatory pre-opportunity tax inputs when local tax workflow inputs are missing", () => {
+    const intake = baseIntake({
+      site: {
+        address: "123 Mission St, San Francisco, CA 94105",
+        geography: {
+          stateCode: "CA",
+          countyFips: "06075",
+          placeName: "San Francisco",
+          zip5: "94105"
+        },
+        electricUtilityProvider: "PG&E",
+        gasUtilityProvider: "PG&E",
+        ownershipStatus: "Own",
+        buildingType: "Retail",
+        squareFootage: "5000",
+        numberOfUnits: null
+      }
+    });
+
+    const payload = buildPortalRetrofitPreviewShell({
+      user: {
+        userId: intake.userId,
+        role: "client",
+        status: "active",
+        fullName: "Test Client",
+        email: "client@example.com",
+        companyName: "Retrofit Test Co",
+        authProvider: "google",
+        googleLinked: true,
+        isFakeUser: false,
+        createdAt: now.toISOString(),
+        lastLoginAt: now.toISOString()
+      },
+      intake,
+      now
+    });
+
+    expect(payload.summary).toMatchObject({
+      canShowOpportunities: false,
+      taxIntakeRequiredBeforeOpportunityDisplay: true
+    });
+    expect(payload.taxRuntimePreview.status).toBe("requires_tax_intake");
+    expect(payload.taxRuntimePreview.requiredPreOpportunityInputs.length).toBeGreaterThan(0);
+    expect(payload.taxRuntimePreview.requiredPreOpportunityInputs[0]).toMatchObject({
+      requiredBeforeOpportunitySelection: true,
+      collectionStage: "pre_opportunity_intake"
+    });
   });
 
   it("reuses the same grouped eligible retrofit matches that feed test cases", () => {

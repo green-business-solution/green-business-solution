@@ -1,6 +1,6 @@
 # Test Case Grant/Tax Estimate Coverage
 
-Generated: 2026-07-05T04:02:23.247Z
+Generated: 2026-07-05T05:49:50.722Z
 
 ## Summary
 
@@ -14,7 +14,10 @@ Generated: 2026-07-05T04:02:23.247Z
 - Tax opportunity packages matched by current test cases: 1
 - Local tax workflow evaluations: 16
 - Tax profile runtime evaluations: 31
-- Tax profile runtime ready rows: 4
+- Tax profile runtime ready rows: 7
+- Tax profile included benefits: $426,432.19
+- Tax profile included liabilities: $216,680.00
+- Tax profile net impact: $209,752.19
 
 ## Runtime Inclusion Status
 
@@ -47,30 +50,30 @@ Generated: 2026-07-05T04:02:23.247Z
 
 | Status | Count |
 | --- | --- |
-| calculated | 5 |
+| calculated | 6 |
 | review_required | 4 |
 | needs_tax_bill | 3 |
-| missing_inputs | 2 |
 | needs_tax_return | 2 |
+| missing_inputs | 1 |
 
 ## Local Tax Production Action Buckets
 
 | Status | Count |
 | --- | --- |
-| production_ready_customer_calculation | 5 |
+| production_ready_customer_calculation | 6 |
 | tax_bill_upload_required | 3 |
 | tax_return_input_required | 3 |
 | not_applicable_zero_value | 2 |
-| tax_profile_input_required | 2 |
 | assessor_confirmation_required | 1 |
+| tax_profile_input_required | 1 |
 
 ## Tax Profile Runtime Status
 
 | Status | Count |
 | --- | --- |
 | unsupported_runtime_model | 11 |
-| missing_inputs | 9 |
-| calculated | 4 |
+| calculated | 7 |
+| missing_inputs | 6 |
 | review_required | 4 |
 | needs_tax_bill | 3 |
 

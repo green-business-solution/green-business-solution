@@ -144,7 +144,9 @@ const report = {
     taxProfileRuntimeEvaluationCount: taxProfileRuntimeRows.length,
     taxProfileRuntimeStatusCounts: countBy(taxProfileRuntimeRows, (row) => row.status),
     taxProfileRuntimeReadyCount: taxProfileRuntimeRows.filter((row) => row.readyForOpportunityFinancialEstimate).length,
-    taxProfileRuntimeIncludedAmountCents: sum(taxProfileRuntimeRows, (row) => row.includedAmountCents),
+    taxProfileRuntimeIncludedBenefitCents: sum(taxProfileRuntimeRows, (row) => row.includedBenefitCents),
+    taxProfileRuntimeIncludedLiabilityCents: sum(taxProfileRuntimeRows, (row) => row.includedLiabilityCents),
+    taxProfileRuntimeNetIncludedAmountCents: sum(taxProfileRuntimeRows, (row) => row.includedAmountCents),
     taxProfileRuntimeMissingPreOpportunityInputCount: sum(taxProfileRuntimeRows, (row) => row.missingRequiredInputCount),
     taxProfileRuntimeStructuredModelWorkCount: taxProfileRuntimeRows.filter((row) => row.requiresStructuredTaxModelWork).length
   },
@@ -300,7 +302,11 @@ function buildTaxProfileRuntimeRows(testCase, workflows, taxGapRules) {
     status: evaluation.result?.status || "unknown",
     amountCents: evaluation.result?.amountCents || 0,
     includedInUserFacingTotal: evaluation.result?.includedInUserFacingTotal === true,
-    includedAmountCents: evaluation.result?.includedInUserFacingTotal === true ? evaluation.result?.amountCents || 0 : 0,
+    financialRole: evaluation.financialRole,
+    financialTiming: evaluation.financialTiming,
+    includedBenefitCents: evaluation.includedBenefitCents || 0,
+    includedLiabilityCents: evaluation.includedLiabilityCents || 0,
+    includedAmountCents: (evaluation.includedBenefitCents || 0) - (evaluation.includedLiabilityCents || 0),
     missingRequiredInputCount: (evaluation.result?.missingInputs || []).length,
     missingInputs: evaluation.result?.missingInputs || [],
     readyForOpportunityFinancialEstimate: result.readyForOpportunityFinancialEstimate,
@@ -497,6 +503,8 @@ function summarizeTaxProfileRuntimeRows(rows) {
     readyCount: rows.filter((row) => row.readyForOpportunityFinancialEstimate).length,
     includedCount: rows.filter((row) => row.includedInUserFacingTotal).length,
     totalIncludedAmountCents: sum(rows, (row) => row.includedAmountCents),
+    totalIncludedBenefitCents: sum(rows, (row) => row.includedBenefitCents),
+    totalIncludedLiabilityCents: sum(rows, (row) => row.includedLiabilityCents),
     structuredModelWorkCount: rows.filter((row) => row.requiresStructuredTaxModelWork).length,
     sampleRows: rows.slice(0, 50)
   };
@@ -524,6 +532,9 @@ function buildMarkdownReport(data) {
     `- Local tax workflow evaluations: ${data.summary.localTaxWorkflowEvaluationCount}`,
     `- Tax profile runtime evaluations: ${data.summary.taxProfileRuntimeEvaluationCount}`,
     `- Tax profile runtime ready rows: ${data.summary.taxProfileRuntimeReadyCount}`,
+    `- Tax profile included benefits: ${formatCents(data.summary.taxProfileRuntimeIncludedBenefitCents)}`,
+    `- Tax profile included liabilities: ${formatCents(data.summary.taxProfileRuntimeIncludedLiabilityCents)}`,
+    `- Tax profile net impact: ${formatCents(data.summary.taxProfileRuntimeNetIncludedAmountCents)}`,
     "",
     "## Runtime Inclusion Status",
     "",
@@ -905,6 +916,15 @@ function tableFromCounts(counts) {
       .map(([value, count]) => ({ value, count })),
     ["Status", "Count"]
   );
+}
+
+function formatCents(value) {
+  const cents = Number(value || 0);
+  const sign = cents < 0 ? "-" : "";
+  return `${sign}$${(Math.abs(cents) / 100).toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })}`;
 }
 
 function tableFromPairs(rows, headers) {

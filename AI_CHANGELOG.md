@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) tax runtime preview gating
+
+- Added a recommendation-level tax runtime preview that exposes mandatory pre-opportunity tax intake fields, opportunity-display gating flags, and calculated tax benefit/liability totals.
+- Split tax runtime calculations into benefit, liability, and net-impact amounts so sales/use taxes, credits, exemptions, gross-receipts taxes, and local taxes are reported with the correct financial direction.
+- Attached tax runtime previews to generated admin test fixtures, refreshed the grant/tax coverage reports, and uploaded the generated fixtures to the development S3 bucket.
+
 ## 2026-07-05 - Codex (GPT-5) selected retrofit savings cache repair
 
 - Fixed synthetic measure-catalog incentive selection so square-foot measures use area quantities instead of producing 8-cent placeholder rebates.

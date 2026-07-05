@@ -7,6 +7,7 @@ import { normalizeUserProfile } from "./matching/normalizeUserProfile.mjs";
 import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
 import { classifyRetrofitsForOpportunity, RETROFIT_TYPES, RETROFIT_TYPES_BY_ID } from "./matching/retrofitTaxonomy.mjs";
 import { buildAdminTestCaseSavingsPreview } from "./savings/adminTestCaseSavings.mjs";
+import { buildTaxProfileRuntimePreview } from "./savings/taxProfileRuntime.mjs";
 
 const incentiveRulesPath = path.resolve(import.meta.dirname, "..", "data", "opportunity_incentive_rules.json");
 const incentiveCalculationPackagesPath = path.resolve(
@@ -16,9 +17,13 @@ const incentiveCalculationPackagesPath = path.resolve(
   "opportunity_incentive_calculation_packages_v2.json"
 );
 const taxGeographyRulesPath = path.resolve(import.meta.dirname, "..", "data", "tax_geography_rules.json");
+const localTaxWorkflowRulesPath = path.resolve(import.meta.dirname, "..", "data", "tax_local_workflow_rules.json");
+const taxGapRuntimeRulesPath = path.resolve(import.meta.dirname, "..", "data", "tax_gap_runtime_rules_2026-07-05.json");
 const opportunityIncentiveRules = readOpportunityIncentiveRules(incentiveRulesPath);
 const opportunityIncentiveCalculationPackages = readOpportunityIncentiveCalculationPackages(incentiveCalculationPackagesPath);
 const taxGeographyRules = readTaxGeographyRules(taxGeographyRulesPath);
+const localTaxWorkflows = readLocalTaxWorkflows(localTaxWorkflowRulesPath);
+const taxGapRuntimeRules = readTaxGapRuntimeRules(taxGapRuntimeRulesPath);
 
 export function buildRetrofitGroupsFromEligibleResults({
   calculationDate,
@@ -69,6 +74,7 @@ export function buildRetrofitGroupsFromEligibleResults({
 export function buildPortalRetrofitRecommendations({ intake, now = new Date(), opportunities, retrofitTypeIds = null, user }) {
   const normalizedProfile = normalizeUserProfile(intake);
   const calculationDate = now.toISOString().slice(0, 10);
+  const taxRuntimePreview = buildTaxRuntimePreviewForProfile(normalizedProfile);
   const requestedRetrofitTypeIds = normalizeRetrofitTypeIdFilter(retrofitTypeIds);
   const eligibleResults = (opportunities || [])
     .filter(isVisibleOpportunity)
@@ -89,8 +95,15 @@ export function buildPortalRetrofitRecommendations({ intake, now = new Date(), o
     isPartialRecommendations: requestedRetrofitTypeIds.size > 0,
     summary: {
       matchedRetrofitCount: retrofits.length,
-      matchedOpportunityCount: eligibleResults.length
+      matchedOpportunityCount: eligibleResults.length,
+      canShowOpportunities: !taxRuntimePreview.opportunityDisplayBlocked,
+      taxIntakeRequiredBeforeOpportunityDisplay: taxRuntimePreview.opportunityDisplayBlocked,
+      requiredTaxInputCount: taxRuntimePreview.requiredPreOpportunityInputs.length,
+      calculatedTaxBenefitCents: taxRuntimePreview.totals.includedBenefitCents,
+      calculatedTaxLiabilityCents: taxRuntimePreview.totals.includedLiabilityCents,
+      netTaxImpactCents: taxRuntimePreview.totals.includedAmountCents
     },
+    taxRuntimePreview,
     retrofits
   };
 }
@@ -98,6 +111,7 @@ export function buildPortalRetrofitRecommendations({ intake, now = new Date(), o
 export function buildPortalRetrofitPreviewShell({ intake, now = new Date(), user }) {
   const normalizedProfile = normalizeUserProfile(intake);
   const calculationDate = now.toISOString().slice(0, 10);
+  const taxRuntimePreview = buildTaxRuntimePreviewForProfile(normalizedProfile);
   const retrofits = buildLightweightRetrofitGroups(intake, {
     calculationDate,
     normalizedProfile,
@@ -110,10 +124,27 @@ export function buildPortalRetrofitPreviewShell({ intake, now = new Date(), user
     isProgressiveShell: true,
     summary: {
       matchedRetrofitCount: retrofits.length,
-      matchedOpportunityCount: intake?.sampleMatchingSummary?.promisingOpportunityCount ?? intake?.sampleMatchingSummary?.topOpportunityCount ?? 0
+      matchedOpportunityCount: intake?.sampleMatchingSummary?.promisingOpportunityCount ?? intake?.sampleMatchingSummary?.topOpportunityCount ?? 0,
+      canShowOpportunities: !taxRuntimePreview.opportunityDisplayBlocked,
+      taxIntakeRequiredBeforeOpportunityDisplay: taxRuntimePreview.opportunityDisplayBlocked,
+      requiredTaxInputCount: taxRuntimePreview.requiredPreOpportunityInputs.length,
+      calculatedTaxBenefitCents: taxRuntimePreview.totals.includedBenefitCents,
+      calculatedTaxLiabilityCents: taxRuntimePreview.totals.includedLiabilityCents,
+      netTaxImpactCents: taxRuntimePreview.totals.includedAmountCents
     },
+    taxRuntimePreview,
     retrofits
   };
+}
+
+function buildTaxRuntimePreviewForProfile(normalizedProfile) {
+  return buildTaxProfileRuntimePreview({
+    taxContext: normalizedProfile?.tax || {},
+    geography: normalizedProfile?.site?.geo || {},
+    localTaxWorkflows,
+    taxGapRuntimeRules,
+    includeCalculatedTaxInUserFacingTotals: true
+  });
 }
 
 function buildLightweightRetrofitGroups(intake, { calculationDate, normalizedProfile, subjectId } = {}) {
@@ -286,4 +317,16 @@ function readTaxGeographyRules(filePath) {
   if (!fs.existsSync(filePath)) return [];
   const source = JSON.parse(fs.readFileSync(filePath, "utf8"));
   return (source.rules || []).filter((rule) => rule?.id && rule.active !== false);
+}
+
+function readLocalTaxWorkflows(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const source = JSON.parse(fs.readFileSync(filePath, "utf8"));
+  return (source.workflows || []).filter((workflow) => workflow?.id);
+}
+
+function readTaxGapRuntimeRules(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const source = JSON.parse(fs.readFileSync(filePath, "utf8"));
+  return (source.rules || []).filter((rule) => rule?.taxRuleId || rule?.sourceSkippedRecordId);
 }

@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { buildAdminTestCaseSavingsPreview } from "../server/savings/adminTestCaseSavings.mjs";
+import { buildTaxProfileRuntimePreview } from "../server/savings/taxProfileRuntime.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const testCasesPath = process.env.MATCHING_TEST_CASES_PATH || path.join(repoRoot, "public", "sample_matching_test_cases.json");
@@ -10,22 +11,40 @@ const incentiveCalculationPackagesPath =
   process.env.OPPORTUNITY_INCENTIVE_CALCULATION_PACKAGES_PATH ||
   path.join(repoRoot, "data", "opportunity_incentive_calculation_packages_v2.json");
 const taxGeographyRulesPath = process.env.TAX_GEOGRAPHY_RULES_PATH || path.join(repoRoot, "data", "tax_geography_rules.json");
+const localTaxWorkflowRulesPath = process.env.TAX_LOCAL_WORKFLOW_RULES_PATH || path.join(repoRoot, "data", "tax_local_workflow_rules.json");
+const taxGapRuntimeRulesPath =
+  process.env.TAX_GAP_RUNTIME_RULES_PATH || path.join(repoRoot, "data", "tax_gap_runtime_rules_2026-07-05.json");
 const source = JSON.parse(fs.readFileSync(testCasesPath, "utf8"));
 const opportunityIncentiveRules = readOpportunityIncentiveRules(incentiveRulesPath);
 const opportunityIncentiveCalculationPackages = readOpportunityIncentiveCalculationPackages(incentiveCalculationPackagesPath);
 const taxGeographyRules = readTaxGeographyRules(taxGeographyRulesPath);
+const localTaxWorkflows = readLocalTaxWorkflows(localTaxWorkflowRulesPath);
+const taxGapRuntimeRules = readTaxGapRuntimeRules(taxGapRuntimeRulesPath);
 const calculationDate = (source.generatedAt || new Date().toISOString()).slice(0, 10);
 
 let calculatedCount = 0;
 let unsupportedCount = 0;
+let taxPreviewCount = 0;
+let taxPreviewBlockedCount = 0;
 
 const testCases = (source.testCases || []).map((testCase) => {
+  const taxContext = buildTaxContext(testCase);
+  const taxRuntimePreview = buildTaxProfileRuntimePreview({
+    taxContext,
+    geography: testCase.normalizedProfile?.site?.geo || testCase.sourceForm?.siteGeography || {},
+    localTaxWorkflows,
+    taxGapRuntimeRules,
+    includeCalculatedTaxInUserFacingTotals: true
+  });
+  if (taxRuntimePreview.status !== "no_applicable_tax_rules") taxPreviewCount += 1;
+  if (taxRuntimePreview.opportunityDisplayBlocked) taxPreviewBlockedCount += 1;
+
   const retrofits = (testCase.retrofits || []).map((retrofitGroup) => {
     const savingsPreview = buildAdminTestCaseSavingsPreview({
       retrofitGroup,
       sampleUserId: testCase.sampleUserId,
       normalizedProfile: testCase.normalizedProfile,
-      taxContext: buildTaxContext(testCase),
+      taxContext,
       grantContext: buildGrantContext(testCase),
       calculationDate,
       opportunityIncentiveRules,
@@ -44,6 +63,7 @@ const testCases = (source.testCases || []).map((testCase) => {
 
   return {
     ...testCase,
+    taxRuntimePreview,
     retrofits
   };
 });
@@ -64,6 +84,8 @@ console.log(`Unsupported previews: ${unsupportedCount}`);
 console.log(`Opportunity incentive rules loaded: ${opportunityIncentiveRules.length}`);
 console.log(`V2 calculation packages loaded: ${opportunityIncentiveCalculationPackages.length}`);
 console.log(`Tax geography rules loaded: ${taxGeographyRules.length}`);
+console.log(`Tax runtime previews attached: ${taxPreviewCount}`);
+console.log(`Tax runtime previews requiring pre-opportunity intake: ${taxPreviewBlockedCount}`);
 
 function readOpportunityIncentiveRules(filePath) {
   if (!fs.existsSync(filePath)) return [];
@@ -84,6 +106,18 @@ function readTaxGeographyRules(filePath) {
   if (!fs.existsSync(filePath)) return [];
   const source = JSON.parse(fs.readFileSync(filePath, "utf8"));
   return (source.rules || []).filter((rule) => rule?.id && rule.active !== false);
+}
+
+function readLocalTaxWorkflows(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const source = JSON.parse(fs.readFileSync(filePath, "utf8"));
+  return (source.workflows || []).filter((workflow) => workflow?.id);
+}
+
+function readTaxGapRuntimeRules(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const source = JSON.parse(fs.readFileSync(filePath, "utf8"));
+  return (source.rules || []).filter((rule) => rule?.taxRuleId || rule?.sourceSkippedRecordId);
 }
 
 function buildGrantContext(testCase) {

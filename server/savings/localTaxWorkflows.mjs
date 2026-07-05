@@ -125,6 +125,7 @@ function equivalentClassValues(classValue) {
     restaurant: ["restaurant", "food_service", "service", "general_business"],
     restaurant_foodservice: ["restaurant_foodservice", "restaurant", "food_service", "service", "general_business"],
     warehouse_logistics: ["warehouse_logistics", "warehouse", "warehousing", "storage", "general_business"],
+    warehouse_distribution_general_business: ["warehouse_distribution_general_business", "general_business", "distribution"],
     distribution: ["distribution", "warehouse", "warehousing", "storage", "general_business"],
     hospitality_lodging: ["hospitality_lodging", "hotel", "lodging", "rental_accommodations", "general_business"]
   };
