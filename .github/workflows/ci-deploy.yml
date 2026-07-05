@@ -94,6 +94,7 @@ jobs:
             node scripts/select-production-deploy-targets.mjs --format github-output "${base}" "${head}"
           } >> "${GITHUB_OUTPUT}"
           node scripts/select-production-deploy-targets.mjs --format lines "${base}" "${head}"
+          node scripts/select-production-deploy-targets.mjs --format markdown "${base}" "${head}" >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Deploy changed production targets
         if: steps.deploy-targets.outputs.has_deploy == 'true'

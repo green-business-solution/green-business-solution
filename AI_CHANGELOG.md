@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) smarter deploy routing summaries
+
+- Made production deploy target selection inspect `package-lock.json` package-level diffs so frontend build-tool changes, API runtime dependency changes, and CI/dev-only dependency changes route independently.
+- Added a GitHub Actions deploy-routing summary to each production deploy run and regression tests for the selector's lockfile routing behavior.
+
 ## 2026-07-05 - Codex (GPT-5) CI action and audit cleanup
 
 - Upgraded GitHub Actions workflow actions to current Node 24-backed majors for checkout, Node setup, and AWS credential configuration.
