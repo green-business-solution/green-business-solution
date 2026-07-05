@@ -16,6 +16,7 @@
 
 - Added a generated 10-frame WebP homepage transition sequence that moves from the planet scanner hero into the futuristic RetroFi dashboard/lab scene.
 - Inserted a sticky scroll-scrubbed canvas sequence between the planet scanner hero and the next homepage section, with preloaded frames and a reduced-motion static final-frame fallback.
+- Regenerated the transition frames so the sequence begins from the completed in-app scanner hero state instead of the originally supplied starter screenshot.
 
 ## 2026-07-05 - Codex (GPT-5) structured tax model records
 
