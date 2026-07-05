@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) production deploy concurrency
+
+- Added GitHub Actions concurrency control to serialize production deploy jobs on `main` without canceling in-progress AWS deployments.
+
 ## 2026-07-05 - Codex (GPT-5) deploy hash skipping and split CI checks
 
 - Added package/dist hash state to production deploys so unchanged Lambda packages skip upload/API stack updates and unchanged frontend builds skip S3 sync/CloudFront invalidation.
