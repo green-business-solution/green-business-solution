@@ -171,4 +171,84 @@ describe("local tax workflows", () => {
     expect(result.amountCents).toBe(0);
     expect(result.missingInputs.map((input) => input.inputKey)).toContain("local_assessor_confirmation");
   });
+
+  it("calculates compiled Vernon employee-band rows as internal values", () => {
+    const result = calculateLocalTaxWorkflow(
+      workflow("local_tax_ca_vernon_business_license_and_parcel_tax_v1"),
+      ctx({
+        local_business_tax_class: "general_business",
+        avg_vernon_employees: 42
+      })
+    );
+
+    expect(result.status).toBe("calculated");
+    expect(result.amountCents).toBe(215000);
+    expect(result.includedInUserFacingTotal).toBe(false);
+  });
+
+  it("calculates New Mexico solar GRT deduction pass-through only when filing gates are confirmed", () => {
+    const calculated = calculateLocalTaxWorkflow(
+      workflow("tax_gap_nm_solar_gross_receipts_deduction_v1"),
+      ctx({
+        local_business_tax_class: "solar_energy_system_sale_installation",
+        eligible_solar_sale_installation_receipts_cents: 1000000,
+        applicable_combined_gross_receipts_tax_rate_decimal: 0.07875,
+        nm_solar_energy_system_eligible: true,
+        seller_nm_gross_receipts_taxpayer_status_confirmed: true,
+        nm_solar_grt_deduction_pass_through_confirmed: true,
+        seller_grt_deduction_filing_confirmed: true,
+        nm_rpd_41341_or_equivalent_documentation_present: true
+      })
+    );
+    const gateFalse = calculateLocalTaxWorkflow(
+      workflow("tax_gap_nm_solar_gross_receipts_deduction_v1"),
+      ctx({
+        local_business_tax_class: "solar_energy_system_sale_installation",
+        eligible_solar_sale_installation_receipts_cents: 1000000,
+        applicable_combined_gross_receipts_tax_rate_decimal: 0.07875,
+        nm_solar_energy_system_eligible: true,
+        seller_nm_gross_receipts_taxpayer_status_confirmed: true,
+        nm_solar_grt_deduction_pass_through_confirmed: false,
+        seller_grt_deduction_filing_confirmed: true,
+        nm_rpd_41341_or_equivalent_documentation_present: true
+      })
+    );
+
+    expect(calculated.status).toBe("calculated");
+    expect(calculated.amountCents).toBe(78750);
+    expect(calculated.includedInUserFacingTotal).toBe(false);
+    expect(gateFalse.amountCents).toBe(0);
+  });
+
+  it("calculates Los Angeles BTRC class-rate rows from current class-rate inputs", () => {
+    const result = calculateLocalTaxWorkflow(
+      workflow("tax_gap_ca_los_angeles_business_tax_v1"),
+      ctx({
+        local_business_tax_class: "retail",
+        la_city_taxable_gross_receipts_cents: 2500000,
+        la_business_tax_rate_cents_per_1000_gross_receipts: 127,
+        la_timely_filing_or_exemption_status_confirmed: true
+      })
+    );
+
+    expect(result.status).toBe("calculated");
+    expect(result.amountCents).toBe(3175);
+    expect(result.includedInUserFacingTotal).toBe(false);
+  });
+
+  it("calculates Ohio CAT current exclusion only with filing confirmation", () => {
+    const result = calculateLocalTaxWorkflow(
+      workflow("tax_gap_oh_commercial_activity_tax_current_exclusion_v1"),
+      ctx({
+        local_business_tax_class: "ohio_cat",
+        tax_year: 2025,
+        annual_ohio_taxable_gross_receipts_cents: 1000000000,
+        oh_cat_filing_confirmation: true
+      })
+    );
+
+    expect(result.status).toBe("calculated");
+    expect(result.amountCents).toBe(1040000);
+    expect(result.includedInUserFacingTotal).toBe(false);
+  });
 });

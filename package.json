@@ -69,6 +69,7 @@
     "matching:tax-structured-records:validate": "node scripts/validate-tax-structured-model-records.mjs",
     "matching:tax-gap-disposition-work-packet": "node scripts/write-tax-gap-disposition-work-packet.mjs",
     "matching:tax-gap-repairs:intake": "node scripts/intake-tax-gap-repair-outputs.mjs",
+    "matching:tax-gap-runtime:compile": "node scripts/compile-tax-gap-runtime-rules.mjs",
     "matching:tax-gap-runtime-readiness:audit": "node scripts/audit-tax-gap-runtime-readiness.mjs",
     "fixtures:generated:list": "node scripts/sync-generated-test-fixtures.mjs list",
     "fixtures:generated:upload": "node scripts/sync-generated-test-fixtures.mjs upload",

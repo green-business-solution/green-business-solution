@@ -18,6 +18,9 @@ const localTaxWorkflowPath = path.resolve(
 const taxGeographyRulesPath = path.resolve(
   options.taxGeographyRulesPath || path.join(repoRoot, "data", "tax_geography_rules.json")
 );
+const taxGapRuntimeRulesPath = path.resolve(
+  options.taxGapRuntimeRulesPath || path.join(repoRoot, "data", `tax_gap_runtime_rules_${date}.json`)
+);
 const outputPath = path.resolve(
   options.outputPath || path.join(repoRoot, "data", `tax_gap_runtime_readiness_audit_${date}.json`)
 );
@@ -34,12 +37,16 @@ const repairsArtifact = readJson(repairsPath);
 const testCasePayload = readJson(testCasesPath);
 const localTaxPayload = readJson(localTaxWorkflowPath);
 const taxGeographyPayload = readJson(taxGeographyRulesPath);
+const taxGapRuntimeRulesPayload = fs.existsSync(taxGapRuntimeRulesPath) ? readJson(taxGapRuntimeRulesPath) : { rules: [] };
 
 const testProfiles = (testCasePayload.testCases || []).map(normalizeTestProfile);
 const existingLocalWorkflowModelMethods = new Set(
   (localTaxPayload.workflows || []).flatMap((workflow) => (workflow.calculationModels || []).map((model) => model.method).filter(Boolean))
 );
 const existingTaxGeographyTaxTypes = new Set((taxGeographyPayload.rules || []).map((rule) => rule.taxType).filter(Boolean));
+const taxGapRuntimeRulesBySourceId = new Map(
+  (taxGapRuntimeRulesPayload.rules || []).map((rule) => [rule.sourceSkippedRecordId, rule])
+);
 
 const candidateRows = (repairsArtifact.promotedTaxRuleRecords || []).map(auditCandidate);
 const nonPromotedRows = [
@@ -73,16 +80,19 @@ const audit = {
     repairs: path.relative(repoRoot, repairsPath),
     testCases: path.relative(repoRoot, testCasesPath),
     localTaxWorkflows: path.relative(repoRoot, localTaxWorkflowPath),
-    taxGeographyRules: path.relative(repoRoot, taxGeographyRulesPath)
+    taxGeographyRules: path.relative(repoRoot, taxGeographyRulesPath),
+    taxGapRuntimeRules: fs.existsSync(taxGapRuntimeRulesPath) ? path.relative(repoRoot, taxGapRuntimeRulesPath) : null
   },
   counts: buildCounts(candidateRows, nonPromotedRows),
   runtimeCapabilities: {
     existingLocalWorkflowModelMethods: [...existingLocalWorkflowModelMethods].sort(),
     existingTaxGeographyTaxTypes: [...existingTaxGeographyTaxTypes].sort(),
+    compiledTaxGapRuntimeRuleCount: taxGapRuntimeRulesBySourceId.size,
     notes: [
       "The current runtime supports explicit local-tax workflow calculationModels and geography-derived input defaults.",
       "The current runtime does not execute free-form GPT Pro formulaExpression strings.",
-      "Tax gap candidates must be compiled into structured local workflow rows, tax geography rows, or v2 package effects before customer-facing inclusion."
+      "Compiled tax gap runtime rules provide structured local workflow rows or generic gated evaluators for selected sales/use exemption and state-credit models.",
+      "Tax gap candidates must still have required taxpayer, tax-document, filing, or program-document inputs before customer-facing inclusion."
     ]
   },
   candidateRows,
@@ -105,6 +115,7 @@ console.log(`Output: ${path.relative(repoRoot, outputPath)}`);
 console.log(`Report: ${path.relative(repoRoot, reportPath)}`);
 
 function auditCandidate(candidate) {
+  const runtimeRule = taxGapRuntimeRulesBySourceId.get(candidate.sourceSkippedRecordId) || null;
   const targetGeography = parseJurisdiction(candidate.jurisdictionText);
   const matchingTestProfiles = testProfiles
     .map((profile) => {
@@ -125,10 +136,10 @@ function auditCandidate(candidate) {
     .filter(Boolean)
     .sort((a, b) => b.geographyMatch.score - a.geographyMatch.score || b.inputCoverage.satisfiedCount - a.inputCoverage.satisfiedCount);
 
-  const formulaSupport = classifyFormulaSupport(candidate);
-  const runtimeSupport = classifyRuntimeSupport(candidate, formulaSupport);
+  const formulaSupport = classifyFormulaSupport(candidate, runtimeRule);
+  const runtimeSupport = classifyRuntimeSupport(candidate, formulaSupport, runtimeRule);
   const bestProfile = matchingTestProfiles[0] || null;
-  const nextAction = decideNextAction({ candidate, targetGeography, matchingTestProfiles, formulaSupport, runtimeSupport });
+  const nextAction = decideNextAction({ candidate, targetGeography, matchingTestProfiles, formulaSupport, runtimeSupport, runtimeRule });
 
   return {
     taxRuleId: candidate.taxRuleId,
@@ -140,6 +151,14 @@ function auditCandidate(candidate) {
     sourceConfidence: candidate.sourceConfidence,
     formulaSupport,
     runtimeSupport,
+    compiledRuntimeRule: runtimeRule
+      ? {
+          runtimeSupportStatus: runtimeRule.runtimeSupportStatus,
+          localWorkflowId: runtimeRule.localWorkflowId || null,
+          calculationModelMethod: runtimeRule.calculationModel?.method || null,
+          canonicalInputCount: (runtimeRule.canonicalInputRequirements || []).length
+        }
+      : null,
     testProfileCoverage: {
       matchingProfileCount: matchingTestProfiles.length,
       fullySatisfiedProfileCount: matchingTestProfiles.filter((profile) => profile.inputCoverage.coverageStatus === "all_required_inputs_present").length,
@@ -154,7 +173,18 @@ function auditCandidate(candidate) {
   };
 }
 
-function classifyFormulaSupport(candidate) {
+function classifyFormulaSupport(candidate, runtimeRule = null) {
+  if (
+    runtimeRule &&
+    ["compiled_to_local_tax_workflow", "generic_runtime_model_supported_gated"].includes(runtimeRule.runtimeSupportStatus)
+  ) {
+    return {
+      status: "source_backed_formula_compiled_to_runtime_model",
+      currentRuntimeExecutable: true,
+      reason: "The source-backed formula has been compiled into structured local workflow rows or a generic gated tax-gap runtime model."
+    };
+  }
+
   const expression = String(candidate.formulaExpression || "").trim();
   const formulaText = String(candidate.formulaText || "").trim();
   const lower = `${formulaText} ${expression}`.toLowerCase();
@@ -220,7 +250,25 @@ function classifyFormulaSupport(candidate) {
   };
 }
 
-function classifyRuntimeSupport(candidate, formulaSupport) {
+function classifyRuntimeSupport(candidate, formulaSupport, runtimeRule = null) {
+  if (runtimeRule?.runtimeSupportStatus) {
+    return {
+      status: runtimeRule.runtimeSupportStatus,
+      currentRuntimeSurface: runtimeRule.localWorkflowId ? "localTaxWorkflows" : "taxGapRuntimeRules",
+      currentRuntimeExecutable:
+        ["compiled_to_local_tax_workflow", "generic_runtime_model_supported_gated"].includes(runtimeRule.runtimeSupportStatus) &&
+        Boolean(runtimeRule.localWorkflowId || runtimeRule.calculationModel),
+      reason:
+        runtimeRule.runtimeSupportStatus === "compiled_to_local_tax_workflow"
+          ? "This candidate has been compiled into executable localTaxWorkflow calculationModels, but required tax/user inputs still gate customer-facing use."
+          : runtimeRule.runtimeSupportStatus === "generic_runtime_model_supported_gated"
+            ? "This candidate has a generic gated tax-gap runtime evaluator, but required tax/user inputs still gate customer-facing use."
+            : runtimeRule.runtimeSupportStatus === "compiled_to_gated_local_workflow"
+              ? "This candidate has been compiled into a local workflow gate, but formula execution still requires a tax-return/accountant model import."
+              : "This candidate has a compiled runtime-facing rule record, but it remains gated by program documents, tax bills, or assessor/tax-return inputs."
+    };
+  }
+
   const modelKind = candidate.modelKind;
   if (modelKind === "local_business_license_or_receipts_tax") {
     return {
@@ -270,11 +318,39 @@ function classifyRuntimeSupport(candidate, formulaSupport) {
   };
 }
 
-function decideNextAction({ candidate, matchingTestProfiles, formulaSupport, runtimeSupport }) {
+function decideNextAction({ candidate, matchingTestProfiles, formulaSupport, runtimeSupport, runtimeRule }) {
+  const completeProfileCount = matchingTestProfiles.filter((profile) => profile.inputCoverage.coverageStatus === "all_required_inputs_present").length;
+  const hasExecutableCompiledRuntime =
+    runtimeRule && ["compiled_to_local_tax_workflow", "generic_runtime_model_supported_gated"].includes(runtimeRule.runtimeSupportStatus);
+
   if (!matchingTestProfiles.length) {
     return {
       action: "create_or_update_test_profile_for_jurisdiction",
       reason: "No current sample test profile matches the candidate jurisdiction.",
+      blocksCustomerFacingRuntime: true
+    };
+  }
+
+  if (hasExecutableCompiledRuntime && completeProfileCount > 0) {
+    return {
+      action: "ready_internal_only_runtime_gated",
+      reason: "A compiled runtime model exists and at least one matching profile has all audited inputs. Customer-facing inclusion remains disabled by policy.",
+      blocksCustomerFacingRuntime: true
+    };
+  }
+
+  if (hasExecutableCompiledRuntime) {
+    return {
+      action: "add_test_profile_tax_inputs_or_keep_gate",
+      reason: "A compiled runtime model exists, but no matching profile currently includes all required tax/user inputs.",
+      blocksCustomerFacingRuntime: true
+    };
+  }
+
+  if (runtimeRule?.runtimeSupportStatus === "compiled_to_gated_local_workflow") {
+    return {
+      action: "add_tax_return_model_or_keep_gate",
+      reason: "The workflow is routable, but formula execution still needs a structured tax-return model or complete filing document inputs.",
       blocksCustomerFacingRuntime: true
     };
   }
@@ -547,11 +623,12 @@ function buildReport(audit) {
     "## Candidate Readiness",
     "",
     table(
-      ["Candidate", "Model", "Jurisdiction", "Runtime Gate", "Test Profiles", "Full Inputs", "Next Action"],
+      ["Candidate", "Model", "Jurisdiction", "Runtime Support", "Runtime Gate", "Test Profiles", "Full Inputs", "Next Action"],
       audit.candidateRows.map((row) => [
         row.sourceSkippedRecordId,
         row.modelKind,
         row.jurisdictionText,
+        row.runtimeSupport.status,
         row.runtimeStatusWhenInputsMissing,
         String(row.testProfileCoverage.matchingProfileCount),
         String(row.testProfileCoverage.fullySatisfiedProfileCount),
@@ -579,7 +656,7 @@ function buildReport(audit) {
     "## Interpretation",
     "",
     "- The GPT Pro repairs are source-backed enough to keep as tax rule candidates, but none should enter customer-facing totals yet.",
-    "- The current runtime cannot execute free-form tax formulas. Candidates must be compiled into structured local workflow rows, tax geography rows, or v2 package effects.",
+    "- Compiled runtime support now exists for selected local workflow, sales/use exemption, and state-credit candidates; free-form GPT Pro formula text still is not executed directly.",
     "- Matching test profiles exist for most state/local candidates, but no candidate has all required user/tax inputs present under the current canonical input-key audit.",
     "- Missing inputs are expected for program-document, tax-bill, tax-return, filing, assessor, and tax-profile gates; those should be represented as UI/upload requirements rather than guessed server-side."
   ];

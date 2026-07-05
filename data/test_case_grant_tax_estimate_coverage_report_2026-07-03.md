@@ -1,6 +1,6 @@
 # Test Case Grant/Tax Estimate Coverage
 
-Generated: 2026-07-04T22:44:59.889Z
+Generated: 2026-07-05T02:56:46.952Z
 
 ## Summary
 
@@ -12,7 +12,7 @@ Generated: 2026-07-04T22:44:59.889Z
 - Missing evidence/input packages: 115
 - Tax opportunity packages in database: 3
 - Tax opportunity packages matched by current test cases: 3
-- Local tax workflow evaluations: 12
+- Local tax workflow evaluations: 15
 
 ## Runtime Inclusion Status
 
@@ -49,8 +49,9 @@ Generated: 2026-07-04T22:44:59.889Z
 | --- | --- |
 | calculated | 5 |
 | needs_tax_bill | 3 |
+| needs_tax_return | 3 |
 | review_required | 3 |
-| needs_tax_return | 1 |
+| missing_inputs | 1 |
 
 ## Local Tax Production Action Buckets
 
@@ -58,9 +59,10 @@ Generated: 2026-07-04T22:44:59.889Z
 | --- | --- |
 | production_ready_internal_calculation | 5 |
 | tax_bill_upload_required | 3 |
+| tax_return_input_required | 3 |
 | not_applicable_zero_value | 2 |
 | assessor_confirmation_required | 1 |
-| tax_return_input_required | 1 |
+| tax_profile_input_required | 1 |
 
 ## Tax Opportunity Production Action Buckets
 

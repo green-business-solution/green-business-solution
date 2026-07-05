@@ -1,0 +1,2560 @@
+{
+  "schemaVersion": "tax-gap-runtime-rules-v1",
+  "generatedAt": "2026-07-05T02:52:01.498Z",
+  "sourceArtifact": "data/tax_gap_repairs_gpt_pro_2026-07-05.json",
+  "description": "Compiled runtime-facing models and canonical input requirements for GPT Pro repaired tax-gap candidates. Customer-facing totals remain off by default until each rule has complete user/tax-document inputs and explicit inclusion policy.",
+  "safetyPolicy": {
+    "includeInUserFacingTotalDefault": false,
+    "notes": [
+      "These records do not make tax estimates customer-facing by themselves.",
+      "Sales/use exemptions and state credits calculate only after required tax profile, invoice, certificate, filing, and liability inputs are present.",
+      "Local business-tax and gross-receipts rows are compiled into local tax workflows where the current runtime supports the formula shape.",
+      "Property-tax credits, exemptions, special valuations, and abatements remain tax-bill, assessor, or program-document gates."
+    ]
+  },
+  "counts": {
+    "promotedCandidateCount": 19,
+    "runtimeRuleCount": 19,
+    "compiledLocalWorkflowCount": 5,
+    "runtimeSupportCounts": {
+      "compiled_to_local_tax_workflow": 3,
+      "program_document_tax_bill_or_assessor_gate": 11,
+      "generic_runtime_model_supported_gated": 4,
+      "compiled_to_gated_local_workflow": 1
+    },
+    "modelKindCounts": {
+      "local_business_license_or_receipts_tax": 2,
+      "tax_abatement_or_pilot": 4,
+      "sales_use_tax_exemption": 1,
+      "gross_receipts_or_bo_rate_preference": 2,
+      "state_income_or_franchise_tax_credit": 3,
+      "property_tax_special_valuation": 1,
+      "property_tax_credit": 4,
+      "property_tax_exemption": 2
+    }
+  },
+  "rules": [
+    {
+      "taxRuleId": "tax_gap_rule_79b7f474d4",
+      "sourceSkippedRecordId": "vernon_ca_partial_local_tax_sources_skip_until_code_verified_v1",
+      "modelKind": "local_business_license_or_receipts_tax",
+      "taxTypes": [
+        "city_business_license_tax",
+        "city_warehouse_business_license_tax",
+        "city_hazardous_waste_business_license_tax",
+        "city_related_waste_facility_license_tax",
+        "city_special_parcel_tax",
+        "city_public_safety_special_parcel_tax"
+      ],
+      "jurisdictionText": "City of Vernon, California",
+      "runtimeStatusWhenInputsMissing": "needs_tax_profile",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "compiled_to_local_tax_workflow",
+      "localWorkflowId": "local_tax_ca_vernon_business_license_and_parcel_tax_v1",
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "local_business_tax_class",
+          "label": "Vernon business activity classification",
+          "valueType": "enum",
+          "sourceStrategy": "tax_profile_or_city_license",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "avg_vernon_employees",
+          "label": "Average number of employees in Vernon for the tax year",
+          "valueType": "number",
+          "sourceStrategy": "city_business_license_return",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "warehouse_square_feet",
+          "label": "Qualifying Vernon warehouse square footage",
+          "valueType": "number",
+          "sourceStrategy": "city_business_license_return",
+          "uiPlacement": "retrofit_or_facility_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "inorganic_hazardous_waste_gross_receipts_cents",
+          "label": "Inorganic hazardous-waste gross receipts",
+          "valueType": "money_cents",
+          "sourceStrategy": "tax_return_or_accounting_system",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "organic_or_infectious_hazardous_waste_gross_receipts_cents",
+          "label": "Organic or infectious hazardous-waste gross receipts",
+          "valueType": "money_cents",
+          "sourceStrategy": "tax_return_or_accounting_system",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "related_party_hazardous_waste_gallons",
+          "label": "Related-party hazardous-waste gallons",
+          "valueType": "number",
+          "sourceStrategy": "city_business_license_return",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "actual_incoming_tons",
+          "label": "Actual incoming tons for waste-to-energy or solid-waste activity",
+          "valueType": "number",
+          "sourceStrategy": "city_business_license_return",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "lead_acid_battery_recycling_tons",
+          "label": "Lead-acid battery recycling incoming tons",
+          "valueType": "number",
+          "sourceStrategy": "city_business_license_return",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "adopted_warehouse_special_parcel_tax_cents_per_100_sqft",
+          "label": "Current adopted Vernon warehouse parcel-tax rate per 100 square feet",
+          "valueType": "money_cents",
+          "sourceStrategy": "official_city_rate_schedule_or_tax_bill",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "eligible_gross_land_area_sqft",
+          "label": "Eligible parcel gross land area",
+          "valueType": "number",
+          "sourceStrategy": "assessor_or_tax_bill",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "adopted_public_safety_special_parcel_tax_cents_per_sqft",
+          "label": "Current adopted Vernon public-safety parcel-tax rate per square foot",
+          "valueType": "money_cents",
+          "sourceStrategy": "official_city_rate_schedule_or_tax_bill",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "taxable_parcel_area_sqft",
+          "label": "Taxable parcel area",
+          "valueType": "number",
+          "sourceStrategy": "assessor_or_tax_bill",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://www.cityofvernonca.gov/business/licenses-permits",
+        "https://www.cityofvernonca.gov/home/showpublisheddocument/3965/638868989865830000",
+        "https://ecode360.com/44468494",
+        "https://ecode360.com/44468136"
+      ],
+      "evidenceText": "Official City sources verify that Vernon business licenses are required, license amount depends on business classification and activity, and the FY2025-26 fee schedule states that business license rates are taxes found in Vernon Municipal Code Chapter 5. Official Vernon Code sources verify the general employee-band license tax, warehouse license tax formula and min/max, hazardous waste gross receipts tax and minimum, annual rate/CPI rules, delinquency penalty cap, and special parcel tax provisions. ([City of Vernon][1])",
+      "reasoningNotes": "Promote to a source-backed local tax rule, but keep runtime status at needs_tax_profile because a customer-facing calculation requires the taxpayer class, current adopted City Council rate or CPI-adjusted rate, APN/parcel data for parcel taxes, and category-specific tax bases. The uploaded repair prompt required promotion only when official formula, taxpayer class, tax base, effective date, and URLs are verified; this record meets that threshold for modeling but not for default customer-facing savings without runtime inputs. "
+    },
+    {
+      "taxRuleId": "tax_gap_rule_4d6fe746b4",
+      "sourceSkippedRecordId": "sales_use_tax_ambiguous_rule_1",
+      "modelKind": "tax_abatement_or_pilot",
+      "taxTypes": [
+        "chapter_9b_project_sales_use_tax_abatement",
+        "chapter_9b_noneducational_construction_related_transaction_tax_abatement"
+      ],
+      "jurisdictionText": "AL",
+      "runtimeStatusWhenInputsMissing": "needs_program_documentation",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "localWorkflowId": null,
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "executed_chapter_9b_abatement_agreement",
+          "label": "Executed Chapter 9B abatement agreement",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "certified_granting_authority_resolution",
+          "label": "Certified granting-authority resolution",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "completed_form_co_caa_and_property_list",
+          "label": "Completed Form CO:CAA and property list",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "completed_form_st_ex_a2_sales_and_use_tax_certificate_application",
+          "label": "Completed Form ST:EX-A2 sales and use tax certificate application",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "alabama_department_of_revenue_sales_and_use_tax_exemption_certificate",
+          "label": "Alabama Department of Revenue sales and use tax exemption certificate",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "e_verify_documentation",
+          "label": "E-Verify documentation",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_document_upload",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "alabama_department_of_commerce_project_notification",
+          "label": "Alabama Department of Commerce project notification",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "itemized_invoices_and_transaction_dates",
+          "label": "Itemized invoices and transaction dates",
+          "valueType": "unknown",
+          "sourceStrategy": "invoice_or_contract",
+          "uiPlacement": "project_quote_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "tax_base_for_qualifying_tangible_personal_property_and_taxable_services_incorporated_into_the_project",
+          "label": "Tax base for qualifying tangible personal property and taxable services incorporated into the project",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "state_and_local_sales_and_use_tax_rates",
+          "label": "State and local sales and use tax rates",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "identification_of_local_education_and_noneducation_tax_components",
+          "label": "Identification of local education and noneducation tax components",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "project_placed_in_service_or_completion_date",
+          "label": "Project placed-in-service or completion date",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://www.revenue.alabama.gov/tax-incentives/chapter-9b-abatements/",
+        "https://www.revenue.alabama.gov/forms/abatement-forms/",
+        "https://www.revenue.alabama.gov/wp-content/uploads/2021/10/Form-CO-CAA-fillable.pdf",
+        "https://www.revenue.alabama.gov/wp-content/uploads/2022/05/Taxincentives_Summary.pdf"
+      ],
+      "evidenceText": "Alabama Department of Revenue Chapter 9B guidance lists the required abatement package and states that, when sales and use tax is included, the Department issues a certificate for purchases incorporated into the project; the same guidance states that qualifying tangible personal property may receive state sales tax abatement excluding the 0.75 percent unabated portion and local sales/use taxes not earmarked for education, while the 0.75 percent state portion and local educational taxes must be filed and remitted. ALDOR forms confirm Form CO:CAA and ST:EX-A2 workflow, and the official ruling page warns that a revenue ruling is limited to its facts and taxpayer. ([Alabama Department of Revenue][2])",
+      "reasoningNotes": "Promote only as a Chapter 9B project-specific abatement workflow. The skipped record should not be modeled as a general retrofit sales/use exemption, because the official sources require granting-authority approval, ALDOR documentation, a project certificate, and itemized qualifying project purchases."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_f2cf164d0d",
+      "sourceSkippedRecordId": "sales_use_tax_ambiguous_rule_4",
+      "modelKind": "sales_use_tax_exemption",
+      "taxTypes": [
+        "sales_use_tax_exemption_solar_energy_equipment",
+        "sales_use_tax_exemption_wind_energy_conversion_materials",
+        "sales_use_tax_exemption_manufacturing_processing_machinery_equipment_supplies",
+        "sales_use_tax_exemption_processing_energy_and_qualifying_services"
+      ],
+      "jurisdictionText": "IA",
+      "runtimeStatusWhenInputsMissing": "needs_tax_profile",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "generic_runtime_model_supported_gated",
+      "localWorkflowId": null,
+      "calculationModel": {
+        "method": "sales_use_tax_exemption",
+        "amountInput": "qualifying_exempt_sales_price_cents",
+        "rateInput": "combined_sales_use_tax_rate_decimal",
+        "requiredTrueInputs": [
+          "iowa_exemption_category_confirmed",
+          "iowa_primary_use_or_item_eligibility_confirmed",
+          "iowa_exemption_certificate_present"
+        ]
+      },
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "qualifying_exempt_sales_price_cents",
+          "label": "Iowa qualifying exempt invoice sales price",
+          "valueType": "money_cents",
+          "sourceStrategy": "invoice_or_contract",
+          "uiPlacement": "project_quote_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "combined_sales_use_tax_rate_decimal",
+          "label": "Combined Iowa sales/use tax rate for the sourced transaction",
+          "valueType": "decimal",
+          "sourceStrategy": "tax_geography_rule_or_user_override",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "iowa_exemption_category_confirmed",
+          "label": "Iowa exemption category confirmed",
+          "valueType": "boolean",
+          "sourceStrategy": "tax_profile_or_exemption_certificate",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "iowa_primary_use_or_item_eligibility_confirmed",
+          "label": "Iowa item/use eligibility confirmed",
+          "valueType": "boolean",
+          "sourceStrategy": "tax_profile_or_exemption_certificate",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "iowa_exemption_certificate_present",
+          "label": "Iowa exemption certificate present when required",
+          "valueType": "boolean",
+          "sourceStrategy": "exemption_certificate_upload",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "iowa_labor_or_service_classification",
+          "label": "Iowa contractor labor/service classification",
+          "valueType": "enum",
+          "sourceStrategy": "invoice_or_contract",
+          "uiPlacement": "project_quote_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://revenue.iowa.gov/taxes/tax-guidance/sales-use-excise-tax/sales-use-tax-guide",
+        "https://www.legis.iowa.gov/docs/code/423.3.pdf",
+        "https://revenue.iowa.gov/taxes/tax-guidance/sales-use-excise-tax/iowa-sales-and-use-tax-manufacturing-and-processing",
+        "https://revenue.iowa.gov/media/2265/download?inline=",
+        "https://revenue.iowa.gov/taxes/tax-guidance/sales-use-excise-tax/iowa-contractors-guide"
+      ],
+      "evidenceText": "Iowa Department of Revenue guidance verifies the general 6 percent state sales/use tax rate plus applicable local option tax, certificate requirements, the solar energy equipment exemption and exclusions, and labor treatment for new construction or remodeling versus repair or installation. Iowa Code section 423.3 verifies the wind energy conversion and solar exemptions. Iowa Department of Revenue manufacturing guidance verifies direct-and-primary-use manufacturing and processing exemptions and the relevant certificate workflow. ([Department of Revenue][3])",
+      "reasoningNotes": "Promote the verified Iowa exemption categories only. Current official sources reviewed did not verify a standalone geothermal or general energy-efficiency retrofit sales/use exemption; those labels should not produce customer-facing savings unless the underlying purchase independently satisfies a verified solar, wind, manufacturing/processing, processing energy, or labor rule."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_3b6c8260a1",
+      "sourceSkippedRecordId": "sales_use_tax_ambiguous_rule_5",
+      "modelKind": "tax_abatement_or_pilot",
+      "taxTypes": [
+        "nevada_reta_partial_sales_use_tax_abatement",
+        "nevada_reta_partial_property_tax_abatement"
+      ],
+      "jurisdictionText": "NV",
+      "runtimeStatusWhenInputsMissing": "needs_program_documentation",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "localWorkflowId": null,
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "governor_s_office_of_energy_reta_application",
+          "label": "Governor's Office of Energy RETA application",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "approved_public_hearing_record",
+          "label": "Approved public hearing record",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "governor_s_office_of_energy_legal_order",
+          "label": "Governor's Office of Energy legal order",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "executed_abatement_agreement",
+          "label": "Executed abatement agreement",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "certificate_of_eligibility",
+          "label": "Certificate of eligibility",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "department_of_taxation_sales_use_tax_fiscal_note",
+          "label": "Department of Taxation sales/use tax fiscal note",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "governor_s_finance_office_or_property_tax_fiscal_note_where_applicable",
+          "label": "Governor's Finance Office or property tax fiscal note where applicable",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "project_county_and_current_combined_sales_use_tax_rate",
+          "label": "Project county and current combined sales/use tax rate",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "current_local_school_support_tax_rate",
+          "label": "Current Local School Support Tax rate",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "eligible_purchase_amounts_by_period_and_project_schedule",
+          "label": "Eligible purchase amounts by period and project schedule",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "transaction_dates_within_the_approved_3_year_sales_use_abatement_period",
+          "label": "Transaction dates within the approved 3-year sales/use abatement period",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "authorized_purchaser_contractor_and_subcontractor_list",
+          "label": "Authorized purchaser, contractor, and subcontractor list",
+          "valueType": "unknown",
+          "sourceStrategy": "invoice_or_contract",
+          "uiPlacement": "project_quote_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "facility_real_and_personal_property_tax_payable_by_year",
+          "label": "Facility real and personal property tax payable by year",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "county_tax_district_rate_assessed_value_depreciation_or_assessment_details_and_property_tax_bill_data",
+          "label": "County tax district rate, assessed value, depreciation or assessment details, and property tax bill data",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "annual_report_and_certified_payroll_report",
+          "label": "Annual report and certified payroll report",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "construction_workforce_nevada_residency_wage_health_insurance_capital_investment_permits_licenses_and_non_overlap_with_other_abatements_documentation",
+          "label": "Construction workforce, Nevada-residency, wage, health insurance, capital investment, permits, licenses, and non-overlap-with-other-abatements documentation",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_document_upload",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://www.energy.nv.gov/programs/renewable-energy-tax-abatement-reta-program/",
+        "https://www.energy.nv.gov/programs/renewable-energy-tax-abatement-reta-program/reta-program-requirements/",
+        "https://www.energy.nv.gov/programs/renewable-energy-tax-abatement-reta-program/renewable-energy-tax-abatement-projects-2026/",
+        "https://www.energy.nv.gov/contentassets/ecb91b2330d345a1bc872bc879534cbd/final-jersey-valley-solar--storage-abatement-agreement---jh-signed.pdf",
+        "https://www.energy.nv.gov/contentassets/ecb91b2330d345a1bc872bc879534cbd/10-yellow-pine-solar-iii-llc_sut_fiscal-note.pdf",
+        "https://www.energy.nv.gov/contentassets/ecb91b2330d345a1bc872bc879534cbd/y-p-solar-iii-ppt-fiscal-note.pdf"
+      ],
+      "evidenceText": "Nevada Governor's Office of Energy states that RETA awards partial sales/use and property tax abatements to eligible renewable energy facilities and that GOE reviews applications, conducts public hearings, and reviews annual compliance audits. Official program requirements verify operating, capacity, workforce, residency, investment, wage, insurance, permit, funding, and non-overlap restrictions. Official 2026 project pages and agreements show 3-year sales/use and 20-year property abatement terms, 55 percent property tax abatement, approved purchaser controls, annual reporting, inspection, and revocation/repayment remedies. Official fiscal notes show sales/use abatement calculated on eligible purchases by applying the combined rate less the Local School Support Tax component in the reviewed Clark County example. ([Nevada Energy][4])",
+      "reasoningNotes": "Promote to a source-backed project abatement workflow covering both sales/use and property tax. Runtime remains needs_program_documentation because the percentage, period, eligible purchasers, eligible purchases, tax components, and property tax amounts must come from the approved project order, agreement, certificate, and fiscal notes for the specific project."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_0702ef4e25",
+      "sourceSkippedRecordId": "sales_use_tax_ambiguous_rule_8",
+      "modelKind": "gross_receipts_or_bo_rate_preference",
+      "taxTypes": [
+        "gross_receipts_tax"
+      ],
+      "jurisdictionText": "NM",
+      "runtimeStatusWhenInputsMissing": "needs_filing_confirmation",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "compiled_to_local_tax_workflow",
+      "localWorkflowId": "tax_gap_nm_solar_gross_receipts_deduction_v1",
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "eligible_solar_sale_installation_receipts_cents",
+          "label": "Eligible New Mexico solar sale-and-installation receipts",
+          "valueType": "money_cents",
+          "sourceStrategy": "invoice_or_contract",
+          "uiPlacement": "project_quote_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "applicable_combined_gross_receipts_tax_rate_decimal",
+          "label": "Applicable combined New Mexico gross receipts tax rate",
+          "valueType": "decimal",
+          "sourceStrategy": "tax_geography_rule_or_user_override",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "nm_solar_energy_system_eligible",
+          "label": "Solar energy system eligibility confirmed under New Mexico rules",
+          "valueType": "boolean",
+          "sourceStrategy": "tax_profile_or_certificate",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "seller_nm_gross_receipts_taxpayer_status_confirmed",
+          "label": "Seller/installer New Mexico gross receipts taxpayer status confirmed",
+          "valueType": "boolean",
+          "sourceStrategy": "seller_or_installer_confirmation",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "nm_solar_grt_deduction_pass_through_confirmed",
+          "label": "Invoice confirms deduction benefit is passed through to customer",
+          "valueType": "boolean",
+          "sourceStrategy": "invoice_or_contract",
+          "uiPlacement": "project_quote_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "seller_grt_deduction_filing_confirmed",
+          "label": "Seller filing confirmation for New Mexico GRT deduction",
+          "valueType": "boolean",
+          "sourceStrategy": "seller_or_installer_confirmation",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "nm_rpd_41341_or_equivalent_documentation_present",
+          "label": "New Mexico RPD-41341 or equivalent retained documentation present",
+          "valueType": "boolean",
+          "sourceStrategy": "tax_document_upload",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://www.tax.newmexico.gov/businesses/gross-receipts-overview/",
+        "https://realfile.tax.newmexico.gov/FYI-105.pdf",
+        "https://realfile.tax.newmexico.gov/rpd-41341.pdf",
+        "https://www.nmlegis.gov/Sessions/21%20Regular/bills/senate/SB0243.pdf"
+      ],
+      "evidenceText": "New Mexico TRD describes New Mexico as imposing gross receipts tax on persons engaged in business rather than a conventional retail sales tax. TRD Form RPD-41341 states that, effective July 1, 2007, a deduction from gross receipts tax is available for the sale and installation of a solar energy system. New Mexico 2021 SB0243 amended Section 7-9-112 to provide that, prior to July 1, 2030, receipts from the sale and installation of solar energy systems may be deducted from gross receipts.",
+      "reasoningNotes": "Reviewed the uploaded repair prompt and target constraints before official-source research.  Promote only the source-backed solar-energy-system gross receipts deduction into the gross_receipts_or_bo_rate_preference model. Do not model a broad clean-energy or retrofit sales/use tax exemption for New Mexico because no current official broad retrofit-specific rule was identified in the official sources reviewed. Customer-facing savings remains gated because the deduction is claimed by the seller or installer and any customer benefit depends on transaction pricing, pass-through treatment, rate, and filing confirmation."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_5b724c7f00",
+      "sourceSkippedRecordId": "az_renewable_energy_production_tax_credit_skip_v1",
+      "modelKind": "state_income_or_franchise_tax_credit",
+      "taxTypes": [
+        "individual_income_tax",
+        "corporate_income_tax"
+      ],
+      "jurisdictionText": "AZ",
+      "runtimeStatusWhenInputsMissing": "needs_filing_confirmation",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "generic_runtime_model_supported_gated",
+      "localWorkflowId": null,
+      "calculationModel": {
+        "method": "az_renewable_energy_production_credit",
+        "resourceTypeInput": "qualified_resource_type",
+        "firstProductionDateInput": "facility_first_production_date",
+        "latestEligibleFirstProductionDate": "2020-12-31",
+        "productionYearNumberInput": "production_year_number",
+        "kwhProducedInput": "calendar_year_kwh_produced",
+        "ownershipPercentageInput": "facility_ownership_percentage",
+        "certifiedCreditAmountInput": "ador_certified_credit_amount_cents",
+        "taxLiabilityInput": "arizona_income_tax_liability_cents",
+        "windBiomassRateCentsPerKwh": 1,
+        "windBiomassKwhCap": 200000000,
+        "solarRateCentsByProductionYear": {
+          "1": 4,
+          "2": 4,
+          "3": 3.5,
+          "4": 3.5,
+          "5": 3,
+          "6": 3,
+          "7": 2,
+          "8": 2,
+          "9": 1.5,
+          "10": 1
+        },
+        "maxFacilityAnnualCreditCents": 200000000,
+        "requiredTrueInputs": [
+          "az_renewable_generator_qualified",
+          "ador_certificate_approved",
+          "ador_aggregate_cap_amount_certified",
+          "az_facility_location_and_land_control_confirmed",
+          "az_grid_transmission_or_interconnection_confirmed",
+          "az_sale_to_eligible_unrelated_entity_confirmed"
+        ]
+      },
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "az_renewable_generator_qualified",
+          "label": "Qualified Arizona renewable generator status confirmed",
+          "valueType": "boolean",
+          "sourceStrategy": "tax_certificate_or_program_document",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "qualified_resource_type",
+          "label": "Qualified resource type",
+          "valueType": "enum",
+          "sourceStrategy": "project_profile",
+          "uiPlacement": "retrofit_or_facility_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "facility_first_production_date",
+          "label": "Facility first-production date",
+          "valueType": "date",
+          "sourceStrategy": "interconnection_or_program_document",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "az_facility_location_and_land_control_confirmed",
+          "label": "Arizona facility location and land control confirmed",
+          "valueType": "boolean",
+          "sourceStrategy": "program_document",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "az_grid_transmission_or_interconnection_confirmed",
+          "label": "Grid transmission or interconnection documentation confirmed",
+          "valueType": "boolean",
+          "sourceStrategy": "program_document",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "az_sale_to_eligible_unrelated_entity_confirmed",
+          "label": "Sale to eligible unrelated entity or regulated public service corporation confirmed",
+          "valueType": "boolean",
+          "sourceStrategy": "program_document",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "production_year_number",
+          "label": "Production year number from 1 through 10",
+          "valueType": "number",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "calendar_year_kwh_produced",
+          "label": "Calendar-year kWh produced",
+          "valueType": "number",
+          "sourceStrategy": "production_meter_or_tax_return",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "facility_ownership_percentage",
+          "label": "Facility ownership percentage",
+          "valueType": "decimal",
+          "sourceStrategy": "title_or_tax_return",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "ador_certificate_approved",
+          "label": "ADOR certificate approval confirmed",
+          "valueType": "boolean",
+          "sourceStrategy": "tax_certificate_upload",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "ador_certified_credit_amount_cents",
+          "label": "ADOR certified credit amount after aggregate cap",
+          "valueType": "money_cents",
+          "sourceStrategy": "tax_certificate_upload",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "ador_aggregate_cap_amount_certified",
+          "label": "ADOR aggregate cap availability reflected in certificate",
+          "valueType": "boolean",
+          "sourceStrategy": "tax_certificate_upload",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "arizona_income_tax_liability_cents",
+          "label": "Arizona income tax liability available to absorb the credit",
+          "valueType": "money_cents",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://azdor.gov/tax-credits/renewable-energy-production-tax-credit",
+        "https://azdor.gov/sites/default/files/2023-03/CREDITS_reptc-programguidelines.pdf",
+        "https://www.azleg.gov/ars/43/01083-02.htm",
+        "https://www.azleg.gov/ars/43/01164-03.htm"
+      ],
+      "evidenceText": "Arizona DOR states that the renewable energy production tax credit applies to individual and corporate income taxpayers that own a qualified energy generator first producing electricity before January 1, 2021, requires ADOR approval and certification, is not residential, and is subject to a $20,000,000 annual aggregate cap. A.R.S. Sections 43-1083.02 and 43-1164.03 provide the ten-year credit period, resource-specific production rates, $2,000,000 facility annual cap, $20,000,000 annual aggregate cap, first-come certification process, co-owner allocation, and five-year carryforward. ADOR program guidelines state that first production after 2020 is not eligible and that the final application year is 2030.",
+      "reasoningNotes": "Promote as a legacy/current certificate workflow, not as a new residential clean-energy credit. Runtime status remains needs_filing_confirmation because RetroFi cannot compute customer-facing savings from production estimates alone; ADOR certification, annual cap position, production-year number, qualified-resource classification, and taxpayer-level credit/carryforward data are required."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_674b51d32a",
+      "sourceSkippedRecordId": "co_heat_pump_systems_registered_contractor_credit_skip_v1",
+      "modelKind": "state_income_or_franchise_tax_credit",
+      "taxTypes": [
+        "colorado_income_tax"
+      ],
+      "jurisdictionText": "CO",
+      "runtimeStatusWhenInputsMissing": "needs_filing_confirmation",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "generic_runtime_model_supported_gated",
+      "localWorkflowId": null,
+      "calculationModel": {
+        "method": "co_heat_pump_invoice_discount_credit",
+        "invoiceDiscountInput": "co_heat_pump_invoice_discount_cents",
+        "requiredTrueInputs": [
+          "co_contractor_registered_at_installation",
+          "co_invoice_separately_states_required_discount",
+          "co_contractor_filing_confirmation"
+        ]
+      },
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "co_contractor_registered_at_installation",
+          "label": "Colorado contractor registered at installation",
+          "valueType": "boolean",
+          "sourceStrategy": "contractor_confirmation",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "co_invoice_separately_states_required_discount",
+          "label": "Invoice separately states Colorado required discount",
+          "valueType": "boolean",
+          "sourceStrategy": "invoice_or_receipt",
+          "uiPlacement": "project_quote_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "co_heat_pump_invoice_discount_cents",
+          "label": "Colorado heat-pump tax-credit discount shown on invoice",
+          "valueType": "money_cents",
+          "sourceStrategy": "invoice_or_receipt",
+          "uiPlacement": "project_quote_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "co_heat_pump_technology_type",
+          "label": "Colorado heat-pump technology category",
+          "valueType": "enum",
+          "sourceStrategy": "invoice_or_equipment_scope",
+          "uiPlacement": "retrofit_or_facility_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "co_heat_pump_property_type",
+          "label": "Colorado property type for unit-count rules",
+          "valueType": "enum",
+          "sourceStrategy": "project_profile",
+          "uiPlacement": "retrofit_or_facility_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "co_contractor_filing_confirmation",
+          "label": "Contractor filing confirmation",
+          "valueType": "boolean",
+          "sourceStrategy": "contractor_or_tax_return_confirmation",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://tax.colorado.gov/DR1322",
+        "https://tax.colorado.gov/sites/tax/files/documents/DR1322_2025.pdf",
+        "https://leg.colorado.gov/sites/default/files/images/olls/crs2024-title-39.pdf",
+        "https://leg.colorado.gov/laws/session-laws/HB26-1289/364/download"
+      ],
+      "evidenceText": "Colorado DOR states that the prior heat pump system income tax credit and sales tax exemption expired December 31, 2023, and that beginning January 1, 2024 the new heat pump tax credit is available only to a heat pump tax credit contractor registered with the Colorado Energy Office. DOR DR1322 for 2025 states that the contractor must provide a discount separately stated on the receipt or invoice, that building owners generally cannot claim the credit unless they are registered contractors installing their own heat pump, and that 2025 credit amounts are $500 for heat pump water heaters, $1,500 for air-source or variable refrigerant flow heat pumps, and $3,000 for ground-source, water-source, or combined-source heat pumps. Colorado Revised Statutes Section 39-22-554 provides the 2024-2032 technology-specific amount schedule and unit-count rules. HB26-1289 amended the statutory revenue-forecast reduction provisions and related program administration provisions.",
+      "reasoningNotes": "Promote because the official statute and DOR form provide a modelable heat pump contractor income tax credit with technology-specific amounts and unit-count rules. Keep customer-facing calculation gated because the credit belongs to the registered contractor, the customer benefit depends on a separately stated invoice discount and current CEO/DOR discount mechanics, and current-year form treatment or statutory forecast reduction may change the allowed amount."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_90d90b107c",
+      "sourceSkippedRecordId": "ct_green_buildings_credit_skip_v1",
+      "modelKind": "state_income_or_franchise_tax_credit",
+      "taxTypes": [
+        "corporation_business_tax"
+      ],
+      "jurisdictionText": "CT",
+      "runtimeStatusWhenInputsMissing": "needs_program_documentation",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "generic_runtime_model_supported_gated",
+      "localWorkflowId": null,
+      "calculationModel": {
+        "method": "ct_green_building_credit",
+        "projectTypeInput": "ct_green_building_project_type",
+        "certificationLevelInput": "leed_or_equivalent_certification_level",
+        "allowableCostsInput": "ct_green_building_allowable_costs_cents",
+        "squareFeetInput": "qualified_square_feet",
+        "voucherAmountInput": "deep_initial_credit_voucher_amount_cents",
+        "taxLiabilityLimitInput": "ct_chapter_208_tax_after_credit_ordering_cents",
+        "availableCreditForTaxYearInput": "ct_green_building_available_credit_for_tax_year_cents",
+        "bonusRateInput": "ct_green_building_bonus_rate_decimal",
+        "annualClaimLimitPercent": 0.25,
+        "costCapCentsPerSquareFootByProjectType": {
+          "new_construction": 25000,
+          "major_renovation": 25000,
+          "renovation": 15000,
+          "rehabilitation": 15000,
+          "core_and_shell": 25000,
+          "commercial_interior": 15000,
+          "default": 15000
+        },
+        "baseRateByProjectAndCertification": {
+          "new_construction:leed_gold": 0.08,
+          "new_construction:leed_platinum": 0.105,
+          "major_renovation:leed_gold": 0.08,
+          "major_renovation:leed_platinum": 0.105,
+          "core_and_shell:leed_gold": 0.05,
+          "core_and_shell:leed_platinum": 0.07,
+          "commercial_interior:leed_gold": 0.05,
+          "commercial_interior:leed_platinum": 0.07,
+          "leed_gold": 0.05,
+          "leed_platinum": 0.07
+        },
+        "requiredTrueInputs": [
+          "ct_chapter_208_taxpayer_status_confirmed",
+          "deep_initial_credit_voucher_valid",
+          "ct_annual_eligibility_certificate_present"
+        ]
+      },
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "tax_year",
+          "label": "Tax year",
+          "valueType": "number",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "ct_chapter_208_taxpayer_status_confirmed",
+          "label": "Connecticut Chapter 208 taxpayer status confirmed",
+          "valueType": "boolean",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "deep_initial_credit_voucher_valid",
+          "label": "Valid DEEP initial credit voucher",
+          "valueType": "boolean",
+          "sourceStrategy": "program_document",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "deep_initial_credit_voucher_amount_cents",
+          "label": "DEEP initial credit voucher amount",
+          "valueType": "money_cents",
+          "sourceStrategy": "program_document",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "ct_green_building_project_type",
+          "label": "Green building project type",
+          "valueType": "enum",
+          "sourceStrategy": "program_document",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "leed_or_equivalent_certification_level",
+          "label": "LEED or equivalent certification level",
+          "valueType": "enum",
+          "sourceStrategy": "certification_document",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "ct_green_building_allowable_costs_cents",
+          "label": "Allowable green-building costs",
+          "valueType": "money_cents",
+          "sourceStrategy": "tax_return_or_project_cost_schedule",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "qualified_square_feet",
+          "label": "Qualified square footage",
+          "valueType": "number",
+          "sourceStrategy": "project_profile",
+          "uiPlacement": "retrofit_or_facility_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "ct_green_building_available_credit_for_tax_year_cents",
+          "label": "Credit available for the claim year",
+          "valueType": "money_cents",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "ct_chapter_208_tax_after_credit_ordering_cents",
+          "label": "Chapter 208 tax after required credit ordering",
+          "valueType": "money_cents",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "ct_annual_eligibility_certificate_present",
+          "label": "Annual eligibility certificate present",
+          "valueType": "boolean",
+          "sourceStrategy": "certification_document",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "ct_green_building_bonus_rate_decimal",
+          "label": "Applicable statutory bonus rate",
+          "valueType": "decimal",
+          "sourceStrategy": "program_document",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "optional",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://portal.ct.gov/drs/drs-forms/current-year-forms/corporation-forms",
+        "https://portal.ct.gov/-/media/drs/forms/2025/corp/ct-1120gb_1225.pdf?hash=7789B0F954A93E3B13CF95621D8F118D&rev=cf0f5d4c912c4675a41aaeeeb6af4316",
+        "https://portal.ct.gov/-/media/drs/forms/2025/corp/ct-1120k_1225.pdf?hash=F2EE0F0A8E6EE4D1EFA6FCC08623E055&rev=6e27e574cd7b4f54b56574c9fd3587bd",
+        "https://www.cga.ct.gov/current/pub/chap_208.htm",
+        "https://portal.ct.gov/drs/publications/corporation-credit-guide/green-buildings-credit-21may2018"
+      ],
+      "evidenceText": "Connecticut DRS Form CT-1120GB states that the Green Building Tax Credit is claimed against Chapter 208 corporation business tax, that DEEP must have approved the application before 2017-12-01, that the credit is allowable costs times the applicable tax-credit percentage, that only 25% of total allowable costs may be claimed in a year, and that no carryforward to 2026 is available on the 2025 form. Conn. Gen. Stat. § 12-217mm supplies the eligibility rules, rate table, cost caps, voucher cap, certificate requirements, five-year carryforward, and transferability rules. DRS guidance states the program is closed to new DEEP applications and describes the same rate and filing mechanics. ([CT.gov][1])",
+      "reasoningNotes": "Promote as a source-backed Connecticut corporation business tax credit, but keep runtime gated on program documentation because new vouchers are no longer available and current claims are carryforward or transferred-credit situations only. Customer-facing savings must remain 0 unless voucher, certification, carryforward, and tax-liability inputs are complete. Input prompt citation: "
+    },
+    {
+      "taxRuleId": "tax_gap_rule_0e0972e958",
+      "sourceSkippedRecordId": "mt_energy_production_development_abatement_skip_2026_v1",
+      "modelKind": "tax_abatement_or_pilot",
+      "taxTypes": [
+        "property_tax"
+      ],
+      "jurisdictionText": "MT",
+      "runtimeStatusWhenInputsMissing": "needs_program_documentation",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "localWorkflowId": null,
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "deq_certification_status_and_certificate_identifier",
+          "label": "DEQ certification status and certificate identifier",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "facility_or_equipment_type_under_mont_code_ann_15_24_3111",
+          "label": "facility or equipment type under Mont. Code Ann. § 15-24-3111",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "facility_address_and_geospatial_location",
+          "label": "facility address and geospatial location",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "construction_start_date",
+          "label": "construction start date",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "operation_commencement_date_or_equipment_purchase_and_placed_in_service_date",
+          "label": "operation commencement date or equipment purchase and placed-in-service date",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "qualifying_taxable_value_from_montana_department_of_revenue_or_tax_bill",
+          "label": "qualifying taxable value from Montana Department of Revenue or tax bill",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "total_mill_rate_for_the_property",
+          "label": "total mill rate for the property",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "current_year_within_qualifying_period",
+          "label": "current year within qualifying period",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "prevailing_heavy_construction_wage_documentation",
+          "label": "prevailing heavy construction wage documentation",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_document_upload",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "carbon_dioxide_sequestration_or_offset_documentation_where_applicable",
+          "label": "carbon dioxide sequestration or offset documentation where applicable",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_document_upload",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "research_and_development_equipment_value_if_applicable",
+          "label": "research and development equipment value if applicable",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "confirmation_that_the_same_property_is_not_also_receiving_a_conflicting_15_24_1402_abatement_for_renewable_diesel_or_sustainable_aviation_fuel",
+          "label": "confirmation that the same property is not also receiving a conflicting § 15-24-1402 abatement for renewable diesel or sustainable aviation fuel",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://mca.legmt.gov/bills/mca/title_0150/chapter_0240/part_0310/section_0110/0150-0240-0310-0110.html",
+        "https://mca.legmt.gov/bills/mca/title_0150/chapter_0240/part_0310/section_0120/0150-0240-0310-0120.html",
+        "https://mca.legmt.gov/bills/mca/title_0150/chapter_0240/part_0310/section_0160/0150-0240-0310-0160.html",
+        "https://deq.mt.gov/energy/resources",
+        "https://deq.mt.gov/files/Energy/Documents/15_24_3111_Abatement_Certification_Form_2024_Final.pdf"
+      ],
+      "evidenceText": "Mont. Code Ann. § 15-24-3111 states that listed qualifying facilities are assessed at 50% of taxable value for the qualifying period, that the abatement applies to all mills, that qualifying research and development equipment is limited to the first $1,000,000 of value, and that the qualifying period cannot exceed 19 years. Section 15-24-3112 assigns certification to DEQ and describes revocation consequences. Montana DEQ guidance states that DEQ certifies the property and DOR applies and administers the tax after certification; DEQ’s application describes required facility, location, date, narrative, and prevailing-wage documentation. ([Legislative Archive of Montana][2])",
+      "reasoningNotes": "Promote as a deterministic statutory abatement formula only after DEQ certification and property-tax inputs exist. The skip was not a local-option adoption problem; it is a project-documentation and tax-bill workflow. Customer-facing savings must remain 0 until DEQ certification, qualifying-period status, value, and mill rate are known."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_4b7fdc1a40",
+      "sourceSkippedRecordId": "ct_uniform_solar_capacity_tax_pa26_refresh_watch_2026_v1",
+      "modelKind": "property_tax_special_valuation",
+      "taxTypes": [
+        "municipal_property_tax_related_capacity_tax"
+      ],
+      "jurisdictionText": "CT",
+      "runtimeStatusWhenInputsMissing": "needs_assessor_confirmation",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "localWorkflowId": null,
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "permission_to_operate_date_from_electric_distribution_company_or_municipal_electric_utility",
+          "label": "permission-to-operate date from electric distribution company or municipal electric utility",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "solar_photovoltaic_system_owner_or_owners",
+          "label": "solar photovoltaic system owner or owners",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "system_nameplate_capacity_in_megawatts_including_fractional_megawatts",
+          "label": "system nameplate capacity in megawatts including fractional megawatts",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "generated_load_and_confirmation_that_system_capacity_exceeds_the_load_for_the_location",
+          "label": "generated load and confirmation that system capacity exceeds the load for the location",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "parcel_or_parcels_and_municipality_or_municipalities_in_which_the_system_is_located",
+          "label": "parcel or parcels and municipality or municipalities in which the system is located",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "nameplate_capacity_allocation_by_municipality_for_multi_municipality_systems",
+          "label": "nameplate capacity allocation by municipality for multi-municipality systems",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "state_owned_land_brownfield_landfill_rooftop_canopy_and_critical_facility_microgrid_exclusion_flags",
+          "label": "state-owned land, brownfield, landfill, rooftop, canopy, and critical-facility microgrid exclusion flags",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "municipal_freeze_or_stabilization_agreement_terms_if_any",
+          "label": "municipal freeze or stabilization agreement terms if any",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "opm_developed_or_municipal_tax_form_when_available",
+          "label": "OPM-developed or municipal tax form when available",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "municipal_tax_collector_due_dates_and_installment_schedule",
+          "label": "municipal tax collector due dates and installment schedule",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "notification_date_and_proof_of_notice_to_the_municipality",
+          "label": "notification date and proof of notice to the municipality",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://cga.ct.gov/2026/sup/chap_203b.htm",
+        "https://www.cga.ct.gov/2026/ACT/PA/PDF/2026PA-00134-R00HB-05442-PA.PDF",
+        "https://www.cga.ct.gov/2026/rpt/pdf/2026-R-0076.pdf",
+        "https://www.cga.ct.gov/olr/Documents/year/AA/2026AA-0087_2026%20Acts%20Affecting%20Energy%20and%20Utilities.pdf?t=1782000000340",
+        "https://www.cga.ct.gov/2026/ba/pdf/2026HB-05442-R000666-BA.pdf",
+        "https://www.cga.ct.gov/2025/ba/pdf/2025SB-00004-R01-BA.pdf"
+      ],
+      "evidenceText": "Official Connecticut legislative materials identify Chapter 203b and PA 26-134 as the current-law update to the municipal uniform solar capacity tax. The official 2025 analysis described the original $10,000 per megawatt, over-1-megawatt, 20-year framework and municipal allocation, form, interest, appeal, and exclusion rules. Official 2026 materials and PA 26-134 snippets show the refresh extending treatment to systems with permission to operate on or after 2025-07-01 and before 2026-07-01, with 19-year treatment beginning 2026-07-01, while retaining the $10,000 per megawatt concept and municipal agreement override mechanics. ([Connecticut General Assembly][3])",
+      "reasoningNotes": "Promote as a current-law special municipal capacity tax rule, not as a savings incentive. Runtime status remains needs_assessor_confirmation because OPM or municipal forms, local due dates, multi-municipality allocation, and any freeze or stabilization agreement must be confirmed before customer-facing calculations. Savings should remain 0 because this is an added or substitute tax liability rather than a credit."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_8c609e72a6",
+      "sourceSkippedRecordId": "local_option_followup_1",
+      "modelKind": "property_tax_credit",
+      "taxTypes": [
+        "county_real_property_tax"
+      ],
+      "jurisdictionText": "Baltimore County, MD",
+      "runtimeStatusWhenInputsMissing": "needs_tax_bill",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "localWorkflowId": null,
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "baltimore_county_property_account_and_qualified_structure_identifier",
+          "label": "Baltimore County property account and qualified structure identifier",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "baltimore_county_real_property_tax_amount_attributable_to_the_qualifying_building_or_home",
+          "label": "Baltimore County real property tax amount attributable to the qualifying building or home",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "application_type_high_performance_building_or_high_performance_home",
+          "label": "application type: high-performance building or high-performance home",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "certification_path_leed_nc_leed_cs_leed_eb_leed_for_homes_national_green_building_standard_or_county_recognized_increased_efficiency_path",
+          "label": "certification path: LEED-NC, LEED-CS, LEED-EB, LEED for Homes, National Green Building Standard, or county-recognized increased-efficiency path",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "rating_level_silver_gold_platinum_emerald_or_certified_energy_efficiency_percentage",
+          "label": "rating level: Silver, Gold, Platinum, Emerald, or certified energy-efficiency percentage",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "documentation_from_an_energy_systems_professional_or_other_required_certifying_professional",
+          "label": "documentation from an energy systems professional or other required certifying professional",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_document_upload",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "application_filing_date_and_approval_status",
+          "label": "application filing date and approval status",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "first_taxable_year_for_which_the_credit_is_sought",
+          "label": "first taxable year for which the credit is sought",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "remaining_credit_years",
+          "label": "remaining credit years",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "available_annual_program_cap_allocation",
+          "label": "available annual program cap allocation",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "whether_a_revitalization_property_credit_or_other_county_credit_applies_first",
+          "label": "whether a revitalization property credit or other county credit applies first",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "confirmation_that_the_property_has_not_been_altered_in_a_way_that_terminates_eligibility",
+          "label": "confirmation that the property has not been altered in a way that terminates eligibility",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "ownership_transfer_status_if_applicable",
+          "label": "ownership transfer status if applicable",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-credits/performance-buildings",
+        "https://www.baltimorecountymd.gov/departments/budfin/taxpayer-services/tax-credits/performance-homes",
+        "https://www.baltimorecountymd.gov/files/Documents/Law/COBAR/cobarhighperfbuildingschapter6.pdf",
+        "https://www.baltimorecountymd.gov/files/Documents/Law/COBAR/cobarhighperfhomeschapter7.pdf",
+        "https://www.baltimorecountymd.gov/files/Documents/Budget/realpropertytaxcredit/apphighperformancebldg140204.pdf",
+        "https://www.baltimorecountymd.gov/files/Documents/Budget/realpropertytaxcredit/apphighperformancehome140204.pdf",
+        "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gtp&section=9-242"
+      ],
+      "evidenceText": "Official Baltimore County pages identify active high-performance building and high-performance home tax credits and cite Baltimore County Code §§ 11-2-203.1 and 11-2-203.2. County COBAR chapter snippets identify the building and home rate tables, rating systems, annual caps, and application timing, and county application snippets confirm required documentation. Maryland Tax-Property § 9-242 authorizes local governments to grant credits for high-performance buildings and to set amount, duration, criteria, qualifications, and other provisions by local law. ([Baltimore County Government][4])",
+      "reasoningNotes": "Promote as a Baltimore County property tax credit rule, but do not show customer-facing savings until the county tax bill, application approval, certification path, rating or efficiency percentage, duration year, and annual cap availability are known. Direct county pages and PDFs were official sources, though some direct openings were access-restricted; official search snippets and the official Maryland enabling statute corroborate the active local program and formulas."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_6023f7ac0f",
+      "sourceSkippedRecordId": "local_option_followup_2",
+      "modelKind": "property_tax_credit",
+      "taxTypes": [
+        "county real property tax",
+        "county personal property tax"
+      ],
+      "jurisdictionText": "Prince George's County, MD",
+      "runtimeStatusWhenInputsMissing": "needs_tax_bill",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "localWorkflowId": null,
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "prince_george_s_county_property_tax_account_number",
+          "label": "Prince George's County property tax account number",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "current_county_real_property_tax_bill_and_county_only_tax_amount",
+          "label": "Current county real property tax bill and county-only tax amount",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "current_county_personal_property_tax_bill_if_claiming_green_business_personal_property_credit",
+          "label": "Current county personal property tax bill if claiming Green Business personal property credit",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "allocation_of_county_tax_to_eligible_building_real_property_portion_personal_property_or_exclusively_used_portion",
+          "label": "Allocation of county tax to eligible building, real property portion, personal property, or exclusively used portion",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "credit_year_within_the_allowed_term",
+          "label": "Credit year within the allowed term",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "green_business_certification_from_an_accepted_third_party_certifier_if_applicable",
+          "label": "Green business certification from an accepted third-party certifier, if applicable",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "high_performance_certification_level_and_rating_system_if_applicable",
+          "label": "High-performance certification level and rating system, if applicable",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "use_and_occupancy_permit_or_other_county_required_property_documentation",
+          "label": "Use and occupancy permit or other county-required property documentation",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_document_upload",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "lease_and_contractual_property_tax_liability_documentation_if_the_claimant_is_a_lessee",
+          "label": "Lease and contractual property-tax liability documentation if the claimant is a lessee",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "confirmation_that_no_prohibited_overlapping_property_tax_credit_is_claimed_for_the_same_property_and_year",
+          "label": "Confirmation that no prohibited overlapping property tax credit is claimed for the same property and year",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "county_application_approval_and_funding_availability",
+          "label": "County application approval and funding availability",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://www.princegeorgescountymd.gov/departments-offices/finance/property-tax-credits/business/green-business-real-personal",
+        "https://www.princegeorgescountymd.gov/sites/default/files/media-document/Green%20Business%20Real%20and%20Personal%20Property%20Tax%20Credit_1.pdf",
+        "https://www.princegeorgescountymd.gov/sites/default/files/media-document/dcv24971_green-business-tax-rebate-legislation-cb-10-2016.pdf",
+        "https://www.princegeorgescountymd.gov/departments-offices/finance/property-tax-credits/business/high-performance-building-real-property-tax-credit",
+        "https://www.princegeorgescountymd.gov/sites/default/files/media-document/Application%20for%20High%20Performance%20Building%20Real%20Property%20Tax%20Credit.pdf",
+        "https://www.princegeorgescountymd.gov/sites/default/files/media-document/CB-61-2010.pdf",
+        "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtp&section=9-318",
+        "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtp&section=9-242"
+      ],
+      "evidenceText": "Prince George's County states the Green Business credit applies to the county portion of tax on qualifying real or personal property for up to five consecutive years, is first-come and subject to funding, requires third-party certification and an October 1 filing, may not be stacked with another local or state property tax credit for the same property, and must be passed through when an eligible lessee is contractually liable for the taxes. The County application supplies the operational percentages: Green Business real property 100%, 80%, 60%, 40%, and 20% for years 1-5, and Green Business personal property 50% for years 1-5. County high-performance materials supply the new-or-major renovation rates of 25%, 50%, and 75% for 5 years and existing-building O+M rates of 10%, 25%, and 50% for 3 years, with October 1 filing and a $5,000,000 fiscal-year aggregate cap. ([Prince George's County Government][1])",
+      "reasoningNotes": "Promote because the county pages, county applications, county bills, and Maryland enabling statutes provide amount, duration, caps, filing conditions, and anti-stacking rules. Runtime still needs tax-bill allocation and county approval/funding; default customer-facing savings must remain 0 until all required inputs are present. Prompt source reviewed: "
+    },
+    {
+      "taxRuleId": "tax_gap_rule_ef70fb4e7d",
+      "sourceSkippedRecordId": "local_option_followup_3",
+      "modelKind": "property_tax_credit",
+      "taxTypes": [
+        "county real property tax"
+      ],
+      "jurisdictionText": "Anne Arundel County, MD",
+      "runtimeStatusWhenInputsMissing": "needs_tax_bill",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "localWorkflowId": null,
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "anne_arundel_county_property_account_number",
+          "label": "Anne Arundel County property account number",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "current_county_real_property_tax_bill",
+          "label": "Current County real property tax bill",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "county_tax_amount_attributable_to_the_dwelling_or_building_excluding_land",
+          "label": "County tax amount attributable to the dwelling or building excluding land",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "remaining_county_property_tax_liability_after_any_other_credits",
+          "label": "Remaining County property-tax liability after any other credits",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "solar_or_geothermal_total_paid_cost_for_materials_installation_and_construction",
+          "label": "Solar or geothermal total paid cost for materials, installation, and construction",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "federal_and_state_grants_and_state_solar_or_geothermal_tax_credits_applied_to_the_project",
+          "label": "Federal and State grants and State solar or geothermal tax credits applied to the project",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "solar_or_geothermal_installation_date_and_final_inspection_date",
+          "label": "Solar or geothermal installation date and final inspection date",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "paid_receipts_and_invoices_for_solar_or_geothermal_equipment",
+          "label": "Paid receipts and invoices for solar or geothermal equipment",
+          "valueType": "unknown",
+          "sourceStrategy": "invoice_or_contract",
+          "uiPlacement": "project_quote_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "high_performance_building_residential_or_commercial_classification",
+          "label": "High-performance building residential or commercial classification",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "high_performance_rating_level_and_certification_documentation",
+          "label": "High-performance rating level and certification documentation",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "application_approval_year_for_high_performance_building_credit",
+          "label": "Application approval year for high-performance building credit",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "other_county_credits_claimed_for_the_same_property_and_tax_year",
+          "label": "Other County credits claimed for the same property and tax year",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://www.aacounty.org/finance/tax-information/tax-credits-exemptions",
+        "https://www.aacounty.org/sites/default/files/2023-03/Solar-Energy-Tax-Credit-Application.pdf",
+        "https://www.aacounty.org/sites/default/files/2023-03/Geothermal_Tax_Credit_App.pdf",
+        "https://www.aacounty.org/sites/default/files/2023-10/high-performance-building-residential.pdf",
+        "https://www.aacounty.org/sites/default/files/2023-10/High-Performance-Building-Commercial.pdf",
+        "https://www.aacounty.org/sites/default/files/2023-08/Bill%20No.%2054-23%20FINAL.pdf",
+        "https://codelibrary.amlegal.com/codes/annearundel/latest/annearundelco_md/0-0-0-151619"
+      ],
+      "evidenceText": "Anne Arundel County states its credits reduce County property taxes, do not affect other charges, cannot exceed actual tax liability, and require building/dwelling-versus-land treatment for these programs. County forms and code excerpts provide the solar one-time lesser-of formula capped at $2,500, the geothermal one-time lesser-of formula capped at $2,500, and the high-performance residential and commercial rating percentages and dollar caps for a five-year building-only credit. County materials also state high-performance building credits cannot be combined with other optional credits, while total credits cannot exceed property tax liability. ([Anne Arundel County Government][2])",
+      "reasoningNotes": "Promote as a calculable tax rule only when the County tax bill or official assessment allocation provides the dwelling/building tax excluding land. Without that allocation, the source-backed formulas are complete but customer-facing savings must remain 0."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_aa1cf6b3ff",
+      "sourceSkippedRecordId": "local_option_followup_4",
+      "modelKind": "property_tax_exemption",
+      "taxTypes": [
+        "real property tax"
+      ],
+      "jurisdictionText": "New York State municipalities and school districts under RPTL §487",
+      "runtimeStatusWhenInputsMissing": "needs_assessor_confirmation",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "localWorkflowId": null,
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "parcel_address_and_tax_map_section_block_lot_identifier",
+          "label": "Parcel address and tax map/section-block-lot identifier",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "all_overlapping_taxing_jurisdictions_for_the_parcel_including_county_city_or_town_village_if_applicable_and_school_district",
+          "label": "All overlapping taxing jurisdictions for the parcel, including county, city or town, village if applicable, and school district",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "eligible_technology_category",
+          "label": "Eligible technology category",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "construction_date_or_contract_interconnection_evidence_satisfying_rptl_487_construction_rules",
+          "label": "Construction date or contract/interconnection evidence satisfying RPTL §487 construction rules",
+          "valueType": "unknown",
+          "sourceStrategy": "invoice_or_contract",
+          "uiPlacement": "project_quote_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "taxable_status_date_for_the_assessing_unit",
+          "label": "Taxable status date for the assessing unit",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "form_rp_487_filing_confirmation",
+          "label": "Form RP-487 filing confirmation",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "assessor_approval_and_assessor_approved_exempt_assessed_value",
+          "label": "Assessor approval and assessor-approved exempt assessed value",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "incremental_cost_and_total_cost_if_the_rp_487_incremental_cost_calculation_applies",
+          "label": "Incremental cost and total cost if the RP-487 incremental-cost calculation applies",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "current_official_rptl_487_opt_out_status_for_each_overlapping_taxing_jurisdiction_and_technology_category",
+          "label": "Current official RPTL §487 opt-out status for each overlapping taxing jurisdiction and technology category",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "pilot_notice_pilot_agreement_or_official_confirmation_that_no_pilot_is_required",
+          "label": "PILOT notice, PILOT agreement, or official confirmation that no PILOT is required",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "current_tax_rates_for_each_applicable_non_opt_out_taxing_jurisdiction",
+          "label": "Current tax rates for each applicable non-opt-out taxing jurisdiction",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://www.tax.ny.gov/research/property/legal/localop/487opt.htm",
+        "https://www.nysenate.gov/legislation/laws/RPT/487",
+        "https://www.tax.ny.gov/forms/orpts/exemption.htm",
+        "https://www.tax.ny.gov/pdf/current_forms/orpts/rp487_fill_in.pdf",
+        "https://www.tax.ny.gov/pdf/current_forms/orpts/rp487i.pdf",
+        "https://www.tax.ny.gov/research/property/renewable-appraisal.htm",
+        "https://www.nyserda.ny.gov/-/media/Project/Nyserda/Files/Programs/NY-Sun/NYS-Real-Property-Tax-Law-487-and-Solar-PILOT.pdf"
+      ],
+      "evidenceText": "RPTL §487 exempts eligible energy systems from taxation to the extent of the increase in assessed value attributable to the system for 15 years, requires owner application on the prescribed form by taxable status date, allows local opt-out by counties, cities, towns, villages, and school districts by technology category, and allows solar or wind PILOT treatment in non-opt-out jurisdictions. The Tax Department publishes an official list of filed local laws and resolutions, with the reviewed list showing records on file as of March 31, 2026. Form RP-487 and its instructions provide the assessor-facing incremental-cost calculation and filing workflow. ([NY Tax Department][3])",
+      "reasoningNotes": "Promote as a safe assessor/PILOT workflow rather than a deterministic statewide savings calculator. The statutory formula is source-backed, but parcel-level savings depend on assessor-approved exempt assessed value, overlapping taxing jurisdictions, opt-out status, PILOT status, and current tax rates."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_f3c5945729",
+      "sourceSkippedRecordId": "local_option_followup_5",
+      "modelKind": "property_tax_exemption",
+      "taxTypes": [
+        "real property tax",
+        "machinery and tools tax where applicable under local ordinance"
+      ],
+      "jurisdictionText": "Virginia localities beyond Fairfax, Arlington, Loudoun, and Prince William",
+      "runtimeStatusWhenInputsMissing": "needs_assessor_confirmation",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "localWorkflowId": null,
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "virginia_locality",
+          "label": "Virginia locality",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "property_address_and_tax_account_number",
+          "label": "Property address and tax account number",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "owner_title_holder_confirmation",
+          "label": "Owner/title-holder confirmation",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "system_type_and_capacity",
+          "label": "System type and capacity",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "installation_date",
+          "label": "Installation date",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "whether_the_system_qualifies_for_the_separate_25_kw_or_less_statewide_wholly_exempt_treatment",
+          "label": "Whether the system qualifies for the separate 25 kW-or-less statewide wholly exempt treatment",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "plans_specifications_narrative_description_and_cost_documentation",
+          "label": "Plans, specifications, narrative description, and cost documentation",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "material_and_labor_cost_receipts_invoices_or_contracts",
+          "label": "Material and labor cost receipts, invoices, or contracts",
+          "valueType": "unknown",
+          "sourceStrategy": "invoice_or_contract",
+          "uiPlacement": "project_quote_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "permit_and_inspection_records",
+          "label": "Permit and inspection records",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "local_building_department_certification",
+          "label": "Local building-department certification",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "assessor_determined_certified_exemption_value",
+          "label": "Assessor-determined certified exemption value",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "current_locality_real_property_tax_rate_and_tax_bill",
+          "label": "Current locality real property tax rate and tax bill",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "for_city_of_fairfax_confirmation_that_installation_occurred_on_or_after_january_1_2022",
+          "label": "For City of Fairfax, confirmation that installation occurred on or after January 1, 2022",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "for_non_alexandria_and_non_city_of_fairfax_localities_official_local_ordinance_application_eligible_system_definitions_exemption_percentage_or_valuation_formula_term_and_assessor_workflow",
+          "label": "For non-Alexandria and non-City-of-Fairfax localities, official local ordinance, application, eligible system definitions, exemption percentage or valuation formula, term, and assessor workflow",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://law.lis.virginia.gov/vacode/title58.1/chapter36/section58.1-3661/",
+        "https://law.lis.virginia.gov/admincodefull/title13/agency5/chapter200/",
+        "https://www.alexandriava.gov/EcoCityHomes",
+        "https://www.alexandriava.gov/code-administration/code-administration-applications-forms",
+        "https://media.alexandriava.gov/docs-archives/code/info/solar-energy-equipment-tax-exemption-forms-04.11.pdf",
+        "https://www.fairfaxva.gov/Property-Business/Taxes/Tax-Exemptions/Solar-Energy-Equipment-Tax-Exemption",
+        "https://www.fairfaxva.gov/files/assets/city/v/1/treasurerfinancecor/documents/solar-energy-equipment-facilities-or-devices-certification-for-real-property-tax-exemption-applicati.pdf",
+        "https://fairfax.granicus.com/MetaViewer.php?event_id=1956&meta_id=93512&view_id=11"
+      ],
+      "evidenceText": "Virginia Code §58.1-3661 provides that certified solar equipment may be wholly or partially exempted by local ordinance, requires local building-department certification after application, requires assessor valuation, and applies the exemption for a term not less than 5 years; the same statute separately treats qualifying systems of 25 kW or less installed under §15.2-2288.7(A) or (B) as wholly exempt from state and local taxation. The Virginia Administrative Code supplies application, certification, and valuation procedures and component valuation rules. Alexandria official materials provide a 5-year solar equipment exemption and an example using 100% of cost and installation for solar panels/hot-water equipment. City of Fairfax official materials provide a 10-year program effective for qualifying installations on or after January 1, 2022, with Code Administration certification and Real Estate Assessment Office valuation. Richmond and Virginia Beach official sources checked did not supply a complete current local-option solar exemption row with ordinance, application workflow, exemption percent, and term for promotion. ([Virginia Law][4])",
+      "reasoningNotes": "Promote only the verified Alexandria and City of Fairfax locality subrules within this broader Virginia follow-up. Keep all other Virginia localities, including Richmond and Virginia Beach based on the official sources checked here, behind a document/local-ordinance gate until exact official local adoption, certification, exemption percentage, eligible system definition, and assessor workflow are available."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_d37ae0f98e",
+      "sourceSkippedRecordId": "skip_prince_georges_MD_green_business_amount_unverified_v1",
+      "modelKind": "property_tax_credit",
+      "taxTypes": [
+        "county_real_property_tax",
+        "county_personal_property_tax"
+      ],
+      "jurisdictionText": "Prince George's County, MD",
+      "runtimeStatusWhenInputsMissing": "needs_filing_confirmation",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "localWorkflowId": null,
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "property_type",
+          "label": "property type",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "credit_year_index",
+          "label": "credit year index",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "county_tax_on_eligible_property_portion",
+          "label": "County tax on eligible property/portion",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "exclusive_use_percentage",
+          "label": "exclusive-use percentage",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "green_business_certification",
+          "label": "green business certification",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "application_approval_and_funding_status",
+          "label": "application approval and funding status",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "lease_pass_through_proof_if_leased",
+          "label": "lease pass-through proof if leased",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "no_overlapping_credit_exemption",
+          "label": "no overlapping credit/exemption",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://www.princegeorgescountymd.gov/departments-offices/finance/property-tax-credits/business/green-business-real-personal",
+        "https://www.princegeorgescountymd.gov/sites/default/files/media-document/Green%20Business%20Real%20and%20Personal%20Property%20Tax%20Credit_1.pdf",
+        "https://www.princegeorgescountymd.gov/sites/default/files/media-document/dcv24971_green-business-tax-rebate-legislation-cb-10-2016.pdf",
+        "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtp&section=9-318"
+      ],
+      "evidenceText": "County official page states the credit applies to the County portion of tax on qualifying real/personal property used exclusively by an eligible green business for up to five consecutive tax years, subject to first-come funding and certification. Official County application supplies the rates: real property 100%, 80%, 60%, 40%, 20%; personal property 50% for years 1-5. CB-10-2016 supplies five-year/no-stacking/lease-pass-through rules and $1,000,000 annual aggregate cap.",
+      "reasoningNotes": "Promote; missing amount is verified, but customer-facing savings still require County tax amount and filing/funding confirmation."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_6fe87d35d5",
+      "sourceSkippedRecordId": "skip_unverified_ca_city_business_license_rates",
+      "modelKind": "local_business_license_or_receipts_tax",
+      "taxTypes": [
+        "business license tax",
+        "gross receipts tax",
+        "local business registration fee",
+        "business tax certificate fee"
+      ],
+      "jurisdictionText": "CA",
+      "runtimeStatusWhenInputsMissing": "needs_tax_profile",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "compiled_to_gated_local_workflow",
+      "localWorkflowId": "tax_gap_ca_san_francisco_business_tax_v1",
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "verified_city",
+          "label": "verified city",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "business_address_and_nexus_within_city",
+          "label": "business address and nexus within city",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "tax_period_or_fiscal_year_schedule",
+          "label": "tax period or fiscal-year schedule",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "business_classification_fund_class_activity_category_or_code_classification",
+          "label": "business classification, fund class, activity category, or code classification",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "taxable_gross_receipts_by_city_and_activity_class",
+          "label": "taxable gross receipts by city and activity class",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "worldwide_gross_receipts_where_city_exemption_rules_require_them",
+          "label": "worldwide gross receipts where city exemption rules require them",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "employee_count_or_average_number_employed",
+          "label": "employee count or average number employed",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "professional_principals_and_professional_non_professional_employee_counts_where_applicable",
+          "label": "professional principals and professional/non-professional employee counts where applicable",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "business_location_count",
+          "label": "business location count",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "contract_valuation_square_footage_units_machines_tons_gallons_or_other_special_tax_measure_where_applicable",
+          "label": "contract valuation, square footage, units, machines, tons, gallons, or other special tax measure where applicable",
+          "valueType": "unknown",
+          "sourceStrategy": "invoice_or_contract",
+          "uiPlacement": "project_quote_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "san_francisco_allocation_apportionment_receipts_and_payroll_inputs",
+          "label": "San Francisco allocation/apportionment receipts and payroll inputs",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "current_registration_renewal_or_certificate_status",
+          "label": "current registration, renewal, or certificate status",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "proof_of_timely_filing_when_claiming_city_exemptions",
+          "label": "proof of timely filing when claiming city exemptions",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://www.burbankca.gov/web/financial-services/revenue",
+        "https://www.burbankca.gov/documents/d/financial-services/fy-2026-27-adopted-fee-schedule-final-revised?download=true",
+        "https://www.cityofpasadena.net/finance/general-fund/fees-tax-schedules/",
+        "https://www.cityofpasadena.net/finance/wp-content/uploads/sites/27/FY-2027-Schedule-of-Taxes-Fees-and-Charges-Adopted.pdf",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54663",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54692",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54706",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54743",
+        "https://finance.lacity.gov/tax-education/business-taxes/know-your-rates",
+        "https://finance.lacity.gov/business-tax-renewal-instructions",
+        "https://www.sandiego.gov/treasurer/taxesfees/btax/btaxfees",
+        "https://www.sandiego.gov/treasurer/taxesfees/btax/btaxhow",
+        "https://ecode360.com/44468493",
+        "https://sftreasurer.org/business/taxes-fees/gross-receipts-tax-gr-0",
+        "https://sftreasurer.org/proposition-m-2024-business-tax-reform",
+        "https://sftreasurer.org/annual-business-registration-and-tax-form-25-27"
+      ],
+      "evidenceText": "Burbank's official revenue page links to the adopted FY 2026-27 citywide fee schedule, and the schedule provides business tax registration and Article VII business tax rows including base, employee, contractor, rental, laundry, and vending/coin-operated machine formulas. ([City of Burbank][1]) Pasadena's official FY2027 Schedule of Taxes, Fees and Charges provides business-license rows for general business, take-out service, professionals, coin-operated machines, and service classifications with employee, professional, machine, and gross-receipts components. ([City of Pasadena][2]) Anaheim's official code provides business-license formulas for gross-receipts classes, professions, services, and contractors. ([American Legal Publishing][3]) Los Angeles Office of Finance publishes the business tax class rates and renewal calculation mechanics, including rounding gross receipts to the next $1,000 and applying the class rate. ([Los Angeles Office of Finance][4]) San Diego's Treasurer publishes Business Tax Certificate rates by employee count and states that businesses operating in the city must register for a certificate. ([San Diego][5]) Vernon and San Francisco official sources provide city-specific employee-bracket, special-schedule, gross-receipts, allocation/apportionment, registration, and Prop M-era business-tax rules. ([eCode360][6])",
+      "reasoningNotes": "Promote to city-specific tax-rule rows for the seven researched cities only. The uploaded repair prompt requires official sources and zero customer-facing savings unless the source-backed formula and required user inputs are complete.  The remaining risk is not source confidence for the named cities, but runtime fit: city, period, class, measure, exemptions, and certificate status must match the official source."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_f388a16443",
+      "sourceSkippedRecordId": "skip_mi_rerz_customer_facing_savings_without_approved_zone_docs",
+      "modelKind": "tax_abatement_or_pilot",
+      "taxTypes": [
+        "state education tax",
+        "real property tax",
+        "personal property tax",
+        "local income tax where applicable",
+        "essential services assessment reduction where applicable"
+      ],
+      "jurisdictionText": "MI",
+      "runtimeStatusWhenInputsMissing": "needs_program_documentation",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "localWorkflowId": null,
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "state_administrative_board_designation_or_official_designation_record",
+          "label": "State Administrative Board designation or official designation record",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "michigan_strategic_fund_recommendation_or_approval_documentation",
+          "label": "Michigan Strategic Fund recommendation or approval documentation",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_document_upload",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "local_unit_consent_or_resolution",
+          "label": "local unit consent or resolution",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "approved_company_name_and_taxpayer_identifiers",
+          "label": "approved company name and taxpayer identifiers",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "renewable_energy_facility_type_and_qualifying_operations",
+          "label": "renewable energy facility type and qualifying operations",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "development_agreement_where_required",
+          "label": "development agreement where required",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "legal_boundary_parcel_or_facility_map",
+          "label": "legal boundary, parcel, or facility map",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "confirmation_that_the_taxpayer_s_operation_is_inside_the_approved_geographic_boundary",
+          "label": "confirmation that the taxpayer's operation is inside the approved geographic boundary",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "term_start_date_term_end_date_and_current_zone_year",
+          "label": "term start date, term end date, and current zone year",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "phaseout_schedule_or_applicable_multiplier",
+          "label": "phaseout schedule or applicable multiplier",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "current_compliance_status_and_proof_taxpayer_is_current_with_state_and_local_taxes",
+          "label": "current compliance status and proof taxpayer is current with state and local taxes",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "tax_bills_returns_or_assessor_treasury_documents_identifying_eligible_tax_lines",
+          "label": "tax bills, returns, or assessor/Treasury documents identifying eligible tax lines",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_bill_or_assessor",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "exclusion_of_federal_taxes_local_bond_obligations_school_sinking_fund_special_assessments_sales_use_tax_and_non_exempt_taxes",
+          "label": "exclusion of federal taxes, local bond obligations, school sinking fund, special assessments, sales/use tax, and non-exempt taxes",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_profile",
+          "uiPlacement": "tax_profile",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "annual_reporting_or_program_documentation_status",
+          "label": "annual reporting or program-documentation status",
+          "valueType": "unknown",
+          "sourceStrategy": "tax_document_upload",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://www.michiganbusiness.org/globalassets/documents/reports/fact-sheets/renewableenergyrenzones.pdf",
+        "https://www.michiganbusiness.org/about-medc/michigan-strategic-fund/",
+        "https://www.michiganbusiness.org/globalassets/documents/reports/legislative-reports/cy2022-renaissance-zone-annual-report.pdf",
+        "https://www.michigan.gov/taxes/property/ppt/esa/topics/esa-topic-special-millages-and-renaissance-zones",
+        "https://legislature.mi.gov/documents/2017-2018/publicact/htm/2018-PA-0474.htm",
+        "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-125-2688e",
+        "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-125-2689"
+      ],
+      "evidenceText": "MEDC's RERZ fact sheet states that benefits apply only to operations of the designated company within approved geographic boundaries, identifies the local resolution and MSF/SAB approval workflow, lists taxes not paid and taxes still due, requires tax-current status, and states that approved companies enter MSF agreements; it also states taxes can be abated up to 15 years and relief is phased out in 25% increments over the last three years. ([MEDC][7]) MEDC's Michigan Strategic Fund page states that the MSF Board recommends Agricultural Processing, Renewable Energy, and Forest Products Processing Renaissance Zone designations to the State Administrative Board. ([MEDC][8]) MEDC's annual Renaissance Zone report confirms most state and local taxes, including real and personal property tax, are abated for specified years; it also confirms Corporate Income Tax, federal taxes, local bond obligations, school sinking fund, special assessments, and sales/use tax limitations, and describes official MSF actions and company-specific RERZ designations. ([MEDC][9]) Michigan Treasury ESA guidance gives renaissance-zone ESA phaseout multipliers and instructs taxpayers to report full acquisition cost while the system calculates the reduction. ([Michigan.gov][10]) Michigan Public Act 474 official text confirms MSF recommendation, local consent, continuous geographic area, revocation risk, development-agreement requirements, and annual reporting conditions. ([Michigan Legislature][11])",
+      "reasoningNotes": "Promote the general RERZ abatement workflow, but keep customer-facing savings gated. The skip reason is correct that a county, municipality, or zone label is only a routing fact until project approval, boundary, term, phaseout, compliance, and tax-line documents are present."
+    },
+    {
+      "taxRuleId": "tax_gap_rule_4a6e174401",
+      "sourceSkippedRecordId": "skip_oh_cat_current_exclusion_amount_without_current_return_confirmation",
+      "modelKind": "gross_receipts_or_bo_rate_preference",
+      "taxTypes": [
+        "Ohio Commercial Activity Tax"
+      ],
+      "jurisdictionText": "OH",
+      "runtimeStatusWhenInputsMissing": "needs_tax_return",
+      "includeInUserFacingTotalDefault": false,
+      "customerFacingSavingsCentsDefault": 0,
+      "sourceConfidence": "high",
+      "runtimeSupportStatus": "compiled_to_local_tax_workflow",
+      "localWorkflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
+      "calculationModel": null,
+      "canonicalInputRequirements": [
+        {
+          "inputKey": "tax_year",
+          "label": "Ohio CAT tax year",
+          "valueType": "number",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "annual_ohio_taxable_gross_receipts_cents",
+          "label": "Annual Ohio taxable gross receipts",
+          "valueType": "money_cents",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "quarterly_ohio_taxable_gross_receipts_cents",
+          "label": "Quarterly Ohio taxable gross receipts",
+          "valueType": "money_cents",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "optional",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "oh_cat_filing_confirmation",
+          "label": "Ohio CAT filing/registration confirmation",
+          "valueType": "boolean",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "blocks_calculation",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "oh_cat_group_taxpayer_status",
+          "label": "Single, combined, or consolidated taxpayer group status",
+          "valueType": "enum",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "optional",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "oh_cat_exclusion_used_in_prior_quarters_cents",
+          "label": "CAT exclusion already used in prior quarters",
+          "valueType": "money_cents",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "optional",
+          "userOverrideAllowed": true
+        }
+      ],
+      "sourceUrls": [
+        "https://codes.ohio.gov/ohio-revised-code/section-5751.03",
+        "https://codes.ohio.gov/ohio-revised-code/chapter-5751",
+        "https://dam.assets.ohio.gov/image/upload/tax.ohio.gov/commercial_activities/information_releases/CAT_2023-01_info_release.pdf",
+        "https://content.govdelivery.com/accounts/OHTAX/bulletins/3e87613"
+      ],
+      "evidenceText": "ORC 5751.03 imposes CAT at two and six-tenths mills per dollar on taxable gross receipts after subtracting the exclusion amount, applies the full exclusion to the first calendar-quarter return, and carries unused exclusion forward to later quarters in the same year. ([Ohio Laws][12]) ORC Chapter 5751 states that CAT is levied on each person with taxable gross receipts for the privilege of doing business in Ohio, provides quarterly filing mechanics, and requires the fourth-quarter return to adjust over- or under-reported receipts for the calendar year. ([Ohio Laws][13]) Ohio's official CAT information release states that the annual minimum tax is eliminated for periods beginning January 1, 2024, the exclusion is $3,000,000 in 2024 and $6,000,000 in 2025 and thereafter, the 0.26% rate is unchanged, annual filing is eliminated after the 2023 return, taxpayers at or below the threshold are not required to file, and combined/consolidated groups are treated as one taxpayer. ([Cloudinary][14]) Ohio's official update for Q2 2025 confirms the $6,000,000-or-less cancellation message and electronic filing/payment routing through the Ohio Business Gateway. ([GovDelivery][15])",
+      "reasoningNotes": "Promote the current CAT constants and mechanics, but keep runtime status as needs_tax_return because a customer-facing amount requires the taxpayer's current return period, Ohio taxable gross receipts, group status, used exclusion, and account/filing status."
+    }
+  ]
+}

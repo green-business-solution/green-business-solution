@@ -1,11 +1,12 @@
 {
   "schemaVersion": "retrofi_tax_gap_runtime_readiness_audit.v1",
-  "generatedAt": "2026-07-05T02:30:34.414Z",
+  "generatedAt": "2026-07-05T02:56:23.978Z",
   "sourceArtifacts": {
     "repairs": "data/tax_gap_repairs_gpt_pro_2026-07-05.json",
     "testCases": "public/sample_matching_test_cases.json",
     "localTaxWorkflows": "data/tax_local_workflow_rules.json",
-    "taxGeographyRules": "data/tax_geography_rules.json"
+    "taxGeographyRules": "data/tax_geography_rules.json",
+    "taxGapRuntimeRules": "data/tax_gap_runtime_rules_2026-07-05.json"
   },
   "counts": {
     "promotedCandidateCount": 19,
@@ -21,33 +22,26 @@
       "tax_abatement_or_pilot": 4
     },
     "candidateCountByRuntimeSupport": {
-      "needs_sales_use_exemption_importer": 1,
-      "needs_tax_credit_runtime_model": 3,
-      "partially_supported_after_business_tax_import": 2,
-      "supported_after_local_workflow_import": 2,
-      "supported_as_gated_workflow_after_import": 11
+      "compiled_to_gated_local_workflow": 1,
+      "compiled_to_local_tax_workflow": 3,
+      "generic_runtime_model_supported_gated": 4,
+      "program_document_tax_bill_or_assessor_gate": 11
     },
     "candidateCountByFormulaSupport": {
-      "source_backed_credit_needs_tax_return_runtime_model": 3,
-      "source_backed_exemption_needs_taxability_importer": 1,
-      "source_backed_formula_needs_compiler_mapping": 1,
-      "source_backed_formula_needs_structured_model_rows": 3,
+      "source_backed_formula_compiled_to_runtime_model": 7,
+      "source_backed_formula_needs_structured_model_rows": 1,
       "source_backed_program_document_workflow": 4,
       "source_backed_property_tax_formula_needs_bill_or_assessor_adapter": 7
     },
     "candidateCountByNextAction": {
-      "add_test_profile_tax_inputs_or_keep_gate": 4,
-      "compile_candidate_into_structured_runtime_rows": 4,
-      "create_or_update_test_profile_for_jurisdiction": 8,
-      "needs_sales_use_exemption_importer": 1,
-      "needs_tax_credit_runtime_model": 2
+      "add_tax_return_model_or_keep_gate": 1,
+      "add_test_profile_tax_inputs_or_keep_gate": 10,
+      "create_or_update_test_profile_for_jurisdiction": 8
     },
     "nextActionCounts": {
-      "add_test_profile_tax_inputs_or_keep_gate": 4,
-      "compile_candidate_into_structured_runtime_rows": 4,
-      "create_or_update_test_profile_for_jurisdiction": 8,
-      "needs_sales_use_exemption_importer": 1,
-      "needs_tax_credit_runtime_model": 2
+      "add_tax_return_model_or_keep_gate": 1,
+      "add_test_profile_tax_inputs_or_keep_gate": 10,
+      "create_or_update_test_profile_for_jurisdiction": 8
     },
     "candidatesWithAnyTestProfileCoverage": 11,
     "candidatesWithCompleteMatchedTestInputs": 0,
@@ -60,15 +54,18 @@
       "base_plus_units_over_threshold",
       "class_rate_table",
       "conditional_fixed_amount",
+      "employee_band",
       "everett_bo_ordinary_rate",
       "fixed_amount",
       "fixed_amount_by_key",
       "fixed_plus_per_employee",
       "gross_receipts_rate",
+      "gross_receipts_rate_after_exclusion",
       "percentage_rate",
       "percentage_rate_by_key",
       "percentage_rate_with_unit_threshold",
       "professional_employee_formula",
+      "rate_times_quantity",
       "rental_unit_tier",
       "san_diego_employee_certificate",
       "square_foot_rate",
@@ -81,10 +78,12 @@
       "property_income_tax_exemption",
       "property_tax"
     ],
+    "compiledTaxGapRuntimeRuleCount": 19,
     "notes": [
       "The current runtime supports explicit local-tax workflow calculationModels and geography-derived input defaults.",
       "The current runtime does not execute free-form GPT Pro formulaExpression strings.",
-      "Tax gap candidates must be compiled into structured local workflow rows, tax geography rows, or v2 package effects before customer-facing inclusion."
+      "Compiled tax gap runtime rules provide structured local workflow rows or generic gated evaluators for selected sales/use exemption and state-credit models.",
+      "Tax gap candidates must still have required taxpayer, tax-document, filing, or program-document inputs before customer-facing inclusion."
     ]
   },
   "candidateRows": [
@@ -103,15 +102,21 @@
       "runtimeStatusWhenInputsMissing": "needs_tax_profile",
       "sourceConfidence": "high",
       "formulaSupport": {
-        "status": "source_backed_formula_needs_structured_model_rows",
-        "currentRuntimeExecutable": false,
-        "reason": "Business/gross-receipts tax formulas must be converted into localTaxWorkflow calculationModels or equivalent structured rows before runtime execution."
+        "status": "source_backed_formula_compiled_to_runtime_model",
+        "currentRuntimeExecutable": true,
+        "reason": "The source-backed formula has been compiled into structured local workflow rows or a generic gated tax-gap runtime model."
       },
       "runtimeSupport": {
-        "status": "supported_after_local_workflow_import",
+        "status": "compiled_to_local_tax_workflow",
         "currentRuntimeSurface": "localTaxWorkflows",
-        "currentRuntimeExecutable": false,
-        "reason": "The local-tax runtime can calculate structured business-tax workflow methods, but this candidate has not been compiled into workflow calculationModels."
+        "currentRuntimeExecutable": true,
+        "reason": "This candidate has been compiled into executable localTaxWorkflow calculationModels, but required tax/user inputs still gate customer-facing use."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "compiled_to_local_tax_workflow",
+        "localWorkflowId": "local_tax_ca_vernon_business_license_and_parcel_tax_v1",
+        "calculationModelMethod": null,
+        "canonicalInputCount": 12
       },
       "testProfileCoverage": {
         "matchingProfileCount": 1,
@@ -436,8 +441,8 @@
         ]
       },
       "nextAction": {
-        "action": "compile_candidate_into_structured_runtime_rows",
-        "reason": "Business/gross-receipts tax formulas must be converted into localTaxWorkflow calculationModels or equivalent structured rows before runtime execution.",
+        "action": "add_test_profile_tax_inputs_or_keep_gate",
+        "reason": "A compiled runtime model exists, but no matching profile currently includes all required tax/user inputs.",
         "blocksCustomerFacingRuntime": true
       },
       "customerFacingPolicy": {
@@ -465,10 +470,16 @@
         "reason": "Abatement/PILOT rules are project-document workflows and must stay gated until approved agreements or certificates are present."
       },
       "runtimeSupport": {
-        "status": "supported_as_gated_workflow_after_import",
-        "currentRuntimeSurface": "localTaxWorkflows",
+        "status": "program_document_tax_bill_or_assessor_gate",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
         "currentRuntimeExecutable": false,
-        "reason": "The local-tax runtime can represent bill/document/assessor gates, but not calculate these candidates until structured workflow rows and required documents are present."
+        "reason": "This candidate has a compiled runtime-facing rule record, but it remains gated by program documents, tax bills, or assessor/tax-return inputs."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+        "localWorkflowId": null,
+        "calculationModelMethod": null,
+        "canonicalInputCount": 12
       },
       "testProfileCoverage": {
         "matchingProfileCount": 0,
@@ -501,15 +512,21 @@
       "runtimeStatusWhenInputsMissing": "needs_tax_profile",
       "sourceConfidence": "high",
       "formulaSupport": {
-        "status": "source_backed_exemption_needs_taxability_importer",
-        "currentRuntimeExecutable": false,
-        "reason": "The current sales-tax runtime calculates rates from explicit rule rows but does not yet execute product taxability/exemption formulas from tax gap records."
+        "status": "source_backed_formula_compiled_to_runtime_model",
+        "currentRuntimeExecutable": true,
+        "reason": "The source-backed formula has been compiled into structured local workflow rows or a generic gated tax-gap runtime model."
       },
       "runtimeSupport": {
-        "status": "needs_sales_use_exemption_importer",
-        "currentRuntimeSurface": "taxGeographyRules",
-        "currentRuntimeExecutable": false,
-        "reason": "Sales-tax rate calculation exists, but product/service taxability and exemption certificates need a separate importer/evaluator."
+        "status": "generic_runtime_model_supported_gated",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
+        "currentRuntimeExecutable": true,
+        "reason": "This candidate has a generic gated tax-gap runtime evaluator, but required tax/user inputs still gate customer-facing use."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "generic_runtime_model_supported_gated",
+        "localWorkflowId": null,
+        "calculationModelMethod": "sales_use_tax_exemption",
+        "canonicalInputCount": 6
       },
       "testProfileCoverage": {
         "matchingProfileCount": 1,
@@ -828,8 +845,8 @@
         ]
       },
       "nextAction": {
-        "action": "needs_sales_use_exemption_importer",
-        "reason": "Sales-tax rate calculation exists, but product/service taxability and exemption certificates need a separate importer/evaluator.",
+        "action": "add_test_profile_tax_inputs_or_keep_gate",
+        "reason": "A compiled runtime model exists, but no matching profile currently includes all required tax/user inputs.",
         "blocksCustomerFacingRuntime": true
       },
       "customerFacingPolicy": {
@@ -857,10 +874,16 @@
         "reason": "Abatement/PILOT rules are project-document workflows and must stay gated until approved agreements or certificates are present."
       },
       "runtimeSupport": {
-        "status": "supported_as_gated_workflow_after_import",
-        "currentRuntimeSurface": "localTaxWorkflows",
+        "status": "program_document_tax_bill_or_assessor_gate",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
         "currentRuntimeExecutable": false,
-        "reason": "The local-tax runtime can represent bill/document/assessor gates, but not calculate these candidates until structured workflow rows and required documents are present."
+        "reason": "This candidate has a compiled runtime-facing rule record, but it remains gated by program documents, tax bills, or assessor/tax-return inputs."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+        "localWorkflowId": null,
+        "calculationModelMethod": null,
+        "canonicalInputCount": 16
       },
       "testProfileCoverage": {
         "matchingProfileCount": 0,
@@ -893,15 +916,21 @@
       "runtimeStatusWhenInputsMissing": "needs_filing_confirmation",
       "sourceConfidence": "high",
       "formulaSupport": {
-        "status": "source_backed_formula_needs_compiler_mapping",
-        "currentRuntimeExecutable": false,
-        "reason": "Business/gross-receipts tax formulas must be converted into localTaxWorkflow calculationModels or equivalent structured rows before runtime execution."
+        "status": "source_backed_formula_compiled_to_runtime_model",
+        "currentRuntimeExecutable": true,
+        "reason": "The source-backed formula has been compiled into structured local workflow rows or a generic gated tax-gap runtime model."
       },
       "runtimeSupport": {
-        "status": "partially_supported_after_business_tax_import",
-        "currentRuntimeSurface": "taxGeographyRules/localTaxWorkflows",
-        "currentRuntimeExecutable": false,
-        "reason": "The repo has some B&O/local gross-receipts workflow support, but this candidate needs jurisdiction-specific constants and tax-return inputs."
+        "status": "compiled_to_local_tax_workflow",
+        "currentRuntimeSurface": "localTaxWorkflows",
+        "currentRuntimeExecutable": true,
+        "reason": "This candidate has been compiled into executable localTaxWorkflow calculationModels, but required tax/user inputs still gate customer-facing use."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "compiled_to_local_tax_workflow",
+        "localWorkflowId": "tax_gap_nm_solar_gross_receipts_deduction_v1",
+        "calculationModelMethod": null,
+        "canonicalInputCount": 7
       },
       "testProfileCoverage": {
         "matchingProfileCount": 1,
@@ -1168,8 +1197,8 @@
         ]
       },
       "nextAction": {
-        "action": "compile_candidate_into_structured_runtime_rows",
-        "reason": "Business/gross-receipts tax formulas must be converted into localTaxWorkflow calculationModels or equivalent structured rows before runtime execution.",
+        "action": "add_test_profile_tax_inputs_or_keep_gate",
+        "reason": "A compiled runtime model exists, but no matching profile currently includes all required tax/user inputs.",
         "blocksCustomerFacingRuntime": true
       },
       "customerFacingPolicy": {
@@ -1192,15 +1221,21 @@
       "runtimeStatusWhenInputsMissing": "needs_filing_confirmation",
       "sourceConfidence": "high",
       "formulaSupport": {
-        "status": "source_backed_credit_needs_tax_return_runtime_model",
-        "currentRuntimeExecutable": false,
-        "reason": "State credit rules require tax-return liability, certificate, carryforward, or filing inputs and are not handled by a generic tax-credit evaluator yet."
+        "status": "source_backed_formula_compiled_to_runtime_model",
+        "currentRuntimeExecutable": true,
+        "reason": "The source-backed formula has been compiled into structured local workflow rows or a generic gated tax-gap runtime model."
       },
       "runtimeSupport": {
-        "status": "needs_tax_credit_runtime_model",
-        "currentRuntimeSurface": "v2 incentive package tax effects",
-        "currentRuntimeExecutable": false,
-        "reason": "Current tax package effects are opportunity-specific; these candidates need source-backed v2 tax package effects or a generic state-credit evaluator."
+        "status": "generic_runtime_model_supported_gated",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
+        "currentRuntimeExecutable": true,
+        "reason": "This candidate has a generic gated tax-gap runtime evaluator, but required tax/user inputs still gate customer-facing use."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "generic_runtime_model_supported_gated",
+        "localWorkflowId": null,
+        "calculationModelMethod": "az_renewable_energy_production_credit",
+        "canonicalInputCount": 13
       },
       "testProfileCoverage": {
         "matchingProfileCount": 2,
@@ -1761,8 +1796,8 @@
         ]
       },
       "nextAction": {
-        "action": "needs_tax_credit_runtime_model",
-        "reason": "Current tax package effects are opportunity-specific; these candidates need source-backed v2 tax package effects or a generic state-credit evaluator.",
+        "action": "add_test_profile_tax_inputs_or_keep_gate",
+        "reason": "A compiled runtime model exists, but no matching profile currently includes all required tax/user inputs.",
         "blocksCustomerFacingRuntime": true
       },
       "customerFacingPolicy": {
@@ -1785,15 +1820,21 @@
       "runtimeStatusWhenInputsMissing": "needs_filing_confirmation",
       "sourceConfidence": "high",
       "formulaSupport": {
-        "status": "source_backed_credit_needs_tax_return_runtime_model",
-        "currentRuntimeExecutable": false,
-        "reason": "State credit rules require tax-return liability, certificate, carryforward, or filing inputs and are not handled by a generic tax-credit evaluator yet."
+        "status": "source_backed_formula_compiled_to_runtime_model",
+        "currentRuntimeExecutable": true,
+        "reason": "The source-backed formula has been compiled into structured local workflow rows or a generic gated tax-gap runtime model."
       },
       "runtimeSupport": {
-        "status": "needs_tax_credit_runtime_model",
-        "currentRuntimeSurface": "v2 incentive package tax effects",
-        "currentRuntimeExecutable": false,
-        "reason": "Current tax package effects are opportunity-specific; these candidates need source-backed v2 tax package effects or a generic state-credit evaluator."
+        "status": "generic_runtime_model_supported_gated",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
+        "currentRuntimeExecutable": true,
+        "reason": "This candidate has a generic gated tax-gap runtime evaluator, but required tax/user inputs still gate customer-facing use."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "generic_runtime_model_supported_gated",
+        "localWorkflowId": null,
+        "calculationModelMethod": "co_heat_pump_invoice_discount_credit",
+        "canonicalInputCount": 6
       },
       "testProfileCoverage": {
         "matchingProfileCount": 2,
@@ -2256,8 +2297,8 @@
         ]
       },
       "nextAction": {
-        "action": "needs_tax_credit_runtime_model",
-        "reason": "Current tax package effects are opportunity-specific; these candidates need source-backed v2 tax package effects or a generic state-credit evaluator.",
+        "action": "add_test_profile_tax_inputs_or_keep_gate",
+        "reason": "A compiled runtime model exists, but no matching profile currently includes all required tax/user inputs.",
         "blocksCustomerFacingRuntime": true
       },
       "customerFacingPolicy": {
@@ -2280,15 +2321,21 @@
       "runtimeStatusWhenInputsMissing": "needs_program_documentation",
       "sourceConfidence": "high",
       "formulaSupport": {
-        "status": "source_backed_credit_needs_tax_return_runtime_model",
-        "currentRuntimeExecutable": false,
-        "reason": "State credit rules require tax-return liability, certificate, carryforward, or filing inputs and are not handled by a generic tax-credit evaluator yet."
+        "status": "source_backed_formula_compiled_to_runtime_model",
+        "currentRuntimeExecutable": true,
+        "reason": "The source-backed formula has been compiled into structured local workflow rows or a generic gated tax-gap runtime model."
       },
       "runtimeSupport": {
-        "status": "needs_tax_credit_runtime_model",
-        "currentRuntimeSurface": "v2 incentive package tax effects",
-        "currentRuntimeExecutable": false,
-        "reason": "Current tax package effects are opportunity-specific; these candidates need source-backed v2 tax package effects or a generic state-credit evaluator."
+        "status": "generic_runtime_model_supported_gated",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
+        "currentRuntimeExecutable": true,
+        "reason": "This candidate has a generic gated tax-gap runtime evaluator, but required tax/user inputs still gate customer-facing use."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "generic_runtime_model_supported_gated",
+        "localWorkflowId": null,
+        "calculationModelMethod": "ct_green_building_credit",
+        "canonicalInputCount": 12
       },
       "testProfileCoverage": {
         "matchingProfileCount": 0,
@@ -2326,10 +2373,16 @@
         "reason": "Abatement/PILOT rules are project-document workflows and must stay gated until approved agreements or certificates are present."
       },
       "runtimeSupport": {
-        "status": "supported_as_gated_workflow_after_import",
-        "currentRuntimeSurface": "localTaxWorkflows",
+        "status": "program_document_tax_bill_or_assessor_gate",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
         "currentRuntimeExecutable": false,
-        "reason": "The local-tax runtime can represent bill/document/assessor gates, but not calculate these candidates until structured workflow rows and required documents are present."
+        "reason": "This candidate has a compiled runtime-facing rule record, but it remains gated by program documents, tax bills, or assessor/tax-return inputs."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+        "localWorkflowId": null,
+        "calculationModelMethod": null,
+        "canonicalInputCount": 12
       },
       "testProfileCoverage": {
         "matchingProfileCount": 1,
@@ -2631,10 +2684,16 @@
         "reason": "Property-tax rules require bill-line allocation, assessor-confirmed values, PILOT status, or local tax-rate rows before customer-facing calculation."
       },
       "runtimeSupport": {
-        "status": "supported_as_gated_workflow_after_import",
-        "currentRuntimeSurface": "localTaxWorkflows",
+        "status": "program_document_tax_bill_or_assessor_gate",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
         "currentRuntimeExecutable": false,
-        "reason": "The local-tax runtime can represent bill/document/assessor gates, but not calculate these candidates until structured workflow rows and required documents are present."
+        "reason": "This candidate has a compiled runtime-facing rule record, but it remains gated by program documents, tax bills, or assessor/tax-return inputs."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+        "localWorkflowId": null,
+        "calculationModelMethod": null,
+        "canonicalInputCount": 11
       },
       "testProfileCoverage": {
         "matchingProfileCount": 0,
@@ -2672,10 +2731,16 @@
         "reason": "Property-tax rules require bill-line allocation, assessor-confirmed values, PILOT status, or local tax-rate rows before customer-facing calculation."
       },
       "runtimeSupport": {
-        "status": "supported_as_gated_workflow_after_import",
-        "currentRuntimeSurface": "localTaxWorkflows",
+        "status": "program_document_tax_bill_or_assessor_gate",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
         "currentRuntimeExecutable": false,
-        "reason": "The local-tax runtime can represent bill/document/assessor gates, but not calculate these candidates until structured workflow rows and required documents are present."
+        "reason": "This candidate has a compiled runtime-facing rule record, but it remains gated by program documents, tax bills, or assessor/tax-return inputs."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+        "localWorkflowId": null,
+        "calculationModelMethod": null,
+        "canonicalInputCount": 13
       },
       "testProfileCoverage": {
         "matchingProfileCount": 0,
@@ -2713,10 +2778,16 @@
         "reason": "Property-tax rules require bill-line allocation, assessor-confirmed values, PILOT status, or local tax-rate rows before customer-facing calculation."
       },
       "runtimeSupport": {
-        "status": "supported_as_gated_workflow_after_import",
-        "currentRuntimeSurface": "localTaxWorkflows",
+        "status": "program_document_tax_bill_or_assessor_gate",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
         "currentRuntimeExecutable": false,
-        "reason": "The local-tax runtime can represent bill/document/assessor gates, but not calculate these candidates until structured workflow rows and required documents are present."
+        "reason": "This candidate has a compiled runtime-facing rule record, but it remains gated by program documents, tax bills, or assessor/tax-return inputs."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+        "localWorkflowId": null,
+        "calculationModelMethod": null,
+        "canonicalInputCount": 11
       },
       "testProfileCoverage": {
         "matchingProfileCount": 0,
@@ -2754,10 +2825,16 @@
         "reason": "Property-tax rules require bill-line allocation, assessor-confirmed values, PILOT status, or local tax-rate rows before customer-facing calculation."
       },
       "runtimeSupport": {
-        "status": "supported_as_gated_workflow_after_import",
-        "currentRuntimeSurface": "localTaxWorkflows",
+        "status": "program_document_tax_bill_or_assessor_gate",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
         "currentRuntimeExecutable": false,
-        "reason": "The local-tax runtime can represent bill/document/assessor gates, but not calculate these candidates until structured workflow rows and required documents are present."
+        "reason": "This candidate has a compiled runtime-facing rule record, but it remains gated by program documents, tax bills, or assessor/tax-return inputs."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+        "localWorkflowId": null,
+        "calculationModelMethod": null,
+        "canonicalInputCount": 12
       },
       "testProfileCoverage": {
         "matchingProfileCount": 0,
@@ -2795,10 +2872,16 @@
         "reason": "Property-tax rules require bill-line allocation, assessor-confirmed values, PILOT status, or local tax-rate rows before customer-facing calculation."
       },
       "runtimeSupport": {
-        "status": "supported_as_gated_workflow_after_import",
-        "currentRuntimeSurface": "localTaxWorkflows",
+        "status": "program_document_tax_bill_or_assessor_gate",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
         "currentRuntimeExecutable": false,
-        "reason": "The local-tax runtime can represent bill/document/assessor gates, but not calculate these candidates until structured workflow rows and required documents are present."
+        "reason": "This candidate has a compiled runtime-facing rule record, but it remains gated by program documents, tax bills, or assessor/tax-return inputs."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+        "localWorkflowId": null,
+        "calculationModelMethod": null,
+        "canonicalInputCount": 11
       },
       "testProfileCoverage": {
         "matchingProfileCount": 1,
@@ -3136,10 +3219,16 @@
         "reason": "Property-tax rules require bill-line allocation, assessor-confirmed values, PILOT status, or local tax-rate rows before customer-facing calculation."
       },
       "runtimeSupport": {
-        "status": "supported_as_gated_workflow_after_import",
-        "currentRuntimeSurface": "localTaxWorkflows",
+        "status": "program_document_tax_bill_or_assessor_gate",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
         "currentRuntimeExecutable": false,
-        "reason": "The local-tax runtime can represent bill/document/assessor gates, but not calculate these candidates until structured workflow rows and required documents are present."
+        "reason": "This candidate has a compiled runtime-facing rule record, but it remains gated by program documents, tax bills, or assessor/tax-return inputs."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+        "localWorkflowId": null,
+        "calculationModelMethod": null,
+        "canonicalInputCount": 14
       },
       "testProfileCoverage": {
         "matchingProfileCount": 1,
@@ -3627,10 +3716,16 @@
         "reason": "Property-tax rules require bill-line allocation, assessor-confirmed values, PILOT status, or local tax-rate rows before customer-facing calculation."
       },
       "runtimeSupport": {
-        "status": "supported_as_gated_workflow_after_import",
-        "currentRuntimeSurface": "localTaxWorkflows",
+        "status": "program_document_tax_bill_or_assessor_gate",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
         "currentRuntimeExecutable": false,
-        "reason": "The local-tax runtime can represent bill/document/assessor gates, but not calculate these candidates until structured workflow rows and required documents are present."
+        "reason": "This candidate has a compiled runtime-facing rule record, but it remains gated by program documents, tax bills, or assessor/tax-return inputs."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+        "localWorkflowId": null,
+        "calculationModelMethod": null,
+        "canonicalInputCount": 8
       },
       "testProfileCoverage": {
         "matchingProfileCount": 0,
@@ -3668,10 +3763,16 @@
         "reason": "Business/gross-receipts tax formulas must be converted into localTaxWorkflow calculationModels or equivalent structured rows before runtime execution."
       },
       "runtimeSupport": {
-        "status": "supported_after_local_workflow_import",
+        "status": "compiled_to_gated_local_workflow",
         "currentRuntimeSurface": "localTaxWorkflows",
         "currentRuntimeExecutable": false,
-        "reason": "The local-tax runtime can calculate structured business-tax workflow methods, but this candidate has not been compiled into workflow calculationModels."
+        "reason": "This candidate has been compiled into a local workflow gate, but formula execution still requires a tax-return/accountant model import."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "compiled_to_gated_local_workflow",
+        "localWorkflowId": "tax_gap_ca_san_francisco_business_tax_v1",
+        "calculationModelMethod": null,
+        "canonicalInputCount": 13
       },
       "testProfileCoverage": {
         "matchingProfileCount": 10,
@@ -6379,8 +6480,8 @@
         ]
       },
       "nextAction": {
-        "action": "compile_candidate_into_structured_runtime_rows",
-        "reason": "Business/gross-receipts tax formulas must be converted into localTaxWorkflow calculationModels or equivalent structured rows before runtime execution.",
+        "action": "add_tax_return_model_or_keep_gate",
+        "reason": "The workflow is routable, but formula execution still needs a structured tax-return model or complete filing document inputs.",
         "blocksCustomerFacingRuntime": true
       },
       "customerFacingPolicy": {
@@ -6408,10 +6509,16 @@
         "reason": "Abatement/PILOT rules are project-document workflows and must stay gated until approved agreements or certificates are present."
       },
       "runtimeSupport": {
-        "status": "supported_as_gated_workflow_after_import",
-        "currentRuntimeSurface": "localTaxWorkflows",
+        "status": "program_document_tax_bill_or_assessor_gate",
+        "currentRuntimeSurface": "taxGapRuntimeRules",
         "currentRuntimeExecutable": false,
-        "reason": "The local-tax runtime can represent bill/document/assessor gates, but not calculate these candidates until structured workflow rows and required documents are present."
+        "reason": "This candidate has a compiled runtime-facing rule record, but it remains gated by program documents, tax bills, or assessor/tax-return inputs."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+        "localWorkflowId": null,
+        "calculationModelMethod": null,
+        "canonicalInputCount": 14
       },
       "testProfileCoverage": {
         "matchingProfileCount": 3,
@@ -7270,15 +7377,21 @@
       "runtimeStatusWhenInputsMissing": "needs_tax_return",
       "sourceConfidence": "high",
       "formulaSupport": {
-        "status": "source_backed_formula_needs_structured_model_rows",
-        "currentRuntimeExecutable": false,
-        "reason": "Business/gross-receipts tax formulas must be converted into localTaxWorkflow calculationModels or equivalent structured rows before runtime execution."
+        "status": "source_backed_formula_compiled_to_runtime_model",
+        "currentRuntimeExecutable": true,
+        "reason": "The source-backed formula has been compiled into structured local workflow rows or a generic gated tax-gap runtime model."
       },
       "runtimeSupport": {
-        "status": "partially_supported_after_business_tax_import",
-        "currentRuntimeSurface": "taxGeographyRules/localTaxWorkflows",
-        "currentRuntimeExecutable": false,
-        "reason": "The repo has some B&O/local gross-receipts workflow support, but this candidate needs jurisdiction-specific constants and tax-return inputs."
+        "status": "compiled_to_local_tax_workflow",
+        "currentRuntimeSurface": "localTaxWorkflows",
+        "currentRuntimeExecutable": true,
+        "reason": "This candidate has been compiled into executable localTaxWorkflow calculationModels, but required tax/user inputs still gate customer-facing use."
+      },
+      "compiledRuntimeRule": {
+        "runtimeSupportStatus": "compiled_to_local_tax_workflow",
+        "localWorkflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
+        "calculationModelMethod": null,
+        "canonicalInputCount": 6
       },
       "testProfileCoverage": {
         "matchingProfileCount": 1,
@@ -7569,8 +7682,8 @@
         ]
       },
       "nextAction": {
-        "action": "compile_candidate_into_structured_runtime_rows",
-        "reason": "Business/gross-receipts tax formulas must be converted into localTaxWorkflow calculationModels or equivalent structured rows before runtime execution.",
+        "action": "add_test_profile_tax_inputs_or_keep_gate",
+        "reason": "A compiled runtime model exists, but no matching profile currently includes all required tax/user inputs.",
         "blocksCustomerFacingRuntime": true
       },
       "customerFacingPolicy": {

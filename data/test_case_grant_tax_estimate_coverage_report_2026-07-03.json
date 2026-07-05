@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_test_case_grant_tax_coverage_report.v1",
-  "generatedAt": "2026-07-04T22:44:59.889Z",
+  "generatedAt": "2026-07-05T02:56:46.952Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json",
     "packages": "data/opportunity_incentive_calculation_packages_v2.json",
@@ -66,18 +66,20 @@
     },
     "taxOpportunityPackageCountInDatabase": 3,
     "taxOpportunityPackageCountMatchedByTestCases": 3,
-    "localTaxWorkflowEvaluationCount": 12,
+    "localTaxWorkflowEvaluationCount": 15,
     "localTaxWorkflowStatusCounts": {
+      "needs_tax_return": 3,
       "calculated": 5,
       "needs_tax_bill": 3,
-      "review_required": 3,
-      "needs_tax_return": 1
+      "missing_inputs": 1,
+      "review_required": 3
     },
     "localTaxWorkflowProductionActionCounts": {
+      "tax_return_input_required": 3,
       "production_ready_internal_calculation": 5,
       "tax_bill_upload_required": 3,
+      "tax_profile_input_required": 1,
       "not_applicable_zero_value": 2,
-      "tax_return_input_required": 1,
       "assessor_confirmation_required": 1
     }
   },
@@ -8387,22 +8389,76 @@
   },
   "unmatchedTaxOpportunityPackages": [],
   "localTaxWorkflowOutcomes": {
-    "count": 12,
+    "count": 15,
     "statusCounts": {
+      "needs_tax_return": 3,
       "calculated": 5,
       "needs_tax_bill": 3,
-      "review_required": 3,
-      "needs_tax_return": 1
+      "missing_inputs": 1,
+      "review_required": 3
     },
     "productionActionCounts": {
+      "tax_return_input_required": 3,
       "production_ready_internal_calculation": 5,
       "tax_bill_upload_required": 3,
+      "tax_profile_input_required": 1,
       "not_applicable_zero_value": 2,
-      "tax_return_input_required": 1,
       "assessor_confirmation_required": 1
     },
     "totalComputedAmountCents": 2590850,
     "sampleRows": [
+      {
+        "sampleUserId": "california-endowment-hq",
+        "sampleName": "california-endowment-hq",
+        "workflowId": "tax_gap_ca_los_angeles_business_tax_v1",
+        "taxDomain": "local_business_tax",
+        "taxType": "business_tax_receipts_tax",
+        "geography": {
+          "country": "US",
+          "stateCode": "CA",
+          "state": "CA",
+          "countyFips": null,
+          "placeGeoid": null,
+          "placeName": "Los Angeles",
+          "city": "Los Angeles",
+          "cities": [
+            "Los Angeles"
+          ],
+          "postalCode": "90012"
+        },
+        "status": "needs_tax_return",
+        "amountCents": 0,
+        "includedInUserFacingTotal": false,
+        "missingInputs": [
+          {
+            "inputKey": "la_city_taxable_gross_receipts_cents",
+            "workflowId": "tax_gap_ca_los_angeles_business_tax_v1",
+            "modelId": "la_btrc_class_rate_per_1000"
+          },
+          {
+            "inputKey": "la_business_tax_rate_cents_per_1000_gross_receipts",
+            "workflowId": "tax_gap_ca_los_angeles_business_tax_v1",
+            "modelId": "la_btrc_class_rate_per_1000"
+          },
+          {
+            "inputKey": "la_timely_filing_or_exemption_status_confirmed",
+            "workflowId": "tax_gap_ca_los_angeles_business_tax_v1",
+            "modelId": "la_btrc_class_rate_per_1000"
+          }
+        ],
+        "localTaxProductionAction": "tax_return_input_required",
+        "localTaxProductionReason": "The formula is source-backed, but the tax base must come from a business tax return, accounting system, or user/accountant entry.",
+        "inferredAnswerKeys": [
+          "employee_count",
+          "filing_frequency",
+          "local_business_tax_class",
+          "lodging_business_or_short_term_rental_indicator",
+          "minimum_wage_fee_applies",
+          "parcel_count",
+          "sb1186_fee_applies",
+          "transient_occupancy_indicator"
+        ]
+      },
       {
         "sampleUserId": "ikea-burbank",
         "sampleName": "ikea-burbank",
@@ -8634,6 +8690,47 @@
         ]
       },
       {
+        "sampleUserId": "la-montanita-nob-hill-albuquerque",
+        "sampleName": "la-montanita-nob-hill-albuquerque",
+        "workflowId": "tax_gap_nm_solar_gross_receipts_deduction_v1",
+        "taxDomain": "state_gross_receipts_tax",
+        "taxType": "gross_receipts_tax_deduction",
+        "geography": {
+          "country": "US",
+          "stateCode": "NM",
+          "state": "NM",
+          "countyFips": null,
+          "placeGeoid": null,
+          "placeName": "Albuquerque",
+          "city": "Albuquerque",
+          "cities": [
+            "Albuquerque"
+          ],
+          "postalCode": "87106"
+        },
+        "status": "missing_inputs",
+        "amountCents": 0,
+        "includedInUserFacingTotal": false,
+        "missingInputs": [
+          {
+            "inputKey": "local_business_tax_class",
+            "workflowId": "tax_gap_nm_solar_gross_receipts_deduction_v1"
+          }
+        ],
+        "localTaxProductionAction": "tax_profile_input_required",
+        "localTaxProductionReason": "The workflow needs additional tax profile inputs before it can calculate.",
+        "inferredAnswerKeys": [
+          "employee_count",
+          "filing_frequency",
+          "local_business_tax_class",
+          "lodging_business_or_short_term_rental_indicator",
+          "minimum_wage_fee_applies",
+          "parcel_count",
+          "sb1186_fee_applies",
+          "transient_occupancy_indicator"
+        ]
+      },
+      {
         "sampleUserId": "eastern-market-detroit",
         "sampleName": "eastern-market-detroit",
         "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1",
@@ -8782,6 +8879,58 @@
             "inputKey": "gross_receipts_cents",
             "workflowId": "local_tax_wa_everett_bo_v1",
             "modelId": "everett_bo_ordinary_rate_by_return_class_v1"
+          }
+        ],
+        "localTaxProductionAction": "tax_return_input_required",
+        "localTaxProductionReason": "The formula is source-backed, but the tax base must come from a business tax return, accounting system, or user/accountant entry.",
+        "inferredAnswerKeys": [
+          "employee_count",
+          "filing_frequency",
+          "local_business_tax_class",
+          "lodging_business_or_short_term_rental_indicator",
+          "minimum_wage_fee_applies",
+          "parcel_count",
+          "sb1186_fee_applies",
+          "transient_occupancy_indicator"
+        ]
+      },
+      {
+        "sampleUserId": "whirlpool-clyde-operations",
+        "sampleName": "whirlpool-clyde-operations",
+        "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
+        "taxDomain": "state_business_tax",
+        "taxType": "commercial_activity_tax",
+        "geography": {
+          "country": "US",
+          "stateCode": "OH",
+          "state": "OH",
+          "countyFips": null,
+          "placeGeoid": null,
+          "placeName": "Clyde",
+          "city": "Clyde",
+          "cities": [
+            "Clyde"
+          ],
+          "postalCode": "43410"
+        },
+        "status": "needs_tax_return",
+        "amountCents": 0,
+        "includedInUserFacingTotal": false,
+        "missingInputs": [
+          {
+            "inputKey": "tax_year",
+            "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
+            "modelId": "oh_cat_annual_simplified_current_exclusion"
+          },
+          {
+            "inputKey": "annual_ohio_taxable_gross_receipts_cents",
+            "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
+            "modelId": "oh_cat_annual_simplified_current_exclusion"
+          },
+          {
+            "inputKey": "oh_cat_filing_confirmation",
+            "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
+            "modelId": "oh_cat_annual_simplified_current_exclusion"
           }
         ],
         "localTaxProductionAction": "tax_return_input_required",
@@ -18077,6 +18226,58 @@
     ],
     "localTaxNeedsInputOrReview": [
       {
+        "sampleUserId": "california-endowment-hq",
+        "sampleName": "california-endowment-hq",
+        "workflowId": "tax_gap_ca_los_angeles_business_tax_v1",
+        "taxDomain": "local_business_tax",
+        "taxType": "business_tax_receipts_tax",
+        "geography": {
+          "country": "US",
+          "stateCode": "CA",
+          "state": "CA",
+          "countyFips": null,
+          "placeGeoid": null,
+          "placeName": "Los Angeles",
+          "city": "Los Angeles",
+          "cities": [
+            "Los Angeles"
+          ],
+          "postalCode": "90012"
+        },
+        "status": "needs_tax_return",
+        "amountCents": 0,
+        "includedInUserFacingTotal": false,
+        "missingInputs": [
+          {
+            "inputKey": "la_city_taxable_gross_receipts_cents",
+            "workflowId": "tax_gap_ca_los_angeles_business_tax_v1",
+            "modelId": "la_btrc_class_rate_per_1000"
+          },
+          {
+            "inputKey": "la_business_tax_rate_cents_per_1000_gross_receipts",
+            "workflowId": "tax_gap_ca_los_angeles_business_tax_v1",
+            "modelId": "la_btrc_class_rate_per_1000"
+          },
+          {
+            "inputKey": "la_timely_filing_or_exemption_status_confirmed",
+            "workflowId": "tax_gap_ca_los_angeles_business_tax_v1",
+            "modelId": "la_btrc_class_rate_per_1000"
+          }
+        ],
+        "localTaxProductionAction": "tax_return_input_required",
+        "localTaxProductionReason": "The formula is source-backed, but the tax base must come from a business tax return, accounting system, or user/accountant entry.",
+        "inferredAnswerKeys": [
+          "employee_count",
+          "filing_frequency",
+          "local_business_tax_class",
+          "lodging_business_or_short_term_rental_indicator",
+          "minimum_wage_fee_applies",
+          "parcel_count",
+          "sb1186_fee_applies",
+          "transient_occupancy_indicator"
+        ]
+      },
+      {
         "sampleUserId": "zingermans-deli-ann-arbor",
         "sampleName": "zingermans-deli-ann-arbor",
         "workflowId": "property_adapter_mi_washtenaw_ann_arbor_v1",
@@ -18114,6 +18315,47 @@
         ],
         "localTaxProductionAction": "tax_bill_upload_required",
         "localTaxProductionReason": "Final property-tax calculations require a current tax bill, parcel/APN, levy lines, or licensed bill-line source.",
+        "inferredAnswerKeys": [
+          "employee_count",
+          "filing_frequency",
+          "local_business_tax_class",
+          "lodging_business_or_short_term_rental_indicator",
+          "minimum_wage_fee_applies",
+          "parcel_count",
+          "sb1186_fee_applies",
+          "transient_occupancy_indicator"
+        ]
+      },
+      {
+        "sampleUserId": "la-montanita-nob-hill-albuquerque",
+        "sampleName": "la-montanita-nob-hill-albuquerque",
+        "workflowId": "tax_gap_nm_solar_gross_receipts_deduction_v1",
+        "taxDomain": "state_gross_receipts_tax",
+        "taxType": "gross_receipts_tax_deduction",
+        "geography": {
+          "country": "US",
+          "stateCode": "NM",
+          "state": "NM",
+          "countyFips": null,
+          "placeGeoid": null,
+          "placeName": "Albuquerque",
+          "city": "Albuquerque",
+          "cities": [
+            "Albuquerque"
+          ],
+          "postalCode": "87106"
+        },
+        "status": "missing_inputs",
+        "amountCents": 0,
+        "includedInUserFacingTotal": false,
+        "missingInputs": [
+          {
+            "inputKey": "local_business_tax_class",
+            "workflowId": "tax_gap_nm_solar_gross_receipts_deduction_v1"
+          }
+        ],
+        "localTaxProductionAction": "tax_profile_input_required",
+        "localTaxProductionReason": "The workflow needs additional tax profile inputs before it can calculate.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -18201,6 +18443,58 @@
             "inputKey": "gross_receipts_cents",
             "workflowId": "local_tax_wa_everett_bo_v1",
             "modelId": "everett_bo_ordinary_rate_by_return_class_v1"
+          }
+        ],
+        "localTaxProductionAction": "tax_return_input_required",
+        "localTaxProductionReason": "The formula is source-backed, but the tax base must come from a business tax return, accounting system, or user/accountant entry.",
+        "inferredAnswerKeys": [
+          "employee_count",
+          "filing_frequency",
+          "local_business_tax_class",
+          "lodging_business_or_short_term_rental_indicator",
+          "minimum_wage_fee_applies",
+          "parcel_count",
+          "sb1186_fee_applies",
+          "transient_occupancy_indicator"
+        ]
+      },
+      {
+        "sampleUserId": "whirlpool-clyde-operations",
+        "sampleName": "whirlpool-clyde-operations",
+        "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
+        "taxDomain": "state_business_tax",
+        "taxType": "commercial_activity_tax",
+        "geography": {
+          "country": "US",
+          "stateCode": "OH",
+          "state": "OH",
+          "countyFips": null,
+          "placeGeoid": null,
+          "placeName": "Clyde",
+          "city": "Clyde",
+          "cities": [
+            "Clyde"
+          ],
+          "postalCode": "43410"
+        },
+        "status": "needs_tax_return",
+        "amountCents": 0,
+        "includedInUserFacingTotal": false,
+        "missingInputs": [
+          {
+            "inputKey": "tax_year",
+            "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
+            "modelId": "oh_cat_annual_simplified_current_exclusion"
+          },
+          {
+            "inputKey": "annual_ohio_taxable_gross_receipts_cents",
+            "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
+            "modelId": "oh_cat_annual_simplified_current_exclusion"
+          },
+          {
+            "inputKey": "oh_cat_filing_confirmation",
+            "workflowId": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
+            "modelId": "oh_cat_annual_simplified_current_exclusion"
           }
         ],
         "localTaxProductionAction": "tax_return_input_required",

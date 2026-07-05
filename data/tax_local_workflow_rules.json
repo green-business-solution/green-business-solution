@@ -3176,7 +3176,18 @@
         ]
       },
       "requiredInputs": [
-        "local_business_tax_class"
+        "local_business_tax_class",
+        "avg_vernon_employees",
+        "warehouse_square_feet",
+        "inorganic_hazardous_waste_gross_receipts_cents",
+        "organic_or_infectious_hazardous_waste_gross_receipts_cents",
+        "related_party_hazardous_waste_gallons",
+        "actual_incoming_tons",
+        "lead_acid_battery_recycling_tons",
+        "adopted_warehouse_special_parcel_tax_cents_per_100_sqft",
+        "eligible_gross_land_area_sqft",
+        "adopted_public_safety_special_parcel_tax_cents_per_sqft",
+        "taxable_parcel_area_sqft"
       ],
       "calculationModels": [
         {
@@ -3215,14 +3226,270 @@
             "inorganic_hazardous_waste_gross_receipts_cents",
             "organic_or_infectious_hazardous_waste_gross_receipts_cents"
           ]
+        },
+        {
+          "modelId": "vernon_general_employee_band",
+          "label": "General business employee-band license tax",
+          "appliesToClasses": [
+            "general_business",
+            "vernon_general_business",
+            "office",
+            "retail",
+            "manufacturing",
+            "distribution"
+          ],
+          "method": "employee_band",
+          "employeeInput": "avg_vernon_employees",
+          "inputKeys": [
+            "avg_vernon_employees"
+          ],
+          "bands": [
+            {
+              "minEmployees": 0,
+              "maxEmployees": 1,
+              "amountCents": 75000,
+              "label": "0-1 employees"
+            },
+            {
+              "minEmployees": 2,
+              "maxEmployees": 10,
+              "amountCents": 115000,
+              "label": "2-10 employees"
+            },
+            {
+              "minEmployees": 11,
+              "maxEmployees": 25,
+              "amountCents": 155000,
+              "label": "11-25 employees"
+            },
+            {
+              "minEmployees": 26,
+              "maxEmployees": 50,
+              "amountCents": 215000,
+              "label": "26-50 employees"
+            },
+            {
+              "minEmployees": 51,
+              "maxEmployees": 75,
+              "amountCents": 287500,
+              "label": "51-75 employees"
+            },
+            {
+              "minEmployees": 76,
+              "maxEmployees": 100,
+              "amountCents": 357500,
+              "label": "76-100 employees"
+            },
+            {
+              "minEmployees": 101,
+              "maxEmployees": 150,
+              "amountCents": 425000,
+              "label": "101-150 employees"
+            },
+            {
+              "minEmployees": 151,
+              "maxEmployees": 200,
+              "amountCents": 497500,
+              "label": "151-200 employees"
+            },
+            {
+              "minEmployees": 201,
+              "maxEmployees": 250,
+              "amountCents": 570000,
+              "label": "201-250 employees"
+            },
+            {
+              "minEmployees": 251,
+              "maxEmployees": 300,
+              "amountCents": 642500,
+              "label": "251-300 employees"
+            },
+            {
+              "minEmployees": 301,
+              "maxEmployees": 400,
+              "amountCents": 715000,
+              "label": "301-400 employees"
+            },
+            {
+              "minEmployees": 401,
+              "maxEmployees": 500,
+              "amountCents": 785000,
+              "label": "401-500 employees"
+            },
+            {
+              "minEmployees": 501,
+              "maxEmployees": 600,
+              "amountCents": 860000,
+              "label": "501-600 employees"
+            },
+            {
+              "minEmployees": 601,
+              "maxEmployees": 700,
+              "amountCents": 1000000,
+              "label": "601-700 employees"
+            },
+            {
+              "minEmployees": 701,
+              "maxEmployees": 800,
+              "amountCents": 1142500,
+              "label": "701-800 employees"
+            },
+            {
+              "minEmployees": 801,
+              "maxEmployees": 900,
+              "amountCents": 1285000,
+              "label": "801-900 employees"
+            },
+            {
+              "minEmployees": 901,
+              "maxEmployees": 1000,
+              "amountCents": 1427500,
+              "label": "901-1000 employees"
+            },
+            {
+              "minEmployees": 1001,
+              "maxEmployees": 1100,
+              "amountCents": 1570000,
+              "label": "1001-1100 employees"
+            },
+            {
+              "minEmployees": 1101,
+              "maxEmployees": 1200,
+              "amountCents": 1710000,
+              "label": "1101-1200 employees"
+            },
+            {
+              "minEmployees": 1201,
+              "maxEmployees": 1300,
+              "amountCents": 1850000,
+              "label": "1201-1300 employees"
+            },
+            {
+              "minEmployees": 1301,
+              "maxEmployees": 1400,
+              "amountCents": 1995000,
+              "label": "1301-1400 employees"
+            },
+            {
+              "minEmployees": 1401,
+              "maxEmployees": 1500,
+              "amountCents": 2135000,
+              "label": "1401-1500 employees"
+            },
+            {
+              "minEmployees": 1501,
+              "maxEmployees": 1600,
+              "amountCents": 2277500,
+              "label": "1501-1600 employees"
+            },
+            {
+              "minEmployees": 1601,
+              "maxEmployees": 1700,
+              "amountCents": 2417500,
+              "label": "1601-1700 employees"
+            },
+            {
+              "minEmployees": 1701,
+              "maxEmployees": 1800,
+              "amountCents": 2562500,
+              "label": "1701-1800 employees"
+            },
+            {
+              "minEmployees": 1801,
+              "maxEmployees": 1900,
+              "amountCents": 2702500,
+              "label": "1801-1900 employees"
+            },
+            {
+              "minEmployees": 1901,
+              "maxEmployees": null,
+              "amountCents": 2845000,
+              "label": "1901+ employees"
+            }
+          ]
+        },
+        {
+          "modelId": "vernon_related_hazardous_waste",
+          "label": "Related hazardous waste gallons",
+          "appliesToClasses": [
+            "related_hazardous_waste"
+          ],
+          "method": "unit_rate",
+          "unitInput": "related_party_hazardous_waste_gallons",
+          "centsPerUnit": 30,
+          "inputKeys": [
+            "related_party_hazardous_waste_gallons"
+          ]
+        },
+        {
+          "modelId": "vernon_waste_to_energy_or_solid_waste",
+          "label": "Waste-to-energy or solid-waste processing incoming tons",
+          "appliesToClasses": [
+            "waste_to_energy",
+            "solid_waste_processing",
+            "solid_waste_recycling"
+          ],
+          "method": "unit_rate",
+          "unitInput": "actual_incoming_tons",
+          "centsPerUnit": 85,
+          "inputKeys": [
+            "actual_incoming_tons"
+          ]
+        },
+        {
+          "modelId": "vernon_lead_acid_battery_recycling",
+          "label": "Lead-acid battery recycling incoming tons",
+          "appliesToClasses": [
+            "lead_acid_battery_recycling"
+          ],
+          "method": "unit_rate",
+          "unitInput": "lead_acid_battery_recycling_tons",
+          "centsPerUnit": 30,
+          "inputKeys": [
+            "lead_acid_battery_recycling_tons"
+          ]
+        },
+        {
+          "modelId": "vernon_warehouse_special_parcel_tax",
+          "label": "Warehouse/distribution special parcel tax",
+          "appliesToClasses": [
+            "warehouse_special_parcel_tax",
+            "warehouse_distribution_special_parcel_tax"
+          ],
+          "method": "rate_times_quantity",
+          "quantityInput": "eligible_gross_land_area_sqft",
+          "quantityDivisor": 100,
+          "rateInput": "adopted_warehouse_special_parcel_tax_cents_per_100_sqft",
+          "inputKeys": [
+            "eligible_gross_land_area_sqft",
+            "adopted_warehouse_special_parcel_tax_cents_per_100_sqft"
+          ]
+        },
+        {
+          "modelId": "vernon_public_safety_special_parcel_tax",
+          "label": "Public safety special parcel tax",
+          "appliesToClasses": [
+            "public_safety_special_parcel_tax"
+          ],
+          "method": "rate_times_quantity",
+          "quantityInput": "taxable_parcel_area_sqft",
+          "quantityDivisor": 1,
+          "rateInput": "adopted_public_safety_special_parcel_tax_cents_per_sqft",
+          "inputKeys": [
+            "taxable_parcel_area_sqft",
+            "adopted_public_safety_special_parcel_tax_cents_per_sqft"
+          ]
         }
       ],
       "unresolvedGaps": [
         "General employee-count bands remain gated to current city rate resolution or renewal statement.",
         "Special parcel taxes require APN, taxable area/use apportionment, and current council rate or property tax bill.",
-        "Mixed warehouse and other-business apportionment requires city classification review."
+        "Mixed warehouse and other-business apportionment requires city classification review.",
+        "Use current City Council-adopted rates when below ordinance maximums or CPI-adjusted schedules are published.",
+        "Special parcel taxes require parcel/APN, land-area apportionment, and current tax bill or council-rate confirmation.",
+        "Mixed-use Vernon businesses require city classification and apportionment confirmation."
       ],
-      "sourceConfidence": "medium_for_listed_rows",
+      "sourceConfidence": "high",
       "sourceUrls": [
         "https://www.cityofvernon.org/government/city-departments/finance/business-license",
         "https://codelibrary.amlegal.com/codes/vernon/latest/vernon_ca/0-0-0-17558",
@@ -3232,7 +3499,9 @@
         "https://www.cityofvernonca.gov/home/showpublisheddocument/3965/638868989865830000",
         "https://ecode360.com/44468490",
         "https://ecode360.com/44468136",
-        "https://www.cityofvernonca.gov/government/health-and-environmental-control/permits-and-invoices"
+        "https://www.cityofvernonca.gov/government/health-and-environmental-control/permits-and-invoices",
+        "https://www.cityofvernonca.gov/business/licenses-permits",
+        "https://ecode360.com/44468494"
       ],
       "edgeClassRows": [
         {
@@ -3710,7 +3979,11 @@
             "gap": "Late penalties, delinquency surcharges, double fees, and reinspection penalties are intentionally excluded from default estimates unless filing-late, delinquent, or reinspection status is supplied explicitly."
           }
         ]
-      }
+      },
+      "evidenceText": "Official City sources verify that Vernon business licenses are required, license amount depends on business classification and activity, and the FY2025-26 fee schedule states that business license rates are taxes found in Vernon Municipal Code Chapter 5. Official Vernon Code sources verify the general employee-band license tax, warehouse license tax formula and min/max, hazardous waste gross receipts tax and minimum, annual rate/CPI rules, delinquency penalty cap, and special parcel tax provisions. ([City of Vernon][1])",
+      "taxGapRepairSourceIds": [
+        "vernon_ca_partial_local_tax_sources_skip_until_code_verified_v1"
+      ]
     },
     {
       "id": "local_tax_ca_san_diego_business_tax_certificate_v1",
@@ -4978,6 +5251,263 @@
         "confidence": "medium",
         "researchedAt": "2026-07-03"
       }
+    },
+    {
+      "id": "tax_gap_nm_solar_gross_receipts_deduction_v1",
+      "sourceTargetId": "sales_use_tax_ambiguous_rule_8",
+      "taxDomain": "state_gross_receipts_tax",
+      "taxType": "gross_receipts_tax_deduction",
+      "calculationStatus": "calculable_with_user_inputs",
+      "includeInUserFacingTotalDefault": false,
+      "geography": {
+        "country": "US",
+        "state": "NM"
+      },
+      "taxGapRepairSourceIds": [
+        "sales_use_tax_ambiguous_rule_8"
+      ],
+      "requiredInputs": [
+        "eligible_solar_sale_installation_receipts_cents",
+        "applicable_combined_gross_receipts_tax_rate_decimal",
+        "nm_solar_energy_system_eligible",
+        "seller_nm_gross_receipts_taxpayer_status_confirmed",
+        "nm_solar_grt_deduction_pass_through_confirmed",
+        "seller_grt_deduction_filing_confirmed",
+        "nm_rpd_41341_or_equivalent_documentation_present"
+      ],
+      "calculationModels": [
+        {
+          "modelId": "nm_solar_grt_pass_through_savings",
+          "label": "New Mexico solar sale-and-installation GRT deduction pass-through value",
+          "appliesToClasses": [
+            "solar_energy_system_sale_installation",
+            "solar_electric_offset",
+            "solar_installation"
+          ],
+          "method": "percentage_rate",
+          "amountInput": "eligible_solar_sale_installation_receipts_cents",
+          "rateInput": "applicable_combined_gross_receipts_tax_rate_decimal",
+          "requiredTrueInputs": [
+            "nm_solar_energy_system_eligible",
+            "seller_nm_gross_receipts_taxpayer_status_confirmed",
+            "nm_solar_grt_deduction_pass_through_confirmed",
+            "seller_grt_deduction_filing_confirmed"
+          ],
+          "inputKeys": [
+            "eligible_solar_sale_installation_receipts_cents",
+            "applicable_combined_gross_receipts_tax_rate_decimal",
+            "nm_solar_energy_system_eligible",
+            "seller_nm_gross_receipts_taxpayer_status_confirmed",
+            "nm_solar_grt_deduction_pass_through_confirmed",
+            "seller_grt_deduction_filing_confirmed",
+            "nm_rpd_41341_or_equivalent_documentation_present"
+          ]
+        }
+      ],
+      "sourceConfidence": "high",
+      "sourceUrls": [
+        "https://www.tax.newmexico.gov/businesses/gross-receipts-overview/",
+        "https://realfile.tax.newmexico.gov/FYI-105.pdf",
+        "https://realfile.tax.newmexico.gov/rpd-41341.pdf",
+        "https://www.nmlegis.gov/Sessions/21%20Regular/bills/senate/SB0243.pdf"
+      ],
+      "evidenceText": "New Mexico TRD describes New Mexico as imposing gross receipts tax on persons engaged in business rather than a conventional retail sales tax. TRD Form RPD-41341 states that, effective July 1, 2007, a deduction from gross receipts tax is available for the sale and installation of a solar energy system. New Mexico 2021 SB0243 amended Section 7-9-112 to provide that, prior to July 1, 2030, receipts from the sale and installation of solar energy systems may be deducted from gross receipts.",
+      "unresolvedGaps": [
+        "Customer-facing value requires invoice/contract evidence that the seller passed the deduction through to the customer.",
+        "The seller, not the customer, claims the deduction on the gross receipts tax return."
+      ]
+    },
+    {
+      "id": "tax_gap_ca_los_angeles_business_tax_v1",
+      "sourceTargetId": "skip_unverified_ca_city_business_license_rates",
+      "taxDomain": "local_business_tax",
+      "taxType": "business_tax_receipts_tax",
+      "calculationStatus": "calculable_with_user_inputs",
+      "includeInUserFacingTotalDefault": false,
+      "geography": {
+        "country": "US",
+        "state": "CA",
+        "countyFips": "06037",
+        "cities": [
+          "Los Angeles"
+        ]
+      },
+      "taxGapRepairSourceIds": [
+        "skip_unverified_ca_city_business_license_rates"
+      ],
+      "requiredInputs": [
+        "local_business_tax_class",
+        "la_city_taxable_gross_receipts_cents",
+        "la_business_tax_rate_cents_per_1000_gross_receipts",
+        "la_timely_filing_or_exemption_status_confirmed"
+      ],
+      "calculationModels": [
+        {
+          "modelId": "la_btrc_class_rate_per_1000",
+          "label": "Los Angeles BTRC gross-receipts class rate",
+          "appliesToClasses": [
+            "los_angeles_btrc",
+            "general_business",
+            "retail",
+            "wholesale",
+            "contractor",
+            "commercial_rental",
+            "professional"
+          ],
+          "method": "rate_times_quantity",
+          "quantityInput": "la_city_taxable_gross_receipts_cents",
+          "quantityDivisor": 100000,
+          "rateInput": "la_business_tax_rate_cents_per_1000_gross_receipts",
+          "requiredTrueInputs": [
+            "la_timely_filing_or_exemption_status_confirmed"
+          ],
+          "inputKeys": [
+            "la_city_taxable_gross_receipts_cents",
+            "la_business_tax_rate_cents_per_1000_gross_receipts",
+            "la_timely_filing_or_exemption_status_confirmed"
+          ]
+        }
+      ],
+      "sourceConfidence": "high",
+      "sourceUrls": [
+        "https://www.burbankca.gov/web/financial-services/revenue",
+        "https://www.burbankca.gov/documents/d/financial-services/fy-2026-27-adopted-fee-schedule-final-revised?download=true",
+        "https://www.cityofpasadena.net/finance/general-fund/fees-tax-schedules/",
+        "https://www.cityofpasadena.net/finance/wp-content/uploads/sites/27/FY-2027-Schedule-of-Taxes-Fees-and-Charges-Adopted.pdf",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54663",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54692",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54706",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54743",
+        "https://finance.lacity.gov/tax-education/business-taxes/know-your-rates",
+        "https://finance.lacity.gov/business-tax-renewal-instructions",
+        "https://www.sandiego.gov/treasurer/taxesfees/btax/btaxfees",
+        "https://www.sandiego.gov/treasurer/taxesfees/btax/btaxhow",
+        "https://ecode360.com/44468493",
+        "https://sftreasurer.org/business/taxes-fees/gross-receipts-tax-gr-0",
+        "https://sftreasurer.org/proposition-m-2024-business-tax-reform",
+        "https://sftreasurer.org/annual-business-registration-and-tax-form-25-27"
+      ],
+      "evidenceText": "Los Angeles Office of Finance publishes BTRC class rates and renewal mechanics; exact class rate must be supplied from the current official class schedule.",
+      "unresolvedGaps": []
+    },
+    {
+      "id": "tax_gap_ca_san_francisco_business_tax_v1",
+      "sourceTargetId": "skip_unverified_ca_city_business_license_rates",
+      "taxDomain": "local_business_tax",
+      "taxType": "gross_receipts_tax",
+      "calculationStatus": "assessor_or_accountant_review_required",
+      "includeInUserFacingTotalDefault": false,
+      "geography": {
+        "country": "US",
+        "state": "CA",
+        "countyFips": "06075",
+        "cities": [
+          "San Francisco"
+        ]
+      },
+      "taxGapRepairSourceIds": [
+        "skip_unverified_ca_city_business_license_rates"
+      ],
+      "requiredInputs": [
+        "sf_business_activity_category",
+        "sf_allocated_gross_receipts_by_category",
+        "sf_registration_fee_schedule_amount_cents",
+        "sf_gross_receipts_tax_return_present",
+        "sf_hgr_or_overpaid_executive_tax_applicability"
+      ],
+      "calculationModels": [],
+      "sourceConfidence": "high",
+      "sourceUrls": [
+        "https://www.burbankca.gov/web/financial-services/revenue",
+        "https://www.burbankca.gov/documents/d/financial-services/fy-2026-27-adopted-fee-schedule-final-revised?download=true",
+        "https://www.cityofpasadena.net/finance/general-fund/fees-tax-schedules/",
+        "https://www.cityofpasadena.net/finance/wp-content/uploads/sites/27/FY-2027-Schedule-of-Taxes-Fees-and-Charges-Adopted.pdf",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54663",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54692",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54706",
+        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54743",
+        "https://finance.lacity.gov/tax-education/business-taxes/know-your-rates",
+        "https://finance.lacity.gov/business-tax-renewal-instructions",
+        "https://www.sandiego.gov/treasurer/taxesfees/btax/btaxfees",
+        "https://www.sandiego.gov/treasurer/taxesfees/btax/btaxhow",
+        "https://ecode360.com/44468493",
+        "https://sftreasurer.org/business/taxes-fees/gross-receipts-tax-gr-0",
+        "https://sftreasurer.org/proposition-m-2024-business-tax-reform",
+        "https://sftreasurer.org/annual-business-registration-and-tax-form-25-27"
+      ],
+      "evidenceText": "San Francisco business tax uses category allocation, Prop M-era rate bands, registration fee, and possible HGR/OE rules. It remains a tax-return gate until progressive band tables are imported as structured rows.",
+      "unresolvedGaps": [
+        "Progressive San Francisco gross-receipts bands are not compiled into executable rows yet.",
+        "Customer-facing calculation requires a city business tax return or complete category allocation schedule."
+      ]
+    },
+    {
+      "id": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
+      "sourceTargetId": "skip_oh_cat_current_exclusion_amount_without_current_return_confirmation",
+      "taxDomain": "state_business_tax",
+      "taxType": "commercial_activity_tax",
+      "calculationStatus": "calculable_with_user_inputs",
+      "includeInUserFacingTotalDefault": false,
+      "geography": {
+        "country": "US",
+        "state": "OH"
+      },
+      "taxGapRepairSourceIds": [
+        "skip_oh_cat_current_exclusion_amount_without_current_return_confirmation"
+      ],
+      "requiredInputs": [
+        "tax_year",
+        "annual_ohio_taxable_gross_receipts_cents",
+        "oh_cat_filing_confirmation"
+      ],
+      "calculationModels": [
+        {
+          "modelId": "oh_cat_annual_simplified_current_exclusion",
+          "label": "Ohio CAT annual simplified current exclusion",
+          "appliesToClasses": [
+            "ohio_cat",
+            "general_business",
+            "manufacturing",
+            "retail",
+            "wholesale"
+          ],
+          "method": "gross_receipts_rate_after_exclusion",
+          "grossReceiptsInput": "annual_ohio_taxable_gross_receipts_cents",
+          "taxYearInput": "tax_year",
+          "rateDecimal": 0.0026,
+          "exclusionCentsByTaxYear": {
+            "2024": 300000000,
+            "2025": 600000000,
+            "2026": 600000000
+          },
+          "exclusionCents": 600000000,
+          "requiredTrueInputs": [
+            "oh_cat_filing_confirmation"
+          ],
+          "inputKeys": [
+            "tax_year",
+            "annual_ohio_taxable_gross_receipts_cents",
+            "oh_cat_filing_confirmation"
+          ]
+        }
+      ],
+      "sourceConfidence": "high",
+      "sourceUrls": [
+        "https://codes.ohio.gov/ohio-revised-code/section-5751.03",
+        "https://codes.ohio.gov/ohio-revised-code/chapter-5751",
+        "https://dam.assets.ohio.gov/image/upload/tax.ohio.gov/commercial_activities/information_releases/CAT_2023-01_info_release.pdf",
+        "https://content.govdelivery.com/accounts/OHTAX/bulletins/3e87613"
+      ],
+      "evidenceText": "ORC 5751.03 imposes CAT at two and six-tenths mills per dollar on taxable gross receipts after subtracting the exclusion amount, applies the full exclusion to the first calendar-quarter return, and carries unused exclusion forward to later quarters in the same year. ([Ohio Laws][12]) ORC Chapter 5751 states that CAT is levied on each person with taxable gross receipts for the privilege of doing business in Ohio, provides quarterly filing mechanics, and requires the fourth-quarter return to adjust over- or under-reported receipts for the calendar year. ([Ohio Laws][13]) Ohio's official CAT information release states that the annual minimum tax is eliminated for periods beginning January 1, 2024, the exclusion is $3,000,000 in 2024 and $6,000,000 in 2025 and thereafter, the 0.26% rate is unchanged, annual filing is eliminated after the 2023 return, taxpayers at or below the threshold are not required to file, and combined/consolidated groups are treated as one taxpayer. ([Cloudinary][14]) Ohio's official update for Q2 2025 confirms the $6,000,000-or-less cancellation message and electronic filing/payment routing through the Ohio Business Gateway. ([GovDelivery][15])",
+      "unresolvedGaps": [
+        "Quarter-level estimates require exclusion already used in prior quarters and group-member receipts.",
+        "This annual model is a simplified internal tax-due estimate, not an incentive savings estimate."
+      ]
     }
+  ],
+  "updatedAt": "2026-07-05T02:52:01.497Z",
+  "sourceArtifacts": [
+    "GPT Pro Work/tax-remaining-gap-research-2026-07-03/output_001-006.md",
+    "data/tax_gap_repairs_gpt_pro_2026-07-05.json"
   ]
 }

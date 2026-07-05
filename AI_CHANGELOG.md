@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) tax gap runtime model compilation
+
+- Compiled the GPT Pro tax-gap repairs into runtime-facing tax rule records with canonical tax/user input requirements and a generated report.
+- Extended local tax workflow support for employee-band schedules, rate-times-quantity rows, gated percentage-rate rows, and gross-receipts tax calculations after statutory exclusions.
+- Added gated generic runtime support for sales/use tax exemptions and state income/franchise tax credits, plus targeted tests for Iowa, Arizona, Colorado, Connecticut, Vernon, New Mexico, Los Angeles, and Ohio CAT cases.
+- Regenerated the tax gap runtime readiness audit so remaining blockers are test-profile/input coverage and document gates rather than missing runtime model support.
+
 ## 2026-07-05 - Codex (GPT-5) tax gap runtime readiness audit
 
 - Added a repeatable audit for GPT Pro promoted tax-gap candidates that checks jurisdiction coverage, formula/runtime support, and required test-profile tax inputs before customer-facing inclusion.

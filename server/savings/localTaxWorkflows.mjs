@@ -167,6 +167,22 @@ function normalizeInputText(value) {
 
 function calculateModel(model, ctx) {
   switch (model.method) {
+    case "employee_band": {
+      const employeeCount = numberAnswer(ctx, model.employeeInput);
+      const selectedBand = (model.bands || []).find((band) => {
+        const min = Number(band.minEmployees ?? band.min ?? 0);
+        const max = band.maxEmployees === null || band.maxEmployees === undefined ? Number.POSITIVE_INFINITY : Number(band.maxEmployees);
+        return employeeCount >= min && employeeCount <= max;
+      });
+      if (!selectedBand) {
+        return { amountCents: 0, trace: [`No employee band matched ${employeeCount} employees.`] };
+      }
+      return {
+        amountCents: Number(selectedBand.amountCents || 0),
+        trace: [`${employeeCount} employees matched ${selectedBand.label || "employee band"} for ${selectedBand.amountCents || 0} cents.`]
+      };
+    }
+
     case "fixed_amount":
       return { amountCents: Number(model.amountCents || 0), trace: [`Fixed amount ${model.amountCents || 0} cents.`] };
 
@@ -207,6 +223,8 @@ function calculateModel(model, ctx) {
     }
 
     case "gross_receipts_rate": {
+      const gateResult = requiredTrueGateResult(model, ctx);
+      if (gateResult) return gateResult;
       const grossReceiptsCents = numberAnswer(ctx, model.grossReceiptsInput);
       if (Number.isFinite(model.lowGrossThresholdCents) && grossReceiptsCents < Number(model.lowGrossThresholdCents)) {
         return {
@@ -217,6 +235,23 @@ function calculateModel(model, ctx) {
       const rate = Number.isFinite(model.rateDecimal) ? Number(model.rateDecimal) : numberAnswer(ctx, model.rateInput);
       const amountCents = grossReceiptsCents * rate;
       return applyModelMinimum(amountCents, model, [`Gross receipts ${grossReceiptsCents} cents * rate ${rate}.`]);
+    }
+
+    case "gross_receipts_rate_after_exclusion": {
+      const gateResult = requiredTrueGateResult(model, ctx);
+      if (gateResult) return gateResult;
+      const grossReceiptsCents = numberAnswer(ctx, model.grossReceiptsInput);
+      const taxYear = String(firstAnswer(ctx, [model.taxYearInput]) || "");
+      const exclusionCents = exclusionCentsForModel(model, taxYear, ctx);
+      const taxableReceiptsCents = Math.max(0, grossReceiptsCents - exclusionCents);
+      const rate = Number.isFinite(model.rateDecimal) ? Number(model.rateDecimal) : numberAnswer(ctx, model.rateInput);
+      return {
+        amountCents: taxableReceiptsCents * rate,
+        trace: [
+          `Gross receipts ${grossReceiptsCents} cents - exclusion ${exclusionCents} cents = taxable receipts ${taxableReceiptsCents} cents.`,
+          `Taxable receipts ${taxableReceiptsCents} cents * rate ${rate}.`
+        ]
+      };
     }
 
     case "everett_bo_ordinary_rate": {
@@ -292,9 +327,11 @@ function calculateModel(model, ctx) {
     }
 
     case "percentage_rate": {
+      const gateResult = requiredTrueGateResult(model, ctx);
+      if (gateResult) return gateResult;
       const conditionApplies = model.conditionInput ? booleanAnswer(ctx, model.conditionInput) === true : true;
       const amountBaseCents = numberAnswer(ctx, model.amountInput);
-      const rate = Number(model.rateDecimal || 0);
+      const rate = Number.isFinite(model.rateDecimal) ? Number(model.rateDecimal) : numberAnswer(ctx, model.rateInput);
       return {
         amountCents: conditionApplies ? amountBaseCents * rate : 0,
         trace: [`${amountBaseCents} cents * rate ${rate}; condition applies: ${conditionApplies}.`]
@@ -357,6 +394,17 @@ function calculateModel(model, ctx) {
       ]);
     }
 
+    case "rate_times_quantity": {
+      const gateResult = requiredTrueGateResult(model, ctx);
+      if (gateResult) return gateResult;
+      const quantity = numberAnswer(ctx, model.quantityInput);
+      const divisor = Number(model.quantityDivisor || 1);
+      const rateCents = Number.isFinite(model.rateCents) ? Number(model.rateCents) : numberAnswer(ctx, model.rateInput);
+      return applyModelMinimum((quantity / divisor) * rateCents, model, [
+        `${quantity} units / ${divisor} * ${rateCents} cents.`
+      ]);
+    }
+
     case "san_diego_employee_certificate": {
       const employees = numberAnswer(ctx, model.employeeInput);
       const base = employees <= 12 ? 3400 : 12500 + 500 * employees;
@@ -396,6 +444,27 @@ function calculateModel(model, ctx) {
     default:
       return { amountCents: 0, trace: [`Unsupported local tax model method: ${model.method || "unknown"}.`] };
   }
+}
+
+function requiredTrueGateResult(model, ctx) {
+  for (const inputKey of model.requiredTrueInputs || []) {
+    const value = booleanAnswer(ctx, inputKey);
+    if (value === false) {
+      return {
+        amountCents: 0,
+        trace: [`Required gate ${inputKey} is false, so ${model.modelId || "model"} value is zero.`]
+      };
+    }
+  }
+  return null;
+}
+
+function exclusionCentsForModel(model, taxYear, ctx) {
+  const explicit = model.exclusionInput ? numberAnswer(ctx, model.exclusionInput) : null;
+  if (Number.isFinite(explicit) && explicit >= 0) return explicit;
+  const byTaxYear = model.exclusionCentsByTaxYear || {};
+  if (taxYear && Number.isFinite(Number(byTaxYear[taxYear]))) return Number(byTaxYear[taxYear]);
+  return Number(model.exclusionCents || 0);
 }
 
 function applyModelMinimum(amountCents, model, trace) {
