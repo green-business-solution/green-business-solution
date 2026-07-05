@@ -4,8 +4,8 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, ScanCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { fromIni } from "@aws-sdk/credential-providers";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
-import { buildExtractionCorpus } from "../server/matching/buildOpportunityMatchProfile.mjs";
-import { inferFacilityRequirements } from "../server/matching/facilityEligibility.mjs";
+import { buildExtractionCorpus } from "../apps/api/server/matching/buildOpportunityMatchProfile.mjs";
+import { inferFacilityRequirements } from "../apps/api/server/matching/facilityEligibility.mjs";
 import { fetchSourceTextWithRetry } from "./reviewFetch.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");

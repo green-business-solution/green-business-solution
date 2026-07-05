@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { buildV2FormInputFields } from "../server/savings/v2InputFieldCatalog.mjs";
+import { buildV2FormInputFields } from "../apps/api/server/savings/v2InputFieldCatalog.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const testCasesPath = process.env.MATCHING_TEST_CASES_PATH || path.join(repoRoot, "public", "sample_matching_test_cases.json");

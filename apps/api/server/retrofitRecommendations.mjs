@@ -9,21 +9,24 @@ import { classifyRetrofitsForOpportunity, RETROFIT_TYPES, RETROFIT_TYPES_BY_ID }
 import { buildAdminTestCaseSavingsPreview } from "./savings/adminTestCaseSavings.mjs";
 import { buildTaxProfileRuntimePreview } from "./savings/taxProfileRuntime.mjs";
 
-const incentiveRulesPath = path.resolve(import.meta.dirname, "..", "data", "opportunity_incentive_rules.json");
-const incentiveCalculationPackagesPath = path.resolve(
-  import.meta.dirname,
-  "..",
-  "data",
-  "opportunity_incentive_calculation_packages_v2.json"
-);
-const taxGeographyRulesPath = path.resolve(import.meta.dirname, "..", "data", "tax_geography_rules.json");
-const localTaxWorkflowRulesPath = path.resolve(import.meta.dirname, "..", "data", "tax_local_workflow_rules.json");
-const taxGapRuntimeRulesPath = path.resolve(import.meta.dirname, "..", "data", "tax_gap_runtime_rules_2026-07-05.json");
+const incentiveRulesPath = resolveRepoOrLambdaDataFile("opportunity_incentive_rules.json");
+const incentiveCalculationPackagesPath = resolveRepoOrLambdaDataFile("opportunity_incentive_calculation_packages_v2.json");
+const taxGeographyRulesPath = resolveRepoOrLambdaDataFile("tax_geography_rules.json");
+const localTaxWorkflowRulesPath = resolveRepoOrLambdaDataFile("tax_local_workflow_rules.json");
+const taxGapRuntimeRulesPath = resolveRepoOrLambdaDataFile("tax_gap_runtime_rules_2026-07-05.json");
 const opportunityIncentiveRules = readOpportunityIncentiveRules(incentiveRulesPath);
 const opportunityIncentiveCalculationPackages = readOpportunityIncentiveCalculationPackages(incentiveCalculationPackagesPath);
 const taxGeographyRules = readTaxGeographyRules(taxGeographyRulesPath);
 const localTaxWorkflows = readLocalTaxWorkflows(localTaxWorkflowRulesPath);
 const taxGapRuntimeRules = readTaxGapRuntimeRules(taxGapRuntimeRulesPath);
+
+function resolveRepoOrLambdaDataFile(fileName) {
+  const candidates = [
+    path.resolve(import.meta.dirname, "..", "data", fileName),
+    path.resolve(import.meta.dirname, "..", "..", "..", "data", fileName)
+  ];
+  return candidates.find((candidate) => fs.existsSync(candidate)) || candidates[0];
+}
 
 export function buildRetrofitGroupsFromEligibleResults({
   calculationDate,

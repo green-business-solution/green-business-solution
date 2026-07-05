@@ -3,7 +3,7 @@ import path from "node:path";
 import {
   RETROFIT_TYPES_BY_ID,
   SPECIAL_PREREQUISITE_NORMAL_EDGE_OPPORTUNITY_IDS
-} from "../server/matching/retrofitTaxonomy.mjs";
+} from "../apps/api/server/matching/retrofitTaxonomy.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const publicDir = path.join(repoRoot, "public");

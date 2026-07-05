@@ -4,12 +4,12 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, ScanCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { fromIni } from "@aws-sdk/credential-providers";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
-import { buildOpportunityMatchProfile } from "../server/matching/buildOpportunityMatchProfile.mjs";
+import { buildOpportunityMatchProfile } from "../apps/api/server/matching/buildOpportunityMatchProfile.mjs";
 import {
   isArchivedOpportunity,
   isLowInformationOpportunity,
   OPPORTUNITY_LIFECYCLE_STATUS
-} from "../server/matching/opportunityLifecycle.mjs";
+} from "../apps/api/server/matching/opportunityLifecycle.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const dataDir = path.join(repoRoot, "data");

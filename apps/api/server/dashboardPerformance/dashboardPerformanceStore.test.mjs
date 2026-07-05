@@ -9,7 +9,7 @@ import {
 } from "./dashboardPerformanceStore.mjs";
 
 async function buildDataset() {
-  const payload = JSON.parse(await fs.readFile(new URL("../../public/sample_matching_test_cases.json", import.meta.url), "utf8"));
+  const payload = JSON.parse(await fs.readFile(new URL("../../../../public/sample_matching_test_cases.json", import.meta.url), "utf8"));
   return buildSyntheticDashboardPostImplementationDataset(payload.testCases[0]);
 }
 

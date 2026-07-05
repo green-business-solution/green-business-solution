@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import { validateIncentiveCalculationPackageV2 } from "../server/savings/incentiveCalculationsV2.mjs";
+import { validateIncentiveCalculationPackageV2 } from "../apps/api/server/savings/incentiveCalculationsV2.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const defaultWorkDir = path.join(repoRoot, "GPT Pro Work", "tax-credit-and-form-input-repair-2026-07-02");

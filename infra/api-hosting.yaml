@@ -1,0 +1,235 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Production API hosting for Green Business Solution.
+
+Parameters:
+  LambdaCodeBucket:
+    Type: String
+    Description: S3 bucket containing the packaged API Lambda zip.
+  LambdaCodeKey:
+    Type: String
+    Description: S3 key for the packaged API Lambda zip.
+  GoogleClientId:
+    Type: String
+    Default: 754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com
+  GoogleClientSecret:
+    Type: String
+    NoEcho: true
+    Description: Google OAuth web client secret used only by the API Lambda for authorization-code exchange.
+  GeocodioApiKey:
+    Type: String
+    NoEcho: true
+    Default: ""
+    Description: Optional Geocodio API key used only as an address-geography fallback when Census Geocoder does not match.
+  GeocodioDailyLimit:
+    Type: Number
+    Default: 2500
+    MinValue: 0
+    MaxValue: 2500
+    Description: Maximum Geocodio fallback lookups allowed per UTC day before fallback is disabled.
+  GeocodioQuotaAlertEmailTo:
+    Type: String
+    Default: neerkuchlous@gmail.com
+    Description: Email address notified when the Geocodio daily fallback quota is reached.
+  AlertEmailFrom:
+    Type: String
+    Default: neerkuchlous@gmail.com
+    Description: SES-verified sender address used for operational alert emails.
+  GoogleRedirectUri:
+    Type: String
+    Default: https://retrofi.org/api/auth/google/callback
+  AdminEmails:
+    Type: String
+    Default: neerkuchlous@gmail.com,pmrajvansh@gmail.com,rshen0210@gmail.com
+  DataRegion:
+    Type: String
+    Default: us-east-2
+  UsersTable:
+    Type: String
+    Default: gbs-users
+  IntakeTable:
+    Type: String
+    Default: gbs-client-intake
+  OpportunitiesTable:
+    Type: String
+    Default: gbs-opportunity-candidates
+  DashboardPerformanceTable:
+    Type: String
+    Default: gbs-dashboard-performance
+  RetrofitRecommendationCacheTable:
+    Type: String
+    Default: gbs-retrofit-recommendation-cache
+  ApplicationProfilesTable:
+    Type: String
+    Default: gbs-application-profiles
+  ApiRuntimeStateTable:
+    Type: String
+    Default: gbs-api-runtime-state
+  EnergyDataBucketName:
+    Type: String
+    Description: Existing S3 bucket used for uploaded utility/energy data.
+  RuntimeCacheBucketName:
+    Type: String
+    Description: S3 bucket used for generated runtime cache payloads.
+  ApiFunctionName:
+    Type: String
+    Default: gbs-retrofi-api-app
+
+Resources:
+  ApiExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: DynamoDbAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:BatchGetItem
+                  - dynamodb:BatchWriteItem
+                  - dynamodb:DescribeTable
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                  - dynamodb:PutItem
+                  - dynamodb:Scan
+                  - dynamodb:TransactWriteItems
+                  - dynamodb:UpdateItem
+                Resource:
+                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${UsersTable}
+                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${IntakeTable}
+                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${OpportunitiesTable}
+                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${DashboardPerformanceTable}
+                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${RetrofitRecommendationCacheTable}
+                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${ApplicationProfilesTable}
+                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${ApiRuntimeStateTable}
+        - PolicyName: OperationalEmailAlerts
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ses:SendEmail
+                  - ses:SendRawEmail
+                Resource: "*"
+        - PolicyName: EnergyDataBucketAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                Resource: !Sub arn:aws:s3:::${EnergyDataBucketName}/*
+        - PolicyName: RuntimeCacheBucketAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                Resource: !Sub arn:aws:s3:::${RuntimeCacheBucketName}/*
+
+  ApiFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Ref ApiFunctionName
+      Architectures:
+        - arm64
+      Code:
+        S3Bucket: !Ref LambdaCodeBucket
+        S3Key: !Ref LambdaCodeKey
+      Environment:
+        Variables:
+          GBS_AWS_REGION: !Ref DataRegion
+          GBS_ENERGY_DATA_BUCKET_REGION: !Ref AWS::Region
+          GBS_USERS_TABLE: !Ref UsersTable
+          GBS_INTAKE_TABLE: !Ref IntakeTable
+          GBS_OPPORTUNITIES_TABLE: !Ref OpportunitiesTable
+          GBS_DASHBOARD_PERFORMANCE_TABLE: !Ref DashboardPerformanceTable
+          GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE: !Ref RetrofitRecommendationCacheTable
+          GBS_APPLICATION_PROFILES_TABLE: !Ref ApplicationProfilesTable
+          GBS_API_RUNTIME_STATE_TABLE: !Ref ApiRuntimeStateTable
+          GBS_ENERGY_DATA_BUCKET: !Ref EnergyDataBucketName
+          GBS_RUNTIME_CACHE_BUCKET: !Ref RuntimeCacheBucketName
+          GOOGLE_CLIENT_ID: !Ref GoogleClientId
+          GOOGLE_CLIENT_SECRET: !Ref GoogleClientSecret
+          GBS_GEOCODIO_API_KEY: !Ref GeocodioApiKey
+          GBS_GEOCODIO_DAILY_LIMIT: !Ref GeocodioDailyLimit
+          GBS_GEOCODIO_QUOTA_ALERT_EMAIL_TO: !Ref GeocodioQuotaAlertEmailTo
+          GBS_ALERT_EMAIL_FROM: !Ref AlertEmailFrom
+          GOOGLE_REDIRECT_URI: !Ref GoogleRedirectUri
+          GBS_ADMIN_EMAILS: !Ref AdminEmails
+      Handler: server/lambda.handler
+      MemorySize: 1024
+      Role: !GetAtt ApiExecutionRole.Arn
+      Runtime: nodejs24.x
+      Timeout: 60
+
+  ApiLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${ApiFunction}
+      RetentionInDays: 14
+
+  HttpApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: gbs-retrofi-api
+      ProtocolType: HTTP
+
+  ApiIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref HttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt ApiFunction.Arn
+      PayloadFormatVersion: "2.0"
+
+  ApiRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: ANY /api/{proxy+}
+      Target: !Sub integrations/${ApiIntegration}
+
+  ApiRootRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: ANY /api
+      Target: !Sub integrations/${ApiIntegration}
+
+  ApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref HttpApi
+      AutoDeploy: true
+      StageName: $default
+
+  ApiInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref ApiFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${HttpApi}/*/*/api*
+
+Outputs:
+  ApiEndpoint:
+    Value: !GetAtt HttpApi.ApiEndpoint
+  ApiDomainName:
+    Value: !Sub ${HttpApi}.execute-api.${AWS::Region}.amazonaws.com
+  ApiFunctionName:
+    Value: !Ref ApiFunction
+  HttpApiId:
+    Value: !Ref HttpApi

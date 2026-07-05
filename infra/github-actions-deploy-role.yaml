@@ -1,0 +1,121 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: GitHub Actions OIDC role for Green Business Solution production deploys.
+
+Parameters:
+  GitHubRepository:
+    Type: String
+    Default: green-business-solution/green-business-solution
+    Description: GitHub owner/repository allowed to assume the deploy role.
+  GitHubBranch:
+    Type: String
+    Default: main
+    Description: Branch allowed to assume the deploy role.
+  DeployRoleName:
+    Type: String
+    Default: gbs-github-actions-deploy
+
+Resources:
+  GitHubActionsOidcProvider:
+    Type: AWS::IAM::OIDCProvider
+    Properties:
+      Url: https://token.actions.githubusercontent.com
+      ClientIdList:
+        - sts.amazonaws.com
+      ThumbprintList:
+        - 22ff89586561fc2d52f77491e9f1eff1b80be33e
+        - 6938fd4d98bab03faadb97b34396831e3780aea1
+      Tags:
+        - Key: Project
+          Value: GreenBusinessSolution
+
+  GitHubActionsDeployRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref DeployRoleName
+      MaxSessionDuration: 3600
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: !Ref GitHubActionsOidcProvider
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
+              StringLike:
+                token.actions.githubusercontent.com:sub: !Sub repo:${GitHubRepository}:ref:refs/heads/${GitHubBranch}
+      Policies:
+        - PolicyName: ProductionDeployment
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: CloudFormationDeployment
+                Effect: Allow
+                Action:
+                  - cloudformation:CancelUpdateStack
+                  - cloudformation:CreateChangeSet
+                  - cloudformation:CreateStack
+                  - cloudformation:DeleteChangeSet
+                  - cloudformation:DescribeChangeSet
+                  - cloudformation:DescribeStackEvents
+                  - cloudformation:DescribeStackResource
+                  - cloudformation:DescribeStackResources
+                  - cloudformation:DescribeStacks
+                  - cloudformation:ExecuteChangeSet
+                  - cloudformation:GetTemplate
+                  - cloudformation:ListStackResources
+                  - cloudformation:ListStacks
+                  - cloudformation:UpdateStack
+                  - cloudformation:ValidateTemplate
+                Resource: "*"
+              - Sid: ProductionAwsResources
+                Effect: Allow
+                Action:
+                  - acm:*
+                  - apigateway:*
+                  - cloudfront:*
+                  - dynamodb:*
+                  - lambda:*
+                  - logs:*
+                  - route53:*
+                  - s3:*
+                  - ses:*
+                  - sesv2:*
+                  - sts:GetCallerIdentity
+                Resource: "*"
+              - Sid: IamDeployment
+                Effect: Allow
+                Action:
+                  - iam:AddClientIDToOpenIDConnectProvider
+                  - iam:AttachRolePolicy
+                  - iam:CreateOpenIDConnectProvider
+                  - iam:CreateRole
+                  - iam:DeleteOpenIDConnectProvider
+                  - iam:DeleteRole
+                  - iam:DeleteRolePolicy
+                  - iam:DetachRolePolicy
+                  - iam:GetOpenIDConnectProvider
+                  - iam:GetRole
+                  - iam:GetRolePolicy
+                  - iam:ListAttachedRolePolicies
+                  - iam:ListRolePolicies
+                  - iam:PassRole
+                  - iam:PutRolePolicy
+                  - iam:RemoveClientIDFromOpenIDConnectProvider
+                  - iam:TagOpenIDConnectProvider
+                  - iam:TagRole
+                  - iam:UntagOpenIDConnectProvider
+                  - iam:UntagRole
+                  - iam:UpdateAssumeRolePolicy
+                  - iam:UpdateOpenIDConnectProviderThumbprint
+                  - iam:UpdateRole
+                Resource:
+                  - !Sub arn:aws:iam::${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com
+                  - !Sub arn:aws:iam::${AWS::AccountId}:role/gbs-*
+
+Outputs:
+  DeployRoleArn:
+    Value: !GetAtt GitHubActionsDeployRole.Arn
+  OidcProviderArn:
+    Value: !Ref GitHubActionsOidcProvider

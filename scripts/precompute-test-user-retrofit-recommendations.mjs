@@ -9,25 +9,24 @@ import {
   buildSiteEnergyProfile,
   supportedUtilityCategories,
   supportedUtilityFileTypes
-} from "../server/energyData/parseEnergyData.mjs";
-import { buildPortalRetrofitRecommendations } from "../server/retrofitRecommendations.mjs";
+} from "../apps/api/server/energyData/parseEnergyData.mjs";
+import { buildPortalRetrofitRecommendations } from "../apps/api/server/retrofitRecommendations.mjs";
 import {
   readPersistentRetrofitRecommendations,
   writePersistentRetrofitRecommendations
-} from "../server/retrofitRecommendationsCache.mjs";
-import { buildFixtureRetrofitRecommendationsPayload } from "../server/fixtureRetrofitRecommendations.mjs";
+} from "../apps/api/server/retrofitRecommendationsCache.mjs";
+import { buildFixtureRetrofitRecommendationsPayload } from "../apps/api/server/fixtureRetrofitRecommendations.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const defaultProfile = process.env.AWS_PROFILE || "gbs";
+const defaultProfile = process.env.AWS_PROFILE ?? (process.env.CI ? "" : "gbs");
 const defaultDataRegion = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
 const defaultS3Region = process.env.GBS_ENERGY_DATA_BUCKET_REGION || process.env.AWS_REGION || "us-east-1";
 const defaultUsersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const defaultIntakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
 const defaultOpportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
 const defaultRetrofitRecommendationCacheTable =
-  process.env.GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE || process.env.GBS_RUNTIME_STATE_TABLE || "gbs-retrofit-recommendation-cache";
-const defaultRuntimeCacheBucket =
-  process.env.GBS_RUNTIME_CACHE_BUCKET || process.env.GBS_ENERGY_DATA_BUCKET || "gbs-retrofi-org-runtime-cache-448016109714";
+  process.env.GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE || "gbs-retrofit-recommendation-cache";
+const defaultRuntimeCacheBucket = process.env.GBS_RUNTIME_CACHE_BUCKET || "gbs-retrofi-org-runtime-cache-448016109714";
 const defaultTestCasesPath = path.join(repoRoot, "public", "sample_matching_test_cases.json");
 const payloadSources = new Set(["auto", "fixture", "live"]);
 
@@ -122,18 +121,8 @@ export function parseArgs(argv) {
       index += 1;
       continue;
     }
-    if (arg === "--runtime-state-table" && next) {
-      options.retrofitRecommendationCacheTable = next;
-      index += 1;
-      continue;
-    }
     if (arg === "--retrofit-cache-table" && next) {
       options.retrofitRecommendationCacheTable = next;
-      index += 1;
-      continue;
-    }
-    if (arg === "--energy-data-bucket" && next) {
-      options.runtimeCacheBucket = next;
       index += 1;
       continue;
     }
@@ -546,10 +535,8 @@ Options:
   --users-table <name>          Users table. Default: ${defaultUsersTable}
   --intake-table <name>         Intake table. Default: ${defaultIntakeTable}
   --opportunities-table <name>  Opportunities table. Default: ${defaultOpportunitiesTable}
-  --runtime-state-table <name>  Deprecated alias for --retrofit-cache-table.
   --retrofit-cache-table <name> Recommendation cache metadata table. Default: ${defaultRetrofitRecommendationCacheTable}
   --runtime-cache-bucket <name> Cache payload bucket. Default: ${defaultRuntimeCacheBucket}
-  --energy-data-bucket <name>   Deprecated alias for --runtime-cache-bucket.
   --test-cases <path>           Generated test cases used to skip tax-only fixtures. Default: public/sample_matching_test_cases.json
 `);
 }

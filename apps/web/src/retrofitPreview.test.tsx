@@ -526,7 +526,7 @@ describe("retrofit recommendations preview", () => {
   });
 
   it("defines short customer UI names for every taxonomy retrofit type", async () => {
-    const taxonomyModulePath = "../server/matching/retrofitTaxonomy.mjs";
+    const taxonomyModulePath = "../../api/server/matching/retrofitTaxonomy.mjs";
     const { RETROFIT_TYPES } = await import(taxonomyModulePath);
     const taxonomyIds = (RETROFIT_TYPES as Array<{ retrofitTypeId: string }>)
       .map((retrofit) => retrofit.retrofitTypeId)

@@ -8,7 +8,7 @@ import {
 } from "./parseEnergyData.mjs";
 
 const billFieldDictionary = JSON.parse(
-  fs.readFileSync(new URL("../../data/bill_field_dictionary.json", import.meta.url), "utf8")
+  fs.readFileSync(new URL("../../../../data/bill_field_dictionary.json", import.meta.url), "utf8")
 );
 
 function sampleUploadBase(overrides = {}) {

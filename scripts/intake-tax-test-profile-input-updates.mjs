@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { normalizeUserProfile } from "../server/matching/normalizeUserProfile.mjs";
+import { normalizeUserProfile } from "../apps/api/server/matching/normalizeUserProfile.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const defaultDate = "2026-07-05";

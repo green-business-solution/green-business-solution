@@ -80,12 +80,11 @@ const dashboardPerformanceTable = process.env.GBS_DASHBOARD_PERFORMANCE_TABLE ||
 const retrofitRecommendationCacheTable =
   process.env.GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE || "gbs-retrofit-recommendation-cache";
 const applicationProfilesTable = process.env.GBS_APPLICATION_PROFILES_TABLE || "gbs-application-profiles";
-const apiRuntimeStateTable =
-  process.env.GBS_API_RUNTIME_STATE_TABLE || process.env.GBS_RUNTIME_STATE_TABLE || "gbs-api-runtime-state";
+const apiRuntimeStateTable = process.env.GBS_API_RUNTIME_STATE_TABLE || "gbs-api-runtime-state";
 const sampleMatchingTestCasesPath =
   process.env.GBS_SAMPLE_MATCHING_TEST_CASES_PATH || path.join(process.cwd(), "public", "sample_matching_test_cases.json");
 const energyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "";
-const runtimeCacheBucket = process.env.GBS_RUNTIME_CACHE_BUCKET || energyDataBucket;
+const runtimeCacheBucket = process.env.GBS_RUNTIME_CACHE_BUCKET || "";
 const geocodioApiKey = process.env.GBS_GEOCODIO_API_KEY || process.env.GEOCODIO_API_KEY || "";
 const geocodioDailyLimit = parseNonNegativeInteger(
   process.env.GBS_GEOCODIO_DAILY_LIMIT,

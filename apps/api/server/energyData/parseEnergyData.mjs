@@ -7,7 +7,15 @@ const xmlParser = new XMLParser({
   trimValues: true
 });
 
-const billFieldDictionaryPath = new URL("../../data/bill_field_dictionary.json", import.meta.url);
+function resolveRepoOrLambdaDataFile(relativePath) {
+  const candidates = [
+    new URL(`../../data/${relativePath}`, import.meta.url),
+    new URL(`../../../../data/${relativePath}`, import.meta.url)
+  ];
+  return candidates.find((candidate) => fs.existsSync(candidate)) || candidates[0];
+}
+
+const billFieldDictionaryPath = resolveRepoOrLambdaDataFile("bill_field_dictionary.json");
 const billFieldDictionary = JSON.parse(fs.readFileSync(billFieldDictionaryPath, "utf8"));
 const billFieldById = new Map(billFieldDictionary.map((field) => [field.id, field]));
 

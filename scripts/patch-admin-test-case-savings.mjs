@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import { buildAdminTestCaseSavingsPreview } from "../server/savings/adminTestCaseSavings.mjs";
-import { buildTaxProfileRuntimePreview } from "../server/savings/taxProfileRuntime.mjs";
+import { buildAdminTestCaseSavingsPreview } from "../apps/api/server/savings/adminTestCaseSavings.mjs";
+import { buildTaxProfileRuntimePreview } from "../apps/api/server/savings/taxProfileRuntime.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const testCasesPath = process.env.MATCHING_TEST_CASES_PATH || path.join(repoRoot, "public", "sample_matching_test_cases.json");

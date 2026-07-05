@@ -24,11 +24,11 @@ about unknowns.
 
 ## Files
 
-- `server/matching/criterionRegistry.mjs`: versioned list of criteria the matcher understands.
-- `server/matching/ontologies.mjs`: utility, organization, building, technology, and state normalization.
-- `server/matching/normalizeUserProfile.mjs`: current form intake to canonical user profile.
-- `server/matching/buildOpportunityMatchProfile.mjs`: opportunity record to canonical match profile.
-- `server/matching/evaluateRules.mjs`: deterministic three-valued eligibility and ranking.
+- `apps/api/server/matching/criterionRegistry.mjs`: versioned list of criteria the matcher understands.
+- `apps/api/server/matching/ontologies.mjs`: utility, organization, building, technology, and state normalization.
+- `apps/api/server/matching/normalizeUserProfile.mjs`: current form intake to canonical user profile.
+- `apps/api/server/matching/buildOpportunityMatchProfile.mjs`: opportunity record to canonical match profile.
+- `apps/api/server/matching/evaluateRules.mjs`: deterministic three-valued eligibility and ranking.
 - `scripts/run-sample-matching.mjs`: evaluates all current opportunities against sample users.
 - `data/sample_user_profiles.json`: ten clean sample users matching the current form.
 - `data/sample_matching_report.md`: generated audit report from the current opportunity table.

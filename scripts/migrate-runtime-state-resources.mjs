@@ -19,12 +19,10 @@ const defaults = {
     process.env.GBS_LEGACY_GENERATED_FIXTURE_BUCKET || "gbs-retrofi-dev-work-448016109714-us-east-1",
   legacyGeneratedFixturePrefix: cleanPrefix(process.env.GBS_LEGACY_GENERATED_FIXTURE_PREFIX || "generated-test-fixtures"),
   legacyRuntimeCacheBucket:
-    process.env.GBS_LEGACY_RUNTIME_CACHE_BUCKET ||
-    process.env.GBS_ENERGY_DATA_BUCKET ||
-    `gbs-retrofi-org-energy-data-${accountId}`,
+    process.env.GBS_LEGACY_RUNTIME_CACHE_BUCKET || `gbs-retrofi-org-energy-data-${accountId}`,
   legacyRuntimeCachePrefix: cleanPrefix(process.env.GBS_LEGACY_RUNTIME_CACHE_PREFIX || "runtime-cache"),
-  legacyRuntimeStateTable: process.env.GBS_LEGACY_RUNTIME_STATE_TABLE || process.env.GBS_RUNTIME_STATE_TABLE || "gbs-runtime-state",
-  profile: process.env.AWS_PROFILE || "gbs",
+  legacyRuntimeStateTable: process.env.GBS_LEGACY_RUNTIME_STATE_TABLE || "gbs-runtime-state",
+  profile: process.env.AWS_PROFILE ?? (process.env.CI ? "" : "gbs"),
   retrofitRecommendationCacheTable:
     process.env.GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE || "gbs-retrofit-recommendation-cache",
   runtimeCacheBucket: process.env.GBS_RUNTIME_CACHE_BUCKET || `gbs-retrofi-org-runtime-cache-${accountId}`,

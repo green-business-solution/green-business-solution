@@ -27,7 +27,7 @@ import {
   StoreOutlineIcon
 } from "./icons";
 import { aboutLinks, pathForRoute, routeFromPath, type Route } from "./routes";
-import billFieldDictionary from "../data/bill_field_dictionary.json";
+import billFieldDictionary from "../../../data/bill_field_dictionary.json";
 
 type UserRecord = {
   userId: string;

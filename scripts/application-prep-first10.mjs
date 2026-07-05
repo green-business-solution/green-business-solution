@@ -1,10 +1,10 @@
 import fs from "node:fs/promises";
-import { resolveOpportunityApplicationSource } from "../server/applicationSources/ApplicationSourceResolver.mjs";
-import { resolveOfficialProgramWebsite } from "../server/applicationSources/OfficialProgramWebsiteResolver.mjs";
-import { discoverOpportunityApplicationLinks } from "../server/applicationSources/ApplicationPathFinder.mjs";
-import { extractOpportunityApplicationRequirements } from "../server/applicationSources/ApplicationRequirementExtractor.mjs";
-import { composeDraftApplicationProfile, validateApplicationProfile } from "../server/applicationSources/ApplicationProfile.mjs";
-import { fetchSourceContent, sourceContentSnippet } from "../server/applicationSources/SourceContentFetcher.mjs";
+import { resolveOpportunityApplicationSource } from "../apps/api/server/applicationSources/ApplicationSourceResolver.mjs";
+import { resolveOfficialProgramWebsite } from "../apps/api/server/applicationSources/OfficialProgramWebsiteResolver.mjs";
+import { discoverOpportunityApplicationLinks } from "../apps/api/server/applicationSources/ApplicationPathFinder.mjs";
+import { extractOpportunityApplicationRequirements } from "../apps/api/server/applicationSources/ApplicationRequirementExtractor.mjs";
+import { composeDraftApplicationProfile, validateApplicationProfile } from "../apps/api/server/applicationSources/ApplicationProfile.mjs";
+import { fetchSourceContent, sourceContentSnippet } from "../apps/api/server/applicationSources/SourceContentFetcher.mjs";
 
 const INPUT_PATH = "APPLICATION_PREP_FIRST_10_EXPORT.json";
 const OUTPUT_JSON_PATH = "APPLICATION_PREP_FIRST_10_AFTER_FIX.json";

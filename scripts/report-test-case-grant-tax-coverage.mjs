@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import { calculateLocalTaxWorkflow, selectLocalTaxWorkflows } from "../server/savings/localTaxWorkflows.mjs";
-import { evaluateTaxProfileRuntime } from "../server/savings/taxProfileRuntime.mjs";
+import { calculateLocalTaxWorkflow, selectLocalTaxWorkflows } from "../apps/api/server/savings/localTaxWorkflows.mjs";
+import { evaluateTaxProfileRuntime } from "../apps/api/server/savings/taxProfileRuntime.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const testCasesPath = process.env.MATCHING_TEST_CASES_PATH || path.join(repoRoot, "public", "sample_matching_test_cases.json");

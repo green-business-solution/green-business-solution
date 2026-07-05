@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROFILE="${AWS_PROFILE:-gbs}"
+PROFILE="${AWS_PROFILE-gbs}"
 STACK_NAME="${STACK_NAME:-gbs-retrofi-production}"
+API_STACK_NAME="${API_STACK_NAME:-gbs-retrofi-api}"
+GITHUB_ACTIONS_STACK_NAME="${GITHUB_ACTIONS_STACK_NAME:-gbs-github-actions-deploy}"
 RUNTIME_DATA_STACK_NAME="${RUNTIME_DATA_STACK_NAME:-gbs-retrofi-runtime-data}"
 RUNTIME_BUCKETS_STACK_NAME="${RUNTIME_BUCKETS_STACK_NAME:-gbs-retrofi-runtime-buckets}"
 DOMAIN_NAME="${DOMAIN_NAME:-retrofi.org}"
@@ -21,6 +23,7 @@ GEOCODIO_QUOTA_ALERT_EMAIL_TO="${GBS_GEOCODIO_QUOTA_ALERT_EMAIL_TO:-neerkuchlous
 ALERT_EMAIL_FROM="${GBS_ALERT_EMAIL_FROM:-${GBS_GEOCODIO_QUOTA_ALERT_EMAIL_FROM:-neerkuchlous@gmail.com}}"
 GOOGLE_REDIRECT_URI="${GOOGLE_REDIRECT_URI:-https://${DOMAIN_NAME}/api/auth/google/callback}"
 ADMIN_EMAILS="${GBS_ADMIN_EMAILS:-neerkuchlous@gmail.com,pmrajvansh@gmail.com,rshen0210@gmail.com}"
+LEGACY_API_FUNCTION_NAME="${LEGACY_API_FUNCTION_NAME:-gbs-retrofi-api}"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BUILD_DIR="${ROOT_DIR}/build"
 LAMBDA_PACKAGE_DIR="${BUILD_DIR}/lambda-package"
@@ -31,17 +34,24 @@ RUN_FRONTEND=0
 RUN_API=0
 RUN_INFRA=0
 RUN_DATA=0
+RUN_CI=0
+
+aws_profile_args() {
+  if [ -n "${PROFILE}" ]; then
+    printf '%s\n' --profile "${PROFILE}"
+  fi
+}
 
 aws_global() {
-  aws --profile "${PROFILE}" "$@"
+  aws $(aws_profile_args) "$@"
 }
 
 aws_region() {
-  aws --profile "${PROFILE}" --region "${REGION}" "$@"
+  aws $(aws_profile_args) --region "${REGION}" "$@"
 }
 
 aws_data_region() {
-  aws --profile "${PROFILE}" --region "${DATA_REGION}" "$@"
+  aws $(aws_profile_args) --region "${DATA_REGION}" "$@"
 }
 
 stack_output() {
@@ -60,16 +70,38 @@ stack_parameter() {
     --output text
 }
 
+api_stack_exists() {
+  aws_region cloudformation describe-stacks --stack-name "${API_STACK_NAME}" >/dev/null 2>&1
+}
+
+api_stack_output() {
+  local key="$1"
+  aws_region cloudformation describe-stacks \
+    --stack-name "${API_STACK_NAME}" \
+    --query "Stacks[0].Outputs[?OutputKey=='${key}'].OutputValue | [0]" \
+    --output text
+}
+
+api_stack_parameter() {
+  local key="$1"
+  aws_region cloudformation describe-stacks \
+    --stack-name "${API_STACK_NAME}" \
+    --query "Stacks[0].Parameters[?ParameterKey=='${key}'].ParameterValue | [0]" \
+    --output text
+}
+
 usage() {
   cat <<EOF
 Usage:
-  AWS_PROFILE=gbs ./scripts/deploy-production.sh [full|frontend|api|infra|data]...
+  AWS_PROFILE=gbs ./scripts/deploy-production.sh [auto|full|ci|frontend|api|infra|data]...
 
 Targets:
-  full      Run data prerequisites, package/deploy API stack, sync frontend, and invalidate CloudFront. Default.
+  auto      Select minimal targets from changed paths. Uses GBS_DEPLOY_BASE_SHA and GBS_DEPLOY_HEAD_SHA when set.
+  full      Run CI bootstrap, data prerequisites, package/deploy API, update edge stack, sync frontend, and invalidate CloudFront. Default.
+  ci        Deploy the GitHub Actions OIDC/deploy role bootstrap stack only.
   frontend  Build Vite, sync the frontend S3 bucket, and invalidate CloudFront only.
-  api       Package/upload the Lambda zip and deploy the stack with the new Lambda code.
-  infra     Deploy the CloudFormation template using the existing Lambda zip.
+  api       Package/upload the Lambda zip and deploy the API stack with the new Lambda code.
+  infra     Deploy the API and edge CloudFormation templates using the existing Lambda zip.
   data      Ensure non-CloudFormation runtime prerequisites only.
 
 Environment:
@@ -79,8 +111,10 @@ EOF
 }
 
 set_full_targets() {
+  RUN_CI=1
   RUN_FRONTEND=1
   RUN_API=1
+  RUN_INFRA=1
   RUN_DATA=1
 }
 
@@ -92,8 +126,14 @@ select_targets() {
 
   for target in "$@"; do
     case "${target}" in
+      auto|--auto)
+        select_auto_targets
+        ;;
       full|--full|all|--all)
         set_full_targets
+        ;;
+      ci|--ci|bootstrap|--bootstrap)
+        RUN_CI=1
         ;;
       frontend|--frontend)
         RUN_FRONTEND=1
@@ -122,6 +162,23 @@ select_targets() {
   if [ "${RUN_API}" -eq 1 ] || [ "${RUN_INFRA}" -eq 1 ]; then
     RUN_DATA=1
   fi
+}
+
+select_auto_targets() {
+  local auto_targets
+  if [ -n "${GBS_DEPLOY_BASE_SHA:-}" ] && [ -n "${GBS_DEPLOY_HEAD_SHA:-}" ]; then
+    auto_targets="$(node scripts/select-production-deploy-targets.mjs --format shell "${GBS_DEPLOY_BASE_SHA}" "${GBS_DEPLOY_HEAD_SHA}")"
+  else
+    auto_targets="$(node scripts/select-production-deploy-targets.mjs --format shell)"
+  fi
+
+  if [ -z "${auto_targets}" ] || [ "${auto_targets}" = "none" ]; then
+    echo "No production deploy target selected from changed paths."
+    exit 0
+  fi
+
+  echo "Auto-selected production deploy target(s): ${auto_targets}"
+  select_targets ${auto_targets}
 }
 
 ensure_alert_email_identity() {
@@ -223,7 +280,11 @@ ensure_artifact_bucket() {
 
 ensure_generated_fixtures() {
   echo "Ensuring generated test fixtures are available..."
-  AWS_PROFILE="${PROFILE}" AWS_REGION="${REGION}" GBS_GENERATED_FIXTURE_BUCKET="${TEST_FIXTURES_BUCKET}" npm run fixtures:generated:download
+  if [ -n "${PROFILE}" ]; then
+    AWS_PROFILE="${PROFILE}" AWS_REGION="${REGION}" GBS_GENERATED_FIXTURE_BUCKET="${TEST_FIXTURES_BUCKET}" npm run fixtures:generated:download
+  else
+    AWS_REGION="${REGION}" GBS_GENERATED_FIXTURE_BUCKET="${TEST_FIXTURES_BUCKET}" npm run fixtures:generated:download
+  fi
 }
 
 build_frontend() {
@@ -237,7 +298,7 @@ package_api_lambda() {
   mkdir -p "${LAMBDA_PACKAGE_DIR}"
   cp apps/api/package.json "${LAMBDA_PACKAGE_DIR}/package.json"
   cp apps/api/package-lock.json "${LAMBDA_PACKAGE_DIR}/package-lock.json"
-  cp -R server "${LAMBDA_PACKAGE_DIR}/server"
+  cp -R apps/api/server "${LAMBDA_PACKAGE_DIR}/server"
   mkdir -p "${LAMBDA_PACKAGE_DIR}/data"
   mkdir -p "${LAMBDA_PACKAGE_DIR}/public"
 
@@ -290,19 +351,61 @@ ensure_data_prerequisites() {
   ensure_energy_data_bucket
 }
 
-deploy_stack() {
+deploy_github_actions_stack() {
+  echo "Deploying GitHub Actions deploy role stack ${GITHUB_ACTIONS_STACK_NAME}..."
+  aws_region cloudformation deploy \
+    --stack-name "${GITHUB_ACTIONS_STACK_NAME}" \
+    --template-file infra/github-actions-deploy-role.yaml \
+    --capabilities CAPABILITY_NAMED_IAM \
+    --parameter-overrides \
+      "GitHubRepository=green-business-solution/green-business-solution"
+}
+
+existing_lambda_env_value() {
+  local variable_name="$1"
+  local value
+  value="$(aws_region lambda get-function-configuration \
+    --function-name "${LEGACY_API_FUNCTION_NAME}" \
+    --query "Environment.Variables.${variable_name}" \
+    --output text 2>/dev/null || true)"
+  if [ "${value}" = "None" ]; then
+    value=""
+  fi
+  printf '%s' "${value}"
+}
+
+hydrate_first_api_stack_secrets() {
+  if api_stack_exists; then
+    return
+  fi
+
+  if [ -z "${GOOGLE_CLIENT_SECRET}" ]; then
+    GOOGLE_CLIENT_SECRET="$(existing_lambda_env_value GOOGLE_CLIENT_SECRET)"
+  fi
+
+  if [ -z "${GEOCODIO_API_KEY}" ]; then
+    GEOCODIO_API_KEY="$(existing_lambda_env_value GBS_GEOCODIO_API_KEY)"
+  fi
+
+  if [ -z "${GOOGLE_CLIENT_SECRET}" ]; then
+    echo "GOOGLE_CLIENT_SECRET is required to create the new API stack and could not be copied from ${LEGACY_API_FUNCTION_NAME}." >&2
+    exit 1
+  fi
+}
+
+deploy_api_stack() {
   local lambda_code_bucket="$1"
   local lambda_code_key="$2"
 
   if [ -z "${lambda_code_bucket}" ] || [ "${lambda_code_bucket}" = "None" ] || [ -z "${lambda_code_key}" ] || [ "${lambda_code_key}" = "None" ]; then
-    echo "LambdaCodeBucket and LambdaCodeKey are required. Run the api or full target first if the stack has no existing Lambda package." >&2
+    echo "LambdaCodeBucket and LambdaCodeKey are required. Run the api or full target first if the API stack has no existing Lambda package." >&2
     exit 1
   fi
 
-  echo "Deploying CloudFormation stack ${STACK_NAME}..."
+  hydrate_first_api_stack_secrets
+
+  echo "Deploying API stack ${API_STACK_NAME}..."
   parameter_overrides=(
-    "DomainName=${DOMAIN_NAME}"
-    "HostedZoneId=${HOSTED_ZONE_ID}"
     "LambdaCodeBucket=${lambda_code_bucket}"
     "LambdaCodeKey=${lambda_code_key}"
     "GoogleClientId=${GOOGLE_CLIENT_ID}"
@@ -333,10 +436,29 @@ deploy_stack() {
   fi
 
   aws_region cloudformation deploy \
+    --stack-name "${API_STACK_NAME}" \
+    --template-file infra/api-hosting.yaml \
+    --capabilities CAPABILITY_IAM \
+    --parameter-overrides "${parameter_overrides[@]}"
+}
+
+deploy_edge_stack() {
+  local api_origin_domain_name="$1"
+
+  if [ -z "${api_origin_domain_name}" ] || [ "${api_origin_domain_name}" = "None" ]; then
+    echo "ApiOriginDomainName is required. Deploy the API stack first." >&2
+    exit 1
+  fi
+
+  echo "Deploying edge/frontend stack ${STACK_NAME}..."
+  aws_region cloudformation deploy \
     --stack-name "${STACK_NAME}" \
     --template-file infra/production-hosting.yaml \
     --capabilities CAPABILITY_IAM \
-    --parameter-overrides "${parameter_overrides[@]}"
+    --parameter-overrides \
+      "DomainName=${DOMAIN_NAME}" \
+      "HostedZoneId=${HOSTED_ZONE_ID}" \
+      "ApiOriginDomainName=${api_origin_domain_name}"
 }
 
 sync_frontend() {
@@ -378,6 +500,10 @@ LAMBDA_CODE_KEY="lambda/gbs-api-$(date -u +%Y%m%d%H%M%S).zip"
 DEPLOYED_LAMBDA_CODE_BUCKET=""
 DEPLOYED_LAMBDA_CODE_KEY=""
 
+if [ "${RUN_CI}" -eq 1 ]; then
+  deploy_github_actions_stack
+fi
+
 if [ "${RUN_DATA}" -eq 1 ]; then
   ensure_data_prerequisites
 fi
@@ -400,12 +526,21 @@ if [ "${RUN_API}" -eq 1 ]; then
   DEPLOYED_LAMBDA_CODE_BUCKET="${ARTIFACT_BUCKET}"
   DEPLOYED_LAMBDA_CODE_KEY="${LAMBDA_CODE_KEY}"
 elif [ "${RUN_INFRA}" -eq 1 ]; then
-  DEPLOYED_LAMBDA_CODE_BUCKET="$(stack_parameter LambdaCodeBucket)"
-  DEPLOYED_LAMBDA_CODE_KEY="$(stack_parameter LambdaCodeKey)"
+  if api_stack_exists; then
+    DEPLOYED_LAMBDA_CODE_BUCKET="$(api_stack_parameter LambdaCodeBucket)"
+    DEPLOYED_LAMBDA_CODE_KEY="$(api_stack_parameter LambdaCodeKey)"
+  else
+    DEPLOYED_LAMBDA_CODE_BUCKET="$(stack_parameter LambdaCodeBucket)"
+    DEPLOYED_LAMBDA_CODE_KEY="$(stack_parameter LambdaCodeKey)"
+  fi
 fi
 
 if [ "${RUN_API}" -eq 1 ] || [ "${RUN_INFRA}" -eq 1 ]; then
-  deploy_stack "${DEPLOYED_LAMBDA_CODE_BUCKET}" "${DEPLOYED_LAMBDA_CODE_KEY}"
+  deploy_api_stack "${DEPLOYED_LAMBDA_CODE_BUCKET}" "${DEPLOYED_LAMBDA_CODE_KEY}"
+fi
+
+if [ "${RUN_INFRA}" -eq 1 ]; then
+  deploy_edge_stack "$(api_stack_output ApiDomainName)"
 fi
 
 if [ "${RUN_FRONTEND}" -eq 1 ]; then

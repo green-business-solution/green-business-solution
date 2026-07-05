@@ -301,12 +301,12 @@ describe("ApplicationProfileApprovalValidator", () => {
   });
 
   it("does not add a customer-facing Prepare Application route", async () => {
-    const routes = await fs.readFile("src/routes.ts", "utf8");
+    const routes = await fs.readFile("apps/web/src/routes.ts", "utf8");
     expect(routes).not.toMatch(/prepare-application/i);
   });
 
   it("keeps Generate Draft opportunity validation separate from Import First 10", async () => {
-    const appSource = await fs.readFile("src/App.tsx", "utf8");
+    const appSource = await fs.readFile("apps/web/src/App.tsx", "utf8");
     expect(appSource).toMatch(/Enter an opportunity ID before generating a draft/);
     expect(appSource).toMatch(/\/api\/admin\/application-profiles\/import-first10/);
     expect(appSource).toMatch(/adminAuthBody\(credential\)/);

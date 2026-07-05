@@ -154,7 +154,7 @@ The special-edge audit writes:
 
 Use the audit to suppress normal-retrofit edges when official source text explicitly says an energy audit, LEED certification, engineering feasibility study, or benchmarking/compliance step is required before the normal retrofit incentive can be used. Also suppress the normal-retrofit edge when the special service is the only source-text match and every normal retrofit match is only a broad fallback. Otherwise keep the normal retrofit edge and show the special category separately in the UI.
 
-When suppression IDs have been added to `SPECIAL_PREREQUISITE_NORMAL_EDGE_OPPORTUNITY_IDS` in `server/matching/retrofitTaxonomy.mjs`, regenerate sample data from AWS with `npm run matching:sample`. If AWS credentials are unavailable and the checked-in public fixtures need to be patched immediately, run:
+When suppression IDs have been added to `SPECIAL_PREREQUISITE_NORMAL_EDGE_OPPORTUNITY_IDS` in `apps/api/server/matching/retrofitTaxonomy.mjs`, regenerate sample data from AWS with `npm run matching:sample`. If AWS credentials are unavailable and the checked-in public fixtures need to be patched immediately, run:
 
 ```sh
 npm run matching:special-edge-suppressions:public

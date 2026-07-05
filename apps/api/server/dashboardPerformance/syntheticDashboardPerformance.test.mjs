@@ -7,7 +7,7 @@ import {
 } from "./schemas.mjs";
 
 async function loadSampleTestCase(sampleUserId = "juniper-and-ivy-san-diego") {
-  const payload = JSON.parse(await fs.readFile(new URL("../../public/sample_matching_test_cases.json", import.meta.url), "utf8"));
+  const payload = JSON.parse(await fs.readFile(new URL("../../../../public/sample_matching_test_cases.json", import.meta.url), "utf8"));
   return payload.testCases.find((testCase) => testCase.sampleUserId === sampleUserId) || payload.testCases[0];
 }
 

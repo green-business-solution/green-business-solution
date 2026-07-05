@@ -1,0 +1,106 @@
+name: CI and production deploy
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check API syntax
+        run: npm run check -w @gbs/api
+
+      - name: Typecheck frontend
+        run: npm run typecheck
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Run tests
+        run: npm test
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Audit Lambda runtime dependencies
+        run: npm audit --workspace @gbs/api --omit=dev --audit-level=high
+
+  deploy-production:
+    name: Deploy production
+    needs: checks
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::448016109714:role/gbs-github-actions-deploy
+          aws-region: us-east-1
+
+      - name: Select deploy targets
+        id: deploy-targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="${{ github.event.before }}"
+          head="${{ github.sha }}"
+          if [ -z "${base}" ] || [ "${base}" = "0000000000000000000000000000000000000000" ]; then
+            base="$(git rev-parse "${head}^")"
+          fi
+          {
+            echo "base_sha=${base}"
+            echo "head_sha=${head}"
+            node scripts/select-production-deploy-targets.mjs --format github-output "${base}" "${head}"
+          } >> "${GITHUB_OUTPUT}"
+          node scripts/select-production-deploy-targets.mjs --format lines "${base}" "${head}"
+
+      - name: Deploy changed production targets
+        if: steps.deploy-targets.outputs.has_deploy == 'true'
+        env:
+          AWS_PROFILE: ""
+          AWS_DEPLOY_REGION: us-east-1
+          GBS_AWS_REGION: us-east-2
+          GBS_DEPLOY_BASE_SHA: ${{ steps.deploy-targets.outputs.base_sha }}
+          GBS_DEPLOY_HEAD_SHA: ${{ steps.deploy-targets.outputs.head_sha }}
+        run: npm run deploy:production:auto

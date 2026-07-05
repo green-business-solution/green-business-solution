@@ -7,7 +7,7 @@ RetroFi uses address-resolved geography as the join key for locality-aware tax e
 1. Intake stores `site.geography` from Census Geocoder, with Geocodio as fallback.
 2. `normalizeUserProfile` exposes state, county, place, tract, block, ZIP, and coordinates on `site.geo`.
 3. Savings previews pass that geography into the v2 incentive runtime.
-4. `server/savings/tax.mjs` normalizes geography and matches rules from `data/tax_geography_rules.json`.
+4. `apps/api/server/savings/tax.mjs` normalizes geography and matches rules from `data/tax_geography_rules.json`.
 5. Matched rules can add source-backed v2 inputs, such as preferential tax rates, while address geography can add jurisdiction facts such as `municipality`, `site_county_fips`, and `place_geoid`.
 6. Rules can also declare `serverDerivableInputs` for workflow routing facts, such as `state_fips`, `place_name`, or an assessor-jurisdiction coordinate candidate. These are still not proof of tax eligibility unless the rule says so.
 

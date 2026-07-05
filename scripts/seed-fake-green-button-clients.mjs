@@ -6,7 +6,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import {
   processUtilityDataUpload,
   validateExtractedValueFieldIds
-} from "../server/energyData/parseEnergyData.mjs";
+} from "../apps/api/server/energyData/parseEnergyData.mjs";
 
 const scriptPath = fileURLToPath(import.meta.url);
 const scriptDir = path.dirname(scriptPath);

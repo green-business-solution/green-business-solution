@@ -4,17 +4,17 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { fromIni } from "@aws-sdk/credential-providers";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
-import { buildOpportunityMatchProfile } from "../server/matching/buildOpportunityMatchProfile.mjs";
-import { evaluateOpportunityForUser } from "../server/matching/evaluateRules.mjs";
-import { summarizeMatchResult } from "../server/matching/explainMatch.mjs";
-import { normalizeUserProfile } from "../server/matching/normalizeUserProfile.mjs";
-import { isVisibleAvailability, isVisibleOpportunity } from "../server/matching/opportunityLifecycle.mjs";
-import { buildRetrofitGroupsFromEligibleResults } from "../server/retrofitRecommendations.mjs";
+import { buildOpportunityMatchProfile } from "../apps/api/server/matching/buildOpportunityMatchProfile.mjs";
+import { evaluateOpportunityForUser } from "../apps/api/server/matching/evaluateRules.mjs";
+import { summarizeMatchResult } from "../apps/api/server/matching/explainMatch.mjs";
+import { normalizeUserProfile } from "../apps/api/server/matching/normalizeUserProfile.mjs";
+import { isVisibleAvailability, isVisibleOpportunity } from "../apps/api/server/matching/opportunityLifecycle.mjs";
+import { buildRetrofitGroupsFromEligibleResults } from "../apps/api/server/retrofitRecommendations.mjs";
 import {
   RETROFIT_TAXONOMY_VERSION,
   buildRetrofitOpportunityIndex,
   classifyRetrofitsForOpportunity
-} from "../server/matching/retrofitTaxonomy.mjs";
+} from "../apps/api/server/matching/retrofitTaxonomy.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const dataDir = path.join(repoRoot, "data");

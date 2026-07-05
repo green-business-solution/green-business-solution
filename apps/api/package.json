@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "cd ../.. && node server/index.mjs",
-    "check": "cd ../.. && node --check server/index.mjs"
+    "dev": "cd ../.. && node apps/api/server/index.mjs",
+    "check": "cd ../.. && node --check apps/api/server/index.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.1073.0",

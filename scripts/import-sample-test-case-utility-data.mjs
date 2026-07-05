@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildSiteEnergyProfile, supportedUtilityCategories } from "../server/energyData/parseEnergyData.mjs";
+import { buildSiteEnergyProfile, supportedUtilityCategories } from "../apps/api/server/energyData/parseEnergyData.mjs";
 
 const scriptPath = fileURLToPath(import.meta.url);
 const repoRoot = path.resolve(path.dirname(scriptPath), "..");

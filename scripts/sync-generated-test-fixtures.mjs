@@ -8,7 +8,7 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."
 const manifestPath = path.join(repoRoot, "data", "generated_test_fixtures_manifest.json");
 const bucket = process.env.GBS_GENERATED_FIXTURE_BUCKET || "gbs-retrofi-test-fixtures-448016109714-us-east-1";
 const prefix = (process.env.GBS_GENERATED_FIXTURE_PREFIX || "generated-test-fixtures").replace(/^\/+|\/+$/g, "");
-const profile = process.env.AWS_PROFILE || "gbs";
+const profile = process.env.AWS_PROFILE ?? (process.env.CI ? "" : "gbs");
 const region = process.env.AWS_REGION || process.env.AWS_DEPLOY_REGION || "us-east-1";
 
 const fixtures = [
@@ -69,7 +69,7 @@ function localAbsolutePath(fixture) {
 }
 
 function runAws(args, { dryRun = false } = {}) {
-  const command = ["aws", "--profile", profile, "--region", region, ...args];
+  const command = ["aws", ...(profile ? ["--profile", profile] : []), "--region", region, ...args];
   if (dryRun) {
     console.log(command.join(" "));
     return;

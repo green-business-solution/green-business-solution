@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { validateIncentiveCalculationPackageV2 } from "../server/savings/incentiveCalculationsV2.mjs";
+import { validateIncentiveCalculationPackageV2 } from "../apps/api/server/savings/incentiveCalculationsV2.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const packagesPath = path.join(repoRoot, "data", "opportunity_incentive_calculation_packages_v2.json");
