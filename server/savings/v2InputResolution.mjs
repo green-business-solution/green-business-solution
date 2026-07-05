@@ -40,6 +40,17 @@ const UNIT_COUNT_ALIASES = [
   "installation_count"
 ];
 
+const AREA_COUNT_ALIASES = [
+  "square_feet",
+  "gross_building_square_footage",
+  "project_square_footage",
+  "conditioned_floor_area_square_feet",
+  "attic_square_feet",
+  "wall_square_feet",
+  "roof_square_feet",
+  "area_or_unit_count"
+];
+
 const PORT_COUNT_ALIASES = [
   "charger_count",
   "charger_port_count",
@@ -412,7 +423,12 @@ function addMeasureSelections({ ctx, packages, answers, add }) {
         Boolean(ctx.allowSyntheticV2Defaults)
       );
       if (!selectedMeasure) continue;
-      const quantity = firstFiniteAnswer(answers, UNIT_COUNT_ALIASES) ?? 1;
+      const quantity = measureSelectionQuantity(
+        selectedMeasure,
+        answers,
+        Boolean(ctx.allowSyntheticV2Defaults)
+      );
+      if (!Number.isFinite(quantity) || quantity <= 0) continue;
       add(selectionInput, [{ measure_id: selectedMeasure.measure_id, quantity }], ctx.allowSyntheticV2Defaults ? "synthetic_test_case_measure_selection" : "derived_retrofit_measure_match", {
         canonicalInputKey: "measure_selection",
         defaultIsPlaceholder: Boolean(ctx.allowSyntheticV2Defaults),
@@ -665,9 +681,43 @@ function selectMeasure(measures, retrofitTypeId, allowSynthetic) {
     .filter((item) => item.score > 0)
     .sort((a, b) => b.score - a.score || a.amountCents - b.amountCents);
 
-  if (scored[0]?.score >= 2) return scored[0].measure;
+  if (scored[0]?.score > 0) return scored[0].measure;
   if (!allowSynthetic) return null;
   return [...calculableMeasures].sort((a, b) => measureAmountCents(a) - measureAmountCents(b))[0] || null;
+}
+
+function measureSelectionQuantity(measure, answers, allowSynthetic) {
+  const unit = measureQuantityUnit(measure);
+  if (unit.includes("square") || unit.includes("sqft") || unit.includes("sq_ft")) {
+    return firstFiniteAnswer(answers, AREA_COUNT_ALIASES) ?? (allowSynthetic ? SYNTHETIC_DEFAULTS.square_feet : null);
+  }
+  if (unit.includes("linear")) {
+    return firstFiniteAnswer(answers, ["linear_feet", "linear_footage", ...UNIT_COUNT_ALIASES]) ??
+      (allowSynthetic ? SYNTHETIC_DEFAULTS.linear_feet : null);
+  }
+  if (unit.includes("door")) return firstFiniteAnswer(answers, ["door_count", ...UNIT_COUNT_ALIASES]) ?? 1;
+  if (unit.includes("window")) return firstFiniteAnswer(answers, ["window_count", ...UNIT_COUNT_ALIASES]) ?? 1;
+  if (unit.includes("port") || unit.includes("charger") || unit.includes("station")) {
+    return firstFiniteAnswer(answers, [...PORT_COUNT_ALIASES, ...UNIT_COUNT_ALIASES]) ?? 1;
+  }
+  if (unit.includes("fixture") || unit.includes("lamp") || unit.includes("bulb")) {
+    return firstFiniteAnswer(answers, [...FIXTURE_COUNT_ALIASES, ...UNIT_COUNT_ALIASES]) ?? 1;
+  }
+  if (unit.includes("thermostat")) {
+    return firstFiniteAnswer(answers, [...THERMOSTAT_COUNT_ALIASES, ...UNIT_COUNT_ALIASES]) ?? 1;
+  }
+  return firstFiniteAnswer(answers, UNIT_COUNT_ALIASES) ?? 1;
+}
+
+function measureQuantityUnit(measure) {
+  const sourceRow = measure.calculation?.source_row || measure.source_row || {};
+  return String(
+    sourceRow.rateUnit ||
+    sourceRow.unit ||
+    measure.calculation?.rate?.unit ||
+    measure.calculation?.unit ||
+    ""
+  ).toLowerCase();
 }
 
 function measureHasCalculableValue(measure) {

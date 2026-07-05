@@ -2,6 +2,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, GetCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { S3Client } from "@aws-sdk/client-s3";
 import { fromIni } from "@aws-sdk/credential-providers";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -15,6 +16,7 @@ import {
   writePersistentRetrofitRecommendations
 } from "../server/retrofitRecommendationsCache.mjs";
 
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const defaultProfile = process.env.AWS_PROFILE || "gbs";
 const defaultDataRegion = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
 const defaultS3Region = process.env.GBS_ENERGY_DATA_BUCKET_REGION || process.env.AWS_REGION || "us-east-1";
@@ -23,6 +25,7 @@ const defaultIntakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
 const defaultOpportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
 const defaultRuntimeStateTable = process.env.GBS_RUNTIME_STATE_TABLE || "gbs-runtime-state";
 const defaultEnergyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "gbs-retrofi-org-energy-data-448016109714";
+const defaultTestCasesPath = path.join(repoRoot, "public", "sample_matching_test_cases.json");
 
 export function parseArgs(argv) {
   const options = {
@@ -36,6 +39,7 @@ export function parseArgs(argv) {
     profile: defaultProfile,
     runtimeStateTable: defaultRuntimeStateTable,
     s3Region: defaultS3Region,
+    testCasesPath: defaultTestCasesPath,
     userIds: [],
     usersTable: defaultUsersTable
   };
@@ -106,6 +110,11 @@ export function parseArgs(argv) {
       index += 1;
       continue;
     }
+    if (arg === "--test-cases" && next) {
+      options.testCasesPath = path.resolve(repoRoot, next);
+      index += 1;
+      continue;
+    }
     if (arg === "--help" || arg === "-h") {
       options.help = true;
       continue;
@@ -129,6 +138,7 @@ export async function precomputeTestUserRetrofitRecommendations(options = {}, de
     profile: options.profile ?? defaultProfile,
     runtimeStateTable: options.runtimeStateTable || defaultRuntimeStateTable,
     s3Region: options.s3Region || defaultS3Region,
+    testCasesPath: options.testCasesPath || defaultTestCasesPath,
     userIds: Array.isArray(options.userIds) ? unique(options.userIds) : [],
     usersTable: options.usersTable || defaultUsersTable
   };
@@ -150,10 +160,14 @@ export async function precomputeTestUserRetrofitRecommendations(options = {}, de
     });
 
   const users = dependencies.users || (await scanAll(db, config.usersTable));
+  const sampleTestCaseById = dependencies.sampleTestCaseById || (await loadSampleTestCaseByIdMap(config.testCasesPath));
   const targetUserIdSet = new Set(config.userIds);
-  let fakeUsers = users
+  const scopedFakeUsers = users
     .filter((user) => isActiveUserRecord(user) && user.role === "client" && isFakeUserRecord(user))
-    .filter((user) => !targetUserIdSet.size || targetUserIdSet.has(user.userId))
+    .filter((user) => !targetUserIdSet.size || targetUserIdSet.has(user.userId));
+  const skippedTaxOnlyUserCount = scopedFakeUsers.filter((user) => !isPreviewableFakeClientUser(user, sampleTestCaseById)).length;
+  let fakeUsers = scopedFakeUsers
+    .filter((user) => isPreviewableFakeClientUser(user, sampleTestCaseById))
     .sort((left, right) => String(left.fullName || left.email || left.userId).localeCompare(String(right.fullName || right.email || right.userId)));
 
   if (config.limit > 0) {
@@ -248,6 +262,7 @@ export async function precomputeTestUserRetrofitRecommendations(options = {}, de
     opportunityRecordCount: opportunities.length,
     results,
     summary: summarizeResults(results),
+    skippedTaxOnlyUserCount,
     targetUserCount: fakeUsers.length
   };
 }
@@ -369,6 +384,27 @@ function isFakeUserRecord(user) {
   return user?.role !== "admin";
 }
 
+async function loadSampleTestCaseByIdMap(testCasesPath) {
+  try {
+    const raw = await readFile(testCasesPath, "utf8");
+    const parsed = JSON.parse(raw);
+    const testCases = Array.isArray(parsed) ? parsed : parsed.testCases || [];
+    return new Map(testCases.map((testCase) => [cleanText(testCase?.sampleUserId), testCase]).filter(([sampleUserId]) => sampleUserId));
+  } catch {
+    return new Map();
+  }
+}
+
+function isPreviewableFakeClientUser(user, sampleTestCaseById) {
+  const sampleUserId = cleanText(user?.sampleUserId);
+  if (!sampleUserId || !sampleTestCaseById?.has(sampleUserId)) return true;
+  return sampleTestCaseHasRetrofitResults(sampleTestCaseById.get(sampleUserId));
+}
+
+function sampleTestCaseHasRetrofitResults(testCase) {
+  return Array.isArray(testCase?.retrofits) && testCase.retrofits.length > 0;
+}
+
 function publicUser(user) {
   if (!user) return null;
 
@@ -439,6 +475,7 @@ Options:
   --opportunities-table <name>  Opportunities table. Default: ${defaultOpportunitiesTable}
   --runtime-state-table <name>  Runtime state table. Default: ${defaultRuntimeStateTable}
   --energy-data-bucket <name>   Cache payload bucket. Default: ${defaultEnergyDataBucket}
+  --test-cases <path>           Generated test cases used to skip tax-only fixtures. Default: public/sample_matching_test_cases.json
 `);
 }
 

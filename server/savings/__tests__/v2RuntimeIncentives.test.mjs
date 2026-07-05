@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildIncentiveScenarios, selectBestScenario } from "../stacking.mjs";
-import { buildV2RuntimeIncentiveBridge } from "../v2RuntimeIncentives.mjs";
+import { buildV2RuntimeIncentiveBridge, selectV2PackagesForRetrofitGroup } from "../v2RuntimeIncentives.mjs";
 
 function ctx(overrides = {}) {
   const { answers: answerOverrides = {}, ...rest } = overrides;
@@ -125,6 +125,55 @@ describe("v2 runtime incentive bridge", () => {
 
     expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("included");
     expect(bridge.runtimeRules[0].amountRule.amountCents).toBe(400000);
+  });
+
+  it("uses area quantities for synthetic square-foot measure catalog selections", () => {
+    const bridge = buildV2RuntimeIncentiveBridge({
+      packages: [squareFootMeasureCatalogPackage()],
+      existingLegacyRules: [],
+      ctx: ctx({
+        answers: { measure_type: undefined, unit_count: undefined },
+        allowSyntheticV2Defaults: true,
+        sourceRetrofitTypeId: "insulation_upgrade"
+      })
+    });
+
+    expect(bridge.packageSummaries[0].runtimeInclusionStatus).toBe("included");
+    expect(bridge.runtimeRules[0].amountRule.amountCents).toBe(12000);
+    expect(bridge.packageSummaries[0].resolvedInputs).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          inputKey: "measure_type",
+          source: "synthetic_test_case_measure_selection"
+        })
+      ])
+    );
+  });
+
+  it("honors repaired package metadata that deletes bad retrofit edges", () => {
+    const packages = [
+      {
+        ...includedFixedPackage(),
+        opportunity_id: "opp_bad_edge",
+        migration_metadata: {
+          edge_actions: [
+            {
+              retrofitTypeId: "high_efficiency_hvac_replacement",
+              action: "delete_bad_edge"
+            }
+          ]
+        }
+      }
+    ];
+
+    expect(selectV2PackagesForRetrofitGroup({
+      retrofitTypeId: "high_efficiency_hvac_replacement",
+      opportunities: [{ opportunityId: "opp_bad_edge" }]
+    }, packages)).toEqual([]);
+    expect(selectV2PackagesForRetrofitGroup({
+      retrofitTypeId: "insulation_upgrade",
+      opportunities: [{ opportunityId: "opp_bad_edge" }]
+    }, packages)).toHaveLength(1);
   });
 
   it("uses conservative range rate-table rows and point-of-sale timing for repaired packages", () => {
@@ -563,6 +612,110 @@ function sourceRowMeasureCatalogPackage() {
         label: "Charger count",
         value_type: "number",
         required_for: ["effect_source_row_catalog"],
+        source_precedence: ["retrofit_quantity"],
+        missing_severity: "blocks_calculation"
+      }
+    ]
+  };
+}
+
+function squareFootMeasureCatalogPackage() {
+  const pkg = includedMeasureCatalogPackage();
+  return {
+    ...pkg,
+    opportunity_id: "opp_v2_square_foot_catalog",
+    program_name: "Square Foot Catalog Rebate",
+    measure_catalogs: [
+      {
+        catalog_id: "catalog_square_foot",
+        name: "Square Foot Catalog",
+        selection_input: "measure_type",
+        measures: [
+          {
+            measure_id: "air_seal_ceiling_or_floor",
+            name: "Air seal ceiling or floor",
+            calculation: {
+              method: "per_unit",
+              rate: { amount: { value: 0.08, currency: "USD" }, unit: "unit" },
+              source_row: {
+                measure: "air_seal_ceiling_or_floor",
+                rateCents: 8,
+                rateUnit: "square_foot"
+              }
+            },
+            customer_filters: [],
+            equipment_filters: [],
+            limits: [],
+            required_inputs: [],
+            evidence_refs: [],
+            confidence: { overall: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["test"] }
+          },
+          {
+            measure_id: "single_family_attic_insulation_r20_to_r30",
+            name: "Single family attic insulation R20 to R30",
+            calculation: {
+              method: "per_unit",
+              rate: { amount: { value: 0.12, currency: "USD" }, unit: "unit" },
+              source_row: {
+                measure: "single_family_attic_insulation_r20_to_r30",
+                rateCents: 12,
+                rateUnit: "square_foot"
+              }
+            },
+            customer_filters: [],
+            equipment_filters: [],
+            limits: [],
+            required_inputs: [],
+            evidence_refs: [],
+            confidence: { overall: 0.9, calculation: 0.9, extraction: 0.9, reason_codes: ["test"] }
+          }
+        ]
+      }
+    ],
+    effects: [
+      {
+        ...pkg.effects[0],
+        effect_id: "effect_square_foot_catalog",
+        label: "Square foot catalog rebate",
+        calculation: {
+          method: "measure_catalog",
+          measure_catalog_id: "catalog_square_foot",
+          measure_selection_input: "measure_type"
+        },
+        required_inputs: [
+          {
+            input_key: "measure_type",
+            label: "Measure type",
+            value_type: "text",
+            required_for: ["effect_square_foot_catalog"],
+            source_precedence: ["equipment_selection"],
+            missing_severity: "blocks_calculation"
+          },
+          {
+            input_key: "square_feet",
+            label: "Square feet",
+            value_type: "number",
+            required_for: ["effect_square_foot_catalog"],
+            source_precedence: ["retrofit_quantity"],
+            missing_severity: "blocks_calculation"
+          }
+        ]
+      }
+    ],
+    input_requirements: [
+      {
+        input_key: "measure_type",
+        label: "Measure type",
+        value_type: "text",
+        required_for: ["effect_square_foot_catalog"],
+        source_precedence: ["equipment_selection"],
+        missing_severity: "blocks_calculation"
+      },
+      {
+        input_key: "square_feet",
+        label: "Square feet",
+        value_type: "number",
+        required_for: ["effect_square_foot_catalog"],
         source_precedence: ["retrofit_quantity"],
         missing_severity: "blocks_calculation"
       }

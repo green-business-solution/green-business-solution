@@ -94,7 +94,19 @@ export function buildV2RuntimeIncentiveBridge({
 export function selectV2PackagesForRetrofitGroup(retrofitGroup, packages = []) {
   if (!retrofitGroup?.opportunities?.length || !packages.length) return [];
   const opportunityIds = new Set(retrofitGroup.opportunities.map((opportunity) => opportunity.opportunityId).filter(Boolean));
-  return packages.filter((pkg) => opportunityIds.has(pkg.opportunity_id));
+  return packages.filter((pkg) =>
+    opportunityIds.has(pkg.opportunity_id) &&
+    packageAllowsRetrofitType(pkg, retrofitGroup.retrofitTypeId)
+  );
+}
+
+function packageAllowsRetrofitType(pkg, retrofitTypeId) {
+  if (!retrofitTypeId) return true;
+  const edgeAction = (pkg.migration_metadata?.edge_actions || []).find((action) =>
+    action?.retrofitTypeId === retrofitTypeId ||
+    action?.retrofit_type_id === retrofitTypeId
+  );
+  return edgeAction?.action !== "delete_bad_edge";
 }
 
 function summarizePackageRuntimeStatus({ pkg, result, ctx, legacyRulePreferred }) {

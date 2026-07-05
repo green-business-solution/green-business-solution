@@ -1698,12 +1698,17 @@ async function buildCachedPortalRetrofitRecommendations({ user, intake, now = ne
 
 async function precomputeAdminClientRetrofitRecommendations(userIds) {
   const uniqueUserIds = [...new Set(cleanStringArray(userIds))].slice(0, 75);
+  const sampleTestCaseById = await loadSampleMatchingTestCaseByIdMap();
   const results = [];
   for (const userId of uniqueUserIds) {
     try {
       const user = await getUserRecord(userId);
       if (!user || user.role !== "client") {
         results.push({ userId, status: "skipped" });
+        continue;
+      }
+      if (!isPreviewableFakeClientUser(user, sampleTestCaseById)) {
+        results.push({ userId, status: "skipped_tax_only" });
         continue;
       }
       const intake = await getIntake(user.userId);
@@ -2332,9 +2337,13 @@ async function buildAdminUserRows() {
 }
 
 async function buildAdminFakeClientOptions() {
-  const users = await scanAll(usersTable);
+  const [users, sampleTestCaseById] = await Promise.all([
+    scanAll(usersTable),
+    loadSampleMatchingTestCaseByIdMap()
+  ]);
   return users
     .filter((user) => isActiveUserRecord(user) && user.role === "client" && isFakeUserRecord(user))
+    .filter((user) => isPreviewableFakeClientUser(user, sampleTestCaseById))
     .map((user) => {
       const publicRecord = publicUser(user);
       return {
@@ -2358,6 +2367,26 @@ async function loadSampleMatchingTestCases() {
   const testCases = Array.isArray(parsed) ? parsed : parsed.testCases || [];
   sampleMatchingTestCasesCache = testCases;
   return testCases;
+}
+
+async function loadSampleMatchingTestCaseByIdMap() {
+  try {
+    const testCases = await loadSampleMatchingTestCases();
+    return new Map(testCases.map((testCase) => [cleanText(testCase?.sampleUserId), testCase]).filter(([sampleUserId]) => sampleUserId));
+  } catch (error) {
+    console.warn("[admin-preview] Could not load sample matching test cases for fake-user filtering:", error);
+    return new Map();
+  }
+}
+
+function isPreviewableFakeClientUser(user, sampleTestCaseById) {
+  const sampleUserId = cleanText(user?.sampleUserId);
+  if (!sampleUserId || !sampleTestCaseById?.has(sampleUserId)) return true;
+  return sampleTestCaseHasRetrofitResults(sampleTestCaseById.get(sampleUserId));
+}
+
+function sampleTestCaseHasRetrofitResults(testCase) {
+  return Array.isArray(testCase?.retrofits) && testCase.retrofits.length > 0;
 }
 
 async function getSampleMatchingTestCase(testCaseId) {

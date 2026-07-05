@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) selected retrofit savings cache repair
+
+- Fixed synthetic measure-catalog incentive selection so square-foot measures use area quantities instead of producing 8-cent placeholder rebates.
+- Honored repaired package edge metadata that deletes bad retrofit/opportunity edges, and bumped the persistent recommendation cache version so stale payloads are not reused.
+- Filtered promoted tax-only fake users out of admin customer preview and test-user recommendation precompute when their sample test case has no retrofit results.
+
 ## 2026-07-05 - Codex (GPT-5) mandatory tax intake runtime policy
 
 - Added a tax profile runtime evaluator that runs compiled tax-gap rules and local tax workflows against tax profile facts/documents, marking missing values as mandatory pre-opportunity inputs.
