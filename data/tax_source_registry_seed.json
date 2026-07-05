@@ -6,7 +6,8 @@
     "data/tax_official_dataset_rule_research_gpt_pro_2026-07-03.json",
     "data/tax_geography_rules.json",
     "data/tax_local_workflow_rules.json",
-    "data/tax_model_framework.json"
+    "data/tax_model_framework.json",
+    "data/tax_comprehensive_model_research_gpt_pro_2026-07-04.json"
   ],
   "importPolicy": {
     "authoritativeSourceOrder": [
@@ -34,14 +35,19 @@
   "sourceFamilies": [
     {
       "taxDataFamily": "sales_use_tax_rates_and_boundaries",
-      "modelKindsSupported": ["sales_use_tax_rate", "sales_use_tax_exemption"],
+      "modelKindsSupported": [
+        "sales_use_tax_rate",
+        "sales_use_tax_exemption"
+      ],
       "priority": "high",
       "runtimeGoal": "Resolve combined sales/use tax rates and source-backed retrofit taxability when address and taxable basis are known.",
       "recommendedSources": [
         {
           "sourceId": "sst_rate_and_boundary_files",
           "officialOwner": "Streamlined Sales Tax Governing Board and member states",
-          "jurisdictionsCovered": ["member_states"],
+          "jurisdictionsCovered": [
+            "member_states"
+          ],
           "accessMethod": "download",
           "machineReadable": true,
           "sourceUrls": [
@@ -53,15 +59,23 @@
         {
           "sourceId": "state_dor_sales_tax_rate_files",
           "officialOwner": "State revenue departments",
-          "jurisdictionsCovered": ["all_states_and_dc_where_available"],
+          "jurisdictionsCovered": [
+            "all_states_and_dc_where_available"
+          ],
           "accessMethod": "download_or_api_or_lookup",
           "machineReadable": "state_specific",
           "sourceUrls": [],
           "runtimeUsePolicy": "Prefer official state downloads/APIs over ZIP-only inference. Use lookup-only tools for validation or admin research unless terms permit automated production use."
         }
       ],
-      "requiredRuntimeInputs": ["eligible_taxable_basis_cents", "equipment_or_service_taxability_category"],
-      "documentGates": ["taxability certificate when required", "invoice/quote for taxable basis"],
+      "requiredRuntimeInputs": [
+        "eligible_taxable_basis_cents",
+        "equipment_or_service_taxability_category"
+      ],
+      "documentGates": [
+        "taxability certificate when required",
+        "invoice/quote for taxable basis"
+      ],
       "refreshCadence": "monthly_or_quarterly_by_state"
     },
     {
@@ -79,15 +93,26 @@
         {
           "sourceId": "state_statutes_and_revenue_guidance",
           "officialOwner": "State legislatures and state tax agencies",
-          "jurisdictionsCovered": ["all_states_and_dc"],
+          "jurisdictionsCovered": [
+            "all_states_and_dc"
+          ],
           "accessMethod": "statute_regulation_guidance",
           "machineReadable": false,
           "sourceUrls": [],
           "runtimeUsePolicy": "Use GPT Pro/Codex research to normalize formulas and required inputs; import only when source URLs and evidence are official."
         }
       ],
-      "requiredRuntimeInputs": ["eligible_basis_cents", "entity_tax_status", "tax_liability_or_tax_appetite_when_relevant"],
-      "documentGates": ["tax return", "filing confirmation", "exemption certificate", "credit form"],
+      "requiredRuntimeInputs": [
+        "eligible_basis_cents",
+        "entity_tax_status",
+        "tax_liability_or_tax_appetite_when_relevant"
+      ],
+      "documentGates": [
+        "tax return",
+        "filing confirmation",
+        "exemption certificate",
+        "credit form"
+      ],
       "refreshCadence": "monthly_watch_plus_annual_legislative_review"
     },
     {
@@ -104,7 +129,9 @@
         {
           "sourceId": "state_property_tax_agency_sources",
           "officialOwner": "State property tax agencies or equalization boards",
-          "jurisdictionsCovered": ["states_with_centralized_property_tax_data"],
+          "jurisdictionsCovered": [
+            "states_with_centralized_property_tax_data"
+          ],
           "accessMethod": "download_or_guidance",
           "machineReadable": "state_specific",
           "sourceUrls": [],
@@ -113,15 +140,27 @@
         {
           "sourceId": "county_city_assessor_treasurer_sources",
           "officialOwner": "County/city assessors and treasurers",
-          "jurisdictionsCovered": ["county_city_priority_jurisdictions"],
+          "jurisdictionsCovered": [
+            "county_city_priority_jurisdictions"
+          ],
           "accessMethod": "open_data_or_lookup_or_bill_upload",
           "machineReadable": "jurisdiction_specific",
           "sourceUrls": [],
           "runtimeUsePolicy": "Use open data for parcel/jurisdiction routing; require uploaded tax bill or licensed source for current bill-line calculations when terms are lookup-only."
         }
       ],
-      "requiredRuntimeInputs": ["parcel_id_or_apn", "current_tax_bill_lines", "assessed_or_taxable_value", "counterfactual_ordinary_tax_cents"],
-      "documentGates": ["property tax bill", "assessment notice", "assessor confirmation", "approved abatement agreement"],
+      "requiredRuntimeInputs": [
+        "parcel_id_or_apn",
+        "current_tax_bill_lines",
+        "assessed_or_taxable_value",
+        "counterfactual_ordinary_tax_cents"
+      ],
+      "documentGates": [
+        "property tax bill",
+        "assessment notice",
+        "assessor confirmation",
+        "approved abatement agreement"
+      ],
       "refreshCadence": "annual_roll_plus_monthly_source_status_check"
     },
     {
@@ -138,7 +177,9 @@
         {
           "sourceId": "state_business_tax_rate_and_form_sources",
           "officialOwner": "State tax agencies",
-          "jurisdictionsCovered": ["all_states_and_dc"],
+          "jurisdictionsCovered": [
+            "all_states_and_dc"
+          ],
           "accessMethod": "forms_instructions_statutes_rate_tables",
           "machineReadable": "partial",
           "sourceUrls": [],
@@ -147,15 +188,26 @@
         {
           "sourceId": "major_local_business_tax_sources",
           "officialOwner": "City finance departments and municipal codes",
-          "jurisdictionsCovered": ["priority_cities_and_known_local_tax_jurisdictions"],
+          "jurisdictionsCovered": [
+            "priority_cities_and_known_local_tax_jurisdictions"
+          ],
           "accessMethod": "municipal_code_return_forms_guidance",
           "machineReadable": "partial",
           "sourceUrls": [],
           "runtimeUsePolicy": "Calculate internal-only unless business class and tax base are user/accountant-confirmed."
         }
       ],
-      "requiredRuntimeInputs": ["gross_receipts_cents", "taxable_income_or_tax_liability_cents", "business_tax_class", "deductions_or_apportionment_when_applicable"],
-      "documentGates": ["tax return", "accounting export", "accountant review"],
+      "requiredRuntimeInputs": [
+        "gross_receipts_cents",
+        "taxable_income_or_tax_liability_cents",
+        "business_tax_class",
+        "deductions_or_apportionment_when_applicable"
+      ],
+      "documentGates": [
+        "tax return",
+        "accounting export",
+        "accountant review"
+      ],
       "refreshCadence": "annual_tax_year_plus_quarterly_rate_check"
     },
     {
@@ -173,7 +225,9 @@
         {
           "sourceId": "local_option_statutory_authority",
           "officialOwner": "State legislatures and state tax agencies",
-          "jurisdictionsCovered": ["states_with_local_option_authority"],
+          "jurisdictionsCovered": [
+            "states_with_local_option_authority"
+          ],
           "accessMethod": "statute_guidance",
           "machineReadable": false,
           "sourceUrls": [],
@@ -182,20 +236,33 @@
         {
           "sourceId": "local_adoption_sources",
           "officialOwner": "City/county/municipal councils, assessors, and code publishers",
-          "jurisdictionsCovered": ["localities_with_verified_adoption"],
+          "jurisdictionsCovered": [
+            "localities_with_verified_adoption"
+          ],
           "accessMethod": "ordinance_code_assessor_guidance",
           "machineReadable": "partial",
           "sourceUrls": [],
           "runtimeUsePolicy": "Require direct local adoption evidence before enabling a local-option estimate."
         }
       ],
-      "requiredRuntimeInputs": ["local_ordinance_confirmation", "eligible_tax_lines_or_basis", "filing_or_application_status"],
-      "documentGates": ["local ordinance", "application approval", "tax bill", "assessor confirmation"],
+      "requiredRuntimeInputs": [
+        "local_ordinance_confirmation",
+        "eligible_tax_lines_or_basis",
+        "filing_or_application_status"
+      ],
+      "documentGates": [
+        "local ordinance",
+        "application approval",
+        "tax bill",
+        "assessor confirmation"
+      ],
       "refreshCadence": "semiannual_or_when_opportunity_collected"
     },
     {
       "taxDataFamily": "unsupported_or_exotic_tax_workflows",
-      "modelKindsSupported": ["unsupported_tax_model"],
+      "modelKindsSupported": [
+        "unsupported_tax_model"
+      ],
       "priority": "low",
       "runtimeGoal": "Provide a safe $0 fallback for tax-like opportunities outside current support.",
       "recommendedSources": [],
@@ -207,32 +274,51 @@
   "databaseTableSkeleton": [
     {
       "tableName": "tax_source_registry",
-      "primaryKey": ["sourceId"],
+      "primaryKey": [
+        "sourceId"
+      ],
       "purpose": "Official source metadata, access terms, refresh cadence, and import status."
     },
     {
       "tableName": "tax_rate_records",
-      "primaryKey": ["taxType", "jurisdictionKey", "effectiveStartDate", "sourceId"],
+      "primaryKey": [
+        "taxType",
+        "jurisdictionKey",
+        "effectiveStartDate",
+        "sourceId"
+      ],
       "purpose": "Structured sales/use, local tax, and business tax rate records."
     },
     {
       "tableName": "tax_boundary_records",
-      "primaryKey": ["boundarySourceId", "jurisdictionKey", "effectiveStartDate"],
+      "primaryKey": [
+        "boundarySourceId",
+        "jurisdictionKey",
+        "effectiveStartDate"
+      ],
       "purpose": "Address/geography boundary or tax-code joins for local tax rates."
     },
     {
       "tableName": "tax_incentive_rule_records",
-      "primaryKey": ["taxRuleId", "version"],
+      "primaryKey": [
+        "taxRuleId",
+        "version"
+      ],
       "purpose": "Normalized credit, exemption, valuation, abatement, deduction, and unsupported tax model records."
     },
     {
       "tableName": "tax_rule_evidence",
-      "primaryKey": ["taxRuleId", "evidenceId"],
+      "primaryKey": [
+        "taxRuleId",
+        "evidenceId"
+      ],
       "purpose": "Official source URLs and evidence text for every material rate/formula/eligibility claim."
     },
     {
       "tableName": "tax_import_runs",
-      "primaryKey": ["importRunId"],
+      "primaryKey": [
+        "importRunId"
+      ],
       "purpose": "Refresh logs, validation errors, source hashes, and change summaries."
     }
   ],
@@ -248,22 +334,69 @@
     {
       "phase": "schema_and_prompting",
       "status": "current",
-      "deliverables": ["tax_model_framework", "tax_source_registry_seed", "comprehensive_gpt_pro_work_packet"]
+      "deliverables": [
+        "tax_model_framework",
+        "tax_source_registry_seed",
+        "comprehensive_gpt_pro_work_packet"
+      ]
     },
     {
       "phase": "structured_source_imports",
       "status": "planned",
-      "deliverables": ["sales_use_tax_rate_import", "tax_boundary_import", "source_registry_import_validation"]
+      "deliverables": [
+        "sales_use_tax_rate_import",
+        "tax_boundary_import",
+        "source_registry_import_validation"
+      ]
     },
     {
       "phase": "gpt_researched_rule_imports",
       "status": "planned",
-      "deliverables": ["state_tax_incentive_rules", "property_tax_local_option_rules", "business_tax_rate_preference_rules"]
+      "deliverables": [
+        "state_tax_incentive_rules",
+        "property_tax_local_option_rules",
+        "business_tax_rate_preference_rules"
+      ]
     },
     {
       "phase": "runtime_mapping",
       "status": "planned",
-      "deliverables": ["new_tax_opportunity_classifier", "unsupported_tax_model_fallback", "tax_form_upload_field_mapping"]
+      "deliverables": [
+        "new_tax_opportunity_classifier",
+        "unsupported_tax_model_fallback",
+        "tax_form_upload_field_mapping"
+      ]
     }
-  ]
+  ],
+  "latestComprehensiveResearchArtifact": "data/tax_comprehensive_model_research_gpt_pro_2026-07-04.json",
+  "latestComprehensiveResearchImportedAt": "2026-07-05T00:14:38.103Z",
+  "latestComprehensiveResearchCounts": {
+    "parsedOutputCount": 10,
+    "filesWithTrailingCitations": 7,
+    "trailingCitationCount": 415,
+    "sourceRegistryAdditionCount": 52,
+    "sourcesToSkipForNowCount": 6,
+    "sourcesNeedingCodexStructuredImportCount": 11,
+    "sourcesNeedingFurtherGPTResearchCount": 11,
+    "stateSalesUsePlanCount": 51,
+    "salesUseTaxExemptionRuleCount": 36,
+    "salesUseTaxAmbiguousSkipCount": 10,
+    "stateTaxCreditRuleCount": 26,
+    "stateTaxCreditSkipCount": 13,
+    "propertyTaxStatewideRuleCount": 44,
+    "propertyTaxStatewideSkipCount": 4,
+    "localOptionAuthorityCount": 5,
+    "verifiedLocalRuleCount": 16,
+    "localRulesNeedingFollowupCount": 6,
+    "localRulesToSkipForNowCount": 8,
+    "stateBusinessTaxModelCount": 13,
+    "majorLocalBusinessTaxModelCount": 16,
+    "businessTaxSkipCount": 7,
+    "exoticWorkflowPatternCount": 6,
+    "exoticOpportunityClassificationRuleCount": 7,
+    "unsupportedTaxTriageRuleCount": 16,
+    "normalizedDatabaseTableRecommendationCount": 12,
+    "importValidationRuleCount": 31,
+    "trackedRuleCount": 151
+  }
 }

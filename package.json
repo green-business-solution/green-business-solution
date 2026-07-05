@@ -64,6 +64,7 @@
     "matching:ri-renewable-tax-test-case": "node scripts/apply-ri-renewable-tax-valuation-test-case.mjs",
     "matching:tax-framework:validate": "node scripts/validate-tax-model-framework.mjs",
     "matching:tax-comprehensive-work-packet": "node scripts/write-comprehensive-tax-research-work-packets.mjs",
+    "matching:tax-comprehensive:intake": "node scripts/intake-comprehensive-tax-research-outputs.mjs",
     "fixtures:generated:list": "node scripts/sync-generated-test-fixtures.mjs list",
     "fixtures:generated:upload": "node scripts/sync-generated-test-fixtures.mjs upload",
     "fixtures:generated:download": "node scripts/sync-generated-test-fixtures.mjs download",

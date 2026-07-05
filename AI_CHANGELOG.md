@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) comprehensive tax research intake
+
+- Added an intake script for the 10 comprehensive tax GPT Pro research outputs, including first-JSON extraction, schema validation, URL normalization, and citation-footnote preservation.
+- Imported the comprehensive tax research artifact and intake report, covering sales/use tax sources, taxability rules, state credits, property-tax rules, local-option incentives, business taxes, exotic workflows, unsupported fallback triage, and import validation mapping.
+- Updated the tax source registry seed to reference the new comprehensive research artifact and added an npm alias for repeatable intake.
+
 ## 2026-07-04 - Codex (GPT-5) scenario and opportunity preview modes
 
 - Added Summary, Review, and Guided Scenarios tab modes so the selected retrofit workspace can compare scenarios through alternative card, table, and guided review layouts.
