@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) runtime resource modularization
+
+- Split generic runtime state usage into domain-specific DynamoDB tables for dashboard performance, recommendation cache metadata, application profiles, and API operational state.
+- Added separate CloudFormation templates for runtime DynamoDB tables and runtime/test-fixture S3 buckets, plus a repeatable migration script for legacy runtime-state and S3 prefixes.
+- Moved generated fixture defaults to a dedicated test-fixtures bucket and moved recommendation cache payloads to a dedicated runtime-cache bucket.
+- Removed the stale `gbs-energy-data` raw table reference from the admin UI hidden-table list and fixed the existing suppressed-grant test expectation.
+
 ## 2026-07-05 - Codex (GPT-5) npm workspace monorepo setup
 
 - Added `apps/web` and `apps/api` workspace manifests to separate frontend/build dependencies from API Lambda runtime dependencies.

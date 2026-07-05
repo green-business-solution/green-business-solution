@@ -5,23 +5,36 @@ The production domain is `retrofi.org`, registered in AWS Route 53 under the Gre
 ## Current AWS Hosting Model
 
 Production hosting is defined in `infra/production-hosting.yaml` and deployed by `scripts/deploy-production.sh`.
+Runtime tables and support buckets are defined separately in `infra/runtime-data.yaml` and
+`infra/runtime-buckets.yaml`.
 
-The stack creates:
+The hosting stack creates:
 
 - S3 bucket for the built Vite frontend.
-- Private S3 bucket for uploaded utility bills and Green Button files.
 - CloudFront distribution for `https://retrofi.org` and `https://www.retrofi.org`.
 - ACM certificate validated through the Route 53 hosted zone.
 - HTTP API Gateway route for `/api/*`.
 - Lambda function running the existing Express API through `server/lambda.mjs`.
 - Route 53 `A` and `AAAA` alias records for the root and `www` domains.
 
+The runtime stacks create:
+
+- `gbs-dashboard-performance` for synthetic/test-case dashboard performance records.
+- `gbs-retrofit-recommendation-cache` for recommendation cache metadata.
+- `gbs-application-profiles` for application source/profile registry records.
+- `gbs-api-runtime-state` for operational state such as Geocodio quota usage.
+- `gbs-retrofi-org-runtime-cache-...` for generated recommendation cache payloads.
+- `gbs-retrofi-test-fixtures-...` for generated fixtures and synthetic test data.
+
+The uploaded utility/energy file bucket remains `gbs-retrofi-org-energy-data-...`; it is now only for
+customer utility/energy uploads, not generated runtime cache payloads.
+
 The API Lambda runs in `us-east-1` with IAM permissions to read/write the existing DynamoDB tables in `us-east-2`.
 
 The production API uses separate AWS regions for:
 
 - DynamoDB data access via `GBS_AWS_REGION` (`us-east-2`)
-- The energy-data S3 bucket via `GBS_ENERGY_DATA_BUCKET_REGION` (`us-east-1`)
+- The energy-data and runtime-cache S3 buckets via `GBS_ENERGY_DATA_BUCKET_REGION` (`us-east-1`)
 
 ## Deploy Command
 
@@ -34,7 +47,7 @@ The script:
 1. Builds the Vite frontend.
 2. Packages the Express API as a Lambda zip using the `apps/api` workspace runtime dependencies.
 3. Uploads the Lambda package to an artifact S3 bucket.
-4. Ensures non-CloudFormation runtime prerequisites exist, including the runtime-state table, alert sender, and energy-data S3 bucket configuration.
+4. Deploys/updates the runtime DynamoDB and runtime bucket stacks, alert sender, and energy-data S3 bucket configuration.
 5. Deploys or updates the CloudFormation stack.
 6. Syncs `dist/` to the frontend S3 bucket.
 7. Invalidates CloudFront.

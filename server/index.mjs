@@ -76,10 +76,16 @@ const profile = process.env.AWS_PROFILE ?? (isLambdaRuntime ? "" : "gbs");
 const usersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
 const opportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
-const runtimeStateTable = process.env.GBS_RUNTIME_STATE_TABLE || "gbs-runtime-state";
+const dashboardPerformanceTable = process.env.GBS_DASHBOARD_PERFORMANCE_TABLE || "gbs-dashboard-performance";
+const retrofitRecommendationCacheTable =
+  process.env.GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE || "gbs-retrofit-recommendation-cache";
+const applicationProfilesTable = process.env.GBS_APPLICATION_PROFILES_TABLE || "gbs-application-profiles";
+const apiRuntimeStateTable =
+  process.env.GBS_API_RUNTIME_STATE_TABLE || process.env.GBS_RUNTIME_STATE_TABLE || "gbs-api-runtime-state";
 const sampleMatchingTestCasesPath =
   process.env.GBS_SAMPLE_MATCHING_TEST_CASES_PATH || path.join(process.cwd(), "public", "sample_matching_test_cases.json");
 const energyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "";
+const runtimeCacheBucket = process.env.GBS_RUNTIME_CACHE_BUCKET || energyDataBucket;
 const geocodioApiKey = process.env.GBS_GEOCODIO_API_KEY || process.env.GEOCODIO_API_KEY || "";
 const geocodioDailyLimit = parseNonNegativeInteger(
   process.env.GBS_GEOCODIO_DAILY_LIMIT,
@@ -1155,23 +1161,23 @@ function writeCachedRetrofitRecommendations(user, intake, payload, retrofitTypeI
 
 async function readPersistentRetrofitRecommendations(user, intake) {
   return readPersistentRetrofitRecommendationsFromStore({
-    bucket: energyDataBucket,
+    bucket: runtimeCacheBucket,
     db,
     intake,
     s3,
-    table: runtimeStateTable,
+    table: retrofitRecommendationCacheTable,
     user
   });
 }
 
 async function writePersistentRetrofitRecommendations(user, intake, payload) {
   await writePersistentRetrofitRecommendationsToStore({
-    bucket: energyDataBucket,
+    bucket: runtimeCacheBucket,
     db,
     intake,
     payload,
     s3,
-    table: runtimeStateTable,
+    table: retrofitRecommendationCacheTable,
     user
   });
 }
@@ -2386,7 +2392,7 @@ async function getSampleMatchingTestCase(testCaseId) {
 }
 
 function dashboardPerformanceStoreOptions() {
-  return { db, tableName: runtimeStateTable };
+  return { db, tableName: dashboardPerformanceTable };
 }
 
 async function seedDashboardPostImplementationDataset(testCaseId) {
@@ -2533,7 +2539,7 @@ async function listApplicationProfileRecords({ cursor, limit, reviewStatus, prof
 
   do {
     const scanInput = {
-      TableName: runtimeStateTable,
+      TableName: applicationProfilesTable,
       Limit: Math.min(Math.max(limit, 25), 250)
     };
     if (ExclusiveStartKey) {
@@ -2575,7 +2581,7 @@ async function getApplicationProfileRecord(profileId) {
 
   const result = await db.send(
     new GetCommand({
-      TableName: runtimeStateTable,
+      TableName: applicationProfilesTable,
       Key: applicationProfileStateKey(cleanProfileId)
     })
   );
@@ -2593,7 +2599,7 @@ async function putApplicationProfileRecord(profile) {
   const item = stripUndefinedApplicationProfileValues(profile);
   await db.send(
     new PutCommand({
-      TableName: runtimeStateTable,
+      TableName: applicationProfilesTable,
       Item: item
     })
   );
@@ -2610,7 +2616,7 @@ async function saveGeneratedApplicationProfileDraft(profile) {
 
   const existing = await db.send(
     new GetCommand({
-      TableName: runtimeStateTable,
+      TableName: applicationProfilesTable,
       Key: applicationProfileStateKey(profileId)
     })
   );
@@ -2683,7 +2689,7 @@ async function importFirstTenApplicationProfiles() {
     getExistingProfile: async (profile) => {
       const result = await db.send(
         new GetCommand({
-          TableName: runtimeStateTable,
+          TableName: applicationProfilesTable,
           Key: applicationProfileStateKey(profile.profileId)
         })
       );
@@ -2905,7 +2911,7 @@ async function resolveSiteGeographyForIntake(input, now) {
       reserveGeocodioLookup: () =>
         reserveGeocodioLookup({
           db,
-          tableName: runtimeStateTable,
+          tableName: apiRuntimeStateTable,
           now,
           limit: geocodioDailyLimit,
           alertEmailTo: geocodioQuotaAlertEmailTo,
@@ -2994,13 +3000,18 @@ app.get("/api/health", (_req, res) => {
     usersTable,
     intakeTable,
     opportunitiesTable,
+    dashboardPerformanceTable,
+    retrofitRecommendationCacheTable,
+    applicationProfilesTable,
+    apiRuntimeStateTable,
     energyDataBucket: energyDataBucket || null,
+    runtimeCacheBucket: runtimeCacheBucket || null,
     addressGeographyResolver: {
       primaryProvider: "census_geocoder",
       fallbackProvider: "geocodio",
       geocodioFallbackConfigured: Boolean(geocodioApiKey),
       geocodioDailyLimit,
-      geocodioQuotaGuardConfigured: Boolean(runtimeStateTable),
+      geocodioQuotaGuardConfigured: Boolean(apiRuntimeStateTable),
       geocodioQuotaAlertEmailTo
     },
     googleClientConfigured: Boolean(googleClientId),
@@ -3029,13 +3040,18 @@ app.get("/api/diagnostics", async (_req, res) => {
       usersTable,
       intakeTable,
       opportunitiesTable,
+      dashboardPerformanceTable,
+      retrofitRecommendationCacheTable,
+      applicationProfilesTable,
+      apiRuntimeStateTable,
       energyDataBucket: energyDataBucket || null,
+      runtimeCacheBucket: runtimeCacheBucket || null,
       addressGeographyResolver: {
         primaryProvider: "census_geocoder",
         fallbackProvider: "geocodio",
         geocodioFallbackConfigured: Boolean(geocodioApiKey),
         geocodioDailyLimit,
-        geocodioQuotaGuardConfigured: Boolean(runtimeStateTable),
+        geocodioQuotaGuardConfigured: Boolean(apiRuntimeStateTable),
         geocodioQuotaAlertEmailTo
       },
       googleClientConfigured: Boolean(googleClientId),
@@ -3586,7 +3602,7 @@ app.get("/api/application-profiles/approved", async (req, res) => {
     const profileId = applicationProfileIdForOpportunity(opportunityId);
     const result = await db.send(
       new GetCommand({
-        TableName: runtimeStateTable,
+        TableName: applicationProfilesTable,
         Key: applicationProfileStateKey(profileId)
       })
     );

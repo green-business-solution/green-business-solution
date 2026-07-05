@@ -15759,7 +15759,14 @@ const ADMIN_TEST_CASES_TAB = "Test Cases";
 const ADMIN_USER_PREVIEW_TAB = "User Preview";
 const ADMIN_POST_FORM_PREVIEW_TAB = "Post Form Preview";
 const ADMIN_DASHBOARD_PERFORMANCE_TAB = "Dashboard Performance Data";
-const ADMIN_HIDDEN_DATA_TABLE_NAMES = new Set(["gbs-client-intake", "gbs-energy-data", "gbs-users"]);
+const ADMIN_HIDDEN_DATA_TABLE_NAMES = new Set([
+  "gbs-application-profiles",
+  "gbs-api-runtime-state",
+  "gbs-client-intake",
+  "gbs-dashboard-performance",
+  "gbs-retrofit-recommendation-cache",
+  "gbs-users"
+]);
 const ADMIN_TEST_CASES_DATA_PATH = "/sample_matching_test_cases.json";
 const ADMIN_RETROFIT_DATABASE_DATA_PATH = "/retrofit_opportunity_index.json";
 const SAMPLE_MATCH_STATUS_ORDER = [

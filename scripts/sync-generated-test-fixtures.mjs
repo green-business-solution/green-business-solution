@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const manifestPath = path.join(repoRoot, "data", "generated_test_fixtures_manifest.json");
-const bucket = process.env.GBS_GENERATED_FIXTURE_BUCKET || "gbs-retrofi-dev-work-448016109714-us-east-1";
+const bucket = process.env.GBS_GENERATED_FIXTURE_BUCKET || "gbs-retrofi-test-fixtures-448016109714-us-east-1";
 const prefix = (process.env.GBS_GENERATED_FIXTURE_PREFIX || "generated-test-fixtures").replace(/^\/+|\/+$/g, "");
 const profile = process.env.AWS_PROFILE || "gbs";
 const region = process.env.AWS_REGION || process.env.AWS_DEPLOY_REGION || "us-east-1";

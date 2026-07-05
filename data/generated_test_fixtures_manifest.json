@@ -1,61 +1,61 @@
 {
   "schemaVersion": "retrofi_generated_test_fixtures_manifest.v1",
   "updatedAt": "2026-07-05T05:55:34.741Z",
-  "bucket": "gbs-retrofi-dev-work-448016109714-us-east-1",
+  "bucket": "gbs-retrofi-test-fixtures-448016109714-us-east-1",
   "prefix": "generated-test-fixtures",
   "fixtures": [
     {
       "localPath": "public/sample_matching_test_cases.json",
-      "s3Uri": "s3://gbs-retrofi-dev-work-448016109714-us-east-1/generated-test-fixtures/public/sample_matching_test_cases.json",
+      "s3Uri": "s3://gbs-retrofi-test-fixtures-448016109714-us-east-1/generated-test-fixtures/public/sample_matching_test_cases.json",
       "description": "Generated public admin-preview matching test cases",
       "sizeBytes": 70429819,
       "sha256": "a92a7aa9a4c2f7a608a86b853298d796e4ae158f71235b9f16e8c844ff279c64"
     },
     {
       "localPath": "data/sample_user_profiles.json",
-      "s3Uri": "s3://gbs-retrofi-dev-work-448016109714-us-east-1/generated-test-fixtures/data/sample_user_profiles.json",
+      "s3Uri": "s3://gbs-retrofi-test-fixtures-448016109714-us-east-1/generated-test-fixtures/data/sample_user_profiles.json",
       "description": "Generated sample user profiles used by matching and grant/tax scripts",
       "sizeBytes": 17118430,
       "sha256": "12654c1aa5a000626bca4c924794ece8226fda38aced49b8bfc1087302b489fd"
     },
     {
       "localPath": "data/retrofi_patch_profiles_01_10.json",
-      "s3Uri": "s3://gbs-retrofi-dev-work-448016109714-us-east-1/generated-test-fixtures/data/retrofi_patch_profiles_01_10.json",
+      "s3Uri": "s3://gbs-retrofi-test-fixtures-448016109714-us-east-1/generated-test-fixtures/data/retrofi_patch_profiles_01_10.json",
       "description": "Generated utility/profile patch fixture batch 01-10",
       "sizeBytes": 653268,
       "sha256": "45a368acf657bef5611704e3d9785fbbf5211f705562cbba417b16e3a0682ed4"
     },
     {
       "localPath": "data/retrofi_patch_profiles_11_20.json",
-      "s3Uri": "s3://gbs-retrofi-dev-work-448016109714-us-east-1/generated-test-fixtures/data/retrofi_patch_profiles_11_20.json",
+      "s3Uri": "s3://gbs-retrofi-test-fixtures-448016109714-us-east-1/generated-test-fixtures/data/retrofi_patch_profiles_11_20.json",
       "description": "Generated utility/profile patch fixture batch 11-20",
       "sizeBytes": 948376,
       "sha256": "9e3a0e67abe9b5da79b0aa7a6b0b416c86f21c50b1c0735e73f6788b0720c48b"
     },
     {
       "localPath": "data/retrofi_patch_profiles_21_30.json",
-      "s3Uri": "s3://gbs-retrofi-dev-work-448016109714-us-east-1/generated-test-fixtures/data/retrofi_patch_profiles_21_30.json",
+      "s3Uri": "s3://gbs-retrofi-test-fixtures-448016109714-us-east-1/generated-test-fixtures/data/retrofi_patch_profiles_21_30.json",
       "description": "Generated utility/profile patch fixture batch 21-30",
       "sizeBytes": 1056101,
       "sha256": "95f651c6b5c22424856f8945d5043639cf61f867fc57b92370e5023a452a019f"
     },
     {
       "localPath": "data/retrofi_patch_profiles_31_40.json",
-      "s3Uri": "s3://gbs-retrofi-dev-work-448016109714-us-east-1/generated-test-fixtures/data/retrofi_patch_profiles_31_40.json",
+      "s3Uri": "s3://gbs-retrofi-test-fixtures-448016109714-us-east-1/generated-test-fixtures/data/retrofi_patch_profiles_31_40.json",
       "description": "Generated utility/profile patch fixture batch 31-40",
       "sizeBytes": 1057645,
       "sha256": "6b04c6f8839377a0d46bcd65abae13061d07e038f0b4ef603cda09b487a36116"
     },
     {
       "localPath": "data/retrofi_patch_profiles_41_50.json",
-      "s3Uri": "s3://gbs-retrofi-dev-work-448016109714-us-east-1/generated-test-fixtures/data/retrofi_patch_profiles_41_50.json",
+      "s3Uri": "s3://gbs-retrofi-test-fixtures-448016109714-us-east-1/generated-test-fixtures/data/retrofi_patch_profiles_41_50.json",
       "description": "Generated utility/profile patch fixture batch 41-50",
       "sizeBytes": 1028995,
       "sha256": "b4cfe763b3b81c8e85ceb2f5fbe11828e871e40f52032aef498f056f6909802a"
     },
     {
       "localPath": "data/retrofi_patch_profiles_all_50.json",
-      "s3Uri": "s3://gbs-retrofi-dev-work-448016109714-us-east-1/generated-test-fixtures/data/retrofi_patch_profiles_all_50.json",
+      "s3Uri": "s3://gbs-retrofi-test-fixtures-448016109714-us-east-1/generated-test-fixtures/data/retrofi_patch_profiles_all_50.json",
       "description": "Generated combined utility/profile patch fixture",
       "sizeBytes": 4933434,
       "sha256": "3bf18ef738b5fd765de0eb1690d129bafd65f5eb704ea50afbc2557ac7fd2e0e"

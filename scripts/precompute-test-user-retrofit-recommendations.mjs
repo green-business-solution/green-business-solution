@@ -24,8 +24,10 @@ const defaultS3Region = process.env.GBS_ENERGY_DATA_BUCKET_REGION || process.env
 const defaultUsersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const defaultIntakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
 const defaultOpportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
-const defaultRuntimeStateTable = process.env.GBS_RUNTIME_STATE_TABLE || "gbs-runtime-state";
-const defaultEnergyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "gbs-retrofi-org-energy-data-448016109714";
+const defaultRetrofitRecommendationCacheTable =
+  process.env.GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE || process.env.GBS_RUNTIME_STATE_TABLE || "gbs-retrofit-recommendation-cache";
+const defaultRuntimeCacheBucket =
+  process.env.GBS_RUNTIME_CACHE_BUCKET || process.env.GBS_ENERGY_DATA_BUCKET || "gbs-retrofi-org-runtime-cache-448016109714";
 const defaultTestCasesPath = path.join(repoRoot, "public", "sample_matching_test_cases.json");
 const payloadSources = new Set(["auto", "fixture", "live"]);
 
@@ -33,13 +35,13 @@ export function parseArgs(argv) {
   const options = {
     dataRegion: defaultDataRegion,
     dryRun: true,
-    energyDataBucket: defaultEnergyDataBucket,
+    runtimeCacheBucket: defaultRuntimeCacheBucket,
     force: false,
     intakeTable: defaultIntakeTable,
     limit: 0,
     opportunitiesTable: defaultOpportunitiesTable,
     profile: defaultProfile,
-    runtimeStateTable: defaultRuntimeStateTable,
+    retrofitRecommendationCacheTable: defaultRetrofitRecommendationCacheTable,
     s3Region: defaultS3Region,
     source: "auto",
     testCasesPath: defaultTestCasesPath,
@@ -121,12 +123,22 @@ export function parseArgs(argv) {
       continue;
     }
     if (arg === "--runtime-state-table" && next) {
-      options.runtimeStateTable = next;
+      options.retrofitRecommendationCacheTable = next;
+      index += 1;
+      continue;
+    }
+    if (arg === "--retrofit-cache-table" && next) {
+      options.retrofitRecommendationCacheTable = next;
       index += 1;
       continue;
     }
     if (arg === "--energy-data-bucket" && next) {
-      options.energyDataBucket = next;
+      options.runtimeCacheBucket = next;
+      index += 1;
+      continue;
+    }
+    if (arg === "--runtime-cache-bucket" && next) {
+      options.runtimeCacheBucket = next;
       index += 1;
       continue;
     }
@@ -150,13 +162,13 @@ export async function precomputeTestUserRetrofitRecommendations(options = {}, de
   const config = {
     dataRegion: options.dataRegion || defaultDataRegion,
     dryRun: options.dryRun !== false,
-    energyDataBucket: options.energyDataBucket || defaultEnergyDataBucket,
+    runtimeCacheBucket: options.runtimeCacheBucket || defaultRuntimeCacheBucket,
     force: Boolean(options.force),
     intakeTable: options.intakeTable || defaultIntakeTable,
     limit: Math.max(0, Number.parseInt(options.limit, 10) || 0),
     opportunitiesTable: options.opportunitiesTable || defaultOpportunitiesTable,
     profile: options.profile ?? defaultProfile,
-    runtimeStateTable: options.runtimeStateTable || defaultRuntimeStateTable,
+    retrofitRecommendationCacheTable: options.retrofitRecommendationCacheTable || defaultRetrofitRecommendationCacheTable,
     s3Region: options.s3Region || defaultS3Region,
     source: payloadSources.has(options.source) ? options.source : "auto",
     testCasesPath: options.testCasesPath || defaultTestCasesPath,
@@ -222,12 +234,12 @@ export async function precomputeTestUserRetrofitRecommendations(options = {}, de
 
       if (!config.force) {
         const existing = await readPersistentRetrofitRecommendations({
-          bucket: config.energyDataBucket,
+          bucket: config.runtimeCacheBucket,
           db,
           intake,
           logger: quietLogger,
           s3,
-          table: config.runtimeStateTable,
+          table: config.retrofitRecommendationCacheTable,
           user
         });
         if (existing) {
@@ -279,12 +291,12 @@ export async function precomputeTestUserRetrofitRecommendations(options = {}, de
       }
 
       const writeResult = await writePersistentRetrofitRecommendations({
-        bucket: config.energyDataBucket,
+        bucket: config.runtimeCacheBucket,
         db,
         intake,
         payload,
         s3,
-        table: config.runtimeStateTable,
+        table: config.retrofitRecommendationCacheTable,
         user
       });
       results.push({
@@ -308,7 +320,7 @@ export async function precomputeTestUserRetrofitRecommendations(options = {}, de
 
   return {
     dryRun: config.dryRun,
-    energyDataBucket: config.energyDataBucket,
+    runtimeCacheBucket: config.runtimeCacheBucket,
     generatedAt: new Date().toISOString(),
     liveOpportunityRecordCount: opportunities?.length || 0,
     results,
@@ -521,7 +533,7 @@ Usage:
   node scripts/precompute-test-user-retrofit-recommendations.mjs [options]
 
 Options:
-  --write                       Write S3/runtime-state cache entries. Default is dry-run.
+  --write                       Write S3/DynamoDB cache entries. Default is dry-run.
   --force                       Recompute even when a current persisted payload already exists.
   --source <auto|fixture|live>  Payload source. Default: auto. Fixture skips live opportunity matching when generated test-case retrofits exist.
   --user-id <id[,id]>           Limit to one or more fake user IDs.
@@ -534,8 +546,10 @@ Options:
   --users-table <name>          Users table. Default: ${defaultUsersTable}
   --intake-table <name>         Intake table. Default: ${defaultIntakeTable}
   --opportunities-table <name>  Opportunities table. Default: ${defaultOpportunitiesTable}
-  --runtime-state-table <name>  Runtime state table. Default: ${defaultRuntimeStateTable}
-  --energy-data-bucket <name>   Cache payload bucket. Default: ${defaultEnergyDataBucket}
+  --runtime-state-table <name>  Deprecated alias for --retrofit-cache-table.
+  --retrofit-cache-table <name> Recommendation cache metadata table. Default: ${defaultRetrofitRecommendationCacheTable}
+  --runtime-cache-bucket <name> Cache payload bucket. Default: ${defaultRuntimeCacheBucket}
+  --energy-data-bucket <name>   Deprecated alias for --runtime-cache-bucket.
   --test-cases <path>           Generated test cases used to skip tax-only fixtures. Default: public/sample_matching_test_cases.json
 `);
 }

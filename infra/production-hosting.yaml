@@ -58,12 +58,24 @@ Parameters:
   OpportunitiesTable:
     Type: String
     Default: gbs-opportunity-candidates
-  RuntimeStateTable:
+  DashboardPerformanceTable:
     Type: String
-    Default: gbs-runtime-state
+    Default: gbs-dashboard-performance
+  RetrofitRecommendationCacheTable:
+    Type: String
+    Default: gbs-retrofit-recommendation-cache
+  ApplicationProfilesTable:
+    Type: String
+    Default: gbs-application-profiles
+  ApiRuntimeStateTable:
+    Type: String
+    Default: gbs-api-runtime-state
   EnergyDataBucketName:
     Type: String
     Description: Existing S3 bucket used for uploaded utility/energy data.
+  RuntimeCacheBucketName:
+    Type: String
+    Description: S3 bucket used for generated runtime cache payloads.
 
 Resources:
   FrontendBucket:
@@ -120,7 +132,10 @@ Resources:
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${UsersTable}
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${IntakeTable}
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${OpportunitiesTable}
-                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${RuntimeStateTable}
+                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${DashboardPerformanceTable}
+                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${RetrofitRecommendationCacheTable}
+                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${ApplicationProfilesTable}
+                  - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${ApiRuntimeStateTable}
         - PolicyName: OperationalEmailAlerts
           PolicyDocument:
             Version: "2012-10-17"
@@ -139,6 +154,15 @@ Resources:
                   - s3:GetObject
                   - s3:PutObject
                 Resource: !Sub arn:aws:s3:::${EnergyDataBucketName}/*
+        - PolicyName: RuntimeCacheBucketAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                Resource: !Sub arn:aws:s3:::${RuntimeCacheBucketName}/*
 
   ApiFunction:
     Type: AWS::Lambda::Function
@@ -156,8 +180,12 @@ Resources:
           GBS_USERS_TABLE: !Ref UsersTable
           GBS_INTAKE_TABLE: !Ref IntakeTable
           GBS_OPPORTUNITIES_TABLE: !Ref OpportunitiesTable
-          GBS_RUNTIME_STATE_TABLE: !Ref RuntimeStateTable
+          GBS_DASHBOARD_PERFORMANCE_TABLE: !Ref DashboardPerformanceTable
+          GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE: !Ref RetrofitRecommendationCacheTable
+          GBS_APPLICATION_PROFILES_TABLE: !Ref ApplicationProfilesTable
+          GBS_API_RUNTIME_STATE_TABLE: !Ref ApiRuntimeStateTable
           GBS_ENERGY_DATA_BUCKET: !Ref EnergyDataBucketName
+          GBS_RUNTIME_CACHE_BUCKET: !Ref RuntimeCacheBucketName
           GOOGLE_CLIENT_ID: !Ref GoogleClientId
           GOOGLE_CLIENT_SECRET: !Ref GoogleClientSecret
           GBS_GEOCODIO_API_KEY: !Ref GeocodioApiKey
@@ -366,6 +394,16 @@ Outputs:
     Value: !Ref FrontendBucket
   EnergyDataBucketName:
     Value: !Ref EnergyDataBucketName
+  RuntimeCacheBucketName:
+    Value: !Ref RuntimeCacheBucketName
+  DashboardPerformanceTableName:
+    Value: !Ref DashboardPerformanceTable
+  RetrofitRecommendationCacheTableName:
+    Value: !Ref RetrofitRecommendationCacheTable
+  ApplicationProfilesTableName:
+    Value: !Ref ApplicationProfilesTable
+  ApiRuntimeStateTableName:
+    Value: !Ref ApiRuntimeStateTable
   SiteUrl:
     Value: !Sub https://${DomainName}
   WwwSiteUrl:

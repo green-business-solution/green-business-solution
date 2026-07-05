@@ -13,7 +13,7 @@ describe("geocodio usage guard", () => {
 
     const result = await reserveGeocodioLookup({
       db,
-      tableName: "gbs-runtime-state",
+      tableName: "gbs-api-runtime-state",
       now: "2026-07-02T23:00:00.000Z",
       limit: 2500,
       logger: silentLogger()
@@ -24,7 +24,7 @@ describe("geocodio usage guard", () => {
     expect(result.usageCount).toBe(12);
     expect(db.send).toHaveBeenCalledTimes(1);
     expect(db.send.mock.calls[0][0].input).toMatchObject({
-      TableName: "gbs-runtime-state",
+      TableName: "gbs-api-runtime-state",
       Key: {
         stateScope: "geocodio",
         stateKey: "usage:2026-07-02"
@@ -40,7 +40,7 @@ describe("geocodio usage guard", () => {
 
     const result = await reserveGeocodioLookup({
       db,
-      tableName: "gbs-runtime-state",
+      tableName: "gbs-api-runtime-state",
       now: "2026-07-02T23:00:00.000Z",
       limit: 2500,
       logger: silentLogger()
@@ -62,7 +62,7 @@ describe("geocodio usage guard", () => {
 
     const result = await reserveGeocodioLookup({
       db,
-      tableName: "gbs-runtime-state",
+      tableName: "gbs-api-runtime-state",
       now: "2026-07-02T23:00:00.000Z",
       limit: 2500,
       alertEmailTo: "neerkuchlous@gmail.com",
@@ -75,7 +75,7 @@ describe("geocodio usage guard", () => {
     expect(result.alert).toEqual({ attempted: true, sent: true });
     expect(db.send).toHaveBeenCalledTimes(2);
     expect(db.send.mock.calls[1][0].input).toMatchObject({
-      TableName: "gbs-runtime-state",
+      TableName: "gbs-api-runtime-state",
       Key: {
         stateScope: "geocodio",
         stateKey: "usage:2026-07-02"
@@ -90,7 +90,7 @@ describe("geocodio usage guard", () => {
 
     const result = await reserveGeocodioLookup({
       db,
-      tableName: "gbs-runtime-state",
+      tableName: "gbs-api-runtime-state",
       now: "2026-07-02T23:00:00.000Z",
       limit: 2500,
       logger: silentLogger()

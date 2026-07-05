@@ -159,6 +159,30 @@ source fields remain stored in DynamoDB.
 This is not the final relational opportunity schema. It is a DynamoDB-backed DSIRE prototype table so
 admins can inspect gathered source records while we build the reviewed opportunity database.
 
+### Runtime Tables
+
+Runtime records are split by domain so deployment and migration work can stay scoped:
+
+- `gbs-dashboard-performance`: synthetic/test-case dashboard performance datasets keyed by
+  `stateScope`/`stateKey`.
+- `gbs-retrofit-recommendation-cache`: recommendation cache metadata keyed by `stateScope`/`stateKey`.
+  The larger JSON payloads live in the runtime-cache S3 bucket.
+- `gbs-application-profiles`: application source/profile registry records keyed by `stateScope`/`stateKey`.
+- `gbs-api-runtime-state`: small operational state keyed by `stateScope`/`stateKey`, such as Geocodio
+  quota usage.
+
+The former shared `gbs-runtime-state` table has been split into those domain tables.
+
+## S3 Buckets
+
+- `gbs-retrofi-org-energy-data-...`: customer uploaded utility bills and Green Button files under
+  `energy-data/`.
+- `gbs-retrofi-org-runtime-cache-...`: generated runtime cache payloads under `runtime-cache/`.
+- `gbs-retrofi-test-fixtures-...`: generated fixtures and synthetic test data under
+  `generated-test-fixtures/`.
+- `gbs-retrofi-org-artifacts-...`: Lambda deployment zip artifacts under `lambda/`.
+- `gbs-retrofi-dev-work-...`: raw GPT Pro prompt/output work under `gpt-pro-work/`.
+
 Admins can review DSIRE records from the `gbs-opportunity-candidates` admin tab. Review actions update
 `reviewStatus`, `reviewNotes`, `duplicateOf`, `reviewedAt`, `reviewedBy`, and `updatedAt` on the same
 DynamoDB row. Supported review statuses are `approved`, `rejected`, `needs_review`, and `duplicate`.

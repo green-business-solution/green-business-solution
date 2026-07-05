@@ -3,11 +3,16 @@ set -euo pipefail
 
 PROFILE="${AWS_PROFILE:-gbs}"
 STACK_NAME="${STACK_NAME:-gbs-retrofi-production}"
+RUNTIME_DATA_STACK_NAME="${RUNTIME_DATA_STACK_NAME:-gbs-retrofi-runtime-data}"
+RUNTIME_BUCKETS_STACK_NAME="${RUNTIME_BUCKETS_STACK_NAME:-gbs-retrofi-runtime-buckets}"
 DOMAIN_NAME="${DOMAIN_NAME:-retrofi.org}"
 HOSTED_ZONE_ID="${HOSTED_ZONE_ID:-Z04402863EVV8FUF4EWUX}"
 REGION="${AWS_DEPLOY_REGION:-us-east-1}"
 DATA_REGION="${GBS_AWS_REGION:-us-east-2}"
-RUNTIME_STATE_TABLE="${GBS_RUNTIME_STATE_TABLE:-gbs-runtime-state}"
+DASHBOARD_PERFORMANCE_TABLE="${GBS_DASHBOARD_PERFORMANCE_TABLE:-gbs-dashboard-performance}"
+RETROFIT_RECOMMENDATION_CACHE_TABLE="${GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE:-gbs-retrofit-recommendation-cache}"
+APPLICATION_PROFILES_TABLE="${GBS_APPLICATION_PROFILES_TABLE:-gbs-application-profiles}"
+API_RUNTIME_STATE_TABLE="${GBS_API_RUNTIME_STATE_TABLE:-gbs-api-runtime-state}"
 GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID:-754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com}"
 GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET:-}"
 GEOCODIO_API_KEY="${GBS_GEOCODIO_API_KEY:-${GEOCODIO_API_KEY:-}}"
@@ -21,6 +26,7 @@ BUILD_DIR="${ROOT_DIR}/build"
 LAMBDA_PACKAGE_DIR="${BUILD_DIR}/lambda-package"
 LAMBDA_ZIP="${BUILD_DIR}/gbs-api-lambda.zip"
 ARTIFACT_RETENTION_DAYS="${GBS_ARTIFACT_RETENTION_DAYS:-30}"
+RUNTIME_CACHE_RETENTION_DAYS="${GBS_RUNTIME_CACHE_RETENTION_DAYS:-90}"
 RUN_FRONTEND=0
 RUN_API=0
 RUN_INFRA=0
@@ -68,6 +74,7 @@ Targets:
 
 Environment:
   GBS_ARTIFACT_RETENTION_DAYS=${ARTIFACT_RETENTION_DAYS}
+  GBS_RUNTIME_CACHE_RETENTION_DAYS=${RUNTIME_CACHE_RETENTION_DAYS}
 EOF
 }
 
@@ -115,25 +122,6 @@ select_targets() {
   if [ "${RUN_API}" -eq 1 ] || [ "${RUN_INFRA}" -eq 1 ]; then
     RUN_DATA=1
   fi
-}
-
-ensure_runtime_state_table() {
-  if aws_data_region dynamodb describe-table --table-name "${RUNTIME_STATE_TABLE}" >/dev/null 2>&1; then
-    return
-  fi
-
-  echo "Creating DynamoDB table ${RUNTIME_STATE_TABLE} in ${DATA_REGION}..."
-  aws_data_region dynamodb create-table \
-    --table-name "${RUNTIME_STATE_TABLE}" \
-    --attribute-definitions \
-      AttributeName=stateScope,AttributeType=S \
-      AttributeName=stateKey,AttributeType=S \
-    --key-schema \
-      AttributeName=stateScope,KeyType=HASH \
-      AttributeName=stateKey,KeyType=RANGE \
-    --billing-mode PAY_PER_REQUEST >/dev/null
-
-  aws_data_region dynamodb wait table-exists --table-name "${RUNTIME_STATE_TABLE}"
 }
 
 ensure_alert_email_identity() {
@@ -186,6 +174,27 @@ ensure_energy_data_bucket() {
     }'
 }
 
+deploy_runtime_data_stack() {
+  echo "Deploying runtime DynamoDB stack ${RUNTIME_DATA_STACK_NAME} in ${DATA_REGION}..."
+  aws_data_region cloudformation deploy \
+    --stack-name "${RUNTIME_DATA_STACK_NAME}" \
+    --template-file infra/runtime-data.yaml \
+    --parameter-overrides \
+      "DashboardPerformanceTable=${DASHBOARD_PERFORMANCE_TABLE}" \
+      "RetrofitRecommendationCacheTable=${RETROFIT_RECOMMENDATION_CACHE_TABLE}" \
+      "ApplicationProfilesTable=${APPLICATION_PROFILES_TABLE}" \
+      "ApiRuntimeStateTable=${API_RUNTIME_STATE_TABLE}"
+
+  echo "Deploying runtime bucket stack ${RUNTIME_BUCKETS_STACK_NAME} in ${REGION}..."
+  aws_region cloudformation deploy \
+    --stack-name "${RUNTIME_BUCKETS_STACK_NAME}" \
+    --template-file infra/runtime-buckets.yaml \
+    --parameter-overrides \
+      "RuntimeCacheBucketName=${RUNTIME_CACHE_BUCKET}" \
+      "TestFixturesBucketName=${TEST_FIXTURES_BUCKET}" \
+      "RuntimeCacheRetentionDays=${RUNTIME_CACHE_RETENTION_DAYS}"
+}
+
 ensure_artifact_bucket() {
   echo "Preparing artifact bucket ${ARTIFACT_BUCKET}..."
   if ! aws_region s3api head-bucket --bucket "${ARTIFACT_BUCKET}" >/dev/null 2>&1; then
@@ -214,7 +223,7 @@ ensure_artifact_bucket() {
 
 ensure_generated_fixtures() {
   echo "Ensuring generated test fixtures are available..."
-  AWS_PROFILE="${PROFILE}" AWS_REGION="${REGION}" npm run fixtures:generated:download
+  AWS_PROFILE="${PROFILE}" AWS_REGION="${REGION}" GBS_GENERATED_FIXTURE_BUCKET="${TEST_FIXTURES_BUCKET}" npm run fixtures:generated:download
 }
 
 build_frontend() {
@@ -276,7 +285,7 @@ upload_lambda_package() {
 }
 
 ensure_data_prerequisites() {
-  ensure_runtime_state_table
+  deploy_runtime_data_stack
   ensure_alert_email_identity
   ensure_energy_data_bucket
 }
@@ -300,8 +309,12 @@ deploy_stack() {
     "GoogleRedirectUri=${GOOGLE_REDIRECT_URI}"
     "AdminEmails=${ADMIN_EMAILS}"
     "DataRegion=${DATA_REGION}"
-    "RuntimeStateTable=${RUNTIME_STATE_TABLE}"
+    "DashboardPerformanceTable=${DASHBOARD_PERFORMANCE_TABLE}"
+    "RetrofitRecommendationCacheTable=${RETROFIT_RECOMMENDATION_CACHE_TABLE}"
+    "ApplicationProfilesTable=${APPLICATION_PROFILES_TABLE}"
+    "ApiRuntimeStateTable=${API_RUNTIME_STATE_TABLE}"
     "EnergyDataBucketName=${ENERGY_DATA_BUCKET}"
+    "RuntimeCacheBucketName=${RUNTIME_CACHE_BUCKET}"
     "GeocodioDailyLimit=${GEOCODIO_DAILY_LIMIT}"
     "GeocodioQuotaAlertEmailTo=${GEOCODIO_QUOTA_ALERT_EMAIL_TO}"
     "AlertEmailFrom=${ALERT_EMAIL_FROM}"
@@ -359,9 +372,15 @@ select_targets "$@"
 ACCOUNT_ID="$(aws_global sts get-caller-identity --query Account --output text)"
 ARTIFACT_BUCKET="${ARTIFACT_BUCKET:-gbs-retrofi-org-artifacts-${ACCOUNT_ID}-${REGION}}"
 ENERGY_DATA_BUCKET="${GBS_ENERGY_DATA_BUCKET:-gbs-retrofi-org-energy-data-${ACCOUNT_ID}}"
+RUNTIME_CACHE_BUCKET="${GBS_RUNTIME_CACHE_BUCKET:-gbs-retrofi-org-runtime-cache-${ACCOUNT_ID}}"
+TEST_FIXTURES_BUCKET="${GBS_TEST_FIXTURES_BUCKET:-${GBS_GENERATED_FIXTURE_BUCKET:-gbs-retrofi-test-fixtures-${ACCOUNT_ID}-${REGION}}}"
 LAMBDA_CODE_KEY="lambda/gbs-api-$(date -u +%Y%m%d%H%M%S).zip"
 DEPLOYED_LAMBDA_CODE_BUCKET=""
 DEPLOYED_LAMBDA_CODE_KEY=""
+
+if [ "${RUN_DATA}" -eq 1 ]; then
+  ensure_data_prerequisites
+fi
 
 if [ "${RUN_FRONTEND}" -eq 1 ] || [ "${RUN_API}" -eq 1 ]; then
   ensure_generated_fixtures
@@ -383,10 +402,6 @@ if [ "${RUN_API}" -eq 1 ]; then
 elif [ "${RUN_INFRA}" -eq 1 ]; then
   DEPLOYED_LAMBDA_CODE_BUCKET="$(stack_parameter LambdaCodeBucket)"
   DEPLOYED_LAMBDA_CODE_KEY="$(stack_parameter LambdaCodeKey)"
-fi
-
-if [ "${RUN_DATA}" -eq 1 ]; then
-  ensure_data_prerequisites
 fi
 
 if [ "${RUN_API}" -eq 1 ] || [ "${RUN_INFRA}" -eq 1 ]; then

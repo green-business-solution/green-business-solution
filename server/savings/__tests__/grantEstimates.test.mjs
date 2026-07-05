@@ -143,7 +143,7 @@ describe("grant estimates", () => {
 
     expect(award.amountCents).toBe(0);
     expect(award.grantEstimate.computedEstimate.estimateStatus).toBe("suppressed");
-    expect(award.upfrontSavingsEntry.amountCents).toBe(0);
+    expect(award.upfrontSavingsEntry).toBeUndefined();
   });
 
   it("caps historical success probability discounts at 35 percent", () => {

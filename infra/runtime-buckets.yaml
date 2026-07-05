@@ -1,0 +1,76 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Runtime S3 buckets for Green Business Solution production support data.
+
+Parameters:
+  RuntimeCacheBucketName:
+    Type: String
+    Description: Private S3 bucket for generated API runtime cache payloads.
+  TestFixturesBucketName:
+    Type: String
+    Description: Private S3 bucket for generated test fixtures and synthetic data.
+  RuntimeCacheRetentionDays:
+    Type: Number
+    Default: 90
+    MinValue: 1
+    Description: Days to retain old runtime-cache objects after they are superseded.
+
+Resources:
+  RuntimeCacheBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Ref RuntimeCacheBucketName
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LifecycleConfiguration:
+        Rules:
+          - Id: expire-runtime-cache
+            Status: Enabled
+            Prefix: runtime-cache/
+            ExpirationInDays: !Ref RuntimeCacheRetentionDays
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 7
+
+  TestFixturesBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Ref TestFixturesBucketName
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: abort-incomplete-uploads
+            Status: Enabled
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 7
+
+Outputs:
+  RuntimeCacheBucketName:
+    Value: !Ref RuntimeCacheBucketName
+  TestFixturesBucketName:
+    Value: !Ref TestFixturesBucketName
