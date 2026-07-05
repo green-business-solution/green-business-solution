@@ -2,6 +2,9 @@
 set -euo pipefail
 
 PROFILE="${AWS_PROFILE-gbs}"
+if [ -z "${PROFILE}" ]; then
+  unset AWS_PROFILE
+fi
 STACK_NAME="${STACK_NAME:-gbs-retrofi-production}"
 API_STACK_NAME="${API_STACK_NAME:-gbs-retrofi-api}"
 GITHUB_ACTIONS_STACK_NAME="${GITHUB_ACTIONS_STACK_NAME:-gbs-github-actions-deploy}"
