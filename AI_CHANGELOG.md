@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) structured tax model records
+
+- Added a structured tax model record builder that converts the comprehensive GPT Pro tax research artifact into normalized source documents, source registry rows, sales/use tax import plans, tax rule records, local-option authority records, unsupported triage rows, skipped/gap records, and import validation metadata.
+- Added validation for the structured tax artifact, including expected 51 state/DC rate plans, 151 tax rule records, unique identifiers, source references, supported model kinds, runtime statuses, and safe customer-facing defaults.
+- Generated the first structured tax model record artifact and report for future tax importer/runtime mapping work while keeping nationwide tax estimates gated off by default.
+
 ## 2026-07-05 - Codex (GPT-5) comprehensive tax research intake
 
 - Added an intake script for the 10 comprehensive tax GPT Pro research outputs, including first-JSON extraction, schema validation, URL normalization, and citation-footnote preservation.
