@@ -167,8 +167,10 @@ function auditCandidate(candidate) {
     },
     nextAction,
     customerFacingPolicy: {
-      includeInUserFacingTotalNow: false,
-      reason: "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+      includeInUserFacingTotalNow: nextAction.customerFacingReady === true,
+      reason: nextAction.customerFacingReady === true
+        ? "A structured runtime model exists and a matching profile supplies all mandatory pre-opportunity tax inputs."
+        : "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
     }
   };
 }
@@ -333,9 +335,10 @@ function decideNextAction({ candidate, matchingTestProfiles, formulaSupport, run
 
   if (hasExecutableCompiledRuntime && completeProfileCount > 0) {
     return {
-      action: "ready_internal_only_runtime_gated",
-      reason: "A compiled runtime model exists and at least one matching profile has all audited inputs. Customer-facing inclusion remains disabled by policy.",
-      blocksCustomerFacingRuntime: true
+      action: "ready_customer_facing_after_mandatory_intake",
+      reason: "A compiled runtime model exists and at least one matching profile has all audited mandatory tax inputs.",
+      blocksCustomerFacingRuntime: false,
+      customerFacingReady: true
     };
   }
 
@@ -666,12 +669,12 @@ function buildReport(audit) {
     "",
     "## Interpretation",
     "",
-    "- The GPT Pro repairs are source-backed enough to keep as tax rule candidates, but none should enter customer-facing totals yet.",
+    "- The GPT Pro repairs are source-backed enough to keep as tax rule candidates.",
     "- Compiled runtime support now exists for selected local workflow, sales/use exemption, and state-credit candidates; free-form GPT Pro formula text still is not executed directly.",
     audit.counts.candidatesWithCompleteMatchedTestInputs > 0
-      ? `- ${audit.counts.candidatesWithCompleteMatchedTestInputs} candidate(s) now have at least one matching test profile with all audited runtime inputs present. These are still internal-only until runtime importer and customer-facing inclusion policy are explicitly enabled.`
+      ? `- ${audit.counts.candidatesWithCompleteMatchedTestInputs} candidate(s) now have at least one matching test profile with all audited runtime inputs present. Candidates with executable structured models are ready for customer-facing calculation after mandatory intake.`
       : "- Matching test profiles exist for most state/local candidates, but no candidate has all required user/tax inputs present under the current canonical input-key audit.",
-    "- Missing inputs are expected for program-document, tax-bill, tax-return, filing, assessor, and tax-profile gates; those should be represented as UI/upload requirements rather than guessed server-side."
+    "- Missing program-document, tax-bill, tax-return, filing, assessor, and tax-profile inputs are mandatory pre-opportunity intake requirements; they should block opportunity display until answered or uploaded."
   ];
   return `${lines.join("\n")}\n`;
 }

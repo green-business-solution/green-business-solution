@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { calculateLocalTaxWorkflow, selectLocalTaxWorkflows } from "../server/savings/localTaxWorkflows.mjs";
+import { evaluateTaxProfileRuntime } from "../server/savings/taxProfileRuntime.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const testCasesPath = process.env.MATCHING_TEST_CASES_PATH || path.join(repoRoot, "public", "sample_matching_test_cases.json");
@@ -8,6 +9,8 @@ const packagePath =
   process.env.OPPORTUNITY_INCENTIVE_CALCULATION_PACKAGES_PATH ||
   path.join(repoRoot, "data", "opportunity_incentive_calculation_packages_v2.json");
 const localTaxWorkflowPath = process.env.TAX_LOCAL_WORKFLOW_RULES_PATH || path.join(repoRoot, "data", "tax_local_workflow_rules.json");
+const taxGapRuntimeRulesPath =
+  process.env.TAX_GAP_RUNTIME_RULES_PATH || path.join(repoRoot, "data", "tax_gap_runtime_rules_2026-07-05.json");
 const jsonReportPath =
   process.env.GRANT_TAX_COVERAGE_JSON_PATH ||
   path.join(repoRoot, "data", "test_case_grant_tax_estimate_coverage_report_2026-07-03.json");
@@ -18,6 +21,9 @@ const markdownReportPath =
 const testCasePayload = JSON.parse(fs.readFileSync(testCasesPath, "utf8"));
 const packagePayload = JSON.parse(fs.readFileSync(packagePath, "utf8"));
 const localTaxPayload = JSON.parse(fs.readFileSync(localTaxWorkflowPath, "utf8"));
+const taxGapRuntimePayload = fs.existsSync(taxGapRuntimeRulesPath)
+  ? JSON.parse(fs.readFileSync(taxGapRuntimeRulesPath, "utf8"))
+  : { rules: [] };
 
 const TAX_EFFECT_TYPES = new Set(["tax_credit", "tax_exemption", "tax_abatement", "tax_rate_preference", "property_tax_valuation"]);
 const GRANT_CASH_CLASSIFICATIONS = new Set(["cash_grant", "reimbursement", "rebate"]);
@@ -37,6 +43,7 @@ const POLICY_SUPPRESSED_STATUSES = new Set(["not_user_facing_default", "human_re
 const testCases = testCasePayload.testCases || [];
 const allPackages = packagePayload.packages || [];
 const localTaxWorkflows = localTaxPayload.workflows || [];
+const taxGapRuntimeRules = taxGapRuntimePayload.rules || [];
 const packageTaxOpportunityIds = new Set(
   allPackages
     .filter((pkg) => (pkg.effects || []).some((effect) => TAX_EFFECT_TYPES.has(effect.effect_type)))
@@ -103,6 +110,7 @@ for (const testCase of testCases) {
 }
 
 const localTaxRows = testCases.flatMap((testCase) => buildLocalTaxRows(testCase, localTaxWorkflows));
+const taxProfileRuntimeRows = testCases.flatMap((testCase) => buildTaxProfileRuntimeRows(testCase, localTaxWorkflows, taxGapRuntimeRules));
 const matchedTaxPackageOpportunityIds = new Set(packageRows.filter((row) => row.taxRelated).map((row) => row.opportunityId));
 const grantProductionRows = packageRows.filter((row) => row.grantOrIncentiveRelated && !row.taxRelated);
 
@@ -112,7 +120,8 @@ const report = {
   sourceFiles: {
     testCases: path.relative(repoRoot, testCasesPath),
     packages: path.relative(repoRoot, packagePath),
-    localTaxWorkflows: path.relative(repoRoot, localTaxWorkflowPath)
+    localTaxWorkflows: path.relative(repoRoot, localTaxWorkflowPath),
+    taxGapRuntimeRules: fs.existsSync(taxGapRuntimeRulesPath) ? path.relative(repoRoot, taxGapRuntimeRulesPath) : null
   },
   summary: {
     testCaseCount: testCases.length,
@@ -131,7 +140,13 @@ const report = {
     taxOpportunityPackageCountMatchedByTestCases: matchedTaxPackageOpportunityIds.size,
     localTaxWorkflowEvaluationCount: localTaxRows.length,
     localTaxWorkflowStatusCounts: countBy(localTaxRows, (row) => row.status),
-    localTaxWorkflowProductionActionCounts: countBy(localTaxRows, (row) => row.localTaxProductionAction)
+    localTaxWorkflowProductionActionCounts: countBy(localTaxRows, (row) => row.localTaxProductionAction),
+    taxProfileRuntimeEvaluationCount: taxProfileRuntimeRows.length,
+    taxProfileRuntimeStatusCounts: countBy(taxProfileRuntimeRows, (row) => row.status),
+    taxProfileRuntimeReadyCount: taxProfileRuntimeRows.filter((row) => row.readyForOpportunityFinancialEstimate).length,
+    taxProfileRuntimeIncludedAmountCents: sum(taxProfileRuntimeRows, (row) => row.includedAmountCents),
+    taxProfileRuntimeMissingPreOpportunityInputCount: sum(taxProfileRuntimeRows, (row) => row.missingRequiredInputCount),
+    taxProfileRuntimeStructuredModelWorkCount: taxProfileRuntimeRows.filter((row) => row.requiresStructuredTaxModelWork).length
   },
   topMissingInputs: topCounts(
     packageRows
@@ -154,6 +169,7 @@ const report = {
       };
     }),
   localTaxWorkflowOutcomes: summarizeLocalTaxRows(localTaxRows),
+  taxProfileRuntimeOutcomes: summarizeTaxProfileRuntimeRows(taxProfileRuntimeRows),
   sampleRows: {
     missingEvidenceOrInputs: packageRows
       .filter((row) => row.outcomeClass === "missing_evidence_or_inputs")
@@ -172,7 +188,10 @@ const report = {
       .map(compactGrantProductionRow)
       .slice(0, 50),
     localTaxNeedsInputOrReview: localTaxRows
-      .filter((row) => !["production_ready_internal_calculation", "not_applicable_zero_value"].includes(row.localTaxProductionAction))
+      .filter((row) => !["production_ready_customer_calculation", "not_applicable_zero_value"].includes(row.localTaxProductionAction))
+      .slice(0, 25),
+    taxProfileRuntimeNeedsStructuredModel: taxProfileRuntimeRows
+      .filter((row) => row.requiresStructuredTaxModelWork || row.missingRequiredInputCount > 0)
       .slice(0, 25)
   }
 };
@@ -234,7 +253,7 @@ function buildLocalTaxRows(testCase, workflows) {
   const selected = selectLocalTaxWorkflows({ workflows, geography });
 
   return selected.map((workflow) => {
-    const result = calculateLocalTaxWorkflow(workflow, { answers });
+    const result = calculateLocalTaxWorkflow(workflow, { answers, includeCalculatedTaxInUserFacingTotals: true });
     const localTaxProductionDecision = classifyLocalTaxProductionAction({ workflow, result, answers });
     return {
       sampleUserId: testCase.sampleUserId,
@@ -255,6 +274,38 @@ function buildLocalTaxRows(testCase, workflows) {
         .sort()
     };
   });
+}
+
+function buildTaxProfileRuntimeRows(testCase, workflows, taxGapRules) {
+  if (!hasTaxRuntimeProfileData(testCase)) return [];
+  const geography = inferCoverageGeography(testCase);
+  const result = evaluateTaxProfileRuntime({
+    taxContext: testCase,
+    geography,
+    localTaxWorkflows: workflows,
+    taxGapRuntimeRules: taxGapRules,
+    includeCalculatedTaxInUserFacingTotals: true
+  });
+
+  return result.evaluations.map((evaluation) => ({
+    sampleUserId: testCase.sampleUserId,
+    sampleName: testCase.name || testCase.sampleUserId,
+    taxOnlyFixture: testCase.taxOnlyFixture === true,
+    evaluationKind: evaluation.kind,
+    workflowId: evaluation.workflowId || null,
+    taxRuleId: evaluation.taxRuleId || null,
+    sourceSkippedRecordId: evaluation.sourceSkippedRecordId || (evaluation.sourceSkippedRecordIds || [])[0] || null,
+    modelKind: evaluation.modelKind || null,
+    runtimeSupportStatus: evaluation.runtimeSupportStatus || null,
+    status: evaluation.result?.status || "unknown",
+    amountCents: evaluation.result?.amountCents || 0,
+    includedInUserFacingTotal: evaluation.result?.includedInUserFacingTotal === true,
+    includedAmountCents: evaluation.result?.includedInUserFacingTotal === true ? evaluation.result?.amountCents || 0 : 0,
+    missingRequiredInputCount: (evaluation.result?.missingInputs || []).length,
+    missingInputs: evaluation.result?.missingInputs || [],
+    readyForOpportunityFinancialEstimate: result.readyForOpportunityFinancialEstimate,
+    requiresStructuredTaxModelWork: isUnsupportedTaxProfileRuntimeStatus(evaluation.result?.status)
+  }));
 }
 
 function inferCoverageGeography(testCase) {
@@ -285,6 +336,12 @@ function inferCoverageGeography(testCase) {
     cities,
     postalCode: site.geo?.zip5 || site.addressStructured?.zip5 || null
   };
+}
+
+function hasTaxRuntimeProfileData(testCase) {
+  return ["taxProfileFacts", "taxExtractedValues", "taxOpportunitySpecificInputs"].some((key) =>
+    taxRows(testCase, key).length > 0
+  );
 }
 
 function inferLocalTaxAnswers(testCase) {
@@ -432,6 +489,19 @@ function summarizeLocalTaxRows(rows) {
   };
 }
 
+function summarizeTaxProfileRuntimeRows(rows) {
+  return {
+    count: rows.length,
+    statusCounts: countBy(rows, (row) => row.status),
+    evaluationKindCounts: countBy(rows, (row) => row.evaluationKind),
+    readyCount: rows.filter((row) => row.readyForOpportunityFinancialEstimate).length,
+    includedCount: rows.filter((row) => row.includedInUserFacingTotal).length,
+    totalIncludedAmountCents: sum(rows, (row) => row.includedAmountCents),
+    structuredModelWorkCount: rows.filter((row) => row.requiresStructuredTaxModelWork).length,
+    sampleRows: rows.slice(0, 50)
+  };
+}
+
 function buildMarkdownReport(data) {
   const missingCount = data.summary.missingEvidenceOrInputPackageCount;
   const matchedTaxCount = data.summary.taxOpportunityPackageCountMatchedByTestCases;
@@ -452,6 +522,8 @@ function buildMarkdownReport(data) {
     `- Tax opportunity packages in database: ${data.summary.taxOpportunityPackageCountInDatabase}`,
     `- Tax opportunity packages matched by current test cases: ${data.summary.taxOpportunityPackageCountMatchedByTestCases}`,
     `- Local tax workflow evaluations: ${data.summary.localTaxWorkflowEvaluationCount}`,
+    `- Tax profile runtime evaluations: ${data.summary.taxProfileRuntimeEvaluationCount}`,
+    `- Tax profile runtime ready rows: ${data.summary.taxProfileRuntimeReadyCount}`,
     "",
     "## Runtime Inclusion Status",
     "",
@@ -468,6 +540,10 @@ function buildMarkdownReport(data) {
     "## Local Tax Production Action Buckets",
     "",
     tableFromCounts(data.summary.localTaxWorkflowProductionActionCounts),
+    "",
+    "## Tax Profile Runtime Status",
+    "",
+    tableFromCounts(data.summary.taxProfileRuntimeStatusCounts),
     "",
     "## Tax Opportunity Production Action Buckets",
     "",
@@ -504,8 +580,9 @@ function buildMarkdownReport(data) {
     matchedTaxCount === 0
       ? `- The current ${data.summary.testCaseCount} test cases exercise grant/incentive packages, but they do not currently match the ${totalTaxCount} tax opportunity packages.`
       : `- The current ${data.summary.testCaseCount} test cases now match ${matchedTaxCount} of ${totalTaxCount} tax opportunity packages.`,
-    "- Local tax workflows can be selected for some test-case addresses after city inference, but they remain internal-only and are not part of customer-facing savings totals.",
-    "- Local tax rows classified as `tax_return_input_required`, `tax_bill_upload_required`, `assessor_confirmation_required`, or `program_document_required` are production input gates, not source-data repair failures.",
+    "- Local tax workflows can be selected for some test-case addresses after city inference; calculated rows are customer-facing once mandatory pre-opportunity tax inputs are present.",
+    "- Local tax rows classified as `tax_return_input_required`, `tax_bill_upload_required`, `assessor_confirmation_required`, or `program_document_required` are mandatory pre-opportunity intake requirements, not optional post-scenario gates.",
+    "- Tax profile runtime rows marked `unsupported_runtime_model` have complete profile inputs but still need a structured formula/model before they can create a customer-facing tax amount.",
     "- Tax opportunity rows classified as `not_applicable_zero_value` are resolved to $0 by current test-case facts; rows classified as `assessor_confirmation_required` need a property-tax profile or assessor confirmation before customer-facing savings.",
     "- Grant/incentive rows classified as `form_input_required` are normal production form gates, not source-data blockers.",
     "- Grant/incentive rows classified as `funding_refresh_required` need current budget/funding status automation rather than one-time formula repair.",
@@ -690,8 +767,8 @@ function compactTaxOpportunityRow(row) {
 function classifyLocalTaxProductionAction({ workflow, result, answers }) {
   if (result.status === "calculated") {
     return {
-      action: "production_ready_internal_calculation",
-      reason: "The local tax formula calculated from source-backed rules and available test-case inputs; it remains internal-only unless confirmed."
+      action: "production_ready_customer_calculation",
+      reason: "The local tax formula calculated from source-backed rules after mandatory pre-opportunity tax inputs were supplied."
     };
   }
 
@@ -745,6 +822,18 @@ function classifyLocalTaxProductionAction({ workflow, result, answers }) {
     action: "tax_profile_input_required",
     reason: "The workflow needs additional tax profile inputs before it can calculate."
   };
+}
+
+function isUnsupportedTaxProfileRuntimeStatus(status) {
+  return [
+    "unsupported_runtime_model",
+    "invalid_rule",
+    "review_required",
+    "needs_tax_bill",
+    "needs_program_documentation",
+    "needs_assessor_confirmation",
+    "no_calculation_model"
+  ].includes(status);
 }
 
 function missingInputKeys(result) {

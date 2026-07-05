@@ -30,16 +30,16 @@ export function calculateTaxGapRuntimeRule(rule, ctx = {}) {
 
   switch (model.method) {
     case "sales_use_tax_exemption":
-      return resultForRule(rule, calculateSalesUseTaxExemption(rule, ctx));
+      return resultForRule(rule, calculateSalesUseTaxExemption(rule, ctx), ctx);
 
     case "az_renewable_energy_production_credit":
-      return resultForRule(rule, calculateArizonaRenewableProductionCredit(rule, ctx));
+      return resultForRule(rule, calculateArizonaRenewableProductionCredit(rule, ctx), ctx);
 
     case "co_heat_pump_invoice_discount_credit":
-      return resultForRule(rule, calculateColoradoHeatPumpInvoiceDiscount(rule, ctx));
+      return resultForRule(rule, calculateColoradoHeatPumpInvoiceDiscount(rule, ctx), ctx);
 
     case "ct_green_building_credit":
-      return resultForRule(rule, calculateConnecticutGreenBuildingCredit(rule, ctx));
+      return resultForRule(rule, calculateConnecticutGreenBuildingCredit(rule, ctx), ctx);
 
     default:
       return blockedResult(rule, "unsupported_runtime_model", [
@@ -145,19 +145,23 @@ function calculateConnecticutGreenBuildingCredit(rule, ctx) {
   };
 }
 
-function resultForRule(rule, calculated) {
+function resultForRule(rule, calculated, ctx = {}) {
+  const includedInUserFacingTotal =
+    rule.includeInUserFacingTotalDefault === true ||
+    ctx.includeCalculatedTaxInUserFacingTotals === true;
+
   return {
     taxRuleId: rule.taxRuleId || null,
     sourceSkippedRecordId: rule.sourceSkippedRecordId || null,
     status: "calculated",
     amountCents: Math.round(calculated.amountCents || 0),
-    includedInUserFacingTotal: rule.includeInUserFacingTotalDefault === true,
+    includedInUserFacingTotal,
     missingInputs: [],
     trace: [
       ...(calculated.trace || []),
-      rule.includeInUserFacingTotalDefault === true
+      includedInUserFacingTotal
         ? "Tax-gap rule is configured for customer-facing totals."
-        : "Tax-gap rule remains internal-only until source, tax-return, certificate, and user-input gates are intentionally enabled."
+        : "Tax-gap rule remains internal-only until required source, tax-return, certificate, and user inputs are present and intentionally included."
     ]
   };
 }

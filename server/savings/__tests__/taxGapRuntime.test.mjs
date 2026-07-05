@@ -42,6 +42,27 @@ describe("tax gap runtime rules", () => {
     expect(calculated.includedInUserFacingTotal).toBe(false);
   });
 
+  it("can include calculated tax-gap values after mandatory intake inputs are complete", () => {
+    const calculated = calculateTaxGapRuntimeRule(
+      rule("sales_use_tax_ambiguous_rule_4"),
+      {
+        ...ctx({
+          qualifying_exempt_sales_price_cents: 1000000,
+          combined_sales_use_tax_rate_decimal: 0.06,
+          iowa_exemption_category_confirmed: true,
+          iowa_primary_use_or_item_eligibility_confirmed: true,
+          iowa_exemption_certificate_present: true,
+          iowa_labor_or_service_classification: "new_construction"
+        }),
+        includeCalculatedTaxInUserFacingTotals: true
+      }
+    );
+
+    expect(calculated.status).toBe("calculated");
+    expect(calculated.amountCents).toBe(60000);
+    expect(calculated.includedInUserFacingTotal).toBe(true);
+  });
+
   it("calculates Arizona renewable production credit with certificate and tax-liability caps", () => {
     const calculated = calculateTaxGapRuntimeRule(
       rule("az_renewable_energy_production_tax_credit_skip_v1"),

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_tax_gap_runtime_readiness_audit.v1",
-  "generatedAt": "2026-07-05T03:39:56.401Z",
+  "generatedAt": "2026-07-05T04:03:33.983Z",
   "sourceArtifacts": {
     "repairs": "data/tax_gap_repairs_gpt_pro_2026-07-05.json",
     "testCases": "public/sample_matching_test_cases.json",
@@ -36,16 +36,16 @@
     "candidateCountByNextAction": {
       "add_tax_return_model_or_keep_gate": 1,
       "import_as_internal_only_gated_rule": 11,
-      "ready_internal_only_runtime_gated": 7
+      "ready_customer_facing_after_mandatory_intake": 7
     },
     "nextActionCounts": {
       "add_tax_return_model_or_keep_gate": 1,
       "import_as_internal_only_gated_rule": 11,
-      "ready_internal_only_runtime_gated": 7
+      "ready_customer_facing_after_mandatory_intake": 7
     },
     "candidatesWithAnyTestProfileCoverage": 19,
     "candidatesWithCompleteMatchedTestInputs": 19,
-    "readyForDirectCustomerFacingCalculationNow": 0,
+    "readyForDirectCustomerFacingCalculationNow": 7,
     "matchedTestProfileCount": 37
   },
   "runtimeCapabilities": {
@@ -421,13 +421,14 @@
         ]
       },
       "nextAction": {
-        "action": "ready_internal_only_runtime_gated",
-        "reason": "A compiled runtime model exists and at least one matching profile has all audited inputs. Customer-facing inclusion remains disabled by policy.",
-        "blocksCustomerFacingRuntime": true
+        "action": "ready_customer_facing_after_mandatory_intake",
+        "reason": "A compiled runtime model exists and at least one matching profile has all audited mandatory tax inputs.",
+        "blocksCustomerFacingRuntime": false,
+        "customerFacingReady": true
       },
       "customerFacingPolicy": {
-        "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "includeInUserFacingTotalNow": true,
+        "reason": "A structured runtime model exists and a matching profile supplies all mandatory pre-opportunity tax inputs."
       }
     },
     {
@@ -770,7 +771,7 @@
       },
       "customerFacingPolicy": {
         "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "reason": "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
       }
     },
     {
@@ -987,13 +988,14 @@
         ]
       },
       "nextAction": {
-        "action": "ready_internal_only_runtime_gated",
-        "reason": "A compiled runtime model exists and at least one matching profile has all audited inputs. Customer-facing inclusion remains disabled by policy.",
-        "blocksCustomerFacingRuntime": true
+        "action": "ready_customer_facing_after_mandatory_intake",
+        "reason": "A compiled runtime model exists and at least one matching profile has all audited mandatory tax inputs.",
+        "blocksCustomerFacingRuntime": false,
+        "customerFacingReady": true
       },
       "customerFacingPolicy": {
-        "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "includeInUserFacingTotalNow": true,
+        "reason": "A structured runtime model exists and a matching profile supplies all mandatory pre-opportunity tax inputs."
       }
     },
     {
@@ -1416,7 +1418,7 @@
       },
       "customerFacingPolicy": {
         "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "reason": "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
       }
     },
     {
@@ -1653,13 +1655,14 @@
         ]
       },
       "nextAction": {
-        "action": "ready_internal_only_runtime_gated",
-        "reason": "A compiled runtime model exists and at least one matching profile has all audited inputs. Customer-facing inclusion remains disabled by policy.",
-        "blocksCustomerFacingRuntime": true
+        "action": "ready_customer_facing_after_mandatory_intake",
+        "reason": "A compiled runtime model exists and at least one matching profile has all audited mandatory tax inputs.",
+        "blocksCustomerFacingRuntime": false,
+        "customerFacingReady": true
       },
       "customerFacingPolicy": {
-        "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "includeInUserFacingTotalNow": true,
+        "reason": "A structured runtime model exists and a matching profile supplies all mandatory pre-opportunity tax inputs."
       }
     },
     {
@@ -2228,13 +2231,14 @@
         ]
       },
       "nextAction": {
-        "action": "ready_internal_only_runtime_gated",
-        "reason": "A compiled runtime model exists and at least one matching profile has all audited inputs. Customer-facing inclusion remains disabled by policy.",
-        "blocksCustomerFacingRuntime": true
+        "action": "ready_customer_facing_after_mandatory_intake",
+        "reason": "A compiled runtime model exists and at least one matching profile has all audited mandatory tax inputs.",
+        "blocksCustomerFacingRuntime": false,
+        "customerFacingReady": true
       },
       "customerFacingPolicy": {
-        "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "includeInUserFacingTotalNow": true,
+        "reason": "A structured runtime model exists and a matching profile supplies all mandatory pre-opportunity tax inputs."
       }
     },
     {
@@ -2579,13 +2583,14 @@
         ]
       },
       "nextAction": {
-        "action": "ready_internal_only_runtime_gated",
-        "reason": "A compiled runtime model exists and at least one matching profile has all audited inputs. Customer-facing inclusion remains disabled by policy.",
-        "blocksCustomerFacingRuntime": true
+        "action": "ready_customer_facing_after_mandatory_intake",
+        "reason": "A compiled runtime model exists and at least one matching profile has all audited mandatory tax inputs.",
+        "blocksCustomerFacingRuntime": false,
+        "customerFacingReady": true
       },
       "customerFacingPolicy": {
-        "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "includeInUserFacingTotalNow": true,
+        "reason": "A structured runtime model exists and a matching profile supplies all mandatory pre-opportunity tax inputs."
       }
     },
     {
@@ -2996,13 +3001,14 @@
         ]
       },
       "nextAction": {
-        "action": "ready_internal_only_runtime_gated",
-        "reason": "A compiled runtime model exists and at least one matching profile has all audited inputs. Customer-facing inclusion remains disabled by policy.",
-        "blocksCustomerFacingRuntime": true
+        "action": "ready_customer_facing_after_mandatory_intake",
+        "reason": "A compiled runtime model exists and at least one matching profile has all audited mandatory tax inputs.",
+        "blocksCustomerFacingRuntime": false,
+        "customerFacingReady": true
       },
       "customerFacingPolicy": {
-        "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "includeInUserFacingTotalNow": true,
+        "reason": "A structured runtime model exists and a matching profile supplies all mandatory pre-opportunity tax inputs."
       }
     },
     {
@@ -3445,7 +3451,7 @@
       },
       "customerFacingPolicy": {
         "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "reason": "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
       }
     },
     {
@@ -3862,7 +3868,7 @@
       },
       "customerFacingPolicy": {
         "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "reason": "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
       }
     },
     {
@@ -4225,7 +4231,7 @@
       },
       "customerFacingPolicy": {
         "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "reason": "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
       }
     },
     {
@@ -4642,7 +4648,7 @@
       },
       "customerFacingPolicy": {
         "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "reason": "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
       }
     },
     {
@@ -4985,7 +4991,7 @@
       },
       "customerFacingPolicy": {
         "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "reason": "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
       }
     },
     {
@@ -5402,7 +5408,7 @@
       },
       "customerFacingPolicy": {
         "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "reason": "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
       }
     },
     {
@@ -5785,7 +5791,7 @@
       },
       "customerFacingPolicy": {
         "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "reason": "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
       }
     },
     {
@@ -6124,7 +6130,7 @@
       },
       "customerFacingPolicy": {
         "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "reason": "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
       }
     },
     {
@@ -7547,7 +7553,7 @@
       },
       "customerFacingPolicy": {
         "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "reason": "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
       }
     },
     {
@@ -8266,7 +8272,7 @@
       },
       "customerFacingPolicy": {
         "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "reason": "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
       }
     },
     {
@@ -8423,13 +8429,14 @@
         ]
       },
       "nextAction": {
-        "action": "ready_internal_only_runtime_gated",
-        "reason": "A compiled runtime model exists and at least one matching profile has all audited inputs. Customer-facing inclusion remains disabled by policy.",
-        "blocksCustomerFacingRuntime": true
+        "action": "ready_customer_facing_after_mandatory_intake",
+        "reason": "A compiled runtime model exists and at least one matching profile has all audited mandatory tax inputs.",
+        "blocksCustomerFacingRuntime": false,
+        "customerFacingReady": true
       },
       "customerFacingPolicy": {
-        "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rules remain excluded until model-specific runtime imports and required taxpayer inputs are verified."
+        "includeInUserFacingTotalNow": true,
+        "reason": "A structured runtime model exists and a matching profile supplies all mandatory pre-opportunity tax inputs."
       }
     }
   ],

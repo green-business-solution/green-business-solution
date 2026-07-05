@@ -65,19 +65,23 @@ export function calculateLocalTaxWorkflow(workflow, ctx = {}) {
     ? Math.min(calculated.amountCents, Number(workflow.maxCents))
     : calculated.amountCents;
 
+  const includedInUserFacingTotal =
+    workflow.includeInUserFacingTotalDefault === true ||
+    ctx.includeCalculatedTaxInUserFacingTotals === true;
+
   return {
     workflowId: workflow.id,
     modelId: model.modelId,
     status: "calculated",
     amountCents: Math.round(cappedAmount),
-    includedInUserFacingTotal: workflow.includeInUserFacingTotalDefault === true,
+    includedInUserFacingTotal,
     missingInputs: [],
     trace: [
       `Calculated ${model.modelId} for ${workflow.id}.`,
       ...calculated.trace,
-      workflow.includeInUserFacingTotalDefault === true
+      includedInUserFacingTotal
         ? "Workflow is configured for user-facing totals."
-        : "Workflow defaults to internal-only until confirmed by user, bill, accountant, or assessor inputs."
+        : "Workflow defaults to internal-only until confirmed by required user, bill, tax-return, program-document, or assessor inputs."
     ]
   };
 }

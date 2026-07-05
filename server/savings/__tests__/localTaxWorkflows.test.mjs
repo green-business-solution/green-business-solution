@@ -65,6 +65,23 @@ describe("local tax workflows", () => {
     expect(result.trace.join(" ")).toContain("internal-only");
   });
 
+  it("can include calculated local tax rows after mandatory intake inputs are complete", () => {
+    const result = calculateLocalTaxWorkflow(
+      workflow("local_tax_ca_burbank_business_license_v1"),
+      {
+        ...ctx({
+          local_business_tax_class: "retail",
+          employee_count: 10
+        }),
+        includeCalculatedTaxInUserFacingTotals: true
+      }
+    );
+
+    expect(result.status).toBe("calculated");
+    expect(result.amountCents).toBe(20870);
+    expect(result.includedInUserFacingTotal).toBe(true);
+  });
+
   it("requires business class and tax-base inputs before local business tax calculation", () => {
     const noClass = calculateLocalTaxWorkflow(workflow("local_tax_ca_anaheim_business_license_v1"), ctx({}));
     const missingGross = calculateLocalTaxWorkflow(

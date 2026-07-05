@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) mandatory tax intake runtime policy
+
+- Added a tax profile runtime evaluator that runs compiled tax-gap rules and local tax workflows against tax profile facts/documents, marking missing values as mandatory pre-opportunity inputs.
+- Allowed calculated tax-gap and local-tax results to enter customer-facing totals when mandatory tax intake inputs are present, while preserving internal-only defaults for callers that do not opt into the policy.
+- Updated tax readiness and grant/tax coverage reports to reflect the mandatory-intake policy, with 7 tax candidates ready after mandatory inputs and structured-model work still required for document/assessor-only rules.
+
 ## 2026-07-05 - Codex (GPT-5) tax test-profile input updates
 
 - Added an intake script for the 19 GPT Pro tax test-profile patches, producing a normalized tax profile update artifact and report.
