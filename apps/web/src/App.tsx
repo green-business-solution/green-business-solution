@@ -3153,7 +3153,7 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
               <h1 className="planet-scan-title planet-scan-title--before" id="planet-scan-heading">
                 <span>Find the money</span>
                 <span>behind your next</span>
-                <span>retrofit.</span>
+                <span className="planet-scan-title-accent">retrofit.</span>
               </h1>
               <p className="planet-scan-subhead">Find incentives, cut operating costs, and know what to do next.</p>
               <button className="planet-scan-cta planet-scan-primary planet-scan-cta--before" onClick={() => navigate("scan")} type="button">

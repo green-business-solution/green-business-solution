@@ -54,6 +54,12 @@
 - Added Lambda artifact bucket lifecycle cleanup for old `lambda/` package zips.
 - Removed the deleted `gbs-energy-data` DynamoDB table from deployment, API diagnostics/admin table surfaces, CloudFormation IAM/env config, and data model docs.
 
+## 2026-07-05 - Codex (GPT-5) homepage hero edge spacing
+
+- Moved the PlanetScan homepage headline block closer to the left edge and the revealed result copy closer to the right edge on desktop and tablet widths.
+- Right-aligned the revealed copy block so its text and CTA anchor to the right side instead of floating inward.
+- Matched the initial `retrofit.` headline line to the brighter green accent used in the current homepage reference.
+
 ## 2026-07-05 - Codex (GPT-5) concise homepage and glass CTA
 
 - Shortened homepage hero, feature, process, trust, and final CTA copy so the page scans faster with fewer wrapped lines.
