@@ -6,6 +6,12 @@
 - Changed the public navbar `How It Works` action to scroll to the embedded home-page journey section instead of routing away when used from the home page.
 - Reused the same journey component for the standalone `/how-it-works` route to keep the experience consistent without duplicating the animation logic.
 
+## 2026-07-05 - Codex (GPT-5) combined scenarios and opportunities preview tab
+
+- Added a `Scenarios+Opportunities` retrofit preview subtab with full-width scenario cards, a compact scenario comparison table, and an opportunity review table.
+- Made the combined tab remove the usual padded preview canvas/header and show a right-side opportunity detail panel only after an opportunity is clicked.
+- Updated preview source regression coverage for the new tab and corrected the stale homepage CTA assertion to match the current single-CTA hero.
+
 ## 2026-07-05 - Codex (GPT-5) homepage CTA alignment cleanup
 
 - Removed the left-side PlanetScan `Get Started` button so the initial hero state stays focused on the copy and scan motion.

@@ -1175,7 +1175,7 @@ describe("retrofit recommendations preview", () => {
     const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
     const tabsStart = source.indexOf("const workspaceTabs = [");
     const tabsSource = source.slice(tabsStart, source.indexOf("] as const;", tabsStart));
-    const workspaceStart = source.indexOf("<article className=\"estimate-workspace-shell\">");
+    const workspaceStart = source.indexOf("<article className={`estimate-workspace-shell");
     const legacyWorkspaceReturnStart = source.indexOf("  return (\n    <article className=\"retrofit-preview-card", workspaceStart);
     const componentSource = source.slice(source.indexOf("function RetrofitPreviewCardView("), legacyWorkspaceReturnStart);
     const workspaceSource = source.slice(workspaceStart, legacyWorkspaceReturnStart);
@@ -1192,12 +1192,14 @@ describe("retrofit recommendations preview", () => {
     expect(tabsSource).toContain("{ key: \"financials\", label: \"Financials\" }");
     expect(tabsSource).toContain("{ key: \"opportunities\", label: \"Opportunities\" }");
     expect(tabsSource).toContain("{ key: \"scenarios\", label: \"Scenarios\" }");
+    expect(tabsSource).toContain("{ key: \"scenariosOpportunities\", label: \"Scenarios+Opportunities\" }");
     expect(tabsSource).toContain("{ key: \"environmental\", label: \"Impact\" }");
     expect(tabsSource).toContain("{ key: \"application\", label: \"Application Overview\" }");
-    expect(tabsSource.match(/label:/g)).toHaveLength(6);
+    expect(tabsSource.match(/label:/g)).toHaveLength(7);
     const tabOrderIndexes = [
       tabsSource.indexOf("{ key: \"overview\", label: \"Overview\" }"),
       tabsSource.indexOf("{ key: \"scenarios\", label: \"Scenarios\" }"),
+      tabsSource.indexOf("{ key: \"scenariosOpportunities\", label: \"Scenarios+Opportunities\" }"),
       tabsSource.indexOf("{ key: \"opportunities\", label: \"Opportunities\" }"),
       tabsSource.indexOf("{ key: \"financials\", label: \"Financials\" }"),
       tabsSource.indexOf("{ key: \"environmental\", label: \"Impact\" }"),
@@ -1293,6 +1295,12 @@ describe("retrofit recommendations preview", () => {
     expect(workspaceSource).toContain("Review opportunities in this scenario");
     expect(workspaceSource).toContain("scenario-guided-preview");
     expect(workspaceSource).toContain("Confirm scenario");
+    expect(workspaceSource).toContain("data-workspace-panel=\"scenariosOpportunities\"");
+    expect(workspaceSource).toContain("scenario-opportunity-workspace");
+    expect(workspaceSource).toContain("Choose your scenario");
+    expect(workspaceSource).toContain("Review opportunities in this scenario");
+    expect(workspaceSource).toContain("scenarioOpportunityDetail ? renderScenarioOpportunityDetailPanel(scenarioOpportunityDetail) : null");
+    expect(componentSource).toContain("scenarioOpportunityDetailSelection");
     expect(workspaceSource).toContain("estimate-scenario-grid");
     expect(workspaceSource).toContain("Selected scenario details");
     expect(workspaceSource).toContain("Edit scenario");
@@ -1750,7 +1758,7 @@ describe("retrofit recommendations preview", () => {
     expect(solarQuestions).not.toContain("What quantity or scope is being upgraded?");
   });
 
-  it("keeps the home planet scan hero copy deterministic with one CTA per state", async () => {
+  it("keeps the home planet scan hero copy deterministic with the single reveal CTA", async () => {
     const fsModuleName = "node:fs";
     const { readFileSync } = await import(fsModuleName);
     const appSource = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
@@ -1765,7 +1773,7 @@ describe("retrofit recommendations preview", () => {
     expect(heroSource).toContain("<span>Find, compare, and claim</span>");
     expect(heroSource).toContain("<span>retrofit incentives.</span>");
     expect(heroSource).not.toContain("<span>RetroFi helps you</span>");
-    expect(heroSource).toContain("planet-scan-cta--before");
+    expect(heroSource).not.toContain("planet-scan-cta--before");
     expect(heroSource).toContain("planet-scan-cta--after");
     expect(heroSource).not.toContain("planet-scan-eyebrow");
     expect(heroSource).not.toContain("See how it works");

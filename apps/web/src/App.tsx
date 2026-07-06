@@ -12124,7 +12124,7 @@ function RetrofitPreviewCardView({
   selectedScenarioId: string;
   selectedOpportunityIds: Record<string, boolean>;
 }) {
-  type EstimateWorkspaceTab = "overview" | "financials" | "opportunities" | "scenarios" | "environmental" | "application" | "more";
+  type EstimateWorkspaceTab = "overview" | "financials" | "opportunities" | "scenarios" | "scenariosOpportunities" | "environmental" | "application" | "more";
   type ScenarioWorkspaceViewMode = "cards" | "table" | "tradeoffs" | "summary" | "review" | "guided";
   type ScenarioTradeoffLevel = "low" | "medium" | "high" | "unknown";
   type OpportunityWorkspaceViewMode = "list" | "review";
@@ -12145,6 +12145,7 @@ function RetrofitPreviewCardView({
   const [scenarioViewModeByRetrofit, setScenarioViewModeByRetrofit] = useState<Record<string, ScenarioWorkspaceViewMode>>({});
   const [opportunityViewModeByRetrofit, setOpportunityViewModeByRetrofit] = useState<Record<string, OpportunityWorkspaceViewMode>>({});
   const [detailOpportunityIdByRetrofit, setDetailOpportunityIdByRetrofit] = useState<Record<string, string>>({});
+  const [scenarioOpportunityDetailIdByRetrofit, setScenarioOpportunityDetailIdByRetrofit] = useState<Record<string, string>>({});
   const [applicationPrepOpportunity, setApplicationPrepOpportunity] = useState<RetrofitOpportunityPreview | null>(null);
   const [applicationPrepProfiles, setApplicationPrepProfiles] = useState<Record<string, CustomerApplicationProfileResponse>>({});
   const [applicationPrepLoading, setApplicationPrepLoading] = useState<Record<string, boolean>>({});
@@ -12285,6 +12286,7 @@ function RetrofitPreviewCardView({
   const workspaceTabs = [
     { key: "overview", label: "Overview" },
     { key: "scenarios", label: "Scenarios" },
+    { key: "scenariosOpportunities", label: "Scenarios+Opportunities" },
     { key: "opportunities", label: "Opportunities" },
     { key: "financials", label: "Financials" },
     { key: "environmental", label: "Impact" },
@@ -12614,6 +12616,10 @@ function RetrofitPreviewCardView({
     detailOpportunitySelection === "__none__"
       ? null
       : retrofit.opportunities.find((opportunity) => opportunity.id === detailOpportunitySelection) || selectedScenarioOpportunities[0] || retrofit.opportunities[0] || null;
+  const scenarioOpportunityDetailSelection = scenarioOpportunityDetailIdByRetrofit[retrofit.id];
+  const scenarioOpportunityDetail = scenarioOpportunityDetailSelection
+    ? retrofit.opportunities.find((opportunity) => opportunity.id === scenarioOpportunityDetailSelection) || null
+    : null;
   const scenarioImpactValue =
     billDataLocked || displayedEnvironmentalImpact.overall.displayValue === "?"
       ? "Unknown"
@@ -12991,6 +12997,83 @@ function RetrofitPreviewCardView({
     );
   }
 
+  function renderScenarioOpportunityDetailPanel(opportunity: RetrofitOpportunityPreview) {
+    const selected = opportunityIncludedInCurrentScenario(opportunity);
+    const includedLabel = getOpportunityIncludedLabel(opportunity, selected);
+    const appStatus = applicationPrepProfiles[opportunity.id];
+    const appReady = appStatus?.status === "customer_ready" && Boolean(appStatus.profile);
+    const oneTimeValue = opportunity.timing === "recurring" ? null : opportunity.estimatedValue ?? null;
+    const recurringValue = opportunity.timing === "recurring" || opportunity.timing === "both" ? opportunity.estimatedValue ?? null : null;
+    const difficulty = capitalizeLabel(opportunity.difficulty || "unknown");
+    return (
+      <aside className="scenario-opportunity-detail-panel" aria-label={`${opportunity.name} details`}>
+        <div className="scenario-opportunity-detail-header">
+          <span className="estimate-card-icon" aria-hidden="true"><MetricSavingsIcon /></span>
+          <div>
+            <small>Opportunity</small>
+            <h3>{opportunity.name}</h3>
+            <span className="soft-badge">{capitalizeLabel(opportunity.type)}</span>
+          </div>
+          <button
+            aria-label="Close opportunity details"
+            className="estimate-row-chevron"
+            onClick={() => setScenarioOpportunityDetailIdByRetrofit((current) => ({ ...current, [retrofit.id]: "" }))}
+            type="button"
+          >
+            x
+          </button>
+        </div>
+
+        <section className="scenario-opportunity-detail-section">
+          <h4>Overview</h4>
+          <p>{opportunityDetailSummary(opportunity)}</p>
+        </section>
+
+        <div className="scenario-opportunity-detail-list">
+          <EstimateInfoRow label="Program type" value={capitalizeLabel(opportunity.type)} />
+          <EstimateInfoRow label="Deadline" value={opportunity.deadline || "Not listed in source data"} />
+          <EstimateInfoRow label="Difficulty" value={difficulty} />
+          <EstimateInfoRow label="Application process" value={opportunity.applicationProcess || capitalizeLabel(opportunity.applicationMethod)} />
+        </div>
+
+        <section className="scenario-opportunity-value-card">
+          <small>Estimated value (one-time)</small>
+          <strong>{formatEstimateCents(oneTimeValue, opportunity.timing === "recurring" ? "Not one-time" : "Unknown")}</strong>
+          <span>{oneTimeValue == null ? includedLabel : "Upfront incentive you can receive"}</span>
+        </section>
+
+        <section className="scenario-opportunity-value-card">
+          <small>Estimated value (recurring)</small>
+          <strong>{formatEstimateCentsPerPeriod(recurringValue, "yr", recurringValue == null ? "Not recurring" : "Unknown")}</strong>
+          <span>{recurringValue == null ? "No recurring value stored" : "Estimated annual savings"}</span>
+        </section>
+
+        <section className="scenario-opportunity-detail-list">
+          <EstimateInfoRow label="Eligibility" value={opportunityEligibleDisplayLabel(opportunity.eligibilityStatus)} />
+          <EstimateInfoRow label="Affects metric" value={opportunityAffectsMetric(opportunity, selected, includedLabel)} />
+          <EstimateInfoRow label="Impact summary" value={opportunity.environmentalImpactContribution || "Impact estimate not stored yet"} />
+        </section>
+
+        <button
+          className={`scenario-opportunity-detail-toggle${selected ? " is-danger" : ""}`}
+          onClick={() => onToggleOpportunity(opportunity.id)}
+          type="button"
+        >
+          {selected ? "Exclude from scenario" : "Include in scenario"}
+        </button>
+        <p className="scenario-opportunity-detail-note">
+          {selected ? "Excluding this opportunity will update scenario metrics and recommendations." : "Including this opportunity will update scenario metrics and recommendations."}
+        </p>
+        {opportunity.sourceUrl ? (
+          <a className="secondary-button opportunity-review-source-link" href={opportunity.sourceUrl} rel="noreferrer" target="_blank">View program details</a>
+        ) : null}
+        {appReady ? (
+          <button className="secondary-button opportunity-review-source-link" onClick={() => setApplicationPrepOpportunity(opportunity)} type="button">Prepare application</button>
+        ) : null}
+      </aside>
+    );
+  }
+
   function renderOpportunityReviewRow(opportunity: RetrofitOpportunityPreview, index: number, compact = false) {
     const selected = opportunityIncludedInCurrentScenario(opportunity);
     const active = opportunityDetail?.id === opportunity.id;
@@ -13028,26 +13111,28 @@ function RetrofitPreviewCardView({
   }
 
   return (
-    <article className="estimate-workspace-shell">
-      <EstimateProgressStepper />
+    <article className={`estimate-workspace-shell${activeWorkspaceTab === "scenariosOpportunities" ? " is-scenarios-opportunities" : ""}`}>
+      {activeWorkspaceTab === "scenariosOpportunities" ? null : <EstimateProgressStepper />}
 
       <div className="estimate-workspace-layout">
-        <section className="estimate-main-card">
-          <header className="estimate-header">
-            <div className="estimate-header-left">
-              <RetrofitPickerIcon retrofit={retrofit} />
-              <div>
-                <h2>{retrofit.name}</h2>
-                <p>{retrofit.description}</p>
+        <section className={`estimate-main-card${activeWorkspaceTab === "scenariosOpportunities" ? " is-scenarios-opportunities" : ""}`}>
+          {activeWorkspaceTab === "scenariosOpportunities" ? null : (
+            <header className="estimate-header">
+              <div className="estimate-header-left">
+                <RetrofitPickerIcon retrofit={retrofit} />
+                <div>
+                  <h2>{retrofit.name}</h2>
+                  <p>{retrofit.description}</p>
+                </div>
               </div>
-            </div>
-            <div className="estimate-header-actions" aria-label="Estimate actions">
-              <button className="estimate-primary-action" onClick={onAddToPlan} type="button">Confirm & move to next step</button>
-              <button className="estimate-secondary-action" type="button">Discard changes</button>
-            </div>
-          </header>
+              <div className="estimate-header-actions" aria-label="Estimate actions">
+                <button className="estimate-primary-action" onClick={onAddToPlan} type="button">Confirm & move to next step</button>
+                <button className="estimate-secondary-action" type="button">Discard changes</button>
+              </div>
+            </header>
+          )}
 
-          <nav aria-label="Estimate workspace tabs" className="estimate-tabs retrofit-workspace-tabs">
+          <nav aria-label="Estimate workspace tabs" className={`estimate-tabs retrofit-workspace-tabs${activeWorkspaceTab === "scenariosOpportunities" ? " is-scenarios-opportunities" : ""}`}>
             {workspaceTabs.map((item) => (
               <button
                 key={item.key}
@@ -13383,6 +13468,128 @@ function RetrofitPreviewCardView({
                   </div>
                 </>
               )}
+            </section>
+          ) : null}
+
+          {activeWorkspaceTab === "scenariosOpportunities" ? (
+            <section className="scenario-opportunity-workspace" data-workspace-panel="scenariosOpportunities">
+              <main className="scenario-opportunity-main">
+                <section className="scenario-opportunity-hero">
+                  <h3>Choose your scenario</h3>
+                  <p>Compare different combinations of opportunities and choose the one that best fits your goals. The recommended scenario is preselected.</p>
+                </section>
+
+                {scenarioPresentationProfiles.length ? (
+                  <>
+                    <div className="scenario-opportunity-card-grid">
+                      {scenarioPresentationProfiles.map((profile) => (
+                        <button
+                          aria-pressed={profile.selected}
+                          className={`scenario-opportunity-card${profile.selected ? " is-selected" : ""}`}
+                          key={profile.scenario.id}
+                          onClick={() => onSelectScenario(profile.scenario.id)}
+                          type="button"
+                        >
+                          <div className="scenario-opportunity-card-title">
+                            <strong>{scenarioDisplayName(profile.index)}</strong>
+                            {profile.index === 0 ? <span className="estimate-preview-pill">Recommended</span> : null}
+                            <span className="scenario-opportunity-card-check" aria-hidden="true">{profile.selected ? "✓" : ""}</span>
+                          </div>
+                          <small>Best for</small>
+                          <h4>{scenarioBestForLabel(profile.index)}</h4>
+                          <div className="scenario-opportunity-card-metrics">
+                            <span><MetricCostIcon /> One-time cost <b>{formatEstimateCents(profile.upfrontCost, "Unknown")}</b></span>
+                            <span><MetricImpactIcon /> Total incentives <b>{formatEstimateCents(profile.incentives, "Unknown")}</b></span>
+                            <span><MetricSavingsIcon /> Annual savings <b>{formatEstimateCentsPerPeriod(profile.annualSavings, "yr", "Unknown")}</b></span>
+                            <span><MetricPaybackIcon /> Simple payback <b>{formatPayback(profile.payback, "Unknown")}</b></span>
+                          </div>
+                          <em>{profile.included.length} included · {profile.excluded.length} excluded</em>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="scenario-opportunity-mini-table" role="table" aria-label="Scenario and opportunity comparison">
+                      {([
+                        ["One-time cost (net)", (profile: typeof scenarioPresentationProfiles[number]) => formatEstimateCents(profile.upfrontCost, "Unknown")],
+                        ["Annual savings", (profile: typeof scenarioPresentationProfiles[number]) => formatEstimateCentsPerPeriod(profile.annualSavings, "yr", "Unknown")],
+                        ["Simple payback", (profile: typeof scenarioPresentationProfiles[number]) => formatPayback(profile.payback, "Unknown")]
+                      ] as const).map(([label, value]) => (
+                        <div className="scenario-opportunity-mini-row" role="row" key={label}>
+                          <strong role="rowheader">{label}</strong>
+                          {scenarioPresentationProfiles.map((profile) => (
+                            <span className={profile.selected ? "is-selected" : ""} role="cell" key={`${profile.scenario.id}:${label}`}>{value(profile)}</span>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <p className="compact-empty">No scenarios available yet.</p>
+                )}
+
+                <section className="scenario-opportunity-review">
+                  <div className="scenario-opportunity-review-heading">
+                    <div>
+                      <h3>Review opportunities in this scenario</h3>
+                      <p>Exclude any opportunity you definitely do not want, and scenario metrics will update automatically.</p>
+                    </div>
+                    <span className="estimate-preview-pill">{includedOpportunityRows.length} included</span>
+                  </div>
+                  <div className="scenario-opportunity-table" role="table" aria-label="Scenario opportunities">
+                    <div className="scenario-opportunity-table-head" role="row">
+                      <span role="columnheader">#</span>
+                      <span role="columnheader">Opportunity</span>
+                      <span role="columnheader">Included</span>
+                      <span role="columnheader">Impact summary</span>
+                      <span role="columnheader">Details</span>
+                    </div>
+                    {opportunityReviewRows.length ? opportunityReviewRows.map((opportunity, index) => {
+                      const selected = opportunityIncludedInCurrentScenario(opportunity);
+                      const includedLabel = getOpportunityIncludedLabel(opportunity, selected);
+                      const active = scenarioOpportunityDetail?.id === opportunity.id;
+                      const estimatedValueLabel = opportunityValueLabel(opportunity, "Value unavailable");
+                      return (
+                        <article className={`scenario-opportunity-table-row${selected ? " is-included" : " is-excluded"}${active ? " is-active" : ""}`} role="row" key={opportunity.id}>
+                          <span className="scenario-opportunity-index" role="cell">{index + 1}</span>
+                          <button
+                            className="scenario-opportunity-name-button"
+                            onClick={() => setScenarioOpportunityDetailIdByRetrofit((current) => ({ ...current, [retrofit.id]: opportunity.id }))}
+                            role="cell"
+                            type="button"
+                          >
+                            <strong>{opportunity.name}</strong>
+                            <small>{capitalizeLabel(opportunity.type)}</small>
+                          </button>
+                          <label className="scenario-opportunity-switch" role="cell">
+                            <input checked={selected} onChange={() => onToggleOpportunity(opportunity.id)} type="checkbox" />
+                            <span aria-hidden="true" />
+                            <b>{selected ? "Included" : "Excluded"}</b>
+                          </label>
+                          <div className="scenario-opportunity-impact-summary" role="cell">
+                            <span><MetricImpactIcon /> {opportunity.environmentalImpactContribution || opportunityAffectsMetric(opportunity, selected, includedLabel)}</span>
+                            <span><MetricCostIcon /> {estimatedValueLabel}{opportunity.timing === "recurring" ? "/yr" : ""}</span>
+                          </div>
+                          <button
+                            className="secondary-button small-action-button"
+                            onClick={() => setScenarioOpportunityDetailIdByRetrofit((current) => ({ ...current, [retrofit.id]: opportunity.id }))}
+                            role="cell"
+                            type="button"
+                          >
+                            Details
+                          </button>
+                        </article>
+                      );
+                    }) : (
+                      <p className="compact-empty">
+                        {isDetailLoading ? "Loading external opportunities for this retrofit..." : "No external opportunities found yet for this retrofit."}
+                      </p>
+                    )}
+                  </div>
+                  <p className="scenario-opportunity-note">Changes to included opportunities will automatically recalculate scenario metrics and recommendations.</p>
+                </section>
+              </main>
+
+              {scenarioOpportunityDetail ? renderScenarioOpportunityDetailPanel(scenarioOpportunityDetail) : null}
             </section>
           ) : null}
 
