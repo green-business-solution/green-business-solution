@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) standalone retrofit tab removal
+
+- Removed the standalone `Scenarios` and `Opportunities` retrofit preview subtabs so the customer workflow uses the combined `Scenarios+Opportunities` tab.
+- Pruned obsolete workspace state, render branches, helpers, and source assertions tied to the removed standalone tabs while preserving the combined scenario/opportunity detail panel.
+- Updated the focused preview regression tests to protect the combined tab layout and verify the old tab routes stay removed.
+
 ## 2026-07-05 - Codex (GPT-5) San Francisco business tax runtime model
 
 - Imported the GPT Pro San Francisco business-tax return repair as a normalized source artifact.

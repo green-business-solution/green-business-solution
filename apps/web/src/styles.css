@@ -9653,7 +9653,8 @@ dd {
   width: 18px;
 }
 
-.opportunity-review-source-link {
+.opportunity-review-source-link,
+.scenario-opportunity-source-link {
   justify-self: start;
 }
 
