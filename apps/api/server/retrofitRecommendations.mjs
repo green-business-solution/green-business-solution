@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { buildRetrofitDetailQuestions } from "./forms/retrofitFormQuestions.mjs";
 import { summarizeMatchResult } from "./matching/explainMatch.mjs";
 import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchProfile.mjs";
 import { evaluateOpportunityForUser } from "./matching/evaluateRules.mjs";
@@ -69,6 +70,7 @@ export function buildRetrofitGroupsFromEligibleResults({
         opportunityIncentiveCalculationPackages: opportunityPackages,
         taxGeographyRules
       }),
+      detailQuestions: buildRetrofitDetailQuestions(group),
       typicalComponents: RETROFIT_TYPES_BY_ID[group.retrofitTypeId]?.typicalComponents || []
     }))
     .sort((a, b) => b.opportunityCount - a.opportunityCount || a.displayName.localeCompare(b.displayName));
@@ -175,6 +177,7 @@ function buildLightweightRetrofitGroups(intake, { calculationDate, normalizedPro
       };
       return {
         ...group,
+        detailQuestions: buildRetrofitDetailQuestions(group),
         savingsPreview: buildAdminTestCaseSavingsPreview({
           retrofitGroup: group,
           sampleUserId: subjectId,

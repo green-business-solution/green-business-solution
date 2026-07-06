@@ -97,6 +97,42 @@ const liveShapedPayload = {
       isPhysicalRetrofit: true,
       typicalComponents: ["LED fixtures", "occupancy sensors"],
       opportunityCount: 1,
+      detailQuestions: [
+        {
+          id: "led_lighting:tax-inclusive-costs",
+          questionId: "tax_inclusive_costs",
+          retrofitId: "led_lighting",
+          question: "Do you want to enter costs with tax included, or should RetroFi estimate them for you?",
+          answerType: "select",
+          options: ["Enter tax-inclusive numbers", "Estimate for me (tax included)"],
+          whyItMatters: "Our standardized values include tax, so this keeps your estimate consistent.",
+          affects: ["Project cost", "Tax benefits", "Payback"],
+          canonicalInputKey: "project_cost_tax_inclusion_preference",
+          collectionStage: "pre_opportunity_estimate",
+          collectionSurface: "retrofit_scope_form"
+        },
+        {
+          id: "led_lighting:fixtures",
+          questionId: "lighting_fixture_count",
+          retrofitId: "led_lighting",
+          question: "How many fixtures or bulbs are being replaced?",
+          answerType: "number",
+          canonicalInputKey: "fixture_count",
+          collectionStage: "pre_opportunity_estimate",
+          collectionSurface: "retrofit_scope_form"
+        },
+        {
+          id: "led_lighting:quote",
+          questionId: "project_quote_status",
+          retrofitId: "led_lighting",
+          question: "Do you already have a project quote?",
+          answerType: "select",
+          options: ["Yes", "No", "In progress"],
+          canonicalInputKey: "project_quote_status",
+          collectionStage: "pre_opportunity_estimate",
+          collectionSurface: "project_quote_upload"
+        }
+      ],
       savingsPreview: {
         status: "calculated",
         estimateKind: "api_result",
@@ -1102,6 +1138,42 @@ describe("retrofit recommendations preview", () => {
     expect(areRetrofitQuestionsComplete(retrofit, {})).toBe(false);
   });
 
+  it("supports conditional form questions without custom frontend branching", () => {
+    const retrofit = {
+      id: "tax_credit_retrofit",
+      detailQuestions: [
+        {
+          id: "tax_credit_retrofit:taxable_income_cents",
+          retrofitId: "tax_credit_retrofit",
+          question: "What is your taxable income?",
+          answerType: "number"
+        },
+        {
+          id: "tax_credit_retrofit:credit_carryforward",
+          retrofitId: "tax_credit_retrofit",
+          question: "Can unused credit be carried forward?",
+          answerType: "boolean",
+          visibleIf: {
+            field: "tax_credit_retrofit:taxable_income_cents",
+            op: ">",
+            value: 0
+          }
+        }
+      ]
+    } as any;
+
+    expect(getRetrofitFormQuestions(retrofit, {}).map((question) => question.id)).toEqual([
+      "tax_credit_retrofit:taxable_income_cents"
+    ]);
+    expect(getRetrofitFormQuestions(retrofit, { "tax_credit_retrofit:taxable_income_cents": "0" }).map((question) => question.id)).toEqual([
+      "tax_credit_retrofit:taxable_income_cents"
+    ]);
+    expect(getRetrofitFormQuestions(retrofit, { "tax_credit_retrofit:taxable_income_cents": "2500000" }).map((question) => question.id)).toEqual([
+      "tax_credit_retrofit:taxable_income_cents",
+      "tax_credit_retrofit:credit_carryforward"
+    ]);
+  });
+
   it("resumes bill upload state from the first incomplete or skipped bill and validates storage keys", () => {
     expect(BILL_UPLOAD_STEPS.map((step) => step.id)).toEqual(["electric", "water", "gas", "waste"]);
     expect(BILL_UPLOAD_STEPS[0].title).toBe("Upload your electric bill");
@@ -1719,7 +1791,7 @@ describe("retrofit recommendations preview", () => {
     expect(retrofit.confidenceLabel).toBe("Needs review");
   });
 
-  it("uses retrofit-specific detail questions for solar and biomass categories", () => {
+  it("uses payload-backed detail questions for solar and biomass categories", () => {
     const categoryPayload = {
       ...liveShapedPayload,
       retrofits: [
@@ -1727,12 +1799,55 @@ describe("retrofit recommendations preview", () => {
           ...liveShapedPayload.retrofits[0],
           retrofitTypeId: "biomass_biogas_energy_system",
           displayName: "Biomass/biogas energy system",
+          detailQuestions: [
+            {
+              id: "biomass_biogas_energy_system:tax-inclusive-costs",
+              retrofitId: "biomass_biogas_energy_system",
+              question: "Do you want to enter costs with tax included, or should RetroFi estimate them for you?",
+              answerType: "select",
+              options: ["Enter tax-inclusive numbers", "Estimate for me (tax included)"]
+            },
+            {
+              id: "biomass_biogas_energy_system:fuel-stream",
+              retrofitId: "biomass_biogas_energy_system",
+              question: "What fuel or waste stream would the system use?",
+              answerType: "text"
+            },
+            {
+              id: "biomass_biogas_energy_system:feedstock",
+              retrofitId: "biomass_biogas_energy_system",
+              question: "What quantity of feedstock is available per month?",
+              answerType: "text"
+            }
+          ],
           opportunities: []
         },
         {
           ...liveShapedPayload.retrofits[0],
           retrofitTypeId: "solar_renewable_electricity",
           displayName: "Rooftop solar PV",
+          detailQuestions: [
+            {
+              id: "solar_renewable_electricity:tax-inclusive-costs",
+              retrofitId: "solar_renewable_electricity",
+              question: "Do you want to enter costs with tax included, or should RetroFi estimate them for you?",
+              answerType: "select",
+              options: ["Enter tax-inclusive numbers", "Estimate for me (tax included)"]
+            },
+            {
+              id: "solar_renewable_electricity:roof-area",
+              retrofitId: "solar_renewable_electricity",
+              question: "What roof or site area is available?",
+              answerType: "number"
+            },
+            {
+              id: "solar_renewable_electricity:roof-control",
+              retrofitId: "solar_renewable_electricity",
+              question: "Do you control the roof or site?",
+              answerType: "select",
+              options: ["Yes", "No", "Shared", "Unknown"]
+            }
+          ],
           opportunities: []
         }
       ]

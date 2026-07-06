@@ -311,6 +311,7 @@ package_api_lambda() {
   copy_data_file data/opportunity_savings_mapping.json
   copy_data_file data/opportunity_incentive_rules.json
   copy_data_file data/opportunity_incentive_calculation_packages_v2.json
+  copy_data_file data/retrofit_form_question_catalog.json
   copy_data_file data/tax_geography_rules.json
   copy_data_file data/tax_local_workflow_rules.json
   copy_data_file data/calculation_requirements.json optional

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-06 - Codex (GPT-5) data-backed retrofit form questions
+
+- Moved base retrofit project-detail questions out of frontend hardcoded branches into a versioned shared form-question catalog.
+- Added API-side retrofit form assembly for live and fixture recommendation payloads, preserving existing question IDs while exposing canonical input keys, collection surfaces, and conditional-question metadata.
+- Updated the frontend form renderer to consume payload-backed questions and evaluate visible/required conditions for decision-tree-style forms.
+
 ## 2026-07-05 - Codex (GPT-5) standalone retrofit tab removal
 
 - Removed the standalone `Scenarios` and `Opportunities` retrofit preview subtabs so the customer workflow uses the combined `Scenarios+Opportunities` tab.

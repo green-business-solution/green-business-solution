@@ -1058,6 +1058,7 @@ type SampleRetrofitGroup = {
   parentCategory: string;
   isPhysicalRetrofit: boolean;
   typicalComponents?: string[];
+  detailQuestions?: RetrofitDetailQuestion[];
   opportunityCount: number;
   opportunities: SampleMatchResult[];
   savingsPreview?: SampleSavingsPreview;
@@ -5932,6 +5933,7 @@ type RetrofitEnvironmentalImpact = {
 
 type RetrofitDetailQuestion = {
   id: string;
+  questionId?: string;
   retrofitId: string;
   question: string;
   whyItMatters?: string;
@@ -5939,7 +5941,19 @@ type RetrofitDetailQuestion = {
   answerType: "text" | "number" | "select" | "boolean";
   options?: string[];
   answer?: string | number | boolean;
+  canonicalInputKey?: string;
+  collectionStage?: string;
+  collectionSurface?: string;
+  visibleIf?: FormCondition;
+  requiredIf?: FormCondition;
+  clearsWhenHidden?: boolean;
 };
+
+type FormCondition =
+  | { field: string; op: "equals" | "not_equals" | ">" | ">=" | "<" | "<=" | "in" | "exists"; value?: string | number | boolean | string[] | number[] | boolean[] }
+  | { all: FormCondition[] }
+  | { any: FormCondition[] }
+  | { not: FormCondition };
 
 type NextBestAction = {
   id: string;
@@ -6257,7 +6271,9 @@ export function areRetrofitQuestionsComplete(
   retrofit: Pick<RetrofitPreviewCard, "detailQuestions">,
   detailAnswers: Record<string, string>
 ) {
-  const questions = getRetrofitFormQuestions(retrofit);
+  const questions = getRetrofitFormQuestions(retrofit, detailAnswers).filter((question) =>
+    isRetrofitQuestionRequired(question, detailAnswers)
+  );
   if (questions.length === 0) return true;
   return questions.every((question) => {
     const answer = detailAnswers[question.id];
@@ -6266,7 +6282,8 @@ export function areRetrofitQuestionsComplete(
 }
 
 export function getRetrofitFormQuestions(
-  retrofit: Pick<RetrofitPreviewCard, "detailQuestions"> & Partial<Pick<RetrofitPreviewCard, "id" | "name" | "opportunities">>
+  retrofit: Pick<RetrofitPreviewCard, "detailQuestions"> & Partial<Pick<RetrofitPreviewCard, "id" | "name" | "opportunities">>,
+  answers: Record<string, string> = {}
 ): RetrofitDetailQuestion[] {
   const questions = [...retrofit.detailQuestions];
   const existingQuestionIds = new Set(questions.map((question) => question.id));
@@ -6293,7 +6310,54 @@ export function getRetrofitFormQuestions(
     existingPrompts.add(normalizedPrompt);
   }
 
-  return questions;
+  return questions.filter((question) => isRetrofitQuestionVisible(question, answers));
+}
+
+function isRetrofitQuestionVisible(question: RetrofitDetailQuestion, answers: Record<string, string>) {
+  return evaluateFormCondition(question.visibleIf, answers, true);
+}
+
+function isRetrofitQuestionRequired(question: RetrofitDetailQuestion, answers: Record<string, string>) {
+  return evaluateFormCondition(question.requiredIf, answers, true);
+}
+
+function evaluateFormCondition(condition: FormCondition | undefined, answers: Record<string, string>, defaultValue: boolean): boolean {
+  if (!condition) return defaultValue;
+  if ("all" in condition) return condition.all.every((item) => evaluateFormCondition(item, answers, true));
+  if ("any" in condition) return condition.any.some((item) => evaluateFormCondition(item, answers, false));
+  if ("not" in condition) return !evaluateFormCondition(condition.not, answers, false);
+
+  const answer = answers[condition.field] ?? answers[canonicalAnswerKey(condition.field, answers)] ?? "";
+  const normalizedAnswer = String(answer).trim();
+  const normalizedValue = String(condition.value ?? "").trim();
+  const numericAnswer = Number(normalizedAnswer);
+  const numericValue = Number(condition.value);
+
+  switch (condition.op) {
+    case "exists":
+      return normalizedAnswer.length > 0;
+    case "equals":
+      return normalizedAnswer === normalizedValue;
+    case "not_equals":
+      return normalizedAnswer !== normalizedValue;
+    case "in":
+      return Array.isArray(condition.value) && condition.value.map(String).includes(normalizedAnswer);
+    case ">":
+      return Number.isFinite(numericAnswer) && Number.isFinite(numericValue) && numericAnswer > numericValue;
+    case ">=":
+      return Number.isFinite(numericAnswer) && Number.isFinite(numericValue) && numericAnswer >= numericValue;
+    case "<":
+      return Number.isFinite(numericAnswer) && Number.isFinite(numericValue) && numericAnswer < numericValue;
+    case "<=":
+      return Number.isFinite(numericAnswer) && Number.isFinite(numericValue) && numericAnswer <= numericValue;
+    default:
+      return defaultValue;
+  }
+}
+
+function canonicalAnswerKey(inputKey: string, answers: Record<string, string>) {
+  const normalized = inputKey.toLowerCase();
+  return Object.keys(answers).find((key) => key.toLowerCase().endsWith(`:${normalized}`)) || inputKey;
 }
 
 function firstAvailableFormValue(...values: Array<string | number | boolean | null | undefined>) {
@@ -6737,7 +6801,7 @@ function buildRetrofitPreviewCard(
     operatingSavings: buildOperatingSavingsPreview(retrofit, payload),
     environmentalImpact: buildRetrofitEnvironmentalImpactPreview(retrofit, missingInfo, preview),
     detailQuestions: [
-      ...detailQuestionsForRetrofit(retrofit),
+      ...baseDetailQuestionsForRetrofit(retrofit),
       ...taxRuntimeQuestionsForRetrofit(payload?.taxRuntimePreview || null, retrofit.retrofitTypeId)
     ]
   };
@@ -10609,17 +10673,18 @@ function RetrofitDetailFormModal({
   onSubmit: (answers: Record<string, string>) => void;
   retrofit: RetrofitPreviewCard;
 }) {
-  const questions = useMemo(() => getRetrofitFormQuestions(retrofit), [retrofit]);
   const [answers, setAnswers] = useState<Record<string, string>>(() =>
-    Object.fromEntries(questions.map((question) => [question.id, initialAnswers[question.id] || ""]))
+    Object.fromEntries(getRetrofitFormQuestions(retrofit, initialAnswers).map((question) => [question.id, initialAnswers[question.id] || ""]))
   );
+  const questions = useMemo(() => getRetrofitFormQuestions(retrofit, answers), [answers, retrofit]);
 
   useEffect(() => {
-    setAnswers(Object.fromEntries(questions.map((question) => [question.id, initialAnswers[question.id] || ""])));
-  }, [initialAnswers, questions]);
+    setAnswers(Object.fromEntries(getRetrofitFormQuestions(retrofit, initialAnswers).map((question) => [question.id, initialAnswers[question.id] || ""])));
+  }, [initialAnswers, retrofit]);
 
   const answeredCount = questions.filter((question) => (answers[question.id] || "").trim().length > 0).length;
-  const canSubmit = questions.length === 0 || answeredCount === questions.length;
+  const requiredQuestions = questions.filter((question) => isRetrofitQuestionRequired(question, answers));
+  const canSubmit = requiredQuestions.length === 0 || requiredQuestions.every((question) => (answers[question.id] || "").trim().length > 0);
 
   function handleAnswerChange(questionId: string, value: string) {
     setAnswers((current) => ({
@@ -13435,114 +13500,15 @@ function assumptionsForRetrofit(retrofitTypeId: string) {
   return ["Quantity", "Estimated project cost", "Labor/human resource fee", "Operating hours", "Estimated annual usage reduction"];
 }
 
-function withRetrofitId(retrofitId: string, questions: Omit<RetrofitDetailQuestion, "retrofitId">[]): RetrofitDetailQuestion[] {
-  return questions.map((question) => ({
-    ...question,
-    retrofitId,
-    whyItMatters: question.whyItMatters || detailQuestionGuidance(question.question).reason,
-    affects: question.affects || detailQuestionGuidance(question.question).affects
-  }));
-}
-
-function detailQuestionsForRetrofit(retrofit: SampleRetrofitGroup): RetrofitDetailQuestion[] {
-  const id = retrofit.retrofitTypeId;
-  const taxInclusiveQuestion: RetrofitDetailQuestion = {
-    id: `${id}:tax-inclusive-costs`,
-    question: "Do you want to enter costs with tax included, or should RetroFi estimate them for you?",
-    answerType: "select",
-    options: ["Enter tax-inclusive numbers", "Estimate for me (tax included)"],
-    whyItMatters: "Our standardized values include tax, so this keeps your estimate consistent.",
-    affects: ["Project cost", "Tax benefits", "Payback"],
-    retrofitId: id
-  };
-  if (id.includes("lighting") || id.includes("led")) {
-    return withRetrofitId(id, [
-      taxInclusiveQuestion,
-      { id: `${id}:fixtures`, question: "How many fixtures or bulbs are being replaced?", answerType: "number" },
-      { id: `${id}:type`, question: "What type of lighting is currently installed?", answerType: "select", options: ["Fluorescent", "Incandescent", "Halogen", "Mixed", "Unknown"] },
-      { id: `${id}:hours`, question: "How many hours per day are the lights used?", answerType: "number" },
-      { id: `${id}:controls`, question: "Are lighting controls or occupancy sensors included?", answerType: "select", options: ["Yes", "No", "Not sure"] },
-      { id: `${id}:quote`, question: "Do you already have a project quote?", answerType: "select", options: ["Yes", "No", "In progress"] }
-    ]);
-  }
-  if (id.includes("hvac")) {
-    return withRetrofitId(id, [
-      taxInclusiveQuestion,
-      { id: `${id}:system`, question: "What system is currently installed?", answerType: "text" },
-      { id: `${id}:fuel`, question: "What is the current fuel type?", answerType: "select", options: ["Electric", "Gas", "Mixed", "Unknown"] },
-      { id: `${id}:age`, question: "Approximate equipment age?", answerType: "number" },
-      { id: `${id}:ductwork`, question: "Is ductwork replacement needed?", answerType: "select", options: ["Yes", "No", "Unknown"] },
-      { id: `${id}:quote`, question: "Do you have a quote?", answerType: "select", options: ["Yes", "No", "In progress"] }
-    ]);
-  }
-  if (id.includes("insulation") || id.includes("envelope")) {
-    return withRetrofitId(id, [
-      taxInclusiveQuestion,
-      { id: `${id}:area`, question: "What area needs insulation?", answerType: "text" },
-      { id: `${id}:current-r`, question: "What is the current insulation level or R-value?", answerType: "text" },
-      { id: `${id}:target-r`, question: "What target R-value or insulation type is planned?", answerType: "text" },
-      { id: `${id}:quote`, question: "Do you have a contractor quote?", answerType: "select", options: ["Yes", "No", "In progress"] },
-      { id: `${id}:location`, question: "Is this attic, wall, roof, or floor insulation?", answerType: "select", options: ["Attic", "Wall", "Roof", "Floor", "Mixed"] }
-    ]);
-  }
-  if (id.includes("refrigeration")) {
-    return withRetrofitId(id, [
-      taxInclusiveQuestion,
-      { id: `${id}:units`, question: "How many refrigeration units?", answerType: "number" },
-      { id: `${id}:age`, question: "Approximate age of current equipment?", answerType: "number" },
-      { id: `${id}:controls`, question: "Are night curtains, doors, controls, or ECM motors included?", answerType: "text" },
-      { id: `${id}:hours`, question: "Average operating hours?", answerType: "number" },
-      { id: `${id}:quote`, question: "Do you already have a project quote?", answerType: "select", options: ["Yes", "No", "In progress"] }
-    ]);
-  }
-  if (id.includes("ev") || id.includes("charger")) {
-    return withRetrofitId(id, [
-      taxInclusiveQuestion,
-      { id: `${id}:chargers`, question: "How many chargers?", answerType: "number" },
-      { id: `${id}:level`, question: "Charger level?", answerType: "select", options: ["Level 2", "DC fast", "Mixed", "Unknown"] },
-      { id: `${id}:use`, question: "Public, employee, fleet, or customer use?", answerType: "select", options: ["Public", "Employee", "Fleet", "Customer", "Mixed"] },
-      { id: `${id}:panel`, question: "Is existing panel capacity known?", answerType: "select", options: ["Yes", "No", "Not sure"] },
-      { id: `${id}:utilization`, question: "Expected utilization?", answerType: "text" },
-      { id: `${id}:baseline`, question: "Current fuel/transportation baseline?", answerType: "text" }
-    ]);
-  }
-  if (id.includes("biomass") || id.includes("biogas")) {
-    return withRetrofitId(id, [
-      taxInclusiveQuestion,
-      { id: `${id}:fuel-stream`, question: "What fuel or waste stream would the system use?", answerType: "text" },
-      { id: `${id}:feedstock`, question: "What quantity of feedstock is available per month?", answerType: "text" },
-      { id: `${id}:use-case`, question: "Is the system for heating, electricity, or both?", answerType: "select", options: ["Heating", "Electricity", "Both", "Unknown"] },
-      { id: `${id}:quote`, question: "Do you have a vendor quote?", answerType: "select", options: ["Yes", "No", "In progress"] },
-      { id: `${id}:permits`, question: "Are permits or interconnection requirements known?", answerType: "select", options: ["Yes", "No", "Not sure"] }
-    ]);
-  }
-  if (id.includes("solar")) {
-    return withRetrofitId(id, [
-      taxInclusiveQuestion,
-      { id: `${id}:roof-area`, question: "What roof or site area is available?", answerType: "number" },
-      { id: `${id}:roof-control`, question: "Do you control the roof or site?", answerType: "select", options: ["Yes", "No", "Shared", "Unknown"] },
-      { id: `${id}:roof-condition`, question: "What is the roof condition?", answerType: "select", options: ["Good", "Fair", "Needs work", "Unknown"] },
-      { id: `${id}:system-size`, question: "What is the estimated system size?", answerType: "number" },
-      { id: `${id}:quote`, question: "Do you have a solar quote?", answerType: "select", options: ["Yes", "No", "In progress"] },
-      { id: `${id}:usage`, question: "Annual kWh usage?", answerType: "number" }
-    ]);
-  }
-  if (id.includes("water")) {
-    return withRetrofitId(id, [
-      taxInclusiveQuestion,
-      { id: `${id}:fixtures`, question: "What fixtures or equipment are being upgraded?", answerType: "text" },
-      { id: `${id}:bill`, question: "Approximate monthly water bill?", answerType: "number" },
-      { id: `${id}:count`, question: "How many fixtures are being replaced?", answerType: "number" },
-      { id: `${id}:quote`, question: "Do you already have a project quote?", answerType: "select", options: ["Yes", "No", "In progress"] }
-    ]);
-  }
-  return withRetrofitId(id, [
-    taxInclusiveQuestion,
-    { id: `${id}:quantity`, question: "What quantity or scope is being upgraded?", answerType: "text" },
-    { id: `${id}:current`, question: "What equipment or process is currently installed?", answerType: "text" },
-    { id: `${id}:hours`, question: "How often is it used?", answerType: "text" },
-    { id: `${id}:quote`, question: "Do you already have a project quote?", answerType: "select", options: ["Yes", "No", "In progress"] }
-  ]);
+function baseDetailQuestionsForRetrofit(retrofit: SampleRetrofitGroup): RetrofitDetailQuestion[] {
+  return (retrofit.detailQuestions || [])
+    .filter((question) => question?.id && question.question && question.answerType)
+    .map((question) => ({
+      ...question,
+      retrofitId: question.retrofitId || retrofit.retrofitTypeId,
+      whyItMatters: question.whyItMatters || detailQuestionGuidance(question.question).reason,
+      affects: question.affects || detailQuestionGuidance(question.question).affects
+    }));
 }
 
 function taxRuntimeQuestionsForRetrofit(

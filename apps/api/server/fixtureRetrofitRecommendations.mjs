@@ -1,3 +1,5 @@
+import { buildRetrofitDetailQuestions } from "./forms/retrofitFormQuestions.mjs";
+
 function cleanText(value) {
   return typeof value === "string" ? value.trim() : "";
 }
@@ -31,7 +33,12 @@ export function buildFixtureRetrofitRecommendationsPayload({ intake, now = new D
     return null;
   }
 
-  const retrofits = testCase.retrofits;
+  const retrofits = testCase.retrofits.map((retrofit) => ({
+    ...retrofit,
+    detailQuestions: Array.isArray(retrofit.detailQuestions) && retrofit.detailQuestions.length
+      ? retrofit.detailQuestions
+      : buildRetrofitDetailQuestions(retrofit)
+  }));
   const taxRuntimePreview = testCase.taxRuntimePreview || null;
   return {
     user: publicUser(user),

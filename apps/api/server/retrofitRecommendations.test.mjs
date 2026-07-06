@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { buildRetrofitDetailQuestions } from "./forms/retrofitFormQuestions.mjs";
 import { summarizeMatchResult } from "./matching/explainMatch.mjs";
 import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchProfile.mjs";
 import { evaluateOpportunityForUser } from "./matching/evaluateRules.mjs";
@@ -90,6 +91,25 @@ function summarizeRetrofits(retrofits) {
 }
 
 describe("portal retrofit recommendations", () => {
+  it("assembles base retrofit form questions from the shared catalog", () => {
+    const solarQuestions = buildRetrofitDetailQuestions({
+      retrofitTypeId: "solar_renewable_electricity",
+      displayName: "Rooftop solar PV",
+      parentCategory: "renewable_generation"
+    });
+    const biomassQuestions = buildRetrofitDetailQuestions({
+      retrofitTypeId: "biomass_biogas_energy_system",
+      displayName: "Biomass/biogas energy system",
+      parentCategory: "renewable_generation"
+    });
+
+    expect(solarQuestions.map((question) => question.id)).toContain("solar_renewable_electricity:roof-area");
+    expect(solarQuestions.map((question) => question.question)).toContain("Do you control the roof or site?");
+    expect(biomassQuestions.map((question) => question.id)).toContain("biomass_biogas_energy_system:fuel-stream");
+    expect(biomassQuestions.map((question) => question.question)).toContain("What quantity of feedstock is available per month?");
+    expect(biomassQuestions.every((question) => question.collectionStage === "pre_opportunity_estimate")).toBe(true);
+  });
+
   it("builds a lightweight shell from saved retrofit interests without opportunity details", () => {
     const intake = baseIntake({
       sustainability: {
@@ -138,6 +158,13 @@ describe("portal retrofit recommendations", () => {
       "led_lighting_retrofit",
       "heat_pump_hvac_retrofit"
     ]);
+    expect(payload.retrofits[0].detailQuestions.map((question) => question.id)).toContain("led_lighting_retrofit:fixtures");
+    expect(payload.retrofits[0].detailQuestions.find((question) => question.id === "led_lighting_retrofit:fixtures")).toMatchObject({
+      canonicalInputKey: "fixture_count",
+      collectionStage: "pre_opportunity_estimate",
+      collectionSurface: "retrofit_scope_form"
+    });
+    expect(payload.retrofits[1].detailQuestions.map((question) => question.id)).toContain("heat_pump_hvac_retrofit:fuel");
     expect(payload.retrofits.every((retrofit) => retrofit.opportunities.length === 0)).toBe(true);
     expect(payload.retrofits.every((retrofit) => retrofit.savingsPreview?.status === "calculated")).toBe(true);
     expect(payload.retrofits[0].savingsPreview?.annualSavingsCents).toBeGreaterThan(0);
