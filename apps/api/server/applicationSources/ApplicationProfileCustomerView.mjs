@@ -1,4 +1,5 @@
 import { validateApplicationProfileApproval } from "./ApplicationProfileApprovalValidator.mjs";
+import { buildApplicationFormQuestions } from "../forms/applicationFormQuestions.mjs";
 
 const CUSTOMER_BLOCKED_APPLICATION_STATUSES = new Set([
   "funding_exhausted",
@@ -182,11 +183,17 @@ export function isCustomerReadyApplicationProfile(profile = {}) {
   }).allowed;
 }
 
-export function sanitizeApplicationProfileForCustomer(profile = {}) {
+export function sanitizeApplicationProfileForCustomer(profile = {}, options = {}) {
   const applicationArtifacts = sanitizeArtifacts(profile);
   const requiredFields = sanitizeRequirements(profile.requiredFields);
   const requiredDocuments = sanitizeRequirements(profile.requiredDocuments);
   const optionalFields = sanitizeRequirements(profile.optionalFields);
+  const sanitizedProfile = {
+    ...profile,
+    requiredFields,
+    requiredDocuments,
+    optionalFields
+  };
   return {
     opportunityId: cleanOptional(profile.opportunityId),
     programName: cleanOptional(profile.opportunityName) || cleanOptional(profile.programName) || "Application profile",
@@ -201,6 +208,7 @@ export function sanitizeApplicationProfileForCustomer(profile = {}) {
     requiredFields,
     optionalFields,
     requiredDocuments,
+    formQuestions: buildApplicationFormQuestions(sanitizedProfile, { catalog: options.catalog }),
     applicationSteps: ensureArray(profile.applicationSteps).map(cleanText).filter(Boolean),
     eligibilityRequirements: extractEligibilityRequirements(profile),
     deadlinesOrFundingStatus: deadlinesOrFundingStatus(profile),
@@ -211,7 +219,7 @@ export function sanitizeApplicationProfileForCustomer(profile = {}) {
   };
 }
 
-export function buildCustomerApplicationProfileResponse(profile = {}) {
+export function buildCustomerApplicationProfileResponse(profile = {}, options = {}) {
   if (!profile || !cleanText(profile.profileId)) {
     return {
       status: "unavailable",
@@ -227,7 +235,7 @@ export function buildCustomerApplicationProfileResponse(profile = {}) {
       status: "reference_only",
       customerReady: false,
       referenceOnly: true,
-      profile: sanitizeApplicationProfileForCustomer(profile),
+      profile: sanitizeApplicationProfileForCustomer(profile, options),
       notice: "This program appears closed or funding-exhausted. RetroFi is showing it for reference only."
     };
   }
@@ -246,7 +254,7 @@ export function buildCustomerApplicationProfileResponse(profile = {}) {
     status: "customer_ready",
     customerReady: true,
     referenceOnly: false,
-    profile: sanitizeApplicationProfileForCustomer(profile),
+    profile: sanitizeApplicationProfileForCustomer(profile, options),
     notice: null
   };
 }

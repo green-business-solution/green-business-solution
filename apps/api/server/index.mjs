@@ -63,10 +63,15 @@ import { validateDashboardPostImplementationDataset } from "./dashboardPerforman
 import {
   filterRetrofitRecommendationsPayload,
   normalizeRetrofitTypeIdList,
+  persistentRetrofitRecommendationsCacheVersion,
   readPersistentRetrofitRecommendations as readPersistentRetrofitRecommendationsFromStore,
   writePersistentRetrofitRecommendations as writePersistentRetrofitRecommendationsToStore
 } from "./retrofitRecommendationsCache.mjs";
 import { buildFixtureRetrofitRecommendationsPayload } from "./fixtureRetrofitRecommendations.mjs";
+import {
+  formQuestionCatalogCacheVersion,
+  loadFormQuestionCatalog
+} from "./forms/formQuestionCatalog.mjs";
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
 const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
@@ -1128,16 +1133,17 @@ function retrofitRecommendationsBaseCacheKey(user, intake) {
   ].join(":");
 }
 
-function retrofitRecommendationsCacheKey(user, intake, retrofitTypeIds = []) {
+function retrofitRecommendationsCacheKey(user, intake, retrofitTypeIds = [], catalogCacheVersion = "catalog:unknown") {
   const requestedRetrofitTypeIds = normalizeRetrofitTypeIdList(retrofitTypeIds);
   return [
     retrofitRecommendationsBaseCacheKey(user, intake),
+    catalogCacheVersion,
     requestedRetrofitTypeIds.length ? `retrofits:${requestedRetrofitTypeIds.join(",")}` : "all"
   ].join(":");
 }
 
-function readCachedRetrofitRecommendations(user, intake, retrofitTypeIds = []) {
-  const key = retrofitRecommendationsCacheKey(user, intake, retrofitTypeIds);
+function readCachedRetrofitRecommendations(user, intake, retrofitTypeIds = [], catalogCacheVersion = "catalog:unknown") {
+  const key = retrofitRecommendationsCacheKey(user, intake, retrofitTypeIds, catalogCacheVersion);
   const cached = retrofitRecommendationsCache.get(key);
   if (!cached) {
     return null;
@@ -1151,16 +1157,17 @@ function readCachedRetrofitRecommendations(user, intake, retrofitTypeIds = []) {
   return cached.payload;
 }
 
-function writeCachedRetrofitRecommendations(user, intake, payload, retrofitTypeIds = []) {
-  retrofitRecommendationsCache.set(retrofitRecommendationsCacheKey(user, intake, retrofitTypeIds), {
+function writeCachedRetrofitRecommendations(user, intake, payload, retrofitTypeIds = [], catalogCacheVersion = "catalog:unknown") {
+  retrofitRecommendationsCache.set(retrofitRecommendationsCacheKey(user, intake, retrofitTypeIds, catalogCacheVersion), {
     createdAt: Date.now(),
     payload
   });
 }
 
-async function readPersistentRetrofitRecommendations(user, intake) {
+async function readPersistentRetrofitRecommendations(user, intake, catalogCacheVersion = "catalog:unknown") {
   return readPersistentRetrofitRecommendationsFromStore({
     bucket: runtimeCacheBucket,
+    cacheVersion: catalogCacheVersion,
     db,
     intake,
     s3,
@@ -1169,15 +1176,25 @@ async function readPersistentRetrofitRecommendations(user, intake) {
   });
 }
 
-async function writePersistentRetrofitRecommendations(user, intake, payload) {
+async function writePersistentRetrofitRecommendations(user, intake, payload, catalogCacheVersion = "catalog:unknown") {
   await writePersistentRetrofitRecommendationsToStore({
     bucket: runtimeCacheBucket,
+    cacheVersion: catalogCacheVersion,
     db,
     intake,
     payload,
     s3,
     table: retrofitRecommendationCacheTable,
     user
+  });
+}
+
+async function loadRuntimeFormQuestionCatalog() {
+  return loadFormQuestionCatalog({
+    bucketName: runtimeCacheBucket,
+    db,
+    s3,
+    tableName: apiRuntimeStateTable
   });
 }
 
@@ -1625,49 +1642,52 @@ async function getUserRecord(userId) {
 
 async function buildCachedPortalRetrofitRecommendations({ user, intake, now = new Date(), persist = true, retrofitTypeIds = [] }) {
   const requestedRetrofitTypeIds = normalizeRetrofitTypeIdList(retrofitTypeIds);
-  const cached = readCachedRetrofitRecommendations(user, intake, requestedRetrofitTypeIds);
+  const formQuestionCatalog = await loadRuntimeFormQuestionCatalog();
+  const catalogCacheVersion = retrofitRecommendationCacheVersionForCatalog(formQuestionCatalog);
+  const cached = readCachedRetrofitRecommendations(user, intake, requestedRetrofitTypeIds, catalogCacheVersion);
   if (cached) {
     return cached;
   }
 
   if (requestedRetrofitTypeIds.length > 0) {
-    const fullMemoryPayload = readCachedRetrofitRecommendations(user, intake);
+    const fullMemoryPayload = readCachedRetrofitRecommendations(user, intake, [], catalogCacheVersion);
     if (fullMemoryPayload) {
       const filteredPayload = filterRetrofitRecommendationsPayload(fullMemoryPayload, requestedRetrofitTypeIds);
-      writeCachedRetrofitRecommendations(user, intake, filteredPayload, requestedRetrofitTypeIds);
+      writeCachedRetrofitRecommendations(user, intake, filteredPayload, requestedRetrofitTypeIds, catalogCacheVersion);
       return filteredPayload;
     }
-    const persistentPayload = await readPersistentRetrofitRecommendations(user, intake);
+    const persistentPayload = await readPersistentRetrofitRecommendations(user, intake, catalogCacheVersion);
     if (persistentPayload) {
-      writeCachedRetrofitRecommendations(user, intake, persistentPayload);
+      writeCachedRetrofitRecommendations(user, intake, persistentPayload, [], catalogCacheVersion);
       const filteredPayload = filterRetrofitRecommendationsPayload(persistentPayload, requestedRetrofitTypeIds);
-      writeCachedRetrofitRecommendations(user, intake, filteredPayload, requestedRetrofitTypeIds);
+      writeCachedRetrofitRecommendations(user, intake, filteredPayload, requestedRetrofitTypeIds, catalogCacheVersion);
       return filteredPayload;
     }
   } else if (persist) {
-    const persistentPayload = await readPersistentRetrofitRecommendations(user, intake);
+    const persistentPayload = await readPersistentRetrofitRecommendations(user, intake, catalogCacheVersion);
     if (persistentPayload) {
-      writeCachedRetrofitRecommendations(user, intake, persistentPayload);
+      writeCachedRetrofitRecommendations(user, intake, persistentPayload, [], catalogCacheVersion);
       return persistentPayload;
     }
   }
 
-  const cacheKey = retrofitRecommendationsCacheKey(user, intake, requestedRetrofitTypeIds);
+  const cacheKey = retrofitRecommendationsCacheKey(user, intake, requestedRetrofitTypeIds, catalogCacheVersion);
   if (!retrofitRecommendationsPromiseCache.has(cacheKey)) {
     retrofitRecommendationsPromiseCache.set(
       cacheKey,
       (async () => {
         const opportunities = await getCachedOpportunities();
         const payload = buildPortalRetrofitRecommendations({
+          formQuestionCatalog,
           user: publicUser(user),
           intake,
           opportunities,
           now,
           retrofitTypeIds: requestedRetrofitTypeIds
         });
-        writeCachedRetrofitRecommendations(user, intake, payload, requestedRetrofitTypeIds);
+        writeCachedRetrofitRecommendations(user, intake, payload, requestedRetrofitTypeIds, catalogCacheVersion);
         if (persist && requestedRetrofitTypeIds.length === 0) {
-          await writePersistentRetrofitRecommendations(user, intake, payload);
+          await writePersistentRetrofitRecommendations(user, intake, payload, catalogCacheVersion);
         }
         return payload;
       })().finally(() => {
@@ -1682,6 +1702,8 @@ async function buildCachedPortalRetrofitRecommendations({ user, intake, now = ne
 async function precomputeAdminClientRetrofitRecommendations(userIds) {
   const uniqueUserIds = [...new Set(cleanStringArray(userIds))].slice(0, 75);
   const sampleTestCaseById = await loadSampleMatchingTestCaseByIdMap();
+  const formQuestionCatalog = await loadRuntimeFormQuestionCatalog();
+  const catalogCacheVersion = retrofitRecommendationCacheVersionForCatalog(formQuestionCatalog);
   const results = [];
   for (const userId of uniqueUserIds) {
     try {
@@ -1696,14 +1718,15 @@ async function precomputeAdminClientRetrofitRecommendations(userIds) {
       }
       const intake = await getIntake(user.userId);
       const fixturePayload = buildFixtureRetrofitRecommendationsPayload({
+        formQuestionCatalog,
         user,
         intake,
         testCase: sampleTestCaseById.get(cleanText(user.sampleUserId)),
         now: new Date()
       });
       if (fixturePayload) {
-        writeCachedRetrofitRecommendations(user, intake, fixturePayload);
-        await writePersistentRetrofitRecommendations(user, intake, fixturePayload);
+        writeCachedRetrofitRecommendations(user, intake, fixturePayload, [], catalogCacheVersion);
+        await writePersistentRetrofitRecommendations(user, intake, fixturePayload, catalogCacheVersion);
         results.push({ userId, source: "fixture", status: "ready" });
         continue;
       }
@@ -1715,6 +1738,10 @@ async function precomputeAdminClientRetrofitRecommendations(userIds) {
     }
   }
   return results;
+}
+
+function retrofitRecommendationCacheVersionForCatalog(formQuestionCatalog) {
+  return `${persistentRetrofitRecommendationsCacheVersion}:forms:${formQuestionCatalogCacheVersion(formQuestionCatalog)}`;
 }
 
 async function updateOpportunityReview({ opportunityId, status, notes, duplicateOf, credential, passwordSessionToken }) {
@@ -3608,11 +3635,12 @@ app.get("/api/application-profiles/approved", async (req, res) => {
     const profile = result.Item && isApplicationProfileRegistryItem(result.Item)
       ? publicApplicationProfileRecord(result.Item)
       : null;
+    const formQuestionCatalog = await loadRuntimeFormQuestionCatalog();
 
     res.json({
       generatedAt: new Date().toISOString(),
       opportunityId,
-      ...buildCustomerApplicationProfileResponse(profile)
+      ...buildCustomerApplicationProfileResponse(profile, { catalog: formQuestionCatalog })
     });
   } catch (error) {
     handleError(res, error);
@@ -3677,7 +3705,8 @@ app.get("/api/admin/client-retrofit-preview/:userId", async (req, res) => {
     }
 
     const intake = await getIntake(user.userId);
-    const payload = buildPortalRetrofitPreviewShell({ user: publicUser(user), intake, now: new Date() });
+    const formQuestionCatalog = await loadRuntimeFormQuestionCatalog();
+    const payload = buildPortalRetrofitPreviewShell({ formQuestionCatalog, user: publicUser(user), intake, now: new Date() });
     res.json(await attachAdminDashboardPostImplementationDataset(payload, user, intake));
   } catch (error) {
     handleError(res, error);

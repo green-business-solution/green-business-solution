@@ -851,6 +851,7 @@ type CustomerApplicationProfile = {
   requiredFields: CustomerApplicationProfileRequirement[];
   optionalFields: CustomerApplicationProfileRequirement[];
   requiredDocuments: CustomerApplicationProfileRequirement[];
+  formQuestions?: RetrofitDetailQuestion[];
   applicationSteps: string[];
   eligibilityRequirements: CustomerApplicationProfileRequirement[];
   deadlinesOrFundingStatus: string[];
@@ -5934,16 +5935,27 @@ type RetrofitEnvironmentalImpact = {
 type RetrofitDetailQuestion = {
   id: string;
   questionId?: string;
-  retrofitId: string;
+  retrofitId?: string;
+  retrofitName?: string;
+  opportunityId?: string;
+  requirementId?: string;
+  requirementType?: string;
+  applicationSection?: string;
+  questionKind?: string;
   question: string;
   whyItMatters?: string;
   affects?: string[];
-  answerType: "text" | "number" | "select" | "boolean";
+  answerType: "text" | "number" | "select" | "boolean" | "file" | "date";
   options?: string[];
   answer?: string | number | boolean;
   canonicalInputKey?: string;
   collectionStage?: string;
   collectionSurface?: string;
+  required?: boolean;
+  sourceUrl?: string;
+  evidenceSnippet?: string;
+  confidence?: string;
+  audience?: string;
   visibleIf?: FormCondition;
   requiredIf?: FormCondition;
   clearsWhenHidden?: boolean;
@@ -6318,7 +6330,8 @@ function isRetrofitQuestionVisible(question: RetrofitDetailQuestion, answers: Re
 }
 
 function isRetrofitQuestionRequired(question: RetrofitDetailQuestion, answers: Record<string, string>) {
-  return evaluateFormCondition(question.requiredIf, answers, true);
+  if (question.requiredIf) return evaluateFormCondition(question.requiredIf, answers, true);
+  return question.required !== false;
 }
 
 function evaluateFormCondition(condition: FormCondition | undefined, answers: Record<string, string>, defaultValue: boolean): boolean {
@@ -10701,11 +10714,12 @@ function RetrofitDetailFormModal({
 
   function renderQuestionInput(question: RetrofitDetailQuestion) {
     const value = answers[question.id] || "";
+    const required = isRetrofitQuestionRequired(question, answers);
     if (question.answerType === "select") {
       return (
         <select
           onChange={(event) => handleAnswerChange(question.id, event.target.value)}
-          required
+          required={required}
           value={value}
         >
           <option value="">Select</option>
@@ -10721,7 +10735,7 @@ function RetrofitDetailFormModal({
       return (
         <select
           onChange={(event) => handleAnswerChange(question.id, event.target.value)}
-          required
+          required={required}
           value={value}
         >
           <option value="">Select</option>
@@ -10730,12 +10744,21 @@ function RetrofitDetailFormModal({
         </select>
       );
     }
+    if (question.answerType === "file") {
+      return (
+        <input
+          onChange={(event) => handleAnswerChange(question.id, event.target.files?.[0]?.name || "")}
+          required={required}
+          type="file"
+        />
+      );
+    }
     return (
       <input
         inputMode={question.answerType === "number" ? "decimal" : undefined}
         onChange={(event) => handleAnswerChange(question.id, event.target.value)}
-        required
-        type={question.answerType === "number" ? "number" : "text"}
+        required={required}
+        type={question.answerType === "number" ? "number" : question.answerType === "date" ? "date" : "text"}
         value={value}
       />
     );
@@ -13199,9 +13222,9 @@ function ApplicationPrepDrawer({
               )}
             </section>
 
-            <section className="application-prep-section application-prep-placeholder">
-              <h3>Missing info</h3>
-              <p>User data mapping coming next.</p>
+            <section className="application-prep-section">
+              <h3>Application form questions</h3>
+              <ApplicationPrepFormQuestionList questions={profile.formQuestions || []} />
             </section>
 
             {profile.evidence.length ? (
@@ -13280,6 +13303,45 @@ function customerRequirementLabel(item: CustomerApplicationProfileRequirement) {
   if (item.requirementType === "contractor") return `Needs contractor info: ${item.label}`;
   if (item.requirementType === "tax") return `Needs tax/accountant review: ${item.label}`;
   return item.label;
+}
+
+function ApplicationPrepFormQuestionList({ questions }: { questions: RetrofitDetailQuestion[] }) {
+  if (!questions.length) {
+    return <p className="compact-empty">No normalized application questions were identified in the reviewed profile.</p>;
+  }
+
+  return (
+    <ul className="application-prep-requirement-list">
+      {questions.map((question) => (
+        <li key={question.id}>
+          <div>
+            <strong>{question.question}</strong>
+            <p>{formatApplicationQuestionCollection(question)}</p>
+            <small>{question.required === false ? "Optional" : "Required"} · {formatAnswerTypeLabel(question.answerType)}</small>
+          </div>
+          {question.evidenceSnippet || question.sourceUrl ? (
+            <details>
+              <summary>Why we ask for this</summary>
+              {question.evidenceSnippet ? <p>{question.evidenceSnippet}</p> : null}
+              {question.sourceUrl ? <a href={question.sourceUrl} rel="noreferrer" target="_blank">Open source</a> : null}
+            </details>
+          ) : null}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function formatApplicationQuestionCollection(question: RetrofitDetailQuestion) {
+  const stage = question.collectionStage === "pre_opportunity_estimate" ? "Before opportunity estimate" : "After scenario selection";
+  const surface = capitalizeLabel(String(question.collectionSurface || "application form").replaceAll("_", " "));
+  return `${stage} · ${surface}`;
+}
+
+function formatAnswerTypeLabel(answerType: RetrofitDetailQuestion["answerType"]) {
+  if (answerType === "file") return "Document upload";
+  if (answerType === "boolean") return "Yes/no";
+  return capitalizeLabel(answerType);
 }
 
 function applicationPrepChecklistText(profile: CustomerApplicationProfile) {

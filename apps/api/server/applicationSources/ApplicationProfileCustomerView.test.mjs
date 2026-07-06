@@ -77,8 +77,43 @@ describe("ApplicationProfileCustomerView", () => {
     expect(response.profile.programName).toBe("Ready Solar Rebate");
     expect(response.profile.requiredFields).toHaveLength(1);
     expect(response.profile.requiredDocuments).toHaveLength(1);
+    expect(response.profile.formQuestions.map((question) => question.question)).toEqual([
+      "Provide Business legal name",
+      "Upload Recent utility bill"
+    ]);
+    expect(response.profile.formQuestions[1]).toMatchObject({
+      answerType: "file",
+      collectionStage: "post_scenario_application",
+      collectionSurface: "utility_bill_upload",
+      required: true
+    });
     expect(response.profile.applicationArtifacts[0].label).toBe("Apply online");
     expect(JSON.stringify(response)).not.toMatch(/adminNotes|reviewedBy|extractionDiagnostics|artifactDiagnostics|Internal admin note|admin@example/);
+  });
+
+  it("marks application eligibility requirements as pre-opportunity form questions", () => {
+    const response = buildCustomerApplicationProfileResponse(
+      readyProfile({
+        requiredFields: [
+          {
+            id: "property_ownership_authorization",
+            label: "Property ownership/authorization",
+            requirementType: "eligibility",
+            required: true,
+            sourceUrl: "https://program.example.com/apply",
+            evidenceSnippet: "Applicant must confirm property ownership or authorization.",
+            confidence: "High"
+          }
+        ],
+        requiredDocuments: []
+      })
+    );
+
+    expect(response.profile.formQuestions[0]).toMatchObject({
+      answerType: "boolean",
+      collectionStage: "pre_opportunity_estimate",
+      collectionSurface: "opportunity_eligibility_form"
+    });
   });
 
   it("does not return ai_extracted or needs_review profiles as customer-ready", () => {

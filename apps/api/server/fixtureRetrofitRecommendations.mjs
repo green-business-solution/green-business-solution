@@ -28,7 +28,7 @@ export function hasFixtureRetrofitRecommendations(testCase) {
   return Array.isArray(testCase?.retrofits) && testCase.retrofits.length > 0;
 }
 
-export function buildFixtureRetrofitRecommendationsPayload({ intake, now = new Date(), testCase, user }) {
+export function buildFixtureRetrofitRecommendationsPayload({ formQuestionCatalog, intake, now = new Date(), testCase, user }) {
   if (!hasFixtureRetrofitRecommendations(testCase)) {
     return null;
   }
@@ -37,7 +37,7 @@ export function buildFixtureRetrofitRecommendationsPayload({ intake, now = new D
     ...retrofit,
     detailQuestions: Array.isArray(retrofit.detailQuestions) && retrofit.detailQuestions.length
       ? retrofit.detailQuestions
-      : buildRetrofitDetailQuestions(retrofit)
+      : buildRetrofitDetailQuestions(retrofit, { catalog: formQuestionCatalog })
   }));
   const taxRuntimePreview = testCase.taxRuntimePreview || null;
   return {

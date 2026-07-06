@@ -1,12 +1,7 @@
-import fs from "node:fs";
-import path from "node:path";
-
-const QUESTION_CATALOG_FILE = "retrofit_form_question_catalog.json";
-
-let cachedCatalog = null;
+import { readFormQuestionCatalog } from "./formQuestionCatalog.mjs";
 
 export function buildRetrofitDetailQuestions(retrofit = {}, options = {}) {
-  const catalog = options.catalog || readRetrofitFormQuestionCatalog();
+  const catalog = retrofitQuestionCatalog(options.catalog || readRetrofitFormQuestionCatalog());
   const retrofitTypeId = String(retrofit.retrofitTypeId || retrofit.id || "").trim();
   if (!retrofitTypeId) return [];
 
@@ -22,15 +17,17 @@ export function buildRetrofitDetailQuestions(retrofit = {}, options = {}) {
 }
 
 export function readRetrofitFormQuestionCatalog() {
-  if (cachedCatalog) return cachedCatalog;
-  const catalogPath = resolveRepoOrLambdaDataFile(QUESTION_CATALOG_FILE);
-  cachedCatalog = JSON.parse(fs.readFileSync(catalogPath, "utf8"));
-  return cachedCatalog;
+  return readFormQuestionCatalog();
 }
 
 export function selectBinding(catalog = {}, retrofit = {}) {
-  const bindings = [...(catalog.bindings || [])].sort((a, b) => Number(a.priority || 0) - Number(b.priority || 0));
+  const retrofitCatalog = retrofitQuestionCatalog(catalog);
+  const bindings = [...(retrofitCatalog.bindings || [])].sort((a, b) => Number(a.priority || 0) - Number(b.priority || 0));
   return bindings.find((binding) => bindingMatches(binding, retrofit)) || null;
+}
+
+function retrofitQuestionCatalog(catalog = {}) {
+  return catalog.retrofit?.questions ? catalog.retrofit : catalog;
 }
 
 function buildQuestion(definition, { questionId, retrofitTypeId }) {
@@ -88,14 +85,6 @@ function detailQuestionGuidance(question = "") {
     return { reason: "Operating patterns determine recurring savings.", affects: ["Recurring savings", "Emissions impact"] };
   }
   return { reason: "This helps calculate a more accurate retrofit estimate.", affects: ["Estimate accuracy", "Opportunity eligibility"] };
-}
-
-function resolveRepoOrLambdaDataFile(fileName) {
-  const candidates = [
-    path.resolve(import.meta.dirname, "..", "..", "data", fileName),
-    path.resolve(import.meta.dirname, "..", "..", "..", "..", "data", fileName)
-  ];
-  return candidates.find((candidate) => fs.existsSync(candidate)) || candidates[0];
 }
 
 function normalizeText(value) {

@@ -1680,7 +1680,8 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("View full application details");
     expect(source).toContain("Funding exhausted — reference only");
     expect(source).toContain("Reviewed by RetroFi");
-    expect(source).toContain("User data mapping coming next.");
+    expect(source).toContain("Application form questions");
+    expect(source).toContain("ApplicationPrepFormQuestionList");
     expect(source).toContain("No application is submitted automatically.");
     expect(source).toContain("navigator.clipboard.writeText(applicationPrepChecklistText(profile))");
     expect(source).toContain("Copy checklist");

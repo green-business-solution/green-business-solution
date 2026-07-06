@@ -34,6 +34,7 @@ export function buildRetrofitGroupsFromEligibleResults({
   normalizedProfile,
   opportunityPackages = opportunityIncentiveCalculationPackages,
   opportunityRules = opportunityIncentiveRules,
+  formQuestionCatalog,
   results,
   subjectId
 }) {
@@ -70,13 +71,13 @@ export function buildRetrofitGroupsFromEligibleResults({
         opportunityIncentiveCalculationPackages: opportunityPackages,
         taxGeographyRules
       }),
-      detailQuestions: buildRetrofitDetailQuestions(group),
+      detailQuestions: buildRetrofitDetailQuestions(group, { catalog: formQuestionCatalog }),
       typicalComponents: RETROFIT_TYPES_BY_ID[group.retrofitTypeId]?.typicalComponents || []
     }))
     .sort((a, b) => b.opportunityCount - a.opportunityCount || a.displayName.localeCompare(b.displayName));
 }
 
-export function buildPortalRetrofitRecommendations({ intake, now = new Date(), opportunities, retrofitTypeIds = null, user }) {
+export function buildPortalRetrofitRecommendations({ formQuestionCatalog, intake, now = new Date(), opportunities, retrofitTypeIds = null, user }) {
   const normalizedProfile = normalizeUserProfile(intake);
   const calculationDate = now.toISOString().slice(0, 10);
   const taxRuntimePreview = buildTaxRuntimePreviewForProfile(normalizedProfile);
@@ -90,6 +91,7 @@ export function buildPortalRetrofitRecommendations({ intake, now = new Date(), o
     results: eligibleResults,
     normalizedProfile,
     calculationDate,
+    formQuestionCatalog,
     subjectId: user?.userId || intake?.userId || "client"
   });
 
@@ -113,12 +115,13 @@ export function buildPortalRetrofitRecommendations({ intake, now = new Date(), o
   };
 }
 
-export function buildPortalRetrofitPreviewShell({ intake, now = new Date(), user }) {
+export function buildPortalRetrofitPreviewShell({ formQuestionCatalog, intake, now = new Date(), user }) {
   const normalizedProfile = normalizeUserProfile(intake);
   const calculationDate = now.toISOString().slice(0, 10);
   const taxRuntimePreview = buildTaxRuntimePreviewForProfile(normalizedProfile);
   const retrofits = buildLightweightRetrofitGroups(intake, {
     calculationDate,
+    formQuestionCatalog,
     normalizedProfile,
     subjectId: user?.userId || intake?.userId || "client"
   });
@@ -152,7 +155,7 @@ function buildTaxRuntimePreviewForProfile(normalizedProfile) {
   });
 }
 
-function buildLightweightRetrofitGroups(intake, { calculationDate, normalizedProfile, subjectId } = {}) {
+function buildLightweightRetrofitGroups(intake, { calculationDate, formQuestionCatalog, normalizedProfile, subjectId } = {}) {
   const selected = [];
   for (const value of intake?.sustainability?.interestedImprovements || []) {
     const type = resolveRetrofitType(value);
@@ -177,7 +180,7 @@ function buildLightweightRetrofitGroups(intake, { calculationDate, normalizedPro
       };
       return {
         ...group,
-        detailQuestions: buildRetrofitDetailQuestions(group),
+        detailQuestions: buildRetrofitDetailQuestions(group, { catalog: formQuestionCatalog }),
         savingsPreview: buildAdminTestCaseSavingsPreview({
           retrofitGroup: group,
           sampleUserId: subjectId,

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-06 - Codex (GPT-5) runtime-backed unified form catalog
+
+- Replaced the retrofit-only form-question catalog with a unified form catalog covering retrofit estimate intake and opportunity application-prep questions.
+- Added runtime catalog loading that prefers DynamoDB, falls back to S3, then uses the bundled catalog, with recommendation cache versioning tied to the active catalog.
+- Exposed approved ApplicationProfile requirements as normalized form questions while preserving the existing customer checklist response, and added deploy seeding for the active catalog.
+
 ## 2026-07-06 - Codex (GPT-5) data-backed retrofit form questions
 
 - Moved base retrofit project-detail questions out of frontend hardcoded branches into a versioned shared form-question catalog.
