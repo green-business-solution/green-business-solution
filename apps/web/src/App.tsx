@@ -2682,11 +2682,13 @@ function PublicNav({
   canStartScan = true,
   isSignedIn = false,
   navigate,
+  onHowItWorksClick,
   onSignOut
 }: {
   canStartScan?: boolean;
   isSignedIn?: boolean;
   navigate: (route: Route) => void;
+  onHowItWorksClick?: () => void;
   onSignOut?: () => void;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -2764,6 +2766,16 @@ function PublicNav({
     onSignOut?.();
   }
 
+  function openHowItWorks() {
+    setIsMenuOpen(false);
+    setIsAboutOpen(false);
+    if (onHowItWorksClick) {
+      onHowItWorksClick();
+      return;
+    }
+    navigate("how-it-works");
+  }
+
   function renderAuthAction() {
     return isSignedIn ? (
       <button className="link-button" onClick={signOutFromNav} type="button">
@@ -2781,7 +2793,7 @@ function PublicNav({
       <div className="navbar-inner">
         <Brand onClick={() => go("home")} />
         <nav aria-label="Primary" className="site-nav">
-          <button className="link-button" onClick={() => go("how-it-works")} type="button">
+          <button className="link-button" onClick={openHowItWorks} type="button">
             How It Works
           </button>
           <button className="link-button" onClick={() => go("pricing")} type="button">
@@ -2849,7 +2861,7 @@ function PublicNav({
         ) : null}
         {isMenuOpen ? (
           <div className="mobile-menu-panel">
-            <button className="link-button" onClick={() => go("how-it-works")} type="button">
+            <button className="link-button" onClick={openHowItWorks} type="button">
               How It Works
             </button>
             <button className="link-button" onClick={() => go("pricing")} type="button">
@@ -2927,12 +2939,14 @@ function Footer({
 function PublicShell({
   children,
   navigate,
+  onHowItWorksClick,
   pageClassName,
   publicAuth,
   showFooter = false
 }: {
   children: ReactNode;
   navigate: (route: Route) => void;
+  onHowItWorksClick?: () => void;
   pageClassName?: string;
   publicAuth?: PublicAuthState;
   showFooter?: boolean;
@@ -2945,6 +2959,7 @@ function PublicShell({
         canStartScan={canStartScan}
         isSignedIn={Boolean(publicAuth?.isSignedIn)}
         navigate={navigate}
+        onHowItWorksClick={onHowItWorksClick}
         onSignOut={publicAuth?.onSignOut}
       />
       {children}
@@ -3180,99 +3195,7 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
   );
 }
 
-function HomePage({
-  navigate,
-  publicAuth
-}: {
-  navigate: (route: Route) => void;
-  publicAuth: PublicAuthState;
-}) {
-  return (
-    <PublicShell navigate={navigate} publicAuth={publicAuth} showFooter>
-      <PlanetScanHero navigate={navigate} />
-
-      <section className="split-section problem-section">
-        <div>
-          <p className="eyebrow">The problem</p>
-          <h2>Retrofit incentives should be easier to use.</h2>
-        </div>
-        <p>RetroFi turns scattered programs into one clear, actionable plan.</p>
-      </section>
-
-      <section className="content-section" id="home-opportunities">
-        <SectionHeading
-          copy="Find funding, estimate value, and plan the work."
-          eyebrow="Platform focus"
-          title="What RetroFi helps with"
-        />
-        <div className="card-grid three">
-          {[
-            [
-              "Identify incentives",
-              "Match your facility to rebates, grants, tax credits, and financing.",
-              "incentives"
-            ],
-            ["Estimate savings", "See projected savings, ROI, and payback.", "savings"],
-            ["Plan implementation", "Prioritize upgrades and move forward with clear next steps.", "roadmap"]
-          ].map(([title, copy, icon]) => (
-            <article className="feature-card" key={title}>
-              <FeatureIcon icon={icon as "incentives" | "savings" | "roadmap"} />
-              <h3>{title}</h3>
-              <p>{copy}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="content-section compact">
-        <SectionHeading
-          copy="Start light. Go deeper only when an opportunity is worth it."
-          eyebrow="Process"
-          title="How RetroFi works"
-        />
-        <div className="step-grid">
-          {["Tell us about your facility", "Get a free opportunity preview", "Unlock a detailed retrofit roadmap"].map(
-            (step, index) => (
-              <article className="step-card" key={step}>
-                <span>{index + 1}</span>
-                <h3>{step}</h3>
-              </article>
-            )
-          )}
-        </div>
-        <button className="text-link with-icon" onClick={() => navigate("how-it-works")} type="button">
-          View full process
-          <ArrowUpRightIcon />
-        </button>
-      </section>
-
-      <section className="trust-strip" aria-label="Trust commitments">
-        {[
-          "Private by design",
-          "Bills used only for analysis",
-          "Built for businesses",
-          "Data-backed recommendations"
-        ].map((item) => (
-          <span key={item}>{item}</span>
-        ))}
-      </section>
-
-      <section className="final-cta">
-        <h2>See what your business may qualify for.</h2>
-        <p>Start free. Go deeper only when it is worth it.</p>
-        <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
-      </section>
-    </PublicShell>
-  );
-}
-
-function HowItWorksPage({
-  navigate,
-  publicAuth
-}: {
-  navigate: (route: Route) => void;
-  publicAuth: PublicAuthState;
-}) {
+function HowItWorksJourneySection({ sectionId }: { sectionId?: string }) {
   const transitionStart = 0.38;
   const transitionEnd = 0.62;
   const journeyRef = useRef<HTMLElement | null>(null);
@@ -3557,102 +3480,131 @@ function HowItWorksPage({
   }, [stages.length]);
 
   return (
-    <PublicShell navigate={navigate} pageClassName="how-it-works-page" publicAuth={publicAuth}>
-      <section className="how-it-works-journey-section" ref={journeyRef}>
-        <div className="journey-canvas" aria-label="RetroFi business transformation journey">
-          <div className="journey-image-stack" aria-hidden="true">
-            {stages.map((stage, index) => (
-              <img
-                alt=""
-                className="journey-scene-image"
-                decoding="async"
-                fetchPriority={index === 0 ? "high" : "auto"}
-                key={stage.image}
-                loading={index < 2 ? "eager" : "lazy"}
-                src={stage.image}
-                style={{
-                  opacity:
-                    visualProgress >= index
-                      ? 1
-                      : visualProgress > index - 1
-                        ? visualProgress - (index - 1)
-                        : 0
-                }}
-              />
-            ))}
-          </div>
-          <div className="journey-vignette" aria-hidden="true" />
-          <div className="journey-cloud-reveal" aria-hidden="true">
-            <div
-              className="journey-cloud-sky"
+    <section className="how-it-works-journey-section" id={sectionId} ref={journeyRef}>
+      <div className="journey-canvas" aria-label="RetroFi business transformation journey">
+        <div className="journey-image-stack" aria-hidden="true">
+          {stages.map((stage, index) => (
+            <img
+              alt=""
+              className="journey-scene-image"
+              decoding="async"
+              fetchPriority={index === 0 ? "high" : "auto"}
+              key={stage.image}
+              loading={index < 2 ? "eager" : "lazy"}
+              src={stage.image}
               style={{
-                opacity: cloudSkyOpacity,
-                transform: `translate3d(${4 * cloudTravelProgress}vw, ${-5 * cloudTravelProgress}vh, 0) scale(${1 + 0.03 * cloudTravelProgress})`
+                opacity:
+                  visualProgress >= index
+                    ? 1
+                    : visualProgress > index - 1
+                      ? visualProgress - (index - 1)
+                      : 0
               }}
             />
-            <div className="journey-cloud-haze" style={{ opacity: cloudHazeOpacity }} />
-            {cloudLayers.map((cloud, index) => {
-              const cloudProgress = prefersReducedMotion ? 0 : Math.min(1, cloudTravelProgress * cloud.speed);
-              const opacityProgress = Math.min(1, Math.max(0, (cloudProgress - 0.08) / 0.92));
-              const layerOpacity = prefersReducedMotion
-                ? revealProgress < 1
-                  ? cloud.opacity * 0.38
-                  : 0
-                : Math.max(0, cloud.opacity * 0.38 * (1 - opacityProgress * opacityProgress));
-              const scale = cloud.baseScale + (cloud.exitScale - cloud.baseScale) * cloudProgress;
-              const blur = cloud.blur + 8 + cloud.exitBlur * cloudProgress;
+          ))}
+        </div>
+        <div className="journey-vignette" aria-hidden="true" />
+        <div className="journey-cloud-reveal" aria-hidden="true">
+          <div
+            className="journey-cloud-sky"
+            style={{
+              opacity: cloudSkyOpacity,
+              transform: `translate3d(${4 * cloudTravelProgress}vw, ${-5 * cloudTravelProgress}vh, 0) scale(${1 + 0.03 * cloudTravelProgress})`
+            }}
+          />
+          <div className="journey-cloud-haze" style={{ opacity: cloudHazeOpacity }} />
+          {cloudLayers.map((cloud, index) => {
+            const cloudProgress = prefersReducedMotion ? 0 : Math.min(1, cloudTravelProgress * cloud.speed);
+            const opacityProgress = Math.min(1, Math.max(0, (cloudProgress - 0.08) / 0.92));
+            const layerOpacity = prefersReducedMotion
+              ? revealProgress < 1
+                ? cloud.opacity * 0.38
+                : 0
+              : Math.max(0, cloud.opacity * 0.38 * (1 - opacityProgress * opacityProgress));
+            const scale = cloud.baseScale + (cloud.exitScale - cloud.baseScale) * cloudProgress;
+            const blur = cloud.blur + 8 + cloud.exitBlur * cloudProgress;
 
-              return (
-                <div
-                  className={cloud.className}
-                  key={`journey-cloud-${index}`}
-                  style={{
-                    filter: `blur(${blur}px)`,
-                    height: cloud.height,
-                    left: cloud.left,
-                    opacity: layerOpacity,
-                    top: cloud.top,
-                    transform: `translate3d(${cloud.exitX * cloudProgress}vw, ${cloud.exitY * cloudProgress}vh, 0) scale(${scale})`,
-                    width: cloud.width
-                  }}
-                />
-              );
-            })}
-          </div>
-          {showIntro ? (
-            <header
-              className="journey-intro-copy"
-              style={{
-                opacity: introOpacity,
-                transform: `translate3d(0, calc(-50% - ${32 * cloudTravelProgress}px), 0)`
-              }}
-            >
-              <p className="journey-intro-eyebrow">How it works</p>
-              <h1>From outdated building to high-performing business</h1>
-            </header>
-          ) : (
-            <div className="journey-story-shell">
-              <article aria-live="polite" className="journey-story-copy" key={activeStage.title}>
-                <p className="journey-step-label">
-                  Step {String(activeStageIndex + 1).padStart(2, "0")} / {String(stages.length).padStart(2, "0")}
-                  <span aria-hidden="true">·</span>
-                  {activeStage.accent}
-                </p>
-                <h2>{activeStage.title}</h2>
-                <p>{activeStage.copy}</p>
-              </article>
-              <div className="journey-progress" aria-hidden="true">
-                <span style={{ transform: `scaleX(${visualProgress / (stages.length - 1)})` }} />
-                <div className="journey-progress-dots">
-                  {stages.map((stage, index) => (
-                    <i className={index === activeStageIndex ? "active" : undefined} key={stage.title} />
-                  ))}
-                </div>
+            return (
+              <div
+                className={cloud.className}
+                key={`journey-cloud-${index}`}
+                style={{
+                  filter: `blur(${blur}px)`,
+                  height: cloud.height,
+                  left: cloud.left,
+                  opacity: layerOpacity,
+                  top: cloud.top,
+                  transform: `translate3d(${cloud.exitX * cloudProgress}vw, ${cloud.exitY * cloudProgress}vh, 0) scale(${scale})`,
+                  width: cloud.width
+                }}
+              />
+            );
+          })}
+        </div>
+        {showIntro ? (
+          <header
+            className="journey-intro-copy"
+            style={{
+              opacity: introOpacity,
+              transform: `translate3d(0, calc(-50% - ${32 * cloudTravelProgress}px), 0)`
+            }}
+          >
+            <p className="journey-intro-eyebrow">How it works</p>
+            <h1>From outdated building to high-performing business</h1>
+          </header>
+        ) : (
+          <div className="journey-story-shell">
+            <article aria-live="polite" className="journey-story-copy" key={activeStage.title}>
+              <p className="journey-step-label">
+                Step {String(activeStageIndex + 1).padStart(2, "0")} / {String(stages.length).padStart(2, "0")}
+                <span aria-hidden="true">·</span>
+                {activeStage.accent}
+              </p>
+              <h2>{activeStage.title}</h2>
+              <p>{activeStage.copy}</p>
+            </article>
+            <div className="journey-progress" aria-hidden="true">
+              <span style={{ transform: `scaleX(${visualProgress / (stages.length - 1)})` }} />
+              <div className="journey-progress-dots">
+                {stages.map((stage) => (
+                  <i className={stage.title === activeStage.title ? "active" : undefined} key={stage.title} />
+                ))}
               </div>
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function HomePage({
+  navigate,
+  onHowItWorksClick,
+  publicAuth
+}: {
+  navigate: (route: Route) => void;
+  onHowItWorksClick: () => void;
+  publicAuth: PublicAuthState;
+}) {
+  return (
+    <PublicShell navigate={navigate} onHowItWorksClick={onHowItWorksClick} publicAuth={publicAuth} showFooter>
+      <PlanetScanHero navigate={navigate} />
+      <HowItWorksJourneySection sectionId="home-how-it-works" />
+    </PublicShell>
+  );
+}
+
+function HowItWorksPage({
+  navigate,
+  publicAuth
+}: {
+  navigate: (route: Route) => void;
+  publicAuth: PublicAuthState;
+}) {
+  return (
+    <PublicShell navigate={navigate} pageClassName="how-it-works-page" publicAuth={publicAuth}>
+      <HowItWorksJourneySection />
     </PublicShell>
   );
 }
@@ -20467,6 +20419,7 @@ export function App() {
   const [authCredential, setAuthCredential] = useState<AuthCredential | null>(null);
   const [signInMessage, setSignInMessage] = useState<string | null>(null);
   const [isAuthRestoring, setIsAuthRestoring] = useState(true);
+  const pendingPublicScrollTargetRef = useRef<string | null>(null);
   const isAdminSignedIn = authPayload?.dashboard === "admin";
 
   useEffect(() => {
@@ -20487,6 +20440,53 @@ export function App() {
       window.localStorage.removeItem(key);
     }
   }, []);
+
+  useEffect(() => {
+    if (route !== "home") {
+      return undefined;
+    }
+
+    const targetFromHash = typeof window !== "undefined" ? window.location.hash.replace(/^#/, "") : "";
+    const targetId = pendingPublicScrollTargetRef.current || targetFromHash;
+
+    if (!targetId) {
+      return undefined;
+    }
+
+    let animationFrame = 0;
+    let attempts = 0;
+
+    const scrollToTarget = (behavior: ScrollBehavior) => {
+      const section = document.getElementById(targetId);
+
+      if (!section) {
+        return false;
+      }
+
+      const headerOffset = 96;
+      const top = Math.max(0, section.getBoundingClientRect().top + window.scrollY - headerOffset);
+      window.scrollTo({ behavior, top });
+      return true;
+    };
+
+    const tryScroll = () => {
+      attempts += 1;
+      if (scrollToTarget(pendingPublicScrollTargetRef.current ? "smooth" : "auto")) {
+        pendingPublicScrollTargetRef.current = null;
+        return;
+      }
+
+      if (attempts < 12) {
+        animationFrame = window.requestAnimationFrame(tryScroll);
+      }
+    };
+
+    animationFrame = window.requestAnimationFrame(tryScroll);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+    };
+  }, [route]);
 
   useEffect(() => {
     let isMounted = true;
@@ -20538,6 +20538,26 @@ export function App() {
     const path = pathForRoute(nextRoute);
     window.history.pushState({}, "", path);
     setRoute(nextRoute);
+  }
+
+  function openHomeHowItWorks() {
+    const sectionId = "home-how-it-works";
+    pendingPublicScrollTargetRef.current = sectionId;
+
+    if (route !== "home") {
+      window.history.pushState({}, "", `${pathForRoute("home")}#${sectionId}`);
+      setRoute("home");
+      return;
+    }
+
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const headerOffset = 96;
+      const top = Math.max(0, section.getBoundingClientRect().top + window.scrollY - headerOffset);
+      window.history.replaceState({}, "", `${pathForRoute("home")}#${sectionId}`);
+      window.scrollTo({ behavior: "smooth", top });
+      pendingPublicScrollTargetRef.current = null;
+    }
   }
 
   function handleAuthSuccess(payload: AuthPayload, credential: AuthCredential) {
@@ -20694,7 +20714,7 @@ export function App() {
     }
 
     if (authPayload.dashboard !== "admin") {
-      return <HomePage navigate={navigate} publicAuth={publicAuth} />;
+      return <HomePage navigate={navigate} onHowItWorksClick={openHomeHowItWorks} publicAuth={publicAuth} />;
     }
 
     return (
@@ -20748,5 +20768,5 @@ export function App() {
     return <UserDashboard credential={authCredential} onSignOut={signOut} payload={authPayload} />;
   }
 
-  return <HomePage navigate={navigate} publicAuth={publicAuth} />;
+  return <HomePage navigate={navigate} onHowItWorksClick={openHomeHowItWorks} publicAuth={publicAuth} />;
 }

@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) homepage how-it-works merge
+
+- Replaced the old home-page sections beneath the scanner with the full animated How It Works journey so that content now begins immediately after the scanner.
+- Changed the public navbar `How It Works` action to scroll to the embedded home-page journey section instead of routing away when used from the home page.
+- Reused the same journey component for the standalone `/how-it-works` route to keep the experience consistent without duplicating the animation logic.
+
 ## 2026-07-05 - Codex (GPT-5) homepage CTA alignment cleanup
 
 - Removed the left-side PlanetScan `Get Started` button so the initial hero state stays focused on the copy and scan motion.
