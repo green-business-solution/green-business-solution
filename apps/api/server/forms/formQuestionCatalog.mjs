@@ -1,12 +1,11 @@
-import fs from "node:fs";
-import path from "node:path";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
 
-export const FORM_QUESTION_CATALOG_FILE = "form_question_catalog.json";
-export const FORM_QUESTION_CATALOG_S3_KEY = "runtime-config/form-question-catalog.json";
+export const FORM_QUESTION_CATALOG_ACTIVE_S3_KEY = "runtime-config/form-question-catalog/active.json";
+export const FORM_QUESTION_CATALOG_LEGACY_S3_KEY = "runtime-config/form-question-catalog.json";
 export const FORM_QUESTION_CATALOG_STATE_SCOPE = "formQuestionCatalog";
 export const FORM_QUESTION_CATALOG_STATE_KEY = "active";
+export const FORM_QUESTION_CATALOG_VERSION_STATE_SCOPE = "formQuestionCatalogVersion";
 
 let bundledCatalogCache = null;
 let runtimeCatalogCache = null;
@@ -18,10 +17,21 @@ export function formQuestionCatalogStateKey() {
   };
 }
 
+export function formQuestionCatalogVersionStateKey(versionId) {
+  return {
+    stateScope: FORM_QUESTION_CATALOG_VERSION_STATE_SCOPE,
+    stateKey: `version:${String(versionId || "").trim()}`
+  };
+}
+
+export function versionedFormQuestionCatalogS3Key(versionId) {
+  const cleanVersionId = String(versionId || "").trim().replace(/[^a-zA-Z0-9_.:-]+/g, "-");
+  return `runtime-config/form-question-catalog/versions/${cleanVersionId}.json`;
+}
+
 export function readFormQuestionCatalog() {
   if (!bundledCatalogCache) {
-    const catalogPath = resolveRepoOrLambdaDataFile(FORM_QUESTION_CATALOG_FILE);
-    bundledCatalogCache = normalizeFormQuestionCatalog(JSON.parse(fs.readFileSync(catalogPath, "utf8")));
+    bundledCatalogCache = normalizeFormQuestionCatalog();
   }
   return bundledCatalogCache;
 }
@@ -40,7 +50,7 @@ export async function loadFormQuestionCatalog({
   }
 
   const catalog =
-    (await readCatalogFromDynamoDb({ db, logger, tableName })) ||
+    (await readCatalogFromDynamoDb({ bucketName, db, logger, s3, tableName })) ||
     (await readCatalogFromS3({ bucketName, logger, s3 })) ||
     readFormQuestionCatalog();
 
@@ -58,7 +68,10 @@ export function clearFormQuestionCatalogCache() {
 
 export function normalizeFormQuestionCatalog(catalog = {}) {
   if (catalog?.retrofit?.questions) {
-    return catalog;
+    return {
+      ...catalog,
+      application: catalog.application || defaultApplicationQuestionCatalog()
+    };
   }
 
   if (catalog?.questions) {
@@ -97,7 +110,7 @@ export function formQuestionCatalogCacheVersion(catalog = readFormQuestionCatalo
   ].join(":");
 }
 
-async function readCatalogFromDynamoDb({ db, logger, tableName } = {}) {
+async function readCatalogFromDynamoDb({ bucketName, db, logger, s3, tableName } = {}) {
   if (!db || !tableName) return null;
   try {
     const result = await db.send(
@@ -107,44 +120,85 @@ async function readCatalogFromDynamoDb({ db, logger, tableName } = {}) {
       })
     );
     const item = result.Item;
-    if (!item?.catalog) return null;
-    return normalizeFormQuestionCatalog(item.catalog);
+    if (!item) return null;
+    if (item.catalog) return normalizeFormQuestionCatalog(item.catalog);
+    if (item.s3Key || item.activeS3Key) {
+      return readCatalogFromS3({
+        bucketName: item.s3Bucket || bucketName,
+        key: item.s3Key || item.activeS3Key,
+        logger,
+        s3
+      });
+    }
+    return null;
   } catch (error) {
-    logger?.warn?.("[form-question-catalog] DynamoDB read failed; falling back to S3/bundled catalog:", error);
+    logger?.warn?.("[form-question-catalog] DynamoDB read failed; falling back to S3/empty catalog:", error);
     return null;
   }
 }
 
-async function readCatalogFromS3({ bucketName, logger, s3 } = {}) {
+async function readCatalogFromS3({ bucketName, key, logger, s3 } = {}) {
   if (!s3 || !bucketName) return null;
-  try {
-    const response = await s3.send(
-      new GetObjectCommand({
-        Bucket: bucketName,
-        Key: FORM_QUESTION_CATALOG_S3_KEY
-      })
-    );
-    const text = await response.Body?.transformToString("utf-8");
-    return text ? normalizeFormQuestionCatalog(JSON.parse(text)) : null;
-  } catch (error) {
-    logger?.warn?.("[form-question-catalog] S3 read failed; falling back to bundled catalog:", error);
-    return null;
+  const keys = key ? [key] : [FORM_QUESTION_CATALOG_ACTIVE_S3_KEY, FORM_QUESTION_CATALOG_LEGACY_S3_KEY];
+  let lastError = null;
+  for (const s3Key of keys) {
+    try {
+      const response = await s3.send(
+        new GetObjectCommand({
+          Bucket: bucketName,
+          Key: s3Key
+        })
+      );
+      const text = await response.Body?.transformToString("utf-8");
+      if (text) return normalizeFormQuestionCatalog(JSON.parse(text));
+    } catch (error) {
+      lastError = error;
+    }
   }
+  if (lastError) {
+    logger?.warn?.("[form-question-catalog] S3 read failed; falling back to empty catalog:", lastError);
+  }
+  return null;
 }
 
 function defaultApplicationQuestionCatalog() {
   return {
     collectionStage: "post_scenario_application",
     collectionSurface: "opportunity_application_form",
-    requirementSections: {},
-    requirementTypeMappings: {}
+    requirementSections: {
+      requiredFields: {
+        label: "Required fields",
+        questionKind: "field",
+        required: true,
+        answerTypeDefault: "text"
+      },
+      requiredDocuments: {
+        label: "Required documents",
+        questionKind: "document",
+        required: true,
+        answerTypeDefault: "file"
+      },
+      optionalFields: {
+        label: "Optional fields",
+        questionKind: "field",
+        required: false,
+        answerTypeDefault: "text"
+      }
+    },
+    requirementTypeMappings: {
+      account_number: { answerType: "text", collectionSurface: "account_number_form", canonicalInputKeyPrefix: "account_number" },
+      bill: { answerType: "file", collectionSurface: "utility_bill_upload", canonicalInputKeyPrefix: "bill_document" },
+      checklist: { answerType: "file", collectionSurface: "application_document_upload", canonicalInputKeyPrefix: "checklist_document" },
+      contact: { answerType: "text", collectionSurface: "contact_form", canonicalInputKeyPrefix: "contact" },
+      contractor: { answerType: "text", collectionSurface: "contractor_or_installer_form", canonicalInputKeyPrefix: "contractor" },
+      document: { answerType: "file", collectionSurface: "application_document_upload", canonicalInputKeyPrefix: "application_document" },
+      eligibility: { answerType: "boolean", collectionSurface: "opportunity_eligibility_form", canonicalInputKeyPrefix: "eligibility" },
+      field: { answerType: "text", collectionSurface: "opportunity_application_form", canonicalInputKeyPrefix: "application_field" },
+      other: { answerType: "text", collectionSurface: "opportunity_application_form", canonicalInputKeyPrefix: "application_requirement" },
+      preapproval: { answerType: "file", collectionSurface: "preapproval_document_upload", canonicalInputKeyPrefix: "preapproval_document" },
+      quote: { answerType: "file", collectionSurface: "project_quote_upload", canonicalInputKeyPrefix: "quote_document" },
+      signature: { answerType: "boolean", collectionSurface: "opportunity_application_form", canonicalInputKeyPrefix: "signature" },
+      tax: { answerType: "file", collectionSurface: "tax_document_upload", canonicalInputKeyPrefix: "tax_document" }
+    }
   };
-}
-
-function resolveRepoOrLambdaDataFile(fileName) {
-  const candidates = [
-    path.resolve(import.meta.dirname, "..", "..", "data", fileName),
-    path.resolve(import.meta.dirname, "..", "..", "..", "..", "data", fileName)
-  ];
-  return candidates.find((candidate) => fs.existsSync(candidate)) || candidates[0];
 }

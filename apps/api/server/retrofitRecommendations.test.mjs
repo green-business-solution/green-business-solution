@@ -13,6 +13,71 @@ import {
 } from "./retrofitRecommendations.mjs";
 
 const now = new Date("2026-06-30T12:00:00Z");
+const testFormQuestionCatalog = {
+  schemaVersion: "retrofi_form_question_catalog.v1",
+  catalogId: "retrofit_recommendations_test_catalog",
+  version: "test",
+  retrofit: {
+    defaultQuestionIds: ["tax_inclusive_costs"],
+    questions: {
+      tax_inclusive_costs: {
+        idSuffix: "tax-inclusive-costs",
+        question: "Do you want to enter costs with tax included, or should RetroFi estimate them for you?",
+        answerType: "select",
+        options: ["Enter tax-inclusive numbers", "Estimate for me (tax included)"],
+        canonicalInputKey: "project_cost_tax_inclusion_preference"
+      },
+      lighting_fixture_count: {
+        idSuffix: "fixtures",
+        question: "How many fixtures or bulbs are being replaced?",
+        answerType: "number",
+        canonicalInputKey: "fixture_count"
+      },
+      current_fuel_type: {
+        idSuffix: "fuel",
+        question: "What is the current fuel type?",
+        answerType: "select",
+        options: ["Electric", "Gas", "Mixed", "Unknown"],
+        canonicalInputKey: "current_fuel_type"
+      },
+      solar_roof_area: {
+        idSuffix: "roof-area",
+        question: "How much usable roof or site area is available?",
+        answerType: "number",
+        canonicalInputKey: "usable_roof_or_site_area_sqft"
+      },
+      solar_site_control: {
+        idSuffix: "roof-control",
+        question: "Do you control the roof or site?",
+        answerType: "select",
+        options: ["Own", "Lease with permission", "Do not control", "Unknown"],
+        canonicalInputKey: "site_control_status"
+      },
+      biomass_fuel_stream: {
+        idSuffix: "fuel-stream",
+        question: "What organic fuel stream or waste source would be used?",
+        answerType: "text",
+        canonicalInputKey: "biomass_fuel_stream"
+      },
+      biomass_feedstock_quantity: {
+        idSuffix: "feedstock",
+        question: "What quantity of feedstock is available per month?",
+        answerType: "text",
+        canonicalInputKey: "monthly_feedstock_quantity"
+      }
+    },
+    bindings: [
+      { priority: 10, match: { retrofitTypeIdContains: ["lighting", "led"] }, questionIds: ["lighting_fixture_count"] },
+      { priority: 20, match: { retrofitTypeIdContains: ["hvac"] }, questionIds: ["current_fuel_type"] },
+      { priority: 30, match: { retrofitTypeIdContains: ["solar"] }, questionIds: ["solar_roof_area", "solar_site_control"] },
+      { priority: 40, match: { retrofitTypeIdContains: ["biomass", "biogas"] }, questionIds: ["biomass_fuel_stream", "biomass_feedstock_quantity"] }
+    ]
+  },
+  application: {
+    requirementSections: {},
+    requirementTypeMappings: {}
+  }
+};
 
 function baseIntake(overrides = {}) {
   return {
@@ -92,16 +157,22 @@ function summarizeRetrofits(retrofits) {
 
 describe("portal retrofit recommendations", () => {
   it("assembles base retrofit form questions from the shared catalog", () => {
-    const solarQuestions = buildRetrofitDetailQuestions({
-      retrofitTypeId: "solar_renewable_electricity",
-      displayName: "Rooftop solar PV",
-      parentCategory: "renewable_generation"
-    });
-    const biomassQuestions = buildRetrofitDetailQuestions({
-      retrofitTypeId: "biomass_biogas_energy_system",
-      displayName: "Biomass/biogas energy system",
-      parentCategory: "renewable_generation"
-    });
+    const solarQuestions = buildRetrofitDetailQuestions(
+      {
+        retrofitTypeId: "solar_renewable_electricity",
+        displayName: "Rooftop solar PV",
+        parentCategory: "renewable_generation"
+      },
+      { catalog: testFormQuestionCatalog }
+    );
+    const biomassQuestions = buildRetrofitDetailQuestions(
+      {
+        retrofitTypeId: "biomass_biogas_energy_system",
+        displayName: "Biomass/biogas energy system",
+        parentCategory: "renewable_generation"
+      },
+      { catalog: testFormQuestionCatalog }
+    );
 
     expect(solarQuestions.map((question) => question.id)).toContain("solar_renewable_electricity:roof-area");
     expect(solarQuestions.map((question) => question.question)).toContain("Do you control the roof or site?");
@@ -140,7 +211,7 @@ describe("portal retrofit recommendations", () => {
       lastLoginAt: now.toISOString()
     };
 
-    const payload = buildPortalRetrofitPreviewShell({ user, intake, now });
+    const payload = buildPortalRetrofitPreviewShell({ formQuestionCatalog: testFormQuestionCatalog, user, intake, now });
 
     expect(payload.isProgressiveShell).toBe(true);
     expect(payload.summary).toMatchObject({
@@ -190,6 +261,7 @@ describe("portal retrofit recommendations", () => {
     });
 
     const payload = buildPortalRetrofitPreviewShell({
+      formQuestionCatalog: testFormQuestionCatalog,
       user: {
         userId: intake.userId,
         role: "client",
@@ -277,10 +349,12 @@ describe("portal retrofit recommendations", () => {
       results: eligibleResults,
       normalizedProfile,
       calculationDate: now.toISOString().slice(0, 10),
+      formQuestionCatalog: testFormQuestionCatalog,
       subjectId: user.userId,
       opportunityRules: []
     });
     const payload = buildPortalRetrofitRecommendations({
+      formQuestionCatalog: testFormQuestionCatalog,
       user,
       intake,
       opportunities,
@@ -309,6 +383,7 @@ describe("portal retrofit recommendations", () => {
       lastLoginAt: now.toISOString()
     };
     const payload = buildPortalRetrofitRecommendations({
+      formQuestionCatalog: testFormQuestionCatalog,
       user,
       intake,
       opportunities: [
@@ -337,6 +412,7 @@ describe("portal retrofit recommendations", () => {
   it("keeps fixture-based savings previews attached to grouped retrofit recommendations", () => {
     const intake = baseIntake();
     const payload = buildPortalRetrofitRecommendations({
+      formQuestionCatalog: testFormQuestionCatalog,
       user: {
         userId: intake.userId,
         role: "client",

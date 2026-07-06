@@ -13,6 +13,11 @@ Parameters:
     Default: 90
     MinValue: 1
     Description: Days to retain old runtime-cache objects after they are superseded.
+  FormQuestionCatalogVersionRetentionDays:
+    Type: Number
+    Default: 30
+    MinValue: 1
+    Description: Days to retain versioned form-question catalog snapshots.
 
 Resources:
   RuntimeCacheBucket:
@@ -39,6 +44,12 @@ Resources:
             Status: Enabled
             Prefix: runtime-cache/
             ExpirationInDays: !Ref RuntimeCacheRetentionDays
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 7
+          - Id: expire-form-question-catalog-versions
+            Status: Enabled
+            Prefix: runtime-config/form-question-catalog/versions/
+            ExpirationInDays: !Ref FormQuestionCatalogVersionRetentionDays
             AbortIncompleteMultipartUpload:
               DaysAfterInitiation: 7
 

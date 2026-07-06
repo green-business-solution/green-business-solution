@@ -111,7 +111,6 @@ function targetsForFile(file, context = {}) {
 
   if (
     file === "scripts/deploy-production.sh" ||
-    file === "scripts/deploy-form-question-catalog.mjs" ||
     file === "scripts/select-production-deploy-targets.mjs" ||
     file === "package.json" ||
     file === "apps/api/package-lock.json"
@@ -166,7 +165,6 @@ function targetsForFile(file, context = {}) {
     file === "data/opportunity_savings_mapping.json" ||
     file === "data/opportunity_incentive_rules.json" ||
     file === "data/opportunity_incentive_calculation_packages_v2.json" ||
-    file === "data/form_question_catalog.json" ||
     file === "data/tax_geography_rules.json" ||
     file === "data/tax_local_workflow_rules.json" ||
     file === "data/calculation_requirements.json" ||

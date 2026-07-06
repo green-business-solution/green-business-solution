@@ -85,6 +85,9 @@
     "fixtures:generated:list": "node scripts/sync-generated-test-fixtures.mjs list",
     "fixtures:generated:upload": "node scripts/sync-generated-test-fixtures.mjs upload",
     "fixtures:generated:download": "node scripts/sync-generated-test-fixtures.mjs download",
+    "form-catalog:export": "node scripts/manage-form-question-catalog.mjs export",
+    "form-catalog:publish": "node scripts/manage-form-question-catalog.mjs publish",
+    "form-catalog:rollback": "node scripts/manage-form-question-catalog.mjs rollback",
     "migrate:runtime-state": "node scripts/migrate-runtime-state-resources.mjs",
     "test": "vitest run",
     "typecheck": "npm run typecheck -w @gbs/web"

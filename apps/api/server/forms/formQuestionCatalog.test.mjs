@@ -2,7 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   clearFormQuestionCatalogCache,
   formQuestionCatalogCacheVersion,
-  loadFormQuestionCatalog
+  loadFormQuestionCatalog,
+  readFormQuestionCatalog
 } from "./formQuestionCatalog.mjs";
 
 function fakeClient(handler) {
@@ -14,6 +15,14 @@ function fakeClient(handler) {
 }
 
 describe("form question catalog loader", () => {
+  it("uses an empty bundled fallback so production catalog data stays in AWS", () => {
+    clearFormQuestionCatalogCache();
+    const catalog = readFormQuestionCatalog();
+
+    expect(catalog.catalogId).toBe("empty_form_question_catalog");
+    expect(Object.keys(catalog.retrofit.questions)).toHaveLength(0);
+  });
+
   it("prefers DynamoDB over S3 and bundled fallback", async () => {
     clearFormQuestionCatalogCache();
     const catalog = {

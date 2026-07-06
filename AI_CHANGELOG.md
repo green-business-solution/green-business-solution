@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-06 - Codex (GPT-5) AWS-owned form catalog lifecycle
+
+- Removed the production form-question catalog JSON from GitHub and changed the API fallback to an empty schema plus generic application requirement mappings.
+- Stopped normal production deploys from publishing form catalog data, leaving AWS DynamoDB/S3 as the active catalog source.
+- Added explicit form-catalog export, publish, and rollback commands, with DynamoDB TTL and S3 lifecycle retention for 30-day version snapshots.
+
 ## 2026-07-06 - Codex (GPT-5) runtime-backed unified form catalog
 
 - Replaced the retrofit-only form-question catalog with a unified form catalog covering retrofit estimate intake and opportunity application-prep questions.

@@ -33,6 +33,7 @@ LAMBDA_PACKAGE_DIR="${BUILD_DIR}/lambda-package"
 LAMBDA_ZIP="${BUILD_DIR}/gbs-api-lambda.zip"
 ARTIFACT_RETENTION_DAYS="${GBS_ARTIFACT_RETENTION_DAYS:-30}"
 RUNTIME_CACHE_RETENTION_DAYS="${GBS_RUNTIME_CACHE_RETENTION_DAYS:-90}"
+FORM_CATALOG_VERSION_RETENTION_DAYS="${GBS_FORM_CATALOG_VERSION_RETENTION_DAYS:-30}"
 RUN_FRONTEND=0
 RUN_API=0
 RUN_INFRA=0
@@ -110,6 +111,7 @@ Targets:
 Environment:
   GBS_ARTIFACT_RETENTION_DAYS=${ARTIFACT_RETENTION_DAYS}
   GBS_RUNTIME_CACHE_RETENTION_DAYS=${RUNTIME_CACHE_RETENTION_DAYS}
+  GBS_FORM_CATALOG_VERSION_RETENTION_DAYS=${FORM_CATALOG_VERSION_RETENTION_DAYS}
   GBS_DEPLOY_STATE_PREFIX=${GBS_DEPLOY_STATE_PREFIX:-deploy-state}
 EOF
 }
@@ -253,7 +255,8 @@ deploy_runtime_data_stack() {
     --parameter-overrides \
       "RuntimeCacheBucketName=${RUNTIME_CACHE_BUCKET}" \
       "TestFixturesBucketName=${TEST_FIXTURES_BUCKET}" \
-      "RuntimeCacheRetentionDays=${RUNTIME_CACHE_RETENTION_DAYS}"
+      "RuntimeCacheRetentionDays=${RUNTIME_CACHE_RETENTION_DAYS}" \
+      "FormQuestionCatalogVersionRetentionDays=${FORM_CATALOG_VERSION_RETENTION_DAYS}"
 }
 
 ensure_artifact_bucket() {
@@ -311,7 +314,6 @@ package_api_lambda() {
   copy_data_file data/opportunity_savings_mapping.json
   copy_data_file data/opportunity_incentive_rules.json
   copy_data_file data/opportunity_incentive_calculation_packages_v2.json
-  copy_data_file data/form_question_catalog.json
   copy_data_file data/tax_geography_rules.json
   copy_data_file data/tax_local_workflow_rules.json
   copy_data_file data/calculation_requirements.json optional
@@ -375,19 +377,8 @@ upload_lambda_package() {
 
 ensure_data_prerequisites() {
   deploy_runtime_data_stack
-  deploy_form_question_catalog
   ensure_alert_email_identity
   ensure_energy_data_bucket
-}
-
-deploy_form_question_catalog() {
-  echo "Publishing active form question catalog to runtime S3/DynamoDB..."
-  AWS_PROFILE="${PROFILE}" \
-  AWS_DEPLOY_REGION="${REGION}" \
-  GBS_AWS_REGION="${DATA_REGION}" \
-  GBS_RUNTIME_CACHE_BUCKET="${RUNTIME_CACHE_BUCKET}" \
-  GBS_API_RUNTIME_STATE_TABLE="${API_RUNTIME_STATE_TABLE}" \
-    node scripts/deploy-form-question-catalog.mjs
 }
 
 deploy_github_actions_stack() {
