@@ -47,6 +47,12 @@ const existingTaxGeographyTaxTypes = new Set((taxGeographyPayload.rules || []).m
 const taxGapRuntimeRulesBySourceId = new Map(
   (taxGapRuntimeRulesPayload.rules || []).map((rule) => [rule.sourceSkippedRecordId, rule])
 );
+const executableRuntimeSupportStatuses = new Set([
+  "compiled_to_local_tax_workflow",
+  "generic_runtime_model_supported_gated",
+  "source_backed_runtime_model",
+  "source_backed_runtime_liability_model_suppressed_customer_savings"
+]);
 
 const candidateRows = (repairsArtifact.promotedTaxRuleRecords || []).map(auditCandidate);
 const nonPromotedRows = [
@@ -92,7 +98,8 @@ const audit = {
       "The current runtime supports explicit local-tax workflow calculationModels and geography-derived input defaults.",
       "The current runtime does not execute free-form GPT Pro formulaExpression strings.",
       "Compiled tax gap runtime rules provide structured local workflow rows or generic gated evaluators for selected sales/use exemption and state-credit models.",
-      "Tax gap candidates must still have required taxpayer, tax-document, filing, or program-document inputs before customer-facing inclusion."
+      "Tax gap candidates must still have required taxpayer, tax-document, filing, or program-document inputs before customer-facing inclusion.",
+      "Program-document, assessor, and tax-bill gates are mandatory intake requirements; they do not make a structured runtime model internal-only once those inputs are present."
     ]
   },
   candidateRows,
@@ -178,12 +185,12 @@ function auditCandidate(candidate) {
 function classifyFormulaSupport(candidate, runtimeRule = null) {
   if (
     runtimeRule &&
-    ["compiled_to_local_tax_workflow", "generic_runtime_model_supported_gated"].includes(runtimeRule.runtimeSupportStatus)
+    executableRuntimeSupportStatuses.has(runtimeRule.runtimeSupportStatus)
   ) {
     return {
       status: "source_backed_formula_compiled_to_runtime_model",
       currentRuntimeExecutable: true,
-      reason: "The source-backed formula has been compiled into structured local workflow rows or a generic gated tax-gap runtime model."
+      reason: "The source-backed formula has been compiled into structured local workflow rows or a gated tax-gap runtime model."
     };
   }
 
@@ -258,13 +265,17 @@ function classifyRuntimeSupport(candidate, formulaSupport, runtimeRule = null) {
       status: runtimeRule.runtimeSupportStatus,
       currentRuntimeSurface: runtimeRule.localWorkflowId ? "localTaxWorkflows" : "taxGapRuntimeRules",
       currentRuntimeExecutable:
-        ["compiled_to_local_tax_workflow", "generic_runtime_model_supported_gated"].includes(runtimeRule.runtimeSupportStatus) &&
+        executableRuntimeSupportStatuses.has(runtimeRule.runtimeSupportStatus) &&
         Boolean(runtimeRule.localWorkflowId || runtimeRule.calculationModel),
       reason:
         runtimeRule.runtimeSupportStatus === "compiled_to_local_tax_workflow"
           ? "This candidate has been compiled into executable localTaxWorkflow calculationModels, but required tax/user inputs still gate customer-facing use."
           : runtimeRule.runtimeSupportStatus === "generic_runtime_model_supported_gated"
             ? "This candidate has a generic gated tax-gap runtime evaluator, but required tax/user inputs still gate customer-facing use."
+            : runtimeRule.runtimeSupportStatus === "source_backed_runtime_model"
+              ? "This candidate has a source-backed tax-gap runtime model; required tax/user/program inputs still gate customer-facing use."
+              : runtimeRule.runtimeSupportStatus === "source_backed_runtime_liability_model_suppressed_customer_savings"
+                ? "This candidate has a source-backed tax-liability runtime model; it is excluded from savings benefits but can be shown as a tax cost after mandatory intake."
             : runtimeRule.runtimeSupportStatus === "compiled_to_gated_local_workflow"
               ? "This candidate has been compiled into a local workflow gate, but formula execution still requires a tax-return/accountant model import."
               : "This candidate has a compiled runtime-facing rule record, but it remains gated by program documents, tax bills, or assessor/tax-return inputs."
@@ -323,7 +334,7 @@ function classifyRuntimeSupport(candidate, formulaSupport, runtimeRule = null) {
 function decideNextAction({ candidate, matchingTestProfiles, formulaSupport, runtimeSupport, runtimeRule }) {
   const completeProfileCount = matchingTestProfiles.filter((profile) => profile.inputCoverage.coverageStatus === "all_required_inputs_present").length;
   const hasExecutableCompiledRuntime =
-    runtimeRule && ["compiled_to_local_tax_workflow", "generic_runtime_model_supported_gated"].includes(runtimeRule.runtimeSupportStatus);
+    runtimeRule && executableRuntimeSupportStatuses.has(runtimeRule.runtimeSupportStatus);
 
   if (!matchingTestProfiles.length) {
     return {

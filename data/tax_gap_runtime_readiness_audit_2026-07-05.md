@@ -1,13 +1,13 @@
 # Tax Gap Runtime Readiness Audit
 
-Generated at: 2026-07-05T23:58:32.255Z
+Generated at: 2026-07-06T00:39:18.843Z
 
 ## Summary
 
 - Promoted tax candidates audited: 19
 - Candidates with any matching test profile: 19
 - Candidates with complete matched test inputs: 19
-- Ready for direct customer-facing calculation now: 7
+- Ready for direct customer-facing calculation now: 18
 - Matched test profiles: 37
 
 ## Next Actions
@@ -15,8 +15,7 @@ Generated at: 2026-07-05T23:58:32.255Z
 | Bucket | Count |
 | --- | --- |
 | add_tax_return_model_or_keep_gate | 1 |
-| import_as_internal_only_gated_rule | 11 |
-| ready_customer_facing_after_mandatory_intake | 7 |
+| ready_customer_facing_after_mandatory_intake | 18 |
 
 ## Runtime Support
 
@@ -25,39 +24,38 @@ Generated at: 2026-07-05T23:58:32.255Z
 | compiled_to_gated_local_workflow | 1 |
 | compiled_to_local_tax_workflow | 3 |
 | generic_runtime_model_supported_gated | 4 |
-| program_document_tax_bill_or_assessor_gate | 11 |
+| source_backed_runtime_liability_model_suppressed_customer_savings | 1 |
+| source_backed_runtime_model | 10 |
 
 ## Formula Support
 
 | Bucket | Count |
 | --- | --- |
-| source_backed_formula_compiled_to_runtime_model | 7 |
+| source_backed_formula_compiled_to_runtime_model | 18 |
 | source_backed_formula_needs_structured_model_rows | 1 |
-| source_backed_program_document_workflow | 4 |
-| source_backed_property_tax_formula_needs_bill_or_assessor_adapter | 7 |
 
 ## Candidate Readiness
 
 | Candidate | Model | Jurisdiction | Runtime Support | Runtime Gate | Test Profiles | Full Inputs | Next Action |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | vernon_ca_partial_local_tax_sources_skip_until_code_verified_v1 | local_business_license_or_receipts_tax | City of Vernon, California | compiled_to_local_tax_workflow | needs_tax_profile | 1 | 1 | ready_customer_facing_after_mandatory_intake |
-| sales_use_tax_ambiguous_rule_1 | tax_abatement_or_pilot | AL | program_document_tax_bill_or_assessor_gate | needs_program_documentation | 1 | 1 | import_as_internal_only_gated_rule |
+| sales_use_tax_ambiguous_rule_1 | tax_abatement_or_pilot | AL | source_backed_runtime_model | needs_program_documentation | 1 | 1 | ready_customer_facing_after_mandatory_intake |
 | sales_use_tax_ambiguous_rule_4 | sales_use_tax_exemption | IA | generic_runtime_model_supported_gated | needs_tax_profile | 1 | 1 | ready_customer_facing_after_mandatory_intake |
-| sales_use_tax_ambiguous_rule_5 | tax_abatement_or_pilot | NV | program_document_tax_bill_or_assessor_gate | needs_program_documentation | 1 | 1 | import_as_internal_only_gated_rule |
+| sales_use_tax_ambiguous_rule_5 | tax_abatement_or_pilot | NV | source_backed_runtime_model | needs_program_documentation | 1 | 1 | ready_customer_facing_after_mandatory_intake |
 | sales_use_tax_ambiguous_rule_8 | gross_receipts_or_bo_rate_preference | NM | compiled_to_local_tax_workflow | needs_filing_confirmation | 1 | 1 | ready_customer_facing_after_mandatory_intake |
 | az_renewable_energy_production_tax_credit_skip_v1 | state_income_or_franchise_tax_credit | AZ | generic_runtime_model_supported_gated | needs_filing_confirmation | 3 | 1 | ready_customer_facing_after_mandatory_intake |
 | co_heat_pump_systems_registered_contractor_credit_skip_v1 | state_income_or_franchise_tax_credit | CO | generic_runtime_model_supported_gated | needs_filing_confirmation | 3 | 1 | ready_customer_facing_after_mandatory_intake |
 | ct_green_buildings_credit_skip_v1 | state_income_or_franchise_tax_credit | CT | generic_runtime_model_supported_gated | needs_program_documentation | 2 | 1 | ready_customer_facing_after_mandatory_intake |
-| mt_energy_production_development_abatement_skip_2026_v1 | tax_abatement_or_pilot | MT | program_document_tax_bill_or_assessor_gate | needs_program_documentation | 2 | 1 | import_as_internal_only_gated_rule |
-| ct_uniform_solar_capacity_tax_pa26_refresh_watch_2026_v1 | property_tax_special_valuation | CT | program_document_tax_bill_or_assessor_gate | needs_assessor_confirmation | 2 | 1 | import_as_internal_only_gated_rule |
-| local_option_followup_1 | property_tax_credit | Baltimore County, MD | program_document_tax_bill_or_assessor_gate | needs_tax_bill | 1 | 1 | import_as_internal_only_gated_rule |
-| local_option_followup_2 | property_tax_credit | Prince George's County, MD | program_document_tax_bill_or_assessor_gate | needs_tax_bill | 2 | 1 | import_as_internal_only_gated_rule |
-| local_option_followup_3 | property_tax_credit | Anne Arundel County, MD | program_document_tax_bill_or_assessor_gate | needs_tax_bill | 1 | 1 | import_as_internal_only_gated_rule |
-| local_option_followup_4 | property_tax_exemption | New York State municipalities and school districts under RPTL §487 | program_document_tax_bill_or_assessor_gate | needs_assessor_confirmation | 2 | 1 | import_as_internal_only_gated_rule |
-| local_option_followup_5 | property_tax_exemption | Virginia localities beyond Fairfax, Arlington, Loudoun, and Prince William | program_document_tax_bill_or_assessor_gate | needs_assessor_confirmation | 1 | 1 | import_as_internal_only_gated_rule |
-| skip_prince_georges_MD_green_business_amount_unverified_v1 | property_tax_credit | Prince George's County, MD | program_document_tax_bill_or_assessor_gate | needs_filing_confirmation | 2 | 1 | import_as_internal_only_gated_rule |
+| mt_energy_production_development_abatement_skip_2026_v1 | tax_abatement_or_pilot | MT | source_backed_runtime_model | needs_program_documentation | 2 | 1 | ready_customer_facing_after_mandatory_intake |
+| ct_uniform_solar_capacity_tax_pa26_refresh_watch_2026_v1 | property_tax_special_valuation | CT | source_backed_runtime_liability_model_suppressed_customer_savings | needs_assessor_confirmation | 2 | 1 | ready_customer_facing_after_mandatory_intake |
+| local_option_followup_1 | property_tax_credit | Baltimore County, MD | source_backed_runtime_model | needs_tax_bill | 1 | 1 | ready_customer_facing_after_mandatory_intake |
+| local_option_followup_2 | property_tax_credit | Prince George's County, MD | source_backed_runtime_model | needs_tax_bill | 2 | 1 | ready_customer_facing_after_mandatory_intake |
+| local_option_followup_3 | property_tax_credit | Anne Arundel County, MD | source_backed_runtime_model | needs_tax_bill | 1 | 1 | ready_customer_facing_after_mandatory_intake |
+| local_option_followup_4 | property_tax_exemption | New York State municipalities and school districts under RPTL §487 | source_backed_runtime_model | needs_assessor_confirmation | 2 | 1 | ready_customer_facing_after_mandatory_intake |
+| local_option_followup_5 | property_tax_exemption | Virginia localities beyond Fairfax, Arlington, Loudoun, and Prince William | source_backed_runtime_model | needs_assessor_confirmation | 1 | 1 | ready_customer_facing_after_mandatory_intake |
+| skip_prince_georges_MD_green_business_amount_unverified_v1 | property_tax_credit | Prince George's County, MD | source_backed_runtime_model | needs_filing_confirmation | 2 | 1 | ready_customer_facing_after_mandatory_intake |
 | skip_unverified_ca_city_business_license_rates | local_business_license_or_receipts_tax | CA | compiled_to_gated_local_workflow | needs_tax_profile | 11 | 1 | add_tax_return_model_or_keep_gate |
-| skip_mi_rerz_customer_facing_savings_without_approved_zone_docs | tax_abatement_or_pilot | MI | program_document_tax_bill_or_assessor_gate | needs_program_documentation | 4 | 1 | import_as_internal_only_gated_rule |
+| skip_mi_rerz_customer_facing_savings_without_approved_zone_docs | tax_abatement_or_pilot | MI | source_backed_runtime_model | needs_program_documentation | 4 | 1 | ready_customer_facing_after_mandatory_intake |
 | skip_oh_cat_current_exclusion_amount_without_current_return_confirmation | gross_receipts_or_bo_rate_preference | OH | compiled_to_local_tax_workflow | needs_tax_return | 1 | 1 | ready_customer_facing_after_mandatory_intake |
 
 ## Test Profile Coverage

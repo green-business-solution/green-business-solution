@@ -1761,7 +1761,7 @@ describe("retrofit recommendations preview", () => {
 
     expect(heroSource).toContain("<span>Find the money</span>");
     expect(heroSource).toContain("<span>behind your next</span>");
-    expect(heroSource).toContain("<span>retrofit.</span>");
+    expect(heroSource).toContain('<span className="planet-scan-title-accent">retrofit.</span>');
     expect(heroSource).toContain("<span>Find, compare, and claim</span>");
     expect(heroSource).toContain("<span>retrofit incentives.</span>");
     expect(heroSource).not.toContain("<span>RetroFi helps you</span>");
@@ -1772,9 +1772,9 @@ describe("retrofit recommendations preview", () => {
     expect(heroSource).not.toContain("handleSecondaryAction");
 
     expect(css).toContain(".planet-scan-title span");
-    expect(css).toContain("left: clamp(72px, 11.5vw, 190px);");
+    expect(css).toContain("left: clamp(40px, 4.8vw, 88px);");
     expect(css).toContain("top: clamp(118px, 15.5vh, 178px);");
-    expect(css).toContain("right: clamp(72px, 8.5vw, 160px);");
+    expect(css).toContain("right: clamp(40px, 4.4vw, 88px);");
     expect(css).toContain("top: clamp(150px, 21vh, 230px);");
     expect(css).toContain(".planet-scan-cta--after");
     expect(css).not.toContain(".planet-scan-actions");

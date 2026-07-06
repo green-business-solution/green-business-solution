@@ -49,8 +49,8 @@ const testCases = [
     taxRow("e_verify_documentation", true, "tax_gap_rule_4d6fe746b4", "sales_use_tax_ambiguous_rule_1"),
     taxRow("alabama_department_of_commerce_project_notification", true, "tax_gap_rule_4d6fe746b4", "sales_use_tax_ambiguous_rule_1"),
     taxRow("itemized_invoices_and_transaction_dates", true, "tax_gap_rule_4d6fe746b4", "sales_use_tax_ambiguous_rule_1"),
-    taxRow("tax_base_for_qualifying_tangible_personal_property_and_taxable_services_incorporated_into_the_project", 118000000, "tax_gap_rule_4d6fe746b4", "sales_use_tax_ambiguous_rule_1"),
-    taxRow("state_and_local_sales_and_use_tax_rates", 0.09, "tax_gap_rule_4d6fe746b4", "sales_use_tax_ambiguous_rule_1"),
+    taxRow("tax_base_for_qualifying_tangible_personal_property_and_taxable_services_incorporated_into_the_project", 64230000, "tax_gap_rule_4d6fe746b4", "sales_use_tax_ambiguous_rule_1"),
+    taxRow("state_and_local_sales_and_use_tax_rates", { totalAbatableRateBps: 725 }, "tax_gap_rule_4d6fe746b4", "sales_use_tax_ambiguous_rule_1"),
     taxRow("identification_of_local_education_and_noneducation_tax_components", true, "tax_gap_rule_4d6fe746b4", "sales_use_tax_ambiguous_rule_1"),
     taxRow("project_placed_in_service_or_completion_date", "2026-06-15", "tax_gap_rule_4d6fe746b4", "sales_use_tax_ambiguous_rule_1")
   ]),
@@ -151,13 +151,14 @@ describe("tax profile runtime", () => {
     );
   });
 
-  it("keeps program-document rules out of financial estimates until a structured formula exists", () => {
+  it("calculates repaired program-document tax rules after structured formula support exists", () => {
     const result = evaluate(taxCase("sample_al_ch9b_huntsville_mfg_001"));
 
     expect(result.totals.missingRequiredInputCount).toBe(0);
-    expect(result.totals.unsupportedOrReviewOnlyCount).toBe(1);
-    expect(result.readyForOpportunityFinancialEstimate).toBe(false);
-    expect(result.requiresStructuredTaxModelWork).toBe(true);
+    expect(result.totals.unsupportedOrReviewOnlyCount).toBe(0);
+    expect(result.totals.includedBenefitCents).toBe(4656675);
+    expect(result.readyForOpportunityFinancialEstimate).toBe(true);
+    expect(result.requiresStructuredTaxModelWork).toBe(false);
   });
 
   it("builds a compact runtime preview with required pre-opportunity fields", () => {

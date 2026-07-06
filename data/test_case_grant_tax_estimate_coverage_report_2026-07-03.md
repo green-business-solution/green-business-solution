@@ -1,6 +1,6 @@
 # Test Case Grant/Tax Estimate Coverage
 
-Generated: 2026-07-05T23:58:32.447Z
+Generated: 2026-07-06T00:38:18.592Z
 
 ## Summary
 
@@ -14,10 +14,10 @@ Generated: 2026-07-05T23:58:32.447Z
 - Tax opportunity packages matched by current test cases: 1
 - Local tax workflow evaluations: 16
 - Tax profile runtime evaluations: 31
-- Tax profile runtime ready rows: 7
-- Tax profile included benefits: $426,432.19
-- Tax profile included liabilities: $216,680.00
-- Tax profile net impact: $209,752.19
+- Tax profile runtime ready rows: 18
+- Tax profile included benefits: $8,564,008.09
+- Tax profile included liabilities: $235,080.00
+- Tax profile net impact: $8,328,928.09
 
 ## Runtime Inclusion Status
 
@@ -71,8 +71,7 @@ Generated: 2026-07-05T23:58:32.447Z
 
 | Status | Count |
 | --- | --- |
-| unsupported_runtime_model | 11 |
-| calculated | 7 |
+| calculated | 18 |
 | missing_inputs | 6 |
 | review_required | 4 |
 | needs_tax_bill | 3 |

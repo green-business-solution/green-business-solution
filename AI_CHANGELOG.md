@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) source-backed tax runtime model import
+
+- Imported the 11 GPT Pro unsupported-tax-model repairs into a normalized source artifact and compiled them into structured tax-gap runtime rules.
+- Added runtime calculators for source-backed property-tax exemptions/credits, project abatements, special solar capacity tax liability, and renewable-energy zone abatements.
+- Updated tax readiness auditing so program-document, assessor, and tax-bill requirements are treated as mandatory intake gates rather than internal-only blockers once structured models and complete inputs exist.
+- Refreshed tax/grant coverage and tax readiness reports, regenerated fixture tax previews, and uploaded the generated fixtures plus GPT Pro work outputs to S3.
+
 ## 2026-07-05 - Codex (GPT-5) tax input gate cleanup and unsupported-model prompts
 
 - Stopped treating already answered tax workflow inputs as mandatory blockers, while still flagging document/assessor workflows that need structured runtime models.
@@ -59,6 +66,7 @@
 - Moved the PlanetScan homepage headline block closer to the left edge and the revealed result copy closer to the right edge on desktop and tablet widths.
 - Right-aligned the revealed copy block so its text and CTA anchor to the right side instead of floating inward.
 - Matched the initial `retrofit.` headline line to the brighter green accent used in the current homepage reference.
+- Updated the homepage source regression to expect the accented `retrofit.` headline span.
 
 ## 2026-07-05 - Codex (GPT-5) concise homepage and glass CTA
 

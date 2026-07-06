@@ -186,9 +186,65 @@
       "includeInUserFacingTotalDefault": false,
       "customerFacingSavingsCentsDefault": 0,
       "sourceConfidence": "high",
-      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "runtimeSupportStatus": "source_backed_runtime_model",
       "localWorkflowId": null,
-      "calculationModel": null,
+      "calculationModel": {
+        "method": "al_chapter_9b_sales_use_tax_abatement",
+        "financialRole": "tax_benefit",
+        "financialTiming": "one_time_project_or_transaction",
+        "repairDisposition": "implement_runtime_model",
+        "sourceConfidence": "high",
+        "estimateConfidenceIfInputsPresent": "high",
+        "sourceRepairFile": "GPT Pro Work/tax-unsupported-runtime-model-repair-2026-07-05/output_002_alabama-chapter-9b-sales-use-tax-abatement.md",
+        "sourceRepairSchemaVersion": "tax_unsupported_runtime_model_repair.v1",
+        "gateConditions": [
+          "alabama_facility_address_verified.verified",
+          "executed_chapter_9b_abatement_agreement.present",
+          "certified_granting_authority_resolution.present",
+          "completed_form_co_caa_and_property_list.present",
+          "completed_form_st_ex_a2_sales_and_use_tax_certificate_application.present",
+          "alabama_department_of_revenue_sales_and_use_tax_exemption_certificate.present",
+          "e_verify_documentation.present",
+          "alabama_department_of_commerce_project_notification.present"
+        ],
+        "requiredInputs": [
+          "executed_chapter_9b_abatement_agreement",
+          "certified_granting_authority_resolution",
+          "completed_form_co_caa_and_property_list",
+          "completed_form_st_ex_a2_sales_and_use_tax_certificate_application",
+          "alabama_department_of_revenue_sales_and_use_tax_exemption_certificate",
+          "e_verify_documentation",
+          "alabama_department_of_commerce_project_notification",
+          "alabama_facility_address_verified",
+          "itemized_invoices_and_transaction_dates",
+          "tax_base_for_qualifying_tangible_personal_property_and_taxable_services_incorporated_into_the_project",
+          "state_and_local_sales_and_use_tax_rates",
+          "identification_of_local_education_and_noneducation_tax_components",
+          "project_placed_in_service_or_completion_date",
+          "approved_investment_or_maximum_qualifying_purchase_base_cents"
+        ],
+        "tableConstants": {
+          "post_2026_06_01_unabated_state_rate_bps": 75,
+          "post_2026_06_01_unabated_state_rate_effective_for_new_abatements_on_or_after": "2026-06-01",
+          "approved_investment_deminimis_multiplier": 1.1,
+          "basis_points_denominator": 10000
+        },
+        "caps": {
+          "qualifyingBaseCents": "min(sum_eligible_invoice_line_bases, agreement_or_certificate_maximum_qualifying_purchase_base_cents if present, floor(approved_investment_amount_cents * 1.10) if present)",
+          "abatableRateBps": "state_abatable_rate_bps + local_noneducation_abatable_rate_bps",
+          "unabatedOrExcludedRateBps": "state_unabated_rate_bps + local_education_unabated_rate_bps",
+          "dateWindow": "invoice_date must be on or after the abatement grant/effective date and on or before the earliest certificate expiration, agreement end, project completion, or placed-in-service date"
+        },
+        "formulaPlainEnglish": "After verifying the executed abatement agreement, granting-authority resolution, ALDOR certificate package, certificate dates, qualifying invoices, and local/state rate split, savings equals the tax actually abated on qualifying incorporated project purchases. Use the qualifying capitalizable tangible personal property and taxable-service base within the certificate/project period, capped by the documented approved amount rules. Multiply that base by the documented abatable rate: state sales/use rate minus the documented unabated state portion, plus local sales/use tax not earmarked for education. Exclude the 0.75% state portion where applicable, local education taxes, nonqualifying purchases, purchases before the grant date, and purchases after the project is placed in service or the certificate expires.",
+        "formulaAmountCents": "roundCurrencyCents(capped_qualifying_purchase_base_cents * (state_abatable_rate_bps + local_noneducation_abatable_rate_bps) / 10000)",
+        "implementationNotes": [
+          "Replace calculationModel null with this new method and keep runtimeStatusWhenInputsMissing as a program-document gate.",
+          "Do not include the abatement in user-facing totals until every required gate input and the local/state rate split are present.",
+          "For the matching synthetic profile, expected tax benefit is 4,656,675 cents using 64,230,000 cents times 725 bps; expected unabated tax due is 1,124,025 cents using 175 bps and should not be counted as savings.",
+          "Keep this rule out of the generic sales_use_tax_exemption method because Chapter 9B is a project-specific partial abatement with official approval and remittance obligations.",
+          "RetroFi context source for this repair: "
+        ]
+      },
       "canonicalInputRequirements": [
         {
           "inputKey": "executed_chapter_9b_abatement_agreement",
@@ -414,9 +470,82 @@
       "includeInUserFacingTotalDefault": false,
       "customerFacingSavingsCentsDefault": 0,
       "sourceConfidence": "high",
-      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "runtimeSupportStatus": "source_backed_runtime_model",
       "localWorkflowId": null,
-      "calculationModel": null,
+      "calculationModel": {
+        "method": "nv_reta_sales_use_and_property_tax_abatement",
+        "financialRole": "tax_benefit",
+        "financialTiming": "multi_year_tax_schedule",
+        "repairDisposition": "implement_runtime_model",
+        "sourceConfidence": "high",
+        "estimateConfidenceIfInputsPresent": "high",
+        "sourceRepairFile": "GPT Pro Work/tax-unsupported-runtime-model-repair-2026-07-05/output_003_nevada-reta-sales-use-and-property-tax-abatement.md",
+        "sourceRepairSchemaVersion": "tax_unsupported_runtime_model_repair.v1",
+        "gateConditions": [
+          "reta_goe_approval_verified",
+          "reta_executed_abatement_agreement_verified",
+          "reta_certificate_of_eligibility_verified",
+          "reta_approval_status_is_approved",
+          "reta_not_revoked_suspended_or_expired_for_claim_period",
+          "reta_no_prohibited_overlap_with_other_abatements_for_same_taxes"
+        ],
+        "requiredInputs": [
+          "goe_legal_order.approvalStatus",
+          "goe_legal_order.issuedDate",
+          "executed_abatement_agreement.effectiveDate",
+          "executed_abatement_agreement.salesUseAbatementStartDate",
+          "executed_abatement_agreement.salesUseAbatementEndDate",
+          "executed_abatement_agreement.propertyTaxAbatementFirstFiscalYear",
+          "executed_abatement_agreement.propertyTaxAbatementLastFiscalYear",
+          "certificate_of_eligibility.effectiveDate",
+          "certificate_of_eligibility.expirationDate",
+          "certificate_of_eligibility.approvedPurchasers",
+          "certificate_of_eligibility.eligiblePurchaseCategories",
+          "certificate_of_eligibility.excludedPurchaseCategories",
+          "sales_use_transactions[].transactionDate",
+          "sales_use_transactions[].purchaserLegalName",
+          "sales_use_transactions[].purchaseCategory",
+          "sales_use_transactions[].amountCents",
+          "combinedSalesUseTaxRateForCountyAndTransactionDate",
+          "localSchoolSupportTaxRateForTransactionDate",
+          "propertyTaxPayableSchedule[].taxYear",
+          "propertyTaxPayableSchedule[].taxBeforeRetaAbatementCents",
+          "propertyTaxPayableSchedule[].documentedAbatementAmountCents",
+          "approvedPropertyTaxAbatementRate",
+          "currentComplianceStatusOrAnnualReportStatus"
+        ],
+        "tableConstants": {
+          "nonAbatableSalesUseComponent": "local_school_support_tax",
+          "hardcodedRatesAllowed": false,
+          "hardcodedPropertyAbatementPercentAllowed": false,
+          "officialSourceHierarchy": [
+            "executed_abatement_agreement",
+            "goe_legal_order",
+            "certificate_of_eligibility",
+            "department_of_taxation_or_governor_finance_fiscal_note",
+            "tax_bill_or_assessor_notice",
+            "invoice_or_contract"
+          ]
+        },
+        "caps": {
+          "salesUseTerm": "Use document dates; official 2026 examples show 3 years.",
+          "propertyTaxTerm": "Use document dates or tax years; official 2026 examples show 20 years.",
+          "propertyTaxRate": "Use approved document rate; reviewed 2026 agreements state 55 percent.",
+          "salesUseRate": "Use documented abatable rate or combined rate minus Local School Support Tax component.",
+          "componentLevelGating": "Calculate a component only when that component's required documents and amounts are verified."
+        },
+        "formulaPlainEnglish": "After verified RETA approval documents exist, calculate the sales/use component only for approved purchasers, approved goods or equipment, and transaction dates inside the approved sales/use abatement period. The sales/use abatement rate is the documented abatable rate from the fiscal note or, if not separately documented, the applicable combined Nevada sales/use rate minus the nonabatable Local School Support Tax component. Calculate the property-tax component only for years inside the approved property-tax term using the approved property-tax abatement rate from the agreement, order, fiscal note, tax bill, or assessor notice multiplied by official facility real and personal property taxes payable before RETA abatement. Use an official documented abatement amount instead of recomputing when a tax bill, assessor notice, filed return, or official fiscal note gives the amount for the same period.",
+        "formulaAmountCents": "totalBenefitCents = salesUseAbatementCents + propertyTaxAbatementCents; salesUseAbatementCents = SUM(eligibleTransactionAmountCents * approvedAbatableSalesUseRate); approvedAbatableSalesUseRate = documentedAbatementEligibleRate OR (combinedSalesUseTaxRate - localSchoolSupportTaxRate); propertyTaxAbatementCents = SUM(documentedPropertyTaxAbatementAmountCents OR (officialTaxBeforeRetaAbatementCents * approvedPropertyTaxAbatementRate));",
+        "implementationNotes": [
+          "Promote from calculationModel null to method nv_reta_sales_use_and_property_tax_abatement with document gates and component-level inputs.",
+          "Keep includeInUserFacingTotal default false until the method verifies required documents; then include only validated sales/use and property components.",
+          "For sales/use, filter transactions by approved purchaser, category, and date before multiplying by the abatable rate.",
+          "For property tax, use official taxBeforeRetaAbatementCents or documentedAbatementAmountCents by year; do not derive taxable value, depreciation, or tax district rates from profile facts.",
+          "The synthetic fixture's sales/use expected value is 13,264,000,000 cents times 0.045, or 596,880,000 cents.",
+          "The synthetic fixture's provided property years total 156,695,000 + 151,965,000 + 147,235,000 = 455,895,000 cents.",
+          "Prompt/context file cited for this repair record: "
+        ]
+      },
       "canonicalInputRequirements": [
         {
           "inputKey": "governor_s_office_of_energy_reta_application",
@@ -1112,9 +1241,61 @@
       "includeInUserFacingTotalDefault": false,
       "customerFacingSavingsCentsDefault": 0,
       "sourceConfidence": "high",
-      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "runtimeSupportStatus": "source_backed_runtime_model",
       "localWorkflowId": null,
-      "calculationModel": null,
+      "calculationModel": {
+        "method": "mt_energy_production_development_property_tax_abatement",
+        "financialRole": "tax_benefit",
+        "financialTiming": "multi_year_tax_schedule",
+        "repairDisposition": "implement_runtime_model",
+        "sourceConfidence": "high",
+        "estimateConfidenceIfInputsPresent": "high",
+        "sourceRepairFile": "GPT Pro Work/tax-unsupported-runtime-model-repair-2026-07-05/output_004_montana-energy-production-development-property-tax-abatement.md",
+        "sourceRepairSchemaVersion": "tax_unsupported_runtime_model_repair.v1",
+        "gateConditions": [
+          "deq_certification_status_and_certificate_identifier.status == 'certified'",
+          "deq_certification_status_and_certificate_identifier.revoked != true",
+          "current_year_within_qualifying_period.withinQualifyingPeriod == true",
+          "qualifying_taxable_value_from_montana_department_of_revenue_or_tax_bill > 0",
+          "total_mill_rate_for_the_property > 0",
+          "if facility_or_equipment_type_under_mont_code_ann_15_24_3111 is renewable diesel production facility or sustainable aviation fuel production facility, confirmation_that_the_same_property_is_not_also_receiving_a_conflicting_15_24_1402_abatement_for_renewable_diesel_or_sustainable_aviation_fuel == true",
+          "if facility_or_equipment_type_under_mont_code_ann_15_24_3111 is clean advanced coal R&D equipment or renewable energy R&D equipment, the provided qualifying taxable value is documented by DOR/assessor as limited to the first $1,000,000 of equipment value"
+        ],
+        "requiredInputs": [
+          "deq_certification_status_and_certificate_identifier",
+          "facility_or_equipment_type_under_mont_code_ann_15_24_3111",
+          "facility_address_and_geospatial_location",
+          "current_year_within_qualifying_period",
+          "qualifying_taxable_value_from_montana_department_of_revenue_or_tax_bill",
+          "total_mill_rate_for_the_property",
+          "research_and_development_equipment_value_if_applicable",
+          "confirmation_that_the_same_property_is_not_also_receiving_a_conflicting_15_24_1402_abatement_for_renewable_diesel_or_sustainable_aviation_fuel"
+        ],
+        "tableConstants": {
+          "assessmentReductionFraction": 0.5,
+          "assessmentTaxableFractionDuringAbatement": 0.5,
+          "rdEquipmentValueCapCents": 100000000,
+          "millRateDivisor": 1000,
+          "maximumQualifyingPeriodYears": 19,
+          "postOperationOrPostPurchaseYears": 15,
+          "facilityConstructionStartAfterDate": "2007-06-01",
+          "rdEquipmentPlacedInServiceAfterDate": "2007-06-30"
+        },
+        "caps": {
+          "rdEquipmentValueCapCents": 100000000,
+          "qualifyingPeriodMaxYears": 19,
+          "abatementSavingsFractionOfPreAbatementTaxOnQualifyingValue": 0.5
+        },
+        "formulaPlainEnglish": "For an approved tax year, compute the tax avoided by assessing the documented qualifying property at 50% of its pre-abatement taxable value instead of 100%. Annual savings equals 50% of the DOR/assessor-documented qualifying pre-abatement taxable value multiplied by total property mills divided by 1,000. For R&D equipment, the qualifying taxable value input must already reflect the statutory first-$1,000,000 equipment-value limitation.",
+        "formulaAmountCents": "gated ? round(qualifying_taxable_value_from_montana_department_of_revenue_or_tax_bill * 0.50 * total_mill_rate_for_the_property / 1000) : 0",
+        "implementationNotes": [
+          "RetroFi uploaded context used for the target identifiers and synthetic fixture: ",
+          "Add a new method named mt_energy_production_development_property_tax_abatement; no existing implemented method covers Montana property-tax assessment abatements.",
+          "Keep includeInUserFacingTotalDefault false until required document inputs pass. When inputs pass, include only the calculated annual tax-year amount.",
+          "Do not request or evaluate broad eligibility facts at runtime when a valid DEQ certification document already establishes qualification; use facility/equipment type only for formula branching and statutory conflict checks.",
+          "If a tax extractor reads only post-abatement taxable value from a bill, do not treat it as pre-abatement taxable value unless the bill or assessor workpaper labels the basis. Prefer the DOR/assessor pre-abatement qualifying taxable value input."
+        ]
+      },
       "canonicalInputRequirements": [
         {
           "inputKey": "deq_certification_status_and_certificate_identifier",
@@ -1247,9 +1428,68 @@
       "includeInUserFacingTotalDefault": false,
       "customerFacingSavingsCentsDefault": 0,
       "sourceConfidence": "high",
-      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "runtimeSupportStatus": "source_backed_runtime_liability_model_suppressed_customer_savings",
       "localWorkflowId": null,
-      "calculationModel": null,
+      "calculationModel": {
+        "method": "ct_uniform_solar_capacity_tax_liability",
+        "financialRole": "tax_liability",
+        "financialTiming": "multi_year_tax_schedule",
+        "repairDisposition": "suppress_customer_value",
+        "sourceConfidence": "high",
+        "estimateConfidenceIfInputsPresent": "high",
+        "sourceRepairFile": "GPT Pro Work/tax-unsupported-runtime-model-repair-2026-07-05/output_005_connecticut-solar-capacity-tax-special-valuation.md",
+        "sourceRepairSchemaVersion": "tax_unsupported_runtime_model_repair.v1",
+        "gateConditions": [
+          "state_code_is_CT",
+          "system_is_solar_photovoltaic_generation",
+          "capacity_exceeds_location_load_confirmed",
+          "municipal_agreement_status_documented"
+        ],
+        "requiredInputs": [
+          "calculation_uniform_solar_capacity_tax_year_start_date",
+          "permission_to_operate_date_from_electric_distribution_company_or_municipal_electric_utility",
+          "aggregated_system_nameplate_capacity_mw",
+          "municipal_capacity_allocations",
+          "statutory_exclusion_flags",
+          "municipal_freeze_or_stabilization_agreement_status_and_terms"
+        ],
+        "tableConstants": {
+          "statutory_rate_cents_per_mw": 1000000,
+          "minimum_nameplate_capacity_mw_exclusive": 1,
+          "retroactive_pto_start_date": "2025-07-01",
+          "first_imposed_tax_year_start_date": "2026-07-01",
+          "duration_years_pto_2025_07_01_to_2026_06_30": 19,
+          "duration_years_pto_on_or_after_2026_07_01": 20,
+          "uniform_tax_year_start_month": 7,
+          "uniform_tax_year_start_day": 1,
+          "delinquent_interest_rate_per_month": 0.015
+        },
+        "caps": {
+          "duration_years": {
+            "pto_2025_07_01_to_2026_06_30": 19,
+            "pto_on_or_after_2026_07_01": 20
+          },
+          "default_rate_cents_per_mw": 1000000,
+          "statutory_exclusion_flags": [
+            "state_owned_land",
+            "brownfield",
+            "landfill",
+            "residential_rooftop",
+            "commercial_rooftop",
+            "industrial_rooftop",
+            "solar_canopy",
+            "critical_facility_microgrid"
+          ]
+        },
+        "formulaPlainEnglish": "For an active uniform solar capacity tax year, annual liability equals $10,000 multiplied by the solar photovoltaic system nameplate capacity in MW, including fractional MW, allocated among municipalities by nameplate capacity located in each municipality. PTO from 2025-07-01 through 2026-06-30 has a 19-tax-year duration starting 2026-07-01. PTO on or after 2026-07-01 has a 20-tax-year duration starting with the uniform tax year containing PTO. A documented municipal freeze or stabilization agreement applies in lieu of the statutory formula for that municipality. Customer-facing savings is always 0.",
+        "formulaAmountCents": "annual_tax_liability_cents = active ? SUM(municipal_agreement_override_cents OR allocated_nameplate_capacity_mw * 1000000) : 0; customer_facing_savings_cents = 0",
+        "implementationNotes": [
+          "Suppress from customer-facing savings totals; do not archive because official evidence supports the liability rule.",
+          "Use a new internal liability/compliance method, not existing credit or exemption methods.",
+          "Fixture expected output: annual liability 1,840,000 cents and customer-facing savings 0 cents.",
+          "Uploaded RetroFi prompt/context file used for identifiers and fixture context only; official sources control the rule. "
+        ]
+      },
       "canonicalInputRequirements": [
         {
           "inputKey": "permission_to_operate_date_from_electric_distribution_company_or_municipal_electric_utility",
@@ -1374,9 +1614,105 @@
       "includeInUserFacingTotalDefault": false,
       "customerFacingSavingsCentsDefault": 0,
       "sourceConfidence": "high",
-      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "runtimeSupportStatus": "source_backed_runtime_model",
       "localWorkflowId": null,
-      "calculationModel": null,
+      "calculationModel": {
+        "method": "md_baltimore_county_high_performance_property_tax_credit",
+        "financialRole": "tax_benefit",
+        "financialTiming": "multi_year_tax_schedule",
+        "repairDisposition": "implement_runtime_model",
+        "sourceConfidence": "high",
+        "estimateConfidenceIfInputsPresent": "high",
+        "sourceRepairFile": "GPT Pro Work/tax-unsupported-runtime-model-repair-2026-07-05/output_006_baltimore-county-high-performance-building-home-property-tax-credit.md",
+        "sourceRepairSchemaVersion": "tax_unsupported_runtime_model_repair.v1",
+        "gateConditions": [
+          "application_filing_date_and_approval_status.approvalStatus == 'approved'",
+          "documentation_from_an_energy_systems_professional_or_other_required_certifying_professional.documentProvided == true",
+          "available_annual_program_cap_allocation.capAllocationAvailable == true",
+          "available_annual_program_cap_allocation.approvedAllocationCents > 0",
+          "remaining_credit_years > 0",
+          "confirmation_that_the_property_has_not_been_altered_in_a_way_that_terminates_eligibility == true"
+        ],
+        "requiredInputs": [
+          "baltimore_county_property_account_and_qualified_structure_identifier",
+          "baltimore_county_real_property_tax_amount_attributable_to_the_qualifying_building_or_home",
+          "application_type_high_performance_building_or_high_performance_home",
+          "certification_path_leed_nc_leed_cs_leed_eb_leed_for_homes_national_green_building_standard_or_county_recognized_increased_efficiency_path",
+          "rating_level_silver_gold_platinum_emerald_or_certified_energy_efficiency_percentage",
+          "documentation_from_an_energy_systems_professional_or_other_required_certifying_professional",
+          "application_filing_date_and_approval_status",
+          "first_taxable_year_for_which_the_credit_is_sought",
+          "remaining_credit_years",
+          "available_annual_program_cap_allocation",
+          "whether_a_revitalization_property_credit_or_other_county_credit_applies_first",
+          "confirmation_that_the_property_has_not_been_altered_in_a_way_that_terminates_eligibility"
+        ],
+        "tableConstants": {
+          "buildingRates": {
+            "leed_nc": {
+              "silver": 0.5,
+              "gold": 0.6,
+              "platinum": 0.8,
+              "durationYears": 5
+            },
+            "leed_cs": {
+              "silver": 0.4,
+              "gold": 0.5,
+              "platinum": 0.7,
+              "durationYears": 5
+            },
+            "leed_eb": {
+              "silver": 0.1,
+              "gold": 0.25,
+              "platinum": 0.5,
+              "durationYears": 3
+            },
+            "ngbs_building": {
+              "silver": 0.5,
+              "gold": 0.6,
+              "emerald": 0.8,
+              "durationYears": 5
+            }
+          },
+          "homeRates": {
+            "leed_for_homes": {
+              "silver": 0.4,
+              "gold": 0.6,
+              "platinum": 1,
+              "durationYears": 3
+            },
+            "ngbs_home": {
+              "silver": 0.4,
+              "gold": 0.6,
+              "emerald": 1,
+              "durationYears": 3
+            },
+            "home_energy_efficiency_improvement": {
+              "rateSource": "certifiedEnergyEfficiencyRate",
+              "minimumRate": 0.3,
+              "maximumRuntimeRate": 1,
+              "durationYears": 3,
+              "carbonNeutralDurationYears": 5
+            }
+          }
+        },
+        "caps": {
+          "buildingAggregateProgramCapCents": 500000000,
+          "homeAnnualAggregateProgramCapCents": 100000000,
+          "perYearCreditCannotExceedEligibleCountyRealPropertyTaxCents": true,
+          "mustUseCountyApprovedAnnualAllocationCents": true
+        },
+        "formulaPlainEnglish": "For an approved tax year, multiply the Baltimore County real property tax amount attributable to the qualifying building or home by the documented certification rate. For a high-performance home certified through an increased-energy-efficiency path, use the documented efficiency-improvement percentage as the rate, subject to the 30% minimum and 100% tax-liability ceiling. Cap the result by the eligible county tax amount and by the county-approved annual cap allocation for that property and year.",
+        "formulaAmountCents": "gates_pass ? min(floor(eligible_county_real_property_tax_cents * applicable_rate), eligible_county_real_property_tax_cents, approved_annual_program_cap_allocation_cents) : 0",
+        "implementationNotes": [
+          "RetroFi supplied context was read from the uploaded prompt file: ",
+          "Implement as a gated runtime model, not as an ungated pre-approval estimate.",
+          "Do not infer application approval, cap allocation, tax base, or remaining credit years from address, certification ambition, project quote, or assessor value alone.",
+          "Use the official county approval/allocation document as the gate for annual cap availability; aggregate program caps are not customer-calculable.",
+          "Prefer document-extracted eligible county real property tax for the qualifying structure. If only a full tax bill is available and the qualifying structure share is unclear, block for assessor/tax-bill extraction.",
+          "When an approval document supplies an exact annual approved credit amount, use it as a hard ceiling and never show a higher calculated amount."
+        ]
+      },
       "canonicalInputRequirements": [
         {
           "inputKey": "baltimore_county_property_account_and_qualified_structure_identifier",
@@ -1521,9 +1857,93 @@
       "includeInUserFacingTotalDefault": false,
       "customerFacingSavingsCentsDefault": 0,
       "sourceConfidence": "high",
-      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "runtimeSupportStatus": "source_backed_runtime_model",
       "localWorkflowId": null,
-      "calculationModel": null,
+      "calculationModel": {
+        "method": "md_pg_county_green_high_performance_property_tax_credit",
+        "financialRole": "tax_benefit",
+        "financialTiming": "multi_year_tax_schedule",
+        "repairDisposition": "implement_runtime_model",
+        "sourceConfidence": "high",
+        "estimateConfidenceIfInputsPresent": "high",
+        "sourceRepairFile": "GPT Pro Work/tax-unsupported-runtime-model-repair-2026-07-05/output_007_prince-george-s-county-green-high-performance-property-tax-credit.md",
+        "sourceRepairSchemaVersion": "tax_unsupported_runtime_model_repair.v1",
+        "gateConditions": [
+          "county_application_approval_and_funding_availability.applicationStatus is approved for the selected track and current tax year",
+          "county_application_approval_and_funding_availability.fundingAvailabilityConfirmed is true or approvedCreditAmountCents is provided for the current tax year",
+          "confirmation_that_no_prohibited_overlapping_property_tax_credit_is_claimed_for_the_same_property_and_year.confirmedNoOverlappingCredit is true",
+          "current county tax base used in the formula excludes state, municipal, special district, fee, interest, and penalty lines",
+          "allocation_of_county_tax_to_eligible_building_real_property_portion_personal_property_or_exclusively_used_portion.eligibleCountyTaxBaseCents is supported by tax bill, assessor, county approval, or approved workpaper"
+        ],
+        "requiredInputs": [
+          "selected_pg_county_green_high_performance_credit_track",
+          "prince_george_s_county_property_tax_account_number",
+          "current_county_real_property_tax_bill_and_county_only_tax_amount",
+          "current_county_personal_property_tax_bill_if_claiming_green_business_personal_property_credit",
+          "allocation_of_county_tax_to_eligible_building_real_property_portion_personal_property_or_exclusively_used_portion",
+          "credit_year_within_the_allowed_term",
+          "green_business_certification_from_an_accepted_third_party_certifier_if_applicable",
+          "high_performance_certification_level_and_rating_system_if_applicable",
+          "use_and_occupancy_permit_or_other_county_required_property_documentation",
+          "lease_and_contractual_property_tax_liability_documentation_if_the_claimant_is_a_lessee",
+          "confirmation_that_no_prohibited_overlapping_property_tax_credit_is_claimed_for_the_same_property_and_year",
+          "county_application_approval_and_funding_availability"
+        ],
+        "tableConstants": {
+          "green_business_real_property": {
+            "durationYears": 5,
+            "ratesByCreditYearBps": {
+              "1": 10000,
+              "2": 8000,
+              "3": 6000,
+              "4": 4000,
+              "5": 2000
+            }
+          },
+          "green_business_personal_property": {
+            "durationYears": 5,
+            "ratesByCreditYearBps": {
+              "1": 5000,
+              "2": 5000,
+              "3": 5000,
+              "4": 5000,
+              "5": 5000
+            }
+          },
+          "high_performance_new_major_bdc_ngbs_equivalent": {
+            "durationYears": 5,
+            "ratesByCertificationLevelBps": {
+              "silver": 2500,
+              "gold": 5000,
+              "platinum": 7500,
+              "emerald": 7500
+            }
+          },
+          "high_performance_existing_om_equivalent": {
+            "durationYears": 3,
+            "ratesByCertificationLevelBps": {
+              "silver": 1000,
+              "gold": 2500,
+              "platinum": 5000
+            }
+          }
+        },
+        "caps": {
+          "greenBusinessAggregateFiscalYearCapCents": 100000000,
+          "highPerformanceAggregateFiscalYearCapCents": 500000000,
+          "capEnforcement": "Runtime must not allocate aggregate fiscal-year caps from user data. Treat cap and funding as satisfied only when the county approval or funding-availability input confirms the current tax year is approved and funded.",
+          "computedAmountCap": "Do not cap against total tax bill lines other than by requiring the eligible county-only tax base. All official rates are 100% or lower, so formula output should not exceed the eligible county-only base unless a county-approved credit amount is used as the controlling documented amount."
+        },
+        "formulaPlainEnglish": "After the county approval and funding gates are satisfied, calculate the annual credit for the selected track. Green Business real property equals the eligible county real property tax base multiplied by 100%, 80%, 60%, 40%, or 20% for credit years 1 through 5. Green Business personal property equals the eligible county personal property tax base multiplied by 50% for credit years 1 through 5. High Performance Building new construction, major renovation, core-and-shell, NGBS, or equivalent equals the eligible county real property tax base multiplied by 25% for Silver, 50% for Gold, or 75% for Platinum or Emerald for 5 years. High Performance Building existing building LEED O+M or equivalent equals the eligible county real property tax base multiplied by 10% for Silver, 25% for Gold, or 50% for Platinum for 3 years.",
+        "formulaAmountCents": "amountCents = county_application_approval_and_funding_availability.approvedCreditAmountCents if present; otherwise amountCents = floor(eligibleCountyTaxBaseCents * applicableRateBps / 10000). eligibleCountyTaxBaseCents must be the pre-credit county-only tax attributable to the approved eligible property, building, personal property, or exclusively used portion.",
+        "implementationNotes": [
+          "This should be implemented as a runtime model with program-document and tax-bill gates, not as an ungated pre-approval savings estimate.",
+          "The model can include user-facing total only when all required inputs are present and the county approval or finance approval document confirms the current tax year is approved and funded.",
+          "Do not apply these credits to the full tax bill total; use only the county-only tax line allocated to the eligible approved property or property portion.",
+          "If the county approval document states a specific approved credit amount for the current tax year, that documented amount should override the formula-derived amount.",
+          "The uploaded RetroFi prompt source was reviewed for the repair context: "
+        ]
+      },
       "canonicalInputRequirements": [
         {
           "inputKey": "prince_george_s_county_property_tax_account_number",
@@ -1650,9 +2070,156 @@
       "includeInUserFacingTotalDefault": false,
       "customerFacingSavingsCentsDefault": 0,
       "sourceConfidence": "high",
-      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "runtimeSupportStatus": "source_backed_runtime_model",
       "localWorkflowId": null,
-      "calculationModel": null,
+      "calculationModel": {
+        "method": "md_anne_arundel_energy_high_performance_property_tax_credit",
+        "financialRole": "tax_benefit",
+        "financialTiming": "multi_year_tax_schedule",
+        "repairDisposition": "implement_runtime_model",
+        "sourceConfidence": "high",
+        "estimateConfidenceIfInputsPresent": "high",
+        "sourceRepairFile": "GPT Pro Work/tax-unsupported-runtime-model-repair-2026-07-05/output_008_anne-arundel-county-solar-geothermal-high-performance-property-tax-credit.md",
+        "sourceRepairSchemaVersion": "tax_unsupported_runtime_model_repair.v1",
+        "gateConditions": [
+          "county_credit_approval_document.approvalStatus == 'approved'",
+          "current_county_real_property_tax_bill.verified == true OR assessor_allocation_document.verified == true",
+          "county_tax_amount_attributable_to_qualifying_dwelling_or_building_excluding_land_cents is present and official",
+          "remaining_county_property_tax_liability_after_prior_credits_cents is present and official",
+          "if approvedCreditPath is high_performance_residential or high_performance_commercial, no_other_optional_county_property_tax_credit_for_same_year == true"
+        ],
+        "requiredInputs": [
+          "anne_arundel_county_property_account_number",
+          "anne_arundel_county_credit_approval_document",
+          "anne_arundel_county_approved_credit_path",
+          "current_county_real_property_tax_bill",
+          "calculation_tax_year",
+          "county_tax_amount_attributable_to_qualifying_dwelling_or_building_excluding_land_cents",
+          "remaining_county_property_tax_liability_after_prior_credits_cents",
+          "solar_or_geothermal_total_paid_cost_for_materials_installation_and_construction_cents",
+          "solar_or_geothermal_required_grant_and_state_credit_reduction_cents",
+          "solar_or_geothermal_installation_and_final_inspection_dates",
+          "paid_receipts_and_invoices_for_solar_or_geothermal_equipment",
+          "high_performance_building_assessment_classification",
+          "high_performance_rating_level_and_certification_documentation",
+          "high_performance_application_approval_year",
+          "other_county_optional_credits_same_property_tax_year"
+        ],
+        "tableConstants": {
+          "solar_residential": {
+            "rateNumerator": 1,
+            "rateDenominator": 2,
+            "capCents": 250000,
+            "oneTime": true,
+            "firstEligibleInstallationDate": "2007-01-01",
+            "allowedPropertyUse": "residential_dwelling"
+          },
+          "geothermal_residential": {
+            "rateNumerator": 1,
+            "rateDenominator": 2,
+            "capCents": 250000,
+            "oneTime": true,
+            "firstEligibleInstallationDate": "2009-01-01",
+            "allowedPropertyUse": "residential_dwelling"
+          },
+          "high_performance_residential": {
+            "durationYears": 5,
+            "ratingTable": {
+              "leed_silver": {
+                "rateNumerator": 40,
+                "rateDenominator": 100,
+                "capCents": 100000
+              },
+              "ngbs_silver": {
+                "rateNumerator": 40,
+                "rateDenominator": 100,
+                "capCents": 100000
+              },
+              "leed_gold": {
+                "rateNumerator": 60,
+                "rateDenominator": 100,
+                "capCents": 200000
+              },
+              "ngbs_gold": {
+                "rateNumerator": 60,
+                "rateDenominator": 100,
+                "capCents": 200000
+              },
+              "leed_platinum": {
+                "rateNumerator": 80,
+                "rateDenominator": 100,
+                "capCents": 300000
+              },
+              "ngbs_emerald": {
+                "rateNumerator": 80,
+                "rateDenominator": 100,
+                "capCents": 300000
+              }
+            }
+          },
+          "high_performance_commercial": {
+            "durationYears": 5,
+            "ratingTable": {
+              "leed_silver": {
+                "rateNumerator": 40,
+                "rateDenominator": 100,
+                "capCents": 2000000
+              },
+              "ngbs_silver": {
+                "rateNumerator": 40,
+                "rateDenominator": 100,
+                "capCents": 2000000
+              },
+              "leed_gold": {
+                "rateNumerator": 60,
+                "rateDenominator": 100,
+                "capCents": 4000000
+              },
+              "ngbs_gold": {
+                "rateNumerator": 60,
+                "rateDenominator": 100,
+                "capCents": 4000000
+              },
+              "leed_platinum": {
+                "rateNumerator": 80,
+                "rateDenominator": 100,
+                "capCents": 6000000
+              },
+              "ngbs_emerald": {
+                "rateNumerator": 80,
+                "rateDenominator": 100,
+                "capCents": 6000000
+              }
+            }
+          }
+        },
+        "caps": {
+          "solarAndGeothermalOneTimeCapCents": 250000,
+          "highPerformanceResidentialCapsCents": {
+            "silver": 100000,
+            "gold": 200000,
+            "platinum_or_emerald": 300000
+          },
+          "highPerformanceCommercialCapsCents": {
+            "silver": 2000000,
+            "gold": 4000000,
+            "platinum_or_emerald": 6000000
+          },
+          "liabilityCaps": [
+            "remaining_county_property_tax_liability_after_prior_credits_cents",
+            "county_tax_amount_attributable_to_qualifying_dwelling_or_building_excluding_land_cents"
+          ]
+        },
+        "formulaPlainEnglish": "For a County-approved application and a verified current County property tax bill or assessor allocation, calculate the current-tax-year credit for the approved path. Solar and geothermal are one-time residential-dwelling credits equal to the lesser of the statutory cost-based amount, $2,500, the dwelling-only County tax excluding land, and remaining County tax liability. High-performance building credits are annual building-only credits for up to five taxable years beginning with the approval year, using rating-specific rates and caps, limited by remaining County tax liability. Do not project future high-performance annual amounts unless each year’s official tax inputs are supplied.",
+        "formulaAmountCents": "solar_or_geothermal_current_year_amount_cents = min(max(0, floor(total_paid_cost_cents / 2) - required_grant_and_state_credit_reduction_cents), 250000, county_dwelling_tax_excluding_land_cents, remaining_county_property_tax_liability_cents). high_performance_current_year_amount_cents = min(floor(county_building_tax_excluding_land_cents * rating_rate), rating_cap_cents, remaining_county_property_tax_liability_cents) when current_tax_year is approval_year through approval_year+4.",
+        "implementationNotes": [
+          "This is not a free-form estimate. The executable model should be allowed, but positive inclusion must be gated by the County approval document and official County tax bill or assessor allocation.",
+          "For solar/geothermal, calculate the statutory amount as max(0, floor(total_paid_cost_cents / 2) - required_grant_and_state_credit_reduction_cents), then apply the $2,500, dwelling-tax-only, and remaining-liability caps.",
+          "For high-performance, calculate only the current tax year’s annual credit unless a schedule of official tax inputs is available for multiple years.",
+          "If the approved credit path and user-selected path disagree, use the official County approval document and treat the user-selected path as non-authoritative.",
+          "The uploaded RetroFi prompt/context was reviewed for the target record and synthetic profile: "
+        ]
+      },
       "canonicalInputRequirements": [
         {
           "inputKey": "anne_arundel_county_property_account_number",
@@ -1787,9 +2354,73 @@
       "includeInUserFacingTotalDefault": false,
       "customerFacingSavingsCentsDefault": 0,
       "sourceConfidence": "high",
-      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "runtimeSupportStatus": "source_backed_runtime_model",
       "localWorkflowId": null,
-      "calculationModel": null,
+      "calculationModel": {
+        "method": "ny_rptl_487_property_tax_exemption",
+        "financialRole": "tax_benefit",
+        "financialTiming": "multi_year_tax_schedule",
+        "repairDisposition": "implement_runtime_model",
+        "sourceConfidence": "high",
+        "estimateConfidenceIfInputsPresent": "high",
+        "sourceRepairFile": "GPT Pro Work/tax-unsupported-runtime-model-repair-2026-07-05/output_009_new-york-rptl-487-real-property-tax-exemption.md",
+        "sourceRepairSchemaVersion": "tax_unsupported_runtime_model_repair.v1",
+        "gateConditions": [
+          "form_rp_487_filing_confirmation.filed == true",
+          "assessor_approval_and_assessor_approved_exempt_assessed_value.approvalStatus == 'approved'",
+          "estimate_year >= assessor_approval_and_assessor_approved_exempt_assessed_value.exemptionTermStartYear",
+          "estimate_year <= assessor_approval_and_assessor_approved_exempt_assessed_value.exemptionTermEndYear",
+          "current_official_rptl_487_opt_out_status_for_each_overlapping_taxing_jurisdiction_and_technology_category.jurisdictionStatuses covers every overlapping taxable jurisdiction",
+          "pilot_notice_pilot_agreement_or_official_confirmation_that_no_pilot_is_required documents either no PILOT or the annual PILOT payment for the estimate year",
+          "current_tax_rates_for_each_applicable_non_opt_out_taxing_jurisdiction.rateBasis == 'dollars_per_1000_assessed_value'"
+        ],
+        "requiredInputs": [
+          "parcel_address_and_tax_map_section_block_lot_identifier",
+          "all_overlapping_taxing_jurisdictions_for_the_parcel_including_county_city_or_town_village_if_applicable_and_school_district",
+          "eligible_technology_category",
+          "taxable_status_date_for_the_assessing_unit",
+          "form_rp_487_filing_confirmation",
+          "assessor_approval_and_assessor_approved_exempt_assessed_value",
+          "incremental_cost_and_total_cost_if_the_rp_487_incremental_cost_calculation_applies",
+          "current_official_rptl_487_opt_out_status_for_each_overlapping_taxing_jurisdiction_and_technology_category",
+          "pilot_notice_pilot_agreement_or_official_confirmation_that_no_pilot_is_required",
+          "current_tax_rates_for_each_applicable_non_opt_out_taxing_jurisdiction",
+          "estimate_year"
+        ],
+        "tableConstants": {
+          "exemptionTermYears": 15,
+          "supportedRateBasis": "dollars_per_1000_assessed_value",
+          "partialExemptionExcludesSpecialAdValoremLevies": true,
+          "partialExemptionExcludesSpecialAssessments": true,
+          "pilotPossibleTechnologyCategories": [
+            "solar_energy_system",
+            "wind_energy_system"
+          ],
+          "optOutJurisdictionTypes": [
+            "county",
+            "city",
+            "town",
+            "village",
+            "school_district"
+          ],
+          "officialOptOutListRecordsOnFileAsOf": "2026-03-31"
+        },
+        "caps": {
+          "maxExemptionTermYears": 15,
+          "maxPilotTermYears": 15,
+          "annualPilotPaymentCentsMax": "gross_tax_effect_cents_for_same_estimate_year",
+          "exemptAssessedValueCentsMax": "assessor_approved_increase_in_assessed_value_attributable_to_system_or_assessor_approved_incremental_cost_result"
+        },
+        "formulaPlainEnglish": "For each estimate year during the approved 15-year exemption term, use the assessor-approved exempt assessed value for the eligible system. For each overlapping taxing jurisdiction that has not opted out for the applicable technology category, multiply that exempt assessed value by the jurisdiction's current property-tax rate normalized as dollars per $1,000 of assessed value. Sum the eligible jurisdiction tax effects, excluding special ad valorem levies and special assessments, then subtract the documented annual PILOT payment for that estimate year. If no PILOT is required, the PILOT offset is zero. Do not calculate any nonzero customer value until the assessor approval/exempt-value gate, opt-out gate, tax-rate gate, and PILOT/no-PILOT gate are satisfied.",
+        "formulaAmountCents": "amount_cents = max(0, Σ_j(round(exempt_assessed_value_cents * tax_rate_per_1000_assessed_value_j / 1000)) - min(documented_annual_pilot_payment_cents_for_estimate_year, Σ_j(round(exempt_assessed_value_cents * tax_rate_per_1000_assessed_value_j / 1000)))) for jurisdictions j where official opt_out_status_j == false and levy line applies to RPTL §487; otherwise 0 or blocked_zero.",
+        "implementationNotes": [
+          "Add ny_rptl_487_property_tax_exemption as a gated property-tax exemption method; do not route this rule to any existing sales/use or income-tax-credit runtime method.",
+          "The method may include a user-facing annual value only when the gate inputs are present; otherwise keep customerFacingSavingsCents at 0 and surface blocked_for_assessor_tax_bill_or_pilot_input.",
+          "For the Albany synthetic fixture, the expected annual amount is 142766 cents: assessor-approved exempt assessed value 3800000 cents times combined rate 37.57 dollars per $1000 assessed value divided by 1000, less 0 PILOT.",
+          "Use per-jurisdiction rates internally even when a combined rate is displayed, because opt-out status and PILOT offsets can vary by jurisdiction.",
+          "Reviewed RetroFi context from uploaded file: "
+        ]
+      },
       "canonicalInputRequirements": [
         {
           "inputKey": "parcel_address_and_tax_map_section_block_lot_identifier",
@@ -1916,9 +2547,94 @@
       "includeInUserFacingTotalDefault": false,
       "customerFacingSavingsCentsDefault": 0,
       "sourceConfidence": "high",
-      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "runtimeSupportStatus": "source_backed_runtime_model",
       "localWorkflowId": null,
-      "calculationModel": null,
+      "calculationModel": {
+        "method": "va_local_option_solar_property_tax_exemption",
+        "financialRole": "tax_benefit",
+        "financialTiming": "multi_year_tax_schedule",
+        "repairDisposition": "implement_runtime_model",
+        "sourceConfidence": "high",
+        "estimateConfidenceIfInputsPresent": "high",
+        "sourceRepairFile": "GPT Pro Work/tax-unsupported-runtime-model-repair-2026-07-05/output_001_virginia-local-option-solar-property-tax-exemption.md",
+        "sourceRepairSchemaVersion": "tax_unsupported_runtime_model_repair.v1",
+        "gateConditions": [
+          "state_code == 'VA'",
+          "virginia_locality is present",
+          "verified_locality_subrule in ['city_of_alexandria_va','city_of_fairfax_va'] OR official_local_ordinance_package.status == 'verified'",
+          "local_building_department_certification.certification_status == 'certified'",
+          "assessor_determined_certified_exemption_value.certified_exemption_value_cents > 0 OR official_bill_solar_credit_amount_cents > 0",
+          "current_locality_real_property_tax_rate_and_tax_bill.real_property_tax_rate_per_100_assessed_value is present OR official_bill_solar_credit_amount_cents is present",
+          "whether_the_system_qualifies_for_the_separate_25_kw_or_less_statewide_wholly_exempt_treatment == false"
+        ],
+        "requiredInputs": [
+          "virginia_locality",
+          "tax_year_for_calculation",
+          "property_address_and_tax_account_number",
+          "verified_locality_subrule",
+          "installation_date",
+          "whether_the_system_qualifies_for_the_separate_25_kw_or_less_statewide_wholly_exempt_treatment",
+          "local_building_department_certification",
+          "assessor_determined_certified_exemption_value",
+          "current_locality_real_property_tax_rate_and_tax_bill"
+        ],
+        "tableConstants": {
+          "stateAuthority": {
+            "codeSection": "Va. Code § 58.1-3661",
+            "adminCodeChapter": "13 VAC 5-200",
+            "minimumLocalOptionTermYears": 5
+          },
+          "verifiedLocalities": {
+            "city_of_alexandria_va": {
+              "displayName": "City of Alexandria",
+              "benefitForm": "assessed_value_deduction",
+              "defaultTermYears": 5,
+              "supportedTaxType": "real_property_tax",
+              "requiresAssessorFinalApprovalLetter": true,
+              "officialSourceUrls": [
+                "[https://www.alexandriava.gov/EcoCityHomes](https://www.alexandriava.gov/EcoCityHomes)",
+                "[https://www.alexandriava.gov/code-administration/code-administration-applications-forms](https://www.alexandriava.gov/code-administration/code-administration-applications-forms)",
+                "[https://media.alexandriava.gov/docs-archives/code/info/solar-energy-equipment-tax-exemption-forms-04.11.pdf](https://media.alexandriava.gov/docs-archives/code/info/solar-energy-equipment-tax-exemption-forms-04.11.pdf)"
+              ],
+              "customerFacingBaseSource": "assessor_final_approval_letter_or_tax_bill",
+              "officialMaterialNotes": "Official examples describe many solar panels or hot-water systems at 100% of cost and installation, but runtime must use assessor-certified exempt value, not invoice cost alone."
+            },
+            "city_of_fairfax_va": {
+              "displayName": "City of Fairfax",
+              "benefitForm": "real_estate_tax_credit_or_bill_reduction",
+              "defaultTermYears": 10,
+              "supportedTaxType": "real_property_tax",
+              "programEffectiveDate": "2022-01-01",
+              "firstCreditTaxYear": 2023,
+              "installationsCompletedBeforeDateNotEligible": "2022-01-01",
+              "requiresRealEstateAssessmentOfficeLetter": true,
+              "officialSourceUrls": [
+                "[https://www.fairfaxva.gov/Property-Business/Taxes/Tax-Exemptions/Solar-Energy-Equipment-Tax-Exemption](https://www.fairfaxva.gov/Property-Business/Taxes/Tax-Exemptions/Solar-Energy-Equipment-Tax-Exemption)",
+                "[https://www.fairfaxva.gov/files/assets/city/v/1/treasurerfinancecor/documents/solar-energy-equipment-facilities-or-devices-certification-for-real-property-tax-exemption-applicati.pdf](https://www.fairfaxva.gov/files/assets/city/v/1/treasurerfinancecor/documents/solar-energy-equipment-facilities-or-devices-certification-for-real-property-tax-exemption-applicati.pdf)",
+                "[https://fairfax.granicus.com/MetaViewer.php?event_id=1956&meta_id=93512&view_id=11](https://fairfax.granicus.com/MetaViewer.php?event_id=1956&meta_id=93512&view_id=11)"
+              ],
+              "customerFacingBaseSource": "real_estate_assessment_office_letter_or_tax_bill",
+              "officialMaterialNotes": "Official examples describe PV and hot-water systems at 100% of cost and installation, but runtime must use the Real Estate Assessment Office value or official bill amount."
+            }
+          }
+        },
+        "caps": {
+          "rounding": "roundHalfUp to nearest cent after multiplying the certified exempt value by the applicable tax rate per $100 and dividing by 100",
+          "annualBenefitCap": "if annual_tax_due_before_exemption_cents is present, min(calculated_annual_benefit_cents, annual_tax_due_before_exemption_cents)",
+          "termCap": "do not generate benefits after exemption_start_tax_year + exemption_term_years - 1",
+          "unsupportedLocalityCap": "0 until verified locality subrule or official local ordinance and assessor workflow are present"
+        },
+        "formulaPlainEnglish": "For each eligible tax year, use the assessor-certified exempt assessed value or official solar tax-credit bill line after any local partial-exemption percentage has already been applied. If an official bill-specific solar credit amount is present, use that amount. Otherwise, annual benefit equals the assessor-certified exempt value multiplied by the applicable local tax rate per $100 of assessed value, divided by 100. Generate the benefit only for the certified start year through the certified term. Alexandria's verified term is 5 years; City of Fairfax's verified term is 10 years. Other Virginia localities require an official local subrule or assessor document before any nonzero value.",
+        "formulaAmountCents": "annualBenefitCents = official_bill_solar_credit_amount_cents if present; else roundHalfUp(assessor_certified_exempt_value_cents * applicable_tax_rate_per_100_assessed_value / 100). Example using the supplied Alexandria synthetic profile: roundHalfUp(19925000 * 1.135 / 100) = 226149 cents.",
+        "implementationNotes": [
+          "Add a new runtime method rather than using any existing sales/use tax or income-tax credit method.",
+          "The method should return the current tax year's annual benefit in amountCents and optionally emit a per-year schedule for the remaining certified term.",
+          "Prefer official bill-line solar credit amount when available; otherwise use assessor-certified exempt value multiplied by the official tax rate per $100.",
+          "Never surface a nonzero pre-approval estimate from contract value, invoices, system capacity, or generic PV cost assumptions.",
+          "For unverified Virginia localities, keep the UI blocked for official local ordinance and assessor documentation rather than allowing free-form user entry.",
+          "Context file reviewed for RetroFi target details: "
+        ]
+      },
       "canonicalInputRequirements": [
         {
           "inputKey": "virginia_locality",
@@ -2073,9 +2789,77 @@
       "includeInUserFacingTotalDefault": false,
       "customerFacingSavingsCentsDefault": 0,
       "sourceConfidence": "high",
-      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "runtimeSupportStatus": "source_backed_runtime_model",
       "localWorkflowId": null,
-      "calculationModel": null,
+      "calculationModel": {
+        "method": "md_prince_georges_green_business_property_tax_credit",
+        "financialRole": "tax_benefit",
+        "financialTiming": "multi_year_tax_schedule",
+        "repairDisposition": "implement_runtime_model",
+        "sourceConfidence": "high",
+        "estimateConfidenceIfInputsPresent": "high",
+        "sourceRepairFile": "GPT Pro Work/tax-unsupported-runtime-model-repair-2026-07-05/output_010_prince-george-s-county-green-business-real-personal-property-tax-credit.md",
+        "sourceRepairSchemaVersion": "tax_unsupported_runtime_model_repair.v1",
+        "gateConditions": [
+          "parsed_jurisdiction.state == 'MD'",
+          "parsed_jurisdiction.countyName equals Prince George's County",
+          "green_business_certification.status == 'certified'",
+          "application_approval_and_funding_status.status == 'approved_funded'",
+          "no_overlapping_credit_exemption == true",
+          "exclusive_use_percentage == 100 for the eligible property portion used as the tax base",
+          "lease_pass_through_proof_if_leased.requiredBecauseLeased != true OR lease_pass_through_proof_if_leased.proofStatus == 'provided'"
+        ],
+        "requiredInputs": [
+          "parsed_jurisdiction",
+          "property_type",
+          "credit_year_index",
+          "county_tax_on_eligible_property_portion",
+          "exclusive_use_percentage",
+          "green_business_certification",
+          "application_approval_and_funding_status",
+          "lease_pass_through_proof_if_leased",
+          "no_overlapping_credit_exemption"
+        ],
+        "tableConstants": {
+          "allowedPropertyTypes": [
+            "real_property",
+            "personal_property"
+          ],
+          "realPropertyCreditRateByYearIndex": {
+            "1": 1,
+            "2": 0.8,
+            "3": 0.6,
+            "4": 0.4,
+            "5": 0.2
+          },
+          "personalPropertyCreditRateByYearIndex": {
+            "1": 0.5,
+            "2": 0.5,
+            "3": 0.5,
+            "4": 0.5,
+            "5": 0.5
+          },
+          "approvedFundedStatusValue": "approved_funded",
+          "requiredCountyName": "Prince George's County",
+          "requiredStateCode": "MD"
+        },
+        "caps": {
+          "maxConsecutiveCreditYears": 5,
+          "annualProgramAggregateCapCents": 100000000,
+          "appliesToCountyPropertyTaxOnly": true,
+          "requiresFirstComeFundingApproval": true,
+          "samePropertyNoOtherCreditOrExemption": true
+        },
+        "formulaPlainEnglish": "After documented County approval and funding, calculate one approved property line at a time. For real property, multiply the County tax on the approved eligible property portion by the year schedule: year 1 100%, year 2 80%, year 3 60%, year 4 40%, year 5 20%. For personal property, multiply the County tax on the approved eligible property portion by 50% for each approved year 1 through 5. Return zero or block from the user-facing total unless the official program/tax/assessor gates are satisfied.",
+        "formulaAmountCents": "round_to_nearest_cent(county_tax_on_eligible_property_portion * rateByPropertyTypeAndCreditYear[property_type][credit_year_index])",
+        "implementationNotes": [
+          "This is a property tax credit, not a rebate based on retrofit invoice cost or equipment cost.",
+          "Do not derive the County tax on the eligible property portion from market value or a general tax rate unless an assessor, tax bill, or approved workpaper supports the allocation.",
+          "For leased property, include the benefit for the business only when the lease or owner acknowledgement documents the required pass-through.",
+          "Use one calculation line per approved property account and property type; sum approved lines only.",
+          "RetroFi prompt context citation: "
+        ]
+      },
       "canonicalInputRequirements": [
         {
           "inputKey": "property_type",
@@ -2333,9 +3117,92 @@
       "includeInUserFacingTotalDefault": false,
       "customerFacingSavingsCentsDefault": 0,
       "sourceConfidence": "high",
-      "runtimeSupportStatus": "program_document_tax_bill_or_assessor_gate",
+      "runtimeSupportStatus": "source_backed_runtime_model",
       "localWorkflowId": null,
-      "calculationModel": null,
+      "calculationModel": {
+        "method": "mi_renewable_energy_renaissance_zone_abatement",
+        "financialRole": "tax_benefit",
+        "financialTiming": "multi_year_tax_schedule",
+        "repairDisposition": "implement_runtime_model",
+        "sourceConfidence": "high",
+        "estimateConfidenceIfInputsPresent": "high",
+        "sourceRepairFile": "GPT Pro Work/tax-unsupported-runtime-model-repair-2026-07-05/output_011_michigan-renewable-energy-renaissance-zone-tax-abatement.md",
+        "sourceRepairSchemaVersion": "tax_unsupported_runtime_model_repair.v1",
+        "gateConditions": [
+          "state_administrative_board_designation_or_official_designation_record.designationStatus == 'approved'",
+          "michigan_strategic_fund_recommendation_or_approval_documentation.recommendationOutcome in ['recommended_to_state_administrative_board','approved']",
+          "local_unit_consent_or_resolution.consentStatus == 'approved'",
+          "confirmation_that_the_taxpayer_s_operation_is_inside_the_approved_geographic_boundary.insideApprovedBoundary == true",
+          "current_compliance_status_and_proof_taxpayer_is_current_with_state_and_local_taxes.stateTaxesCurrent == true",
+          "current_compliance_status_and_proof_taxpayer_is_current_with_state_and_local_taxes.localTaxesCurrent == true",
+          "annual_reporting_or_program_documentation_status.programStatus in ['active','active_in_good_standing']",
+          "exclusion_of_federal_taxes_local_bond_obligations_school_sinking_fund_special_assessments_sales_use_tax_and_non_exempt_taxes.excludedCategoriesConfirmed == true"
+        ],
+        "requiredInputs": [
+          "state_administrative_board_designation_or_official_designation_record",
+          "michigan_strategic_fund_recommendation_or_approval_documentation",
+          "local_unit_consent_or_resolution",
+          "approved_company_name_and_taxpayer_identifiers",
+          "renewable_energy_facility_type_and_qualifying_operations",
+          "development_agreement_where_required",
+          "legal_boundary_parcel_or_facility_map",
+          "confirmation_that_the_taxpayer_s_operation_is_inside_the_approved_geographic_boundary",
+          "term_start_date_term_end_date_and_current_zone_year",
+          "phaseout_schedule_or_applicable_multiplier",
+          "current_compliance_status_and_proof_taxpayer_is_current_with_state_and_local_taxes",
+          "tax_bills_returns_or_assessor_treasury_documents_identifying_eligible_tax_lines",
+          "exclusion_of_federal_taxes_local_bond_obligations_school_sinking_fund_special_assessments_sales_use_tax_and_non_exempt_taxes",
+          "annual_reporting_or_program_documentation_status"
+        ],
+        "tableConstants": {
+          "standardRerzSavingsMultiplierByTaxYearRelativeToFinalYear": {
+            "three_or_more_years_before_final_year": 1,
+            "second_year_before_final_year": 0.75,
+            "year_immediately_before_final_year": 0.5,
+            "final_year": 0.25,
+            "after_final_year": 0
+          },
+          "standardRerzTaxpayerPaysShareByTaxYearRelativeToFinalYear": {
+            "three_or_more_years_before_final_year": 0,
+            "second_year_before_final_year": 0.25,
+            "year_immediately_before_final_year": 0.5,
+            "final_year": 0.75,
+            "after_final_year": 1
+          },
+          "esaAcquisitionCostMultiplierByTaxYearRelativeToFinalYear": {
+            "three_or_more_years_before_final_year": 0,
+            "second_year_before_final_year": 0.25,
+            "year_immediately_before_final_year": 0.5,
+            "final_year": 0.75
+          },
+          "excludedTaxCategories": [
+            "federal_tax",
+            "corporate_income_tax",
+            "local_bond_obligation",
+            "school_sinking_fund",
+            "special_assessment",
+            "sales_tax",
+            "use_tax",
+            "non_exempt_tax_line"
+          ]
+        },
+        "caps": {
+          "maxSavingsMultiplier": 1,
+          "minSavingsMultiplier": 0,
+          "lineSavingsCannotExceedPreRerzLineAmount": true,
+          "defaultCustomerFacingSavingsCentsWhenGatesMissing": 0,
+          "maxTermYearsFromMEDCFactSheet": 15
+        },
+        "formulaPlainEnglish": "With all official gates satisfied, compute the annual benefit from documented eligible tax lines only. For each eligible line, use the documented post-RERZ tax if available; otherwise multiply the documented pre-RERZ eligible tax amount by the approved RERZ savings multiplier. Exclude federal taxes, Corporate Income Tax, local bond obligations, school sinking fund, special assessments, sales/use tax, and any line not identified as RERZ-eligible. Before the final three years the standard savings multiplier is 1.00; in the final three years the standard savings multipliers are 0.75, 0.50, and 0.25, unless the official tax document provides a more specific documented line result.",
+        "formulaAmountCents": "all_gates_true ? sum(eligibleLines[].taxAfterRerzCents is present ? max(0, (eligibleLines[].taxBeforeRerzCents ?? eligibleLines[].amountCents) - eligibleLines[].taxAfterRerzCents) : round((eligibleLines[].taxBeforeRerzCents ?? eligibleLines[].amountCents) * abatementMultiplierForEligibleTaxLines)) : 0",
+        "implementationNotes": [
+          "Implement this as a document-gated abatement method, not as an address-based local incentive estimate.",
+          "The method can be compiled now because the current synthetic profile supplies all required gates and audited amount inputs; production should still default to $0 until equivalent official documents are present.",
+          "For the supplied gratiot-bioenergy-rerz fixture, calculatedBenefitCents = 5,650,700; do not include 634,200 cents of excluded lines.",
+          "When both taxAfterRerzCents and multiplier are present, prefer the official before/after tax-line comparison and use multiplier only as a consistency check.",
+          "If eligibleTaxBeforeRerzTotalCents and the sum of eligibleLines differ materially, block for review rather than choosing one silently."
+        ]
+      },
       "canonicalInputRequirements": [
         {
           "inputKey": "state_administrative_board_designation_or_official_designation_record",

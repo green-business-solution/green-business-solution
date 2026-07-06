@@ -50,6 +50,8 @@ export function evaluateTaxProfileRuntime({
     sourceSkippedRecordId: rule.sourceSkippedRecordId || null,
     modelKind: rule.modelKind || null,
     runtimeSupportStatus: rule.runtimeSupportStatus || null,
+    financialRoleHint: rule.calculationModel?.financialRole || null,
+    financialTimingHint: rule.calculationModel?.financialTiming || null,
     result: calculateTaxGapRuntimeRule(rule, ctx)
   }));
 
@@ -209,6 +211,7 @@ function enrichTaxEvaluation(evaluation) {
 }
 
 function taxFinancialRole(evaluation) {
+  if (evaluation.financialRoleHint) return evaluation.financialRoleHint;
   const text = normalizeTaxText([
     evaluation.kind,
     evaluation.modelKind,
@@ -230,6 +233,7 @@ function taxFinancialRole(evaluation) {
 }
 
 function taxFinancialTiming(evaluation) {
+  if (evaluation.financialTimingHint) return evaluation.financialTimingHint;
   const text = normalizeTaxText([
     evaluation.modelKind,
     evaluation.taxDomain,
