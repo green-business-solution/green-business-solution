@@ -3156,9 +3156,6 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
                 <span className="planet-scan-title-accent">retrofit.</span>
               </h1>
               <p className="planet-scan-subhead">Find incentives, cut operating costs, and know what to do next.</p>
-              <button className="planet-scan-cta planet-scan-primary planet-scan-cta--before" onClick={() => navigate("scan")} type="button">
-                Get Started
-              </button>
             </div>
           </div>
 

@@ -11251,16 +11251,16 @@ body {
   -webkit-backdrop-filter: blur(18px) saturate(175%);
   backdrop-filter: blur(18px) saturate(175%);
   background:
-    linear-gradient(135deg, rgba(180, 255, 207, 0.28), rgba(41, 173, 123, 0.16)),
-    rgba(13, 77, 56, 0.46);
-  border: 1px solid rgba(207, 255, 223, 0.48);
+    linear-gradient(135deg, rgba(184, 242, 133, 0.68), rgba(134, 201, 104, 0.5)),
+    rgba(154, 219, 125, 0.34);
+  border: 1px solid rgba(219, 255, 190, 0.58);
   border-radius: 999px;
   box-shadow:
-    0 12px 30px rgba(2, 35, 27, 0.32),
-    0 0 24px rgba(134, 201, 104, 0.1),
+    0 12px 30px rgba(11, 33, 18, 0.24),
+    0 0 24px rgba(134, 201, 104, 0.18),
     inset 0 1px 0 rgba(255, 255, 255, 0.38),
-    inset 0 -1px 0 rgba(102, 222, 159, 0.14);
-  color: #f5fff8;
+    inset 0 -1px 0 rgba(108, 168, 77, 0.22);
+  color: #07120d;
   font-size: 16px;
   font-weight: 800;
   height: 46px;
@@ -11269,7 +11269,7 @@ body {
   overflow: hidden;
   padding: 0 22px;
   position: relative;
-  text-shadow: 0 1px 12px rgba(3, 24, 18, 0.42);
+  text-shadow: 0 1px 10px rgba(245, 255, 248, 0.18);
   transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
@@ -11288,12 +11288,12 @@ body {
 .public-page .site-header .mobile-cta:hover,
 .public-page .site-header .mobile-menu-panel .nav-cta:hover {
   background:
-    linear-gradient(135deg, rgba(193, 255, 215, 0.38), rgba(52, 193, 139, 0.24)),
-    rgba(13, 89, 64, 0.54);
-  border-color: rgba(222, 255, 233, 0.68);
+    linear-gradient(135deg, rgba(205, 248, 152, 0.76), rgba(146, 214, 112, 0.58)),
+    rgba(164, 226, 136, 0.4);
+  border-color: rgba(231, 255, 205, 0.78);
   box-shadow:
-    0 16px 38px rgba(2, 35, 27, 0.4),
-    0 0 30px rgba(134, 201, 104, 0.16),
+    0 16px 38px rgba(11, 33, 18, 0.3),
+    0 0 30px rgba(134, 201, 104, 0.26),
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
   transform: translateY(-1px) scale(1.015);
 }

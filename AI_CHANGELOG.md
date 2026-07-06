@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) homepage CTA alignment cleanup
+
+- Removed the left-side PlanetScan `Get Started` button so the initial hero state stays focused on the copy and scan motion.
+- Retuned the public header `Get Started` button to use the same brighter green family as the homepage CTA while preserving the existing liquid-glass blur and highlight treatment.
+
 ## 2026-07-05 - Codex (GPT-5) source-backed tax runtime model import
 
 - Imported the 11 GPT Pro unsupported-tax-model repairs into a normalized source artifact and compiled them into structured tax-gap runtime rules.
