@@ -12459,6 +12459,55 @@ body {
   width: 1px;
 }
 
+.home-chart-showcase {
+  background:
+    radial-gradient(circle at top, rgba(31, 91, 74, 0.22), transparent 36%),
+    linear-gradient(180deg, #02070a 0%, #071019 18%, #081320 100%);
+  margin: 0;
+  padding: clamp(44px, 7vw, 88px) clamp(18px, 4vw, 40px) clamp(52px, 8vw, 104px);
+}
+
+.home-chart-showcase-copy {
+  display: grid;
+  gap: 12px;
+  margin: 0 auto 26px;
+  max-width: 1180px;
+}
+
+.home-chart-showcase-copy h2,
+.home-chart-showcase-copy p {
+  margin: 0;
+}
+
+.home-chart-showcase-copy h2 {
+  color: #f3f8fb;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.02;
+  max-width: 14ch;
+}
+
+.home-chart-showcase-copy > p:last-child {
+  color: rgba(229, 240, 246, 0.74);
+  font-size: clamp(17px, 1.5vw, 21px);
+  line-height: 1.55;
+  max-width: 58ch;
+}
+
+.home-chart-showcase-frame {
+  margin: 0 auto;
+  max-width: 1380px;
+}
+
+.home-chart-showcase-image {
+  border-radius: 28px;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.44),
+    0 0 0 1px rgba(84, 167, 255, 0.12);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 @media (max-width: 1180px) {
   .planet-scan-copy {
     left: 5vw;
@@ -12568,6 +12617,27 @@ body {
 
   .planet-scan-scroll-cue {
     bottom: 18px;
+  }
+
+  .home-chart-showcase {
+    padding: 34px 16px 56px;
+  }
+
+  .home-chart-showcase-copy {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .home-chart-showcase-copy h2 {
+    max-width: 12ch;
+  }
+
+  .home-chart-showcase-copy > p:last-child {
+    font-size: 16px;
+  }
+
+  .home-chart-showcase-image {
+    border-radius: 20px;
   }
 }
 

@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-06 - Codex (GPT-5) homepage chart showcase
+
+- Added a new home-page showcase section between the planet scanner and the embedded How It Works journey.
+- Imported the provided four-card dashboard graphic into the frontend public assets and presented it as a full-width dark band with supporting copy.
+
 ## 2026-07-06 - Codex (GPT-5) AWS-owned form catalog lifecycle
 
 - Removed the production form-question catalog JSON from GitHub and changed the API fallback to an empty schema plus generic application requirement mappings.

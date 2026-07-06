@@ -3592,6 +3592,22 @@ function HomePage({
   return (
     <PublicShell navigate={navigate} onHowItWorksClick={onHowItWorksClick} publicAuth={publicAuth} showFooter>
       <PlanetScanHero navigate={navigate} />
+      <section className="home-chart-showcase" aria-labelledby="home-chart-showcase-heading">
+        <div className="home-chart-showcase-copy">
+          <p className="eyebrow">Platform snapshot</p>
+          <h2 id="home-chart-showcase-heading">A clearer view of ranked retrofits, savings, impact, and applications.</h2>
+          <p>RetroFi brings top opportunities, projected financial upside, long-term emissions impact, and next-step application flow into one visual workflow.</p>
+        </div>
+        <div className="home-chart-showcase-frame">
+          <img
+            alt="RetroFi dashboard concept showing ranked retrofits, annual savings, cumulative CO2e avoided, and a four-step application process."
+            className="home-chart-showcase-image"
+            decoding="async"
+            loading="lazy"
+            src="/home/final-4-cards-page.png"
+          />
+        </div>
+      </section>
       <HowItWorksJourneySection sectionId="home-how-it-works" />
     </PublicShell>
   );
