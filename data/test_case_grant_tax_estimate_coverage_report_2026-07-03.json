@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_test_case_grant_tax_coverage_report.v1",
-  "generatedAt": "2026-07-06T00:38:18.592Z",
+  "generatedAt": "2026-07-06T01:26:08.899Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json",
     "packages": "data/opportunity_incentive_calculation_packages_v2.json",
@@ -67,30 +67,30 @@
       "needs_tax_return": 2,
       "calculated": 6,
       "needs_tax_bill": 3,
-      "missing_inputs": 1,
-      "review_required": 4
+      "missing_inputs": 2,
+      "review_required": 3
     },
     "localTaxWorkflowProductionActionCounts": {
-      "tax_return_input_required": 3,
+      "tax_return_input_required": 2,
       "production_ready_customer_calculation": 6,
       "tax_bill_upload_required": 3,
-      "tax_profile_input_required": 1,
+      "tax_profile_input_required": 2,
       "not_applicable_zero_value": 2,
       "assessor_confirmation_required": 1
     },
     "taxProfileRuntimeEvaluationCount": 31,
     "taxProfileRuntimeStatusCounts": {
       "missing_inputs": 6,
-      "calculated": 18,
+      "calculated": 19,
       "needs_tax_bill": 3,
-      "review_required": 4
+      "review_required": 3
     },
-    "taxProfileRuntimeReadyCount": 18,
+    "taxProfileRuntimeReadyCount": 19,
     "taxProfileRuntimeIncludedBenefitCents": 856400809,
-    "taxProfileRuntimeIncludedLiabilityCents": 23508000,
-    "taxProfileRuntimeNetIncludedAmountCents": 832892809,
+    "taxProfileRuntimeIncludedLiabilityCents": 23635000,
+    "taxProfileRuntimeNetIncludedAmountCents": 832765809,
     "taxProfileRuntimeMissingPreOpportunityInputCount": 20,
-    "taxProfileRuntimeStructuredModelWorkCount": 7
+    "taxProfileRuntimeStructuredModelWorkCount": 6
   },
   "topMissingInputs": [],
   "grantAndIncentivePackageOutcomes": {
@@ -6620,14 +6620,14 @@
       "needs_tax_return": 2,
       "calculated": 6,
       "needs_tax_bill": 3,
-      "missing_inputs": 1,
-      "review_required": 4
+      "missing_inputs": 2,
+      "review_required": 3
     },
     "productionActionCounts": {
-      "tax_return_input_required": 3,
+      "tax_return_input_required": 2,
       "production_ready_customer_calculation": 6,
       "tax_bill_upload_required": 3,
-      "tax_profile_input_required": 1,
+      "tax_profile_input_required": 2,
       "not_applicable_zero_value": 2,
       "assessor_confirmation_required": 1
     },
@@ -7280,29 +7280,17 @@
           ],
           "postalCode": "94110"
         },
-        "status": "review_required",
+        "status": "missing_inputs",
         "amountCents": 0,
         "includedInUserFacingTotal": false,
         "missingInputs": [
           {
-            "inputKey": "sf_business_activity_category",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_allocated_gross_receipts_by_category",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_gross_receipts_tax_return_present",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_hgr_or_overpaid_executive_tax_applicability",
+            "inputKey": "local_business_tax_class",
             "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
           }
         ],
-        "localTaxProductionAction": "tax_return_input_required",
-        "localTaxProductionReason": "The formula is source-backed, but the tax base must come from a business tax return, accounting system, or user/accountant entry.",
+        "localTaxProductionAction": "tax_profile_input_required",
+        "localTaxProductionReason": "The workflow needs additional tax profile inputs before it can calculate.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -7320,20 +7308,20 @@
     "count": 31,
     "statusCounts": {
       "missing_inputs": 6,
-      "calculated": 18,
+      "calculated": 19,
       "needs_tax_bill": 3,
-      "review_required": 4
+      "review_required": 3
     },
     "evaluationKindCounts": {
       "local_tax_workflow": 16,
       "tax_gap_runtime_rule": 15
     },
-    "readyCount": 18,
-    "includedCount": 18,
-    "totalIncludedAmountCents": 832892809,
+    "readyCount": 19,
+    "includedCount": 19,
+    "totalIncludedAmountCents": 832765809,
     "totalIncludedBenefitCents": 856400809,
-    "totalIncludedLiabilityCents": 23508000,
-    "structuredModelWorkCount": 7,
+    "totalIncludedLiabilityCents": 23635000,
+    "structuredModelWorkCount": 6,
     "sampleRows": [
       {
         "sampleUserId": "california-endowment-hq",
@@ -8103,18 +8091,18 @@
         "sourceSkippedRecordId": "skip_unverified_ca_city_business_license_rates",
         "modelKind": null,
         "runtimeSupportStatus": null,
-        "status": "review_required",
-        "amountCents": 0,
-        "includedInUserFacingTotal": false,
+        "status": "calculated",
+        "amountCents": 127000,
+        "includedInUserFacingTotal": true,
         "financialRole": "tax_liability",
         "financialTiming": "annual_tax_filing_or_bill",
         "includedBenefitCents": 0,
-        "includedLiabilityCents": 0,
-        "includedAmountCents": 0,
+        "includedLiabilityCents": 127000,
+        "includedAmountCents": -127000,
         "missingRequiredInputCount": 0,
         "missingInputs": [],
-        "readyForOpportunityFinancialEstimate": false,
-        "requiresStructuredTaxModelWork": true
+        "readyForOpportunityFinancialEstimate": true,
+        "requiresStructuredTaxModelWork": false
       },
       {
         "sampleUserId": "gratiot-bioenergy-rerz",
@@ -16685,29 +16673,17 @@
           ],
           "postalCode": "94110"
         },
-        "status": "review_required",
+        "status": "missing_inputs",
         "amountCents": 0,
         "includedInUserFacingTotal": false,
         "missingInputs": [
           {
-            "inputKey": "sf_business_activity_category",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_allocated_gross_receipts_by_category",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_gross_receipts_tax_return_present",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_hgr_or_overpaid_executive_tax_applicability",
+            "inputKey": "local_business_tax_class",
             "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
           }
         ],
-        "localTaxProductionAction": "tax_return_input_required",
-        "localTaxProductionReason": "The formula is source-backed, but the tax base must come from a business tax return, accounting system, or user/accountant entry.",
+        "localTaxProductionAction": "tax_profile_input_required",
+        "localTaxProductionReason": "The workflow needs additional tax profile inputs before it can calculate.",
         "inferredAnswerKeys": [
           "employee_count",
           "filing_frequency",
@@ -17073,29 +17049,6 @@
         "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1",
         "taxRuleId": null,
         "sourceSkippedRecordId": null,
-        "modelKind": null,
-        "runtimeSupportStatus": null,
-        "status": "review_required",
-        "amountCents": 0,
-        "includedInUserFacingTotal": false,
-        "financialRole": "tax_liability",
-        "financialTiming": "annual_tax_filing_or_bill",
-        "includedBenefitCents": 0,
-        "includedLiabilityCents": 0,
-        "includedAmountCents": 0,
-        "missingRequiredInputCount": 0,
-        "missingInputs": [],
-        "readyForOpportunityFinancialEstimate": false,
-        "requiresStructuredTaxModelWork": true
-      },
-      {
-        "sampleUserId": "sf-mission-hardware-synthetic",
-        "sampleName": "sf-mission-hardware-synthetic",
-        "taxOnlyFixture": true,
-        "evaluationKind": "local_tax_workflow",
-        "workflowId": "tax_gap_ca_san_francisco_business_tax_v1",
-        "taxRuleId": null,
-        "sourceSkippedRecordId": "skip_unverified_ca_city_business_license_rates",
         "modelKind": null,
         "runtimeSupportStatus": null,
         "status": "review_required",

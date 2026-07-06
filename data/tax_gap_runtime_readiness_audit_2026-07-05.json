@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_tax_gap_runtime_readiness_audit.v1",
-  "generatedAt": "2026-07-06T00:39:18.843Z",
+  "generatedAt": "2026-07-06T01:26:08.691Z",
   "sourceArtifacts": {
     "repairs": "data/tax_gap_repairs_gpt_pro_2026-07-05.json",
     "testCases": "public/sample_matching_test_cases.json",
@@ -22,27 +22,23 @@
       "tax_abatement_or_pilot": 4
     },
     "candidateCountByRuntimeSupport": {
-      "compiled_to_gated_local_workflow": 1,
-      "compiled_to_local_tax_workflow": 3,
+      "compiled_to_local_tax_workflow": 4,
       "generic_runtime_model_supported_gated": 4,
       "source_backed_runtime_liability_model_suppressed_customer_savings": 1,
       "source_backed_runtime_model": 10
     },
     "candidateCountByFormulaSupport": {
-      "source_backed_formula_compiled_to_runtime_model": 18,
-      "source_backed_formula_needs_structured_model_rows": 1
+      "source_backed_formula_compiled_to_runtime_model": 19
     },
     "candidateCountByNextAction": {
-      "add_tax_return_model_or_keep_gate": 1,
-      "ready_customer_facing_after_mandatory_intake": 18
+      "ready_customer_facing_after_mandatory_intake": 19
     },
     "nextActionCounts": {
-      "add_tax_return_model_or_keep_gate": 1,
-      "ready_customer_facing_after_mandatory_intake": 18
+      "ready_customer_facing_after_mandatory_intake": 19
     },
     "candidatesWithAnyTestProfileCoverage": 19,
     "candidatesWithCompleteMatchedTestInputs": 19,
-    "readyForDirectCustomerFacingCalculationNow": 18,
+    "readyForDirectCustomerFacingCalculationNow": 19,
     "matchedTestProfileCount": 37
   },
   "runtimeCapabilities": {
@@ -65,6 +61,7 @@
       "rate_times_quantity",
       "rental_unit_tier",
       "san_diego_employee_certificate",
+      "sf_business_tax_return_liability",
       "square_foot_rate",
       "two_receipts_rate",
       "unit_rate",
@@ -6156,21 +6153,21 @@
       "runtimeStatusWhenInputsMissing": "needs_tax_profile",
       "sourceConfidence": "high",
       "formulaSupport": {
-        "status": "source_backed_formula_needs_structured_model_rows",
-        "currentRuntimeExecutable": false,
-        "reason": "Business/gross-receipts tax formulas must be converted into localTaxWorkflow calculationModels or equivalent structured rows before runtime execution."
+        "status": "source_backed_formula_compiled_to_runtime_model",
+        "currentRuntimeExecutable": true,
+        "reason": "The source-backed formula has been compiled into structured local workflow rows or a gated tax-gap runtime model."
       },
       "runtimeSupport": {
-        "status": "compiled_to_gated_local_workflow",
+        "status": "compiled_to_local_tax_workflow",
         "currentRuntimeSurface": "localTaxWorkflows",
-        "currentRuntimeExecutable": false,
-        "reason": "This candidate has been compiled into a local workflow gate, but formula execution still requires a tax-return/accountant model import."
+        "currentRuntimeExecutable": true,
+        "reason": "This candidate has been compiled into executable localTaxWorkflow calculationModels, but required tax/user inputs still gate customer-facing use."
       },
       "compiledRuntimeRule": {
-        "runtimeSupportStatus": "compiled_to_gated_local_workflow",
+        "runtimeSupportStatus": "compiled_to_local_tax_workflow",
         "localWorkflowId": "tax_gap_ca_san_francisco_business_tax_v1",
-        "calculationModelMethod": null,
-        "canonicalInputCount": 13
+        "calculationModelMethod": "sf_business_tax_return_liability",
+        "canonicalInputCount": 17
       },
       "testProfileCoverage": {
         "matchingProfileCount": 11,
@@ -7555,13 +7552,14 @@
         ]
       },
       "nextAction": {
-        "action": "add_tax_return_model_or_keep_gate",
-        "reason": "The workflow is routable, but formula execution still needs a structured tax-return model or complete filing document inputs.",
-        "blocksCustomerFacingRuntime": true
+        "action": "ready_customer_facing_after_mandatory_intake",
+        "reason": "A compiled runtime model exists and at least one matching profile has all audited mandatory tax inputs.",
+        "blocksCustomerFacingRuntime": false,
+        "customerFacingReady": true
       },
       "customerFacingPolicy": {
-        "includeInUserFacingTotalNow": false,
-        "reason": "Tax gap rule still needs a structured runtime model or mandatory taxpayer/tax-document inputs before customer-facing inclusion."
+        "includeInUserFacingTotalNow": true,
+        "reason": "A structured runtime model exists and a matching profile supplies all mandatory pre-opportunity tax inputs."
       }
     },
     {

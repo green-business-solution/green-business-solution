@@ -1,28 +1,26 @@
 # Tax Gap Runtime Readiness Audit
 
-Generated at: 2026-07-06T00:39:18.843Z
+Generated at: 2026-07-06T01:26:08.691Z
 
 ## Summary
 
 - Promoted tax candidates audited: 19
 - Candidates with any matching test profile: 19
 - Candidates with complete matched test inputs: 19
-- Ready for direct customer-facing calculation now: 18
+- Ready for direct customer-facing calculation now: 19
 - Matched test profiles: 37
 
 ## Next Actions
 
 | Bucket | Count |
 | --- | --- |
-| add_tax_return_model_or_keep_gate | 1 |
-| ready_customer_facing_after_mandatory_intake | 18 |
+| ready_customer_facing_after_mandatory_intake | 19 |
 
 ## Runtime Support
 
 | Bucket | Count |
 | --- | --- |
-| compiled_to_gated_local_workflow | 1 |
-| compiled_to_local_tax_workflow | 3 |
+| compiled_to_local_tax_workflow | 4 |
 | generic_runtime_model_supported_gated | 4 |
 | source_backed_runtime_liability_model_suppressed_customer_savings | 1 |
 | source_backed_runtime_model | 10 |
@@ -31,8 +29,7 @@ Generated at: 2026-07-06T00:39:18.843Z
 
 | Bucket | Count |
 | --- | --- |
-| source_backed_formula_compiled_to_runtime_model | 18 |
-| source_backed_formula_needs_structured_model_rows | 1 |
+| source_backed_formula_compiled_to_runtime_model | 19 |
 
 ## Candidate Readiness
 
@@ -54,7 +51,7 @@ Generated at: 2026-07-06T00:39:18.843Z
 | local_option_followup_4 | property_tax_exemption | New York State municipalities and school districts under RPTL §487 | source_backed_runtime_model | needs_assessor_confirmation | 2 | 1 | ready_customer_facing_after_mandatory_intake |
 | local_option_followup_5 | property_tax_exemption | Virginia localities beyond Fairfax, Arlington, Loudoun, and Prince William | source_backed_runtime_model | needs_assessor_confirmation | 1 | 1 | ready_customer_facing_after_mandatory_intake |
 | skip_prince_georges_MD_green_business_amount_unverified_v1 | property_tax_credit | Prince George's County, MD | source_backed_runtime_model | needs_filing_confirmation | 2 | 1 | ready_customer_facing_after_mandatory_intake |
-| skip_unverified_ca_city_business_license_rates | local_business_license_or_receipts_tax | CA | compiled_to_gated_local_workflow | needs_tax_profile | 11 | 1 | add_tax_return_model_or_keep_gate |
+| skip_unverified_ca_city_business_license_rates | local_business_license_or_receipts_tax | CA | compiled_to_local_tax_workflow | needs_tax_profile | 11 | 1 | ready_customer_facing_after_mandatory_intake |
 | skip_mi_rerz_customer_facing_savings_without_approved_zone_docs | tax_abatement_or_pilot | MI | source_backed_runtime_model | needs_program_documentation | 4 | 1 | ready_customer_facing_after_mandatory_intake |
 | skip_oh_cat_current_exclusion_amount_without_current_return_confirmation | gross_receipts_or_bo_rate_preference | OH | compiled_to_local_tax_workflow | needs_tax_return | 1 | 1 | ready_customer_facing_after_mandatory_intake |
 

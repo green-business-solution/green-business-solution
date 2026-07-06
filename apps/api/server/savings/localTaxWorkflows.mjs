@@ -61,6 +61,18 @@ export function calculateLocalTaxWorkflow(workflow, ctx = {}) {
   }
 
   const calculated = calculateModel(model, ctx);
+  if (calculated.status && calculated.status !== "calculated") {
+    return {
+      workflowId: workflow.id,
+      modelId: model.modelId,
+      status: calculated.status,
+      amountCents: 0,
+      includedInUserFacingTotal: false,
+      missingInputs: (calculated.missingInputs || []).map((inputKey) => ({ inputKey, workflowId: workflow.id, modelId: model.modelId })),
+      trace: calculated.trace || [`${model.modelId} requires additional local tax inputs.`]
+    };
+  }
+
   const cappedAmount = Number.isFinite(workflow.maxCents)
     ? Math.min(calculated.amountCents, Number(workflow.maxCents))
     : calculated.amountCents;
@@ -455,9 +467,260 @@ function calculateModel(model, ctx) {
       };
     }
 
+    case "sf_business_tax_return_liability":
+      return calculateSanFranciscoBusinessTaxReturnLiability(model, ctx);
+
     default:
       return { amountCents: 0, trace: [`Unsupported local tax model method: ${model.method || "unknown"}.`] };
   }
+}
+
+function calculateSanFranciscoBusinessTaxReturnLiability(model, ctx) {
+  const returnTotalCents = numberOrNull(firstAnswer(ctx, [model.authoritativeTotalInput]));
+  const returnPresent = booleanAnswer(ctx, model.returnPresentInput);
+  if (returnPresent === false) {
+    return {
+      status: "needs_tax_return",
+      amountCents: 0,
+      missingInputs: [model.returnPresentInput],
+      trace: ["San Francisco business-tax liability requires a filed return, bill, or equivalent tax workpaper."]
+    };
+  }
+  if (returnPresent === true && returnTotalCents !== null) {
+    return {
+      amountCents: returnTotalCents,
+      trace: [`Used authoritative San Francisco annual business tax return total: ${returnTotalCents} cents.`]
+    };
+  }
+
+  const taxYear = sanFranciscoTaxYear(model, ctx);
+  if (!taxYear) {
+    return {
+      status: "needs_tax_return",
+      amountCents: 0,
+      missingInputs: ["tax_year", "tax_period_or_fiscal_year_schedule"],
+      trace: ["San Francisco business-tax liability requires the tax year."]
+    };
+  }
+
+  const grossReceiptsModel = sanFranciscoGrossReceiptsModel(model, taxYear);
+  if (!grossReceiptsModel) {
+    return {
+      status: "needs_tax_return",
+      amountCents: 0,
+      missingInputs: ["tax_year"],
+      trace: [`No San Francisco gross-receipts tax rate matrix is compiled for tax year ${taxYear}.`]
+    };
+  }
+  const receipts = sanFranciscoReceiptEntries({ ...model, activityCategories: grossReceiptsModel.activityCategories }, ctx);
+  if (!receipts.length) {
+    return {
+      status: "needs_tax_return",
+      amountCents: 0,
+      missingInputs: [model.grossReceiptsInput || "sf_allocated_gross_receipts_by_category"],
+      trace: ["San Francisco business-tax liability requires taxable gross receipts allocated by activity category."]
+    };
+  }
+
+  const smallBusinessExempt = sanFranciscoSmallBusinessExempt(grossReceiptsModel, model, ctx, receipts);
+  const grossReceiptsTaxCents = smallBusinessExempt
+    ? 0
+    : receipts.reduce((total, entry) => total + progressiveRateAmount(entry.receiptsCents, grossReceiptsModel.bandBounds, grossReceiptsModel.rateMatrixByActivityCategory?.[entry.categoryKey] || []), 0);
+
+  const registrationFee = sanFranciscoRegistrationFee(model, ctx, taxYear);
+  if (registrationFee.missingInputs?.length) return registrationFee;
+
+  const additionalTax = sanFranciscoAdditionalBusinessTax(model, ctx, taxYear, receipts, smallBusinessExempt);
+  if (additionalTax.missingInputs?.length) return additionalTax;
+
+  return {
+    amountCents: grossReceiptsTaxCents + registrationFee.amountCents + additionalTax.amountCents,
+    trace: [
+      smallBusinessExempt
+        ? "San Francisco small-business exemption applies, so gross receipts tax component is zero."
+        : `San Francisco gross receipts tax component: ${Math.round(grossReceiptsTaxCents)} cents.`,
+      `San Francisco registration fee component: ${Math.round(registrationFee.amountCents)} cents.`,
+      `San Francisco HGR/OE component: ${Math.round(additionalTax.amountCents)} cents.`,
+      `Tax year: ${taxYear}.`
+    ]
+  };
+}
+
+function sanFranciscoTaxYear(model, ctx) {
+  const direct = numberOrNull(firstAnswer(ctx, [model.taxYearInput, "tax_year"]));
+  if (direct !== null) return direct;
+  const schedule = objectAnswer(ctx, "tax_period_or_fiscal_year_schedule");
+  return numberOrNull(schedule.taxYear || schedule.tax_year || schedule.filingTaxYear || schedule.renewalFiledForTaxYear);
+}
+
+function sanFranciscoReceiptEntries(model, ctx) {
+  const value = firstAnswer(ctx, [model.grossReceiptsInput || "sf_allocated_gross_receipts_by_category"]);
+  const categoryFallback = firstAnswer(ctx, [model.activityCategoryInput || "sf_business_activity_category"]);
+  const categories = model.activityCategories || {};
+  const rows = Array.isArray(value)
+    ? value
+    : Array.isArray(value?.cityReceiptsByActivityClass)
+      ? value.cityReceiptsByActivityClass
+      : value && typeof value === "object"
+        ? Object.entries(value).map(([activityClass, receiptsCents]) => ({ activityClass, receiptsCents }))
+        : [{ activityClass: categoryFallback, receiptsCents: value }];
+
+  return rows
+    .map((row) => {
+      const categoryKey = sanFranciscoActivityCategoryKey(
+        row.categoryKey || row.activityCategory || row.activityClass || row.category || categoryFallback,
+        categories
+      );
+      const receiptsCents = firstNumber(
+        row.taxableReceiptsCents,
+        row.taxableGrossReceiptsCents,
+        row.sanFranciscoGrossReceiptsCents,
+        row.grossReceiptsCents,
+        row.receiptsCents,
+        typeof row === "number" ? row : null
+      );
+      return categoryKey && receiptsCents !== null ? { categoryKey, receiptsCents } : null;
+    })
+    .filter(Boolean);
+}
+
+function sanFranciscoActivityCategoryKey(value, categories = {}) {
+  const normalized = normalizeClass(value);
+  for (const [categoryKey, category] of Object.entries(categories || {})) {
+    const candidates = [
+      categoryKey,
+      `category_${category.categoryNumber}`,
+      String(category.categoryNumber || ""),
+      category.label,
+      ...(category.activityCategoryLabels || []),
+      ...(category.retrofiActivityAliases || [])
+    ].map(normalizeClass);
+    if (candidates.includes(normalized)) return categoryKey;
+  }
+  return normalized && categories[normalized] ? normalized : null;
+}
+
+function sanFranciscoGrossReceiptsModel(model, taxYear) {
+  return (model.grossReceiptsTaxModels || []).find((candidate) => {
+    if (Array.isArray(candidate.taxYears)) return candidate.taxYears.map(Number).includes(Number(taxYear));
+    return Number(candidate.taxYear) === Number(taxYear);
+  });
+}
+
+function sanFranciscoSmallBusinessExempt(grossReceiptsModel, model, ctx, receipts) {
+  const exemption = grossReceiptsModel.smallBusinessExemption || {};
+  const combinedReceiptsCents = firstNumber(
+    firstAnswer(ctx, [model.combinedGrossReceiptsInput || "sf_combined_taxable_san_francisco_gross_receipts_cents"]),
+    receipts.reduce((total, entry) => total + entry.receiptsCents, 0)
+  ) || 0;
+  const thresholdCents = firstNumber(
+    firstAnswer(ctx, [exemption.thresholdInput, model.smallBusinessThresholdInput]),
+    exemption.thresholdCents
+  );
+  if (thresholdCents === null) return false;
+  const residentialLessor = booleanAnswer(ctx, model.residentialLessorInput || "sf_is_lessor_of_residential_real_estate") === true;
+  const administrativeOffice = booleanAnswer(ctx, model.administrativeOfficeInput || "sf_subject_to_administrative_office_tax") === true;
+  return !residentialLessor && !administrativeOffice && combinedReceiptsCents <= thresholdCents;
+}
+
+function sanFranciscoRegistrationFee(model, ctx, taxYear) {
+  const imported = numberOrNull(firstAnswer(ctx, [model.registrationFeeInput || "sf_registration_fee_schedule_amount_cents"]));
+  if (imported !== null) {
+    return { amountCents: imported, trace: [`Used imported San Francisco registration fee ${imported} cents.`] };
+  }
+
+  const priorReceipts = numberOrNull(firstAnswer(ctx, [model.priorYearGrossReceiptsInput || "sf_prior_year_san_francisco_gross_receipts_cents"]));
+  if (priorReceipts === null) {
+    return {
+      status: "needs_tax_return",
+      amountCents: 0,
+      missingInputs: [model.registrationFeeInput || "sf_registration_fee_schedule_amount_cents", model.priorYearGrossReceiptsInput || "sf_prior_year_san_francisco_gross_receipts_cents"],
+      trace: ["San Francisco registration fee requires an imported fee amount or prior-year San Francisco gross receipts for the supported fee schedule."]
+    };
+  }
+
+  const feeModel = (model.registrationFeeModels || []).find((candidate) =>
+    Number(taxYear) >= Number(candidate.appliesToTaxYears?.[0] || candidate.taxYear || taxYear) &&
+    Number(taxYear) <= Number(candidate.appliesToTaxYears?.[1] || candidate.taxYear || taxYear)
+  );
+  const band = (feeModel?.feeBands || []).find((candidate) =>
+    priorReceipts >= Number(candidate.floorCents || 0) &&
+    (candidate.ceilingCents === null || candidate.ceilingCents === undefined || priorReceipts <= Number(candidate.ceilingCents))
+  );
+  if (!band) {
+    return {
+      status: "needs_tax_return",
+      amountCents: 0,
+      missingInputs: [model.registrationFeeInput || "sf_registration_fee_schedule_amount_cents"],
+      trace: [`No San Francisco registration-fee band matched ${priorReceipts} cents.`]
+    };
+  }
+  return {
+    amountCents: Number(band.cityRegistrationFeeCents || 0) + Number(band.stateFeeCents || 0),
+    trace: [`San Francisco registration fee from prior receipts band ${band.bandId || "unknown"}.`]
+  };
+}
+
+function sanFranciscoAdditionalBusinessTax(model, ctx, taxYear, receipts, smallBusinessExempt) {
+  const applies = booleanAnswer(ctx, model.additionalTaxApplicabilityInput || "sf_hgr_or_overpaid_executive_tax_applicability");
+  if (applies !== true) return { amountCents: 0, trace: ["No San Francisco HGR/OE applicability indicated."] };
+
+  const importedHgr = numberOrNull(firstAnswer(ctx, [model.importedHgrInput || "sf_homelessness_gross_receipts_tax_cents"]));
+  const importedOe = numberOrNull(firstAnswer(ctx, [model.importedOeInput || "sf_overpaid_executive_gross_receipts_tax_cents"]));
+  if (importedHgr !== null || importedOe !== null) {
+    return {
+      amountCents: (importedHgr || 0) + (importedOe || 0),
+      trace: ["Used imported San Francisco HGR/OE tax component amounts."]
+    };
+  }
+
+  const hgrReceiptsValue = firstAnswer(ctx, [model.hgrReceiptsInput || "sf_hgr_taxable_gross_receipts_by_category"]);
+  const oeReceipts = numberOrNull(firstAnswer(ctx, [model.oeReceiptsInput || "sf_overpaid_executive_taxable_gross_receipts_cents"]));
+  const oePayRatio = numberOrNull(firstAnswer(ctx, [model.oePayRatioInput || "sf_overpaid_executive_pay_ratio"]));
+  if (!hgrReceiptsValue && (oeReceipts === null || oePayRatio === null)) {
+    return {
+      status: "needs_tax_return",
+      amountCents: 0,
+      missingInputs: [
+        model.importedHgrInput || "sf_homelessness_gross_receipts_tax_cents",
+        model.importedOeInput || "sf_overpaid_executive_gross_receipts_tax_cents"
+      ],
+      trace: ["San Francisco HGR/OE applies but component tax amounts or component-specific inputs are missing."]
+    };
+  }
+
+  let hgrAmount = 0;
+  if (hgrReceiptsValue && !smallBusinessExempt) {
+    const hgrModel = model.hgrTaxModel || {};
+    const hgrCtx = { ...ctx, [model.grossReceiptsInput || "sf_allocated_gross_receipts_by_category"]: hgrReceiptsValue };
+    const hgrReceipts = sanFranciscoReceiptEntries({ ...model, activityCategories: hgrModel.activityCategories || model.activityCategories }, hgrCtx);
+    hgrAmount = hgrReceipts.reduce((total, entry) =>
+      total + progressiveRateAmount(entry.receiptsCents, hgrModel.bandBounds || [], hgrModel.rateMatrixByActivityCategory?.[entry.categoryKey] || []), 0);
+  }
+
+  let oeAmount = 0;
+  if (oeReceipts !== null && oePayRatio !== null && !smallBusinessExempt) {
+    const oeModel = (model.oeTaxModels || []).find((candidate) => Number(candidate.taxYear) === Number(taxYear));
+    const band = (oeModel?.rateBands || []).find((candidate) =>
+      oePayRatio > Number(candidate.payRatioGreaterThan || 0) &&
+      (candidate.payRatioLessThanOrEqualTo === null || candidate.payRatioLessThanOrEqualTo === undefined || oePayRatio <= Number(candidate.payRatioLessThanOrEqualTo))
+    );
+    oeAmount = oeReceipts * Number(band?.rateDecimal || 0);
+  }
+
+  return {
+    amountCents: hgrAmount + oeAmount,
+    trace: [`Calculated San Francisco HGR/OE component from specific inputs: ${Math.round(hgrAmount + oeAmount)} cents.`]
+  };
+}
+
+function progressiveRateAmount(receiptsCents, bandBounds = [], rates = []) {
+  return (bandBounds || []).reduce((total, band, index) => {
+    const floor = Number(band.floorCents || 0);
+    const ceiling = band.ceilingCents === null || band.ceilingCents === undefined ? Number.POSITIVE_INFINITY : Number(band.ceilingCents);
+    const taxableInBand = Math.max(0, Math.min(receiptsCents, ceiling) - floor);
+    return total + taxableInBand * Number(rates[index] || 0);
+  }, 0);
 }
 
 function requiredTrueGateResult(model, ctx) {
@@ -546,12 +809,31 @@ function numberAnswer(ctx, inputKey) {
   return Number.isFinite(number) ? number : 0;
 }
 
+function objectAnswer(ctx, inputKey) {
+  const value = firstAnswer(ctx, [inputKey]);
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function numberOrNull(value) {
+  if (value === undefined || value === null || value === "") return null;
+  const number = Number(value);
+  return Number.isFinite(number) ? number : null;
+}
+
+function firstNumber(...values) {
+  for (const value of values) {
+    const number = numberOrNull(value);
+    if (number !== null) return number;
+  }
+  return null;
+}
+
 function booleanAnswer(ctx, inputKey) {
   const value = firstAnswer(ctx, [inputKey]);
   if (typeof value === "boolean") return value;
   const normalized = String(value || "").trim().toLowerCase();
   if (["true", "yes", "y", "1", "applies"].includes(normalized)) return true;
-  if (["false", "no", "n", "0", "does_not_apply"].includes(normalized)) return false;
+  if (["false", "no", "n", "0", "does_not_apply", "does not apply", "not_applicable", "not applicable"].includes(normalized)) return false;
   return null;
 }
 

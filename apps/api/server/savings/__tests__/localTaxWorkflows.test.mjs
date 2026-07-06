@@ -253,6 +253,47 @@ describe("local tax workflows", () => {
     expect(result.includedInUserFacingTotal).toBe(false);
   });
 
+  it("calculates San Francisco business-tax liability from source-backed Prop M tables", () => {
+    const result = calculateLocalTaxWorkflow(
+      workflow("tax_gap_ca_san_francisco_business_tax_v1"),
+      ctx({
+        tax_year: 2025,
+        sf_business_activity_category: "Retail Trade",
+        sf_allocated_gross_receipts_by_category: [
+          { activityClass: "Retail Trade", taxableReceiptsCents: 384250000 }
+        ],
+        sf_registration_fee_schedule_amount_cents: 127000,
+        sf_gross_receipts_tax_return_present: true,
+        sf_hgr_or_overpaid_executive_tax_applicability: false
+      })
+    );
+
+    expect(result.status).toBe("calculated");
+    expect(result.amountCents).toBe(127000);
+    expect(result.includedInUserFacingTotal).toBe(false);
+    expect(result.trace.join(" ")).toContain("small-business exemption applies");
+  });
+
+  it("uses imported San Francisco business-tax return totals before computed components", () => {
+    const result = calculateLocalTaxWorkflow(
+      workflow("tax_gap_ca_san_francisco_business_tax_v1"),
+      ctx({
+        tax_year: 2025,
+        sf_business_activity_category: "Retail Trade",
+        sf_allocated_gross_receipts_by_category: [
+          { activityClass: "Retail Trade", taxableReceiptsCents: 384250000 }
+        ],
+        sf_registration_fee_schedule_amount_cents: 127000,
+        sf_gross_receipts_tax_return_present: true,
+        sf_business_tax_return_total_liability_cents: 815000,
+        sf_hgr_or_overpaid_executive_tax_applicability: false
+      })
+    );
+
+    expect(result.status).toBe("calculated");
+    expect(result.amountCents).toBe(815000);
+  });
+
   it("calculates Ohio CAT current exclusion only with filing confirmation", () => {
     const result = calculateLocalTaxWorkflow(
       workflow("tax_gap_oh_commercial_activity_tax_current_exclusion_v1"),

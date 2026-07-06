@@ -17,10 +17,9 @@
     "runtimeRuleCount": 19,
     "compiledLocalWorkflowCount": 5,
     "runtimeSupportCounts": {
-      "compiled_to_local_tax_workflow": 3,
+      "compiled_to_local_tax_workflow": 4,
       "program_document_tax_bill_or_assessor_gate": 11,
-      "generic_runtime_model_supported_gated": 4,
-      "compiled_to_gated_local_workflow": 1
+      "generic_runtime_model_supported_gated": 4
     },
     "modelKindCounts": {
       "local_business_license_or_receipts_tax": 2,
@@ -2958,9 +2957,21 @@
       "includeInUserFacingTotalDefault": false,
       "customerFacingSavingsCentsDefault": 0,
       "sourceConfidence": "high",
-      "runtimeSupportStatus": "compiled_to_gated_local_workflow",
+      "runtimeSupportStatus": "compiled_to_local_tax_workflow",
       "localWorkflowId": "tax_gap_ca_san_francisco_business_tax_v1",
-      "calculationModel": null,
+      "calculationModel": {
+        "method": "sf_business_tax_return_liability",
+        "financialRole": "tax_liability",
+        "financialTiming": "annual_tax_filing_or_bill",
+        "sourceRepairFile": "GPT Pro Work/sf-business-tax-return-model-repair-2026-07-06/output_001_san_francisco_business_tax_return_model.md",
+        "sourceRepairSchemaVersion": "sf_business_tax_return_model_repair.v1",
+        "localWorkflowId": "tax_gap_ca_san_francisco_business_tax_v1",
+        "implementationNotes": [
+          "Use imported sf_business_tax_return_total_liability_cents as highest precedence when present.",
+          "If no return total is present, compute San Francisco GRT marginally by activity category and add the imported or computed registration fee.",
+          "HGR/OE are added only from imported component values or component-specific inputs; a true combined HGR/OE applicability flag without component data gates the model."
+        ]
+      },
       "canonicalInputRequirements": [
         {
           "inputKey": "verified_city",
@@ -3078,28 +3089,56 @@
           "uiPlacement": "tax_document_upload",
           "missingSeverity": "blocks_calculation",
           "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "sf_business_tax_return_total_liability_cents",
+          "label": "San Francisco business tax return total liability",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "optional",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "sf_prior_year_san_francisco_gross_receipts_cents",
+          "label": "Prior-year San Francisco gross receipts for registration fee",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "optional",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "sf_homelessness_gross_receipts_tax_cents",
+          "label": "San Francisco HGR component from return",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "optional",
+          "userOverrideAllowed": true
+        },
+        {
+          "inputKey": "sf_overpaid_executive_gross_receipts_tax_cents",
+          "label": "San Francisco OE component from return",
+          "sourceStrategy": "tax_return",
+          "uiPlacement": "tax_document_upload",
+          "missingSeverity": "optional",
+          "userOverrideAllowed": true
         }
       ],
       "sourceUrls": [
-        "https://www.burbankca.gov/web/financial-services/revenue",
-        "https://www.burbankca.gov/documents/d/financial-services/fy-2026-27-adopted-fee-schedule-final-revised?download=true",
-        "https://www.cityofpasadena.net/finance/general-fund/fees-tax-schedules/",
-        "https://www.cityofpasadena.net/finance/wp-content/uploads/sites/27/FY-2027-Schedule-of-Taxes-Fees-and-Charges-Adopted.pdf",
-        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54663",
-        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54692",
-        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54706",
-        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54743",
-        "https://finance.lacity.gov/tax-education/business-taxes/know-your-rates",
-        "https://finance.lacity.gov/business-tax-renewal-instructions",
-        "https://www.sandiego.gov/treasurer/taxesfees/btax/btaxfees",
-        "https://www.sandiego.gov/treasurer/taxesfees/btax/btaxhow",
-        "https://ecode360.com/44468493",
-        "https://sftreasurer.org/business/taxes-fees/gross-receipts-tax-gr-0",
         "https://sftreasurer.org/proposition-m-2024-business-tax-reform",
-        "https://sftreasurer.org/annual-business-registration-and-tax-form-25-27"
+        "https://sftreasurer.org/business/taxes-fees/gross-receipts-tax-gr-0",
+        "https://sftreasurer.org/business/taxes-fees/homelessness-gross-receipts-tax-hgr-0",
+        "https://sftreasurer.org/business/taxes-fees/overpaid-executive-gross-receipts-tax-oe",
+        "https://sftreasurer.org/annual-business-registration-and-tax-form-25-27",
+        "https://sftreasurer.org/annual-business-registration-and-tax-form-instructions-25-27",
+        "https://sftreasurer.org/business-registration-renewal-instructions-2025-2026",
+        "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-51635",
+        "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-4760",
+        "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-1883",
+        "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-1108",
+        "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-50212"
       ],
-      "evidenceText": "Burbank's official revenue page links to the adopted FY 2026-27 citywide fee schedule, and the schedule provides business tax registration and Article VII business tax rows including base, employee, contractor, rental, laundry, and vending/coin-operated machine formulas. ([City of Burbank][1]) Pasadena's official FY2027 Schedule of Taxes, Fees and Charges provides business-license rows for general business, take-out service, professionals, coin-operated machines, and service classifications with employee, professional, machine, and gross-receipts components. ([City of Pasadena][2]) Anaheim's official code provides business-license formulas for gross-receipts classes, professions, services, and contractors. ([American Legal Publishing][3]) Los Angeles Office of Finance publishes the business tax class rates and renewal calculation mechanics, including rounding gross receipts to the next $1,000 and applying the class rate. ([Los Angeles Office of Finance][4]) San Diego's Treasurer publishes Business Tax Certificate rates by employee count and states that businesses operating in the city must register for a certificate. ([San Diego][5]) Vernon and San Francisco official sources provide city-specific employee-bracket, special-schedule, gross-receipts, allocation/apportionment, registration, and Prop M-era business-tax rules. ([eCode360][6])",
-      "reasoningNotes": "Promote to city-specific tax-rule rows for the seven researched cities only. The uploaded repair prompt requires official sources and zero customer-facing savings unless the source-backed formula and required user inputs are complete.  The remaining risk is not source confidence for the named cities, but runtime fit: city, period, class, measure, exemptions, and certificate status must match the official source."
+      "evidenceText": "Repair target and current RetroFi inputs are from the uploaded prompt.  Official San Francisco guidance states that, for tax years beginning in 2025 after Prop M, Gross Receipts Tax is imposed on taxable San Francisco gross receipts, filed as part of the Annual Business Registration and Tax Form, and calculated by activity category and San Francisco receipts. ([Treasurer & Tax Collector][7]) Official Prop M and Annual Business Registration pages publish the 2025/2026 and 2027 gross receipts category rates. ([Treasurer & Tax Collector][2]) Official instructions and Code sources confirm the $5,000,000 2025 filing/small-business threshold, annual registration renewal requirement, multiple-category summing rule, and CPI adjustment for later small-business thresholds. ([Treasurer & Tax Collector][1]) Official HGR guidance publishes the HGR threshold, exclusions and category rates, and official OE guidance publishes the executive-pay-ratio rates and exemptions. ([Treasurer & Tax Collector][3]) Official Code Section 855, the 2025-2026 renewal instructions, and the annual form page publish registration fee schedules for the 2025-2026 transition and registration years beginning April 1, 2026, including the separate $4 state fee shown on the official form tables. ([American Legal Publishing][8])",
+      "reasoningNotes": "Promote to city-specific tax-rule rows for the seven researched cities only. The uploaded repair prompt requires official sources and zero customer-facing savings unless the source-backed formula and required user inputs are complete.  The remaining risk is not source confidence for the named cities, but runtime fit: city, period, class, measure, exemptions, and certificate status must match the official source.\nCompiled San Francisco business-tax return model from GPT Pro repair 2026-07-06."
     },
     {
       "taxRuleId": "tax_gap_rule_f388a16443",

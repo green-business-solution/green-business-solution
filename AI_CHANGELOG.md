@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) San Francisco business tax runtime model
+
+- Imported the GPT Pro San Francisco business-tax return repair as a normalized source artifact.
+- Compiled the San Francisco workflow into an executable annual business-tax liability model using official Prop M gross-receipts tables, registration-fee inputs, and return-total precedence.
+- Updated tax readiness reporting so all 19 promoted tax candidates are ready after mandatory intake, then uploaded regenerated fixtures and GPT Pro work outputs to S3.
+
 ## 2026-07-05 - Codex (GPT-5) homepage how-it-works merge
 
 - Replaced the old home-page sections beneath the scanner with the full animated How It Works journey so that content now begins immediately after the scanner.

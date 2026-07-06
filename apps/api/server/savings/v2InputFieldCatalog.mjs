@@ -135,6 +135,42 @@ const FIELD_OVERRIDES = {
     options: ["Applies", "Does not apply", "Unknown"],
     collectionSurface: "tax_document_upload",
     collectionSourceType: "tax_document"
+  },
+  sf_business_tax_return_total_liability_cents: {
+    label: "San Francisco business tax return total liability",
+    questionPrompt: "What total San Francisco annual business tax liability appears on the filed return or bill?",
+    helperText: "Use the official Annual Business Registration and Tax Form total when available.",
+    valueType: "money_cents",
+    answerType: "number",
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  },
+  sf_prior_year_san_francisco_gross_receipts_cents: {
+    label: "Prior-year San Francisco gross receipts",
+    questionPrompt: "What prior-year San Francisco gross receipts determine the business registration fee?",
+    helperText: "Use the registration renewal, annual return, or city fee schedule workpaper.",
+    valueType: "money_cents",
+    answerType: "number",
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  },
+  sf_homelessness_gross_receipts_tax_cents: {
+    label: "San Francisco HGR tax amount",
+    questionPrompt: "What Homelessness Gross Receipts Tax amount appears on the San Francisco return?",
+    helperText: "Only needed when HGR applies and the component amount is not already included in the imported total liability.",
+    valueType: "money_cents",
+    answerType: "number",
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  },
+  sf_overpaid_executive_gross_receipts_tax_cents: {
+    label: "San Francisco overpaid executive tax amount",
+    questionPrompt: "What Overpaid Executive Gross Receipts Tax amount appears on the San Francisco return?",
+    helperText: "Only needed when OE applies and the component amount is not already included in the imported total liability.",
+    valueType: "money_cents",
+    answerType: "number",
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
   }
 };
 

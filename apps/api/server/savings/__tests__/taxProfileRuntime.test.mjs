@@ -59,6 +59,7 @@ const testCases = [
   ]),
   taxCaseFixture("sf-mission-hardware-complete-local-review", { stateCode: "CA", countyFips: "06075", countyName: "San Francisco County", placeName: "San Francisco" }, [
     taxRow("verified_city", "San Francisco", "tax_gap_rule_6fe87d35d5", "skip_unverified_ca_city_business_license_rates"),
+    taxRow("tax_year", 2025, "tax_gap_rule_6fe87d35d5", "skip_unverified_ca_city_business_license_rates"),
     taxRow("sf_business_activity_category", "Retail Trade", "tax_gap_rule_6fe87d35d5", "skip_unverified_ca_city_business_license_rates"),
     taxRow("sf_allocated_gross_receipts_by_category", [{ activityClass: "Retail Trade", taxableReceiptsCents: 384250000 }], "tax_gap_rule_6fe87d35d5", "skip_unverified_ca_city_business_license_rates"),
     taxRow("sf_registration_fee_schedule_amount_cents", 127000, "tax_gap_rule_6fe87d35d5", "skip_unverified_ca_city_business_license_rates"),
@@ -194,7 +195,7 @@ describe("tax profile runtime", () => {
     });
   });
 
-  it("does not emit pre-opportunity form fields for review-required local workflows when required values are present", () => {
+  it("calculates San Francisco business-tax liabilities when required return values are present", () => {
     const preview = buildTaxProfileRuntimePreview({
       taxContext: taxCase("sf-mission-hardware-complete-local-review"),
       geography: geographyFor(taxCase("sf-mission-hardware-complete-local-review")),
@@ -202,10 +203,11 @@ describe("tax profile runtime", () => {
       taxGapRuntimeRules
     });
 
-    expect(preview.status).toBe("needs_structured_tax_model");
+    expect(preview.status).toBe("calculated");
     expect(preview.opportunityDisplayBlocked).toBe(false);
     expect(preview.requiredPreOpportunityInputs).toHaveLength(0);
-    expect(preview.requiresStructuredTaxModelWork).toBe(true);
+    expect(preview.requiresStructuredTaxModelWork).toBe(false);
+    expect(preview.totals.includedLiabilityCents).toBe(127000);
   });
 });
 

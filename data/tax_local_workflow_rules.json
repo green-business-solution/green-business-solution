@@ -5395,7 +5395,7 @@
       "sourceTargetId": "skip_unverified_ca_city_business_license_rates",
       "taxDomain": "local_business_tax",
       "taxType": "gross_receipts_tax",
-      "calculationStatus": "assessor_or_accountant_review_required",
+      "calculationStatus": "calculable_with_user_inputs",
       "includeInUserFacingTotalDefault": false,
       "geography": {
         "country": "US",
@@ -5415,31 +5415,1399 @@
         "sf_gross_receipts_tax_return_present",
         "sf_hgr_or_overpaid_executive_tax_applicability"
       ],
-      "calculationModels": [],
+      "calculationModels": [
+        {
+          "modelId": "sf_business_tax_return_liability_2025_2027",
+          "label": "San Francisco annual business tax liability - GRT, registration fee, and imported HGR/OE components",
+          "method": "sf_business_tax_return_liability",
+          "taxYears": [
+            2025,
+            2026,
+            2027
+          ],
+          "taxComponent": "annual_business_tax_liability",
+          "taxYearInput": "tax_year",
+          "returnPresentInput": "sf_gross_receipts_tax_return_present",
+          "authoritativeTotalInput": "sf_business_tax_return_total_liability_cents",
+          "activityCategoryInput": "sf_business_activity_category",
+          "grossReceiptsInput": "sf_allocated_gross_receipts_by_category",
+          "combinedGrossReceiptsInput": "sf_combined_taxable_san_francisco_gross_receipts_cents",
+          "smallBusinessThresholdInput": "sf_small_business_exemption_threshold_cents",
+          "residentialLessorInput": "sf_is_lessor_of_residential_real_estate",
+          "administrativeOfficeInput": "sf_subject_to_administrative_office_tax",
+          "registrationFeeInput": "sf_registration_fee_schedule_amount_cents",
+          "priorYearGrossReceiptsInput": "sf_prior_year_san_francisco_gross_receipts_cents",
+          "additionalTaxApplicabilityInput": "sf_hgr_or_overpaid_executive_tax_applicability",
+          "importedHgrInput": "sf_homelessness_gross_receipts_tax_cents",
+          "importedOeInput": "sf_overpaid_executive_gross_receipts_tax_cents",
+          "hgrReceiptsInput": "sf_hgr_taxable_gross_receipts_by_category",
+          "oeReceiptsInput": "sf_overpaid_executive_taxable_gross_receipts_cents",
+          "oePayRatioInput": "sf_overpaid_executive_pay_ratio",
+          "inputKeys": [
+            "sf_business_activity_category",
+            "sf_allocated_gross_receipts_by_category",
+            "sf_gross_receipts_tax_return_present",
+            "sf_hgr_or_overpaid_executive_tax_applicability"
+          ],
+          "optionalInputKeys": [
+            "tax_year",
+            "tax_period_or_fiscal_year_schedule",
+            "sf_business_tax_return_total_liability_cents",
+            "sf_registration_fee_schedule_amount_cents",
+            "sf_prior_year_san_francisco_gross_receipts_cents",
+            "sf_homelessness_gross_receipts_tax_cents",
+            "sf_overpaid_executive_gross_receipts_tax_cents",
+            "sf_hgr_taxable_gross_receipts_by_category",
+            "sf_overpaid_executive_taxable_gross_receipts_cents",
+            "sf_overpaid_executive_pay_ratio"
+          ],
+          "grossReceiptsTaxModels": [
+            {
+              "modelId": "sf_gross_receipts_tax_2025_2026_all_categories",
+              "taxYears": [
+                2025,
+                2026
+              ],
+              "activityCategories": {
+                "category_1": {
+                  "categoryNumber": 1,
+                  "label": "Category 1 - retail, wholesale, restaurants, repair, personal services and similar activities",
+                  "activityCategoryLabels": [
+                    "Wholesale Trade",
+                    "Retail Trade",
+                    "Rental and Leasing Services",
+                    "Arts, Entertainment, and Recreation",
+                    "Food Services and Drinking Places",
+                    "Repair and Maintenance",
+                    "Personal and Laundry Services except Parking Lots and Garages",
+                    "Religious, Grantmaking, Civic, Professional, and Similar Organizations"
+                  ],
+                  "retrofiActivityAliases": [
+                    "retail_trade",
+                    "hardware_store",
+                    "wholesale_trade",
+                    "restaurant",
+                    "food_services",
+                    "arts_entertainment_recreation",
+                    "repair_maintenance",
+                    "personal_laundry_services"
+                  ]
+                },
+                "category_2": {
+                  "categoryNumber": 2,
+                  "label": "Category 2 - accommodation",
+                  "activityCategoryLabels": [
+                    "Accommodation"
+                  ],
+                  "retrofiActivityAliases": [
+                    "accommodation",
+                    "hotel",
+                    "lodging"
+                  ]
+                },
+                "category_3": {
+                  "categoryNumber": 3,
+                  "label": "Category 3 - real estate, facilities support, building services and parking",
+                  "activityCategoryLabels": [
+                    "Real Estate",
+                    "Facilities Support Services",
+                    "Services to Buildings and Dwellings",
+                    "Parking Lots and Garages"
+                  ],
+                  "retrofiActivityAliases": [
+                    "real_estate",
+                    "facilities_support",
+                    "building_services",
+                    "parking_lots_and_garages"
+                  ]
+                },
+                "category_4": {
+                  "categoryNumber": 4,
+                  "label": "Category 4 - manufacturing, transportation, insurance and specified support activities",
+                  "activityCategoryLabels": [
+                    "Agriculture, Forestry, Fishing and Hunting",
+                    "Mining, Quarrying, and Oil and Gas Extraction",
+                    "Utilities",
+                    "Manufacturing",
+                    "Transportation and Warehousing",
+                    "Insurance Carriers and Related Activities",
+                    "Selected R&D and support activities"
+                  ],
+                  "retrofiActivityAliases": [
+                    "manufacturing",
+                    "transportation_warehousing",
+                    "insurance_carriers",
+                    "utilities",
+                    "agriculture",
+                    "mining",
+                    "support_services"
+                  ]
+                },
+                "category_5": {
+                  "categoryNumber": 5,
+                  "label": "Category 5 - information, professional services, management, education, healthcare and uncategorized activities",
+                  "activityCategoryLabels": [
+                    "Information",
+                    "Nondepository Credit Intermediation",
+                    "Activities Related to Credit Intermediation",
+                    "Lessors of Nonfinancial Intangible Assets except Copyrighted Works",
+                    "Professional, Scientific, and Technical Services except NAICS 541714",
+                    "Management of Companies and Enterprises",
+                    "Waste Management and Remediation Services",
+                    "Educational Services",
+                    "Healthcare and Social Assistance",
+                    "All other taxable activities not otherwise categorized"
+                  ],
+                  "retrofiActivityAliases": [
+                    "information",
+                    "professional_services",
+                    "software_services",
+                    "consulting",
+                    "management_companies",
+                    "education",
+                    "healthcare",
+                    "uncategorized"
+                  ]
+                },
+                "category_6": {
+                  "categoryNumber": 6,
+                  "label": "Category 6 - financial services",
+                  "activityCategoryLabels": [
+                    "Monetary Authorities-Central Bank",
+                    "Depository Credit Intermediation",
+                    "Securities, Commodity Contracts, and Other Financial Investments and Related Activities",
+                    "Funds, Trusts, and Other Financial Vehicles"
+                  ],
+                  "retrofiActivityAliases": [
+                    "financial_services",
+                    "banking",
+                    "securities",
+                    "investment_funds",
+                    "trusts"
+                  ]
+                },
+                "category_7": {
+                  "categoryNumber": 7,
+                  "label": "Category 7 - construction",
+                  "activityCategoryLabels": [
+                    "Construction"
+                  ],
+                  "retrofiActivityAliases": [
+                    "construction",
+                    "contractor"
+                  ]
+                }
+              },
+              "bandBounds": [
+                {
+                  "bandId": "0_to_1m",
+                  "floorCents": 0,
+                  "ceilingCents": 100000000
+                },
+                {
+                  "bandId": "1m_to_2_5m",
+                  "floorCents": 100000000,
+                  "ceilingCents": 250000000
+                },
+                {
+                  "bandId": "2_5m_to_25m",
+                  "floorCents": 250000000,
+                  "ceilingCents": 2500000000
+                },
+                {
+                  "bandId": "25m_to_50m",
+                  "floorCents": 2500000000,
+                  "ceilingCents": 5000000000
+                },
+                {
+                  "bandId": "50m_to_75m",
+                  "floorCents": 5000000000,
+                  "ceilingCents": 7500000000
+                },
+                {
+                  "bandId": "75m_to_100m",
+                  "floorCents": 7500000000,
+                  "ceilingCents": 10000000000
+                },
+                {
+                  "bandId": "100m_to_150m",
+                  "floorCents": 10000000000,
+                  "ceilingCents": 15000000000
+                },
+                {
+                  "bandId": "150m_to_250m",
+                  "floorCents": 15000000000,
+                  "ceilingCents": 25000000000
+                },
+                {
+                  "bandId": "250m_to_500m",
+                  "floorCents": 25000000000,
+                  "ceilingCents": 50000000000
+                },
+                {
+                  "bandId": "500m_to_1b",
+                  "floorCents": 50000000000,
+                  "ceilingCents": 100000000000
+                },
+                {
+                  "bandId": "over_1b",
+                  "floorCents": 100000000000,
+                  "ceilingCents": null
+                }
+              ],
+              "rateMatrixByActivityCategory": {
+                "category_1": [
+                  0.001,
+                  0.0013,
+                  0.0018,
+                  0.00336,
+                  0.00336,
+                  0.00336,
+                  0.00336,
+                  0.00504,
+                  0.00672,
+                  0.0084,
+                  0.01008
+                ],
+                "category_2": [
+                  0.00185,
+                  0.00201,
+                  0.00201,
+                  0.00331,
+                  0.00582,
+                  0.00582,
+                  0.00582,
+                  0.00582,
+                  0.00582,
+                  0.00582,
+                  0.00582
+                ],
+                "category_3": [
+                  0.00413,
+                  0.00413,
+                  0.00435,
+                  0.00435,
+                  0.00435,
+                  0.00435,
+                  0.00435,
+                  0.00435,
+                  0.00435,
+                  0.00435,
+                  0.00435
+                ],
+                "category_4": [
+                  0.0025,
+                  0.0025,
+                  0.003,
+                  0.00504,
+                  0.0084,
+                  0.0084,
+                  0.01176,
+                  0.01176,
+                  0.01344,
+                  0.01344,
+                  0.01512
+                ],
+                "category_5": [
+                  0.01,
+                  0.01,
+                  0.015,
+                  0.01176,
+                  0.01344,
+                  0.01344,
+                  0.01344,
+                  0.01512,
+                  0.0168,
+                  0.0168,
+                  0.0168
+                ],
+                "category_6": [
+                  0.015,
+                  0.015,
+                  0.03,
+                  0.02352,
+                  0.03024,
+                  0.03024,
+                  0.0336,
+                  0.0336,
+                  0.0336,
+                  0.0336,
+                  0.0336
+                ],
+                "category_7": [
+                  0.005,
+                  0.005,
+                  0.0075,
+                  0.00672,
+                  0.01008,
+                  0.01008,
+                  0.01344,
+                  0.01344,
+                  0.01512,
+                  0.01512,
+                  0.0168
+                ]
+              },
+              "smallBusinessExemption": {
+                "thresholdCents": 500000000,
+                "thresholdAdjustment": "Tax year 2025 threshold is $5,000,000; tax year 2026 threshold is CPI-adjusted and rounded under Code Section 954.1, so prefer imported sf_small_business_exemption_threshold_cents when available.",
+                "appliesIf": [
+                  "not_lessor_of_residential_real_estate",
+                  "not_subject_to_administrative_office_tax",
+                  "combined_taxable_san_francisco_gross_receipts_cents <= applicable_threshold_cents"
+                ],
+                "effect": "gross_receipts_tax_cents = 0"
+              },
+              "sourceUrls": [
+                "https://sftreasurer.org/proposition-m-2024-business-tax-reform",
+                "https://sftreasurer.org/business/taxes-fees/gross-receipts-tax-gr-0",
+                "https://sftreasurer.org/annual-business-registration-and-tax-form-25-27",
+                "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-51635",
+                "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-4760"
+              ],
+              "evidenceText": "Official San Francisco sources publish the 2025/2026 GRT rates by category and state that GRT is calculated by business activity category and taxable San Francisco gross receipts. ([Treasurer & Tax Collector][2])"
+            },
+            {
+              "modelId": "sf_gross_receipts_tax_2027_all_categories",
+              "taxYears": [
+                2027
+              ],
+              "activityCategories": {
+                "category_1": {
+                  "categoryNumber": 1,
+                  "label": "Category 1 - retail, wholesale, restaurants, repair, personal services and similar activities",
+                  "activityCategoryLabels": [
+                    "Wholesale Trade",
+                    "Retail Trade",
+                    "Rental and Leasing Services",
+                    "Arts, Entertainment, and Recreation",
+                    "Food Services and Drinking Places",
+                    "Repair and Maintenance",
+                    "Personal and Laundry Services except Parking Lots and Garages",
+                    "Religious, Grantmaking, Civic, Professional, and Similar Organizations"
+                  ],
+                  "retrofiActivityAliases": [
+                    "retail_trade",
+                    "hardware_store",
+                    "wholesale_trade",
+                    "restaurant",
+                    "food_services",
+                    "arts_entertainment_recreation",
+                    "repair_maintenance",
+                    "personal_laundry_services"
+                  ]
+                },
+                "category_2": {
+                  "categoryNumber": 2,
+                  "label": "Category 2 - accommodation",
+                  "activityCategoryLabels": [
+                    "Accommodation"
+                  ],
+                  "retrofiActivityAliases": [
+                    "accommodation",
+                    "hotel",
+                    "lodging"
+                  ]
+                },
+                "category_3": {
+                  "categoryNumber": 3,
+                  "label": "Category 3 - real estate, facilities support, building services and parking",
+                  "activityCategoryLabels": [
+                    "Real Estate",
+                    "Facilities Support Services",
+                    "Services to Buildings and Dwellings",
+                    "Parking Lots and Garages"
+                  ],
+                  "retrofiActivityAliases": [
+                    "real_estate",
+                    "facilities_support",
+                    "building_services",
+                    "parking_lots_and_garages"
+                  ]
+                },
+                "category_4": {
+                  "categoryNumber": 4,
+                  "label": "Category 4 - manufacturing, transportation, insurance and specified support activities",
+                  "activityCategoryLabels": [
+                    "Agriculture, Forestry, Fishing and Hunting",
+                    "Mining, Quarrying, and Oil and Gas Extraction",
+                    "Utilities",
+                    "Manufacturing",
+                    "Transportation and Warehousing",
+                    "Insurance Carriers and Related Activities",
+                    "Selected R&D and support activities"
+                  ],
+                  "retrofiActivityAliases": [
+                    "manufacturing",
+                    "transportation_warehousing",
+                    "insurance_carriers",
+                    "utilities",
+                    "agriculture",
+                    "mining",
+                    "support_services"
+                  ]
+                },
+                "category_5": {
+                  "categoryNumber": 5,
+                  "label": "Category 5 - information, professional services, management, education, healthcare and uncategorized activities",
+                  "activityCategoryLabels": [
+                    "Information",
+                    "Nondepository Credit Intermediation",
+                    "Activities Related to Credit Intermediation",
+                    "Lessors of Nonfinancial Intangible Assets except Copyrighted Works",
+                    "Professional, Scientific, and Technical Services except NAICS 541714",
+                    "Management of Companies and Enterprises",
+                    "Waste Management and Remediation Services",
+                    "Educational Services",
+                    "Healthcare and Social Assistance",
+                    "All other taxable activities not otherwise categorized"
+                  ],
+                  "retrofiActivityAliases": [
+                    "information",
+                    "professional_services",
+                    "software_services",
+                    "consulting",
+                    "management_companies",
+                    "education",
+                    "healthcare",
+                    "uncategorized"
+                  ]
+                },
+                "category_6": {
+                  "categoryNumber": 6,
+                  "label": "Category 6 - financial services",
+                  "activityCategoryLabels": [
+                    "Monetary Authorities-Central Bank",
+                    "Depository Credit Intermediation",
+                    "Securities, Commodity Contracts, and Other Financial Investments and Related Activities",
+                    "Funds, Trusts, and Other Financial Vehicles"
+                  ],
+                  "retrofiActivityAliases": [
+                    "financial_services",
+                    "banking",
+                    "securities",
+                    "investment_funds",
+                    "trusts"
+                  ]
+                },
+                "category_7": {
+                  "categoryNumber": 7,
+                  "label": "Category 7 - construction",
+                  "activityCategoryLabels": [
+                    "Construction"
+                  ],
+                  "retrofiActivityAliases": [
+                    "construction",
+                    "contractor"
+                  ]
+                }
+              },
+              "bandBounds": [
+                {
+                  "bandId": "0_to_1m",
+                  "floorCents": 0,
+                  "ceilingCents": 100000000
+                },
+                {
+                  "bandId": "1m_to_2_5m",
+                  "floorCents": 100000000,
+                  "ceilingCents": 250000000
+                },
+                {
+                  "bandId": "2_5m_to_25m",
+                  "floorCents": 250000000,
+                  "ceilingCents": 2500000000
+                },
+                {
+                  "bandId": "25m_to_50m",
+                  "floorCents": 2500000000,
+                  "ceilingCents": 5000000000
+                },
+                {
+                  "bandId": "50m_to_75m",
+                  "floorCents": 5000000000,
+                  "ceilingCents": 7500000000
+                },
+                {
+                  "bandId": "75m_to_100m",
+                  "floorCents": 7500000000,
+                  "ceilingCents": 10000000000
+                },
+                {
+                  "bandId": "100m_to_150m",
+                  "floorCents": 10000000000,
+                  "ceilingCents": 15000000000
+                },
+                {
+                  "bandId": "150m_to_250m",
+                  "floorCents": 15000000000,
+                  "ceilingCents": 25000000000
+                },
+                {
+                  "bandId": "250m_to_500m",
+                  "floorCents": 25000000000,
+                  "ceilingCents": 50000000000
+                },
+                {
+                  "bandId": "500m_to_1b",
+                  "floorCents": 50000000000,
+                  "ceilingCents": 100000000000
+                },
+                {
+                  "bandId": "over_1b",
+                  "floorCents": 100000000000,
+                  "ceilingCents": null
+                }
+              ],
+              "rateMatrixByActivityCategory": {
+                "category_1": [
+                  0.00104,
+                  0.00135,
+                  0.00187,
+                  0.00356,
+                  0.00356,
+                  0.00356,
+                  0.00356,
+                  0.00534,
+                  0.00712,
+                  0.0089,
+                  0.01068
+                ],
+                "category_2": [
+                  0.00192,
+                  0.00209,
+                  0.00209,
+                  0.00351,
+                  0.00617,
+                  0.00617,
+                  0.00617,
+                  0.00617,
+                  0.00617,
+                  0.00617,
+                  0.00617
+                ],
+                "category_3": [
+                  0.0043,
+                  0.0043,
+                  0.00452,
+                  0.00452,
+                  0.00465,
+                  0.00465,
+                  0.00465,
+                  0.00465,
+                  0.00465,
+                  0.00465,
+                  0.00465
+                ],
+                "category_4": [
+                  0.0026,
+                  0.0026,
+                  0.00312,
+                  0.00534,
+                  0.0089,
+                  0.0089,
+                  0.01246,
+                  0.01246,
+                  0.01424,
+                  0.01424,
+                  0.01602
+                ],
+                "category_5": [
+                  0.0104,
+                  0.0104,
+                  0.0156,
+                  0.01246,
+                  0.01424,
+                  0.01424,
+                  0.01424,
+                  0.01602,
+                  0.0178,
+                  0.0178,
+                  0.0178
+                ],
+                "category_6": [
+                  0.0156,
+                  0.0156,
+                  0.0312,
+                  0.02492,
+                  0.03204,
+                  0.03204,
+                  0.0356,
+                  0.0356,
+                  0.0356,
+                  0.0356,
+                  0.0356
+                ],
+                "category_7": [
+                  0.0052,
+                  0.0052,
+                  0.0078,
+                  0.00712,
+                  0.01068,
+                  0.01068,
+                  0.01424,
+                  0.01424,
+                  0.01602,
+                  0.01602,
+                  0.0178
+                ]
+              },
+              "smallBusinessExemption": {
+                "thresholdCents": null,
+                "thresholdInput": "sf_small_business_exemption_threshold_cents",
+                "thresholdAdjustment": "For tax years beginning on or after 2026, Code Section 954.1 adjusts the threshold annually by CPI and rounds to the nearest $10,000; do not hard-code the 2025 threshold for 2027.",
+                "appliesIf": [
+                  "not_lessor_of_residential_real_estate",
+                  "not_subject_to_administrative_office_tax",
+                  "combined_taxable_san_francisco_gross_receipts_cents <= applicable_threshold_cents"
+                ],
+                "effect": "gross_receipts_tax_cents = 0"
+              },
+              "sourceUrls": [
+                "https://sftreasurer.org/proposition-m-2024-business-tax-reform",
+                "https://sftreasurer.org/business/taxes-fees/gross-receipts-tax-gr-0",
+                "https://sftreasurer.org/annual-business-registration-and-tax-form-25-27",
+                "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-51635",
+                "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-4760"
+              ],
+              "evidenceText": "Official San Francisco Prop M materials publish the 2027 GRT rates by category; official GRT guidance states the tax is calculated by applying category rates to San Francisco gross receipts. ([Treasurer & Tax Collector][2])"
+            }
+          ],
+          "hgrTaxModel": {
+            "modelId": "sf_homelessness_gross_receipts_tax_2025_2027_all_categories",
+            "taxYears": [
+              2025,
+              2026,
+              2027
+            ],
+            "activityCategories": {
+              "category_1": {
+                "categoryNumber": 1,
+                "label": "Category 1 - retail, wholesale, restaurants, repair, personal services and similar activities",
+                "activityCategoryLabels": [
+                  "Wholesale Trade",
+                  "Retail Trade",
+                  "Rental and Leasing Services",
+                  "Arts, Entertainment, and Recreation",
+                  "Food Services and Drinking Places",
+                  "Repair and Maintenance",
+                  "Personal and Laundry Services except Parking Lots and Garages",
+                  "Religious, Grantmaking, Civic, Professional, and Similar Organizations"
+                ],
+                "retrofiActivityAliases": [
+                  "retail_trade",
+                  "hardware_store",
+                  "wholesale_trade",
+                  "restaurant",
+                  "food_services",
+                  "arts_entertainment_recreation",
+                  "repair_maintenance",
+                  "personal_laundry_services"
+                ]
+              },
+              "category_2": {
+                "categoryNumber": 2,
+                "label": "Category 2 - accommodation",
+                "activityCategoryLabels": [
+                  "Accommodation"
+                ],
+                "retrofiActivityAliases": [
+                  "accommodation",
+                  "hotel",
+                  "lodging"
+                ]
+              },
+              "category_3": {
+                "categoryNumber": 3,
+                "label": "Category 3 - real estate, facilities support, building services and parking",
+                "activityCategoryLabels": [
+                  "Real Estate",
+                  "Facilities Support Services",
+                  "Services to Buildings and Dwellings",
+                  "Parking Lots and Garages"
+                ],
+                "retrofiActivityAliases": [
+                  "real_estate",
+                  "facilities_support",
+                  "building_services",
+                  "parking_lots_and_garages"
+                ]
+              },
+              "category_4": {
+                "categoryNumber": 4,
+                "label": "Category 4 - manufacturing, transportation, insurance and specified support activities",
+                "activityCategoryLabels": [
+                  "Agriculture, Forestry, Fishing and Hunting",
+                  "Mining, Quarrying, and Oil and Gas Extraction",
+                  "Utilities",
+                  "Manufacturing",
+                  "Transportation and Warehousing",
+                  "Insurance Carriers and Related Activities",
+                  "Selected R&D and support activities"
+                ],
+                "retrofiActivityAliases": [
+                  "manufacturing",
+                  "transportation_warehousing",
+                  "insurance_carriers",
+                  "utilities",
+                  "agriculture",
+                  "mining",
+                  "support_services"
+                ]
+              },
+              "category_5": {
+                "categoryNumber": 5,
+                "label": "Category 5 - information, professional services, management, education, healthcare and uncategorized activities",
+                "activityCategoryLabels": [
+                  "Information",
+                  "Nondepository Credit Intermediation",
+                  "Activities Related to Credit Intermediation",
+                  "Lessors of Nonfinancial Intangible Assets except Copyrighted Works",
+                  "Professional, Scientific, and Technical Services except NAICS 541714",
+                  "Management of Companies and Enterprises",
+                  "Waste Management and Remediation Services",
+                  "Educational Services",
+                  "Healthcare and Social Assistance",
+                  "All other taxable activities not otherwise categorized"
+                ],
+                "retrofiActivityAliases": [
+                  "information",
+                  "professional_services",
+                  "software_services",
+                  "consulting",
+                  "management_companies",
+                  "education",
+                  "healthcare",
+                  "uncategorized"
+                ]
+              },
+              "category_6": {
+                "categoryNumber": 6,
+                "label": "Category 6 - financial services",
+                "activityCategoryLabels": [
+                  "Monetary Authorities-Central Bank",
+                  "Depository Credit Intermediation",
+                  "Securities, Commodity Contracts, and Other Financial Investments and Related Activities",
+                  "Funds, Trusts, and Other Financial Vehicles"
+                ],
+                "retrofiActivityAliases": [
+                  "financial_services",
+                  "banking",
+                  "securities",
+                  "investment_funds",
+                  "trusts"
+                ]
+              },
+              "category_7": {
+                "categoryNumber": 7,
+                "label": "Category 7 - construction",
+                "activityCategoryLabels": [
+                  "Construction"
+                ],
+                "retrofiActivityAliases": [
+                  "construction",
+                  "contractor"
+                ]
+              }
+            },
+            "bandBounds": [
+              {
+                "bandId": "0_to_1m",
+                "floorCents": 0,
+                "ceilingCents": 100000000
+              },
+              {
+                "bandId": "1m_to_2_5m",
+                "floorCents": 100000000,
+                "ceilingCents": 250000000
+              },
+              {
+                "bandId": "2_5m_to_25m",
+                "floorCents": 250000000,
+                "ceilingCents": 2500000000
+              },
+              {
+                "bandId": "25m_to_50m",
+                "floorCents": 2500000000,
+                "ceilingCents": 5000000000
+              },
+              {
+                "bandId": "50m_to_75m",
+                "floorCents": 5000000000,
+                "ceilingCents": 7500000000
+              },
+              {
+                "bandId": "75m_to_100m",
+                "floorCents": 7500000000,
+                "ceilingCents": 10000000000
+              },
+              {
+                "bandId": "100m_to_150m",
+                "floorCents": 10000000000,
+                "ceilingCents": 15000000000
+              },
+              {
+                "bandId": "150m_to_250m",
+                "floorCents": 15000000000,
+                "ceilingCents": 25000000000
+              },
+              {
+                "bandId": "250m_to_500m",
+                "floorCents": 25000000000,
+                "ceilingCents": 50000000000
+              },
+              {
+                "bandId": "500m_to_1b",
+                "floorCents": 50000000000,
+                "ceilingCents": 100000000000
+              },
+              {
+                "bandId": "over_1b",
+                "floorCents": 100000000000,
+                "ceilingCents": null
+              }
+            ],
+            "rateMatrixByActivityCategory": {
+              "category_1": [
+                0,
+                0,
+                0,
+                0.00164,
+                0.00164,
+                0.00164,
+                0.00164,
+                0.00246,
+                0.00328,
+                0.0041,
+                0.00492
+              ],
+              "category_2": [
+                0,
+                0,
+                0,
+                0.00162,
+                0.00284,
+                0.00284,
+                0.00284,
+                0.00284,
+                0.00284,
+                0.00284,
+                0.00284
+              ],
+              "category_3": [
+                0,
+                0,
+                0,
+                0,
+                0.00325,
+                0.00325,
+                0.00325,
+                0.00325,
+                0.00325,
+                0.00325,
+                0.00325
+              ],
+              "category_4": [
+                0,
+                0,
+                0,
+                0.00246,
+                0.0041,
+                0.0041,
+                0.00574,
+                0.00574,
+                0.00656,
+                0.00656,
+                0.00738
+              ],
+              "category_5": [
+                0,
+                0,
+                0,
+                0.00574,
+                0.00656,
+                0.00656,
+                0.00656,
+                0.00738,
+                0.0082,
+                0.0082,
+                0.0082
+              ],
+              "category_6": [
+                0,
+                0,
+                0,
+                0.01148,
+                0.01476,
+                0.01476,
+                0.0164,
+                0.0164,
+                0.0164,
+                0.0164,
+                0.0164
+              ],
+              "category_7": [
+                0,
+                0,
+                0,
+                0.00328,
+                0.00492,
+                0.00492,
+                0.00656,
+                0.00656,
+                0.00738,
+                0.00738,
+                0.0082
+              ]
+            },
+            "applicability": {
+              "thresholdRule": "Applies to business activities with San Francisco gross receipts over $25,000,000 in a Business Activity Category; bands below $25,000,000 are encoded with zero rates for executable marginal computation.",
+              "thresholdCents": 2500000000,
+              "smallBusinessExemption": "A person or combined group exempt from GRT as a small business enterprise is also exempt from HGR."
+            },
+            "sourceUrls": [
+              "https://sftreasurer.org/business/taxes-fees/homelessness-gross-receipts-tax-hgr-0",
+              "https://sftreasurer.org/proposition-m-2024-business-tax-reform",
+              "https://sftreasurer.org/annual-business-registration-and-tax-form-instructions-25-27"
+            ],
+            "evidenceText": "Official San Francisco HGR guidance states HGR is an additional tax for business activities with San Francisco gross receipts over $25 million and publishes category rates and exclusions. ([Treasurer & Tax Collector][3])"
+          },
+          "oeTaxModels": [
+            {
+              "modelId": "sf_overpaid_executive_gross_receipts_tax_2025",
+              "taxYear": 2025,
+              "rateBands": [
+                {
+                  "payRatioGreaterThan": 100,
+                  "payRatioLessThanOrEqualTo": 200,
+                  "rateDecimal": 0.0002
+                },
+                {
+                  "payRatioGreaterThan": 200,
+                  "payRatioLessThanOrEqualTo": 300,
+                  "rateDecimal": 0.0004
+                },
+                {
+                  "payRatioGreaterThan": 300,
+                  "payRatioLessThanOrEqualTo": 400,
+                  "rateDecimal": 0.0006
+                },
+                {
+                  "payRatioGreaterThan": 400,
+                  "payRatioLessThanOrEqualTo": 500,
+                  "rateDecimal": 0.0008
+                },
+                {
+                  "payRatioGreaterThan": 500,
+                  "payRatioLessThanOrEqualTo": 600,
+                  "rateDecimal": 0.001
+                },
+                {
+                  "payRatioGreaterThan": 600,
+                  "payRatioLessThanOrEqualTo": null,
+                  "rateDecimal": 0.0012
+                }
+              ],
+              "sourceUrls": [
+                "https://sftreasurer.org/business/taxes-fees/overpaid-executive-gross-receipts-tax-oe",
+                "https://sftreasurer.org/proposition-m-2024-business-tax-reform",
+                "https://sftreasurer.org/annual-business-registration-and-tax-form-instructions-25-27",
+                "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-50212"
+              ],
+              "evidenceText": "Official San Francisco OE guidance says the tax applies where highest-paid managerial employee compensation exceeds 100 times median San Francisco employee compensation, and publishes 2025/2026 and 2027 rate bands. ([Treasurer & Tax Collector][4])"
+            },
+            {
+              "modelId": "sf_overpaid_executive_gross_receipts_tax_2026",
+              "taxYear": 2026,
+              "rateBands": [
+                {
+                  "payRatioGreaterThan": 100,
+                  "payRatioLessThanOrEqualTo": 200,
+                  "rateDecimal": 0.0002
+                },
+                {
+                  "payRatioGreaterThan": 200,
+                  "payRatioLessThanOrEqualTo": 300,
+                  "rateDecimal": 0.0004
+                },
+                {
+                  "payRatioGreaterThan": 300,
+                  "payRatioLessThanOrEqualTo": 400,
+                  "rateDecimal": 0.0006
+                },
+                {
+                  "payRatioGreaterThan": 400,
+                  "payRatioLessThanOrEqualTo": 500,
+                  "rateDecimal": 0.0008
+                },
+                {
+                  "payRatioGreaterThan": 500,
+                  "payRatioLessThanOrEqualTo": 600,
+                  "rateDecimal": 0.001
+                },
+                {
+                  "payRatioGreaterThan": 600,
+                  "payRatioLessThanOrEqualTo": null,
+                  "rateDecimal": 0.0012
+                }
+              ],
+              "sourceUrls": [
+                "https://sftreasurer.org/business/taxes-fees/overpaid-executive-gross-receipts-tax-oe",
+                "https://sftreasurer.org/proposition-m-2024-business-tax-reform",
+                "https://sftreasurer.org/annual-business-registration-and-tax-form-instructions-25-27",
+                "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-50212"
+              ],
+              "evidenceText": "Official San Francisco OE guidance says the tax applies where highest-paid managerial employee compensation exceeds 100 times median San Francisco employee compensation, and publishes 2025/2026 and 2027 rate bands. ([Treasurer & Tax Collector][4])"
+            },
+            {
+              "modelId": "sf_overpaid_executive_gross_receipts_tax_2027",
+              "taxYear": 2027,
+              "rateBands": [
+                {
+                  "payRatioGreaterThan": 100,
+                  "payRatioLessThanOrEqualTo": 200,
+                  "rateDecimal": 0.00021
+                },
+                {
+                  "payRatioGreaterThan": 200,
+                  "payRatioLessThanOrEqualTo": 300,
+                  "rateDecimal": 0.00042
+                },
+                {
+                  "payRatioGreaterThan": 300,
+                  "payRatioLessThanOrEqualTo": 400,
+                  "rateDecimal": 0.00062
+                },
+                {
+                  "payRatioGreaterThan": 400,
+                  "payRatioLessThanOrEqualTo": 500,
+                  "rateDecimal": 0.00083
+                },
+                {
+                  "payRatioGreaterThan": 500,
+                  "payRatioLessThanOrEqualTo": 600,
+                  "rateDecimal": 0.00104
+                },
+                {
+                  "payRatioGreaterThan": 600,
+                  "payRatioLessThanOrEqualTo": null,
+                  "rateDecimal": 0.00125
+                }
+              ],
+              "sourceUrls": [
+                "https://sftreasurer.org/business/taxes-fees/overpaid-executive-gross-receipts-tax-oe",
+                "https://sftreasurer.org/proposition-m-2024-business-tax-reform",
+                "https://sftreasurer.org/annual-business-registration-and-tax-form-instructions-25-27",
+                "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-50212"
+              ],
+              "evidenceText": "Official San Francisco OE guidance says the tax applies where highest-paid managerial employee compensation exceeds 100 times median San Francisco employee compensation, and publishes 2025/2026 and 2027 rate bands. ([Treasurer & Tax Collector][4])"
+            }
+          ],
+          "registrationFeeModels": [
+            {
+              "modelId": "sf_business_registration_fee_2025_2026_general",
+              "appliesToTaxYears": [
+                2025,
+                2025
+              ],
+              "feeBands": [
+                {
+                  "bandId": "0_to_100k",
+                  "floorCents": 0,
+                  "ceilingCents": 10000000,
+                  "cityRegistrationFeeCents": 4100,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "100k_to_250k",
+                  "floorCents": 10000000,
+                  "ceilingCents": 25000000,
+                  "cityRegistrationFeeCents": 7100,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "250k_to_500k",
+                  "floorCents": 25000000,
+                  "ceilingCents": 50000000,
+                  "cityRegistrationFeeCents": 12000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "500k_to_750k",
+                  "floorCents": 50000000,
+                  "ceilingCents": 75000000,
+                  "cityRegistrationFeeCents": 24000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "750k_to_1m",
+                  "floorCents": 75000000,
+                  "ceilingCents": 100000000,
+                  "cityRegistrationFeeCents": 33000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "1m_to_1_5m",
+                  "floorCents": 100000000,
+                  "ceilingCents": 150000000,
+                  "cityRegistrationFeeCents": 46900,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "1_5m_to_2m",
+                  "floorCents": 150000000,
+                  "ceilingCents": 200000000,
+                  "cityRegistrationFeeCents": 65600,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "2m_to_2_5m",
+                  "floorCents": 200000000,
+                  "ceilingCents": 250000000,
+                  "cityRegistrationFeeCents": 84800,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "2_5m_to_5m",
+                  "floorCents": 250000000,
+                  "ceilingCents": 500000000,
+                  "cityRegistrationFeeCents": 141400,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "5m_to_7_5m",
+                  "floorCents": 500000000,
+                  "ceilingCents": 750000000,
+                  "cityRegistrationFeeCents": 60000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "7_5m_to_15m",
+                  "floorCents": 750000000,
+                  "ceilingCents": 1500000000,
+                  "cityRegistrationFeeCents": 150000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "15m_to_25m",
+                  "floorCents": 1500000000,
+                  "ceilingCents": 2500000000,
+                  "cityRegistrationFeeCents": 487500,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "25m_to_50m",
+                  "floorCents": 2500000000,
+                  "ceilingCents": 5000000000,
+                  "cityRegistrationFeeCents": 1500000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "50m_to_100m",
+                  "floorCents": 5000000000,
+                  "ceilingCents": 10000000000,
+                  "cityRegistrationFeeCents": 3000000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "100m_to_200m",
+                  "floorCents": 10000000000,
+                  "ceilingCents": 20000000000,
+                  "cityRegistrationFeeCents": 3750000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "over_200m",
+                  "floorCents": 20000000000,
+                  "ceilingCents": null,
+                  "cityRegistrationFeeCents": 4500000,
+                  "stateFeeCents": 400
+                }
+              ],
+              "sourceUrls": [
+                "https://sftreasurer.org/business-registration-renewal-instructions-2025-2026",
+                "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-1883"
+              ],
+              "evidenceText": "Official 2025-2026 Business Registration Renewal instructions and Code Section 855(c) publish the 2025-2026 registration year fee schedule by 2024 taxable San Francisco gross receipts and show a separate $4 state fee. ([Treasurer & Tax Collector][5])"
+            },
+            {
+              "modelId": "sf_business_registration_fee_2026_2027_general",
+              "appliesToTaxYears": [
+                2026,
+                2027
+              ],
+              "feeBands": [
+                {
+                  "bandId": "0_to_100k",
+                  "floorCents": 0,
+                  "ceilingCents": 10000000,
+                  "cityRegistrationFeeCents": 5500,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "100k_to_250k",
+                  "floorCents": 10000000,
+                  "ceilingCents": 25000000,
+                  "cityRegistrationFeeCents": 9500,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "250k_to_500k",
+                  "floorCents": 25000000,
+                  "ceilingCents": 50000000,
+                  "cityRegistrationFeeCents": 16000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "500k_to_750k",
+                  "floorCents": 50000000,
+                  "ceilingCents": 75000000,
+                  "cityRegistrationFeeCents": 32000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "750k_to_1m",
+                  "floorCents": 75000000,
+                  "ceilingCents": 100000000,
+                  "cityRegistrationFeeCents": 44000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "1m_to_1_5m",
+                  "floorCents": 100000000,
+                  "ceilingCents": 150000000,
+                  "cityRegistrationFeeCents": 62500,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "1_5m_to_2m",
+                  "floorCents": 150000000,
+                  "ceilingCents": 200000000,
+                  "cityRegistrationFeeCents": 87500,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "2m_to_2_5m",
+                  "floorCents": 200000000,
+                  "ceilingCents": 250000000,
+                  "cityRegistrationFeeCents": 113000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "2_5m_to_5m",
+                  "floorCents": 250000000,
+                  "ceilingCents": 500000000,
+                  "cityRegistrationFeeCents": 188500,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "5m_to_7_5m",
+                  "floorCents": 500000000,
+                  "ceilingCents": 750000000,
+                  "cityRegistrationFeeCents": 80000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "7_5m_to_15m",
+                  "floorCents": 750000000,
+                  "ceilingCents": 1500000000,
+                  "cityRegistrationFeeCents": 200000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "15m_to_25m",
+                  "floorCents": 1500000000,
+                  "ceilingCents": 2500000000,
+                  "cityRegistrationFeeCents": 650000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "25m_to_50m",
+                  "floorCents": 2500000000,
+                  "ceilingCents": 5000000000,
+                  "cityRegistrationFeeCents": 2000000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "50m_to_100m",
+                  "floorCents": 5000000000,
+                  "ceilingCents": 10000000000,
+                  "cityRegistrationFeeCents": 4000000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "100m_to_200m",
+                  "floorCents": 10000000000,
+                  "ceilingCents": 20000000000,
+                  "cityRegistrationFeeCents": 5000000,
+                  "stateFeeCents": 400
+                },
+                {
+                  "bandId": "over_200m",
+                  "floorCents": 20000000000,
+                  "ceilingCents": null,
+                  "cityRegistrationFeeCents": 6000000,
+                  "stateFeeCents": 400
+                }
+              ],
+              "cpiAdjustmentAfter": "2027-03-31",
+              "sourceUrls": [
+                "https://sftreasurer.org/annual-business-registration-and-tax-form-25-27",
+                "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-1883"
+              ],
+              "evidenceText": "The official Annual Business Registration and Tax Form page and Code Section 855(d) publish the registration year beginning April 1, 2026 fee schedule; Section 855(h) requires CPI adjustment for later registration years ending after March 31, 2027. ([Treasurer & Tax Collector][6])"
+            }
+          ],
+          "sourceUrls": [
+            "https://sftreasurer.org/proposition-m-2024-business-tax-reform",
+            "https://sftreasurer.org/business/taxes-fees/gross-receipts-tax-gr-0",
+            "https://sftreasurer.org/business/taxes-fees/homelessness-gross-receipts-tax-hgr-0",
+            "https://sftreasurer.org/business/taxes-fees/overpaid-executive-gross-receipts-tax-oe",
+            "https://sftreasurer.org/annual-business-registration-and-tax-form-25-27",
+            "https://sftreasurer.org/annual-business-registration-and-tax-form-instructions-25-27",
+            "https://sftreasurer.org/business-registration-renewal-instructions-2025-2026",
+            "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-51635",
+            "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-4760",
+            "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-1883",
+            "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-1108",
+            "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-50212"
+          ],
+          "evidenceText": "Repair target and current RetroFi inputs are from the uploaded prompt.  Official San Francisco guidance states that, for tax years beginning in 2025 after Prop M, Gross Receipts Tax is imposed on taxable San Francisco gross receipts, filed as part of the Annual Business Registration and Tax Form, and calculated by activity category and San Francisco receipts. ([Treasurer & Tax Collector][7]) Official Prop M and Annual Business Registration pages publish the 2025/2026 and 2027 gross receipts category rates. ([Treasurer & Tax Collector][2]) Official instructions and Code sources confirm the $5,000,000 2025 filing/small-business threshold, annual registration renewal requirement, multiple-category summing rule, and CPI adjustment for later small-business thresholds. ([Treasurer & Tax Collector][1]) Official HGR guidance publishes the HGR threshold, exclusions and category rates, and official OE guidance publishes the executive-pay-ratio rates and exemptions. ([Treasurer & Tax Collector][3]) Official Code Section 855, the 2025-2026 renewal instructions, and the annual form page publish registration fee schedules for the 2025-2026 transition and registration years beginning April 1, 2026, including the separate $4 state fee shown on the official form tables. ([American Legal Publishing][8])",
+          "implementationNotes": [
+            "Use imported sf_business_tax_return_total_liability_cents as highest precedence when present.",
+            "If no return total is present, compute San Francisco GRT marginally by activity category and add the imported or computed registration fee.",
+            "HGR/OE are added only from imported component values or component-specific inputs; a true combined HGR/OE applicability flag without component data gates the model."
+          ]
+        }
+      ],
       "sourceConfidence": "high",
       "sourceUrls": [
-        "https://www.burbankca.gov/web/financial-services/revenue",
-        "https://www.burbankca.gov/documents/d/financial-services/fy-2026-27-adopted-fee-schedule-final-revised?download=true",
-        "https://www.cityofpasadena.net/finance/general-fund/fees-tax-schedules/",
-        "https://www.cityofpasadena.net/finance/wp-content/uploads/sites/27/FY-2027-Schedule-of-Taxes-Fees-and-Charges-Adopted.pdf",
-        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54663",
-        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54692",
-        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54706",
-        "https://codelibrary.amlegal.com/codes/anaheim/latest/anaheim_ca/0-0-0-54743",
-        "https://finance.lacity.gov/tax-education/business-taxes/know-your-rates",
-        "https://finance.lacity.gov/business-tax-renewal-instructions",
-        "https://www.sandiego.gov/treasurer/taxesfees/btax/btaxfees",
-        "https://www.sandiego.gov/treasurer/taxesfees/btax/btaxhow",
-        "https://ecode360.com/44468493",
-        "https://sftreasurer.org/business/taxes-fees/gross-receipts-tax-gr-0",
         "https://sftreasurer.org/proposition-m-2024-business-tax-reform",
-        "https://sftreasurer.org/annual-business-registration-and-tax-form-25-27"
+        "https://sftreasurer.org/business/taxes-fees/gross-receipts-tax-gr-0",
+        "https://sftreasurer.org/business/taxes-fees/homelessness-gross-receipts-tax-hgr-0",
+        "https://sftreasurer.org/business/taxes-fees/overpaid-executive-gross-receipts-tax-oe",
+        "https://sftreasurer.org/annual-business-registration-and-tax-form-25-27",
+        "https://sftreasurer.org/annual-business-registration-and-tax-form-instructions-25-27",
+        "https://sftreasurer.org/business-registration-renewal-instructions-2025-2026",
+        "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-51635",
+        "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-4760",
+        "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-1883",
+        "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-1108",
+        "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_business/0-0-0-50212"
       ],
-      "evidenceText": "San Francisco business tax uses category allocation, Prop M-era rate bands, registration fee, and possible HGR/OE rules. It remains a tax-return gate until progressive band tables are imported as structured rows.",
+      "evidenceText": "Repair target and current RetroFi inputs are from the uploaded prompt.  Official San Francisco guidance states that, for tax years beginning in 2025 after Prop M, Gross Receipts Tax is imposed on taxable San Francisco gross receipts, filed as part of the Annual Business Registration and Tax Form, and calculated by activity category and San Francisco receipts. ([Treasurer & Tax Collector][7]) Official Prop M and Annual Business Registration pages publish the 2025/2026 and 2027 gross receipts category rates. ([Treasurer & Tax Collector][2]) Official instructions and Code sources confirm the $5,000,000 2025 filing/small-business threshold, annual registration renewal requirement, multiple-category summing rule, and CPI adjustment for later small-business thresholds. ([Treasurer & Tax Collector][1]) Official HGR guidance publishes the HGR threshold, exclusions and category rates, and official OE guidance publishes the executive-pay-ratio rates and exemptions. ([Treasurer & Tax Collector][3]) Official Code Section 855, the 2025-2026 renewal instructions, and the annual form page publish registration fee schedules for the 2025-2026 transition and registration years beginning April 1, 2026, including the separate $4 state fee shown on the official form tables. ([American Legal Publishing][8])",
       "unresolvedGaps": [
-        "Progressive San Francisco gross-receipts bands are not compiled into executable rows yet.",
-        "Customer-facing calculation requires a city business tax return or complete category allocation schedule."
-      ]
+        "The currently collected sf_hgr_or_overpaid_executive_tax_applicability input does not distinguish HGR from OE and is not enough to compute either additional tax.",
+        "HGR should not be computed from ordinary GRT taxable receipts unless the system can confirm HGR-specific exclusions, including Commercial Rents Tax receipts and specified real-estate exclusions, have already been applied.",
+        "OE V1 computation requires executive pay ratio, OE taxable receipts and exemption inputs; otherwise import the filed OE component or gate the component.",
+        "The 2026 and later small-business exemption threshold is CPI-adjusted and rounded by statute; do not hard-code $5,000,000 for 2026 or 2027 if the official adjusted threshold has been published/imported.",
+        "Registration fees after the 2026-2027 registration year require the official CPI-adjusted schedule or an imported bill amount.",
+        "This model does not calculate Gross Receipts Tax credits, Commercial Rents Tax, Administrative Office Tax, penalties, interest or estimated-payment credits unless those amounts are imported from the filed return or supplied as separate official inputs."
+      ],
+      "estimateConfidenceIfInputsPresent": "high",
+      "financialRole": "tax_liability",
+      "financialTiming": "annual_tax_filing_or_bill",
+      "gptProRepairSource": "data/sf_business_tax_return_model_repair_gpt_pro_2026-07-06.json"
     },
     {
       "id": "tax_gap_oh_commercial_activity_tax_current_exclusion_v1",
