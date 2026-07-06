@@ -1062,6 +1062,46 @@ describe("retrofit recommendations preview", () => {
     expect(areRetrofitQuestionsComplete(retrofit, {})).toBe(false);
   });
 
+  it("adds required tax runtime fields to retrofit project questions", () => {
+    const preview = buildUserRetrofitPreviewResult({
+      ...liveShapedPayload,
+      taxRuntimePreview: {
+        status: "requires_tax_intake",
+        opportunityDisplayBlocked: true,
+        requiredPreOpportunityInputs: [
+          {
+            inputKey: "sf_business_activity_category",
+            label: "San Francisco business activity category",
+            questionPrompt: "Which San Francisco business activity category applies?",
+            answerType: "text",
+            valueType: "string",
+            helperText: "Use the annual business tax return activity schedule."
+          },
+          {
+            inputKey: "sf_gross_receipts_tax_return_present",
+            label: "San Francisco gross receipts tax return available",
+            questionPrompt: "Is the San Francisco gross receipts tax return or equivalent workpaper available?",
+            answerType: "boolean",
+            valueType: "boolean_or_enum"
+          }
+        ],
+        totals: {
+          includedBenefitCents: 0,
+          includedLiabilityCents: 0,
+          includedAmountCents: 0
+        }
+      }
+    } as any);
+
+    const retrofit = preview.retrofits[0];
+    const questions = getRetrofitFormQuestions(retrofit);
+
+    expect(preview.missingInputs).toContain("San Francisco business activity category");
+    expect(questions.map((question) => question.question)).toContain("Which San Francisco business activity category applies?");
+    expect(questions.map((question) => question.question)).toContain("Is the San Francisco gross receipts tax return or equivalent workpaper available?");
+    expect(areRetrofitQuestionsComplete(retrofit, {})).toBe(false);
+  });
+
   it("resumes bill upload state from the first incomplete or skipped bill and validates storage keys", () => {
     expect(BILL_UPLOAD_STEPS.map((step) => step.id)).toEqual(["electric", "water", "gas", "waste"]);
     expect(BILL_UPLOAD_STEPS[0].title).toBe("Upload your electric bill");

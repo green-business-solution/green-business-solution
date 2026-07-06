@@ -4,6 +4,140 @@ const IMPLEMENTED_SURFACES = new Set([
   "utility_bill_upload"
 ]);
 
+const FIELD_OVERRIDES = {
+  ac_nameplate_capacity_kw: {
+    label: "AC nameplate capacity",
+    questionPrompt: "What is the renewable system's AC nameplate capacity?",
+    helperText: "Use the project quote, engineering summary, interconnection application, or equipment datasheet.",
+    valueType: "number",
+    answerType: "number",
+    collectionSurface: "retrofit_scope_form",
+    collectionSourceType: "retrofit_scope",
+    unit: "kW"
+  },
+  renewable_resource_type: {
+    label: "Renewable resource type",
+    questionPrompt: "What renewable resource or technology does the system use?",
+    helperText: "Examples include solar PV, wind, hydro, biomass, biogas, geothermal electric, or battery-paired renewable generation.",
+    valueType: "string",
+    answerType: "select",
+    options: ["Solar PV", "Wind", "Hydro", "Biomass", "Biogas", "Geothermal electric", "Battery-paired renewable generation", "Other"],
+    collectionSurface: "retrofit_scope_form",
+    collectionSourceType: "retrofit_scope"
+  },
+  municipality: {
+    label: "Municipality",
+    questionPrompt: "Which city or town controls the local property-tax treatment?",
+    helperText: "This is usually derived from the site address, but it can be overridden if the tax parcel is in a different municipality.",
+    valueType: "string",
+    answerType: "text",
+    collectionSurface: "intake_profile_form",
+    collectionSourceType: "user_profile"
+  },
+  system_use_and_tax_classification: {
+    label: "System use and tax classification",
+    questionPrompt: "How should the system be classified for property-tax purposes?",
+    helperText: "Describe whether the system is onsite/customer-serving, commercial generation, tangible property, real property, or subject to another assessor classification.",
+    valueType: "string",
+    answerType: "text",
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  },
+  municipal_exemption_or_waiver_status: {
+    label: "Municipal exemption or waiver status",
+    questionPrompt: "Has the municipality approved an exemption, waiver, PILOT, or other tax agreement for this system?",
+    helperText: "Use the local ordinance, assessor notice, council approval, tax agreement, or accountant review if available.",
+    valueType: "boolean_or_enum",
+    answerType: "select",
+    options: ["Approved", "Not approved", "Not applicable", "Pending", "Unknown"],
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  },
+  tangible_property_applicable: {
+    label: "Tangible-property treatment applies",
+    questionPrompt: "Does the assessor treat any part of the renewable system as taxable tangible property?",
+    helperText: "Use the assessor notice, personal-property schedule, or accountant review.",
+    valueType: "boolean_or_enum",
+    answerType: "boolean",
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  },
+  real_property_applicable: {
+    label: "Real-property treatment applies",
+    questionPrompt: "Does the assessor treat any part of the renewable system as real-property value?",
+    helperText: "Use the assessor notice, property-tax bill, or accountant review.",
+    valueType: "boolean_or_enum",
+    answerType: "boolean",
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  },
+  counterfactual_ordinary_annual_property_tax_cents: {
+    label: "Ordinary annual property tax without special treatment",
+    questionPrompt: "What annual property tax would apply without the renewable-energy special tax treatment?",
+    helperText: "Use a tax bill, assessor estimate, accountant workpaper, or appraisal-supported counterfactual.",
+    valueType: "money_cents",
+    answerType: "number",
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  },
+  local_assessor_confirmation: {
+    label: "Local assessor confirmation",
+    questionPrompt: "Has the local assessor confirmed this tax treatment for the project?",
+    helperText: "Upload or enter the assessor notice, approval, or tax professional confirmation.",
+    valueType: "boolean_or_enum",
+    answerType: "select",
+    options: ["Confirmed", "Pending", "Not confirmed", "Unknown"],
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  },
+  sf_business_activity_category: {
+    label: "San Francisco business activity category",
+    questionPrompt: "Which San Francisco business activity category applies?",
+    helperText: "Use the annual business tax return activity schedule or the Treasurer and Tax Collector category instructions.",
+    valueType: "string",
+    answerType: "text",
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  },
+  sf_allocated_gross_receipts_by_category: {
+    label: "San Francisco gross receipts by category",
+    questionPrompt: "What gross receipts are allocated to each San Francisco business activity category?",
+    helperText: "Use the city business tax return or allocation workpaper.",
+    valueType: "string",
+    answerType: "text",
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  },
+  sf_registration_fee_schedule_amount_cents: {
+    label: "San Francisco registration fee",
+    questionPrompt: "What San Francisco business registration fee applies for the tax year?",
+    helperText: "Use the business registration renewal, filing confirmation, or city fee schedule.",
+    valueType: "money_cents",
+    answerType: "number",
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  },
+  sf_gross_receipts_tax_return_present: {
+    label: "San Francisco gross receipts tax return available",
+    questionPrompt: "Is the San Francisco gross receipts tax return or equivalent workpaper available?",
+    helperText: "This lets RetroFi use actual filing data instead of asking for each schedule manually.",
+    valueType: "boolean_or_enum",
+    answerType: "boolean",
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  },
+  sf_hgr_or_overpaid_executive_tax_applicability: {
+    label: "San Francisco HGR or overpaid executive tax applicability",
+    questionPrompt: "Do the homelessness gross receipts or overpaid executive tax rules apply?",
+    helperText: "Use the city return, tax preparer workpaper, or mark not applicable if the business does not meet the thresholds.",
+    valueType: "boolean_or_enum",
+    answerType: "select",
+    options: ["Applies", "Does not apply", "Unknown"],
+    collectionSurface: "tax_document_upload",
+    collectionSourceType: "tax_document"
+  }
+};
+
 const SOURCE_SURFACE_HINTS = [
   {
     pattern: /\b(tax|assessor|parcel|filing|liability|abatement|exemption|property_tax|income_tax)\b/i,
@@ -84,22 +218,28 @@ export function buildV2FormInputFields({ requiredInputs = [], missingInputs = []
 
 export function mapV2InputToField(input, { isMissing = false } = {}) {
   const inputKey = inputKeyFor(input);
+  const override = FIELD_OVERRIDES[inputKey] || {};
   const sourcePrecedence = Array.isArray(input?.source_precedence)
     ? input.source_precedence
     : Array.isArray(input?.sourcePrecedence)
       ? input.sourcePrecedence
       : [];
   const sourceHint = sourceHintFor(inputKey, sourcePrecedence);
-  const valueType = input?.value_type || input?.valueType || inferValueType(inputKey);
-  const collectionSurface = sourceHint.surface;
+  const valueType = override.valueType || input?.value_type || input?.valueType || inferValueType(inputKey);
+  const collectionSurface = override.collectionSurface || sourceHint.surface;
 
   return {
     inputKey,
-    label: input?.label || humanizeInputKey(inputKey),
+    label: input?.label || override.label || humanizeInputKey(inputKey),
+    questionPrompt: input?.questionPrompt || input?.question_prompt || override.questionPrompt || input?.label || override.label || humanizeInputKey(inputKey),
+    helperText: input?.helperText || input?.helper_text || override.helperText || "",
+    answerType: override.answerType || answerTypeForValueType(valueType),
+    options: override.options || input?.options || [],
+    unit: override.unit || input?.unit || null,
     valueType,
     collectionSurface,
     collectionSurfaceLabel: collectionSurfaceLabel(collectionSurface),
-    collectionSourceType: sourceHint.sourceType,
+    collectionSourceType: override.collectionSourceType || sourceHint.sourceType,
     implementationStatus: IMPLEMENTED_SURFACES.has(collectionSurface) ? "implemented" : "planned",
     fieldId: fieldIdFor(collectionSurface, inputKey),
     requiredBeforeEstimate: input?.missing_severity === "blocks_calculation" || input?.missingSeverity === "blocks_calculation" || isMissing,
@@ -146,6 +286,13 @@ function inferValueType(inputKey = "") {
   if (/(count|quantity|number|kw|kwh|therm|percent|share|rate|tons|horsepower|capacity|square_feet)/i.test(inputKey)) return "number";
   if (/(eligible|verified|confirmed|required|approved|enrolled|compliance|status)/i.test(inputKey)) return "boolean_or_enum";
   return "string";
+}
+
+function answerTypeForValueType(valueType = "") {
+  if (valueType === "number" || valueType === "money_cents") return "number";
+  if (valueType === "boolean_or_enum") return "boolean";
+  if (valueType === "date") return "text";
+  return "text";
 }
 
 function humanizeInputKey(inputKey = "") {

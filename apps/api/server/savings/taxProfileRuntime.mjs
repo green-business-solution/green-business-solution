@@ -155,6 +155,7 @@ export function buildTaxProfileRuntimeAnswers(taxContext = {}) {
   addAlias(answers, "leased_square_feet", "business_square_feet");
   addAlias(answers, "building_square_feet", "warehouse_square_feet");
   addAlias(answers, "leased_square_feet", "warehouse_square_feet");
+  addSanFranciscoBusinessTaxAliases(answers);
   addSourceBasedLocalBusinessTaxClass(answers, taxContext);
 
   return answers;
@@ -314,6 +315,47 @@ function addAlias(answers, fromKey, toKey) {
     ...answers[fromKey],
     source: "tax_profile_alias"
   };
+}
+
+function addDerivedAlias(answers, fromKey, toKey, deriveValue) {
+  if (answers[toKey] || !answers[fromKey]) return;
+  const value = deriveValue(answers[fromKey].value);
+  if (value === undefined || value === null || value === "") return;
+  answers[toKey] = {
+    value,
+    source: "tax_profile_derived_alias"
+  };
+}
+
+function addSanFranciscoBusinessTaxAliases(answers) {
+  addDerivedAlias(
+    answers,
+    "business_classification_fund_class_activity_category_or_code_classification",
+    "sf_business_activity_category",
+    (value) => value?.grossReceiptsActivityClass || value?.primaryActivity || null
+  );
+  addDerivedAlias(
+    answers,
+    "taxable_gross_receipts_by_city_and_activity_class",
+    "sf_allocated_gross_receipts_by_category",
+    (value) => value?.cityReceiptsByActivityClass || value
+  );
+  addDerivedAlias(
+    answers,
+    "tax_period_or_fiscal_year_schedule",
+    "sf_gross_receipts_tax_return_present",
+    (value) => Boolean(value?.returnType || value?.taxYear)
+  );
+  addDerivedAlias(
+    answers,
+    "proof_of_timely_filing_when_claiming_city_exemptions",
+    "sf_hgr_or_overpaid_executive_tax_applicability",
+    (value) => {
+      if (value?.hgrOrOverpaidExecutiveTaxApplies !== undefined) return Boolean(value.hgrOrOverpaidExecutiveTaxApplies);
+      if (value?.claimingCityExemption === false) return false;
+      return null;
+    }
+  );
 }
 
 function addSourceBasedLocalBusinessTaxClass(answers, taxContext) {

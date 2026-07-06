@@ -1,6 +1,6 @@
 {
   "schemaVersion": "retrofi_test_case_grant_tax_coverage_report.v1",
-  "generatedAt": "2026-07-05T05:49:50.722Z",
+  "generatedAt": "2026-07-05T23:58:32.447Z",
   "sourceFiles": {
     "testCases": "public/sample_matching_test_cases.json",
     "packages": "data/opportunity_incentive_calculation_packages_v2.json",
@@ -90,7 +90,7 @@
     "taxProfileRuntimeIncludedBenefitCents": 42643219,
     "taxProfileRuntimeIncludedLiabilityCents": 21668000,
     "taxProfileRuntimeNetIncludedAmountCents": 20975219,
-    "taxProfileRuntimeMissingPreOpportunityInputCount": 47,
+    "taxProfileRuntimeMissingPreOpportunityInputCount": 20,
     "taxProfileRuntimeStructuredModelWorkCount": 18
   },
   "topMissingInputs": [],
@@ -6980,35 +6980,11 @@
         "includedInUserFacingTotal": false,
         "missingInputs": [
           {
-            "inputKey": "approved_rerz_designation",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "qualified_company_operations",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
             "inputKey": "parcel_or_facility_within_approved_zone_boundary",
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           },
           {
-            "inputKey": "company_current_on_state_and_local_taxes",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
             "inputKey": "phaseout_multiplier",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_state_education_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_real_property_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_personal_property_tax_cents",
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           },
           {
@@ -7180,39 +7156,11 @@
         "includedInUserFacingTotal": false,
         "missingInputs": [
           {
-            "inputKey": "approved_rerz_designation",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "qualified_company_operations",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
             "inputKey": "parcel_or_facility_within_approved_zone_boundary",
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           },
           {
             "inputKey": "company_current_on_state_and_local_taxes",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "phaseout_multiplier",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_state_education_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_real_property_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_personal_property_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_local_income_tax_cents",
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           }
         ],
@@ -7300,44 +7248,7 @@
         "status": "review_required",
         "amountCents": 0,
         "includedInUserFacingTotal": false,
-        "missingInputs": [
-          {
-            "inputKey": "ac_nameplate_capacity_kw",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "renewable_resource_type",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "municipality",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "system_use_and_tax_classification",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "municipal_exemption_or_waiver_status",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "tangible_property_applicable",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "real_property_applicable",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "counterfactual_ordinary_annual_property_tax_cents",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "local_assessor_confirmation",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          }
-        ],
+        "missingInputs": [],
         "localTaxProductionAction": "assessor_confirmation_required",
         "localTaxProductionReason": "The statutory formula is known, but customer-facing savings require assessor-confirmed applicability and counterfactual local tax treatment.",
         "inferredAnswerKeys": [
@@ -7380,10 +7291,6 @@
           },
           {
             "inputKey": "sf_allocated_gross_receipts_by_category",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_registration_fee_schedule_amount_cents",
             "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
           },
           {
@@ -7670,38 +7577,14 @@
         "includedBenefitCents": 0,
         "includedLiabilityCents": 0,
         "includedAmountCents": 0,
-        "missingRequiredInputCount": 9,
+        "missingRequiredInputCount": 3,
         "missingInputs": [
-          {
-            "inputKey": "approved_rerz_designation",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "qualified_company_operations",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
           {
             "inputKey": "parcel_or_facility_within_approved_zone_boundary",
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           },
           {
-            "inputKey": "company_current_on_state_and_local_taxes",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
             "inputKey": "phaseout_multiplier",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_state_education_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_real_property_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_personal_property_tax_cents",
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           },
           {
@@ -7817,42 +7700,14 @@
         "includedBenefitCents": 0,
         "includedLiabilityCents": 0,
         "includedAmountCents": 0,
-        "missingRequiredInputCount": 9,
+        "missingRequiredInputCount": 2,
         "missingInputs": [
-          {
-            "inputKey": "approved_rerz_designation",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "qualified_company_operations",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
           {
             "inputKey": "parcel_or_facility_within_approved_zone_boundary",
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           },
           {
             "inputKey": "company_current_on_state_and_local_taxes",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "phaseout_multiplier",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_state_education_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_real_property_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_personal_property_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_local_income_tax_cents",
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           }
         ],
@@ -7959,45 +7814,8 @@
         "includedBenefitCents": 0,
         "includedLiabilityCents": 0,
         "includedAmountCents": 0,
-        "missingRequiredInputCount": 9,
-        "missingInputs": [
-          {
-            "inputKey": "ac_nameplate_capacity_kw",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "renewable_resource_type",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "municipality",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "system_use_and_tax_classification",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "municipal_exemption_or_waiver_status",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "tangible_property_applicable",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "real_property_applicable",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "counterfactual_ordinary_annual_property_tax_cents",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "local_assessor_confirmation",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          }
-        ],
+        "missingRequiredInputCount": 0,
+        "missingInputs": [],
         "readyForOpportunityFinancialEstimate": false,
         "requiresStructuredTaxModelWork": true
       },
@@ -8295,29 +8113,8 @@
         "includedBenefitCents": 0,
         "includedLiabilityCents": 0,
         "includedAmountCents": 0,
-        "missingRequiredInputCount": 5,
-        "missingInputs": [
-          {
-            "inputKey": "sf_business_activity_category",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_allocated_gross_receipts_by_category",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_registration_fee_schedule_amount_cents",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_gross_receipts_tax_return_present",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_hgr_or_overpaid_executive_tax_applicability",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          }
-        ],
+        "missingRequiredInputCount": 0,
+        "missingInputs": [],
         "readyForOpportunityFinancialEstimate": false,
         "requiresStructuredTaxModelWork": true
       },
@@ -16857,44 +16654,7 @@
         "status": "review_required",
         "amountCents": 0,
         "includedInUserFacingTotal": false,
-        "missingInputs": [
-          {
-            "inputKey": "ac_nameplate_capacity_kw",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "renewable_resource_type",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "municipality",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "system_use_and_tax_classification",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "municipal_exemption_or_waiver_status",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "tangible_property_applicable",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "real_property_applicable",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "counterfactual_ordinary_annual_property_tax_cents",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "local_assessor_confirmation",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          }
-        ],
+        "missingInputs": [],
         "localTaxProductionAction": "assessor_confirmation_required",
         "localTaxProductionReason": "The statutory formula is known, but customer-facing savings require assessor-confirmed applicability and counterfactual local tax treatment.",
         "inferredAnswerKeys": [
@@ -16937,10 +16697,6 @@
           },
           {
             "inputKey": "sf_allocated_gross_receipts_by_category",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_registration_fee_schedule_amount_cents",
             "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
           },
           {
@@ -17161,38 +16917,14 @@
         "includedBenefitCents": 0,
         "includedLiabilityCents": 0,
         "includedAmountCents": 0,
-        "missingRequiredInputCount": 9,
+        "missingRequiredInputCount": 3,
         "missingInputs": [
-          {
-            "inputKey": "approved_rerz_designation",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "qualified_company_operations",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
           {
             "inputKey": "parcel_or_facility_within_approved_zone_boundary",
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           },
           {
-            "inputKey": "company_current_on_state_and_local_taxes",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
             "inputKey": "phaseout_multiplier",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_state_education_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_real_property_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_personal_property_tax_cents",
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           },
           {
@@ -17285,42 +17017,14 @@
         "includedBenefitCents": 0,
         "includedLiabilityCents": 0,
         "includedAmountCents": 0,
-        "missingRequiredInputCount": 9,
+        "missingRequiredInputCount": 2,
         "missingInputs": [
-          {
-            "inputKey": "approved_rerz_designation",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "qualified_company_operations",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
           {
             "inputKey": "parcel_or_facility_within_approved_zone_boundary",
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           },
           {
             "inputKey": "company_current_on_state_and_local_taxes",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "phaseout_multiplier",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_state_education_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_real_property_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_personal_property_tax_cents",
-            "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
-          },
-          {
-            "inputKey": "eligible_local_income_tax_cents",
             "workflowId": "local_tax_mi_rerz_detroit_wayne_dsire_3216_v1"
           }
         ],
@@ -17404,45 +17108,8 @@
         "includedBenefitCents": 0,
         "includedLiabilityCents": 0,
         "includedAmountCents": 0,
-        "missingRequiredInputCount": 9,
-        "missingInputs": [
-          {
-            "inputKey": "ac_nameplate_capacity_kw",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "renewable_resource_type",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "municipality",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "system_use_and_tax_classification",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "municipal_exemption_or_waiver_status",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "tangible_property_applicable",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "real_property_applicable",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "counterfactual_ordinary_annual_property_tax_cents",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          },
-          {
-            "inputKey": "local_assessor_confirmation",
-            "workflowId": "local_tax_ri_renewable_property_tax_dsire_22798_v1"
-          }
-        ],
+        "missingRequiredInputCount": 0,
+        "missingInputs": [],
         "readyForOpportunityFinancialEstimate": false,
         "requiresStructuredTaxModelWork": true
       },
@@ -17671,29 +17338,8 @@
         "includedBenefitCents": 0,
         "includedLiabilityCents": 0,
         "includedAmountCents": 0,
-        "missingRequiredInputCount": 5,
-        "missingInputs": [
-          {
-            "inputKey": "sf_business_activity_category",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_allocated_gross_receipts_by_category",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_registration_fee_schedule_amount_cents",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_gross_receipts_tax_return_present",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          },
-          {
-            "inputKey": "sf_hgr_or_overpaid_executive_tax_applicability",
-            "workflowId": "tax_gap_ca_san_francisco_business_tax_v1"
-          }
-        ],
+        "missingRequiredInputCount": 0,
+        "missingInputs": [],
         "readyForOpportunityFinancialEstimate": false,
         "requiresStructuredTaxModelWork": true
       },

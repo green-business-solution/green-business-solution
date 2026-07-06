@@ -203,8 +203,47 @@ type PortalRetrofitRecommendationsResponse = PortalPayload & {
   summary: {
     matchedRetrofitCount: number;
     matchedOpportunityCount: number;
+    canShowOpportunities?: boolean;
+    taxIntakeRequiredBeforeOpportunityDisplay?: boolean;
+    requiredTaxInputCount?: number;
+    calculatedTaxBenefitCents?: number;
+    calculatedTaxLiabilityCents?: number;
+    netTaxImpactCents?: number;
   };
+  taxRuntimePreview?: TaxRuntimePreview | null;
   retrofits: SampleRetrofitGroup[];
+};
+
+type TaxRuntimeInputField = {
+  inputKey: string;
+  label?: string;
+  questionPrompt?: string;
+  helperText?: string;
+  answerType?: "text" | "number" | "select" | "boolean";
+  valueType?: string;
+  options?: string[];
+  unit?: string | null;
+  collectionSurface?: string;
+  collectionSurfaceLabel?: string;
+  collectionSourceType?: string;
+  fieldId?: string;
+  requiredBeforeEstimate?: boolean;
+  requiredBeforeOpportunitySelection?: boolean;
+  collectionStage?: string;
+};
+
+type TaxRuntimePreview = {
+  schemaVersion?: string;
+  status?: string;
+  opportunityDisplayBlocked?: boolean;
+  readyForOpportunityFinancialEstimate?: boolean;
+  requiresStructuredTaxModelWork?: boolean;
+  requiredPreOpportunityInputs?: TaxRuntimeInputField[];
+  totals?: {
+    includedBenefitCents?: number;
+    includedLiabilityCents?: number;
+    includedAmountCents?: number;
+  };
 };
 
 type DashboardPostImplementationDataset = {
@@ -6004,6 +6043,7 @@ export type UserRetrofitPreviewResult = {
   profileId?: string;
   intakeId?: string;
   customerName?: string;
+  taxRuntimePreview?: TaxRuntimePreview | null;
   estimateBasis: EstimateBasisValue;
   estimateCompletenessPercent?: number;
   missingInputs: string[];
@@ -6661,6 +6701,7 @@ export function buildUserRetrofitPreviewResult(
       : undefined,
     retrofits,
     nextActions: buildNextBestActions(retrofits, missingInputs),
+    taxRuntimePreview: payload?.taxRuntimePreview || null,
     generatedAt: payload?.generatedAt,
     dataSourceLabel: payload
       ? "Live/API backend recommendation data"
@@ -6746,7 +6787,10 @@ function buildRetrofitPreviewCard(
     opportunities: retrofit.opportunities.map((opportunity) => buildOpportunityPreview(opportunity, preview, payload)),
     operatingSavings: buildOperatingSavingsPreview(retrofit, payload),
     environmentalImpact: buildRetrofitEnvironmentalImpactPreview(retrofit, missingInfo, preview),
-    detailQuestions: detailQuestionsForRetrofit(retrofit)
+    detailQuestions: [
+      ...detailQuestionsForRetrofit(retrofit),
+      ...taxRuntimeQuestionsForRetrofit(payload?.taxRuntimePreview || null, retrofit.retrofitTypeId)
+    ]
   };
 }
 
@@ -14992,6 +15036,12 @@ function estimateMissingInputs(payload: PortalRetrofitRecommendationsResponse | 
   const missing: string[] = [];
   if (!payload?.intake?.uploadedUtilityFiles?.length) missing.push("electric bill");
   if (!payload?.intake?.site?.squareFootage) missing.push("square footage");
+  if (payload?.taxRuntimePreview?.opportunityDisplayBlocked) {
+    const requiredTaxInputs = (payload.taxRuntimePreview.requiredPreOpportunityInputs || [])
+      .map((field) => field.label || field.inputKey.replaceAll("_", " "))
+      .slice(0, 3);
+    missing.push(...requiredTaxInputs);
+  }
   if (topRetrofit?.missingInfo.length) missing.push(...topRetrofit.missingInfo);
   if (!topRetrofit) missing.push("project quote", "retrofit quantity", "tax/entity information");
   return [...new Set(missing)].slice(0, 5);
@@ -15204,6 +15254,36 @@ function detailQuestionsForRetrofit(retrofit: SampleRetrofitGroup): RetrofitDeta
   ]);
 }
 
+function taxRuntimeQuestionsForRetrofit(
+  taxRuntimePreview: TaxRuntimePreview | null,
+  retrofitId: string
+): RetrofitDetailQuestion[] {
+  const fields = taxRuntimePreview?.requiredPreOpportunityInputs || [];
+  if (!taxRuntimePreview?.opportunityDisplayBlocked || fields.length === 0) return [];
+  return fields.slice(0, 12).map((field) => ({
+    id: `${retrofitId}:tax:${slugify(field.inputKey)}`,
+    retrofitId,
+    question: field.questionPrompt || field.label || field.inputKey.replaceAll("_", " "),
+    answerType: retrofitQuestionAnswerType(field),
+    options: retrofitQuestionOptions(field),
+    whyItMatters:
+      field.helperText ||
+      "This tax input is required before RetroFi can show opportunity financial estimates for this profile.",
+    affects: ["Tax estimates", "Opportunity financials", "Scenario math"]
+  }));
+}
+
+function retrofitQuestionAnswerType(field: TaxRuntimeInputField): RetrofitDetailQuestion["answerType"] {
+  if (field.answerType === "number" || field.valueType === "number" || field.valueType === "money_cents") return "number";
+  if (field.answerType === "select" || (field.options || []).length > 0) return "select";
+  if (field.answerType === "boolean" || field.valueType === "boolean_or_enum") return "boolean";
+  return "text";
+}
+
+function retrofitQuestionOptions(field: TaxRuntimeInputField) {
+  return (field.options || []).length > 0 ? field.options : undefined;
+}
+
 function operatingSavingsNameForRetrofit(retrofitTypeId: string) {
   if (retrofitTypeId.includes("water")) return "Water Savings";
   if (retrofitTypeId.includes("fleet") || retrofitTypeId.includes("vehicle")) return "Fuel Savings";
@@ -15331,6 +15411,13 @@ function missingInfoForRetrofit(
   }
   if (retrofit.opportunities.some((opportunity) => normalizeOpportunityType(opportunity.sourceSummary?.programType).includes("tax"))) {
     missing.push("tax/entity information");
+  }
+  if (payload?.taxRuntimePreview?.opportunityDisplayBlocked) {
+    missing.push(
+      ...(payload.taxRuntimePreview.requiredPreOpportunityInputs || [])
+        .map((field) => field.label || field.inputKey.replaceAll("_", " "))
+        .slice(0, 3)
+    );
   }
   return [...new Set(missing)].slice(0, 6);
 }

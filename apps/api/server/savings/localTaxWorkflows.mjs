@@ -20,19 +20,19 @@ export function calculateLocalTaxWorkflow(workflow, ctx = {}) {
   }
 
   if (workflow.calculationStatus === "source_inaccessible") {
-    return reviewResult(workflow, "source_inaccessible", workflow.unresolvedGaps || ["Official source is inaccessible."]);
+    return reviewResult(workflow, "source_inaccessible", [], ctx, workflow.unresolvedGaps || ["Official source is inaccessible."]);
   }
 
   if (workflow.calculationStatus === "assessor_or_accountant_review_required") {
-    return reviewResult(workflow, "review_required", workflow.requiredInputs || []);
+    return reviewResult(workflow, "review_required", workflow.requiredInputs || [], ctx);
   }
 
   if (workflow.calculationStatus === "calculable_with_tax_bill") {
-    return reviewResult(workflow, "needs_tax_bill", workflow.requiredInputs || []);
+    return reviewResult(workflow, "needs_tax_bill", workflow.requiredInputs || [], ctx);
   }
 
   const models = workflow.calculationModels || [];
-  if (!models.length) return reviewResult(workflow, "no_calculation_model", workflow.requiredInputs || []);
+  if (!models.length) return reviewResult(workflow, "no_calculation_model", workflow.requiredInputs || [], ctx);
 
   const model = selectCalculationModel(models, ctx);
   if (!model) {
@@ -86,14 +86,23 @@ export function calculateLocalTaxWorkflow(workflow, ctx = {}) {
   };
 }
 
-function reviewResult(workflow, status, inputsOrReasons) {
+function reviewResult(workflow, status, inputsOrReasons, ctx = {}, traceReasons = []) {
+  const missingInputs = (inputsOrReasons || [])
+    .filter((inputKey) => !hasRuntimeAnswer(ctx, inputKey))
+    .map((inputKey) => ({ inputKey, workflowId: workflow?.id || null }));
   return {
     workflowId: workflow?.id || null,
     status,
     amountCents: 0,
     includedInUserFacingTotal: false,
-    missingInputs: (inputsOrReasons || []).map((inputKey) => ({ inputKey, workflowId: workflow?.id || null })),
-    trace: [`Local tax workflow ${workflow?.id || "unknown"} status: ${status}.`]
+    missingInputs,
+    trace: [
+      `Local tax workflow ${workflow?.id || "unknown"} status: ${status}.`,
+      missingInputs.length
+        ? `Missing local tax inputs: ${missingInputs.map((input) => input.inputKey).join(", ")}.`
+        : "Required local tax inputs are present; workflow still requires structured calculation or professional review before inclusion.",
+      ...(traceReasons || [])
+    ]
   };
 }
 

@@ -56,6 +56,14 @@ const testCases = [
   ]),
   taxCaseFixture("sf-mission-hardware-synthetic", { stateCode: "CA", countyFips: "06075", countyName: "San Francisco County", placeName: "San Francisco" }, [
     taxRow("verified_city", "San Francisco", "tax_gap_rule_6fe87d35d5", "skip_unverified_ca_city_business_license_rates")
+  ]),
+  taxCaseFixture("sf-mission-hardware-complete-local-review", { stateCode: "CA", countyFips: "06075", countyName: "San Francisco County", placeName: "San Francisco" }, [
+    taxRow("verified_city", "San Francisco", "tax_gap_rule_6fe87d35d5", "skip_unverified_ca_city_business_license_rates"),
+    taxRow("sf_business_activity_category", "Retail Trade", "tax_gap_rule_6fe87d35d5", "skip_unverified_ca_city_business_license_rates"),
+    taxRow("sf_allocated_gross_receipts_by_category", [{ activityClass: "Retail Trade", taxableReceiptsCents: 384250000 }], "tax_gap_rule_6fe87d35d5", "skip_unverified_ca_city_business_license_rates"),
+    taxRow("sf_registration_fee_schedule_amount_cents", 127000, "tax_gap_rule_6fe87d35d5", "skip_unverified_ca_city_business_license_rates"),
+    taxRow("sf_gross_receipts_tax_return_present", true, "tax_gap_rule_6fe87d35d5", "skip_unverified_ca_city_business_license_rates"),
+    taxRow("sf_hgr_or_overpaid_executive_tax_applicability", false, "tax_gap_rule_6fe87d35d5", "skip_unverified_ca_city_business_license_rates")
   ])
 ];
 const localTaxWorkflows = localWorkflowPayload.workflows || [];
@@ -183,6 +191,20 @@ describe("tax profile runtime", () => {
       kind: "local_tax_workflow",
       workflowId: "tax_gap_ca_san_francisco_business_tax_v1"
     });
+  });
+
+  it("does not emit pre-opportunity form fields for review-required local workflows when required values are present", () => {
+    const preview = buildTaxProfileRuntimePreview({
+      taxContext: taxCase("sf-mission-hardware-complete-local-review"),
+      geography: geographyFor(taxCase("sf-mission-hardware-complete-local-review")),
+      localTaxWorkflows,
+      taxGapRuntimeRules
+    });
+
+    expect(preview.status).toBe("needs_structured_tax_model");
+    expect(preview.opportunityDisplayBlocked).toBe(false);
+    expect(preview.requiredPreOpportunityInputs).toHaveLength(0);
+    expect(preview.requiresStructuredTaxModelWork).toBe(true);
   });
 });
 

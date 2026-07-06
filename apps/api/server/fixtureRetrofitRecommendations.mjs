@@ -32,6 +32,7 @@ export function buildFixtureRetrofitRecommendationsPayload({ intake, now = new D
   }
 
   const retrofits = testCase.retrofits;
+  const taxRuntimePreview = testCase.taxRuntimePreview || null;
   return {
     user: publicUser(user),
     intake,
@@ -45,8 +46,15 @@ export function buildFixtureRetrofitRecommendationsPayload({ intake, now = new D
       matchedOpportunityCount: retrofits.reduce((sum, retrofit) => {
         if (Array.isArray(retrofit?.opportunities)) return sum + retrofit.opportunities.length;
         return sum + (Number.isFinite(retrofit?.opportunityCount) ? retrofit.opportunityCount : 0);
-      }, 0)
+      }, 0),
+      canShowOpportunities: taxRuntimePreview ? !taxRuntimePreview.opportunityDisplayBlocked : true,
+      taxIntakeRequiredBeforeOpportunityDisplay: taxRuntimePreview ? taxRuntimePreview.opportunityDisplayBlocked === true : false,
+      requiredTaxInputCount: taxRuntimePreview?.requiredPreOpportunityInputs?.length || 0,
+      calculatedTaxBenefitCents: taxRuntimePreview?.totals?.includedBenefitCents || 0,
+      calculatedTaxLiabilityCents: taxRuntimePreview?.totals?.includedLiabilityCents || 0,
+      netTaxImpactCents: taxRuntimePreview?.totals?.includedAmountCents || 0
     },
+    taxRuntimePreview,
     retrofits
   };
 }

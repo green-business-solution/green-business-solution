@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-05 - Codex (GPT-5) tax input gate cleanup and unsupported-model prompts
+
+- Stopped treating already answered tax workflow inputs as mandatory blockers, while still flagging document/assessor workflows that need structured runtime models.
+- Added tax runtime field metadata for assessor, tax-return, renewable-system, and San Francisco business-tax inputs and surfaced required tax questions in the retrofit preview form flow.
+- Preserved tax runtime previews in fixture-backed recommendation payloads, refreshed generated fixture tax previews/reports, uploaded generated fixtures to S3, and created the 11-rule GPT Pro prompt batch for unsupported tax runtime models.
+
 ## 2026-07-05 - Codex (GPT-5) production deploy concurrency
 
 - Added GitHub Actions concurrency control to serialize production deploy jobs on `main` without canceling in-progress AWS deployments.
