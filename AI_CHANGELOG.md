@@ -7,6 +7,11 @@
 - Updated tax readiness auditing so program-document, assessor, and tax-bill requirements are treated as mandatory intake gates rather than internal-only blockers once structured models and complete inputs exist.
 - Refreshed tax/grant coverage and tax readiness reports, regenerated fixture tax previews, and uploaded the generated fixtures plus GPT Pro work outputs to S3.
 
+## 2026-07-05 - Codex (GPT-5) homepage hero reveal overflow fix
+
+- Tightened the revealed PlanetScan hero copy width on desktop/tablet and added extra right-edge breathing room so the final text block no longer gets clipped.
+- Let the revealed headline wrap within its block instead of forcing unbreakable line spans at the end of the scan animation.
+
 ## 2026-07-05 - Codex (GPT-5) tax input gate cleanup and unsupported-model prompts
 
 - Stopped treating already answered tax workflow inputs as mandatory blockers, while still flagging document/assessor workflows that need structured runtime models.

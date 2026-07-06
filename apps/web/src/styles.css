@@ -11763,14 +11763,14 @@ body {
   filter: blur(calc((1 - var(--planet-scan-reveal)) * 8px));
   gap: 0;
   justify-items: end;
-  max-width: calc(100vw - 80px);
+  max-width: calc(100vw - 112px);
   opacity: var(--planet-scan-reveal);
   position: absolute;
   right: clamp(40px, 4.4vw, 88px);
   text-align: right;
   top: clamp(150px, 21vh, 230px);
   transform: translate3d(calc((1 - var(--planet-scan-reveal)) * 26px), 0, 0);
-  width: clamp(620px, 42vw, 700px);
+  width: min(700px, calc(100vw - 112px));
   will-change: clip-path, filter, opacity, transform;
 }
 
@@ -11797,11 +11797,16 @@ body {
 }
 
 .planet-scan-title--after {
-  font-size: clamp(52px, 4.35vw, 76px);
+  font-size: clamp(48px, 4vw, 72px);
   font-weight: 800;
   letter-spacing: -0.045em;
   line-height: 0.96;
+  max-width: 100%;
   text-shadow: 0 0 34px rgba(134, 201, 104, 0.18);
+}
+
+.planet-scan-title--after span {
+  white-space: normal;
 }
 
 .planet-scan-subhead {
@@ -11904,10 +11909,10 @@ body {
   }
 
   .planet-scan-result-copy {
-    max-width: calc(100vw - 10vw);
+    max-width: calc(100vw - 12vw);
     right: 5vw;
     top: clamp(150px, 21vh, 210px);
-    width: min(620px, calc(100vw - 10vw));
+    width: min(600px, calc(100vw - 12vw));
   }
 
   .planet-scan-title--before {
