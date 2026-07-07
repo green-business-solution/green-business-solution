@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-07 - Codex (GPT-5) AWS root email plan cleanup
+
+- Removed the obsolete SES founders forwarding infrastructure and runbook after the AWS root email plan changed away from `founders@retrofi.org`.
+- Documented `retroficontact@gmail.com` as the planned new AWS Organizations management account root email.
+
 ## 2026-07-06 - Codex (GPT-5) homepage chart showcase
 
 - Added a new home-page showcase section between the planet scanner and the embedded How It Works journey.

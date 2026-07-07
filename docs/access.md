@@ -15,6 +15,12 @@
 - Human access should be granted through AWS IAM Identity Center.
 - Project collaborators should receive access only to the Green Business Solution account unless explicitly approved otherwise.
 
+## Planned AWS Organization migration
+
+- New AWS Organizations management account root email: `retroficontact@gmail.com`
+- Do not use a shared `@retrofi.org` forwarding alias as the AWS root email.
+- After account creation, daily human access should go through AWS IAM Identity Center, not root.
+
 ## Current AWS account
 
 - Account name: `green-business-solution`

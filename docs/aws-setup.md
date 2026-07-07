@@ -1,11 +1,22 @@
 # AWS Setup Notes
 
-The intended AWS structure mirrors the existing project-account pattern:
+The current AWS structure mirrors the existing project-account pattern:
 
 - Management account: existing AWS Organizations management account.
 - Project account: Green Business Solution member account `448016109714`.
 - Access: AWS IAM Identity Center users assigned directly to the project account.
 - Permission set: `AdministratorAccess`, scoped only to the project account.
+
+## Planned AWS Organization migration
+
+Create the new RetroFi AWS Organizations management account with this root email:
+
+```text
+retroficontact@gmail.com
+```
+
+Do not use a shared `@retrofi.org` forwarding address as the root email for the new AWS Organization.
+Use IAM Identity Center users for daily access after the account is created.
 
 Current local AWS CLI profile name:
 
@@ -25,7 +36,7 @@ Route 53 hosted zone:
 Z04402863EVV8FUF4EWUX
 ```
 
-Account root email:
+Current project account root email:
 
 ```text
 neerkuchlous+greenbusiness@gmail.com
