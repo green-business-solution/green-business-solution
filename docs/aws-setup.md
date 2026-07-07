@@ -18,6 +18,8 @@ retroficontact@gmail.com
 Do not use a shared `@retrofi.org` forwarding address as the root email for the new AWS Organization.
 Use IAM Identity Center users for daily access after the account is created.
 
+Detailed setup and handoff steps are in [AWS Organization Migration Runbook](./aws-organization-migration-runbook.md).
+
 Current local AWS CLI profile name:
 
 ```text

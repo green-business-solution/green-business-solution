@@ -4,6 +4,7 @@
 
 - Removed the obsolete SES founders forwarding infrastructure and runbook after the AWS root email plan changed away from `founders@retrofi.org`.
 - Documented `retroficontact@gmail.com` as the planned new AWS Organizations management account root email.
+- Added an AWS Organization migration runbook with the browser-only setup steps and the agent handoff point for CLI/IaC migration work.
 
 ## 2026-07-06 - Codex (GPT-5) homepage chart showcase
 
