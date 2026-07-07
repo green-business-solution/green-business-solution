@@ -1,0 +1,364 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: SES inbound archive and forwarding path for founders@retrofi.org.
+
+Parameters:
+  DomainName:
+    Type: String
+    Default: retrofi.org
+    Description: Domain that would receive the MX record after testing.
+  HostedZoneId:
+    Type: String
+    Default: Z04402863EVV8FUF4EWUX
+    Description: Route 53 hosted zone ID for the domain. Used only when CreateMXRecord is true.
+  CreateMXRecord:
+    Type: String
+    Default: "false"
+    AllowedValues:
+      - "true"
+      - "false"
+    Description: Whether to create the domain MX record. Keep false until direct SES inbound testing passes.
+  ReceiptRecipient:
+    Type: String
+    Default: founders@retrofi.org
+    Description: Inbound email address handled by the SES receipt rule.
+  ForwardingRecipients:
+    Type: CommaDelimitedList
+    Description: Comma-separated destination email addresses for forwarded founders mail.
+  ForwardingSender:
+    Type: String
+    Default: founders@retrofi.org
+    Description: SES-verified sender identity used as the From address for forwarded mail.
+  SubjectPrefix:
+    Type: String
+    Default: "[founders] "
+    Description: Prefix added to forwarded message subjects.
+  RuleSetName:
+    Type: String
+    Default: retrofi-founders-forwarding
+    Description: SES receipt rule set name.
+  ReceiptRuleName:
+    Type: String
+    Default: founders-forwarding
+    Description: SES receipt rule name.
+  EnableReceiptRule:
+    Type: String
+    Default: "true"
+    AllowedValues:
+      - "true"
+      - "false"
+    Description: Whether the receipt rule should be enabled when the stack is deployed.
+  TlsPolicy:
+    Type: String
+    Default: Optional
+    AllowedValues:
+      - Optional
+      - Require
+    Description: SES TLS policy for inbound mail.
+  ArchiveBucketName:
+    Type: String
+    Default: ""
+    Description: Optional explicit S3 archive bucket name. Leave blank for a generated name.
+  ArchiveObjectPrefix:
+    Type: String
+    Default: founders/
+    Description: S3 object prefix used by SES when archiving received messages.
+  ArchiveRetentionDays:
+    Type: Number
+    Default: 3650
+    MinValue: 1
+    Description: Number of days to retain archived inbound email objects.
+  ForwarderFunctionName:
+    Type: String
+    Default: gbs-retrofi-founders-ses-forwarder
+    Description: Lambda function name for the SES forwarder.
+  LogRetentionDays:
+    Type: Number
+    Default: 30
+    AllowedValues:
+      - 1
+      - 3
+      - 5
+      - 7
+      - 14
+      - 30
+      - 60
+      - 90
+      - 120
+      - 150
+      - 180
+      - 365
+      - 400
+      - 545
+      - 731
+      - 1096
+      - 1827
+      - 2192
+      - 2557
+      - 2922
+      - 3288
+      - 3653
+    Description: CloudWatch Logs retention period for the forwarder.
+
+Conditions:
+  HasArchiveBucketName: !Not
+    - !Equals
+      - !Ref ArchiveBucketName
+      - ""
+  ShouldCreateMXRecord: !Equals
+    - !Ref CreateMXRecord
+    - "true"
+
+Resources:
+  ArchiveBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !If
+        - HasArchiveBucketName
+        - !Ref ArchiveBucketName
+        - !Ref AWS::NoValue
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LifecycleConfiguration:
+        Rules:
+          - Id: expire-archived-email
+            Status: Enabled
+            Prefix: !Ref ArchiveObjectPrefix
+            ExpirationInDays: !Ref ArchiveRetentionDays
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 7
+
+  ArchiveBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ArchiveBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: DenyInsecureTransport
+            Effect: Deny
+            Principal: "*"
+            Action: s3:*
+            Resource:
+              - !Sub arn:${AWS::Partition}:s3:::${ArchiveBucket}
+              - !Sub arn:${AWS::Partition}:s3:::${ArchiveBucket}/*
+            Condition:
+              Bool:
+                aws:SecureTransport: "false"
+
+  SesS3WriteRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AllowSESAssume
+            Effect: Allow
+            Principal:
+              Service: ses.amazonaws.com
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals:
+                AWS:SourceAccount: !Ref AWS::AccountId
+                AWS:SourceArn: !Sub arn:${AWS::Partition}:ses:${AWS::Region}:${AWS::AccountId}:receipt-rule-set/${RuleSetName}:receipt-rule/${ReceiptRuleName}
+      Policies:
+        - PolicyName: WriteInboundEmailArchive
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: s3:PutObject
+                Resource: !Sub arn:${AWS::Partition}:s3:::${ArchiveBucket}/${ArchiveObjectPrefix}*
+
+  ForwarderRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: ForwardFoundersMail
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: s3:GetObject
+                Resource: !Sub arn:${AWS::Partition}:s3:::${ArchiveBucket}/${ArchiveObjectPrefix}*
+              - Effect: Allow
+                Action:
+                  - ses:SendRawEmail
+                Resource: "*"
+
+  ForwarderFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Ref ForwarderFunctionName
+      Architectures:
+        - arm64
+      Runtime: python3.12
+      Handler: index.handler
+      Role: !GetAtt ForwarderRole.Arn
+      MemorySize: 256
+      Timeout: 30
+      Environment:
+        Variables:
+          ARCHIVE_BUCKET: !Ref ArchiveBucket
+          FORWARDING_RECIPIENTS: !Join
+            - ","
+            - !Ref ForwardingRecipients
+          FORWARDING_SENDER: !Ref ForwardingSender
+          S3_PREFIX: !Ref ArchiveObjectPrefix
+          SES_REGION: !Ref AWS::Region
+          SUBJECT_PREFIX: !Ref SubjectPrefix
+      Code:
+        ZipFile: |
+          import os
+          import boto3
+          from email import policy
+          from email.parser import BytesParser
+
+          s3 = boto3.client("s3")
+          ses = boto3.client("ses", region_name=os.environ["SES_REGION"])
+
+          def recipients():
+              return [x.strip() for x in os.environ["FORWARDING_RECIPIENTS"].split(",") if x.strip()]
+
+          def replace_header(message, name, value):
+              if name in message:
+                  del message[name]
+              if value:
+                  message[name] = value
+
+          def forward(record):
+              message_id = record["ses"]["mail"]["messageId"]
+              key = os.environ.get("S3_PREFIX", "") + message_id
+              raw = s3.get_object(Bucket=os.environ["ARCHIVE_BUCKET"], Key=key)["Body"].read()
+              message = BytesParser(policy=policy.SMTP).parsebytes(raw)
+              targets = recipients()
+              if not targets:
+                  raise ValueError("FORWARDING_RECIPIENTS must contain at least one address")
+
+              sender = os.environ["FORWARDING_SENDER"]
+              original_from = str(message.get("From", ""))
+              original_reply_to = str(message.get("Reply-To", ""))
+              original_subject = str(message.get("Subject", "(no subject)"))
+              subject = os.environ.get("SUBJECT_PREFIX", "") + original_subject
+
+              for name in ("From", "Sender", "To", "Cc", "Bcc", "Reply-To", "Return-Path"):
+                  replace_header(message, name, None)
+              for name in ("DKIM-Signature", "X-Retrofi-Original-From", "X-Retrofi-Archived-Message-Id"):
+                  replace_header(message, name, None)
+
+              replace_header(message, "From", sender)
+              replace_header(message, "To", ", ".join(targets))
+              replace_header(message, "Subject", subject)
+              replace_header(message, "X-Retrofi-Archived-Message-Id", message_id)
+              if original_from:
+                  replace_header(message, "Reply-To", original_reply_to or original_from)
+                  replace_header(message, "X-Retrofi-Original-From", original_from)
+
+              ses.send_raw_email(
+                  Source=sender,
+                  Destinations=targets,
+                  RawMessage={"Data": message.as_bytes(policy=policy.SMTP)},
+              )
+              return {"messageId": message_id, "s3Key": key, "recipients": targets}
+
+          def handler(event, context):
+              results = [forward(record) for record in event.get("Records", [])]
+              print({"forwarded": len(results), "messages": results})
+              return {"forwarded": len(results)}
+
+  ForwarderLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${ForwarderFunction}
+      RetentionInDays: !Ref LogRetentionDays
+
+  ReceiptRuleSet:
+    Type: AWS::SES::ReceiptRuleSet
+    Properties:
+      RuleSetName: !Ref RuleSetName
+
+  ForwarderInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref ForwarderFunction
+      Principal: ses.amazonaws.com
+      SourceAccount: !Ref AWS::AccountId
+      SourceArn: !Sub arn:${AWS::Partition}:ses:${AWS::Region}:${AWS::AccountId}:receipt-rule-set/${RuleSetName}:receipt-rule/${ReceiptRuleName}
+
+  ReceiptRule:
+    Type: AWS::SES::ReceiptRule
+    DependsOn:
+      - ForwarderInvokePermission
+      - SesS3WriteRole
+    Properties:
+      RuleSetName: !Ref ReceiptRuleSet
+      Rule:
+        Name: !Ref ReceiptRuleName
+        Enabled: !Equals
+          - !Ref EnableReceiptRule
+          - "true"
+        ScanEnabled: true
+        TlsPolicy: !Ref TlsPolicy
+        Recipients:
+          - !Ref ReceiptRecipient
+        Actions:
+          - S3Action:
+              BucketName: !Ref ArchiveBucket
+              IamRoleArn: !GetAtt SesS3WriteRole.Arn
+              ObjectKeyPrefix: !Ref ArchiveObjectPrefix
+          - LambdaAction:
+              FunctionArn: !GetAtt ForwarderFunction.Arn
+              InvocationType: Event
+
+  DomainMXRecord:
+    Type: AWS::Route53::RecordSet
+    Condition: ShouldCreateMXRecord
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref DomainName
+      Type: MX
+      TTL: 300
+      ResourceRecords:
+        - !Sub 10 inbound-smtp.${AWS::Region}.amazonaws.com
+
+Outputs:
+  DomainName:
+    Value: !Ref DomainName
+  HostedZoneId:
+    Value: !Ref HostedZoneId
+  MXRecordCreated:
+    Value: !Ref CreateMXRecord
+  ArchiveBucketName:
+    Value: !Ref ArchiveBucket
+  ForwarderFunctionName:
+    Value: !Ref ForwarderFunction
+  ReceiptRecipient:
+    Value: !Ref ReceiptRecipient
+  ReceiptRuleName:
+    Value: !Ref ReceiptRuleName
+  ReceiptRuleSetName:
+    Value: !Ref ReceiptRuleSet
+  SESInboundMXValue:
+    Value: !Sub 10 inbound-smtp.${AWS::Region}.amazonaws.com
+    Description: Add this MX value only after the no-MX direct SES receiving test passes.
