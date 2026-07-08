@@ -303,6 +303,30 @@ Exact DynamoDB scans and item hashes matched for all seven production tables.
 Current S3 object manifests matched for the energy-data and runtime-cache buckets.
 Version summaries matched for the generated-test-fixtures and dev-work buckets.
 
+## Old Account Cleanup Checkpoint
+
+As of July 7, 2026 Pacific time, the first safe cleanup pass in old account `448016109714` is complete.
+
+Deleted resources:
+
+- CloudFormation stack `gbs-retrofi-api` in `us-east-1`.
+- CloudFormation stack `gbs-github-actions-deploy` in `us-east-1`.
+- S3 artifact bucket `gbs-retrofi-org-artifacts-448016109714-us-east-1`.
+
+The deleted API stack removed the old API Gateway, Lambda function, Lambda execution role, Lambda permission, and API log group that served the old account.
+The deleted GitHub deploy stack removed the old GitHub OIDC deploy role and old account OIDC provider.
+
+Resources intentionally retained:
+
+- Hosted zone `Z04402863EVV8FUF4EWUX`, because recursive resolvers can cache the old nameserver delegation for up to 48 hours after the nameserver update.
+- CloudFormation stack `gbs-retrofi-production`, because it still owns the old hosted-zone Route 53 records and disabled old CloudFront distribution until the old hosted zone can be retired.
+- CloudFormation stack `gbs-retrofi-runtime-buckets`, because it owns old copied S3 data buckets.
+- CloudFormation stack `gbs-retrofi-runtime-data`, because it owns old copied DynamoDB tables.
+- Old copied S3 data buckets and DynamoDB tables, as a short rollback/data-retention buffer.
+
+Before the next cleanup pass, verify that public DNS no longer returns the old nameservers for `retrofi.org`.
+Then delete the old hosted zone records and old hosting stack, followed by old copied data stores after the retention decision is explicit.
+
 ## New Account API And Frontend Staging
 
 Deploy the API in the new production account before touching DNS:
