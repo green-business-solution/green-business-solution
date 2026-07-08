@@ -150,15 +150,20 @@ Use the existing `RetroFi-Admins` group unless a narrower permission set has bee
 ## New Account Bootstrap
 
 The new production account is empty by design.
-Bootstrap the GitHub OIDC role, runtime DynamoDB tables, and runtime S3 buckets before copying data:
+Bootstrap the GitHub OIDC role, runtime DynamoDB tables, runtime S3 buckets, and versioned development artifact bucket before copying data:
 
 ```sh
-AWS_PROFILE=retrofi-prod GBS_MANAGE_CORE_RUNTIME_TABLES=true ./scripts/deploy-production.sh ci data
+AWS_PROFILE=retrofi-prod \
+  GBS_MANAGE_CORE_RUNTIME_TABLES=true \
+  GBS_MANAGE_DEV_WORK_BUCKET=true \
+  ./scripts/deploy-production.sh ci data
 ```
 
 The deploy script leaves `GBS_MANAGE_CORE_RUNTIME_TABLES` at its default `false`.
 That is intentional so legacy-account deploys do not try to import or recreate externally managed tables.
 Set it to `true` only for a new account where the core user, intake, and opportunity tables do not already exist.
+The deploy script also leaves `GBS_MANAGE_DEV_WORK_BUCKET` at its default `false` so legacy-account deploys do not try to adopt the existing dev-work bucket.
+Set it to `true` only in the new production account.
 
 ## DynamoDB Data Copy
 
@@ -181,7 +186,78 @@ node scripts/copy-dynamodb-tables-between-profiles.mjs \
   --write
 ```
 
+Verify the result with exact scans and item hashes:
+
+```sh
+node scripts/copy-dynamodb-tables-between-profiles.mjs \
+  --source-profile gbs \
+  --target-profile retrofi-prod \
+  --region us-east-2 \
+  --verify
+```
+
 Run the copy again during the final cutover window so records changed during migration prep are not missed.
+
+## S3 Data Copy
+
+Current live runtime objects have been copied to the new production account.
+For versioned buckets, preserve object history separately because a plain `aws s3 sync` only copies current objects.
+
+Dry-run the versioned bucket replay:
+
+```sh
+node scripts/copy-s3-bucket-versions-between-profiles.mjs
+```
+
+Replay versioned buckets from the old account into the new account:
+
+```sh
+node scripts/copy-s3-bucket-versions-between-profiles.mjs --write --reset-target
+```
+
+The default replay covers:
+
+- `gbs-retrofi-test-fixtures-448016109714-us-east-1` to `gbs-retrofi-test-fixtures-059310317821-us-east-1`
+- `gbs-retrofi-dev-work-448016109714-us-east-1` to `gbs-retrofi-dev-work-059310317821-us-east-1`
+
+Use `--reset-target` only on the new account staging buckets.
+Never run target-history reset against the old source account.
+
+Keep the old account buckets intact until after the new production stack is live and a rollback window has passed.
+
+## Data Verification Checkpoint
+
+As of July 7, 2026, the first new-account data copy has been verified.
+
+Exact DynamoDB scans and full typed item hashes match between source account `448016109714` and target account `059310317821`:
+
+| Table | Source count | Target count |
+| --- | ---: | ---: |
+| `gbs-users` | 54 | 54 |
+| `gbs-client-intake` | 68 | 68 |
+| `gbs-opportunity-candidates` | 2,096 | 2,096 |
+| `gbs-dashboard-performance` | 7,872 | 7,872 |
+| `gbs-retrofit-recommendation-cache` | 51 | 51 |
+| `gbs-application-profiles` | 10 | 10 |
+| `gbs-api-runtime-state` | 1 | 1 |
+
+Current S3 object copies also match by key, object count, and byte count:
+
+| Bucket data | Source count / bytes | Target count / bytes |
+| --- | ---: | ---: |
+| Energy data | 17 / 6,013,182 | 17 / 6,013,182 |
+| Runtime cache | 103 / 42,717,661 | 103 / 42,717,661 |
+| Generated test fixtures, current objects | 8 / 98,136,801 | 8 / 98,136,801 |
+
+The generated test fixture and dev-work buckets are versioned.
+Their historical object versions were replayed into the new production account after the initial current-object copy.
+
+| Versioned bucket data | Source versions / bytes | Target versions / bytes | Source delete markers | Target delete markers |
+| --- | ---: | ---: | ---: | ---: |
+| Generated test fixtures | 40 / 488,849,407 | 40 / 488,849,407 | 0 | 0 |
+| Dev work archives | 1,150 / 921,724,784 | 1,150 / 921,724,784 | 12 | 12 |
+
+Run one final DynamoDB copy, S3 current-object sync, S3 version replay, and verification pass during the cutover window.
 
 ## Migration Constraints
 

@@ -8,6 +8,11 @@
 - Recorded the created RetroFi management and production account IDs, Identity Center portal, and local SSO profile names after setup was completed.
 - Added opt-in CloudFormation support for owning all production DynamoDB tables in the new account without breaking legacy-account deploys.
 - Added a dry-run-first DynamoDB table copy utility for the old-to-new account migration.
+- Added opt-in CloudFormation support for the versioned development artifact bucket in the new production account.
+- Added a dry-run-first S3 version replay utility for preserving generated-fixture and dev-work bucket histories during migration.
+- Recorded the first verified DynamoDB and S3 data-copy checkpoint in the AWS Organization migration runbook.
+- Added exact DynamoDB scan/hash verification mode to the cross-account table copy utility.
+- Replayed and verified generated-fixture and dev-work S3 version histories into the new production account.
 
 ## 2026-07-07 - Codex (GPT-5) local dashboard to How It Works handoff
 

@@ -8,6 +8,16 @@ Parameters:
   TestFixturesBucketName:
     Type: String
     Description: Private S3 bucket for generated test fixtures and synthetic data.
+  ManageDevWorkBucket:
+    Type: String
+    Default: "false"
+    AllowedValues:
+      - "true"
+      - "false"
+    Description: Create the private development artifact bucket. Keep false in legacy accounts where the bucket already exists outside this stack.
+  DevWorkBucketName:
+    Type: String
+    Description: Private S3 bucket for raw GPT Pro work packets and other non-Git development archives.
   RuntimeCacheRetentionDays:
     Type: Number
     Default: 90
@@ -18,6 +28,9 @@ Parameters:
     Default: 30
     MinValue: 1
     Description: Days to retain versioned form-question catalog snapshots.
+
+Conditions:
+  ShouldManageDevWorkBucket: !Equals [!Ref ManageDevWorkBucket, "true"]
 
 Resources:
   RuntimeCacheBucket:
@@ -80,8 +93,39 @@ Resources:
             AbortIncompleteMultipartUpload:
               DaysAfterInitiation: 7
 
+  DevWorkBucket:
+    Type: AWS::S3::Bucket
+    Condition: ShouldManageDevWorkBucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Ref DevWorkBucketName
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: abort-incomplete-uploads
+            Status: Enabled
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 7
+
 Outputs:
   RuntimeCacheBucketName:
     Value: !Ref RuntimeCacheBucketName
   TestFixturesBucketName:
     Value: !Ref TestFixturesBucketName
+  DevWorkBucketName:
+    Condition: ShouldManageDevWorkBucket
+    Value: !Ref DevWorkBucketName

@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { DynamoDBClient, DescribeTableCommand } from "@aws-sdk/client-dynamodb";
 import {
   BatchWriteCommand,
@@ -28,6 +29,7 @@ const targetProfile = options.targetProfile || "retrofi-prod";
 const region = options.region || "us-east-2";
 const tables = options.tables.length ? options.tables : defaultTables;
 const write = Boolean(options.write);
+const verify = Boolean(options.verify);
 
 const source = createClients(sourceProfile, region);
 const target = createClients(targetProfile, region);
@@ -35,7 +37,7 @@ const target = createClients(targetProfile, region);
 console.log(`Source profile: ${sourceProfile}`);
 console.log(`Target profile: ${targetProfile}`);
 console.log(`Region: ${region}`);
-console.log(`Mode: ${write ? "write" : "dry-run"}`);
+console.log(`Mode: ${verify ? "verify" : write ? "write" : "dry-run"}`);
 
 for (const tableName of tables) {
   await migrateTable(tableName);
@@ -50,12 +52,17 @@ async function migrateTable(tableName) {
   console.log(
     JSON.stringify({
       table: tableName,
-      sourceItems: sourceSummary.Table.ItemCount,
-      targetItemsBefore: targetSummary.Table.ItemCount,
+      sourceApproximateItems: sourceSummary.Table.ItemCount,
+      targetApproximateItemsBefore: targetSummary.Table.ItemCount,
       sourceStatus: sourceSummary.Table.TableStatus,
       targetStatus: targetSummary.Table.TableStatus
     })
   );
+
+  if (verify) {
+    await verifyTable(tableName, sourceSummary.Table.KeySchema || []);
+    return;
+  }
 
   if (!write) return;
 
@@ -77,6 +84,84 @@ async function migrateTable(tableName) {
     lastEvaluatedKey = page.LastEvaluatedKey;
     console.log(JSON.stringify({ table: tableName, copied }));
   } while (lastEvaluatedKey);
+}
+
+async function verifyTable(tableName, keySchema) {
+  const keyAttributes = keySchema
+    .slice()
+    .sort((left, right) => keyTypeOrder(left.KeyType) - keyTypeOrder(right.KeyType))
+    .map((entry) => entry.AttributeName);
+  const [sourceIndex, targetIndex] = await Promise.all([
+    scanTableIndex(source.doc, tableName, keyAttributes),
+    scanTableIndex(target.doc, tableName, keyAttributes)
+  ]);
+
+  let missing = 0;
+  let extra = 0;
+  let itemDiffs = 0;
+
+  for (const [key, sourceDigest] of sourceIndex.items.entries()) {
+    const targetDigest = targetIndex.items.get(key);
+    if (!targetDigest) {
+      missing += 1;
+    } else if (targetDigest !== sourceDigest) {
+      itemDiffs += 1;
+    }
+  }
+
+  for (const key of targetIndex.items.keys()) {
+    if (!sourceIndex.items.has(key)) {
+      extra += 1;
+    }
+  }
+
+  const result = {
+    table: tableName,
+    key: keyAttributes.join(","),
+    sourceExactItems: sourceIndex.items.size,
+    targetExactItems: targetIndex.items.size,
+    missing,
+    extra,
+    itemDiffs,
+    sourceHash: sourceIndex.aggregateHash,
+    targetHash: targetIndex.aggregateHash
+  };
+
+  console.log(JSON.stringify(result));
+
+  if (missing || extra || itemDiffs || sourceIndex.aggregateHash !== targetIndex.aggregateHash) {
+    throw new Error(`Verification failed for ${tableName}`);
+  }
+}
+
+async function scanTableIndex(client, tableName, keyAttributes) {
+  const items = new Map();
+  const hashes = [];
+  let lastEvaluatedKey;
+
+  do {
+    const page = await client.send(
+      new ScanCommand({
+        TableName: tableName,
+        ExclusiveStartKey: lastEvaluatedKey
+      })
+    );
+
+    for (const item of page.Items || []) {
+      const key = canonicalStringify(Object.fromEntries(keyAttributes.map((attribute) => [attribute, item[attribute]])));
+      const digest = sha256(canonicalStringify(item));
+      items.set(key, digest);
+      hashes.push(`${key}:${digest}`);
+    }
+
+    lastEvaluatedKey = page.LastEvaluatedKey;
+  } while (lastEvaluatedKey);
+
+  hashes.sort();
+  return {
+    items,
+    aggregateHash: sha256(hashes.join("\n"))
+  };
 }
 
 function createClients(profile, regionName) {
@@ -125,6 +210,36 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function keyTypeOrder(keyType) {
+  if (keyType === "HASH") return 0;
+  if (keyType === "RANGE") return 1;
+  return 2;
+}
+
+function sha256(value) {
+  return createHash("sha256").update(value).digest("hex");
+}
+
+function canonicalStringify(value) {
+  if (value instanceof Set) {
+    return `[${[...value].map(canonicalStringify).sort().join(",")}]`;
+  }
+
+  if (Array.isArray(value)) {
+    return `[${value.map(canonicalStringify).join(",")}]`;
+  }
+
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value)
+      .filter((key) => value[key] !== undefined)
+      .sort()
+      .map((key) => `${JSON.stringify(key)}:${canonicalStringify(value[key])}`)
+      .join(",")}}`;
+  }
+
+  return JSON.stringify(value);
+}
+
 function parseArgs(args) {
   const parsed = {
     tables: []
@@ -140,6 +255,10 @@ function parseArgs(args) {
     }
     if (arg === "--write") {
       parsed.write = true;
+      continue;
+    }
+    if (arg === "--verify") {
+      parsed.verify = true;
       continue;
     }
     if (arg === "--source-profile" && next) {
@@ -171,9 +290,11 @@ function parseArgs(args) {
 
 function usage() {
   console.log(`Usage:
-  node scripts/copy-dynamodb-tables-between-profiles.mjs [--write] [--source-profile gbs] [--target-profile retrofi-prod] [--region us-east-2] [--table TABLE]...
+  node scripts/copy-dynamodb-tables-between-profiles.mjs [--write|--verify] [--source-profile gbs] [--target-profile retrofi-prod] [--region us-east-2] [--table TABLE]...
 
 Default mode is a dry-run that verifies both profiles can describe the default production DynamoDB tables.
+Dry-run table item counts are approximate AWS metadata and can lag behind exact scans.
 Use --write to scan each source table and upsert all items into the matching target table.
+Use --verify to exact-scan source and target tables, compare primary-key sets, and compare canonical item hashes.
 `);
 }
