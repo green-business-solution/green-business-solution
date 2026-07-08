@@ -15,11 +15,22 @@
 - Human access should be granted through AWS IAM Identity Center.
 - Project collaborators should receive access only to the Green Business Solution account unless explicitly approved otherwise.
 
-## Planned AWS Organization migration
+## Dedicated RetroFi AWS Organization
 
-- New AWS Organizations management account root email: `retroficontact@gmail.com`
+- AWS Organizations management account: `retrofi_official`, `945129430686`, root email `retroficontact@gmail.com`
+- Production workload account: `RetroFi Production`, `059310317821`, root email `retroficontact+aws-prod@gmail.com`
+- AWS access portal: `https://d-9066740c42.awsapps.com/start`
+- Local CLI profiles: `retrofi-management`, `retrofi-prod`
 - Do not use a shared `@retrofi.org` forwarding alias as the AWS root email.
 - After account creation, daily human access should go through AWS IAM Identity Center, not root.
+
+## New RetroFi Identity Center access
+
+- IAM Identity Center region: `us-east-1`
+- Admin group: `RetroFi-Admins`
+- Permission set: `AdministratorAccess`, 8-hour session duration
+- Assigned accounts: `retrofi_official` and `RetroFi Production`
+- Neer Identity Center username: `neer`
 
 ## Current AWS account
 

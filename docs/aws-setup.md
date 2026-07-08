@@ -7,16 +7,36 @@ The current AWS structure mirrors the existing project-account pattern:
 - Access: AWS IAM Identity Center users assigned directly to the project account.
 - Permission set: `AdministratorAccess`, scoped only to the project account.
 
-## Planned AWS Organization migration
+## Dedicated RetroFi AWS Organization
 
-Create the new RetroFi AWS Organizations management account with this root email:
+The new RetroFi AWS Organizations management account uses this root email:
 
 ```text
 retroficontact@gmail.com
 ```
 
 Do not use a shared `@retrofi.org` forwarding address as the root email for the new AWS Organization.
-Use IAM Identity Center users for daily access after the account is created.
+Use IAM Identity Center users for daily access.
+
+New AWS account structure:
+
+| Purpose | Account name | Account ID | Root email |
+| --- | --- | --- | --- |
+| Management | `retrofi_official` | `945129430686` | `retroficontact@gmail.com` |
+| Production workloads | `RetroFi Production` | `059310317821` | `retroficontact+aws-prod@gmail.com` |
+
+AWS access portal:
+
+```text
+https://d-9066740c42.awsapps.com/start
+```
+
+Local AWS CLI profile names:
+
+```text
+retrofi-management
+retrofi-prod
+```
 
 Detailed setup and handoff steps are in [AWS Organization Migration Runbook](./aws-organization-migration-runbook.md).
 

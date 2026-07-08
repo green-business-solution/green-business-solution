@@ -7,6 +7,20 @@ The new AWS Organizations management account root email is:
 retroficontact@gmail.com
 ```
 
+The new account structure has been created:
+
+| Purpose | Account name | Account ID | Root email |
+| --- | --- | --- | --- |
+| Management | `retrofi_official` | `945129430686` | `retroficontact@gmail.com` |
+| Production workloads | `RetroFi Production` | `059310317821` | `retroficontact+aws-prod@gmail.com` |
+
+IAM Identity Center is enabled in `us-east-1`.
+The AWS access portal is:
+
+```text
+https://d-9066740c42.awsapps.com/start
+```
+
 ## Target Model
 
 - Neer's personal AWS account keeps Neer's personal projects.
@@ -15,10 +29,10 @@ retroficontact@gmail.com
 - Production workloads live in a separate member account, not in the management account.
 - Daily human access goes through AWS IAM Identity Center, not root credentials.
 
-## Non-Automatable Setup
+## Completed Browser Setup
 
-An agent cannot safely complete the AWS signup flow because it requires access to the Gmail inbox, payment details, account contact data, phone verification, root password creation, and MFA enrollment.
-Complete these steps in a browser before asking an agent to continue with CLI or infrastructure work.
+These browser-only setup steps are complete.
+They are kept here as historical setup notes and as a checklist for future audits.
 
 ## Phase 1: Create The Management Account
 
@@ -70,6 +84,7 @@ Do not deploy app resources into the management account.
 ## Phase 4: Configure Local SSO Profiles
 
 After the Organization and Identity Center users exist, configure local AWS CLI profiles.
+On Neer's machine, these profiles are already configured in `~/.aws/config`.
 
 ```sh
 aws configure sso --profile retrofi-management
@@ -85,20 +100,33 @@ aws sts get-caller-identity --profile retrofi-prod --output json
 
 Record these values before continuing:
 
-- Management account ID.
-- Production member account ID.
-- IAM Identity Center start URL.
-- IAM Identity Center region.
-- Production member account root email.
+- Management account ID: `945129430686`.
+- Production member account ID: `059310317821`.
+- IAM Identity Center start URL: `https://d-9066740c42.awsapps.com/start`.
+- IAM Identity Center region: `us-east-1`.
+- Production member account root email: `retroficontact+aws-prod@gmail.com`.
 
 ## Phase 5: Agent Handoff Point
 
-After Phase 4 is complete, an agent can continue the technical migration.
-Provide the production profile name and account ID.
+Phase 4 is complete on Neer's machine.
+An agent can continue the technical migration with these profiles.
 The expected production profile name is:
 
 ```text
 retrofi-prod
+```
+
+The expected management profile name is:
+
+```text
+retrofi-management
+```
+
+Verify access before making changes:
+
+```sh
+aws sts get-caller-identity --profile retrofi-prod --output json
+aws sts get-caller-identity --profile retrofi-management --output json
 ```
 
 The agent can then:
