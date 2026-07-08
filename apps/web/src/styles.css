@@ -2798,6 +2798,289 @@ dd {
   padding: 14px;
 }
 
+.gpt-pro-chats {
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+}
+
+.gpt-pro-chats-header,
+.gpt-pro-batch-toolbar,
+.gpt-pro-file-header,
+.gpt-pro-prompt-list-header {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.gpt-pro-chats-header h1,
+.gpt-pro-file-header h2 {
+  color: #17211b;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.gpt-pro-chats-header h1 {
+  font-size: clamp(30px, 3vw, 46px);
+  line-height: 1;
+}
+
+.gpt-pro-file-header h2 {
+  font-size: 22px;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.gpt-pro-file-header p {
+  color: #60716a;
+  margin: 5px 0 0;
+  overflow-wrap: anywhere;
+}
+
+.gpt-pro-chats-actions,
+.gpt-pro-file-actions,
+.gpt-pro-batch-meta {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.gpt-pro-chats-warning {
+  background: #fff8e5;
+  border: 1px solid #ead597;
+  border-radius: 8px;
+  color: #6a4b0f;
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+}
+
+.gpt-pro-chats-warning p {
+  margin: 0;
+}
+
+.gpt-pro-chats-summary {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.gpt-pro-chats-summary article {
+  background: #ffffff;
+  border: 1px solid #e2e9e4;
+  border-radius: 8px;
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 14px;
+}
+
+.gpt-pro-chats-summary span,
+.gpt-pro-file-context span,
+.gpt-pro-editor-field > span {
+  color: #60716a;
+  font-size: 12px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.gpt-pro-chats-summary strong {
+  color: #17211b;
+  font-size: 24px;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.gpt-pro-batch-toolbar {
+  background: #ffffff;
+  border: 1px solid #dfe7e2;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.gpt-pro-batch-toolbar .field {
+  flex: 1 1 360px;
+  gap: 8px;
+  max-width: 720px;
+}
+
+.gpt-pro-batch-toolbar select {
+  background: #ffffff;
+  border: 1px solid #cfd9d3;
+  border-radius: 7px;
+  color: #17211b;
+  font: inherit;
+  min-height: 42px;
+  padding: 0 12px;
+  width: 100%;
+}
+
+.gpt-pro-batch-meta {
+  color: #60716a;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.gpt-pro-batch-meta span {
+  background: #f7faf8;
+  border: 1px solid #e2e9e4;
+  border-radius: 7px;
+  padding: 8px 10px;
+}
+
+.gpt-pro-chats-layout {
+  align-items: start;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(320px, 0.34fr) minmax(0, 0.66fr);
+  min-width: 0;
+}
+
+.gpt-pro-prompt-list-panel,
+.gpt-pro-editor-panel {
+  background: #ffffff;
+  border: 1px solid #dfe7e2;
+  border-radius: 8px;
+  min-width: 0;
+}
+
+.gpt-pro-prompt-list-panel {
+  display: grid;
+  overflow: hidden;
+}
+
+.gpt-pro-prompt-list-header {
+  border-bottom: 1px solid #e8eee9;
+  padding: 14px 16px;
+}
+
+.gpt-pro-prompt-list-header strong {
+  color: #17211b;
+  overflow-wrap: anywhere;
+}
+
+.gpt-pro-prompt-list {
+  display: grid;
+  max-height: calc(100vh - 420px);
+  min-height: 420px;
+  overflow: auto;
+}
+
+.gpt-pro-prompt-row {
+  align-items: center;
+  background: #ffffff;
+  border: 0;
+  border-bottom: 1px solid #e8eee9;
+  border-radius: 0;
+  color: #17211b;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: 78px;
+  padding: 12px 14px;
+  text-align: left;
+  width: 100%;
+}
+
+.gpt-pro-prompt-row:hover,
+.gpt-pro-prompt-row[aria-current="true"] {
+  background: #f0f6f2;
+}
+
+.gpt-pro-prompt-row strong,
+.gpt-pro-prompt-row small {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.gpt-pro-prompt-row strong {
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.gpt-pro-prompt-row small {
+  color: #66746c;
+  font-size: 12px;
+  line-height: 1.35;
+  margin-top: 4px;
+}
+
+.gpt-pro-prompt-row mark {
+  background: #edf7ef;
+  border: 1px solid #cfe2d4;
+  border-radius: 999px;
+  color: #13543d;
+  font-size: 11px;
+  font-weight: 850;
+  padding: 5px 8px;
+  white-space: nowrap;
+}
+
+.gpt-pro-editor-panel {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+}
+
+.gpt-pro-file-context {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.gpt-pro-file-context div {
+  background: #f7faf8;
+  border: 1px solid #e2e9e4;
+  border-radius: 8px;
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 10px;
+}
+
+.gpt-pro-file-context strong {
+  color: #17211b;
+  font-size: 13px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.gpt-pro-editor-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.gpt-pro-editor-field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.gpt-pro-editor-field textarea {
+  background: #fbfdfb;
+  border: 1px solid #cfd9d3;
+  border-radius: 8px;
+  color: #17211b;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  line-height: 1.55;
+  min-height: 560px;
+  padding: 12px;
+  resize: vertical;
+  width: 100%;
+}
+
+.gpt-pro-editor-field textarea:disabled {
+  background: #f2f5f3;
+  color: #66746c;
+  cursor: not-allowed;
+}
+
 .opportunity-summary-grid {
   display: grid;
   gap: 10px;
@@ -16317,6 +16600,44 @@ body {
   .conversational-action-group {
     align-items: stretch;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 1100px) {
+  .gpt-pro-chats-layout,
+  .gpt-pro-editor-grid,
+  .gpt-pro-file-context {
+    grid-template-columns: 1fr;
+  }
+
+  .gpt-pro-prompt-list {
+    max-height: 360px;
+    min-height: 280px;
+  }
+
+  .gpt-pro-editor-field textarea {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 720px) {
+  .gpt-pro-chats-header,
+  .gpt-pro-batch-toolbar,
+  .gpt-pro-file-header,
+  .gpt-pro-prompt-list-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .gpt-pro-chats-actions,
+  .gpt-pro-file-actions,
+  .gpt-pro-batch-meta {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .gpt-pro-chats-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

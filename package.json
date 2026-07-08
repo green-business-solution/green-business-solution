@@ -89,6 +89,7 @@
     "form-catalog:publish": "node scripts/manage-form-question-catalog.mjs publish",
     "form-catalog:rollback": "node scripts/manage-form-question-catalog.mjs rollback",
     "migrate:runtime-state": "node scripts/migrate-runtime-state-resources.mjs",
+    "migrate:gpt-pro-work": "node scripts/migrate-gpt-pro-work-to-s3.mjs",
     "test": "vitest run",
     "typecheck": "npm run typecheck -w @gbs/web"
   },

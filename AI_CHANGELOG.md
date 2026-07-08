@@ -33,6 +33,14 @@
 - Detached the embedded home How It Works section from the legacy dashboard handoff for the local scanner replacement.
 - Restyled the local homepage hero and nav toward a bright eco landing-page treatment with serif typography, transparent desktop navigation, and a dark green CTA.
 
+## 2026-07-08 - Codex (GPT-5) GPT Pro chats workspace
+
+- Added an admin-only `/chats` workspace for browsing GPT Pro repair batches, copying prompt files, editing corresponding output slots, and saving outputs back through the API.
+- Added S3-backed GPT Pro work storage helpers with strict batch and artifact path validation, server-derived output keys, and a local read-only development fallback for the existing GPT Pro Work folder.
+- Wired the API Lambda to the private dev work bucket under the `gpt-pro-work/` prefix with scoped S3 list, read, and write permissions.
+- Added a dry-run-first `migrate:gpt-pro-work` command that uploads the local GPT Pro Work tree to S3 while skipping macOS junk files and preserving relative paths.
+- Documented the GPT Pro work S3 layout, fallback behavior, and migration command path.
+
 ## 2026-07-07 - Codex (GPT-5) restart handoff for migration and product tasks
 
 - Added a July 2026 restart handoff document summarizing the remaining AWS migration cleanup, form-gate, grant/tax, scenario-verification, and automation work for a clean future conversation.

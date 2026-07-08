@@ -67,6 +67,15 @@ import {
   readPersistentRetrofitRecommendations as readPersistentRetrofitRecommendationsFromStore,
   writePersistentRetrofitRecommendations as writePersistentRetrofitRecommendationsToStore
 } from "./retrofitRecommendationsCache.mjs";
+import {
+  cleanGptProWorkPrefix,
+  defaultGptProWorkLocalFallbackRoot,
+  defaultGptProWorkPrefix,
+  listGptProWorkBatches,
+  readGptProOutput,
+  readGptProPrompt,
+  writeGptProOutput
+} from "./gptProWorkStore.mjs";
 import { buildFixtureRetrofitRecommendationsPayload } from "./fixtureRetrofitRecommendations.mjs";
 import {
   formQuestionCatalogCacheVersion,
@@ -90,6 +99,15 @@ const sampleMatchingTestCasesPath =
   process.env.GBS_SAMPLE_MATCHING_TEST_CASES_PATH || path.join(process.cwd(), "public", "sample_matching_test_cases.json");
 const energyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "";
 const runtimeCacheBucket = process.env.GBS_RUNTIME_CACHE_BUCKET || "";
+const devWorkBucket = process.env.GBS_DEV_WORK_BUCKET || process.env.GBS_GPT_PRO_WORK_BUCKET || "";
+const gptProWorkPrefix = cleanGptProWorkPrefix(process.env.GBS_GPT_PRO_WORK_PREFIX || defaultGptProWorkPrefix);
+const configuredGptProWorkLocalFallbackRoot = process.env.GBS_GPT_PRO_WORK_LOCAL_FALLBACK_ROOT;
+const gptProWorkLocalFallbackRoot =
+  !isLambdaRuntime
+    ? configuredGptProWorkLocalFallbackRoot === undefined
+      ? defaultGptProWorkLocalFallbackRoot
+      : configuredGptProWorkLocalFallbackRoot
+    : "";
 const geocodioApiKey = process.env.GBS_GEOCODIO_API_KEY || process.env.GEOCODIO_API_KEY || "";
 const geocodioDailyLimit = parseNonNegativeInteger(
   process.env.GBS_GEOCODIO_DAILY_LIMIT,
@@ -137,7 +155,7 @@ const s3 = new S3Client({
 export const app = express();
 let activeServer = null;
 
-app.use(express.json({ limit: "128kb" }));
+app.use(express.json({ limit: "5mb" }));
 
 const baseRequiredFields = [
   ["email", "Email"],
@@ -2990,7 +3008,7 @@ function classifyError(error) {
     return {
       status: 403,
       message:
-        "The active AWS profile does not have access to the Green Business Solution DynamoDB tables. Confirm the `gbs` profile uses account 448016109714 with AdministratorAccess."
+        "The active AWS profile does not have access to the Green Business Solution AWS resources. Confirm the `gbs` profile uses the expected RetroFi account and has access to the DynamoDB tables and private S3 buckets."
     };
   }
 
@@ -3019,6 +3037,15 @@ function handleError(res, error) {
   res.status(status).json({ error: classified.message });
 }
 
+function gptProWorkStoreOptions() {
+  return {
+    bucket: devWorkBucket,
+    localFallbackRoot: gptProWorkLocalFallbackRoot,
+    prefix: gptProWorkPrefix,
+    s3
+  };
+}
+
 app.get("/api/health", (_req, res) => {
   res.json({
     ok: true,
@@ -3032,6 +3059,12 @@ app.get("/api/health", (_req, res) => {
     apiRuntimeStateTable,
     energyDataBucket: energyDataBucket || null,
     runtimeCacheBucket: runtimeCacheBucket || null,
+    devWorkBucket: devWorkBucket || null,
+    gptProWork: {
+      localFallbackEnabled: Boolean(gptProWorkLocalFallbackRoot),
+      prefix: gptProWorkPrefix,
+      storageConfigured: Boolean(devWorkBucket)
+    },
     addressGeographyResolver: {
       primaryProvider: "census_geocoder",
       fallbackProvider: "geocodio",
@@ -3047,6 +3080,61 @@ app.get("/api/health", (_req, res) => {
     googleClientIdHint: publicGoogleClientIdHint(),
     recommendedGoogleRedirectUris
   });
+});
+
+app.get("/api/admin/gpt-pro-work/batches", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    res.json(await listGptProWorkBatches(gptProWorkStoreOptions()));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/gpt-pro-work/prompt", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    res.json(
+      await readGptProPrompt({
+        ...gptProWorkStoreOptions(),
+        batchId: req.query.batch,
+        promptPath: req.query.path
+      })
+    );
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/gpt-pro-work/output", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    res.json(
+      await readGptProOutput({
+        ...gptProWorkStoreOptions(),
+        batchId: req.query.batch,
+        promptPath: req.query.path
+      })
+    );
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.put("/api/admin/gpt-pro-work/output", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    res.json(
+      await writeGptProOutput({
+        ...gptProWorkStoreOptions(),
+        batchId: req.body?.batchId,
+        content: req.body?.content,
+        promptPath: req.body?.promptPath
+      })
+    );
+  } catch (error) {
+    handleError(res, error);
+  }
 });
 
 app.get("/api/diagnostics", async (_req, res) => {
