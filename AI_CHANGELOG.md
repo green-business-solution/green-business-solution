@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-08 - Codex (GPT-5) durable AI workflow adoption
+
+- Adopted the reusable AI workflow structure with project-specific `ARCHITECTURE.md`, `RESOURCE_MAP.md`, `TASK_LIST.md`, `review.md`, `template.md`, ADR, and `AI_RESOURCES/` starter docs.
+- Updated `AGENTS.md` and `AGENT_WORKFLOW.md` to connect the existing fast-iteration GitHub/AWS rules with review gates, resource mapping, selector scripts, secret safety, and deploy-target selection.
+- Documented follow-up work for auditing legacy AWS profile/account assumptions and deciding whether the existing detailed architecture-resource map should merge into the root resource map.
+
 ## 2026-07-08 - Codex (GPT-5) local homepage scanner copy transition
 
 - Added scroll-driven hero copy choreography to the local homepage scanner so the initial words move upward while a new RetroFi incentive message rises in from below.
