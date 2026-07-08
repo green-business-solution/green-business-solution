@@ -21,6 +21,7 @@
 - Added guarded admin Firstmate task API endpoints that read local backlog, metadata, status, and report files only when `RETROFI_ENABLE_FIRSTMATE_TASKS=1` and `RETROFI_FIRSTMATE_HOME` are configured.
 - Added a compact `/tasks` admin page with active, blocked, queued, and completed task sections, active-agent counts, done indicators, and new-tab report links.
 - Added a `/tasks/reports/:taskId` admin report page that renders Firstmate Markdown reports from the guarded backend endpoint.
+- Added a guarded response workflow for tasks whose latest status needs captain input and whose Firstmate metadata has a live response window.
 - Documented the local-only Firstmate task dashboard environment variables in `docs/development-artifacts.md`.
 
 ## 2026-07-08 - Codex (GPT-5) local homepage scanner copy transition

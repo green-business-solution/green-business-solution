@@ -67,3 +67,4 @@ AWS_PROFILE=gbs npm run fixtures:generated:upload
 The admin `/tasks` page is disabled unless local Firstmate task access is explicitly enabled.
 For local captain workflow only, run the API with `RETROFI_ENABLE_FIRSTMATE_TASKS=1` and `RETROFI_FIRSTMATE_HOME=/Users/neer_kuchlous/Code/firstmate`.
 The API reads Firstmate backlog, status, metadata, and `data/<task-id>/report.md` files without mutating them.
+For response-needed tasks with a live `window=` value in `state/<task-id>.meta`, the admin page can send a captain response through `<RETROFI_FIRSTMATE_HOME>/bin/fm-send.sh` using argument-based process execution.

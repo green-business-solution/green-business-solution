@@ -1,8 +1,12 @@
+import { execFile } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 
 const taskIdPattern = /^[a-z0-9][a-z0-9._-]{0,120}$/i;
+const windowTargetPattern = /^[a-z0-9._:-]{1,180}$/i;
 const enabledValues = new Set(["1", "true", "yes", "on"]);
+const responseNeededStatusStates = new Set(["needs-decision", "blocked", "failed"]);
+const maxResponseMessageLength = 4000;
 
 export function firstmateTasksConfigFromEnv(env = process.env) {
   const enabledFlag = String(env.RETROFI_ENABLE_FIRSTMATE_TASKS || "").trim().toLowerCase();
@@ -90,6 +94,7 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
       .map(async (task) => {
         const hasReport = await reportExists(firstmateHome, task.id);
         const state = resolveTaskState(task);
+        const responseNeeded = responseNeededStatusStates.has(task.statusState);
         return {
           id: task.id,
           title: task.title || titleFromTaskId(task.id),
@@ -103,6 +108,8 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
           statusState: task.statusState || null,
           since: task.since || null,
           reportedAt: task.reportedAt || null,
+          responseNeeded,
+          canRespond: responseNeeded && isSafeWindowTarget(task.window),
           hasReport,
           reportUrl: hasReport ? `/tasks/reports/${encodeURIComponent(task.id)}` : null
         };
@@ -150,6 +157,80 @@ export async function readFirstmateTaskReport({ env = process.env, taskId, now =
     }
     throw error;
   }
+}
+
+export async function sendFirstmateTaskResponse({
+  env = process.env,
+  taskId,
+  message,
+  now = new Date(),
+  execFileFn = execFile
+} = {}) {
+  const config = firstmateTasksConfigFromEnv(env);
+  if (!config.enabled) {
+    throw statusError(config.reason || "Firstmate task responses are disabled.", 404);
+  }
+
+  const normalizedTaskId = normalizeTaskId(taskId);
+  if (!normalizedTaskId) {
+    throw statusError("Invalid task id.", 400);
+  }
+
+  const cleanMessage = normalizeResponseMessage(message);
+  if (!cleanMessage) {
+    throw statusError("Response message is required.", 400);
+  }
+  if (cleanMessage.length > maxResponseMessageLength) {
+    throw statusError(`Response message must be ${maxResponseMessageLength} characters or fewer.`, 400);
+  }
+  if (cleanMessage === "--key") {
+    throw statusError("Response message cannot be --key.", 400);
+  }
+
+  const firstmateHome = path.resolve(config.firstmateHome);
+  const homeStatus = await statDirectory(firstmateHome);
+  if (!homeStatus.exists) {
+    throw statusError("Configured Firstmate home does not exist.", 404);
+  }
+  if (!homeStatus.isDirectory) {
+    throw statusError("Configured Firstmate home is not a directory.", 400);
+  }
+
+  const metaPath = safeStateFilePath(firstmateHome, normalizedTaskId, ".meta");
+  const metaText = await readRequiredText(metaPath, "Task metadata not found.");
+  const meta = parseKeyValueLines(metaText);
+  const windowTarget = cleanOptional(meta.window);
+  if (!isSafeWindowTarget(windowTarget)) {
+    throw statusError("Task does not have a live response window.", 409);
+  }
+
+  const statusPath = safeStateFilePath(firstmateHome, normalizedTaskId, ".status");
+  const statusText = await readRequiredText(statusPath, "Task status not found.");
+  const latestStatus = parseStatusText(statusText);
+  if (!responseNeededStatusStates.has(latestStatus.state)) {
+    throw statusError("Task is not waiting for a captain response.", 409);
+  }
+
+  const sendScriptPath = safeFirstmateBinPath(firstmateHome, "fm-send.sh");
+  const sendScriptStatus = await statFile(sendScriptPath);
+  if (!sendScriptStatus.exists) {
+    throw statusError("Firstmate send helper was not found.", 503);
+  }
+  if (!sendScriptStatus.isFile) {
+    throw statusError("Firstmate send helper is not a file.", 503);
+  }
+
+  await execFilePromise(execFileFn, sendScriptPath, [windowTarget, cleanMessage], {
+    cwd: firstmateHome,
+    maxBuffer: 64 * 1024,
+    timeout: 15_000
+  });
+
+  return {
+    generatedAt: toIsoString(now),
+    taskId: normalizedTaskId,
+    sent: true
+  };
 }
 
 export function parseBacklogTasks(markdown) {
@@ -208,6 +289,22 @@ export function safeReportPath(firstmateHome, taskId) {
   return reportPath;
 }
 
+export function safeStateFilePath(firstmateHome, taskId, extension) {
+  const normalizedTaskId = normalizeTaskId(taskId);
+  if (!normalizedTaskId || ![".meta", ".status"].includes(extension)) {
+    throw statusError("Invalid task state path.", 400);
+  }
+
+  const stateDir = path.resolve(firstmateHome, "state");
+  const filePath = path.resolve(stateDir, `${normalizedTaskId}${extension}`);
+  const statePrefix = `${stateDir}${path.sep}`;
+  if (!filePath.startsWith(statePrefix)) {
+    throw statusError("Invalid task state path.", 400);
+  }
+
+  return filePath;
+}
+
 function disabledFirstmateTasksResponse(reason, generatedAt) {
   return {
     enabled: false,
@@ -219,7 +316,8 @@ function disabledFirstmateTasksResponse(reason, generatedAt) {
       active: 0,
       completed: 0,
       blocked: 0,
-      queued: 0
+      queued: 0,
+      needsResponse: 0
     },
     tasks: [],
     warnings: []
@@ -381,13 +479,17 @@ function countTasksByState(tasks) {
   return tasks.reduce(
     (counts, task) => {
       counts[task.state] += 1;
+      if (task.responseNeeded) {
+        counts.needsResponse += 1;
+      }
       return counts;
     },
     {
       active: 0,
       completed: 0,
       blocked: 0,
-      queued: 0
+      queued: 0,
+      needsResponse: 0
     }
   );
 }
@@ -422,9 +524,66 @@ function cleanOptional(value) {
   return text || "";
 }
 
+function normalizeResponseMessage(value) {
+  return String(value || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim();
+}
+
 function normalizeTaskId(taskId) {
   const value = String(taskId || "").trim();
   return taskIdPattern.test(value) ? value : "";
+}
+
+function isSafeWindowTarget(value) {
+  return windowTargetPattern.test(cleanOptional(value));
+}
+
+function safeFirstmateBinPath(firstmateHome, fileName) {
+  const binDir = path.resolve(firstmateHome, "bin");
+  const filePath = path.resolve(binDir, fileName);
+  const binPrefix = `${binDir}${path.sep}`;
+  if (!filePath.startsWith(binPrefix)) {
+    throw statusError("Invalid Firstmate helper path.", 400);
+  }
+  return filePath;
+}
+
+async function statFile(filePath) {
+  try {
+    const stat = await fs.stat(filePath);
+    return { exists: true, isFile: stat.isFile() };
+  } catch (error) {
+    if (error?.code === "ENOENT") {
+      return { exists: false, isFile: false };
+    }
+    throw error;
+  }
+}
+
+async function readRequiredText(filePath, missingMessage) {
+  try {
+    return await fs.readFile(filePath, "utf8");
+  } catch (error) {
+    if (error?.code === "ENOENT") {
+      throw statusError(missingMessage, 404);
+    }
+    throw error;
+  }
+}
+
+function execFilePromise(execFileFn, file, args, options) {
+  return new Promise((resolve, reject) => {
+    execFileFn(file, args, options, (error, stdout, stderr) => {
+      if (error) {
+        const wrapped = statusError("Could not send response to Firstmate task.", 502);
+        wrapped.cause = error;
+        wrapped.stdout = stdout;
+        wrapped.stderr = stderr;
+        reject(wrapped);
+        return;
+      }
+      resolve({ stdout, stderr });
+    });
+  });
 }
 
 function statusError(message, status) {

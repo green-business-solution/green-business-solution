@@ -461,6 +461,8 @@ type FirstmateTask = {
   statusState: string | null;
   since: string | null;
   reportedAt: string | null;
+  responseNeeded: boolean;
+  canRespond: boolean;
   hasReport: boolean;
   reportUrl: string | null;
 };
@@ -472,7 +474,7 @@ type FirstmateTasksResponse = {
   firstmateHome?: string;
   activeAgentCount: number;
   totalTaskCount: number;
-  counts: Record<FirstmateTaskState, number>;
+  counts: Record<FirstmateTaskState, number> & { needsResponse: number };
   tasks: FirstmateTask[];
   warnings?: string[];
 };
@@ -481,6 +483,12 @@ type FirstmateTaskReportResponse = {
   generatedAt: string;
   taskId: string;
   markdown: string;
+};
+
+type FirstmateTaskRespondResponse = {
+  generatedAt: string;
+  taskId: string;
+  sent: true;
 };
 
 type AdminTableResponse = {
@@ -15449,8 +15457,10 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
     active: 0,
     blocked: 0,
     queued: 0,
-    completed: 0
+    completed: 0,
+    needsResponse: 0
   };
+  const responseNeededTasks = response?.tasks.filter((task) => task.responseNeeded) || [];
 
   return (
     <section className="tasks-page-panel">
@@ -15480,6 +15490,10 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
           <span>Blocked</span>
           <strong>{counts.blocked}</strong>
         </article>
+        <article className={counts.needsResponse ? "tasks-needs-response-stat" : undefined}>
+          <span>Needs response</span>
+          <strong>{counts.needsResponse}</strong>
+        </article>
         <article>
           <span>Completed</span>
           <strong>{counts.completed}</strong>
@@ -15501,6 +15515,13 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
 
       {response?.enabled ? (
         <div className="tasks-section-stack">
+          {responseNeededTasks.length ? (
+            <FirstmateNeedsResponseSection
+              credential={credential}
+              onResponded={() => void loadTasks()}
+              tasks={responseNeededTasks}
+            />
+          ) : null}
           {FIRSTMATE_TASK_SECTIONS.map((section) => (
             <FirstmateTaskSection
               count={counts[section.state] || 0}
@@ -15513,6 +15534,105 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
         </div>
       ) : null}
     </section>
+  );
+}
+
+function FirstmateNeedsResponseSection({
+  credential,
+  onResponded,
+  tasks
+}: {
+  credential: AuthCredential | null;
+  onResponded: () => void;
+  tasks: FirstmateTask[];
+}) {
+  return (
+    <section className="tasks-response-section">
+      <div className="tasks-section-heading">
+        <h2>Needs response</h2>
+        <span className="task-state-pill is-needs-response">{tasks.length}</span>
+      </div>
+      <div className="tasks-response-list">
+        {tasks.map((task) => (
+          <FirstmateTaskResponseCard
+            credential={credential}
+            key={task.id}
+            onResponded={onResponded}
+            task={task}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function FirstmateTaskResponseCard({
+  credential,
+  onResponded,
+  task
+}: {
+  credential: AuthCredential | null;
+  onResponded: () => void;
+  task: FirstmateTask;
+}) {
+  const [message, setMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const trimmedMessage = message.trim();
+  const canSubmit = Boolean(credential && task.canRespond && trimmedMessage.length > 0 && trimmedMessage.length <= 4000 && !isSending);
+
+  async function sendResponse() {
+    if (!credential || !task.canRespond || !trimmedMessage) return;
+
+    setIsSending(true);
+    setError(null);
+    try {
+      await apiPost<FirstmateTaskRespondResponse>(
+        `/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/respond`,
+        {
+          ...adminAuthBody(credential),
+          message: trimmedMessage
+        }
+      );
+      setMessage("");
+      onResponded();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not send response.");
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  return (
+    <article className="tasks-response-card">
+      <div className="tasks-response-card-main">
+        <div>
+          <strong>{task.title}</strong>
+          <span>{task.id} / {task.kind} / {task.repo}</span>
+        </div>
+        <p>{task.recentStatus || "This task is waiting for captain input."}</p>
+      </div>
+      {task.canRespond ? (
+        <div className="tasks-response-form">
+          <label>
+            <span className="sr-only">Response for {task.id}</span>
+            <textarea
+              maxLength={4000}
+              onChange={(event) => setMessage(event.target.value)}
+              placeholder="Type captain response..."
+              rows={2}
+              value={message}
+            />
+          </label>
+          <button disabled={!canSubmit} onClick={() => void sendResponse()} type="button">
+            {isSending ? "Sending..." : "Respond"}
+          </button>
+          {error ? <p className="error-message">{error}</p> : null}
+        </div>
+      ) : (
+        <p className="tasks-muted">No live response window is available for this task.</p>
+      )}
+    </article>
   );
 }
 
@@ -15563,7 +15683,7 @@ function FirstmateTaskSection({
 
 function FirstmateTaskRow({ task }: { task: FirstmateTask }) {
   return (
-    <tr>
+    <tr className={task.responseNeeded ? "is-response-needed" : undefined}>
       <td>
         <span className={`task-status-indicator is-${task.state}`} title={formatFirstmateTaskState(task.state)}>
           {task.state === "completed" ? <CheckIcon /> : <span aria-hidden="true" />}
@@ -15579,7 +15699,10 @@ function FirstmateTaskRow({ task }: { task: FirstmateTask }) {
         <span>{task.project || "Project path unavailable"}</span>
       </td>
       <td>{task.blocked ? task.blockedBy.length ? `Yes: ${task.blockedBy.join(", ")}` : "Yes" : "No"}</td>
-      <td>{task.recentStatus || "No recent status"}</td>
+      <td>
+        {task.responseNeeded ? <span className="task-response-needed-badge">Needs response</span> : null}
+        {task.recentStatus || "No recent status"}
+      </td>
       <td>
         {task.hasReport && task.reportUrl ? (
           <a className="button-link secondary-button" href={task.reportUrl} rel="noreferrer" target="_blank">

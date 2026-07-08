@@ -72,7 +72,7 @@ import {
   formQuestionCatalogCacheVersion,
   loadFormQuestionCatalog
 } from "./forms/formQuestionCatalog.mjs";
-import { readFirstmateTaskReport, readFirstmateTasksDashboard } from "./firstmateTasks.mjs";
+import { readFirstmateTaskReport, readFirstmateTasksDashboard, sendFirstmateTaskResponse } from "./firstmateTasks.mjs";
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
 const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
@@ -3679,6 +3679,20 @@ app.get("/api/admin/firstmate/tasks/:taskId/report", async (req, res) => {
   try {
     await requireAdminFromRequest(req);
     res.json(await readFirstmateTaskReport({ env: process.env, taskId: req.params.taskId, now: new Date() }));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/firstmate/tasks/:taskId/respond", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    res.json(await sendFirstmateTaskResponse({
+      env: process.env,
+      taskId: req.params.taskId,
+      message: req.body?.message,
+      now: new Date()
+    }));
   } catch (error) {
     handleError(res, error);
   }
