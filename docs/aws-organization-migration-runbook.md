@@ -141,6 +141,48 @@ The agent can then:
 - Move or recreate Route 53 DNS and domain registration ownership.
 - Cut over `retrofi.org` only after the new stack is verified.
 
+## Collaborator Access Timing
+
+Add Rajvansh and Ryan to IAM Identity Center before DNS cutover so production access is not dependent on Neer alone.
+This is not a blocker for account bootstrap or data migration prep.
+Use the existing `RetroFi-Admins` group unless a narrower permission set has been created.
+
+## New Account Bootstrap
+
+The new production account is empty by design.
+Bootstrap the GitHub OIDC role, runtime DynamoDB tables, and runtime S3 buckets before copying data:
+
+```sh
+AWS_PROFILE=retrofi-prod GBS_MANAGE_CORE_RUNTIME_TABLES=true ./scripts/deploy-production.sh ci data
+```
+
+The deploy script leaves `GBS_MANAGE_CORE_RUNTIME_TABLES` at its default `false`.
+That is intentional so legacy-account deploys do not try to import or recreate externally managed tables.
+Set it to `true` only for a new account where the core user, intake, and opportunity tables do not already exist.
+
+## DynamoDB Data Copy
+
+Run a dry-run first:
+
+```sh
+node scripts/copy-dynamodb-tables-between-profiles.mjs \
+  --source-profile gbs \
+  --target-profile retrofi-prod \
+  --region us-east-2
+```
+
+Copy the data:
+
+```sh
+node scripts/copy-dynamodb-tables-between-profiles.mjs \
+  --source-profile gbs \
+  --target-profile retrofi-prod \
+  --region us-east-2 \
+  --write
+```
+
+Run the copy again during the final cutover window so records changed during migration prep are not missed.
+
 ## Migration Constraints
 
 The current Green Business Solution AWS account is still:

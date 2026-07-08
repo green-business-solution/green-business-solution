@@ -14,6 +14,10 @@ DOMAIN_NAME="${DOMAIN_NAME:-retrofi.org}"
 HOSTED_ZONE_ID="${HOSTED_ZONE_ID:-Z04402863EVV8FUF4EWUX}"
 REGION="${AWS_DEPLOY_REGION:-us-east-1}"
 DATA_REGION="${GBS_AWS_REGION:-us-east-2}"
+MANAGE_CORE_RUNTIME_TABLES="${GBS_MANAGE_CORE_RUNTIME_TABLES:-false}"
+USERS_TABLE="${GBS_USERS_TABLE:-gbs-users}"
+INTAKE_TABLE="${GBS_INTAKE_TABLE:-gbs-client-intake}"
+OPPORTUNITIES_TABLE="${GBS_OPPORTUNITIES_TABLE:-gbs-opportunity-candidates}"
 DASHBOARD_PERFORMANCE_TABLE="${GBS_DASHBOARD_PERFORMANCE_TABLE:-gbs-dashboard-performance}"
 RETROFIT_RECOMMENDATION_CACHE_TABLE="${GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE:-gbs-retrofit-recommendation-cache}"
 APPLICATION_PROFILES_TABLE="${GBS_APPLICATION_PROFILES_TABLE:-gbs-application-profiles}"
@@ -112,6 +116,7 @@ Environment:
   GBS_ARTIFACT_RETENTION_DAYS=${ARTIFACT_RETENTION_DAYS}
   GBS_RUNTIME_CACHE_RETENTION_DAYS=${RUNTIME_CACHE_RETENTION_DAYS}
   GBS_FORM_CATALOG_VERSION_RETENTION_DAYS=${FORM_CATALOG_VERSION_RETENTION_DAYS}
+  GBS_MANAGE_CORE_RUNTIME_TABLES=${MANAGE_CORE_RUNTIME_TABLES}
   GBS_DEPLOY_STATE_PREFIX=${GBS_DEPLOY_STATE_PREFIX:-deploy-state}
 EOF
 }
@@ -243,6 +248,10 @@ deploy_runtime_data_stack() {
     --stack-name "${RUNTIME_DATA_STACK_NAME}" \
     --template-file infra/runtime-data.yaml \
     --parameter-overrides \
+      "ManageCoreRuntimeTables=${MANAGE_CORE_RUNTIME_TABLES}" \
+      "UsersTable=${USERS_TABLE}" \
+      "IntakeTable=${INTAKE_TABLE}" \
+      "OpportunitiesTable=${OPPORTUNITIES_TABLE}" \
       "DashboardPerformanceTable=${DASHBOARD_PERFORMANCE_TABLE}" \
       "RetrofitRecommendationCacheTable=${RETROFIT_RECOMMENDATION_CACHE_TABLE}" \
       "ApplicationProfilesTable=${APPLICATION_PROFILES_TABLE}" \
@@ -442,6 +451,9 @@ deploy_api_stack() {
     "GoogleRedirectUri=${GOOGLE_REDIRECT_URI}"
     "AdminEmails=${ADMIN_EMAILS}"
     "DataRegion=${DATA_REGION}"
+    "UsersTable=${USERS_TABLE}"
+    "IntakeTable=${INTAKE_TABLE}"
+    "OpportunitiesTable=${OPPORTUNITIES_TABLE}"
     "DashboardPerformanceTable=${DASHBOARD_PERFORMANCE_TABLE}"
     "RetrofitRecommendationCacheTable=${RETROFIT_RECOMMENDATION_CACHE_TABLE}"
     "ApplicationProfilesTable=${APPLICATION_PROFILES_TABLE}"

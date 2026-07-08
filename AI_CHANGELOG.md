@@ -6,6 +6,8 @@
 - Documented `retroficontact@gmail.com` as the planned new AWS Organizations management account root email.
 - Added an AWS Organization migration runbook with the browser-only setup steps and the agent handoff point for CLI/IaC migration work.
 - Recorded the created RetroFi management and production account IDs, Identity Center portal, and local SSO profile names after setup was completed.
+- Added opt-in CloudFormation support for owning all production DynamoDB tables in the new account without breaking legacy-account deploys.
+- Added a dry-run-first DynamoDB table copy utility for the old-to-new account migration.
 
 ## 2026-07-07 - Codex (GPT-5) local dashboard to How It Works handoff
 

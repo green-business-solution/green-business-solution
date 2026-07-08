@@ -2,6 +2,22 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: Runtime DynamoDB tables for Green Business Solution production.
 
 Parameters:
+  ManageCoreRuntimeTables:
+    Type: String
+    Default: "false"
+    AllowedValues:
+      - "true"
+      - "false"
+    Description: Create the core user, intake, and opportunity tables. Keep false in legacy accounts where those tables already exist outside this stack.
+  UsersTable:
+    Type: String
+    Default: gbs-users
+  IntakeTable:
+    Type: String
+    Default: gbs-client-intake
+  OpportunitiesTable:
+    Type: String
+    Default: gbs-opportunity-candidates
   DashboardPerformanceTable:
     Type: String
     Default: gbs-dashboard-performance
@@ -15,7 +31,61 @@ Parameters:
     Type: String
     Default: gbs-api-runtime-state
 
+Conditions:
+  ShouldManageCoreRuntimeTables: !Equals [!Ref ManageCoreRuntimeTables, "true"]
+
 Resources:
+  UsersDynamoTable:
+    Type: AWS::DynamoDB::Table
+    Condition: ShouldManageCoreRuntimeTables
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Ref UsersTable
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+
+  IntakeDynamoTable:
+    Type: AWS::DynamoDB::Table
+    Condition: ShouldManageCoreRuntimeTables
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Ref IntakeTable
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+
+  OpportunitiesDynamoTable:
+    Type: AWS::DynamoDB::Table
+    Condition: ShouldManageCoreRuntimeTables
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Ref OpportunitiesTable
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: opportunityId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: opportunityId
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+
   DashboardPerformanceDynamoTable:
     Type: AWS::DynamoDB::Table
     DeletionPolicy: Retain
@@ -100,6 +170,15 @@ Resources:
         PointInTimeRecoveryEnabled: true
 
 Outputs:
+  UsersTableName:
+    Condition: ShouldManageCoreRuntimeTables
+    Value: !Ref UsersTable
+  IntakeTableName:
+    Condition: ShouldManageCoreRuntimeTables
+    Value: !Ref IntakeTable
+  OpportunitiesTableName:
+    Condition: ShouldManageCoreRuntimeTables
+    Value: !Ref OpportunitiesTable
   DashboardPerformanceTableName:
     Value: !Ref DashboardPerformanceTable
   RetrofitRecommendationCacheTableName:
