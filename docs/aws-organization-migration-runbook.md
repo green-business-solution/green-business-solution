@@ -259,6 +259,37 @@ Their historical object versions were replayed into the new production account a
 
 Run one final DynamoDB copy, S3 current-object sync, S3 version replay, and verification pass during the cutover window.
 
+## New Account API And Frontend Staging
+
+Deploy the API in the new production account before touching DNS:
+
+```sh
+AWS_PROFILE=retrofi-prod \
+  AWS_DEPLOY_REGION=us-east-1 \
+  GBS_AWS_REGION=us-east-2 \
+  GBS_MANAGE_CORE_RUNTIME_TABLES=true \
+  GBS_MANAGE_DEV_WORK_BUCKET=true \
+  GOOGLE_CLIENT_SECRET=... \
+  GBS_GEOCODIO_API_KEY=... \
+  ./scripts/deploy-production.sh api
+```
+
+Smoke test the raw API Gateway endpoint from the API stack output before continuing.
+
+Then deploy the frontend and CloudFront distribution in staging mode.
+This creates the new CloudFront distribution without claiming `retrofi.org` aliases or changing Route 53:
+
+```sh
+AWS_PROFILE=retrofi-prod \
+  AWS_DEPLOY_REGION=us-east-1 \
+  GBS_AWS_REGION=us-east-2 \
+  GBS_ENABLE_CUSTOM_DOMAIN=false \
+  ./scripts/deploy-production.sh infra frontend
+```
+
+Smoke test the CloudFront default domain from the `SiteUrl` stack output.
+Only enable custom domain mode for the new account during the final DNS/CloudFront cutover window.
+
 ## Migration Constraints
 
 The current Green Business Solution AWS account is still:

@@ -13,6 +13,7 @@
 - Recorded the first verified DynamoDB and S3 data-copy checkpoint in the AWS Organization migration runbook.
 - Added exact DynamoDB scan/hash verification mode to the cross-account table copy utility.
 - Replayed and verified generated-fixture and dev-work S3 version histories into the new production account.
+- Added a custom-domain toggle for the frontend/CloudFront stack so the new production account can be staged without claiming `retrofi.org`.
 
 ## 2026-07-07 - Codex (GPT-5) local dashboard to How It Works handoff
 

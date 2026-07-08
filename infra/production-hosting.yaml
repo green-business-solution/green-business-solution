@@ -8,9 +8,19 @@ Parameters:
   HostedZoneId:
     Type: String
     Description: Route 53 hosted zone ID for the domain.
+  EnableCustomDomain:
+    Type: String
+    Default: "true"
+    AllowedValues:
+      - "true"
+      - "false"
+    Description: Attach retrofi.org aliases, create ACM validation, and manage Route 53 records.
   ApiOriginDomainName:
     Type: String
     Description: API Gateway origin domain name without protocol, such as abc123.execute-api.us-east-1.amazonaws.com.
+
+Conditions:
+  ShouldConfigureCustomDomain: !Equals [!Ref EnableCustomDomain, "true"]
 
 Resources:
   FrontendBucket:
@@ -37,6 +47,7 @@ Resources:
 
   Certificate:
     Type: AWS::CertificateManager::Certificate
+    Condition: ShouldConfigureCustomDomain
     Properties:
       DomainName: !Ref DomainName
       SubjectAlternativeNames:
@@ -53,8 +64,11 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - !Ref DomainName
-          - !Sub www.${DomainName}
+          !If
+            - ShouldConfigureCustomDomain
+            - - !Ref DomainName
+              - !Sub www.${DomainName}
+            - !Ref AWS::NoValue
         Comment: !Sub Green Business Solution hosting for ${DomainName}
         CustomErrorResponses:
           - ErrorCode: 403
@@ -109,9 +123,12 @@ Resources:
             ViewerProtocolPolicy: https-only
         PriceClass: PriceClass_100
         ViewerCertificate:
-          AcmCertificateArn: !Ref Certificate
-          MinimumProtocolVersion: TLSv1.2_2021
-          SslSupportMethod: sni-only
+          !If
+            - ShouldConfigureCustomDomain
+            - AcmCertificateArn: !Ref Certificate
+              MinimumProtocolVersion: TLSv1.2_2021
+              SslSupportMethod: sni-only
+            - CloudFrontDefaultCertificate: true
 
   FrontendBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -131,6 +148,7 @@ Resources:
 
   RootAliasRecord:
     Type: AWS::Route53::RecordSet
+    Condition: ShouldConfigureCustomDomain
     Properties:
       HostedZoneId: !Ref HostedZoneId
       Name: !Sub ${DomainName}.
@@ -141,6 +159,7 @@ Resources:
 
   RootIpv6AliasRecord:
     Type: AWS::Route53::RecordSet
+    Condition: ShouldConfigureCustomDomain
     Properties:
       HostedZoneId: !Ref HostedZoneId
       Name: !Sub ${DomainName}.
@@ -151,6 +170,7 @@ Resources:
 
   WwwAliasRecord:
     Type: AWS::Route53::RecordSet
+    Condition: ShouldConfigureCustomDomain
     Properties:
       HostedZoneId: !Ref HostedZoneId
       Name: !Sub www.${DomainName}.
@@ -161,6 +181,7 @@ Resources:
 
   WwwIpv6AliasRecord:
     Type: AWS::Route53::RecordSet
+    Condition: ShouldConfigureCustomDomain
     Properties:
       HostedZoneId: !Ref HostedZoneId
       Name: !Sub www.${DomainName}.
@@ -179,6 +200,10 @@ Outputs:
   FrontendBucketName:
     Value: !Ref FrontendBucket
   SiteUrl:
-    Value: !Sub https://${DomainName}
+    Value: !If
+      - ShouldConfigureCustomDomain
+      - !Sub https://${DomainName}
+      - !Join ["", ["https://", !GetAtt CloudFrontDistribution.DomainName]]
   WwwSiteUrl:
+    Condition: ShouldConfigureCustomDomain
     Value: !Sub https://www.${DomainName}
