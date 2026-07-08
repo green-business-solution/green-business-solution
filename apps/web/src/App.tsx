@@ -446,6 +446,43 @@ type AdminUserPreviewOptionsResponse = {
   options: UserPreviewOption[];
 };
 
+type FirstmateTaskState = "active" | "completed" | "blocked" | "queued";
+
+type FirstmateTask = {
+  id: string;
+  title: string;
+  kind: string;
+  repo: string;
+  project: string | null;
+  state: FirstmateTaskState;
+  blocked: boolean;
+  blockedBy: string[];
+  recentStatus: string | null;
+  statusState: string | null;
+  since: string | null;
+  reportedAt: string | null;
+  hasReport: boolean;
+  reportUrl: string | null;
+};
+
+type FirstmateTasksResponse = {
+  enabled: boolean;
+  reason?: string;
+  generatedAt: string;
+  firstmateHome?: string;
+  activeAgentCount: number;
+  totalTaskCount: number;
+  counts: Record<FirstmateTaskState, number>;
+  tasks: FirstmateTask[];
+  warnings?: string[];
+};
+
+type FirstmateTaskReportResponse = {
+  generatedAt: string;
+  taskId: string;
+  markdown: string;
+};
+
 type AdminTableResponse = {
   table: DatabaseTableSnapshot;
 };
@@ -6279,6 +6316,8 @@ function isAppChromeRoute(route: Route) {
     route === "admin-dashboard-performance-data" ||
     route === "admin-application-sources" ||
     route === "admin-application-profiles" ||
+    route === "tasks" ||
+    route === "task-report" ||
     route === "testcases"
   );
 }
@@ -10544,12 +10583,51 @@ function DashboardFinancialPage({
   onTabChange: (tab: FinancialDashboardTabId) => void;
   viewModel: DashboardViewModel;
 }) {
+  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
+
   return (
     <div className="dashboard-page-stack">
-      <DashboardSubTabs tabs={FINANCIAL_DASHBOARD_TABS} activeTab={activeTab} onTabChange={onTabChange} />
+      <div className="dashboard-financial-toolbar">
+        <DashboardSubTabs tabs={FINANCIAL_DASHBOARD_TABS} activeTab={activeTab} onTabChange={onTabChange} />
+        <button onClick={() => setQuoteModalOpen(true)} type="button">
+          Add quote
+        </button>
+      </div>
       {activeTab === "overview" ? <FinancialOverview viewModel={viewModel} /> : null}
       {activeTab === "cash-flow" ? <FinancialCashFlow viewModel={viewModel} /> : null}
       {activeTab === "savings-by-retrofit" ? <FinancialSavingsByRetrofit viewModel={viewModel} /> : null}
+      {quoteModalOpen ? <AddQuotePlaceholderModal onClose={() => setQuoteModalOpen(false)} /> : null}
+    </div>
+  );
+}
+
+function AddQuotePlaceholderModal({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
+  return (
+    <div className="modal-backdrop quote-modal-backdrop" onMouseDown={(event) => {
+      if (event.target === event.currentTarget) onClose();
+    }}>
+      <section className="save-results-modal quote-placeholder-modal" role="dialog" aria-modal="true" aria-labelledby="quote-placeholder-title">
+        <button className="modal-close-button" onClick={onClose} type="button">Close</button>
+        <div className="modal-copy">
+          <p className="eyebrow">Project quote</p>
+          <h2 id="quote-placeholder-title">Quote capture is coming soon</h2>
+          <p>
+            RetroFi is not changing this financial model yet. Keep contractor quotes with the project record for now, and quote entry will replace modeled project costs when the form is ready.
+          </p>
+        </div>
+        {/* TODO: Replace this placeholder with the project quote capture form once quote storage is defined. */}
+      </section>
     </div>
   );
 }
@@ -15029,6 +15107,7 @@ const ADMIN_RETROFITS_TAB = "Retrofits";
 const ADMIN_TEST_CASES_TAB = "Test Cases";
 const ADMIN_USER_PREVIEW_TAB = "User Preview";
 const ADMIN_POST_FORM_PREVIEW_TAB = "Post Form Preview";
+const ADMIN_TASKS_TAB = "Tasks";
 const ADMIN_DASHBOARD_PERFORMANCE_TAB = "Dashboard Performance Data";
 const ADMIN_HIDDEN_DATA_TABLE_NAMES = new Set([
   "gbs-application-profiles",
@@ -15084,6 +15163,7 @@ function AdminDashboard({
     "Users",
     ADMIN_USER_PREVIEW_TAB,
     ADMIN_POST_FORM_PREVIEW_TAB,
+    ADMIN_TASKS_TAB,
     ADMIN_DASHBOARD_PERFORMANCE_TAB,
     ADMIN_TEST_CASES_TAB,
     ADMIN_APPLICATION_SOURCES_TAB,
@@ -15243,6 +15323,10 @@ function AdminDashboard({
       window.open(pathForRoute("testcases"), "_blank", "noopener,noreferrer");
       return;
     }
+    if (item === ADMIN_TASKS_TAB) {
+      window.open(pathForRoute("tasks"), "_blank", "noopener,noreferrer");
+      return;
+    }
     const nextPath =
       item === ADMIN_APPLICATION_SOURCES_TAB
         ? pathForRoute("admin-application-sources")
@@ -15300,6 +15384,483 @@ function AdminTestCasesStandalonePage() {
       <AdminTestCasesPanel />
     </main>
   );
+}
+
+const FIRSTMATE_TASK_SECTIONS: Array<{ state: FirstmateTaskState; label: string }> = [
+  { state: "active", label: "Active" },
+  { state: "blocked", label: "Blocked" },
+  { state: "queued", label: "Queued" },
+  { state: "completed", label: "Completed" }
+];
+
+function AdminTasksStandalonePage({
+  credential,
+  onSignOut,
+  viewer
+}: {
+  credential: AuthCredential | null;
+  onSignOut: () => void;
+  viewer: UserRecord;
+}) {
+  return (
+    <WorkspaceLayout
+      activeNavItem={ADMIN_TASKS_TAB}
+      navItems={[ADMIN_TASKS_TAB]}
+      onSignOut={onSignOut}
+      title="Tasks"
+      user={viewer}
+    >
+      <FirstmateTasksPanel credential={credential} />
+    </WorkspaceLayout>
+  );
+}
+
+function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null }) {
+  const [response, setResponse] = useState<FirstmateTasksResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadTasks = useCallback(async () => {
+    if (!credential) {
+      setError("Sign in again to load Firstmate tasks.");
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const nextResponse = await apiGet<FirstmateTasksResponse>("/api/admin/firstmate/tasks", {
+        headers: adminAuthHeaders(credential)
+      });
+      setResponse(nextResponse);
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not load Firstmate tasks.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [credential]);
+
+  useEffect(() => {
+    void loadTasks();
+  }, [loadTasks]);
+
+  const counts = response?.counts || {
+    active: 0,
+    blocked: 0,
+    queued: 0,
+    completed: 0
+  };
+
+  return (
+    <section className="tasks-page-panel">
+      <div className="tasks-page-header">
+        <div>
+          <p className="eyebrow">Firstmate operations</p>
+          <h1>Tasks</h1>
+          <p>Current and completed agent work across local Firstmate task state.</p>
+        </div>
+        <button className="secondary-button" disabled={isLoading} onClick={() => void loadTasks()} type="button">
+          {isLoading ? "Refreshing..." : "Refresh"}
+        </button>
+      </div>
+
+      {error ? <p className="error-message">{error}</p> : null}
+
+      <div className="tasks-stats">
+        <article>
+          <span>Active agents</span>
+          <strong>{response?.activeAgentCount ?? 0}</strong>
+        </article>
+        <article>
+          <span>Total tasks</span>
+          <strong>{response?.totalTaskCount ?? 0}</strong>
+        </article>
+        <article>
+          <span>Blocked</span>
+          <strong>{counts.blocked}</strong>
+        </article>
+        <article>
+          <span>Completed</span>
+          <strong>{counts.completed}</strong>
+        </article>
+      </div>
+
+      {isLoading && !response ? (
+        <section className="tasks-empty-state">
+          <RetroFiLogoLoader label="Loading Firstmate tasks..." size="lg" tone="card" />
+        </section>
+      ) : null}
+
+      {response && !response.enabled ? (
+        <section className="tasks-empty-state">
+          <strong>Firstmate tasks disabled</strong>
+          <p>{response.reason || "Firstmate task data is not enabled in this environment."}</p>
+        </section>
+      ) : null}
+
+      {response?.enabled ? (
+        <div className="tasks-section-stack">
+          {FIRSTMATE_TASK_SECTIONS.map((section) => (
+            <FirstmateTaskSection
+              count={counts[section.state] || 0}
+              key={section.state}
+              label={section.label}
+              state={section.state}
+              tasks={response.tasks.filter((task) => task.state === section.state)}
+            />
+          ))}
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
+function FirstmateTaskSection({
+  count,
+  label,
+  state,
+  tasks
+}: {
+  count: number;
+  label: string;
+  state: FirstmateTaskState;
+  tasks: FirstmateTask[];
+}) {
+  return (
+    <section className="tasks-section">
+      <div className="tasks-section-heading">
+        <h2>{label}</h2>
+        <span className={`task-state-pill is-${state}`}>{count}</span>
+      </div>
+      <div className="tasks-table-wrap">
+        <table className="tasks-table">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Task</th>
+              <th>Kind</th>
+              <th>Repo / project</th>
+              <th>Blocked</th>
+              <th>Recent status</th>
+              <th>Report</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tasks.length ? (
+              tasks.map((task) => <FirstmateTaskRow key={task.id} task={task} />)
+            ) : (
+              <tr>
+                <td colSpan={7}>No {label.toLowerCase()} tasks.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+function FirstmateTaskRow({ task }: { task: FirstmateTask }) {
+  return (
+    <tr>
+      <td>
+        <span className={`task-status-indicator is-${task.state}`} title={formatFirstmateTaskState(task.state)}>
+          {task.state === "completed" ? <CheckIcon /> : <span aria-hidden="true" />}
+        </span>
+      </td>
+      <td>
+        <strong>{task.title}</strong>
+        <span>{task.id}</span>
+      </td>
+      <td>{task.kind}</td>
+      <td>
+        <strong>{task.repo}</strong>
+        <span>{task.project || "Project path unavailable"}</span>
+      </td>
+      <td>{task.blocked ? task.blockedBy.length ? `Yes: ${task.blockedBy.join(", ")}` : "Yes" : "No"}</td>
+      <td>{task.recentStatus || "No recent status"}</td>
+      <td>
+        {task.hasReport && task.reportUrl ? (
+          <a className="button-link secondary-button" href={task.reportUrl} rel="noreferrer" target="_blank">
+            See Report
+          </a>
+        ) : (
+          <span className="tasks-muted">No report</span>
+        )}
+      </td>
+    </tr>
+  );
+}
+
+function AdminTaskReportStandalonePage({
+  credential,
+  onSignOut,
+  viewer
+}: {
+  credential: AuthCredential | null;
+  onSignOut: () => void;
+  viewer: UserRecord;
+}) {
+  return (
+    <WorkspaceLayout
+      activeNavItem={ADMIN_TASKS_TAB}
+      navItems={[ADMIN_TASKS_TAB]}
+      onSignOut={onSignOut}
+      title="Task report"
+      user={viewer}
+    >
+      <FirstmateTaskReportPanel credential={credential} taskId={taskReportIdFromPath()} />
+    </WorkspaceLayout>
+  );
+}
+
+function FirstmateTaskReportPanel({ credential, taskId }: { credential: AuthCredential | null; taskId: string }) {
+  const [report, setReport] = useState<FirstmateTaskReportResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (!credential) {
+      setError("Sign in again to load this Firstmate report.");
+      setIsLoading(false);
+      return () => {
+        isMounted = false;
+      };
+    }
+
+    if (!taskId) {
+      setError("Report task id is missing.");
+      setIsLoading(false);
+      return () => {
+        isMounted = false;
+      };
+    }
+
+    setIsLoading(true);
+    setError(null);
+    apiGet<FirstmateTaskReportResponse>(`/api/admin/firstmate/tasks/${encodeURIComponent(taskId)}/report`, {
+      headers: adminAuthHeaders(credential)
+    })
+      .then((nextReport) => {
+        if (!isMounted) return;
+        setReport(nextReport);
+      })
+      .catch((requestError) => {
+        if (!isMounted) return;
+        setError(requestError instanceof Error ? requestError.message : "Could not load the Firstmate report.");
+      })
+      .finally(() => {
+        if (isMounted) setIsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [credential, taskId]);
+
+  return (
+    <section className="task-report-panel">
+      <div className="task-report-header">
+        <div>
+          <p className="eyebrow">Firstmate report</p>
+          <h1>{taskId || "Task report"}</h1>
+        </div>
+        <a className="button-link secondary-button" href={pathForRoute("tasks")}>
+          Back to Tasks
+        </a>
+      </div>
+      {isLoading ? (
+        <RetroFiLogoLoader label="Loading report..." size="lg" tone="card" />
+      ) : null}
+      {error ? <p className="error-message">{error}</p> : null}
+      {report ? <MarkdownReport markdown={report.markdown} /> : null}
+    </section>
+  );
+}
+
+type MarkdownBlock =
+  | { kind: "heading"; level: number; text: string }
+  | { kind: "paragraph"; text: string }
+  | { kind: "list"; ordered: boolean; items: string[] }
+  | { kind: "code"; text: string }
+  | { kind: "rule" };
+
+function MarkdownReport({ markdown }: { markdown: string }) {
+  const blocks = useMemo(() => parseSimpleMarkdown(markdown), [markdown]);
+
+  return (
+    <article className="task-report-markdown">
+      {blocks.map((block, index) => renderMarkdownBlock(block, index))}
+    </article>
+  );
+}
+
+function parseSimpleMarkdown(markdown: string): MarkdownBlock[] {
+  const blocks: MarkdownBlock[] = [];
+  const paragraphLines: string[] = [];
+  let listItems: string[] = [];
+  let listOrdered = false;
+  let codeLines: string[] = [];
+  let inCode = false;
+
+  function flushParagraph() {
+    if (!paragraphLines.length) return;
+    blocks.push({ kind: "paragraph", text: paragraphLines.join(" ").trim() });
+    paragraphLines.length = 0;
+  }
+
+  function flushList() {
+    if (!listItems.length) return;
+    blocks.push({ kind: "list", ordered: listOrdered, items: listItems });
+    listItems = [];
+    listOrdered = false;
+  }
+
+  for (const line of markdown.split(/\r?\n/)) {
+    if (line.trim().startsWith("```")) {
+      if (inCode) {
+        blocks.push({ kind: "code", text: codeLines.join("\n") });
+        codeLines = [];
+        inCode = false;
+      } else {
+        flushParagraph();
+        flushList();
+        inCode = true;
+      }
+      continue;
+    }
+
+    if (inCode) {
+      codeLines.push(line);
+      continue;
+    }
+
+    const trimmed = line.trim();
+    if (!trimmed) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
+    const heading = trimmed.match(/^(#{1,4})\s+(.+)$/);
+    if (heading) {
+      flushParagraph();
+      flushList();
+      blocks.push({ kind: "heading", level: heading[1].length, text: heading[2].trim() });
+      continue;
+    }
+
+    if (/^---+$/.test(trimmed)) {
+      flushParagraph();
+      flushList();
+      blocks.push({ kind: "rule" });
+      continue;
+    }
+
+    const bullet = trimmed.match(/^[-*]\s+(.+)$/);
+    const ordered = trimmed.match(/^\d+\.\s+(.+)$/);
+    if (bullet || ordered) {
+      flushParagraph();
+      const nextOrdered = Boolean(ordered);
+      if (listItems.length && listOrdered !== nextOrdered) {
+        flushList();
+      }
+      listOrdered = nextOrdered;
+      listItems.push((bullet?.[1] || ordered?.[1] || "").trim());
+      continue;
+    }
+
+    flushList();
+    paragraphLines.push(trimmed);
+  }
+
+  if (inCode) {
+    blocks.push({ kind: "code", text: codeLines.join("\n") });
+  }
+  flushParagraph();
+  flushList();
+
+  return blocks;
+}
+
+function renderMarkdownBlock(block: MarkdownBlock, index: number) {
+  if (block.kind === "heading") {
+    const content = renderMarkdownInline(block.text, `heading-${index}`);
+    if (block.level === 1) return <h1 key={index}>{content}</h1>;
+    if (block.level === 2) return <h2 key={index}>{content}</h2>;
+    if (block.level === 3) return <h3 key={index}>{content}</h3>;
+    return <h4 key={index}>{content}</h4>;
+  }
+
+  if (block.kind === "paragraph") {
+    return <p key={index}>{renderMarkdownInline(block.text, `paragraph-${index}`)}</p>;
+  }
+
+  if (block.kind === "list") {
+    const ListTag = block.ordered ? "ol" : "ul";
+    return (
+      <ListTag key={index}>
+        {block.items.map((item, itemIndex) => (
+          <li key={`${index}-${itemIndex}`}>{renderMarkdownInline(item, `list-${index}-${itemIndex}`)}</li>
+        ))}
+      </ListTag>
+    );
+  }
+
+  if (block.kind === "code") {
+    return <pre key={index}><code>{block.text}</code></pre>;
+  }
+
+  return <hr key={index} />;
+}
+
+function renderMarkdownInline(text: string, keyPrefix: string): ReactNode[] {
+  const nodes: ReactNode[] = [];
+  const pattern = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)|(https?:\/\/[^\s)]+)/g;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(text))) {
+    if (match.index > lastIndex) {
+      nodes.push(text.slice(lastIndex, match.index));
+    }
+
+    const label = match[1] || match[3];
+    const href = match[2] || match[3];
+    nodes.push(
+      <a href={href} key={`${keyPrefix}-${match.index}`} rel="noreferrer" target="_blank">
+        {label}
+      </a>
+    );
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+
+  return nodes;
+}
+
+function taskReportIdFromPath(pathname = typeof window === "undefined" ? "" : window.location.pathname) {
+  const prefix = "/tasks/reports/";
+  if (!pathname.startsWith(prefix)) return "";
+  const encoded = pathname.slice(prefix.length).split("/")[0] || "";
+  try {
+    return decodeURIComponent(encoded);
+  } catch {
+    return "";
+  }
+}
+
+function formatFirstmateTaskState(state: FirstmateTaskState) {
+  if (state === "active") return "Active";
+  if (state === "completed") return "Completed";
+  if (state === "blocked") return "Blocked";
+  return "Queued";
 }
 
 type DashboardPerformanceSummary = {
@@ -19727,7 +20288,9 @@ export function App() {
           route === "user-preview" ||
           route === "admin-dashboard-performance-data" ||
           route === "admin-application-sources" ||
-          route === "admin-application-profiles"
+          route === "admin-application-profiles" ||
+          route === "tasks" ||
+          route === "task-report"
           ? route
           : "admin"
         : "portal"
@@ -19823,6 +20386,48 @@ export function App() {
   if (effectiveRoute === "testcases") {
     if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
       return <AdminTestCasesStandalonePage />;
+    }
+
+    return (
+      <SignInPage
+        navigate={navigate}
+        message={signInMessage}
+        onAuthSuccess={handleAuthSuccess}
+        publicAuth={publicAuth}
+      />
+    );
+  }
+
+  if (effectiveRoute === "tasks") {
+    if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
+      return (
+        <AdminTasksStandalonePage
+          credential={authCredential}
+          onSignOut={signOut}
+          viewer={authPayload.user}
+        />
+      );
+    }
+
+    return (
+      <SignInPage
+        navigate={navigate}
+        message={signInMessage}
+        onAuthSuccess={handleAuthSuccess}
+        publicAuth={publicAuth}
+      />
+    );
+  }
+
+  if (effectiveRoute === "task-report") {
+    if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
+      return (
+        <AdminTaskReportStandalonePage
+          credential={authCredential}
+          onSignOut={signOut}
+          viewer={authPayload.user}
+        />
+      );
     }
 
     return (

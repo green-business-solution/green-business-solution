@@ -15,6 +15,14 @@
 - Updated `AGENTS.md` and `AGENT_WORKFLOW.md` to connect the existing fast-iteration GitHub/AWS rules with review gates, resource mapping, selector scripts, secret safety, and deploy-target selection.
 - Documented follow-up work for auditing legacy AWS profile/account assumptions and deciding whether the existing detailed architecture-resource map should merge into the root resource map.
 
+## 2026-07-08 - Codex (GPT-5) quote button and Firstmate tasks page
+
+- Added a non-mutating `Add quote` button to the user preview financial dashboard with a placeholder modal for future quote capture.
+- Added guarded admin Firstmate task API endpoints that read local backlog, metadata, status, and report files only when `RETROFI_ENABLE_FIRSTMATE_TASKS=1` and `RETROFI_FIRSTMATE_HOME` are configured.
+- Added a compact `/tasks` admin page with active, blocked, queued, and completed task sections, active-agent counts, done indicators, and new-tab report links.
+- Added a `/tasks/reports/:taskId` admin report page that renders Firstmate Markdown reports from the guarded backend endpoint.
+- Documented the local-only Firstmate task dashboard environment variables in `docs/development-artifacts.md`.
+
 ## 2026-07-08 - Codex (GPT-5) local homepage scanner copy transition
 
 - Added scroll-driven hero copy choreography to the local homepage scanner so the initial words move upward while a new RetroFi incentive message rises in from below.
