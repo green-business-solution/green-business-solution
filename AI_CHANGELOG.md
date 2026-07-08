@@ -33,6 +33,11 @@
 - Detached the embedded home How It Works section from the legacy dashboard handoff for the local scanner replacement.
 - Restyled the local homepage hero and nav toward a bright eco landing-page treatment with serif typography, transparent desktop navigation, and a dark green CTA.
 
+## 2026-07-08 - Codex (GPT-5) RetroFi GPT Pro production profile
+
+- Updated the GPT Pro work migration path and production deploy usage to default to `retrofi-prod`, `us-east-1`, and the current private dev work bucket in account `059310317821`.
+- Documented the old `gbs` profile and account `448016109714` as legacy rollback context for GPT Pro work rather than the current operating path.
+
 ## 2026-07-08 - Codex (GPT-5) GPT Pro chats workspace
 
 - Added an admin-only `/chats` workspace for browsing GPT Pro repair batches, copying prompt files, editing corresponding output slots, and saving outputs back through the API.

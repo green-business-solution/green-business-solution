@@ -4,6 +4,16 @@
 
 The production API reads and writes GPT Pro artifacts from the private dev work S3 bucket under the `gpt-pro-work/` prefix.
 
+Current RetroFi production GPT Pro work lives at:
+
+```text
+s3://gbs-retrofi-dev-work-059310317821-us-east-1/gpt-pro-work/
+```
+
+Use `AWS_PROFILE=retrofi-prod` and `AWS_REGION=us-east-1` for current GPT Pro work.
+
+The old `gbs` profile and account `448016109714` are legacy rollback context only.
+
 The deploy script passes `GBS_DEV_WORK_BUCKET` and `GBS_GPT_PRO_WORK_PREFIX` into the API Lambda.
 
 The default object layout preserves the local folder tree:
@@ -25,13 +35,13 @@ That fallback is read-only and is disabled in Lambda.
 Run a dry migration check with:
 
 ```sh
-npm run migrate:gpt-pro-work -- --bucket <dev-work-bucket>
+AWS_PROFILE=retrofi-prod AWS_REGION=us-east-1 npm run migrate:gpt-pro-work
 ```
 
 Run the migration with:
 
 ```sh
-npm run migrate:gpt-pro-work -- --bucket <dev-work-bucket> --write
+AWS_PROFILE=retrofi-prod AWS_REGION=us-east-1 npm run migrate:gpt-pro-work -- --write
 ```
 
 The migration skips `.DS_Store`, AppleDouble files, and `__MACOSX`.

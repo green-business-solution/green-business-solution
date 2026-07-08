@@ -8,13 +8,19 @@ import { fromIni } from "@aws-sdk/credential-providers";
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const defaultSourceRoot =
   "/Users/neer_kuchlous/Code/firstmate/Green Business Solution/GPT Pro Work";
+const currentRetroFiProfile = "retrofi-prod";
+const currentRetroFiRegion = "us-east-1";
+const currentRetroFiDevWorkBucket = "gbs-retrofi-dev-work-059310317821-us-east-1";
 
 function parseArgs(argv) {
   const options = {
-    bucket: process.env.GBS_DEV_WORK_BUCKET || process.env.GBS_GPT_PRO_WORK_BUCKET || "",
+    bucket:
+      process.env.GBS_DEV_WORK_BUCKET ||
+      process.env.GBS_GPT_PRO_WORK_BUCKET ||
+      currentRetroFiDevWorkBucket,
     prefix: process.env.GBS_GPT_PRO_WORK_PREFIX || "gpt-pro-work",
-    profile: process.env.AWS_PROFILE ?? "gbs",
-    region: process.env.AWS_REGION || process.env.AWS_DEPLOY_REGION || "us-east-1",
+    profile: process.env.AWS_PROFILE ?? currentRetroFiProfile,
+    region: process.env.AWS_REGION || process.env.AWS_DEPLOY_REGION || currentRetroFiRegion,
     sourceRoot: process.env.GBS_GPT_PRO_WORK_SOURCE || defaultSourceRoot,
     write: false
   };
@@ -53,10 +59,10 @@ function parseArgs(argv) {
 
 function usage(options) {
   console.log(`Usage:
-  node scripts/migrate-gpt-pro-work-to-s3.mjs --bucket <bucket> [--write]
+  AWS_PROFILE=${currentRetroFiProfile} AWS_REGION=${currentRetroFiRegion} node scripts/migrate-gpt-pro-work-to-s3.mjs [--write]
 
 Options:
-  --bucket ${options.bucket || "<required>"}
+  --bucket ${options.bucket}
   --prefix ${options.prefix}
   --source ${options.sourceRoot}
   --profile ${options.profile || "<default credential chain>"}
@@ -65,6 +71,7 @@ Options:
 
 Default mode is a dry run.
 The script skips .DS_Store and AppleDouble files, preserves relative paths under the prefix, and never deletes local files.
+The legacy gbs profile is blocked by default for GPT Pro work migration.
 `);
 }
 
@@ -118,6 +125,11 @@ async function listFiles(sourceRoot, currentRelativeDirectory = "") {
 }
 
 async function assertReady(options, client) {
+  if (options.profile === "gbs" && process.env.GBS_ALLOW_LEGACY_GPT_PRO_PROFILE !== "1") {
+    throw new Error(
+      "The legacy gbs profile is not allowed for current GPT Pro work migration. Use --profile retrofi-prod, or set GBS_ALLOW_LEGACY_GPT_PRO_PROFILE=1 only for an explicit legacy rollback."
+    );
+  }
   if (!options.bucket) {
     throw new Error("Target bucket is required. Pass --bucket or set GBS_DEV_WORK_BUCKET.");
   }

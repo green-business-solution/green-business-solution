@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROFILE="${AWS_PROFILE-gbs}"
+PROFILE="${AWS_PROFILE-retrofi-prod}"
 if [ -z "${PROFILE}" ]; then
   unset AWS_PROFILE
 fi
@@ -15,7 +15,7 @@ HOSTED_ZONE_ID="${HOSTED_ZONE_ID:-Z10326481HHLW5TKN20XQ}"
 ENABLE_CUSTOM_DOMAIN="${GBS_ENABLE_CUSTOM_DOMAIN:-true}"
 CERTIFICATE_ARN="${GBS_CERTIFICATE_ARN:-arn:aws:acm:us-east-1:059310317821:certificate/2c45fa03-2cb3-4cd7-8455-d098174d1e73}"
 MANAGE_ROUTE53_RECORDS="${GBS_MANAGE_ROUTE53_RECORDS:-false}"
-REGION="${AWS_DEPLOY_REGION:-us-east-1}"
+REGION="${AWS_DEPLOY_REGION:-${AWS_REGION:-us-east-1}}"
 DATA_REGION="${GBS_AWS_REGION:-us-east-2}"
 MANAGE_CORE_RUNTIME_TABLES="${GBS_MANAGE_CORE_RUNTIME_TABLES:-false}"
 MANAGE_DEV_WORK_BUCKET="${GBS_MANAGE_DEV_WORK_BUCKET:-false}"
@@ -106,7 +106,7 @@ api_stack_parameter() {
 usage() {
   cat <<EOF
 Usage:
-  AWS_PROFILE=gbs ./scripts/deploy-production.sh [auto|full|ci|frontend|api|infra|data]...
+  AWS_PROFILE=retrofi-prod AWS_REGION=us-east-1 ./scripts/deploy-production.sh [auto|full|ci|frontend|api|infra|data]...
 
 Targets:
   auto      Select minimal targets from changed paths. Uses GBS_DEPLOY_BASE_SHA and GBS_DEPLOY_HEAD_SHA when set.
@@ -118,6 +118,8 @@ Targets:
   data      Ensure non-CloudFormation runtime prerequisites only.
 
 Environment:
+  AWS_PROFILE=${PROFILE:-<default credential chain>}
+  AWS_REGION=${REGION}
   GBS_ARTIFACT_RETENTION_DAYS=${ARTIFACT_RETENTION_DAYS}
   GBS_RUNTIME_CACHE_RETENTION_DAYS=${RUNTIME_CACHE_RETENTION_DAYS}
   GBS_FORM_CATALOG_VERSION_RETENTION_DAYS=${FORM_CATALOG_VERSION_RETENTION_DAYS}
