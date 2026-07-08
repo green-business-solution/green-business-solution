@@ -1,83 +1,91 @@
 # Review
 
-This file defines the review process agents should use after each slice of progress.
-A slice of progress is a small coherent unit of work, such as one bug fix, one feature increment, one refactor step, one docs update, or one deployable change.
+Use these gates after each meaningful slice of progress.
+A slice can be a bug fix, feature increment, workflow refactor, infrastructure change, data repair, docs update, or deployable change.
 
-The review process has three gates:
-
-1. A1: Integration Gate.
-2. A2: Correctness Gate.
-3. A3: Release Readiness Gate.
-
-Each gate must either pass or produce concrete follow-up work.
-If a gate fails, investigate the failure, fix the issue when practical, and rerun the relevant gate.
+Each gate should pass or produce concrete follow-up work.
+If a gate fails, investigate, fix when practical, and rerun the relevant check.
 
 ## A1: Integration Gate
 
-A1 verifies that the branch is integrated with the latest main branch and that local work is not based on stale code.
+A1 verifies that the change was reviewed against current `main` and that local work is not based on stale code.
 
 Required steps:
 
 1. Run `git status --short --branch`.
-2. If the working tree is clean, fetch the latest remote state.
-3. Sync with `origin/main`.
-4. Resolve any conflicts carefully.
-5. Rerun relevant A2 checks after conflict resolution.
+2. Fetch remote state when the task allows it.
+3. Sync the working branch with `origin/main` when the task allows it.
+4. Resolve conflicts carefully if they occur.
+5. Rerun relevant A2 checks after any conflict resolution.
 
-Typical workflow:
+Typical commands:
 
 ```sh
 git fetch origin
 git rebase origin/main
 ```
 
+Use merge instead of rebase only when repository policy or the supervising workflow requires it.
+If a firstmate or no-mistakes workflow explicitly asks for a local commit handoff before pushing or rebasing, follow that workflow.
 If the repository is already in the middle of a rebase or merge, finish or explicitly report that state before starting new work.
 Do not overwrite another person's local changes.
 
 ## A2: Correctness Gate
 
-A2 verifies that the change is logically correct in a fresh and adversarial review context.
-Inspect the diff and look for ways the change could fail.
+A2 verifies that the change is logically correct and locally checked.
+Review the diff before trusting the implementation.
+Inspect the diff in a fresh and adversarial review context.
 
-The adversarial review should check for:
+Look for:
 
-- Incorrect logic.
-- Missing edge cases.
 - Broken user flows.
-- Security or privacy issues.
-- Bad abstractions.
-- Incorrect assumptions about AWS, Google OAuth, browser trust, DNS, GitHub Actions, or external systems.
-- Missing tests.
+- Incorrect logic or missing edge cases.
+- Incorrect assumptions about AWS, GitHub Actions, auth, routing, DNS, Google OAuth, external systems, or path selectors.
+- Security or privacy regressions.
+- Browser credential boundary violations.
+- Missing tests for changed behavior.
 - Regressions in adjacent behavior.
 - Poor error handling.
-- Stale docs or resource maps.
+- Stale docs, resource maps, or workflow references.
+- Bad abstractions.
+- Generated, build, dependency, cache, secret, or deployment output accidentally staged.
 
-Choose checks from `RESOURCE_MAP.md`.
-Selector command:
+Use the CI selector when scope is unclear:
 
 ```sh
-node scripts/select-ci-checks.mjs --format lines BASE_REF HEAD_REF
+node scripts/select-ci-checks.mjs --format lines origin/main HEAD
 ```
 
-Common local checks:
+Relevant local checks:
 
 ```sh
 npm run check -w @gbs/api
 npm run typecheck
-npm test
 npm run build
+npx vitest run apps/api
+npx vitest run apps/web
+npx vitest run scripts
+npm test
 ```
 
+Docs-only and workflow-only changes usually need diff review plus targeted selector tests rather than full runtime checks.
+If a selector script changes, run its test file.
 For targeted script work, prefer the relevant script test or dry run.
-For docs-only changes, A2 can be limited to diff review, Markdown readability, and link/path sanity checks.
 Record what was run and whether each command passed.
 
 ## A3: Release Readiness Gate
 
-A3 verifies that the change is ready for broader review, CI, and deployment.
-This is the full code review stage.
+A3 verifies that the branch is ready for review, CI, and any required deployment.
 
-The full review should check:
+Required steps:
+
+1. Confirm the final diff is scoped and coherent.
+2. Confirm commit history is clear.
+3. Confirm CI checks are expected for the changed paths.
+4. Confirm deploy targets are selected only when runtime, infrastructure, AWS data, or AWS configuration changed.
+5. Confirm post-deploy smoke checks are known for any deployment that will run.
+
+Review for:
 
 - Architecture fit.
 - API compatibility.
@@ -92,16 +100,17 @@ The full review should check:
 - UI quality when applicable.
 - Test coverage.
 
-For GitHub projects, check PR or Actions results when available:
+Use the deploy selector before any production deploy:
 
 ```sh
-gh pr checks
-gh run list --limit 10
+node scripts/select-production-deploy-targets.mjs --format lines origin/main HEAD
 ```
 
-Run end-to-end or browser smoke checks when the change affects user flows, integrations, infrastructure, authentication, permissions, data movement, or deployment behavior.
+For GitHub checks and pull requests, agents should use `gh-axi` or the current repository workflow tooling.
+For production deploys, use the npm deploy commands documented in [RESOURCE_MAP.md](./RESOURCE_MAP.md) and [docs/production-deployment.md](./docs/production-deployment.md).
+Do not deploy for docs-only, workflow-only, or instruction-only changes.
+Run end-to-end or browser checks when the change affects user flows, authentication, API integration, UI behavior, deployment routing, or production infrastructure.
 After production deployment, smoke-check the affected public route or API endpoint.
-Documentation-only changes normally do not require deployment.
 
 ## Failure Handling
 
@@ -119,7 +128,7 @@ If the issue cannot be fixed in the current session, explain the blocker clearly
 
 ## Review Evidence
 
-Every completed review should leave a short evidence trail in the final agent message, PR comment, or task update.
+Leave concise evidence in the PR, task status, or final agent response.
 
 Recommended format:
 
@@ -127,23 +136,20 @@ Recommended format:
 ## Review Evidence
 
 A1 Integration Gate:
-- Synced with main: yes
-- Method: rebase
-- Conflicts: none
+- Synced with main: yes or no
+- Method: rebase, merge, already current, or not applicable
+- Conflicts: none or describe
 
 A2 Correctness Gate:
-- Adversarial review: completed
-- Type checks: passed
-- Smoke tests: not applicable
-- Unit tests: passed
-- Lint: not configured
+- Diff review: completed
+- Checks run: list commands and results
+- Checks skipped: list with reason
 
 A3 Release Readiness Gate:
-- Full code review: completed
-- CI/CD checks: not run locally
-- E2E tests: not applicable
-- Deployment: not required
+- CI expected: describe selected checks
+- Deploy target: none, ci, data, api, infra, frontend, auto, or full
+- Post-deploy smoke: not applicable or describe
 
-Notes:
-- No known remaining review risks.
+Remaining Risk:
+- No known remaining review risks, or list concrete risks.
 ```

@@ -93,4 +93,4 @@ The next product work should not start with new GPT Pro research. Start by makin
 - Use S3/dev-work archives for large development artifacts.
 - Do not use GPT Pro at runtime. GPT Pro is only an offline research/repair accelerator; imported outputs must pass deterministic validation before production use.
 - Before editing, check branch/status and pull only when clean.
-- After meaningful edits, update `AI_CHANGELOG.md`, commit, push, and deploy/apply AWS changes if runtime behavior, infrastructure, AWS data, or AWS configuration changed.
+- After meaningful edits, follow `AGENT_WORKFLOW.md`, commit, push when the supervising workflow allows it, and deploy/apply AWS changes if runtime behavior, infrastructure, AWS data, or AWS configuration changed.

@@ -1,8 +1,7 @@
 # Codex Local Workspace
 
-Use the Codex app in `Local` mode on this exact directory:
-
-- `/Users/RyanShen/Code/Green Business Solution`
+Use the Codex app on the repository root for the checkout you intend to edit.
+For firstmate or task-runner worktrees, verify the path before editing and stay inside the isolated worktree.
 
 What is configured here:
 
@@ -15,13 +14,14 @@ What is configured here:
 
 Recommended workflow:
 
-1. Open this folder in the Codex app.
-2. Start a `Local` thread, not a `Worktree`.
-3. Run `.codex/setup.sh` once after opening the project.
-4. If AWS is expired, run `aws sso login --profile gbs` in a terminal on this machine.
+1. Open the intended checkout in the Codex app.
+2. Use `Local` mode when you intentionally want to edit the same checkout as your terminal.
+3. Use a worktree only when the task runner or user explicitly asks for isolated work.
+4. Run `.codex/setup.sh` once after opening the project.
+5. If AWS is expired, run `aws sso login --profile gbs` or the profile named by the current task docs.
 
 Notes:
 
 - `Local` mode uses the same checkout as your CLI workflow.
-- `Worktree` mode creates a separate checkout and is not the same workspace.
-- Codex app and CLI are still separate processes, so temporary shell state is not shared unless it comes from your shell profile, environment, or the setup script.
+- Worktree mode creates a separate checkout and may not share uncommitted local files.
+- Codex app and CLI are separate processes, so temporary shell state is not shared unless it comes from your shell profile, environment, or the setup script.

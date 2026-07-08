@@ -36,6 +36,10 @@ describe("select-production-deploy-targets", () => {
     expect(result.reasons[0].reason).toContain("CI/dev-only");
   });
 
+  it("does not select an AWS deploy for workflow docs", () => {
+    expect(classifyFiles(["AGENTS.md", "ARCHITECTURE.md", "RESOURCE_MAP.md"]).targets).toEqual([]);
+  });
+
   it("keeps shared deploy script changes conservative", () => {
     expect(classifyFiles(["scripts/select-production-deploy-targets.mjs"]).targets).toEqual([
       "ci",

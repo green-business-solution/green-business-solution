@@ -8,7 +8,8 @@ For the current website direction, user flow, intake decisions, and long-term pr
 
 GitHub is the source of truth for this project. AWS is a deployment target and should not contain code changes that are missing from GitHub.
 
-All LLM-assisted work must follow [AGENT_WORKFLOW.md](./AGENT_WORKFLOW.md), including committing changes, pushing them to GitHub, and explaining what changed.
+All LLM-assisted work must follow [AGENTS.md](./AGENTS.md), [AGENT_WORKFLOW.md](./AGENT_WORKFLOW.md), and the review gates in [review.md](./review.md).
+Use [ARCHITECTURE.md](./ARCHITECTURE.md) and [RESOURCE_MAP.md](./RESOURCE_MAP.md) before changing system boundaries, AWS resources, deploy routing, or production behavior.
 
 ## Development
 
