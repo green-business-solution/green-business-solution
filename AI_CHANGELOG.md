@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-07 - Codex (GPT-5) restart handoff for migration and product tasks
+
+- Added a July 2026 restart handoff document summarizing the remaining AWS migration cleanup, form-gate, grant/tax, scenario-verification, and automation work for a clean future conversation.
+- Linked the handoff from the product TODO list and AWS Organization migration runbook so future agents can resume from GitHub without relying on chat history.
+
 ## 2026-07-07 - Codex (GPT-5) AWS root email plan cleanup
 
 - Removed the obsolete SES founders forwarding infrastructure and runbook after the AWS root email plan changed away from `founders@retrofi.org`.

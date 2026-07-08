@@ -2,6 +2,11 @@
 
 This document captures product, data-quality, and verification work that should guide future Codex sessions.
 
+For the current clean-conversation resume point after the AWS account migration, start with
+[Restart Handoff - 2026-07-07](./restart-handoff-2026-07-07.md). It summarizes the remaining
+form-gate, scenario-verification, grant/tax, and migration follow-up work from the July 2026
+conversation.
+
 ## Opportunity Data Confidence
 
 - Continue GPT Pro-assisted opportunity-data repair until every user-visible opportunity has complete source-backed availability, utility, facility, applicant, geography, technology, requirements, blockers, and evidence data.

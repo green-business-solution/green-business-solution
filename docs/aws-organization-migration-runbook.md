@@ -7,6 +7,10 @@ The new AWS Organizations management account root email is:
 retroficontact@gmail.com
 ```
 
+For the current restart/resume checklist after the July 2026 cutover, see
+[Restart Handoff - 2026-07-07](./restart-handoff-2026-07-07.md). That document lists the remaining
+migration cleanup tasks plus the product/data work that should continue after the account move.
+
 The new account structure has been created:
 
 | Purpose | Account name | Account ID | Root email |
