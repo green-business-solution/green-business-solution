@@ -14,6 +14,7 @@
 - Removed the local scanner scroll cue and bottom progress bar, and restored the homepage brand text casing to `RetroFi`.
 - Added a local light-themed homepage infographic section after the hero with a white fade handoff, botanical edge accents, and four premium cards staged across the first and second scroll views.
 - Softened the hero-to-infographic handoff by letting the overlapped hero show through the top of the cards section and blending it into white with a visible layered gradient.
+- Refined the homepage into a more cohesive premium system with outcome-specific incentive CTAs, reassurance copy, tighter typography and spacing, quieter card surfaces, realistic example economics, a section-level conversion prompt, and restrained hover/press interactions with reduced-motion support.
 
 ## 2026-07-07 - Codex (GPT-5) local scanner frame scrubber
 

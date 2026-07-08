@@ -2843,7 +2843,7 @@ function PublicNav({
           {renderAuthAction()}
           {canStartScan ? (
             <button className="nav-cta" onClick={() => go("scan")} type="button">
-              Get Started
+              Find my incentives
             </button>
           ) : null}
         </div>
@@ -2860,7 +2860,7 @@ function PublicNav({
         </button>
         {canStartScan ? (
           <button className="mobile-cta" onClick={() => go("scan")} type="button">
-            Get Started
+            Find incentives
           </button>
         ) : null}
         {isMenuOpen ? (
@@ -2882,7 +2882,7 @@ function PublicNav({
             {renderAuthAction()}
             {canStartScan ? (
               <button className="nav-cta" onClick={() => go("scan")} type="button">
-                Get Started
+                Find my incentives
               </button>
             ) : null}
           </div>
@@ -3090,9 +3090,13 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
               <span className="planet-scan-title-accent">retrofit.</span>
             </h1>
             <p className="planet-scan-subhead">Billions in retrofit incentives exist while building owners lose billions to operating expenses.</p>
-            <button className="planet-scan-cta planet-scan-primary" onClick={() => navigate("scan")} type="button">
-              Get Started
-            </button>
+            <div className="planet-scan-action">
+              <button className="planet-scan-cta planet-scan-primary" onClick={() => navigate("scan")} type="button">
+                Find my incentives
+                <ArrowUpRightIcon />
+              </button>
+              <p>Free property scan · No commitment</p>
+            </div>
           </div>
           <div className="planet-scan-message planet-scan-message-static planet-scan-message-next">
             <h2 className="planet-scan-next-headline">RetroFi helps businesses find, compare, claim, and implement retrofit incentives.</h2>
@@ -3528,18 +3532,18 @@ const homeRankedRetrofits = [
   {
     impact: "2.41 tCO2e/yr",
     name: "Insulation",
-    savings: "$610K/yr",
+    savings: "$61K/yr",
     scope: "Improve building envelope efficiency over time.",
-    spend: "$2.8k",
-    timeline: "3.9 yrs"
+    spend: "$280K",
+    timeline: "4.6 yrs"
   },
   {
     impact: "3.11 tCO2e/yr",
     name: "EV chargers",
     savings: "$8.5K/yr",
     scope: "Add charging capability for residents and tenants.",
-    spend: "$5.4k",
-    timeline: "1.0 yrs"
+    spend: "$54K",
+    timeline: "6.4 yrs"
   }
 ];
 
@@ -3579,7 +3583,7 @@ const homeApplicationSteps = [
   }
 ];
 
-function HomeInfographicSection() {
+function HomeInfographicSection({ navigate }: { navigate: (route: Route) => void }) {
   const impactPolyline = homeImpactPoints
     .map((point, index) => {
       const x = 24 + index * 32;
@@ -3608,8 +3612,8 @@ function HomeInfographicSection() {
       <div className="home-infographics-inner">
         <header className="home-infographics-header">
           <p>Retrofit intelligence</p>
-          <h2 id="home-infographics-heading">Clear retrofit decisions, ranked and ready.</h2>
-          <span>From project ranking to application steps, RetroFi keeps the workflow easy to understand.</span>
+          <h2 id="home-infographics-heading">Know what to upgrade—and what it could be worth.</h2>
+          <span>RetroFi turns property details into prioritized projects, financial estimates, and a clear path to available incentives.</span>
         </header>
 
         <div className="home-infographic-stage home-infographic-stage--primary">
@@ -3731,6 +3735,17 @@ function HomeInfographicSection() {
               ))}
             </div>
           </article>
+        </div>
+
+        <div className="home-infographics-cta">
+          <div>
+            <p>Ready to find opportunities for your property?</p>
+            <span>Start with a free scan. Add utility data later for more precise estimates.</span>
+          </div>
+          <button onClick={() => navigate("scan")} type="button">
+            Find my incentives
+            <ArrowUpRightIcon />
+          </button>
         </div>
       </div>
     </section>
@@ -4441,7 +4456,7 @@ function HomePage({
   return (
     <PublicShell navigate={navigate} onHowItWorksClick={onHowItWorksClick} pageClassName="home-page" publicAuth={publicAuth} showFooter>
       <PlanetScanHero navigate={navigate} />
-      <HomeInfographicSection />
+      <HomeInfographicSection navigate={navigate} />
       <HowItWorksJourneySection sectionId="home-how-it-works" />
     </PublicShell>
   );
