@@ -15,6 +15,12 @@
 - Updated `AGENTS.md` and `AGENT_WORKFLOW.md` to connect the existing fast-iteration GitHub/AWS rules with review gates, resource mapping, selector scripts, secret safety, and deploy-target selection.
 - Documented follow-up work for auditing legacy AWS profile/account assumptions and deciding whether the existing detailed architecture-resource map should merge into the root resource map.
 
+## 2026-07-08 - Codex (GPT-5) unknown-route URL canonicalization
+
+- Added route-match metadata so unknown public paths that render the homepage can be distinguished from intentional homepage aliases.
+- Replaced unknown homepage fallback URLs with `/` using history replacement while preserving known app routes and API paths.
+- Added a focused frontend route test for unknown-route canonicalization and preserved route exclusions.
+
 ## 2026-07-08 - Codex (GPT-5) local homepage scanner copy transition
 
 - Added scroll-driven hero copy choreography to the local homepage scanner so the initial words move upward while a new RetroFi incentive message rises in from below.
