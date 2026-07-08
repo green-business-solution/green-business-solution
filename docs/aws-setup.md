@@ -1,11 +1,8 @@
 # AWS Setup Notes
 
-The current AWS structure mirrors the existing project-account pattern:
+RetroFi production now runs in the dedicated RetroFi AWS Organization.
 
-- Management account: existing AWS Organizations management account.
-- Project account: Green Business Solution member account `448016109714`.
-- Access: AWS IAM Identity Center users assigned directly to the project account.
-- Permission set: `AdministratorAccess`, scoped only to the project account.
+The old Green Business Solution account `448016109714` remains active for rollback history and for the Route 53 hosted zone until domain and hosted-zone ownership are intentionally migrated.
 
 ## Dedicated RetroFi AWS Organization
 
@@ -40,7 +37,7 @@ retrofi-prod
 
 Detailed setup and handoff steps are in [AWS Organization Migration Runbook](./aws-organization-migration-runbook.md).
 
-Current local AWS CLI profile name:
+Legacy local AWS CLI profile name:
 
 ```text
 gbs
@@ -58,7 +55,7 @@ Route 53 hosted zone:
 Z04402863EVV8FUF4EWUX
 ```
 
-Current project account root email:
+Legacy project account root email:
 
 ```text
 neerkuchlous+greenbusiness@gmail.com
@@ -66,10 +63,11 @@ neerkuchlous+greenbusiness@gmail.com
 
 Use collaborator emails for IAM Identity Center users, not as the account root email.
 
-## Current Identity Center assignments
+## Current RetroFi Identity Center assignments
 
-The following users are assigned `AdministratorAccess` on only account `448016109714`:
+The following users are members of `RetroFi-Admins`.
+That group is assigned `AdministratorAccess` on `retrofi_official` and `RetroFi Production`.
 
 - Neer Kuchlous, username `neer`
 - Rajvansh Gupta, username `rajvansh`
-- Ryan Shen, username `rshen0210`
+- Ryan Shen, username `ryan`

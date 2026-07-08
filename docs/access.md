@@ -11,9 +11,10 @@
 ## AWS
 
 - AWS accounts are isolated by project.
-- Green Business Solution resources should live only in the Green Business Solution AWS member account.
+- RetroFi production resources live in the RetroFi production AWS member account.
+- The old Green Business Solution account remains active for rollback history and hosted-zone ownership until those are intentionally migrated.
 - Human access should be granted through AWS IAM Identity Center.
-- Project collaborators should receive access only to the Green Business Solution account unless explicitly approved otherwise.
+- Project collaborators should receive access through the `RetroFi-Admins` group unless explicitly approved otherwise.
 
 ## Dedicated RetroFi AWS Organization
 
@@ -37,7 +38,7 @@
 - Account name: `green-business-solution`
 - Account ID: `448016109714`
 - Root email: `neerkuchlous+greenbusiness@gmail.com`
-- Status: active
+- Status: active legacy account
 
 ## Current collaborators
 
@@ -45,12 +46,10 @@
 - GitHub access: invited as organization admin/owner; invitation pending acceptance
 - AWS Identity Center user: Rajvansh Gupta, `pmrajvansh@gmail.com`
 - AWS Identity Center username: `rajvansh`
-- AWS Identity Center user ID: `614b3520-a0d1-702d-d1ec-c7003d30b3f9`
-- AWS permission set: `AdministratorAccess` on only the Green Business Solution AWS account
+- AWS permission set: `AdministratorAccess` through `RetroFi-Admins` on `retrofi_official` and `RetroFi Production`
 
 - GitHub username: `PlaneCoder75367`
 - GitHub access: invited with write access
 - AWS Identity Center user: Ryan Shen, `rshen0210@gmail.com`
-- AWS Identity Center username: `rshen0210`
-- AWS Identity Center user ID: `518bd500-c071-7005-2eee-da5a920becd1`
-- AWS permission set: `AdministratorAccess` on only the Green Business Solution AWS account
+- AWS Identity Center username: `ryan`
+- AWS permission set: `AdministratorAccess` through `RetroFi-Admins` on `retrofi_official` and `RetroFi Production`

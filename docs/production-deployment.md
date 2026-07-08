@@ -116,13 +116,12 @@ Registered domain settings:
 
 ## GitHub Actions
 
-`.github/workflows/ci-deploy.yml` runs checks for pull requests and pushes. Pushes to `main` also assume
-the `gbs-github-actions-deploy` IAM role through GitHub OIDC, select deploy targets from the pushed path
-diff, and run `npm run deploy:production:auto`.
+`.github/workflows/ci-deploy.yml` runs checks for pull requests and pushes.
+Pushes to `main` also assume the `gbs-github-actions-deploy` IAM role in the RetroFi production account `059310317821` through GitHub OIDC, select deploy targets from the pushed path diff, and run `npm run deploy:production:auto`.
 
-The OIDC role stack is defined in `infra/github-actions-deploy-role.yaml`. The role must exist before a
-new workflow can deploy, so bootstrap it with:
+The OIDC role stack is defined in `infra/github-actions-deploy-role.yaml`.
+The role must exist before a new workflow can deploy, so bootstrap it with:
 
 ```sh
-AWS_PROFILE=gbs ./scripts/deploy-production.sh ci
+AWS_PROFILE=retrofi-prod ./scripts/deploy-production.sh ci
 ```
