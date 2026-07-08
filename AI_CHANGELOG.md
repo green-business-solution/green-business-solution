@@ -6,6 +6,34 @@
 - Documented `retroficontact@gmail.com` as the planned new AWS Organizations management account root email.
 - Added an AWS Organization migration runbook with the browser-only setup steps and the agent handoff point for CLI/IaC migration work.
 
+## 2026-07-07 - Codex (GPT-5) local dashboard to How It Works handoff
+
+- Refactored the local dashboard-to-How-It-Works transition out of a standalone bridge section and into the existing embedded How It Works journey.
+- Overlapped the home How It Works section with the final dashboard viewport and added a temporary cloud/fog overlay inside the real journey canvas.
+- Removed the extra dashboard-image overlay so the cloud handoff starts from the actual settled four-card dashboard screen before fading into the real How It Works layers.
+- Restored the cloud zoom by driving the actual scanner dashboard layer during the How It Works overlap instead of introducing a duplicate four-card image.
+- Split the home handoff progress from the How It Works reveal progress so the `How it works / From outdated building to high-performing business` intro screen appears after the dashboard-cloud zoom.
+- Made the home dashboard-to-How-It-Works handoff auto-play once the viewer reaches the transition point, preventing manual scrub during the cloud zoom and landing on the restored How It Works intro.
+- Locked the completed home handoff so backward wheel, touch, key, or direct scroll attempts cannot scrub or teleport back into the four-card dashboard animation.
+- Made the local home handoff autoplay reversible by catching upward scroll inside the real How It Works intro zone and driving the viewer back to the actual four-card dashboard without manual scrubbing.
+- Added a local four-card dashboard deadzone before the How It Works cloud handoff so small downward scrolls keep the viewer on the dashboard instead of immediately starting the next animation.
+- Replaced the local scanner-to-dashboard frame sequence with a single real four-card dashboard image that zooms from the monitor/planet area into the full panel.
+
+## 2026-07-06 - Codex (GPT-5) local scanner dashboard zoom transition
+
+- Folded the local-only scanner-to-dashboard zoom reveal into the existing home-page scanner section instead of using a separate transition section below it.
+- Added an eight-frame 4K monitor-to-dashboard sequence derived from the provided final scene so the reveal crossfades through matched crops instead of over-scaling one raster image.
+- Preloaded and mapped the scanner-section scroll progress to adjacent frame blends with a subtle settle scale for a smoother pullback into the full four-card dashboard.
+- Removed the monitor/home-page copy from the transition frames, centered the planet on the monitor, and added a short planet-only hold after the scanner finishes before the dashboard pullback begins.
+- Expanded the local transition sequence from 8 PNG frames to 16 optimized WebP frames to make the scroll-driven pullback feel smoother without changing the animation structure.
+- Reworked the local transition renderer to keep only the current and next dashboard frames mounted, with frame-load guards that keep the scanner visible instead of flashing black while assets decode.
+- Added synchronized per-frame scale/translate motion between adjacent dashboard frames so each crossfade includes a subtle monitor-anchored zoom-out instead of a flat image handoff.
+- Switched the local scanner dashboard reveal to a smoothed continuous timeline that lerps rendered progress toward scroll progress, crossfades adjacent frames across the full local interval, and holds the dashboard reveal until every frame is decoded.
+- Removed the darkening/shadow artifact between dashboard frames by keeping the incoming frame fully opaque underneath while fading only the outgoing frame above it.
+- Changed the local dashboard reveal trigger so reaching the scanner transition point starts a fast automatic pullback and page scroll to the fully settled four-card dashboard instead of requiring scroll to drive every frame.
+- Made the local scanner/dashboard auto-transition bidirectional and repeatable, with a faster timed run so forward and reverse passes cannot be manually scrubbed on later attempts.
+- Added a local post-reveal scroll deadzone that keeps the viewer locked on the fully settled four-card dashboard for a short extra scroll distance before allowing normal downward scrolling to resume.
+
 ## 2026-07-06 - Codex (GPT-5) homepage chart showcase
 
 - Added a new home-page showcase section between the planet scanner and the embedded How It Works journey.

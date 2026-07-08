@@ -3072,6 +3072,10 @@ function AboutHubCard({
   );
 }
 
+const scannerDashboardImage = "/home/final-4-cards-page.png";
+const scannerDashboardStartMotion = { scale: 2.34, x: 0, y: -18 };
+const scannerDashboardEndMotion = { scale: 1, x: 0, y: 0 };
+
 function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
   const sectionRef = useRef<HTMLElement | null>(null);
 
@@ -3079,38 +3083,181 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
     const section = sectionRef.current;
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let animationFrame = 0;
+    let targetProgress = 0;
+    let displayProgress = 0;
+    let hasMeasuredProgress = false;
+    let isDisposed = false;
+    let autoTransitionActive = false;
+    let autoTransitionSettledSide: "before" | "after" | null = null;
+    let autoTransitionDirection: "forward" | "reverse" | null = null;
+    let autoTransitionStartProgress = 0;
+    let autoTransitionEndProgress = 1;
+    let autoTransitionStartTime = 0;
+    let pendingAutoTransitionDirection: "forward" | "reverse" | null = null;
+    let dashboardScrollLockActive = false;
+    let dashboardScrollLockConsumed = 0;
+    let touchStartY: number | null = null;
+    let dashboardImageLoaded = false;
+    let dashboardImage: HTMLImageElement | null = null;
+    const scannerEnd = 0.68;
+    const resultClearStart = 0.7;
+    const resultClearEnd = 0.76;
+    const transitionStart = 0.78;
+    const transitionEnd = 1;
+    const forwardAutoTrigger = transitionStart + 0.006;
+    const reverseAutoTrigger = 0.995;
+    const autoTransitionDuration = 680;
+    const dashboardScrollLockDistance = 520;
+    const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+    const lerp = (start: number, end: number, progress: number) => start + (end - start) * progress;
+    const smootherstep = (value: number) => {
+      const clamped = clamp(value);
+      return clamped * clamped * clamped * (clamped * (clamped * 6 - 15) + 10);
+    };
+    const easeOutCubic = (value: number) => {
+      const clamped = clamp(value);
+      return 1 - Math.pow(1 - clamped, 3);
+    };
+    const smoothstep = (start: number, end: number, value: number) => {
+      if (start === end) return value >= end ? 1 : 0;
+      const clamped = clamp((value - start) / (end - start));
+      return clamped * clamped * (3 - 2 * clamped);
+    };
+    const setDashboardMotion = (motion: { scale: number; x: number; y: number }) => {
+      section?.style.setProperty("--scanner-dashboard-scale", motion.scale.toFixed(4));
+      section?.style.setProperty("--scanner-dashboard-x", `${motion.x.toFixed(2)}vw`);
+      section?.style.setProperty("--scanner-dashboard-y", `${motion.y.toFixed(2)}vh`);
+    };
 
-    const updateScan = () => {
-      animationFrame = 0;
-
-      if (reducedMotionQuery.matches) {
-        section?.style.setProperty("--planet-scan-position", "100%");
-        section?.style.setProperty("--planet-scan-ray-opacity", "0");
-        section?.style.setProperty("--planet-scan-hint-opacity", "0");
-        section?.style.setProperty("--planet-scan-erase", "1");
-        section?.style.setProperty("--planet-scan-reveal", "1");
-        section?.style.setProperty("--planet-scan-magic-opacity", "0");
-        return;
+    const measureScrollProgress = () => {
+      if (!section) {
+        return 0;
       }
+
+      const scrollDistance = Math.max(1, section.offsetHeight - window.innerHeight);
+      return clamp(-section.getBoundingClientRect().top / scrollDistance);
+    };
+
+    const getScrollYForProgress = (progress: number) => {
+      if (!section) {
+        return window.scrollY;
+      }
+
+      const scrollDistance = Math.max(1, section.offsetHeight - window.innerHeight);
+      const sectionTop = window.scrollY + section.getBoundingClientRect().top;
+      return sectionTop + scrollDistance * clamp(progress);
+    };
+
+    const startAutoTransition = (direction: "forward" | "reverse", timestamp: number) => {
+      autoTransitionActive = true;
+      autoTransitionDirection = direction;
+      pendingAutoTransitionDirection = null;
+      dashboardScrollLockActive = false;
+      dashboardScrollLockConsumed = 0;
+      autoTransitionStartTime = timestamp;
+      autoTransitionStartProgress =
+        direction === "forward"
+          ? clamp(Math.max(targetProgress, transitionStart), transitionStart, 1)
+          : clamp(targetProgress, transitionStart, 1);
+      autoTransitionEndProgress = direction === "forward" ? 1 : transitionStart;
+      targetProgress = autoTransitionStartProgress;
+      displayProgress = autoTransitionStartProgress;
+      window.scrollTo(0, getScrollYForProgress(displayProgress));
+    };
+
+    const updateScan = (timestamp = window.performance.now()) => {
+      animationFrame = 0;
 
       if (!section) {
         return;
       }
 
-      const scrollDistance = Math.max(1, section.offsetHeight - window.innerHeight);
-      const rawProgress = Math.min(1, Math.max(0, -section.getBoundingClientRect().top / scrollDistance));
-      const easedProgress = rawProgress * rawProgress * (3 - 2 * rawProgress);
-      const edgeFade = Math.min(1, rawProgress * 10, (1 - rawProgress) * 10);
+      if (reducedMotionQuery.matches) {
+        section.style.setProperty("--planet-scan-position", "100%");
+        section.style.setProperty("--planet-scan-ray-opacity", "0");
+        section.style.setProperty("--planet-scan-hint-opacity", "0");
+        section.style.setProperty("--planet-scan-erase", "1");
+        section.style.setProperty("--planet-scan-reveal", "1");
+        section.style.setProperty("--planet-scan-result-copy-opacity", "0");
+        section.style.setProperty("--planet-scan-magic-opacity", "0");
+        section.style.setProperty("--planet-scan-layer-opacity", "0");
+        section.style.setProperty("--scanner-dashboard-opacity", "1");
+        setDashboardMotion(scannerDashboardEndMotion);
+        return;
+      }
+
+      if (!hasMeasuredProgress) {
+        targetProgress = measureScrollProgress();
+        displayProgress = targetProgress;
+        hasMeasuredProgress = true;
+      }
+
+      if (pendingAutoTransitionDirection && dashboardImageLoaded && !autoTransitionActive) {
+        startAutoTransition(pendingAutoTransitionDirection, timestamp);
+      }
+
+      if (autoTransitionActive) {
+        const autoProgress = clamp((timestamp - autoTransitionStartTime) / autoTransitionDuration);
+        const easedAutoProgress = easeOutCubic(autoProgress);
+        targetProgress = lerp(autoTransitionStartProgress, autoTransitionEndProgress, easedAutoProgress);
+        displayProgress = targetProgress;
+        window.scrollTo(0, getScrollYForProgress(displayProgress));
+
+        if (autoProgress >= 1) {
+          const settledProgress = autoTransitionEndProgress;
+          autoTransitionActive = false;
+          autoTransitionSettledSide = autoTransitionDirection === "forward" ? "after" : "before";
+          dashboardScrollLockActive = autoTransitionDirection === "forward";
+          dashboardScrollLockConsumed = 0;
+          autoTransitionDirection = null;
+          targetProgress = settledProgress;
+          displayProgress = settledProgress;
+          window.scrollTo(0, getScrollYForProgress(settledProgress));
+        }
+      } else {
+        const animationTargetProgress = dashboardImageLoaded ? targetProgress : Math.min(targetProgress, transitionStart);
+        const progressDelta = animationTargetProgress - displayProgress;
+        displayProgress = Math.abs(progressDelta) < 0.0006 ? animationTargetProgress : displayProgress + progressDelta * 0.12;
+      }
+
+      const rawProgress = displayProgress;
+      const scannerProgress = clamp(rawProgress / scannerEnd);
+      const easedProgress = smootherstep(scannerProgress);
+      const transitionProgress = clamp((rawProgress - transitionStart) / (transitionEnd - transitionStart));
+      const dashboardOpacity = smoothstep(0.03, 0.2, transitionProgress);
+      const scannerLayerOpacity = 1 - smoothstep(0.12, 0.42, transitionProgress);
+      const edgeFade = Math.min(1, scannerProgress * 10, (1 - scannerProgress) * 10);
       const eraseProgress = Math.min(1, Math.max(0, (easedProgress - 0.08) / 0.34));
       const revealProgress = Math.min(1, Math.max(0, (easedProgress - 0.54) / 0.3));
+      const resultCopyOpacity = 1 - smoothstep(resultClearStart, resultClearEnd, rawProgress);
       const magicOpacity = Math.min(1, edgeFade, Math.max(0, (easedProgress - 0.06) / 0.12), Math.max(0, (0.96 - easedProgress) / 0.18));
+      const dashboardMotionProgress = smootherstep(transitionProgress);
+      const dashboardMotion = {
+        scale: lerp(scannerDashboardStartMotion.scale, scannerDashboardEndMotion.scale, dashboardMotionProgress),
+        x: lerp(scannerDashboardStartMotion.x, scannerDashboardEndMotion.x, dashboardMotionProgress),
+        y: lerp(scannerDashboardStartMotion.y, scannerDashboardEndMotion.y, dashboardMotionProgress)
+      };
+      const safeDashboardOpacity = dashboardImageLoaded ? dashboardOpacity : 0;
+      const safeScannerLayerOpacity = dashboardImageLoaded ? scannerLayerOpacity : 1;
 
       section.style.setProperty("--planet-scan-position", `${easedProgress * 100}%`);
       section.style.setProperty("--planet-scan-ray-opacity", `${Math.max(0, edgeFade)}`);
       section.style.setProperty("--planet-scan-hint-opacity", `${Math.max(0, 1 - rawProgress * 6)}`);
       section.style.setProperty("--planet-scan-erase", String(eraseProgress));
       section.style.setProperty("--planet-scan-reveal", String(revealProgress));
+      section.style.setProperty("--planet-scan-result-copy-opacity", String(resultCopyOpacity));
       section.style.setProperty("--planet-scan-magic-opacity", String(magicOpacity));
+      section.style.setProperty("--planet-scan-layer-opacity", String(safeScannerLayerOpacity));
+      section.style.setProperty("--scanner-dashboard-opacity", String(safeDashboardOpacity));
+      setDashboardMotion(dashboardMotion);
+
+      const shouldContinueSmoothing =
+        autoTransitionActive ||
+        Math.abs((dashboardImageLoaded ? targetProgress : Math.min(targetProgress, transitionStart)) - displayProgress) > 0.0006;
+
+      if (shouldContinueSmoothing) {
+        scheduleScanUpdate();
+      }
     };
 
     const scheduleScanUpdate = () => {
@@ -3119,15 +3266,157 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
       }
     };
 
-    updateScan();
-    window.addEventListener("scroll", scheduleScanUpdate, { passive: true });
-    window.addEventListener("resize", scheduleScanUpdate);
+    const handleScrollProgressChange = () => {
+      const measuredProgress = measureScrollProgress();
+
+      if (autoTransitionActive) {
+        return;
+      }
+
+      if (!hasMeasuredProgress) {
+        targetProgress = measuredProgress;
+        displayProgress = measuredProgress;
+        autoTransitionSettledSide = measuredProgress >= reverseAutoTrigger ? "after" : "before";
+        hasMeasuredProgress = true;
+      }
+
+      if (autoTransitionSettledSide === "after" && measuredProgress < reverseAutoTrigger) {
+        pendingAutoTransitionDirection = "reverse";
+        targetProgress = measuredProgress;
+      } else if (autoTransitionSettledSide !== "after" && measuredProgress >= forwardAutoTrigger) {
+        pendingAutoTransitionDirection = "forward";
+        targetProgress = Math.max(measuredProgress, transitionStart);
+      } else {
+        pendingAutoTransitionDirection = null;
+        targetProgress = measuredProgress;
+        if (measuredProgress < transitionStart - 0.04) {
+          autoTransitionSettledSide = "before";
+        } else if (measuredProgress >= reverseAutoTrigger) {
+          autoTransitionSettledSide = "after";
+        }
+      }
+
+      scheduleScanUpdate();
+    };
+
+    const holdDashboardScrollLock = (scrollAmount: number) => {
+      if (!section || scrollAmount <= 0 || autoTransitionSettledSide !== "after") {
+        return false;
+      }
+
+      const measuredProgress = measureScrollProgress();
+      if (measuredProgress < reverseAutoTrigger) {
+        return false;
+      }
+
+      if (!dashboardScrollLockActive) {
+        return false;
+      }
+
+      dashboardScrollLockConsumed += scrollAmount;
+      window.scrollTo(0, getScrollYForProgress(1));
+
+      if (dashboardScrollLockConsumed >= dashboardScrollLockDistance) {
+        dashboardScrollLockActive = false;
+        dashboardScrollLockConsumed = 0;
+      }
+
+      return true;
+    };
+
+    const handleWheel = (event: WheelEvent) => {
+      if (autoTransitionActive) {
+        event.preventDefault();
+        return;
+      }
+
+      if (holdDashboardScrollLock(event.deltaY)) {
+        event.preventDefault();
+      }
+    };
+
+    const handleTouchStart = (event: TouchEvent) => {
+      touchStartY = event.touches[0]?.clientY ?? null;
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      if (autoTransitionActive) {
+        event.preventDefault();
+        return;
+      }
+
+      const currentY = event.touches[0]?.clientY;
+      if (touchStartY == null || currentY == null) {
+        return;
+      }
+
+      const scrollAmount = touchStartY - currentY;
+      if (holdDashboardScrollLock(scrollAmount)) {
+        event.preventDefault();
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (autoTransitionActive) {
+        event.preventDefault();
+        return;
+      }
+
+      const scrollKeys: Record<string, number> = {
+        " ": window.innerHeight * 0.8,
+        ArrowDown: 80,
+        PageDown: window.innerHeight * 0.8,
+        End: dashboardScrollLockDistance
+      };
+      const scrollAmount = scrollKeys[event.key] ?? 0;
+
+      if (holdDashboardScrollLock(scrollAmount)) {
+        event.preventDefault();
+      }
+    };
+
+    dashboardImage = new Image();
+    dashboardImage.decoding = "async";
+    dashboardImage.onload = () => {
+      const markDashboardLoaded = () => {
+        if (isDisposed) {
+          return;
+        }
+
+        dashboardImageLoaded = true;
+        scheduleScanUpdate();
+      };
+
+      if (dashboardImage?.decode) {
+        void dashboardImage.decode().then(markDashboardLoaded).catch(markDashboardLoaded);
+        return;
+      }
+
+      markDashboardLoaded();
+    };
+    dashboardImage.src = scannerDashboardImage;
+
+    handleScrollProgressChange();
+    window.addEventListener("scroll", handleScrollProgressChange, { passive: true });
+    window.addEventListener("resize", handleScrollProgressChange);
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
     reducedMotionQuery.addEventListener("change", scheduleScanUpdate);
 
     return () => {
+      isDisposed = true;
       window.cancelAnimationFrame(animationFrame);
-      window.removeEventListener("scroll", scheduleScanUpdate);
-      window.removeEventListener("resize", scheduleScanUpdate);
+      if (dashboardImage) {
+        dashboardImage.onload = null;
+      }
+      window.removeEventListener("scroll", handleScrollProgressChange);
+      window.removeEventListener("resize", handleScrollProgressChange);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("keydown", handleKeyDown);
       reducedMotionQuery.removeEventListener("change", scheduleScanUpdate);
     };
   }, []);
@@ -3164,6 +3453,16 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
 
         <div aria-hidden="true" className="planet-scan-shade" />
 
+        <div aria-hidden="true" className="scanner-dashboard-layer">
+          <img
+            alt=""
+            className="scanner-dashboard-panel"
+            decoding="async"
+            loading="eager"
+            src={scannerDashboardImage}
+          />
+        </div>
+
         <div className="planet-scan-content">
           <div className="planet-scan-copy">
             <div className="planet-scan-message planet-scan-message-before">
@@ -3197,7 +3496,13 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
   );
 }
 
-function HowItWorksJourneySection({ sectionId }: { sectionId?: string }) {
+function HowItWorksJourneySection({
+  sectionId,
+  withDashboardHandoff = false
+}: {
+  sectionId?: string;
+  withDashboardHandoff?: boolean;
+}) {
   const transitionStart = 0.38;
   const transitionEnd = 0.62;
   const journeyRef = useRef<HTMLElement | null>(null);
@@ -3390,9 +3695,24 @@ function HowItWorksJourneySection({ sectionId }: { sectionId?: string }) {
   const revealScrollUnits = 1.2;
   const journeyScrollUnits = stages.length - 1;
   const revealShare = revealScrollUnits / (revealScrollUnits + journeyScrollUnits);
-  const revealProgress = Math.min(1, Math.max(0, sectionProgress / revealShare));
+  const clampProgress = (value: number) => Math.min(1, Math.max(0, value));
+  const smootherstep = (value: number) => {
+    const clamped = clampProgress(value);
+    return clamped * clamped * clamped * (clamped * (clamped * 6 - 15) + 10);
+  };
+  const smoothstep = (start: number, end: number, value: number) => {
+    if (start === end) return value >= end ? 1 : 0;
+    const clamped = clampProgress((value - start) / (end - start));
+    return clamped * clamped * (3 - 2 * clamped);
+  };
+  const dashboardHandoffEnabled = withDashboardHandoff && !prefersReducedMotion;
+  const dashboardHandoffShare = dashboardHandoffEnabled ? revealShare * 0.82 : 0;
+  const journeySectionProgress = dashboardHandoffEnabled
+    ? clampProgress((sectionProgress - dashboardHandoffShare) / (1 - dashboardHandoffShare))
+    : sectionProgress;
+  const revealProgress = Math.min(1, Math.max(0, journeySectionProgress / revealShare));
   const continuousJourneyProgress =
-    Math.min(1, Math.max(0, (sectionProgress - revealShare) / (1 - revealShare))) * journeyScrollUnits;
+    Math.min(1, Math.max(0, (journeySectionProgress - revealShare) / (1 - revealShare))) * journeyScrollUnits;
   const journeyProgress = prefersReducedMotion
     ? Math.round(continuousJourneyProgress)
     : continuousJourneyProgress;
@@ -3410,8 +3730,21 @@ function HowItWorksJourneySection({ sectionId }: { sectionId?: string }) {
       ? 0.78
       : 0
     : Math.max(0, 0.78 * (1 - easedRevealProgress));
+  const dashboardHandoffProgress = dashboardHandoffEnabled ? clampProgress(sectionProgress / dashboardHandoffShare) : 1;
+  const dashboardHandoffCloudReveal = dashboardHandoffEnabled ? smoothstep(0.12, 0.8, dashboardHandoffProgress) : 1;
+  const dashboardHandoffSceneReveal = dashboardHandoffEnabled ? smoothstep(0.72, 1, dashboardHandoffProgress) : 1;
+  const dashboardHandoffOverlayOpacity = dashboardHandoffEnabled
+    ? smoothstep(0.22, 0.72, dashboardHandoffProgress) * (1 - smoothstep(0.84, 1, dashboardHandoffProgress))
+    : 0;
+  const dashboardHandoffDarkCloudOpacity =
+    dashboardHandoffEnabled
+      ? smoothstep(0.26, 0.72, dashboardHandoffProgress) * (1 - smoothstep(0.72, 1, dashboardHandoffProgress))
+      : 0;
+  const dashboardHandoffHazeOpacity = dashboardHandoffEnabled ? smoothstep(0.58, 0.96, dashboardHandoffProgress) : 0;
+  const introHandoffGate = dashboardHandoffEnabled ? smoothstep(0.86, 1, dashboardHandoffProgress) : 1;
   const showIntro = prefersReducedMotion ? revealProgress < 1 : revealProgress < 0.7;
-  const introOpacity = prefersReducedMotion ? 1 : Math.max(0, 1 - revealProgress / 0.55);
+  const baseIntroOpacity = prefersReducedMotion ? 1 : Math.max(0, 1 - revealProgress / 0.55);
+  const introOpacity = baseIntroOpacity * introHandoffGate;
   const visualProgress = (() => {
     if (prefersReducedMotion) {
       return activeStageIndex;
@@ -3448,13 +3781,182 @@ function HowItWorksJourneySection({ sectionId }: { sectionId?: string }) {
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let animationFrame = 0;
+    let autoHandoffActive = false;
+    let autoHandoffSettled = false;
+    let autoHandoffReturned = false;
+    let autoHandoffDirection: "forward" | "reverse" = "forward";
+    let touchStartY: number | null = null;
+    let autoHandoffStartProgress = 0;
+    let autoHandoffStartTime = 0;
+    let lastNormalizedProgress = 0;
+    let dashboardHandoffDeadzoneConsumed = 0;
+    let dashboardHandoffDeadzoneReady = false;
+    const autoHandoffDuration = 860;
+    const dashboardHandoffDeadzoneDistance = 780;
+    const handoffEndProgress = revealShare * 0.82;
+    const revealEndProgress = handoffEndProgress + revealShare * (1 - handoffEndProgress);
+    const reverseCatchProgress = handoffEndProgress + (revealEndProgress - handoffEndProgress) * 0.78;
+    const lerp = (start: number, end: number, progress: number) => start + (end - start) * progress;
+    const easeOutCubic = (value: number) => {
+      const clamped = clampProgress(value);
+      return 1 - Math.pow(1 - clamped, 3);
+    };
+    const resetDashboardHandoff = () => {
+      const scanner = document.querySelector<HTMLElement>(".planet-scan-section");
+
+      if (!scanner) {
+        return;
+      }
+
+      scanner.classList.remove("planet-scan-section--cloud-handoff");
+      scanner.style.removeProperty("--scanner-dashboard-handoff-scale");
+      scanner.style.removeProperty("--scanner-dashboard-handoff-y");
+    };
+    const resetDashboardHandoffDeadzone = () => {
+      dashboardHandoffDeadzoneConsumed = 0;
+      dashboardHandoffDeadzoneReady = false;
+    };
+    const getScrollYForProgress = (progress: number) => {
+      const scrollDistance = Math.max(1, journey.offsetHeight - window.innerHeight);
+      const sectionTop = window.scrollY + journey.getBoundingClientRect().top;
+      return sectionTop + scrollDistance * clampProgress(progress);
+    };
+    const startAutoHandoff = (direction: "forward" | "reverse", normalizedProgress: number, timestamp: number) => {
+      autoHandoffActive = true;
+      autoHandoffDirection = direction;
+      const maxStartProgress = direction === "forward" ? handoffEndProgress : reverseCatchProgress;
+      autoHandoffStartProgress = clampProgress(Math.min(Math.max(normalizedProgress, 0), maxStartProgress));
+      autoHandoffStartTime = timestamp;
+      window.scrollTo(0, getScrollYForProgress(autoHandoffStartProgress));
+    };
+    const holdDashboardHandoffDeadzone = (scrollAmount: number, normalizedProgress: number) => {
+      if (scrollAmount <= 0 || dashboardHandoffDeadzoneReady || normalizedProgress > handoffEndProgress + 0.01) {
+        return false;
+      }
+
+      dashboardHandoffDeadzoneConsumed += scrollAmount;
+      window.scrollTo(0, getScrollYForProgress(0));
+
+      if (dashboardHandoffDeadzoneConsumed >= dashboardHandoffDeadzoneDistance) {
+        dashboardHandoffDeadzoneReady = true;
+        startAutoHandoff("forward", 0, window.performance.now());
+        requestProgressUpdate();
+      }
+
+      return true;
+    };
+    const syncDashboardHandoff = (normalizedProgress: number, isAtHandoffStart: boolean) => {
+      const scanner = document.querySelector<HTMLElement>(".planet-scan-section");
+
+      if (!scanner || !withDashboardHandoff || mediaQuery.matches || !isAtHandoffStart) {
+        resetDashboardHandoff();
+        return;
+      }
+
+      const handoffProgress = clampProgress(normalizedProgress / handoffEndProgress);
+      const handoffActive = handoffProgress < 0.995;
+
+      if (!handoffActive) {
+        resetDashboardHandoff();
+        return;
+      }
+
+      const handoffScale = 1 + 1.48 * smootherstep(handoffProgress);
+      const handoffY = 9 * smootherstep((handoffProgress - 0.24) / 0.56);
+
+      scanner.classList.add("planet-scan-section--cloud-handoff");
+      scanner.style.setProperty("--scanner-dashboard-handoff-scale", handoffScale.toFixed(4));
+      scanner.style.setProperty("--scanner-dashboard-handoff-y", `${handoffY.toFixed(2)}vh`);
+    };
 
     const updateProgress = () => {
+      const timestamp = window.performance.now();
       const bounds = journey.getBoundingClientRect();
       const scrollDistance = Math.max(1, journey.offsetHeight - window.innerHeight);
-      const normalizedProgress = Math.min(1, Math.max(0, -bounds.top / scrollDistance));
+      let normalizedProgress = Math.min(1, Math.max(0, -bounds.top / scrollDistance));
+      const progressDelta = normalizedProgress - lastNormalizedProgress;
+      const canAutoHandoff = withDashboardHandoff && !mediaQuery.matches;
+
+      if (canAutoHandoff && bounds.top > 1) {
+        autoHandoffActive = false;
+        autoHandoffSettled = false;
+        autoHandoffReturned = false;
+        lastNormalizedProgress = 0;
+        resetDashboardHandoffDeadzone();
+      }
+
+      if (
+        canAutoHandoff &&
+        !autoHandoffActive &&
+        !autoHandoffSettled &&
+        !autoHandoffReturned &&
+        bounds.top <= 1 &&
+        normalizedProgress < handoffEndProgress - 0.001
+      ) {
+        if (dashboardHandoffDeadzoneReady) {
+          startAutoHandoff("forward", normalizedProgress, timestamp);
+        } else {
+          normalizedProgress = 0;
+          window.scrollTo(0, getScrollYForProgress(0));
+        }
+      } else if (
+        canAutoHandoff &&
+        !autoHandoffActive &&
+        !autoHandoffSettled &&
+        bounds.top <= 1 &&
+        normalizedProgress >= handoffEndProgress
+      ) {
+        autoHandoffSettled = true;
+        autoHandoffReturned = false;
+      } else if (
+        canAutoHandoff &&
+        !autoHandoffActive &&
+        autoHandoffSettled &&
+        bounds.top <= 1 &&
+        normalizedProgress < reverseCatchProgress &&
+        progressDelta < -0.0005
+      ) {
+        startAutoHandoff("reverse", normalizedProgress, timestamp);
+      } else if (
+        canAutoHandoff &&
+        !autoHandoffActive &&
+        autoHandoffReturned &&
+        bounds.top <= 1 &&
+        normalizedProgress > 0.001 &&
+        progressDelta > 0.0005
+      ) {
+        if (dashboardHandoffDeadzoneReady) {
+          startAutoHandoff("forward", normalizedProgress, timestamp);
+        } else {
+          normalizedProgress = 0;
+          window.scrollTo(0, getScrollYForProgress(0));
+        }
+      }
+
+      if (autoHandoffActive) {
+        const autoProgress = clampProgress((timestamp - autoHandoffStartTime) / autoHandoffDuration);
+        const autoTargetProgress = autoHandoffDirection === "forward" ? handoffEndProgress : 0;
+        normalizedProgress = lerp(autoHandoffStartProgress, autoTargetProgress, easeOutCubic(autoProgress));
+        window.scrollTo(0, getScrollYForProgress(normalizedProgress));
+
+        if (autoProgress >= 1) {
+          autoHandoffActive = false;
+          autoHandoffSettled = autoHandoffDirection === "forward";
+          autoHandoffReturned = autoHandoffDirection === "reverse";
+          resetDashboardHandoffDeadzone();
+          normalizedProgress = autoTargetProgress;
+          window.scrollTo(0, getScrollYForProgress(autoTargetProgress));
+        }
+      }
+
+      syncDashboardHandoff(normalizedProgress, bounds.top <= 1 || autoHandoffActive);
       setSectionProgress(normalizedProgress);
+      lastNormalizedProgress = normalizedProgress;
       animationFrame = 0;
+
+      if (autoHandoffActive) {
+        requestProgressUpdate();
+      }
     };
 
     const requestProgressUpdate = () => {
@@ -3467,24 +3969,124 @@ function HowItWorksJourneySection({ sectionId }: { sectionId?: string }) {
       setPrefersReducedMotion(mediaQuery.matches);
       requestProgressUpdate();
     };
+    const getCurrentProgress = () => {
+      const bounds = journey.getBoundingClientRect();
+      const scrollDistance = Math.max(1, journey.offsetHeight - window.innerHeight);
+
+      return {
+        bounds,
+        normalizedProgress: Math.min(1, Math.max(0, -bounds.top / scrollDistance))
+      };
+    };
+    const startOrLockHandoff = (event: WheelEvent | TouchEvent | KeyboardEvent, scrollDirection: number) => {
+      if (!withDashboardHandoff || mediaQuery.matches) {
+        return;
+      }
+
+      const { bounds, normalizedProgress } = getCurrentProgress();
+
+      if (autoHandoffActive) {
+        event.preventDefault();
+        return;
+      }
+
+      if (
+        !autoHandoffSettled &&
+        (autoHandoffReturned || normalizedProgress < handoffEndProgress) &&
+        bounds.top <= 1 &&
+        scrollDirection > 0 &&
+        holdDashboardHandoffDeadzone(scrollDirection, normalizedProgress)
+      ) {
+        event.preventDefault();
+        return;
+      }
+
+      if (autoHandoffSettled) {
+        if (scrollDirection < 0 && bounds.top <= 1 && normalizedProgress <= reverseCatchProgress) {
+          event.preventDefault();
+          startAutoHandoff("reverse", normalizedProgress, window.performance.now());
+          requestProgressUpdate();
+        }
+
+        return;
+      }
+
+      if (autoHandoffReturned) {
+        if (scrollDirection > 0 && bounds.top <= 1 && normalizedProgress < handoffEndProgress + 0.01) {
+          event.preventDefault();
+          startAutoHandoff("forward", normalizedProgress, window.performance.now());
+          requestProgressUpdate();
+        }
+
+        return;
+      }
+
+      if (bounds.top <= 1 && normalizedProgress < handoffEndProgress && scrollDirection >= 0) {
+        event.preventDefault();
+        startAutoHandoff("forward", normalizedProgress, window.performance.now());
+        requestProgressUpdate();
+      }
+    };
+    const handleWheel = (event: WheelEvent) => {
+      startOrLockHandoff(event, event.deltaY);
+    };
+    const handleTouchStart = (event: TouchEvent) => {
+      touchStartY = event.touches[0]?.clientY ?? null;
+    };
+    const handleTouchMove = (event: TouchEvent) => {
+      const currentY = event.touches[0]?.clientY;
+      const scrollDirection = touchStartY == null || currentY == null ? 0 : touchStartY - currentY;
+      startOrLockHandoff(event, scrollDirection);
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const scrollKeys = new Set([" ", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End"]);
+
+      if (!scrollKeys.has(event.key)) {
+        return;
+      }
+
+      const scrollDirection = event.key === "ArrowUp" || event.key === "PageUp" || event.key === "Home" ? -1 : 1;
+      startOrLockHandoff(event, scrollDirection);
+    };
 
     updateProgress();
     window.addEventListener("scroll", requestProgressUpdate, { passive: true });
     window.addEventListener("resize", requestProgressUpdate);
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
     mediaQuery.addEventListener("change", updateMotionPreference);
 
     return () => {
       window.removeEventListener("scroll", requestProgressUpdate);
       window.removeEventListener("resize", requestProgressUpdate);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("keydown", handleKeyDown);
       mediaQuery.removeEventListener("change", updateMotionPreference);
       window.cancelAnimationFrame(animationFrame);
+      resetDashboardHandoff();
     };
-  }, [stages.length]);
+  }, [stages.length, withDashboardHandoff, revealShare]);
 
   return (
-    <section className="how-it-works-journey-section" id={sectionId} ref={journeyRef}>
-      <div className="journey-canvas" aria-label="RetroFi business transformation journey">
-        <div className="journey-image-stack" aria-hidden="true">
+    <section
+      className={`how-it-works-journey-section${withDashboardHandoff ? " how-it-works-journey-section--home-handoff" : ""}`}
+      id={sectionId}
+      ref={journeyRef}
+    >
+      <div
+        className="journey-canvas"
+        aria-label="RetroFi business transformation journey"
+        style={
+          dashboardHandoffEnabled
+            ? { backgroundColor: `rgba(22, 32, 27, ${dashboardHandoffSceneReveal.toFixed(4)})` }
+            : undefined
+        }
+      >
+        <div className="journey-image-stack" aria-hidden="true" style={{ opacity: dashboardHandoffSceneReveal }}>
           {stages.map((stage, index) => (
             <img
               alt=""
@@ -3505,8 +4107,8 @@ function HowItWorksJourneySection({ sectionId }: { sectionId?: string }) {
             />
           ))}
         </div>
-        <div className="journey-vignette" aria-hidden="true" />
-        <div className="journey-cloud-reveal" aria-hidden="true">
+        <div className="journey-vignette" aria-hidden="true" style={{ opacity: dashboardHandoffSceneReveal }} />
+        <div className="journey-cloud-reveal" aria-hidden="true" style={{ opacity: dashboardHandoffCloudReveal }}>
           <div
             className="journey-cloud-sky"
             style={{
@@ -3543,6 +4145,12 @@ function HowItWorksJourneySection({ sectionId }: { sectionId?: string }) {
             );
           })}
         </div>
+        {withDashboardHandoff ? (
+          <div aria-hidden="true" className="journey-dashboard-handoff" style={{ opacity: dashboardHandoffOverlayOpacity }}>
+            <div className="journey-dashboard-handoff-clouds" style={{ opacity: dashboardHandoffDarkCloudOpacity }} />
+            <div className="journey-dashboard-handoff-haze" style={{ opacity: dashboardHandoffHazeOpacity }} />
+          </div>
+        ) : null}
         {showIntro ? (
           <header
             className="journey-intro-copy"
@@ -3592,23 +4200,7 @@ function HomePage({
   return (
     <PublicShell navigate={navigate} onHowItWorksClick={onHowItWorksClick} publicAuth={publicAuth} showFooter>
       <PlanetScanHero navigate={navigate} />
-      <section className="home-chart-showcase" aria-labelledby="home-chart-showcase-heading">
-        <div className="home-chart-showcase-copy">
-          <p className="eyebrow">Platform snapshot</p>
-          <h2 id="home-chart-showcase-heading">A clearer view of ranked retrofits, savings, impact, and applications.</h2>
-          <p>RetroFi brings top opportunities, projected financial upside, long-term emissions impact, and next-step application flow into one visual workflow.</p>
-        </div>
-        <div className="home-chart-showcase-frame">
-          <img
-            alt="RetroFi dashboard concept showing ranked retrofits, annual savings, cumulative CO2e avoided, and a four-step application process."
-            className="home-chart-showcase-image"
-            decoding="async"
-            loading="lazy"
-            src="/home/final-4-cards-page.png"
-          />
-        </div>
-      </section>
-      <HowItWorksJourneySection sectionId="home-how-it-works" />
+      <HowItWorksJourneySection sectionId="home-how-it-works" withDashboardHandoff />
     </PublicShell>
   );
 }
