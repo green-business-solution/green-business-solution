@@ -104,8 +104,10 @@ http://127.0.0.1:5173/api/auth/google/callback
 Route 53 hosted zone:
 
 ```text
-Z04402863EVV8FUF4EWUX
+Z10326481HHLW5TKN20XQ
 ```
+
+The legacy hosted zone `Z04402863EVV8FUF4EWUX` remains in the old account only for resolver-cache rollback safety after the domain registration and nameserver migration.
 
 Registered domain settings:
 
@@ -125,3 +127,6 @@ The role must exist before a new workflow can deploy, so bootstrap it with:
 ```sh
 AWS_PROFILE=retrofi-prod ./scripts/deploy-production.sh ci
 ```
+
+Default production deploys use the externally validated ACM certificate in account `059310317821` and keep Route 53 record management disabled.
+Do not set `GBS_MANAGE_ROUTE53_RECORDS=true` until the manually migrated hosted-zone records are imported into CloudFormation or recreated during a planned DNS maintenance step.

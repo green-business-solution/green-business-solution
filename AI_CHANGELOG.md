@@ -24,6 +24,7 @@
 - Recorded the live AWS cutover checkpoint, including the new distribution ID, disabled old distribution, and remaining old-account hosted-zone ownership.
 - Updated GitHub Actions to assume the new RetroFi production account deploy role.
 - Refreshed AWS setup and access docs so collaborator access and production deploys point at the dedicated RetroFi Organization.
+- Created the new production hosted zone, transferred the `retrofi.org` registration into the RetroFi management account, and updated deploy defaults to use the migrated DNS/certificate state.
 
 ## 2026-07-07 - Codex (GPT-5) local dashboard to How It Works handoff
 

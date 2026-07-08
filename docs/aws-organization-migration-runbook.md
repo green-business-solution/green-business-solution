@@ -287,14 +287,16 @@ The old CloudFront distribution ID is:
 E3IN1F29FNWPZH
 ```
 
-Route 53 alias records for `retrofi.org` and `www.retrofi.org` still live in hosted zone `Z04402863EVV8FUF4EWUX` in the old account.
-Those records now point to `d1l4o8icodiv1l.cloudfront.net`.
+Route 53 alias records for `retrofi.org` and `www.retrofi.org` were later copied into the new production hosted zone `Z10326481HHLW5TKN20XQ`.
+Those records point to `d1l4o8icodiv1l.cloudfront.net`.
 
 The production frontend CloudFormation stack in the new account is `gbs-retrofi-production`.
 It is configured with `EnableCustomDomain=true`, `ManageRoute53Records=false`, and the externally validated ACM certificate in account `059310317821`.
 
-The hosted zone and domain registration have not been moved into the new account yet.
-Do not delete the old account or hosted zone until hosted-zone ownership and registrar ownership are intentionally migrated or a rollback window has passed.
+The domain registration has been internally transferred to the RetroFi management account `945129430686`.
+The registered nameservers now point at the production hosted zone `Z10326481HHLW5TKN20XQ`.
+Do not delete the old hosted zone until the old nameserver delegation has aged out of recursive resolver caches.
+The old hosted zone had a 172,800 second NS TTL, so keep it at least 48 hours after the July 7, 2026 Pacific time nameserver update.
 
 Final cutover data verification passed before DNS was updated.
 Exact DynamoDB scans and item hashes matched for all seven production tables.
@@ -347,6 +349,16 @@ AWS_PROFILE=retrofi-prod \
 The Route 53 records for `retrofi.org` are still in the old account until the hosted zone or domain registration is moved.
 Update those records with the `gbs` profile during the cutover window.
 
+After the domain registration and hosted zone move, default production deploys use:
+
+```text
+HostedZoneId=Z10326481HHLW5TKN20XQ
+CertificateArn=arn:aws:acm:us-east-1:059310317821:certificate/2c45fa03-2cb3-4cd7-8455-d098174d1e73
+ManageRoute53Records=false
+```
+
+Keep `ManageRoute53Records=false` until the manually migrated Route 53 records are intentionally imported into CloudFormation or recreated by CloudFormation during a planned DNS maintenance step.
+
 ## Migration Constraints
 
 The current Green Business Solution AWS account is still:
@@ -361,7 +373,7 @@ The current production domain is:
 retrofi.org
 ```
 
-The current hosted zone is:
+The legacy hosted zone is:
 
 ```text
 Z04402863EVV8FUF4EWUX

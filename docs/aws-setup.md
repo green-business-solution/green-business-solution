@@ -49,11 +49,19 @@ Registered production domain:
 retrofi.org
 ```
 
-Route 53 hosted zone:
+Current Route 53 hosted zone:
+
+```text
+Z10326481HHLW5TKN20XQ
+```
+
+Legacy Route 53 hosted zone:
 
 ```text
 Z04402863EVV8FUF4EWUX
 ```
+
+Keep the legacy hosted zone for at least 48 hours after the July 7, 2026 Pacific time nameserver update because recursive resolvers can cache the old nameserver delegation.
 
 Legacy project account root email:
 
