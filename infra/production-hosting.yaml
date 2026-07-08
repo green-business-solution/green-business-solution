@@ -15,12 +15,33 @@ Parameters:
       - "true"
       - "false"
     Description: Attach retrofi.org aliases, create ACM validation, and manage Route 53 records.
+  CertificateArn:
+    Type: String
+    Default: ""
+    Description: Existing us-east-1 ACM certificate ARN to use for CloudFront. Leave empty to create one in this account.
+  ManageRoute53Records:
+    Type: String
+    Default: "true"
+    AllowedValues:
+      - "true"
+      - "false"
+    Description: Manage Route 53 alias records for the custom domain from this stack.
   ApiOriginDomainName:
     Type: String
     Description: API Gateway origin domain name without protocol, such as abc123.execute-api.us-east-1.amazonaws.com.
 
 Conditions:
   ShouldConfigureCustomDomain: !Equals [!Ref EnableCustomDomain, "true"]
+  HasCertificateArn: !Not [!Equals [!Ref CertificateArn, ""]]
+  ShouldCreateCertificate: !And
+    - !Condition ShouldConfigureCustomDomain
+    - !Not [!Condition HasCertificateArn]
+  ShouldManageRoute53Records: !And
+    - !Condition ShouldConfigureCustomDomain
+    - !Equals [!Ref ManageRoute53Records, "true"]
+  ShouldUseCustomCertificate: !Or
+    - !Condition ShouldConfigureCustomDomain
+    - !Condition HasCertificateArn
 
 Resources:
   FrontendBucket:
@@ -47,7 +68,7 @@ Resources:
 
   Certificate:
     Type: AWS::CertificateManager::Certificate
-    Condition: ShouldConfigureCustomDomain
+    Condition: ShouldCreateCertificate
     Properties:
       DomainName: !Ref DomainName
       SubjectAlternativeNames:
@@ -124,8 +145,11 @@ Resources:
         PriceClass: PriceClass_100
         ViewerCertificate:
           !If
-            - ShouldConfigureCustomDomain
-            - AcmCertificateArn: !Ref Certificate
+            - ShouldUseCustomCertificate
+            - AcmCertificateArn: !If
+                - HasCertificateArn
+                - !Ref CertificateArn
+                - !Ref Certificate
               MinimumProtocolVersion: TLSv1.2_2021
               SslSupportMethod: sni-only
             - CloudFrontDefaultCertificate: true
@@ -148,7 +172,7 @@ Resources:
 
   RootAliasRecord:
     Type: AWS::Route53::RecordSet
-    Condition: ShouldConfigureCustomDomain
+    Condition: ShouldManageRoute53Records
     Properties:
       HostedZoneId: !Ref HostedZoneId
       Name: !Sub ${DomainName}.
@@ -159,7 +183,7 @@ Resources:
 
   RootIpv6AliasRecord:
     Type: AWS::Route53::RecordSet
-    Condition: ShouldConfigureCustomDomain
+    Condition: ShouldManageRoute53Records
     Properties:
       HostedZoneId: !Ref HostedZoneId
       Name: !Sub ${DomainName}.
@@ -170,7 +194,7 @@ Resources:
 
   WwwAliasRecord:
     Type: AWS::Route53::RecordSet
-    Condition: ShouldConfigureCustomDomain
+    Condition: ShouldManageRoute53Records
     Properties:
       HostedZoneId: !Ref HostedZoneId
       Name: !Sub www.${DomainName}.
@@ -181,7 +205,7 @@ Resources:
 
   WwwIpv6AliasRecord:
     Type: AWS::Route53::RecordSet
-    Condition: ShouldConfigureCustomDomain
+    Condition: ShouldManageRoute53Records
     Properties:
       HostedZoneId: !Ref HostedZoneId
       Name: !Sub www.${DomainName}.

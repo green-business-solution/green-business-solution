@@ -290,6 +290,21 @@ AWS_PROFILE=retrofi-prod \
 Smoke test the CloudFront default domain from the `SiteUrl` stack output.
 Only enable custom domain mode for the new account during the final DNS/CloudFront cutover window.
 
+When the hosted zone remains in the old account during cutover, use an already validated ACM certificate from the new production account and keep Route 53 record changes separate:
+
+```sh
+AWS_PROFILE=retrofi-prod \
+  AWS_DEPLOY_REGION=us-east-1 \
+  GBS_AWS_REGION=us-east-2 \
+  GBS_ENABLE_CUSTOM_DOMAIN=true \
+  GBS_CERTIFICATE_ARN=arn:aws:acm:us-east-1:059310317821:certificate/... \
+  GBS_MANAGE_ROUTE53_RECORDS=false \
+  ./scripts/deploy-production.sh infra
+```
+
+The Route 53 records for `retrofi.org` are still in the old account until the hosted zone or domain registration is moved.
+Update those records with the `gbs` profile during the cutover window.
+
 ## Migration Constraints
 
 The current Green Business Solution AWS account is still:
