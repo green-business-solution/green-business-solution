@@ -7,6 +7,7 @@
 - Delayed the scanner copy handoff so the original headline remains visible longer and the second message enters later in the scroll.
 - Removed the local scanner scroll cue and bottom progress bar, and restored the homepage brand text casing to `RetroFi`.
 - Added a local light-themed homepage infographic section after the hero with a white fade handoff, botanical edge accents, and four premium cards staged across the first and second scroll views.
+- Softened the hero-to-infographic handoff by letting the overlapped hero show through the top of the cards section and blending it into white with a visible layered gradient.
 
 ## 2026-07-07 - Codex (GPT-5) local scanner frame scrubber
 

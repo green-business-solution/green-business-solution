@@ -13205,7 +13205,14 @@ body {
   background:
     radial-gradient(circle at 8% 16%, rgba(158, 202, 137, 0.22), transparent 27%),
     radial-gradient(circle at 88% 8%, rgba(191, 224, 164, 0.2), transparent 25%),
-    linear-gradient(180deg, #ffffff 0%, #f6fbf3 36%, #edf6ea 100%);
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.72) 7%,
+      #ffffff 16%,
+      #f6fbf3 42%,
+      #edf6ea 100%
+    );
   color: #071e16;
   isolation: isolate;
   margin-top: -18svh;
@@ -13216,15 +13223,15 @@ body {
 }
 
 .home-infographics-section::before {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.76) 46%, #ffffff 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 46%, #ffffff 100%);
   content: "";
-  height: 24svh;
+  height: clamp(120px, 22svh, 220px);
   left: 0;
   pointer-events: none;
   position: absolute;
   right: 0;
-  top: -22svh;
-  z-index: -1;
+  top: 0;
+  z-index: 0;
 }
 
 .home-infographics-section::after {
