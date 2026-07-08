@@ -26,6 +26,8 @@
 - Refreshed AWS setup and access docs so collaborator access and production deploys point at the dedicated RetroFi Organization.
 - Created the new production hosted zone, transferred the `retrofi.org` registration into the RetroFi management account, and updated deploy defaults to use the migrated DNS/certificate state.
 - Deleted the old account API stack, old GitHub deploy-role stack, and old API artifact bucket while retaining old hosted-zone and copied data resources for resolver-cache and rollback safety.
+- Triple-verified the copied DynamoDB tables, current S3 objects, and versioned S3 histories before destructive cleanup.
+- Deleted the remaining old-account RetroFi/GBS CloudFormation stacks, copied data stores, old S3 buckets, old ACM certificate, and old hosted zone after live production was confirmed on the new account.
 
 ## 2026-07-07 - Codex (GPT-5) local dashboard to How It Works handoff
 

@@ -327,6 +327,35 @@ Resources intentionally retained:
 Before the next cleanup pass, verify that public DNS no longer returns the old nameservers for `retrofi.org`.
 Then delete the old hosted zone records and old hosting stack, followed by old copied data stores after the retention decision is explicit.
 
+## Final Old Account Cleanup Checkpoint
+
+As of July 7, 2026 Pacific time, the remaining old RetroFi and Green Business Solution resources in old account `448016109714` have been deleted after an explicit final verification pass.
+
+The final pre-delete data verification confirmed:
+
+- All seven DynamoDB tables matched exactly by item count and typed item hash between source account `448016109714` and target account `059310317821`.
+- Current S3 objects in the energy-data bucket matched by key, size, and ETag, with 17 objects and 6,013,182 bytes on both sides.
+- Current S3 objects in the runtime-cache bucket matched by key, size, and ETag, with 103 objects and 42,717,661 bytes on both sides.
+- The generated-test-fixtures version history matched with 40 versions, 488,849,407 bytes, and no delete markers on both sides.
+- The dev-work version history matched with 1,150 versions, 921,724,784 bytes, and 12 delete markers on both sides.
+
+Deleted in the final cleanup pass:
+
+- CloudFormation stack `gbs-retrofi-production` in old account `us-east-1`.
+- CloudFormation stack `gbs-retrofi-runtime-buckets` in old account `us-east-1`.
+- CloudFormation stack `gbs-retrofi-runtime-data` in old account `us-east-2`.
+- DynamoDB tables `gbs-users`, `gbs-client-intake`, `gbs-opportunity-candidates`, `gbs-dashboard-performance`, `gbs-retrofit-recommendation-cache`, `gbs-application-profiles`, and `gbs-api-runtime-state` in old account `us-east-2`.
+- S3 buckets `gbs-retrofi-org-frontend-448016109714`, `gbs-retrofi-org-runtime-cache-448016109714`, `gbs-retrofi-test-fixtures-448016109714-us-east-1`, `gbs-retrofi-org-energy-data-448016109714`, and `gbs-retrofi-dev-work-448016109714-us-east-1`.
+- Old hosted zone `Z04402863EVV8FUF4EWUX` after deleting its non-NS/SOA records.
+- Old account ACM certificates and CloudFront distribution resources owned by the deleted hosting stack.
+
+Post-cleanup verification found no remaining old-account `gbs-*` or RetroFi resources in DynamoDB, S3, active CloudFormation stacks, Route 53 hosted zones, CloudFront distributions, Lambda functions, API Gateway APIs, or ACM certificates.
+The live public health endpoint at `https://retrofi.org/api/health` returned `ok: true` and references the new production account buckets `gbs-retrofi-org-energy-data-059310317821` and `gbs-retrofi-org-runtime-cache-059310317821`.
+
+The `retrofi.org` domain registration in account `945129430686` is delegated to the new production hosted zone nameservers.
+Recursive resolvers can still show cached old nameservers for a while because the old hosted zone had a long NS TTL before deletion.
+Treat that as DNS cache propagation unless live resolution fails after cache expiry.
+
 ## New Account API And Frontend Staging
 
 Deploy the API in the new production account before touching DNS:
