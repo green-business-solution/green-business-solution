@@ -259,6 +259,44 @@ Their historical object versions were replayed into the new production account a
 
 Run one final DynamoDB copy, S3 current-object sync, S3 version replay, and verification pass during the cutover window.
 
+## Live Cutover Checkpoint
+
+As of July 7, 2026 Pacific time, `retrofi.org` and `www.retrofi.org` are serving from the new RetroFi production account `059310317821`.
+
+The new CloudFront distribution is:
+
+```text
+EDUJMKVIUDD3Z
+```
+
+The new CloudFront domain is:
+
+```text
+d1l4o8icodiv1l.cloudfront.net
+```
+
+The old CloudFront distribution in account `448016109714` is disabled and no longer owns the `retrofi.org` aliases.
+
+The old CloudFront distribution ID is:
+
+```text
+E3IN1F29FNWPZH
+```
+
+Route 53 alias records for `retrofi.org` and `www.retrofi.org` still live in hosted zone `Z04402863EVV8FUF4EWUX` in the old account.
+Those records now point to `d1l4o8icodiv1l.cloudfront.net`.
+
+The production frontend CloudFormation stack in the new account is `gbs-retrofi-production`.
+It is configured with `EnableCustomDomain=true`, `ManageRoute53Records=false`, and the externally validated ACM certificate in account `059310317821`.
+
+The hosted zone and domain registration have not been moved into the new account yet.
+Do not delete the old account or hosted zone until hosted-zone ownership and registrar ownership are intentionally migrated or a rollback window has passed.
+
+Final cutover data verification passed before DNS was updated.
+Exact DynamoDB scans and item hashes matched for all seven production tables.
+Current S3 object manifests matched for the energy-data and runtime-cache buckets.
+Version summaries matched for the generated-test-fixtures and dev-work buckets.
+
 ## New Account API And Frontend Staging
 
 Deploy the API in the new production account before touching DNS:

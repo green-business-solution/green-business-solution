@@ -15,6 +15,8 @@
 - Replayed and verified generated-fixture and dev-work S3 version histories into the new production account.
 - Added a custom-domain toggle for the frontend/CloudFront stack so the new production account can be staged without claiming `retrofi.org`.
 - Added support for externally validated ACM certificates and separately managed Route 53 records during cross-account CloudFront cutover.
+- Cut over `retrofi.org` and `www.retrofi.org` to the new RetroFi production account CloudFront distribution after final DynamoDB and S3 verification.
+- Recorded the live AWS cutover checkpoint, including the new distribution ID, disabled old distribution, and remaining old-account hosted-zone ownership.
 
 ## 2026-07-07 - Codex (GPT-5) local dashboard to How It Works handoff
 
