@@ -1,5 +1,21 @@
 # AI Changelog
 
+## 2026-07-08 - Codex (GPT-5) local homepage scanner copy transition
+
+- Added scroll-driven hero copy choreography to the local homepage scanner so the initial words move upward while a new RetroFi incentive message rises in from below.
+- Exposed eased copy-in/copy-out progress variables from the local scanner frame component for smoother text motion without adding a new section.
+- Delayed the scanner copy handoff so the original headline remains visible longer and the second message enters later in the scroll.
+- Removed the local scanner scroll cue and bottom progress bar, and restored the homepage brand text casing to `RetroFi`.
+- Added a local light-themed homepage infographic section after the hero with a white fade handoff, botanical edge accents, and four premium cards staged across the first and second scroll views.
+
+## 2026-07-07 - Codex (GPT-5) local scanner frame scrubber
+
+- Extracted the Higgsfield JPEG sequence into `public/scanner-scroll/frames/` with stable `frame_0001.jpg` naming.
+- Added a generated scanner frame manifest and canvas-based scroll scrubber component for the homepage scanner hero.
+- Replaced the rendered homepage scanner UI with the frame sequence while preserving the existing headline and primary CTA.
+- Detached the embedded home How It Works section from the legacy dashboard handoff for the local scanner replacement.
+- Restyled the local homepage hero and nav toward a bright eco landing-page treatment with serif typography, transparent desktop navigation, and a dark green CTA.
+
 ## 2026-07-07 - Codex (GPT-5) restart handoff for migration and product tasks
 
 - Added a July 2026 restart handoff document summarizing the remaining AWS migration cleanup, form-gate, grant/tax, scenario-verification, and automation work for a clean future conversation.

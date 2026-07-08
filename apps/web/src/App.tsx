@@ -11,6 +11,7 @@ import {
 } from "./config";
 import { databaseProgramMatchesSearch } from "./databaseSearch";
 import { RetroFiLogoLoader, RetroFiPageLoader, RetroFiProgressLoader, RetroFiSkeleton } from "./components/RetroFiLoader";
+import { ScrollFrameScanner } from "./components/ScrollFrameScanner";
 import { GoogleSignInButton } from "./googleSignIn";
 import {
   BuildingOutlineIcon,
@@ -27,6 +28,7 @@ import {
   StoreOutlineIcon
 } from "./icons";
 import { aboutLinks, pathForRoute, routeFromPath, type Route } from "./routes";
+import { scannerFrames } from "./lib/scannerFrames";
 import billFieldDictionary from "../../../data/bill_field_dictionary.json";
 
 type UserRecord = {
@@ -3077,6 +3079,32 @@ const scannerDashboardStartMotion = { scale: 2.34, x: 0, y: -18 };
 const scannerDashboardEndMotion = { scale: 1, x: 0, y: 0 };
 
 function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
+  return (
+    <ScrollFrameScanner ariaLabelledBy="planet-scan-heading" className="planet-scan-section" frames={scannerFrames}>
+      <div className="planet-scan-content">
+        <div className="planet-scan-copy">
+          <div className="planet-scan-message planet-scan-message-static planet-scan-message-primary">
+            <h1 className="planet-scan-title planet-scan-title--before" id="planet-scan-heading">
+              <span>Find the money</span>
+              <span>behind your next</span>
+              <span className="planet-scan-title-accent">retrofit.</span>
+            </h1>
+            <p className="planet-scan-subhead">Billions in retrofit incentives exist while building owners lose billions to operating expenses.</p>
+            <button className="planet-scan-cta planet-scan-primary" onClick={() => navigate("scan")} type="button">
+              Get Started
+            </button>
+          </div>
+          <div className="planet-scan-message planet-scan-message-static planet-scan-message-next">
+            <h2 className="planet-scan-next-headline">RetroFi helps businesses find, compare, claim, and implement retrofit incentives.</h2>
+            <p className="planet-scan-emphasis">Sustainable. Profitable. Practical.</p>
+          </div>
+        </div>
+      </div>
+    </ScrollFrameScanner>
+  );
+}
+
+function LegacyPlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -3471,7 +3499,7 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
                 <span>behind your next</span>
                 <span className="planet-scan-title-accent">retrofit.</span>
               </h1>
-              <p className="planet-scan-subhead">Find incentives, cut operating costs, and know what to do next.</p>
+              <p className="planet-scan-subhead">Billions in retrofit incentives exist while building owners lose billions to operating expenses.</p>
             </div>
           </div>
 
@@ -3490,6 +3518,219 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
         <div aria-hidden="true" className="planet-scan-scroll-cue">
           <span />
           Scroll to scan
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const homeRankedRetrofits = [
+  {
+    impact: "2.41 tCO2e/yr",
+    name: "Insulation",
+    savings: "$610K/yr",
+    scope: "Improve building envelope efficiency over time.",
+    spend: "$2.8k",
+    timeline: "3.9 yrs"
+  },
+  {
+    impact: "3.11 tCO2e/yr",
+    name: "EV chargers",
+    savings: "$8.5K/yr",
+    scope: "Add charging capability for residents and tenants.",
+    spend: "$5.4k",
+    timeline: "1.0 yrs"
+  }
+];
+
+const homeSavingsBars = [28, 44, 58, 74, 92];
+const homeImpactPoints = [
+  { label: "Year 1", value: 46 },
+  { label: "Year 2", value: 125 },
+  { label: "Year 3", value: 319 },
+  { label: "Year 4", value: 558 },
+  { label: "Year 5", value: 618 },
+  { label: "Year 7", value: 818 },
+  { label: "Year 8", value: 926 },
+  { label: "Year 9", value: 938 },
+  { label: "Year 10", value: 1247 }
+];
+
+const homeApplicationSteps = [
+  {
+    detail: "Set up profile and property details.",
+    label: "Create account",
+    time: "5-10 min"
+  },
+  {
+    detail: "View matching grants and incentive recommendations.",
+    label: "Explore grants",
+    time: "5-10 min"
+  },
+  {
+    detail: "Submit your application and documents securely online.",
+    label: "Submit application",
+    time: "15-20 min"
+  },
+  {
+    detail: "Track status and receive your incentives.",
+    label: "Get approved",
+    time: "2-6 weeks"
+  }
+];
+
+function HomeInfographicSection() {
+  const impactPolyline = homeImpactPoints
+    .map((point, index) => {
+      const x = 24 + index * 32;
+      const y = 150 - (point.value / 1300) * 112;
+      return `${x},${y}`;
+    })
+    .join(" ");
+
+  return (
+    <section aria-labelledby="home-infographics-heading" className="home-infographics-section">
+      <div aria-hidden="true" className="home-greenery home-greenery--top-left">
+        {Array.from({ length: 7 }, (_, index) => (
+          <span key={index} />
+        ))}
+      </div>
+      <div aria-hidden="true" className="home-greenery home-greenery--top-right">
+        {Array.from({ length: 7 }, (_, index) => (
+          <span key={index} />
+        ))}
+      </div>
+      <div aria-hidden="true" className="home-greenery home-greenery--lower-left">
+        {Array.from({ length: 6 }, (_, index) => (
+          <span key={index} />
+        ))}
+      </div>
+      <div className="home-infographics-inner">
+        <header className="home-infographics-header">
+          <p>Retrofit intelligence</p>
+          <h2 id="home-infographics-heading">Clear retrofit decisions, ranked and ready.</h2>
+          <span>From project ranking to application steps, RetroFi keeps the workflow easy to understand.</span>
+        </header>
+
+        <div className="home-infographic-stage home-infographic-stage--primary">
+          <article className="home-infographic-card home-infographic-card--ranked">
+            <div className="home-infographic-card-heading">
+              <span>01</span>
+              <div>
+                <h3>TOP RETROFITS RANKED</h3>
+                <p>Top retrofit rankings by impact and costs.</p>
+              </div>
+            </div>
+            <div className="home-ranked-retrofits">
+              {homeRankedRetrofits.map((retrofit) => (
+                <div className="home-ranked-retrofit" key={retrofit.name}>
+                  <span className="home-ranked-icon">
+                    {retrofit.name === "Insulation" ? <HomeOutlineIcon /> : <FeatureIcon icon="roadmap" />}
+                  </span>
+                  <div className="home-ranked-body">
+                    <h4>{retrofit.name}</h4>
+                    <p>{retrofit.scope}</p>
+                    <dl>
+                      <div>
+                        <dt>Savings</dt>
+                        <dd>{retrofit.savings}</dd>
+                      </div>
+                      <div>
+                        <dt>Cost</dt>
+                        <dd>{retrofit.spend}</dd>
+                      </div>
+                      <div>
+                        <dt>Payback</dt>
+                        <dd>{retrofit.timeline}</dd>
+                      </div>
+                    </dl>
+                    <div className="home-impact-row">
+                      <LeafOutlineIcon />
+                      <span>Environmental impact</span>
+                      <strong>{retrofit.impact}</strong>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="home-infographic-card home-infographic-card--savings">
+            <div className="home-infographic-card-heading">
+              <span>02</span>
+              <div>
+                <h3>FINANCIAL SAVINGS</h3>
+                <p>Estimated annual savings</p>
+              </div>
+            </div>
+            <div className="home-savings-figure">
+              <strong>$1.42M</strong>
+              <span>+13% vs. current spend</span>
+            </div>
+            <div aria-label="Five year annual savings growth" className="home-bar-chart" role="img">
+              {homeSavingsBars.map((height, index) => (
+                <i key={index} style={{ "--bar-height": `${height}%` } as CSSProperties}>
+                  <span>{`YR ${index + 1}`}</span>
+                </i>
+              ))}
+            </div>
+          </article>
+        </div>
+
+        <div className="home-infographic-stage home-infographic-stage--secondary">
+          <article className="home-infographic-card home-infographic-card--impact">
+            <div className="home-infographic-card-heading">
+              <span>03</span>
+              <div>
+                <h3>CUMULATIVE CO2e AVOIDED</h3>
+                <p>Total cumulative CO2e avoided this retrofit over time.</p>
+              </div>
+            </div>
+            <div className="home-impact-total">
+              <span>10-year total</span>
+              <strong>1,247 tCO2e</strong>
+              <small>Cumulative CO2e avoided</small>
+            </div>
+            <svg aria-label="Cumulative CO2e avoided over 10 years" className="home-line-chart" role="img" viewBox="0 0 300 170">
+              <g className="home-line-grid">
+                <path d="M24 38h252M24 76h252M24 114h252M24 152h252" />
+              </g>
+              <polyline points={impactPolyline} />
+              {homeImpactPoints.map((point, index) => {
+                const cx = 24 + index * 32;
+                const cy = 150 - (point.value / 1300) * 112;
+                return (
+                  <g key={point.label}>
+                    <circle cx={cx} cy={cy} r="3.6" />
+                    <text x={cx} y={cy - 8}>
+                      {point.value}
+                    </text>
+                  </g>
+                );
+              })}
+            </svg>
+          </article>
+
+          <article className="home-infographic-card home-infographic-card--process">
+            <div className="home-infographic-card-heading">
+              <span>04</span>
+              <div>
+                <h3>APPLICATION PROCESS</h3>
+                <p>Apply for grants and incentives on retrofi.org in 4 simple steps.</p>
+              </div>
+            </div>
+            <div className="home-process-steps">
+              {homeApplicationSteps.map((step, index) => (
+                <div className="home-process-step" key={step.label}>
+                  <span className="home-process-number">{index + 1}</span>
+                  <span className="home-process-icon">{index === 3 ? <CheckIcon /> : <FeatureIcon icon={index === 0 ? "contact" : index === 1 ? "savings" : "roadmap"} />}</span>
+                  <h4>{step.label}</h4>
+                  <strong>{step.time}</strong>
+                  <p>{step.detail}</p>
+                </div>
+              ))}
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -4198,9 +4439,10 @@ function HomePage({
   publicAuth: PublicAuthState;
 }) {
   return (
-    <PublicShell navigate={navigate} onHowItWorksClick={onHowItWorksClick} publicAuth={publicAuth} showFooter>
+    <PublicShell navigate={navigate} onHowItWorksClick={onHowItWorksClick} pageClassName="home-page" publicAuth={publicAuth} showFooter>
       <PlanetScanHero navigate={navigate} />
-      <HowItWorksJourneySection sectionId="home-how-it-works" withDashboardHandoff />
+      <HomeInfographicSection />
+      <HowItWorksJourneySection sectionId="home-how-it-works" />
     </PublicShell>
   );
 }
