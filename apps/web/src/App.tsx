@@ -4695,56 +4695,194 @@ function PricingPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
-  const cards = [
-    ["Free Scan", "$0", "Exploring potential opportunities", ["Basic opportunity preview", "Estimated value range", "General retrofit categories", "Prompt to upload utility bills"], "Get Started"],
-    ["Opportunity Report", "$950/site", "Businesses ready to evaluate real projects", ["Exact matching incentives", "Eligibility analysis", "Utility bill review", "Savings estimates", "ROI/payback", "Prioritized roadmap", "Financing options", "Required documents", "Deadlines", "Downloadable report"], "Start with Free Scan"],
-    ["Implementation Support", "Starting at $3,500", "Businesses ready to move forward", ["Application preparation support", "Document collection guidance", "Contractor quote review", "Financing guidance", "Incentive tracking", "60-90 days of support"], "Contact Us"],
-    ["Multi-Site", "Custom", "Franchisees, regional operators, and multi-location businesses", ["Site-by-site scans", "Portfolio prioritization", "Centralized incentive tracking", "Standardized recommendations"], "Contact Us"]
+  const plans = [
+    {
+      audience: "Exploring potential opportunities",
+      cta: "Start free scan",
+      features: ["Basic opportunity preview", "Estimated value range", "General retrofit categories", "Utility bill prompt for sharper estimates"],
+      footnote: "No commitment. Useful before you collect documents.",
+      name: "Free Scan",
+      price: "$0",
+      route: "scan" as Route
+    },
+    {
+      audience: "Ready to decide whether a project is worth pursuing",
+      cta: "Start with free scan",
+      featured: true,
+      features: ["Exact incentive matches", "Eligibility analysis", "Savings and ROI estimates", "Prioritized retrofit roadmap", "Downloadable report and assumptions"],
+      footnote: "Best first paid step for a single property.",
+      name: "Opportunity Report",
+      price: "$950",
+      priceNote: "per site",
+      route: "scan" as Route
+    },
+    {
+      audience: "Moving from decision to application and execution",
+      cta: "Talk to us",
+      features: ["Application preparation support", "Document collection guidance", "Contractor quote review", "Financing guidance", "60-90 days of incentive tracking"],
+      footnote: "Scoped after we understand the retrofit and documents.",
+      name: "Implementation Support",
+      price: "$3,500+",
+      route: "about-contact" as Route
+    },
+    {
+      audience: "Portfolios, franchise groups, and regional operators",
+      cta: "Plan portfolio",
+      features: ["Site-by-site scans", "Portfolio prioritization", "Centralized incentive tracking", "Standardized recommendations", "Rollup view for decision makers"],
+      footnote: "Custom pricing based on portfolio size and workflow depth.",
+      name: "Multi-Site",
+      price: "Custom",
+      route: "about-contact" as Route
+    }
+  ];
+  const pathSteps = [
+    ["01", "Scan", "Find the likely incentive value before paying for deeper work."],
+    ["02", "Report", "Turn the best opportunities into project economics and next steps."],
+    ["03", "Support", "Move selected retrofits through documents, applications, and tracking."]
+  ];
+  const comparisonRows = [
+    ["Upfront cost", "Free", "$950 / site", "$3,500+", "Custom"],
+    ["Best output", "Opportunity preview", "Decision-ready report", "Application-ready workflow", "Portfolio roadmap"],
+    ["Utility bill depth", "Optional", "Recommended", "Required for selected projects", "Standardized by site"],
+    ["Application support", "Not included", "Guidance only", "Hands-on support", "Centralized support"],
+    ["Subscription", "No", "No", "No", "No"]
+  ];
+  const faqs = [
+    ["Why is the scan free?", "The scan helps you see whether deeper analysis is likely to create enough value before you pay."],
+    ["When do I pay?", "Only when you choose to upgrade to an Opportunity Report or implementation support."],
+    ["Do I need utility bills?", "Not for the free scan. Utility bills improve savings, ROI, and application readiness."],
+    ["Is this a subscription?", "No. RetroFi starts with project-based pricing instead of a recurring software fee."],
+    ["Do you charge a success fee?", "No success fee initially. Pricing stays tied to clear work products and support scope."],
+    ["Can this cover multiple sites?", "Yes. Multi-site pricing depends on portfolio size, reporting needs, and rollout complexity."]
   ];
 
   return (
-    <PublicShell navigate={navigate} publicAuth={publicAuth}>
-      <PageHero
-        compact
-        eyebrow="Pricing"
-        title="Simple project-based pricing"
-        copy="Start with a free scan, then upgrade only if there is enough potential value to justify a deeper analysis."
-      />
-      <section className="pricing-note">
-        <span>No subscription and no success fee initially.</span>
+    <PublicShell navigate={navigate} pageClassName="pricing-page" publicAuth={publicAuth}>
+      <section className="pricing-hero" aria-labelledby="pricing-heading">
+        <div className="pricing-hero-copy">
+          <p className="pricing-eyebrow">Pricing</p>
+          <h1 id="pricing-heading">Start free. Pay when the opportunity is real.</h1>
+          <p>
+            RetroFi keeps pricing tied to clear decisions: scan for free, upgrade for project economics, then add support only when a retrofit is worth moving forward.
+          </p>
+          <div className="pricing-hero-actions">
+            <button className="pricing-primary-action" onClick={() => navigate("scan")} type="button">
+              Start free scan
+              <ArrowUpRightIcon />
+            </button>
+            <button className="pricing-secondary-action" onClick={() => navigate("about-contact")} type="button">
+              Talk to RetroFi
+            </button>
+          </div>
+          <ul className="pricing-trust-list" aria-label="Pricing assurances">
+            <li><CheckIcon /> No subscription</li>
+            <li><CheckIcon /> No success fee initially</li>
+            <li><CheckIcon /> Upgrade only after the scan</li>
+          </ul>
+        </div>
+        <aside className="pricing-hero-panel" aria-label="Recommended pricing path">
+          <span>Recommended path</span>
+          <strong>$0 first</strong>
+          <p>Use the free scan to decide whether a paid report is likely to pay for itself.</p>
+          <div className="pricing-hero-meter" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </div>
+        </aside>
       </section>
-      <section className="pricing-grid">
-        {cards.map(([name, price, bestFor, includes, cta], index) => (
-          <article className={index === 1 ? "pricing-card recommended" : "pricing-card"} key={name as string}>
-            {index === 1 ? <span className="recommended-badge">Recommended</span> : null}
-            <h2>{name}</h2>
-            <strong>{price}</strong>
-            <p>Best for: {bestFor}</p>
+
+      <section className="pricing-path-section" aria-labelledby="pricing-path-heading">
+        <div className="pricing-section-heading">
+          <p className="pricing-eyebrow">How pricing scales</p>
+          <h2 id="pricing-path-heading">Each step earns the next one.</h2>
+          <span>Move from quick discovery to decision support to implementation without committing to a long-term contract.</span>
+        </div>
+        <div className="pricing-path-grid">
+          {pathSteps.map(([number, title, copy]) => (
+            <article className="pricing-path-card" key={title}>
+              <span>{number}</span>
+              <h3>{title}</h3>
+              <p>{copy}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="pricing-plan-grid" aria-label="Pricing plans">
+        {plans.map((plan) => (
+          <article className={plan.featured ? "pricing-card recommended" : "pricing-card"} key={plan.name}>
+            {plan.featured ? <span className="recommended-badge">Most useful first upgrade</span> : null}
+            <div className="pricing-card-header">
+              <h2>{plan.name}</h2>
+              <p>{plan.audience}</p>
+            </div>
+            <div className="pricing-price-line">
+              <strong>{plan.price}</strong>
+              {plan.priceNote ? <span>{plan.priceNote}</span> : null}
+            </div>
             <ul>
-              {(includes as string[]).map((item) => (
-                <li key={item}>{item}</li>
+              {plan.features.map((item) => (
+                <li key={item}><CheckIcon /> {item}</li>
               ))}
             </ul>
-            <button onClick={() => navigate(cta === "Contact Us" ? "about-contact" : "scan")} type="button">
-              {cta}
+            <p className="pricing-card-footnote">{plan.footnote}</p>
+            <button className="pricing-plan-button" onClick={() => navigate(plan.route)} type="button">
+              {plan.cta}
+              <ArrowUpRightIcon />
             </button>
           </article>
         ))}
       </section>
-      <section className="faq-grid faq-section">
-        {[
-          ["Why is the scan free?", "The scan helps identify whether a deeper analysis is likely to be worth it."],
-          ["When do I pay?", "Only when you choose to upgrade to an Opportunity Report or implementation support."],
-          ["Do I need utility bills?", "Not for the free scan. Utility bills are needed for detailed savings and ROI."],
-          ["Is this a subscription?", "V1 is not a subscription."],
-          ["Do you charge a success fee?", "No success fee initially."],
-          ["Can I use this for multiple sites?", "Yes. Multi-site pricing is custom based on portfolio size."]
-        ].map(([question, answer]) => (
-          <article className="feature-card" key={question}>
-            <h3>{question}</h3>
-            <p>{answer}</p>
-          </article>
-        ))}
+
+      <section className="pricing-comparison-section" aria-labelledby="pricing-comparison-heading">
+        <div className="pricing-section-heading">
+          <p className="pricing-eyebrow">Compare</p>
+          <h2 id="pricing-comparison-heading">Choose by decision stage.</h2>
+          <span>The difference is not feature bloat. It is how much certainty and hands-on execution you need.</span>
+        </div>
+        <div className="pricing-comparison-grid" role="table" aria-label="Pricing comparison">
+          <div className="pricing-comparison-row pricing-comparison-row--header" role="row">
+            <span role="columnheader">Question</span>
+            <span role="columnheader">Free Scan</span>
+            <span role="columnheader">Report</span>
+            <span role="columnheader">Support</span>
+            <span role="columnheader">Multi-Site</span>
+          </div>
+          {comparisonRows.map((row) => (
+            <div className="pricing-comparison-row" role="row" key={row[0]}>
+              {row.map((cell, index) => (
+                <span role={index === 0 ? "rowheader" : "cell"} key={cell}>{cell}</span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="pricing-faq-section" aria-labelledby="pricing-faq-heading">
+        <div className="pricing-section-heading">
+          <p className="pricing-eyebrow">Questions</p>
+          <h2 id="pricing-faq-heading">The short version.</h2>
+        </div>
+        <div className="pricing-faq-grid">
+          {faqs.map(([question, answer]) => (
+            <article className="pricing-faq-card" key={question}>
+              <h3>{question}</h3>
+              <p>{answer}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="pricing-final-cta">
+        <div>
+          <p>Ready to see whether there is money on the table?</p>
+          <span>Start with the free scan. Bring utility data later if the numbers deserve a closer look.</span>
+        </div>
+        <button className="pricing-final-button" onClick={() => navigate("scan")} type="button">
+          Start free scan
+          <ArrowUpRightIcon />
+        </button>
       </section>
     </PublicShell>
   );
