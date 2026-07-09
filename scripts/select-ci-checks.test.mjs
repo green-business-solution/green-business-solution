@@ -12,7 +12,7 @@ describe("select-ci-checks", () => {
   });
 
   it("does not run code checks for docs-only changes", () => {
-    expect(classifyCiChecks(["docs/architecture-resource-map.md", "review.md"]).checks).toEqual([]);
+    expect(classifyCiChecks(["docs/architecture-resource-map.md", "AI_CHANGELOG.md"]).checks).toEqual([]);
   });
 
   it("runs all checks for shared workflow changes", () => {

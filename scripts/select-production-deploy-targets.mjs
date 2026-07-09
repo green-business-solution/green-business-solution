@@ -412,6 +412,7 @@ function isDocsOnly(file) {
   return (
     file.startsWith("docs/") ||
     file === "README.md" ||
+    file === "AI_CHANGELOG.md" ||
     file === "AGENTS.md" ||
     file === "AGENT_WORKFLOW.md" ||
     file === "STYLE_GUIDE.md" ||
