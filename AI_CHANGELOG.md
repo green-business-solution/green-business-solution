@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-09 - Codex (GPT-5) RetroFi preview scenario tab polish
+
+- Renamed the combined scenario/opportunity user-preview tab to `Scenarios` and changed scenario card and row hover states to use the light green preview hover color.
+
 ## 2026-07-09 - Codex (GPT-5) next-session context handoff
 
 - Added a root `NEXT_CODEX_CONTEXT.md` handoff for future Codex sessions covering the current implementation plan, completed Codex work, architecture state, AWS migration state, runtime artifact rules, application-prep status, and highest-priority next tasks.
