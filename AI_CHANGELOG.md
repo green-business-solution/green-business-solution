@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-09 - Codex (GPT-5) GPT Pro output save fix
+
+- Scoped a larger JSON body parser to the GPT Pro work output save route so repair outputs can reach the store-level size validation.
+
 ## 2026-07-09 - Codex (GPT-5) GPT Pro fallback fix
 
 - Preserved explicit empty GPT Pro work bucket configuration so local fallback storage can activate as documented.

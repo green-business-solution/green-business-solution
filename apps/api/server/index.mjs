@@ -185,7 +185,16 @@ const gptProWorkS3 = new S3Client({
 export const app = express();
 let activeServer = null;
 
-app.use(express.json({ limit: "128kb" }));
+const defaultJsonParser = express.json({ limit: "128kb" });
+const gptProWorkOutputJsonParser = express.json({ limit: "6mb" });
+
+app.use((req, res, next) => {
+  if (req.method === "PUT" && req.path === "/api/admin/gpt-pro-work/output") {
+    next();
+    return;
+  }
+  defaultJsonParser(req, res, next);
+});
 
 const baseRequiredFields = [
   ["email", "Email"],
@@ -3219,7 +3228,7 @@ app.get("/api/admin/gpt-pro-work/output", async (req, res) => {
   }
 });
 
-app.put("/api/admin/gpt-pro-work/output", async (req, res) => {
+app.put("/api/admin/gpt-pro-work/output", gptProWorkOutputJsonParser, async (req, res) => {
   try {
     await requireGptProWorkRouteAccess(req);
     res.json(
