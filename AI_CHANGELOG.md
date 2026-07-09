@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-09 - Codex (GPT-5) GPT Pro docs auth fix
+
+- Updated local GPT Pro chats documentation to require the dedicated chats auth bypass instead of the Firstmate tasks bypass.
+
 ## 2026-07-09 - Codex (GPT-5) GPT Pro output save fix
 
 - Scoped a larger JSON body parser to the GPT Pro work output save route so repair outputs can reach the store-level size validation.

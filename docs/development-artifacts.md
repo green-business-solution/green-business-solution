@@ -87,5 +87,6 @@ If an active or reopened task still has an older `report.md`, the dashboard labe
 Set `report_status=review-ready` in task metadata only when an active task explicitly wants captain report review before completion.
 GPT Pro repair/report tasks expose the repair workspace action only when task metadata explicitly marks the next step as repair work, such as `gpt_pro_repair_status=ready` or `report_status=repair-ready`.
 Set `RETROFI_FIRSTMATE_GPT_PRO_REPAIR_URL=/chats` to route those repair-ready rows to the local GPT Pro copy/paste workspace.
-Set `RETROFI_GPT_PRO_CHATS_LOCAL_AUTH_BYPASS=1`, or use the existing Firstmate tasks local auth bypass, only for local captain workflows where Google OAuth is not configured.
+Set `RETROFI_GPT_PRO_CHATS_LOCAL_AUTH_BYPASS=1` only for local captain `/chats` workflows where Google OAuth is not configured.
+The Firstmate tasks local auth bypass remains scoped to Firstmate task endpoints and does not grant access to GPT Pro work endpoints.
 Rows in report review mode and rows in GPT Pro repair mode are mutually exclusive in the dashboard.
