@@ -30,9 +30,13 @@ The runtime stacks create:
 - `gbs-retrofit-recommendation-cache` for recommendation cache metadata.
 - `gbs-application-profiles` for application source/profile registry records.
 - `gbs-api-runtime-state` for operational state such as Geocodio quota usage.
+- `gbs-firstmate-tasks` for production-safe Codex task snapshots and bounded admin report records.
 - `gbs-retrofi-org-runtime-cache-...` for generated recommendation cache payloads.
 - `gbs-retrofi-test-fixtures-...` for generated fixtures and synthetic test data.
 - `gbs-retrofi-dev-work-...` for private GPT Pro work artifacts under `gpt-pro-work/`.
+
+Set `GBS_FIRSTMATE_TASKS_INGESTION_PRINCIPAL_ARN` before deploying runtime data to create an optional least-privilege ingestion role for publishing task snapshots with
+`scripts/sync-firstmate-tasks-to-dynamodb.mjs`.
 
 The uploaded utility/energy file bucket remains `gbs-retrofi-org-energy-data-...`; it is now only for
 customer utility/energy uploads, not generated runtime cache payloads.

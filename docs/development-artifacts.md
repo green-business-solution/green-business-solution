@@ -88,8 +88,11 @@ Deploy the optional ingestion role by setting `GBS_FIRSTMATE_TASKS_INGESTION_PRI
 Leave it blank to create only the table and skip the writer role.
 The RetroFi Lambda role has read-only access to the snapshot table.
 
-For local captain workflow only, run the API with `RETROFI_ENABLE_FIRSTMATE_TASKS=1` and `RETROFI_FIRSTMATE_HOME=<firstmate-home>`.
-If local Google OAuth is not configured, set `RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS=1` to allow only the Firstmate tasks list, report, and response endpoints to run without admin sign-in.
+For local captain workflow only, run the API with `RETROFI_ENABLE_FIRSTMATE_TASKS=1` and
+`RETROFI_FIRSTMATE_HOME=<firstmate-home>`.
+If local Google OAuth is not configured, set `RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS=1` to allow only
+Firstmate task reads, response, report feedback, and assignment endpoints to run without admin
+sign-in.
 The auth bypass is ignored when AWS Lambda runtime environment markers are present.
 The API reads Firstmate backlog, status, metadata, and `data/<task-id>/report.md` files without mutating them.
 For response-needed tasks with a live `window=` value in `state/<task-id>.meta`, the admin page can send a captain response through `<RETROFI_FIRSTMATE_HOME>/bin/fm-send.sh` using argument-based process execution.
