@@ -6250,13 +6250,13 @@ function SignInPage({
   );
 }
 
-function SessionRestoringPage({ navigate }: { navigate: (route: Route) => void }) {
+function SessionRestoringPage() {
   return (
-    <PublicShell navigate={navigate} pageClassName="sign-in-page" showFooter={false}>
-      <section className="sign-in-panel session-restoring-panel">
-        <RetroFiLogoLoader label="Checking your signed-in session..." size="lg" tone="modal" />
-      </section>
-    </PublicShell>
+    <RetroFiPageLoader
+      label="Checking your signed-in session..."
+      mode="spinner"
+      variant="default"
+    />
   );
 }
 
@@ -19748,7 +19748,7 @@ export function App() {
       return <AppSessionRestoringPage />;
     }
 
-    return <SessionRestoringPage navigate={navigate} />;
+    return <SessionRestoringPage />;
   }
 
   const publicAuth: PublicAuthState = {
