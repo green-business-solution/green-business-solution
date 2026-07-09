@@ -1,6 +1,6 @@
 # Data Model
 
-The local development app writes to DynamoDB in the Green Business Solution AWS account.
+The local development app writes to DynamoDB in the RetroFi production AWS account by default.
 
 ## Tables
 
@@ -215,13 +215,13 @@ The browser does not receive AWS credentials. The React app calls the local Node
 `/api` proxy. The API uses the local AWS CLI SSO profile:
 
 ```text
-gbs
+retrofi-prod
 ```
 
 Before running the app, sign in with:
 
 ```sh
-aws sso login --profile gbs
+aws sso login --profile retrofi-prod
 ```
 
 ## Diagnostics
@@ -232,15 +232,15 @@ on another:
 ```sh
 git pull --ff-only
 npm install
-aws sso login --profile gbs
-aws sts get-caller-identity --profile gbs
+aws sso login --profile retrofi-prod
+aws sts get-caller-identity --profile retrofi-prod
 npm run dev
 curl http://127.0.0.1:8787/api/diagnostics
 ```
 
 Expected:
 
-- `aws sts get-caller-identity --profile gbs` shows account `448016109714`.
+- `aws sts get-caller-identity --profile retrofi-prod` shows account `059310317821`.
 - `npm run dev` starts both the API and Vite.
 - the API prints `Green Business Solution API running at http://127.0.0.1:8787`.
 - `/api/diagnostics` returns `"ok": true`.

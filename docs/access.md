@@ -12,7 +12,7 @@
 
 - AWS accounts are isolated by project.
 - RetroFi production resources live in the RetroFi production AWS member account.
-- The old Green Business Solution account remains active for rollback history and hosted-zone ownership until those are intentionally migrated.
+- The old Green Business Solution account remains active only for explicit rollback history.
 - Human access should be granted through AWS IAM Identity Center.
 - Project collaborators should receive access through the `RetroFi-Admins` group unless explicitly approved otherwise.
 
@@ -33,7 +33,7 @@
 - Assigned accounts: `retrofi_official` and `RetroFi Production`
 - Neer Identity Center username: `neer`
 
-## Current AWS account
+## Legacy AWS account
 
 - Account name: `green-business-solution`
 - Account ID: `448016109714`

@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-09 - Codex (GPT-5) documentation sync
+
+- Synced architecture, resource, deployment, access, and data-model docs with the integrated profile tab and GPT Pro development-work release.
+
 ## 2026-07-09 - Codex (GPT-5) GPT Pro docs auth fix
 
 - Updated local GPT Pro chats documentation to require the dedicated chats auth bypass instead of the Firstmate tasks bypass.

@@ -40,27 +40,27 @@ AWS_PROFILE=retrofi-prod AWS_REGION=us-east-1 npm run migrate:gpt-pro-work -- --
 
 ## Generated Fixtures
 
-- Current source S3 URI: `s3://gbs-retrofi-test-fixtures-448016109714-us-east-1/generated-test-fixtures/`
-- New production S3 URI: `s3://gbs-retrofi-test-fixtures-059310317821-us-east-1/generated-test-fixtures/`
+- Current production S3 URI: `s3://gbs-retrofi-test-fixtures-059310317821-us-east-1/generated-test-fixtures/`
 - AWS region: `us-east-1`
-- Current source bucket: `gbs-retrofi-test-fixtures-448016109714-us-east-1`
-- New production bucket: `gbs-retrofi-test-fixtures-059310317821-us-east-1`
+- Current production bucket: `gbs-retrofi-test-fixtures-059310317821-us-east-1`
+- Current AWS profile: `retrofi-prod`
+- Legacy rollback profile: `gbs`
 - Access: private S3 bucket with public access blocked
 - Default encryption: AES-256
 - Versioning: enabled
 
-During the AWS account migration, use `scripts/copy-s3-bucket-versions-between-profiles.mjs` to preserve historical versions for both versioned buckets.
+Use `scripts/copy-s3-bucket-versions-between-profiles.mjs` only for explicit legacy rollback or migration verification work.
 
 Restore locally:
 
 ```sh
-AWS_PROFILE=gbs npm run fixtures:generated:download
+AWS_PROFILE=retrofi-prod GBS_GENERATED_FIXTURE_BUCKET=gbs-retrofi-test-fixtures-059310317821-us-east-1 npm run fixtures:generated:download
 ```
 
 Upload refreshed fixtures:
 
 ```sh
-AWS_PROFILE=gbs npm run fixtures:generated:upload
+AWS_PROFILE=retrofi-prod GBS_GENERATED_FIXTURE_BUCKET=gbs-retrofi-test-fixtures-059310317821-us-east-1 npm run fixtures:generated:upload
 ```
 
 ## Local Firstmate Tasks

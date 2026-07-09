@@ -84,6 +84,7 @@ GitHub Actions deploys from `main` using OIDC into production account `059310317
 | prod | RetroFi Production | `059310317821` | `us-east-1` | `gbs-retrofi-runtime-buckets` stack | data | `infra/runtime-buckets.yaml` | Runtime cache, generated fixture, and dev-work buckets |
 | prod | RetroFi Production | `059310317821` | `us-east-1` | `gbs-retrofi-api` stack | api | `infra/api-hosting.yaml` | Lambda, API Gateway, IAM role, logs |
 | prod | RetroFi Production | `059310317821` | `us-east-1` | `gbs-retrofi-production` stack | frontend/infra | `infra/production-hosting.yaml` | Frontend bucket, CloudFront, ACM, DNS aliases |
+| prod | RetroFi Production | `059310317821` | `us-east-1` | `gbs-retrofi-dev-work-059310317821-us-east-1` | data/api | `infra/runtime-buckets.yaml`, `infra/api-hosting.yaml` | Private GPT Pro work artifacts under `gpt-pro-work/` |
 | prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-users` | api/data | `infra/runtime-data.yaml` | User records |
 | prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-client-intake` | api/data | `infra/runtime-data.yaml` | Intake records |
 | prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-opportunity-candidates` | api/data | `infra/runtime-data.yaml` | DSIRE opportunity records |
