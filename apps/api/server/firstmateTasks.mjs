@@ -128,7 +128,7 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
         const state = resolveTaskState(task);
         const responseNeeded = responseNeededStatusStates.has(task.statusState);
         const reportArtifact = resolveReportArtifact({ hasReport, state, task });
-        const gptProRepairTarget = resolveGptProRepairTarget(task);
+        const gptProRepairTarget = resolveGptProRepairTarget(task, env);
         return {
           id: task.id,
           title: task.title || titleFromTaskId(task.id),
@@ -152,10 +152,17 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
           reportNote: reportArtifact.note,
           reportIsFinal: reportArtifact.isFinal,
           reportReviewReady: reportArtifact.reviewReady,
-          canSendReportFeedback: reportArtifact.reviewReady && isSafeWindowTarget(task.window),
+          reportFeedbackMode: reportArtifact.reviewReady
+            ? isSafeWindowTarget(task.window)
+              ? "live-window"
+              : "follow-up-task"
+            : null,
+          reportFeedbackUnavailableReason: reportArtifact.reviewReady ? null : "Report feedback is available only for final reports or reports explicitly marked ready for review.",
+          canSendReportFeedback: reportArtifact.reviewReady,
           gptProRepairUrl: gptProRepairTarget.url,
           gptProRepairLabel: gptProRepairTarget.label,
-          gptProRepairFallback: gptProRepairTarget.fallback
+          gptProRepairFallback: gptProRepairTarget.fallback,
+          gptProRepairUnavailableReason: gptProRepairTarget.unavailableReason
         };
       })
   );
@@ -205,6 +212,8 @@ export async function readFirstmateTaskReport({ env = process.env, taskId, now =
       reportNote: task?.reportNote || "This report artifact exists, but no current task status was found.",
       reportIsFinal: Boolean(task?.reportIsFinal),
       reportReviewReady: Boolean(task?.reportReviewReady),
+      reportFeedbackMode: task?.reportFeedbackMode || null,
+      canSendReportFeedback: Boolean(task?.canSendReportFeedback),
       markdown
     };
   } catch (error) {
@@ -339,36 +348,56 @@ export async function sendFirstmateTaskReportFeedback({
   }
 
   const metaPath = safeStateFilePath(firstmateHome, normalizedTaskId, ".meta");
-  const metaText = await readRequiredText(metaPath, "Task metadata not found.");
+  const metaText = await readTextIfExists(metaPath);
   const meta = parseKeyValueLines(metaText);
   const windowTarget = cleanOptional(meta.window);
-  if (!isSafeWindowTarget(windowTarget)) {
-    throw statusError("Task does not have a live response window for report feedback.", 409);
+  if (isSafeWindowTarget(windowTarget)) {
+    const sendScriptPath = safeFirstmateBinPath(firstmateHome, "fm-send.sh");
+    const sendScriptStatus = await statFile(sendScriptPath);
+    if (!sendScriptStatus.exists) {
+      throw statusError("Firstmate send helper was not found.", 503);
+    }
+    if (!sendScriptStatus.isFile) {
+      throw statusError("Firstmate send helper is not a file.", 503);
+    }
+
+    await sendFirstmateWindowMessage(execFileFn, sendScriptPath, windowTarget, buildReportFeedbackMessage({
+      action: cleanAction,
+      comment: cleanComment,
+      taskId: normalizedTaskId
+    }), {
+      cwd: firstmateHome,
+      maxBuffer: 64 * 1024,
+      timeout: 15_000
+    });
+
+    return {
+      generatedAt: toIsoString(now),
+      taskId: normalizedTaskId,
+      action: cleanAction,
+      delivery: "live-window",
+      sent: true
+    };
   }
 
-  const sendScriptPath = safeFirstmateBinPath(firstmateHome, "fm-send.sh");
-  const sendScriptStatus = await statFile(sendScriptPath);
-  if (!sendScriptStatus.exists) {
-    throw statusError("Firstmate send helper was not found.", 503);
-  }
-  if (!sendScriptStatus.isFile) {
-    throw statusError("Firstmate send helper is not a file.", 503);
-  }
-
-  await sendFirstmateWindowMessage(execFileFn, sendScriptPath, windowTarget, buildReportFeedbackMessage({
+  const followUp = await createReportFeedbackFollowUp({
+    env,
+    execFileFn,
+    firstmateHome,
+    task,
+    taskId: normalizedTaskId,
     action: cleanAction,
     comment: cleanComment,
-    taskId: normalizedTaskId
-  }), {
-    cwd: firstmateHome,
-    maxBuffer: 64 * 1024,
-    timeout: 15_000
+    now
   });
 
   return {
     generatedAt: toIsoString(now),
     taskId: normalizedTaskId,
     action: cleanAction,
+    delivery: "follow-up-task",
+    feedbackPath: followUp.feedbackPath,
+    followUpTaskId: followUp.followUpTaskId,
     sent: true
   };
 }
@@ -756,13 +785,24 @@ function resolveReportArtifact({ hasReport, state, task }) {
   };
 }
 
-function resolveGptProRepairTarget(task) {
+function resolveGptProRepairTarget(task, env = process.env) {
   const directUrl = cleanOptional(task.gptProRepairUrl);
   if (isSafeLocalBrowserUrl(directUrl)) {
     return {
       url: directUrl,
       label: "Go To Pro Repair Batch",
-      fallback: false
+      fallback: false,
+      unavailableReason: null
+    };
+  }
+
+  const configuredUrl = cleanOptional(env.RETROFI_FIRSTMATE_GPT_PRO_REPAIR_URL);
+  if (isGptProRepairTask(task) && isSafeLocalBrowserUrl(configuredUrl)) {
+    return {
+      url: configuredUrl,
+      label: "Go To Pro Repair Batch",
+      fallback: false,
+      unavailableReason: null
     };
   }
 
@@ -770,14 +810,16 @@ function resolveGptProRepairTarget(task) {
     return {
       url: null,
       label: null,
-      fallback: false
+      fallback: false,
+      unavailableReason: null
     };
   }
 
   return {
-    url: "/chats",
-    label: "Go To Pro Repair Batch (/chats fallback)",
-    fallback: true
+    url: null,
+    label: null,
+    fallback: false,
+    unavailableReason: "GPT Pro repair workspace URL is not configured for this local dashboard."
   };
 }
 
@@ -819,6 +861,133 @@ function buildReportFeedbackMessage({ action, comment, taskId }) {
     `Captain comment: ${commentText}`,
     "If the action and comment are clear, proceed accordingly. If they are ambiguous, ask the captain a clarifying question before doing more work."
   ].join("\n");
+}
+
+async function createReportFeedbackFollowUp({
+  execFileFn,
+  firstmateHome,
+  task,
+  taskId,
+  action,
+  comment,
+  now
+}) {
+  const feedbackPath = safeReportFeedbackPath(firstmateHome, taskId, now);
+  const followUpTaskId = buildReportFeedbackFollowUpTaskId(taskId, now);
+  const artifact = buildReportFeedbackArtifact({
+    action,
+    comment,
+    feedbackPath,
+    followUpTaskId,
+    firstmateHome,
+    task,
+    taskId,
+    now
+  });
+
+  await fs.mkdir(path.dirname(feedbackPath), { recursive: true });
+  await fs.writeFile(feedbackPath, artifact, { flag: "wx" });
+
+  const queueResult = await execFilePromise(execFileFn, "tasks-axi", [
+    "add",
+    followUpTaskId,
+    `Follow up on report feedback for ${taskId}`,
+    "--kind",
+    "scout",
+    "--repo",
+    task.repo || "unknown",
+    "--body-file",
+    feedbackPath,
+    "--queue",
+    "--json"
+  ], {
+    cwd: firstmateHome,
+    maxBuffer: 64 * 1024,
+    timeout: 15_000
+  });
+
+  if (queueResult.error) {
+    const wrapped = statusError("Could not queue Firstmate report feedback follow-up task.", 502);
+    wrapped.cause = queueResult.error;
+    wrapped.stdout = queueResult.stdout;
+    wrapped.stderr = queueResult.stderr;
+    wrapped.feedbackPath = feedbackPath;
+    wrapped.followUpTaskId = followUpTaskId;
+    throw wrapped;
+  }
+
+  return {
+    feedbackPath,
+    followUpTaskId
+  };
+}
+
+function safeReportFeedbackPath(firstmateHome, taskId, now) {
+  const normalizedTaskId = normalizeTaskId(taskId);
+  if (!normalizedTaskId) {
+    throw statusError("Invalid task id.", 400);
+  }
+
+  const taskDataDir = path.resolve(firstmateHome, "data", normalizedTaskId);
+  const feedbackDir = path.resolve(taskDataDir, "feedback");
+  const fileName = `report-feedback-${compactTimestamp(now)}.md`;
+  const feedbackPath = path.resolve(feedbackDir, fileName);
+  const feedbackPrefix = `${feedbackDir}${path.sep}`;
+  if (!feedbackPath.startsWith(feedbackPrefix)) {
+    throw statusError("Invalid report feedback path.", 400);
+  }
+  return feedbackPath;
+}
+
+function buildReportFeedbackFollowUpTaskId(taskId, now) {
+  const compactId = normalizeTaskId(taskId).slice(0, 72).replace(/[^a-z0-9._-]/gi, "-").toLowerCase();
+  return `feedback-${compactId}-${compactTimestamp(now)}`.slice(0, 120);
+}
+
+function buildReportFeedbackArtifact({
+  action,
+  comment,
+  feedbackPath,
+  followUpTaskId,
+  firstmateHome,
+  task,
+  taskId,
+  now
+}) {
+  const reportPath = safeReportPath(firstmateHome, taskId);
+  const reportUrl = `/tasks/reports/${encodeURIComponent(taskId)}`;
+  const commentText = comment || "No additional comment.";
+  const nextInstruction = action === "proceed"
+    ? "Proceed from the report if the captain comment is clear; ask a clarifying question if it is ambiguous."
+    : "Revise or investigate from the report using the captain comment, and ask a clarifying question if the requested change is ambiguous.";
+
+  return [
+    `# Report Feedback Follow-up: ${task.title || taskId}`,
+    "",
+    `- Original task id: ${taskId}`,
+    `- Original task title: ${task.title || taskId}`,
+    `- Follow-up task id: ${followUpTaskId}`,
+    `- Captured at: ${toIsoString(now)}`,
+    `- Repo: ${task.repo || "unknown"}`,
+    `- Kind: ${task.kind || "unknown"}`,
+    `- Report path: ${reportPath}`,
+    `- Report URL: ${reportUrl}`,
+    `- Feedback artifact: ${feedbackPath}`,
+    `- Action: ${action}`,
+    "",
+    "## Captain Comment",
+    "",
+    commentText,
+    "",
+    "## Instructions",
+    "",
+    nextInstruction,
+    "Keep the original report context attached to this follow-up and update the captain through normal Firstmate task status."
+  ].join("\n");
+}
+
+function compactTimestamp(value) {
+  return toIsoString(value).replace(/[^0-9]/g, "").slice(0, 17);
 }
 
 function safeFirstmateBinPath(firstmateHome, fileName) {

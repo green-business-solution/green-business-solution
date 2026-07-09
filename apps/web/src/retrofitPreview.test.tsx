@@ -1615,12 +1615,13 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("action === \"changes-requested\"");
     expect(source).toContain("What should change?");
     expect(source).toContain("rel=\"noreferrer\" target=\"_blank\"");
-    expect(source).toContain("Opens the local /chats fallback for this GPT Pro repair task.");
     expect(source).toContain("Go To Pro Repair Batch");
+    expect(source).toContain("gptProRepairUnavailableReason");
+    expect(source).not.toContain("Opens the local /chats fallback for this GPT Pro repair task.");
     expect(source).toContain("task.reportActionLabel || \"View Report\"");
     expect(source).toContain("task.reportNote && !task.reportIsFinal");
     expect(source).toContain("task-report-status-note");
-    expect(source).toContain("No feedback window");
+    expect(source).toContain("This will create a Firstmate follow-up task with your feedback.");
   });
 
   it("renders the shared full-page loader with the RetroFi logo and dashboard status text", () => {

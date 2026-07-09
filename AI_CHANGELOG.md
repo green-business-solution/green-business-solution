@@ -24,6 +24,7 @@
 - Added a guarded response workflow for tasks whose latest status needs captain input and whose Firstmate metadata has a live response window.
 - Added an explicit local-only `RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS=1` mode so `/tasks` works without local Google OAuth while leaving other admin endpoints unchanged and ignoring the bypass in AWS runtime.
 - Added stale response handling, completed-report feedback actions, draft/previous report labels, and GPT Pro repair batch links for the local Firstmate tasks dashboard.
+- Added durable follow-up task creation for completed report feedback when the original task has no live response window.
 - Added a guarded one-time Enter retry when `fm-send.sh` leaves a Firstmate task response in the Codex composer.
 - Documented the local-only Firstmate task dashboard environment variables in `docs/development-artifacts.md`.
 

@@ -72,6 +72,7 @@ The API reads Firstmate backlog, status, metadata, and `data/<task-id>/report.md
 For response-needed tasks with a live `window=` value in `state/<task-id>.meta`, the admin page can send a captain response through `<RETROFI_FIRSTMATE_HOME>/bin/fm-send.sh` using argument-based process execution.
 If `fm-send.sh` reports that Enter was swallowed and text was left in the composer, the API performs one argument-based `--key Enter` retry for the same validated window.
 For completed tasks with reports and a live `window=`, the admin page can send report feedback with either a proceed action or requested-change comments through the same helper.
+For completed or review-ready reports without a live `window=`, report feedback is written to `data/<task-id>/feedback/` and queued as a Firstmate follow-up task through `tasks-axi add`.
 If an active or reopened task still has an older `report.md`, the dashboard labels it as a previous or draft report instead of a final report.
 Set `report_status=review-ready` in task metadata only when an active task explicitly wants captain report review before completion.
-GPT Pro repair/report tasks can expose a safe local repair URL from task metadata, and otherwise fall back to opening `/chats` in a new tab.
+GPT Pro repair/report tasks can expose a safe local repair URL from task metadata or `RETROFI_FIRSTMATE_GPT_PRO_REPAIR_URL`; otherwise the dashboard shows that the repair workspace URL is not configured.

@@ -448,6 +448,7 @@ type AdminUserPreviewOptionsResponse = {
 
 type FirstmateTaskState = "active" | "completed" | "blocked" | "queued";
 type FirstmateTaskReportFeedbackAction = "proceed" | "changes-requested";
+type FirstmateTaskReportFeedbackMode = "live-window" | "follow-up-task";
 type FirstmateTaskReportStatus = "none" | "final" | "review-ready" | "draft" | "previous";
 
 type FirstmateTask = {
@@ -473,10 +474,13 @@ type FirstmateTask = {
   reportNote: string | null;
   reportIsFinal: boolean;
   reportReviewReady: boolean;
+  reportFeedbackMode: FirstmateTaskReportFeedbackMode | null;
+  reportFeedbackUnavailableReason: string | null;
   canSendReportFeedback: boolean;
   gptProRepairUrl: string | null;
   gptProRepairLabel: string | null;
   gptProRepairFallback: boolean;
+  gptProRepairUnavailableReason: string | null;
 };
 
 type FirstmateTasksResponse = {
@@ -504,6 +508,8 @@ type FirstmateTaskReportResponse = {
   reportNote: string | null;
   reportIsFinal: boolean;
   reportReviewReady: boolean;
+  reportFeedbackMode: FirstmateTaskReportFeedbackMode | null;
+  canSendReportFeedback: boolean;
   markdown: string;
 };
 
@@ -517,6 +523,9 @@ type FirstmateTaskReportFeedbackResponse = {
   generatedAt: string;
   taskId: string;
   action: FirstmateTaskReportFeedbackAction;
+  delivery: FirstmateTaskReportFeedbackMode;
+  feedbackPath?: string;
+  followUpTaskId?: string;
   sent: true;
 };
 
@@ -15835,12 +15844,15 @@ function FirstmateTaskRow({
             </button>
           ) : null}
           {task.state === "completed" && task.hasReport && !task.canSendReportFeedback ? (
-            <span className="tasks-muted">No feedback window</span>
+            <span className="tasks-muted">{task.reportFeedbackUnavailableReason || "Feedback unavailable"}</span>
           ) : null}
           {task.gptProRepairUrl ? (
-            <a className="button-link secondary-button" href={task.gptProRepairUrl} rel="noreferrer" target="_blank" title={task.gptProRepairFallback ? "Opens the local /chats fallback for this GPT Pro repair task." : undefined}>
+            <a className="button-link secondary-button" href={task.gptProRepairUrl} rel="noreferrer" target="_blank">
               {task.gptProRepairLabel || "Go To Pro Repair Batch"}
             </a>
+          ) : null}
+          {task.gptProRepairUnavailableReason ? (
+            <span className="tasks-muted">{task.gptProRepairUnavailableReason}</span>
           ) : null}
         </div>
         {task.hasReport && task.reportNote && !task.reportIsFinal ? (
@@ -15934,6 +15946,9 @@ function FirstmateReportFeedbackForm({
           value={comment}
         />
       </label>
+      {task.reportFeedbackMode === "follow-up-task" ? (
+        <p className="tasks-muted">No live agent window is available. This will create a Firstmate follow-up task with your feedback.</p>
+      ) : null}
       <button disabled={!canSubmit} onClick={() => void sendFeedback()} type="button">
         {isSending ? "Sending..." : "Send Feedback"}
       </button>

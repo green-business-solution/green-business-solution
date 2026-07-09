@@ -150,6 +150,7 @@ describe("firstmate task reader", () => {
         "## Done",
         "- [x] gpt-pro-repair-g1 - GPT Pro repair report data/gpt-pro-repair-g1/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)",
         "- [x] exact-gpt-pro-g2 - GPT Pro repair report data/exact-gpt-pro-g2/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)",
+        "- [x] no-window-report-n1 - Completed report without live window data/no-window-report-n1/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)",
         "## In flight",
         "- [ ] reopened-report-r3 - Reopened report task data/reopened-report-r3/report.md (repo: green-business-solution) (kind: ship) (since 2026-07-08)",
         "- [ ] review-ready-r4 - Report review task data/review-ready-r4/report.md (repo: green-business-solution) (kind: ship) (since 2026-07-08)"
@@ -163,6 +164,7 @@ describe("firstmate task reader", () => {
     await writeFile(home, "state/review-ready-r4.status", "working: report ready for captain review\n");
     await writeFile(home, "data/gpt-pro-repair-g1/report.md", "# GPT Pro Repair\n\nReady.\n");
     await writeFile(home, "data/exact-gpt-pro-g2/report.md", "# Exact GPT Pro Repair\n\nReady.\n");
+    await writeFile(home, "data/no-window-report-n1/report.md", "# No Window Report\n\nReady.\n");
     await writeFile(home, "data/reopened-report-r3/report.md", "# Previous Report\n\nOlder artifact.\n");
     await writeFile(home, "data/review-ready-r4/report.md", "# Review Ready\n\nReady.\n");
 
@@ -179,15 +181,24 @@ describe("firstmate task reader", () => {
       reportStatus: "final",
       reportActionLabel: "See Report",
       reportIsFinal: true,
-      gptProRepairUrl: "/chats",
-      gptProRepairLabel: "Go To Pro Repair Batch (/chats fallback)",
-      gptProRepairFallback: true
+      reportFeedbackMode: "live-window",
+      gptProRepairUrl: null,
+      gptProRepairLabel: null,
+      gptProRepairFallback: false,
+      gptProRepairUnavailableReason: "GPT Pro repair workspace URL is not configured for this local dashboard."
     });
     expect(dashboard.tasks.find((task) => task.id === "exact-gpt-pro-g2")).toMatchObject({
       canSendReportFeedback: true,
+      reportFeedbackMode: "live-window",
       gptProRepairUrl: "http://localhost:5173/chats?batch=tax-repair",
       gptProRepairLabel: "Go To Pro Repair Batch",
       gptProRepairFallback: false
+    });
+    expect(dashboard.tasks.find((task) => task.id === "no-window-report-n1")).toMatchObject({
+      canSendReportFeedback: true,
+      reportStatus: "final",
+      reportFeedbackMode: "follow-up-task",
+      reportIsFinal: true
     });
     expect(dashboard.tasks.find((task) => task.id === "reopened-report-r3")).toMatchObject({
       state: "active",
@@ -203,7 +214,22 @@ describe("firstmate task reader", () => {
       canSendReportFeedback: true,
       reportStatus: "review-ready",
       reportActionLabel: "Review Report",
+      reportFeedbackMode: "live-window",
       reportReviewReady: true
+    });
+
+    const configuredDashboard = await readFirstmateTasksDashboard({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home,
+        RETROFI_FIRSTMATE_GPT_PRO_REPAIR_URL: "http://localhost:5173/chats"
+      },
+      now: new Date("2026-07-08T12:00:00.000Z")
+    });
+    expect(configuredDashboard.tasks.find((task) => task.id === "gpt-pro-repair-g1")).toMatchObject({
+      gptProRepairUrl: "http://localhost:5173/chats",
+      gptProRepairLabel: "Go To Pro Repair Batch",
+      gptProRepairUnavailableReason: null
     });
   });
 
@@ -401,6 +427,7 @@ describe("firstmate task reader", () => {
       generatedAt: "2026-07-08T12:00:00.000Z",
       taskId: "feedback-task-f1",
       action: "proceed",
+      delivery: "live-window",
       sent: true
     });
     expect(calls).toHaveLength(1);
@@ -410,6 +437,62 @@ describe("firstmate task reader", () => {
     expect(calls[0].args[1]).toContain("Captain comment: Looks good. Proceed with the next step.");
     expect(calls[0].args[1]).toContain("ask the captain a clarifying question");
     expect(calls[0].options).toMatchObject({ cwd: home, timeout: 15_000 });
+  });
+
+  it("queues report feedback as a follow-up task when no live window exists", async () => {
+    const home = await makeFirstmateHome();
+    await writeFile(home, "data/backlog.md", "## Done\n- [x] feedback-no-window-f4 - Completed report data/feedback-no-window-f4/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)\n");
+    await writeFile(home, "data/feedback-no-window-f4/report.md", "# Report\n\nReady.\n");
+    const calls = [];
+
+    const result = await sendFirstmateTaskReportFeedback({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      taskId: "feedback-no-window-f4",
+      action: "changes-requested",
+      comment: "Please add the missing validation notes.",
+      now: new Date("2026-07-08T12:34:56.789Z"),
+      execFileFn: (file, args, options, callback) => {
+        calls.push({ file, args, options });
+        callback(null, JSON.stringify({ id: args[1] }), "");
+      }
+    });
+
+    expect(result).toMatchObject({
+      generatedAt: "2026-07-08T12:34:56.789Z",
+      taskId: "feedback-no-window-f4",
+      action: "changes-requested",
+      delivery: "follow-up-task",
+      followUpTaskId: "feedback-feedback-no-window-f4-20260708123456789",
+      sent: true
+    });
+    expect(result.feedbackPath).toBe(path.join(home, "data", "feedback-no-window-f4", "feedback", "report-feedback-20260708123456789.md"));
+    expect(calls).toHaveLength(1);
+    expect(calls[0].file).toBe("tasks-axi");
+    expect(calls[0].args).toEqual([
+      "add",
+      "feedback-feedback-no-window-f4-20260708123456789",
+      "Follow up on report feedback for feedback-no-window-f4",
+      "--kind",
+      "scout",
+      "--repo",
+      "green-business-solution",
+      "--body-file",
+      result.feedbackPath,
+      "--queue",
+      "--json"
+    ]);
+    expect(calls[0].options).toMatchObject({ cwd: home, timeout: 15_000 });
+
+    const artifact = await fs.readFile(result.feedbackPath, "utf8");
+    expect(artifact).toContain("Original task id: feedback-no-window-f4");
+    expect(artifact).toContain("Original task title: Completed report");
+    expect(artifact).toContain("Report URL: /tasks/reports/feedback-no-window-f4");
+    expect(artifact).toContain("Action: changes-requested");
+    expect(artifact).toContain("Please add the missing validation notes.");
+    expect(artifact).toContain("Revise or investigate from the report");
   });
 
   it("retries report feedback submit once when Firstmate leaves text in the composer", async () => {
@@ -447,6 +530,7 @@ describe("firstmate task reader", () => {
       generatedAt: "2026-07-08T12:00:00.000Z",
       taskId: "feedback-retry-f3",
       action: "changes-requested",
+      delivery: "live-window",
       sent: true
     });
     expect(calls).toHaveLength(2);

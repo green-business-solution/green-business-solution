@@ -1639,6 +1639,12 @@ textarea {
   margin: 0;
 }
 
+.task-report-feedback-form .tasks-muted {
+  font-size: 12px;
+  line-height: 1.35;
+  margin: 0;
+}
+
 .task-status-indicator {
   align-items: center;
   border-radius: 999px;
