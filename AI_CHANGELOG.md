@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-09 - Codex (GPT-5) GPT Pro fallback fix
+
+- Preserved explicit empty GPT Pro work bucket configuration so local fallback storage can activate as documented.
+- Added focused regression coverage for GPT Pro work bucket precedence.
+
 ## 2026-07-09 - Codex (GPT-5) GPT Pro review fixes
 
 - Scoped GPT Pro work API local auth bypass to the dedicated GPT Pro chats environment flag.

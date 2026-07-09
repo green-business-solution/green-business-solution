@@ -6,6 +6,7 @@ import {
   gptProObjectPathFromS3Key,
   gptProOutputPathForPromptPath,
   isGptProChatsLocalAuthBypassEnabled,
+  resolveGptProWorkBucket,
   validateGptProArtifactPath,
   validateGptProBatchId
 } from "./gptProWorkStore.mjs";
@@ -34,6 +35,24 @@ describe("GPT Pro work store helpers", () => {
 
     expect(helperSource).toContain("isGptProChatsLocalAuthBypassEnabled(env)");
     expect(helperSource).not.toContain("isFirstmateTasksLocalAuthBypassEnabled(env)");
+  });
+
+  it("lets an explicit empty GPT Pro work bucket disable S3", () => {
+    expect(resolveGptProWorkBucket({})).toBe("gbs-retrofi-dev-work-059310317821-us-east-1");
+    expect(resolveGptProWorkBucket({
+      GBS_GPT_PRO_WORK_BUCKET: "gpt-pro-work-bucket"
+    })).toBe("gpt-pro-work-bucket");
+    expect(resolveGptProWorkBucket({
+      GBS_DEV_WORK_BUCKET: "dev-work-bucket",
+      GBS_GPT_PRO_WORK_BUCKET: "gpt-pro-work-bucket"
+    })).toBe("dev-work-bucket");
+    expect(resolveGptProWorkBucket({
+      GBS_GPT_PRO_WORK_BUCKET: ""
+    })).toBe("");
+    expect(resolveGptProWorkBucket({
+      GBS_DEV_WORK_BUCKET: "",
+      GBS_GPT_PRO_WORK_BUCKET: "gpt-pro-work-bucket"
+    })).toBe("");
   });
 
   it("derives output paths from prompt paths without accepting traversal", () => {

@@ -27,6 +27,10 @@ export function isGptProChatsLocalAuthBypassEnabled(env = process.env) {
   return !isAwsRuntime && bypassFlag === "1";
 }
 
+export function resolveGptProWorkBucket(env = process.env) {
+  return env.GBS_DEV_WORK_BUCKET ?? env.GBS_GPT_PRO_WORK_BUCKET ?? defaultGptProWorkBucket;
+}
+
 export function cleanGptProWorkPrefix(value) {
   const prefix = cleanText(value || defaultGptProWorkPrefix).replace(/^\/+|\/+$/g, "");
   if (!prefix || prefix.split("/").some((segment) => !segment || segment === "." || segment === "..")) {

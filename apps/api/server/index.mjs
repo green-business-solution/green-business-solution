@@ -83,6 +83,7 @@ import {
   listGptProWorkBatches,
   readGptProOutput,
   readGptProPrompt,
+  resolveGptProWorkBucket,
   writeGptProOutput
 } from "./gptProWorkStore.mjs";
 import { buildFixtureRetrofitRecommendationsPayload } from "./fixtureRetrofitRecommendations.mjs";
@@ -121,8 +122,7 @@ const sampleMatchingTestCasesPath =
   process.env.GBS_SAMPLE_MATCHING_TEST_CASES_PATH || path.join(process.cwd(), "public", "sample_matching_test_cases.json");
 const energyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "";
 const runtimeCacheBucket = process.env.GBS_RUNTIME_CACHE_BUCKET || "";
-const gptProWorkBucket =
-  process.env.GBS_DEV_WORK_BUCKET || process.env.GBS_GPT_PRO_WORK_BUCKET || defaultGptProWorkBucket;
+const gptProWorkBucket = resolveGptProWorkBucket(process.env);
 const gptProWorkPrefix = cleanGptProWorkPrefix(process.env.GBS_GPT_PRO_WORK_PREFIX || defaultGptProWorkPrefix);
 const gptProWorkRegion = process.env.GBS_GPT_PRO_WORK_REGION || process.env.AWS_REGION || defaultGptProWorkRegion;
 const gptProWorkProfile =
