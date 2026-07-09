@@ -509,6 +509,11 @@ type GptProWorkSaveResponse = {
 type FirstmateTaskState = "active" | "completed" | "blocked" | "queued";
 type FirstmateTaskReportFeedbackAction = "proceed" | "changes-requested";
 type FirstmateTaskReportFeedbackMode = "live-window" | "follow-up-task";
+type FirstmateTaskReportFeedbackDispatchStatus =
+  | "sent-to-active-agent"
+  | "auto-dispatched"
+  | "queued-fallback"
+  | "queued-follow-up";
 type FirstmateTaskReportStatus = "none" | "final" | "review-ready" | "draft" | "previous" | "repair-ready";
 
 type FirstmateTask = {
@@ -590,8 +595,12 @@ type FirstmateTaskReportFeedbackResponse = {
   taskId: string;
   action: FirstmateTaskReportFeedbackAction;
   delivery: FirstmateTaskReportFeedbackMode;
+  dispatchStatus?: FirstmateTaskReportFeedbackDispatchStatus;
+  message?: string;
   feedbackPath?: string;
   followUpTaskId?: string;
+  queuedFallbackReason?: string;
+  startWarning?: string;
   sent: true;
 };
 
@@ -15941,10 +15950,10 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
     await loadTasks({ preserveNotice: true });
   }, [loadTasks]);
 
-  const refreshAfterReportFeedback = useCallback(async (action: FirstmateTaskReportFeedbackAction) => {
-    setNotice(action === "proceed"
+  const refreshAfterReportFeedback = useCallback(async (feedback: FirstmateTaskReportFeedbackResponse) => {
+    setNotice(feedback.message || (feedback.action === "proceed"
       ? "Report feedback sent: looks good and the agent may proceed."
-      : "Report feedback sent: changes requested.");
+      : "Report feedback sent: changes requested."));
     await loadTasks({ preserveNotice: true });
   }, [loadTasks]);
 
@@ -16171,7 +16180,7 @@ function FirstmateTaskSection({
   credential: AuthCredential | null;
   label: string;
   localAuthBypass: boolean;
-  onReportFeedbackSent: (action: FirstmateTaskReportFeedbackAction) => Promise<void>;
+  onReportFeedbackSent: (feedback: FirstmateTaskReportFeedbackResponse) => Promise<void>;
   state: FirstmateTaskState;
   tasks: FirstmateTask[];
 }) {
@@ -16225,7 +16234,7 @@ export function FirstmateTaskRow({
 }: {
   credential: AuthCredential | null;
   localAuthBypass: boolean;
-  onReportFeedbackSent: (action: FirstmateTaskReportFeedbackAction) => Promise<void>;
+  onReportFeedbackSent: (feedback: FirstmateTaskReportFeedbackResponse) => Promise<void>;
   task: FirstmateTask;
 }) {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
@@ -16315,7 +16324,7 @@ function FirstmateReportFeedbackForm({
 }: {
   credential: AuthCredential | null;
   localAuthBypass: boolean;
-  onSent: (action: FirstmateTaskReportFeedbackAction) => Promise<void>;
+  onSent: (feedback: FirstmateTaskReportFeedbackResponse) => Promise<void>;
   task: FirstmateTask;
 }) {
   const [action, setAction] = useState<FirstmateTaskReportFeedbackAction>("proceed");
@@ -16346,7 +16355,7 @@ function FirstmateReportFeedbackForm({
             }
       );
       setComment("");
-      await onSent(response.action);
+      await onSent(response);
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Could not send report feedback.");
     } finally {
@@ -16383,7 +16392,7 @@ function FirstmateReportFeedbackForm({
         />
       </label>
       {task.reportFeedbackMode === "follow-up-task" ? (
-        <p className="tasks-muted">No live agent window is available. This will create a Firstmate follow-up task with your feedback.</p>
+        <p className="tasks-muted">No live agent window is available. Changes requested will queue a report revision follow-up; looks-good feedback is recorded as a follow-up.</p>
       ) : null}
       <button disabled={!canSubmit} onClick={() => void sendFeedback()} type="button">
         {isSending ? "Sending..." : "Send Feedback"}

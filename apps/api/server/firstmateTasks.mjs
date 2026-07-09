@@ -10,6 +10,11 @@ const reportFeedbackActions = new Set(["proceed", "changes-requested"]);
 const explicitReportStatuses = new Set(["final", "review-ready", "draft", "previous", "repair-ready"]);
 const repairReadyStatuses = new Set(["ready", "repair-ready", "needs-repair", "needs-gpt-pro-repair"]);
 const maxResponseMessageLength = 4000;
+const defaultFeedbackDispatchHarness = "codex";
+const defaultFeedbackDispatchModel = "gpt-5.5";
+const defaultFeedbackDispatchEffort = "xhigh";
+const spawnEffortValues = new Set(["low", "medium", "high", "xhigh", "max"]);
+const spawnProfileValuePattern = /^[a-z0-9._:-]{1,80}$/i;
 const gptProRepairUrlMetaKeys = [
   "gptProRepairUrl",
   "gpt_pro_repair_url",
@@ -323,7 +328,8 @@ export async function sendFirstmateTaskReportFeedback({
   action,
   comment,
   now = new Date(),
-  execFileFn = execFile
+  execFileFn = execFile,
+  allowLocalAgentDispatch = false
 } = {}) {
   const config = firstmateTasksConfigFromEnv(env);
   if (!config.enabled) {
@@ -395,6 +401,10 @@ export async function sendFirstmateTaskReportFeedback({
       taskId: normalizedTaskId,
       action: cleanAction,
       delivery: "live-window",
+      dispatchStatus: "sent-to-active-agent",
+      message: cleanAction === "changes-requested"
+        ? "Revision request sent to the active agent."
+        : "Report approval sent to the active agent.",
       sent: true
     };
   }
@@ -407,7 +417,8 @@ export async function sendFirstmateTaskReportFeedback({
     taskId: normalizedTaskId,
     action: cleanAction,
     comment: cleanComment,
-    now
+    now,
+    allowLocalAgentDispatch
   });
 
   return {
@@ -417,6 +428,12 @@ export async function sendFirstmateTaskReportFeedback({
     delivery: "follow-up-task",
     feedbackPath: followUp.feedbackPath,
     followUpTaskId: followUp.followUpTaskId,
+    dispatchStatus: followUp.dispatchStatus,
+    message: followUp.message,
+    queuedFallbackReason: followUp.queuedFallbackReason,
+    spawnStdout: followUp.spawnStdout,
+    spawnStderr: followUp.spawnStderr,
+    startWarning: followUp.startWarning,
     sent: true
   };
 }
@@ -899,16 +916,18 @@ function buildReportFeedbackMessage({ action, comment, taskId }) {
 }
 
 async function createReportFeedbackFollowUp({
+  env,
   execFileFn,
   firstmateHome,
   task,
   taskId,
   action,
   comment,
-  now
+  now,
+  allowLocalAgentDispatch
 }) {
   const feedbackPath = safeReportFeedbackPath(firstmateHome, taskId, now);
-  const followUpTaskId = buildReportFeedbackFollowUpTaskId(taskId, now);
+  const followUpTaskId = buildReportFeedbackFollowUpTaskId(taskId, now, action);
   const artifact = buildReportFeedbackArtifact({
     action,
     comment,
@@ -926,7 +945,9 @@ async function createReportFeedbackFollowUp({
   const queueResult = await execFilePromise(execFileFn, "tasks-axi", [
     "add",
     followUpTaskId,
-    `Follow up on report feedback for ${taskId}`,
+    action === "changes-requested"
+      ? `Revise report for ${taskId}`
+      : `Follow up on report feedback for ${taskId}`,
     "--kind",
     "scout",
     "--repo",
@@ -951,9 +972,28 @@ async function createReportFeedbackFollowUp({
     throw wrapped;
   }
 
+  if (action !== "changes-requested") {
+    return {
+      feedbackPath,
+      followUpTaskId,
+      dispatchStatus: "queued-follow-up",
+      message: `Report approval recorded in follow-up task ${followUpTaskId}.`
+    };
+  }
+
+  const dispatch = await dispatchReportRevisionFollowUp({
+    allowLocalAgentDispatch,
+    env,
+    execFileFn,
+    firstmateHome,
+    followUpTaskId,
+    task
+  });
+
   return {
     feedbackPath,
-    followUpTaskId
+    followUpTaskId,
+    ...dispatch
   };
 }
 
@@ -974,9 +1014,10 @@ function safeReportFeedbackPath(firstmateHome, taskId, now) {
   return feedbackPath;
 }
 
-function buildReportFeedbackFollowUpTaskId(taskId, now) {
+function buildReportFeedbackFollowUpTaskId(taskId, now, action = "proceed") {
   const compactId = normalizeTaskId(taskId).slice(0, 72).replace(/[^a-z0-9._-]/gi, "-").toLowerCase();
-  return `feedback-${compactId}-${compactTimestamp(now)}`.slice(0, 120);
+  const prefix = action === "changes-requested" ? "revision" : "feedback";
+  return `${prefix}-${compactId}-${compactTimestamp(now)}`.slice(0, 120);
 }
 
 function buildReportFeedbackArtifact({
@@ -1004,6 +1045,7 @@ function buildReportFeedbackArtifact({
     `- Follow-up task id: ${followUpTaskId}`,
     `- Captured at: ${toIsoString(now)}`,
     `- Repo: ${task.repo || "unknown"}`,
+    `- Project: ${task.project || "unknown"}`,
     `- Kind: ${task.kind || "unknown"}`,
     `- Report path: ${reportPath}`,
     `- Report URL: ${reportUrl}`,
@@ -1017,8 +1059,177 @@ function buildReportFeedbackArtifact({
     "## Instructions",
     "",
     nextInstruction,
+    action === "changes-requested"
+      ? "This is report revision work. Do not do unrelated implementation work unless the captain explicitly asks for it."
+      : "This is approval/proceed feedback, not a report revision request.",
     "Keep the original report context attached to this follow-up and update the captain through normal Firstmate task status."
   ].join("\n");
+}
+
+async function dispatchReportRevisionFollowUp({
+  allowLocalAgentDispatch,
+  env,
+  execFileFn,
+  firstmateHome,
+  followUpTaskId,
+  task
+}) {
+  const autoDispatch = firstmateReportFeedbackAutoDispatchConfig(env, { allowLocalAgentDispatch });
+  if (!autoDispatch.enabled) {
+    return queuedRevisionFallback(followUpTaskId, autoDispatch.reason);
+  }
+
+  const projectPath = cleanOptional(task.project);
+  if (!projectPath) {
+    return queuedRevisionFallback(followUpTaskId, "Original project path is unavailable.");
+  }
+
+  const projectStatus = await statDirectory(projectPath);
+  if (!projectStatus.exists) {
+    return queuedRevisionFallback(followUpTaskId, "Original project path does not exist.");
+  }
+  if (!projectStatus.isDirectory) {
+    return queuedRevisionFallback(followUpTaskId, "Original project path is not a directory.");
+  }
+
+  const spawnScriptPath = safeFirstmateBinPath(firstmateHome, "fm-spawn.sh");
+  const spawnScriptStatus = await statFile(spawnScriptPath);
+  if (!spawnScriptStatus.exists) {
+    return queuedRevisionFallback(followUpTaskId, "Firstmate spawn helper was not found.");
+  }
+  if (!spawnScriptStatus.isFile) {
+    return queuedRevisionFallback(followUpTaskId, "Firstmate spawn helper is not a file.");
+  }
+
+  const profile = firstmateReportFeedbackDispatchProfile(env);
+  const spawnResult = await execFilePromise(execFileFn, spawnScriptPath, [
+    followUpTaskId,
+    projectPath,
+    "--harness",
+    profile.harness,
+    "--model",
+    profile.model,
+    "--effort",
+    profile.effort,
+    "--scout"
+  ], {
+    cwd: firstmateHome,
+    maxBuffer: 128 * 1024,
+    timeout: 60_000
+  });
+
+  if (spawnResult.error) {
+    return queuedRevisionFallback(followUpTaskId, summarizeExecFailure("fm-spawn.sh failed", spawnResult), {
+      spawnStdout: truncateDiagnostic(spawnResult.stdout),
+      spawnStderr: truncateDiagnostic(spawnResult.stderr)
+    });
+  }
+
+  const startResult = await execFilePromise(execFileFn, "tasks-axi", [
+    "start",
+    followUpTaskId,
+    "--json"
+  ], {
+    cwd: firstmateHome,
+    maxBuffer: 64 * 1024,
+    timeout: 15_000
+  });
+
+  if (startResult.error) {
+    return {
+      dispatchStatus: "auto-dispatched",
+      message: `Revision crewmate started for ${followUpTaskId}, but Firstmate could not mark the task started.`,
+      spawnStdout: truncateDiagnostic(spawnResult.stdout),
+      spawnStderr: truncateDiagnostic(spawnResult.stderr),
+      startWarning: summarizeExecFailure("tasks-axi start failed", startResult)
+    };
+  }
+
+  return {
+    dispatchStatus: "auto-dispatched",
+    message: `Revision crewmate started for ${followUpTaskId}.`,
+    spawnStdout: truncateDiagnostic(spawnResult.stdout),
+    spawnStderr: truncateDiagnostic(spawnResult.stderr)
+  };
+}
+
+function firstmateReportFeedbackAutoDispatchConfig(env = process.env, { allowLocalAgentDispatch = false } = {}) {
+  const flag = String(env.RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH || "").trim().toLowerCase();
+  if (!enabledValues.has(flag)) {
+    return {
+      enabled: false,
+      reason: "Set RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH=1 to auto-dispatch report revisions."
+    };
+  }
+
+  if (env.AWS_LAMBDA_FUNCTION_NAME || env.AWS_EXECUTION_ENV) {
+    return {
+      enabled: false,
+      reason: "Report revision auto-dispatch is disabled in AWS runtime."
+    };
+  }
+
+  if (!isFirstmateTasksLocalAuthBypassEnabled(env)) {
+    return {
+      enabled: false,
+      reason: "Report revision auto-dispatch requires the local Firstmate tasks auth bypass."
+    };
+  }
+
+  if (!allowLocalAgentDispatch) {
+    return {
+      enabled: false,
+      reason: "Report revision auto-dispatch requires a local Firstmate tasks request."
+    };
+  }
+
+  return {
+    enabled: true,
+    reason: null
+  };
+}
+
+function firstmateReportFeedbackDispatchProfile(env = process.env) {
+  return {
+    harness: cleanSpawnProfileValue(env.RETROFI_FIRSTMATE_FEEDBACK_DISPATCH_HARNESS, defaultFeedbackDispatchHarness),
+    model: cleanSpawnProfileValue(env.RETROFI_FIRSTMATE_FEEDBACK_DISPATCH_MODEL, defaultFeedbackDispatchModel),
+    effort: cleanSpawnEffortValue(env.RETROFI_FIRSTMATE_FEEDBACK_DISPATCH_EFFORT, defaultFeedbackDispatchEffort)
+  };
+}
+
+function cleanSpawnProfileValue(value, fallback) {
+  const cleanValue = cleanOptional(value) || fallback;
+  return spawnProfileValuePattern.test(cleanValue) ? cleanValue : fallback;
+}
+
+function cleanSpawnEffortValue(value, fallback) {
+  const cleanValue = cleanSpawnProfileValue(value, fallback).toLowerCase();
+  return spawnEffortValues.has(cleanValue) ? cleanValue : fallback;
+}
+
+function queuedRevisionFallback(followUpTaskId, reason, details = {}) {
+  return {
+    dispatchStatus: "queued-fallback",
+    message: `Revision task ${followUpTaskId} was queued because auto-dispatch could not start a crewmate. ${reason}`,
+    queuedFallbackReason: reason,
+    ...details
+  };
+}
+
+function summarizeExecFailure(label, result) {
+  const detail = truncateDiagnostic(result?.stderr)
+    || truncateDiagnostic(result?.stdout)
+    || truncateDiagnostic(result?.error?.message)
+    || "unknown error";
+  return `${label}: ${detail}`;
+}
+
+function truncateDiagnostic(value, maxLength = 600) {
+  const text = cleanOptional(value).replace(/\s+/g, " ");
+  if (text.length <= maxLength) {
+    return text || undefined;
+  }
+  return `${text.slice(0, maxLength - 3)}...`;
 }
 
 function compactTimestamp(value) {

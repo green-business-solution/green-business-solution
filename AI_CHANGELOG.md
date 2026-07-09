@@ -29,6 +29,7 @@
 - Integrated the real GPT Pro repair `/chats` workspace into the dashboard build with guarded local auth bypass support and current RetroFi work bucket defaults.
 - Made Firstmate task row actions mutually exclusive so report review/feedback controls and GPT Pro repair actions cannot render together.
 - Added backwards-compatible task row rendering for older local API payloads that have `hasReport` and `reportUrl` but not `showReportAction`.
+- Added local-only auto-dispatch for no-window report revision feedback, with queued fallback reporting and explicit `fm-spawn.sh` harness/model/effort args.
 - Documented the local-only Firstmate task dashboard environment variables in `docs/development-artifacts.md`.
 
 ## 2026-07-08 - Codex (GPT-5) local homepage scanner copy transition

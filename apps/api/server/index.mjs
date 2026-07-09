@@ -3806,6 +3806,26 @@ async function requireFirstmateTasksRouteAccess(req) {
   return { localAuthBypass: false };
 }
 
+function canDispatchLocalFirstmateAgents(req, access) {
+  return Boolean(access?.localAuthBypass && isLocalRequest(req));
+}
+
+function isLocalRequest(req) {
+  return [
+    req.ip,
+    req.socket?.remoteAddress,
+    req.connection?.remoteAddress
+  ].some(isLoopbackAddress);
+}
+
+function isLoopbackAddress(value) {
+  const address = String(value || "").trim().toLowerCase();
+  return address === "::1"
+    || address === "localhost"
+    || address.startsWith("127.")
+    || address.startsWith("::ffff:127.");
+}
+
 app.get("/api/admin/firstmate/tasks", async (req, res) => {
   try {
     await requireFirstmateTasksRouteAccess(req);
@@ -3840,13 +3860,14 @@ app.post("/api/admin/firstmate/tasks/:taskId/respond", async (req, res) => {
 
 app.post("/api/admin/firstmate/tasks/:taskId/report-feedback", async (req, res) => {
   try {
-    await requireFirstmateTasksRouteAccess(req);
+    const access = await requireFirstmateTasksRouteAccess(req);
     res.json(await sendFirstmateTaskReportFeedback({
       env: process.env,
       taskId: req.params.taskId,
       action: req.body?.action,
       comment: req.body?.comment,
-      now: new Date()
+      now: new Date(),
+      allowLocalAgentDispatch: canDispatchLocalFirstmateAgents(req, access)
     }));
   } catch (error) {
     handleError(res, error);

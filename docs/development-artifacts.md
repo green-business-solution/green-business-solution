@@ -74,6 +74,10 @@ For response-needed tasks with a live `window=` value in `state/<task-id>.meta`,
 If `fm-send.sh` reports that Enter was swallowed and text was left in the composer, the API performs one argument-based `--key Enter` retry for the same validated window.
 For completed tasks with reports and a live `window=`, the admin page can send report feedback with either a proceed action or requested-change comments through the same helper.
 For completed or review-ready reports without a live `window=`, report feedback is written to `data/<task-id>/feedback/` and queued as a Firstmate follow-up task through `tasks-axi add`.
+Set `RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH=1` with the local tasks auth bypass to automatically spawn a scout crewmate for no-window report revision requests.
+The auto-dispatch spawn uses `<RETROFI_FIRSTMATE_HOME>/bin/fm-spawn.sh` with explicit profile args, defaulting to `--harness codex --model gpt-5.5 --effort xhigh`.
+Override those local-only defaults with `RETROFI_FIRSTMATE_FEEDBACK_DISPATCH_HARNESS`, `RETROFI_FIRSTMATE_FEEDBACK_DISPATCH_MODEL`, and `RETROFI_FIRSTMATE_FEEDBACK_DISPATCH_EFFORT`.
+If auto-dispatch is disabled or spawn fails, the revision follow-up remains queued and the dashboard reports that fallback.
 If an active or reopened task still has an older `report.md`, the dashboard labels it as a previous or draft report instead of a final report.
 Set `report_status=review-ready` in task metadata only when an active task explicitly wants captain report review before completion.
 GPT Pro repair/report tasks expose the repair workspace action only when task metadata explicitly marks the next step as repair work, such as `gpt_pro_repair_status=ready` or `report_status=repair-ready`.

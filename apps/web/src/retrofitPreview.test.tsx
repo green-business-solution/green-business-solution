@@ -1621,6 +1621,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/report-feedback");
     expect(source).toContain("action === \"changes-requested\"");
     expect(source).toContain("What should change?");
+    expect(source).toContain("feedback.message ||");
     expect(source).toContain("rel=\"noreferrer\" target=\"_blank\"");
     expect(source).toContain("Go To Pro Repair Batch");
     expect(source).toContain("const showGptProRepairAction = Boolean(task.showGptProRepairAction ?? task.gptProRepairReady)");
@@ -1631,7 +1632,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("task.reportActionLabel || \"View Report\"");
     expect(source).toContain("showReportAction && task.reportNote && !task.reportIsFinal");
     expect(source).toContain("task-report-status-note");
-    expect(source).toContain("This will create a Firstmate follow-up task with your feedback.");
+    expect(source).toContain("Changes requested will queue a report revision follow-up");
 
     const taskRowSource = source.slice(
       source.indexOf("function FirstmateTaskRow"),
