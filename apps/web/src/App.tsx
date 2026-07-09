@@ -27,7 +27,13 @@ import {
   MoreHorizontalOutlineIcon,
   StoreOutlineIcon
 } from "./icons";
-import { aboutLinks, pathForRoute, routeFromPath, type Route } from "./routes";
+import {
+  aboutLinks,
+  pathForRoute,
+  routeFromPath,
+  shouldCanonicalizeUnknownHomeFallback,
+  type Route
+} from "./routes";
 import { scannerFrames } from "./lib/scannerFrames";
 import billFieldDictionary from "../../../data/bill_field_dictionary.json";
 
@@ -20813,6 +20819,8 @@ export function App() {
       const nextRoute = routeFromPath();
       if (window.location.pathname === "/database") {
         window.history.replaceState({}, "", pathForRoute(nextRoute));
+      } else if (shouldCanonicalizeUnknownHomeFallback()) {
+        window.history.replaceState({}, "", pathForRoute("home"));
       }
       setRoute(nextRoute);
     }
