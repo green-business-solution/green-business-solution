@@ -1637,6 +1637,14 @@ textarea {
   margin: 0;
 }
 
+.tasks-page-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
 .tasks-stats {
   display: grid;
   gap: 10px;
@@ -1724,6 +1732,11 @@ textarea {
   color: #176b4c;
 }
 
+.task-state-pill.is-working {
+  background: #e8f7ef;
+  color: #176b4c;
+}
+
 .task-state-pill.is-blocked {
   background: #fff3e7;
   color: #8a4b14;
@@ -1739,7 +1752,17 @@ textarea {
   color: #177044;
 }
 
+.task-state-pill.is-archived {
+  background: #f1eee7;
+  color: #6c6254;
+}
+
 .task-state-pill.is-needs-response {
+  background: #fff0df;
+  color: #9d5313;
+}
+
+.task-state-pill.is-reports-ready {
   background: #fff0df;
   color: #9d5313;
 }
@@ -1978,13 +2001,18 @@ textarea {
   background: #dff5e8;
 }
 
-.task-status-indicator.is-active span {
+.task-status-indicator.is-active span,
+.task-status-indicator.is-working span {
   background: #176b4c;
   border-radius: 999px;
   display: block;
   height: 9px;
   margin: 0;
   width: 9px;
+}
+
+.task-status-indicator.is-working {
+  background: #dff5e8;
 }
 
 .task-status-indicator.is-blocked {
@@ -2016,6 +2044,11 @@ textarea {
 .task-status-indicator.is-completed {
   background: #e1f4e8;
   color: #177044;
+}
+
+.task-status-indicator.is-archived {
+  background: #efede8;
+  color: #6c6254;
 }
 
 .tasks-muted {
@@ -2145,6 +2178,7 @@ textarea {
 .user-preview-bill-toggle,
 .user-preview-customer-mode-button,
 .user-preview-form-toggle,
+.user-preview-tasks-link,
 .customer-preview-strip .secondary-button {
   background: #ffffff;
   border: 1px solid #dce5df;
@@ -2157,6 +2191,7 @@ textarea {
 .user-preview-bill-toggle:hover,
 .user-preview-customer-mode-button:hover,
 .user-preview-form-toggle:hover,
+.user-preview-tasks-link:hover,
 .customer-preview-strip .secondary-button:hover {
   background: #f3faf6;
   border-color: #bbdccb;

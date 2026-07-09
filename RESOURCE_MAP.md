@@ -92,6 +92,7 @@ GitHub Actions deploys from `main` using OIDC into production account `059310317
 | prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-retrofit-recommendation-cache` | api/data | `infra/runtime-data.yaml` | Recommendation cache metadata |
 | prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-application-profiles` | api/data | `infra/runtime-data.yaml` | Application source/profile registry |
 | prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-api-runtime-state` | api/data | `infra/runtime-data.yaml` | Operational state such as Geocodio quota counters |
+| prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-firstmate-tasks` | api/data | `infra/runtime-data.yaml`, `infra/api-hosting.yaml`, `scripts/sync-firstmate-tasks-to-dynamodb.mjs` | Sanitized versioned Codex task and bounded report snapshots. Lambda reads only. The optional ingestion role writes only this table from an explicit publisher principal. |
 | legacy | green-business-solution | `448016109714` | mixed | legacy hosted zone and copied resources | rollback/data-copy | docs/runbooks | Keep only where documented for rollback or migration history |
 
 ## Routing Rules

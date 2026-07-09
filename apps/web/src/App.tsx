@@ -567,7 +567,7 @@ type GptProWorkSaveResponse = {
   storageStatus: string;
 };
 
-type FirstmateTaskState = "active" | "completed" | "blocked" | "queued";
+type FirstmateTaskState = "active" | "working" | "completed" | "blocked" | "queued" | "archived";
 type FirstmateTaskReportFeedbackMode = "live-window" | "follow-up-task";
 type FirstmateTaskReportStatus = "none" | "final" | "review-ready" | "draft" | "previous" | "repair-ready";
 
@@ -578,6 +578,9 @@ type FirstmateTask = {
   repo: string;
   project: string | null;
   state: FirstmateTaskState;
+  active?: boolean;
+  defaultVisible?: boolean;
+  hiddenByDefault?: boolean;
   blocked: boolean;
   blockedBy: string[];
   recentStatus: string | null;
@@ -613,12 +616,18 @@ type FirstmateTasksResponse = {
   enabled: boolean;
   reason?: string;
   generatedAt: string;
+  source?: "local" | "dynamodb";
+  storageStatus?: string;
+  snapshotVersion?: string;
+  inactiveHidden?: boolean;
+  inactiveTaskCount?: number;
+  hiddenByDefaultTaskCount?: number;
   firstmateHome?: string;
   localAuthBypass?: boolean;
   authMode?: "admin" | "local-bypass";
   activeAgentCount: number;
   totalTaskCount: number;
-  counts: Record<FirstmateTaskState, number> & { needsResponse: number };
+  counts: Partial<Record<FirstmateTaskState, number>> & { needsResponse: number; reportsReady?: number };
   tasks: FirstmateTask[];
   warnings?: string[];
 };
@@ -15983,7 +15992,7 @@ const ADMIN_RETROFITS_TAB = "Retrofits";
 const ADMIN_TEST_CASES_TAB = "Test Cases";
 const ADMIN_USER_PREVIEW_TAB = "User Preview";
 const ADMIN_POST_FORM_PREVIEW_TAB = "Post Form Preview";
-const ADMIN_TASKS_TAB = "Tasks";
+const ADMIN_TASKS_TAB = "Codex tasks";
 const ADMIN_DASHBOARD_PERFORMANCE_TAB = "Dashboard Performance Data";
 const ADMIN_HIDDEN_DATA_TABLE_NAMES = new Set([
   "gbs-application-profiles",
@@ -16663,10 +16672,11 @@ function AdminTestCasesStandalonePage() {
 }
 
 const FIRSTMATE_TASK_SECTIONS: Array<{ state: FirstmateTaskState; label: string }> = [
-  { state: "active", label: "Active" },
+  { state: "working", label: "Working" },
   { state: "blocked", label: "Blocked" },
   { state: "queued", label: "Queued" },
-  { state: "completed", label: "Completed" }
+  { state: "completed", label: "Completed" },
+  { state: "archived", label: "Archived" }
 ];
 
 function AdminTasksStandalonePage({
@@ -16705,10 +16715,46 @@ function firstmateTasksAccessErrorMessage(error: unknown, fallback: string) {
   }
 
   if (/admin sign-in is required/i.test(error.message)) {
-    return "Firstmate tasks require admin sign-in unless the local Firstmate tasks auth bypass is enabled.";
+    return "Codex tasks require RetroFi admin sign-in.";
   }
 
   return error.message;
+}
+
+export function normalizeFirstmateTasksResponse(payload: FirstmateTasksResponse): FirstmateTasksResponse {
+  const tasks = payload.tasks.map((task) => {
+    const state = normalizeFirstmateTaskState(task.state);
+    const isActiveWork = task.active ?? !["completed", "archived"].includes(state);
+    const defaultVisible = task.defaultVisible ?? Boolean(isActiveWork || task.reportReviewReady);
+    return {
+      ...task,
+      state,
+      active: isActiveWork,
+      defaultVisible,
+      hiddenByDefault: task.hiddenByDefault ?? !defaultVisible
+    };
+  });
+  const counts = {
+    queued: payload.counts.queued || 0,
+    working: payload.counts.working ?? payload.counts.active ?? 0,
+    active: payload.counts.working ?? payload.counts.active ?? 0,
+    blocked: payload.counts.blocked || 0,
+    completed: payload.counts.completed || 0,
+    archived: payload.counts.archived || 0,
+    reportsReady: payload.counts.reportsReady || 0,
+    needsResponse: payload.counts.needsResponse || 0
+  };
+
+  return {
+    ...payload,
+    activeAgentCount: payload.activeAgentCount ?? counts.working + counts.blocked,
+    counts,
+    tasks
+  };
+}
+
+function normalizeFirstmateTaskState(state: FirstmateTaskState): FirstmateTaskState {
+  return state === "active" ? "working" : state;
 }
 
 function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null }) {
@@ -16716,6 +16762,7 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [includeInactive, setIncludeInactive] = useState(false);
 
   const loadTasks = useCallback(async (options?: { preserveNotice?: boolean }) => {
     setIsLoading(true);
@@ -16724,16 +16771,19 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
       setNotice(null);
     }
     try {
-      const nextResponse = await apiGet<FirstmateTasksResponse>("/api/admin/firstmate/tasks", {
+      const params = new URLSearchParams();
+      if (includeInactive) params.set("includeInactive", "1");
+      const query = params.toString();
+      const nextResponse = await apiGet<FirstmateTasksResponse>(`/api/admin/firstmate/tasks${query ? `?${query}` : ""}`, {
         ...(credential ? { headers: adminAuthHeaders(credential) } : {})
       });
-      setResponse(nextResponse);
+      setResponse(normalizeFirstmateTasksResponse(nextResponse));
     } catch (requestError) {
-      setError(firstmateTasksAccessErrorMessage(requestError, "Could not load Firstmate tasks."));
+      setError(firstmateTasksAccessErrorMessage(requestError, "Could not load Codex tasks."));
     } finally {
       setIsLoading(false);
     }
-  }, [credential]);
+  }, [credential, includeInactive]);
 
   useEffect(() => {
     void loadTasks();
@@ -16746,25 +16796,49 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
 
   const counts = response?.counts || {
     active: 0,
+    working: 0,
     blocked: 0,
     queued: 0,
     completed: 0,
+    archived: 0,
+    reportsReady: 0,
     needsResponse: 0
   };
   const responseNeededTasks = response?.tasks.filter((task) => task.responseNeeded) || [];
+  const reportReadyTasks = includeInactive
+    ? []
+    : response?.tasks.filter(
+      (task) => task.hasReport && task.reportReviewReady && ["completed", "archived"].includes(task.state)
+    ) || [];
   const localAuthBypass = Boolean(response?.localAuthBypass);
+  const visibleSections = includeInactive
+    ? FIRSTMATE_TASK_SECTIONS
+    : FIRSTMATE_TASK_SECTIONS.filter((section) => !["completed", "archived"].includes(section.state));
+  const visibleTaskCount = response?.tasks.filter((task) => visibleSections.some((section) => section.state === task.state)).length || 0;
+  const defaultTaskGroupCount = visibleTaskCount + reportReadyTasks.length;
+  const inactiveTaskCount = response?.hiddenByDefaultTaskCount ?? response?.inactiveTaskCount ?? ((response?.counts.completed || 0) + (response?.counts.archived || 0));
 
   return (
     <section className="tasks-page-panel">
       <div className="tasks-page-header">
         <div>
-          <p className="eyebrow">Firstmate operations</p>
-          <h1>Tasks</h1>
-          <p>Current and completed agent work across local Firstmate task state.</p>
+          <p className="eyebrow">RetroFi admin operations</p>
+          <h1>Codex tasks</h1>
+          <p>Current Codex work synced from Firstmate as a sanitized admin snapshot.</p>
         </div>
-        <button className="secondary-button" disabled={isLoading} onClick={() => void loadTasks()} type="button">
-          {isLoading ? "Refreshing..." : "Refresh"}
-        </button>
+        <div className="tasks-page-actions">
+          <button
+            aria-pressed={includeInactive}
+            className="secondary-button"
+            onClick={() => setIncludeInactive((current) => !current)}
+            type="button"
+          >
+            {includeInactive ? "Hide inactive" : `Show inactive${inactiveTaskCount ? ` (${inactiveTaskCount})` : ""}`}
+          </button>
+          <button className="secondary-button" disabled={isLoading} onClick={() => void loadTasks()} type="button">
+            {isLoading ? "Refreshing..." : "Refresh"}
+          </button>
+        </div>
       </div>
 
       {notice ? <p className="tasks-notice-message">{notice}</p> : null}
@@ -16787,6 +16861,10 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
           <span>Needs response</span>
           <strong>{counts.needsResponse}</strong>
         </article>
+        <article className={counts.reportsReady ? "tasks-needs-response-stat" : undefined}>
+          <span>Reports ready</span>
+          <strong>{counts.reportsReady || 0}</strong>
+        </article>
         <article>
           <span>Completed</span>
           <strong>{counts.completed}</strong>
@@ -16795,14 +16873,14 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
 
       {isLoading && !response ? (
         <section className="tasks-empty-state">
-          <RetroFiLogoLoader label="Loading Firstmate tasks..." size="lg" tone="card" />
+          <RetroFiLogoLoader label="Loading Codex tasks..." size="lg" tone="card" />
         </section>
       ) : null}
 
       {response && !response.enabled ? (
         <section className="tasks-empty-state">
-          <strong>Firstmate tasks disabled</strong>
-          <p>{response.reason || "Firstmate task data is not enabled in this environment."}</p>
+          <strong>Codex tasks unavailable</strong>
+          <p>{response.reason || "Codex task snapshots are not available in this environment."}</p>
         </section>
       ) : null}
 
@@ -16817,7 +16895,22 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
               tasks={responseNeededTasks}
             />
           ) : null}
-          {FIRSTMATE_TASK_SECTIONS.map((section) => (
+          {reportReadyTasks.length ? (
+            <FirstmateTaskSection
+              count={reportReadyTasks.length}
+              label="Reports ready"
+              pillState="reports-ready"
+              state="completed"
+              tasks={reportReadyTasks}
+            />
+          ) : null}
+          {defaultTaskGroupCount === 0 ? (
+            <section className="tasks-empty-state">
+              <strong>{includeInactive ? "No Codex tasks found" : "No active Codex tasks"}</strong>
+              <p>{includeInactive ? "The latest synced snapshot did not include any tasks." : "Completed and archived tasks without pending report review are hidden by default."}</p>
+            </section>
+          ) : null}
+          {visibleSections.map((section) => (
             <FirstmateTaskSection
               count={counts[section.state] || 0}
               key={section.state}
@@ -16954,11 +17047,13 @@ function FirstmateTaskResponseCard({
 function FirstmateTaskSection({
   count,
   label,
+  pillState,
   state,
   tasks
 }: {
   count: number;
   label: string;
+  pillState?: string;
   state: FirstmateTaskState;
   tasks: FirstmateTask[];
 }) {
@@ -16966,7 +17061,7 @@ function FirstmateTaskSection({
     <section className="tasks-section">
       <div className="tasks-section-heading">
         <h2>{label}</h2>
-        <span className={`task-state-pill is-${state}`}>{count}</span>
+        <span className={`task-state-pill is-${pillState || state}`}>{count}</span>
       </div>
       <div className="tasks-table-wrap">
         <table className="tasks-table">
@@ -17006,6 +17101,8 @@ export function FirstmateTaskRow({
 }: {
   task: FirstmateTask;
 }) {
+  const normalizedState = normalizeFirstmateTaskState(task.state);
+  const isCompleteState = normalizedState === "completed" || normalizedState === "archived";
   const showGptProRepairAction = Boolean(task.showGptProRepairAction ?? task.gptProRepairReady);
   const showReportAction = Boolean(
     !showGptProRepairAction && (task.showReportAction ?? Boolean(task.hasReport && task.reportUrl))
@@ -17014,8 +17111,8 @@ export function FirstmateTaskRow({
   return (
     <tr className={task.responseNeeded ? "is-response-needed" : undefined}>
       <td>
-        <span className={`task-status-indicator is-${task.state}`} title={formatFirstmateTaskState(task.state)}>
-          {task.state === "completed" ? <CheckIcon /> : <span aria-hidden="true" />}
+        <span className={`task-status-indicator is-${normalizedState}`} title={formatFirstmateTaskState(normalizedState)}>
+          {isCompleteState ? <CheckIcon /> : <span aria-hidden="true" />}
         </span>
       </td>
       <td>
@@ -17025,7 +17122,7 @@ export function FirstmateTaskRow({
       <td>{task.kind}</td>
       <td>
         <strong>{task.repo}</strong>
-        <span>{task.project || "Project path unavailable"}</span>
+        <span>Project context hidden</span>
       </td>
       <td>{task.blocked ? task.blockedBy.length ? `Yes: ${task.blockedBy.join(", ")}` : "Yes" : "No"}</td>
       <td>
@@ -17338,9 +17435,11 @@ function taskReportIdFromPath(pathname = typeof window === "undefined" ? "" : wi
 }
 
 function formatFirstmateTaskState(state: FirstmateTaskState) {
-  if (state === "active") return "Active";
-  if (state === "completed") return "Completed";
-  if (state === "blocked") return "Blocked";
+  const normalizedState = normalizeFirstmateTaskState(state);
+  if (normalizedState === "working") return "Working";
+  if (normalizedState === "completed") return "Completed";
+  if (normalizedState === "blocked") return "Blocked";
+  if (normalizedState === "archived") return "Archived";
   return "Queued";
 }
 
@@ -17925,6 +18024,9 @@ function AdminUserPreviewStandalonePage({
                 </div>
               </div>
               <div className="user-preview-toolbar-buttons">
+                <a className="secondary-button user-preview-tasks-link" href={pathForRoute("tasks")}>
+                  Codex tasks
+                </a>
                 <button
                   className="secondary-button user-preview-customer-mode-button"
                   onClick={() => {
@@ -21896,7 +21998,18 @@ export function App() {
       );
     }
 
-    return <LocalFirstmateTasksStandalonePage />;
+    if (!authPayload) {
+      return (
+        <SignInPage
+          navigate={navigate}
+          message={signInMessage}
+          onAuthSuccess={handleAuthSuccess}
+          publicAuth={publicAuth}
+        />
+      );
+    }
+
+    return <UserDashboard credential={authCredential} onSignOut={signOut} payload={authPayload} />;
   }
 
   if (effectiveRoute === "chats") {
@@ -21925,7 +22038,18 @@ export function App() {
       );
     }
 
-    return <LocalFirstmateTaskReportStandalonePage />;
+    if (!authPayload) {
+      return (
+        <SignInPage
+          navigate={navigate}
+          message={signInMessage}
+          onAuthSuccess={handleAuthSuccess}
+          publicAuth={publicAuth}
+        />
+      );
+    }
+
+    return <UserDashboard credential={authCredential} onSignOut={signOut} payload={authPayload} />;
   }
 
   if (effectiveRoute === "user-preview") {

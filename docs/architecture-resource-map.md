@@ -49,6 +49,7 @@ Browser traffic enters CloudFront on `retrofi.org`.
 | `gbs-retrofit-recommendation-cache` | `us-east-2` | Recommendation cache metadata; large payloads live in S3 |
 | `gbs-application-profiles` | `us-east-2` | Application source/profile registry records |
 | `gbs-api-runtime-state` | `us-east-2` | Small API operational state such as Geocodio quota counters |
+| `gbs-firstmate-tasks` | `us-east-2` | Sanitized versioned Codex task snapshots and bounded admin-readable report payloads. RetroFi Lambda reads only; the optional ingestion role writes from an explicit publisher principal. |
 
 The deleted `gbs-runtime-state` table was split into the four domain runtime tables above. The deleted
 `gbs-energy-data` DynamoDB table is not part of the active model.

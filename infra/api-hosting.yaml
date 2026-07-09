@@ -64,6 +64,9 @@ Parameters:
   ApiRuntimeStateTable:
     Type: String
     Default: gbs-api-runtime-state
+  FirstmateTasksTable:
+    Type: String
+    Default: gbs-firstmate-tasks
   EnergyDataBucketName:
     Type: String
     Description: Existing S3 bucket used for uploaded utility/energy data.
@@ -118,6 +121,15 @@ Resources:
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${RetrofitRecommendationCacheTable}
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${ApplicationProfilesTable}
                   - !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${ApiRuntimeStateTable}
+        - PolicyName: FirstmateTaskSnapshotRead
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                Resource: !Sub arn:aws:dynamodb:${DataRegion}:${AWS::AccountId}:table/${FirstmateTasksTable}
         - PolicyName: OperationalEmailAlerts
           PolicyDocument:
             Version: "2012-10-17"
@@ -184,6 +196,7 @@ Resources:
           GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE: !Ref RetrofitRecommendationCacheTable
           GBS_APPLICATION_PROFILES_TABLE: !Ref ApplicationProfilesTable
           GBS_API_RUNTIME_STATE_TABLE: !Ref ApiRuntimeStateTable
+          GBS_FIRSTMATE_TASKS_TABLE: !Ref FirstmateTasksTable
           GBS_ENERGY_DATA_BUCKET: !Ref EnergyDataBucketName
           GBS_RUNTIME_CACHE_BUCKET: !Ref RuntimeCacheBucketName
           GBS_DEV_WORK_BUCKET: !Ref DevWorkBucketName

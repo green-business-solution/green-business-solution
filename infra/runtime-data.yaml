@@ -30,9 +30,21 @@ Parameters:
   ApiRuntimeStateTable:
     Type: String
     Default: gbs-api-runtime-state
+  FirstmateTasksTable:
+    Type: String
+    Default: gbs-firstmate-tasks
+  FirstmateTasksIngestionRoleName:
+    Type: String
+    Default: gbs-firstmate-task-ingestion
+  FirstmateTasksIngestionPrincipalArn:
+    Type: String
+    Default: ""
+    AllowedPattern: "^$|^arn:aws:iam::[0-9]{12}:(role|user)/[A-Za-z0-9+=,.@_/-]+$"
+    Description: Optional exact IAM role or user ARN allowed to assume the Firstmate task ingestion role. Leave blank to skip creating the ingestion role.
 
 Conditions:
   ShouldManageCoreRuntimeTables: !Equals [!Ref ManageCoreRuntimeTables, "true"]
+  ShouldCreateFirstmateTasksIngestionRole: !Not [!Equals [!Ref FirstmateTasksIngestionPrincipalArn, ""]]
 
 Resources:
   UsersDynamoTable:
@@ -169,6 +181,50 @@ Resources:
       PointInTimeRecoverySpecification:
         PointInTimeRecoveryEnabled: true
 
+  FirstmateTasksDynamoTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Ref FirstmateTasksTable
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: stateScope
+          AttributeType: S
+        - AttributeName: stateKey
+          AttributeType: S
+      KeySchema:
+        - AttributeName: stateScope
+          KeyType: HASH
+        - AttributeName: stateKey
+          KeyType: RANGE
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+
+  FirstmateTasksIngestionRole:
+    Type: AWS::IAM::Role
+    Condition: ShouldCreateFirstmateTasksIngestionRole
+    Properties:
+      RoleName: !Ref FirstmateTasksIngestionRoleName
+      MaxSessionDuration: 3600
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Ref FirstmateTasksIngestionPrincipalArn
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: FirstmateTaskSnapshotWrite
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:BatchWriteItem
+                  - dynamodb:PutItem
+                Resource: !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${FirstmateTasksTable}
+
 Outputs:
   UsersTableName:
     Condition: ShouldManageCoreRuntimeTables
@@ -187,3 +243,8 @@ Outputs:
     Value: !Ref ApplicationProfilesTable
   ApiRuntimeStateTableName:
     Value: !Ref ApiRuntimeStateTable
+  FirstmateTasksTableName:
+    Value: !Ref FirstmateTasksTable
+  FirstmateTasksIngestionRoleArn:
+    Condition: ShouldCreateFirstmateTasksIngestionRole
+    Value: !GetAtt FirstmateTasksIngestionRole.Arn

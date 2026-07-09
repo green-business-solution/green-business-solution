@@ -100,6 +100,10 @@ import {
   sendFirstmateTaskResponse
 } from "./firstmateTasks.mjs";
 import {
+  readPublishedFirstmateTaskReport,
+  readPublishedFirstmateTaskSnapshot
+} from "./firstmateTaskSnapshots.mjs";
+import {
   buildPreRetrofitFormAnswerRecord,
   mergePreRetrofitFormAnswers,
   normalizePreRetrofitFormAnswers
@@ -118,6 +122,8 @@ const retrofitRecommendationCacheTable =
   process.env.GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE || "gbs-retrofit-recommendation-cache";
 const applicationProfilesTable = process.env.GBS_APPLICATION_PROFILES_TABLE || "gbs-application-profiles";
 const apiRuntimeStateTable = process.env.GBS_API_RUNTIME_STATE_TABLE || "gbs-api-runtime-state";
+const firstmateTasksTable = process.env.GBS_FIRSTMATE_TASKS_TABLE || "gbs-firstmate-tasks";
+const firstmateTaskWorkspaceId = process.env.GBS_FIRSTMATE_TASK_WORKSPACE_ID || "retrofi";
 const sampleMatchingTestCasesPath =
   process.env.GBS_SAMPLE_MATCHING_TEST_CASES_PATH || path.join(process.cwd(), "public", "sample_matching_test_cases.json");
 const energyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "";
@@ -267,6 +273,16 @@ function parseNonNegativeInteger(value, fallback, max = Number.MAX_SAFE_INTEGER)
   }
 
   return Math.min(number, max);
+}
+
+function parseBooleanQuery(value) {
+  return ["1", "true", "yes", "on"].includes(cleanText(value).toLowerCase());
+}
+
+function httpError(message, status) {
+  const error = new Error(message);
+  error.status = status;
+  return error;
 }
 
 function cleanOptional(value) {
@@ -3887,12 +3903,12 @@ app.get("/api/admin/fake-client-options", async (req, res) => {
 });
 
 async function requireFirstmateTasksRouteAccess(req) {
-  if (isFirstmateTasksLocalAuthBypassEnabled(process.env)) {
-    return { localAuthBypass: true };
+  if (isFirstmateTasksLocalAuthBypassEnabled(process.env) && isLocalRequest(req)) {
+    return { localAuthBypass: true, source: "local" };
   }
 
-  await requireAdminFromRequest(req);
-  return { localAuthBypass: false };
+  const admin = await requireAdminFromRequest(req);
+  return { admin, localAuthBypass: false, source: "dynamodb" };
 }
 
 function canDispatchLocalFirstmateAgents(req, access) {
@@ -3917,8 +3933,19 @@ function isLoopbackAddress(value) {
 
 app.get("/api/admin/firstmate/tasks", async (req, res) => {
   try {
-    await requireFirstmateTasksRouteAccess(req);
-    res.json(await readFirstmateTasksDashboard({ env: process.env, now: new Date() }));
+    const access = await requireFirstmateTasksRouteAccess(req);
+    if (access.localAuthBypass) {
+      res.json(await readFirstmateTasksDashboard({ env: process.env, now: new Date() }));
+      return;
+    }
+
+    res.json(await readPublishedFirstmateTaskSnapshot({
+      db,
+      includeInactive: parseBooleanQuery(req.query.includeInactive),
+      now: new Date(),
+      tableName: firstmateTasksTable,
+      workspaceId: firstmateTaskWorkspaceId
+    }));
   } catch (error) {
     handleError(res, error);
   }
@@ -3926,8 +3953,19 @@ app.get("/api/admin/firstmate/tasks", async (req, res) => {
 
 app.get("/api/admin/firstmate/tasks/:taskId/report", async (req, res) => {
   try {
-    await requireFirstmateTasksRouteAccess(req);
-    res.json(await readFirstmateTaskReport({ env: process.env, taskId: req.params.taskId, now: new Date() }));
+    const access = await requireFirstmateTasksRouteAccess(req);
+    if (access.localAuthBypass) {
+      res.json(await readFirstmateTaskReport({ env: process.env, taskId: req.params.taskId, now: new Date() }));
+      return;
+    }
+
+    res.json(await readPublishedFirstmateTaskReport({
+      db,
+      now: new Date(),
+      tableName: firstmateTasksTable,
+      taskId: req.params.taskId,
+      workspaceId: firstmateTaskWorkspaceId
+    }));
   } catch (error) {
     handleError(res, error);
   }
@@ -3935,7 +3973,10 @@ app.get("/api/admin/firstmate/tasks/:taskId/report", async (req, res) => {
 
 app.post("/api/admin/firstmate/tasks/:taskId/respond", async (req, res) => {
   try {
-    await requireFirstmateTasksRouteAccess(req);
+    const access = await requireFirstmateTasksRouteAccess(req);
+    if (!access.localAuthBypass) {
+      throw httpError("Firstmate task responses are only available from the local Firstmate workflow.", 403);
+    }
     res.json(await sendFirstmateTaskResponse({
       env: process.env,
       taskId: req.params.taskId,
@@ -3950,6 +3991,9 @@ app.post("/api/admin/firstmate/tasks/:taskId/respond", async (req, res) => {
 app.post("/api/admin/firstmate/tasks/:taskId/report-feedback", async (req, res) => {
   try {
     const access = await requireFirstmateTasksRouteAccess(req);
+    if (!access.localAuthBypass) {
+      throw httpError("Firstmate report feedback is only available from the local Firstmate workflow.", 403);
+    }
     res.json(await sendFirstmateTaskReportFeedback({
       env: process.env,
       taskId: req.params.taskId,
@@ -3966,6 +4010,9 @@ app.post("/api/admin/firstmate/tasks/:taskId/report-feedback", async (req, res) 
 app.post("/api/admin/firstmate/tasks/:taskId/assign", async (req, res) => {
   try {
     const access = await requireFirstmateTasksRouteAccess(req);
+    if (!access.localAuthBypass) {
+      throw httpError("Firstmate task assignment is only available from the local Firstmate workflow.", 403);
+    }
     res.json(await assignFirstmateQueuedTask({
       env: process.env,
       taskId: req.params.taskId,

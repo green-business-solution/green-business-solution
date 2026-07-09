@@ -30,11 +30,48 @@ import {
   getScenarioSelectedOpportunityCount,
   hydrateBillUploadStateFromIntake,
   isSupportedBillUploadFile,
+  normalizeFirstmateTasksResponse,
   sanitizeBillUploadState,
   selectGptProBatchIdForIndex,
   selectGptProPromptPathForBatch,
   UserPreviewProfileView
 } from "./App";
+
+function buildFirstmateTaskFixture(overrides: Record<string, unknown> = {}) {
+  return {
+    id: "task-t1",
+    title: "Task",
+    kind: "codex",
+    repo: "green-business-solution",
+    project: null,
+    state: "working" as const,
+    blocked: false,
+    blockedBy: [],
+    recentStatus: null,
+    statusState: null,
+    since: null,
+    reportedAt: null,
+    responseNeeded: false,
+    canRespond: false,
+    hasReport: false,
+    reportUrl: null,
+    reportStatus: "none" as const,
+    reportActionLabel: null,
+    reportStatusLabel: null,
+    reportNote: null,
+    reportIsFinal: false,
+    reportReviewReady: false,
+    reportFeedbackMode: null,
+    reportFeedbackUnavailableReason: null,
+    canSendReportFeedback: false,
+    gptProRepairStatus: null,
+    gptProRepairUrl: null,
+    gptProRepairLabel: null,
+    gptProRepairFallback: false,
+    gptProRepairUnavailableReason: null,
+    ...overrides
+  };
+}
 
 const liveShapedPayload = {
   generatedAt: "2026-06-30T12:00:00.000Z",
@@ -1898,7 +1935,7 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".retrofi-logo-spinner");
   });
 
-  it("keeps local Firstmate task and GPT Pro chats routes out of the Google sign-in redirect path", async () => {
+  it("guards Codex task routes while keeping the local GPT Pro chats fallback out of the Google sign-in redirect path", async () => {
     const fsModuleName = "node:fs";
     const { readFileSync } = await import(fsModuleName);
     const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
@@ -1915,15 +1952,81 @@ describe("retrofit recommendations preview", () => {
       source.indexOf("if (effectiveRoute === \"task-report\")"),
       source.indexOf("if (effectiveRoute === \"user-preview\")")
     );
+    const adminPreviewRouteSource = source.slice(
+      source.indexOf("if (effectiveRoute === \"user-preview\")"),
+      source.indexOf("if (effectiveRoute === \"portal-preview\")")
+    );
+    const adminUserPreviewSource = source.slice(
+      source.indexOf("function AdminUserPreviewStandalonePage("),
+      source.indexOf("function buildUserPreviewOptions(")
+    );
 
-    expect(tasksRouteSource).toContain("return <LocalFirstmateTasksStandalonePage />");
-    expect(tasksRouteSource).not.toContain("SignInPage");
+    expect(tasksRouteSource).toContain("AdminTasksStandalonePage");
+    expect(tasksRouteSource).toContain("SignInPage");
+    expect(tasksRouteSource).toContain("return <UserDashboard");
+    expect(tasksRouteSource).not.toContain("return <LocalFirstmateTasksStandalonePage />");
     expect(chatsRouteSource).toContain("return <LocalGptProChatsStandalonePage />");
     expect(chatsRouteSource).not.toContain("SignInPage");
-    expect(reportRouteSource).toContain("return <LocalFirstmateTaskReportStandalonePage />");
-    expect(reportRouteSource).not.toContain("SignInPage");
+    expect(reportRouteSource).toContain("AdminTaskReportStandalonePage");
+    expect(reportRouteSource).toContain("SignInPage");
+    expect(reportRouteSource).toContain("return <UserDashboard");
+    expect(reportRouteSource).not.toContain("return <LocalFirstmateTaskReportStandalonePage />");
+    expect(adminPreviewRouteSource).toContain("AdminUserPreviewStandalonePage");
+    expect(adminPreviewRouteSource).toContain("SignInPage");
+    expect(adminUserPreviewSource).toContain("user-preview-tasks-link");
+    expect(adminUserPreviewSource).toContain("href={pathForRoute(\"tasks\")}");
+    expect(adminUserPreviewSource).toContain("Codex tasks");
     expect(source).toContain("credential ? { headers: adminAuthHeaders(credential) } : {}");
-    expect(source).toContain("Firstmate tasks require admin sign-in unless the local Firstmate tasks auth bypass is enabled.");
+    expect(source).toContain("Codex tasks require RetroFi admin sign-in.");
+    expect(source).toContain("Reports ready");
+    expect(source).toContain("Completed and archived tasks without pending report review are hidden by default.");
+  });
+
+  it("normalizes legacy Firstmate task payloads into the production task state model", () => {
+    const normalized = normalizeFirstmateTasksResponse({
+      enabled: true,
+      generatedAt: "2026-07-09T12:00:00.000Z",
+      activeAgentCount: 0,
+      totalTaskCount: 2,
+      counts: {
+        active: 1,
+        completed: 1,
+        needsResponse: 0
+      },
+      tasks: [
+        buildFirstmateTaskFixture({
+          id: "legacy-active-l1",
+          state: "active"
+        }),
+        buildFirstmateTaskFixture({
+          id: "archived-task-a1",
+          state: "archived"
+        }),
+        buildFirstmateTaskFixture({
+          id: "review-ready-r1",
+          state: "completed",
+          reportReviewReady: true
+        })
+      ]
+    });
+
+    expect(normalized.counts).toMatchObject({
+      active: 1,
+      working: 1,
+      completed: 1,
+      archived: 0,
+      needsResponse: 0
+    });
+    expect(normalized.tasks.map((task) => [task.id, task.state, task.active])).toEqual([
+      ["legacy-active-l1", "working", true],
+      ["archived-task-a1", "archived", false],
+      ["review-ready-r1", "completed", false]
+    ]);
+    expect(normalized.tasks.map((task) => [task.id, task.defaultVisible, task.hiddenByDefault])).toEqual([
+      ["legacy-active-l1", true, false],
+      ["archived-task-a1", false, true],
+      ["review-ready-r1", true, false]
+    ]);
   });
 
   it("keeps the Firstmate tasks dashboard read-only outside response-needed tasks", async () => {

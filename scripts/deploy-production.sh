@@ -26,6 +26,8 @@ DASHBOARD_PERFORMANCE_TABLE="${GBS_DASHBOARD_PERFORMANCE_TABLE:-gbs-dashboard-pe
 RETROFIT_RECOMMENDATION_CACHE_TABLE="${GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE:-gbs-retrofit-recommendation-cache}"
 APPLICATION_PROFILES_TABLE="${GBS_APPLICATION_PROFILES_TABLE:-gbs-application-profiles}"
 API_RUNTIME_STATE_TABLE="${GBS_API_RUNTIME_STATE_TABLE:-gbs-api-runtime-state}"
+FIRSTMATE_TASKS_TABLE="${GBS_FIRSTMATE_TASKS_TABLE:-gbs-firstmate-tasks}"
+FIRSTMATE_TASKS_INGESTION_PRINCIPAL_ARN="${GBS_FIRSTMATE_TASKS_INGESTION_PRINCIPAL_ARN:-}"
 GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID:-754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com}"
 GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET:-}"
 GEOCODIO_API_KEY="${GBS_GEOCODIO_API_KEY:-${GEOCODIO_API_KEY:-}}"
@@ -259,6 +261,7 @@ deploy_runtime_data_stack() {
   aws_data_region cloudformation deploy \
     --stack-name "${RUNTIME_DATA_STACK_NAME}" \
     --template-file infra/runtime-data.yaml \
+    --capabilities CAPABILITY_NAMED_IAM \
     --parameter-overrides \
       "ManageCoreRuntimeTables=${MANAGE_CORE_RUNTIME_TABLES}" \
       "UsersTable=${USERS_TABLE}" \
@@ -267,7 +270,9 @@ deploy_runtime_data_stack() {
       "DashboardPerformanceTable=${DASHBOARD_PERFORMANCE_TABLE}" \
       "RetrofitRecommendationCacheTable=${RETROFIT_RECOMMENDATION_CACHE_TABLE}" \
       "ApplicationProfilesTable=${APPLICATION_PROFILES_TABLE}" \
-      "ApiRuntimeStateTable=${API_RUNTIME_STATE_TABLE}"
+      "ApiRuntimeStateTable=${API_RUNTIME_STATE_TABLE}" \
+      "FirstmateTasksTable=${FIRSTMATE_TASKS_TABLE}" \
+      "FirstmateTasksIngestionPrincipalArn=${FIRSTMATE_TASKS_INGESTION_PRINCIPAL_ARN}"
 
   echo "Deploying runtime bucket stack ${RUNTIME_BUCKETS_STACK_NAME} in ${REGION}..."
   aws_region cloudformation deploy \
@@ -472,6 +477,7 @@ deploy_api_stack() {
     "RetrofitRecommendationCacheTable=${RETROFIT_RECOMMENDATION_CACHE_TABLE}"
     "ApplicationProfilesTable=${APPLICATION_PROFILES_TABLE}"
     "ApiRuntimeStateTable=${API_RUNTIME_STATE_TABLE}"
+    "FirstmateTasksTable=${FIRSTMATE_TASKS_TABLE}"
     "EnergyDataBucketName=${ENERGY_DATA_BUCKET}"
     "RuntimeCacheBucketName=${RUNTIME_CACHE_BUCKET}"
     "DevWorkBucketName=${DEV_WORK_BUCKET}"
