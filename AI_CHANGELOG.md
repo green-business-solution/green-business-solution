@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-09 - Codex (GPT-5) homepage dashboard preview section
+
+- Added a static, native JSX/CSS RetroFi Performance Dashboard preview directly after the homepage How It Works section.
+- Built Summary, Savings, and Impact preview tabs using homepage design-system cards, green metrics, soft glass surfaces, native CSS/SVG charts, responsive stacking, hover polish, and reduced-motion handling.
+
 ## 2026-07-09 - Codex (GPT-5) pricing page design-system redesign
 
 - Redesigned the public pricing page around the homepage design-system contract with a stronger pricing hero, guided upgrade path, richer plan cards, comparison matrix, FAQ structure, and final CTA.

@@ -3890,6 +3890,236 @@ const homeApplicationSteps = [
   }
 ];
 
+type HomeDashboardPreviewTab = "summary" | "savings" | "impact";
+
+const homeDashboardPreviewTabs: Array<{ id: HomeDashboardPreviewTab; label: string }> = [
+  { id: "summary", label: "Summary" },
+  { id: "savings", label: "Savings" },
+  { id: "impact", label: "Impact" }
+];
+
+const homeDashboardSummaryMetrics = [
+  { label: "Total Project Cost", value: "$104K", note: "Across implemented retrofits" },
+  { label: "Incentives Received", value: "$6K", note: "Received or approved" },
+  { label: "Net Project Cost", value: "$98K", note: "After incentives" },
+  { label: "Certification Progress", value: "52%", note: "Average across programs" }
+];
+
+const homeDashboardImpactMetrics = [
+  { label: "CO2e Reduced / Year", value: "14 MT", note: "Metric tons CO2e" },
+  { label: "kWh Saved", value: "111,520 kWh", note: "Electricity savings" },
+  { label: "Therms Reduced", value: "1,032 therms", note: "Natural gas" },
+  { label: "Water Saved", value: "69,694 gal", note: "Water savings" }
+];
+
+const homeDashboardStatusStrip = [
+  {
+    label: "Realized",
+    values: ["$104K cost incurred", "$6K incentives received", "$21K annual savings"]
+  },
+  {
+    label: "Current",
+    values: ["$11K current savings", "$5K current incentives", "22% current ROI"]
+  },
+  {
+    label: "Projected",
+    values: ["$106K projected 5-year savings", "$213K projected 10-year savings", "$70K remaining before payback"]
+  }
+];
+
+const homeDashboardEnvironmentalPoints = [
+  "24,126 114",
+  "70,118 108",
+  "116,106 96",
+  "162,88 78",
+  "208,82 68",
+  "254,64 56",
+  "300,48 40"
+].join(" ");
+
+function HomeDashboardMetricCard({ label, note, value }: { label: string; note: string; value: string }) {
+  return (
+    <article className="home-dashboard-preview-metric">
+      <span className="home-dashboard-preview-icon"><LeafOutlineIcon /></span>
+      <div>
+        <p>{label}</p>
+        <strong>{value}</strong>
+        <span>{note}</span>
+      </div>
+    </article>
+  );
+}
+
+function HomeDashboardStatusStrip() {
+  return (
+    <div className="home-dashboard-preview-status-strip">
+      {homeDashboardStatusStrip.map((group) => (
+        <article className="home-dashboard-preview-status" key={group.label}>
+          <h4>{group.label}</h4>
+          <ul>
+            {group.values.map((value) => (
+              <li key={value}>{value}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function HomeDashboardSummaryPanel() {
+  return (
+    <div className="home-dashboard-preview-panel">
+      <div className="home-dashboard-preview-metrics">
+        {homeDashboardSummaryMetrics.map((metric) => (
+          <HomeDashboardMetricCard key={metric.label} {...metric} />
+        ))}
+      </div>
+      <HomeDashboardStatusStrip />
+    </div>
+  );
+}
+
+function HomeDashboardSavingsPanel() {
+  return (
+    <div className="home-dashboard-preview-panel home-dashboard-preview-panel--savings">
+      <article className="home-dashboard-preview-card home-dashboard-preview-card--donut">
+        <div className="home-dashboard-preview-card-heading">
+          <h3>Financial Snapshot</h3>
+          <span>+$83,213</span>
+        </div>
+        <div className="home-dashboard-preview-donut-row">
+          <div aria-label="$6K incentives received" className="home-dashboard-preview-donut" role="img">
+            <span>$6K</span>
+            <small>Incentives received</small>
+          </div>
+          <dl className="home-dashboard-preview-legend">
+            <div>
+              <dt>Received</dt>
+              <dd>$6K</dd>
+            </div>
+            <div>
+              <dt>Pending</dt>
+              <dd>$36K</dd>
+            </div>
+            <div>
+              <dt>Not Yet Claimed</dt>
+              <dd>$41K</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+      <article className="home-dashboard-preview-card home-dashboard-preview-card--savings-total">
+        <span>Total Annual Savings</span>
+        <strong>$21K</strong>
+        <p>Estimated/modelled across implemented retrofits.</p>
+      </article>
+      <article className="home-dashboard-preview-card home-dashboard-preview-card--savings-total">
+        <span>Projected 10-year Savings</span>
+        <strong>$213K</strong>
+        <p>Forecast from current project performance.</p>
+      </article>
+      <article className="home-dashboard-preview-card home-dashboard-preview-action-card">
+        <span>Next Best Action</span>
+        <h3>Claim WSHFC Sustainable Energy Program</h3>
+        <p>Finish the rebate claim package so approved money moves from pending to received.</p>
+        <button className="home-dashboard-preview-link" type="button">
+          View next action
+          <ArrowUpRightIcon />
+        </button>
+      </article>
+    </div>
+  );
+}
+
+function HomeDashboardImpactPanel() {
+  return (
+    <div className="home-dashboard-preview-panel">
+      <div className="home-dashboard-preview-metrics">
+        {homeDashboardImpactMetrics.map((metric) => (
+          <HomeDashboardMetricCard key={metric.label} {...metric} />
+        ))}
+      </div>
+      <article className="home-dashboard-preview-card home-dashboard-preview-card--environment">
+        <div className="home-dashboard-preview-card-heading">
+          <h3>Environmental Snapshot</h3>
+          <span>9.2 MT</span>
+        </div>
+        <svg aria-label="Environmental savings trend" className="home-dashboard-preview-line" role="img" viewBox="0 0 324 140">
+          <g className="home-dashboard-preview-line-grid">
+            <path d="M24 36h276M24 72h276M24 108h276" />
+          </g>
+          <polyline points={homeDashboardEnvironmentalPoints} />
+          {homeDashboardEnvironmentalPoints.split(" ").map((point) => {
+            const [cx, cy] = point.split(",");
+            return <circle cx={cx} cy={cy} key={point} r="3" />;
+          })}
+        </svg>
+      </article>
+    </div>
+  );
+}
+
+function HomeDashboardPreviewSection() {
+  const [activeTab, setActiveTab] = useState<HomeDashboardPreviewTab>("summary");
+
+  return (
+    <section aria-labelledby="home-dashboard-preview-heading" className="home-dashboard-preview-section">
+      <div className="home-dashboard-preview-inner">
+        <header className="home-dashboard-preview-intro">
+          <p>Performance dashboard</p>
+          <h2 id="home-dashboard-preview-heading">See every retrofit pay off in one place.</h2>
+          <span>
+            RetroFi turns project costs, incentives, savings, emissions reductions, and certification progress into a clear performance dashboard for every property.
+          </span>
+        </header>
+
+        <div className="home-dashboard-preview-shell">
+          <div className="home-dashboard-preview-topbar">
+            <div>
+              <p>Performance Dashboard</p>
+              <span>Cross-portfolio overview of implemented retrofits.</span>
+            </div>
+            <div aria-label="Dashboard preview filters" className="home-dashboard-preview-filters">
+              <span>Jul 1, 2025 - Jun 30, 2026</span>
+              <span>All properties</span>
+            </div>
+          </div>
+
+          <div aria-label="Dashboard preview views" className="home-dashboard-preview-tabs" role="tablist">
+            {homeDashboardPreviewTabs.map((tab) => (
+              <button
+                aria-controls={`home-dashboard-preview-panel-${tab.id}`}
+                aria-selected={activeTab === tab.id}
+                className="home-dashboard-preview-tab"
+                id={`home-dashboard-preview-tab-${tab.id}`}
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                role="tab"
+                type="button"
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          <div
+            aria-labelledby={`home-dashboard-preview-tab-${activeTab}`}
+            className="home-dashboard-preview-tab-panel"
+            id={`home-dashboard-preview-panel-${activeTab}`}
+            key={activeTab}
+            role="tabpanel"
+          >
+            {activeTab === "summary" ? <HomeDashboardSummaryPanel /> : null}
+            {activeTab === "savings" ? <HomeDashboardSavingsPanel /> : null}
+            {activeTab === "impact" ? <HomeDashboardImpactPanel /> : null}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function HomeInfographicSection({ navigate }: { navigate: (route: Route) => void }) {
   const impactPolyline = homeImpactPoints
     .map((point, index) => {
@@ -4765,6 +4995,7 @@ function HomePage({
       <PlanetScanHero navigate={navigate} />
       <HomeInfographicSection navigate={navigate} />
       <HowItWorksJourneySection sectionId={HOME_HOW_IT_WORKS_SECTION_ID} />
+      <HomeDashboardPreviewSection />
     </PublicShell>
   );
 }
