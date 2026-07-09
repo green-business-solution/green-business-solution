@@ -47,6 +47,7 @@ type UserRecord = {
   authProvider: string;
   googleLinked: boolean;
   googlePicture?: string | null;
+  passwordLinked?: boolean;
   isFakeUser: boolean;
   sampleUserId?: string | null;
   createdAt: string;
@@ -205,6 +206,10 @@ type AdminClientPortalProfilePayload = PortalPayload;
 
 type PortalRetrofitRecommendationsResponse = PortalPayload & {
   generatedAt: string;
+  source?: {
+    kind?: string;
+    sampleUserId?: string | null;
+  };
   isProgressiveShell?: boolean;
   isPartialRecommendations?: boolean;
   dashboardPostImplementationDataset?: DashboardPostImplementationDataset | null;
@@ -8685,6 +8690,7 @@ function buildNextBestActions(retrofits: RetrofitPreviewCard[], missingInputs: s
 }
 
 type DashboardPageId = "summary" | "financial" | "environmental" | "certifications";
+type UserPreviewPrimaryView = "profile" | "retrofits" | "dashboard";
 type FinancialDashboardTabId = "overview" | "cash-flow" | "savings-by-retrofit";
 type EnvironmentalDashboardTabId = "overview" | "outlook";
 type CertificationDashboardTabId = "progress" | "gaps" | "next-actions";
@@ -9602,7 +9608,7 @@ export function RetrofitRecommendationsPreview({
   const [confidenceFilter, setConfidenceFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [missingInfoFilter, setMissingInfoFilter] = useState("all");
-  const [activePrimaryView, setActivePrimaryView] = useState<"retrofits" | "dashboard">("retrofits");
+  const [activePrimaryView, setActivePrimaryView] = useState<UserPreviewPrimaryView>("retrofits");
   const [activeDashboardPage, setActiveDashboardPage] = useState<DashboardPageId>("summary");
   const [activeRetrofitId, setActiveRetrofitId] = useState<string>("");
   const [selectedScenarioIds, setSelectedScenarioIds] = useState<Record<string, string>>(initialScenarioIds);
@@ -9929,6 +9935,13 @@ export function RetrofitRecommendationsPreview({
     setMobileSidebarOpen(false);
   }
 
+  function handleProfileSelect() {
+    setActivePrimaryView("profile");
+    setActiveRetrofitId("");
+    setSidebarCollapsed(false);
+    setMobileSidebarOpen(false);
+  }
+
   function handleDashboardPageSelect(pageId: DashboardPageId) {
     setActivePrimaryView("dashboard");
     setActiveDashboardPage(pageId);
@@ -9978,6 +9991,7 @@ export function RetrofitRecommendationsPreview({
         onCloseMobile={() => setMobileSidebarOpen(false)}
         onOpenDashboardPage={handleDashboardPageSelect}
         onOpenInstructions={openInstructionsFromNav}
+        onOpenProfile={handleProfileSelect}
         onSelectRetrofit={handleSidebarRetrofitSelect}
         onShowAllRetrofits={() => {
           setActivePrimaryView("retrofits");
@@ -9993,7 +10007,7 @@ export function RetrofitRecommendationsPreview({
         <section className="retrofit-preview-page">
           <button className="user-preview-mobile-menu-button user-preview-inline-menu-button" onClick={() => setMobileSidebarOpen(true)} type="button">
             <ViewPanelIcon />
-            <span>Retrofits</span>
+            <span>{activePrimaryView === "profile" ? "Profile" : activePrimaryView === "dashboard" ? "Dashboard" : "Retrofits"}</span>
           </button>
           {error ? <p className="error-message">{error}</p> : null}
           {isProgressiveDetailLoading ? (
@@ -10008,6 +10022,17 @@ export function RetrofitRecommendationsPreview({
               activePage={activeDashboardPage}
               onPageChange={setActiveDashboardPage}
               viewModel={dashboardViewModel}
+            />
+          ) : activePrimaryView === "profile" ? (
+            <UserPreviewProfileView
+              billUploadState={effectiveBillUploadState}
+              detailAnswers={effectiveDetailAnswers}
+              hideBillData={hideBillData}
+              hideFormDetails={hideFormDetails}
+              isDetailLoading={isDetailLoading}
+              payload={payload}
+              preview={preview}
+              seededDetailAnswers={seededDetailAnswers}
             />
           ) : activeRetrofit ? (
             <>
@@ -10096,6 +10121,467 @@ export function RetrofitRecommendationsPreview({
         />
       ) : null}
     </div>
+  );
+}
+
+type UserPreviewProfileDetailRow = {
+  label: string;
+  value: ReactNode;
+};
+
+type UserPreviewProfileListItem = {
+  title: string;
+  meta?: ReactNode;
+  detail?: ReactNode;
+};
+
+export function UserPreviewProfileView({
+  billUploadState,
+  detailAnswers,
+  hideBillData,
+  hideFormDetails,
+  isDetailLoading,
+  payload,
+  preview,
+  seededDetailAnswers
+}: {
+  billUploadState: BillUploadState;
+  detailAnswers: Record<string, string>;
+  hideBillData: boolean;
+  hideFormDetails: boolean;
+  isDetailLoading: boolean;
+  payload: PortalRetrofitRecommendationsResponse | null;
+  preview: UserRetrofitPreviewResult;
+  seededDetailAnswers: Record<string, string>;
+}) {
+  const user = payload?.user || null;
+  const intake = payload?.intake || null;
+  const site = intake?.site || null;
+  const geography = site?.geography || null;
+  const summary = payload?.summary || null;
+  const taxRuntime = payload?.taxRuntimePreview || null;
+  const topRetrofit = preview.retrofits[0] || null;
+  const dashboardDataset = payload?.dashboardPostImplementationDataset || null;
+  const uploadedBillSteps = getBillUploadStepSummary(billUploadState);
+  const answerRows = hideFormDetails
+    ? []
+    : buildUserPreviewProfileAnswerRows(preview.retrofits, detailAnswers, seededDetailAnswers);
+  const headerName = profileText(user?.fullName || intake?.contact.fullName || preview.customerName);
+  const headerCompany = profileText(user?.companyName || intake?.business.companyName);
+
+  return (
+    <div className="user-preview-profile-view" data-testid="user-preview-profile-view">
+      <header className="user-preview-profile-header">
+        <div>
+          <p className="eyebrow">Profile info</p>
+          <h1>{headerName}</h1>
+          <p>{headerCompany}</p>
+        </div>
+        <div className="user-preview-profile-badges" aria-label="Profile view status">
+          <span>Read-only</span>
+          {user?.isFakeUser || dashboardDataset?.isSynthetic || payload?.source?.kind ? <span>Test/demo data</span> : null}
+          {summary ? <span>{profileCount(summary.matchedRetrofitCount, "retrofit")} matched</span> : null}
+        </div>
+      </header>
+
+      <div className="user-preview-profile-grid">
+        <UserPreviewProfileCard title="Account">
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "User ID", value: profileText(user?.userId || preview.profileId) },
+              { label: "Sample user ID", value: profileText(payload?.source?.sampleUserId) },
+              { label: "Role", value: profileText(user?.role) },
+              { label: "Status", value: profileText(user?.status) },
+              { label: "Auth provider", value: profileText(user?.authProvider) },
+              { label: "Google linked", value: profileBoolean(user?.googleLinked) },
+              { label: "Password linked", value: profileBoolean(user?.passwordLinked) },
+              { label: "Created", value: profileDate(user?.createdAt) },
+              { label: "Last login", value: profileDate(user?.lastLoginAt) }
+            ]}
+          />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Contact">
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "Name", value: profileText(intake?.contact.fullName || user?.fullName) },
+              { label: "Email", value: profileText(intake?.contact.email || user?.email) },
+              { label: "Phone", value: profileText(intake?.contact.phone) },
+              { label: "Role title", value: profileText(intake?.contact.roleTitle) },
+              { label: "Preference", value: profileText(intake?.contact.contactPreference) },
+              { label: "Submission ID", value: profileText(intake?.submissionId || preview.intakeId) },
+              { label: "Submitted", value: profileDate(intake?.createdAt) },
+              { label: "Updated", value: profileDate(intake?.updatedAt) }
+            ]}
+          />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Business">
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "Company", value: profileText(intake?.business.companyName || user?.companyName) },
+              { label: "Website", value: profileWebsite(intake?.business.website) },
+              { label: "Industry", value: profileText(intake?.business.industry) },
+              { label: "Organization type", value: profileText(intake?.business.organizationType) },
+              { label: "Organization size", value: profileText(intake?.business.organizationSize) },
+              { label: "Headquarters", value: profileText(intake?.business.headquarters) }
+            ]}
+          />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Site and building" wide>
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "Address", value: profileText(site?.address) },
+              { label: "Matched address", value: profileText(geography?.matchedAddress) },
+              { label: "Geography status", value: profileText(geography?.status) },
+              { label: "State", value: profileText(geography?.stateCode) },
+              { label: "County", value: profileText(geography?.countyName) },
+              { label: "Place", value: profileText(geography?.placeName) },
+              { label: "ZIP", value: profileText(geography?.zip5) },
+              { label: "Census tract", value: profileText(geography?.censusTractGeoid) },
+              { label: "Electric utility", value: profileText(site?.electricUtilityProvider) },
+              { label: "Gas utility", value: profileText(site?.gasUtilityProvider) },
+              { label: "Ownership", value: profileText(site?.ownershipStatus) },
+              { label: "Building type", value: profileText(site?.buildingType) },
+              { label: "Square footage", value: profileText(site?.squareFootage) },
+              { label: "Units", value: profileText(site?.numberOfUnits) },
+              { label: "Derived fields", value: profileText(site?.derivedFieldsStatus) },
+              { label: "Planned derived fields", value: profileList(site?.derivedFieldsPlanned) }
+            ]}
+          />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Sustainability">
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "Goals", value: profileText(intake?.sustainability.goals) },
+              { label: "Challenges", value: profileText(intake?.sustainability.currentChallenges) },
+              { label: "Interested improvements", value: profileList(intake?.sustainability.interestedImprovements) },
+              { label: "Monthly utility spend", value: profileText(intake?.sustainability.monthlyUtilitySpend) },
+              { label: "Timeline", value: profileText(intake?.sustainability.timeline) },
+              { label: "Notes", value: profileText(intake?.sustainability.notes) }
+            ]}
+          />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Utility data" wide>
+          {hideBillData ? (
+            <p className="user-preview-profile-muted">Bill data is hidden in this admin preview.</p>
+          ) : (
+            <>
+              <UserPreviewProfileDetails
+                rows={[
+                  { label: "Bill upload status", value: uploadedBillSteps.length ? profileList(uploadedBillSteps.map((step) => step.utilityLabel)) : "No uploaded bills in the active preview state" },
+                  { label: "Uploaded files", value: profileCount(intake?.uploadedUtilityFiles.length, "file") },
+                  { label: "Processed files", value: profileCount(intake?.siteEnergyProfile?.processedFileCount, "file") },
+                  { label: "Available fields", value: profileCount(intake?.siteEnergyProfile?.availableFieldIds.length, "field") },
+                  { label: "Latest provider", value: profileText(intake?.siteEnergyProfile?.latestUtilityProvider) },
+                  { label: "Latest period", value: formatUtilityPeriod(intake?.siteEnergyProfile?.latestBillingPeriodStart || null, intake?.siteEnergyProfile?.latestBillingPeriodEnd || null) },
+                  { label: "Annual kWh", value: profileNumber(intake?.siteEnergyProfile?.annualKwh, "kWh") },
+                  { label: "Annual electric cost", value: profileCurrencyDollars(intake?.siteEnergyProfile?.annualElectricCost) },
+                  { label: "Average cost per kWh", value: profileRate(intake?.siteEnergyProfile?.averageCostPerKwh, "kWh") },
+                  { label: "Last updated", value: profileDate(intake?.siteEnergyProfile?.lastUpdatedAt) }
+                ]}
+              />
+              <UserPreviewUtilitySummaries summaries={intake?.siteEnergyProfile?.utilitySummaries || []} />
+              <UserPreviewUtilityFiles files={intake?.uploadedUtilityFiles || []} />
+              <UserPreviewExtractedValues values={intake?.utilityExtractedValues || []} />
+            </>
+          )}
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Recommendation profile" wide>
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "Generated", value: profileDate(payload?.generatedAt || preview.generatedAt) },
+              { label: "Data source", value: profileText(payload?.source?.kind || preview.dataSourceLabel) },
+              { label: "Estimate basis", value: estimateBasisLabel(preview.estimateBasis) },
+              { label: "Completeness", value: preview.estimateCompletenessPercent == null ? "Not scored" : `${preview.estimateCompletenessPercent}%` },
+              { label: "Matched retrofits", value: profileCount(summary?.matchedRetrofitCount ?? preview.retrofits.length, "retrofit") },
+              { label: "Matched opportunities", value: profileCount(summary?.matchedOpportunityCount, "opportunity", "opportunities") },
+              { label: "Opportunity display", value: summary?.canShowOpportunities === false ? "Blocked until required data is collected" : "Available for current payload" },
+              { label: "Required tax inputs", value: profileCount(summary?.requiredTaxInputCount ?? taxRuntime?.requiredPreOpportunityInputs?.length, "input") },
+              { label: "Top recommendation", value: profileText(topRetrofit?.name || preview.topRecommendation?.retrofitName) },
+              { label: "Missing inputs", value: preview.missingInputs.length ? profileList(preview.missingInputs.slice(0, 8)) : "No missing inputs in the current preview" }
+            ]}
+          />
+          {isDetailLoading ? <p className="user-preview-profile-muted">Detailed recommendation records are still loading.</p> : null}
+          <UserPreviewTopRetrofits retrofits={preview.retrofits} />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Tax runtime">
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "Status", value: profileText(taxRuntime?.status) },
+              { label: "Ready for opportunity estimate", value: profileBoolean(taxRuntime?.readyForOpportunityFinancialEstimate) },
+              { label: "Opportunity display blocked", value: profileBoolean(taxRuntime?.opportunityDisplayBlocked) },
+              { label: "Structured tax model work", value: profileBoolean(taxRuntime?.requiresStructuredTaxModelWork) },
+              { label: "Included benefits", value: formatCents(taxRuntime?.totals?.includedBenefitCents) },
+              { label: "Included liabilities", value: formatCents(taxRuntime?.totals?.includedLiabilityCents) },
+              { label: "Included net amount", value: formatCents(taxRuntime?.totals?.includedAmountCents) },
+              { label: "Summary tax benefit", value: formatCents(summary?.calculatedTaxBenefitCents) },
+              { label: "Summary tax liability", value: formatCents(summary?.calculatedTaxLiabilityCents) },
+              { label: "Summary net tax impact", value: formatCents(summary?.netTaxImpactCents) }
+            ]}
+          />
+          <UserPreviewProfileList
+            emptyMessage="No required tax inputs are listed in this payload."
+            items={(taxRuntime?.requiredPreOpportunityInputs || []).slice(0, 8).map((field) => ({
+              title: field.label || field.questionPrompt || field.inputKey,
+              meta: profileList([
+                field.collectionSurfaceLabel || field.collectionSurface,
+                field.answerType,
+                field.requiredBeforeOpportunitySelection ? "Required before opportunities" : field.requiredBeforeEstimate ? "Required before estimate" : null
+              ]),
+              detail: field.helperText || field.inputKey
+            }))}
+          />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Pre-retrofit form values" wide>
+          {hideFormDetails ? (
+            <p className="user-preview-profile-muted">Pre-retrofit form values are hidden in this admin preview.</p>
+          ) : (
+            <UserPreviewProfileList
+              emptyMessage="No pre-retrofit form values are available in this preview yet."
+              items={answerRows.map((row) => ({
+                title: row.label,
+                meta: row.value,
+                detail: row.source
+              }))}
+            />
+          )}
+        </UserPreviewProfileCard>
+
+        {dashboardDataset ? (
+          <UserPreviewProfileCard title="Synthetic dashboard data" wide>
+            <UserPreviewProfileDetails
+              rows={[
+                { label: "Dataset test case", value: profileText(dashboardDataset.testCaseId) },
+                { label: "Synthetic source", value: profileText(dashboardDataset.syntheticSource) },
+                { label: "Reporting period", value: profileText(dashboardDataset.reportingPeriod?.label) },
+                { label: "Properties", value: profileCount(dashboardDataset.properties.length, "property", "properties") },
+                { label: "Implemented retrofits", value: profileCount(dashboardDataset.implementedRetrofits.length, "retrofit") },
+                { label: "Monthly performance records", value: profileCount(dashboardDataset.monthlyPerformanceRecords.length, "record") },
+                { label: "Incentive records", value: profileCount(dashboardDataset.incentivePerformanceRecords.length, "record") },
+                { label: "Document records", value: profileCount(dashboardDataset.documentRecords.length, "record") },
+                { label: "Certification records", value: profileCount(dashboardDataset.certificationRecords.length, "record") },
+                { label: "Next best actions", value: profileCount(dashboardDataset.nextBestActions.length, "action") }
+              ]}
+            />
+          </UserPreviewProfileCard>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+function UserPreviewProfileCard({ children, title, wide = false }: { children: ReactNode; title: string; wide?: boolean }) {
+  return (
+    <section className={`user-preview-profile-card${wide ? " user-preview-profile-card-wide" : ""}`}>
+      <h2 className="user-preview-profile-card-heading">{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+function UserPreviewProfileDetails({ rows }: { rows: UserPreviewProfileDetailRow[] }) {
+  return (
+    <dl className="user-preview-profile-details">
+      {rows.map((row) => (
+        <div key={row.label}>
+          <dt>{row.label}</dt>
+          <dd>{row.value ?? "Not recorded"}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+function UserPreviewProfileList({
+  emptyMessage,
+  items
+}: {
+  emptyMessage: string;
+  items: UserPreviewProfileListItem[];
+}) {
+  if (items.length === 0) return <p className="user-preview-profile-muted">{emptyMessage}</p>;
+  return (
+    <div className="user-preview-profile-list">
+      {items.map((item, index) => (
+        <div key={`${item.title}-${index}`}>
+          <strong>{item.title}</strong>
+          {item.meta ? <span>{item.meta}</span> : null}
+          {item.detail ? <p>{item.detail}</p> : null}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function UserPreviewUtilitySummaries({ summaries }: { summaries: SiteEnergyProfile["utilitySummaries"] }) {
+  const items = summaries.map((summary) => ({
+    title: formatUtilityCategory(summary.utilityCategory),
+    meta: profileList([
+      summary.latestUtilityProvider,
+      profileCount(summary.uploadedFileCount, "file"),
+      profileCount(summary.processedFileCount, "processed file")
+    ]),
+    detail: profileList([
+      summary.annualUsage == null ? null : `${profileNumber(summary.annualUsage, summary.usageUnit || undefined)} annual usage`,
+      summary.annualCost == null ? null : `${profileCurrencyDollars(summary.annualCost)} annual cost`,
+      summary.averageUnitCost == null ? null : `${profileRate(summary.averageUnitCost, summary.usageUnit || undefined)} average rate`,
+      formatUtilityPeriod(summary.latestBillingPeriodStart, summary.latestBillingPeriodEnd),
+      summary.lastUpdatedAt ? `Updated ${profileDate(summary.lastUpdatedAt)}` : null
+    ])
+  }));
+  return (
+    <div className="user-preview-profile-subsection">
+      <h3>Utility summaries</h3>
+      <UserPreviewProfileList emptyMessage="No utility summaries are available." items={items} />
+    </div>
+  );
+}
+
+function UserPreviewUtilityFiles({ files }: { files: UploadedUtilityFile[] }) {
+  const items = files.map((file) => ({
+    title: file.originalFilename || `${formatUtilityCategory(file.utilityCategory)} bill`,
+    meta: profileList([
+      formatUtilityCategory(file.utilityCategory),
+      energyDataSourceTypeLabels[file.fileType] || "Unknown utility file",
+      formatProcessingStatus(file.processingStatus)
+    ]),
+    detail: profileList([
+      file.utilityProvider,
+      file.uploadedAt ? `Uploaded ${profileDate(file.uploadedAt)}` : null,
+      file.processedAt ? `Processed ${profileDate(file.processedAt)}` : null
+    ])
+  }));
+  return (
+    <div className="user-preview-profile-subsection">
+      <h3>Uploaded files</h3>
+      <UserPreviewProfileList emptyMessage="No uploaded utility files are available." items={items} />
+    </div>
+  );
+}
+
+function UserPreviewExtractedValues({ values }: { values: UtilityExtractedValue[] }) {
+  const items = values.slice(0, 12).map((value) => ({
+    title: value.fieldDisplayName || value.fieldId,
+    meta: profileList([
+      formatUtilityFieldValue(value),
+      value.confidence ? `${capitalizeLabel(value.confidence)} confidence` : null,
+      energyDataSourceTypeLabels[value.sourceType] || "Unknown source"
+    ]),
+    detail: formatUtilityPeriod(value.periodStart, value.periodEnd)
+  }));
+  return (
+    <div className="user-preview-profile-subsection">
+      <h3>Extracted values</h3>
+      <UserPreviewProfileList emptyMessage="No extracted utility values are available." items={items} />
+    </div>
+  );
+}
+
+function UserPreviewTopRetrofits({ retrofits }: { retrofits: RetrofitPreviewCard[] }) {
+  const items = retrofits.slice(0, 6).map((retrofit) => ({
+    title: retrofit.name,
+    meta: profileList([
+      retrofit.confidenceLabel,
+      estimateBasisLabel(retrofit.estimateBasis),
+      profileCount(retrofit.opportunities.length, "opportunity", "opportunities")
+    ]),
+    detail: profileList([
+      retrofit.tabSummary.primaryMetricValue == null ? null : `${retrofit.tabSummary.primaryMetricLabel}: ${retrofit.tabSummary.primaryMetricValue}`,
+      retrofit.metrics.effectiveCostAfterOneTimeBenefits == null ? null : `Net cost ${formatCents(retrofit.metrics.effectiveCostAfterOneTimeBenefits)}`,
+      retrofit.missingInfo.length ? `${retrofit.missingInfo.length} missing input(s)` : "No missing inputs listed"
+    ])
+  }));
+  return (
+    <div className="user-preview-profile-subsection">
+      <h3>Top retrofits</h3>
+      <UserPreviewProfileList emptyMessage="No retrofits are available." items={items} />
+    </div>
+  );
+}
+
+function buildUserPreviewProfileAnswerRows(
+  retrofits: RetrofitPreviewCard[],
+  detailAnswers: Record<string, string>,
+  seededDetailAnswers: Record<string, string>
+) {
+  const rows: Array<UserPreviewProfileDetailRow & { source: string }> = [];
+  const seenQuestionIds = new Set<string>();
+  for (const retrofit of retrofits) {
+    for (const question of getRetrofitFormQuestions(retrofit, detailAnswers)) {
+      if (seenQuestionIds.has(question.id)) continue;
+      seenQuestionIds.add(question.id);
+      const answer = detailAnswers[question.id] ?? seededDetailAnswers[question.id] ?? question.answer;
+      if (answer == null || String(answer).trim() === "") continue;
+      const seeded = seededDetailAnswers[question.id] != null && String(seededDetailAnswers[question.id]) === String(answer);
+      rows.push({
+        label: `${retrofit.name}: ${question.question}`,
+        value: String(answer),
+        source: seeded ? "Seeded preview value" : "Current preview session value"
+      });
+    }
+  }
+  return rows.slice(0, 18);
+}
+
+function profileText(value: string | number | boolean | null | undefined) {
+  if (value == null) return "Not recorded";
+  const text = String(value).trim();
+  return text || "Not recorded";
+}
+
+function profileBoolean(value: boolean | null | undefined) {
+  if (value == null) return "Not recorded";
+  return value ? "Yes" : "No";
+}
+
+function profileDate(value: string | null | undefined) {
+  return value ? formatDate(value) : "Not recorded";
+}
+
+function profileNumber(value: number | null | undefined, unit?: string) {
+  if (value == null || !Number.isFinite(value)) return "Not recorded";
+  const formatted = new Intl.NumberFormat("en-US", { maximumFractionDigits: value < 10 ? 2 : 0 }).format(value);
+  return unit ? `${formatted} ${unit}` : formatted;
+}
+
+function profileCurrencyDollars(value: number | null | undefined) {
+  if (value == null || !Number.isFinite(value)) return "Not recorded";
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
+}
+
+function profileRate(value: number | null | undefined, unit?: string) {
+  if (value == null || !Number.isFinite(value)) return "Not recorded";
+  const formatted = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 4 }).format(value);
+  return unit ? `${formatted} / ${unit}` : formatted;
+}
+
+function profileCount(count: number | null | undefined, singular: string, plural?: string) {
+  if (count == null || !Number.isFinite(count)) return "Not recorded";
+  return `${count.toLocaleString()} ${count === 1 ? singular : plural || `${singular}s`}`;
+}
+
+function profileList(values: Array<string | number | boolean | null | undefined> | null | undefined) {
+  const items = (values || [])
+    .map((value) => (value == null ? "" : String(value).trim()))
+    .filter(Boolean);
+  return items.length ? items.join(", ") : "Not recorded";
+}
+
+function profileWebsite(value: string | null | undefined) {
+  const text = value?.trim();
+  if (!text) return "Not recorded";
+  const href = /^https?:\/\//i.test(text) ? text : `https://${text}`;
+  return (
+    <a href={href} rel="noreferrer" target="_blank">
+      {text}
+    </a>
   );
 }
 
@@ -10393,6 +10879,7 @@ function UserPreviewSidebar({
   onCloseMobile,
   onOpenDashboardPage,
   onOpenInstructions,
+  onOpenProfile,
   onSelectRetrofit,
   onShowAllRetrofits,
   onToggleCollapsed,
@@ -10400,13 +10887,14 @@ function UserPreviewSidebar({
 }: {
   activeDashboardPage: DashboardPageId;
   activeRetrofitId: string;
-  activeView: "retrofits" | "dashboard";
+  activeView: UserPreviewPrimaryView;
   collapsed: boolean;
   instructionsPulse: boolean;
   mobileOpen: boolean;
   onCloseMobile: () => void;
   onOpenDashboardPage: (pageId: DashboardPageId) => void;
   onOpenInstructions: () => void;
+  onOpenProfile: () => void;
   onSelectRetrofit: (retrofitId: string) => void;
   onShowAllRetrofits: () => void;
   onToggleCollapsed: () => void;
@@ -10463,7 +10951,11 @@ function UserPreviewSidebar({
             </div>
           ) : null}
           <div className="user-preview-sidebar-secondary" role="group" aria-label="Profile navigation">
-            <button className="sidebar-nav-row sidebar-secondary-item" type="button">
+            <button
+              className={`sidebar-nav-row sidebar-secondary-item sidebar-profile-item${activeView === "profile" ? " is-active" : ""}`}
+              onClick={onOpenProfile}
+              type="button"
+            >
               <ProfileInfoIcon />
               <span className="sidebar-label">Profile info</span>
             </button>

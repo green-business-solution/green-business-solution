@@ -28,7 +28,8 @@ import {
   getScenarioSelectedOpportunityCount,
   hydrateBillUploadStateFromIntake,
   isSupportedBillUploadFile,
-  sanitizeBillUploadState
+  sanitizeBillUploadState,
+  UserPreviewProfileView
 } from "./App";
 
 const liveShapedPayload = {
@@ -1019,6 +1020,191 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain(">Upload bills</button>");
   });
 
+  it("renders a read-only profile view without raw utility source fields", () => {
+    const payloadWithProfileData = {
+      ...liveShapedPayload,
+      source: {
+        kind: "admin_test_case_preview",
+        sampleUserId: "sample-profile-user"
+      },
+      user: {
+        ...liveShapedPayload.user,
+        passwordLinked: true,
+        isFakeUser: true
+      },
+      summary: {
+        ...liveShapedPayload.summary,
+        matchedOpportunityCount: 2,
+        canShowOpportunities: false,
+        requiredTaxInputCount: 1,
+        calculatedTaxBenefitCents: 120000,
+        calculatedTaxLiabilityCents: 35000,
+        netTaxImpactCents: 85000
+      },
+      taxRuntimePreview: {
+        status: "needs_input",
+        opportunityDisplayBlocked: true,
+        readyForOpportunityFinancialEstimate: false,
+        requiresStructuredTaxModelWork: false,
+        requiredPreOpportunityInputs: [
+          {
+            inputKey: "entity_tax_classification",
+            label: "Entity tax classification",
+            answerType: "select",
+            collectionSurfaceLabel: "Profile",
+            helperText: "Needed before opportunity values.",
+            requiredBeforeOpportunitySelection: true
+          }
+        ],
+        totals: {
+          includedBenefitCents: 30000,
+          includedLiabilityCents: 5000,
+          includedAmountCents: 25000
+        }
+      },
+      dashboardPostImplementationDataset: {
+        schemaVersion: "dashboard-post-implementation-v1",
+        testCaseId: "restaurant-case",
+        isSynthetic: true,
+        syntheticSource: "admin_test_case_seed",
+        generatedAt: "2026-06-30T12:00:00.000Z",
+        updatedAt: "2026-06-30T12:00:00.000Z",
+        storageStatus: "generated",
+        reportingPeriod: {
+          startDate: "2025-07-01",
+          endDate: "2026-06-30",
+          label: "Jul 1, 2025 - Jun 30, 2026"
+        },
+        properties: [{ id: "primary" }],
+        implementedRetrofits: [{ id: "perf-led" }],
+        monthlyPerformanceRecords: [{ id: "month-2025-07" }],
+        incentivePerformanceRecords: [],
+        documentRecords: [],
+        certificationRecords: [],
+        certificationRequirements: [],
+        nextBestActions: [{ id: "next-action" }],
+        dataQuality: { status: "synthetic", notes: [], warnings: [] }
+      },
+      intake: {
+        ...liveShapedPayload.intake,
+        business: {
+          ...liveShapedPayload.intake.business,
+          website: "example.test"
+        },
+        site: {
+          ...liveShapedPayload.intake.site,
+          numberOfUnits: "1",
+          derivedFieldsStatus: "planned",
+          derivedFieldsPlanned: ["weather_normalized_usage"],
+          geography: {
+            status: "matched",
+            provider: "test",
+            matchedAddress: "1 Market St, San Francisco, CA 94105",
+            stateCode: "CA",
+            countyName: "San Francisco County",
+            placeName: "San Francisco",
+            zip5: "94105",
+            censusTractGeoid: "06075061500"
+          }
+        },
+        uploadedUtilityFiles: [
+          {
+            fileId: "sample-electric",
+            clientIntakeId: "intake-1",
+            siteId: "intake-1:primary",
+            originalFilename: "hoa-mai-electric.pdf",
+            fileType: "utility_pdf",
+            utilityCategory: "electric",
+            utilityProvider: "Sample Electric",
+            s3Key: "synthetic/private/secret-electric.pdf",
+            processingStatus: "processed",
+            uploadedAt: "2026-06-01T00:00:00.000Z",
+            processedAt: "2026-06-01T00:00:00.000Z",
+            errorMessage: null
+          }
+        ],
+        utilityExtractedValues: [
+          {
+            extractedValueId: "sample-annual-kwh",
+            clientIntakeId: "intake-1",
+            fileId: "sample-electric",
+            fieldId: "annual_kwh",
+            fieldDisplayName: "Annual kWh",
+            value: 12000,
+            unit: "kWh",
+            periodStart: "2025-01-01",
+            periodEnd: "2025-12-31",
+            confidence: "medium",
+            sourceType: "utility_pdf",
+            sourceText: "raw OCR text must stay hidden",
+            sourcePath: "pdf.pages[0].tables[1]"
+          }
+        ],
+        siteEnergyProfile: {
+          siteId: "intake-1:primary",
+          uploadedFileCount: 1,
+          processedFileCount: 1,
+          availableFieldIds: ["annual_kwh"],
+          latestUtilityProvider: "Sample Electric",
+          latestBillingPeriodStart: "2025-01-01",
+          latestBillingPeriodEnd: "2025-12-31",
+          annualKwh: 12000,
+          annualElectricCost: 2400,
+          averageCostPerKwh: 0.2,
+          monthlySummaries: [],
+          utilitySummaries: [
+            {
+              utilityCategory: "electric",
+              uploadedFileCount: 1,
+              processedFileCount: 1,
+              availableFieldIds: ["annual_kwh"],
+              latestUtilityProvider: "Sample Electric",
+              latestBillingPeriodStart: "2025-01-01",
+              latestBillingPeriodEnd: "2025-12-31",
+              annualUsage: 12000,
+              annualCost: 2400,
+              averageUnitCost: 0.2,
+              usageUnit: "kWh",
+              monthlySummaries: [],
+              lastUpdatedAt: "2026-06-01T00:00:00.000Z"
+            }
+          ],
+          lastUpdatedAt: "2026-06-01T00:00:00.000Z"
+        }
+      }
+    } as any;
+    const preview = buildUserRetrofitPreviewResult(payloadWithProfileData);
+    const seededAnswers = buildSeededRetrofitDetailAnswers(preview.retrofits, payloadWithProfileData.intake);
+    const billUploadState = hydrateBillUploadStateFromIntake(payloadWithProfileData.intake, getDefaultBillUploadState());
+
+    const html = renderToStaticMarkup(
+      <UserPreviewProfileView
+        billUploadState={billUploadState}
+        detailAnswers={seededAnswers}
+        hideBillData={false}
+        hideFormDetails={false}
+        isDetailLoading={false}
+        payload={payloadWithProfileData}
+        preview={preview}
+        seededDetailAnswers={seededAnswers}
+      />
+    );
+
+    expect(html).toContain("Profile info");
+    expect(html).toContain("Read-only");
+    expect(html).toContain("Test/demo data");
+    expect(html).toContain("Test Business");
+    expect(html).toContain("sample-profile-user");
+    expect(html).toContain("Annual kWh");
+    expect(html).toContain("hoa-mai-electric.pdf");
+    expect(html).toContain("Entity tax classification");
+    expect(html).toContain("Pre-retrofit form values");
+    expect(html).toContain("Synthetic dashboard data");
+    expect(html).not.toContain("synthetic/private/secret-electric.pdf");
+    expect(html).not.toContain("raw OCR text must stay hidden");
+    expect(html).not.toContain("pdf.pages[0].tables[1]");
+  });
+
   it("updates local confirmation state helpers", () => {
     const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
     const firstAssumption = preview.retrofits[0].editableAssumptions[0];
@@ -1490,6 +1676,12 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("getRetrofitFormQuestions(retrofit)");
     expect(source).not.toContain("function UserPreviewTopBar");
     expect(source).toContain("Profile info");
+    expect(source).toContain("type UserPreviewPrimaryView = \"profile\" | \"retrofits\" | \"dashboard\"");
+    expect(source).toContain("export function UserPreviewProfileView");
+    expect(source).toContain("onOpenProfile={handleProfileSelect}");
+    expect(source).toContain("activePrimaryView === \"profile\"");
+    expect(source).toContain("sidebar-profile-item");
+    expect(source).toContain("Bill data is hidden in this admin preview.");
     expect(source).toContain("Dashboard");
     expect(source).toContain("Instructions");
     expect(source).toContain("ProcessOnboardingModal");

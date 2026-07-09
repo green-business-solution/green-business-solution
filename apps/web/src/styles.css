@@ -4144,6 +4144,7 @@ dd {
 }
 
 .sidebar-section-trigger.is-active,
+.sidebar-profile-item.is-active,
 .sidebar-dashboard-item.is-active {
   background: #f1f8f3;
   color: var(--rf-green);
@@ -4196,6 +4197,182 @@ dd {
 .sidebar-dashboard-subitem.is-active {
   background: #f3faf6;
   color: var(--rf-green);
+}
+
+.user-preview-profile-view {
+  color: var(--rf-text);
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+  width: 100%;
+}
+
+.user-preview-profile-header {
+  align-items: end;
+  border-bottom: 1px solid rgba(18, 48, 30, 0.12);
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding-bottom: 12px;
+}
+
+.user-preview-profile-header h1 {
+  font-size: 34px;
+  line-height: 40px;
+  margin: 0;
+}
+
+.user-preview-profile-header p {
+  color: #4b5f53;
+  margin: 6px 0 0;
+}
+
+.user-preview-profile-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.user-preview-profile-badges span {
+  background: #edf8f2;
+  border: 1px solid rgba(15, 107, 70, 0.18);
+  border-radius: 999px;
+  color: #17462f;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 16px;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+
+.user-preview-profile-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-width: 0;
+}
+
+.user-preview-profile-card {
+  background: #ffffff;
+  border: 1px solid rgba(18, 48, 30, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(17, 38, 26, 0.06);
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: 18px;
+}
+
+.user-preview-profile-card-wide {
+  grid-column: span 2;
+}
+
+.user-preview-profile-card-heading {
+  color: #13231a;
+  font-size: 18px;
+  line-height: 24px;
+  margin: 0;
+}
+
+.user-preview-profile-details {
+  display: grid;
+  gap: 10px 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+.user-preview-profile-details div {
+  border-top: 1px solid rgba(18, 48, 30, 0.08);
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding-top: 10px;
+}
+
+.user-preview-profile-details dt {
+  color: #607266;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+
+.user-preview-profile-details dd {
+  color: #16271d;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 20px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.user-preview-profile-details a {
+  color: var(--rf-green);
+  text-decoration: none;
+}
+
+.user-preview-profile-details a:hover {
+  text-decoration: underline;
+}
+
+.user-preview-profile-muted {
+  color: #5b6d62;
+  font-size: 14px;
+  line-height: 21px;
+  margin: 0;
+}
+
+.user-preview-profile-subsection {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.user-preview-profile-subsection h3 {
+  color: #31443a;
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 18px;
+  margin: 2px 0 0;
+  text-transform: uppercase;
+}
+
+.user-preview-profile-list {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.user-preview-profile-list > div {
+  border-top: 1px solid rgba(18, 48, 30, 0.08);
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding-top: 10px;
+}
+
+.user-preview-profile-list strong {
+  color: #16271d;
+  font-size: 14px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+
+.user-preview-profile-list span {
+  color: #42564a;
+  font-size: 13px;
+  line-height: 18px;
+  overflow-wrap: anywhere;
+}
+
+.user-preview-profile-list p {
+  color: #5b6d62;
+  font-size: 13px;
+  line-height: 18px;
+  margin: 0;
+  overflow-wrap: anywhere;
 }
 
 .dashboard-hub {
@@ -11972,6 +12149,23 @@ dd {
     padding-inline: 24px;
   }
 
+  .user-preview-profile-header {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .user-preview-profile-badges {
+    justify-content: flex-start;
+  }
+
+  .user-preview-profile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .user-preview-profile-card-wide {
+    grid-column: span 2;
+  }
+
   .recommendation-readiness-strip,
   .estimate-accuracy-banner,
   .retrofit-preview-header,
@@ -12124,6 +12318,29 @@ dd {
 
   .retrofit-preview-page {
     padding: 18px 16px 82px;
+  }
+
+  .user-preview-profile-view {
+    gap: 14px;
+  }
+
+  .user-preview-profile-header h1 {
+    font-size: 27px;
+    line-height: 33px;
+  }
+
+  .user-preview-profile-badges {
+    justify-content: flex-start;
+  }
+
+  .user-preview-profile-grid,
+  .user-preview-profile-details {
+    grid-template-columns: 1fr;
+  }
+
+  .user-preview-profile-card,
+  .user-preview-profile-card-wide {
+    grid-column: auto;
   }
 
   .retrofit-metric-grid,

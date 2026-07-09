@@ -16,6 +16,11 @@
 - Reverse engineered the current RetroFi homepage visual language into `docs/homepage-design-system.md`, covering colors, spacing, typography, shadows, glass effects, gradients, motion, radius, cards, charts, buttons, and responsive rules.
 - Marked the homepage as the immutable public design-system source of truth in `AGENTS.md` so future agents consult the contract before changing homepage-adjacent UI.
 
+## 2026-07-09 - User preview Profile tab
+
+- Added a read-only Profile info view to the admin user preview sidebar using the existing recommendation payload.
+- Summarized account, intake, site, utility, recommendation, tax, preview-assumption, and synthetic dashboard data without exposing raw utility storage keys or extraction source text.
+
 ## 2026-07-08 - Codex (GPT-5) durable AI workflow adoption
 
 - Adopted the reusable AI workflow structure with project-specific `ARCHITECTURE.md`, `RESOURCE_MAP.md`, `TASK_LIST.md`, `review.md`, `template.md`, ADR, and `AI_RESOURCES/` starter docs.
