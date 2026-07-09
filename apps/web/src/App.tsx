@@ -2881,6 +2881,33 @@ function ArrowUpRightIcon() {
   );
 }
 
+const HOME_HOW_IT_WORKS_SECTION_ID = "home-how-it-works";
+
+function scrollToHomeHowItWorksFallback() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const homeHowItWorksPath = `${pathForRoute("home")}#${HOME_HOW_IT_WORKS_SECTION_ID}`;
+
+  if (window.location.pathname !== pathForRoute("home")) {
+    window.history.pushState({}, "", homeHowItWorksPath);
+    window.dispatchEvent(new Event("popstate"));
+    return;
+  }
+
+  const section = document.getElementById(HOME_HOW_IT_WORKS_SECTION_ID);
+  window.history.replaceState({}, "", homeHowItWorksPath);
+
+  if (!section) {
+    return;
+  }
+
+  const headerOffset = 96;
+  const top = Math.max(0, section.getBoundingClientRect().top + window.scrollY - headerOffset);
+  window.scrollTo({ behavior: "smooth", top });
+}
+
 function PublicNav({
   canStartScan = true,
   isSignedIn = false,
@@ -2976,7 +3003,7 @@ function PublicNav({
       onHowItWorksClick();
       return;
     }
-    navigate("how-it-works");
+    scrollToHomeHowItWorksFallback();
   }
 
   function renderAuthAction() {
@@ -3098,10 +3125,7 @@ function Footer({
   canStartScan?: boolean;
   navigate: (route: Route) => void;
 }) {
-  const siteLinks: Array<[string, Route]> = [
-    ["How It Works", "how-it-works"],
-    ["Pricing", "pricing"]
-  ];
+  const siteLinks: Array<[string, Route]> = [["Pricing", "pricing"]];
 
   if (canStartScan) {
     siteLinks.push(["Get Started", "scan"]);
@@ -3115,6 +3139,9 @@ function Footer({
       </div>
       <nav aria-label="Site links" className="footer-links">
         <span className="footer-heading">Site</span>
+        <button className="footer-link" onClick={scrollToHomeHowItWorksFallback} type="button">
+          How It Works
+        </button>
         {siteLinks.map(([label, route]) => (
           <button className="footer-link" key={route} onClick={() => navigate(route)} type="button">
             {label}
@@ -4656,21 +4683,7 @@ function HomePage({
     <PublicShell navigate={navigate} onHowItWorksClick={onHowItWorksClick} pageClassName="home-page" publicAuth={publicAuth} showFooter>
       <PlanetScanHero navigate={navigate} />
       <HomeInfographicSection navigate={navigate} />
-      <HowItWorksJourneySection sectionId="home-how-it-works" />
-    </PublicShell>
-  );
-}
-
-function HowItWorksPage({
-  navigate,
-  publicAuth
-}: {
-  navigate: (route: Route) => void;
-  publicAuth: PublicAuthState;
-}) {
-  return (
-    <PublicShell navigate={navigate} pageClassName="how-it-works-page" publicAuth={publicAuth}>
-      <HowItWorksJourneySection />
+      <HowItWorksJourneySection sectionId={HOME_HOW_IT_WORKS_SECTION_ID} />
     </PublicShell>
   );
 }
@@ -21309,6 +21322,9 @@ export function App() {
 
   useEffect(() => {
     function syncRoute() {
+      if (window.location.pathname === "/how-it-works") {
+        window.history.replaceState({}, "", `${pathForRoute("home")}#${HOME_HOW_IT_WORKS_SECTION_ID}`);
+      }
       const nextRoute = routeFromPath();
       if (window.location.pathname === "/database") {
         window.history.replaceState({}, "", pathForRoute(nextRoute));
@@ -21428,7 +21444,7 @@ export function App() {
   }
 
   function openHomeHowItWorks() {
-    const sectionId = "home-how-it-works";
+    const sectionId = HOME_HOW_IT_WORKS_SECTION_ID;
     pendingPublicScrollTargetRef.current = sectionId;
 
     if (route !== "home") {
@@ -21500,10 +21516,6 @@ export function App() {
           email: portalPreviewSearchParams.get("email") || ""
         }
       : null;
-
-  if (effectiveRoute === "how-it-works") {
-    return <HowItWorksPage navigate={navigate} publicAuth={publicAuth} />;
-  }
 
   if (effectiveRoute === "pricing") {
     return <PricingPage navigate={navigate} publicAuth={publicAuth} />;
