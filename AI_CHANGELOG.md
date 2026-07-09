@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-09 - Codex (GPT-5) four-card dashboard CTA contrast
+
+- Restyled the post-transition “Get Started” CTA over the four-card dashboard to use a pale surface with dark-pine text, preserving clear text and icon contrast against the dark scene.
+
 ## 2026-07-09 - Codex (GPT-5) homepage dashboard preview section
 
 - Added a static, native JSX/CSS RetroFi Performance Dashboard preview directly after the homepage How It Works section.
