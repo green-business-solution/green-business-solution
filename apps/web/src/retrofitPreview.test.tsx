@@ -10,6 +10,7 @@ import {
   buildSeededRetrofitDetailAnswers,
   comparePreviewRetrofits,
   RetrofitRecommendationsPreview,
+  UserPreviewProfileView,
   buildRetrofitEnvironmentalImpactPreview,
   buildUserRetrofitPreviewResult,
   confirmAllEstimateState,
@@ -784,6 +785,170 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("SOURCE_DSIRE");
   });
 
+  it("renders the user preview Profile tab from safe existing payload data", () => {
+    const profilePayload = {
+      ...liveShapedPayload,
+      summary: {
+        ...liveShapedPayload.summary,
+        canShowOpportunities: true,
+        calculatedTaxBenefitCents: 125000,
+        netTaxImpactCents: 125000
+      },
+      user: {
+        ...liveShapedPayload.user,
+        isFakeUser: true,
+        passwordLinked: true,
+        sampleUserId: "sample-restaurant-1"
+      },
+      intake: {
+        ...liveShapedPayload.intake,
+        site: {
+          ...liveShapedPayload.intake.site,
+          derivedFieldsStatus: "complete",
+          geography: {
+            status: "matched",
+            matchedAddress: "1 Market Street, San Francisco, CA 94105",
+            coordinates: { lat: 37.7936, lng: -122.3958 },
+            stateCode: "CA",
+            countyName: "San Francisco County",
+            placeName: "San Francisco",
+            zip5: "94105"
+          }
+        },
+        uploadedUtilityFiles: [
+          {
+            fileId: "file-1",
+            clientIntakeId: "intake-1",
+            siteId: "site-1",
+            originalFilename: "june-electric.pdf",
+            fileType: "utility_pdf",
+            utilityCategory: "electric",
+            utilityProvider: "PG&E",
+            s3Key: "private/s3/key/should-not-render.pdf",
+            processingStatus: "processed",
+            uploadedAt: "2026-06-02T00:00:00.000Z",
+            processedAt: "2026-06-02T01:00:00.000Z",
+            errorMessage: null
+          }
+        ],
+        utilityExtractedValues: [
+          {
+            extractedValueId: "value-1",
+            clientIntakeId: "intake-1",
+            fileId: "file-1",
+            fieldId: "annual_kwh",
+            fieldDisplayName: "Annual kWh",
+            value: 120000,
+            unit: "kWh",
+            periodStart: "2025-06-01",
+            periodEnd: "2026-05-31",
+            confidence: "high",
+            sourceType: "utility_pdf",
+            sourceText: "raw source text should not render",
+            sourcePath: "$.private.path"
+          }
+        ],
+        siteEnergyProfile: {
+          siteId: "site-1",
+          uploadedFileCount: 1,
+          processedFileCount: 1,
+          availableFieldIds: ["annual_kwh", "annual_electric_cost"],
+          latestUtilityProvider: "PG&E",
+          latestBillingPeriodStart: "2025-06-01",
+          latestBillingPeriodEnd: "2026-05-31",
+          annualKwh: 120000,
+          annualElectricCost: 31000,
+          averageCostPerKwh: 0.258,
+          monthlySummaries: [],
+          utilitySummaries: [
+            {
+              utilityCategory: "electric",
+              uploadedFileCount: 1,
+              processedFileCount: 1,
+              availableFieldIds: ["annual_kwh", "annual_electric_cost"],
+              latestUtilityProvider: "PG&E",
+              latestBillingPeriodStart: "2025-06-01",
+              latestBillingPeriodEnd: "2026-05-31",
+              annualUsage: 120000,
+              annualCost: 31000,
+              averageUnitCost: 0.258,
+              usageUnit: "kWh",
+              monthlySummaries: [],
+              lastUpdatedAt: "2026-06-02T01:00:00.000Z"
+            }
+          ],
+          lastUpdatedAt: "2026-06-02T01:00:00.000Z"
+        }
+      },
+      taxRuntimePreview: {
+        status: "needs_inputs",
+        opportunityDisplayBlocked: false,
+        readyForOpportunityFinancialEstimate: true,
+        requiredPreOpportunityInputs: [
+          {
+            inputKey: "tax_entity_type",
+            label: "Tax entity type"
+          }
+        ],
+        totals: {
+          includedBenefitCents: 125000,
+          includedLiabilityCents: 0,
+          includedAmountCents: 125000
+        }
+      },
+      dashboardPostImplementationDataset: {
+        schemaVersion: "dashboard-post-implementation-v1",
+        testCaseId: "sample-restaurant-1",
+        isSynthetic: true,
+        generatedAt: "2026-06-30T12:00:00.000Z",
+        updatedAt: "2026-06-30T12:00:00.000Z",
+        storageStatus: "seeded",
+        reportingPeriod: { startDate: "2026-01-01", endDate: "2026-12-31", label: "2026" },
+        properties: [{}],
+        implementedRetrofits: [{}],
+        monthlyPerformanceRecords: [{}, {}],
+        incentivePerformanceRecords: [{}],
+        documentRecords: [{}],
+        certificationRecords: [],
+        certificationRequirements: [],
+        nextBestActions: [{}],
+        dataQuality: { status: "modeled", notes: ["Seeded dashboard dataset"], warnings: [] }
+      }
+    } as any;
+    const preview = buildUserRetrofitPreviewResult(profilePayload);
+    const seededDetailAnswers = buildSeededRetrofitDetailAnswers(preview.retrofits, profilePayload.intake);
+
+    const html = renderToStaticMarkup(
+      <UserPreviewProfileView
+        effectiveBillUploadState={hydrateBillUploadStateFromIntake(profilePayload.intake, getDefaultBillUploadState())}
+        effectiveDetailAnswers={seededDetailAnswers}
+        hideBillData={false}
+        hideFormDetails={false}
+        payload={profilePayload}
+        preview={preview}
+        seededDetailAnswers={seededDetailAnswers}
+      />
+    );
+
+    expect(html).toContain("Profile data");
+    expect(html).toContain("Read-only");
+    expect(html).toContain("Synthetic test case");
+    expect(html).toContain("Test Client");
+    expect(html).toContain("client@example.com");
+    expect(html).toContain("sample-restaurant-1");
+    expect(html).toContain("1 Market Street, San Francisco, CA 94105");
+    expect(html).toContain("PG&amp;E");
+    expect(html).toContain("june-electric.pdf");
+    expect(html).toContain("Annual kWh");
+    expect(html).toContain("Tax entity type");
+    expect(html).toContain("Matched retrofits");
+    expect(html).toContain("LED Lighting");
+    expect(html).toContain("read-only preview assumptions available");
+    expect(html).not.toContain("private/s3/key");
+    expect(html).not.toContain("raw source text should not render");
+    expect(html).not.toContain("$.private.path");
+  });
+
   it("hydrates test-case bill readiness from intake data and lets admins hide it", () => {
     const payloadWithBills = {
       ...liveShapedPayload,
@@ -1482,6 +1647,11 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("onShowAllRetrofits={() =>");
     expect(source).toContain("if (activeRetrofitId) {");
     expect(source).toContain("onShowAllRetrofits();");
+    expect(source).toContain("type UserPreviewPrimaryView = \"profile\" | \"retrofits\" | \"dashboard\"");
+    expect(source).toContain("function handleProfileSelect()");
+    expect(source).toContain("onOpenProfile={handleProfileSelect}");
+    expect(source).toContain("UserPreviewProfileView");
+    expect(source).toContain("sidebar-profile-item");
     expect(source).toContain("function RetrofitDetailFormModal(");
     expect(source).toContain("setActiveFormRetrofitId(retrofit.id)");
     expect(source).toContain("if (!readiness.questionsComplete)");
@@ -1910,6 +2080,10 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".picker-view-icon");
     expect(css).toContain(".sidebar-retrofit-item:hover");
     expect(css).toContain(".sidebar-retrofit-item.is-active");
+    expect(css).toContain(".sidebar-profile-item.is-active");
+    expect(css).toContain(".user-profile-tab-view");
+    expect(css).toContain(".user-profile-definition-list");
+    expect(css).toContain(".user-profile-assumption-details");
     expect(css).toContain(".user-preview-shell.is-sidebar-collapsed");
     expect(css).toContain(".user-preview-sidebar-collapse");
     expect(css).toContain(".process-onboarding-modal");

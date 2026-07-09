@@ -2534,3 +2534,7 @@
 - Updated the v2 runtime bridge to distinguish grant-production action outcomes for no-calculable-value placeholders and non-grant workflows instead of collapsing them into generic suppression.
 - Regenerated grant/tax coverage and form-input audit reports, confirming all 87 form-input-required grant/rebate evaluations map to collection surfaces, and uploaded the regenerated generated-test-fixture manifest to S3.
 - Audited and tightened tax runtime readiness: confirmed tax-gate disqualifications now resolve to zero-value outcomes, local gross-receipts tax gaps are tax-return input gates, and the grant/tax coverage report separates tax opportunity and local-tax production action buckets.
+
+# 2026-07-08
+
+- Implemented the read-only Profile tab in the user preview, showing existing account, intake, site, utility, recommendation, tax, synthetic dashboard, and preview-assumption data without exposing raw storage keys or source snippets.
