@@ -1,6 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { RetroFiLogoLoader, RetroFiPageLoader, RetroFiProgressLoader, RetroFiSkeleton, clampRetroFiProgress } from "./components/RetroFiLoader";
+import { USER_PREVIEW_TRIAGE_ISSUES, isUserPreviewTriageModeEnabled } from "./userPreviewTriage";
 import {
   BILL_UPLOAD_STEPS,
   CUSTOMER_RETROFIT_UI_NAMES,
@@ -782,6 +783,37 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("Selected opportunities update counts now; financial recalculation requires the calculation engine");
     expect(html).not.toContain("Financing ignored in V1");
     expect(html).not.toContain("SOURCE_DSIRE");
+  });
+
+  it("keeps user-preview triage annotations off by default and visible only when enabled", () => {
+    const baseProps = {
+      emptyMessage: "No retrofit recommendations yet.",
+      error: null,
+      eyebrow: "Admin-only portal preview",
+      intro: "Review recommended retrofits.",
+      isLoading: false,
+      loadingMessage: "Loading live retrofit recommendations for this client...",
+      hideBillData: true,
+      payload: liveShapedPayload as any,
+      title: "Retrofit Recommendations"
+    };
+    const offHtml = renderToStaticMarkup(<RetrofitRecommendationsPreview {...baseProps} />);
+    const onHtml = renderToStaticMarkup(<RetrofitRecommendationsPreview {...baseProps} triageMode />);
+
+    expect(isUserPreviewTriageModeEnabled("?triage=1")).toBe(true);
+    expect(isUserPreviewTriageModeEnabled("?triage=true")).toBe(true);
+    expect(isUserPreviewTriageModeEnabled("?customerPreview=1")).toBe(false);
+    expect(Object.keys(USER_PREVIEW_TRIAGE_ISSUES)).toContain("picker.environmental-impact.placeholder");
+    expect(Object.keys(USER_PREVIEW_TRIAGE_ISSUES)).toContain("workspace.actions.discard-no-handler");
+    expect(offHtml).not.toContain("review-triage-panel");
+    expect(offHtml).not.toContain("data-review-triage-surface");
+    expect(onHtml).toContain("review-triage-panel");
+    expect(onHtml).toContain("Review triage overlay");
+    expect(onHtml).toContain("data-review-triage-surface=\"picker.environmental-impact\"");
+    expect(onHtml).toContain("The picker impact metric is returned by retrofitPickerEnvironmentalImpact()");
+    expect(onHtml).toContain("Remove review");
+    expect(onHtml).toContain("Implement or repair");
+    expect(onHtml).toContain("Rendering repair");
   });
 
   it("hydrates test-case bill readiness from intake data and lets admins hide it", () => {
