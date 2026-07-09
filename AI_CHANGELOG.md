@@ -1,5 +1,12 @@
 # AI Changelog
 
+## 2026-07-09 - Codex (GPT-5) loading and home navbar polish
+
+- Replaced the public session restore card with the shared full-page RetroFi spinner loader so auth restoration no longer looks like a modal dialog.
+- Removed the home-page mobile liquid-glass navbar shell override while preserving the existing public navbar controls and routing behavior.
+- Added a small-screen home hero text-fit guard so the first mobile viewport does not clip the headline.
+- Added regression coverage for the clean loading surface and the home-page navbar override removal.
+
 ## 2026-07-09 - Codex (GPT-5) next-session context handoff
 
 - Added a root `NEXT_CODEX_CONTEXT.md` handoff for future Codex sessions covering the current implementation plan, completed Codex work, architecture state, AWS migration state, runtime artifact rules, application-prep status, and highest-priority next tasks.

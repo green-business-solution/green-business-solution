@@ -14034,16 +14034,6 @@ body {
     right: 16px;
     top: 12px;
   }
-
-  .public-page.home-page .navbar-inner {
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
-    backdrop-filter: blur(18px) saturate(140%);
-    background: rgba(237, 248, 242, 0.58);
-    border: 1px solid rgba(6, 38, 25, 0.1);
-    border-radius: 22px;
-    box-shadow: 0 16px 34px rgba(6, 38, 25, 0.1);
-    padding: 0 14px 0 18px;
-  }
 }
 
 @media (max-width: 768px) {
@@ -14094,6 +14084,14 @@ body {
     min-height: 40px;
     min-width: 112px;
     padding: 0 12px;
+  }
+
+  .public-page.home-page .planet-scan-section.scroll-frame-scanner .planet-scan-title {
+    font-size: 50px;
+  }
+
+  .public-page.home-page .planet-scan-section.scroll-frame-scanner .planet-scan-title span {
+    white-space: normal;
   }
 
   .public-page.home-page .planet-scan-section.scroll-frame-scanner .planet-scan-copy {

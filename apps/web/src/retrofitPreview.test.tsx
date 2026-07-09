@@ -1567,7 +1567,17 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("function isAppChromeRoute(route: Route)");
     expect(source).toContain("route === \"user-preview\"");
     expect(source).toContain("return <AppSessionRestoringPage />");
-    expect(source).toContain("return <SessionRestoringPage navigate={navigate} />");
+    expect(source).toContain("return <SessionRestoringPage />");
+
+    const publicRestoringSource = source.slice(
+      source.indexOf("function SessionRestoringPage"),
+      source.indexOf("function AppSessionRestoringPage")
+    );
+    expect(publicRestoringSource).toContain("RetroFiPageLoader");
+    expect(publicRestoringSource).toContain("Checking your signed-in session...");
+    expect(publicRestoringSource).not.toContain("PublicShell");
+    expect(publicRestoringSource).not.toContain("sign-in-panel");
+    expect(publicRestoringSource).not.toContain("RetroFiLogoLoader");
 
     const appRestoringSource = source.slice(
       source.indexOf("function AppSessionRestoringPage"),
@@ -1737,6 +1747,27 @@ describe("retrofit recommendations preview", () => {
     expect(queuedHtml).toContain("No report");
     expect(queuedHtml).not.toContain("Assign Crewmate");
     expect(queuedHtml).not.toContain("Report Feedback");
+  });
+
+  it("keeps the home page primary navbar free of the mobile glass shell override", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
+    const homeMobileNavStart = css.indexOf("@media (max-width: 860px) {");
+    const homeMobileNavEnd = css.indexOf("@media (max-width: 768px)", homeMobileNavStart);
+    const homeMobileNavCss = css.slice(homeMobileNavStart, homeMobileNavEnd);
+    const homeSmallMobileStart = css.indexOf("@media (max-width: 520px)", homeMobileNavEnd);
+    const homeSmallMobileEnd = css.indexOf(".home-infographics-section", homeSmallMobileStart);
+    const homeSmallMobileCss = css.slice(homeSmallMobileStart, homeSmallMobileEnd);
+
+    expect(css).toContain(".public-page.home-page .navbar-inner");
+    expect(css).toContain("background: transparent;");
+    expect(homeMobileNavCss).toContain(".public-page.home-page .site-header");
+    expect(homeMobileNavCss).not.toContain(".public-page.home-page .navbar-inner");
+    expect(homeMobileNavCss).not.toContain("backdrop-filter");
+    expect(homeMobileNavCss).not.toContain("rgba(237, 248, 242, 0.58)");
+    expect(homeSmallMobileCss).toContain(".public-page.home-page .planet-scan-section.scroll-frame-scanner .planet-scan-title span");
+    expect(homeSmallMobileCss).toContain("white-space: normal;");
   });
 
   it("renders the shared full-page loader with the RetroFi logo and dashboard status text", () => {
