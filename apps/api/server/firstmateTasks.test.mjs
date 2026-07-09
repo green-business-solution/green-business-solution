@@ -294,6 +294,53 @@ describe("firstmate task reader", () => {
     expect(() => safeStateFilePath(home, "../outside", ".meta")).toThrow("Invalid task state path.");
   });
 
+  it("suppresses completed report rows when queued feedback follow-ups already exist", async () => {
+    const home = await makeFirstmateHome();
+    await writeFile(
+      home,
+      "data/backlog.md",
+      [
+        "## Queued",
+        "- [ ] feedback-original-body-b1-20260708123456789 - Follow up on report feedback for original-body-b1 (repo: green-business-solution) (kind: scout)",
+        "  - Original task id: original-body-b1",
+        "  - Follow-up task id: feedback-original-body-b1-20260708123456789",
+        "- [ ] revision-original-id-b2-20260708123456789 - Revise report for original-id-b2 (repo: green-business-solution) (kind: scout)",
+        "## Done",
+        "- [x] original-body-b1 - Completed report data/original-body-b1/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)",
+        "- [x] original-id-b2 - Completed report data/original-id-b2/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)",
+        "- [x] untouched-report-u1 - Completed report data/untouched-report-u1/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)"
+      ].join("\n")
+    );
+    await writeFile(home, "data/original-body-b1/report.md", "# Original Body\n\nStill readable.\n");
+    await writeFile(home, "data/original-id-b2/report.md", "# Original Id\n\nStill readable.\n");
+    await writeFile(home, "data/untouched-report-u1/report.md", "# Untouched\n\nStill reviewable.\n");
+
+    const dashboard = await readFirstmateTasksDashboard({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      now: new Date("2026-07-08T12:00:00.000Z")
+    });
+
+    expect(dashboard.tasks.map((task) => task.id)).toContain("feedback-original-body-b1-20260708123456789");
+    expect(dashboard.tasks.map((task) => task.id)).toContain("revision-original-id-b2-20260708123456789");
+    expect(dashboard.tasks.map((task) => task.id)).toContain("untouched-report-u1");
+    expect(dashboard.tasks.map((task) => task.id)).not.toContain("original-body-b1");
+    expect(dashboard.tasks.map((task) => task.id)).not.toContain("original-id-b2");
+
+    const directReport = await readFirstmateTaskReport({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      taskId: "original-body-b1",
+      now: new Date("2026-07-08T12:00:00.000Z")
+    });
+    expect(directReport.markdown).toContain("Still readable.");
+    expect(directReport.reportStatus).toBe("previous");
+  });
+
   it("sends responses with execFile arguments instead of shell interpolation", async () => {
     const home = await makeFirstmateHome();
     await writeFile(home, "bin/fm-send.sh", "#!/usr/bin/env bash\n");
@@ -540,6 +587,61 @@ describe("firstmate task reader", () => {
     expect(artifact).toContain("This is report revision work.");
   });
 
+  it("suppresses the original completed report after a changes-requested follow-up is queued", async () => {
+    const home = await makeFirstmateHome();
+    await writeFile(home, "data/backlog.md", "## Done\n- [x] feedback-change-state-f14 - Completed report data/feedback-change-state-f14/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)\n");
+    await writeFile(home, "data/feedback-change-state-f14/report.md", "# Report\n\nReady.\n");
+    const calls = [];
+
+    const result = await sendFirstmateTaskReportFeedback({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      taskId: "feedback-change-state-f14",
+      action: "changes-requested",
+      comment: "Please revise the assumptions section.",
+      now: new Date("2026-07-08T12:34:56.789Z"),
+      execFileFn: (file, args, options, callback) => {
+        calls.push({ file, args, options });
+        callback(null, JSON.stringify({ id: args[1] }), "");
+      }
+    });
+
+    expect(result).toMatchObject({
+      taskId: "feedback-change-state-f14",
+      action: "changes-requested",
+      delivery: "follow-up-task",
+      followUpTaskId: "revision-feedback-change-state-f14-20260708123456789",
+      dispatchStatus: "queued-fallback"
+    });
+    const reviewState = JSON.parse(await fs.readFile(path.join(home, "data", "feedback-change-state-f14", "feedback", "report-review-state.json"), "utf8"));
+    expect(reviewState).toMatchObject({
+      state: "follow-up-created",
+      action: "changes-requested",
+      followUpTaskId: "revision-feedback-change-state-f14-20260708123456789"
+    });
+
+    const dashboard = await readFirstmateTasksDashboard({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      now: new Date("2026-07-08T12:35:00.000Z")
+    });
+    expect(dashboard.tasks.some((task) => task.id === "feedback-change-state-f14")).toBe(false);
+
+    const directReport = await readFirstmateTaskReport({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      taskId: "feedback-change-state-f14",
+      now: new Date("2026-07-08T12:35:00.000Z")
+    });
+    expect(directReport.markdown).toContain("Ready.");
+  });
+
   it("sends changes-requested report feedback to an active agent with live-window wording", async () => {
     const home = await makeFirstmateHome();
     await writeFile(home, "bin/fm-send.sh", "#!/usr/bin/env bash\n");
@@ -731,6 +833,16 @@ describe("firstmate task reader", () => {
       now: new Date("2026-07-08T12:35:00.000Z")
     });
     expect(dashboard.tasks.some((task) => task.id === "feedback-continue-f13")).toBe(false);
+
+    const directReport = await readFirstmateTaskReport({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      taskId: "feedback-continue-f13",
+      now: new Date("2026-07-08T12:35:00.000Z")
+    });
+    expect(directReport.markdown).toContain("Ready.");
   });
 
   it("uses local env overrides for report revision auto-dispatch spawn profile", async () => {

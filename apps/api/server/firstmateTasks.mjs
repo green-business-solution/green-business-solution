@@ -9,6 +9,7 @@ const responseNeededStatusStates = new Set(["needs-decision", "blocked", "failed
 const reportFeedbackActions = new Set(["proceed", "changes-requested"]);
 const explicitReportStatuses = new Set(["final", "review-ready", "draft", "previous", "repair-ready"]);
 const repairReadyStatuses = new Set(["ready", "repair-ready", "needs-repair", "needs-gpt-pro-repair"]);
+const suppressingReportReviewStates = new Set(["accepted", "follow-up-created"]);
 const maxResponseMessageLength = 4000;
 const defaultFeedbackDispatchHarness = "codex";
 const defaultFeedbackDispatchModel = "gpt-5.5";
@@ -135,6 +136,7 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
     });
   }
 
+  const followUpSuppressedOriginalTaskIds = inferFollowUpSuppressedOriginalTaskIds({ backlogText, tasksById });
   const tasks = await Promise.all(
     [...tasksById.values()]
       .filter((task) => taskIdPattern.test(task.id))
@@ -142,7 +144,10 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
         const hasReport = await reportExists(firstmateHome, task.id);
         const state = resolveTaskState(task);
         const reportReview = await readReportReviewState(firstmateHome, task.id);
-        if (state === "completed" && reportReview?.state === "accepted") {
+        if (
+          state === "completed" &&
+          (isSuppressingReportReviewState(reportReview) || followUpSuppressedOriginalTaskIds.has(task.id))
+        ) {
           return null;
         }
         const responseNeeded = responseNeededStatusStates.has(task.statusState);
@@ -439,7 +444,7 @@ export async function sendFirstmateTaskReportFeedback({
     allowLocalAgentDispatch
   });
 
-  if (cleanAction === "proceed") {
+  if (["proceed", "changes-requested"].includes(cleanAction)) {
     await writeReportReviewState({
       action: cleanAction,
       comment: cleanComment,
@@ -1381,6 +1386,81 @@ function spawnKindForTask(task) {
   return String(task.kind || "").trim().toLowerCase() === "scout" ? "scout" : "ship";
 }
 
+function inferFollowUpSuppressedOriginalTaskIds({ backlogText, tasksById }) {
+  const suppressed = new Set();
+  const knownTaskIds = new Set(tasksById.keys());
+  let section = "unknown";
+  let currentTask = null;
+
+  for (const rawLine of String(backlogText || "").split(/\r?\n/)) {
+    const heading = rawLine.match(/^##\s+(.+?)\s*$/);
+    if (heading) {
+      section = heading[1].trim().toLowerCase();
+      currentTask = null;
+      continue;
+    }
+
+    const taskLine = rawLine.match(/^-\s+\[([ xX])\]\s+([a-z0-9._-]+)\s+-\s+(.+?)\s*$/i);
+    if (taskLine) {
+      const [, checked, id] = taskLine;
+      const checkedDone = checked.toLowerCase() === "x";
+      const backlogState = checkedDone || section === "done"
+        ? "completed"
+        : section === "queued"
+          ? "queued"
+          : "active";
+      currentTask = { id, backlogState };
+
+      const originalFromId = originalTaskIdFromFollowUpTaskId(id, knownTaskIds);
+      if (backlogState !== "completed" && originalFromId) {
+        suppressed.add(originalFromId);
+      }
+      continue;
+    }
+
+    const originalLine = rawLine.match(/^\s*-\s+Original task id:\s*([a-z0-9._-]+)\s*$/i);
+    if (currentTask?.backlogState !== "completed" && originalLine) {
+      const originalTaskId = normalizeTaskId(originalLine[1]);
+      if (originalTaskId && knownTaskIds.has(originalTaskId)) {
+        suppressed.add(originalTaskId);
+      }
+    }
+  }
+
+  for (const task of tasksById.values()) {
+    if (resolveTaskState(task) === "completed") {
+      continue;
+    }
+    const originalTaskId = originalTaskIdFromFollowUpTaskId(task.id, knownTaskIds);
+    if (originalTaskId) {
+      suppressed.add(originalTaskId);
+    }
+  }
+
+  return suppressed;
+}
+
+function originalTaskIdFromFollowUpTaskId(taskId, knownTaskIds) {
+  const cleanTaskId = normalizeTaskId(taskId);
+  if (!cleanTaskId) {
+    return "";
+  }
+
+  for (const originalTaskId of knownTaskIds) {
+    if (!originalTaskId || originalTaskId === cleanTaskId) {
+      continue;
+    }
+    for (const prefix of ["feedback", "revision", "continue"]) {
+      const expectedPrefix = `${prefix}-${originalTaskId}-`;
+      if (cleanTaskId.startsWith(expectedPrefix) && /^\d{14,20}$/.test(cleanTaskId.slice(expectedPrefix.length))) {
+        return originalTaskId;
+      }
+    }
+  }
+
+  return "";
+}
+
 async function readReportReviewState(firstmateHome, taskId) {
   const reviewPath = safeReportReviewStatePath(firstmateHome, taskId);
   const text = await readTextIfExists(reviewPath);
@@ -1390,10 +1470,14 @@ async function readReportReviewState(firstmateHome, taskId) {
 
   try {
     const parsed = JSON.parse(text);
-    return parsed?.state === "accepted" ? parsed : null;
+    return isSuppressingReportReviewState(parsed) ? parsed : null;
   } catch {
     return null;
   }
+}
+
+function isSuppressingReportReviewState(value) {
+  return suppressingReportReviewStates.has(String(value?.state || "").trim());
 }
 
 async function writeReportReviewState({
@@ -1408,10 +1492,6 @@ async function writeReportReviewState({
   task,
   taskId
 }) {
-  if (action !== "proceed") {
-    return;
-  }
-
   const reviewPath = safeReportReviewStatePath(firstmateHome, taskId);
   await fs.mkdir(path.dirname(reviewPath), { recursive: true });
   await fs.writeFile(reviewPath, `${JSON.stringify({
@@ -1427,7 +1507,7 @@ async function writeReportReviewState({
     kind: task.kind || "unknown",
     project: task.project || null,
     reviewedAt: toIsoString(now),
-    state: "accepted"
+    state: action === "proceed" ? "accepted" : "follow-up-created"
   }, null, 2)}\n`);
 }
 

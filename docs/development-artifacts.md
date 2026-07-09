@@ -76,6 +76,7 @@ For completed tasks with reports and a live `window=`, the admin page can send r
 For completed or review-ready reports without a live `window=`, report feedback is written to `data/<task-id>/feedback/` and queued as a Firstmate follow-up task through `tasks-axi add`.
 Looks-good report approval creates a continuation task and records `data/<task-id>/feedback/report-review-state.json` so the approved report leaves the default review list without deleting `report.md`.
 Requested changes create a revision task and keep the original report row visible until a revised report is available.
+Existing queued or active `feedback-*`, `revision-*`, or `continue-*` follow-ups also suppress the original completed report from the default review list.
 Set `RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH=1` with the local tasks auth bypass to automatically spawn crewmates for no-window report revisions, report continuations, and queued task assignment.
 The auto-dispatch spawn uses `<RETROFI_FIRSTMATE_HOME>/bin/fm-spawn.sh` with explicit profile args, defaulting to `--harness codex --model gpt-5.5 --effort xhigh`.
 Override those local-only defaults with `RETROFI_FIRSTMATE_FEEDBACK_DISPATCH_HARNESS`, `RETROFI_FIRSTMATE_FEEDBACK_DISPATCH_MODEL`, and `RETROFI_FIRSTMATE_FEEDBACK_DISPATCH_EFFORT`.
