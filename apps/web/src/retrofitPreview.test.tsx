@@ -1581,6 +1581,28 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".retrofi-logo-spinner");
   });
 
+  it("keeps local Firstmate task routes out of the Google sign-in redirect path", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+
+    const tasksRouteSource = source.slice(
+      source.indexOf("if (effectiveRoute === \"tasks\")"),
+      source.indexOf("if (effectiveRoute === \"task-report\")")
+    );
+    const reportRouteSource = source.slice(
+      source.indexOf("if (effectiveRoute === \"task-report\")"),
+      source.indexOf("if (effectiveRoute === \"user-preview\")")
+    );
+
+    expect(tasksRouteSource).toContain("return <LocalFirstmateTasksStandalonePage />");
+    expect(tasksRouteSource).not.toContain("SignInPage");
+    expect(reportRouteSource).toContain("return <LocalFirstmateTaskReportStandalonePage />");
+    expect(reportRouteSource).not.toContain("SignInPage");
+    expect(source).toContain("credential ? { headers: adminAuthHeaders(credential) } : {}");
+    expect(source).toContain("Firstmate tasks require admin sign-in unless the local Firstmate tasks auth bypass is enabled.");
+  });
+
   it("renders the shared full-page loader with the RetroFi logo and dashboard status text", () => {
     const html = renderToStaticMarkup(
       <RetroFiPageLoader

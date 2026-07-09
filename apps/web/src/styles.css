@@ -1275,9 +1275,16 @@ textarea {
   padding: 30px;
 }
 
-.testcases-standalone-page {
+.testcases-standalone-page,
+.tasks-standalone-page {
   min-height: 100vh;
   padding: 24px;
+}
+
+.tasks-standalone-page {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.9)),
+    var(--retrofi-bg);
 }
 
 .tasks-page-panel,

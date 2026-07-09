@@ -72,7 +72,12 @@ import {
   formQuestionCatalogCacheVersion,
   loadFormQuestionCatalog
 } from "./forms/formQuestionCatalog.mjs";
-import { readFirstmateTaskReport, readFirstmateTasksDashboard, sendFirstmateTaskResponse } from "./firstmateTasks.mjs";
+import {
+  isFirstmateTasksLocalAuthBypassEnabled,
+  readFirstmateTaskReport,
+  readFirstmateTasksDashboard,
+  sendFirstmateTaskResponse
+} from "./firstmateTasks.mjs";
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
 const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
@@ -3666,9 +3671,18 @@ app.get("/api/admin/fake-client-options", async (req, res) => {
   }
 });
 
+async function requireFirstmateTasksRouteAccess(req) {
+  if (isFirstmateTasksLocalAuthBypassEnabled(process.env)) {
+    return { localAuthBypass: true };
+  }
+
+  await requireAdminFromRequest(req);
+  return { localAuthBypass: false };
+}
+
 app.get("/api/admin/firstmate/tasks", async (req, res) => {
   try {
-    await requireAdminFromRequest(req);
+    await requireFirstmateTasksRouteAccess(req);
     res.json(await readFirstmateTasksDashboard({ env: process.env, now: new Date() }));
   } catch (error) {
     handleError(res, error);
@@ -3677,7 +3691,7 @@ app.get("/api/admin/firstmate/tasks", async (req, res) => {
 
 app.get("/api/admin/firstmate/tasks/:taskId/report", async (req, res) => {
   try {
-    await requireAdminFromRequest(req);
+    await requireFirstmateTasksRouteAccess(req);
     res.json(await readFirstmateTaskReport({ env: process.env, taskId: req.params.taskId, now: new Date() }));
   } catch (error) {
     handleError(res, error);
@@ -3686,7 +3700,7 @@ app.get("/api/admin/firstmate/tasks/:taskId/report", async (req, res) => {
 
 app.post("/api/admin/firstmate/tasks/:taskId/respond", async (req, res) => {
   try {
-    await requireAdminFromRequest(req);
+    await requireFirstmateTasksRouteAccess(req);
     res.json(await sendFirstmateTaskResponse({
       env: process.env,
       taskId: req.params.taskId,

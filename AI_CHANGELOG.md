@@ -22,6 +22,7 @@
 - Added a compact `/tasks` admin page with active, blocked, queued, and completed task sections, active-agent counts, done indicators, and new-tab report links.
 - Added a `/tasks/reports/:taskId` admin report page that renders Firstmate Markdown reports from the guarded backend endpoint.
 - Added a guarded response workflow for tasks whose latest status needs captain input and whose Firstmate metadata has a live response window.
+- Added an explicit local-only `RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS=1` mode so `/tasks` works without local Google OAuth while leaving other admin endpoints unchanged and ignoring the bypass in AWS runtime.
 - Documented the local-only Firstmate task dashboard environment variables in `docs/development-artifacts.md`.
 
 ## 2026-07-08 - Codex (GPT-5) local homepage scanner copy transition

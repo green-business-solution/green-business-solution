@@ -472,6 +472,8 @@ type FirstmateTasksResponse = {
   reason?: string;
   generatedAt: string;
   firstmateHome?: string;
+  localAuthBypass?: boolean;
+  authMode?: "admin" | "local-bypass";
   activeAgentCount: number;
   totalTaskCount: number;
   counts: Record<FirstmateTaskState, number> & { needsResponse: number };
@@ -15423,27 +15425,41 @@ function AdminTasksStandalonePage({
   );
 }
 
+function LocalFirstmateTasksStandalonePage() {
+  return (
+    <main className="tasks-standalone-page">
+      <FirstmateTasksPanel credential={null} />
+    </main>
+  );
+}
+
+function firstmateTasksAccessErrorMessage(error: unknown, fallback: string) {
+  if (!(error instanceof Error)) {
+    return fallback;
+  }
+
+  if (/admin sign-in is required/i.test(error.message)) {
+    return "Firstmate tasks require admin sign-in unless the local Firstmate tasks auth bypass is enabled.";
+  }
+
+  return error.message;
+}
+
 function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null }) {
   const [response, setResponse] = useState<FirstmateTasksResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const loadTasks = useCallback(async () => {
-    if (!credential) {
-      setError("Sign in again to load Firstmate tasks.");
-      setIsLoading(false);
-      return;
-    }
-
     setIsLoading(true);
     setError(null);
     try {
       const nextResponse = await apiGet<FirstmateTasksResponse>("/api/admin/firstmate/tasks", {
-        headers: adminAuthHeaders(credential)
+        ...(credential ? { headers: adminAuthHeaders(credential) } : {})
       });
       setResponse(nextResponse);
     } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : "Could not load Firstmate tasks.");
+      setError(firstmateTasksAccessErrorMessage(requestError, "Could not load Firstmate tasks."));
     } finally {
       setIsLoading(false);
     }
@@ -15461,6 +15477,7 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
     needsResponse: 0
   };
   const responseNeededTasks = response?.tasks.filter((task) => task.responseNeeded) || [];
+  const localAuthBypass = Boolean(response?.localAuthBypass);
 
   return (
     <section className="tasks-page-panel">
@@ -15518,6 +15535,7 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
           {responseNeededTasks.length ? (
             <FirstmateNeedsResponseSection
               credential={credential}
+              localAuthBypass={localAuthBypass}
               onResponded={() => void loadTasks()}
               tasks={responseNeededTasks}
             />
@@ -15539,10 +15557,12 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
 
 function FirstmateNeedsResponseSection({
   credential,
+  localAuthBypass,
   onResponded,
   tasks
 }: {
   credential: AuthCredential | null;
+  localAuthBypass: boolean;
   onResponded: () => void;
   tasks: FirstmateTask[];
 }) {
@@ -15557,6 +15577,7 @@ function FirstmateNeedsResponseSection({
           <FirstmateTaskResponseCard
             credential={credential}
             key={task.id}
+            localAuthBypass={localAuthBypass}
             onResponded={onResponded}
             task={task}
           />
@@ -15568,10 +15589,12 @@ function FirstmateNeedsResponseSection({
 
 function FirstmateTaskResponseCard({
   credential,
+  localAuthBypass,
   onResponded,
   task
 }: {
   credential: AuthCredential | null;
+  localAuthBypass: boolean;
   onResponded: () => void;
   task: FirstmateTask;
 }) {
@@ -15579,20 +15602,24 @@ function FirstmateTaskResponseCard({
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const trimmedMessage = message.trim();
-  const canSubmit = Boolean(credential && task.canRespond && trimmedMessage.length > 0 && trimmedMessage.length <= 4000 && !isSending);
+  const canSubmit = Boolean((credential || localAuthBypass) && task.canRespond && trimmedMessage.length > 0 && trimmedMessage.length <= 4000 && !isSending);
 
   async function sendResponse() {
-    if (!credential || !task.canRespond || !trimmedMessage) return;
+    if ((!credential && !localAuthBypass) || !task.canRespond || !trimmedMessage) return;
 
     setIsSending(true);
     setError(null);
     try {
       await apiPost<FirstmateTaskRespondResponse>(
         `/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/respond`,
-        {
-          ...adminAuthBody(credential),
-          message: trimmedMessage
-        }
+        credential
+          ? {
+              ...adminAuthBody(credential),
+              message: trimmedMessage
+            }
+          : {
+              message: trimmedMessage
+            }
       );
       setMessage("");
       onResponded();
@@ -15738,6 +15765,14 @@ function AdminTaskReportStandalonePage({
   );
 }
 
+function LocalFirstmateTaskReportStandalonePage() {
+  return (
+    <main className="tasks-standalone-page">
+      <FirstmateTaskReportPanel credential={null} taskId={taskReportIdFromPath()} />
+    </main>
+  );
+}
+
 function FirstmateTaskReportPanel({ credential, taskId }: { credential: AuthCredential | null; taskId: string }) {
   const [report, setReport] = useState<FirstmateTaskReportResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -15745,14 +15780,6 @@ function FirstmateTaskReportPanel({ credential, taskId }: { credential: AuthCred
 
   useEffect(() => {
     let isMounted = true;
-
-    if (!credential) {
-      setError("Sign in again to load this Firstmate report.");
-      setIsLoading(false);
-      return () => {
-        isMounted = false;
-      };
-    }
 
     if (!taskId) {
       setError("Report task id is missing.");
@@ -15765,7 +15792,7 @@ function FirstmateTaskReportPanel({ credential, taskId }: { credential: AuthCred
     setIsLoading(true);
     setError(null);
     apiGet<FirstmateTaskReportResponse>(`/api/admin/firstmate/tasks/${encodeURIComponent(taskId)}/report`, {
-      headers: adminAuthHeaders(credential)
+      ...(credential ? { headers: adminAuthHeaders(credential) } : {})
     })
       .then((nextReport) => {
         if (!isMounted) return;
@@ -15773,7 +15800,7 @@ function FirstmateTaskReportPanel({ credential, taskId }: { credential: AuthCred
       })
       .catch((requestError) => {
         if (!isMounted) return;
-        setError(requestError instanceof Error ? requestError.message : "Could not load the Firstmate report.");
+        setError(firstmateTasksAccessErrorMessage(requestError, "Could not load the Firstmate report."));
       })
       .finally(() => {
         if (isMounted) setIsLoading(false);
@@ -20532,14 +20559,7 @@ export function App() {
       );
     }
 
-    return (
-      <SignInPage
-        navigate={navigate}
-        message={signInMessage}
-        onAuthSuccess={handleAuthSuccess}
-        publicAuth={publicAuth}
-      />
-    );
+    return <LocalFirstmateTasksStandalonePage />;
   }
 
   if (effectiveRoute === "task-report") {
@@ -20553,14 +20573,7 @@ export function App() {
       );
     }
 
-    return (
-      <SignInPage
-        navigate={navigate}
-        message={signInMessage}
-        onAuthSuccess={handleAuthSuccess}
-        publicAuth={publicAuth}
-      />
-    );
+    return <LocalFirstmateTaskReportStandalonePage />;
   }
 
   if (effectiveRoute === "user-preview") {

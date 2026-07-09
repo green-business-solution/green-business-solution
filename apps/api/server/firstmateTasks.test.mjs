@@ -4,6 +4,7 @@ import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   firstmateTasksConfigFromEnv,
+  isFirstmateTasksLocalAuthBypassEnabled,
   parseBacklogTasks,
   readFirstmateTaskReport,
   readFirstmateTasksDashboard,
@@ -28,6 +29,36 @@ describe("firstmate task reader", () => {
       enabled: false,
       reason: "Firstmate task data is disabled because RETROFI_FIRSTMATE_HOME is not configured."
     });
+    expect(isFirstmateTasksLocalAuthBypassEnabled({
+      RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "1"
+    })).toBe(false);
+  });
+
+  it("keeps local auth bypass off unless tasks are enabled with a configured Firstmate home", () => {
+    expect(isFirstmateTasksLocalAuthBypassEnabled({
+      RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+      RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "1"
+    })).toBe(false);
+    expect(isFirstmateTasksLocalAuthBypassEnabled({
+      RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+      RETROFI_FIRSTMATE_HOME: "/tmp/firstmate"
+    })).toBe(false);
+    expect(isFirstmateTasksLocalAuthBypassEnabled({
+      RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+      RETROFI_FIRSTMATE_HOME: "/tmp/firstmate",
+      RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "1"
+    })).toBe(true);
+    expect(isFirstmateTasksLocalAuthBypassEnabled({
+      RETROFI_ENABLE_FIRSTMATE_TASKS: "true",
+      RETROFI_FIRSTMATE_HOME: "/tmp/firstmate",
+      RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "true"
+    })).toBe(false);
+    expect(isFirstmateTasksLocalAuthBypassEnabled({
+      RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+      RETROFI_FIRSTMATE_HOME: "/tmp/firstmate",
+      RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "1",
+      AWS_EXECUTION_ENV: "AWS_Lambda_nodejs20.x"
+    })).toBe(false);
   });
 
   it("parses backlog sections, blocked dependencies, reports, and recent status", async () => {
@@ -62,6 +93,8 @@ describe("firstmate task reader", () => {
     });
 
     expect(dashboard.enabled).toBe(true);
+    expect(dashboard.localAuthBypass).toBe(false);
+    expect(dashboard.authMode).toBe("admin");
     expect(dashboard.activeAgentCount).toBe(1);
     expect(dashboard.counts).toEqual({
       active: 1,
@@ -87,6 +120,24 @@ describe("firstmate task reader", () => {
       responseNeeded: false,
       canRespond: false
     });
+  });
+
+  it("reports local bypass mode only when the server has enabled it", async () => {
+    const home = await makeFirstmateHome();
+    await writeFile(home, "data/backlog.md", "- [ ] local-task-l1 - Local task (repo: green-business-solution) (kind: ship) (since 2026-07-08)\n");
+
+    const dashboard = await readFirstmateTasksDashboard({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home,
+        RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "1"
+      },
+      now: new Date("2026-07-08T12:00:00.000Z")
+    });
+
+    expect(dashboard.enabled).toBe(true);
+    expect(dashboard.localAuthBypass).toBe(true);
+    expect(dashboard.authMode).toBe("local-bypass");
   });
 
   it("reads reports only from data/<task-id>/report.md", async () => {

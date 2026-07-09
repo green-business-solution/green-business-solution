@@ -35,21 +35,29 @@ export function firstmateTasksConfigFromEnv(env = process.env) {
   };
 }
 
+export function isFirstmateTasksLocalAuthBypassEnabled(env = process.env) {
+  const tasksEnabledFlag = String(env.RETROFI_ENABLE_FIRSTMATE_TASKS || "").trim();
+  const bypassFlag = String(env.RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS || "").trim();
+  const isAwsRuntime = Boolean(env.AWS_LAMBDA_FUNCTION_NAME || env.AWS_EXECUTION_ENV);
+  return !isAwsRuntime && tasksEnabledFlag === "1" && bypassFlag === "1" && firstmateTasksConfigFromEnv(env).enabled;
+}
+
 export async function readFirstmateTasksDashboard({ env = process.env, now = new Date() } = {}) {
   const config = firstmateTasksConfigFromEnv(env);
   const generatedAt = toIsoString(now);
+  const localAuthBypass = isFirstmateTasksLocalAuthBypassEnabled(env);
 
   if (!config.enabled) {
-    return disabledFirstmateTasksResponse(config.reason, generatedAt);
+    return disabledFirstmateTasksResponse(config.reason, generatedAt, localAuthBypass);
   }
 
   const firstmateHome = path.resolve(config.firstmateHome);
   const homeStatus = await statDirectory(firstmateHome);
   if (!homeStatus.exists) {
-    return disabledFirstmateTasksResponse("Configured Firstmate home does not exist.", generatedAt);
+    return disabledFirstmateTasksResponse("Configured Firstmate home does not exist.", generatedAt, localAuthBypass);
   }
   if (!homeStatus.isDirectory) {
-    return disabledFirstmateTasksResponse("Configured Firstmate home is not a directory.", generatedAt);
+    return disabledFirstmateTasksResponse("Configured Firstmate home is not a directory.", generatedAt, localAuthBypass);
   }
 
   const backlogPath = path.join(firstmateHome, "data", "backlog.md");
@@ -122,6 +130,8 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
     enabled: true,
     generatedAt,
     firstmateHome,
+    localAuthBypass,
+    authMode: localAuthBypass ? "local-bypass" : "admin",
     activeAgentCount: counts.active,
     totalTaskCount: sortedTasks.length,
     counts,
@@ -305,11 +315,13 @@ export function safeStateFilePath(firstmateHome, taskId, extension) {
   return filePath;
 }
 
-function disabledFirstmateTasksResponse(reason, generatedAt) {
+function disabledFirstmateTasksResponse(reason, generatedAt, localAuthBypass = false) {
   return {
     enabled: false,
     reason,
     generatedAt,
+    localAuthBypass,
+    authMode: localAuthBypass ? "local-bypass" : "admin",
     activeAgentCount: 0,
     totalTaskCount: 0,
     counts: {
