@@ -1,5 +1,9 @@
 # AI Changelog
 
+## 2026-07-09 - Codex (GPT-5) next-session context handoff
+
+- Added a root `NEXT_CODEX_CONTEXT.md` handoff for future Codex sessions covering the current implementation plan, completed Codex work, architecture state, AWS migration state, runtime artifact rules, application-prep status, and highest-priority next tasks.
+
 ## 2026-07-08 - Codex (GPT-5) durable AI workflow adoption
 
 - Adopted the reusable AI workflow structure with project-specific `ARCHITECTURE.md`, `RESOURCE_MAP.md`, `TASK_LIST.md`, `review.md`, `template.md`, ADR, and `AI_RESOURCES/` starter docs.
