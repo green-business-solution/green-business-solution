@@ -70,6 +70,7 @@ If local Google OAuth is not configured, set `RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH
 The auth bypass is ignored when AWS Lambda runtime environment markers are present.
 The API reads Firstmate backlog, status, metadata, and `data/<task-id>/report.md` files without mutating them.
 For response-needed tasks with a live `window=` value in `state/<task-id>.meta`, the admin page can send a captain response through `<RETROFI_FIRSTMATE_HOME>/bin/fm-send.sh` using argument-based process execution.
+If `fm-send.sh` reports that Enter was swallowed and text was left in the composer, the API performs one argument-based `--key Enter` retry for the same validated window.
 For completed tasks with reports and a live `window=`, the admin page can send report feedback with either a proceed action or requested-change comments through the same helper.
 If an active or reopened task still has an older `report.md`, the dashboard labels it as a previous or draft report instead of a final report.
 Set `report_status=review-ready` in task metadata only when an active task explicitly wants captain report review before completion.

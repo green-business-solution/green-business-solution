@@ -262,6 +262,118 @@ describe("firstmate task reader", () => {
     expect(calls[0].options).toMatchObject({ cwd: home, timeout: 15_000 });
   });
 
+  it("retries response submit once when Firstmate leaves text in the composer", async () => {
+    const home = await makeFirstmateHome();
+    await writeFile(home, "bin/fm-send.sh", "#!/usr/bin/env bash\n");
+    await writeFile(home, "state/respond-retry-r4.meta", "window=firstmate:fm-respond-retry-r4\nkind=ship\n");
+    await writeFile(home, "state/respond-retry-r4.status", "needs-decision: pick a path\n");
+    const calls = [];
+
+    const result = await sendFirstmateTaskResponse({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      taskId: "respond-retry-r4",
+      message: "Use the safer path.",
+      now: new Date("2026-07-08T12:00:00.000Z"),
+      execFileFn: (file, args, options, callback) => {
+        calls.push({ file, args, options });
+        if (calls.length === 1) {
+          callback(
+            new Error("fm-send exited 1"),
+            "",
+            "text not submitted to firstmate:fm-respond-retry-r4 (Enter swallowed; text left in composer)"
+          );
+          return;
+        }
+        callback(null, "", "");
+      }
+    });
+
+    expect(result).toEqual({
+      generatedAt: "2026-07-08T12:00:00.000Z",
+      taskId: "respond-retry-r4",
+      sent: true
+    });
+    expect(calls).toHaveLength(2);
+    expect(calls[0].args).toEqual(["firstmate:fm-respond-retry-r4", "Use the safer path."]);
+    expect(calls[1].args).toEqual(["firstmate:fm-respond-retry-r4", "--key", "Enter"]);
+  });
+
+  it("surfaces both Firstmate send attempts when the Enter retry also fails", async () => {
+    const home = await makeFirstmateHome();
+    await writeFile(home, "bin/fm-send.sh", "#!/usr/bin/env bash\n");
+    await writeFile(home, "state/respond-double-fail-r5.meta", "window=firstmate:fm-respond-double-fail-r5\nkind=ship\n");
+    await writeFile(home, "state/respond-double-fail-r5.status", "needs-decision: pick a path\n");
+    const calls = [];
+
+    await expect(sendFirstmateTaskResponse({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      taskId: "respond-double-fail-r5",
+      message: "Use the safer path.",
+      execFileFn: (file, args, options, callback) => {
+        calls.push({ file, args, options });
+        if (calls.length === 1) {
+          callback(
+            new Error("fm-send exited 1"),
+            "",
+            "text not submitted to firstmate:fm-respond-double-fail-r5 (Enter swallowed; text left in composer)"
+          );
+          return;
+        }
+        callback(new Error("enter retry failed"), "", "no focused composer");
+      }
+    })).rejects.toMatchObject({
+      message: "Could not submit response after Firstmate left text in the composer.",
+      status: 502,
+      firstAttempt: {
+        args: ["firstmate:fm-respond-double-fail-r5", "Use the safer path."],
+        stderr: "text not submitted to firstmate:fm-respond-double-fail-r5 (Enter swallowed; text left in composer)"
+      },
+      retryAttempt: {
+        args: ["firstmate:fm-respond-double-fail-r5", "--key", "Enter"],
+        stderr: "no focused composer"
+      }
+    });
+    expect(calls).toHaveLength(2);
+  });
+
+  it("does not retry Enter-swallowed stderr for a different Firstmate window", async () => {
+    const home = await makeFirstmateHome();
+    await writeFile(home, "bin/fm-send.sh", "#!/usr/bin/env bash\n");
+    await writeFile(home, "state/respond-no-retry-r6.meta", "window=firstmate:fm-respond-no-retry-r6\nkind=ship\n");
+    await writeFile(home, "state/respond-no-retry-r6.status", "needs-decision: pick a path\n");
+    const calls = [];
+
+    await expect(sendFirstmateTaskResponse({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      taskId: "respond-no-retry-r6",
+      message: "Use the safer path.",
+      execFileFn: (file, args, options, callback) => {
+        calls.push({ file, args, options });
+        callback(
+          new Error("fm-send exited 1"),
+          "",
+          "text not submitted to firstmate:fm-other-window (Enter swallowed; text left in composer)"
+        );
+      }
+    })).rejects.toMatchObject({
+      message: "Could not send response to Firstmate task.",
+      status: 502,
+      firstAttempt: {
+        args: ["firstmate:fm-respond-no-retry-r6", "Use the safer path."]
+      }
+    });
+    expect(calls).toHaveLength(1);
+  });
+
   it("sends report feedback with an explicit action and optional captain comment", async () => {
     const home = await makeFirstmateHome();
     await writeFile(home, "bin/fm-send.sh", "#!/usr/bin/env bash\n");
@@ -298,6 +410,49 @@ describe("firstmate task reader", () => {
     expect(calls[0].args[1]).toContain("Captain comment: Looks good. Proceed with the next step.");
     expect(calls[0].args[1]).toContain("ask the captain a clarifying question");
     expect(calls[0].options).toMatchObject({ cwd: home, timeout: 15_000 });
+  });
+
+  it("retries report feedback submit once when Firstmate leaves text in the composer", async () => {
+    const home = await makeFirstmateHome();
+    await writeFile(home, "bin/fm-send.sh", "#!/usr/bin/env bash\n");
+    await writeFile(home, "data/backlog.md", "## Done\n- [x] feedback-retry-f3 - Completed report data/feedback-retry-f3/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)\n");
+    await writeFile(home, "state/feedback-retry-f3.meta", "window=firstmate:fm-feedback-retry-f3\nkind=scout\n");
+    await writeFile(home, "data/feedback-retry-f3/report.md", "# Report\n\nReady.\n");
+    const calls = [];
+
+    const result = await sendFirstmateTaskReportFeedback({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      taskId: "feedback-retry-f3",
+      action: "changes-requested",
+      comment: "Please tighten the validation section.",
+      now: new Date("2026-07-08T12:00:00.000Z"),
+      execFileFn: (file, args, options, callback) => {
+        calls.push({ file, args, options });
+        if (calls.length === 1) {
+          callback(
+            new Error("fm-send exited 1"),
+            "",
+            "text not submitted to firstmate:fm-feedback-retry-f3 (Enter swallowed; text left in composer)"
+          );
+          return;
+        }
+        callback(null, "", "");
+      }
+    });
+
+    expect(result).toEqual({
+      generatedAt: "2026-07-08T12:00:00.000Z",
+      taskId: "feedback-retry-f3",
+      action: "changes-requested",
+      sent: true
+    });
+    expect(calls).toHaveLength(2);
+    expect(calls[0].args[0]).toBe("firstmate:fm-feedback-retry-f3");
+    expect(calls[0].args[1]).toContain("Action: changes-requested");
+    expect(calls[1].args).toEqual(["firstmate:fm-feedback-retry-f3", "--key", "Enter"]);
   });
 
   it("rejects report feedback that is not actionable", async () => {

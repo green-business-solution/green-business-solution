@@ -276,7 +276,7 @@ export async function sendFirstmateTaskResponse({
     throw statusError("Firstmate send helper is not a file.", 503);
   }
 
-  await execFilePromise(execFileFn, sendScriptPath, [windowTarget, cleanMessage], {
+  await sendFirstmateWindowMessage(execFileFn, sendScriptPath, windowTarget, cleanMessage, {
     cwd: firstmateHome,
     maxBuffer: 64 * 1024,
     timeout: 15_000
@@ -355,11 +355,11 @@ export async function sendFirstmateTaskReportFeedback({
     throw statusError("Firstmate send helper is not a file.", 503);
   }
 
-  await execFilePromise(execFileFn, sendScriptPath, [windowTarget, buildReportFeedbackMessage({
+  await sendFirstmateWindowMessage(execFileFn, sendScriptPath, windowTarget, buildReportFeedbackMessage({
     action: cleanAction,
     comment: cleanComment,
     taskId: normalizedTaskId
-  })], {
+  }), {
     cwd: firstmateHome,
     maxBuffer: 64 * 1024,
     timeout: 15_000
@@ -854,20 +854,65 @@ async function readRequiredText(filePath, missingMessage) {
   }
 }
 
+async function sendFirstmateWindowMessage(execFileFn, file, windowTarget, message, options) {
+  const firstAttempt = await execFilePromise(execFileFn, file, [windowTarget, message], options);
+  if (!firstAttempt.error) {
+    return firstAttempt;
+  }
+
+  if (!isEnterSwallowedFailure(firstAttempt.stderr, windowTarget)) {
+    throw buildFirstmateSendError("Could not send response to Firstmate task.", firstAttempt);
+  }
+
+  const retryAttempt = await execFilePromise(execFileFn, file, [windowTarget, "--key", "Enter"], options);
+  if (!retryAttempt.error) {
+    return {
+      ...retryAttempt,
+      retriedSubmit: true,
+      firstAttempt
+    };
+  }
+
+  throw buildFirstmateSendError("Could not submit response after Firstmate left text in the composer.", firstAttempt, retryAttempt);
+}
+
 function execFilePromise(execFileFn, file, args, options) {
   return new Promise((resolve, reject) => {
     execFileFn(file, args, options, (error, stdout, stderr) => {
       if (error) {
-        const wrapped = statusError("Could not send response to Firstmate task.", 502);
-        wrapped.cause = error;
-        wrapped.stdout = stdout;
-        wrapped.stderr = stderr;
-        reject(wrapped);
+        resolve({ error, stdout, stderr, file, args });
         return;
       }
       resolve({ stdout, stderr });
     });
   });
+}
+
+function isEnterSwallowedFailure(stderr, windowTarget) {
+  const text = String(stderr || "");
+  return text.includes(`text not submitted to ${windowTarget}`)
+    && /Enter swallowed/i.test(text)
+    && /text left in composer/i.test(text);
+}
+
+function buildFirstmateSendError(message, firstAttempt, retryAttempt = null) {
+  const wrapped = statusError(message, 502);
+  wrapped.cause = retryAttempt?.error || firstAttempt?.error;
+  wrapped.stdout = retryAttempt?.stdout ?? firstAttempt?.stdout;
+  wrapped.stderr = retryAttempt?.stderr ?? firstAttempt?.stderr;
+  wrapped.firstAttempt = {
+    args: firstAttempt?.args,
+    stdout: firstAttempt?.stdout,
+    stderr: firstAttempt?.stderr
+  };
+  if (retryAttempt) {
+    wrapped.retryAttempt = {
+      args: retryAttempt.args,
+      stdout: retryAttempt.stdout,
+      stderr: retryAttempt.stderr
+    };
+  }
+  return wrapped;
 }
 
 function statusError(message, status) {
