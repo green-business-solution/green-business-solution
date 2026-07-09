@@ -20,7 +20,7 @@ The previous workflow also required agents to maintain `AI_CHANGELOG.md`, which 
 Adopt the highest-value root workflow files from `ai-workflow` and customize them for RetroFi.
 Keep GitHub as the source of truth for code, docs, workflow files, and infrastructure templates.
 Keep AWS as the source of truth for runtime data and cloud resource state.
-Use root `AGENTS.md`, `AGENT_WORKFLOW.md`, `ARCHITECTURE.md`, `RESOURCE_MAP.md`, `review.md`, `TASK_LIST.md`, and `ADRS/` as the agent workflow entry points.
+Use root `AGENTS.md`, `AGENT_WORKFLOW.md`, `ARCHITECTURE.md`, `RESOURCE_MAP.md`, `review.md`, `TASK_LIST.md`, `template.md`, `ADRS/`, and `AI_RESOURCES/` as the agent workflow entry points.
 Remove the manual `AI_CHANGELOG.md` workflow and put meaningful history in commits, pull requests, ADRs, product docs, resource maps, or task notes.
 
 ## Alternatives Considered
@@ -46,4 +46,4 @@ Detailed resource inventory still needs to stay synchronized between root workfl
 - [ ] Audit docs and scripts that still assume the legacy `gbs` profile or account `448016109714` for production.
 - [ ] Keep `RESOURCE_MAP.md` and `docs/architecture-resource-map.md` synchronized as ownership changes.
 - [ ] Add more ADRs when future infrastructure, architecture, or workflow decisions need durable context.
-- [ ] Add `AI_RESOURCES/` only when RetroFi has real reusable repo-specific assets to store there.
+- [ ] Populate `AI_RESOURCES/Skills/` or `AI_RESOURCES/Scripts/` only when RetroFi has real reusable repo-specific agent assets to store there.

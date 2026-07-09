@@ -30,12 +30,12 @@ Use [docs/product-todos.md](./docs/product-todos.md) for product backlog details
   - Branch: none
   - Blocker: none
   - Notes: Use [ADRS/README.md](./ADRS/README.md) before adding a record.
-- [ ] Add `AI_RESOURCES/` only when RetroFi has reusable repo-specific skills, scripts, or templates that are not already covered by committed scripts or docs.
+- [ ] Populate `AI_RESOURCES/Skills/` or `AI_RESOURCES/Scripts/` only when RetroFi has reusable repo-specific agent assets that are not already covered by committed scripts or docs.
   - Owner: agents as needed
-  - Status: deferred
+  - Status: ongoing
   - Branch: none
   - Blocker: none
-  - Notes: The first workflow pass intentionally avoids empty template folders.
+  - Notes: `AI_RESOURCES/` and `template.md` are tracked as part of the adopted workflow structure; add specialized assets only when they are useful.
 
 ## Blocked
 

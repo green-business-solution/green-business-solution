@@ -198,6 +198,7 @@ Before changing form-gate behavior, verify the active AWS catalog includes the r
 
 Codex has adopted the durable AI workflow structure.
 This includes `ARCHITECTURE.md`, `RESOURCE_MAP.md`, `TASK_LIST.md`, `review.md`, `template.md`, ADRs, `AI_RESOURCES/`, updated `AGENTS.md`, and updated `AGENT_WORKFLOW.md`.
+`AI_RESOURCES/` and `template.md` are intentionally tracked workflow assets; add specialized skills or agent-only scripts there only when they are useful.
 
 Codex has reorganized the app into npm workspaces.
 Frontend dependencies and source live under `apps/web`.
