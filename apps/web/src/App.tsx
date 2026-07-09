@@ -531,6 +531,8 @@ type FirstmateTask = {
   reportedAt: string | null;
   responseNeeded: boolean;
   canRespond: boolean;
+  canAssign?: boolean;
+  assignmentUnavailableReason?: string | null;
   hasReport: boolean;
   showReportAction?: boolean;
   reportUrl: string | null;
@@ -602,6 +604,16 @@ type FirstmateTaskReportFeedbackResponse = {
   queuedFallbackReason?: string;
   startWarning?: string;
   sent: true;
+};
+
+type FirstmateTaskAssignResponse = {
+  generatedAt: string;
+  taskId: string;
+  dispatchStatus?: FirstmateTaskReportFeedbackDispatchStatus;
+  message?: string;
+  queuedFallbackReason?: string;
+  startWarning?: string;
+  assigned: boolean;
 };
 
 type AdminTableResponse = {
@@ -15957,6 +15969,11 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
     await loadTasks({ preserveNotice: true });
   }, [loadTasks]);
 
+  const refreshAfterTaskAssigned = useCallback(async (assignment: FirstmateTaskAssignResponse) => {
+    setNotice(assignment.message || "Queued task assignment updated.");
+    await loadTasks({ preserveNotice: true });
+  }, [loadTasks]);
+
   const counts = response?.counts || {
     active: 0,
     blocked: 0,
@@ -16037,6 +16054,7 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
               key={section.state}
               label={section.label}
               localAuthBypass={localAuthBypass}
+              onTaskAssigned={refreshAfterTaskAssigned}
               onReportFeedbackSent={refreshAfterReportFeedback}
               state={section.state}
               tasks={response.tasks.filter((task) => task.state === section.state)}
@@ -16172,6 +16190,7 @@ function FirstmateTaskSection({
   credential,
   label,
   localAuthBypass,
+  onTaskAssigned,
   onReportFeedbackSent,
   state,
   tasks
@@ -16180,6 +16199,7 @@ function FirstmateTaskSection({
   credential: AuthCredential | null;
   label: string;
   localAuthBypass: boolean;
+  onTaskAssigned: (assignment: FirstmateTaskAssignResponse) => Promise<void>;
   onReportFeedbackSent: (feedback: FirstmateTaskReportFeedbackResponse) => Promise<void>;
   state: FirstmateTaskState;
   tasks: FirstmateTask[];
@@ -16210,6 +16230,7 @@ function FirstmateTaskSection({
                   credential={credential}
                   key={task.id}
                   localAuthBypass={localAuthBypass}
+                  onTaskAssigned={onTaskAssigned}
                   onReportFeedbackSent={onReportFeedbackSent}
                   task={task}
                 />
@@ -16229,20 +16250,44 @@ function FirstmateTaskSection({
 export function FirstmateTaskRow({
   credential,
   localAuthBypass,
+  onTaskAssigned,
   onReportFeedbackSent,
   task
 }: {
   credential: AuthCredential | null;
   localAuthBypass: boolean;
+  onTaskAssigned: (assignment: FirstmateTaskAssignResponse) => Promise<void>;
   onReportFeedbackSent: (feedback: FirstmateTaskReportFeedbackResponse) => Promise<void>;
   task: FirstmateTask;
 }) {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [isAssigning, setIsAssigning] = useState(false);
+  const [assignError, setAssignError] = useState<string | null>(null);
   const showGptProRepairAction = Boolean(task.showGptProRepairAction ?? task.gptProRepairReady);
   const showReportAction = Boolean(
     !showGptProRepairAction && (task.showReportAction ?? Boolean(task.hasReport && task.reportUrl))
   );
   const showReportFeedbackAction = Boolean(showReportAction && task.canSendReportFeedback);
+  const showQueuedAssignAction = Boolean(task.state === "queued" && (task.canAssign ?? true));
+  const canAssign = Boolean((credential || localAuthBypass) && showQueuedAssignAction && !isAssigning);
+
+  async function assignQueuedTask() {
+    if (!canAssign) return;
+
+    setIsAssigning(true);
+    setAssignError(null);
+    try {
+      const response = await apiPost<FirstmateTaskAssignResponse>(
+        `/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/assign`,
+        credential ? adminAuthBody(credential) : {}
+      );
+      await onTaskAssigned(response);
+    } catch (requestError) {
+      setAssignError(requestError instanceof Error ? requestError.message : "Could not assign queued task.");
+    } finally {
+      setIsAssigning(false);
+    }
+  }
 
   return (
     <tr className={task.responseNeeded ? "is-response-needed" : undefined}>
@@ -16311,6 +16356,14 @@ export function FirstmateTaskRow({
             task={task}
           />
         ) : null}
+        {showQueuedAssignAction ? (
+          <div className="task-assign-actions">
+            <button disabled={!canAssign} onClick={() => void assignQueuedTask()} type="button">
+              {isAssigning ? "Assigning..." : "Assign Crewmate"}
+            </button>
+            {assignError ? <p className="error-message">{assignError}</p> : null}
+          </div>
+        ) : null}
       </td>
     </tr>
   );
@@ -16327,18 +16380,17 @@ function FirstmateReportFeedbackForm({
   onSent: (feedback: FirstmateTaskReportFeedbackResponse) => Promise<void>;
   task: FirstmateTask;
 }) {
-  const [action, setAction] = useState<FirstmateTaskReportFeedbackAction>("proceed");
   const [comment, setComment] = useState("");
-  const [isSending, setIsSending] = useState(false);
+  const [sendingAction, setSendingAction] = useState<FirstmateTaskReportFeedbackAction | null>(null);
   const [error, setError] = useState<string | null>(null);
   const trimmedComment = comment.trim();
-  const needsComment = action === "changes-requested";
-  const canSubmit = Boolean((credential || localAuthBypass) && !isSending && (!needsComment || trimmedComment.length > 0) && trimmedComment.length <= 4000);
+  const canSendProceed = Boolean((credential || localAuthBypass) && !sendingAction && trimmedComment.length <= 4000);
+  const canRequestChanges = Boolean((credential || localAuthBypass) && !sendingAction && trimmedComment.length <= 4000);
 
-  async function sendFeedback() {
-    if ((!credential && !localAuthBypass) || !canSubmit) return;
+  async function sendFeedback(action: FirstmateTaskReportFeedbackAction) {
+    if ((!credential && !localAuthBypass) || (action === "changes-requested" ? !canRequestChanges : !canSendProceed)) return;
 
-    setIsSending(true);
+    setSendingAction(action);
     setError(null);
     try {
       const response = await apiPost<FirstmateTaskReportFeedbackResponse>(
@@ -16359,44 +16411,33 @@ function FirstmateReportFeedbackForm({
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Could not send report feedback.");
     } finally {
-      setIsSending(false);
+      setSendingAction(null);
     }
   }
 
   return (
     <div className="task-report-feedback-form">
-      <div className="task-report-feedback-toggle" role="group" aria-label={`Report feedback action for ${task.id}`}>
-        <button
-          className={action === "proceed" ? "is-active" : undefined}
-          onClick={() => setAction("proceed")}
-          type="button"
-        >
-          Looks good
-        </button>
-        <button
-          className={action === "changes-requested" ? "is-active" : undefined}
-          onClick={() => setAction("changes-requested")}
-          type="button"
-        >
-          Request changes
-        </button>
-      </div>
       <label>
         <span className="sr-only">Report feedback comment for {task.id}</span>
         <textarea
           maxLength={4000}
           onChange={(event) => setComment(event.target.value)}
-          placeholder={action === "proceed" ? "Optional note for the agent..." : "What should change?"}
+          placeholder="Optional note, or describe requested changes..."
           rows={3}
           value={comment}
         />
       </label>
       {task.reportFeedbackMode === "follow-up-task" ? (
-        <p className="tasks-muted">No live agent window is available. Changes requested will queue a report revision follow-up; looks-good feedback is recorded as a follow-up.</p>
+        <p className="tasks-muted">No live agent window is available. Looks good creates a continuation task; request changes creates a report revision task. Local dispatch starts the task automatically when enabled.</p>
       ) : null}
-      <button disabled={!canSubmit} onClick={() => void sendFeedback()} type="button">
-        {isSending ? "Sending..." : "Send Feedback"}
-      </button>
+      <div className="task-report-feedback-actions">
+        <button disabled={!canSendProceed} onClick={() => void sendFeedback("proceed")} type="button">
+          {sendingAction === "proceed" ? "Starting..." : "Looks good / Continue"}
+        </button>
+        <button className="secondary-button" disabled={!canRequestChanges} onClick={() => void sendFeedback("changes-requested")} type="button">
+          {sendingAction === "changes-requested" ? "Requesting..." : "Request changes"}
+        </button>
+      </div>
       {error ? <p className="error-message">{error}</p> : null}
     </div>
   );

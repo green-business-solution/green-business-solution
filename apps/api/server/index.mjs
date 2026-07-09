@@ -86,6 +86,7 @@ import {
   loadFormQuestionCatalog
 } from "./forms/formQuestionCatalog.mjs";
 import {
+  assignFirstmateQueuedTask,
   isFirstmateTasksLocalAuthBypassEnabled,
   readFirstmateTaskReport,
   readFirstmateTasksDashboard,
@@ -3866,6 +3867,20 @@ app.post("/api/admin/firstmate/tasks/:taskId/report-feedback", async (req, res) 
       taskId: req.params.taskId,
       action: req.body?.action,
       comment: req.body?.comment,
+      now: new Date(),
+      allowLocalAgentDispatch: canDispatchLocalFirstmateAgents(req, access)
+    }));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/firstmate/tasks/:taskId/assign", async (req, res) => {
+  try {
+    const access = await requireFirstmateTasksRouteAccess(req);
+    res.json(await assignFirstmateQueuedTask({
+      env: process.env,
+      taskId: req.params.taskId,
       now: new Date(),
       allowLocalAgentDispatch: canDispatchLocalFirstmateAgents(req, access)
     }));

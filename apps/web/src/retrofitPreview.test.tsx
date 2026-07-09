@@ -1619,8 +1619,12 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("task is not waiting for a captain response");
     expect(source).toContain("await onStaleResponse(serverMessage)");
     expect(source).toContain("/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/report-feedback");
+    expect(source).toContain("/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/assign");
     expect(source).toContain("action === \"changes-requested\"");
-    expect(source).toContain("What should change?");
+    expect(source).toContain("Looks good / Continue");
+    expect(source).toContain("Request changes");
+    expect(source).toContain("Assign Crewmate");
+    expect(source).not.toContain("task-report-feedback-toggle");
     expect(source).toContain("feedback.message ||");
     expect(source).toContain("rel=\"noreferrer\" target=\"_blank\"");
     expect(source).toContain("Go To Pro Repair Batch");
@@ -1632,7 +1636,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("task.reportActionLabel || \"View Report\"");
     expect(source).toContain("showReportAction && task.reportNote && !task.reportIsFinal");
     expect(source).toContain("task-report-status-note");
-    expect(source).toContain("Changes requested will queue a report revision follow-up");
+    expect(source).toContain("Looks good creates a continuation task");
 
     const taskRowSource = source.slice(
       source.indexOf("function FirstmateTaskRow"),
@@ -1681,6 +1685,7 @@ describe("retrofit recommendations preview", () => {
           <FirstmateTaskRow
             credential={null}
             localAuthBypass
+            onTaskAssigned={async () => undefined}
             onReportFeedbackSent={async () => undefined}
             task={baseTask}
           />
@@ -1698,6 +1703,7 @@ describe("retrofit recommendations preview", () => {
           <FirstmateTaskRow
             credential={null}
             localAuthBypass
+            onTaskAssigned={async () => undefined}
             onReportFeedbackSent={async () => undefined}
             task={{
               ...baseTask,
@@ -1711,6 +1717,31 @@ describe("retrofit recommendations preview", () => {
 
     expect(noReportHtml).toContain("No report");
     expect(noReportHtml).not.toContain("Report Feedback");
+
+    const queuedHtml = renderToStaticMarkup(
+      <table>
+        <tbody>
+          <FirstmateTaskRow
+            credential={null}
+            localAuthBypass
+            onTaskAssigned={async () => undefined}
+            onReportFeedbackSent={async () => undefined}
+            task={{
+              ...baseTask,
+              id: "queued-follow-up-q1",
+              state: "queued" as const,
+              statusState: null,
+              hasReport: false,
+              reportUrl: null,
+              canSendReportFeedback: false,
+              canAssign: true
+            }}
+          />
+        </tbody>
+      </table>
+    );
+
+    expect(queuedHtml).toContain("Assign Crewmate");
   });
 
   it("renders the shared full-page loader with the RetroFi logo and dashboard status text", () => {

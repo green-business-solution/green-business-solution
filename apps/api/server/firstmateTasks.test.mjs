@@ -3,6 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import {
+  assignFirstmateQueuedTask,
   firstmateTasksConfigFromEnv,
   isFirstmateTasksLocalAuthBypassEnabled,
   parseBacklogTasks,
@@ -466,7 +467,7 @@ describe("firstmate task reader", () => {
       action: "proceed",
       delivery: "live-window",
       dispatchStatus: "sent-to-active-agent",
-      message: "Report approval sent to the active agent.",
+      message: "Report approved and the active agent was told to continue.",
       sent: true
     });
     expect(calls).toHaveLength(1);
@@ -506,7 +507,7 @@ describe("firstmate task reader", () => {
       delivery: "follow-up-task",
       followUpTaskId: "revision-feedback-no-window-f4-20260708123456789",
       dispatchStatus: "queued-fallback",
-      queuedFallbackReason: "Set RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH=1 to auto-dispatch report revisions.",
+      queuedFallbackReason: "Set RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH=1 to auto-dispatch Firstmate follow-up tasks.",
       sent: true
     });
     expect(result.message).toContain("Revision task revision-feedback-no-window-f4-20260708123456789 was queued");
@@ -641,6 +642,97 @@ describe("firstmate task reader", () => {
     expect(artifact).toContain("This is report revision work.");
   });
 
+  it("auto-dispatches looks-good report approval as a continuation task and hides the reviewed report", async () => {
+    const home = await makeFirstmateHome();
+    const projectPath = path.join(home, "projects", "green-business-solution");
+    await fs.mkdir(projectPath, { recursive: true });
+    await writeFile(home, "bin/fm-spawn.sh", "#!/usr/bin/env bash\n");
+    await writeFile(home, "data/backlog.md", "## Done\n- [x] feedback-continue-f13 - Completed report data/feedback-continue-f13/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)\n");
+    await writeFile(home, "state/feedback-continue-f13.meta", `project=${projectPath}\nkind=scout\n`);
+    await writeFile(home, "data/feedback-continue-f13/report.md", "# Report\n\nReady.\n");
+    const calls = [];
+
+    const result = await sendFirstmateTaskReportFeedback({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home,
+        RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "1",
+        RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH: "1"
+      },
+      taskId: "feedback-continue-f13",
+      action: "proceed",
+      comment: "Approved. Continue with the implementation.",
+      now: new Date("2026-07-08T12:34:56.789Z"),
+      allowLocalAgentDispatch: true,
+      execFileFn: (file, args, options, callback) => {
+        calls.push({ file, args, options });
+        if (file.endsWith("fm-spawn.sh")) {
+          callback(null, "spawned continuation", "");
+          return;
+        }
+        callback(null, JSON.stringify({ id: args[1] }), "");
+      }
+    });
+
+    expect(result).toMatchObject({
+      taskId: "feedback-continue-f13",
+      action: "proceed",
+      delivery: "follow-up-task",
+      followUpTaskId: "continue-feedback-continue-f13-20260708123456789",
+      dispatchStatus: "auto-dispatched",
+      message: "Continuation crewmate started for continue-feedback-continue-f13-20260708123456789.",
+      spawnStdout: "spawned continuation",
+      sent: true
+    });
+    expect(calls).toHaveLength(3);
+    expect(calls[0].args).toEqual([
+      "add",
+      "continue-feedback-continue-f13-20260708123456789",
+      "Continue from approved report for feedback-continue-f13",
+      "--kind",
+      "ship",
+      "--repo",
+      "green-business-solution",
+      "--body-file",
+      result.feedbackPath,
+      "--queue",
+      "--json"
+    ]);
+    expect(calls[1].args).toEqual([
+      "continue-feedback-continue-f13-20260708123456789",
+      projectPath,
+      "--harness",
+      "codex",
+      "--model",
+      "gpt-5.5",
+      "--effort",
+      "xhigh"
+    ]);
+    expect(calls[2].args).toEqual(["start", "continue-feedback-continue-f13-20260708123456789", "--json"]);
+
+    const artifact = await fs.readFile(result.feedbackPath, "utf8");
+    expect(artifact).toContain("Action: proceed");
+    expect(artifact).toContain("Continue the next work from the approved report");
+    expect(artifact).toContain("This is continuation work from an approved report");
+
+    const reviewState = JSON.parse(await fs.readFile(path.join(home, "data", "feedback-continue-f13", "feedback", "report-review-state.json"), "utf8"));
+    expect(reviewState).toMatchObject({
+      state: "accepted",
+      action: "proceed",
+      followUpTaskId: "continue-feedback-continue-f13-20260708123456789",
+      dispatchStatus: "auto-dispatched"
+    });
+
+    const dashboard = await readFirstmateTasksDashboard({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      now: new Date("2026-07-08T12:35:00.000Z")
+    });
+    expect(dashboard.tasks.some((task) => task.id === "feedback-continue-f13")).toBe(false);
+  });
+
   it("uses local env overrides for report revision auto-dispatch spawn profile", async () => {
     const home = await makeFirstmateHome();
     const projectPath = path.join(home, "projects", "green-business-solution");
@@ -727,6 +819,170 @@ describe("firstmate task reader", () => {
     expect(calls[1].file).toBe(path.join(home, "bin", "fm-spawn.sh"));
   });
 
+  it("assigns a queued task by spawning and starting the matching crewmate kind", async () => {
+    const home = await makeFirstmateHome();
+    const projectPath = path.join(home, "projects", "green-business-solution");
+    await fs.mkdir(projectPath, { recursive: true });
+    await writeFile(home, "bin/fm-spawn.sh", "#!/usr/bin/env bash\n");
+    await writeFile(home, "data/backlog.md", "## Queued\n- [ ] queued-assign-q1 - Queued scout follow-up (repo: green-business-solution) (kind: scout)\n");
+    await writeFile(home, "state/queued-assign-q1.meta", `project=${projectPath}\nkind=scout\n`);
+    const calls = [];
+
+    const result = await assignFirstmateQueuedTask({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home,
+        RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "1",
+        RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH: "1"
+      },
+      taskId: "queued-assign-q1",
+      now: new Date("2026-07-08T12:34:56.789Z"),
+      allowLocalAgentDispatch: true,
+      execFileFn: (file, args, options, callback) => {
+        calls.push({ file, args, options });
+        if (file.endsWith("fm-spawn.sh")) {
+          callback(null, "spawned queued task", "");
+          return;
+        }
+        callback(null, JSON.stringify({ id: args[1] }), "");
+      }
+    });
+
+    expect(result).toMatchObject({
+      generatedAt: "2026-07-08T12:34:56.789Z",
+      taskId: "queued-assign-q1",
+      dispatchStatus: "auto-dispatched",
+      message: "Crewmate started for queued-assign-q1.",
+      spawnStdout: "spawned queued task",
+      assigned: true
+    });
+    expect(calls).toHaveLength(2);
+    expect(calls[0].file).toBe(path.join(home, "bin", "fm-spawn.sh"));
+    expect(calls[0].args).toEqual([
+      "queued-assign-q1",
+      projectPath,
+      "--harness",
+      "codex",
+      "--model",
+      "gpt-5.5",
+      "--effort",
+      "xhigh",
+      "--scout"
+    ]);
+    expect(calls[1].file).toBe("tasks-axi");
+    expect(calls[1].args).toEqual(["start", "queued-assign-q1", "--json"]);
+  });
+
+  it("resolves a missing queued task project from the Firstmate project registry", async () => {
+    const home = await makeFirstmateHome();
+    const projectPath = path.join(home, "projects", "green-business-solution");
+    await fs.mkdir(projectPath, { recursive: true });
+    await writeFile(home, "bin/fm-spawn.sh", "#!/usr/bin/env bash\n");
+    await writeFile(home, "data/projects.md", "- green-business-solution - React + Vite sustainable business workflow application. (added 2026-07-08)\n");
+    await writeFile(home, "data/backlog.md", "## Queued\n- [ ] queued-registry-q2 - Queued ship follow-up (repo: green-business-solution) (kind: ship)\n");
+    const calls = [];
+
+    const result = await assignFirstmateQueuedTask({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home,
+        RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "1",
+        RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH: "1"
+      },
+      taskId: "queued-registry-q2",
+      allowLocalAgentDispatch: true,
+      execFileFn: (file, args, options, callback) => {
+        calls.push({ file, args, options });
+        callback(null, JSON.stringify({ id: args[1] }), "");
+      }
+    });
+
+    expect(result).toMatchObject({
+      dispatchStatus: "auto-dispatched",
+      assigned: true
+    });
+    expect(calls[0].file).toBe(path.join(home, "bin", "fm-spawn.sh"));
+    expect(calls[0].args).toEqual([
+      "queued-registry-q2",
+      projectPath,
+      "--harness",
+      "codex",
+      "--model",
+      "gpt-5.5",
+      "--effort",
+      "xhigh"
+    ]);
+  });
+
+  it("keeps a queued task queued when assignment spawn fails", async () => {
+    const home = await makeFirstmateHome();
+    const projectPath = path.join(home, "projects", "green-business-solution");
+    await fs.mkdir(projectPath, { recursive: true });
+    await writeFile(home, "bin/fm-spawn.sh", "#!/usr/bin/env bash\n");
+    await writeFile(home, "data/backlog.md", "## Queued\n- [ ] queued-spawn-fail-q3 - Queued follow-up (repo: green-business-solution) (kind: ship)\n");
+    await writeFile(home, "state/queued-spawn-fail-q3.meta", `project=${projectPath}\nkind=ship\n`);
+    const calls = [];
+
+    const result = await assignFirstmateQueuedTask({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home,
+        RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "1",
+        RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH: "1"
+      },
+      taskId: "queued-spawn-fail-q3",
+      allowLocalAgentDispatch: true,
+      execFileFn: (file, args, options, callback) => {
+        calls.push({ file, args, options });
+        callback(new Error("spawn failed"), "", "terminal unavailable");
+      }
+    });
+
+    expect(result).toMatchObject({
+      taskId: "queued-spawn-fail-q3",
+      dispatchStatus: "queued-fallback",
+      queuedFallbackReason: "fm-spawn.sh failed: terminal unavailable",
+      spawnStderr: "terminal unavailable",
+      assigned: false
+    });
+    expect(result.message).toContain("Queued task queued-spawn-fail-q3 remains queued");
+    expect(calls).toHaveLength(1);
+    expect(calls[0].file).toBe(path.join(home, "bin", "fm-spawn.sh"));
+  });
+
+  it("does not assign queued tasks when local auto-dispatch is blocked by AWS runtime", async () => {
+    const home = await makeFirstmateHome();
+    const projectPath = path.join(home, "projects", "green-business-solution");
+    await fs.mkdir(projectPath, { recursive: true });
+    await writeFile(home, "bin/fm-spawn.sh", "#!/usr/bin/env bash\n");
+    await writeFile(home, "data/backlog.md", "## Queued\n- [ ] queued-aws-guard-q4 - Queued follow-up (repo: green-business-solution) (kind: ship)\n");
+    await writeFile(home, "state/queued-aws-guard-q4.meta", `project=${projectPath}\nkind=ship\n`);
+    const calls = [];
+
+    const result = await assignFirstmateQueuedTask({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home,
+        RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "1",
+        RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH: "1",
+        AWS_EXECUTION_ENV: "AWS_Lambda_nodejs20.x"
+      },
+      taskId: "queued-aws-guard-q4",
+      allowLocalAgentDispatch: true,
+      execFileFn: (file, args, options, callback) => {
+        calls.push({ file, args, options });
+        callback(null, "", "");
+      }
+    });
+
+    expect(result).toMatchObject({
+      dispatchStatus: "queued-fallback",
+      queuedFallbackReason: "Firstmate follow-up auto-dispatch is disabled in AWS runtime.",
+      assigned: false
+    });
+    expect(calls).toHaveLength(0);
+  });
+
   it("does not auto-dispatch report revisions without the local auth bypass guard", async () => {
     const home = await makeFirstmateHome();
     const projectPath = path.join(home, "projects", "green-business-solution");
@@ -755,7 +1011,7 @@ describe("firstmate task reader", () => {
 
     expect(result).toMatchObject({
       dispatchStatus: "queued-fallback",
-      queuedFallbackReason: "Report revision auto-dispatch requires the local Firstmate tasks auth bypass."
+      queuedFallbackReason: "Firstmate follow-up auto-dispatch requires the local Firstmate tasks auth bypass."
     });
     expect(calls).toHaveLength(1);
     expect(calls[0].file).toBe("tasks-axi");
@@ -791,7 +1047,7 @@ describe("firstmate task reader", () => {
 
     expect(result).toMatchObject({
       dispatchStatus: "queued-fallback",
-      queuedFallbackReason: "Report revision auto-dispatch is disabled in AWS runtime."
+      queuedFallbackReason: "Firstmate follow-up auto-dispatch is disabled in AWS runtime."
     });
     expect(calls).toHaveLength(1);
     expect(calls[0].file).toBe("tasks-axi");
@@ -862,8 +1118,8 @@ describe("firstmate task reader", () => {
         throw new Error("should not execute");
       }
     })).rejects.toMatchObject({
-      message: "Report feedback comments are required when requesting changes.",
-      status: 400
+      message: "Report feedback is only available after the report is marked ready for review.",
+      status: 409
     });
 
     await expect(sendFirstmateTaskReportFeedback({

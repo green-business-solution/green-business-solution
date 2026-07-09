@@ -141,6 +141,10 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
       .map(async (task) => {
         const hasReport = await reportExists(firstmateHome, task.id);
         const state = resolveTaskState(task);
+        const reportReview = await readReportReviewState(firstmateHome, task.id);
+        if (state === "completed" && reportReview?.state === "accepted") {
+          return null;
+        }
         const responseNeeded = responseNeededStatusStates.has(task.statusState);
         const reportArtifact = resolveReportArtifact({ hasReport, state, task });
         const gptProRepairReady = isGptProRepairReadyTask(task);
@@ -162,6 +166,8 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
           reportedAt: task.reportedAt || null,
           responseNeeded,
           canRespond: responseNeeded && isSafeWindowTarget(task.window),
+          canAssign: state === "queued",
+          assignmentUnavailableReason: state === "queued" ? null : "Only queued tasks can be assigned from the dashboard.",
           hasReport,
           showReportAction,
           reportUrl: showReportAction ? `/tasks/reports/${encodeURIComponent(task.id)}` : null,
@@ -178,6 +184,8 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
             : null,
           reportFeedbackUnavailableReason: canSendReportFeedback || gptProRepairReady ? null : "Report feedback is available only for final reports or reports explicitly marked ready for review.",
           canSendReportFeedback,
+          reportReviewState: reportReview?.state || null,
+          reportReviewedAt: reportReview?.reviewedAt || null,
           gptProRepairStatus: task.gptProRepairStatus || null,
           gptProRepairReady,
           showGptProRepairAction: gptProRepairReady,
@@ -188,7 +196,7 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
         };
       })
   );
-  const sortedTasks = tasks.sort(compareTasks);
+  const sortedTasks = tasks.filter(Boolean).sort(compareTasks);
   const counts = countTasksByState(sortedTasks);
 
   return {
@@ -350,9 +358,6 @@ export async function sendFirstmateTaskReportFeedback({
   if (cleanComment.length > maxResponseMessageLength) {
     throw statusError(`Report feedback comment must be ${maxResponseMessageLength} characters or fewer.`, 400);
   }
-  if (cleanAction === "changes-requested" && !cleanComment) {
-    throw statusError("Report feedback comments are required when requesting changes.", 400);
-  }
 
   const firstmateHome = path.resolve(config.firstmateHome);
   const homeStatus = await statDirectory(firstmateHome);
@@ -396,6 +401,19 @@ export async function sendFirstmateTaskReportFeedback({
       timeout: 15_000
     });
 
+    if (cleanAction === "proceed") {
+      await writeReportReviewState({
+        action: cleanAction,
+        comment: cleanComment,
+        delivery: "live-window",
+        dispatchStatus: "sent-to-active-agent",
+        firstmateHome,
+        now,
+        task,
+        taskId: normalizedTaskId
+      });
+    }
+
     return {
       generatedAt: toIsoString(now),
       taskId: normalizedTaskId,
@@ -404,7 +422,7 @@ export async function sendFirstmateTaskReportFeedback({
       dispatchStatus: "sent-to-active-agent",
       message: cleanAction === "changes-requested"
         ? "Revision request sent to the active agent."
-        : "Report approval sent to the active agent.",
+        : "Report approved and the active agent was told to continue.",
       sent: true
     };
   }
@@ -421,6 +439,21 @@ export async function sendFirstmateTaskReportFeedback({
     allowLocalAgentDispatch
   });
 
+  if (cleanAction === "proceed") {
+    await writeReportReviewState({
+      action: cleanAction,
+      comment: cleanComment,
+      delivery: "follow-up-task",
+      dispatchStatus: followUp.dispatchStatus,
+      feedbackPath: followUp.feedbackPath,
+      firstmateHome,
+      followUpTaskId: followUp.followUpTaskId,
+      now,
+      task,
+      taskId: normalizedTaskId
+    });
+  }
+
   return {
     generatedAt: toIsoString(now),
     taskId: normalizedTaskId,
@@ -435,6 +468,60 @@ export async function sendFirstmateTaskReportFeedback({
     spawnStderr: followUp.spawnStderr,
     startWarning: followUp.startWarning,
     sent: true
+  };
+}
+
+export async function assignFirstmateQueuedTask({
+  env = process.env,
+  taskId,
+  now = new Date(),
+  execFileFn = execFile,
+  allowLocalAgentDispatch = false
+} = {}) {
+  const config = firstmateTasksConfigFromEnv(env);
+  if (!config.enabled) {
+    throw statusError(config.reason || "Firstmate queued task assignment is disabled.", 404);
+  }
+
+  const normalizedTaskId = normalizeTaskId(taskId);
+  if (!normalizedTaskId) {
+    throw statusError("Invalid task id.", 400);
+  }
+
+  const firstmateHome = path.resolve(config.firstmateHome);
+  const homeStatus = await statDirectory(firstmateHome);
+  if (!homeStatus.exists) {
+    throw statusError("Configured Firstmate home does not exist.", 404);
+  }
+  if (!homeStatus.isDirectory) {
+    throw statusError("Configured Firstmate home is not a directory.", 400);
+  }
+
+  const dashboard = await readFirstmateTasksDashboard({ env, now });
+  const task = dashboard.tasks.find((candidate) => candidate.id === normalizedTaskId);
+  if (!task) {
+    throw statusError("Queued task not found.", 404);
+  }
+  if (task.state !== "queued") {
+    throw statusError("Only queued tasks can be assigned from the dashboard.", 409);
+  }
+
+  const dispatch = await dispatchFirstmateTask({
+    allowLocalAgentDispatch,
+    env,
+    execFileFn,
+    firstmateHome,
+    spawnKind: spawnKindForTask(task),
+    task,
+    taskId: normalizedTaskId,
+    workflow: "queued-task"
+  });
+
+  return {
+    generatedAt: toIsoString(now),
+    taskId: normalizedTaskId,
+    ...dispatch,
+    assigned: dispatch.dispatchStatus === "auto-dispatched"
   };
 }
 
@@ -947,9 +1034,9 @@ async function createReportFeedbackFollowUp({
     followUpTaskId,
     action === "changes-requested"
       ? `Revise report for ${taskId}`
-      : `Follow up on report feedback for ${taskId}`,
+      : `Continue from approved report for ${taskId}`,
     "--kind",
-    "scout",
+    action === "changes-requested" ? "scout" : "ship",
     "--repo",
     task.repo || "unknown",
     "--body-file",
@@ -972,22 +1059,15 @@ async function createReportFeedbackFollowUp({
     throw wrapped;
   }
 
-  if (action !== "changes-requested") {
-    return {
-      feedbackPath,
-      followUpTaskId,
-      dispatchStatus: "queued-follow-up",
-      message: `Report approval recorded in follow-up task ${followUpTaskId}.`
-    };
-  }
-
-  const dispatch = await dispatchReportRevisionFollowUp({
+  const dispatch = await dispatchFirstmateTask({
     allowLocalAgentDispatch,
     env,
     execFileFn,
     firstmateHome,
-    followUpTaskId,
-    task
+    spawnKind: action === "changes-requested" ? "scout" : "ship",
+    task,
+    taskId: followUpTaskId,
+    workflow: action === "changes-requested" ? "revision" : "continuation"
   });
 
   return {
@@ -1016,7 +1096,7 @@ function safeReportFeedbackPath(firstmateHome, taskId, now) {
 
 function buildReportFeedbackFollowUpTaskId(taskId, now, action = "proceed") {
   const compactId = normalizeTaskId(taskId).slice(0, 72).replace(/[^a-z0-9._-]/gi, "-").toLowerCase();
-  const prefix = action === "changes-requested" ? "revision" : "feedback";
+  const prefix = action === "changes-requested" ? "revision" : "continue";
   return `${prefix}-${compactId}-${compactTimestamp(now)}`.slice(0, 120);
 }
 
@@ -1034,7 +1114,7 @@ function buildReportFeedbackArtifact({
   const reportUrl = `/tasks/reports/${encodeURIComponent(taskId)}`;
   const commentText = comment || "No additional comment.";
   const nextInstruction = action === "proceed"
-    ? "Proceed from the report if the captain comment is clear; ask a clarifying question if it is ambiguous."
+    ? "Continue the next work from the approved report and captain note; ask a clarifying question if the next step is ambiguous."
     : "Revise or investigate from the report using the captain comment, and ask a clarifying question if the requested change is ambiguous.";
 
   return [
@@ -1061,65 +1141,65 @@ function buildReportFeedbackArtifact({
     nextInstruction,
     action === "changes-requested"
       ? "This is report revision work. Do not do unrelated implementation work unless the captain explicitly asks for it."
-      : "This is approval/proceed feedback, not a report revision request.",
+      : "This is continuation work from an approved report, not a report revision request.",
     "Keep the original report context attached to this follow-up and update the captain through normal Firstmate task status."
   ].join("\n");
 }
 
-async function dispatchReportRevisionFollowUp({
+async function dispatchFirstmateTask({
   allowLocalAgentDispatch,
   env,
   execFileFn,
   firstmateHome,
-  followUpTaskId,
-  task
+  spawnKind = "ship",
+  task,
+  taskId,
+  workflow
 }) {
   const autoDispatch = firstmateReportFeedbackAutoDispatchConfig(env, { allowLocalAgentDispatch });
   if (!autoDispatch.enabled) {
-    return queuedRevisionFallback(followUpTaskId, autoDispatch.reason);
+    return queuedDispatchFallback(taskId, workflow, autoDispatch.reason);
   }
 
-  const projectPath = cleanOptional(task.project);
+  const projectResolution = await resolveFirstmateTaskProjectPath({ env, firstmateHome, task });
+  const projectPath = projectResolution.projectPath;
+
   if (!projectPath) {
-    return queuedRevisionFallback(followUpTaskId, "Original project path is unavailable.");
-  }
-
-  const projectStatus = await statDirectory(projectPath);
-  if (!projectStatus.exists) {
-    return queuedRevisionFallback(followUpTaskId, "Original project path does not exist.");
-  }
-  if (!projectStatus.isDirectory) {
-    return queuedRevisionFallback(followUpTaskId, "Original project path is not a directory.");
+    return queuedDispatchFallback(taskId, workflow, projectResolution.reason || "Project path is unavailable.");
   }
 
   const spawnScriptPath = safeFirstmateBinPath(firstmateHome, "fm-spawn.sh");
   const spawnScriptStatus = await statFile(spawnScriptPath);
   if (!spawnScriptStatus.exists) {
-    return queuedRevisionFallback(followUpTaskId, "Firstmate spawn helper was not found.");
+    return queuedDispatchFallback(taskId, workflow, "Firstmate spawn helper was not found.");
   }
   if (!spawnScriptStatus.isFile) {
-    return queuedRevisionFallback(followUpTaskId, "Firstmate spawn helper is not a file.");
+    return queuedDispatchFallback(taskId, workflow, "Firstmate spawn helper is not a file.");
   }
 
   const profile = firstmateReportFeedbackDispatchProfile(env);
-  const spawnResult = await execFilePromise(execFileFn, spawnScriptPath, [
-    followUpTaskId,
+  const spawnArgs = [
+    taskId,
     projectPath,
     "--harness",
     profile.harness,
     "--model",
     profile.model,
     "--effort",
-    profile.effort,
-    "--scout"
-  ], {
+    profile.effort
+  ];
+  if (spawnKind === "scout") {
+    spawnArgs.push("--scout");
+  }
+
+  const spawnResult = await execFilePromise(execFileFn, spawnScriptPath, spawnArgs, {
     cwd: firstmateHome,
     maxBuffer: 128 * 1024,
     timeout: 60_000
   });
 
   if (spawnResult.error) {
-    return queuedRevisionFallback(followUpTaskId, summarizeExecFailure("fm-spawn.sh failed", spawnResult), {
+    return queuedDispatchFallback(taskId, workflow, summarizeExecFailure("fm-spawn.sh failed", spawnResult), {
       spawnStdout: truncateDiagnostic(spawnResult.stdout),
       spawnStderr: truncateDiagnostic(spawnResult.stderr)
     });
@@ -1127,7 +1207,7 @@ async function dispatchReportRevisionFollowUp({
 
   const startResult = await execFilePromise(execFileFn, "tasks-axi", [
     "start",
-    followUpTaskId,
+    taskId,
     "--json"
   ], {
     cwd: firstmateHome,
@@ -1138,7 +1218,7 @@ async function dispatchReportRevisionFollowUp({
   if (startResult.error) {
     return {
       dispatchStatus: "auto-dispatched",
-      message: `Revision crewmate started for ${followUpTaskId}, but Firstmate could not mark the task started.`,
+      message: `${dispatchStartedLabel(workflow)} started for ${taskId}, but Firstmate could not mark the task started.`,
       spawnStdout: truncateDiagnostic(spawnResult.stdout),
       spawnStderr: truncateDiagnostic(spawnResult.stderr),
       startWarning: summarizeExecFailure("tasks-axi start failed", startResult)
@@ -1147,7 +1227,7 @@ async function dispatchReportRevisionFollowUp({
 
   return {
     dispatchStatus: "auto-dispatched",
-    message: `Revision crewmate started for ${followUpTaskId}.`,
+    message: `${dispatchStartedLabel(workflow)} started for ${taskId}.`,
     spawnStdout: truncateDiagnostic(spawnResult.stdout),
     spawnStderr: truncateDiagnostic(spawnResult.stderr)
   };
@@ -1158,28 +1238,28 @@ function firstmateReportFeedbackAutoDispatchConfig(env = process.env, { allowLoc
   if (!enabledValues.has(flag)) {
     return {
       enabled: false,
-      reason: "Set RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH=1 to auto-dispatch report revisions."
+      reason: "Set RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH=1 to auto-dispatch Firstmate follow-up tasks."
     };
   }
 
   if (env.AWS_LAMBDA_FUNCTION_NAME || env.AWS_EXECUTION_ENV) {
     return {
       enabled: false,
-      reason: "Report revision auto-dispatch is disabled in AWS runtime."
+      reason: "Firstmate follow-up auto-dispatch is disabled in AWS runtime."
     };
   }
 
   if (!isFirstmateTasksLocalAuthBypassEnabled(env)) {
     return {
       enabled: false,
-      reason: "Report revision auto-dispatch requires the local Firstmate tasks auth bypass."
+      reason: "Firstmate follow-up auto-dispatch requires the local Firstmate tasks auth bypass."
     };
   }
 
   if (!allowLocalAgentDispatch) {
     return {
       enabled: false,
-      reason: "Report revision auto-dispatch requires a local Firstmate tasks request."
+      reason: "Firstmate follow-up auto-dispatch requires a local Firstmate tasks request."
     };
   }
 
@@ -1207,13 +1287,164 @@ function cleanSpawnEffortValue(value, fallback) {
   return spawnEffortValues.has(cleanValue) ? cleanValue : fallback;
 }
 
-function queuedRevisionFallback(followUpTaskId, reason, details = {}) {
+function queuedDispatchFallback(taskId, workflow, reason, details = {}) {
   return {
     dispatchStatus: "queued-fallback",
-    message: `Revision task ${followUpTaskId} was queued because auto-dispatch could not start a crewmate. ${reason}`,
+    message: `${queuedDispatchLabel(workflow)} ${taskId} ${queuedDispatchVerb(workflow)} because auto-dispatch could not start a crewmate. ${reason}`,
     queuedFallbackReason: reason,
     ...details
   };
+}
+
+function dispatchStartedLabel(workflow) {
+  if (workflow === "revision") return "Revision crewmate";
+  if (workflow === "continuation") return "Continuation crewmate";
+  return "Crewmate";
+}
+
+function queuedDispatchLabel(workflow) {
+  if (workflow === "revision") return "Revision task";
+  if (workflow === "continuation") return "Continuation task";
+  return "Queued task";
+}
+
+function queuedDispatchVerb(workflow) {
+  return workflow === "queued-task" ? "remains queued" : "was queued";
+}
+
+async function resolveFirstmateTaskProjectPath({ env = process.env, firstmateHome, task }) {
+  const repo = cleanOptional(task.repo) || repoNameFromProject(task.project);
+  const registryProjects = await readFirstmateProjectRegistry(firstmateHome);
+  const candidates = [];
+
+  addProjectCandidate(candidates, task.project, "task metadata");
+  if (repo) {
+    addProjectCandidate(candidates, env[`RETROFI_FIRSTMATE_PROJECT_${envKeyFromName(repo)}_PATH`], "repo-specific env");
+  }
+  addProjectCandidate(candidates, env.RETROFI_FIRSTMATE_PROJECT_PATH, "default project env");
+  if (repo && registryProjects.has(repo)) {
+    addProjectCandidate(candidates, path.join(firstmateHome, "projects", repo), "Firstmate project registry");
+    addProjectCandidate(candidates, path.join(firstmateHome, titleFromTaskId(repo)), "Firstmate project registry");
+  }
+  if (repo === "green-business-solution") {
+    addProjectCandidate(candidates, env.RETROFI_GREEN_BUSINESS_SOLUTION_PATH, "RetroFi project env");
+    addProjectCandidate(candidates, path.join(firstmateHome, "projects", "green-business-solution"), "known RetroFi project path");
+    addProjectCandidate(candidates, path.join(firstmateHome, "Green Business Solution"), "known RetroFi project path");
+  }
+  if (repo && path.basename(process.cwd()) === repo) {
+    addProjectCandidate(candidates, process.cwd(), "current working tree");
+  }
+
+  for (const candidate of candidates) {
+    const directoryPath = path.resolve(candidate.path);
+    const status = await statDirectory(directoryPath);
+    if (status.exists && status.isDirectory) {
+      return {
+        projectPath: directoryPath,
+        source: candidate.source
+      };
+    }
+  }
+
+  return {
+    projectPath: "",
+    reason: repo
+      ? `Project path is unavailable for repo ${repo}.`
+      : "Project path is unavailable."
+  };
+}
+
+function addProjectCandidate(candidates, value, source) {
+  const projectPath = cleanOptional(value);
+  if (!projectPath) return;
+  if (candidates.some((candidate) => candidate.path === projectPath)) return;
+  candidates.push({ path: projectPath, source });
+}
+
+async function readFirstmateProjectRegistry(firstmateHome) {
+  const registryText = await readTextIfExists(path.join(firstmateHome, "data", "projects.md"));
+  const projects = new Set();
+  for (const rawLine of registryText.split(/\r?\n/)) {
+    const match = rawLine.match(/^-\s+([a-z0-9._-]+)\b/i);
+    if (match) {
+      projects.add(match[1]);
+    }
+  }
+  return projects;
+}
+
+function envKeyFromName(value) {
+  return String(value || "").trim().toUpperCase().replace(/[^A-Z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+}
+
+function spawnKindForTask(task) {
+  return String(task.kind || "").trim().toLowerCase() === "scout" ? "scout" : "ship";
+}
+
+async function readReportReviewState(firstmateHome, taskId) {
+  const reviewPath = safeReportReviewStatePath(firstmateHome, taskId);
+  const text = await readTextIfExists(reviewPath);
+  if (!text) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(text);
+    return parsed?.state === "accepted" ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+async function writeReportReviewState({
+  action,
+  comment,
+  delivery,
+  dispatchStatus,
+  feedbackPath = null,
+  firstmateHome,
+  followUpTaskId = null,
+  now,
+  task,
+  taskId
+}) {
+  if (action !== "proceed") {
+    return;
+  }
+
+  const reviewPath = safeReportReviewStatePath(firstmateHome, taskId);
+  await fs.mkdir(path.dirname(reviewPath), { recursive: true });
+  await fs.writeFile(reviewPath, `${JSON.stringify({
+    action,
+    comment: comment || "",
+    delivery,
+    dispatchStatus,
+    feedbackPath,
+    followUpTaskId,
+    originalTaskId: taskId,
+    originalTaskTitle: task.title || taskId,
+    repo: task.repo || "unknown",
+    kind: task.kind || "unknown",
+    project: task.project || null,
+    reviewedAt: toIsoString(now),
+    state: "accepted"
+  }, null, 2)}\n`);
+}
+
+function safeReportReviewStatePath(firstmateHome, taskId) {
+  const normalizedTaskId = normalizeTaskId(taskId);
+  if (!normalizedTaskId) {
+    throw statusError("Invalid task id.", 400);
+  }
+
+  const taskDataDir = path.resolve(firstmateHome, "data", normalizedTaskId);
+  const feedbackDir = path.resolve(taskDataDir, "feedback");
+  const reviewPath = path.resolve(feedbackDir, "report-review-state.json");
+  const feedbackPrefix = `${feedbackDir}${path.sep}`;
+  if (!reviewPath.startsWith(feedbackPrefix)) {
+    throw statusError("Invalid report review state path.", 400);
+  }
+  return reviewPath;
 }
 
 function summarizeExecFailure(label, result) {

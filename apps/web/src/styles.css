@@ -1914,29 +1914,13 @@ textarea {
   padding: 10px;
 }
 
-.task-report-feedback-toggle {
-  background: #eef3ef;
-  border: 1px solid #d7e1db;
-  border-radius: 8px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  overflow: hidden;
-}
-
-.task-report-feedback-toggle button {
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  color: #3d4d44;
-  font-size: 12px;
-  min-height: 32px;
-  padding: 7px 8px;
-}
-
-.task-report-feedback-toggle button.is-active {
-  background: #ffffff;
-  color: #176b4c;
-  font-weight: 850;
+.task-report-feedback-actions,
+.task-assign-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
 }
 
 .task-report-feedback-form textarea {
@@ -1954,6 +1938,16 @@ textarea {
 .task-report-feedback-form > button {
   justify-self: end;
   min-height: 34px;
+}
+
+.task-assign-actions {
+  justify-content: flex-start;
+  margin-top: 8px;
+}
+
+.task-assign-actions .error-message {
+  flex-basis: 100%;
+  margin: 0;
 }
 
 .task-report-feedback-form .error-message {
