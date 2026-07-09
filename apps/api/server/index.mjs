@@ -98,6 +98,11 @@ import {
   sendFirstmateTaskReportFeedback,
   sendFirstmateTaskResponse
 } from "./firstmateTasks.mjs";
+import {
+  buildPreRetrofitFormAnswerRecord,
+  mergePreRetrofitFormAnswers,
+  normalizePreRetrofitFormAnswers
+} from "./profilePreRetrofitFormAnswers.mjs";
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
 const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
@@ -892,11 +897,13 @@ function normalizeIntakeRecord(item) {
   const uploadedUtilityFiles = normalizeUploadedUtilityFiles(item.uploadedUtilityFiles);
   const utilityExtractedValues = normalizeUtilityExtractedValues(item.utilityExtractedValues);
   const siteId = deriveSiteId(item.userId, item);
+  const preRetrofitFormAnswers = normalizePreRetrofitFormAnswers(item.preRetrofitFormAnswers);
 
   return {
     ...item,
     uploadedUtilityFiles,
     utilityExtractedValues,
+    ...(preRetrofitFormAnswers ? { preRetrofitFormAnswers } : {}),
     siteEnergyProfile:
       item.siteEnergyProfile && Array.isArray(item.siteEnergyProfile.utilitySummaries)
         ? item.siteEnergyProfile
@@ -971,6 +978,60 @@ async function getIntake(userId) {
     })
   );
   return normalizeIntakeRecord(result.Item || null);
+}
+
+async function savePreRetrofitFormAnswersForUser(user, input) {
+  if (!user || user.role !== "client") {
+    const error = new Error("Pre-retrofit form answers are only available for client accounts.");
+    error.status = 403;
+    throw error;
+  }
+
+  if (isFakeUserRecord(user)) {
+    const error = new Error("Pre-retrofit form answers cannot be saved for test-case preview users.");
+    error.status = 403;
+    throw error;
+  }
+
+  const intake = await getIntake(user.userId);
+  if (!intake) {
+    const error = new Error("No profile was found for this account.");
+    error.status = 404;
+    throw error;
+  }
+
+  const now = new Date().toISOString();
+  const retrofitAnswerRecord = buildPreRetrofitFormAnswerRecord(input, { now });
+  const preRetrofitFormAnswers = mergePreRetrofitFormAnswers(intake.preRetrofitFormAnswers, retrofitAnswerRecord, { now });
+  const result = await db.send(
+    new UpdateCommand({
+      TableName: intakeTable,
+      Key: { userId: user.userId },
+      UpdateExpression: "SET #preRetrofitFormAnswers = :preRetrofitFormAnswers, #updatedAt = :updatedAt",
+      ExpressionAttributeNames: {
+        "#preRetrofitFormAnswers": "preRetrofitFormAnswers",
+        "#updatedAt": "updatedAt"
+      },
+      ExpressionAttributeValues: {
+        ":preRetrofitFormAnswers": preRetrofitFormAnswers,
+        ":updatedAt": now
+      },
+      ConditionExpression: "attribute_exists(userId)",
+      ReturnValues: "ALL_NEW"
+    })
+  );
+
+  const nextIntake = normalizeIntakeRecord(result.Attributes || {
+    ...intake,
+    preRetrofitFormAnswers,
+    updatedAt: now
+  });
+
+  return {
+    intake: nextIntake,
+    preRetrofitFormAnswers: nextIntake.preRetrofitFormAnswers,
+    savedRetrofit: nextIntake.preRetrofitFormAnswers?.retrofits?.[retrofitAnswerRecord.retrofitTypeId] || null
+  };
 }
 
 function publicEnergyUploadSession(userId, intake) {
@@ -3751,6 +3812,16 @@ app.get("/api/portal/retrofit-recommendations", async (req, res) => {
         retrofitTypeIds: retrofitTypeId ? [retrofitTypeId] : []
       })
     );
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/portal/pre-retrofit-form-answers", async (req, res) => {
+  try {
+    const user = await requireAuthenticatedUserFromRequest(req);
+    const result = await savePreRetrofitFormAnswersForUser(user, req.body || {});
+    res.status(201).json(result);
   } catch (error) {
     handleError(res, error);
   }

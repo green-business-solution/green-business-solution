@@ -136,6 +136,41 @@ type SiteEnergyProfile = {
   lastUpdatedAt: string | null;
 };
 
+type PreRetrofitFormAnswerValue = {
+  questionId: string;
+  catalogQuestionId?: string;
+  canonicalInputKey?: string;
+  retrofitId?: string;
+  retrofitName?: string;
+  opportunityId?: string;
+  requirementId?: string;
+  requirementType?: string;
+  applicationSection?: string;
+  questionKind?: string;
+  collectionStage?: string;
+  collectionSurface?: string;
+  question: string;
+  answerType: "text" | "number" | "select" | "boolean" | "file" | "date";
+  value: string;
+  options?: string[];
+  updatedAt?: string;
+};
+
+type PreRetrofitFormRetrofitAnswers = {
+  retrofitTypeId: string;
+  retrofitName: string;
+  updatedAt?: string;
+  answerCount: number;
+  answerOrder: string[];
+  answers: Record<string, PreRetrofitFormAnswerValue>;
+};
+
+type PreRetrofitFormAnswers = {
+  schemaVersion: "pre-retrofit-form-answers-v1";
+  updatedAt?: string;
+  retrofits: Record<string, PreRetrofitFormRetrofitAnswers>;
+};
+
 type IntakeRecord = {
   userId: string;
   submissionId: string;
@@ -194,6 +229,7 @@ type IntakeRecord = {
   uploadedUtilityFiles: UploadedUtilityFile[];
   utilityExtractedValues: UtilityExtractedValue[];
   siteEnergyProfile: SiteEnergyProfile | null;
+  preRetrofitFormAnswers?: PreRetrofitFormAnswers | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -225,6 +261,12 @@ type PortalRetrofitRecommendationsResponse = PortalPayload & {
   };
   taxRuntimePreview?: TaxRuntimePreview | null;
   retrofits: SampleRetrofitGroup[];
+};
+
+type PreRetrofitFormSaveResponse = {
+  intake: IntakeRecord;
+  preRetrofitFormAnswers: PreRetrofitFormAnswers | null;
+  savedRetrofit: PreRetrofitFormRetrofitAnswers | null;
 };
 
 type TaxRuntimeInputField = {
@@ -6465,6 +6507,7 @@ function UserDashboard({
           eyebrow="Retrofit estimates"
           intro="These recommendations are matched from your current profile, site details, and live opportunity data."
           loadingMessage="Matching your profile to live retrofit opportunities..."
+          profileFormWriteEndpoint="/api/portal/pre-retrofit-form-answers"
           title="Retrofit Recommendations"
         />
       ) : (
@@ -6514,6 +6557,7 @@ function CustomerRetrofitEstimatesPanel({
   intro,
   loadingMessage,
   onPayloadLoaded,
+  profileFormWriteEndpoint,
   summaryEndpoint,
   title,
   hideBillData = false,
@@ -6528,6 +6572,7 @@ function CustomerRetrofitEstimatesPanel({
   intro: string;
   loadingMessage: string;
   onPayloadLoaded?: (payload: PortalRetrofitRecommendationsResponse) => void;
+  profileFormWriteEndpoint?: string;
   summaryEndpoint?: string;
   title: string;
   hideBillData?: boolean;
@@ -6655,6 +6700,10 @@ function CustomerRetrofitEstimatesPanel({
       });
   }, [credential, endpoint]);
 
+  const handleProfileFormSaved = useCallback((response: PreRetrofitFormSaveResponse) => {
+    setPayload((currentPayload) => currentPayload ? { ...currentPayload, intake: response.intake } : currentPayload);
+  }, []);
+
   return (
       <RetrofitRecommendationsPreview
         credential={credential}
@@ -6670,7 +6719,9 @@ function CustomerRetrofitEstimatesPanel({
         hideBillData={hideBillData}
         hideFormDetails={hideFormDetails}
         enableSeededFormDetails={enableSeededFormDetails}
+        onProfileFormSaved={handleProfileFormSaved}
         payload={payload}
+        profileFormWriteEndpoint={profileFormWriteEndpoint}
         title={title}
       />
   );
@@ -7483,6 +7534,34 @@ export function buildSeededRetrofitDetailAnswers(retrofits: RetrofitPreviewCard[
         answers[question.id] = seededTextAnswer(question, intake);
       }
     }
+  }
+  return answers;
+}
+
+export function answersFromSavedPreRetrofitRecord(record: PreRetrofitFormRetrofitAnswers | null | undefined) {
+  const answers: Record<string, string> = {};
+  if (!record?.answers) return answers;
+  const orderedQuestionIds = [
+    ...(record.answerOrder || []),
+    ...Object.keys(record.answers).filter((questionId) => !(record.answerOrder || []).includes(questionId))
+  ];
+
+  for (const questionId of orderedQuestionIds) {
+    const value = record.answers[questionId]?.value;
+    if (typeof value === "string" && value.trim().length > 0) {
+      answers[questionId] = value;
+    }
+  }
+
+  return answers;
+}
+
+export function buildPersistedRetrofitDetailAnswers(retrofits: RetrofitPreviewCard[], intake: IntakeRecord | null | undefined) {
+  const savedRetrofits = intake?.preRetrofitFormAnswers?.retrofits || {};
+  const answers: Record<string, string> = {};
+  for (const retrofit of retrofits) {
+    const record = savedRetrofits[retrofit.id];
+    Object.assign(answers, answersFromSavedPreRetrofitRecord(record));
   }
   return answers;
 }
@@ -9551,10 +9630,12 @@ export function RetrofitRecommendationsPreview({
   loadingRetrofitDetailIds = {},
   loadingMessage,
   onPrioritizeRetrofit,
+  onProfileFormSaved,
   enableSeededFormDetails = false,
   hideBillData = false,
   hideFormDetails = true,
   payload,
+  profileFormWriteEndpoint,
   title
 }: {
   credential?: AuthCredential | null;
@@ -9567,10 +9648,12 @@ export function RetrofitRecommendationsPreview({
   loadingRetrofitDetailIds?: Record<string, boolean>;
   loadingMessage: string;
   onPrioritizeRetrofit?: (retrofitId: string) => void;
+  onProfileFormSaved?: (response: PreRetrofitFormSaveResponse) => void;
   enableSeededFormDetails?: boolean;
   hideBillData?: boolean;
   hideFormDetails?: boolean;
   payload: PortalRetrofitRecommendationsResponse | null;
+  profileFormWriteEndpoint?: string;
   title: string;
 }) {
   const preview = useMemo(() => buildUserRetrofitPreviewResult(payload), [payload]);
@@ -9615,6 +9698,8 @@ export function RetrofitRecommendationsPreview({
   const [selectedOpportunityIds, setSelectedOpportunityIds] = useState<Record<string, boolean>>(initialSelectedOpportunityIds);
   const [detailAnswers, setDetailAnswers] = useState<Record<string, string>>({});
   const [activeFormRetrofitId, setActiveFormRetrofitId] = useState<string | null>(null);
+  const [formSaveError, setFormSaveError] = useState<string | null>(null);
+  const [savingFormRetrofitId, setSavingFormRetrofitId] = useState<string | null>(null);
   const [nextActionStatuses, setNextActionStatuses] = useState<Record<string, NextBestAction["status"]>>({});
   const [financingRetrofit, setFinancingRetrofit] = useState<RetrofitPreviewCard | null>(null);
   const [refinementMessage, setRefinementMessage] = useState<string | null>(null);
@@ -9636,12 +9721,17 @@ export function RetrofitRecommendationsPreview({
     () => (enableSeededFormDetails && !hideFormDetails ? buildSeededRetrofitDetailAnswers(preview.retrofits, payload?.intake || null) : {}),
     [enableSeededFormDetails, hideFormDetails, payload?.intake, preview.retrofits]
   );
+  const persistedDetailAnswers = useMemo(
+    () => (profileFormWriteEndpoint ? buildPersistedRetrofitDetailAnswers(preview.retrofits, payload?.intake || null) : {}),
+    [payload?.intake, preview.retrofits, profileFormWriteEndpoint]
+  );
   const effectiveDetailAnswers = useMemo(
     () => ({
+      ...persistedDetailAnswers,
       ...seededDetailAnswers,
       ...detailAnswers
     }),
-    [detailAnswers, seededDetailAnswers]
+    [detailAnswers, persistedDetailAnswers, seededDetailAnswers]
   );
   const dashboardViewModel = useMemo(() => buildDashboardPerformanceData(payload, preview), [payload, preview]);
 
@@ -9661,6 +9751,8 @@ export function RetrofitRecommendationsPreview({
     setActiveRetrofitInitialWorkspaceTab("overview");
     setBillUploadFocusStepId(null);
     setActiveFormRetrofitId(null);
+    setFormSaveError(null);
+    setSavingFormRetrofitId(null);
     setDetailAnswers({});
     setActivePrimaryView("retrofits");
     setActiveDashboardPage("summary");
@@ -9904,16 +9996,43 @@ export function RetrofitRecommendationsPreview({
     }
     if (!readiness.questionsComplete) {
       setActiveFormRetrofitId(retrofit.id);
+      setFormSaveError(null);
       setRefinementMessage(`Answer project details to unlock ${retrofit.name}.`);
       return;
     }
     openRetrofitWorkspace(retrofitId);
   }
 
-  function handleRetrofitFormSubmit(retrofit: RetrofitPreviewCard, answers: Record<string, string>) {
+  async function handleRetrofitFormSubmit(retrofit: RetrofitPreviewCard, answers: Record<string, string>) {
+    const questions = getRetrofitFormQuestions(retrofit, answers);
+    const scopedAnswers = Object.fromEntries(questions.map((question) => [question.id, answers[question.id] || ""]));
+    let nextAnswers = scopedAnswers;
+    setFormSaveError(null);
+
+    if (profileFormWriteEndpoint && credential) {
+      setSavingFormRetrofitId(retrofit.id);
+      try {
+        const response = await apiPost<PreRetrofitFormSaveResponse>(profileFormWriteEndpoint, {
+          ...adminAuthBody(credential),
+          retrofitTypeId: retrofit.id,
+          retrofitName: retrofit.name,
+          answers: scopedAnswers,
+          questions
+        });
+        onProfileFormSaved?.(response);
+        nextAnswers = answersFromSavedPreRetrofitRecord(response.savedRetrofit);
+        if (Object.keys(nextAnswers).length === 0) nextAnswers = scopedAnswers;
+      } catch (requestError) {
+        setFormSaveError(requestError instanceof Error ? requestError.message : "Could not save project details.");
+        return;
+      } finally {
+        setSavingFormRetrofitId(null);
+      }
+    }
+
     setDetailAnswers((current) => ({
       ...current,
-      ...answers
+      ...nextAnswers
     }));
     setActiveFormRetrofitId(null);
     setRefinementMessage(`${retrofit.name} project details saved.`);
@@ -10109,9 +10228,14 @@ export function RetrofitRecommendationsPreview({
       {activeFormRetrofit ? (
         <RetrofitDetailFormModal
           initialAnswers={effectiveDetailAnswers}
-          onClose={() => setActiveFormRetrofitId(null)}
+          isSubmitting={savingFormRetrofitId === activeFormRetrofit.id}
+          onClose={() => {
+            setActiveFormRetrofitId(null);
+            setFormSaveError(null);
+          }}
           onSubmit={(answers) => handleRetrofitFormSubmit(activeFormRetrofit, answers)}
           retrofit={activeFormRetrofit}
+          submitError={formSaveError}
         />
       ) : null}
       {showInstructionsModal ? (
@@ -12222,14 +12346,18 @@ function RetrofitPickerView({
 
 function RetrofitDetailFormModal({
   initialAnswers,
+  isSubmitting = false,
   onClose,
   onSubmit,
-  retrofit
+  retrofit,
+  submitError = null
 }: {
   initialAnswers: Record<string, string>;
+  isSubmitting?: boolean;
   onClose: () => void;
-  onSubmit: (answers: Record<string, string>) => void;
+  onSubmit: (answers: Record<string, string>) => void | Promise<void>;
   retrofit: RetrofitPreviewCard;
+  submitError?: string | null;
 }) {
   const [answers, setAnswers] = useState<Record<string, string>>(() =>
     Object.fromEntries(getRetrofitFormQuestions(retrofit, initialAnswers).map((question) => [question.id, initialAnswers[question.id] || ""]))
@@ -12242,7 +12370,7 @@ function RetrofitDetailFormModal({
 
   const answeredCount = questions.filter((question) => (answers[question.id] || "").trim().length > 0).length;
   const requiredQuestions = questions.filter((question) => isRetrofitQuestionRequired(question, answers));
-  const canSubmit = requiredQuestions.length === 0 || requiredQuestions.every((question) => (answers[question.id] || "").trim().length > 0);
+  const canSubmit = !isSubmitting && (requiredQuestions.length === 0 || requiredQuestions.every((question) => (answers[question.id] || "").trim().length > 0));
 
   function handleAnswerChange(questionId: string, value: string) {
     setAnswers((current) => ({
@@ -12254,7 +12382,7 @@ function RetrofitDetailFormModal({
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!canSubmit) return;
-    onSubmit(answers);
+    void onSubmit(answers);
   }
 
   function renderQuestionInput(question: RetrofitDetailQuestion) {
@@ -12338,12 +12466,13 @@ function RetrofitDetailFormModal({
             </label>
           ))}
         </div>
+        {submitError ? <p className="error-message">{submitError}</p> : null}
         <footer className="retrofit-form-footer">
-          <button className="secondary-button" onClick={onClose} type="button">
+          <button className="secondary-button" disabled={isSubmitting} onClick={onClose} type="button">
             Back
           </button>
           <button className="primary-button" disabled={!canSubmit} type="submit">
-            Save and review retrofit
+            {isSubmitting ? "Saving..." : "Save and review retrofit"}
           </button>
         </footer>
       </form>

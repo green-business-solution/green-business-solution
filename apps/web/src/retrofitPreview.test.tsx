@@ -7,6 +7,7 @@ import {
   areBillsCompleteForRetrofit,
   areRetrofitQuestionsComplete,
   buildDashboardPerformanceData,
+  buildPersistedRetrofitDetailAnswers,
   buildSeededRetrofitDetailAnswers,
   comparePreviewRetrofits,
   RetrofitRecommendationsPreview,
@@ -1285,6 +1286,63 @@ describe("retrofit recommendations preview", () => {
     expect(areRetrofitQuestionsComplete(retrofit, {})).toBe(false);
   });
 
+  it("hydrates production form answers from the saved intake profile record", () => {
+    const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
+    const retrofit = preview.retrofits[0];
+    const savedIntake = {
+      ...liveShapedPayload.intake,
+      preRetrofitFormAnswers: {
+        schemaVersion: "pre-retrofit-form-answers-v1",
+        updatedAt: "2026-07-09T12:00:00.000Z",
+        retrofits: {
+          led_lighting: {
+            retrofitTypeId: "led_lighting",
+            retrofitName: "LED Lighting",
+            updatedAt: "2026-07-09T12:00:00.000Z",
+            answerCount: 4,
+            answerOrder: [
+              "led_lighting:tax-inclusive-costs",
+              "led_lighting:fixtures",
+              "led_lighting:quote",
+              "led_lighting:opportunity:project-quote"
+            ],
+            answers: {
+              "led_lighting:tax-inclusive-costs": {
+                questionId: "led_lighting:tax-inclusive-costs",
+                question: "Tax inclusive?",
+                answerType: "select",
+                value: "Enter tax-inclusive numbers"
+              },
+              "led_lighting:fixtures": {
+                questionId: "led_lighting:fixtures",
+                question: "Fixture count?",
+                answerType: "number",
+                value: "88"
+              },
+              "led_lighting:quote": {
+                questionId: "led_lighting:quote",
+                question: "Quote?",
+                answerType: "select",
+                value: "In progress"
+              },
+              "led_lighting:opportunity:project-quote": {
+                questionId: "led_lighting:opportunity:project-quote",
+                question: "Confirm project quote.",
+                answerType: "text",
+                value: "Quote requested"
+              }
+            }
+          }
+        }
+      }
+    };
+    const persistedAnswers = buildPersistedRetrofitDetailAnswers(preview.retrofits, savedIntake as any);
+
+    expect(persistedAnswers["led_lighting:fixtures"]).toBe("88");
+    expect(areRetrofitQuestionsComplete(retrofit, persistedAnswers)).toBe(true);
+    expect(buildPersistedRetrofitDetailAnswers(preview.retrofits, liveShapedPayload.intake as any)).toEqual({});
+  });
+
   it("adds required tax runtime fields to retrofit project questions", () => {
     const preview = buildUserRetrofitPreviewResult({
       ...liveShapedPayload,
@@ -1730,6 +1788,28 @@ describe("retrofit recommendations preview", () => {
     expect(workspaceSource).not.toContain("Send email");
     expect(workspaceSource).not.toContain("Autofill PDF");
     expect(workspaceSource).not.toContain("Generate packet");
+  });
+
+  it("wires pre-retrofit profile writes only from the real customer portal", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+    const userDashboardSource = source.slice(
+      source.indexOf("function UserDashboard("),
+      source.indexOf("function mergePortalRetrofitRecommendationsPayload")
+    );
+    const adminPortalPreviewSource = source.slice(
+      source.indexOf("function AdminClientPortalPreviewPage("),
+      source.indexOf("const ADMIN_OPPORTUNITIES_TAB")
+    );
+    const adminUserPreviewSource = source.slice(
+      source.indexOf("function AdminUserPreviewStandalonePage("),
+      source.indexOf("function buildUserPreviewOptions(")
+    );
+
+    expect(userDashboardSource).toContain('profileFormWriteEndpoint="/api/portal/pre-retrofit-form-answers"');
+    expect(adminPortalPreviewSource).not.toContain("profileFormWriteEndpoint=");
+    expect(adminUserPreviewSource).not.toContain("profileFormWriteEndpoint=");
   });
 
   it("opens admin ApplicationProfile details visibly from the list actions", async () => {

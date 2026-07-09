@@ -53,6 +53,7 @@ Representative fields:
 - `uploadedUtilityFiles`
 - `utilityExtractedValues`
 - `siteEnergyProfile`
+- `preRetrofitFormAnswers`
 - `createdAt`
 - `updatedAt`
 
@@ -73,6 +74,10 @@ Current intake form fields include:
 The browser uploads original utility and Green Button files directly to the private energy-data S3 bucket
 using a presigned URL returned by the API. Parsed upload metadata and normalized bill/usage summaries are
 stored on the matching intake record; the original documents stay in S3.
+
+Per-retrofit pre-retrofit form answers are stored on the matching intake record under `preRetrofitFormAnswers`.
+The field uses schema version `pre-retrofit-form-answers-v1`, keys answer groups by retrofit type ID, and stores sanitized answer values plus question metadata needed to rehydrate the customer form.
+Admin test-case preview remains fixture and seeded-answer driven; it does not write through this intake profile field.
 
 ### `gbs-opportunity-candidates`
 

@@ -43,7 +43,7 @@ Browser traffic enters CloudFront on `retrofi.org`.
 | Table | Region | Purpose |
 | --- | --- | --- |
 | `gbs-users` | `us-east-2` | Account/auth/user records |
-| `gbs-client-intake` | `us-east-2` | Intake form state, business/site profile, uploaded utility metadata, extracted bill fields |
+| `gbs-client-intake` | `us-east-2` | Intake form state, business/site profile, uploaded utility metadata, extracted bill fields, per-retrofit pre-retrofit form answers |
 | `gbs-opportunity-candidates` | `us-east-2` | DSIRE opportunity candidate records and admin review state |
 | `gbs-dashboard-performance` | `us-east-2` | Synthetic/test-case dashboard performance datasets |
 | `gbs-retrofit-recommendation-cache` | `us-east-2` | Recommendation cache metadata; large payloads live in S3 |

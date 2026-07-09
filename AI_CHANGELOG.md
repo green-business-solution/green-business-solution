@@ -12,6 +12,12 @@
 - Added canonical S3 key validation for energy data upload registration so a valid upload session can only register the object key minted by the upload-url endpoint.
 - Moved energy upload object-key construction into a pure helper and covered accepted and rejected registration-key cases with focused API tests.
 
+## 2026-07-09 - Codex (GPT-5) pre-retrofit profile write support
+
+- Added a client-only portal API write path that stores per-retrofit pre-retrofit form answers on the matching intake profile record.
+- Wired the signed-in customer portal to save and rehydrate those form answers while keeping admin test-case preview on seeded read-only values.
+- Added targeted backend and frontend regression coverage for answer normalization, merge behavior, persisted form hydration, and preview write-path unlinking.
+
 ## 2026-07-09 - Codex (GPT-5) next-session context handoff
 
 - Added a root `NEXT_CODEX_CONTEXT.md` handoff for future Codex sessions covering the current implementation plan, completed Codex work, architecture state, AWS migration state, runtime artifact rules, application-prep status, and highest-priority next tasks.
