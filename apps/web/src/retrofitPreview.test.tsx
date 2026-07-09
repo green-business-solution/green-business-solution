@@ -31,6 +31,8 @@ import {
   hydrateBillUploadStateFromIntake,
   isSupportedBillUploadFile,
   sanitizeBillUploadState,
+  selectGptProBatchIdForIndex,
+  selectGptProPromptPathForBatch,
   UserPreviewProfileView
 } from "./App";
 
@@ -2507,5 +2509,31 @@ describe("retrofit recommendations preview", () => {
       /\.retrofit-preview-page \.scenario-card:hover,\n\.retrofit-preview-page \.scenario-opportunity-card:hover,\n\.retrofit-preview-page \.scenario-opportunity-table-row:hover\s*{([^}]*)}/
     )?.[1] || "";
     expect(scenarioHoverRule).toContain("background: var(--rf-green-soft)");
+  });
+
+  it("opens GPT Pro chat repair links on the requested batch and prompt", () => {
+    const batches = [
+      {
+        batchId: "current-batch",
+        promptFiles: [
+          { promptPath: "prompt_001_current.md" }
+        ]
+      },
+      {
+        batchId: "repair-batch",
+        promptFiles: [
+          { promptPath: "prompt_001_default.md" },
+          { promptPath: "nested/prompt_002_repair.md" }
+        ]
+      }
+    ] as any;
+
+    expect(selectGptProBatchIdForIndex(batches, "", "current-batch", "?batch=repair-batch")).toBe("repair-batch");
+    expect(selectGptProBatchIdForIndex(batches, "current-batch", "current-batch", "?batch=repair-batch")).toBe("current-batch");
+    expect(selectGptProBatchIdForIndex(batches, "", "current-batch", "?batch=missing")).toBe("current-batch");
+    expect(selectGptProPromptPathForBatch(batches[1], "", "?path=nested%2Fprompt_002_repair.md")).toBe(
+      "nested/prompt_002_repair.md"
+    );
+    expect(selectGptProPromptPathForBatch(batches[1], "", "?path=missing.md")).toBe("prompt_001_default.md");
   });
 });

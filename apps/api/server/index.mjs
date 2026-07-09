@@ -3129,7 +3129,7 @@ function gptProWorkStoreOptions() {
 }
 
 function isLocalGptProWorkAuthBypassEnabled(env = process.env) {
-  return isFirstmateTasksLocalAuthBypassEnabled(env) || isGptProChatsLocalAuthBypassEnabled(env);
+  return isGptProChatsLocalAuthBypassEnabled(env);
 }
 
 app.get("/api/health", (_req, res) => {

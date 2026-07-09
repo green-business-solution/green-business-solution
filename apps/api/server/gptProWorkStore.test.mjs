@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 import {
   buildGptProWorkIndex,
   gptProArtifactS3Key,
@@ -22,6 +23,17 @@ describe("GPT Pro work store helpers", () => {
       AWS_EXECUTION_ENV: "AWS_Lambda_nodejs24.x",
       RETROFI_GPT_PRO_CHATS_LOCAL_AUTH_BYPASS: "1"
     })).toBe(false);
+  });
+
+  it("keeps GPT Pro work routes scoped to the GPT Pro chats local bypass", () => {
+    const source = readFileSync(new URL("./index.mjs", import.meta.url), "utf8");
+    const helperSource = source.slice(
+      source.indexOf("function isLocalGptProWorkAuthBypassEnabled"),
+      source.indexOf('app.get("/api/health"')
+    );
+
+    expect(helperSource).toContain("isGptProChatsLocalAuthBypassEnabled(env)");
+    expect(helperSource).not.toContain("isFirstmateTasksLocalAuthBypassEnabled(env)");
   });
 
   it("derives output paths from prompt paths without accepting traversal", () => {

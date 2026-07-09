@@ -1,5 +1,11 @@
 # AI Changelog
 
+## 2026-07-09 - Codex (GPT-5) GPT Pro review fixes
+
+- Scoped GPT Pro work API local auth bypass to the dedicated GPT Pro chats environment flag.
+- Made GPT Pro chat repair links seed the selected batch and prompt from valid URL query parameters.
+- Added focused API and frontend regression coverage for both review findings.
+
 ## 2026-07-09 - Codex (GPT-5) loading and home navbar polish
 
 - Replaced the public session restore card with the shared full-page RetroFi spinner loader so auth restoration no longer looks like a modal dialog.

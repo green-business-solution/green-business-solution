@@ -16069,6 +16069,41 @@ function LocalGptProChatsStandalonePage() {
   );
 }
 
+export function selectGptProBatchIdForIndex(
+  batches: GptProBatch[],
+  currentSelection: string,
+  currentBatchId: string | null | undefined,
+  locationSearch: string
+) {
+  if (batches.some((batch) => batch.batchId === currentSelection)) {
+    return currentSelection;
+  }
+
+  const requestedBatchId = new URLSearchParams(locationSearch).get("batch") || "";
+  if (batches.some((batch) => batch.batchId === requestedBatchId)) {
+    return requestedBatchId;
+  }
+
+  return currentBatchId || batches[0]?.batchId || "";
+}
+
+export function selectGptProPromptPathForBatch(
+  batch: GptProBatch,
+  currentSelection: string,
+  locationSearch: string
+) {
+  if (batch.promptFiles.some((prompt) => prompt.promptPath === currentSelection)) {
+    return currentSelection;
+  }
+
+  const requestedPromptPath = new URLSearchParams(locationSearch).get("path") || "";
+  if (batch.promptFiles.some((prompt) => prompt.promptPath === requestedPromptPath)) {
+    return requestedPromptPath;
+  }
+
+  return batch.promptFiles[0]?.promptPath || "";
+}
+
 function GptProChatsPanel({ credential }: { credential: AuthCredential | null }) {
   const [indexResponse, setIndexResponse] = useState<GptProWorkIndexResponse | null>(null);
   const [selectedBatchId, setSelectedBatchId] = useState("");
@@ -16101,9 +16136,12 @@ function GptProChatsPanel({ credential }: { credential: AuthCredential | null })
       });
       setIndexResponse(payload);
       setSelectedBatchId((currentBatchId) =>
-        payload.batches.some((batch) => batch.batchId === currentBatchId)
-          ? currentBatchId
-          : payload.currentBatchId || payload.batches[0]?.batchId || ""
+        selectGptProBatchIdForIndex(
+          payload.batches,
+          currentBatchId,
+          payload.currentBatchId,
+          typeof window === "undefined" ? "" : window.location.search
+        )
       );
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Could not load GPT Pro work batches.");
@@ -16123,9 +16161,11 @@ function GptProChatsPanel({ credential }: { credential: AuthCredential | null })
     }
 
     setSelectedPromptPath((currentPath) =>
-      selectedBatch.promptFiles.some((prompt) => prompt.promptPath === currentPath)
-        ? currentPath
-        : selectedBatch.promptFiles[0]?.promptPath || ""
+      selectGptProPromptPathForBatch(
+        selectedBatch,
+        currentPath,
+        typeof window === "undefined" ? "" : window.location.search
+      )
     );
   }, [selectedBatch]);
 
