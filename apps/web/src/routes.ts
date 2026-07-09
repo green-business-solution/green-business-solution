@@ -1,6 +1,5 @@
 export type Route =
   | "home"
-  | "how-it-works"
   | "pricing"
   | "about"
   | "about-mission"
