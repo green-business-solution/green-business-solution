@@ -511,13 +511,20 @@ export async function assignFirstmateQueuedTask({
     throw statusError("Only queued tasks can be assigned from the dashboard.", 409);
   }
 
+  const backlogDetails = await readBacklogTaskDetails(firstmateHome, normalizedTaskId);
   const dispatch = await dispatchFirstmateTask({
     allowLocalAgentDispatch,
     env,
     execFileFn,
     firstmateHome,
     spawnKind: spawnKindForTask(task),
-    task,
+    task: {
+      ...task,
+      title: task.title || backlogDetails.title,
+      kind: task.kind || backlogDetails.kind,
+      repo: task.repo || backlogDetails.repo
+    },
+    taskBody: backlogDetails.body,
     taskId: normalizedTaskId,
     workflow: "queued-task"
   });
@@ -1071,6 +1078,7 @@ async function createReportFeedbackFollowUp({
     firstmateHome,
     spawnKind: action === "changes-requested" ? "scout" : "ship",
     task,
+    taskBody: artifact,
     taskId: followUpTaskId,
     workflow: action === "changes-requested" ? "revision" : "continuation"
   });
@@ -1158,6 +1166,7 @@ async function dispatchFirstmateTask({
   firstmateHome,
   spawnKind = "ship",
   task,
+  taskBody = "",
   taskId,
   workflow
 }) {
@@ -1181,6 +1190,15 @@ async function dispatchFirstmateTask({
   if (!spawnScriptStatus.isFile) {
     return queuedDispatchFallback(taskId, workflow, "Firstmate spawn helper is not a file.");
   }
+
+  await ensureFirstmateTaskBrief({
+    firstmateHome,
+    projectPath,
+    task,
+    taskBody,
+    taskId,
+    workflow
+  });
 
   const profile = firstmateReportFeedbackDispatchProfile(env);
   const spawnArgs = [
@@ -1459,6 +1477,150 @@ function originalTaskIdFromFollowUpTaskId(taskId, knownTaskIds) {
   }
 
   return "";
+}
+
+async function readBacklogTaskDetails(firstmateHome, taskId) {
+  const normalizedTaskId = normalizeTaskId(taskId);
+  if (!normalizedTaskId) {
+    throw statusError("Invalid task id.", 400);
+  }
+
+  const backlogText = await readTextIfExists(path.join(firstmateHome, "data", "backlog.md"));
+  let found = null;
+  const bodyLines = [];
+
+  for (const rawLine of String(backlogText || "").split(/\r?\n/)) {
+    const heading = rawLine.match(/^##\s+(.+?)\s*$/);
+    if (heading && found) {
+      break;
+    }
+
+    const taskLine = rawLine.match(/^-\s+\[([ xX])\]\s+([a-z0-9._-]+)\s+-\s+(.+?)\s*$/i);
+    if (taskLine) {
+      if (found) {
+        break;
+      }
+
+      const [, , id, rest] = taskLine;
+      if (id === normalizedTaskId) {
+        const metadata = parseBacklogMetadata(rest);
+        found = {
+          ...metadata,
+          title: metadata.title || titleFromTaskId(id)
+        };
+      }
+      continue;
+    }
+
+    if (found) {
+      bodyLines.push(rawLine.replace(/^\s{2}/, ""));
+    }
+  }
+
+  if (!found) {
+    return {
+      body: "",
+      kind: "",
+      repo: "",
+      title: titleFromTaskId(normalizedTaskId)
+    };
+  }
+
+  return {
+    ...found,
+    body: bodyLines.join("\n").trim()
+  };
+}
+
+async function ensureFirstmateTaskBrief({
+  firstmateHome,
+  projectPath,
+  task,
+  taskBody,
+  taskId,
+  workflow
+}) {
+  const briefPath = safeTaskBriefPath(firstmateHome, taskId);
+  const briefStatus = await statFile(briefPath);
+  if (briefStatus.exists) {
+    if (!briefStatus.isFile) {
+      throw statusError("Firstmate task brief path is not a file.", 500);
+    }
+    return {
+      briefPath,
+      created: false
+    };
+  }
+
+  const briefText = buildFirstmateTaskBrief({
+    projectPath,
+    task,
+    taskBody,
+    taskId,
+    workflow
+  });
+
+  await fs.mkdir(path.dirname(briefPath), { recursive: true });
+  try {
+    await fs.writeFile(briefPath, briefText, { flag: "wx" });
+  } catch (error) {
+    if (error?.code !== "EEXIST") {
+      throw error;
+    }
+  }
+
+  return {
+    briefPath,
+    created: true
+  };
+}
+
+function buildFirstmateTaskBrief({
+  projectPath,
+  task,
+  taskBody,
+  taskId,
+  workflow
+}) {
+  const bodyText = cleanOptional(taskBody) || "No additional backlog details were recorded.";
+  const isReportFollowUp = /Original task id:|Report path:|Report URL:|Feedback artifact:|Captain Comment/i.test(bodyText);
+  const instruction = isReportFollowUp
+    ? "Use the report path, report URL, feedback artifact, action, captain comment, and instructions below to continue or revise the report as requested. Do not do unrelated implementation work unless the task explicitly asks for it."
+    : "Complete the queued task described below. Stay within the named repo/project and report progress through normal Firstmate status updates.";
+
+  return [
+    `# ${task.title || titleFromTaskId(taskId)}`,
+    "",
+    `- Task id: ${taskId}`,
+    `- Kind: ${task.kind || "unknown"}`,
+    `- Repo: ${task.repo || "unknown"}`,
+    `- Project: ${task.project || "unknown"}`,
+    `- Resolved project path: ${projectPath || "unknown"}`,
+    `- Workflow: ${workflow || "queued-task"}`,
+    "",
+    "## Instructions",
+    "",
+    instruction,
+    "",
+    "## Backlog Details",
+    "",
+    bodyText
+  ].join("\n");
+}
+
+function safeTaskBriefPath(firstmateHome, taskId) {
+  const normalizedTaskId = normalizeTaskId(taskId);
+  if (!normalizedTaskId) {
+    throw statusError("Invalid task id.", 400);
+  }
+
+  const taskDataDir = path.resolve(firstmateHome, "data", normalizedTaskId);
+  const briefPath = path.resolve(taskDataDir, "brief.md");
+  const taskDataPrefix = `${taskDataDir}${path.sep}`;
+  if (!briefPath.startsWith(taskDataPrefix)) {
+    throw statusError("Invalid task brief path.", 400);
+  }
+  return briefPath;
 }
 
 async function readReportReviewState(firstmateHome, taskId) {

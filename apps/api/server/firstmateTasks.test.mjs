@@ -983,6 +983,14 @@ describe("firstmate task reader", () => {
     ]);
     expect(calls[1].file).toBe("tasks-axi");
     expect(calls[1].args).toEqual(["start", "queued-assign-q1", "--json"]);
+
+    const brief = await fs.readFile(path.join(home, "data", "queued-assign-q1", "brief.md"), "utf8");
+    expect(brief).toContain("# Queued scout follow-up");
+    expect(brief).toContain("- Task id: queued-assign-q1");
+    expect(brief).toContain("- Kind: scout");
+    expect(brief).toContain("- Repo: green-business-solution");
+    expect(brief).toContain(`- Resolved project path: ${projectPath}`);
+    expect(brief).toContain("Complete the queued task described below.");
   });
 
   it("resolves a missing queued task project from the Firstmate project registry", async () => {
@@ -1026,6 +1034,90 @@ describe("firstmate task reader", () => {
     ]);
   });
 
+  it("preserves an existing queued task brief before spawning", async () => {
+    const home = await makeFirstmateHome();
+    const projectPath = path.join(home, "projects", "green-business-solution");
+    await fs.mkdir(projectPath, { recursive: true });
+    await writeFile(home, "bin/fm-spawn.sh", "#!/usr/bin/env bash\n");
+    await writeFile(home, "data/backlog.md", "## Queued\n- [ ] queued-existing-brief-q5 - Queued follow-up (repo: green-business-solution) (kind: ship)\n");
+    await writeFile(home, "state/queued-existing-brief-q5.meta", `project=${projectPath}\nkind=ship\n`);
+    await writeFile(home, "data/queued-existing-brief-q5/brief.md", "# Custom Brief\n\nDo not overwrite this.\n");
+
+    await assignFirstmateQueuedTask({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home,
+        RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "1",
+        RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH: "1"
+      },
+      taskId: "queued-existing-brief-q5",
+      allowLocalAgentDispatch: true,
+      execFileFn: (file, args, options, callback) => callback(null, JSON.stringify({ id: args[1] }), "")
+    });
+
+    await expect(fs.readFile(path.join(home, "data", "queued-existing-brief-q5", "brief.md"), "utf8")).resolves.toBe("# Custom Brief\n\nDo not overwrite this.\n");
+  });
+
+  it("creates a report follow-up brief from backlog body metadata before spawning", async () => {
+    const home = await makeFirstmateHome();
+    const projectPath = path.join(home, "projects", "green-business-solution");
+    await fs.mkdir(projectPath, { recursive: true });
+    await writeFile(home, "bin/fm-spawn.sh", "#!/usr/bin/env bash\n");
+    await writeFile(
+      home,
+      "data/backlog.md",
+      [
+        "## Queued",
+        "- [ ] feedback-original-report-q6-20260709031532066 - Follow up on report feedback for original-report-q6 (repo: green-business-solution) (kind: scout)",
+        "  # Report Feedback Follow-up: Original report",
+        "  ",
+        "  - Original task id: original-report-q6",
+        "  - Report path: /tmp/firstmate/data/original-report-q6/report.md",
+        "  - Report URL: /tasks/reports/original-report-q6",
+        "  - Feedback artifact: /tmp/firstmate/data/original-report-q6/feedback/report-feedback.md",
+        "  - Action: changes-requested",
+        "  ",
+        "  ## Captain Comment",
+        "  ",
+        "  Please add the missing vendor evidence.",
+        "  ",
+        "  ## Instructions",
+        "  ",
+        "  Revise or investigate from the report using the captain comment.",
+        "## Done",
+        "- [x] original-report-q6 - Completed report data/original-report-q6/report.md (repo: green-business-solution) (kind: scout)"
+      ].join("\n")
+    );
+    await writeFile(home, "state/feedback-original-report-q6-20260709031532066.meta", `project=${projectPath}\nkind=scout\n`);
+
+    const result = await assignFirstmateQueuedTask({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home,
+        RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "1",
+        RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH: "1"
+      },
+      taskId: "feedback-original-report-q6-20260709031532066",
+      allowLocalAgentDispatch: true,
+      execFileFn: (file, args, options, callback) => callback(null, JSON.stringify({ id: args[1] }), "")
+    });
+
+    expect(result).toMatchObject({
+      dispatchStatus: "auto-dispatched",
+      assigned: true
+    });
+
+    const brief = await fs.readFile(path.join(home, "data", "feedback-original-report-q6-20260709031532066", "brief.md"), "utf8");
+    expect(brief).toContain("# Follow up on report feedback for original-report-q6");
+    expect(brief).toContain("Use the report path, report URL, feedback artifact, action, captain comment, and instructions below");
+    expect(brief).toContain("Original task id: original-report-q6");
+    expect(brief).toContain("Report URL: /tasks/reports/original-report-q6");
+    expect(brief).toContain("Feedback artifact: /tmp/firstmate/data/original-report-q6/feedback/report-feedback.md");
+    expect(brief).toContain("Please add the missing vendor evidence.");
+    expect(brief).not.toContain("## Done");
+    expect(brief).not.toContain("original-report-q6 - Completed report");
+  });
+
   it("keeps a queued task queued when assignment spawn fails", async () => {
     const home = await makeFirstmateHome();
     const projectPath = path.join(home, "projects", "green-business-solution");
@@ -1060,6 +1152,30 @@ describe("firstmate task reader", () => {
     expect(result.message).toContain("Queued task queued-spawn-fail-q3 remains queued");
     expect(calls).toHaveLength(1);
     expect(calls[0].file).toBe(path.join(home, "bin", "fm-spawn.sh"));
+  });
+
+  it("rejects invalid queued task ids before creating a brief", async () => {
+    const home = await makeFirstmateHome();
+    const calls = [];
+
+    await expect(assignFirstmateQueuedTask({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home,
+        RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "1",
+        RETROFI_FIRSTMATE_FEEDBACK_AUTO_DISPATCH: "1"
+      },
+      taskId: "../bad-task",
+      allowLocalAgentDispatch: true,
+      execFileFn: (file, args, options, callback) => {
+        calls.push({ file, args, options });
+        callback(null, "", "");
+      }
+    })).rejects.toMatchObject({
+      message: "Invalid task id.",
+      status: 400
+    });
+    expect(calls).toHaveLength(0);
   });
 
   it("does not assign queued tasks when local auto-dispatch is blocked by AWS runtime", async () => {

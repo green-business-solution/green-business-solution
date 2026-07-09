@@ -32,6 +32,7 @@
 - Added local-only auto-dispatch for no-window report revision feedback, with queued fallback reporting and explicit `fm-spawn.sh` harness/model/effort args.
 - Split report review into distinct continue and request-changes actions, added continuation auto-dispatch, hid accepted reports from the default review list, and added queued task assignment.
 - Suppressed completed report-review rows once a queued, active, or recorded report follow-up exists while keeping direct report URLs readable.
+- Made queued task assignment create a missing safe Firstmate `brief.md` from backlog/report-feedback details before spawning.
 - Documented the local-only Firstmate task dashboard environment variables in `docs/development-artifacts.md`.
 
 ## 2026-07-08 - Codex (GPT-5) local homepage scanner copy transition

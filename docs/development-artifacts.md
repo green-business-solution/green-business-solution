@@ -82,6 +82,7 @@ The auto-dispatch spawn uses `<RETROFI_FIRSTMATE_HOME>/bin/fm-spawn.sh` with exp
 Override those local-only defaults with `RETROFI_FIRSTMATE_FEEDBACK_DISPATCH_HARNESS`, `RETROFI_FIRSTMATE_FEEDBACK_DISPATCH_MODEL`, and `RETROFI_FIRSTMATE_FEEDBACK_DISPATCH_EFFORT`.
 If auto-dispatch is disabled or spawn fails, the follow-up remains queued and the dashboard reports that fallback.
 For queued tasks without `project=` metadata, the dashboard assignment endpoint tries the Firstmate project registry, `RETROFI_FIRSTMATE_PROJECT_<REPO>_PATH`, `RETROFI_FIRSTMATE_PROJECT_PATH`, and known local RetroFi project paths before reporting that the project path is unavailable.
+If a queued task is missing `data/<task-id>/brief.md`, assignment creates that brief under the task data directory from the backlog details before calling `fm-spawn.sh`.
 If an active or reopened task still has an older `report.md`, the dashboard labels it as a previous or draft report instead of a final report.
 Set `report_status=review-ready` in task metadata only when an active task explicitly wants captain report review before completion.
 GPT Pro repair/report tasks expose the repair workspace action only when task metadata explicitly marks the next step as repair work, such as `gpt_pro_repair_status=ready` or `report_status=repair-ready`.
