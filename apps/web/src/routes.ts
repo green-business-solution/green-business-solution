@@ -14,10 +14,13 @@ export type Route =
   | "portal"
   | "portal-preview"
   | "user-preview"
+  | "chats"
   | "admin"
   | "admin-dashboard-performance-data"
   | "admin-application-sources"
   | "admin-application-profiles"
+  | "tasks"
+  | "task-report"
   | "testcases";
 
 export const aboutLinks: Array<{ label: string; route: Route }> = [
@@ -44,10 +47,13 @@ export function routeFromPath(pathname = typeof window === "undefined" ? "/" : w
   if (pathname === "/portal") return "portal";
   if (pathname === "/portal-preview") return "portal-preview";
   if (pathname === "/user-preview") return "user-preview";
+  if (pathname === "/chats") return "chats";
   if (pathname === "/admin/dashboard-performance-data") return "admin-dashboard-performance-data";
   if (pathname === "/admin/application-sources") return "admin-application-sources";
   if (pathname === "/admin/application-profiles") return "admin-application-profiles";
   if (pathname === "/admin") return "admin";
+  if (pathname === "/tasks") return "tasks";
+  if (pathname.startsWith("/tasks/reports/")) return "task-report";
   if (pathname === "/testcases") return "testcases";
   return "home";
 }
@@ -61,6 +67,7 @@ export function pathForRoute(route: Route) {
   if (route === "admin-application-sources") return "/admin/application-sources";
   if (route === "admin-dashboard-performance-data") return "/admin/dashboard-performance-data";
   if (route === "admin-application-profiles") return "/admin/application-profiles";
+  if (route === "task-report") return "/tasks/reports";
   if (route === "scan-results") return "/scan/results";
   if (route === "scan-energy-data") return "/scan/energy-data";
   return `/${route}`;

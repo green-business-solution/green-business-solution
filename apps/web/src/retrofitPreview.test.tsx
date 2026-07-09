@@ -16,6 +16,7 @@ import {
   confirmSingleEstimateState,
   countScenarioSelectedOpportunities,
   customerRetrofitUiName,
+  FirstmateTaskRow,
   getBillUploadResumeIndex,
   getBillUploadStepSummary,
   getDefaultBillUploadState,
@@ -1579,6 +1580,163 @@ describe("retrofit recommendations preview", () => {
 
     expect(css).toContain(".retrofi-loader-page");
     expect(css).toContain(".retrofi-logo-spinner");
+  });
+
+  it("keeps local Firstmate task and GPT Pro chats routes out of the Google sign-in redirect path", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+
+    const tasksRouteSource = source.slice(
+      source.indexOf("if (effectiveRoute === \"tasks\")"),
+      source.indexOf("if (effectiveRoute === \"chats\")")
+    );
+    const chatsRouteSource = source.slice(
+      source.indexOf("if (effectiveRoute === \"chats\")"),
+      source.indexOf("if (effectiveRoute === \"task-report\")")
+    );
+    const reportRouteSource = source.slice(
+      source.indexOf("if (effectiveRoute === \"task-report\")"),
+      source.indexOf("if (effectiveRoute === \"user-preview\")")
+    );
+
+    expect(tasksRouteSource).toContain("return <LocalFirstmateTasksStandalonePage />");
+    expect(tasksRouteSource).not.toContain("SignInPage");
+    expect(chatsRouteSource).toContain("return <LocalGptProChatsStandalonePage />");
+    expect(chatsRouteSource).not.toContain("SignInPage");
+    expect(reportRouteSource).toContain("return <LocalFirstmateTaskReportStandalonePage />");
+    expect(reportRouteSource).not.toContain("SignInPage");
+    expect(source).toContain("credential ? { headers: adminAuthHeaders(credential) } : {}");
+    expect(source).toContain("Firstmate tasks require admin sign-in unless the local Firstmate tasks auth bypass is enabled.");
+  });
+
+  it("keeps the Firstmate tasks dashboard read-only outside response-needed tasks", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+
+    expect(source).toContain("The agent has already moved on, so the task list was refreshed.");
+    expect(source).toContain("task is not waiting for a captain response");
+    expect(source).toContain("await onStaleResponse(serverMessage)");
+    expect(source).not.toContain("/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/report-feedback");
+    expect(source).not.toContain("/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/assign");
+    expect(source).not.toContain("Looks good / Continue");
+    expect(source).not.toContain("Request changes");
+    expect(source).not.toContain("Assign Crewmate");
+    expect(source).not.toContain("Report Feedback");
+    expect(source).not.toContain("feedback.message ||");
+    expect(source).not.toContain("task-report-feedback-toggle");
+    expect(source).toContain("rel=\"noreferrer\" target=\"_blank\"");
+    expect(source).toContain("Go To Pro Repair Batch");
+    expect(source).toContain("const showGptProRepairAction = Boolean(task.showGptProRepairAction ?? task.gptProRepairReady)");
+    expect(source).toContain("task.showReportAction ?? Boolean(task.hasReport && task.reportUrl)");
+    expect(source).toContain("gptProRepairUnavailableReason");
+    expect(source).not.toContain("Opens the local /chats fallback for this GPT Pro repair task.");
+    expect(source).toContain("task.reportActionLabel || \"View Report\"");
+    expect(source).toContain("showReportAction && task.reportNote && !task.reportIsFinal");
+    expect(source).toContain("task-report-status-note");
+    expect(source).not.toContain("Looks good creates a continuation task");
+
+    const taskRowSource = source.slice(
+      source.indexOf("function FirstmateTaskRow"),
+      source.indexOf("function AdminTaskReportStandalonePage")
+    );
+    expect(taskRowSource).toContain("{showGptProRepairAction ? (");
+    expect(taskRowSource).not.toContain("setIsFeedbackOpen");
+    expect(taskRowSource).not.toContain("assignQueuedTask");
+  });
+
+  it("keeps task row report actions compatible with older API payloads", () => {
+    const baseTask = {
+      id: "old-report-o1",
+      title: "Old API report row",
+      kind: "scout",
+      repo: "green-business-solution",
+      project: null,
+      state: "completed" as const,
+      blocked: false,
+      blockedBy: [],
+      recentStatus: "done: report ready",
+      statusState: "done",
+      since: null,
+      reportedAt: "2026-07-08",
+      responseNeeded: false,
+      canRespond: false,
+      hasReport: true,
+      reportUrl: "/tasks/reports/old-report-o1",
+      reportStatus: "final" as const,
+      reportActionLabel: "See Report",
+      reportStatusLabel: "Final report",
+      reportNote: null,
+      reportIsFinal: true,
+      reportReviewReady: true,
+      reportFeedbackMode: "follow-up-task" as const,
+      reportFeedbackUnavailableReason: null,
+      canSendReportFeedback: true,
+      gptProRepairStatus: null,
+      gptProRepairUrl: null,
+      gptProRepairLabel: null,
+      gptProRepairFallback: false,
+      gptProRepairUnavailableReason: null
+    };
+    const oldPayloadHtml = renderToStaticMarkup(
+      <table>
+        <tbody>
+          <FirstmateTaskRow
+            task={baseTask}
+          />
+        </tbody>
+      </table>
+    );
+
+    expect(oldPayloadHtml).toContain("See Report");
+    expect(oldPayloadHtml).not.toContain("Report Feedback");
+    expect(oldPayloadHtml).not.toContain("Looks good / Continue");
+    expect(oldPayloadHtml).not.toContain("Request changes");
+    expect(oldPayloadHtml).not.toContain("Assign Crewmate");
+    expect(oldPayloadHtml).not.toContain("No report");
+
+    const noReportHtml = renderToStaticMarkup(
+      <table>
+        <tbody>
+          <FirstmateTaskRow
+            task={{
+              ...baseTask,
+              hasReport: false,
+              reportUrl: null
+            }}
+          />
+        </tbody>
+      </table>
+    );
+
+    expect(noReportHtml).toContain("No report");
+    expect(noReportHtml).not.toContain("Report Feedback");
+    expect(noReportHtml).not.toContain("Assign Crewmate");
+
+    const queuedHtml = renderToStaticMarkup(
+      <table>
+        <tbody>
+          <FirstmateTaskRow
+            task={{
+              ...baseTask,
+              id: "queued-follow-up-q1",
+              state: "queued" as const,
+              statusState: null,
+              hasReport: false,
+              reportUrl: null,
+              canSendReportFeedback: false,
+              canAssign: true
+            }}
+          />
+        </tbody>
+      </table>
+    );
+
+    expect(queuedHtml).toContain("queued-follow-up-q1");
+    expect(queuedHtml).toContain("No report");
+    expect(queuedHtml).not.toContain("Assign Crewmate");
+    expect(queuedHtml).not.toContain("Report Feedback");
   });
 
   it("renders the shared full-page loader with the RetroFi logo and dashboard status text", () => {

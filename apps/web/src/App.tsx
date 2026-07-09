@@ -1,5 +1,5 @@
 import { ChangeEvent, CSSProperties, DragEvent, FormEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { apiDelete, apiGet, apiPatch, apiPost } from "./api";
+import { apiDelete, apiGet, apiPatch, apiPost, apiPut } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
   AUTH_CREDENTIAL_STORAGE_KEY,
@@ -444,6 +444,146 @@ type AdminUsersResponse = {
 
 type AdminUserPreviewOptionsResponse = {
   options: UserPreviewOption[];
+};
+
+type GptProPromptFile = {
+  batchId: string;
+  displayName: string;
+  outputExists: boolean;
+  outputKey: string;
+  outputLastModifiedAt: string | null;
+  outputPath: string;
+  outputSizeBytes: number;
+  promptKey: string;
+  promptLastModifiedAt: string | null;
+  promptPath: string;
+  promptSizeBytes: number;
+};
+
+type GptProBatch = {
+  batchId: string;
+  displayName: string;
+  latestModifiedAt: string | null;
+  objectCount: number;
+  outputCount: number;
+  promptCount: number;
+  promptFiles: GptProPromptFile[];
+  storageStatus: string;
+  totalBytes: number;
+};
+
+type GptProWorkIndexResponse = {
+  batches: GptProBatch[];
+  bucket: string | null;
+  currentBatchId: string | null;
+  prefix: string;
+  storageStatus: string;
+  totals: {
+    batchCount: number;
+    objectCount: number;
+    outputCount: number;
+    promptCount: number;
+    totalBytes: number;
+  };
+  warnings?: string[];
+};
+
+type GptProWorkContentResponse = {
+  batchId: string;
+  content: string;
+  exists?: boolean;
+  outputPath?: string;
+  promptPath: string;
+  storageStatus: string;
+};
+
+type GptProWorkSaveResponse = {
+  batchId: string;
+  outputPath: string;
+  promptPath: string;
+  savedAt: string;
+  sizeBytes: number;
+  storageStatus: string;
+};
+
+type FirstmateTaskState = "active" | "completed" | "blocked" | "queued";
+type FirstmateTaskReportFeedbackMode = "live-window" | "follow-up-task";
+type FirstmateTaskReportStatus = "none" | "final" | "review-ready" | "draft" | "previous" | "repair-ready";
+
+type FirstmateTask = {
+  id: string;
+  title: string;
+  kind: string;
+  repo: string;
+  project: string | null;
+  state: FirstmateTaskState;
+  blocked: boolean;
+  blockedBy: string[];
+  recentStatus: string | null;
+  statusState: string | null;
+  since: string | null;
+  reportedAt: string | null;
+  responseNeeded: boolean;
+  canRespond: boolean;
+  canAssign?: boolean;
+  assignmentUnavailableReason?: string | null;
+  hasReport: boolean;
+  showReportAction?: boolean;
+  reportUrl: string | null;
+  reportStatus: FirstmateTaskReportStatus;
+  reportActionLabel: string | null;
+  reportStatusLabel: string | null;
+  reportNote: string | null;
+  reportIsFinal: boolean;
+  reportReviewReady: boolean;
+  reportFeedbackMode: FirstmateTaskReportFeedbackMode | null;
+  reportFeedbackUnavailableReason: string | null;
+  canSendReportFeedback: boolean;
+  gptProRepairStatus: string | null;
+  gptProRepairReady?: boolean;
+  showGptProRepairAction?: boolean;
+  gptProRepairUrl: string | null;
+  gptProRepairLabel: string | null;
+  gptProRepairFallback: boolean;
+  gptProRepairUnavailableReason: string | null;
+};
+
+type FirstmateTasksResponse = {
+  enabled: boolean;
+  reason?: string;
+  generatedAt: string;
+  firstmateHome?: string;
+  localAuthBypass?: boolean;
+  authMode?: "admin" | "local-bypass";
+  activeAgentCount: number;
+  totalTaskCount: number;
+  counts: Record<FirstmateTaskState, number> & { needsResponse: number };
+  tasks: FirstmateTask[];
+  warnings?: string[];
+};
+
+type FirstmateTaskReportResponse = {
+  generatedAt: string;
+  taskId: string;
+  taskState: FirstmateTaskState | null;
+  statusState: string | null;
+  recentStatus: string | null;
+  reportStatus: FirstmateTaskReportStatus;
+  reportStatusLabel: string;
+  reportNote: string | null;
+  reportIsFinal: boolean;
+  reportReviewReady: boolean;
+  reportFeedbackMode: FirstmateTaskReportFeedbackMode | null;
+  canSendReportFeedback: boolean;
+  gptProRepairStatus: string | null;
+  gptProRepairReady: boolean;
+  markdown: string;
+};
+
+type FirstmateTaskRespondResponse = {
+  generatedAt: string;
+  taskId: string;
+  sent: true;
 };
 
 type AdminTableResponse = {
@@ -6275,10 +6415,13 @@ function isAppChromeRoute(route: Route) {
     route === "portal" ||
     route === "portal-preview" ||
     route === "user-preview" ||
+    route === "chats" ||
     route === "admin" ||
     route === "admin-dashboard-performance-data" ||
     route === "admin-application-sources" ||
     route === "admin-application-profiles" ||
+    route === "tasks" ||
+    route === "task-report" ||
     route === "testcases"
   );
 }
@@ -10544,12 +10687,51 @@ function DashboardFinancialPage({
   onTabChange: (tab: FinancialDashboardTabId) => void;
   viewModel: DashboardViewModel;
 }) {
+  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
+
   return (
     <div className="dashboard-page-stack">
-      <DashboardSubTabs tabs={FINANCIAL_DASHBOARD_TABS} activeTab={activeTab} onTabChange={onTabChange} />
+      <div className="dashboard-financial-toolbar">
+        <DashboardSubTabs tabs={FINANCIAL_DASHBOARD_TABS} activeTab={activeTab} onTabChange={onTabChange} />
+        <button onClick={() => setQuoteModalOpen(true)} type="button">
+          Add quote
+        </button>
+      </div>
       {activeTab === "overview" ? <FinancialOverview viewModel={viewModel} /> : null}
       {activeTab === "cash-flow" ? <FinancialCashFlow viewModel={viewModel} /> : null}
       {activeTab === "savings-by-retrofit" ? <FinancialSavingsByRetrofit viewModel={viewModel} /> : null}
+      {quoteModalOpen ? <AddQuotePlaceholderModal onClose={() => setQuoteModalOpen(false)} /> : null}
+    </div>
+  );
+}
+
+function AddQuotePlaceholderModal({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
+  return (
+    <div className="modal-backdrop quote-modal-backdrop" onMouseDown={(event) => {
+      if (event.target === event.currentTarget) onClose();
+    }}>
+      <section className="save-results-modal quote-placeholder-modal" role="dialog" aria-modal="true" aria-labelledby="quote-placeholder-title">
+        <button className="modal-close-button" onClick={onClose} type="button">Close</button>
+        <div className="modal-copy">
+          <p className="eyebrow">Project quote</p>
+          <h2 id="quote-placeholder-title">Quote capture is coming soon</h2>
+          <p>
+            RetroFi is not changing this financial model yet. Keep contractor quotes with the project record for now, and quote entry will replace modeled project costs when the form is ready.
+          </p>
+        </div>
+        {/* TODO: Replace this placeholder with the project quote capture form once quote storage is defined. */}
+      </section>
     </div>
   );
 }
@@ -15029,6 +15211,7 @@ const ADMIN_RETROFITS_TAB = "Retrofits";
 const ADMIN_TEST_CASES_TAB = "Test Cases";
 const ADMIN_USER_PREVIEW_TAB = "User Preview";
 const ADMIN_POST_FORM_PREVIEW_TAB = "Post Form Preview";
+const ADMIN_TASKS_TAB = "Tasks";
 const ADMIN_DASHBOARD_PERFORMANCE_TAB = "Dashboard Performance Data";
 const ADMIN_HIDDEN_DATA_TABLE_NAMES = new Set([
   "gbs-application-profiles",
@@ -15063,6 +15246,366 @@ function adminSectionKey(tab: string) {
   return tab === "Users" ? "users" : `table:${tab}`;
 }
 
+function formatBytes(value: number) {
+  if (!Number.isFinite(value) || value <= 0) return "0 B";
+  const units = ["B", "KB", "MB", "GB"];
+  let amount = value;
+  let unitIndex = 0;
+  while (amount >= 1024 && unitIndex < units.length - 1) {
+    amount /= 1024;
+    unitIndex += 1;
+  }
+  return `${amount >= 10 || unitIndex === 0 ? amount.toFixed(0) : amount.toFixed(1)} ${units[unitIndex]}`;
+}
+
+function AdminGptProChatsPage({
+  credential,
+  navigate,
+  onSignOut,
+  viewer
+}: {
+  credential: AuthCredential | null;
+  navigate: (route: Route) => void;
+  onSignOut: () => void;
+  viewer: UserRecord;
+}) {
+  function handleWorkspaceNav(item: string) {
+    if (item === "Admin") {
+      navigate("admin");
+    }
+  }
+
+  return (
+    <WorkspaceLayout
+      activeNavItem="GPT Pro chats"
+      navItems={["GPT Pro chats", "Admin"]}
+      onNavItemChange={handleWorkspaceNav}
+      onSignOut={onSignOut}
+      title="Chats"
+      user={viewer}
+    >
+      <GptProChatsPanel credential={credential} />
+    </WorkspaceLayout>
+  );
+}
+
+function LocalGptProChatsStandalonePage() {
+  return (
+    <main className="tasks-standalone-page">
+      <GptProChatsPanel credential={null} />
+    </main>
+  );
+}
+
+function GptProChatsPanel({ credential }: { credential: AuthCredential | null }) {
+  const [indexResponse, setIndexResponse] = useState<GptProWorkIndexResponse | null>(null);
+  const [selectedBatchId, setSelectedBatchId] = useState("");
+  const [selectedPromptPath, setSelectedPromptPath] = useState("");
+  const [promptContent, setPromptContent] = useState("");
+  const [outputContent, setOutputContent] = useState("");
+  const [savedOutputContent, setSavedOutputContent] = useState("");
+  const [outputExists, setOutputExists] = useState(false);
+  const [isLoadingIndex, setIsLoadingIndex] = useState(true);
+  const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [copyMessage, setCopyMessage] = useState<string | null>(null);
+
+  const batches = indexResponse?.batches || [];
+  const selectedBatch = batches.find((batch) => batch.batchId === selectedBatchId) || null;
+  const selectedPrompt = selectedBatch?.promptFiles.find((prompt) => prompt.promptPath === selectedPromptPath) || null;
+  const isOutputDirty = outputContent !== savedOutputContent;
+  const storageIsWritable = indexResponse?.storageStatus === "s3";
+
+  const loadIndex = useCallback(async () => {
+    setIsLoadingIndex(true);
+    setError(null);
+    setMessage(null);
+
+    try {
+      const payload = await apiGet<GptProWorkIndexResponse>("/api/admin/gpt-pro-work/batches", {
+        ...(credential ? { headers: adminAuthHeaders(credential) } : {})
+      });
+      setIndexResponse(payload);
+      setSelectedBatchId((currentBatchId) =>
+        payload.batches.some((batch) => batch.batchId === currentBatchId)
+          ? currentBatchId
+          : payload.currentBatchId || payload.batches[0]?.batchId || ""
+      );
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not load GPT Pro work batches.");
+    } finally {
+      setIsLoadingIndex(false);
+    }
+  }, [credential]);
+
+  useEffect(() => {
+    void loadIndex();
+  }, [loadIndex]);
+
+  useEffect(() => {
+    if (!selectedBatch) {
+      setSelectedPromptPath("");
+      return;
+    }
+
+    setSelectedPromptPath((currentPath) =>
+      selectedBatch.promptFiles.some((prompt) => prompt.promptPath === currentPath)
+        ? currentPath
+        : selectedBatch.promptFiles[0]?.promptPath || ""
+    );
+  }, [selectedBatch]);
+
+  useEffect(() => {
+    if (!selectedBatch || !selectedPromptPath) {
+      setPromptContent("");
+      setOutputContent("");
+      setSavedOutputContent("");
+      setOutputExists(false);
+      return undefined;
+    }
+
+    let isMounted = true;
+    setIsLoadingFile(true);
+    setError(null);
+    setMessage(null);
+    setCopyMessage(null);
+
+    const params = new URLSearchParams({
+      batch: selectedBatch.batchId,
+      path: selectedPromptPath
+    });
+    const requestInit = {
+      ...(credential ? { headers: adminAuthHeaders(credential) } : {})
+    };
+
+    Promise.all([
+      apiGet<GptProWorkContentResponse>(`/api/admin/gpt-pro-work/prompt?${params.toString()}`, requestInit),
+      apiGet<GptProWorkContentResponse>(`/api/admin/gpt-pro-work/output?${params.toString()}`, requestInit)
+    ])
+      .then(([promptPayload, outputPayload]) => {
+        if (!isMounted) return;
+        setPromptContent(promptPayload.content);
+        setOutputContent(outputPayload.content);
+        setSavedOutputContent(outputPayload.content);
+        setOutputExists(Boolean(outputPayload.exists));
+      })
+      .catch((requestError) => {
+        if (!isMounted) return;
+        setError(requestError instanceof Error ? requestError.message : "Could not load the selected GPT Pro file.");
+        setPromptContent("");
+        setOutputContent("");
+        setSavedOutputContent("");
+        setOutputExists(false);
+      })
+      .finally(() => {
+        if (isMounted) {
+          setIsLoadingFile(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [credential, selectedBatch, selectedPromptPath]);
+
+  async function copyPrompt() {
+    if (!promptContent) return;
+    setCopyMessage(null);
+    try {
+      await navigator.clipboard.writeText(promptContent);
+      setCopyMessage("Prompt copied.");
+    } catch {
+      setCopyMessage("Clipboard access failed.");
+    }
+  }
+
+  async function saveOutput() {
+    if (!selectedBatch || !selectedPrompt) {
+      setError("Select a prompt before saving output.");
+      return;
+    }
+
+    setIsSaving(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const saved = await apiPut<GptProWorkSaveResponse>("/api/admin/gpt-pro-work/output", {
+        ...(credential ? adminAuthBody(credential) : {}),
+        batchId: selectedBatch.batchId,
+        content: outputContent,
+        promptPath: selectedPrompt.promptPath
+      });
+      setSavedOutputContent(outputContent);
+      setOutputExists(true);
+      setMessage(`Saved ${formatBytes(saved.sizeBytes)} to ${saved.outputPath}.`);
+      await loadIndex();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not save GPT Pro output.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  return (
+    <section className="gpt-pro-chats">
+      <div className="gpt-pro-chats-header">
+        <div>
+          <p className="eyebrow">GPT Pro repair batches</p>
+          <h1>Chats</h1>
+        </div>
+        <div className="gpt-pro-chats-actions">
+          <span className="soft-badge">Storage: {indexResponse?.storageStatus || "checking"}</span>
+          <button className="secondary-button" disabled={isLoadingIndex} onClick={() => void loadIndex()} type="button">
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      {error ? <p className="error-message">{error}</p> : null}
+      {message ? <p className="success-message">{message}</p> : null}
+      {copyMessage ? <p className="success-message">{copyMessage}</p> : null}
+      {indexResponse?.warnings?.length ? (
+        <div className="gpt-pro-chats-warning">
+          {indexResponse.warnings.map((warning) => (
+            <p key={warning}>{warning}</p>
+          ))}
+        </div>
+      ) : null}
+
+      <div className="gpt-pro-chats-summary">
+        <article>
+          <span>Batches</span>
+          <strong>{indexResponse?.totals.batchCount.toLocaleString() || "0"}</strong>
+        </article>
+        <article>
+          <span>Prompts</span>
+          <strong>{indexResponse?.totals.promptCount.toLocaleString() || "0"}</strong>
+        </article>
+        <article>
+          <span>Outputs</span>
+          <strong>{indexResponse?.totals.outputCount.toLocaleString() || "0"}</strong>
+        </article>
+        <article>
+          <span>Size</span>
+          <strong>{formatBytes(indexResponse?.totals.totalBytes || 0)}</strong>
+        </article>
+      </div>
+
+      <div className="gpt-pro-batch-toolbar">
+        <label className="field">
+          <span>Batch</span>
+          <select
+            disabled={isLoadingIndex || batches.length === 0}
+            onChange={(event) => setSelectedBatchId(event.target.value)}
+            value={selectedBatchId}
+          >
+            {batches.map((batch) => (
+              <option key={batch.batchId} value={batch.batchId}>
+                {batch.displayName}{batch.batchId === indexResponse?.currentBatchId ? " (current)" : ""}
+              </option>
+            ))}
+          </select>
+        </label>
+        <div className="gpt-pro-batch-meta">
+          <span>{selectedBatch?.promptCount.toLocaleString() || "0"} prompts</span>
+          <span>{selectedBatch?.objectCount.toLocaleString() || "0"} objects</span>
+          <span>{selectedBatch?.latestModifiedAt ? formatDate(selectedBatch.latestModifiedAt) : "No date"}</span>
+        </div>
+      </div>
+
+      <div className="gpt-pro-chats-layout">
+        <aside className="gpt-pro-prompt-list-panel" aria-label="GPT Pro prompts">
+          <div className="gpt-pro-prompt-list-header">
+            <strong>{selectedBatch?.displayName || "No batch selected"}</strong>
+            {selectedBatch?.batchId === indexResponse?.currentBatchId ? <span className="soft-badge">Current</span> : null}
+          </div>
+          <div className="gpt-pro-prompt-list">
+            {isLoadingIndex ? <p className="empty-state">Loading batches...</p> : null}
+            {!isLoadingIndex && selectedBatch?.promptFiles.length === 0 ? (
+              <p className="empty-state">No prompt files found in this batch.</p>
+            ) : null}
+            {selectedBatch?.promptFiles.map((prompt) => (
+              <button
+                aria-current={prompt.promptPath === selectedPromptPath ? "true" : undefined}
+                className="gpt-pro-prompt-row"
+                key={prompt.promptPath}
+                onClick={() => setSelectedPromptPath(prompt.promptPath)}
+                type="button"
+              >
+                <span>
+                  <strong>{prompt.displayName}</strong>
+                  <small>{prompt.promptPath}</small>
+                </span>
+                <mark>{prompt.outputExists ? "Saved" : "Empty"}</mark>
+              </button>
+            ))}
+          </div>
+        </aside>
+
+        <section className="gpt-pro-editor-panel">
+          {selectedPrompt ? (
+            <>
+              <div className="gpt-pro-file-header">
+                <div>
+                  <p className="eyebrow">Current file</p>
+                  <h2>{selectedPrompt.displayName}</h2>
+                  <p>{selectedPrompt.promptPath}</p>
+                </div>
+                <div className="gpt-pro-file-actions">
+                  <button className="secondary-button" disabled={!promptContent || isLoadingFile} onClick={() => void copyPrompt()} type="button">
+                    Copy prompt
+                  </button>
+                  <button
+                    disabled={!storageIsWritable || !isOutputDirty || isSaving || isLoadingFile}
+                    onClick={() => void saveOutput()}
+                    type="button"
+                  >
+                    {isSaving ? "Saving..." : "Save output"}
+                  </button>
+                </div>
+              </div>
+
+              <div className="gpt-pro-file-context">
+                <div>
+                  <span>Prompt object</span>
+                  <strong>{selectedPrompt.promptKey}</strong>
+                </div>
+                <div>
+                  <span>Output object</span>
+                  <strong>{selectedPrompt.outputKey}</strong>
+                </div>
+                <div>
+                  <span>Status</span>
+                  <strong>{outputExists ? "Output saved" : "Output empty"}{isOutputDirty ? " - unsaved edits" : ""}</strong>
+                </div>
+              </div>
+
+              <div className="gpt-pro-editor-grid">
+                <label className="gpt-pro-editor-field">
+                  <span>Prompt</span>
+                  <textarea readOnly value={isLoadingFile ? "Loading prompt..." : promptContent} />
+                </label>
+                <label className="gpt-pro-editor-field">
+                  <span>Output</span>
+                  <textarea
+                    disabled={!storageIsWritable}
+                    onChange={(event) => setOutputContent(event.target.value)}
+                    value={isLoadingFile ? "Loading output..." : outputContent}
+                  />
+                </label>
+              </div>
+            </>
+          ) : (
+            <p className="empty-state">Select a prompt file to open its workspace.</p>
+          )}
+        </section>
+      </div>
+    </section>
+  );
+}
+
 function AdminDashboard({
   credential,
   initialTab,
@@ -15084,6 +15627,7 @@ function AdminDashboard({
     "Users",
     ADMIN_USER_PREVIEW_TAB,
     ADMIN_POST_FORM_PREVIEW_TAB,
+    ADMIN_TASKS_TAB,
     ADMIN_DASHBOARD_PERFORMANCE_TAB,
     ADMIN_TEST_CASES_TAB,
     ADMIN_APPLICATION_SOURCES_TAB,
@@ -15243,6 +15787,10 @@ function AdminDashboard({
       window.open(pathForRoute("testcases"), "_blank", "noopener,noreferrer");
       return;
     }
+    if (item === ADMIN_TASKS_TAB) {
+      window.open(pathForRoute("tasks"), "_blank", "noopener,noreferrer");
+      return;
+    }
     const nextPath =
       item === ADMIN_APPLICATION_SOURCES_TAB
         ? pathForRoute("admin-application-sources")
@@ -15300,6 +15848,688 @@ function AdminTestCasesStandalonePage() {
       <AdminTestCasesPanel />
     </main>
   );
+}
+
+const FIRSTMATE_TASK_SECTIONS: Array<{ state: FirstmateTaskState; label: string }> = [
+  { state: "active", label: "Active" },
+  { state: "blocked", label: "Blocked" },
+  { state: "queued", label: "Queued" },
+  { state: "completed", label: "Completed" }
+];
+
+function AdminTasksStandalonePage({
+  credential,
+  onSignOut,
+  viewer
+}: {
+  credential: AuthCredential | null;
+  onSignOut: () => void;
+  viewer: UserRecord;
+}) {
+  return (
+    <WorkspaceLayout
+      activeNavItem={ADMIN_TASKS_TAB}
+      navItems={[ADMIN_TASKS_TAB]}
+      onSignOut={onSignOut}
+      title="Tasks"
+      user={viewer}
+    >
+      <FirstmateTasksPanel credential={credential} />
+    </WorkspaceLayout>
+  );
+}
+
+function LocalFirstmateTasksStandalonePage() {
+  return (
+    <main className="tasks-standalone-page">
+      <FirstmateTasksPanel credential={null} />
+    </main>
+  );
+}
+
+function firstmateTasksAccessErrorMessage(error: unknown, fallback: string) {
+  if (!(error instanceof Error)) {
+    return fallback;
+  }
+
+  if (/admin sign-in is required/i.test(error.message)) {
+    return "Firstmate tasks require admin sign-in unless the local Firstmate tasks auth bypass is enabled.";
+  }
+
+  return error.message;
+}
+
+function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null }) {
+  const [response, setResponse] = useState<FirstmateTasksResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  const loadTasks = useCallback(async (options?: { preserveNotice?: boolean }) => {
+    setIsLoading(true);
+    setError(null);
+    if (!options?.preserveNotice) {
+      setNotice(null);
+    }
+    try {
+      const nextResponse = await apiGet<FirstmateTasksResponse>("/api/admin/firstmate/tasks", {
+        ...(credential ? { headers: adminAuthHeaders(credential) } : {})
+      });
+      setResponse(nextResponse);
+    } catch (requestError) {
+      setError(firstmateTasksAccessErrorMessage(requestError, "Could not load Firstmate tasks."));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [credential]);
+
+  useEffect(() => {
+    void loadTasks();
+  }, [loadTasks]);
+
+  const refreshAfterStaleResponse = useCallback(async (serverMessage: string) => {
+    setNotice(`${serverMessage} The agent has already moved on, so the task list was refreshed.`);
+    await loadTasks({ preserveNotice: true });
+  }, [loadTasks]);
+
+  const counts = response?.counts || {
+    active: 0,
+    blocked: 0,
+    queued: 0,
+    completed: 0,
+    needsResponse: 0
+  };
+  const responseNeededTasks = response?.tasks.filter((task) => task.responseNeeded) || [];
+  const localAuthBypass = Boolean(response?.localAuthBypass);
+
+  return (
+    <section className="tasks-page-panel">
+      <div className="tasks-page-header">
+        <div>
+          <p className="eyebrow">Firstmate operations</p>
+          <h1>Tasks</h1>
+          <p>Current and completed agent work across local Firstmate task state.</p>
+        </div>
+        <button className="secondary-button" disabled={isLoading} onClick={() => void loadTasks()} type="button">
+          {isLoading ? "Refreshing..." : "Refresh"}
+        </button>
+      </div>
+
+      {notice ? <p className="tasks-notice-message">{notice}</p> : null}
+      {error ? <p className="error-message">{error}</p> : null}
+
+      <div className="tasks-stats">
+        <article>
+          <span>Active agents</span>
+          <strong>{response?.activeAgentCount ?? 0}</strong>
+        </article>
+        <article>
+          <span>Total tasks</span>
+          <strong>{response?.totalTaskCount ?? 0}</strong>
+        </article>
+        <article>
+          <span>Blocked</span>
+          <strong>{counts.blocked}</strong>
+        </article>
+        <article className={counts.needsResponse ? "tasks-needs-response-stat" : undefined}>
+          <span>Needs response</span>
+          <strong>{counts.needsResponse}</strong>
+        </article>
+        <article>
+          <span>Completed</span>
+          <strong>{counts.completed}</strong>
+        </article>
+      </div>
+
+      {isLoading && !response ? (
+        <section className="tasks-empty-state">
+          <RetroFiLogoLoader label="Loading Firstmate tasks..." size="lg" tone="card" />
+        </section>
+      ) : null}
+
+      {response && !response.enabled ? (
+        <section className="tasks-empty-state">
+          <strong>Firstmate tasks disabled</strong>
+          <p>{response.reason || "Firstmate task data is not enabled in this environment."}</p>
+        </section>
+      ) : null}
+
+      {response?.enabled ? (
+        <div className="tasks-section-stack">
+          {responseNeededTasks.length ? (
+            <FirstmateNeedsResponseSection
+              credential={credential}
+              localAuthBypass={localAuthBypass}
+              onResponded={() => void loadTasks({ preserveNotice: true })}
+              onStaleResponse={refreshAfterStaleResponse}
+              tasks={responseNeededTasks}
+            />
+          ) : null}
+          {FIRSTMATE_TASK_SECTIONS.map((section) => (
+            <FirstmateTaskSection
+              count={counts[section.state] || 0}
+              key={section.state}
+              label={section.label}
+              state={section.state}
+              tasks={response.tasks.filter((task) => task.state === section.state)}
+            />
+          ))}
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
+function FirstmateNeedsResponseSection({
+  credential,
+  localAuthBypass,
+  onResponded,
+  onStaleResponse,
+  tasks
+}: {
+  credential: AuthCredential | null;
+  localAuthBypass: boolean;
+  onResponded: () => void;
+  onStaleResponse: (serverMessage: string) => Promise<void>;
+  tasks: FirstmateTask[];
+}) {
+  return (
+    <section className="tasks-response-section">
+      <div className="tasks-section-heading">
+        <h2>Needs response</h2>
+        <span className="task-state-pill is-needs-response">{tasks.length}</span>
+      </div>
+      <div className="tasks-response-list">
+        {tasks.map((task) => (
+          <FirstmateTaskResponseCard
+            credential={credential}
+            key={task.id}
+            localAuthBypass={localAuthBypass}
+            onResponded={onResponded}
+            onStaleResponse={onStaleResponse}
+            task={task}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function FirstmateTaskResponseCard({
+  credential,
+  localAuthBypass,
+  onResponded,
+  onStaleResponse,
+  task
+}: {
+  credential: AuthCredential | null;
+  localAuthBypass: boolean;
+  onResponded: () => void;
+  onStaleResponse: (serverMessage: string) => Promise<void>;
+  task: FirstmateTask;
+}) {
+  const [message, setMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const trimmedMessage = message.trim();
+  const canSubmit = Boolean((credential || localAuthBypass) && task.canRespond && trimmedMessage.length > 0 && trimmedMessage.length <= 4000 && !isSending);
+
+  async function sendResponse() {
+    if ((!credential && !localAuthBypass) || !task.canRespond || !trimmedMessage) return;
+
+    setIsSending(true);
+    setError(null);
+    try {
+      await apiPost<FirstmateTaskRespondResponse>(
+        `/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/respond`,
+        credential
+          ? {
+              ...adminAuthBody(credential),
+              message: trimmedMessage
+            }
+          : {
+              message: trimmedMessage
+            }
+      );
+      setMessage("");
+      onResponded();
+    } catch (requestError) {
+      const serverMessage = requestError instanceof Error ? requestError.message : "Could not send response.";
+      if (/task is not waiting for a captain response/i.test(serverMessage)) {
+        setError(`${serverMessage} The agent has already moved on. Refreshing tasks.`);
+        await onStaleResponse(serverMessage);
+      } else {
+        setError(serverMessage);
+      }
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  return (
+    <article className="tasks-response-card">
+      <div className="tasks-response-card-main">
+        <div>
+          <strong>{task.title}</strong>
+          <span>{task.id} / {task.kind} / {task.repo}</span>
+        </div>
+        <p>{task.recentStatus || "This task is waiting for captain input."}</p>
+      </div>
+      {task.canRespond ? (
+        <div className="tasks-response-form">
+          <label>
+            <span className="sr-only">Response for {task.id}</span>
+            <textarea
+              maxLength={4000}
+              onChange={(event) => setMessage(event.target.value)}
+              placeholder="Type captain response..."
+              rows={2}
+              value={message}
+            />
+          </label>
+          <button disabled={!canSubmit} onClick={() => void sendResponse()} type="button">
+            {isSending ? "Sending..." : "Respond"}
+          </button>
+          {error ? <p className="error-message">{error}</p> : null}
+        </div>
+      ) : (
+        <p className="tasks-muted">No live response window is available for this task.</p>
+      )}
+    </article>
+  );
+}
+
+function FirstmateTaskSection({
+  count,
+  label,
+  state,
+  tasks
+}: {
+  count: number;
+  label: string;
+  state: FirstmateTaskState;
+  tasks: FirstmateTask[];
+}) {
+  return (
+    <section className="tasks-section">
+      <div className="tasks-section-heading">
+        <h2>{label}</h2>
+        <span className={`task-state-pill is-${state}`}>{count}</span>
+      </div>
+      <div className="tasks-table-wrap">
+        <table className="tasks-table">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Task</th>
+              <th>Kind</th>
+              <th>Repo / project</th>
+              <th>Blocked</th>
+              <th>Recent status</th>
+              <th>Report</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tasks.length ? (
+              tasks.map((task) => (
+                <FirstmateTaskRow
+                  key={task.id}
+                  task={task}
+                />
+              ))
+            ) : (
+              <tr>
+                <td colSpan={7}>No {label.toLowerCase()} tasks.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+export function FirstmateTaskRow({
+  task
+}: {
+  task: FirstmateTask;
+}) {
+  const showGptProRepairAction = Boolean(task.showGptProRepairAction ?? task.gptProRepairReady);
+  const showReportAction = Boolean(
+    !showGptProRepairAction && (task.showReportAction ?? Boolean(task.hasReport && task.reportUrl))
+  );
+
+  return (
+    <tr className={task.responseNeeded ? "is-response-needed" : undefined}>
+      <td>
+        <span className={`task-status-indicator is-${task.state}`} title={formatFirstmateTaskState(task.state)}>
+          {task.state === "completed" ? <CheckIcon /> : <span aria-hidden="true" />}
+        </span>
+      </td>
+      <td>
+        <strong>{task.title}</strong>
+        <span>{task.id}</span>
+      </td>
+      <td>{task.kind}</td>
+      <td>
+        <strong>{task.repo}</strong>
+        <span>{task.project || "Project path unavailable"}</span>
+      </td>
+      <td>{task.blocked ? task.blockedBy.length ? `Yes: ${task.blockedBy.join(", ")}` : "Yes" : "No"}</td>
+      <td>
+        {task.responseNeeded ? <span className="task-response-needed-badge">Needs response</span> : null}
+        {task.recentStatus || "No recent status"}
+      </td>
+      <td>
+        <div className="task-report-actions">
+          {showGptProRepairAction ? (
+            task.gptProRepairUrl ? (
+              <a className="button-link secondary-button" href={task.gptProRepairUrl} rel="noreferrer" target="_blank">
+                {task.gptProRepairLabel || "Go To Pro Repair Batch"}
+              </a>
+            ) : (
+              <span className="tasks-muted">{task.gptProRepairUnavailableReason || "GPT Pro repair workspace URL is not configured."}</span>
+            )
+          ) : (
+            <>
+              {showReportAction ? (
+                <a
+                  className={`button-link secondary-button ${task.reportIsFinal ? "" : "is-report-draft"}`.trim()}
+                  href={task.reportUrl || ""}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {task.reportActionLabel || "View Report"}
+                </a>
+              ) : (
+                <span className="tasks-muted">No report</span>
+              )}
+            </>
+          )}
+        </div>
+        {showReportAction && task.reportNote && !task.reportIsFinal ? (
+          <p className="task-report-note">{task.reportNote}</p>
+        ) : null}
+      </td>
+    </tr>
+  );
+}
+
+function AdminTaskReportStandalonePage({
+  credential,
+  onSignOut,
+  viewer
+}: {
+  credential: AuthCredential | null;
+  onSignOut: () => void;
+  viewer: UserRecord;
+}) {
+  return (
+    <WorkspaceLayout
+      activeNavItem={ADMIN_TASKS_TAB}
+      navItems={[ADMIN_TASKS_TAB]}
+      onSignOut={onSignOut}
+      title="Task report"
+      user={viewer}
+    >
+      <FirstmateTaskReportPanel credential={credential} taskId={taskReportIdFromPath()} />
+    </WorkspaceLayout>
+  );
+}
+
+function LocalFirstmateTaskReportStandalonePage() {
+  return (
+    <main className="tasks-standalone-page">
+      <FirstmateTaskReportPanel credential={null} taskId={taskReportIdFromPath()} />
+    </main>
+  );
+}
+
+function FirstmateTaskReportPanel({ credential, taskId }: { credential: AuthCredential | null; taskId: string }) {
+  const [report, setReport] = useState<FirstmateTaskReportResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (!taskId) {
+      setError("Report task id is missing.");
+      setIsLoading(false);
+      return () => {
+        isMounted = false;
+      };
+    }
+
+    setIsLoading(true);
+    setError(null);
+    apiGet<FirstmateTaskReportResponse>(`/api/admin/firstmate/tasks/${encodeURIComponent(taskId)}/report`, {
+      ...(credential ? { headers: adminAuthHeaders(credential) } : {})
+    })
+      .then((nextReport) => {
+        if (!isMounted) return;
+        setReport(nextReport);
+      })
+      .catch((requestError) => {
+        if (!isMounted) return;
+        setError(firstmateTasksAccessErrorMessage(requestError, "Could not load the Firstmate report."));
+      })
+      .finally(() => {
+        if (isMounted) setIsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [credential, taskId]);
+
+  return (
+    <section className="task-report-panel">
+      <div className="task-report-header">
+        <div>
+          <p className="eyebrow">Firstmate report</p>
+          <h1>{taskId || "Task report"}</h1>
+        </div>
+        <a className="button-link secondary-button" href={pathForRoute("tasks")}>
+          Back to Tasks
+        </a>
+      </div>
+      {isLoading ? (
+        <RetroFiLogoLoader label="Loading report..." size="lg" tone="card" />
+      ) : null}
+      {error ? <p className="error-message">{error}</p> : null}
+      {report?.reportNote && !report.reportIsFinal ? (
+        <section className="task-report-status-note">
+          <strong>{report.reportStatusLabel}</strong>
+          <p>{report.reportNote}</p>
+          {report.taskState ? <span>Task state: {formatFirstmateTaskState(report.taskState)}</span> : null}
+        </section>
+      ) : null}
+      {report ? <MarkdownReport markdown={report.markdown} /> : null}
+    </section>
+  );
+}
+
+type MarkdownBlock =
+  | { kind: "heading"; level: number; text: string }
+  | { kind: "paragraph"; text: string }
+  | { kind: "list"; ordered: boolean; items: string[] }
+  | { kind: "code"; text: string }
+  | { kind: "rule" };
+
+function MarkdownReport({ markdown }: { markdown: string }) {
+  const blocks = useMemo(() => parseSimpleMarkdown(markdown), [markdown]);
+
+  return (
+    <article className="task-report-markdown">
+      {blocks.map((block, index) => renderMarkdownBlock(block, index))}
+    </article>
+  );
+}
+
+function parseSimpleMarkdown(markdown: string): MarkdownBlock[] {
+  const blocks: MarkdownBlock[] = [];
+  const paragraphLines: string[] = [];
+  let listItems: string[] = [];
+  let listOrdered = false;
+  let codeLines: string[] = [];
+  let inCode = false;
+
+  function flushParagraph() {
+    if (!paragraphLines.length) return;
+    blocks.push({ kind: "paragraph", text: paragraphLines.join(" ").trim() });
+    paragraphLines.length = 0;
+  }
+
+  function flushList() {
+    if (!listItems.length) return;
+    blocks.push({ kind: "list", ordered: listOrdered, items: listItems });
+    listItems = [];
+    listOrdered = false;
+  }
+
+  for (const line of markdown.split(/\r?\n/)) {
+    if (line.trim().startsWith("```")) {
+      if (inCode) {
+        blocks.push({ kind: "code", text: codeLines.join("\n") });
+        codeLines = [];
+        inCode = false;
+      } else {
+        flushParagraph();
+        flushList();
+        inCode = true;
+      }
+      continue;
+    }
+
+    if (inCode) {
+      codeLines.push(line);
+      continue;
+    }
+
+    const trimmed = line.trim();
+    if (!trimmed) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
+    const heading = trimmed.match(/^(#{1,4})\s+(.+)$/);
+    if (heading) {
+      flushParagraph();
+      flushList();
+      blocks.push({ kind: "heading", level: heading[1].length, text: heading[2].trim() });
+      continue;
+    }
+
+    if (/^---+$/.test(trimmed)) {
+      flushParagraph();
+      flushList();
+      blocks.push({ kind: "rule" });
+      continue;
+    }
+
+    const bullet = trimmed.match(/^[-*]\s+(.+)$/);
+    const ordered = trimmed.match(/^\d+\.\s+(.+)$/);
+    if (bullet || ordered) {
+      flushParagraph();
+      const nextOrdered = Boolean(ordered);
+      if (listItems.length && listOrdered !== nextOrdered) {
+        flushList();
+      }
+      listOrdered = nextOrdered;
+      listItems.push((bullet?.[1] || ordered?.[1] || "").trim());
+      continue;
+    }
+
+    flushList();
+    paragraphLines.push(trimmed);
+  }
+
+  if (inCode) {
+    blocks.push({ kind: "code", text: codeLines.join("\n") });
+  }
+  flushParagraph();
+  flushList();
+
+  return blocks;
+}
+
+function renderMarkdownBlock(block: MarkdownBlock, index: number) {
+  if (block.kind === "heading") {
+    const content = renderMarkdownInline(block.text, `heading-${index}`);
+    if (block.level === 1) return <h1 key={index}>{content}</h1>;
+    if (block.level === 2) return <h2 key={index}>{content}</h2>;
+    if (block.level === 3) return <h3 key={index}>{content}</h3>;
+    return <h4 key={index}>{content}</h4>;
+  }
+
+  if (block.kind === "paragraph") {
+    return <p key={index}>{renderMarkdownInline(block.text, `paragraph-${index}`)}</p>;
+  }
+
+  if (block.kind === "list") {
+    const ListTag = block.ordered ? "ol" : "ul";
+    return (
+      <ListTag key={index}>
+        {block.items.map((item, itemIndex) => (
+          <li key={`${index}-${itemIndex}`}>{renderMarkdownInline(item, `list-${index}-${itemIndex}`)}</li>
+        ))}
+      </ListTag>
+    );
+  }
+
+  if (block.kind === "code") {
+    return <pre key={index}><code>{block.text}</code></pre>;
+  }
+
+  return <hr key={index} />;
+}
+
+function renderMarkdownInline(text: string, keyPrefix: string): ReactNode[] {
+  const nodes: ReactNode[] = [];
+  const pattern = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)|(https?:\/\/[^\s)]+)/g;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(text))) {
+    if (match.index > lastIndex) {
+      nodes.push(text.slice(lastIndex, match.index));
+    }
+
+    const label = match[1] || match[3];
+    const href = match[2] || match[3];
+    nodes.push(
+      <a href={href} key={`${keyPrefix}-${match.index}`} rel="noreferrer" target="_blank">
+        {label}
+      </a>
+    );
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+
+  return nodes;
+}
+
+function taskReportIdFromPath(pathname = typeof window === "undefined" ? "" : window.location.pathname) {
+  const prefix = "/tasks/reports/";
+  if (!pathname.startsWith(prefix)) return "";
+  const encoded = pathname.slice(prefix.length).split("/")[0] || "";
+  try {
+    return decodeURIComponent(encoded);
+  } catch {
+    return "";
+  }
+}
+
+function formatFirstmateTaskState(state: FirstmateTaskState) {
+  if (state === "active") return "Active";
+  if (state === "completed") return "Completed";
+  if (state === "blocked") return "Blocked";
+  return "Queued";
 }
 
 type DashboardPerformanceSummary = {
@@ -19725,9 +20955,12 @@ export function App() {
       payload.dashboard === "admin"
         ? route === "testcases" ||
           route === "user-preview" ||
+          route === "chats" ||
           route === "admin-dashboard-performance-data" ||
           route === "admin-application-sources" ||
-          route === "admin-application-profiles"
+          route === "admin-application-profiles" ||
+          route === "tasks" ||
+          route === "task-report"
           ? route
           : "admin"
         : "portal"
@@ -19833,6 +21066,49 @@ export function App() {
         publicAuth={publicAuth}
       />
     );
+  }
+
+  if (effectiveRoute === "tasks") {
+    if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
+      return (
+        <AdminTasksStandalonePage
+          credential={authCredential}
+          onSignOut={signOut}
+          viewer={authPayload.user}
+        />
+      );
+    }
+
+    return <LocalFirstmateTasksStandalonePage />;
+  }
+
+  if (effectiveRoute === "chats") {
+    if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
+      return (
+        <AdminGptProChatsPage
+          credential={authCredential}
+          navigate={navigate}
+          onSignOut={signOut}
+          viewer={authPayload.user}
+        />
+      );
+    }
+
+    return <LocalGptProChatsStandalonePage />;
+  }
+
+  if (effectiveRoute === "task-report") {
+    if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
+      return (
+        <AdminTaskReportStandalonePage
+          credential={authCredential}
+          onSignOut={signOut}
+          viewer={authPayload.user}
+        />
+      );
+    }
+
+    return <LocalFirstmateTaskReportStandalonePage />;
   }
 
   if (effectiveRoute === "user-preview") {

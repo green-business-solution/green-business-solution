@@ -46,7 +46,7 @@ The production API uses separate AWS regions for:
 ## Deploy Command
 
 ```sh
-AWS_PROFILE=gbs ./scripts/deploy-production.sh
+AWS_PROFILE=retrofi-prod AWS_REGION=us-east-1 ./scripts/deploy-production.sh
 ```
 
 The script:

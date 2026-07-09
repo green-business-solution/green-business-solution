@@ -15,6 +15,27 @@
 - Updated `AGENTS.md` and `AGENT_WORKFLOW.md` to connect the existing fast-iteration GitHub/AWS rules with review gates, resource mapping, selector scripts, secret safety, and deploy-target selection.
 - Documented follow-up work for auditing legacy AWS profile/account assumptions and deciding whether the existing detailed architecture-resource map should merge into the root resource map.
 
+## 2026-07-08 - Codex (GPT-5) quote button and Firstmate tasks page
+
+- Added a non-mutating `Add quote` button to the user preview financial dashboard with a placeholder modal for future quote capture.
+- Added guarded admin Firstmate task API endpoints that read local backlog, metadata, status, and report files only when `RETROFI_ENABLE_FIRSTMATE_TASKS=1` and `RETROFI_FIRSTMATE_HOME` are configured.
+- Added a compact `/tasks` admin page with active, blocked, queued, and completed task sections, active-agent counts, done indicators, and new-tab report links.
+- Added a `/tasks/reports/:taskId` admin report page that renders Firstmate Markdown reports from the guarded backend endpoint.
+- Added a guarded response workflow for tasks whose latest status needs captain input and whose Firstmate metadata has a live response window.
+- Added an explicit local-only `RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS=1` mode so `/tasks` works without local Google OAuth while leaving other admin endpoints unchanged and ignoring the bypass in AWS runtime.
+- Added stale response handling, completed-report feedback actions, draft/previous report labels, and GPT Pro repair batch links for the local Firstmate tasks dashboard.
+- Added durable follow-up task creation for completed report feedback when the original task has no live response window.
+- Added a guarded one-time Enter retry when `fm-send.sh` leaves a Firstmate task response in the Codex composer.
+- Integrated the real GPT Pro repair `/chats` workspace into the dashboard build with guarded local auth bypass support and current RetroFi work bucket defaults.
+- Made Firstmate task row actions mutually exclusive so report review/feedback controls and GPT Pro repair actions cannot render together.
+- Added backwards-compatible task row rendering for older local API payloads that have `hasReport` and `reportUrl` but not `showReportAction`.
+- Added local-only auto-dispatch for no-window report revision feedback, with queued fallback reporting and explicit `fm-spawn.sh` harness/model/effort args.
+- Split report review into distinct continue and request-changes actions, added continuation auto-dispatch, hid accepted reports from the default review list, and added queued task assignment.
+- Suppressed completed report-review rows once a queued, active, or recorded report follow-up exists while keeping direct report URLs readable.
+- Made queued task assignment create a missing safe Firstmate `brief.md` from backlog/report-feedback details before spawning.
+- Simplified the local Firstmate tasks dashboard back to read-only status and report links by removing report feedback and queued assignment controls from the UI.
+- Documented the local-only Firstmate task dashboard environment variables in `docs/development-artifacts.md`.
+
 ## 2026-07-08 - Codex (GPT-5) local homepage scanner copy transition
 
 - Added scroll-driven hero copy choreography to the local homepage scanner so the initial words move upward while a new RetroFi incentive message rises in from below.
