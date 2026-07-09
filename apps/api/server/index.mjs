@@ -49,6 +49,11 @@ import {
   supportedUtilityFileTypes,
   utilityUploadCategoryOptions
 } from "./energyData/parseEnergyData.mjs";
+import {
+  buildEnergyDataS3Key,
+  cleanEnergyDataFileName,
+  validateEnergyDataRegistrationKey
+} from "./energyData/energyDataObjectKeys.mjs";
 import { buildSyntheticDashboardPostImplementationDataset } from "./dashboardPerformance/syntheticDashboardPerformance.mjs";
 import {
   buildDashboardPerformanceSummaryResponse,
@@ -252,10 +257,6 @@ function createEnergyDataUploadSession(now) {
   };
 }
 
-function cleanFileName(value) {
-  return cleanText(value).replace(/[^\w.\-]+/g, "_").slice(0, 160);
-}
-
 function cleanSourceType(value) {
   const sourceType = cleanText(value);
   return supportedEnergyDataSourceTypes.has(sourceType) ? sourceType : "";
@@ -275,7 +276,7 @@ function validateEnergyDataFile({ sourceType, contentType, fileName }) {
 
   const normalizedContentType = normalizeUploadedContentType(contentType);
   const allowedMimeTypes = energyDataSourceMimeTypes[normalizedSourceType] || new Set();
-  const normalizedFileName = cleanFileName(fileName);
+  const normalizedFileName = cleanEnergyDataFileName(fileName);
 
   if (!normalizedFileName) {
     const error = new Error("A file name is required.");
@@ -3360,7 +3361,7 @@ app.post("/api/energy-data/upload-url", async (req, res) => {
       fileName: req.body?.fileName
     });
     const energyDataId = `energy_${crypto.randomUUID()}`;
-    const s3Key = `energy-data/${userId}/${energyDataId}/${fileName}`;
+    const s3Key = buildEnergyDataS3Key({ userId, energyDataId, fileName });
     const command = new PutObjectCommand({
       Bucket: energyDataBucket,
       Key: s3Key,
@@ -3396,6 +3397,13 @@ app.post("/api/energy-data/register", async (req, res) => {
 
     if (!energyDataId || !s3Key) {
       const error = new Error("Energy data registration requires an upload identifier and storage key.");
+      error.status = 400;
+      throw error;
+    }
+
+    const registrationKey = validateEnergyDataRegistrationKey({ userId, energyDataId, fileName, s3Key });
+    if (!registrationKey.ok) {
+      const error = new Error("Energy data registration must use the upload identifier and storage key returned by the upload-url endpoint.");
       error.status = 400;
       throw error;
     }
