@@ -6156,6 +6156,239 @@ dd {
   width: 100%;
 }
 
+.review-triage-panel {
+  background: #ffffff;
+  border: 1px solid #cfd8d2;
+  border-left: 6px solid #1f2937;
+  border-radius: 12px;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
+  padding: 16px 18px;
+}
+
+.review-triage-panel strong {
+  color: #0f172a;
+  display: block;
+  font-size: 16px;
+  line-height: 21px;
+  margin-bottom: 4px;
+}
+
+.review-triage-panel p {
+  color: #46564d;
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.review-triage-legend {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.review-triage-legend-item {
+  align-items: start;
+  background: #f8faf9;
+  border: 1px solid #d9e2dc;
+  border-radius: 10px;
+  display: grid;
+  gap: 4px;
+  grid-template-columns: 10px minmax(0, 1fr);
+  padding: 10px;
+}
+
+.review-triage-legend-item i {
+  border-radius: 999px;
+  display: block;
+  grid-row: 1 / span 2;
+  height: 100%;
+  min-height: 34px;
+  width: 5px;
+}
+
+.review-triage-legend-item b {
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 16px;
+}
+
+.review-triage-legend-item small {
+  color: #52635a;
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.review-triage-target {
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.08);
+  overflow: visible;
+  position: relative;
+}
+
+.review-triage-target::before {
+  background: var(--review-triage-stripe, #b7791f);
+  border-radius: 999px;
+  bottom: 8px;
+  content: "";
+  left: 6px;
+  pointer-events: none;
+  position: absolute;
+  top: 8px;
+  width: 5px;
+  z-index: 2;
+}
+
+.review-triage-badges {
+  display: grid;
+  gap: 6px;
+  margin-top: 6px;
+  min-width: 0;
+}
+
+.review-triage-badges.is-compact {
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.review-triage-badge {
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  display: grid;
+  gap: 3px;
+  line-height: 1.3;
+  min-width: 0;
+  padding: 7px 9px;
+  text-align: left;
+}
+
+.review-triage-badge strong {
+  color: inherit;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+
+.review-triage-badge span {
+  color: #1f2937;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 16px;
+}
+
+.review-triage-badge.is-red,
+.review-triage-legend-item.is-red {
+  color: #b42318;
+}
+
+.review-triage-badge.is-yellow,
+.review-triage-legend-item.is-yellow {
+  color: #b7791f;
+}
+
+.review-triage-badge.is-orange,
+.review-triage-legend-item.is-orange {
+  color: #c2410c;
+}
+
+.review-triage-badge.is-red,
+.review-triage-legend-item.is-red {
+  background: #fff1f0;
+  border-color: #f0b4ae;
+}
+
+.review-triage-badge.is-yellow,
+.review-triage-legend-item.is-yellow {
+  background: #fff8e8;
+  border-color: #ead29d;
+}
+
+.review-triage-badge.is-orange,
+.review-triage-legend-item.is-orange {
+  background: #fff4ed;
+  border-color: #f0bd98;
+}
+
+.review-triage-legend-item.is-red i {
+  background: #b42318;
+}
+
+.review-triage-legend-item.is-yellow i {
+  background: #b7791f;
+}
+
+.review-triage-legend-item.is-orange i {
+  background: #c2410c;
+}
+
+.estimate-progress-stepper.review-triage-target {
+  flex-wrap: wrap;
+  overflow: visible;
+  padding-left: clamp(26px, 2.4vw, 36px);
+}
+
+.estimate-progress-stepper.review-triage-target .review-triage-badges {
+  flex: 1 0 100%;
+}
+
+.estimate-header-actions.review-triage-target,
+.estimate-financing-strip.review-triage-target,
+.scenario-opportunity-review.review-triage-target,
+.application-overview-card.review-triage-target,
+.estimate-overview-card.review-triage-target,
+.estimate-certification-list.review-triage-target,
+.dashboard-path-option-grid.review-triage-target,
+.dashboard-empty-state.review-triage-target {
+  padding-left: 22px;
+}
+
+.estimate-tab.workspace-tab.review-triage-target {
+  display: inline-grid;
+  gap: 4px;
+  max-width: 280px;
+  min-width: min(220px, 100%);
+  padding-left: 18px;
+  text-align: left;
+  white-space: normal;
+}
+
+.retrofit-picker-card-impact.review-triage-target {
+  padding-left: 16px;
+}
+
+.retrofit-picker-card-impact.review-triage-target .review-triage-badges {
+  grid-column: 1 / -1;
+}
+
+.sidebar-secondary-item.review-triage-target {
+  align-items: start;
+}
+
+.sidebar-secondary-item.review-triage-target .review-triage-badges {
+  grid-column: 1 / -1;
+  margin-left: 32px;
+}
+
+.dashboard-inline-action.review-triage-target {
+  align-items: start;
+  display: inline-grid;
+  gap: 4px;
+  justify-items: start;
+  padding-left: 18px;
+  text-align: left;
+}
+
+.dashboard-inline-action.review-triage-target .review-triage-badges {
+  max-width: min(320px, 100%);
+}
+
+.user-preview-shell.is-sidebar-collapsed .sidebar-secondary-item.review-triage-target .review-triage-badges {
+  display: none;
+}
+
 .retrofit-preview-page h1,
 .retrofit-preview-page h2,
 .retrofit-preview-page h3,

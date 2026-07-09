@@ -35,6 +35,14 @@ import {
   type Route
 } from "./routes";
 import { scannerFrames } from "./lib/scannerFrames";
+import {
+  UserPreviewTriageBadges,
+  UserPreviewTriagePanel,
+  UserPreviewTriageProvider,
+  getUserPreviewTriageTargetProps,
+  isUserPreviewTriageModeEnabled,
+  useUserPreviewTriageMode
+} from "./userPreviewTriage";
 import billFieldDictionary from "../../../data/bill_field_dictionary.json";
 
 type UserRecord = {
@@ -6560,6 +6568,7 @@ function CustomerRetrofitEstimatesPanel({
   profileFormWriteEndpoint,
   summaryEndpoint,
   title,
+  triageMode = false,
   hideBillData = false,
   hideFormDetails = true,
   enableSeededFormDetails = false
@@ -6575,6 +6584,7 @@ function CustomerRetrofitEstimatesPanel({
   profileFormWriteEndpoint?: string;
   summaryEndpoint?: string;
   title: string;
+  triageMode?: boolean;
   hideBillData?: boolean;
   hideFormDetails?: boolean;
   enableSeededFormDetails?: boolean;
@@ -6723,6 +6733,7 @@ function CustomerRetrofitEstimatesPanel({
         payload={payload}
         profileFormWriteEndpoint={profileFormWriteEndpoint}
         title={title}
+        triageMode={triageMode}
       />
   );
 }
@@ -9636,7 +9647,8 @@ export function RetrofitRecommendationsPreview({
   hideFormDetails = true,
   payload,
   profileFormWriteEndpoint,
-  title
+  title,
+  triageMode = false
 }: {
   credential?: AuthCredential | null;
   emptyMessage: string;
@@ -9655,6 +9667,7 @@ export function RetrofitRecommendationsPreview({
   payload: PortalRetrofitRecommendationsResponse | null;
   profileFormWriteEndpoint?: string;
   title: string;
+  triageMode?: boolean;
 }) {
   const preview = useMemo(() => buildUserRetrofitPreviewResult(payload), [payload]);
   const hasUploadedBills = intakeHasUtilityBillData(payload?.intake);
@@ -10097,8 +10110,9 @@ export function RetrofitRecommendationsPreview({
   }
 
   return (
+    <UserPreviewTriageProvider enabled={triageMode}>
     <div
-      className={`user-preview-shell${mobileSidebarOpen ? " is-mobile-sidebar-open" : ""}${sidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
+      className={`user-preview-shell${mobileSidebarOpen ? " is-mobile-sidebar-open" : ""}${sidebarCollapsed ? " is-sidebar-collapsed" : ""}${triageMode ? " is-review-triage-mode" : ""}`}
       data-testid="retrofit-recommendations-preview"
     >
       <UserPreviewSidebar
@@ -10124,6 +10138,7 @@ export function RetrofitRecommendationsPreview({
       />
       <main className="user-preview-main">
         <section className="retrofit-preview-page">
+          <UserPreviewTriagePanel />
           <button className="user-preview-mobile-menu-button user-preview-inline-menu-button" onClick={() => setMobileSidebarOpen(true)} type="button">
             <ViewPanelIcon />
             <span>{activePrimaryView === "profile" ? "Profile" : activePrimaryView === "dashboard" ? "Dashboard" : "Retrofits"}</span>
@@ -10245,6 +10260,7 @@ export function RetrofitRecommendationsPreview({
         />
       ) : null}
     </div>
+    </UserPreviewTriageProvider>
   );
 }
 
@@ -11025,6 +11041,7 @@ function UserPreviewSidebar({
   retrofits: RetrofitPreviewCard[];
 }) {
   const [retrofitsOpen, setRetrofitsOpen] = useState(false);
+  const triageMode = useUserPreviewTriageMode();
   const activeNavRetrofitId = activeRetrofitId;
   const dashboardOpen = activeView === "dashboard";
   useEffect(() => {
@@ -11076,22 +11093,32 @@ function UserPreviewSidebar({
           ) : null}
           <div className="user-preview-sidebar-secondary" role="group" aria-label="Profile navigation">
             <button
-              className={`sidebar-nav-row sidebar-secondary-item sidebar-profile-item${activeView === "profile" ? " is-active" : ""}`}
+              {...getUserPreviewTriageTargetProps({
+                className: `sidebar-nav-row sidebar-secondary-item sidebar-profile-item${activeView === "profile" ? " is-active" : ""}`,
+                enabled: triageMode,
+                surfaceId: "sidebar.profile-info"
+              })}
               onClick={onOpenProfile}
               type="button"
             >
               <ProfileInfoIcon />
               <span className="sidebar-label">Profile info</span>
+              <UserPreviewTriageBadges as="span" compact surfaceId="sidebar.profile-info" />
             </button>
             <button
               aria-expanded={dashboardOpen}
-              className={`sidebar-nav-row sidebar-secondary-item sidebar-dashboard-item${dashboardOpen ? " is-active" : ""}`}
+              {...getUserPreviewTriageTargetProps({
+                className: `sidebar-nav-row sidebar-secondary-item sidebar-dashboard-item${dashboardOpen ? " is-active" : ""}`,
+                enabled: triageMode,
+                surfaceId: "sidebar.dashboard"
+              })}
               onClick={() => onOpenDashboardPage(activeDashboardPage || "summary")}
               type="button"
             >
               <DashboardIcon />
               <span className="sidebar-label">Dashboard</span>
               <ChevronDownIcon />
+              <UserPreviewTriageBadges as="span" compact surfaceId="sidebar.dashboard" />
             </button>
             {dashboardOpen ? (
               <div className="sidebar-dashboard-subnav" aria-label="Dashboard sections">
@@ -11255,10 +11282,18 @@ function DashboardPageHeader({
 }
 
 function DashboardEmptyNotice({ notes }: { notes: string[] }) {
+  const triageMode = useUserPreviewTriageMode();
   return (
-    <section className="dashboard-empty-state">
+    <section
+      {...getUserPreviewTriageTargetProps({
+        className: "dashboard-empty-state",
+        enabled: triageMode,
+        surfaceId: "dashboard.empty-notice"
+      })}
+    >
       <strong>No implemented retrofits yet</strong>
       <p>{notes[0] || "Performance tracking will appear after implementation data is available."}</p>
+      <UserPreviewTriageBadges surfaceId="dashboard.empty-notice" />
     </section>
   );
 }
@@ -11679,6 +11714,7 @@ function CertificationsGaps({ viewModel }: { viewModel: DashboardViewModel }) {
 }
 
 function CertificationsNextActions({ viewModel }: { viewModel: DashboardViewModel }) {
+  const triageMode = useUserPreviewTriageMode();
   const actions = viewModel.certifications.nextActions;
   const highestImpact = actions.find((action) => action.estimatedCO2eImpact);
   const lowestCost = [...actions].filter((action) => action.estimatedCostCents != null).sort((a, b) => (a.estimatedCostCents ?? 0) - (b.estimatedCostCents ?? 0))[0];
@@ -11702,7 +11738,14 @@ function CertificationsNextActions({ viewModel }: { viewModel: DashboardViewMode
           <DashboardInlineAction label="View full timeline" />
         </DashboardCard>
         <DashboardCard title="Best Path Options">
-          <div className="dashboard-path-option-grid">
+          <div
+            {...getUserPreviewTriageTargetProps({
+              className: "dashboard-path-option-grid",
+              enabled: triageMode,
+              surfaceId: "dashboard.best-path-options"
+            })}
+          >
+            <UserPreviewTriageBadges surfaceId="dashboard.best-path-options" />
             {["Fastest Path", "Lowest-Cost Path", "Highest-Certification-Impact Path"].map((label, index) => (
               <article className="dashboard-path-option" key={label}>
                 <strong>{label}</strong>
@@ -12165,7 +12208,20 @@ function DashboardProgressBar({ value }: { value: number | null | undefined }) {
 }
 
 function DashboardInlineAction({ label }: { label: string }) {
-  return <button className="dashboard-inline-action" type="button">{label} <span aria-hidden="true">→</span></button>;
+  const triageMode = useUserPreviewTriageMode();
+  return (
+    <button
+      {...getUserPreviewTriageTargetProps({
+        className: "dashboard-inline-action",
+        enabled: triageMode,
+        surfaceId: "dashboard.inline-action"
+      })}
+      type="button"
+    >
+      {label} <span aria-hidden="true">→</span>
+      <UserPreviewTriageBadges as="span" compact surfaceId="dashboard.inline-action" />
+    </button>
+  );
 }
 
 function DashboardUnavailable({ label }: { label: string }) {
@@ -12216,6 +12272,7 @@ function RetrofitPickerView({
   pickerVisibleCount: number;
   sortBy: string;
 }) {
+  const triageMode = useUserPreviewTriageMode();
   const collapsedRetrofitCount = 6;
   const visibleRetrofits = displayedRetrofits.slice(0, pickerVisibleCount);
   const hasMoreRetrofits = displayedRetrofits.length > visibleRetrofits.length;
@@ -12313,8 +12370,16 @@ function RetrofitPickerView({
                   <PickerMetric kind="cost" label="Cost" value={retrofitPickerCost(retrofit, hideBillData)} />
                   <PickerMetric kind="payback" label="Payback" value={retrofitPickerPayback(retrofit, hideBillData)} />
                 </div>
-                <div className="retrofit-picker-card-impact" aria-label={`${retrofit.name} environmental impact`}>
+                <div
+                  {...getUserPreviewTriageTargetProps({
+                    className: "retrofit-picker-card-impact",
+                    enabled: triageMode,
+                    surfaceId: "picker.environmental-impact"
+                  })}
+                  aria-label={`${retrofit.name} environmental impact`}
+                >
                   <PickerMetric kind="impact" label="Environmental impact" value={retrofitPickerEnvironmentalImpact()} />
+                  <UserPreviewTriageBadges as="span" compact surfaceId="picker.environmental-impact" />
                 </div>
                 <RetrofitReadinessRow {...(retrofitReadinessById.get(retrofit.id) || { billsComplete: false, questionsComplete: false, estimateComplete: false })} />
               </button>
@@ -13154,6 +13219,7 @@ function formatCompactCents(value: number | null | undefined) {
 }
 
 function EstimateProgressStepper() {
+  const triageMode = useUserPreviewTriageMode();
   const steps = [
     { id: "bills", label: "Bills", complete: true, number: 1 },
     { id: "questions", label: "Questions", complete: true, number: 2 },
@@ -13164,7 +13230,14 @@ function EstimateProgressStepper() {
   ];
 
   return (
-    <nav aria-label="Retrofit workflow progress" className="estimate-progress-stepper">
+    <nav
+      aria-label="Retrofit workflow progress"
+      {...getUserPreviewTriageTargetProps({
+        className: "estimate-progress-stepper",
+        enabled: triageMode,
+        surfaceId: "workspace.stepper"
+      })}
+    >
       {steps.map((step, index) => (
         <div className={`estimate-progress-step${step.complete ? " is-complete" : ""}${step.active ? " is-active" : ""}`} key={step.id}>
           <span className="estimate-progress-circle">{step.complete ? "✓" : step.number}</span>
@@ -13172,6 +13245,7 @@ function EstimateProgressStepper() {
           {index < steps.length - 1 ? <i aria-hidden="true" /> : null}
         </div>
       ))}
+      <UserPreviewTriageBadges surfaceId="workspace.stepper" />
     </nav>
   );
 }
@@ -13868,6 +13942,7 @@ function RetrofitPreviewCardView({
   const [scenarioOpportunityDetailIdByRetrofit, setScenarioOpportunityDetailIdByRetrofit] = useState<Record<string, string>>({});
   const [applicationPrepOpportunity, setApplicationPrepOpportunity] = useState<RetrofitOpportunityPreview | null>(null);
   const [applicationPrepProfiles, setApplicationPrepProfiles] = useState<Record<string, CustomerApplicationProfileResponse>>({});
+  const triageMode = useUserPreviewTriageMode();
   const billDataLocked = hideBillData;
   useEffect(() => {
     setActiveWorkspaceTab(initialWorkspaceTab);
@@ -14400,26 +14475,47 @@ function RetrofitPreviewCardView({
                   <p>{retrofit.description}</p>
                 </div>
               </div>
-              <div className="estimate-header-actions" aria-label="Estimate actions">
+              <div
+                {...getUserPreviewTriageTargetProps({
+                  className: "estimate-header-actions",
+                  enabled: triageMode,
+                  surfaceId: "workspace.actions"
+                })}
+                aria-label="Estimate actions"
+              >
                 <button className="estimate-primary-action" onClick={onAddToPlan} type="button">Confirm & move to next step</button>
                 <button className="estimate-secondary-action" type="button">Discard changes</button>
+                <UserPreviewTriageBadges surfaceId="workspace.actions" />
               </div>
             </header>
           )}
 
           <nav aria-label="Estimate workspace tabs" className={`estimate-tabs retrofit-workspace-tabs${activeWorkspaceTab === "scenariosOpportunities" ? " is-scenarios-opportunities" : ""}`}>
-            {workspaceTabs.map((item) => (
-              <button
-                key={item.key}
-                aria-current={activeWorkspaceTab === item.key ? "true" : undefined}
-                className={`estimate-tab workspace-tab${activeWorkspaceTab === item.key ? " is-active" : ""}`}
-                data-workspace-tab={item.key}
-                onClick={() => openWorkspaceTab(item.key)}
-                type="button"
-              >
-                {item.label}
-              </button>
-            ))}
+            {workspaceTabs.map((item) => {
+              const className = `estimate-tab workspace-tab${activeWorkspaceTab === item.key ? " is-active" : ""}`;
+              const triageProps = item.key === "scenariosOpportunities"
+                ? getUserPreviewTriageTargetProps({
+                    className,
+                    enabled: triageMode,
+                    surfaceId: "workspace.tabs.scenarios-opportunities"
+                  })
+                : { className };
+              return (
+                <button
+                  key={item.key}
+                  aria-current={activeWorkspaceTab === item.key ? "true" : undefined}
+                  {...triageProps}
+                  data-workspace-tab={item.key}
+                  onClick={() => openWorkspaceTab(item.key)}
+                  type="button"
+                >
+                  {item.label}
+                  {item.key === "scenariosOpportunities" ? (
+                    <UserPreviewTriageBadges as="span" compact surfaceId="workspace.tabs.scenarios-opportunities" />
+                  ) : null}
+                </button>
+              );
+            })}
           </nav>
 
           {activeWorkspaceTab === "overview" ? (
@@ -14479,11 +14575,18 @@ function RetrofitPreviewCardView({
                   </div>
                 </section>
 
-                <section className="estimate-overview-card">
+                <section
+                  {...getUserPreviewTriageTargetProps({
+                    className: "estimate-overview-card",
+                    enabled: triageMode,
+                    surfaceId: "overview.application-card"
+                  })}
+                >
                   <div className="estimate-card-title-row">
                     <h3>Application overview</h3>
                     <span className="estimate-preview-pill">preview</span>
                   </div>
+                  <UserPreviewTriageBadges surfaceId="overview.application-card" />
                   {overviewApplicationUnavailable ? (
                     <p className="compact-empty">Application support not available yet.</p>
                   ) : (
@@ -14499,11 +14602,18 @@ function RetrofitPreviewCardView({
                   )}
                 </section>
 
-                <section className="estimate-overview-card">
+                <section
+                  {...getUserPreviewTriageTargetProps({
+                    className: "estimate-overview-card",
+                    enabled: triageMode,
+                    surfaceId: "overview.impact-card"
+                  })}
+                >
                   <div className="estimate-card-title-row">
                     <h3>Impact overview</h3>
                     <span className="estimate-preview-pill">preview</span>
                   </div>
+                  <UserPreviewTriageBadges surfaceId="overview.impact-card" />
                   <div className="estimate-info-list">
                     <EstimateInfoRow label="CO₂e avoided per year" value={displayedEnvironmentalImpact.overall.displayValue === "?" ? displayedEnvironmentalImpact.overall.fallback || "Needs bills" : `${displayedEnvironmentalImpact.overall.displayValue} ${displayedEnvironmentalImpact.overall.unit}`} />
                     <EstimateInfoRow label="kWh saved per year" value={kwhImpactResource?.displayValue || "Needs bill"} />
@@ -14513,13 +14623,20 @@ function RetrofitPreviewCardView({
                 </section>
               </div>
 
-              <section className="estimate-financing-strip">
+              <section
+                {...getUserPreviewTriageTargetProps({
+                  className: "estimate-financing-strip",
+                  enabled: triageMode,
+                  surfaceId: "workspace.financing-strip"
+                })}
+              >
                 <EstimateMiniIcon>▥</EstimateMiniIcon>
                 <div>
                   <strong>Financing options available</strong>
                   <p>Explore loans and financing that can help make this upgrade more affordable.</p>
                 </div>
                 <button className="secondary-button" onClick={onExploreFinancing} type="button">View financing options ↗</button>
+                <UserPreviewTriageBadges surfaceId="workspace.financing-strip" />
               </section>
             </section>
           ) : null}
@@ -14541,13 +14658,20 @@ function RetrofitPreviewCardView({
                 <EstimateMetricCard icon={<MetricImpactIcon />} label="ROI" value={formatEstimatePercent(retrofit.metrics.roi, "Estimate unavailable")} subtitle="Average annual return" />
               </div>
 
-              <section className="estimate-financing-strip">
+              <section
+                {...getUserPreviewTriageTargetProps({
+                  className: "estimate-financing-strip",
+                  enabled: triageMode,
+                  surfaceId: "workspace.financing-strip"
+                })}
+              >
                 <EstimateMiniIcon>▥</EstimateMiniIcon>
                 <div>
                   <strong>Financing options available</strong>
                   <p>Explore loans and financing that can help make this upgrade more affordable.</p>
                 </div>
                 <button className="secondary-button" onClick={onExploreFinancing} type="button">View financing options ↗</button>
+                <UserPreviewTriageBadges surfaceId="workspace.financing-strip" />
               </section>
 
               <div className="estimate-financial-equation-grid">
@@ -14645,7 +14769,13 @@ function RetrofitPreviewCardView({
                   <p className="compact-empty">No scenarios available yet.</p>
                 )}
 
-                <section className="scenario-opportunity-review">
+                <section
+                  {...getUserPreviewTriageTargetProps({
+                    className: "scenario-opportunity-review",
+                    enabled: triageMode,
+                    surfaceId: "scenarios.opportunity-table"
+                  })}
+                >
                   <div className="scenario-opportunity-review-heading">
                     <div>
                       <h3>Review opportunities in this scenario</h3>
@@ -14653,6 +14783,7 @@ function RetrofitPreviewCardView({
                     </div>
                     <span className="estimate-preview-pill">{includedOpportunityRows.length} included</span>
                   </div>
+                  <UserPreviewTriageBadges surfaceId="scenarios.opportunity-table" />
                   <div className="scenario-opportunity-table" role="table" aria-label="Scenario opportunities">
                     <div className="scenario-opportunity-table-head" role="row">
                       <span role="columnheader">#</span>
@@ -14734,7 +14865,14 @@ function RetrofitPreviewCardView({
                 <EstimateMetricCard icon={<MetricCostIcon />} label="Utility cost savings per year" value={formatEstimateCentsPerPeriod(annualOperatingSavingsValue, "yr", "Needs bill")} subtitle="USD/yr" />
               </div>
               <h3>Certification contribution</h3>
-              <div className="estimate-certification-list">
+              <div
+                {...getUserPreviewTriageTargetProps({
+                  className: "estimate-certification-list",
+                  enabled: triageMode,
+                  surfaceId: "impact.certification-list"
+                })}
+              >
+                <UserPreviewTriageBadges surfaceId="impact.certification-list" />
                 {certificationRows.map((row) => (
                   <article className="estimate-certification-row" key={row.program}>
                     <span className="estimate-card-icon"><MetricImpactIcon /></span>
@@ -14752,7 +14890,13 @@ function RetrofitPreviewCardView({
 
           {activeWorkspaceTab === "application" ? (
             <section className="estimate-tab-panel estimate-application-tab" data-workspace-panel="application">
-              <section className="application-overview-card">
+              <section
+                {...getUserPreviewTriageTargetProps({
+                  className: "application-overview-card",
+                  enabled: triageMode,
+                  surfaceId: "application.overview-card"
+                })}
+              >
                 <div className="estimate-card-title-row">
                   <span className="estimate-card-icon"><MetricImpactIcon /></span>
                   <div>
@@ -14760,6 +14904,7 @@ function RetrofitPreviewCardView({
                     <p>Here’s a preview of the program and support available for this retrofit.</p>
                   </div>
                 </div>
+                <UserPreviewTriageBadges surfaceId="application.overview-card" />
                 {applicationOverviewReferenceOnly ? <p className="application-prep-reference-notice">Funding exhausted — reference only</p> : null}
                 <div className="application-overview-rows">
                   <EstimateInfoRow label="Opportunity name" value={applicationOverviewProfile?.programName || applicationOverviewOpportunity?.name || "Application support not available yet"} />
@@ -17602,6 +17747,8 @@ function AdminUserPreviewStandalonePage({
   const [customerPreviewMode, setCustomerPreviewMode] = useState(false);
   const [hideBillData, setHideBillData] = useState(false);
   const [hideFormDetails, setHideFormDetails] = useState(false);
+  const triageMode =
+    typeof window !== "undefined" && isUserPreviewTriageModeEnabled(window.location.search);
   const [selectedUserId, setSelectedUserId] = useState(() => {
     if (typeof window === "undefined") return "";
     return new URLSearchParams(window.location.search).get("userId") || "";
@@ -17713,7 +17860,7 @@ function AdminUserPreviewStandalonePage({
   }
 
   return (
-    <main className={`user-preview-standalone-page${customerPreviewMode ? " is-customer-preview" : ""}`}>
+    <main className={`user-preview-standalone-page${customerPreviewMode ? " is-customer-preview" : ""}${triageMode ? " is-review-triage-mode" : ""}`}>
       <header className={`user-preview-toolbar user-preview-toolbar-collapsed${customerPreviewMode ? " is-customer-preview" : ""}`}>
         {customerPreviewMode ? (
           <div className="customer-preview-strip">
@@ -17823,6 +17970,7 @@ function AdminUserPreviewStandalonePage({
             hideFormDetails={hideFormDetails}
             enableSeededFormDetails={true}
             title="Retrofit Recommendations"
+            triageMode={triageMode}
           />
       ) : (
         <section className="retrofit-preview-page">

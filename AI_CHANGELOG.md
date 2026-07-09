@@ -36,6 +36,13 @@
 - Added a read-only Profile info view to the admin user preview sidebar using the existing recommendation payload.
 - Summarized account, intake, site, utility, recommendation, tax, preview-assumption, and synthetic dashboard data without exposing raw utility storage keys or extraction source text.
 
+## 2026-07-08 - Codex (GPT-5) user-preview triage overlay
+
+- Added a query-gated `?triage=1` review overlay for the admin RetroFi user preview, with red, yellow, and orange annotations hidden from normal preview traffic.
+- Centralized seeded triage issue metadata in `apps/web/src/userPreviewTriage.tsx` so future review updates can change stable issue IDs, tones, and notes without hunting through unrelated JSX.
+- Marked current preview targets including inactive sidebar/dashboard actions, hardcoded picker impact values, placeholder financing/application/dashboard surfaces, dense scenario tables, and fallback impact claims.
+- Added frontend regression coverage for the triage query parser, default-off rendering, active overlay legend, and metadata-backed picker annotation.
+
 ## 2026-07-08 - Codex (GPT-5) durable AI workflow adoption
 
 - Adopted the reusable AI workflow structure with project-specific `ARCHITECTURE.md`, `RESOURCE_MAP.md`, `TASK_LIST.md`, `review.md`, `template.md`, ADR, and `AI_RESOURCES/` starter docs.
