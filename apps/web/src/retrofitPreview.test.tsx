@@ -1610,7 +1610,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Firstmate tasks require admin sign-in unless the local Firstmate tasks auth bypass is enabled.");
   });
 
-  it("keeps Firstmate task response and report feedback workflows explicit", async () => {
+  it("keeps the Firstmate tasks dashboard read-only outside response-needed tasks", async () => {
     const fsModuleName = "node:fs";
     const { readFileSync } = await import(fsModuleName);
     const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
@@ -1618,32 +1618,32 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("The agent has already moved on, so the task list was refreshed.");
     expect(source).toContain("task is not waiting for a captain response");
     expect(source).toContain("await onStaleResponse(serverMessage)");
-    expect(source).toContain("/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/report-feedback");
-    expect(source).toContain("/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/assign");
-    expect(source).toContain("action === \"changes-requested\"");
-    expect(source).toContain("Looks good / Continue");
-    expect(source).toContain("Request changes");
-    expect(source).toContain("Assign Crewmate");
+    expect(source).not.toContain("/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/report-feedback");
+    expect(source).not.toContain("/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/assign");
+    expect(source).not.toContain("Looks good / Continue");
+    expect(source).not.toContain("Request changes");
+    expect(source).not.toContain("Assign Crewmate");
+    expect(source).not.toContain("Report Feedback");
+    expect(source).not.toContain("feedback.message ||");
     expect(source).not.toContain("task-report-feedback-toggle");
-    expect(source).toContain("feedback.message ||");
     expect(source).toContain("rel=\"noreferrer\" target=\"_blank\"");
     expect(source).toContain("Go To Pro Repair Batch");
     expect(source).toContain("const showGptProRepairAction = Boolean(task.showGptProRepairAction ?? task.gptProRepairReady)");
     expect(source).toContain("task.showReportAction ?? Boolean(task.hasReport && task.reportUrl)");
-    expect(source).toContain("const showReportFeedbackAction = Boolean(showReportAction && task.canSendReportFeedback)");
     expect(source).toContain("gptProRepairUnavailableReason");
     expect(source).not.toContain("Opens the local /chats fallback for this GPT Pro repair task.");
     expect(source).toContain("task.reportActionLabel || \"View Report\"");
     expect(source).toContain("showReportAction && task.reportNote && !task.reportIsFinal");
     expect(source).toContain("task-report-status-note");
-    expect(source).toContain("Looks good creates a continuation task");
+    expect(source).not.toContain("Looks good creates a continuation task");
 
     const taskRowSource = source.slice(
       source.indexOf("function FirstmateTaskRow"),
-      source.indexOf("function FirstmateReportFeedbackForm")
+      source.indexOf("function AdminTaskReportStandalonePage")
     );
     expect(taskRowSource).toContain("{showGptProRepairAction ? (");
-    expect(taskRowSource).toContain("{showReportFeedbackAction && isFeedbackOpen ? (");
+    expect(taskRowSource).not.toContain("setIsFeedbackOpen");
+    expect(taskRowSource).not.toContain("assignQueuedTask");
   });
 
   it("keeps task row report actions compatible with older API payloads", () => {
@@ -1683,10 +1683,6 @@ describe("retrofit recommendations preview", () => {
       <table>
         <tbody>
           <FirstmateTaskRow
-            credential={null}
-            localAuthBypass
-            onTaskAssigned={async () => undefined}
-            onReportFeedbackSent={async () => undefined}
             task={baseTask}
           />
         </tbody>
@@ -1694,17 +1690,16 @@ describe("retrofit recommendations preview", () => {
     );
 
     expect(oldPayloadHtml).toContain("See Report");
-    expect(oldPayloadHtml).toContain("Report Feedback");
+    expect(oldPayloadHtml).not.toContain("Report Feedback");
+    expect(oldPayloadHtml).not.toContain("Looks good / Continue");
+    expect(oldPayloadHtml).not.toContain("Request changes");
+    expect(oldPayloadHtml).not.toContain("Assign Crewmate");
     expect(oldPayloadHtml).not.toContain("No report");
 
     const noReportHtml = renderToStaticMarkup(
       <table>
         <tbody>
           <FirstmateTaskRow
-            credential={null}
-            localAuthBypass
-            onTaskAssigned={async () => undefined}
-            onReportFeedbackSent={async () => undefined}
             task={{
               ...baseTask,
               hasReport: false,
@@ -1717,15 +1712,12 @@ describe("retrofit recommendations preview", () => {
 
     expect(noReportHtml).toContain("No report");
     expect(noReportHtml).not.toContain("Report Feedback");
+    expect(noReportHtml).not.toContain("Assign Crewmate");
 
     const queuedHtml = renderToStaticMarkup(
       <table>
         <tbody>
           <FirstmateTaskRow
-            credential={null}
-            localAuthBypass
-            onTaskAssigned={async () => undefined}
-            onReportFeedbackSent={async () => undefined}
             task={{
               ...baseTask,
               id: "queued-follow-up-q1",
@@ -1741,7 +1733,10 @@ describe("retrofit recommendations preview", () => {
       </table>
     );
 
-    expect(queuedHtml).toContain("Assign Crewmate");
+    expect(queuedHtml).toContain("queued-follow-up-q1");
+    expect(queuedHtml).toContain("No report");
+    expect(queuedHtml).not.toContain("Assign Crewmate");
+    expect(queuedHtml).not.toContain("Report Feedback");
   });
 
   it("renders the shared full-page loader with the RetroFi logo and dashboard status text", () => {
