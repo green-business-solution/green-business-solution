@@ -7,6 +7,11 @@
 - Added a small-screen home hero text-fit guard so the first mobile viewport does not clip the headline.
 - Added regression coverage for the clean loading surface and the home-page navbar override removal.
 
+## 2026-07-09 - Codex (GPT-5) energy upload S3 key hardening
+
+- Added canonical S3 key validation for energy data upload registration so a valid upload session can only register the object key minted by the upload-url endpoint.
+- Moved energy upload object-key construction into a pure helper and covered accepted and rejected registration-key cases with focused API tests.
+
 ## 2026-07-09 - Codex (GPT-5) next-session context handoff
 
 - Added a root `NEXT_CODEX_CONTEXT.md` handoff for future Codex sessions covering the current implementation plan, completed Codex work, architecture state, AWS migration state, runtime artifact rules, application-prep status, and highest-priority next tasks.
