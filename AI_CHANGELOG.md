@@ -1,5 +1,10 @@
 # AI Changelog
 
+## 2026-07-09 - Codex (GPT-5) pricing page design-system redesign
+
+- Redesigned the public pricing page around the homepage design-system contract with a stronger pricing hero, guided upgrade path, richer plan cards, comparison matrix, FAQ structure, and final CTA.
+- Added homepage-aligned pricing CSS for serif display hierarchy, pine CTAs, soft white cards, responsive layouts, hover/press feedback, view-timeline reveals, and reduced-motion support.
+
 ## 2026-07-09 - Codex (GPT-5) homepage How It Works route removal
 
 - Removed the standalone public How It Works route surface so `/how-it-works` resolves back to the homepage How It Works section.
