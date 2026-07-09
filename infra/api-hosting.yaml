@@ -70,6 +70,13 @@ Parameters:
   RuntimeCacheBucketName:
     Type: String
     Description: S3 bucket used for generated runtime cache payloads.
+  DevWorkBucketName:
+    Type: String
+    Description: Private S3 bucket used for GPT Pro work packets and other development artifacts.
+  GptProWorkPrefix:
+    Type: String
+    Default: gpt-pro-work
+    Description: Prefix inside the dev work bucket where GPT Pro repair artifacts are stored.
   ApiFunctionName:
     Type: String
     Default: gbs-retrofi-api-app
@@ -138,6 +145,24 @@ Resources:
                   - s3:GetObject
                   - s3:PutObject
                 Resource: !Sub arn:aws:s3:::${RuntimeCacheBucketName}/*
+        - PolicyName: GptProWorkBucketAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:ListBucket
+                Resource: !Sub arn:aws:s3:::${DevWorkBucketName}
+                Condition:
+                  StringLike:
+                    s3:prefix:
+                      - !Sub ${GptProWorkPrefix}/
+                      - !Sub ${GptProWorkPrefix}/*
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                Resource: !Sub arn:aws:s3:::${DevWorkBucketName}/${GptProWorkPrefix}/*
 
   ApiFunction:
     Type: AWS::Lambda::Function
@@ -161,6 +186,8 @@ Resources:
           GBS_API_RUNTIME_STATE_TABLE: !Ref ApiRuntimeStateTable
           GBS_ENERGY_DATA_BUCKET: !Ref EnergyDataBucketName
           GBS_RUNTIME_CACHE_BUCKET: !Ref RuntimeCacheBucketName
+          GBS_DEV_WORK_BUCKET: !Ref DevWorkBucketName
+          GBS_GPT_PRO_WORK_PREFIX: !Ref GptProWorkPrefix
           GOOGLE_CLIENT_ID: !Ref GoogleClientId
           GOOGLE_CLIENT_SECRET: !Ref GoogleClientSecret
           GBS_GEOCODIO_API_KEY: !Ref GeocodioApiKey

@@ -7,7 +7,8 @@ const windowTargetPattern = /^[a-z0-9._:-]{1,180}$/i;
 const enabledValues = new Set(["1", "true", "yes", "on"]);
 const responseNeededStatusStates = new Set(["needs-decision", "blocked", "failed"]);
 const reportFeedbackActions = new Set(["proceed", "changes-requested"]);
-const explicitReportStatuses = new Set(["final", "review-ready", "draft", "previous"]);
+const explicitReportStatuses = new Set(["final", "review-ready", "draft", "previous", "repair-ready"]);
+const repairReadyStatuses = new Set(["ready", "repair-ready", "needs-repair", "needs-gpt-pro-repair"]);
 const maxResponseMessageLength = 4000;
 const gptProRepairUrlMetaKeys = [
   "gptProRepairUrl",
@@ -22,6 +23,14 @@ const gptProRepairUrlMetaKeys = [
   "chat_url",
   "chatsUrl",
   "chats_url"
+];
+const gptProRepairStatusMetaKeys = [
+  "gptProRepairStatus",
+  "gpt_pro_repair_status",
+  "proRepairStatus",
+  "pro_repair_status",
+  "repairStatus",
+  "repair_status"
 ];
 const reportStatusMetaKeys = [
   "reportStatus",
@@ -106,6 +115,7 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
       worktree: cleanOptional(meta.worktree) || existing.worktree,
       window: cleanOptional(meta.window) || existing.window,
       reportStatus: normalizeReportStatus(firstCleanMetaValue(meta, reportStatusMetaKeys)) || existing.reportStatus,
+      gptProRepairStatus: normalizeGptProRepairStatus(firstCleanMetaValue(meta, gptProRepairStatusMetaKeys)) || existing.gptProRepairStatus,
       gptProRepairUrl: firstCleanMetaValue(meta, gptProRepairUrlMetaKeys) || existing.gptProRepairUrl
     });
   }
@@ -128,7 +138,10 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
         const state = resolveTaskState(task);
         const responseNeeded = responseNeededStatusStates.has(task.statusState);
         const reportArtifact = resolveReportArtifact({ hasReport, state, task });
-        const gptProRepairTarget = resolveGptProRepairTarget(task, env);
+        const gptProRepairReady = isGptProRepairReadyTask(task);
+        const gptProRepairTarget = resolveGptProRepairTarget(task, env, { repairReady: gptProRepairReady });
+        const showReportAction = Boolean(hasReport && !gptProRepairReady);
+        const canSendReportFeedback = Boolean(reportArtifact.reviewReady && !gptProRepairReady);
         return {
           id: task.id,
           title: task.title || titleFromTaskId(task.id),
@@ -145,20 +158,24 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
           responseNeeded,
           canRespond: responseNeeded && isSafeWindowTarget(task.window),
           hasReport,
-          reportUrl: hasReport ? `/tasks/reports/${encodeURIComponent(task.id)}` : null,
+          showReportAction,
+          reportUrl: showReportAction ? `/tasks/reports/${encodeURIComponent(task.id)}` : null,
           reportStatus: reportArtifact.status,
           reportActionLabel: reportArtifact.actionLabel,
           reportStatusLabel: reportArtifact.statusLabel,
           reportNote: reportArtifact.note,
           reportIsFinal: reportArtifact.isFinal,
           reportReviewReady: reportArtifact.reviewReady,
-          reportFeedbackMode: reportArtifact.reviewReady
+          reportFeedbackMode: canSendReportFeedback
             ? isSafeWindowTarget(task.window)
               ? "live-window"
               : "follow-up-task"
             : null,
-          reportFeedbackUnavailableReason: reportArtifact.reviewReady ? null : "Report feedback is available only for final reports or reports explicitly marked ready for review.",
-          canSendReportFeedback: reportArtifact.reviewReady,
+          reportFeedbackUnavailableReason: canSendReportFeedback || gptProRepairReady ? null : "Report feedback is available only for final reports or reports explicitly marked ready for review.",
+          canSendReportFeedback,
+          gptProRepairStatus: task.gptProRepairStatus || null,
+          gptProRepairReady,
+          showGptProRepairAction: gptProRepairReady,
           gptProRepairUrl: gptProRepairTarget.url,
           gptProRepairLabel: gptProRepairTarget.label,
           gptProRepairFallback: gptProRepairTarget.fallback,
@@ -214,6 +231,8 @@ export async function readFirstmateTaskReport({ env = process.env, taskId, now =
       reportReviewReady: Boolean(task?.reportReviewReady),
       reportFeedbackMode: task?.reportFeedbackMode || null,
       canSendReportFeedback: Boolean(task?.canSendReportFeedback),
+      gptProRepairStatus: task?.gptProRepairStatus || null,
+      gptProRepairReady: Boolean(task?.gptProRepairReady),
       markdown
     };
   } catch (error) {
@@ -505,6 +524,7 @@ function baseTask(id) {
     worktree: "",
     window: "",
     reportStatus: "",
+    gptProRepairStatus: "",
     gptProRepairUrl: "",
     backlogState: "active",
     blockedBy: [],
@@ -719,6 +739,10 @@ function normalizeReportStatus(value) {
   return explicitReportStatuses.has(cleanStatus) ? cleanStatus : "";
 }
 
+function normalizeGptProRepairStatus(value) {
+  return String(value || "").trim().toLowerCase().replace(/_/g, "-");
+}
+
 function normalizeTaskId(taskId) {
   const value = String(taskId || "").trim();
   return taskIdPattern.test(value) ? value : "";
@@ -735,6 +759,17 @@ function resolveReportArtifact({ hasReport, state, task }) {
       actionLabel: null,
       statusLabel: "No report",
       note: null,
+      isFinal: false,
+      reviewReady: false
+    };
+  }
+
+  if (task.reportStatus === "repair-ready") {
+    return {
+      status: "repair-ready",
+      actionLabel: null,
+      statusLabel: "Repair workspace ready",
+      note: "The agent marked this task for GPT Pro repair work instead of report review.",
       isFinal: false,
       reviewReady: false
     };
@@ -785,7 +820,16 @@ function resolveReportArtifact({ hasReport, state, task }) {
   };
 }
 
-function resolveGptProRepairTarget(task, env = process.env) {
+function resolveGptProRepairTarget(task, env = process.env, { repairReady = false } = {}) {
+  if (!repairReady) {
+    return {
+      url: null,
+      label: null,
+      fallback: false,
+      unavailableReason: null
+    };
+  }
+
   const directUrl = cleanOptional(task.gptProRepairUrl);
   if (isSafeLocalBrowserUrl(directUrl)) {
     return {
@@ -797,19 +841,10 @@ function resolveGptProRepairTarget(task, env = process.env) {
   }
 
   const configuredUrl = cleanOptional(env.RETROFI_FIRSTMATE_GPT_PRO_REPAIR_URL);
-  if (isGptProRepairTask(task) && isSafeLocalBrowserUrl(configuredUrl)) {
+  if (isSafeLocalBrowserUrl(configuredUrl)) {
     return {
       url: configuredUrl,
       label: "Go To Pro Repair Batch",
-      fallback: false,
-      unavailableReason: null
-    };
-  }
-
-  if (!isGptProRepairTask(task)) {
-    return {
-      url: null,
-      label: null,
       fallback: false,
       unavailableReason: null
     };
@@ -823,16 +858,16 @@ function resolveGptProRepairTarget(task, env = process.env) {
   };
 }
 
-function isGptProRepairTask(task) {
-  const searchable = [
-    task.id,
-    task.title,
-    task.kind,
-    task.repo,
-    task.project,
-    task.recentStatus
-  ].map((value) => String(value || "")).join(" ");
-  return /\bgpt[-\s_]*pro\b|\bgptpro\b/i.test(searchable) && /(repair|batch|prompt|report|chat)/i.test(searchable);
+function isGptProRepairReadyTask(task) {
+  if (task.reportStatus === "repair-ready") {
+    return true;
+  }
+
+  if (repairReadyStatuses.has(normalizeGptProRepairStatus(task.gptProRepairStatus))) {
+    return true;
+  }
+
+  return isSafeLocalBrowserUrl(task.gptProRepairUrl);
 }
 
 function isSafeLocalBrowserUrl(value) {

@@ -7,11 +7,11 @@ does not mix with raw GPT prompt/output archives.
 
 ## GPT Pro Work
 
-- Current source S3 URI: `s3://gbs-retrofi-dev-work-448016109714-us-east-1/gpt-pro-work/`
-- New production S3 URI: `s3://gbs-retrofi-dev-work-059310317821-us-east-1/gpt-pro-work/`
+- Current production S3 URI: `s3://gbs-retrofi-dev-work-059310317821-us-east-1/gpt-pro-work/`
 - AWS region: `us-east-1`
-- Current source bucket: `gbs-retrofi-dev-work-448016109714-us-east-1`
-- New production bucket: `gbs-retrofi-dev-work-059310317821-us-east-1`
+- Current production bucket: `gbs-retrofi-dev-work-059310317821-us-east-1`
+- Current AWS profile: `retrofi-prod`
+- Legacy rollback profile: `gbs`
 - Access: private S3 bucket with public access blocked
 - Default encryption: AES-256
 - Versioning: enabled
@@ -19,20 +19,21 @@ does not mix with raw GPT prompt/output archives.
 Restore locally:
 
 ```sh
-AWS_PROFILE=gbs AWS_REGION=us-east-1 aws s3 sync \
-  s3://gbs-retrofi-dev-work-448016109714-us-east-1/gpt-pro-work/ \
+AWS_PROFILE=retrofi-prod AWS_REGION=us-east-1 aws s3 sync \
+  s3://gbs-retrofi-dev-work-059310317821-us-east-1/gpt-pro-work/ \
   "GPT Pro Work/"
 ```
 
-Upload new local GPT Pro work:
+Dry-run the managed migration before uploading new local GPT Pro work:
 
 ```sh
-AWS_PROFILE=gbs AWS_REGION=us-east-1 aws s3 sync \
-  "GPT Pro Work/" \
-  s3://gbs-retrofi-dev-work-448016109714-us-east-1/gpt-pro-work/ \
-  --exclude ".DS_Store" \
-  --exclude "*/.DS_Store" \
-  --sse AES256
+AWS_PROFILE=retrofi-prod AWS_REGION=us-east-1 npm run migrate:gpt-pro-work
+```
+
+Upload with:
+
+```sh
+AWS_PROFILE=retrofi-prod AWS_REGION=us-east-1 npm run migrate:gpt-pro-work -- --write
 ```
 
 `GPT Pro Work/` is intentionally ignored by Git. Keep durable normalized import artifacts in `data/` when runtime code or tests need them.
@@ -75,4 +76,7 @@ For completed tasks with reports and a live `window=`, the admin page can send r
 For completed or review-ready reports without a live `window=`, report feedback is written to `data/<task-id>/feedback/` and queued as a Firstmate follow-up task through `tasks-axi add`.
 If an active or reopened task still has an older `report.md`, the dashboard labels it as a previous or draft report instead of a final report.
 Set `report_status=review-ready` in task metadata only when an active task explicitly wants captain report review before completion.
-GPT Pro repair/report tasks can expose a safe local repair URL from task metadata or `RETROFI_FIRSTMATE_GPT_PRO_REPAIR_URL`; otherwise the dashboard shows that the repair workspace URL is not configured.
+GPT Pro repair/report tasks expose the repair workspace action only when task metadata explicitly marks the next step as repair work, such as `gpt_pro_repair_status=ready` or `report_status=repair-ready`.
+Set `RETROFI_FIRSTMATE_GPT_PRO_REPAIR_URL=/chats` to route those repair-ready rows to the local GPT Pro copy/paste workspace.
+Set `RETROFI_GPT_PRO_CHATS_LOCAL_AUTH_BYPASS=1`, or use the existing Firstmate tasks local auth bypass, only for local captain workflows where Google OAuth is not configured.
+Rows in report review mode and rows in GPT Pro repair mode are mutually exclusive in the dashboard.

@@ -67,6 +67,19 @@ import {
   readPersistentRetrofitRecommendations as readPersistentRetrofitRecommendationsFromStore,
   writePersistentRetrofitRecommendations as writePersistentRetrofitRecommendationsToStore
 } from "./retrofitRecommendationsCache.mjs";
+import {
+  cleanGptProWorkPrefix,
+  defaultGptProWorkBucket,
+  defaultGptProWorkLocalFallbackRoot,
+  defaultGptProWorkPrefix,
+  defaultGptProWorkProfile,
+  defaultGptProWorkRegion,
+  isGptProChatsLocalAuthBypassEnabled,
+  listGptProWorkBatches,
+  readGptProOutput,
+  readGptProPrompt,
+  writeGptProOutput
+} from "./gptProWorkStore.mjs";
 import { buildFixtureRetrofitRecommendationsPayload } from "./fixtureRetrofitRecommendations.mjs";
 import {
   formQuestionCatalogCacheVersion,
@@ -84,7 +97,7 @@ const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.app
 const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
 const dataRegion = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
 const s3Region = process.env.GBS_ENERGY_DATA_BUCKET_REGION || process.env.AWS_REGION || dataRegion;
-const profile = process.env.AWS_PROFILE ?? (isLambdaRuntime ? "" : "gbs");
+const profile = process.env.AWS_PROFILE ?? (isLambdaRuntime ? "" : defaultGptProWorkProfile);
 const usersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
 const opportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
@@ -97,6 +110,19 @@ const sampleMatchingTestCasesPath =
   process.env.GBS_SAMPLE_MATCHING_TEST_CASES_PATH || path.join(process.cwd(), "public", "sample_matching_test_cases.json");
 const energyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "";
 const runtimeCacheBucket = process.env.GBS_RUNTIME_CACHE_BUCKET || "";
+const gptProWorkBucket =
+  process.env.GBS_DEV_WORK_BUCKET || process.env.GBS_GPT_PRO_WORK_BUCKET || defaultGptProWorkBucket;
+const gptProWorkPrefix = cleanGptProWorkPrefix(process.env.GBS_GPT_PRO_WORK_PREFIX || defaultGptProWorkPrefix);
+const gptProWorkRegion = process.env.GBS_GPT_PRO_WORK_REGION || process.env.AWS_REGION || defaultGptProWorkRegion;
+const gptProWorkProfile =
+  process.env.GBS_GPT_PRO_WORK_AWS_PROFILE ?? (isLambdaRuntime ? "" : defaultGptProWorkProfile);
+const configuredGptProWorkLocalFallbackRoot = process.env.GBS_GPT_PRO_WORK_LOCAL_FALLBACK_ROOT;
+const gptProWorkLocalFallbackRoot =
+  !isLambdaRuntime && !gptProWorkBucket
+    ? configuredGptProWorkLocalFallbackRoot === undefined
+      ? defaultGptProWorkLocalFallbackRoot
+      : configuredGptProWorkLocalFallbackRoot
+    : "";
 const geocodioApiKey = process.env.GBS_GEOCODIO_API_KEY || process.env.GEOCODIO_API_KEY || "";
 const geocodioDailyLimit = parseNonNegativeInteger(
   process.env.GBS_GEOCODIO_DAILY_LIMIT,
@@ -140,6 +166,10 @@ const db = DynamoDBDocumentClient.from(client);
 const s3 = new S3Client({
   region: s3Region,
   credentials: profile ? fromIni({ profile }) : undefined
+});
+const gptProWorkS3 = new S3Client({
+  region: gptProWorkRegion,
+  credentials: gptProWorkProfile ? fromIni({ profile: gptProWorkProfile }) : undefined
 });
 export const app = express();
 let activeServer = null;
@@ -2989,7 +3019,7 @@ function classifyError(error) {
       message:
         isLambdaRuntime
           ? "The production API could not access AWS. Check the Lambda execution role and deployment configuration."
-          : "AWS credentials are not ready for the local API. Run `aws sso login --profile gbs`, then restart `npm run dev`."
+          : "AWS credentials are not ready for the local API. Run `aws sso login --profile retrofi-prod`, then restart `npm run dev`."
     };
   }
 
@@ -2997,7 +3027,7 @@ function classifyError(error) {
     return {
       status: 403,
       message:
-        "The active AWS profile does not have access to the Green Business Solution DynamoDB tables. Confirm the `gbs` profile uses account 448016109714 with AdministratorAccess."
+        "The active AWS profile does not have access to the RetroFi AWS resources. Confirm the `retrofi-prod` profile uses account 059310317821 with AdministratorAccess."
     };
   }
 
@@ -3007,7 +3037,7 @@ function classifyError(error) {
       message:
         isLambdaRuntime
           ? "The production API could not reach its AWS data store. Try again in a minute."
-          : "The local API could not reach AWS DynamoDB. Check internet access, then run `aws sts get-caller-identity --profile gbs`."
+          : "The local API could not reach AWS. Check internet access, then run `aws sts get-caller-identity --profile retrofi-prod`."
     };
   }
 
@@ -3026,6 +3056,19 @@ function handleError(res, error) {
   res.status(status).json({ error: classified.message });
 }
 
+function gptProWorkStoreOptions() {
+  return {
+    bucket: gptProWorkBucket,
+    localFallbackRoot: gptProWorkLocalFallbackRoot,
+    prefix: gptProWorkPrefix,
+    s3: gptProWorkS3
+  };
+}
+
+function isLocalGptProWorkAuthBypassEnabled(env = process.env) {
+  return isFirstmateTasksLocalAuthBypassEnabled(env) || isGptProChatsLocalAuthBypassEnabled(env);
+}
+
 app.get("/api/health", (_req, res) => {
   res.json({
     ok: true,
@@ -3039,6 +3082,15 @@ app.get("/api/health", (_req, res) => {
     apiRuntimeStateTable,
     energyDataBucket: energyDataBucket || null,
     runtimeCacheBucket: runtimeCacheBucket || null,
+    devWorkBucket: gptProWorkBucket || null,
+    gptProWork: {
+      localAuthBypassEnabled: isLocalGptProWorkAuthBypassEnabled(process.env),
+      localFallbackEnabled: Boolean(gptProWorkLocalFallbackRoot),
+      prefix: gptProWorkPrefix,
+      profile: gptProWorkProfile || null,
+      region: gptProWorkRegion,
+      storageConfigured: Boolean(gptProWorkBucket)
+    },
     addressGeographyResolver: {
       primaryProvider: "census_geocoder",
       fallbackProvider: "geocodio",
@@ -3054,6 +3106,70 @@ app.get("/api/health", (_req, res) => {
     googleClientIdHint: publicGoogleClientIdHint(),
     recommendedGoogleRedirectUris
   });
+});
+
+async function requireGptProWorkRouteAccess(req) {
+  if (isLocalGptProWorkAuthBypassEnabled(process.env)) {
+    return { localAuthBypass: true };
+  }
+
+  await requireAdminFromRequest(req);
+  return { localAuthBypass: false };
+}
+
+app.get("/api/admin/gpt-pro-work/batches", async (req, res) => {
+  try {
+    await requireGptProWorkRouteAccess(req);
+    res.json(await listGptProWorkBatches(gptProWorkStoreOptions()));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/gpt-pro-work/prompt", async (req, res) => {
+  try {
+    await requireGptProWorkRouteAccess(req);
+    res.json(
+      await readGptProPrompt({
+        ...gptProWorkStoreOptions(),
+        batchId: req.query.batch,
+        promptPath: req.query.path
+      })
+    );
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/gpt-pro-work/output", async (req, res) => {
+  try {
+    await requireGptProWorkRouteAccess(req);
+    res.json(
+      await readGptProOutput({
+        ...gptProWorkStoreOptions(),
+        batchId: req.query.batch,
+        promptPath: req.query.path
+      })
+    );
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.put("/api/admin/gpt-pro-work/output", async (req, res) => {
+  try {
+    await requireGptProWorkRouteAccess(req);
+    res.json(
+      await writeGptProOutput({
+        ...gptProWorkStoreOptions(),
+        batchId: req.body?.batchId,
+        content: req.body?.content,
+        promptPath: req.body?.promptPath
+      })
+    );
+  } catch (error) {
+    handleError(res, error);
+  }
 });
 
 app.get("/api/diagnostics", async (_req, res) => {
@@ -3079,6 +3195,15 @@ app.get("/api/diagnostics", async (_req, res) => {
       apiRuntimeStateTable,
       energyDataBucket: energyDataBucket || null,
       runtimeCacheBucket: runtimeCacheBucket || null,
+      devWorkBucket: gptProWorkBucket || null,
+      gptProWork: {
+        localAuthBypassEnabled: isLocalGptProWorkAuthBypassEnabled(process.env),
+        localFallbackEnabled: Boolean(gptProWorkLocalFallbackRoot),
+        prefix: gptProWorkPrefix,
+        profile: gptProWorkProfile || null,
+        region: gptProWorkRegion,
+        storageConfigured: Boolean(gptProWorkBucket)
+      },
       addressGeographyResolver: {
         primaryProvider: "census_geocoder",
         fallbackProvider: "geocodio",

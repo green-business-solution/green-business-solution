@@ -1,5 +1,5 @@
 import { ChangeEvent, CSSProperties, DragEvent, FormEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { apiDelete, apiGet, apiPatch, apiPost } from "./api";
+import { apiDelete, apiGet, apiPatch, apiPost, apiPut } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
   AUTH_CREDENTIAL_STORAGE_KEY,
@@ -446,10 +446,70 @@ type AdminUserPreviewOptionsResponse = {
   options: UserPreviewOption[];
 };
 
+type GptProPromptFile = {
+  batchId: string;
+  displayName: string;
+  outputExists: boolean;
+  outputKey: string;
+  outputLastModifiedAt: string | null;
+  outputPath: string;
+  outputSizeBytes: number;
+  promptKey: string;
+  promptLastModifiedAt: string | null;
+  promptPath: string;
+  promptSizeBytes: number;
+};
+
+type GptProBatch = {
+  batchId: string;
+  displayName: string;
+  latestModifiedAt: string | null;
+  objectCount: number;
+  outputCount: number;
+  promptCount: number;
+  promptFiles: GptProPromptFile[];
+  storageStatus: string;
+  totalBytes: number;
+};
+
+type GptProWorkIndexResponse = {
+  batches: GptProBatch[];
+  bucket: string | null;
+  currentBatchId: string | null;
+  prefix: string;
+  storageStatus: string;
+  totals: {
+    batchCount: number;
+    objectCount: number;
+    outputCount: number;
+    promptCount: number;
+    totalBytes: number;
+  };
+  warnings?: string[];
+};
+
+type GptProWorkContentResponse = {
+  batchId: string;
+  content: string;
+  exists?: boolean;
+  outputPath?: string;
+  promptPath: string;
+  storageStatus: string;
+};
+
+type GptProWorkSaveResponse = {
+  batchId: string;
+  outputPath: string;
+  promptPath: string;
+  savedAt: string;
+  sizeBytes: number;
+  storageStatus: string;
+};
+
 type FirstmateTaskState = "active" | "completed" | "blocked" | "queued";
 type FirstmateTaskReportFeedbackAction = "proceed" | "changes-requested";
 type FirstmateTaskReportFeedbackMode = "live-window" | "follow-up-task";
-type FirstmateTaskReportStatus = "none" | "final" | "review-ready" | "draft" | "previous";
+type FirstmateTaskReportStatus = "none" | "final" | "review-ready" | "draft" | "previous" | "repair-ready";
 
 type FirstmateTask = {
   id: string;
@@ -467,6 +527,7 @@ type FirstmateTask = {
   responseNeeded: boolean;
   canRespond: boolean;
   hasReport: boolean;
+  showReportAction?: boolean;
   reportUrl: string | null;
   reportStatus: FirstmateTaskReportStatus;
   reportActionLabel: string | null;
@@ -477,6 +538,9 @@ type FirstmateTask = {
   reportFeedbackMode: FirstmateTaskReportFeedbackMode | null;
   reportFeedbackUnavailableReason: string | null;
   canSendReportFeedback: boolean;
+  gptProRepairStatus: string | null;
+  gptProRepairReady?: boolean;
+  showGptProRepairAction?: boolean;
   gptProRepairUrl: string | null;
   gptProRepairLabel: string | null;
   gptProRepairFallback: boolean;
@@ -510,6 +574,8 @@ type FirstmateTaskReportResponse = {
   reportReviewReady: boolean;
   reportFeedbackMode: FirstmateTaskReportFeedbackMode | null;
   canSendReportFeedback: boolean;
+  gptProRepairStatus: string | null;
+  gptProRepairReady: boolean;
   markdown: string;
 };
 
@@ -6358,6 +6424,7 @@ function isAppChromeRoute(route: Route) {
     route === "portal" ||
     route === "portal-preview" ||
     route === "user-preview" ||
+    route === "chats" ||
     route === "admin" ||
     route === "admin-dashboard-performance-data" ||
     route === "admin-application-sources" ||
@@ -15188,6 +15255,366 @@ function adminSectionKey(tab: string) {
   return tab === "Users" ? "users" : `table:${tab}`;
 }
 
+function formatBytes(value: number) {
+  if (!Number.isFinite(value) || value <= 0) return "0 B";
+  const units = ["B", "KB", "MB", "GB"];
+  let amount = value;
+  let unitIndex = 0;
+  while (amount >= 1024 && unitIndex < units.length - 1) {
+    amount /= 1024;
+    unitIndex += 1;
+  }
+  return `${amount >= 10 || unitIndex === 0 ? amount.toFixed(0) : amount.toFixed(1)} ${units[unitIndex]}`;
+}
+
+function AdminGptProChatsPage({
+  credential,
+  navigate,
+  onSignOut,
+  viewer
+}: {
+  credential: AuthCredential | null;
+  navigate: (route: Route) => void;
+  onSignOut: () => void;
+  viewer: UserRecord;
+}) {
+  function handleWorkspaceNav(item: string) {
+    if (item === "Admin") {
+      navigate("admin");
+    }
+  }
+
+  return (
+    <WorkspaceLayout
+      activeNavItem="GPT Pro chats"
+      navItems={["GPT Pro chats", "Admin"]}
+      onNavItemChange={handleWorkspaceNav}
+      onSignOut={onSignOut}
+      title="Chats"
+      user={viewer}
+    >
+      <GptProChatsPanel credential={credential} />
+    </WorkspaceLayout>
+  );
+}
+
+function LocalGptProChatsStandalonePage() {
+  return (
+    <main className="tasks-standalone-page">
+      <GptProChatsPanel credential={null} />
+    </main>
+  );
+}
+
+function GptProChatsPanel({ credential }: { credential: AuthCredential | null }) {
+  const [indexResponse, setIndexResponse] = useState<GptProWorkIndexResponse | null>(null);
+  const [selectedBatchId, setSelectedBatchId] = useState("");
+  const [selectedPromptPath, setSelectedPromptPath] = useState("");
+  const [promptContent, setPromptContent] = useState("");
+  const [outputContent, setOutputContent] = useState("");
+  const [savedOutputContent, setSavedOutputContent] = useState("");
+  const [outputExists, setOutputExists] = useState(false);
+  const [isLoadingIndex, setIsLoadingIndex] = useState(true);
+  const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [copyMessage, setCopyMessage] = useState<string | null>(null);
+
+  const batches = indexResponse?.batches || [];
+  const selectedBatch = batches.find((batch) => batch.batchId === selectedBatchId) || null;
+  const selectedPrompt = selectedBatch?.promptFiles.find((prompt) => prompt.promptPath === selectedPromptPath) || null;
+  const isOutputDirty = outputContent !== savedOutputContent;
+  const storageIsWritable = indexResponse?.storageStatus === "s3";
+
+  const loadIndex = useCallback(async () => {
+    setIsLoadingIndex(true);
+    setError(null);
+    setMessage(null);
+
+    try {
+      const payload = await apiGet<GptProWorkIndexResponse>("/api/admin/gpt-pro-work/batches", {
+        ...(credential ? { headers: adminAuthHeaders(credential) } : {})
+      });
+      setIndexResponse(payload);
+      setSelectedBatchId((currentBatchId) =>
+        payload.batches.some((batch) => batch.batchId === currentBatchId)
+          ? currentBatchId
+          : payload.currentBatchId || payload.batches[0]?.batchId || ""
+      );
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not load GPT Pro work batches.");
+    } finally {
+      setIsLoadingIndex(false);
+    }
+  }, [credential]);
+
+  useEffect(() => {
+    void loadIndex();
+  }, [loadIndex]);
+
+  useEffect(() => {
+    if (!selectedBatch) {
+      setSelectedPromptPath("");
+      return;
+    }
+
+    setSelectedPromptPath((currentPath) =>
+      selectedBatch.promptFiles.some((prompt) => prompt.promptPath === currentPath)
+        ? currentPath
+        : selectedBatch.promptFiles[0]?.promptPath || ""
+    );
+  }, [selectedBatch]);
+
+  useEffect(() => {
+    if (!selectedBatch || !selectedPromptPath) {
+      setPromptContent("");
+      setOutputContent("");
+      setSavedOutputContent("");
+      setOutputExists(false);
+      return undefined;
+    }
+
+    let isMounted = true;
+    setIsLoadingFile(true);
+    setError(null);
+    setMessage(null);
+    setCopyMessage(null);
+
+    const params = new URLSearchParams({
+      batch: selectedBatch.batchId,
+      path: selectedPromptPath
+    });
+    const requestInit = {
+      ...(credential ? { headers: adminAuthHeaders(credential) } : {})
+    };
+
+    Promise.all([
+      apiGet<GptProWorkContentResponse>(`/api/admin/gpt-pro-work/prompt?${params.toString()}`, requestInit),
+      apiGet<GptProWorkContentResponse>(`/api/admin/gpt-pro-work/output?${params.toString()}`, requestInit)
+    ])
+      .then(([promptPayload, outputPayload]) => {
+        if (!isMounted) return;
+        setPromptContent(promptPayload.content);
+        setOutputContent(outputPayload.content);
+        setSavedOutputContent(outputPayload.content);
+        setOutputExists(Boolean(outputPayload.exists));
+      })
+      .catch((requestError) => {
+        if (!isMounted) return;
+        setError(requestError instanceof Error ? requestError.message : "Could not load the selected GPT Pro file.");
+        setPromptContent("");
+        setOutputContent("");
+        setSavedOutputContent("");
+        setOutputExists(false);
+      })
+      .finally(() => {
+        if (isMounted) {
+          setIsLoadingFile(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [credential, selectedBatch, selectedPromptPath]);
+
+  async function copyPrompt() {
+    if (!promptContent) return;
+    setCopyMessage(null);
+    try {
+      await navigator.clipboard.writeText(promptContent);
+      setCopyMessage("Prompt copied.");
+    } catch {
+      setCopyMessage("Clipboard access failed.");
+    }
+  }
+
+  async function saveOutput() {
+    if (!selectedBatch || !selectedPrompt) {
+      setError("Select a prompt before saving output.");
+      return;
+    }
+
+    setIsSaving(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const saved = await apiPut<GptProWorkSaveResponse>("/api/admin/gpt-pro-work/output", {
+        ...(credential ? adminAuthBody(credential) : {}),
+        batchId: selectedBatch.batchId,
+        content: outputContent,
+        promptPath: selectedPrompt.promptPath
+      });
+      setSavedOutputContent(outputContent);
+      setOutputExists(true);
+      setMessage(`Saved ${formatBytes(saved.sizeBytes)} to ${saved.outputPath}.`);
+      await loadIndex();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not save GPT Pro output.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  return (
+    <section className="gpt-pro-chats">
+      <div className="gpt-pro-chats-header">
+        <div>
+          <p className="eyebrow">GPT Pro repair batches</p>
+          <h1>Chats</h1>
+        </div>
+        <div className="gpt-pro-chats-actions">
+          <span className="soft-badge">Storage: {indexResponse?.storageStatus || "checking"}</span>
+          <button className="secondary-button" disabled={isLoadingIndex} onClick={() => void loadIndex()} type="button">
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      {error ? <p className="error-message">{error}</p> : null}
+      {message ? <p className="success-message">{message}</p> : null}
+      {copyMessage ? <p className="success-message">{copyMessage}</p> : null}
+      {indexResponse?.warnings?.length ? (
+        <div className="gpt-pro-chats-warning">
+          {indexResponse.warnings.map((warning) => (
+            <p key={warning}>{warning}</p>
+          ))}
+        </div>
+      ) : null}
+
+      <div className="gpt-pro-chats-summary">
+        <article>
+          <span>Batches</span>
+          <strong>{indexResponse?.totals.batchCount.toLocaleString() || "0"}</strong>
+        </article>
+        <article>
+          <span>Prompts</span>
+          <strong>{indexResponse?.totals.promptCount.toLocaleString() || "0"}</strong>
+        </article>
+        <article>
+          <span>Outputs</span>
+          <strong>{indexResponse?.totals.outputCount.toLocaleString() || "0"}</strong>
+        </article>
+        <article>
+          <span>Size</span>
+          <strong>{formatBytes(indexResponse?.totals.totalBytes || 0)}</strong>
+        </article>
+      </div>
+
+      <div className="gpt-pro-batch-toolbar">
+        <label className="field">
+          <span>Batch</span>
+          <select
+            disabled={isLoadingIndex || batches.length === 0}
+            onChange={(event) => setSelectedBatchId(event.target.value)}
+            value={selectedBatchId}
+          >
+            {batches.map((batch) => (
+              <option key={batch.batchId} value={batch.batchId}>
+                {batch.displayName}{batch.batchId === indexResponse?.currentBatchId ? " (current)" : ""}
+              </option>
+            ))}
+          </select>
+        </label>
+        <div className="gpt-pro-batch-meta">
+          <span>{selectedBatch?.promptCount.toLocaleString() || "0"} prompts</span>
+          <span>{selectedBatch?.objectCount.toLocaleString() || "0"} objects</span>
+          <span>{selectedBatch?.latestModifiedAt ? formatDate(selectedBatch.latestModifiedAt) : "No date"}</span>
+        </div>
+      </div>
+
+      <div className="gpt-pro-chats-layout">
+        <aside className="gpt-pro-prompt-list-panel" aria-label="GPT Pro prompts">
+          <div className="gpt-pro-prompt-list-header">
+            <strong>{selectedBatch?.displayName || "No batch selected"}</strong>
+            {selectedBatch?.batchId === indexResponse?.currentBatchId ? <span className="soft-badge">Current</span> : null}
+          </div>
+          <div className="gpt-pro-prompt-list">
+            {isLoadingIndex ? <p className="empty-state">Loading batches...</p> : null}
+            {!isLoadingIndex && selectedBatch?.promptFiles.length === 0 ? (
+              <p className="empty-state">No prompt files found in this batch.</p>
+            ) : null}
+            {selectedBatch?.promptFiles.map((prompt) => (
+              <button
+                aria-current={prompt.promptPath === selectedPromptPath ? "true" : undefined}
+                className="gpt-pro-prompt-row"
+                key={prompt.promptPath}
+                onClick={() => setSelectedPromptPath(prompt.promptPath)}
+                type="button"
+              >
+                <span>
+                  <strong>{prompt.displayName}</strong>
+                  <small>{prompt.promptPath}</small>
+                </span>
+                <mark>{prompt.outputExists ? "Saved" : "Empty"}</mark>
+              </button>
+            ))}
+          </div>
+        </aside>
+
+        <section className="gpt-pro-editor-panel">
+          {selectedPrompt ? (
+            <>
+              <div className="gpt-pro-file-header">
+                <div>
+                  <p className="eyebrow">Current file</p>
+                  <h2>{selectedPrompt.displayName}</h2>
+                  <p>{selectedPrompt.promptPath}</p>
+                </div>
+                <div className="gpt-pro-file-actions">
+                  <button className="secondary-button" disabled={!promptContent || isLoadingFile} onClick={() => void copyPrompt()} type="button">
+                    Copy prompt
+                  </button>
+                  <button
+                    disabled={!storageIsWritable || !isOutputDirty || isSaving || isLoadingFile}
+                    onClick={() => void saveOutput()}
+                    type="button"
+                  >
+                    {isSaving ? "Saving..." : "Save output"}
+                  </button>
+                </div>
+              </div>
+
+              <div className="gpt-pro-file-context">
+                <div>
+                  <span>Prompt object</span>
+                  <strong>{selectedPrompt.promptKey}</strong>
+                </div>
+                <div>
+                  <span>Output object</span>
+                  <strong>{selectedPrompt.outputKey}</strong>
+                </div>
+                <div>
+                  <span>Status</span>
+                  <strong>{outputExists ? "Output saved" : "Output empty"}{isOutputDirty ? " - unsaved edits" : ""}</strong>
+                </div>
+              </div>
+
+              <div className="gpt-pro-editor-grid">
+                <label className="gpt-pro-editor-field">
+                  <span>Prompt</span>
+                  <textarea readOnly value={isLoadingFile ? "Loading prompt..." : promptContent} />
+                </label>
+                <label className="gpt-pro-editor-field">
+                  <span>Output</span>
+                  <textarea
+                    disabled={!storageIsWritable}
+                    onChange={(event) => setOutputContent(event.target.value)}
+                    value={isLoadingFile ? "Loading output..." : outputContent}
+                  />
+                </label>
+              </div>
+            </>
+          ) : (
+            <p className="empty-state">Select a prompt file to open its workspace.</p>
+          )}
+        </section>
+      </div>
+    </section>
+  );
+}
+
 function AdminDashboard({
   credential,
   initialTab,
@@ -15790,7 +16217,7 @@ function FirstmateTaskSection({
   );
 }
 
-function FirstmateTaskRow({
+export function FirstmateTaskRow({
   credential,
   localAuthBypass,
   onReportFeedbackSent,
@@ -15802,6 +16229,11 @@ function FirstmateTaskRow({
   task: FirstmateTask;
 }) {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const showGptProRepairAction = Boolean(task.showGptProRepairAction ?? task.gptProRepairReady);
+  const showReportAction = Boolean(
+    !showGptProRepairAction && (task.showReportAction ?? Boolean(task.hasReport && task.reportUrl))
+  );
+  const showReportFeedbackAction = Boolean(showReportAction && task.canSendReportFeedback);
 
   return (
     <tr className={task.responseNeeded ? "is-response-needed" : undefined}>
@@ -15826,39 +16258,43 @@ function FirstmateTaskRow({
       </td>
       <td>
         <div className="task-report-actions">
-          {task.hasReport && task.reportUrl ? (
-            <a
-              className={`button-link secondary-button ${task.reportIsFinal ? "" : "is-report-draft"}`.trim()}
-              href={task.reportUrl}
-              rel="noreferrer"
-              target="_blank"
-            >
-              {task.reportActionLabel || "View Report"}
-            </a>
+          {showGptProRepairAction ? (
+            task.gptProRepairUrl ? (
+              <a className="button-link secondary-button" href={task.gptProRepairUrl} rel="noreferrer" target="_blank">
+                {task.gptProRepairLabel || "Go To Pro Repair Batch"}
+              </a>
+            ) : (
+              <span className="tasks-muted">{task.gptProRepairUnavailableReason || "GPT Pro repair workspace URL is not configured."}</span>
+            )
           ) : (
-            <span className="tasks-muted">No report</span>
+            <>
+              {showReportAction ? (
+                <a
+                  className={`button-link secondary-button ${task.reportIsFinal ? "" : "is-report-draft"}`.trim()}
+                  href={task.reportUrl || ""}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {task.reportActionLabel || "View Report"}
+                </a>
+              ) : (
+                <span className="tasks-muted">No report</span>
+              )}
+              {showReportFeedbackAction ? (
+                <button className="secondary-button" onClick={() => setIsFeedbackOpen((value) => !value)} type="button">
+                  {isFeedbackOpen ? "Close Feedback" : "Report Feedback"}
+                </button>
+              ) : null}
+              {task.state === "completed" && showReportAction && !showReportFeedbackAction ? (
+                <span className="tasks-muted">{task.reportFeedbackUnavailableReason || "Feedback unavailable"}</span>
+              ) : null}
+            </>
           )}
-          {task.canSendReportFeedback ? (
-            <button className="secondary-button" onClick={() => setIsFeedbackOpen((value) => !value)} type="button">
-              {isFeedbackOpen ? "Close Feedback" : "Report Feedback"}
-            </button>
-          ) : null}
-          {task.state === "completed" && task.hasReport && !task.canSendReportFeedback ? (
-            <span className="tasks-muted">{task.reportFeedbackUnavailableReason || "Feedback unavailable"}</span>
-          ) : null}
-          {task.gptProRepairUrl ? (
-            <a className="button-link secondary-button" href={task.gptProRepairUrl} rel="noreferrer" target="_blank">
-              {task.gptProRepairLabel || "Go To Pro Repair Batch"}
-            </a>
-          ) : null}
-          {task.gptProRepairUnavailableReason ? (
-            <span className="tasks-muted">{task.gptProRepairUnavailableReason}</span>
-          ) : null}
         </div>
-        {task.hasReport && task.reportNote && !task.reportIsFinal ? (
+        {showReportAction && task.reportNote && !task.reportIsFinal ? (
           <p className="task-report-note">{task.reportNote}</p>
         ) : null}
-        {isFeedbackOpen ? (
+        {showReportFeedbackAction && isFeedbackOpen ? (
           <FirstmateReportFeedbackForm
             credential={credential}
             localAuthBypass={localAuthBypass}
@@ -20657,6 +21093,7 @@ export function App() {
       payload.dashboard === "admin"
         ? route === "testcases" ||
           route === "user-preview" ||
+          route === "chats" ||
           route === "admin-dashboard-performance-data" ||
           route === "admin-application-sources" ||
           route === "admin-application-profiles" ||
@@ -20781,6 +21218,21 @@ export function App() {
     }
 
     return <LocalFirstmateTasksStandalonePage />;
+  }
+
+  if (effectiveRoute === "chats") {
+    if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
+      return (
+        <AdminGptProChatsPage
+          credential={authCredential}
+          navigate={navigate}
+          onSignOut={signOut}
+          viewer={authPayload.user}
+        />
+      );
+    }
+
+    return <LocalGptProChatsStandalonePage />;
   }
 
   if (effectiveRoute === "task-report") {

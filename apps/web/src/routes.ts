@@ -14,6 +14,7 @@ export type Route =
   | "portal"
   | "portal-preview"
   | "user-preview"
+  | "chats"
   | "admin"
   | "admin-dashboard-performance-data"
   | "admin-application-sources"
@@ -46,6 +47,7 @@ export function routeFromPath(pathname = typeof window === "undefined" ? "/" : w
   if (pathname === "/portal") return "portal";
   if (pathname === "/portal-preview") return "portal-preview";
   if (pathname === "/user-preview") return "user-preview";
+  if (pathname === "/chats") return "chats";
   if (pathname === "/admin/dashboard-performance-data") return "admin-dashboard-performance-data";
   if (pathname === "/admin/application-sources") return "admin-application-sources";
   if (pathname === "/admin/application-profiles") return "admin-application-profiles";

@@ -26,6 +26,9 @@
 - Added stale response handling, completed-report feedback actions, draft/previous report labels, and GPT Pro repair batch links for the local Firstmate tasks dashboard.
 - Added durable follow-up task creation for completed report feedback when the original task has no live response window.
 - Added a guarded one-time Enter retry when `fm-send.sh` leaves a Firstmate task response in the Codex composer.
+- Integrated the real GPT Pro repair `/chats` workspace into the dashboard build with guarded local auth bypass support and current RetroFi work bucket defaults.
+- Made Firstmate task row actions mutually exclusive so report review/feedback controls and GPT Pro repair actions cannot render together.
+- Added backwards-compatible task row rendering for older local API payloads that have `hasReport` and `reportUrl` but not `showReportAction`.
 - Documented the local-only Firstmate task dashboard environment variables in `docs/development-artifacts.md`.
 
 ## 2026-07-08 - Codex (GPT-5) local homepage scanner copy transition

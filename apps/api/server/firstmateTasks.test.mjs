@@ -150,6 +150,8 @@ describe("firstmate task reader", () => {
         "## Done",
         "- [x] gpt-pro-repair-g1 - GPT Pro repair report data/gpt-pro-repair-g1/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)",
         "- [x] exact-gpt-pro-g2 - GPT Pro repair report data/exact-gpt-pro-g2/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)",
+        "- [x] repair-ready-g5 - GPT Pro repair-ready report data/repair-ready-g5/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)",
+        "- [x] report-status-repair-r6 - GPT Pro repair-ready report data/report-status-repair-r6/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)",
         "- [x] no-window-report-n1 - Completed report without live window data/no-window-report-n1/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)",
         "## In flight",
         "- [ ] reopened-report-r3 - Reopened report task data/reopened-report-r3/report.md (repo: green-business-solution) (kind: ship) (since 2026-07-08)",
@@ -158,12 +160,16 @@ describe("firstmate task reader", () => {
     );
     await writeFile(home, "state/gpt-pro-repair-g1.meta", "window=firstmate:fm-gpt-pro-repair-g1\n");
     await writeFile(home, "state/exact-gpt-pro-g2.meta", "window=firstmate:fm-exact-gpt-pro-g2\ngptProRepairUrl=http://localhost:5173/chats?batch=tax-repair\n");
+    await writeFile(home, "state/repair-ready-g5.meta", "window=firstmate:fm-repair-ready-g5\ngpt_pro_repair_status=ready\n");
+    await writeFile(home, "state/report-status-repair-r6.meta", "window=firstmate:fm-report-status-repair-r6\nreport_status=repair-ready\n");
     await writeFile(home, "state/reopened-report-r3.meta", "window=firstmate:fm-reopened-report-r3\n");
     await writeFile(home, "state/reopened-report-r3.status", "working: compiling richer report\n");
     await writeFile(home, "state/review-ready-r4.meta", "window=firstmate:fm-review-ready-r4\nreport_status=review-ready\n");
     await writeFile(home, "state/review-ready-r4.status", "working: report ready for captain review\n");
     await writeFile(home, "data/gpt-pro-repair-g1/report.md", "# GPT Pro Repair\n\nReady.\n");
     await writeFile(home, "data/exact-gpt-pro-g2/report.md", "# Exact GPT Pro Repair\n\nReady.\n");
+    await writeFile(home, "data/repair-ready-g5/report.md", "# Repair Ready\n\nReady.\n");
+    await writeFile(home, "data/report-status-repair-r6/report.md", "# Report Status Repair Ready\n\nReady.\n");
     await writeFile(home, "data/no-window-report-n1/report.md", "# No Window Report\n\nReady.\n");
     await writeFile(home, "data/reopened-report-r3/report.md", "# Previous Report\n\nOlder artifact.\n");
     await writeFile(home, "data/review-ready-r4/report.md", "# Review Ready\n\nReady.\n");
@@ -182,22 +188,48 @@ describe("firstmate task reader", () => {
       reportActionLabel: "See Report",
       reportIsFinal: true,
       reportFeedbackMode: "live-window",
+      showReportAction: true,
+      showGptProRepairAction: false,
+      gptProRepairReady: false,
       gptProRepairUrl: null,
       gptProRepairLabel: null,
       gptProRepairFallback: false,
-      gptProRepairUnavailableReason: "GPT Pro repair workspace URL is not configured for this local dashboard."
+      gptProRepairUnavailableReason: null
     });
     expect(dashboard.tasks.find((task) => task.id === "exact-gpt-pro-g2")).toMatchObject({
-      canSendReportFeedback: true,
-      reportFeedbackMode: "live-window",
+      canSendReportFeedback: false,
+      reportFeedbackMode: null,
+      showReportAction: false,
+      reportUrl: null,
+      gptProRepairReady: true,
+      showGptProRepairAction: true,
       gptProRepairUrl: "http://localhost:5173/chats?batch=tax-repair",
       gptProRepairLabel: "Go To Pro Repair Batch",
       gptProRepairFallback: false
+    });
+    expect(dashboard.tasks.find((task) => task.id === "repair-ready-g5")).toMatchObject({
+      canSendReportFeedback: false,
+      reportFeedbackMode: null,
+      showReportAction: false,
+      reportUrl: null,
+      gptProRepairReady: true,
+      showGptProRepairAction: true,
+      gptProRepairUrl: null,
+      gptProRepairUnavailableReason: "GPT Pro repair workspace URL is not configured for this local dashboard."
+    });
+    expect(dashboard.tasks.find((task) => task.id === "report-status-repair-r6")).toMatchObject({
+      reportStatus: "repair-ready",
+      canSendReportFeedback: false,
+      showReportAction: false,
+      gptProRepairReady: true,
+      showGptProRepairAction: true
     });
     expect(dashboard.tasks.find((task) => task.id === "no-window-report-n1")).toMatchObject({
       canSendReportFeedback: true,
       reportStatus: "final",
       reportFeedbackMode: "follow-up-task",
+      showReportAction: true,
+      showGptProRepairAction: false,
       reportIsFinal: true
     });
     expect(dashboard.tasks.find((task) => task.id === "reopened-report-r3")).toMatchObject({
@@ -227,6 +259,11 @@ describe("firstmate task reader", () => {
       now: new Date("2026-07-08T12:00:00.000Z")
     });
     expect(configuredDashboard.tasks.find((task) => task.id === "gpt-pro-repair-g1")).toMatchObject({
+      gptProRepairUrl: null,
+      gptProRepairLabel: null,
+      gptProRepairUnavailableReason: null
+    });
+    expect(configuredDashboard.tasks.find((task) => task.id === "repair-ready-g5")).toMatchObject({
       gptProRepairUrl: "http://localhost:5173/chats",
       gptProRepairLabel: "Go To Pro Repair Batch",
       gptProRepairUnavailableReason: null
