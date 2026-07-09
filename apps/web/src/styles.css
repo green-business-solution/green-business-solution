@@ -14054,6 +14054,18 @@ body {
   transform: translateY(-2px);
 }
 
+/* Keep the CTA legible over the dark four-card dashboard transition. */
+.public-page.home-page .planet-scan-section.scroll-frame-scanner .planet-scan-cta--after {
+  background: #f3f8f1;
+  border-color: #f3f8f1;
+  color: #062619;
+}
+
+.public-page.home-page .planet-scan-section.scroll-frame-scanner .planet-scan-cta--after:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
 .public-page.home-page .planet-scan-section.scroll-frame-scanner .planet-scan-cta:active {
   box-shadow: 0 8px 18px rgba(6, 38, 25, 0.14);
   transform: scale(0.97);
