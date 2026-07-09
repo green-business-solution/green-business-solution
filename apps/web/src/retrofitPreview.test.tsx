@@ -1507,7 +1507,7 @@ describe("retrofit recommendations preview", () => {
 
     expect(tabsSource).toContain("{ key: \"overview\", label: \"Overview\" }");
     expect(tabsSource).toContain("{ key: \"financials\", label: \"Financials\" }");
-    expect(tabsSource).toContain("{ key: \"scenariosOpportunities\", label: \"Scenarios+Opportunities\" }");
+    expect(tabsSource).toContain("{ key: \"scenariosOpportunities\", label: \"Scenarios\" }");
     expect(tabsSource).toContain("{ key: \"environmental\", label: \"Impact\" }");
     expect(tabsSource).toContain("{ key: \"application\", label: \"Application Overview\" }");
     expect(tabsSource).not.toContain("{ key: \"opportunities\", label: \"Opportunities\" }");
@@ -1515,7 +1515,7 @@ describe("retrofit recommendations preview", () => {
     expect(tabsSource.match(/label:/g)).toHaveLength(5);
     const tabOrderIndexes = [
       tabsSource.indexOf("{ key: \"overview\", label: \"Overview\" }"),
-      tabsSource.indexOf("{ key: \"scenariosOpportunities\", label: \"Scenarios+Opportunities\" }"),
+      tabsSource.indexOf("{ key: \"scenariosOpportunities\", label: \"Scenarios\" }"),
       tabsSource.indexOf("{ key: \"financials\", label: \"Financials\" }"),
       tabsSource.indexOf("{ key: \"environmental\", label: \"Impact\" }"),
       tabsSource.indexOf("{ key: \"application\", label: \"Application Overview\" }")
@@ -2453,6 +2453,8 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".estimate-workspace-shell.is-scenarios-opportunities");
     expect(css).toContain(".scenario-opportunity-workspace");
     expect(css).toContain(".scenario-opportunity-detail-panel");
+    expect(css).toContain(".retrofit-preview-page .scenario-opportunity-card:hover");
+    expect(css).toContain(".retrofit-preview-page .scenario-opportunity-table-row:hover");
     expect(css).toContain(".scenario-opportunity-table-row");
     expect(css).toContain(".workspace-panel");
     expect(css).toContain(".overview-command-grid");
@@ -2468,5 +2470,10 @@ describe("retrofit recommendations preview", () => {
     const tabHoverRule = css.match(/\.retrofit-preview-page \.retrofit-tab:hover,[\s\S]*?{([\s\S]*?)}/)?.[1] || "";
     expect(tabHoverRule).not.toContain("#0f573c");
     expect(tabHoverRule).not.toContain("#176b4c");
+
+    const scenarioHoverRule = css.match(
+      /\.retrofit-preview-page \.scenario-card:hover,\n\.retrofit-preview-page \.scenario-opportunity-card:hover,\n\.retrofit-preview-page \.scenario-opportunity-table-row:hover\s*{([^}]*)}/
+    )?.[1] || "";
+    expect(scenarioHoverRule).toContain("background: var(--rf-green-soft)");
   });
 });

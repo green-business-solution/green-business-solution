@@ -6225,6 +6225,12 @@ dd {
   color: var(--rf-text);
 }
 
+.retrofit-preview-page .scenario-card:hover,
+.retrofit-preview-page .scenario-opportunity-card:hover,
+.retrofit-preview-page .scenario-opportunity-table-row:hover {
+  background: var(--rf-green-soft);
+}
+
 .retrofit-preview-page .retrofit-tab:hover,
 .retrofit-preview-page .retrofit-picker-card:hover,
 .retrofit-preview-page .scenario-card:hover,
