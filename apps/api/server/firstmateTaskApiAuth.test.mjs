@@ -234,7 +234,7 @@ describe("Firstmate task API admin authorization", () => {
         source: "dynamodb",
         taskId: "current-task",
         reportStatus: "final",
-        markdown: "# Safe report\n\nAdmin-readable sanitized summary."
+        markdown: "# Safe report Admin-readable sanitized summary."
       });
     });
 

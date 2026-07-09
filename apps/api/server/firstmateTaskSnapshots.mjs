@@ -36,7 +36,6 @@ export function sanitizeFirstmateTaskForSnapshot(task) {
   if (!taskIdPattern.test(id)) return null;
   const state = normalizeFirstmateSnapshotTaskState(task?.state);
   const reportUrl = safeTaskReportUrl(task?.reportUrl, id);
-  const gptProRepairUrl = safeHttpsUrl(task?.gptProRepairUrl);
   const reportReviewReady = Boolean(task?.reportReviewReady);
   const active = !inactiveTaskStates.has(state);
   const defaultVisible = typeof task?.defaultVisible === "boolean" ? task.defaultVisible : active;
@@ -74,14 +73,7 @@ export function sanitizeFirstmateTaskForSnapshot(task) {
     reportReviewReady,
     reportFeedbackMode: null,
     reportFeedbackUnavailableReason: "Report feedback happens in Firstmate.",
-    canSendReportFeedback: false,
-    gptProRepairStatus: sanitizeOptionalPublicText(task?.gptProRepairStatus, 80),
-    gptProRepairReady: Boolean(task?.gptProRepairReady),
-    showGptProRepairAction: Boolean(gptProRepairUrl),
-    gptProRepairUrl,
-    gptProRepairLabel: gptProRepairUrl ? sanitizePublicText(task?.gptProRepairLabel || "Open repair workspace", 80) : null,
-    gptProRepairFallback: false,
-    gptProRepairUnavailableReason: gptProRepairUrl ? null : "Repair workspace links are not included in the synced snapshot."
+    canSendReportFeedback: false
   });
 }
 
@@ -106,8 +98,6 @@ export function sanitizeFirstmateReportForSnapshot(report, task, { maxMarkdownCh
     reportReviewReady: Boolean(report?.reportReviewReady ?? task?.reportReviewReady),
     reportFeedbackMode: null,
     canSendReportFeedback: false,
-    gptProRepairStatus: sanitizeOptionalPublicText(report?.gptProRepairStatus || task?.gptProRepairStatus, 80),
-    gptProRepairReady: Boolean(report?.gptProRepairReady ?? task?.gptProRepairReady),
     markdown: markdownResult.markdown,
     markdownTruncated: Boolean(report?.markdownTruncated || markdownResult.truncated),
     markdownMaxChars: maxMarkdownChars,
@@ -136,12 +126,11 @@ export function buildFirstmateTaskSnapshotFromDashboard(
   const tasks = taskAndReportPairs.map((pair) => pair.task);
   const reports = taskAndReportPairs.map((pair) => pair.report).filter(Boolean).sort(compareSnapshotReports);
   const counts = countSnapshotTasks(tasks);
+  const canonicalReports = reports.map(stripSnapshotReportGeneratedAt);
   const snapshotBase = {
     schemaVersion: FIRSTMATE_TASK_SNAPSHOT_SCHEMA_VERSION,
     workspaceId: normalizedWorkspaceId,
-    sourceGeneratedAt,
-    sourceModifiedAtEpochMs: sourceModifiedAt,
-    reports,
+    reports: canonicalReports,
     tasks
   };
   const snapshotVersion = crypto
@@ -152,6 +141,8 @@ export function buildFirstmateTaskSnapshotFromDashboard(
 
   return {
     ...snapshotBase,
+    sourceGeneratedAt,
+    sourceModifiedAtEpochMs: sourceModifiedAt,
     snapshotVersion,
     generatedAt,
     publishedAt: generatedAt,
@@ -221,7 +212,7 @@ export async function publishFirstmateTaskSnapshot({ db, tableName, snapshot }) 
         TableName: tableName,
         Item: manifest,
         ConditionExpression:
-          "attribute_not_exists(stateScope) OR sourceModifiedAtEpochMs <= :sourceModifiedAtEpochMs OR snapshotVersion = :snapshotVersion",
+          "attribute_not_exists(stateScope) OR sourceModifiedAtEpochMs < :sourceModifiedAtEpochMs OR (sourceModifiedAtEpochMs = :sourceModifiedAtEpochMs AND snapshotVersion <= :snapshotVersion)",
         ExpressionAttributeValues: {
           ":sourceModifiedAtEpochMs": manifest.sourceModifiedAtEpochMs,
           ":snapshotVersion": manifest.snapshotVersion
@@ -402,8 +393,6 @@ export async function readPublishedFirstmateTaskReport({
     reportReviewReady: Boolean(report.reportReviewReady ?? task.reportReviewReady),
     reportFeedbackMode: null,
     canSendReportFeedback: false,
-    gptProRepairStatus: report.gptProRepairStatus || task.gptProRepairStatus || null,
-    gptProRepairReady: Boolean(report.gptProRepairReady ?? task.gptProRepairReady),
     markdown: report.markdown,
     markdownTruncated: Boolean(report.markdownTruncated)
   };
@@ -451,6 +440,12 @@ function normalizeSnapshot(snapshot) {
     inactiveTaskCount: tasks.filter((task) => !task.active).length,
     hiddenByDefaultTaskCount: tasks.filter((task) => task.hiddenByDefault).length
   };
+}
+
+function stripSnapshotReportGeneratedAt(report) {
+  if (!report) return report;
+  const { generatedAt, ...rest } = report;
+  return rest;
 }
 
 function reportInputMap(reportsByTaskId) {
@@ -618,14 +613,15 @@ function sanitizePublicText(value, maxLength) {
 
 function sanitizePublicMarkdown(value, maxLength) {
   const raw = String(value || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
-  const sanitized = raw
-    .replace(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, "[email]")
-    .replace(/\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/g, "[redacted]")
-    .replace(/\b(?:password|secret|token|credential|authorization)\s*[=:]\s*\S+/gi, "[redacted]")
-    .replace(/(^|[\s(["'`])\/(?:Users|home|tmp|var|private|Volumes)\/[^\s)"'`]+/g, "$1[local path]")
-    .replace(/[A-Za-z]:\\[^\s)"'`]+/g, "[local path]")
-    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
-    .trim();
+  const sanitized = stripMarkdownForAdminPreview(raw).trim();
+  if (containsUnsafeReportConstructs(raw) || containsUnsafeReportConstructs(sanitized)) {
+    const redacted = "Report content redacted for admin preview.";
+    return {
+      markdown: redacted,
+      truncated: false,
+      charCount: redacted.length
+    };
+  }
   const safeMarkdown = sanitized || "Report content is unavailable after sanitization.";
   if (safeMarkdown.length <= maxLength) {
     return {
@@ -641,6 +637,40 @@ function sanitizePublicMarkdown(value, maxLength) {
     truncated: true,
     charCount: markdown.length
   };
+}
+
+function stripMarkdownForAdminPreview(value) {
+  return String(value || "")
+    .replace(/<!--[\s\S]*?-->/g, "\n")
+    .replace(/```[\s\S]*?```/g, "\n[code block omitted]\n")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/!\[([^\]]*)\]\((?:[^)\s]+)\)/g, "$1")
+    .replace(/\[([^\]]+)\]\((?:[^)\s]+)\)/g, "$1")
+    .replace(/\bhttps?:\/\/[^\s<>)]+/gi, "[link]")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, "[email]")
+    .replace(/\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/g, "[redacted]")
+    .replace(/\b(?:password|secret|token|credential|authorization)\s*[:=]\s*["'`]?[^"\s'`]+/gi, "[redacted]")
+    .replace(/\b(?:aws[_-]?secret[_-]?access[_-]?key|x-amz-signature|x-amz-credential|x-amz-security-token|private[_-]?key)\b[^\n]*/gi, "[redacted]")
+    .replace(/(^|[\s(["'`])\/(?:Users|home|tmp|var|private|Volumes)\/[^\s)"'`]+/g, "$1[local path]")
+    .replace(/[A-Za-z]:\\[^\s)"'`]+/g, "[local path]")
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+    .replace(/\s+/g, " ");
+}
+
+function containsUnsafeReportConstructs(value) {
+  const text = String(value || "");
+  const unsafePatterns = [
+    /-----BEGIN [^-]+PRIVATE KEY-----/i,
+    /(?:^|[\s"'])Authorization\s*[:=]\s*(?:Bearer|Basic)\s+\S+/i,
+    /["'](?:password|secret|token|credential|authorization|api[_-]?key|access[_-]?key|private[_-]?key)["']\s*:\s*["'][^"'`\n]+["']/i,
+    /\b(?:password|secret|token|credential|authorization|api[_-]?key|access[_-]?key|private[_-]?key)\s*[:=]\s*["'`]?[^"\s'`]+/i,
+    /\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/i,
+    /https?:\/\/[^/\s]+:[^@\s]+@/i,
+    /https?:\/\/[^\s<>)?]*(?:[?&](?:X-Amz-Signature|X-Amz-Credential|X-Amz-Security-Token|token|secret|password|credential)=)/i,
+    /\b(?:x-amz-signature|x-amz-credential|x-amz-security-token)\b/i
+  ];
+  return unsafePatterns.some((pattern) => pattern.test(text));
 }
 
 function sanitizeOptionalPublicText(value, maxLength) {
@@ -666,18 +696,6 @@ function sanitizeReportStatus(value) {
 function safeTaskReportUrl(value, taskId) {
   const url = cleanText(value);
   return url === `/tasks/reports/${encodeURIComponent(taskId)}` ? url : null;
-}
-
-function safeHttpsUrl(value) {
-  const url = cleanText(value);
-  if (!url) return null;
-  try {
-    const parsed = new URL(url);
-    if (parsed.protocol !== "https:") return null;
-    return parsed.toString();
-  } catch {
-    return null;
-  }
 }
 
 function safeDateText(value) {

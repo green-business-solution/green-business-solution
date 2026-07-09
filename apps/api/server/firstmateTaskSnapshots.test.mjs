@@ -37,11 +37,15 @@ function createMockDocumentClient({ queryPageSize = 1000 } = {}) {
         const existing = items.find(
           (item) => item.stateScope === input.Item.stateScope && item.stateKey === input.Item.stateKey
         );
+        const existingSourceModifiedAt = existing?.sourceModifiedAtEpochMs ?? -1;
+        const nextSourceModifiedAt = input.Item.sourceModifiedAtEpochMs ?? -1;
+        const existingSnapshotVersion = existing?.snapshotVersion || "";
+        const nextSnapshotVersion = input.Item.snapshotVersion || "";
         if (
           input.ConditionExpression &&
           existing &&
-          existing.sourceModifiedAtEpochMs > input.Item.sourceModifiedAtEpochMs &&
-          existing.snapshotVersion !== input.Item.snapshotVersion
+          (existingSourceModifiedAt > nextSourceModifiedAt ||
+            (existingSourceModifiedAt === nextSourceModifiedAt && existingSnapshotVersion > nextSnapshotVersion))
         ) {
           const error = new Error("Conditional check failed.");
           error.name = "ConditionalCheckFailedException";
@@ -77,10 +81,10 @@ function upsert(items, nextItem) {
   items.push(nextItem);
 }
 
-function buildDashboard(tasks) {
+function buildDashboard(tasks, generatedAt = "2026-07-09T12:00:00.000Z") {
   return {
     enabled: true,
-    generatedAt: "2026-07-09T12:00:00.000Z",
+    generatedAt,
     tasks
   };
 }
@@ -134,10 +138,11 @@ describe("Firstmate task DynamoDB snapshots", () => {
       canRespond: false,
       canAssign: false,
       reportUrl: "/tasks/reports/active-task-a1",
-      showReportAction: true,
-      gptProRepairUrl: null,
-      showGptProRepairAction: false
+      showReportAction: true
     });
+    expect(activeTask).not.toHaveProperty("gptProRepairUrl");
+    expect(activeTask).not.toHaveProperty("showGptProRepairAction");
+    expect(activeTask).not.toHaveProperty("gptProRepairReady");
     expect(activeTask.title).not.toContain("/Users/");
     expect(activeTask.title).not.toContain("admin@example.com");
     expect(activeTask.title).not.toContain("AKIA1234567890ABCDEF");
@@ -147,13 +152,10 @@ describe("Firstmate task DynamoDB snapshots", () => {
     expect(snapshot.reports).toEqual([
       expect.objectContaining({
         taskId: "active-task-a1",
-        markdown: expect.stringContaining("[local path]"),
+        markdown: "Report content redacted for admin preview.",
         markdownTruncated: false
       })
     ]);
-    expect(snapshot.reports[0].markdown).not.toContain("/Users/");
-    expect(snapshot.reports[0].markdown).not.toContain("admin@example.com");
-    expect(snapshot.reports[0].markdown).not.toContain("abc123");
 
     const completedTask = snapshot.tasks.find((task) => task.id === "completed-task-c1");
     expect(completedTask).toMatchObject({
@@ -166,6 +168,42 @@ describe("Firstmate task DynamoDB snapshots", () => {
       working: 1,
       active: 1,
       completed: 1
+    });
+  });
+
+  it("keeps identical snapshot content on a stable version across repeat publishes", async () => {
+    const db = createMockDocumentClient();
+    const tableName = "firstmateTasksTable";
+    const firstSnapshot = buildFirstmateTaskSnapshotFromDashboard(
+      buildDashboard([{ id: "stable-task-s1", title: "Stable task", kind: "codex", repo: "green-business-solution", state: "working" }], "2026-07-09T12:00:00.000Z"),
+      {
+        now: new Date("2026-07-09T12:01:00.000Z"),
+        sourceModifiedAtEpochMs: 2000
+      }
+    );
+    const secondSnapshot = buildFirstmateTaskSnapshotFromDashboard(
+      buildDashboard([{ id: "stable-task-s1", title: "Stable task", kind: "codex", repo: "green-business-solution", state: "working" }], "2026-07-09T12:30:00.000Z"),
+      {
+        now: new Date("2026-07-09T12:31:00.000Z"),
+        sourceModifiedAtEpochMs: 2000
+      }
+    );
+
+    expect(firstSnapshot.snapshotVersion).toBe(secondSnapshot.snapshotVersion);
+
+    await publishFirstmateTaskSnapshot({ db, tableName, snapshot: firstSnapshot });
+    await publishFirstmateTaskSnapshot({ db, tableName, snapshot: secondSnapshot });
+
+    expect(
+      db.items.filter(
+        (item) =>
+          item.stateScope === firstmateTaskSnapshotScope("retrofi", firstSnapshot.snapshotVersion) &&
+          item.entityType === "FIRSTMATE_TASK"
+      )
+    ).toHaveLength(1);
+    expect(await readPublishedFirstmateTaskSnapshot({ db, tableName, workspaceId: "retrofi" })).toMatchObject({
+      totalTaskCount: 1,
+      snapshotVersion: firstSnapshot.snapshotVersion
     });
   });
 
@@ -363,7 +401,7 @@ describe("Firstmate task DynamoDB snapshots", () => {
   it("keeps report payloads sanitized, bounded, and unavailable when no report record is published", async () => {
     const db = createMockDocumentClient();
     const tableName = "firstmateTasksTable";
-    const largeMarkdown = `${"Report line\n".repeat(3000)}Secret path /Users/neer/private token=abc123 admin@example.com`;
+    const safeLargeMarkdown = "Report line\n".repeat(3000);
     const snapshot = buildFirstmateTaskSnapshotFromDashboard(
       buildDashboard([
         {
@@ -390,7 +428,7 @@ describe("Firstmate task DynamoDB snapshots", () => {
           "large-report-l1": {
             taskId: "large-report-l1",
             reportStatus: "final",
-            markdown: largeMarkdown
+            markdown: safeLargeMarkdown
           }
         },
         sourceModifiedAtEpochMs: 4000
@@ -404,9 +442,7 @@ describe("Firstmate task DynamoDB snapshots", () => {
       markdownMaxChars: FIRSTMATE_TASK_REPORT_MARKDOWN_MAX_CHARS
     });
     expect(snapshot.reports[0].markdown.length).toBeLessThanOrEqual(FIRSTMATE_TASK_REPORT_MARKDOWN_MAX_CHARS);
-    expect(snapshot.reports[0].markdown).not.toContain("/Users/");
-    expect(snapshot.reports[0].markdown).not.toContain("admin@example.com");
-    expect(snapshot.reports[0].markdown).not.toContain("abc123");
+    expect(snapshot.reports[0].markdown).toContain("Report line");
     expect(snapshot.tasks.find((task) => task.id === "large-report-l1")).toMatchObject({
       hasReport: true,
       reportUrl: "/tasks/reports/large-report-l1"
@@ -424,6 +460,53 @@ describe("Firstmate task DynamoDB snapshots", () => {
     await expect(readPublishedFirstmateTaskReport({ db, tableName, taskId: "missing-report-m1" })).rejects.toMatchObject({
       status: 404,
       message: "Report not found."
+    });
+  });
+
+  it("redacts unsafe report constructs before publishing", async () => {
+    const db = createMockDocumentClient();
+    const tableName = "firstmateTasksTable";
+    const snapshot = buildFirstmateTaskSnapshotFromDashboard(
+      buildDashboard([
+        {
+          id: "unsafe-report-u1",
+          title: "Unsafe report",
+          kind: "codex",
+          repo: "green-business-solution",
+          state: "completed",
+          hasReport: true,
+          reportUrl: "/tasks/reports/unsafe-report-u1"
+        }
+      ]),
+      {
+        reportsByTaskId: {
+          "unsafe-report-u1": {
+            taskId: "unsafe-report-u1",
+            reportStatus: "final",
+            markdown: [
+              "# Unsafe",
+              "",
+              "Authorization: Bearer secret-token",
+              "https://example.com/callback?X-Amz-Signature=abc123",
+              "token = secret-value"
+            ].join("\n")
+          }
+        },
+        sourceModifiedAtEpochMs: 5000
+      }
+    );
+
+    expect(snapshot.reports).toHaveLength(1);
+    expect(snapshot.reports[0]).toMatchObject({
+      taskId: "unsafe-report-u1",
+      markdown: "Report content redacted for admin preview.",
+      markdownTruncated: false
+    });
+
+    await publishFirstmateTaskSnapshot({ db, tableName, snapshot });
+    await expect(readPublishedFirstmateTaskReport({ db, tableName, taskId: "unsafe-report-u1" })).resolves.toMatchObject({
+      markdown: "Report content redacted for admin preview.",
+      markdownTruncated: false
     });
   });
 
