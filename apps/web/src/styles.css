@@ -1354,6 +1354,17 @@ textarea {
   margin: 0;
 }
 
+.tasks-notice-message {
+  background: #eef8f1;
+  border: 1px solid #bde2c8;
+  border-radius: 8px;
+  color: #176b4c;
+  font-size: 13px;
+  font-weight: 750;
+  margin: 0;
+  padding: 10px 12px;
+}
+
 .tasks-section-stack {
   display: grid;
   gap: 16px;
@@ -1513,7 +1524,7 @@ textarea {
 
 .tasks-table {
   border-collapse: collapse;
-  min-width: 1060px;
+  min-width: 1180px;
   width: 100%;
 }
 
@@ -1542,6 +1553,90 @@ textarea {
   display: block;
   font-size: 12px;
   margin-top: 3px;
+}
+
+.task-report-actions {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 360px;
+}
+
+.task-report-actions .secondary-button,
+.task-report-actions .button-link {
+  min-height: 32px;
+  padding: 7px 10px;
+}
+
+.task-report-actions .is-report-draft {
+  border-color: #d7c38f;
+  color: #7a5a13;
+}
+
+.task-report-note {
+  color: #6f623c;
+  font-size: 12px;
+  line-height: 1.35;
+  margin: 6px 0 0;
+  max-width: 360px;
+}
+
+.task-report-feedback-form {
+  background: #f8fbf9;
+  border: 1px solid #dce7e0;
+  border-radius: 8px;
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+  max-width: 360px;
+  padding: 10px;
+}
+
+.task-report-feedback-toggle {
+  background: #eef3ef;
+  border: 1px solid #d7e1db;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+.task-report-feedback-toggle button {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: #3d4d44;
+  font-size: 12px;
+  min-height: 32px;
+  padding: 7px 8px;
+}
+
+.task-report-feedback-toggle button.is-active {
+  background: #ffffff;
+  color: #176b4c;
+  font-weight: 850;
+}
+
+.task-report-feedback-form textarea {
+  background: #ffffff;
+  border: 1px solid #d5dfd8;
+  border-radius: 8px;
+  color: #17211b;
+  line-height: 1.4;
+  min-height: 74px;
+  padding: 10px;
+  resize: vertical;
+  width: 100%;
+}
+
+.task-report-feedback-form > button {
+  justify-self: end;
+  min-height: 34px;
+}
+
+.task-report-feedback-form .error-message {
+  margin: 0;
 }
 
 .task-status-indicator {
@@ -1604,6 +1699,30 @@ textarea {
 
 .tasks-muted {
   color: #7b8780;
+}
+
+.task-report-status-note {
+  background: #fffaf0;
+  border: 1px solid #e4d1a1;
+  border-radius: 8px;
+  color: #6f623c;
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+}
+
+.task-report-status-note strong {
+  color: #7a5a13;
+}
+
+.task-report-status-note p {
+  margin: 0;
+}
+
+.task-report-status-note span {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .task-report-markdown {

@@ -76,6 +76,7 @@ import {
   isFirstmateTasksLocalAuthBypassEnabled,
   readFirstmateTaskReport,
   readFirstmateTasksDashboard,
+  sendFirstmateTaskReportFeedback,
   sendFirstmateTaskResponse
 } from "./firstmateTasks.mjs";
 
@@ -3705,6 +3706,21 @@ app.post("/api/admin/firstmate/tasks/:taskId/respond", async (req, res) => {
       env: process.env,
       taskId: req.params.taskId,
       message: req.body?.message,
+      now: new Date()
+    }));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/firstmate/tasks/:taskId/report-feedback", async (req, res) => {
+  try {
+    await requireFirstmateTasksRouteAccess(req);
+    res.json(await sendFirstmateTaskReportFeedback({
+      env: process.env,
+      taskId: req.params.taskId,
+      action: req.body?.action,
+      comment: req.body?.comment,
       now: new Date()
     }));
   } catch (error) {

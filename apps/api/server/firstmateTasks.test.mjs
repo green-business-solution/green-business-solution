@@ -10,6 +10,7 @@ import {
   readFirstmateTasksDashboard,
   safeReportPath,
   safeStateFilePath,
+  sendFirstmateTaskReportFeedback,
   sendFirstmateTaskResponse
 } from "./firstmateTasks.mjs";
 
@@ -140,6 +141,72 @@ describe("firstmate task reader", () => {
     expect(dashboard.authMode).toBe("local-bypass");
   });
 
+  it("exposes report feedback and GPT Pro repair targets for completed report tasks", async () => {
+    const home = await makeFirstmateHome();
+    await writeFile(
+      home,
+      "data/backlog.md",
+      [
+        "## Done",
+        "- [x] gpt-pro-repair-g1 - GPT Pro repair report data/gpt-pro-repair-g1/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)",
+        "- [x] exact-gpt-pro-g2 - GPT Pro repair report data/exact-gpt-pro-g2/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)",
+        "## In flight",
+        "- [ ] reopened-report-r3 - Reopened report task data/reopened-report-r3/report.md (repo: green-business-solution) (kind: ship) (since 2026-07-08)",
+        "- [ ] review-ready-r4 - Report review task data/review-ready-r4/report.md (repo: green-business-solution) (kind: ship) (since 2026-07-08)"
+      ].join("\n")
+    );
+    await writeFile(home, "state/gpt-pro-repair-g1.meta", "window=firstmate:fm-gpt-pro-repair-g1\n");
+    await writeFile(home, "state/exact-gpt-pro-g2.meta", "window=firstmate:fm-exact-gpt-pro-g2\ngptProRepairUrl=http://localhost:5173/chats?batch=tax-repair\n");
+    await writeFile(home, "state/reopened-report-r3.meta", "window=firstmate:fm-reopened-report-r3\n");
+    await writeFile(home, "state/reopened-report-r3.status", "working: compiling richer report\n");
+    await writeFile(home, "state/review-ready-r4.meta", "window=firstmate:fm-review-ready-r4\nreport_status=review-ready\n");
+    await writeFile(home, "state/review-ready-r4.status", "working: report ready for captain review\n");
+    await writeFile(home, "data/gpt-pro-repair-g1/report.md", "# GPT Pro Repair\n\nReady.\n");
+    await writeFile(home, "data/exact-gpt-pro-g2/report.md", "# Exact GPT Pro Repair\n\nReady.\n");
+    await writeFile(home, "data/reopened-report-r3/report.md", "# Previous Report\n\nOlder artifact.\n");
+    await writeFile(home, "data/review-ready-r4/report.md", "# Review Ready\n\nReady.\n");
+
+    const dashboard = await readFirstmateTasksDashboard({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      now: new Date("2026-07-08T12:00:00.000Z")
+    });
+
+    expect(dashboard.tasks.find((task) => task.id === "gpt-pro-repair-g1")).toMatchObject({
+      canSendReportFeedback: true,
+      reportStatus: "final",
+      reportActionLabel: "See Report",
+      reportIsFinal: true,
+      gptProRepairUrl: "/chats",
+      gptProRepairLabel: "Go To Pro Repair Batch (/chats fallback)",
+      gptProRepairFallback: true
+    });
+    expect(dashboard.tasks.find((task) => task.id === "exact-gpt-pro-g2")).toMatchObject({
+      canSendReportFeedback: true,
+      gptProRepairUrl: "http://localhost:5173/chats?batch=tax-repair",
+      gptProRepairLabel: "Go To Pro Repair Batch",
+      gptProRepairFallback: false
+    });
+    expect(dashboard.tasks.find((task) => task.id === "reopened-report-r3")).toMatchObject({
+      state: "active",
+      canSendReportFeedback: false,
+      reportStatus: "previous",
+      reportActionLabel: "View Previous Report",
+      reportIsFinal: false,
+      reportReviewReady: false
+    });
+    expect(dashboard.tasks.find((task) => task.id === "reopened-report-r3").reportNote).toContain("active again");
+    expect(dashboard.tasks.find((task) => task.id === "review-ready-r4")).toMatchObject({
+      state: "active",
+      canSendReportFeedback: true,
+      reportStatus: "review-ready",
+      reportActionLabel: "Review Report",
+      reportReviewReady: true
+    });
+  });
+
   it("reads reports only from data/<task-id>/report.md", async () => {
     const home = await makeFirstmateHome();
     await writeFile(home, "data/report-task-z9/report.md", "# Report\n\nReady.\n");
@@ -154,6 +221,11 @@ describe("firstmate task reader", () => {
     });
 
     expect(report.markdown).toContain("Ready.");
+    expect(report).toMatchObject({
+      reportStatus: "previous",
+      reportIsFinal: false,
+      reportReviewReady: false
+    });
     expect(() => safeReportPath(home, "../outside")).toThrow("Invalid task id.");
     expect(() => safeStateFilePath(home, "../outside", ".meta")).toThrow("Invalid task state path.");
   });
@@ -188,6 +260,84 @@ describe("firstmate task reader", () => {
     expect(calls[0].file).toBe(path.join(home, "bin", "fm-send.sh"));
     expect(calls[0].args).toEqual(["firstmate:fm-respond-task-r1", "Approve option A; do not mutate data."]);
     expect(calls[0].options).toMatchObject({ cwd: home, timeout: 15_000 });
+  });
+
+  it("sends report feedback with an explicit action and optional captain comment", async () => {
+    const home = await makeFirstmateHome();
+    await writeFile(home, "bin/fm-send.sh", "#!/usr/bin/env bash\n");
+    await writeFile(home, "data/backlog.md", "## Done\n- [x] feedback-task-f1 - Completed report data/feedback-task-f1/report.md (repo: green-business-solution) (kind: scout) (reported 2026-07-08)\n");
+    await writeFile(home, "state/feedback-task-f1.meta", "window=firstmate:fm-feedback-task-f1\nkind=scout\n");
+    await writeFile(home, "data/feedback-task-f1/report.md", "# Report\n\nReady.\n");
+    const calls = [];
+
+    const result = await sendFirstmateTaskReportFeedback({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      taskId: "feedback-task-f1",
+      action: "proceed",
+      comment: "Looks good. Proceed with the next step.",
+      now: new Date("2026-07-08T12:00:00.000Z"),
+      execFileFn: (file, args, options, callback) => {
+        calls.push({ file, args, options });
+        callback(null, "", "");
+      }
+    });
+
+    expect(result).toEqual({
+      generatedAt: "2026-07-08T12:00:00.000Z",
+      taskId: "feedback-task-f1",
+      action: "proceed",
+      sent: true
+    });
+    expect(calls).toHaveLength(1);
+    expect(calls[0].file).toBe(path.join(home, "bin", "fm-send.sh"));
+    expect(calls[0].args[0]).toBe("firstmate:fm-feedback-task-f1");
+    expect(calls[0].args[1]).toContain("Action: report-approved-proceed");
+    expect(calls[0].args[1]).toContain("Captain comment: Looks good. Proceed with the next step.");
+    expect(calls[0].args[1]).toContain("ask the captain a clarifying question");
+    expect(calls[0].options).toMatchObject({ cwd: home, timeout: 15_000 });
+  });
+
+  it("rejects report feedback that is not actionable", async () => {
+    const home = await makeFirstmateHome();
+    await writeFile(home, "bin/fm-send.sh", "#!/usr/bin/env bash\n");
+    await writeFile(home, "data/backlog.md", "- [ ] active-feedback-f2 - Active report data/active-feedback-f2/report.md (repo: green-business-solution) (kind: ship) (since 2026-07-08)\n");
+    await writeFile(home, "state/active-feedback-f2.meta", "window=firstmate:fm-active-feedback-f2\nkind=ship\n");
+    await writeFile(home, "data/active-feedback-f2/report.md", "# Report\n\nNot done.\n");
+
+    await expect(sendFirstmateTaskReportFeedback({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      taskId: "active-feedback-f2",
+      action: "changes-requested",
+      comment: "",
+      execFileFn: () => {
+        throw new Error("should not execute");
+      }
+    })).rejects.toMatchObject({
+      message: "Report feedback comments are required when requesting changes.",
+      status: 400
+    });
+
+    await expect(sendFirstmateTaskReportFeedback({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      taskId: "active-feedback-f2",
+      action: "proceed",
+      comment: "Looks good.",
+      execFileFn: () => {
+        throw new Error("should not execute");
+      }
+    })).rejects.toMatchObject({
+      message: "Report feedback is only available after the report is marked ready for review.",
+      status: 409
+    });
   });
 
   it("rejects response sends without a safe live window or valid message", async () => {

@@ -447,6 +447,8 @@ type AdminUserPreviewOptionsResponse = {
 };
 
 type FirstmateTaskState = "active" | "completed" | "blocked" | "queued";
+type FirstmateTaskReportFeedbackAction = "proceed" | "changes-requested";
+type FirstmateTaskReportStatus = "none" | "final" | "review-ready" | "draft" | "previous";
 
 type FirstmateTask = {
   id: string;
@@ -465,6 +467,16 @@ type FirstmateTask = {
   canRespond: boolean;
   hasReport: boolean;
   reportUrl: string | null;
+  reportStatus: FirstmateTaskReportStatus;
+  reportActionLabel: string | null;
+  reportStatusLabel: string | null;
+  reportNote: string | null;
+  reportIsFinal: boolean;
+  reportReviewReady: boolean;
+  canSendReportFeedback: boolean;
+  gptProRepairUrl: string | null;
+  gptProRepairLabel: string | null;
+  gptProRepairFallback: boolean;
 };
 
 type FirstmateTasksResponse = {
@@ -484,12 +496,27 @@ type FirstmateTasksResponse = {
 type FirstmateTaskReportResponse = {
   generatedAt: string;
   taskId: string;
+  taskState: FirstmateTaskState | null;
+  statusState: string | null;
+  recentStatus: string | null;
+  reportStatus: FirstmateTaskReportStatus;
+  reportStatusLabel: string;
+  reportNote: string | null;
+  reportIsFinal: boolean;
+  reportReviewReady: boolean;
   markdown: string;
 };
 
 type FirstmateTaskRespondResponse = {
   generatedAt: string;
   taskId: string;
+  sent: true;
+};
+
+type FirstmateTaskReportFeedbackResponse = {
+  generatedAt: string;
+  taskId: string;
+  action: FirstmateTaskReportFeedbackAction;
   sent: true;
 };
 
@@ -15449,10 +15476,14 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
   const [response, setResponse] = useState<FirstmateTasksResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
-  const loadTasks = useCallback(async () => {
+  const loadTasks = useCallback(async (options?: { preserveNotice?: boolean }) => {
     setIsLoading(true);
     setError(null);
+    if (!options?.preserveNotice) {
+      setNotice(null);
+    }
     try {
       const nextResponse = await apiGet<FirstmateTasksResponse>("/api/admin/firstmate/tasks", {
         ...(credential ? { headers: adminAuthHeaders(credential) } : {})
@@ -15467,6 +15498,18 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
 
   useEffect(() => {
     void loadTasks();
+  }, [loadTasks]);
+
+  const refreshAfterStaleResponse = useCallback(async (serverMessage: string) => {
+    setNotice(`${serverMessage} The agent has already moved on, so the task list was refreshed.`);
+    await loadTasks({ preserveNotice: true });
+  }, [loadTasks]);
+
+  const refreshAfterReportFeedback = useCallback(async (action: FirstmateTaskReportFeedbackAction) => {
+    setNotice(action === "proceed"
+      ? "Report feedback sent: looks good and the agent may proceed."
+      : "Report feedback sent: changes requested.");
+    await loadTasks({ preserveNotice: true });
   }, [loadTasks]);
 
   const counts = response?.counts || {
@@ -15492,6 +15535,7 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
         </button>
       </div>
 
+      {notice ? <p className="tasks-notice-message">{notice}</p> : null}
       {error ? <p className="error-message">{error}</p> : null}
 
       <div className="tasks-stats">
@@ -15536,15 +15580,19 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
             <FirstmateNeedsResponseSection
               credential={credential}
               localAuthBypass={localAuthBypass}
-              onResponded={() => void loadTasks()}
+              onResponded={() => void loadTasks({ preserveNotice: true })}
+              onStaleResponse={refreshAfterStaleResponse}
               tasks={responseNeededTasks}
             />
           ) : null}
           {FIRSTMATE_TASK_SECTIONS.map((section) => (
             <FirstmateTaskSection
               count={counts[section.state] || 0}
+              credential={credential}
               key={section.state}
               label={section.label}
+              localAuthBypass={localAuthBypass}
+              onReportFeedbackSent={refreshAfterReportFeedback}
               state={section.state}
               tasks={response.tasks.filter((task) => task.state === section.state)}
             />
@@ -15559,11 +15607,13 @@ function FirstmateNeedsResponseSection({
   credential,
   localAuthBypass,
   onResponded,
+  onStaleResponse,
   tasks
 }: {
   credential: AuthCredential | null;
   localAuthBypass: boolean;
   onResponded: () => void;
+  onStaleResponse: (serverMessage: string) => Promise<void>;
   tasks: FirstmateTask[];
 }) {
   return (
@@ -15579,6 +15629,7 @@ function FirstmateNeedsResponseSection({
             key={task.id}
             localAuthBypass={localAuthBypass}
             onResponded={onResponded}
+            onStaleResponse={onStaleResponse}
             task={task}
           />
         ))}
@@ -15591,11 +15642,13 @@ function FirstmateTaskResponseCard({
   credential,
   localAuthBypass,
   onResponded,
+  onStaleResponse,
   task
 }: {
   credential: AuthCredential | null;
   localAuthBypass: boolean;
   onResponded: () => void;
+  onStaleResponse: (serverMessage: string) => Promise<void>;
   task: FirstmateTask;
 }) {
   const [message, setMessage] = useState("");
@@ -15624,7 +15677,13 @@ function FirstmateTaskResponseCard({
       setMessage("");
       onResponded();
     } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : "Could not send response.");
+      const serverMessage = requestError instanceof Error ? requestError.message : "Could not send response.";
+      if (/task is not waiting for a captain response/i.test(serverMessage)) {
+        setError(`${serverMessage} The agent has already moved on. Refreshing tasks.`);
+        await onStaleResponse(serverMessage);
+      } else {
+        setError(serverMessage);
+      }
     } finally {
       setIsSending(false);
     }
@@ -15665,12 +15724,18 @@ function FirstmateTaskResponseCard({
 
 function FirstmateTaskSection({
   count,
+  credential,
   label,
+  localAuthBypass,
+  onReportFeedbackSent,
   state,
   tasks
 }: {
   count: number;
+  credential: AuthCredential | null;
   label: string;
+  localAuthBypass: boolean;
+  onReportFeedbackSent: (action: FirstmateTaskReportFeedbackAction) => Promise<void>;
   state: FirstmateTaskState;
   tasks: FirstmateTask[];
 }) {
@@ -15695,7 +15760,15 @@ function FirstmateTaskSection({
           </thead>
           <tbody>
             {tasks.length ? (
-              tasks.map((task) => <FirstmateTaskRow key={task.id} task={task} />)
+              tasks.map((task) => (
+                <FirstmateTaskRow
+                  credential={credential}
+                  key={task.id}
+                  localAuthBypass={localAuthBypass}
+                  onReportFeedbackSent={onReportFeedbackSent}
+                  task={task}
+                />
+              ))
             ) : (
               <tr>
                 <td colSpan={7}>No {label.toLowerCase()} tasks.</td>
@@ -15708,7 +15781,19 @@ function FirstmateTaskSection({
   );
 }
 
-function FirstmateTaskRow({ task }: { task: FirstmateTask }) {
+function FirstmateTaskRow({
+  credential,
+  localAuthBypass,
+  onReportFeedbackSent,
+  task
+}: {
+  credential: AuthCredential | null;
+  localAuthBypass: boolean;
+  onReportFeedbackSent: (action: FirstmateTaskReportFeedbackAction) => Promise<void>;
+  task: FirstmateTask;
+}) {
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+
   return (
     <tr className={task.responseNeeded ? "is-response-needed" : undefined}>
       <td>
@@ -15731,15 +15816,129 @@ function FirstmateTaskRow({ task }: { task: FirstmateTask }) {
         {task.recentStatus || "No recent status"}
       </td>
       <td>
-        {task.hasReport && task.reportUrl ? (
-          <a className="button-link secondary-button" href={task.reportUrl} rel="noreferrer" target="_blank">
-            See Report
-          </a>
-        ) : (
-          <span className="tasks-muted">No report</span>
-        )}
+        <div className="task-report-actions">
+          {task.hasReport && task.reportUrl ? (
+            <a
+              className={`button-link secondary-button ${task.reportIsFinal ? "" : "is-report-draft"}`.trim()}
+              href={task.reportUrl}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {task.reportActionLabel || "View Report"}
+            </a>
+          ) : (
+            <span className="tasks-muted">No report</span>
+          )}
+          {task.canSendReportFeedback ? (
+            <button className="secondary-button" onClick={() => setIsFeedbackOpen((value) => !value)} type="button">
+              {isFeedbackOpen ? "Close Feedback" : "Report Feedback"}
+            </button>
+          ) : null}
+          {task.state === "completed" && task.hasReport && !task.canSendReportFeedback ? (
+            <span className="tasks-muted">No feedback window</span>
+          ) : null}
+          {task.gptProRepairUrl ? (
+            <a className="button-link secondary-button" href={task.gptProRepairUrl} rel="noreferrer" target="_blank" title={task.gptProRepairFallback ? "Opens the local /chats fallback for this GPT Pro repair task." : undefined}>
+              {task.gptProRepairLabel || "Go To Pro Repair Batch"}
+            </a>
+          ) : null}
+        </div>
+        {task.hasReport && task.reportNote && !task.reportIsFinal ? (
+          <p className="task-report-note">{task.reportNote}</p>
+        ) : null}
+        {isFeedbackOpen ? (
+          <FirstmateReportFeedbackForm
+            credential={credential}
+            localAuthBypass={localAuthBypass}
+            onSent={onReportFeedbackSent}
+            task={task}
+          />
+        ) : null}
       </td>
     </tr>
+  );
+}
+
+function FirstmateReportFeedbackForm({
+  credential,
+  localAuthBypass,
+  onSent,
+  task
+}: {
+  credential: AuthCredential | null;
+  localAuthBypass: boolean;
+  onSent: (action: FirstmateTaskReportFeedbackAction) => Promise<void>;
+  task: FirstmateTask;
+}) {
+  const [action, setAction] = useState<FirstmateTaskReportFeedbackAction>("proceed");
+  const [comment, setComment] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const trimmedComment = comment.trim();
+  const needsComment = action === "changes-requested";
+  const canSubmit = Boolean((credential || localAuthBypass) && !isSending && (!needsComment || trimmedComment.length > 0) && trimmedComment.length <= 4000);
+
+  async function sendFeedback() {
+    if ((!credential && !localAuthBypass) || !canSubmit) return;
+
+    setIsSending(true);
+    setError(null);
+    try {
+      const response = await apiPost<FirstmateTaskReportFeedbackResponse>(
+        `/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/report-feedback`,
+        credential
+          ? {
+              ...adminAuthBody(credential),
+              action,
+              comment: trimmedComment
+            }
+          : {
+              action,
+              comment: trimmedComment
+            }
+      );
+      setComment("");
+      await onSent(response.action);
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not send report feedback.");
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  return (
+    <div className="task-report-feedback-form">
+      <div className="task-report-feedback-toggle" role="group" aria-label={`Report feedback action for ${task.id}`}>
+        <button
+          className={action === "proceed" ? "is-active" : undefined}
+          onClick={() => setAction("proceed")}
+          type="button"
+        >
+          Looks good
+        </button>
+        <button
+          className={action === "changes-requested" ? "is-active" : undefined}
+          onClick={() => setAction("changes-requested")}
+          type="button"
+        >
+          Request changes
+        </button>
+      </div>
+      <label>
+        <span className="sr-only">Report feedback comment for {task.id}</span>
+        <textarea
+          maxLength={4000}
+          onChange={(event) => setComment(event.target.value)}
+          placeholder={action === "proceed" ? "Optional note for the agent..." : "What should change?"}
+          rows={3}
+          value={comment}
+        />
+      </label>
+      <button disabled={!canSubmit} onClick={() => void sendFeedback()} type="button">
+        {isSending ? "Sending..." : "Send Feedback"}
+      </button>
+      {error ? <p className="error-message">{error}</p> : null}
+    </div>
   );
 }
 
@@ -15826,6 +16025,13 @@ function FirstmateTaskReportPanel({ credential, taskId }: { credential: AuthCred
         <RetroFiLogoLoader label="Loading report..." size="lg" tone="card" />
       ) : null}
       {error ? <p className="error-message">{error}</p> : null}
+      {report?.reportNote && !report.reportIsFinal ? (
+        <section className="task-report-status-note">
+          <strong>{report.reportStatusLabel}</strong>
+          <p>{report.reportNote}</p>
+          {report.taskState ? <span>Task state: {formatFirstmateTaskState(report.taskState)}</span> : null}
+        </section>
+      ) : null}
       {report ? <MarkdownReport markdown={report.markdown} /> : null}
     </section>
   );

@@ -1603,6 +1603,26 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Firstmate tasks require admin sign-in unless the local Firstmate tasks auth bypass is enabled.");
   });
 
+  it("keeps Firstmate task response and report feedback workflows explicit", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+
+    expect(source).toContain("The agent has already moved on, so the task list was refreshed.");
+    expect(source).toContain("task is not waiting for a captain response");
+    expect(source).toContain("await onStaleResponse(serverMessage)");
+    expect(source).toContain("/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/report-feedback");
+    expect(source).toContain("action === \"changes-requested\"");
+    expect(source).toContain("What should change?");
+    expect(source).toContain("rel=\"noreferrer\" target=\"_blank\"");
+    expect(source).toContain("Opens the local /chats fallback for this GPT Pro repair task.");
+    expect(source).toContain("Go To Pro Repair Batch");
+    expect(source).toContain("task.reportActionLabel || \"View Report\"");
+    expect(source).toContain("task.reportNote && !task.reportIsFinal");
+    expect(source).toContain("task-report-status-note");
+    expect(source).toContain("No feedback window");
+  });
+
   it("renders the shared full-page loader with the RetroFi logo and dashboard status text", () => {
     const html = renderToStaticMarkup(
       <RetroFiPageLoader
