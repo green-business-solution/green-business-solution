@@ -14,10 +14,13 @@ export type Route =
   | "portal"
   | "portal-preview"
   | "user-preview"
+  | "chats"
   | "admin"
   | "admin-dashboard-performance-data"
   | "admin-application-sources"
   | "admin-application-profiles"
+  | "tasks"
+  | "task-report"
   | "testcases";
 
 export const aboutLinks: Array<{ label: string; route: Route }> = [
@@ -27,29 +30,56 @@ export const aboutLinks: Array<{ label: string; route: Route }> = [
   { label: "Contact", route: "about-contact" }
 ];
 
+export type RoutePathMatch = {
+  isKnownPath: boolean;
+  route: Route;
+};
+
+export function routePathMatchFromPath(
+  pathname = typeof window === "undefined" ? "/" : window.location.pathname
+): RoutePathMatch {
+  if (pathname === "/" || pathname === "/for-businesses") return { isKnownPath: true, route: "home" };
+  if (pathname === "/how-it-works") return { isKnownPath: true, route: "how-it-works" };
+  if (pathname === "/pricing") return { isKnownPath: true, route: "pricing" };
+  if (pathname === "/database") return { isKnownPath: true, route: "admin" };
+  if (pathname === "/about") return { isKnownPath: true, route: "about" };
+  if (pathname === "/about/mission") return { isKnownPath: true, route: "about-mission" };
+  if (pathname === "/about/team") return { isKnownPath: true, route: "about-team" };
+  if (pathname === "/about/trust") return { isKnownPath: true, route: "about-trust" };
+  if (pathname === "/about/contact") return { isKnownPath: true, route: "about-contact" };
+  if (pathname === "/scan" || pathname === "/get-started") return { isKnownPath: true, route: "scan" };
+  if (pathname === "/scan/results") return { isKnownPath: true, route: "scan-results" };
+  if (pathname === "/scan/energy-data") return { isKnownPath: true, route: "scan-energy-data" };
+  if (pathname === "/sign-in") return { isKnownPath: true, route: "sign-in" };
+  if (pathname === "/portal") return { isKnownPath: true, route: "portal" };
+  if (pathname === "/portal-preview") return { isKnownPath: true, route: "portal-preview" };
+  if (pathname === "/user-preview") return { isKnownPath: true, route: "user-preview" };
+  if (pathname === "/chats") return { isKnownPath: true, route: "chats" };
+  if (pathname === "/admin/dashboard-performance-data") {
+    return { isKnownPath: true, route: "admin-dashboard-performance-data" };
+  }
+  if (pathname === "/admin/application-sources") return { isKnownPath: true, route: "admin-application-sources" };
+  if (pathname === "/admin/application-profiles") return { isKnownPath: true, route: "admin-application-profiles" };
+  if (pathname === "/admin") return { isKnownPath: true, route: "admin" };
+  if (pathname === "/tasks") return { isKnownPath: true, route: "tasks" };
+  if (pathname.startsWith("/tasks/reports/")) return { isKnownPath: true, route: "task-report" };
+  if (pathname === "/testcases") return { isKnownPath: true, route: "testcases" };
+  return { isKnownPath: false, route: "home" };
+}
+
 export function routeFromPath(pathname = typeof window === "undefined" ? "/" : window.location.pathname): Route {
-  if (pathname === "/how-it-works") return "how-it-works";
-  if (pathname === "/pricing") return "pricing";
-  if (pathname === "/database") return "admin";
-  if (pathname === "/for-businesses") return "home";
-  if (pathname === "/about") return "about";
-  if (pathname === "/about/mission") return "about-mission";
-  if (pathname === "/about/team") return "about-team";
-  if (pathname === "/about/trust") return "about-trust";
-  if (pathname === "/about/contact") return "about-contact";
-  if (pathname === "/scan" || pathname === "/get-started") return "scan";
-  if (pathname === "/scan/results") return "scan-results";
-  if (pathname === "/scan/energy-data") return "scan-energy-data";
-  if (pathname === "/sign-in") return "sign-in";
-  if (pathname === "/portal") return "portal";
-  if (pathname === "/portal-preview") return "portal-preview";
-  if (pathname === "/user-preview") return "user-preview";
-  if (pathname === "/admin/dashboard-performance-data") return "admin-dashboard-performance-data";
-  if (pathname === "/admin/application-sources") return "admin-application-sources";
-  if (pathname === "/admin/application-profiles") return "admin-application-profiles";
-  if (pathname === "/admin") return "admin";
-  if (pathname === "/testcases") return "testcases";
-  return "home";
+  return routePathMatchFromPath(pathname).route;
+}
+
+function isServerHandledPath(pathname: string) {
+  return pathname === "/api" || pathname.startsWith("/api/");
+}
+
+export function shouldCanonicalizeUnknownHomeFallback(
+  pathname = typeof window === "undefined" ? "/" : window.location.pathname
+) {
+  const match = routePathMatchFromPath(pathname);
+  return match.route === "home" && !match.isKnownPath && !isServerHandledPath(pathname);
 }
 
 export function pathForRoute(route: Route) {
@@ -61,6 +91,7 @@ export function pathForRoute(route: Route) {
   if (route === "admin-application-sources") return "/admin/application-sources";
   if (route === "admin-dashboard-performance-data") return "/admin/dashboard-performance-data";
   if (route === "admin-application-profiles") return "/admin/application-profiles";
+  if (route === "task-report") return "/tasks/reports";
   if (route === "scan-results") return "/scan/results";
   if (route === "scan-energy-data") return "/scan/energy-data";
   return `/${route}`;

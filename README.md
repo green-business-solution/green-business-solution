@@ -13,7 +13,7 @@ All LLM-assisted work must follow [AGENT_WORKFLOW.md](./AGENT_WORKFLOW.md), incl
 ## Development
 
 ```sh
-aws sso login --profile gbs
+aws sso login --profile retrofi-prod
 npm install
 npm run dev
 ```
@@ -36,13 +36,15 @@ The Google client secret is not used by the local browser sign-in flow.
 If the website shows an API or request error after Google sign-in, intake submission, or admin loading:
 
 ```sh
-aws sso login --profile gbs
-aws sts get-caller-identity --profile gbs
+aws sso login --profile retrofi-prod
+aws sts get-caller-identity --profile retrofi-prod
 npm run dev
 curl http://127.0.0.1:8787/api/diagnostics
 ```
 
-The `sts` command should show account `448016109714`. The diagnostics endpoint should return `"ok": true`.
+The `sts` command should show account `059310317821`.
+The old `gbs` profile and account `448016109714` are legacy rollback context only.
+The diagnostics endpoint should return `"ok": true`.
 
 ## Checks
 

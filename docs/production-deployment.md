@@ -1,6 +1,6 @@
 # Production Deployment
 
-The production domain is `retrofi.org`, registered in AWS Route 53 under the Green Business Solution account.
+The production domain is `retrofi.org`, registered in AWS Route 53 under the RetroFi management account and served from the RetroFi production account.
 
 ## Current AWS Hosting Model
 
@@ -32,21 +32,23 @@ The runtime stacks create:
 - `gbs-api-runtime-state` for operational state such as Geocodio quota usage.
 - `gbs-retrofi-org-runtime-cache-...` for generated recommendation cache payloads.
 - `gbs-retrofi-test-fixtures-...` for generated fixtures and synthetic test data.
+- `gbs-retrofi-dev-work-...` for private GPT Pro work artifacts under `gpt-pro-work/`.
 
 The uploaded utility/energy file bucket remains `gbs-retrofi-org-energy-data-...`; it is now only for
 customer utility/energy uploads, not generated runtime cache payloads.
 
-The API Lambda runs in `us-east-1` with IAM permissions to read/write the existing DynamoDB tables in `us-east-2`.
+The API Lambda runs in `us-east-1` with IAM permissions to read/write the existing DynamoDB tables in `us-east-2` and scoped S3 object prefixes in `us-east-1`.
 
 The production API uses separate AWS regions for:
 
 - DynamoDB data access via `GBS_AWS_REGION` (`us-east-2`)
 - The energy-data and runtime-cache S3 buckets via `GBS_ENERGY_DATA_BUCKET_REGION` (`us-east-1`)
+- The GPT Pro development-work bucket via `GBS_DEV_WORK_BUCKET` and `GBS_GPT_PRO_WORK_PREFIX` (`us-east-1`)
 
 ## Deploy Command
 
 ```sh
-AWS_PROFILE=gbs ./scripts/deploy-production.sh
+AWS_PROFILE=retrofi-prod AWS_REGION=us-east-1 ./scripts/deploy-production.sh
 ```
 
 The script:

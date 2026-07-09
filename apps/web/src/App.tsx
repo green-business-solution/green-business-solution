@@ -1,5 +1,5 @@
 import { ChangeEvent, CSSProperties, DragEvent, FormEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { apiDelete, apiGet, apiPatch, apiPost } from "./api";
+import { apiDelete, apiGet, apiPatch, apiPost, apiPut } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
   AUTH_CREDENTIAL_STORAGE_KEY,
@@ -27,8 +27,22 @@ import {
   MoreHorizontalOutlineIcon,
   StoreOutlineIcon
 } from "./icons";
-import { aboutLinks, pathForRoute, routeFromPath, type Route } from "./routes";
+import {
+  aboutLinks,
+  pathForRoute,
+  routeFromPath,
+  shouldCanonicalizeUnknownHomeFallback,
+  type Route
+} from "./routes";
 import { scannerFrames } from "./lib/scannerFrames";
+import {
+  UserPreviewTriageBadges,
+  UserPreviewTriagePanel,
+  UserPreviewTriageProvider,
+  getUserPreviewTriageTargetProps,
+  isUserPreviewTriageModeEnabled,
+  useUserPreviewTriageMode
+} from "./userPreviewTriage";
 import billFieldDictionary from "../../../data/bill_field_dictionary.json";
 
 type UserRecord = {
@@ -41,6 +55,7 @@ type UserRecord = {
   authProvider: string;
   googleLinked: boolean;
   googlePicture?: string | null;
+  passwordLinked?: boolean;
   isFakeUser: boolean;
   sampleUserId?: string | null;
   createdAt: string;
@@ -129,6 +144,41 @@ type SiteEnergyProfile = {
   lastUpdatedAt: string | null;
 };
 
+type PreRetrofitFormAnswerValue = {
+  questionId: string;
+  catalogQuestionId?: string;
+  canonicalInputKey?: string;
+  retrofitId?: string;
+  retrofitName?: string;
+  opportunityId?: string;
+  requirementId?: string;
+  requirementType?: string;
+  applicationSection?: string;
+  questionKind?: string;
+  collectionStage?: string;
+  collectionSurface?: string;
+  question: string;
+  answerType: "text" | "number" | "select" | "boolean" | "file" | "date";
+  value: string;
+  options?: string[];
+  updatedAt?: string;
+};
+
+type PreRetrofitFormRetrofitAnswers = {
+  retrofitTypeId: string;
+  retrofitName: string;
+  updatedAt?: string;
+  answerCount: number;
+  answerOrder: string[];
+  answers: Record<string, PreRetrofitFormAnswerValue>;
+};
+
+type PreRetrofitFormAnswers = {
+  schemaVersion: "pre-retrofit-form-answers-v1";
+  updatedAt?: string;
+  retrofits: Record<string, PreRetrofitFormRetrofitAnswers>;
+};
+
 type IntakeRecord = {
   userId: string;
   submissionId: string;
@@ -187,6 +237,7 @@ type IntakeRecord = {
   uploadedUtilityFiles: UploadedUtilityFile[];
   utilityExtractedValues: UtilityExtractedValue[];
   siteEnergyProfile: SiteEnergyProfile | null;
+  preRetrofitFormAnswers?: PreRetrofitFormAnswers | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -199,6 +250,10 @@ type AdminClientPortalProfilePayload = PortalPayload;
 
 type PortalRetrofitRecommendationsResponse = PortalPayload & {
   generatedAt: string;
+  source?: {
+    kind?: string;
+    sampleUserId?: string | null;
+  };
   isProgressiveShell?: boolean;
   isPartialRecommendations?: boolean;
   dashboardPostImplementationDataset?: DashboardPostImplementationDataset | null;
@@ -214,6 +269,12 @@ type PortalRetrofitRecommendationsResponse = PortalPayload & {
   };
   taxRuntimePreview?: TaxRuntimePreview | null;
   retrofits: SampleRetrofitGroup[];
+};
+
+type PreRetrofitFormSaveResponse = {
+  intake: IntakeRecord;
+  preRetrofitFormAnswers: PreRetrofitFormAnswers | null;
+  savedRetrofit: PreRetrofitFormRetrofitAnswers | null;
 };
 
 type TaxRuntimeInputField = {
@@ -444,6 +505,146 @@ type AdminUsersResponse = {
 
 type AdminUserPreviewOptionsResponse = {
   options: UserPreviewOption[];
+};
+
+type GptProPromptFile = {
+  batchId: string;
+  displayName: string;
+  outputExists: boolean;
+  outputKey: string;
+  outputLastModifiedAt: string | null;
+  outputPath: string;
+  outputSizeBytes: number;
+  promptKey: string;
+  promptLastModifiedAt: string | null;
+  promptPath: string;
+  promptSizeBytes: number;
+};
+
+type GptProBatch = {
+  batchId: string;
+  displayName: string;
+  latestModifiedAt: string | null;
+  objectCount: number;
+  outputCount: number;
+  promptCount: number;
+  promptFiles: GptProPromptFile[];
+  storageStatus: string;
+  totalBytes: number;
+};
+
+type GptProWorkIndexResponse = {
+  batches: GptProBatch[];
+  bucket: string | null;
+  currentBatchId: string | null;
+  prefix: string;
+  storageStatus: string;
+  totals: {
+    batchCount: number;
+    objectCount: number;
+    outputCount: number;
+    promptCount: number;
+    totalBytes: number;
+  };
+  warnings?: string[];
+};
+
+type GptProWorkContentResponse = {
+  batchId: string;
+  content: string;
+  exists?: boolean;
+  outputPath?: string;
+  promptPath: string;
+  storageStatus: string;
+};
+
+type GptProWorkSaveResponse = {
+  batchId: string;
+  outputPath: string;
+  promptPath: string;
+  savedAt: string;
+  sizeBytes: number;
+  storageStatus: string;
+};
+
+type FirstmateTaskState = "active" | "completed" | "blocked" | "queued";
+type FirstmateTaskReportFeedbackMode = "live-window" | "follow-up-task";
+type FirstmateTaskReportStatus = "none" | "final" | "review-ready" | "draft" | "previous" | "repair-ready";
+
+type FirstmateTask = {
+  id: string;
+  title: string;
+  kind: string;
+  repo: string;
+  project: string | null;
+  state: FirstmateTaskState;
+  blocked: boolean;
+  blockedBy: string[];
+  recentStatus: string | null;
+  statusState: string | null;
+  since: string | null;
+  reportedAt: string | null;
+  responseNeeded: boolean;
+  canRespond: boolean;
+  canAssign?: boolean;
+  assignmentUnavailableReason?: string | null;
+  hasReport: boolean;
+  showReportAction?: boolean;
+  reportUrl: string | null;
+  reportStatus: FirstmateTaskReportStatus;
+  reportActionLabel: string | null;
+  reportStatusLabel: string | null;
+  reportNote: string | null;
+  reportIsFinal: boolean;
+  reportReviewReady: boolean;
+  reportFeedbackMode: FirstmateTaskReportFeedbackMode | null;
+  reportFeedbackUnavailableReason: string | null;
+  canSendReportFeedback: boolean;
+  gptProRepairStatus: string | null;
+  gptProRepairReady?: boolean;
+  showGptProRepairAction?: boolean;
+  gptProRepairUrl: string | null;
+  gptProRepairLabel: string | null;
+  gptProRepairFallback: boolean;
+  gptProRepairUnavailableReason: string | null;
+};
+
+type FirstmateTasksResponse = {
+  enabled: boolean;
+  reason?: string;
+  generatedAt: string;
+  firstmateHome?: string;
+  localAuthBypass?: boolean;
+  authMode?: "admin" | "local-bypass";
+  activeAgentCount: number;
+  totalTaskCount: number;
+  counts: Record<FirstmateTaskState, number> & { needsResponse: number };
+  tasks: FirstmateTask[];
+  warnings?: string[];
+};
+
+type FirstmateTaskReportResponse = {
+  generatedAt: string;
+  taskId: string;
+  taskState: FirstmateTaskState | null;
+  statusState: string | null;
+  recentStatus: string | null;
+  reportStatus: FirstmateTaskReportStatus;
+  reportStatusLabel: string;
+  reportNote: string | null;
+  reportIsFinal: boolean;
+  reportReviewReady: boolean;
+  reportFeedbackMode: FirstmateTaskReportFeedbackMode | null;
+  canSendReportFeedback: boolean;
+  gptProRepairStatus: string | null;
+  gptProRepairReady: boolean;
+  markdown: string;
+};
+
+type FirstmateTaskRespondResponse = {
+  generatedAt: string;
+  taskId: string;
+  sent: true;
 };
 
 type AdminTableResponse = {
@@ -6250,13 +6451,13 @@ function SignInPage({
   );
 }
 
-function SessionRestoringPage({ navigate }: { navigate: (route: Route) => void }) {
+function SessionRestoringPage() {
   return (
-    <PublicShell navigate={navigate} pageClassName="sign-in-page" showFooter={false}>
-      <section className="sign-in-panel session-restoring-panel">
-        <RetroFiLogoLoader label="Checking your signed-in session..." size="lg" tone="modal" />
-      </section>
-    </PublicShell>
+    <RetroFiPageLoader
+      label="Checking your signed-in session..."
+      mode="spinner"
+      variant="default"
+    />
   );
 }
 
@@ -6275,10 +6476,13 @@ function isAppChromeRoute(route: Route) {
     route === "portal" ||
     route === "portal-preview" ||
     route === "user-preview" ||
+    route === "chats" ||
     route === "admin" ||
     route === "admin-dashboard-performance-data" ||
     route === "admin-application-sources" ||
     route === "admin-application-profiles" ||
+    route === "tasks" ||
+    route === "task-report" ||
     route === "testcases"
   );
 }
@@ -6311,6 +6515,7 @@ function UserDashboard({
           eyebrow="Retrofit estimates"
           intro="These recommendations are matched from your current profile, site details, and live opportunity data."
           loadingMessage="Matching your profile to live retrofit opportunities..."
+          profileFormWriteEndpoint="/api/portal/pre-retrofit-form-answers"
           title="Retrofit Recommendations"
         />
       ) : (
@@ -6360,8 +6565,10 @@ function CustomerRetrofitEstimatesPanel({
   intro,
   loadingMessage,
   onPayloadLoaded,
+  profileFormWriteEndpoint,
   summaryEndpoint,
   title,
+  triageMode = false,
   hideBillData = false,
   hideFormDetails = true,
   enableSeededFormDetails = false
@@ -6374,8 +6581,10 @@ function CustomerRetrofitEstimatesPanel({
   intro: string;
   loadingMessage: string;
   onPayloadLoaded?: (payload: PortalRetrofitRecommendationsResponse) => void;
+  profileFormWriteEndpoint?: string;
   summaryEndpoint?: string;
   title: string;
+  triageMode?: boolean;
   hideBillData?: boolean;
   hideFormDetails?: boolean;
   enableSeededFormDetails?: boolean;
@@ -6501,6 +6710,10 @@ function CustomerRetrofitEstimatesPanel({
       });
   }, [credential, endpoint]);
 
+  const handleProfileFormSaved = useCallback((response: PreRetrofitFormSaveResponse) => {
+    setPayload((currentPayload) => currentPayload ? { ...currentPayload, intake: response.intake } : currentPayload);
+  }, []);
+
   return (
       <RetrofitRecommendationsPreview
         credential={credential}
@@ -6516,8 +6729,11 @@ function CustomerRetrofitEstimatesPanel({
         hideBillData={hideBillData}
         hideFormDetails={hideFormDetails}
         enableSeededFormDetails={enableSeededFormDetails}
+        onProfileFormSaved={handleProfileFormSaved}
         payload={payload}
+        profileFormWriteEndpoint={profileFormWriteEndpoint}
         title={title}
+        triageMode={triageMode}
       />
   );
 }
@@ -7329,6 +7545,34 @@ export function buildSeededRetrofitDetailAnswers(retrofits: RetrofitPreviewCard[
         answers[question.id] = seededTextAnswer(question, intake);
       }
     }
+  }
+  return answers;
+}
+
+export function answersFromSavedPreRetrofitRecord(record: PreRetrofitFormRetrofitAnswers | null | undefined) {
+  const answers: Record<string, string> = {};
+  if (!record?.answers) return answers;
+  const orderedQuestionIds = [
+    ...(record.answerOrder || []),
+    ...Object.keys(record.answers).filter((questionId) => !(record.answerOrder || []).includes(questionId))
+  ];
+
+  for (const questionId of orderedQuestionIds) {
+    const value = record.answers[questionId]?.value;
+    if (typeof value === "string" && value.trim().length > 0) {
+      answers[questionId] = value;
+    }
+  }
+
+  return answers;
+}
+
+export function buildPersistedRetrofitDetailAnswers(retrofits: RetrofitPreviewCard[], intake: IntakeRecord | null | undefined) {
+  const savedRetrofits = intake?.preRetrofitFormAnswers?.retrofits || {};
+  const answers: Record<string, string> = {};
+  for (const retrofit of retrofits) {
+    const record = savedRetrofits[retrofit.id];
+    Object.assign(answers, answersFromSavedPreRetrofitRecord(record));
   }
   return answers;
 }
@@ -8536,6 +8780,7 @@ function buildNextBestActions(retrofits: RetrofitPreviewCard[], missingInputs: s
 }
 
 type DashboardPageId = "summary" | "financial" | "environmental" | "certifications";
+type UserPreviewPrimaryView = "profile" | "retrofits" | "dashboard";
 type FinancialDashboardTabId = "overview" | "cash-flow" | "savings-by-retrofit";
 type EnvironmentalDashboardTabId = "overview" | "outlook";
 type CertificationDashboardTabId = "progress" | "gaps" | "next-actions";
@@ -9396,11 +9641,14 @@ export function RetrofitRecommendationsPreview({
   loadingRetrofitDetailIds = {},
   loadingMessage,
   onPrioritizeRetrofit,
+  onProfileFormSaved,
   enableSeededFormDetails = false,
   hideBillData = false,
   hideFormDetails = true,
   payload,
-  title
+  profileFormWriteEndpoint,
+  title,
+  triageMode = false
 }: {
   credential?: AuthCredential | null;
   emptyMessage: string;
@@ -9412,11 +9660,14 @@ export function RetrofitRecommendationsPreview({
   loadingRetrofitDetailIds?: Record<string, boolean>;
   loadingMessage: string;
   onPrioritizeRetrofit?: (retrofitId: string) => void;
+  onProfileFormSaved?: (response: PreRetrofitFormSaveResponse) => void;
   enableSeededFormDetails?: boolean;
   hideBillData?: boolean;
   hideFormDetails?: boolean;
   payload: PortalRetrofitRecommendationsResponse | null;
+  profileFormWriteEndpoint?: string;
   title: string;
+  triageMode?: boolean;
 }) {
   const preview = useMemo(() => buildUserRetrofitPreviewResult(payload), [payload]);
   const hasUploadedBills = intakeHasUtilityBillData(payload?.intake);
@@ -9453,13 +9704,15 @@ export function RetrofitRecommendationsPreview({
   const [confidenceFilter, setConfidenceFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [missingInfoFilter, setMissingInfoFilter] = useState("all");
-  const [activePrimaryView, setActivePrimaryView] = useState<"retrofits" | "dashboard">("retrofits");
+  const [activePrimaryView, setActivePrimaryView] = useState<UserPreviewPrimaryView>("retrofits");
   const [activeDashboardPage, setActiveDashboardPage] = useState<DashboardPageId>("summary");
   const [activeRetrofitId, setActiveRetrofitId] = useState<string>("");
   const [selectedScenarioIds, setSelectedScenarioIds] = useState<Record<string, string>>(initialScenarioIds);
   const [selectedOpportunityIds, setSelectedOpportunityIds] = useState<Record<string, boolean>>(initialSelectedOpportunityIds);
   const [detailAnswers, setDetailAnswers] = useState<Record<string, string>>({});
   const [activeFormRetrofitId, setActiveFormRetrofitId] = useState<string | null>(null);
+  const [formSaveError, setFormSaveError] = useState<string | null>(null);
+  const [savingFormRetrofitId, setSavingFormRetrofitId] = useState<string | null>(null);
   const [nextActionStatuses, setNextActionStatuses] = useState<Record<string, NextBestAction["status"]>>({});
   const [financingRetrofit, setFinancingRetrofit] = useState<RetrofitPreviewCard | null>(null);
   const [refinementMessage, setRefinementMessage] = useState<string | null>(null);
@@ -9481,12 +9734,17 @@ export function RetrofitRecommendationsPreview({
     () => (enableSeededFormDetails && !hideFormDetails ? buildSeededRetrofitDetailAnswers(preview.retrofits, payload?.intake || null) : {}),
     [enableSeededFormDetails, hideFormDetails, payload?.intake, preview.retrofits]
   );
+  const persistedDetailAnswers = useMemo(
+    () => (profileFormWriteEndpoint ? buildPersistedRetrofitDetailAnswers(preview.retrofits, payload?.intake || null) : {}),
+    [payload?.intake, preview.retrofits, profileFormWriteEndpoint]
+  );
   const effectiveDetailAnswers = useMemo(
     () => ({
+      ...persistedDetailAnswers,
       ...seededDetailAnswers,
       ...detailAnswers
     }),
-    [detailAnswers, seededDetailAnswers]
+    [detailAnswers, persistedDetailAnswers, seededDetailAnswers]
   );
   const dashboardViewModel = useMemo(() => buildDashboardPerformanceData(payload, preview), [payload, preview]);
 
@@ -9506,6 +9764,8 @@ export function RetrofitRecommendationsPreview({
     setActiveRetrofitInitialWorkspaceTab("overview");
     setBillUploadFocusStepId(null);
     setActiveFormRetrofitId(null);
+    setFormSaveError(null);
+    setSavingFormRetrofitId(null);
     setDetailAnswers({});
     setActivePrimaryView("retrofits");
     setActiveDashboardPage("summary");
@@ -9749,16 +10009,43 @@ export function RetrofitRecommendationsPreview({
     }
     if (!readiness.questionsComplete) {
       setActiveFormRetrofitId(retrofit.id);
+      setFormSaveError(null);
       setRefinementMessage(`Answer project details to unlock ${retrofit.name}.`);
       return;
     }
     openRetrofitWorkspace(retrofitId);
   }
 
-  function handleRetrofitFormSubmit(retrofit: RetrofitPreviewCard, answers: Record<string, string>) {
+  async function handleRetrofitFormSubmit(retrofit: RetrofitPreviewCard, answers: Record<string, string>) {
+    const questions = getRetrofitFormQuestions(retrofit, answers);
+    const scopedAnswers = Object.fromEntries(questions.map((question) => [question.id, answers[question.id] || ""]));
+    let nextAnswers = scopedAnswers;
+    setFormSaveError(null);
+
+    if (profileFormWriteEndpoint && credential) {
+      setSavingFormRetrofitId(retrofit.id);
+      try {
+        const response = await apiPost<PreRetrofitFormSaveResponse>(profileFormWriteEndpoint, {
+          ...adminAuthBody(credential),
+          retrofitTypeId: retrofit.id,
+          retrofitName: retrofit.name,
+          answers: scopedAnswers,
+          questions
+        });
+        onProfileFormSaved?.(response);
+        nextAnswers = answersFromSavedPreRetrofitRecord(response.savedRetrofit);
+        if (Object.keys(nextAnswers).length === 0) nextAnswers = scopedAnswers;
+      } catch (requestError) {
+        setFormSaveError(requestError instanceof Error ? requestError.message : "Could not save project details.");
+        return;
+      } finally {
+        setSavingFormRetrofitId(null);
+      }
+    }
+
     setDetailAnswers((current) => ({
       ...current,
-      ...answers
+      ...nextAnswers
     }));
     setActiveFormRetrofitId(null);
     setRefinementMessage(`${retrofit.name} project details saved.`);
@@ -9777,6 +10064,13 @@ export function RetrofitRecommendationsPreview({
   function handleSidebarRetrofitSelect(retrofitId: string) {
     setActivePrimaryView("retrofits");
     handleRetrofitTabClick(retrofitId);
+    setMobileSidebarOpen(false);
+  }
+
+  function handleProfileSelect() {
+    setActivePrimaryView("profile");
+    setActiveRetrofitId("");
+    setSidebarCollapsed(false);
     setMobileSidebarOpen(false);
   }
 
@@ -9816,8 +10110,9 @@ export function RetrofitRecommendationsPreview({
   }
 
   return (
+    <UserPreviewTriageProvider enabled={triageMode}>
     <div
-      className={`user-preview-shell${mobileSidebarOpen ? " is-mobile-sidebar-open" : ""}${sidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
+      className={`user-preview-shell${mobileSidebarOpen ? " is-mobile-sidebar-open" : ""}${sidebarCollapsed ? " is-sidebar-collapsed" : ""}${triageMode ? " is-review-triage-mode" : ""}`}
       data-testid="retrofit-recommendations-preview"
     >
       <UserPreviewSidebar
@@ -9829,6 +10124,7 @@ export function RetrofitRecommendationsPreview({
         onCloseMobile={() => setMobileSidebarOpen(false)}
         onOpenDashboardPage={handleDashboardPageSelect}
         onOpenInstructions={openInstructionsFromNav}
+        onOpenProfile={handleProfileSelect}
         onSelectRetrofit={handleSidebarRetrofitSelect}
         onShowAllRetrofits={() => {
           setActivePrimaryView("retrofits");
@@ -9842,9 +10138,10 @@ export function RetrofitRecommendationsPreview({
       />
       <main className="user-preview-main">
         <section className="retrofit-preview-page">
+          <UserPreviewTriagePanel />
           <button className="user-preview-mobile-menu-button user-preview-inline-menu-button" onClick={() => setMobileSidebarOpen(true)} type="button">
             <ViewPanelIcon />
-            <span>Retrofits</span>
+            <span>{activePrimaryView === "profile" ? "Profile" : activePrimaryView === "dashboard" ? "Dashboard" : "Retrofits"}</span>
           </button>
           {error ? <p className="error-message">{error}</p> : null}
           {isProgressiveDetailLoading ? (
@@ -9859,6 +10156,17 @@ export function RetrofitRecommendationsPreview({
               activePage={activeDashboardPage}
               onPageChange={setActiveDashboardPage}
               viewModel={dashboardViewModel}
+            />
+          ) : activePrimaryView === "profile" ? (
+            <UserPreviewProfileView
+              billUploadState={effectiveBillUploadState}
+              detailAnswers={effectiveDetailAnswers}
+              hideBillData={hideBillData}
+              hideFormDetails={hideFormDetails}
+              isDetailLoading={isDetailLoading}
+              payload={payload}
+              preview={preview}
+              seededDetailAnswers={seededDetailAnswers}
             />
           ) : activeRetrofit ? (
             <>
@@ -9935,9 +10243,14 @@ export function RetrofitRecommendationsPreview({
       {activeFormRetrofit ? (
         <RetrofitDetailFormModal
           initialAnswers={effectiveDetailAnswers}
-          onClose={() => setActiveFormRetrofitId(null)}
+          isSubmitting={savingFormRetrofitId === activeFormRetrofit.id}
+          onClose={() => {
+            setActiveFormRetrofitId(null);
+            setFormSaveError(null);
+          }}
           onSubmit={(answers) => handleRetrofitFormSubmit(activeFormRetrofit, answers)}
           retrofit={activeFormRetrofit}
+          submitError={formSaveError}
         />
       ) : null}
       {showInstructionsModal ? (
@@ -9947,6 +10260,468 @@ export function RetrofitRecommendationsPreview({
         />
       ) : null}
     </div>
+    </UserPreviewTriageProvider>
+  );
+}
+
+type UserPreviewProfileDetailRow = {
+  label: string;
+  value: ReactNode;
+};
+
+type UserPreviewProfileListItem = {
+  title: string;
+  meta?: ReactNode;
+  detail?: ReactNode;
+};
+
+export function UserPreviewProfileView({
+  billUploadState,
+  detailAnswers,
+  hideBillData,
+  hideFormDetails,
+  isDetailLoading,
+  payload,
+  preview,
+  seededDetailAnswers
+}: {
+  billUploadState: BillUploadState;
+  detailAnswers: Record<string, string>;
+  hideBillData: boolean;
+  hideFormDetails: boolean;
+  isDetailLoading: boolean;
+  payload: PortalRetrofitRecommendationsResponse | null;
+  preview: UserRetrofitPreviewResult;
+  seededDetailAnswers: Record<string, string>;
+}) {
+  const user = payload?.user || null;
+  const intake = payload?.intake || null;
+  const site = intake?.site || null;
+  const geography = site?.geography || null;
+  const summary = payload?.summary || null;
+  const taxRuntime = payload?.taxRuntimePreview || null;
+  const topRetrofit = preview.retrofits[0] || null;
+  const dashboardDataset = payload?.dashboardPostImplementationDataset || null;
+  const uploadedBillSteps = getBillUploadStepSummary(billUploadState);
+  const answerRows = hideFormDetails
+    ? []
+    : buildUserPreviewProfileAnswerRows(preview.retrofits, detailAnswers, seededDetailAnswers);
+  const headerName = profileText(user?.fullName || intake?.contact.fullName || preview.customerName);
+  const headerCompany = profileText(user?.companyName || intake?.business.companyName);
+
+  return (
+    <div className="user-preview-profile-view" data-testid="user-preview-profile-view">
+      <header className="user-preview-profile-header">
+        <div>
+          <p className="eyebrow">Profile info</p>
+          <h1>{headerName}</h1>
+          <p>{headerCompany}</p>
+        </div>
+        <div className="user-preview-profile-badges" aria-label="Profile view status">
+          <span>Read-only</span>
+          {user?.isFakeUser || dashboardDataset?.isSynthetic || payload?.source?.kind ? <span>Test/demo data</span> : null}
+          {summary ? <span>{profileCount(summary.matchedRetrofitCount, "retrofit")} matched</span> : null}
+        </div>
+      </header>
+
+      <div className="user-preview-profile-grid">
+        <UserPreviewProfileCard title="Account">
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "User ID", value: profileText(user?.userId || preview.profileId) },
+              { label: "Sample user ID", value: profileText(payload?.source?.sampleUserId) },
+              { label: "Role", value: profileText(user?.role) },
+              { label: "Status", value: profileText(user?.status) },
+              { label: "Auth provider", value: profileText(user?.authProvider) },
+              { label: "Google linked", value: profileBoolean(user?.googleLinked) },
+              { label: "Password linked", value: profileBoolean(user?.passwordLinked) },
+              { label: "Created", value: profileDate(user?.createdAt) },
+              { label: "Last login", value: profileDate(user?.lastLoginAt) }
+            ]}
+          />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Contact">
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "Name", value: profileText(intake?.contact.fullName || user?.fullName) },
+              { label: "Email", value: profileText(intake?.contact.email || user?.email) },
+              { label: "Phone", value: profileText(intake?.contact.phone) },
+              { label: "Role title", value: profileText(intake?.contact.roleTitle) },
+              { label: "Preference", value: profileText(intake?.contact.contactPreference) },
+              { label: "Submission ID", value: profileText(intake?.submissionId || preview.intakeId) },
+              { label: "Submitted", value: profileDate(intake?.createdAt) },
+              { label: "Updated", value: profileDate(intake?.updatedAt) }
+            ]}
+          />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Business">
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "Company", value: profileText(intake?.business.companyName || user?.companyName) },
+              { label: "Website", value: profileWebsite(intake?.business.website) },
+              { label: "Industry", value: profileText(intake?.business.industry) },
+              { label: "Organization type", value: profileText(intake?.business.organizationType) },
+              { label: "Organization size", value: profileText(intake?.business.organizationSize) },
+              { label: "Headquarters", value: profileText(intake?.business.headquarters) }
+            ]}
+          />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Site and building" wide>
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "Address", value: profileText(site?.address) },
+              { label: "Matched address", value: profileText(geography?.matchedAddress) },
+              { label: "Geography status", value: profileText(geography?.status) },
+              { label: "State", value: profileText(geography?.stateCode) },
+              { label: "County", value: profileText(geography?.countyName) },
+              { label: "Place", value: profileText(geography?.placeName) },
+              { label: "ZIP", value: profileText(geography?.zip5) },
+              { label: "Census tract", value: profileText(geography?.censusTractGeoid) },
+              { label: "Electric utility", value: profileText(site?.electricUtilityProvider) },
+              { label: "Gas utility", value: profileText(site?.gasUtilityProvider) },
+              { label: "Ownership", value: profileText(site?.ownershipStatus) },
+              { label: "Building type", value: profileText(site?.buildingType) },
+              { label: "Square footage", value: profileText(site?.squareFootage) },
+              { label: "Units", value: profileText(site?.numberOfUnits) },
+              { label: "Derived fields", value: profileText(site?.derivedFieldsStatus) },
+              { label: "Planned derived fields", value: profileList(site?.derivedFieldsPlanned) }
+            ]}
+          />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Sustainability">
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "Goals", value: profileText(intake?.sustainability.goals) },
+              { label: "Challenges", value: profileText(intake?.sustainability.currentChallenges) },
+              { label: "Interested improvements", value: profileList(intake?.sustainability.interestedImprovements) },
+              { label: "Monthly utility spend", value: profileText(intake?.sustainability.monthlyUtilitySpend) },
+              { label: "Timeline", value: profileText(intake?.sustainability.timeline) },
+              { label: "Notes", value: profileText(intake?.sustainability.notes) }
+            ]}
+          />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Utility data" wide>
+          {hideBillData ? (
+            <p className="user-preview-profile-muted">Bill data is hidden in this admin preview.</p>
+          ) : (
+            <>
+              <UserPreviewProfileDetails
+                rows={[
+                  { label: "Bill upload status", value: uploadedBillSteps.length ? profileList(uploadedBillSteps.map((step) => step.utilityLabel)) : "No uploaded bills in the active preview state" },
+                  { label: "Uploaded files", value: profileCount(intake?.uploadedUtilityFiles.length, "file") },
+                  { label: "Processed files", value: profileCount(intake?.siteEnergyProfile?.processedFileCount, "file") },
+                  { label: "Available fields", value: profileCount(intake?.siteEnergyProfile?.availableFieldIds.length, "field") },
+                  { label: "Latest provider", value: profileText(intake?.siteEnergyProfile?.latestUtilityProvider) },
+                  { label: "Latest period", value: formatUtilityPeriod(intake?.siteEnergyProfile?.latestBillingPeriodStart || null, intake?.siteEnergyProfile?.latestBillingPeriodEnd || null) },
+                  { label: "Annual kWh", value: profileNumber(intake?.siteEnergyProfile?.annualKwh, "kWh") },
+                  { label: "Annual electric cost", value: profileCurrencyDollars(intake?.siteEnergyProfile?.annualElectricCost) },
+                  { label: "Average cost per kWh", value: profileRate(intake?.siteEnergyProfile?.averageCostPerKwh, "kWh") },
+                  { label: "Last updated", value: profileDate(intake?.siteEnergyProfile?.lastUpdatedAt) }
+                ]}
+              />
+              <UserPreviewUtilitySummaries summaries={intake?.siteEnergyProfile?.utilitySummaries || []} />
+              <UserPreviewUtilityFiles files={intake?.uploadedUtilityFiles || []} />
+              <UserPreviewExtractedValues values={intake?.utilityExtractedValues || []} />
+            </>
+          )}
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Recommendation profile" wide>
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "Generated", value: profileDate(payload?.generatedAt || preview.generatedAt) },
+              { label: "Data source", value: profileText(payload?.source?.kind || preview.dataSourceLabel) },
+              { label: "Estimate basis", value: estimateBasisLabel(preview.estimateBasis) },
+              { label: "Completeness", value: preview.estimateCompletenessPercent == null ? "Not scored" : `${preview.estimateCompletenessPercent}%` },
+              { label: "Matched retrofits", value: profileCount(summary?.matchedRetrofitCount ?? preview.retrofits.length, "retrofit") },
+              { label: "Matched opportunities", value: profileCount(summary?.matchedOpportunityCount, "opportunity", "opportunities") },
+              { label: "Opportunity display", value: summary?.canShowOpportunities === false ? "Blocked until required data is collected" : "Available for current payload" },
+              { label: "Required tax inputs", value: profileCount(summary?.requiredTaxInputCount ?? taxRuntime?.requiredPreOpportunityInputs?.length, "input") },
+              { label: "Top recommendation", value: profileText(topRetrofit?.name || preview.topRecommendation?.retrofitName) },
+              { label: "Missing inputs", value: preview.missingInputs.length ? profileList(preview.missingInputs.slice(0, 8)) : "No missing inputs in the current preview" }
+            ]}
+          />
+          {isDetailLoading ? <p className="user-preview-profile-muted">Detailed recommendation records are still loading.</p> : null}
+          <UserPreviewTopRetrofits retrofits={preview.retrofits} />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Tax runtime">
+          <UserPreviewProfileDetails
+            rows={[
+              { label: "Status", value: profileText(taxRuntime?.status) },
+              { label: "Ready for opportunity estimate", value: profileBoolean(taxRuntime?.readyForOpportunityFinancialEstimate) },
+              { label: "Opportunity display blocked", value: profileBoolean(taxRuntime?.opportunityDisplayBlocked) },
+              { label: "Structured tax model work", value: profileBoolean(taxRuntime?.requiresStructuredTaxModelWork) },
+              { label: "Included benefits", value: formatCents(taxRuntime?.totals?.includedBenefitCents) },
+              { label: "Included liabilities", value: formatCents(taxRuntime?.totals?.includedLiabilityCents) },
+              { label: "Included net amount", value: formatCents(taxRuntime?.totals?.includedAmountCents) },
+              { label: "Summary tax benefit", value: formatCents(summary?.calculatedTaxBenefitCents) },
+              { label: "Summary tax liability", value: formatCents(summary?.calculatedTaxLiabilityCents) },
+              { label: "Summary net tax impact", value: formatCents(summary?.netTaxImpactCents) }
+            ]}
+          />
+          <UserPreviewProfileList
+            emptyMessage="No required tax inputs are listed in this payload."
+            items={(taxRuntime?.requiredPreOpportunityInputs || []).slice(0, 8).map((field) => ({
+              title: field.label || field.questionPrompt || field.inputKey,
+              meta: profileList([
+                field.collectionSurfaceLabel || field.collectionSurface,
+                field.answerType,
+                field.requiredBeforeOpportunitySelection ? "Required before opportunities" : field.requiredBeforeEstimate ? "Required before estimate" : null
+              ]),
+              detail: field.helperText || field.inputKey
+            }))}
+          />
+        </UserPreviewProfileCard>
+
+        <UserPreviewProfileCard title="Pre-retrofit form values" wide>
+          {hideFormDetails ? (
+            <p className="user-preview-profile-muted">Pre-retrofit form values are hidden in this admin preview.</p>
+          ) : (
+            <UserPreviewProfileList
+              emptyMessage="No pre-retrofit form values are available in this preview yet."
+              items={answerRows.map((row) => ({
+                title: row.label,
+                meta: row.value,
+                detail: row.source
+              }))}
+            />
+          )}
+        </UserPreviewProfileCard>
+
+        {dashboardDataset ? (
+          <UserPreviewProfileCard title="Synthetic dashboard data" wide>
+            <UserPreviewProfileDetails
+              rows={[
+                { label: "Dataset test case", value: profileText(dashboardDataset.testCaseId) },
+                { label: "Synthetic source", value: profileText(dashboardDataset.syntheticSource) },
+                { label: "Reporting period", value: profileText(dashboardDataset.reportingPeriod?.label) },
+                { label: "Properties", value: profileCount(dashboardDataset.properties.length, "property", "properties") },
+                { label: "Implemented retrofits", value: profileCount(dashboardDataset.implementedRetrofits.length, "retrofit") },
+                { label: "Monthly performance records", value: profileCount(dashboardDataset.monthlyPerformanceRecords.length, "record") },
+                { label: "Incentive records", value: profileCount(dashboardDataset.incentivePerformanceRecords.length, "record") },
+                { label: "Document records", value: profileCount(dashboardDataset.documentRecords.length, "record") },
+                { label: "Certification records", value: profileCount(dashboardDataset.certificationRecords.length, "record") },
+                { label: "Next best actions", value: profileCount(dashboardDataset.nextBestActions.length, "action") }
+              ]}
+            />
+          </UserPreviewProfileCard>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+function UserPreviewProfileCard({ children, title, wide = false }: { children: ReactNode; title: string; wide?: boolean }) {
+  return (
+    <section className={`user-preview-profile-card${wide ? " user-preview-profile-card-wide" : ""}`}>
+      <h2 className="user-preview-profile-card-heading">{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+function UserPreviewProfileDetails({ rows }: { rows: UserPreviewProfileDetailRow[] }) {
+  return (
+    <dl className="user-preview-profile-details">
+      {rows.map((row) => (
+        <div key={row.label}>
+          <dt>{row.label}</dt>
+          <dd>{row.value ?? "Not recorded"}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+function UserPreviewProfileList({
+  emptyMessage,
+  items
+}: {
+  emptyMessage: string;
+  items: UserPreviewProfileListItem[];
+}) {
+  if (items.length === 0) return <p className="user-preview-profile-muted">{emptyMessage}</p>;
+  return (
+    <div className="user-preview-profile-list">
+      {items.map((item, index) => (
+        <div key={`${item.title}-${index}`}>
+          <strong>{item.title}</strong>
+          {item.meta ? <span>{item.meta}</span> : null}
+          {item.detail ? <p>{item.detail}</p> : null}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function UserPreviewUtilitySummaries({ summaries }: { summaries: SiteEnergyProfile["utilitySummaries"] }) {
+  const items = summaries.map((summary) => ({
+    title: formatUtilityCategory(summary.utilityCategory),
+    meta: profileList([
+      summary.latestUtilityProvider,
+      profileCount(summary.uploadedFileCount, "file"),
+      profileCount(summary.processedFileCount, "processed file")
+    ]),
+    detail: profileList([
+      summary.annualUsage == null ? null : `${profileNumber(summary.annualUsage, summary.usageUnit || undefined)} annual usage`,
+      summary.annualCost == null ? null : `${profileCurrencyDollars(summary.annualCost)} annual cost`,
+      summary.averageUnitCost == null ? null : `${profileRate(summary.averageUnitCost, summary.usageUnit || undefined)} average rate`,
+      formatUtilityPeriod(summary.latestBillingPeriodStart, summary.latestBillingPeriodEnd),
+      summary.lastUpdatedAt ? `Updated ${profileDate(summary.lastUpdatedAt)}` : null
+    ])
+  }));
+  return (
+    <div className="user-preview-profile-subsection">
+      <h3>Utility summaries</h3>
+      <UserPreviewProfileList emptyMessage="No utility summaries are available." items={items} />
+    </div>
+  );
+}
+
+function UserPreviewUtilityFiles({ files }: { files: UploadedUtilityFile[] }) {
+  const items = files.map((file) => ({
+    title: file.originalFilename || `${formatUtilityCategory(file.utilityCategory)} bill`,
+    meta: profileList([
+      formatUtilityCategory(file.utilityCategory),
+      energyDataSourceTypeLabels[file.fileType] || "Unknown utility file",
+      formatProcessingStatus(file.processingStatus)
+    ]),
+    detail: profileList([
+      file.utilityProvider,
+      file.uploadedAt ? `Uploaded ${profileDate(file.uploadedAt)}` : null,
+      file.processedAt ? `Processed ${profileDate(file.processedAt)}` : null
+    ])
+  }));
+  return (
+    <div className="user-preview-profile-subsection">
+      <h3>Uploaded files</h3>
+      <UserPreviewProfileList emptyMessage="No uploaded utility files are available." items={items} />
+    </div>
+  );
+}
+
+function UserPreviewExtractedValues({ values }: { values: UtilityExtractedValue[] }) {
+  const items = values.slice(0, 12).map((value) => ({
+    title: value.fieldDisplayName || value.fieldId,
+    meta: profileList([
+      formatUtilityFieldValue(value),
+      value.confidence ? `${capitalizeLabel(value.confidence)} confidence` : null,
+      energyDataSourceTypeLabels[value.sourceType] || "Unknown source"
+    ]),
+    detail: formatUtilityPeriod(value.periodStart, value.periodEnd)
+  }));
+  return (
+    <div className="user-preview-profile-subsection">
+      <h3>Extracted values</h3>
+      <UserPreviewProfileList emptyMessage="No extracted utility values are available." items={items} />
+    </div>
+  );
+}
+
+function UserPreviewTopRetrofits({ retrofits }: { retrofits: RetrofitPreviewCard[] }) {
+  const items = retrofits.slice(0, 6).map((retrofit) => ({
+    title: retrofit.name,
+    meta: profileList([
+      retrofit.confidenceLabel,
+      estimateBasisLabel(retrofit.estimateBasis),
+      profileCount(retrofit.opportunities.length, "opportunity", "opportunities")
+    ]),
+    detail: profileList([
+      retrofit.tabSummary.primaryMetricValue == null ? null : `${retrofit.tabSummary.primaryMetricLabel}: ${retrofit.tabSummary.primaryMetricValue}`,
+      retrofit.metrics.effectiveCostAfterOneTimeBenefits == null ? null : `Net cost ${formatCents(retrofit.metrics.effectiveCostAfterOneTimeBenefits)}`,
+      retrofit.missingInfo.length ? `${retrofit.missingInfo.length} missing input(s)` : "No missing inputs listed"
+    ])
+  }));
+  return (
+    <div className="user-preview-profile-subsection">
+      <h3>Top retrofits</h3>
+      <UserPreviewProfileList emptyMessage="No retrofits are available." items={items} />
+    </div>
+  );
+}
+
+function buildUserPreviewProfileAnswerRows(
+  retrofits: RetrofitPreviewCard[],
+  detailAnswers: Record<string, string>,
+  seededDetailAnswers: Record<string, string>
+) {
+  const rows: Array<UserPreviewProfileDetailRow & { source: string }> = [];
+  const seenQuestionIds = new Set<string>();
+  for (const retrofit of retrofits) {
+    for (const question of getRetrofitFormQuestions(retrofit, detailAnswers)) {
+      if (seenQuestionIds.has(question.id)) continue;
+      seenQuestionIds.add(question.id);
+      const answer = detailAnswers[question.id] ?? seededDetailAnswers[question.id] ?? question.answer;
+      if (answer == null || String(answer).trim() === "") continue;
+      const seeded = seededDetailAnswers[question.id] != null && String(seededDetailAnswers[question.id]) === String(answer);
+      rows.push({
+        label: `${retrofit.name}: ${question.question}`,
+        value: String(answer),
+        source: seeded ? "Seeded preview value" : "Current preview session value"
+      });
+    }
+  }
+  return rows.slice(0, 18);
+}
+
+function profileText(value: string | number | boolean | null | undefined) {
+  if (value == null) return "Not recorded";
+  const text = String(value).trim();
+  return text || "Not recorded";
+}
+
+function profileBoolean(value: boolean | null | undefined) {
+  if (value == null) return "Not recorded";
+  return value ? "Yes" : "No";
+}
+
+function profileDate(value: string | null | undefined) {
+  return value ? formatDate(value) : "Not recorded";
+}
+
+function profileNumber(value: number | null | undefined, unit?: string) {
+  if (value == null || !Number.isFinite(value)) return "Not recorded";
+  const formatted = new Intl.NumberFormat("en-US", { maximumFractionDigits: value < 10 ? 2 : 0 }).format(value);
+  return unit ? `${formatted} ${unit}` : formatted;
+}
+
+function profileCurrencyDollars(value: number | null | undefined) {
+  if (value == null || !Number.isFinite(value)) return "Not recorded";
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
+}
+
+function profileRate(value: number | null | undefined, unit?: string) {
+  if (value == null || !Number.isFinite(value)) return "Not recorded";
+  const formatted = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 4 }).format(value);
+  return unit ? `${formatted} / ${unit}` : formatted;
+}
+
+function profileCount(count: number | null | undefined, singular: string, plural?: string) {
+  if (count == null || !Number.isFinite(count)) return "Not recorded";
+  return `${count.toLocaleString()} ${count === 1 ? singular : plural || `${singular}s`}`;
+}
+
+function profileList(values: Array<string | number | boolean | null | undefined> | null | undefined) {
+  const items = (values || [])
+    .map((value) => (value == null ? "" : String(value).trim()))
+    .filter(Boolean);
+  return items.length ? items.join(", ") : "Not recorded";
+}
+
+function profileWebsite(value: string | null | undefined) {
+  const text = value?.trim();
+  if (!text) return "Not recorded";
+  const href = /^https?:\/\//i.test(text) ? text : `https://${text}`;
+  return (
+    <a href={href} rel="noreferrer" target="_blank">
+      {text}
+    </a>
   );
 }
 
@@ -10244,6 +11019,7 @@ function UserPreviewSidebar({
   onCloseMobile,
   onOpenDashboardPage,
   onOpenInstructions,
+  onOpenProfile,
   onSelectRetrofit,
   onShowAllRetrofits,
   onToggleCollapsed,
@@ -10251,19 +11027,21 @@ function UserPreviewSidebar({
 }: {
   activeDashboardPage: DashboardPageId;
   activeRetrofitId: string;
-  activeView: "retrofits" | "dashboard";
+  activeView: UserPreviewPrimaryView;
   collapsed: boolean;
   instructionsPulse: boolean;
   mobileOpen: boolean;
   onCloseMobile: () => void;
   onOpenDashboardPage: (pageId: DashboardPageId) => void;
   onOpenInstructions: () => void;
+  onOpenProfile: () => void;
   onSelectRetrofit: (retrofitId: string) => void;
   onShowAllRetrofits: () => void;
   onToggleCollapsed: () => void;
   retrofits: RetrofitPreviewCard[];
 }) {
   const [retrofitsOpen, setRetrofitsOpen] = useState(false);
+  const triageMode = useUserPreviewTriageMode();
   const activeNavRetrofitId = activeRetrofitId;
   const dashboardOpen = activeView === "dashboard";
   useEffect(() => {
@@ -10314,19 +11092,33 @@ function UserPreviewSidebar({
             </div>
           ) : null}
           <div className="user-preview-sidebar-secondary" role="group" aria-label="Profile navigation">
-            <button className="sidebar-nav-row sidebar-secondary-item" type="button">
+            <button
+              {...getUserPreviewTriageTargetProps({
+                className: `sidebar-nav-row sidebar-secondary-item sidebar-profile-item${activeView === "profile" ? " is-active" : ""}`,
+                enabled: triageMode,
+                surfaceId: "sidebar.profile-info"
+              })}
+              onClick={onOpenProfile}
+              type="button"
+            >
               <ProfileInfoIcon />
               <span className="sidebar-label">Profile info</span>
+              <UserPreviewTriageBadges as="span" compact surfaceId="sidebar.profile-info" />
             </button>
             <button
               aria-expanded={dashboardOpen}
-              className={`sidebar-nav-row sidebar-secondary-item sidebar-dashboard-item${dashboardOpen ? " is-active" : ""}`}
+              {...getUserPreviewTriageTargetProps({
+                className: `sidebar-nav-row sidebar-secondary-item sidebar-dashboard-item${dashboardOpen ? " is-active" : ""}`,
+                enabled: triageMode,
+                surfaceId: "sidebar.dashboard"
+              })}
               onClick={() => onOpenDashboardPage(activeDashboardPage || "summary")}
               type="button"
             >
               <DashboardIcon />
               <span className="sidebar-label">Dashboard</span>
               <ChevronDownIcon />
+              <UserPreviewTriageBadges as="span" compact surfaceId="sidebar.dashboard" />
             </button>
             {dashboardOpen ? (
               <div className="sidebar-dashboard-subnav" aria-label="Dashboard sections">
@@ -10490,10 +11282,18 @@ function DashboardPageHeader({
 }
 
 function DashboardEmptyNotice({ notes }: { notes: string[] }) {
+  const triageMode = useUserPreviewTriageMode();
   return (
-    <section className="dashboard-empty-state">
+    <section
+      {...getUserPreviewTriageTargetProps({
+        className: "dashboard-empty-state",
+        enabled: triageMode,
+        surfaceId: "dashboard.empty-notice"
+      })}
+    >
       <strong>No implemented retrofits yet</strong>
       <p>{notes[0] || "Performance tracking will appear after implementation data is available."}</p>
+      <UserPreviewTriageBadges surfaceId="dashboard.empty-notice" />
     </section>
   );
 }
@@ -10544,12 +11344,51 @@ function DashboardFinancialPage({
   onTabChange: (tab: FinancialDashboardTabId) => void;
   viewModel: DashboardViewModel;
 }) {
+  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
+
   return (
     <div className="dashboard-page-stack">
-      <DashboardSubTabs tabs={FINANCIAL_DASHBOARD_TABS} activeTab={activeTab} onTabChange={onTabChange} />
+      <div className="dashboard-financial-toolbar">
+        <DashboardSubTabs tabs={FINANCIAL_DASHBOARD_TABS} activeTab={activeTab} onTabChange={onTabChange} />
+        <button onClick={() => setQuoteModalOpen(true)} type="button">
+          Add quote
+        </button>
+      </div>
       {activeTab === "overview" ? <FinancialOverview viewModel={viewModel} /> : null}
       {activeTab === "cash-flow" ? <FinancialCashFlow viewModel={viewModel} /> : null}
       {activeTab === "savings-by-retrofit" ? <FinancialSavingsByRetrofit viewModel={viewModel} /> : null}
+      {quoteModalOpen ? <AddQuotePlaceholderModal onClose={() => setQuoteModalOpen(false)} /> : null}
+    </div>
+  );
+}
+
+function AddQuotePlaceholderModal({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
+  return (
+    <div className="modal-backdrop quote-modal-backdrop" onMouseDown={(event) => {
+      if (event.target === event.currentTarget) onClose();
+    }}>
+      <section className="save-results-modal quote-placeholder-modal" role="dialog" aria-modal="true" aria-labelledby="quote-placeholder-title">
+        <button className="modal-close-button" onClick={onClose} type="button">Close</button>
+        <div className="modal-copy">
+          <p className="eyebrow">Project quote</p>
+          <h2 id="quote-placeholder-title">Quote capture is coming soon</h2>
+          <p>
+            RetroFi is not changing this financial model yet. Keep contractor quotes with the project record for now, and quote entry will replace modeled project costs when the form is ready.
+          </p>
+        </div>
+        {/* TODO: Replace this placeholder with the project quote capture form once quote storage is defined. */}
+      </section>
     </div>
   );
 }
@@ -10875,6 +11714,7 @@ function CertificationsGaps({ viewModel }: { viewModel: DashboardViewModel }) {
 }
 
 function CertificationsNextActions({ viewModel }: { viewModel: DashboardViewModel }) {
+  const triageMode = useUserPreviewTriageMode();
   const actions = viewModel.certifications.nextActions;
   const highestImpact = actions.find((action) => action.estimatedCO2eImpact);
   const lowestCost = [...actions].filter((action) => action.estimatedCostCents != null).sort((a, b) => (a.estimatedCostCents ?? 0) - (b.estimatedCostCents ?? 0))[0];
@@ -10898,7 +11738,14 @@ function CertificationsNextActions({ viewModel }: { viewModel: DashboardViewMode
           <DashboardInlineAction label="View full timeline" />
         </DashboardCard>
         <DashboardCard title="Best Path Options">
-          <div className="dashboard-path-option-grid">
+          <div
+            {...getUserPreviewTriageTargetProps({
+              className: "dashboard-path-option-grid",
+              enabled: triageMode,
+              surfaceId: "dashboard.best-path-options"
+            })}
+          >
+            <UserPreviewTriageBadges surfaceId="dashboard.best-path-options" />
             {["Fastest Path", "Lowest-Cost Path", "Highest-Certification-Impact Path"].map((label, index) => (
               <article className="dashboard-path-option" key={label}>
                 <strong>{label}</strong>
@@ -11361,7 +12208,20 @@ function DashboardProgressBar({ value }: { value: number | null | undefined }) {
 }
 
 function DashboardInlineAction({ label }: { label: string }) {
-  return <button className="dashboard-inline-action" type="button">{label} <span aria-hidden="true">→</span></button>;
+  const triageMode = useUserPreviewTriageMode();
+  return (
+    <button
+      {...getUserPreviewTriageTargetProps({
+        className: "dashboard-inline-action",
+        enabled: triageMode,
+        surfaceId: "dashboard.inline-action"
+      })}
+      type="button"
+    >
+      {label} <span aria-hidden="true">→</span>
+      <UserPreviewTriageBadges as="span" compact surfaceId="dashboard.inline-action" />
+    </button>
+  );
 }
 
 function DashboardUnavailable({ label }: { label: string }) {
@@ -11412,6 +12272,7 @@ function RetrofitPickerView({
   pickerVisibleCount: number;
   sortBy: string;
 }) {
+  const triageMode = useUserPreviewTriageMode();
   const collapsedRetrofitCount = 6;
   const visibleRetrofits = displayedRetrofits.slice(0, pickerVisibleCount);
   const hasMoreRetrofits = displayedRetrofits.length > visibleRetrofits.length;
@@ -11509,8 +12370,16 @@ function RetrofitPickerView({
                   <PickerMetric kind="cost" label="Cost" value={retrofitPickerCost(retrofit, hideBillData)} />
                   <PickerMetric kind="payback" label="Payback" value={retrofitPickerPayback(retrofit, hideBillData)} />
                 </div>
-                <div className="retrofit-picker-card-impact" aria-label={`${retrofit.name} environmental impact`}>
+                <div
+                  {...getUserPreviewTriageTargetProps({
+                    className: "retrofit-picker-card-impact",
+                    enabled: triageMode,
+                    surfaceId: "picker.environmental-impact"
+                  })}
+                  aria-label={`${retrofit.name} environmental impact`}
+                >
                   <PickerMetric kind="impact" label="Environmental impact" value={retrofitPickerEnvironmentalImpact()} />
+                  <UserPreviewTriageBadges as="span" compact surfaceId="picker.environmental-impact" />
                 </div>
                 <RetrofitReadinessRow {...(retrofitReadinessById.get(retrofit.id) || { billsComplete: false, questionsComplete: false, estimateComplete: false })} />
               </button>
@@ -11542,14 +12411,18 @@ function RetrofitPickerView({
 
 function RetrofitDetailFormModal({
   initialAnswers,
+  isSubmitting = false,
   onClose,
   onSubmit,
-  retrofit
+  retrofit,
+  submitError = null
 }: {
   initialAnswers: Record<string, string>;
+  isSubmitting?: boolean;
   onClose: () => void;
-  onSubmit: (answers: Record<string, string>) => void;
+  onSubmit: (answers: Record<string, string>) => void | Promise<void>;
   retrofit: RetrofitPreviewCard;
+  submitError?: string | null;
 }) {
   const [answers, setAnswers] = useState<Record<string, string>>(() =>
     Object.fromEntries(getRetrofitFormQuestions(retrofit, initialAnswers).map((question) => [question.id, initialAnswers[question.id] || ""]))
@@ -11562,7 +12435,7 @@ function RetrofitDetailFormModal({
 
   const answeredCount = questions.filter((question) => (answers[question.id] || "").trim().length > 0).length;
   const requiredQuestions = questions.filter((question) => isRetrofitQuestionRequired(question, answers));
-  const canSubmit = requiredQuestions.length === 0 || requiredQuestions.every((question) => (answers[question.id] || "").trim().length > 0);
+  const canSubmit = !isSubmitting && (requiredQuestions.length === 0 || requiredQuestions.every((question) => (answers[question.id] || "").trim().length > 0));
 
   function handleAnswerChange(questionId: string, value: string) {
     setAnswers((current) => ({
@@ -11574,7 +12447,7 @@ function RetrofitDetailFormModal({
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!canSubmit) return;
-    onSubmit(answers);
+    void onSubmit(answers);
   }
 
   function renderQuestionInput(question: RetrofitDetailQuestion) {
@@ -11658,12 +12531,13 @@ function RetrofitDetailFormModal({
             </label>
           ))}
         </div>
+        {submitError ? <p className="error-message">{submitError}</p> : null}
         <footer className="retrofit-form-footer">
-          <button className="secondary-button" onClick={onClose} type="button">
+          <button className="secondary-button" disabled={isSubmitting} onClick={onClose} type="button">
             Back
           </button>
           <button className="primary-button" disabled={!canSubmit} type="submit">
-            Save and review retrofit
+            {isSubmitting ? "Saving..." : "Save and review retrofit"}
           </button>
         </footer>
       </form>
@@ -12345,6 +13219,7 @@ function formatCompactCents(value: number | null | undefined) {
 }
 
 function EstimateProgressStepper() {
+  const triageMode = useUserPreviewTriageMode();
   const steps = [
     { id: "bills", label: "Bills", complete: true, number: 1 },
     { id: "questions", label: "Questions", complete: true, number: 2 },
@@ -12355,7 +13230,14 @@ function EstimateProgressStepper() {
   ];
 
   return (
-    <nav aria-label="Retrofit workflow progress" className="estimate-progress-stepper">
+    <nav
+      aria-label="Retrofit workflow progress"
+      {...getUserPreviewTriageTargetProps({
+        className: "estimate-progress-stepper",
+        enabled: triageMode,
+        surfaceId: "workspace.stepper"
+      })}
+    >
       {steps.map((step, index) => (
         <div className={`estimate-progress-step${step.complete ? " is-complete" : ""}${step.active ? " is-active" : ""}`} key={step.id}>
           <span className="estimate-progress-circle">{step.complete ? "✓" : step.number}</span>
@@ -12363,6 +13245,7 @@ function EstimateProgressStepper() {
           {index < steps.length - 1 ? <i aria-hidden="true" /> : null}
         </div>
       ))}
+      <UserPreviewTriageBadges surfaceId="workspace.stepper" />
     </nav>
   );
 }
@@ -13059,6 +13942,7 @@ function RetrofitPreviewCardView({
   const [scenarioOpportunityDetailIdByRetrofit, setScenarioOpportunityDetailIdByRetrofit] = useState<Record<string, string>>({});
   const [applicationPrepOpportunity, setApplicationPrepOpportunity] = useState<RetrofitOpportunityPreview | null>(null);
   const [applicationPrepProfiles, setApplicationPrepProfiles] = useState<Record<string, CustomerApplicationProfileResponse>>({});
+  const triageMode = useUserPreviewTriageMode();
   const billDataLocked = hideBillData;
   useEffect(() => {
     setActiveWorkspaceTab(initialWorkspaceTab);
@@ -13177,7 +14061,7 @@ function RetrofitPreviewCardView({
   ];
   const workspaceTabs = [
     { key: "overview", label: "Overview" },
-    { key: "scenariosOpportunities", label: "Scenarios+Opportunities" },
+    { key: "scenariosOpportunities", label: "Scenarios" },
     { key: "financials", label: "Financials" },
     { key: "environmental", label: "Impact" },
     { key: "application", label: "Application Overview" }
@@ -13591,26 +14475,47 @@ function RetrofitPreviewCardView({
                   <p>{retrofit.description}</p>
                 </div>
               </div>
-              <div className="estimate-header-actions" aria-label="Estimate actions">
+              <div
+                {...getUserPreviewTriageTargetProps({
+                  className: "estimate-header-actions",
+                  enabled: triageMode,
+                  surfaceId: "workspace.actions"
+                })}
+                aria-label="Estimate actions"
+              >
                 <button className="estimate-primary-action" onClick={onAddToPlan} type="button">Confirm & move to next step</button>
                 <button className="estimate-secondary-action" type="button">Discard changes</button>
+                <UserPreviewTriageBadges surfaceId="workspace.actions" />
               </div>
             </header>
           )}
 
           <nav aria-label="Estimate workspace tabs" className={`estimate-tabs retrofit-workspace-tabs${activeWorkspaceTab === "scenariosOpportunities" ? " is-scenarios-opportunities" : ""}`}>
-            {workspaceTabs.map((item) => (
-              <button
-                key={item.key}
-                aria-current={activeWorkspaceTab === item.key ? "true" : undefined}
-                className={`estimate-tab workspace-tab${activeWorkspaceTab === item.key ? " is-active" : ""}`}
-                data-workspace-tab={item.key}
-                onClick={() => openWorkspaceTab(item.key)}
-                type="button"
-              >
-                {item.label}
-              </button>
-            ))}
+            {workspaceTabs.map((item) => {
+              const className = `estimate-tab workspace-tab${activeWorkspaceTab === item.key ? " is-active" : ""}`;
+              const triageProps = item.key === "scenariosOpportunities"
+                ? getUserPreviewTriageTargetProps({
+                    className,
+                    enabled: triageMode,
+                    surfaceId: "workspace.tabs.scenarios-opportunities"
+                  })
+                : { className };
+              return (
+                <button
+                  key={item.key}
+                  aria-current={activeWorkspaceTab === item.key ? "true" : undefined}
+                  {...triageProps}
+                  data-workspace-tab={item.key}
+                  onClick={() => openWorkspaceTab(item.key)}
+                  type="button"
+                >
+                  {item.label}
+                  {item.key === "scenariosOpportunities" ? (
+                    <UserPreviewTriageBadges as="span" compact surfaceId="workspace.tabs.scenarios-opportunities" />
+                  ) : null}
+                </button>
+              );
+            })}
           </nav>
 
           {activeWorkspaceTab === "overview" ? (
@@ -13670,11 +14575,18 @@ function RetrofitPreviewCardView({
                   </div>
                 </section>
 
-                <section className="estimate-overview-card">
+                <section
+                  {...getUserPreviewTriageTargetProps({
+                    className: "estimate-overview-card",
+                    enabled: triageMode,
+                    surfaceId: "overview.application-card"
+                  })}
+                >
                   <div className="estimate-card-title-row">
                     <h3>Application overview</h3>
                     <span className="estimate-preview-pill">preview</span>
                   </div>
+                  <UserPreviewTriageBadges surfaceId="overview.application-card" />
                   {overviewApplicationUnavailable ? (
                     <p className="compact-empty">Application support not available yet.</p>
                   ) : (
@@ -13690,11 +14602,18 @@ function RetrofitPreviewCardView({
                   )}
                 </section>
 
-                <section className="estimate-overview-card">
+                <section
+                  {...getUserPreviewTriageTargetProps({
+                    className: "estimate-overview-card",
+                    enabled: triageMode,
+                    surfaceId: "overview.impact-card"
+                  })}
+                >
                   <div className="estimate-card-title-row">
                     <h3>Impact overview</h3>
                     <span className="estimate-preview-pill">preview</span>
                   </div>
+                  <UserPreviewTriageBadges surfaceId="overview.impact-card" />
                   <div className="estimate-info-list">
                     <EstimateInfoRow label="CO₂e avoided per year" value={displayedEnvironmentalImpact.overall.displayValue === "?" ? displayedEnvironmentalImpact.overall.fallback || "Needs bills" : `${displayedEnvironmentalImpact.overall.displayValue} ${displayedEnvironmentalImpact.overall.unit}`} />
                     <EstimateInfoRow label="kWh saved per year" value={kwhImpactResource?.displayValue || "Needs bill"} />
@@ -13704,13 +14623,20 @@ function RetrofitPreviewCardView({
                 </section>
               </div>
 
-              <section className="estimate-financing-strip">
+              <section
+                {...getUserPreviewTriageTargetProps({
+                  className: "estimate-financing-strip",
+                  enabled: triageMode,
+                  surfaceId: "workspace.financing-strip"
+                })}
+              >
                 <EstimateMiniIcon>▥</EstimateMiniIcon>
                 <div>
                   <strong>Financing options available</strong>
                   <p>Explore loans and financing that can help make this upgrade more affordable.</p>
                 </div>
                 <button className="secondary-button" onClick={onExploreFinancing} type="button">View financing options ↗</button>
+                <UserPreviewTriageBadges surfaceId="workspace.financing-strip" />
               </section>
             </section>
           ) : null}
@@ -13732,13 +14658,20 @@ function RetrofitPreviewCardView({
                 <EstimateMetricCard icon={<MetricImpactIcon />} label="ROI" value={formatEstimatePercent(retrofit.metrics.roi, "Estimate unavailable")} subtitle="Average annual return" />
               </div>
 
-              <section className="estimate-financing-strip">
+              <section
+                {...getUserPreviewTriageTargetProps({
+                  className: "estimate-financing-strip",
+                  enabled: triageMode,
+                  surfaceId: "workspace.financing-strip"
+                })}
+              >
                 <EstimateMiniIcon>▥</EstimateMiniIcon>
                 <div>
                   <strong>Financing options available</strong>
                   <p>Explore loans and financing that can help make this upgrade more affordable.</p>
                 </div>
                 <button className="secondary-button" onClick={onExploreFinancing} type="button">View financing options ↗</button>
+                <UserPreviewTriageBadges surfaceId="workspace.financing-strip" />
               </section>
 
               <div className="estimate-financial-equation-grid">
@@ -13836,7 +14769,13 @@ function RetrofitPreviewCardView({
                   <p className="compact-empty">No scenarios available yet.</p>
                 )}
 
-                <section className="scenario-opportunity-review">
+                <section
+                  {...getUserPreviewTriageTargetProps({
+                    className: "scenario-opportunity-review",
+                    enabled: triageMode,
+                    surfaceId: "scenarios.opportunity-table"
+                  })}
+                >
                   <div className="scenario-opportunity-review-heading">
                     <div>
                       <h3>Review opportunities in this scenario</h3>
@@ -13844,6 +14783,7 @@ function RetrofitPreviewCardView({
                     </div>
                     <span className="estimate-preview-pill">{includedOpportunityRows.length} included</span>
                   </div>
+                  <UserPreviewTriageBadges surfaceId="scenarios.opportunity-table" />
                   <div className="scenario-opportunity-table" role="table" aria-label="Scenario opportunities">
                     <div className="scenario-opportunity-table-head" role="row">
                       <span role="columnheader">#</span>
@@ -13925,7 +14865,14 @@ function RetrofitPreviewCardView({
                 <EstimateMetricCard icon={<MetricCostIcon />} label="Utility cost savings per year" value={formatEstimateCentsPerPeriod(annualOperatingSavingsValue, "yr", "Needs bill")} subtitle="USD/yr" />
               </div>
               <h3>Certification contribution</h3>
-              <div className="estimate-certification-list">
+              <div
+                {...getUserPreviewTriageTargetProps({
+                  className: "estimate-certification-list",
+                  enabled: triageMode,
+                  surfaceId: "impact.certification-list"
+                })}
+              >
+                <UserPreviewTriageBadges surfaceId="impact.certification-list" />
                 {certificationRows.map((row) => (
                   <article className="estimate-certification-row" key={row.program}>
                     <span className="estimate-card-icon"><MetricImpactIcon /></span>
@@ -13943,7 +14890,13 @@ function RetrofitPreviewCardView({
 
           {activeWorkspaceTab === "application" ? (
             <section className="estimate-tab-panel estimate-application-tab" data-workspace-panel="application">
-              <section className="application-overview-card">
+              <section
+                {...getUserPreviewTriageTargetProps({
+                  className: "application-overview-card",
+                  enabled: triageMode,
+                  surfaceId: "application.overview-card"
+                })}
+              >
                 <div className="estimate-card-title-row">
                   <span className="estimate-card-icon"><MetricImpactIcon /></span>
                   <div>
@@ -13951,6 +14904,7 @@ function RetrofitPreviewCardView({
                     <p>Here’s a preview of the program and support available for this retrofit.</p>
                   </div>
                 </div>
+                <UserPreviewTriageBadges surfaceId="application.overview-card" />
                 {applicationOverviewReferenceOnly ? <p className="application-prep-reference-notice">Funding exhausted — reference only</p> : null}
                 <div className="application-overview-rows">
                   <EstimateInfoRow label="Opportunity name" value={applicationOverviewProfile?.programName || applicationOverviewOpportunity?.name || "Application support not available yet"} />
@@ -15029,6 +15983,7 @@ const ADMIN_RETROFITS_TAB = "Retrofits";
 const ADMIN_TEST_CASES_TAB = "Test Cases";
 const ADMIN_USER_PREVIEW_TAB = "User Preview";
 const ADMIN_POST_FORM_PREVIEW_TAB = "Post Form Preview";
+const ADMIN_TASKS_TAB = "Tasks";
 const ADMIN_DASHBOARD_PERFORMANCE_TAB = "Dashboard Performance Data";
 const ADMIN_HIDDEN_DATA_TABLE_NAMES = new Set([
   "gbs-application-profiles",
@@ -15063,6 +16018,406 @@ function adminSectionKey(tab: string) {
   return tab === "Users" ? "users" : `table:${tab}`;
 }
 
+function formatBytes(value: number) {
+  if (!Number.isFinite(value) || value <= 0) return "0 B";
+  const units = ["B", "KB", "MB", "GB"];
+  let amount = value;
+  let unitIndex = 0;
+  while (amount >= 1024 && unitIndex < units.length - 1) {
+    amount /= 1024;
+    unitIndex += 1;
+  }
+  return `${amount >= 10 || unitIndex === 0 ? amount.toFixed(0) : amount.toFixed(1)} ${units[unitIndex]}`;
+}
+
+function AdminGptProChatsPage({
+  credential,
+  navigate,
+  onSignOut,
+  viewer
+}: {
+  credential: AuthCredential | null;
+  navigate: (route: Route) => void;
+  onSignOut: () => void;
+  viewer: UserRecord;
+}) {
+  function handleWorkspaceNav(item: string) {
+    if (item === "Admin") {
+      navigate("admin");
+    }
+  }
+
+  return (
+    <WorkspaceLayout
+      activeNavItem="GPT Pro chats"
+      navItems={["GPT Pro chats", "Admin"]}
+      onNavItemChange={handleWorkspaceNav}
+      onSignOut={onSignOut}
+      title="Chats"
+      user={viewer}
+    >
+      <GptProChatsPanel credential={credential} />
+    </WorkspaceLayout>
+  );
+}
+
+function LocalGptProChatsStandalonePage() {
+  return (
+    <main className="tasks-standalone-page">
+      <GptProChatsPanel credential={null} />
+    </main>
+  );
+}
+
+export function selectGptProBatchIdForIndex(
+  batches: GptProBatch[],
+  currentSelection: string,
+  currentBatchId: string | null | undefined,
+  locationSearch: string
+) {
+  if (batches.some((batch) => batch.batchId === currentSelection)) {
+    return currentSelection;
+  }
+
+  const requestedBatchId = new URLSearchParams(locationSearch).get("batch") || "";
+  if (batches.some((batch) => batch.batchId === requestedBatchId)) {
+    return requestedBatchId;
+  }
+
+  return currentBatchId || batches[0]?.batchId || "";
+}
+
+export function selectGptProPromptPathForBatch(
+  batch: GptProBatch,
+  currentSelection: string,
+  locationSearch: string
+) {
+  if (batch.promptFiles.some((prompt) => prompt.promptPath === currentSelection)) {
+    return currentSelection;
+  }
+
+  const requestedPromptPath = new URLSearchParams(locationSearch).get("path") || "";
+  if (batch.promptFiles.some((prompt) => prompt.promptPath === requestedPromptPath)) {
+    return requestedPromptPath;
+  }
+
+  return batch.promptFiles[0]?.promptPath || "";
+}
+
+function GptProChatsPanel({ credential }: { credential: AuthCredential | null }) {
+  const [indexResponse, setIndexResponse] = useState<GptProWorkIndexResponse | null>(null);
+  const [selectedBatchId, setSelectedBatchId] = useState("");
+  const [selectedPromptPath, setSelectedPromptPath] = useState("");
+  const [promptContent, setPromptContent] = useState("");
+  const [outputContent, setOutputContent] = useState("");
+  const [savedOutputContent, setSavedOutputContent] = useState("");
+  const [outputExists, setOutputExists] = useState(false);
+  const [isLoadingIndex, setIsLoadingIndex] = useState(true);
+  const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [copyMessage, setCopyMessage] = useState<string | null>(null);
+
+  const batches = indexResponse?.batches || [];
+  const selectedBatch = batches.find((batch) => batch.batchId === selectedBatchId) || null;
+  const selectedPrompt = selectedBatch?.promptFiles.find((prompt) => prompt.promptPath === selectedPromptPath) || null;
+  const isOutputDirty = outputContent !== savedOutputContent;
+  const storageIsWritable = indexResponse?.storageStatus === "s3";
+
+  const loadIndex = useCallback(async () => {
+    setIsLoadingIndex(true);
+    setError(null);
+    setMessage(null);
+
+    try {
+      const payload = await apiGet<GptProWorkIndexResponse>("/api/admin/gpt-pro-work/batches", {
+        ...(credential ? { headers: adminAuthHeaders(credential) } : {})
+      });
+      setIndexResponse(payload);
+      setSelectedBatchId((currentBatchId) =>
+        selectGptProBatchIdForIndex(
+          payload.batches,
+          currentBatchId,
+          payload.currentBatchId,
+          typeof window === "undefined" ? "" : window.location.search
+        )
+      );
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not load GPT Pro work batches.");
+    } finally {
+      setIsLoadingIndex(false);
+    }
+  }, [credential]);
+
+  useEffect(() => {
+    void loadIndex();
+  }, [loadIndex]);
+
+  useEffect(() => {
+    if (!selectedBatch) {
+      setSelectedPromptPath("");
+      return;
+    }
+
+    setSelectedPromptPath((currentPath) =>
+      selectGptProPromptPathForBatch(
+        selectedBatch,
+        currentPath,
+        typeof window === "undefined" ? "" : window.location.search
+      )
+    );
+  }, [selectedBatch]);
+
+  useEffect(() => {
+    if (!selectedBatch || !selectedPromptPath) {
+      setPromptContent("");
+      setOutputContent("");
+      setSavedOutputContent("");
+      setOutputExists(false);
+      return undefined;
+    }
+
+    let isMounted = true;
+    setIsLoadingFile(true);
+    setError(null);
+    setMessage(null);
+    setCopyMessage(null);
+
+    const params = new URLSearchParams({
+      batch: selectedBatch.batchId,
+      path: selectedPromptPath
+    });
+    const requestInit = {
+      ...(credential ? { headers: adminAuthHeaders(credential) } : {})
+    };
+
+    Promise.all([
+      apiGet<GptProWorkContentResponse>(`/api/admin/gpt-pro-work/prompt?${params.toString()}`, requestInit),
+      apiGet<GptProWorkContentResponse>(`/api/admin/gpt-pro-work/output?${params.toString()}`, requestInit)
+    ])
+      .then(([promptPayload, outputPayload]) => {
+        if (!isMounted) return;
+        setPromptContent(promptPayload.content);
+        setOutputContent(outputPayload.content);
+        setSavedOutputContent(outputPayload.content);
+        setOutputExists(Boolean(outputPayload.exists));
+      })
+      .catch((requestError) => {
+        if (!isMounted) return;
+        setError(requestError instanceof Error ? requestError.message : "Could not load the selected GPT Pro file.");
+        setPromptContent("");
+        setOutputContent("");
+        setSavedOutputContent("");
+        setOutputExists(false);
+      })
+      .finally(() => {
+        if (isMounted) {
+          setIsLoadingFile(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [credential, selectedBatch, selectedPromptPath]);
+
+  async function copyPrompt() {
+    if (!promptContent) return;
+    setCopyMessage(null);
+    try {
+      await navigator.clipboard.writeText(promptContent);
+      setCopyMessage("Prompt copied.");
+    } catch {
+      setCopyMessage("Clipboard access failed.");
+    }
+  }
+
+  async function saveOutput() {
+    if (!selectedBatch || !selectedPrompt) {
+      setError("Select a prompt before saving output.");
+      return;
+    }
+
+    setIsSaving(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const saved = await apiPut<GptProWorkSaveResponse>("/api/admin/gpt-pro-work/output", {
+        ...(credential ? adminAuthBody(credential) : {}),
+        batchId: selectedBatch.batchId,
+        content: outputContent,
+        promptPath: selectedPrompt.promptPath
+      });
+      setSavedOutputContent(outputContent);
+      setOutputExists(true);
+      setMessage(`Saved ${formatBytes(saved.sizeBytes)} to ${saved.outputPath}.`);
+      await loadIndex();
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Could not save GPT Pro output.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  return (
+    <section className="gpt-pro-chats">
+      <div className="gpt-pro-chats-header">
+        <div>
+          <p className="eyebrow">GPT Pro repair batches</p>
+          <h1>Chats</h1>
+        </div>
+        <div className="gpt-pro-chats-actions">
+          <span className="soft-badge">Storage: {indexResponse?.storageStatus || "checking"}</span>
+          <button className="secondary-button" disabled={isLoadingIndex} onClick={() => void loadIndex()} type="button">
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      {error ? <p className="error-message">{error}</p> : null}
+      {message ? <p className="success-message">{message}</p> : null}
+      {copyMessage ? <p className="success-message">{copyMessage}</p> : null}
+      {indexResponse?.warnings?.length ? (
+        <div className="gpt-pro-chats-warning">
+          {indexResponse.warnings.map((warning) => (
+            <p key={warning}>{warning}</p>
+          ))}
+        </div>
+      ) : null}
+
+      <div className="gpt-pro-chats-summary">
+        <article>
+          <span>Batches</span>
+          <strong>{indexResponse?.totals.batchCount.toLocaleString() || "0"}</strong>
+        </article>
+        <article>
+          <span>Prompts</span>
+          <strong>{indexResponse?.totals.promptCount.toLocaleString() || "0"}</strong>
+        </article>
+        <article>
+          <span>Outputs</span>
+          <strong>{indexResponse?.totals.outputCount.toLocaleString() || "0"}</strong>
+        </article>
+        <article>
+          <span>Size</span>
+          <strong>{formatBytes(indexResponse?.totals.totalBytes || 0)}</strong>
+        </article>
+      </div>
+
+      <div className="gpt-pro-batch-toolbar">
+        <label className="field">
+          <span>Batch</span>
+          <select
+            disabled={isLoadingIndex || batches.length === 0}
+            onChange={(event) => setSelectedBatchId(event.target.value)}
+            value={selectedBatchId}
+          >
+            {batches.map((batch) => (
+              <option key={batch.batchId} value={batch.batchId}>
+                {batch.displayName}{batch.batchId === indexResponse?.currentBatchId ? " (current)" : ""}
+              </option>
+            ))}
+          </select>
+        </label>
+        <div className="gpt-pro-batch-meta">
+          <span>{selectedBatch?.promptCount.toLocaleString() || "0"} prompts</span>
+          <span>{selectedBatch?.objectCount.toLocaleString() || "0"} objects</span>
+          <span>{selectedBatch?.latestModifiedAt ? formatDate(selectedBatch.latestModifiedAt) : "No date"}</span>
+        </div>
+      </div>
+
+      <div className="gpt-pro-chats-layout">
+        <aside className="gpt-pro-prompt-list-panel" aria-label="GPT Pro prompts">
+          <div className="gpt-pro-prompt-list-header">
+            <strong>{selectedBatch?.displayName || "No batch selected"}</strong>
+            {selectedBatch?.batchId === indexResponse?.currentBatchId ? <span className="soft-badge">Current</span> : null}
+          </div>
+          <div className="gpt-pro-prompt-list">
+            {isLoadingIndex ? <p className="empty-state">Loading batches...</p> : null}
+            {!isLoadingIndex && selectedBatch?.promptFiles.length === 0 ? (
+              <p className="empty-state">No prompt files found in this batch.</p>
+            ) : null}
+            {selectedBatch?.promptFiles.map((prompt) => (
+              <button
+                aria-current={prompt.promptPath === selectedPromptPath ? "true" : undefined}
+                className="gpt-pro-prompt-row"
+                key={prompt.promptPath}
+                onClick={() => setSelectedPromptPath(prompt.promptPath)}
+                type="button"
+              >
+                <span>
+                  <strong>{prompt.displayName}</strong>
+                  <small>{prompt.promptPath}</small>
+                </span>
+                <mark>{prompt.outputExists ? "Saved" : "Empty"}</mark>
+              </button>
+            ))}
+          </div>
+        </aside>
+
+        <section className="gpt-pro-editor-panel">
+          {selectedPrompt ? (
+            <>
+              <div className="gpt-pro-file-header">
+                <div>
+                  <p className="eyebrow">Current file</p>
+                  <h2>{selectedPrompt.displayName}</h2>
+                  <p>{selectedPrompt.promptPath}</p>
+                </div>
+                <div className="gpt-pro-file-actions">
+                  <button className="secondary-button" disabled={!promptContent || isLoadingFile} onClick={() => void copyPrompt()} type="button">
+                    Copy prompt
+                  </button>
+                  <button
+                    disabled={!storageIsWritable || !isOutputDirty || isSaving || isLoadingFile}
+                    onClick={() => void saveOutput()}
+                    type="button"
+                  >
+                    {isSaving ? "Saving..." : "Save output"}
+                  </button>
+                </div>
+              </div>
+
+              <div className="gpt-pro-file-context">
+                <div>
+                  <span>Prompt object</span>
+                  <strong>{selectedPrompt.promptKey}</strong>
+                </div>
+                <div>
+                  <span>Output object</span>
+                  <strong>{selectedPrompt.outputKey}</strong>
+                </div>
+                <div>
+                  <span>Status</span>
+                  <strong>{outputExists ? "Output saved" : "Output empty"}{isOutputDirty ? " - unsaved edits" : ""}</strong>
+                </div>
+              </div>
+
+              <div className="gpt-pro-editor-grid">
+                <label className="gpt-pro-editor-field">
+                  <span>Prompt</span>
+                  <textarea readOnly value={isLoadingFile ? "Loading prompt..." : promptContent} />
+                </label>
+                <label className="gpt-pro-editor-field">
+                  <span>Output</span>
+                  <textarea
+                    disabled={!storageIsWritable}
+                    onChange={(event) => setOutputContent(event.target.value)}
+                    value={isLoadingFile ? "Loading output..." : outputContent}
+                  />
+                </label>
+              </div>
+            </>
+          ) : (
+            <p className="empty-state">Select a prompt file to open its workspace.</p>
+          )}
+        </section>
+      </div>
+    </section>
+  );
+}
+
 function AdminDashboard({
   credential,
   initialTab,
@@ -15084,6 +16439,7 @@ function AdminDashboard({
     "Users",
     ADMIN_USER_PREVIEW_TAB,
     ADMIN_POST_FORM_PREVIEW_TAB,
+    ADMIN_TASKS_TAB,
     ADMIN_DASHBOARD_PERFORMANCE_TAB,
     ADMIN_TEST_CASES_TAB,
     ADMIN_APPLICATION_SOURCES_TAB,
@@ -15243,6 +16599,10 @@ function AdminDashboard({
       window.open(pathForRoute("testcases"), "_blank", "noopener,noreferrer");
       return;
     }
+    if (item === ADMIN_TASKS_TAB) {
+      window.open(pathForRoute("tasks"), "_blank", "noopener,noreferrer");
+      return;
+    }
     const nextPath =
       item === ADMIN_APPLICATION_SOURCES_TAB
         ? pathForRoute("admin-application-sources")
@@ -15300,6 +16660,688 @@ function AdminTestCasesStandalonePage() {
       <AdminTestCasesPanel />
     </main>
   );
+}
+
+const FIRSTMATE_TASK_SECTIONS: Array<{ state: FirstmateTaskState; label: string }> = [
+  { state: "active", label: "Active" },
+  { state: "blocked", label: "Blocked" },
+  { state: "queued", label: "Queued" },
+  { state: "completed", label: "Completed" }
+];
+
+function AdminTasksStandalonePage({
+  credential,
+  onSignOut,
+  viewer
+}: {
+  credential: AuthCredential | null;
+  onSignOut: () => void;
+  viewer: UserRecord;
+}) {
+  return (
+    <WorkspaceLayout
+      activeNavItem={ADMIN_TASKS_TAB}
+      navItems={[ADMIN_TASKS_TAB]}
+      onSignOut={onSignOut}
+      title="Tasks"
+      user={viewer}
+    >
+      <FirstmateTasksPanel credential={credential} />
+    </WorkspaceLayout>
+  );
+}
+
+function LocalFirstmateTasksStandalonePage() {
+  return (
+    <main className="tasks-standalone-page">
+      <FirstmateTasksPanel credential={null} />
+    </main>
+  );
+}
+
+function firstmateTasksAccessErrorMessage(error: unknown, fallback: string) {
+  if (!(error instanceof Error)) {
+    return fallback;
+  }
+
+  if (/admin sign-in is required/i.test(error.message)) {
+    return "Firstmate tasks require admin sign-in unless the local Firstmate tasks auth bypass is enabled.";
+  }
+
+  return error.message;
+}
+
+function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null }) {
+  const [response, setResponse] = useState<FirstmateTasksResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  const loadTasks = useCallback(async (options?: { preserveNotice?: boolean }) => {
+    setIsLoading(true);
+    setError(null);
+    if (!options?.preserveNotice) {
+      setNotice(null);
+    }
+    try {
+      const nextResponse = await apiGet<FirstmateTasksResponse>("/api/admin/firstmate/tasks", {
+        ...(credential ? { headers: adminAuthHeaders(credential) } : {})
+      });
+      setResponse(nextResponse);
+    } catch (requestError) {
+      setError(firstmateTasksAccessErrorMessage(requestError, "Could not load Firstmate tasks."));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [credential]);
+
+  useEffect(() => {
+    void loadTasks();
+  }, [loadTasks]);
+
+  const refreshAfterStaleResponse = useCallback(async (serverMessage: string) => {
+    setNotice(`${serverMessage} The agent has already moved on, so the task list was refreshed.`);
+    await loadTasks({ preserveNotice: true });
+  }, [loadTasks]);
+
+  const counts = response?.counts || {
+    active: 0,
+    blocked: 0,
+    queued: 0,
+    completed: 0,
+    needsResponse: 0
+  };
+  const responseNeededTasks = response?.tasks.filter((task) => task.responseNeeded) || [];
+  const localAuthBypass = Boolean(response?.localAuthBypass);
+
+  return (
+    <section className="tasks-page-panel">
+      <div className="tasks-page-header">
+        <div>
+          <p className="eyebrow">Firstmate operations</p>
+          <h1>Tasks</h1>
+          <p>Current and completed agent work across local Firstmate task state.</p>
+        </div>
+        <button className="secondary-button" disabled={isLoading} onClick={() => void loadTasks()} type="button">
+          {isLoading ? "Refreshing..." : "Refresh"}
+        </button>
+      </div>
+
+      {notice ? <p className="tasks-notice-message">{notice}</p> : null}
+      {error ? <p className="error-message">{error}</p> : null}
+
+      <div className="tasks-stats">
+        <article>
+          <span>Active agents</span>
+          <strong>{response?.activeAgentCount ?? 0}</strong>
+        </article>
+        <article>
+          <span>Total tasks</span>
+          <strong>{response?.totalTaskCount ?? 0}</strong>
+        </article>
+        <article>
+          <span>Blocked</span>
+          <strong>{counts.blocked}</strong>
+        </article>
+        <article className={counts.needsResponse ? "tasks-needs-response-stat" : undefined}>
+          <span>Needs response</span>
+          <strong>{counts.needsResponse}</strong>
+        </article>
+        <article>
+          <span>Completed</span>
+          <strong>{counts.completed}</strong>
+        </article>
+      </div>
+
+      {isLoading && !response ? (
+        <section className="tasks-empty-state">
+          <RetroFiLogoLoader label="Loading Firstmate tasks..." size="lg" tone="card" />
+        </section>
+      ) : null}
+
+      {response && !response.enabled ? (
+        <section className="tasks-empty-state">
+          <strong>Firstmate tasks disabled</strong>
+          <p>{response.reason || "Firstmate task data is not enabled in this environment."}</p>
+        </section>
+      ) : null}
+
+      {response?.enabled ? (
+        <div className="tasks-section-stack">
+          {responseNeededTasks.length ? (
+            <FirstmateNeedsResponseSection
+              credential={credential}
+              localAuthBypass={localAuthBypass}
+              onResponded={() => void loadTasks({ preserveNotice: true })}
+              onStaleResponse={refreshAfterStaleResponse}
+              tasks={responseNeededTasks}
+            />
+          ) : null}
+          {FIRSTMATE_TASK_SECTIONS.map((section) => (
+            <FirstmateTaskSection
+              count={counts[section.state] || 0}
+              key={section.state}
+              label={section.label}
+              state={section.state}
+              tasks={response.tasks.filter((task) => task.state === section.state)}
+            />
+          ))}
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
+function FirstmateNeedsResponseSection({
+  credential,
+  localAuthBypass,
+  onResponded,
+  onStaleResponse,
+  tasks
+}: {
+  credential: AuthCredential | null;
+  localAuthBypass: boolean;
+  onResponded: () => void;
+  onStaleResponse: (serverMessage: string) => Promise<void>;
+  tasks: FirstmateTask[];
+}) {
+  return (
+    <section className="tasks-response-section">
+      <div className="tasks-section-heading">
+        <h2>Needs response</h2>
+        <span className="task-state-pill is-needs-response">{tasks.length}</span>
+      </div>
+      <div className="tasks-response-list">
+        {tasks.map((task) => (
+          <FirstmateTaskResponseCard
+            credential={credential}
+            key={task.id}
+            localAuthBypass={localAuthBypass}
+            onResponded={onResponded}
+            onStaleResponse={onStaleResponse}
+            task={task}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function FirstmateTaskResponseCard({
+  credential,
+  localAuthBypass,
+  onResponded,
+  onStaleResponse,
+  task
+}: {
+  credential: AuthCredential | null;
+  localAuthBypass: boolean;
+  onResponded: () => void;
+  onStaleResponse: (serverMessage: string) => Promise<void>;
+  task: FirstmateTask;
+}) {
+  const [message, setMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const trimmedMessage = message.trim();
+  const canSubmit = Boolean((credential || localAuthBypass) && task.canRespond && trimmedMessage.length > 0 && trimmedMessage.length <= 4000 && !isSending);
+
+  async function sendResponse() {
+    if ((!credential && !localAuthBypass) || !task.canRespond || !trimmedMessage) return;
+
+    setIsSending(true);
+    setError(null);
+    try {
+      await apiPost<FirstmateTaskRespondResponse>(
+        `/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/respond`,
+        credential
+          ? {
+              ...adminAuthBody(credential),
+              message: trimmedMessage
+            }
+          : {
+              message: trimmedMessage
+            }
+      );
+      setMessage("");
+      onResponded();
+    } catch (requestError) {
+      const serverMessage = requestError instanceof Error ? requestError.message : "Could not send response.";
+      if (/task is not waiting for a captain response/i.test(serverMessage)) {
+        setError(`${serverMessage} The agent has already moved on. Refreshing tasks.`);
+        await onStaleResponse(serverMessage);
+      } else {
+        setError(serverMessage);
+      }
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  return (
+    <article className="tasks-response-card">
+      <div className="tasks-response-card-main">
+        <div>
+          <strong>{task.title}</strong>
+          <span>{task.id} / {task.kind} / {task.repo}</span>
+        </div>
+        <p>{task.recentStatus || "This task is waiting for captain input."}</p>
+      </div>
+      {task.canRespond ? (
+        <div className="tasks-response-form">
+          <label>
+            <span className="sr-only">Response for {task.id}</span>
+            <textarea
+              maxLength={4000}
+              onChange={(event) => setMessage(event.target.value)}
+              placeholder="Type captain response..."
+              rows={2}
+              value={message}
+            />
+          </label>
+          <button disabled={!canSubmit} onClick={() => void sendResponse()} type="button">
+            {isSending ? "Sending..." : "Respond"}
+          </button>
+          {error ? <p className="error-message">{error}</p> : null}
+        </div>
+      ) : (
+        <p className="tasks-muted">No live response window is available for this task.</p>
+      )}
+    </article>
+  );
+}
+
+function FirstmateTaskSection({
+  count,
+  label,
+  state,
+  tasks
+}: {
+  count: number;
+  label: string;
+  state: FirstmateTaskState;
+  tasks: FirstmateTask[];
+}) {
+  return (
+    <section className="tasks-section">
+      <div className="tasks-section-heading">
+        <h2>{label}</h2>
+        <span className={`task-state-pill is-${state}`}>{count}</span>
+      </div>
+      <div className="tasks-table-wrap">
+        <table className="tasks-table">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Task</th>
+              <th>Kind</th>
+              <th>Repo / project</th>
+              <th>Blocked</th>
+              <th>Recent status</th>
+              <th>Report</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tasks.length ? (
+              tasks.map((task) => (
+                <FirstmateTaskRow
+                  key={task.id}
+                  task={task}
+                />
+              ))
+            ) : (
+              <tr>
+                <td colSpan={7}>No {label.toLowerCase()} tasks.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+export function FirstmateTaskRow({
+  task
+}: {
+  task: FirstmateTask;
+}) {
+  const showGptProRepairAction = Boolean(task.showGptProRepairAction ?? task.gptProRepairReady);
+  const showReportAction = Boolean(
+    !showGptProRepairAction && (task.showReportAction ?? Boolean(task.hasReport && task.reportUrl))
+  );
+
+  return (
+    <tr className={task.responseNeeded ? "is-response-needed" : undefined}>
+      <td>
+        <span className={`task-status-indicator is-${task.state}`} title={formatFirstmateTaskState(task.state)}>
+          {task.state === "completed" ? <CheckIcon /> : <span aria-hidden="true" />}
+        </span>
+      </td>
+      <td>
+        <strong>{task.title}</strong>
+        <span>{task.id}</span>
+      </td>
+      <td>{task.kind}</td>
+      <td>
+        <strong>{task.repo}</strong>
+        <span>{task.project || "Project path unavailable"}</span>
+      </td>
+      <td>{task.blocked ? task.blockedBy.length ? `Yes: ${task.blockedBy.join(", ")}` : "Yes" : "No"}</td>
+      <td>
+        {task.responseNeeded ? <span className="task-response-needed-badge">Needs response</span> : null}
+        {task.recentStatus || "No recent status"}
+      </td>
+      <td>
+        <div className="task-report-actions">
+          {showGptProRepairAction ? (
+            task.gptProRepairUrl ? (
+              <a className="button-link secondary-button" href={task.gptProRepairUrl} rel="noreferrer" target="_blank">
+                {task.gptProRepairLabel || "Go To Pro Repair Batch"}
+              </a>
+            ) : (
+              <span className="tasks-muted">{task.gptProRepairUnavailableReason || "GPT Pro repair workspace URL is not configured."}</span>
+            )
+          ) : (
+            <>
+              {showReportAction ? (
+                <a
+                  className={`button-link secondary-button ${task.reportIsFinal ? "" : "is-report-draft"}`.trim()}
+                  href={task.reportUrl || ""}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {task.reportActionLabel || "View Report"}
+                </a>
+              ) : (
+                <span className="tasks-muted">No report</span>
+              )}
+            </>
+          )}
+        </div>
+        {showReportAction && task.reportNote && !task.reportIsFinal ? (
+          <p className="task-report-note">{task.reportNote}</p>
+        ) : null}
+      </td>
+    </tr>
+  );
+}
+
+function AdminTaskReportStandalonePage({
+  credential,
+  onSignOut,
+  viewer
+}: {
+  credential: AuthCredential | null;
+  onSignOut: () => void;
+  viewer: UserRecord;
+}) {
+  return (
+    <WorkspaceLayout
+      activeNavItem={ADMIN_TASKS_TAB}
+      navItems={[ADMIN_TASKS_TAB]}
+      onSignOut={onSignOut}
+      title="Task report"
+      user={viewer}
+    >
+      <FirstmateTaskReportPanel credential={credential} taskId={taskReportIdFromPath()} />
+    </WorkspaceLayout>
+  );
+}
+
+function LocalFirstmateTaskReportStandalonePage() {
+  return (
+    <main className="tasks-standalone-page">
+      <FirstmateTaskReportPanel credential={null} taskId={taskReportIdFromPath()} />
+    </main>
+  );
+}
+
+function FirstmateTaskReportPanel({ credential, taskId }: { credential: AuthCredential | null; taskId: string }) {
+  const [report, setReport] = useState<FirstmateTaskReportResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (!taskId) {
+      setError("Report task id is missing.");
+      setIsLoading(false);
+      return () => {
+        isMounted = false;
+      };
+    }
+
+    setIsLoading(true);
+    setError(null);
+    apiGet<FirstmateTaskReportResponse>(`/api/admin/firstmate/tasks/${encodeURIComponent(taskId)}/report`, {
+      ...(credential ? { headers: adminAuthHeaders(credential) } : {})
+    })
+      .then((nextReport) => {
+        if (!isMounted) return;
+        setReport(nextReport);
+      })
+      .catch((requestError) => {
+        if (!isMounted) return;
+        setError(firstmateTasksAccessErrorMessage(requestError, "Could not load the Firstmate report."));
+      })
+      .finally(() => {
+        if (isMounted) setIsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [credential, taskId]);
+
+  return (
+    <section className="task-report-panel">
+      <div className="task-report-header">
+        <div>
+          <p className="eyebrow">Firstmate report</p>
+          <h1>{taskId || "Task report"}</h1>
+        </div>
+        <a className="button-link secondary-button" href={pathForRoute("tasks")}>
+          Back to Tasks
+        </a>
+      </div>
+      {isLoading ? (
+        <RetroFiLogoLoader label="Loading report..." size="lg" tone="card" />
+      ) : null}
+      {error ? <p className="error-message">{error}</p> : null}
+      {report?.reportNote && !report.reportIsFinal ? (
+        <section className="task-report-status-note">
+          <strong>{report.reportStatusLabel}</strong>
+          <p>{report.reportNote}</p>
+          {report.taskState ? <span>Task state: {formatFirstmateTaskState(report.taskState)}</span> : null}
+        </section>
+      ) : null}
+      {report ? <MarkdownReport markdown={report.markdown} /> : null}
+    </section>
+  );
+}
+
+type MarkdownBlock =
+  | { kind: "heading"; level: number; text: string }
+  | { kind: "paragraph"; text: string }
+  | { kind: "list"; ordered: boolean; items: string[] }
+  | { kind: "code"; text: string }
+  | { kind: "rule" };
+
+function MarkdownReport({ markdown }: { markdown: string }) {
+  const blocks = useMemo(() => parseSimpleMarkdown(markdown), [markdown]);
+
+  return (
+    <article className="task-report-markdown">
+      {blocks.map((block, index) => renderMarkdownBlock(block, index))}
+    </article>
+  );
+}
+
+function parseSimpleMarkdown(markdown: string): MarkdownBlock[] {
+  const blocks: MarkdownBlock[] = [];
+  const paragraphLines: string[] = [];
+  let listItems: string[] = [];
+  let listOrdered = false;
+  let codeLines: string[] = [];
+  let inCode = false;
+
+  function flushParagraph() {
+    if (!paragraphLines.length) return;
+    blocks.push({ kind: "paragraph", text: paragraphLines.join(" ").trim() });
+    paragraphLines.length = 0;
+  }
+
+  function flushList() {
+    if (!listItems.length) return;
+    blocks.push({ kind: "list", ordered: listOrdered, items: listItems });
+    listItems = [];
+    listOrdered = false;
+  }
+
+  for (const line of markdown.split(/\r?\n/)) {
+    if (line.trim().startsWith("```")) {
+      if (inCode) {
+        blocks.push({ kind: "code", text: codeLines.join("\n") });
+        codeLines = [];
+        inCode = false;
+      } else {
+        flushParagraph();
+        flushList();
+        inCode = true;
+      }
+      continue;
+    }
+
+    if (inCode) {
+      codeLines.push(line);
+      continue;
+    }
+
+    const trimmed = line.trim();
+    if (!trimmed) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
+    const heading = trimmed.match(/^(#{1,4})\s+(.+)$/);
+    if (heading) {
+      flushParagraph();
+      flushList();
+      blocks.push({ kind: "heading", level: heading[1].length, text: heading[2].trim() });
+      continue;
+    }
+
+    if (/^---+$/.test(trimmed)) {
+      flushParagraph();
+      flushList();
+      blocks.push({ kind: "rule" });
+      continue;
+    }
+
+    const bullet = trimmed.match(/^[-*]\s+(.+)$/);
+    const ordered = trimmed.match(/^\d+\.\s+(.+)$/);
+    if (bullet || ordered) {
+      flushParagraph();
+      const nextOrdered = Boolean(ordered);
+      if (listItems.length && listOrdered !== nextOrdered) {
+        flushList();
+      }
+      listOrdered = nextOrdered;
+      listItems.push((bullet?.[1] || ordered?.[1] || "").trim());
+      continue;
+    }
+
+    flushList();
+    paragraphLines.push(trimmed);
+  }
+
+  if (inCode) {
+    blocks.push({ kind: "code", text: codeLines.join("\n") });
+  }
+  flushParagraph();
+  flushList();
+
+  return blocks;
+}
+
+function renderMarkdownBlock(block: MarkdownBlock, index: number) {
+  if (block.kind === "heading") {
+    const content = renderMarkdownInline(block.text, `heading-${index}`);
+    if (block.level === 1) return <h1 key={index}>{content}</h1>;
+    if (block.level === 2) return <h2 key={index}>{content}</h2>;
+    if (block.level === 3) return <h3 key={index}>{content}</h3>;
+    return <h4 key={index}>{content}</h4>;
+  }
+
+  if (block.kind === "paragraph") {
+    return <p key={index}>{renderMarkdownInline(block.text, `paragraph-${index}`)}</p>;
+  }
+
+  if (block.kind === "list") {
+    const ListTag = block.ordered ? "ol" : "ul";
+    return (
+      <ListTag key={index}>
+        {block.items.map((item, itemIndex) => (
+          <li key={`${index}-${itemIndex}`}>{renderMarkdownInline(item, `list-${index}-${itemIndex}`)}</li>
+        ))}
+      </ListTag>
+    );
+  }
+
+  if (block.kind === "code") {
+    return <pre key={index}><code>{block.text}</code></pre>;
+  }
+
+  return <hr key={index} />;
+}
+
+function renderMarkdownInline(text: string, keyPrefix: string): ReactNode[] {
+  const nodes: ReactNode[] = [];
+  const pattern = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)|(https?:\/\/[^\s)]+)/g;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(text))) {
+    if (match.index > lastIndex) {
+      nodes.push(text.slice(lastIndex, match.index));
+    }
+
+    const label = match[1] || match[3];
+    const href = match[2] || match[3];
+    nodes.push(
+      <a href={href} key={`${keyPrefix}-${match.index}`} rel="noreferrer" target="_blank">
+        {label}
+      </a>
+    );
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+
+  return nodes;
+}
+
+function taskReportIdFromPath(pathname = typeof window === "undefined" ? "" : window.location.pathname) {
+  const prefix = "/tasks/reports/";
+  if (!pathname.startsWith(prefix)) return "";
+  const encoded = pathname.slice(prefix.length).split("/")[0] || "";
+  try {
+    return decodeURIComponent(encoded);
+  } catch {
+    return "";
+  }
+}
+
+function formatFirstmateTaskState(state: FirstmateTaskState) {
+  if (state === "active") return "Active";
+  if (state === "completed") return "Completed";
+  if (state === "blocked") return "Blocked";
+  return "Queued";
 }
 
 type DashboardPerformanceSummary = {
@@ -15745,6 +17787,8 @@ function AdminUserPreviewStandalonePage({
   const [customerPreviewMode, setCustomerPreviewMode] = useState(false);
   const [hideBillData, setHideBillData] = useState(false);
   const [hideFormDetails, setHideFormDetails] = useState(false);
+  const triageMode =
+    typeof window !== "undefined" && isUserPreviewTriageModeEnabled(window.location.search);
   const [selectedUserId, setSelectedUserId] = useState(() => {
     if (typeof window === "undefined") return "";
     return new URLSearchParams(window.location.search).get("userId") || "";
@@ -15856,7 +17900,7 @@ function AdminUserPreviewStandalonePage({
   }
 
   return (
-    <main className={`user-preview-standalone-page${customerPreviewMode ? " is-customer-preview" : ""}`}>
+    <main className={`user-preview-standalone-page${customerPreviewMode ? " is-customer-preview" : ""}${triageMode ? " is-review-triage-mode" : ""}`}>
       <header className={`user-preview-toolbar user-preview-toolbar-collapsed${customerPreviewMode ? " is-customer-preview" : ""}`}>
         {customerPreviewMode ? (
           <div className="customer-preview-strip">
@@ -15966,6 +18010,7 @@ function AdminUserPreviewStandalonePage({
             hideFormDetails={hideFormDetails}
             enableSeededFormDetails={true}
             title="Retrofit Recommendations"
+            triageMode={triageMode}
           />
       ) : (
         <section className="retrofit-preview-page">
@@ -19583,6 +21628,8 @@ export function App() {
       const nextRoute = routeFromPath();
       if (window.location.pathname === "/database") {
         window.history.replaceState({}, "", pathForRoute(nextRoute));
+      } else if (shouldCanonicalizeUnknownHomeFallback()) {
+        window.history.replaceState({}, "", pathForRoute("home"));
       }
       setRoute(nextRoute);
     }
@@ -19725,9 +21772,12 @@ export function App() {
       payload.dashboard === "admin"
         ? route === "testcases" ||
           route === "user-preview" ||
+          route === "chats" ||
           route === "admin-dashboard-performance-data" ||
           route === "admin-application-sources" ||
-          route === "admin-application-profiles"
+          route === "admin-application-profiles" ||
+          route === "tasks" ||
+          route === "task-report"
           ? route
           : "admin"
         : "portal"
@@ -19748,7 +21798,7 @@ export function App() {
       return <AppSessionRestoringPage />;
     }
 
-    return <SessionRestoringPage navigate={navigate} />;
+    return <SessionRestoringPage />;
   }
 
   const publicAuth: PublicAuthState = {
@@ -19833,6 +21883,49 @@ export function App() {
         publicAuth={publicAuth}
       />
     );
+  }
+
+  if (effectiveRoute === "tasks") {
+    if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
+      return (
+        <AdminTasksStandalonePage
+          credential={authCredential}
+          onSignOut={signOut}
+          viewer={authPayload.user}
+        />
+      );
+    }
+
+    return <LocalFirstmateTasksStandalonePage />;
+  }
+
+  if (effectiveRoute === "chats") {
+    if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
+      return (
+        <AdminGptProChatsPage
+          credential={authCredential}
+          navigate={navigate}
+          onSignOut={signOut}
+          viewer={authPayload.user}
+        />
+      );
+    }
+
+    return <LocalGptProChatsStandalonePage />;
+  }
+
+  if (effectiveRoute === "task-report") {
+    if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
+      return (
+        <AdminTaskReportStandalonePage
+          credential={authCredential}
+          onSignOut={signOut}
+          viewer={authPayload.user}
+        />
+      );
+    }
+
+    return <LocalFirstmateTaskReportStandalonePage />;
   }
 
   if (effectiveRoute === "user-preview") {

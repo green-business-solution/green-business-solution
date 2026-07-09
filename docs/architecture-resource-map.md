@@ -34,7 +34,7 @@ Browser traffic enters CloudFront on `retrofi.org`.
 | --- | --- | --- | --- |
 | `gbs-github-actions-deploy` | `us-east-1` | `infra/github-actions-deploy-role.yaml` | GitHub OIDC provider and `gbs-github-actions-deploy` IAM role |
 | `gbs-retrofi-runtime-data` | `us-east-2` | `infra/runtime-data.yaml` | Domain-specific runtime DynamoDB tables |
-| `gbs-retrofi-runtime-buckets` | `us-east-1` | `infra/runtime-buckets.yaml` | Runtime cache and generated fixture buckets |
+| `gbs-retrofi-runtime-buckets` | `us-east-1` | `infra/runtime-buckets.yaml` | Runtime cache, generated fixture, and private development-work buckets |
 | `gbs-retrofi-api` | `us-east-1` | `infra/api-hosting.yaml` | API Lambda, HTTP API Gateway, Lambda execution role, log group |
 | `gbs-retrofi-production` | `us-east-1` | `infra/production-hosting.yaml` | Frontend S3 bucket, CloudFront, ACM cert, Route 53 aliases |
 
@@ -43,7 +43,7 @@ Browser traffic enters CloudFront on `retrofi.org`.
 | Table | Region | Purpose |
 | --- | --- | --- |
 | `gbs-users` | `us-east-2` | Account/auth/user records |
-| `gbs-client-intake` | `us-east-2` | Intake form state, business/site profile, uploaded utility metadata, extracted bill fields |
+| `gbs-client-intake` | `us-east-2` | Intake form state, business/site profile, uploaded utility metadata, extracted bill fields, per-retrofit pre-retrofit form answers |
 | `gbs-opportunity-candidates` | `us-east-2` | DSIRE opportunity candidate records and admin review state |
 | `gbs-dashboard-performance` | `us-east-2` | Synthetic/test-case dashboard performance datasets |
 | `gbs-retrofit-recommendation-cache` | `us-east-2` | Recommendation cache metadata; large payloads live in S3 |
@@ -57,12 +57,12 @@ The deleted `gbs-runtime-state` table was split into the four domain runtime tab
 
 | Bucket | Region | Purpose |
 | --- | --- | --- |
-| `gbs-retrofi-org-frontend-448016109714` | `us-east-1` | Built frontend assets served through CloudFront |
-| `gbs-retrofi-org-artifacts-448016109714-us-east-1` | `us-east-1` | Lambda zip artifacts under `lambda/`; GitHub is still the code source of truth |
-| `gbs-retrofi-org-energy-data-448016109714` | `us-east-1` | Customer utility/energy uploads under `energy-data/` |
-| `gbs-retrofi-org-runtime-cache-448016109714` | `us-east-1` | Generated runtime cache payloads under `runtime-cache/` |
-| `gbs-retrofi-test-fixtures-448016109714-us-east-1` | `us-east-1` | Generated fixtures and synthetic test data under `generated-test-fixtures/` |
-| `gbs-retrofi-dev-work-448016109714-us-east-1` | `us-east-1` | Raw GPT Pro prompt/output archives under `gpt-pro-work/` |
+| `gbs-retrofi-org-frontend-059310317821` | `us-east-1` | Built frontend assets served through CloudFront |
+| `gbs-retrofi-org-artifacts-059310317821-us-east-1` | `us-east-1` | Lambda zip artifacts under `lambda/`; GitHub is still the code source of truth |
+| `gbs-retrofi-org-energy-data-059310317821` | `us-east-1` | Customer utility/energy uploads under `energy-data/` |
+| `gbs-retrofi-org-runtime-cache-059310317821` | `us-east-1` | Generated runtime cache payloads under `runtime-cache/` |
+| `gbs-retrofi-test-fixtures-059310317821-us-east-1` | `us-east-1` | Generated fixtures and synthetic test data under `generated-test-fixtures/` |
+| `gbs-retrofi-dev-work-059310317821-us-east-1` | `us-east-1` | Raw GPT Pro prompt/output archives under `gpt-pro-work/` |
 
 ## Deployment Commands
 

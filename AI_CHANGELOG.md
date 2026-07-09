@@ -1,5 +1,50 @@
 # AI Changelog
 
+## 2026-07-09 - Codex (GPT-5) documentation sync
+
+- Synced architecture, resource, deployment, access, and data-model docs with the integrated profile tab and GPT Pro development-work release.
+
+## 2026-07-09 - Codex (GPT-5) GPT Pro docs auth fix
+
+- Updated local GPT Pro chats documentation to require the dedicated chats auth bypass instead of the Firstmate tasks bypass.
+
+## 2026-07-09 - Codex (GPT-5) GPT Pro output save fix
+
+- Scoped a larger JSON body parser to the GPT Pro work output save route so repair outputs can reach the store-level size validation.
+
+## 2026-07-09 - Codex (GPT-5) GPT Pro fallback fix
+
+- Preserved explicit empty GPT Pro work bucket configuration so local fallback storage can activate as documented.
+- Added focused regression coverage for GPT Pro work bucket precedence.
+
+## 2026-07-09 - Codex (GPT-5) GPT Pro review fixes
+
+- Scoped GPT Pro work API local auth bypass to the dedicated GPT Pro chats environment flag.
+- Made GPT Pro chat repair links seed the selected batch and prompt from valid URL query parameters.
+- Added focused API and frontend regression coverage for both review findings.
+
+## 2026-07-09 - Codex (GPT-5) loading and home navbar polish
+
+- Replaced the public session restore card with the shared full-page RetroFi spinner loader so auth restoration no longer looks like a modal dialog.
+- Removed the home-page mobile liquid-glass navbar shell override while preserving the existing public navbar controls and routing behavior.
+- Added a small-screen home hero text-fit guard so the first mobile viewport does not clip the headline.
+- Added regression coverage for the clean loading surface and the home-page navbar override removal.
+
+## 2026-07-09 - Codex (GPT-5) energy upload S3 key hardening
+
+- Added canonical S3 key validation for energy data upload registration so a valid upload session can only register the object key minted by the upload-url endpoint.
+- Moved energy upload object-key construction into a pure helper and covered accepted and rejected registration-key cases with focused API tests.
+
+## 2026-07-09 - Codex (GPT-5) pre-retrofit profile write support
+
+- Added a client-only portal API write path that stores per-retrofit pre-retrofit form answers on the matching intake profile record.
+- Wired the signed-in customer portal to save and rehydrate those form answers while keeping admin test-case preview on seeded read-only values.
+- Added targeted backend and frontend regression coverage for answer normalization, merge behavior, persisted form hydration, and preview write-path unlinking.
+
+## 2026-07-09 - Codex (GPT-5) RetroFi preview scenario tab polish
+
+- Renamed the combined scenario/opportunity user-preview tab to `Scenarios` and changed scenario card and row hover states to use the light green preview hover color.
+
 ## 2026-07-09 - Codex (GPT-5) next-session context handoff
 
 - Added a root `NEXT_CODEX_CONTEXT.md` handoff for future Codex sessions covering the current implementation plan, completed Codex work, architecture state, AWS migration state, runtime artifact rules, application-prep status, and highest-priority next tasks.
@@ -9,11 +54,50 @@
 - Reverse engineered the current RetroFi homepage visual language into `docs/homepage-design-system.md`, covering colors, spacing, typography, shadows, glass effects, gradients, motion, radius, cards, charts, buttons, and responsive rules.
 - Marked the homepage as the immutable public design-system source of truth in `AGENTS.md` so future agents consult the contract before changing homepage-adjacent UI.
 
+## 2026-07-09 - User preview Profile tab
+
+- Added a read-only Profile info view to the admin user preview sidebar using the existing recommendation payload.
+- Summarized account, intake, site, utility, recommendation, tax, preview-assumption, and synthetic dashboard data without exposing raw utility storage keys or extraction source text.
+
+## 2026-07-08 - Codex (GPT-5) user-preview triage overlay
+
+- Added a query-gated `?triage=1` review overlay for the admin RetroFi user preview, with red, yellow, and orange annotations hidden from normal preview traffic.
+- Centralized seeded triage issue metadata in `apps/web/src/userPreviewTriage.tsx` so future review updates can change stable issue IDs, tones, and notes without hunting through unrelated JSX.
+- Marked current preview targets including inactive sidebar/dashboard actions, hardcoded picker impact values, placeholder financing/application/dashboard surfaces, dense scenario tables, and fallback impact claims.
+- Added frontend regression coverage for the triage query parser, default-off rendering, active overlay legend, and metadata-backed picker annotation.
+
 ## 2026-07-08 - Codex (GPT-5) durable AI workflow adoption
 
 - Adopted the reusable AI workflow structure with project-specific `ARCHITECTURE.md`, `RESOURCE_MAP.md`, `TASK_LIST.md`, `review.md`, `template.md`, ADR, and `AI_RESOURCES/` starter docs.
 - Updated `AGENTS.md` and `AGENT_WORKFLOW.md` to connect the existing fast-iteration GitHub/AWS rules with review gates, resource mapping, selector scripts, secret safety, and deploy-target selection.
 - Documented follow-up work for auditing legacy AWS profile/account assumptions and deciding whether the existing detailed architecture-resource map should merge into the root resource map.
+
+## 2026-07-08 - Codex (GPT-5) quote button and Firstmate tasks page
+
+- Added a non-mutating `Add quote` button to the user preview financial dashboard with a placeholder modal for future quote capture.
+- Added guarded admin Firstmate task API endpoints that read local backlog, metadata, status, and report files only when `RETROFI_ENABLE_FIRSTMATE_TASKS=1` and `RETROFI_FIRSTMATE_HOME` are configured.
+- Added a compact `/tasks` admin page with active, blocked, queued, and completed task sections, active-agent counts, done indicators, and new-tab report links.
+- Added a `/tasks/reports/:taskId` admin report page that renders Firstmate Markdown reports from the guarded backend endpoint.
+- Added a guarded response workflow for tasks whose latest status needs captain input and whose Firstmate metadata has a live response window.
+- Added an explicit local-only `RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS=1` mode so `/tasks` works without local Google OAuth while leaving other admin endpoints unchanged and ignoring the bypass in AWS runtime.
+- Added stale response handling, completed-report feedback actions, draft/previous report labels, and GPT Pro repair batch links for the local Firstmate tasks dashboard.
+- Added durable follow-up task creation for completed report feedback when the original task has no live response window.
+- Added a guarded one-time Enter retry when `fm-send.sh` leaves a Firstmate task response in the Codex composer.
+- Integrated the real GPT Pro repair `/chats` workspace into the dashboard build with guarded local auth bypass support and current RetroFi work bucket defaults.
+- Made Firstmate task row actions mutually exclusive so report review/feedback controls and GPT Pro repair actions cannot render together.
+- Added backwards-compatible task row rendering for older local API payloads that have `hasReport` and `reportUrl` but not `showReportAction`.
+- Added local-only auto-dispatch for no-window report revision feedback, with queued fallback reporting and explicit `fm-spawn.sh` harness/model/effort args.
+- Split report review into distinct continue and request-changes actions, added continuation auto-dispatch, hid accepted reports from the default review list, and added queued task assignment.
+- Suppressed completed report-review rows once a queued, active, or recorded report follow-up exists while keeping direct report URLs readable.
+- Made queued task assignment create a missing safe Firstmate `brief.md` from backlog/report-feedback details before spawning.
+- Simplified the local Firstmate tasks dashboard back to read-only status and report links by removing report feedback and queued assignment controls from the UI.
+- Documented the local-only Firstmate task dashboard environment variables in `docs/development-artifacts.md`.
+
+## 2026-07-08 - Codex (GPT-5) unknown-route URL canonicalization
+
+- Added route-match metadata so unknown public paths that render the homepage can be distinguished from intentional homepage aliases.
+- Replaced unknown homepage fallback URLs with `/` using history replacement while preserving known app routes and API paths.
+- Added a focused frontend route test for unknown-route canonicalization and preserved route exclusions.
 
 ## 2026-07-08 - Codex (GPT-5) local homepage scanner copy transition
 

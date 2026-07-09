@@ -1,6 +1,6 @@
 # Data Model
 
-The local development app writes to DynamoDB in the Green Business Solution AWS account.
+The local development app writes to DynamoDB in the RetroFi production AWS account by default.
 
 ## Tables
 
@@ -53,6 +53,7 @@ Representative fields:
 - `uploadedUtilityFiles`
 - `utilityExtractedValues`
 - `siteEnergyProfile`
+- `preRetrofitFormAnswers`
 - `createdAt`
 - `updatedAt`
 
@@ -73,6 +74,10 @@ Current intake form fields include:
 The browser uploads original utility and Green Button files directly to the private energy-data S3 bucket
 using a presigned URL returned by the API. Parsed upload metadata and normalized bill/usage summaries are
 stored on the matching intake record; the original documents stay in S3.
+
+Per-retrofit pre-retrofit form answers are stored on the matching intake record under `preRetrofitFormAnswers`.
+The field uses schema version `pre-retrofit-form-answers-v1`, keys answer groups by retrofit type ID, and stores sanitized answer values plus question metadata needed to rehydrate the customer form.
+Admin test-case preview remains fixture and seeded-answer driven; it does not write through this intake profile field.
 
 ### `gbs-opportunity-candidates`
 
@@ -210,13 +215,13 @@ The browser does not receive AWS credentials. The React app calls the local Node
 `/api` proxy. The API uses the local AWS CLI SSO profile:
 
 ```text
-gbs
+retrofi-prod
 ```
 
 Before running the app, sign in with:
 
 ```sh
-aws sso login --profile gbs
+aws sso login --profile retrofi-prod
 ```
 
 ## Diagnostics
@@ -227,15 +232,15 @@ on another:
 ```sh
 git pull --ff-only
 npm install
-aws sso login --profile gbs
-aws sts get-caller-identity --profile gbs
+aws sso login --profile retrofi-prod
+aws sts get-caller-identity --profile retrofi-prod
 npm run dev
 curl http://127.0.0.1:8787/api/diagnostics
 ```
 
 Expected:
 
-- `aws sts get-caller-identity --profile gbs` shows account `448016109714`.
+- `aws sts get-caller-identity --profile retrofi-prod` shows account `059310317821`.
 - `npm run dev` starts both the API and Vite.
 - the API prints `Green Business Solution API running at http://127.0.0.1:8787`.
 - `/api/diagnostics` returns `"ok": true`.

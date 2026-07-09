@@ -19,7 +19,7 @@ The backend is a Node/Express API under `apps/api` that can run locally or as an
 Production runs at `https://retrofi.org`.
 Normal browser traffic enters CloudFront and serves static frontend assets from S3.
 Requests under `/api/*` route through CloudFront to API Gateway, then to the Lambda-wrapped Express app.
-The backend owns privileged access to DynamoDB, S3, Google OAuth flows, Geocodio usage tracking, retrofit recommendations, application profiles, and generated runtime cache data.
+The backend owns privileged access to DynamoDB, S3, Google OAuth flows, Geocodio usage tracking, retrofit recommendations, application profiles, generated runtime cache data, and private GPT Pro development-work artifacts.
 
 ## Major Components
 
@@ -60,9 +60,9 @@ The backend owns:
 
 - Google OAuth and account/session handling.
 - DynamoDB access for users, intake records, opportunities, dashboard performance, recommendation cache metadata, application profiles, and API runtime state.
-- S3 presigned upload URLs and runtime cache object access.
+- S3 presigned upload URLs, runtime cache object access, and private GPT Pro development-work artifact access.
 - Admin data access and review updates.
-- Retrofit matching, savings, tax, grant, and application-profile APIs.
+- Retrofit matching, savings, tax, grant, application-profile, pre-retrofit form-answer, and GPT Pro work APIs.
 - Geocoding and external source-fetching safeguards.
 - Input validation and error messages for privileged operations.
 

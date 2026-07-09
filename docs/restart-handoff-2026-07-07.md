@@ -5,7 +5,7 @@ This handoff captures the remaining work from the long grant/tax/form-catalog/AW
 ## Current Project State
 
 - Production traffic for `retrofi.org` and `www.retrofi.org` has been cut over to the dedicated RetroFi production AWS account `059310317821`.
-- The old Green Business Solution account `448016109714` remains active for rollback history and still owns the Route 53 hosted zone `Z04402863EVV8FUF4EWUX`.
+- The old Green Business Solution account `448016109714` remains active only for explicit rollback history.
 - GitHub Actions now deploys to the new RetroFi production account.
 - Generated fixtures and GPT Pro work archives have been moved out of Git where practical and into development S3 storage.
 - The production form-question catalog is now AWS-owned. Normal deploys should not seed or overwrite it; use `npm run form-catalog:export`, `npm run form-catalog:publish`, and `npm run form-catalog:rollback` for explicit catalog management.
@@ -33,16 +33,12 @@ AWS_PROFILE=retrofi-prod npm run form-catalog:export -- --output /tmp/retrofi-fo
 
 The active catalog should have real retrofit questions and application requirement mappings. If this fails or exports an empty catalog, recover from the runtime-cache S3 copy or publish the last known good catalog explicitly with `npm run form-catalog:publish`.
 
-## Remaining AWS Migration Tasks
+## Remaining AWS Follow-Ups
 
-1. Keep the old account `448016109714` active until the rollback window has passed.
-2. Decide whether to migrate the Route 53 hosted zone and domain registration into the new RetroFi Organization, or intentionally keep DNS ownership in the old account for a while longer.
-3. If DNS ownership is migrated, update Route 53 name servers/registrar settings carefully and re-check ACM validation, CloudFront aliases, and production smoke tests.
-4. Audit all docs and scripts that still assume `AWS_PROFILE=gbs` or account `448016109714` for production. Update production defaults to `retrofi-prod` where appropriate, while preserving explicit legacy-account commands for rollback/data-copy use.
-5. Verify GitHub Actions deploys still work after the cutover by reviewing the latest `main` deployment run and production smoke checks.
-6. Confirm all required secrets exist in the new account deployment path: Google OAuth client secret, Geocodio API key, Google OAuth redirect configuration, alert email/Sender settings, and any other production parameters.
-7. Confirm operational guardrails in the new Organization: root MFA, IAM Identity Center admin access, billing alerts/budgets, CloudTrail/security baseline, and contact/billing details.
-8. After the rollback window, decide what to do with old-account resources: keep read-only archive, disable unused deploy roles, delete disabled CloudFront distribution when safe, and avoid deleting buckets/tables until backups and legal/business retention needs are clear.
+1. Keep old-account references only where they are explicit rollback, data-copy, or historical migration context.
+2. Verify GitHub Actions deploys still work after the cutover by reviewing the latest `main` deployment run and production smoke checks.
+3. Confirm all required secrets exist in the new account deployment path: Google OAuth client secret, Geocodio API key, Google OAuth redirect configuration, alert email/Sender settings, and any other production parameters.
+4. Confirm operational guardrails in the new Organization: root MFA, IAM Identity Center admin access, billing alerts/budgets, CloudTrail/security baseline, and contact/billing details.
 
 ## Current Product Resume Point
 

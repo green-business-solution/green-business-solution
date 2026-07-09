@@ -2,7 +2,7 @@
 
 RetroFi production now runs in the dedicated RetroFi AWS Organization.
 
-The old Green Business Solution account `448016109714` remains active for rollback history and for the Route 53 hosted zone until domain and hosted-zone ownership are intentionally migrated.
+The old Green Business Solution account `448016109714` remains active only for explicit rollback history.
 
 ## Dedicated RetroFi AWS Organization
 
@@ -61,7 +61,7 @@ Legacy Route 53 hosted zone:
 Z04402863EVV8FUF4EWUX
 ```
 
-Keep the legacy hosted zone for at least 48 hours after the July 7, 2026 Pacific time nameserver update because recursive resolvers can cache the old nameserver delegation.
+The legacy hosted zone was kept through the July 7, 2026 Pacific time nameserver cache window and is now legacy rollback context only.
 
 Legacy project account root email:
 
