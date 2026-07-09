@@ -352,7 +352,8 @@ For runtime or user-facing changes, run the relevant local checks and perform a 
 
 ## Working Rules To Preserve
 
-After meaningful edits, update `AI_CHANGELOG.md`, commit, and push.
+After meaningful edits, commit and push.
+Record durable context in commits, pull requests, review evidence, ADRs, task notes, and the root workflow docs as appropriate.
 If runtime behavior, infrastructure, AWS data, or AWS configuration changed, deploy or apply the matching AWS change.
 
 Never commit secrets, `.env` files, credentials, tokens, private keys, local dumps, or raw secret values.
@@ -360,7 +361,7 @@ Never expose AWS credentials or backend secrets to frontend code.
 Keep browser clients untrusted.
 
 Do not manually edit `CHANGELOG.md` files or auto-generated files.
-`AI_CHANGELOG.md` is the repository's human-maintained LLM change record and should be updated for meaningful agent-authored changes.
+Do not recreate or update `AI_CHANGELOG.md`; it has been removed from the workflow.
 
 When writing long Markdown, keep each full sentence on its own physical line.
 Do not introduce em dashes in newly written prose.
