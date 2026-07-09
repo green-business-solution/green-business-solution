@@ -1,8 +1,8 @@
 # Template
 
 This repository uses a durable AI-assisted project workflow.
-GitHub is the source of truth for code and project history.
-AWS is the source of truth for deployed runtime state and durable data.
+GitHub is the source of truth for code, docs, workflow files, infrastructure templates, and project history.
+AWS is the deployment target and the source of truth for runtime data, customer uploads, runtime cache payloads, generated fixture archives, and durable cloud state.
 
 ## Project Files
 
@@ -10,6 +10,7 @@ Root workflow files:
 
 ```text
 AGENTS.md
+CLAUDE.md
 AGENT_WORKFLOW.md
 ARCHITECTURE.md
 RESOURCE_MAP.md
@@ -25,6 +26,8 @@ AI_RESOURCES/
 
 `AGENTS.md` tells agents how to work in this repository.
 It includes repo-specific rules, test commands, protected boundaries, review expectations, and deployment notes.
+
+`CLAUDE.md` may point Claude-family agents at the same project instructions when the repository needs that compatibility entry point.
 
 `AGENT_WORKFLOW.md` defines the start, change, verify, review, and finish loop for AI-assisted work.
 

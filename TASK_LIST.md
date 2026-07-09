@@ -52,4 +52,4 @@ Use [docs/product-todos.md](./docs/product-todos.md) for product backlog details
   - Owner: Codex
   - Status: done
   - Branch: `fm/adopt-ai-workflow-f4`
-  - Notes: Added root workflow docs and ADRs, added task and review gates, and removed the manual AI changelog process.
+  - Notes: Added root workflow docs and ADRs, added `CLAUDE.md` as an agent-instruction symlink, added task and review gates, and removed the manual AI changelog process.

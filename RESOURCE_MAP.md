@@ -23,7 +23,7 @@ AWS is the source of truth for runtime data, customer uploads, runtime cache pay
 | `infra/production-hosting.yaml` | Edge/frontend infrastructure | frontend checks and CloudFormation review | `infra` or `frontend` | CloudFront, S3 frontend hosting, DNS, ACM |
 | `scripts/` | Tooling | `npx vitest run scripts`, targeted dry runs | selected by script purpose | Deploy, routing, migration, repair, fixture, and maintenance scripts |
 | `.github/workflows/`, selector scripts, package manifests, package locks | CI/CD routing | all relevant checks, selector tests, audits | none directly on PR | Pushes to `main` run production deploy selection |
-| `docs/`, `AGENTS.md`, `AGENT_WORKFLOW.md`, `ARCHITECTURE.md`, `RESOURCE_MAP.md`, `review.md`, `TASK_LIST.md`, `ADRS/` | Documentation and workflow | diff review, link/readability check, selector tests when routing changes | none | No AWS deploy for docs-only or workflow-only changes |
+| `docs/`, `AGENTS.md`, `CLAUDE.md`, `AGENT_WORKFLOW.md`, `ARCHITECTURE.md`, `RESOURCE_MAP.md`, `review.md`, `TASK_LIST.md`, `ADRS/` | Documentation and workflow | diff review, link/readability check, selector tests when routing changes | none | No AWS deploy for docs-only or workflow-only changes |
 
 ## Selector Commands
 
