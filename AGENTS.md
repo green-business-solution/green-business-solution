@@ -8,6 +8,7 @@ Read `review.md` before finalizing a meaningful change.
 - `ARCHITECTURE.md` summarizes the current npm workspace, React/Vite frontend, Express/Lambda API, DynamoDB/S3 data model, and deployment shape.
 - `RESOURCE_MAP.md` maps source paths to runtime surfaces, checks, deploy targets, and AWS resources.
 - `docs/workspace-architecture.md` and `docs/architecture-resource-map.md` are detailed operational references.
+- `docs/homepage-design-system.md` is the immutable homepage visual-system contract; use it before changing homepage-adjacent public UI.
 - `TASK_LIST.md` tracks active workflow-level follow-ups.
 - `ADRS/` records architecture decisions that future agents should preserve.
 - `AI_CHANGELOG.md` records meaningful LLM-authored changes.

@@ -4,6 +4,11 @@
 
 - Added a root `NEXT_CODEX_CONTEXT.md` handoff for future Codex sessions covering the current implementation plan, completed Codex work, architecture state, AWS migration state, runtime artifact rules, application-prep status, and highest-priority next tasks.
 
+## 2026-07-09 - Codex (GPT-5) homepage design system contract
+
+- Reverse engineered the current RetroFi homepage visual language into `docs/homepage-design-system.md`, covering colors, spacing, typography, shadows, glass effects, gradients, motion, radius, cards, charts, buttons, and responsive rules.
+- Marked the homepage as the immutable public design-system source of truth in `AGENTS.md` so future agents consult the contract before changing homepage-adjacent UI.
+
 ## 2026-07-08 - Codex (GPT-5) durable AI workflow adoption
 
 - Adopted the reusable AI workflow structure with project-specific `ARCHITECTURE.md`, `RESOURCE_MAP.md`, `TASK_LIST.md`, `review.md`, `template.md`, ADR, and `AI_RESOURCES/` starter docs.
