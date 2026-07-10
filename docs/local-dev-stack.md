@@ -11,8 +11,8 @@ It brings up:
 
 Local SDK credentials are static and intentionally non-production.
 
-- Access key: `local-access-key`
-- Secret key: `local-access-key`
+- Access key: `localaccesskey`
+- Secret key: `localsecretkey`
 - Region: `us-east-2`
 
 The stack seeds:
