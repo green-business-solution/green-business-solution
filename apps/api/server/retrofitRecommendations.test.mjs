@@ -445,6 +445,32 @@ describe("portal retrofit recommendations", () => {
     expect(payload.retrofits[0].retrofitTypeId).toBe("led_lighting_retrofit");
     expect(payload.retrofits[0].savingsPreview?.retrofitTypeId).toBe("led_lighting_retrofit");
   });
+
+  it("prevents non-active lifecycle records from appearing as current matches", () => {
+    const intake = baseIntake();
+    const lifecycleStatuses = ["active", "conditional", "disabled", "quarantined", "archived"];
+    const payload = buildPortalRetrofitRecommendations({
+      formQuestionCatalog: testFormQuestionCatalog,
+      user: { userId: intake.userId },
+      intake,
+      opportunities: lifecycleStatuses.map((availabilityStatus) =>
+        makeOpportunity({
+          opportunityId: `lifecycle-${availabilityStatus}`,
+          availabilityStatus
+        })
+      ),
+      now
+    });
+
+    expect(payload.summary.matchedOpportunityCount).toBe(1);
+    expect(payload.retrofits.flatMap((retrofit) => retrofit.opportunities)).toEqual([
+      expect.objectContaining({
+        opportunityId: "lifecycle-active",
+        availabilityStatus: "active"
+      })
+    ]);
+  });
+
   it("propagates award-audit fields into recommendation payload opportunities", () => {
     const intake = baseIntake();
     const payload = buildPortalRetrofitRecommendations({
@@ -507,6 +533,11 @@ describe("portal retrofit recommendations", () => {
       matchedReasons: ["reason-a"],
       unresolvedRequirements: [],
       blockers: [],
+      availabilityStatus: "conditional",
+      availabilityLifecycle: {
+        status: "conditional",
+        conditionalRequirements: [{ type: "locality", description: "Resolve the jurisdiction." }]
+      },
       requiresProgramApproval: true,
       approvalRequirements: ["official permit", "energy audit"],
       approvalStage: "before_installation",
@@ -516,6 +547,11 @@ describe("portal retrofit recommendations", () => {
     });
 
     expect(summary).toMatchObject({
+      availabilityStatus: "conditional",
+      availabilityLifecycle: {
+        status: "conditional",
+        conditionalRequirements: [{ type: "locality", description: "Resolve the jurisdiction." }]
+      },
       requiresProgramApproval: true,
       approvalRequirements: ["official permit", "energy audit"],
       approvalStage: "before_installation",
