@@ -2193,6 +2193,68 @@ textarea {
   width: 100%;
 }
 
+.portfolio-preview-status-banner {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border: 1px solid rgba(48, 84, 66, 0.18);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(243, 248, 244, 0.95), rgba(228, 240, 232, 0.95));
+  box-shadow: 0 12px 28px rgba(28, 44, 34, 0.08);
+}
+
+.portfolio-preview-status-banner strong {
+  color: #214233;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.portfolio-preview-status-banner span {
+  color: #465a4e;
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+.portfolio-preview-status-banner.is-stale {
+  border-color: rgba(184, 112, 35, 0.22);
+  background: linear-gradient(135deg, rgba(255, 249, 239, 0.98), rgba(247, 237, 219, 0.96));
+}
+
+.user-preview-failure-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 780px;
+}
+
+.user-preview-failure-card h2 {
+  margin: 0;
+}
+
+.user-preview-failure-stack {
+  margin: 0;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(23, 31, 26, 0.06);
+  color: #314438;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.retrofit-preview-exhausted-note {
+  margin: 8px 0 0;
+  color: #6d4f14;
+  font-weight: 600;
+}
+
+.retrofit-preview-exhausted-badge {
+  background: rgba(220, 135, 31, 0.12);
+  color: #7f4d10;
+}
+
 .sr-only {
   height: 1px;
   left: -10000px;

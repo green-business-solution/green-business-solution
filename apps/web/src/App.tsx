@@ -1,4 +1,4 @@
-import { ChangeEvent, CSSProperties, DragEvent, FormEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, Component, CSSProperties, DragEvent, FormEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { apiDelete, apiGet, apiPatch, apiPost, apiPut, isLocalDevelopmentHost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
@@ -43,6 +43,17 @@ import {
   isUserPreviewTriageModeEnabled,
   useUserPreviewTriageMode
 } from "./userPreviewTriage";
+import {
+  commitCoordinatedSnapshotPayload,
+  createCoordinatedSnapshotState,
+  extractPortfolioSnapshotIdentity,
+  markCoordinatedSnapshotFailure,
+  portfolioSnapshotKey,
+  rejectStaleCoordinatedSnapshotPayload,
+  stageCoordinatedSnapshotPayload,
+  type CoordinatedSnapshotState,
+  type PortfolioSnapshotLike
+} from "./portfolioPreviewState";
 import billFieldDictionary from "../../../data/bill_field_dictionary.json";
 
 type UserRecord = {
@@ -254,6 +265,18 @@ type PortalRetrofitRecommendationsResponse = PortalPayload & {
     kind?: string;
     sampleUserId?: string | null;
   };
+  portfolio?: PortfolioSnapshotLike | null;
+  portfolioId?: string | null;
+  portfolioVersion?: number | null;
+  scenarioId?: string | null;
+  calculationRunId?: string | null;
+  grossPotentialMinorUnits?: number | null;
+  remainingMarginalValueMinorUnits?: number | null;
+  exhaustedOpportunities?: Array<{
+    portfolioItemId?: string | null;
+    reasonCodes?: string[] | null;
+    remainingMarginalValueMinorUnits?: number | null;
+  }> | null;
   isProgressiveShell?: boolean;
   isPartialRecommendations?: boolean;
   dashboardPostImplementationDataset?: DashboardPostImplementationDataset | null;
@@ -307,6 +330,18 @@ type TaxRuntimePreview = {
     includedLiabilityCents?: number;
     includedAmountCents?: number;
   };
+};
+
+type PortfolioCardSnapshotContext = {
+  calculationRunId: string | null;
+  exhausted: boolean;
+  exhaustionReason: string | null;
+  grossPotentialMinorUnits: number | null;
+  portfolioId: string | null;
+  portfolioVersion: number | null;
+  remainingMarginalValueMinorUnits: number | null;
+  scenarioId: string | null;
+  sharedReasonCodes: string[];
 };
 
 type DashboardPostImplementationDataset = {
@@ -6840,7 +6875,7 @@ function EnergyDataUploadPage({
                         Annual cost:{" "}
                         {summary.annualCost != null ? `$${Number(summary.annualCost).toLocaleString()}` : "Not available"}
                       </p>
-                      <p>Available fields: {summary.availableFieldIds.length}</p>
+                      <p>Available fields: {summary.availableFieldIds?.length || 0}</p>
                     </article>
                   ))}
               </div>
@@ -7572,10 +7607,19 @@ function PricingChoiceGroup<T extends string>({
   );
 }
 
-function mergePortalRetrofitRecommendationsPayload(
+export function mergePortalRetrofitRecommendationsPayload(
   currentPayload: PortalRetrofitRecommendationsResponse | null,
   detailPayload: PortalRetrofitRecommendationsResponse
 ): PortalRetrofitRecommendationsResponse {
+  const currentSnapshot = extractPortfolioSnapshotIdentity(currentPayload?.portfolio || currentPayload || null);
+  const detailSnapshot = extractPortfolioSnapshotIdentity(detailPayload?.portfolio || detailPayload || null);
+  const currentSnapshotKey = portfolioSnapshotKey(currentSnapshot);
+  const detailSnapshotKey = portfolioSnapshotKey(detailSnapshot);
+
+  if (currentPayload && currentSnapshotKey && detailSnapshotKey && currentSnapshotKey !== detailSnapshotKey) {
+    return detailPayload.isPartialRecommendations ? currentPayload : detailPayload;
+  }
+
   if (!detailPayload.isPartialRecommendations || !currentPayload) {
     return detailPayload;
   }
@@ -8133,6 +8177,8 @@ type RetrofitPreviewCard = {
     roi?: string | number | null;
     netCostBeforeTaxBenefits?: number | null;
     effectiveCostAfterOneTimeBenefits?: number | null;
+    remainingMarginalValueMinorUnits?: number | null;
+    grossPotentialMinorUnits?: number | null;
   };
   editableAssumptions: EditableEstimateAssumption[];
   scenarios: RetrofitScenarioPreview[];
@@ -8141,6 +8187,7 @@ type RetrofitPreviewCard = {
   environmentalImpact: RetrofitEnvironmentalImpact;
   sustainabilityImpact: SampleSustainabilityImpact | null;
   detailQuestions: RetrofitDetailQuestion[];
+  coordinatedFinancials?: PortfolioCardSnapshotContext | null;
 };
 
 export type UserRetrofitPreviewResult = {
@@ -8348,9 +8395,9 @@ function billUploadStepIdsFromIntake(intake: IntakeRecord) {
   intake.utilityExtractedValues.forEach((value) => addFieldId(value.fieldId));
   intake.siteEnergyProfile?.availableFieldIds?.forEach(addFieldId);
   intake.siteEnergyProfile?.utilitySummaries?.forEach((summary) => {
-    if (summary.uploadedFileCount || summary.processedFileCount || summary.availableFieldIds.length) {
+    if (summary.uploadedFileCount || summary.processedFileCount || (summary.availableFieldIds?.length || 0)) {
       addStepId(summary.utilityCategory);
-      summary.availableFieldIds.forEach(addFieldId);
+      (summary.availableFieldIds || []).forEach(addFieldId);
     }
   });
 
@@ -8364,7 +8411,7 @@ function intakeHasUtilityBillData(intake: IntakeRecord | null | undefined) {
     intake?.siteEnergyProfile?.uploadedFileCount ||
     intake?.siteEnergyProfile?.processedFileCount ||
     intake?.siteEnergyProfile?.availableFieldIds?.length ||
-    intake?.siteEnergyProfile?.utilitySummaries?.some((summary) => summary.uploadedFileCount || summary.processedFileCount || summary.availableFieldIds.length)
+    intake?.siteEnergyProfile?.utilitySummaries?.some((summary) => summary.uploadedFileCount || summary.processedFileCount || (summary.availableFieldIds?.length || 0))
   );
 }
 
@@ -8861,9 +8908,10 @@ function shortenRetrofitUiName(displayName: string) {
 export function buildUserRetrofitPreviewResult(
   payload: PortalRetrofitRecommendationsResponse | null
 ): UserRetrofitPreviewResult {
+  const portfolioSnapshot = getPortfolioSnapshotContext(payload);
   const estimateBasis = estimateBasisFromPayload(payload);
   const retrofits = (payload?.retrofits || []).map((retrofit, index) =>
-    buildRetrofitPreviewCard(retrofit, index, estimateBasis, payload)
+    buildRetrofitPreviewCard(retrofit, index, estimateBasis, payload, portfolioSnapshot)
   );
   const missingInputs = estimateMissingInputs(payload, retrofits[0]);
 
@@ -8892,11 +8940,46 @@ export function buildUserRetrofitPreviewResult(
   };
 }
 
+function getPortfolioSnapshotContext(payload: PortalRetrofitRecommendationsResponse | null): PortfolioCardSnapshotContext | null {
+  const snapshotSource = payload?.portfolio || payload || null;
+  const identity = extractPortfolioSnapshotIdentity(snapshotSource);
+  const portfolioVersion = identity?.portfolioVersion ?? payload?.portfolioVersion ?? null;
+  const portfolioId = identity?.portfolioId ?? payload?.portfolioId ?? null;
+  const scenarioId = identity?.scenarioId ?? payload?.scenarioId ?? null;
+  const calculationRunId = identity?.calculationRunId ?? payload?.calculationRunId ?? null;
+  const remainingMarginalValueMinorUnits = snapshotSource?.remainingMarginalValueMinorUnits ?? payload?.remainingMarginalValueMinorUnits ?? null;
+  const grossPotentialMinorUnits = snapshotSource?.grossPotentialMinorUnits ?? payload?.grossPotentialMinorUnits ?? null;
+  const sharedEffects = snapshotSource && typeof snapshotSource === "object" && "sharedEffects" in snapshotSource
+    ? (snapshotSource as { sharedEffects?: PortfolioSnapshotLike["sharedEffects"] | null }).sharedEffects
+    : null;
+  const sharedReasonCodes = Array.isArray(sharedEffects?.reasonCodes)
+    ? sharedEffects.reasonCodes.filter((reasonCode): reasonCode is string => typeof reasonCode === "string" && reasonCode.trim().length > 0)
+    : [];
+  const exhaustedOpportunities = payload?.exhaustedOpportunities || snapshotSource?.exhaustedOpportunities || [];
+
+  if (!portfolioId && portfolioVersion == null && !scenarioId && !calculationRunId && remainingMarginalValueMinorUnits == null && grossPotentialMinorUnits == null && sharedReasonCodes.length === 0 && exhaustedOpportunities.length === 0) {
+    return null;
+  }
+
+  return {
+    calculationRunId: calculationRunId || null,
+    exhausted: exhaustedOpportunities.some((opportunity) => Boolean(opportunity?.portfolioItemId)),
+    exhaustionReason: exhaustedOpportunities.flatMap((opportunity) => opportunity?.reasonCodes || []).find((reason) => typeof reason === "string" && reason.trim().length > 0) || null,
+    grossPotentialMinorUnits: grossPotentialMinorUnits ?? null,
+    portfolioId: portfolioId || null,
+    portfolioVersion,
+    remainingMarginalValueMinorUnits: remainingMarginalValueMinorUnits ?? null,
+    scenarioId: scenarioId || null,
+    sharedReasonCodes
+  };
+}
+
 function buildRetrofitPreviewCard(
   retrofit: SampleRetrofitGroup,
   index: number,
   estimateBasis: EstimateBasisValue,
-  payload: PortalRetrofitRecommendationsResponse | null
+  payload: PortalRetrofitRecommendationsResponse | null,
+  portfolioSnapshot: PortfolioCardSnapshotContext | null
 ): RetrofitPreviewCard {
   const preview = retrofit.savingsPreview || null;
   const isCalculated = preview?.status === "calculated";
@@ -8932,6 +9015,7 @@ function buildRetrofitPreviewCard(
     roi
   };
   const sustainabilityImpact = preview?.sustainabilityImpact || null;
+  const portfolioItemContext = getPortfolioItemPortfolioContext(retrofit.retrofitTypeId, payload, portfolioSnapshot);
 
   return {
     id: retrofit.retrofitTypeId,
@@ -8961,7 +9045,9 @@ function buildRetrofitPreviewCard(
       taxBenefits: taxBenefitAmount == null ? "Needs tax review" : taxBenefitAmount,
       roi,
       netCostBeforeTaxBenefits,
-      effectiveCostAfterOneTimeBenefits
+      effectiveCostAfterOneTimeBenefits,
+      remainingMarginalValueMinorUnits: portfolioItemContext?.remainingMarginalValueMinorUnits ?? null,
+      grossPotentialMinorUnits: portfolioItemContext?.grossPotentialMinorUnits ?? null
     },
     editableAssumptions: buildEditableAssumptions(retrofit),
     scenarios: buildRetrofitScenarios(retrofit, scenarioMetrics, missingInfo),
@@ -8972,7 +9058,75 @@ function buildRetrofitPreviewCard(
     detailQuestions: [
       ...baseDetailQuestionsForRetrofit(retrofit),
       ...taxRuntimeQuestionsForRetrofit(payload?.taxRuntimePreview || null, retrofit.retrofitTypeId)
-    ]
+    ],
+    coordinatedFinancials: portfolioItemContext
+  };
+}
+
+function getPortfolioItemPortfolioContext(
+  retrofitTypeId: string,
+  payload: PortalRetrofitRecommendationsResponse | null,
+  snapshot: PortfolioCardSnapshotContext | null
+): PortfolioCardSnapshotContext | null {
+  if (!snapshot) return null;
+  const portfolioItem = findPortfolioItemSnapshot(retrofitTypeId, payload);
+  if (!portfolioItem && snapshot.remainingMarginalValueMinorUnits == null && snapshot.grossPotentialMinorUnits == null && !snapshot.exhausted) {
+    return null;
+  }
+
+  const remainingMarginalValueMinorUnits =
+    portfolioItem?.remainingMarginalValueMinorUnits ??
+    (portfolioItem?.exhausted ? 0 : snapshot.remainingMarginalValueMinorUnits);
+  const exhaustionReason =
+    portfolioItem?.exhaustionReason ||
+    (portfolioItem?.exhausted ? "This opportunity has no remaining marginal value." : snapshot.exhaustionReason);
+
+  return {
+    ...snapshot,
+    exhausted: Boolean(portfolioItem?.exhausted || portfolioItem?.remainingMarginalValueMinorUnits === 0 || snapshot.exhausted),
+    exhaustionReason,
+    grossPotentialMinorUnits: portfolioItem?.grossPotentialMinorUnits ?? snapshot.grossPotentialMinorUnits,
+    remainingMarginalValueMinorUnits:
+      typeof remainingMarginalValueMinorUnits === "number" ? remainingMarginalValueMinorUnits : snapshot.remainingMarginalValueMinorUnits
+  };
+}
+
+function findPortfolioItemSnapshot(
+  retrofitTypeId: string,
+  payload: PortalRetrofitRecommendationsResponse | null
+): {
+  grossPotentialMinorUnits?: number | null;
+  exhausted?: boolean;
+  exhaustionReason?: string | null;
+  remainingMarginalValueMinorUnits?: number | null;
+} | null {
+  const candidates = [
+    ...(payload?.portfolio?.items || []),
+    ...(Array.isArray((payload as any)?.portfolioItems) ? (payload as any).portfolioItems : [])
+  ];
+  const normalizedId = retrofitTypeId.trim().toLowerCase();
+  const match = candidates.find((item) => {
+    const candidateId = String((item as any)?.portfolioItemId || (item as any)?.retrofitTypeId || "").trim().toLowerCase();
+    return candidateId === normalizedId;
+  });
+  if (!match) {
+    const exhausted = (payload?.exhaustedOpportunities || payload?.portfolio?.exhaustedOpportunities || []).find((item) => {
+      const candidateId = String(item?.portfolioItemId || "").trim().toLowerCase();
+      return candidateId === normalizedId;
+    });
+    if (!exhausted) return null;
+    return {
+      exhausted: true,
+      exhaustionReason: (exhausted.reasonCodes || []).find((reason) => typeof reason === "string" && reason.trim().length > 0) || null,
+      remainingMarginalValueMinorUnits: exhausted.remainingMarginalValueMinorUnits ?? 0
+    };
+  }
+
+  return {
+    exhausted: Boolean((match as any).exhausted || (match as any).remainingMarginalValueMinorUnits === 0),
+    exhaustionReason: (match as any).exhaustionReason || (match as any).reason || null,
+    grossPotentialMinorUnits: (match as any).grossPotentialMinorUnits ?? null,
+    remainingMarginalValueMinorUnits: (match as any).remainingMarginalValueMinorUnits ?? null
   };
 }
 
@@ -10874,6 +11028,16 @@ export function RetrofitRecommendationsPreview({
   triageMode?: boolean;
 }) {
   const preview = useMemo(() => buildUserRetrofitPreviewResult(payload), [payload]);
+  const portfolioIdentity = extractPortfolioSnapshotIdentity(payload?.portfolio || payload || null);
+  const portfolioSnapshotLabel = portfolioIdentity
+    ? [
+        portfolioIdentity.portfolioId ? `Portfolio ${portfolioIdentity.portfolioId}` : null,
+        portfolioIdentity.portfolioVersion == null ? null : `v${portfolioIdentity.portfolioVersion}`,
+        portfolioIdentity.scenarioId ? `Scenario ${portfolioIdentity.scenarioId}` : null,
+        portfolioIdentity.calculationRunId ? `Run ${portfolioIdentity.calculationRunId}` : null
+      ].filter((value): value is string => Boolean(value)).join(" · ")
+    : null;
+  const isPortfolioRefreshPending = Boolean(payload && (isLoading || isDetailLoading));
   const hasUploadedBills = intakeHasUtilityBillData(payload?.intake);
   const billUploadStorageKey = useMemo(() => getBillUploadStorageKey(preview.profileId, preview.intakeId), [preview.intakeId, preview.profileId]);
   const [billUploadModalOpen, setBillUploadModalOpen] = useState(false);
@@ -11348,6 +11512,15 @@ export function RetrofitRecommendationsPreview({
             <span>{activePrimaryView === "profile" ? "Profile" : activePrimaryView === "dashboard" ? "Dashboard" : "Retrofits"}</span>
           </button>
           {error ? <p className="error-message">{error}</p> : null}
+          {portfolioSnapshotLabel ? (
+            <section className={`portfolio-preview-status-banner${isPortfolioRefreshPending ? " is-stale" : ""}`}>
+              <strong>{error ? "Preview failure" : isPortfolioRefreshPending ? "Preview updating" : "Preview ready"}</strong>
+              <span>
+                {portfolioSnapshotLabel}
+                {isPortfolioRefreshPending ? " - showing the last consistent snapshot while newer results load." : ""}
+              </span>
+            </section>
+          ) : null}
           {isProgressiveDetailLoading ? (
             <section className="retrofit-detail-loading-banner">
               <strong>Loading detailed opportunities and calculations...</strong>
@@ -11619,7 +11792,7 @@ export function UserPreviewProfileView({
                   { label: "Bill upload status", value: uploadedBillSteps.length ? profileList(uploadedBillSteps.map((step) => step.utilityLabel)) : "No uploaded bills in the active preview state" },
                   { label: "Uploaded files", value: profileCount(intake?.uploadedUtilityFiles.length, "file") },
                   { label: "Processed files", value: profileCount(intake?.siteEnergyProfile?.processedFileCount, "file") },
-                  { label: "Available fields", value: profileCount(intake?.siteEnergyProfile?.availableFieldIds.length, "field") },
+                  { label: "Available fields", value: profileCount(intake?.siteEnergyProfile?.availableFieldIds?.length || 0, "field") },
                   { label: "Latest provider", value: profileText(intake?.siteEnergyProfile?.latestUtilityProvider) },
                   { label: "Latest period", value: formatUtilityPeriod(intake?.siteEnergyProfile?.latestBillingPeriodStart || null, intake?.siteEnergyProfile?.latestBillingPeriodEnd || null) },
                   { label: "Annual kWh", value: profileNumber(intake?.siteEnergyProfile?.annualKwh, "kWh") },
@@ -15258,6 +15431,18 @@ function RetrofitPreviewCardView({
           ? "Includes selected incentives and one-time benefits"
           : "Needs selected incentives and tax review"
     },
+    ...(retrofit.coordinatedFinancials?.remainingMarginalValueMinorUnits != null
+      ? [
+          {
+            id: "remaining-marginal-value",
+            label: "Remaining marginal value",
+            value: formatCents(retrofit.coordinatedFinancials.remainingMarginalValueMinorUnits),
+            basis: retrofit.coordinatedFinancials.exhausted
+              ? retrofit.coordinatedFinancials.exhaustionReason || "This opportunity has no remaining marginal value."
+              : "Shared value remaining after coordinating the portfolio snapshot"
+          }
+        ]
+      : []),
     {
       id: "annual-savings",
       label: "Annual operating savings",
@@ -15393,6 +15578,9 @@ function RetrofitPreviewCardView({
           ? initialCashFlowInvestmentValue / annualCashFlowValue
           : null;
   const selectedScenarioLabel = selectedScenario ? formatScenarioTabLabel(selectedScenario.name) : "Balanced";
+  const portfolioExhaustedReason = retrofit.coordinatedFinancials?.exhausted
+    ? retrofit.coordinatedFinancials.exhaustionReason || "This opportunity has no remaining marginal value in the current portfolio snapshot."
+    : null;
   const overviewApplicationProfile = readyApplicationProfile || applicationOverviewProfile;
   const overviewApplicationOpportunity = readyApplicationPrepOpportunity || applicationOverviewOpportunity;
   const overviewApplicationUnavailable = !overviewApplicationProfile && !overviewApplicationOpportunity;
@@ -15703,6 +15891,7 @@ function RetrofitPreviewCardView({
                 <div>
                   <h2>{retrofit.name}</h2>
                   <p>{retrofit.description}</p>
+                  {portfolioExhaustedReason ? <p className="retrofit-preview-exhausted-note">{portfolioExhaustedReason}</p> : null}
                 </div>
               </div>
               <div
@@ -18538,23 +18727,30 @@ function AdminUserPreviewStandalonePage({
       {error ? <p className="error-message">{error}</p> : null}
 
       {selectedOption ? (
-          <CustomerRetrofitEstimatesPanel
-            credential={credential}
-            emptyMessage="This client does not have any eligible retrofit matches yet."
-            endpoint={`/api/admin/client-retrofit-recommendations/${encodeURIComponent(selectedOption.userId)}`}
-            eyebrow="Admin user preview"
-            initialPayload={selectedPayload}
-            intro={`Customer-facing preview for ${selectedOption.clientName}, powered by live profile and opportunity data.`}
+          <UserPreviewFailureBoundary
             key={selectedOption.userId}
-            loadingMessage="Loading live retrofit recommendations for this client..."
-            onPayloadLoaded={cacheSelectedPayload}
-            summaryEndpoint={`/api/admin/client-retrofit-preview/${encodeURIComponent(selectedOption.userId)}`}
-            hideBillData={hideBillData}
-            hideFormDetails={hideFormDetails}
-            enableSeededFormDetails={true}
-            title="Retrofit Recommendations"
-            triageMode={triageMode}
-          />
+            onRetry={() => {
+              window.location.reload();
+            }}
+          >
+            <CustomerRetrofitEstimatesPanel
+              credential={credential}
+              emptyMessage="This client does not have any eligible retrofit matches yet."
+              endpoint={`/api/admin/client-retrofit-recommendations/${encodeURIComponent(selectedOption.userId)}`}
+              eyebrow="Admin user preview"
+              initialPayload={selectedPayload}
+              intro={`Customer-facing preview for ${selectedOption.clientName}, powered by live profile and opportunity data.`}
+              key={selectedOption.userId}
+              loadingMessage="Loading live retrofit recommendations for this client..."
+              onPayloadLoaded={cacheSelectedPayload}
+              summaryEndpoint={`/api/admin/client-retrofit-preview/${encodeURIComponent(selectedOption.userId)}`}
+              hideBillData={hideBillData}
+              hideFormDetails={hideFormDetails}
+              enableSeededFormDetails={true}
+              title="Retrofit Recommendations"
+              triageMode={triageMode}
+            />
+          </UserPreviewFailureBoundary>
       ) : (
         <section className="retrofit-preview-page">
           <article className="retrofit-preview-card">
@@ -18596,6 +18792,42 @@ function queueAdminRecommendationPrecompute(credential: AuthCredential | null, o
   }).catch(() => {
     // Background warming should never block the admin preview.
   });
+}
+
+type UserPreviewFailureBoundaryProps = {
+  children: ReactNode;
+  onRetry: () => void;
+};
+
+type UserPreviewFailureBoundaryState = {
+  error: Error | null;
+};
+
+class UserPreviewFailureBoundary extends Component<UserPreviewFailureBoundaryProps, UserPreviewFailureBoundaryState> {
+  state: UserPreviewFailureBoundaryState = { error: null };
+
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+
+  override render() {
+    if (this.state.error) {
+      return (
+        <section className="retrofit-preview-page">
+          <article className="retrofit-preview-card user-preview-failure-card" role="alert">
+            <h2>Preview could not render</h2>
+            <p>Unexpected preview data or a rendering bug interrupted this page. The current snapshot is not being shown yet.</p>
+            <pre className="user-preview-failure-stack">{this.state.error.message}</pre>
+            <button className="secondary-button" onClick={this.props.onRetry} type="button">
+              Reload preview
+            </button>
+          </article>
+        </section>
+      );
+    }
+
+    return this.props.children;
+  }
 }
 
 function AdminTestCasesPanel() {
@@ -19906,7 +20138,7 @@ function AdminUsersTable({
                 : "No utility data uploaded"}
               <small>
                 {intake?.siteEnergyProfile?.latestUtilityProvider
-                  ? `${intake.siteEnergyProfile.latestUtilityProvider} · ${(intake.siteEnergyProfile.utilitySummaries || []).map((summary) => formatUtilityCategory(summary.utilityCategory)).join(", ") || "No categories"} · ${intake.siteEnergyProfile.availableFieldIds.length} field types available`
+                  ? `${intake.siteEnergyProfile.latestUtilityProvider} · ${(intake.siteEnergyProfile.utilitySummaries || []).map((summary) => formatUtilityCategory(summary.utilityCategory)).join(", ") || "No categories"} · ${(intake.siteEnergyProfile.availableFieldIds?.length || 0)} field types available`
                   : intake?.sustainability.goals || "Conversational intake"}
               </small>
             </span>
@@ -22424,7 +22656,7 @@ function ProfilePanel({ intake, user }: { intake: IntakeRecord | null; user: Use
           <dt>Billing period</dt>
           <dd>{formatUtilityPeriod(intake.siteEnergyProfile?.latestBillingPeriodStart || null, intake.siteEnergyProfile?.latestBillingPeriodEnd || null)}</dd>
           <dt>Available bill fields</dt>
-          <dd>{intake.siteEnergyProfile?.availableFieldIds.join(", ") || "None extracted yet"}</dd>
+          <dd>{intake.siteEnergyProfile?.availableFieldIds?.join(", ") || "None extracted yet"}</dd>
         </dl>
         <div className="card-grid three compact-cards">
           {intake.uploadedUtilityFiles.map((file) => (
