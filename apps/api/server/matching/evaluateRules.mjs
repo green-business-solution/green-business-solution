@@ -2,6 +2,7 @@ import { UTILITY_DISPLAY_NAMES, unique } from "./ontologies.mjs";
 import { buildingTypesOverlap } from "./facilityEligibility.mjs";
 import { classifyRetrofitsForOpportunity } from "./retrofitTaxonomy.mjs";
 import { normalizeAwardLikelihood } from "./awardLikelihood.mjs";
+import { opportunityAvailabilityStatus } from "./opportunityLifecycle.mjs";
 
 export function evaluateOpportunityForUser(userMatchProfile, opportunity, matchProfile, { now = new Date() } = {}) {
   const offerResults = matchProfile.offers.map((offer) => evaluateOffer(userMatchProfile, opportunity, matchProfile, offer, { now }));
@@ -86,6 +87,8 @@ function evaluateOffer(user, opportunity, profile, offer, { now }) {
 
 function awardAuditFields(opportunity) {
   return {
+    availabilityStatus: opportunityAvailabilityStatus(opportunity),
+    availabilityLifecycle: opportunity?.availabilityLifecycle || null,
     requiresProgramApproval:
       typeof opportunity?.requiresProgramApproval === "boolean" ? opportunity.requiresProgramApproval : null,
     approvalRequirements: opportunity?.approvalRequirements || [],

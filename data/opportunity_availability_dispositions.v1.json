@@ -1,0 +1,466 @@
+{
+  "schemaVersion": "opportunity_availability_dispositions.v1",
+  "reviewedAt": "2026-07-10",
+  "sourceReports": [
+    "review-unknown-evidence-m8/report.md",
+    "review-unknown-followup-z6/report.md",
+    "challenge-archive-unknowns-r2/report.md"
+  ],
+  "cohort": {
+    "totalOpportunityCount": 1514,
+    "dispositionRecordCount": 41,
+    "defaultActiveCount": 1473,
+    "counts": {
+      "active": 1473,
+      "conditional": 27,
+      "disabled": 9,
+      "quarantined": 4,
+      "archived": 1
+    }
+  },
+  "records": {
+    "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "solicitation", "description": "Resolve an eligible federal funding opportunity, federal award, California project category, timing, and the active CEC application." }
+      ],
+      "rationale": "The 2026 solicitation is active, but a project is not matchable until its prerequisite federal award and CEC pathway are resolved.",
+      "officialUrls": ["https://www.energy.ca.gov/solicitations/2026-06/gfo-25-902-cost-share-federal-geothermal-energy-funding-opportunities"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 1 }
+    },
+    "SOURCE_DSIRE:dsire_program_code_title_hash:OK30F:e57fdd96f549": {
+      "availabilityStatus": "disabled",
+      "conditionalRequirements": [
+        { "type": "mapping", "description": "Reconcile the duplicate hash identity to DSIRE ID 4525 and split the exact supported WISE measures." }
+      ],
+      "rationale": "OMPA has active offerings, but the hash identity and current air-sealing mapping are unsafe until source identity and measure edges are reconciled.",
+      "officialUrls": ["https://www.ompa.com/services/rebate-programs/"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 2 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:1106": {
+      "availabilityStatus": "disabled",
+      "conditionalRequirements": [
+        { "type": "mapping", "description": "Reclassify the live Cow Power customer rider and remove the unsupported generic farm-retrofit award edge." }
+      ],
+      "rationale": "Cow Power is live, but the public record does not establish the mapped farm-retrofit award application or payment path.",
+      "officialUrls": ["https://greenmountainpower.com/help/cow-power/"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 3 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:1459": {
+      "availabilityStatus": "disabled",
+      "conditionalRequirements": [
+        { "type": "mapping", "description": "Replace the legacy multifamily umbrella with current program-specific records and remove unsupported benchmarking award edges." }
+      ],
+      "rationale": "The SCE multifamily page is an informational umbrella rather than one current standalone award-bearing program.",
+      "officialUrls": ["https://www.sce.com/save-money/savings-programs/ways-to-save-at-home/multifamily-property-resources"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 4 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:1970": {
+      "availabilityStatus": "quarantined",
+      "conditionalRequirements": [
+        { "type": "other", "description": "Retry the official pages through a normal browser or obtain current utility documents before changing lifecycle state." }
+      ],
+      "rationale": "Official pages returned HTTP 403 while indexed material suggests a heat-pump offer, so crawler failure does not prove closure.",
+      "officialUrls": ["https://www.dixie.coop/energy-efficiency-program"],
+      "reviewedAt": "2026-07-10",
+      "recheckAt": null,
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 5 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:2138": {
+      "availabilityStatus": "quarantined",
+      "conditionalRequirements": [
+        { "type": "other", "description": "Retry the official detail pages or obtain current commercial and industrial program documents." }
+      ],
+      "rationale": "Official detail pages returned HTTP 403 while the administrator index identifies live incentive categories.",
+      "officialUrls": ["https://www.epud.org/energy-efficiency/energy-incentive-programs/"],
+      "reviewedAt": "2026-07-10",
+      "recheckAt": null,
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 6 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:22056": {
+      "availabilityStatus": "disabled",
+      "conditionalRequirements": [
+        { "type": "provider", "description": "Reconcile the Empire District identity to the current Liberty administrator." },
+        { "type": "mapping", "description": "Replace the unsupported broad gas program with narrower current offerings backed by operative terms." }
+      ],
+      "rationale": "The named broad commercial gas program is not established in the current Liberty catalog.",
+      "officialUrls": ["https://central.libertyutilities.com/all/residential/ways-to-save/rebates.html"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 7 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:22149": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "solicitation", "description": "Resolve a currently open Clean Transportation subprogram or implementer round." },
+        { "type": "mapping", "description": "Match the user's project to that round's applicant and technology scope." }
+      ],
+      "rationale": "The Clean Transportation Program is an active umbrella with materially different solicitations and implementers.",
+      "officialUrls": ["https://www.energy.ca.gov/programs-and-topics/programs/clean-transportation-program"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 8 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:22206": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "provider", "description": "Resolve the applicable sponsor program." },
+        { "type": "solicitation", "description": "Resolve a currently open round." },
+        { "type": "locality", "description": "Confirm the project's geography." },
+        { "type": "mapping", "description": "Confirm the eligible vehicle, equipment, or charging category." }
+      ],
+      "rationale": "The New York VW page mixes open, closed, completed, and underway sponsor programs and cannot match as one global opportunity.",
+      "officialUrls": ["https://dec.ny.gov/environmental-protection/air-quality/controlling-motor-vehicle-pollution/vw-settlement-information/vw-funding-for-diesel-replacement-and-evse-projects"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 9 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:2221": {
+      "availabilityStatus": "disabled",
+      "conditionalRequirements": [
+        { "type": "other", "description": "Obtain the current application, filing timing, inspection sequence, funding status, and payment route." }
+      ],
+      "rationale": "Comfort Advantage standards and amounts exist, but operative administration documents were not established.",
+      "officialUrls": ["https://help.prvepa.com/article/29-comfort-advantage"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 10 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:22228": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "solicitation", "description": "Require a currently open Electric Cargo Handling round with dates, budget, and category-specific rules." }
+      ],
+      "rationale": "Cargo handling remains a supported funding category, but no current open application round was established.",
+      "officialUrls": ["https://www.pa.gov/agencies/dep/programs-and-services/air/driving-pa-forward"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 11 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:22229": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "solicitation", "description": "Require an operative DC fast-charging or hydrogen round with application dates, budget, and selection rules." }
+      ],
+      "rationale": "The funding family and historical awards exist, but no current application window was verified.",
+      "officialUrls": ["https://www.pa.gov/agencies/dep/programs-and-services/air/driving-pa-forward/driving-pa-forward-grant-and-rebate-awards"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 12 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:22428": {
+      "availabilityStatus": "disabled",
+      "conditionalRequirements": [
+        { "type": "other", "description": "Attach a current residential charger application, equipment criteria, value rule, deadline, and funding status." }
+      ],
+      "rationale": "A current MID residential charger application and operative criteria were not verified.",
+      "officialUrls": ["https://www.mid.org/saving-energy-money/rebates/residential-rebates/"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 13 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:22525": {
+      "availabilityStatus": "disabled",
+      "conditionalRequirements": [
+        { "type": "other", "description": "Attach a current nonresidential charger application, equipment criteria, value rule, deadline, and funding status." }
+      ],
+      "rationale": "A current MID business charger application and operative criteria were not verified.",
+      "officialUrls": ["https://www.mid.org/saving-energy-money/rebates/"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 14 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:22526": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "provider", "description": "Confirm Redding Electric Utility territory and utility review approval." },
+        { "type": "other", "description": "Resolve the current incentive schedule and funding rules." }
+      ],
+      "rationale": "The utility review and incentive pathway exists, but current payment and funding terms remain unresolved.",
+      "officialUrls": ["https://www.cityofredding.gov/government/departments/redding_electric_utility/going_green/commercial_ev_charging_program.php"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 15 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:22631": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "solicitation", "description": "Bind the record to an open Nevada procurement with sites, scoring, deadlines, and funding rules." }
+      ],
+      "rationale": "An approved statewide NEVI plan is not itself an applicant award opportunity.",
+      "officialUrls": ["https://www.dot.nv.gov/mobility/alternative-fueling-infrastructure-plan"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 16 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:22639": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "solicitation", "description": "Require an operative Mississippi outside-applicant solicitation with final locations and evaluation rules." }
+      ],
+      "rationale": "The state plan exists, but no current project-operator application was established.",
+      "officialUrls": ["https://mdot.ms.gov/portal/nevi_funding_opportunities"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 17 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:22648": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "solicitation", "description": "Bind the record to a posted MoDOT procurement with application and selection state." }
+      ],
+      "rationale": "The plan describes competitive contracting, but no operative new project solicitation was established.",
+      "officialUrls": ["https://www.modot.org/nevi"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 18 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:22660": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "solicitation", "description": "Require a live South Dakota procurement and an eligible charging site." }
+      ],
+      "rationale": "The current material is a deployment framework rather than a standing award application.",
+      "officialUrls": ["https://dot.sd.gov/projects-studies/planning/south-dakota-ev-fast-charging-plan/"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 19 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:22665": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "solicitation", "description": "Resolve the final South Carolina procurement, applicant, site, application, and scoring rules." }
+      ],
+      "rationale": "Procurement and scoring remain round dependent and no final open solicitation was established.",
+      "officialUrls": ["https://southcarolina-ev.com/industry.html"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 20 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:232": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "locality", "description": "Resolve a county or municipality with an adopted current credit and property-specific eligibility." }
+      ],
+      "rationale": "Maryland law authorizes local credits but does not create a uniform statewide benefit.",
+      "officialUrls": ["https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gtp&section=9-203"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 21 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:2363": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "locality", "description": "Resolve the property's jurisdiction and its current high-performance-building credit ordinance." }
+      ],
+      "rationale": "The locality chooses whether to grant the credit and sets its value, duration, and qualifications.",
+      "officialUrls": ["https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gtp&section=9-242"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 22 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:2466": {
+      "availabilityStatus": "quarantined",
+      "conditionalRequirements": [
+        { "type": "other", "description": "Retry the City page and obtain a current Buildings Department statement before disabling or archiving." }
+      ],
+      "rationale": "The named green-permit page could not be retrieved and legacy material cannot establish current operation.",
+      "officialUrls": ["https://www.chicago.gov/city/en/depts/bldgs/provdrs/permits/svcs/green-permits.html"],
+      "reviewedAt": "2026-07-10",
+      "recheckAt": null,
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 23 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:2672": {
+      "availabilityStatus": "archived",
+      "conditionalRequirements": [
+        { "type": "mapping", "description": "Create or reconcile a separate Carroll White REMC successor opportunity with current service territory and payment rules." }
+      ],
+      "rationale": "Carroll County REMC was affirmatively superseded by Carroll White REMC effective January 1, 2012.",
+      "officialUrls": ["https://www.cwremc.coop/about/history/", "https://www.cwremc.coop/programs/rebates/heat-pump-rebates/"],
+      "reviewedAt": "2026-07-10",
+      "supersededBy": null,
+      "successorDescription": "Carroll White REMC heat-pump rebate program",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 24 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:2983": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "locality", "description": "Resolve the property locality, current ordinance, building qualification, and assessed value." }
+      ],
+      "rationale": "Virginia law permits local adoption of a separate tax rate but does not require it.",
+      "officialUrls": ["https://law.lis.virginia.gov/vacode/title58.1/chapter32/section58.1-3221.2/"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 25 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:3294": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "other", "description": "Obtain current commercial measure documents, application terms, and the approval path." }
+      ],
+      "rationale": "Current evidence supports a continuing rebate portfolio, but the commercial application and approval path remain incomplete.",
+      "officialUrls": ["https://www.bpu.com/ResourcesServices/EnergySavings.aspx"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 26 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:3561": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "locality", "description": "Resolve an operating Oregon locality and current local financing program." },
+        { "type": "mapping", "description": "Verify that the local program covers standalone battery storage." }
+      ],
+      "rationale": "State authorization does not prove an operating local program, fund, or battery eligibility.",
+      "officialUrls": ["https://www.oregonlegislature.gov/bills_laws/ors/ors223.html"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 27 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:364": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "mapping", "description": "Repair the legacy Clean Energy Revenue Bond administrator and source mapping without assuming an unsupported successor." },
+        { "type": "other", "description": "Resolve an eligible public borrower and a current financing intake route." }
+      ],
+      "rationale": "Related public-project financing is active, but the legacy named route lacks a verified current standalone application.",
+      "officialUrls": ["https://www.nmfinance.com/project/public-project-revolving-fund/"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 28 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:365": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "provider", "description": "Resolve project sponsorship through the Idaho Energy Resources Authority." },
+        { "type": "other", "description": "Establish the transaction-specific board process and diligence requirements." }
+      ],
+      "rationale": "Bonding authority and project-specific board actions exist, but there is no standing generic retrofit award.",
+      "officialUrls": ["https://iera.info/"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 29 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:3869": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "locality", "description": "Resolve a participating Florida jurisdiction." },
+        { "type": "provider", "description": "Resolve the selected PACE provider and current underwriting terms." },
+        { "type": "mapping", "description": "Verify battery eligibility for that provider and locality." },
+        { "type": "other", "description": "Complete property, contractor, mortgage, permit, and financing review." }
+      ],
+      "rationale": "PACE is financing whose availability and approval depend on locality, property, provider, measure, and underwriting.",
+      "officialUrls": ["https://floridapace.gov/apply/"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 30 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:4198": {
+      "availabilityStatus": "quarantined",
+      "conditionalRequirements": [
+        { "type": "other", "description": "Retry the official rebate pages or obtain the current form directly from Northern Lights." }
+      ],
+      "rationale": "Official pages returned HTTP 403 while indexed material indicated an active offer.",
+      "officialUrls": ["https://www.nli.coop/save/rebates/"],
+      "reviewedAt": "2026-07-10",
+      "recheckAt": null,
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 31 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:4283": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "locality", "description": "Resolve a municipality that has created an operating energy revolving loan fund." },
+        { "type": "other", "description": "Resolve fund balance, eligible measures, property qualification, audit, and underwriting." }
+      ],
+      "rationale": "State law authorizes local funds but does not identify an active, funded municipality for the user.",
+      "officialUrls": ["https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter44/Section53E3~4"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 32 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:4290": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "provider", "description": "Confirm an eligible Ocala Electric Utility residential account." },
+        { "type": "mapping", "description": "Confirm a qualifying ENERGY STAR solar water heater." },
+        { "type": "other", "description": "Refresh the canonical evidence and apply the current filing and proof requirements." }
+      ],
+      "rationale": "Current official evidence supports a $450 solar water-heater rebate, but the canonical record must be refreshed and scoped before matching.",
+      "officialUrls": ["https://www.ocalafl.gov/government/electric-utility/rebates", "https://www.ocalafl.gov/home/showpublisheddocument/26388/638665758851870000"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 33 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:4333": {
+      "availabilityStatus": "disabled",
+      "conditionalRequirements": [
+        { "type": "mapping", "description": "Disable the solar rebate edge until Austin Utilities confirms a current solar incentive." }
+      ],
+      "rationale": "Current 2026 rebate materials do not list solar even though permitting and interconnection continue.",
+      "officialUrls": ["https://www.austinutilities.com/pages/BusinessRebates"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 34 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:45": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "locality", "description": "Resolve the municipality and required voter authority." },
+        { "type": "mapping", "description": "Retain only qualifying electric-generation technologies and remove unsupported solar thermal, biomass, and generic CHP edges." },
+        { "type": "other", "description": "Resolve the negotiated municipal tax contract." }
+      ],
+      "rationale": "The statute creates a discretionary municipal agreement, not an automatic statewide exemption.",
+      "officialUrls": ["https://legislature.vermont.gov/statutes/section/24/075/02741"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 35 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:4914": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "locality", "description": "Resolve an adopting Wyoming local government and operating PACE program." },
+        { "type": "mapping", "description": "Verify standalone battery eligibility." },
+        { "type": "other", "description": "Resolve property qualification, financing terms, and underwriting." }
+      ],
+      "rationale": "State authorization does not prove a local operating program or battery eligibility.",
+      "officialUrls": ["https://wyoleg.gov/statutes/compress/title15.pdf"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 36 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:4932": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "locality", "description": "Confirm the property is in an eligible Miami-Dade jurisdiction." },
+        { "type": "provider", "description": "Resolve the selected PACE district or provider and its current terms." },
+        { "type": "mapping", "description": "Verify battery eligibility." },
+        { "type": "other", "description": "Resolve property, mortgage, permits, inspections, approvals, and underwriting." }
+      ],
+      "rationale": "The County authorizes private PACE districts but does not administer or guarantee provider decisions.",
+      "officialUrls": ["https://www.miamidade.gov/global/environment/resilience/energy.page"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 37 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:4951": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "locality", "description": "Resolve a municipality operating a current section 7-121n residential program." },
+        { "type": "mapping", "description": "Verify that the local program accepts the proposed measure, including standalone battery storage where relevant." }
+      ],
+      "rationale": "State law permits municipal programs, but no standard active statewide residential application or current municipal roster was established.",
+      "officialUrls": ["https://www.cga.ct.gov/current/pub/chap_097.htm"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 38 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:5189": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "provider", "description": "Confirm an eligible Hudson Light & Power customer account." },
+        { "type": "mapping", "description": "Keep the solar pathway conditional and remove the unsupported window-film edge." },
+        { "type": "other", "description": "Obtain current eligibility, application, interconnection, documentation, funding, and payment rules." }
+      ],
+      "rationale": "The current page lists a solar rebate, disproving inactivity, but lacks operative rules and does not support window film.",
+      "officialUrls": ["https://www.hudsonlight.com/rebates"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 39 }
+    },
+    "SOURCE_DSIRE:dsire_program_id:60": {
+      "availabilityStatus": "conditional",
+      "conditionalRequirements": [
+        { "type": "locality", "description": "Resolve the property's municipality and its adopted current exemption." },
+        { "type": "mapping", "description": "Confirm the eligible system type." },
+        { "type": "other", "description": "Resolve the local application, exemption amount, documentation, and assessor decision." }
+      ],
+      "rationale": "Municipal adoption, exemption amount, and continuing ordinance vary across New Hampshire.",
+      "officialUrls": ["https://www.gc.nh.gov/rsa/html/V/72/72-mrg.htm"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-followup-z6", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 40 }
+    },
+    "SOURCE_SCE_BUSINESS:sce_source_section:bcdeae04c5863d3b:hvac-optimization-program": {
+      "availabilityStatus": "disabled",
+      "conditionalRequirements": [
+        { "type": "mapping", "description": "Reclassify the live HVAC Optimization offering as a service unless current documents establish a direct financial benefit." }
+      ],
+      "rationale": "The service program is active, but a direct cash award and payment rule were not established.",
+      "officialUrls": ["https://www.sce.com/business/save-costs-energy/savings-strategies/building-improvement"],
+      "reviewedAt": "2026-07-10",
+      "dispositionProvenance": { "sourceReports": ["review-unknown-evidence-m8", "challenge-archive-unknowns-r2"], "finalDispositionRecord": 41 }
+    }
+  }
+}
