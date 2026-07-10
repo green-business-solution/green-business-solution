@@ -2,6 +2,7 @@ import {
   buildBoundaryNote,
   getElectricityEmissionFactor,
   getNaturalGasEmissionFactor,
+  getWasteTippingFeeProxy,
 } from "./savings/sustainabilityFactors.mjs";
 
 const KWH_TO_KBTU = 3.412;
@@ -28,6 +29,16 @@ function normalizeDeltaUnit(unit) {
   if (text.includes("cubic foot")) return "cubic_foot";
   if (text.includes("gallon") || text === "gal") return "gallon";
   if (text.includes("kw")) return "kw";
+  return null;
+}
+
+function normalizeWasteDeltaUnit(unit) {
+  const text = cleanText(unit).toLowerCase();
+  if (!text) return null;
+  if (text.includes("short ton") || text === "ton" || text.includes(" tons")) return "short_ton";
+  if (text.includes("metric ton") || text.includes(" tonne")) return "metric_ton";
+  if (text.includes("kilogram") || text === "kg") return "kg";
+  if (text.includes("pound") || text === "lb" || text.includes(" lbs")) return "pound";
   return null;
 }
 
@@ -76,6 +87,25 @@ function convertGasDeltaToTherms(delta) {
   if (value == null) return null;
   const normalizedUnit = normalizeDeltaUnit(delta?.unit);
   return normalizedUnit === "therm" || normalizedUnit == null ? value : null;
+}
+
+function convertWasteDeltaToShortTons(delta) {
+  const value = annualizeDelta(delta);
+  if (value == null) return null;
+  const normalizedUnit = normalizeWasteDeltaUnit(delta?.unit);
+  if (normalizedUnit == null || normalizedUnit === "short_ton") {
+    return value;
+  }
+  if (normalizedUnit === "metric_ton") {
+    return value * 1.102311310924388;
+  }
+  if (normalizedUnit === "kg") {
+    return value / 907.18474;
+  }
+  if (normalizedUnit === "pound") {
+    return value / 2000;
+  }
+  return null;
 }
 
 function relevantDeltas(billLineDeltas = [], canonicalField) {
@@ -134,13 +164,18 @@ function buildMetric({
   assumptions = [],
   trace = {},
 }) {
+  const numericValue = Number.isFinite(value)
+    ? Object.is(value, -0)
+      ? 0
+      : value
+    : 0;
   return {
     id,
     label,
     unit,
     status: provenanceState,
     provenanceState,
-    value: Number.isFinite(value) ? value : 0,
+    value: numericValue,
     sourceField,
     formulaId,
     assumptions: cleanMetricNotes(assumptions),
@@ -224,6 +259,39 @@ function classifyApplicability({
         "new_fixture_watts",
         "peak_load_factor",
         "charger_kw",
+      ])
+    ) {
+      return "applicable";
+    }
+    return "not_applicable";
+  }
+
+  if (metricId === "wasteAvoidedTonsPerYear") {
+    if (
+      [
+        "waste_reduction",
+        "waste_minimization",
+        "waste_diversion",
+        "recycling",
+        "organics",
+        "compost",
+        "zero_waste",
+        "food_waste",
+        "landfill",
+        "garbage",
+        "trash",
+        "solid_waste",
+        "material_recovery",
+        "mrf",
+      ].some((token) => text.includes(token)) ||
+      hasAnyNumber(inputs, [
+        "annual_waste_avoided_tons",
+        "annual_waste_reduction_tons",
+        "annual_waste_mass_delta",
+        "annual_waste_cost_savings_cents",
+        "current_total_waste_cost_cents_per_month",
+        "new_total_waste_cost_cents_per_month",
+        "total_waste_cost_delta",
       ])
     ) {
       return "applicable";
@@ -882,6 +950,188 @@ function resolvePeakMetric({
   });
 }
 
+function resolveWasteMetric({
+  billLineDeltas,
+  retrofitTypeId,
+  sourceModelInputs,
+}) {
+  const wasteMassDeltas = [
+    ...relevantDeltas(billLineDeltas, "annual_waste_mass_delta"),
+    ...relevantDeltas(billLineDeltas, "annual_waste_tons_delta"),
+    ...relevantDeltas(billLineDeltas, "annual_waste_delta"),
+    ...relevantDeltas(billLineDeltas, "annual_waste_kg_delta"),
+    ...relevantDeltas(billLineDeltas, "annual_waste_lb_delta"),
+  ];
+  const directWasteTons = wasteMassDeltas
+    .map(convertWasteDeltaToShortTons)
+    .filter(Number.isFinite);
+  if (directWasteTons.length) {
+    const value = -sumNumbers(directWasteTons);
+    return {
+      value,
+      provenanceState:
+        value < 0 ? "increased_consumption" : "source_calculated",
+      quality: {
+        confidence: "high",
+        source: "bill_line_delta",
+        sourceVintage: "bill_line_delta",
+        notes: [],
+      },
+      assumptions: [
+        "Waste mass is read directly from annual waste bill-line changes when a mass unit is provided.",
+        "Short tons are used as the annual reporting unit.",
+      ],
+      trace: {
+        sourceDeltas: wasteMassDeltas.map(sourceDeltaSummary),
+        sourceInputs: sourceInputSummary(sourceModelInputs),
+        calculation: {
+          formula: "-sum(direct annual waste mass deltas converted to short tons/year)",
+          sourceUnit: "short tons/year",
+        },
+      },
+    };
+  }
+
+  const explicitWasteTons = toNumber(
+    sourceModelInputs?.annual_waste_avoided_tons ??
+      sourceModelInputs?.annual_waste_reduction_tons ??
+      sourceModelInputs?.annual_waste_mass_delta,
+  );
+  if (Number.isFinite(explicitWasteTons)) {
+    const value = explicitWasteTons;
+    return {
+      value,
+      provenanceState: value < 0 ? "increased_consumption" : "estimated",
+      quality: {
+        confidence: "medium",
+        source: "fixture_assumption",
+        sourceVintage: "admin_test_fixture",
+        notes: [
+          "Waste mass is estimated from an explicit annual waste tonnage input.",
+        ],
+      },
+      assumptions: [
+        "Admin test fixture supplies an explicit annual waste tonnage assumption.",
+      ],
+      trace: {
+        sourceDeltas: wasteMassDeltas.map(sourceDeltaSummary),
+        sourceInputs: sourceInputSummary(sourceModelInputs),
+        calculation: {
+          formula: "annual_waste_avoided_tons",
+          sourceUnit: "short tons/year",
+        },
+      },
+    };
+  }
+
+  const wasteCostDeltas = relevantDeltas(
+    billLineDeltas,
+    "total_waste_cost_delta",
+  );
+  const annualWasteCostSavingsCents = -sumNumbers(
+    wasteCostDeltas.map((delta) => toNumber(delta?.deltaValue)),
+  );
+  const explicitWasteCostSavingsCents = toNumber(
+    sourceModelInputs?.annual_waste_cost_savings_cents,
+  );
+  const modeledWasteCostSavingsCents = Number.isFinite(
+    explicitWasteCostSavingsCents,
+  )
+    ? explicitWasteCostSavingsCents
+    : annualWasteCostSavingsCents;
+
+  if (
+    (wasteCostDeltas.length > 0 || Number.isFinite(explicitWasteCostSavingsCents)) &&
+    Number.isFinite(modeledWasteCostSavingsCents)
+  ) {
+    const proxy = getWasteTippingFeeProxy();
+    const annualWasteCostSavingsUsd = modeledWasteCostSavingsCents / 100;
+    const value = annualWasteCostSavingsUsd / proxy.usdPerShortTon;
+    return {
+      value,
+      provenanceState:
+        value < 0 ? "increased_consumption" : "estimated",
+      quality: {
+        confidence: "medium",
+        source: "reviewed_proxy",
+        sourceVintage: "epa_2024",
+        notes: [
+          "Waste mass is estimated from annual waste service cost savings using an EPA tipping-fee proxy.",
+        ],
+      },
+      assumptions: [
+        "Waste mass is estimated from annual waste service cost savings when no direct waste mass delta is available.",
+        "The proxy uses EPA's documented average U.S. tipping fee of $53.72 per short ton.",
+      ],
+      trace: {
+        sourceDeltas: [...wasteMassDeltas, ...wasteCostDeltas].map(
+          sourceDeltaSummary,
+        ),
+        sourceInputs: sourceInputSummary(sourceModelInputs),
+        calculation: {
+          formula:
+            "(annual waste service cost savings in dollars) / 53.72",
+          annualWasteCostSavingsCents: modeledWasteCostSavingsCents,
+          annualWasteCostSavingsUsd,
+          proxyUsdPerShortTon: proxy.usdPerShortTon,
+          proxySource: proxy.source,
+        },
+      },
+    };
+  }
+
+  const applicability = classifyApplicability({
+    metricId: "wasteAvoidedTonsPerYear",
+    retrofitTypeId,
+    sourceModelInputs,
+  });
+  if (applicability === "not_applicable") {
+    return buildNotApplicableMetric({
+      value: 0,
+      provenanceState: "not_applicable",
+      quality: {
+        confidence: "high",
+        source: "not_applicable",
+        sourceVintage: "retrofit_archetype",
+        notes: [
+          "This retrofit archetype does not have a defensible causal pathway to waste generation or diversion in the current contract.",
+        ],
+      },
+      assumptions: [
+        "Waste avoided is not applicable for this retrofit archetype in the current model.",
+      ],
+      trace: {
+        sourceDeltas: [...wasteMassDeltas, ...wasteCostDeltas].map(
+          sourceDeltaSummary,
+        ),
+        sourceInputs: sourceInputSummary(sourceModelInputs),
+      },
+    });
+  }
+
+  return buildNotApplicableMetric({
+    value: 0,
+    provenanceState: "unavailable",
+    quality: {
+      confidence: "low",
+      source: "missing_input",
+      sourceVintage: "missing_input",
+      notes: [
+        "Waste bill deltas, a direct annual waste mass input, or an annual waste service-cost proxy were missing.",
+      ],
+    },
+    assumptions: [
+      "Waste avoided remains unavailable until either a direct waste mass input or a reviewed annual waste cost proxy is provided.",
+    ],
+    trace: {
+      sourceDeltas: [...wasteMassDeltas, ...wasteCostDeltas].map(
+        sourceDeltaSummary,
+      ),
+      sourceInputs: sourceInputSummary(sourceModelInputs),
+    },
+  });
+}
+
 function buildSiteEuiMetric({
   squareFootage,
   sourceSquareFootage,
@@ -1198,6 +1448,11 @@ export function buildSustainabilityImpact({
     retrofitTypeId,
     sourceModelInputs,
   });
+  const wasteMetric = resolveWasteMetric({
+    billLineDeltas,
+    retrofitTypeId,
+    sourceModelInputs: resolvedSourceModelInputs,
+  });
   const siteEuiMetric = buildSiteEuiMetric({
     squareFootage,
     sourceSquareFootage,
@@ -1274,6 +1529,21 @@ export function buildSustainabilityImpact({
       },
     }),
     annualOperationalCO2eReductionKgPerYear: co2eMetric,
+    wasteAvoidedTonsPerYear: buildMetric({
+      id: "wasteAvoidedTonsPerYear",
+      label: "Annual waste avoided",
+      unit: "short tons/year",
+      sourceField: "annual_waste_mass_delta",
+      value: wasteMetric.value,
+      provenanceState: wasteMetric.provenanceState,
+      formulaId: "sustainability.waste_avoided_v1",
+      quality: wasteMetric.quality,
+      assumptions: wasteMetric.assumptions,
+      trace: {
+        ...wasteMetric.trace,
+        sourceSquareFootage,
+      },
+    }),
   };
 
   const metricStatuses = Object.values(metrics).map((metric) => metric.status);

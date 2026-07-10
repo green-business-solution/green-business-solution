@@ -7171,6 +7171,7 @@ type RetrofitPreviewCard = {
   opportunities: RetrofitOpportunityPreview[];
   operatingSavings: OperatingSavingsPreview[];
   environmentalImpact: RetrofitEnvironmentalImpact;
+  sustainabilityImpact: SampleSustainabilityImpact | null;
   detailQuestions: RetrofitDetailQuestion[];
 };
 
@@ -7965,6 +7966,7 @@ function buildRetrofitPreviewCard(
     paybackPeriodYears,
     roi
   };
+  const sustainabilityImpact = preview?.sustainabilityImpact || null;
 
   return {
     id: retrofit.retrofitTypeId,
@@ -8000,7 +8002,8 @@ function buildRetrofitPreviewCard(
     scenarios: buildRetrofitScenarios(retrofit, scenarioMetrics, missingInfo),
     opportunities: retrofit.opportunities.map((opportunity) => buildOpportunityPreview(opportunity, preview, payload)),
     operatingSavings: buildOperatingSavingsPreview(retrofit, payload),
-    environmentalImpact: buildRetrofitEnvironmentalImpactPreview(retrofit, missingInfo, preview),
+    environmentalImpact: buildRetrofitEnvironmentalImpactPreview(retrofit, missingInfo, sustainabilityImpact),
+    sustainabilityImpact,
     detailQuestions: [
       ...baseDetailQuestionsForRetrofit(retrofit),
       ...taxRuntimeQuestionsForRetrofit(payload?.taxRuntimePreview || null, retrofit.retrofitTypeId)
@@ -8011,14 +8014,16 @@ function buildRetrofitPreviewCard(
 export function buildRetrofitEnvironmentalImpactPreview(
   retrofit: Pick<SampleRetrofitGroup, "retrofitTypeId" | "parentCategory" | "isPhysicalRetrofit">,
   missingInfo: string[] = [],
-  preview: SampleSavingsPreview | null = null
+  sustainabilityImpact: SampleSustainabilityImpact | null = null
 ): RetrofitEnvironmentalImpact {
   const id = retrofit.retrofitTypeId.toLowerCase();
   const parent = retrofit.parentCategory.toLowerCase();
   const isCertification = parent.includes("certification") || id.includes("certification") || id.includes("compliance") || id.includes("benchmarking");
   const isPlanning = !retrofit.isPhysicalRetrofit && !isCertification;
-  const modeledImpact = buildModeledEnvironmentalImpactFromSavings(retrofit, preview);
-  const resources = modeledImpact?.resources || environmentalResourceFallbackRows(retrofit);
+  const co2Metric = sustainabilityImpact?.metrics?.annualOperationalCO2eReductionKgPerYear || null;
+  const resources = sustainabilityImpact
+    ? sustainabilityImpactRowsFromContract(sustainabilityImpact)
+    : environmentalResourceFallbackRows(retrofit);
   const missingInputs = environmentalMissingInputsForRetrofit(retrofit, missingInfo);
   const overallLabel = isCertification
     ? "Certification progress supported"
@@ -8029,99 +8034,69 @@ export function buildRetrofitEnvironmentalImpactPreview(
     ? "certification_progress"
     : isPlanning
       ? "potential_identified"
-      : modeledImpact
+      : co2Metric
         ? "avoided_emissions"
       : "not_estimated";
   const subtext = isCertification
     ? "Certification impact is not quantified until certification requirements are reviewed."
     : isPlanning
       ? "Planning items can identify impact potential, but avoided emissions depend on follow-on retrofit work."
-      : modeledImpact
-        ? "Estimated from stored savings-model utility deltas for this test case."
+      : co2Metric
+        ? "Backend sustainability impact contract provided by the API."
       : "Estimated climate impact from completing this retrofit.";
 
   return {
     overall: {
       label: overallLabel,
-      displayValue: modeledImpact?.overallDisplayValue || "?",
+      displayValue: co2Metric ? formatDashboardNumber(co2Metric.value / 1000, "", "?") : "?",
       unit: "tCO2e/year",
-      fallback: modeledImpact ? undefined : isCertification ? "Not evaluated yet" : isPlanning ? "Needs audit scope" : "Needs bills and retrofit-specific details",
+      fallback: co2Metric ? undefined : isCertification ? "Not evaluated yet" : isPlanning ? "Needs audit scope" : "Needs bills and retrofit-specific details",
       impactType,
-      confidence: modeledImpact ? "Medium" : "Needs data",
+      confidence: co2Metric ? "Medium" : "Needs data",
       subtext,
-      basis: modeledImpact?.basis || ["Needs bills and retrofit-specific details"]
+      basis: co2Metric
+        ? [
+            "Backend sustainability impact contract provided by the API.",
+            "Annual CO2e uses the backend-calculated operational emissions reduction metric."
+          ]
+        : ["Needs bills and retrofit-specific details"]
     },
     resources,
     certificationContribution: certificationContributionForRetrofit(retrofit),
-    missingInfo: modeledImpact ? missingInputs.filter((item) => item !== "Upload bills").slice(0, 6) : missingInputs
+    missingInfo: co2Metric ? missingInputs.filter((item) => item !== "Upload bills").slice(0, 6) : missingInputs
   };
 }
 
-const GENERIC_ELECTRIC_TCO2E_PER_KWH = 0.00039;
+function sustainabilityImpactRowsFromContract(impact: SampleSustainabilityImpact): RetrofitEnvironmentalImpact["resources"] {
+  const metricOrder = [
+    "waterConservationGallonsPerYear",
+    "scope1ThermReductionPerYear",
+    "scope2ElectricityReductionKwhPerYear",
+    "siteEuiReductionKbtuPerSquareFootPerYear",
+    "gridPeakDemandReductionKw",
+    "annualOperationalCO2eReductionKgPerYear",
+    "wasteAvoidedTonsPerYear"
+  ] as const;
 
-function buildModeledEnvironmentalImpactFromSavings(
-  retrofit: Pick<SampleRetrofitGroup, "retrofitTypeId" | "parentCategory" | "isPhysicalRetrofit">,
-  preview: SampleSavingsPreview | null
-) {
-  if (preview?.status !== "calculated" || !preview.billLineDeltas?.length) return null;
-  const id = retrofit.retrofitTypeId.toLowerCase();
-  const fallbackRows = environmentalResourceFallbackRows(retrofit);
-  const electricKwhAvoided = sumBillLineDeltaAbs(preview.billLineDeltas, "annual_kwh_delta", { onlyNegative: true });
-  const exportedKwh = sumBillLineDeltaAbs(preview.billLineDeltas, "export_kwh");
-  const modeledKwh = id.includes("solar") || id.includes("renewable")
-    ? electricKwhAvoided + exportedKwh
-    : electricKwhAvoided;
-
-  if (!modeledKwh || modeledKwh <= 0) return null;
-
-  const estimatedTco2e = modeledKwh * GENERIC_ELECTRIC_TCO2E_PER_KWH;
-  const resources = fallbackRows.map((resource) => {
-    const label = resource.label.toLowerCase();
-    if (label.includes("electricity") || label.includes("renewable") || resource.unit.toLowerCase().includes("kwh")) {
-      return {
-        ...resource,
-        displayValue: formatImpactQuantity(modeledKwh),
-        confidence: "Medium" as const,
-        basis: "From stored annual kWh delta in the savings preview."
-      };
-    }
-    if (label.includes("emissions") || resource.unit.toLowerCase().includes("tco2")) {
-      return {
-        ...resource,
-        displayValue: formatImpactQuantity(estimatedTco2e, 1),
-        confidence: "Medium" as const,
-        basis: "Estimated from stored annual kWh delta using a generic electric-grid emissions factor."
-      };
-    }
-    return resource;
-  });
-
-  return {
-    overallDisplayValue: formatImpactQuantity(estimatedTco2e, 1),
-    resources,
-    basis: [
-      "Stored savingsPreview.billLineDeltas supplied the annual kWh delta.",
-      "CO2e is estimated with a generic electric-grid emissions factor until geography-specific factors are available."
-    ]
-  };
-}
-
-function sumBillLineDeltaAbs(
-  billLineDeltas: NonNullable<SampleSavingsPreview["billLineDeltas"]>,
-  canonicalField: string,
-  options: { onlyNegative?: boolean } = {}
-) {
-  return billLineDeltas
-    .filter((delta) => delta.canonicalField === canonicalField)
-    .filter((delta) => !options.onlyNegative || Number(delta.deltaValue) < 0)
-    .reduce((sum, delta) => sum + Math.abs(Number(delta.deltaValue) || 0), 0);
-}
-
-function formatImpactQuantity(value: number, maximumFractionDigits = 0) {
-  return new Intl.NumberFormat("en-US", {
-    maximumFractionDigits,
-    minimumFractionDigits: maximumFractionDigits > 0 && value < 10 ? 1 : 0
-  }).format(value);
+  return metricOrder
+    .map((metricId) => impact.metrics[metricId])
+    .filter((metric): metric is SampleSustainabilityImpactMetric => Boolean(metric))
+    .map((metric) => ({
+      label: metric.label,
+      displayValue: formatImpactMetricValue(metric.value, metric.unit),
+      unit: metric.unit,
+      confidence:
+        metric.provenanceState === "source_calculated"
+          ? "High"
+          : metric.provenanceState === "estimated"
+            ? "Medium"
+            : metric.provenanceState === "not_applicable"
+              ? "Low"
+              : "Needs data",
+      basis: metric.assumptions?.length
+        ? metric.assumptions.join(" ")
+        : metric.quality?.notes?.[0] || metric.formulaId
+    }));
 }
 
 function stripAnnualUnitSuffix(unit: string) {
@@ -8135,6 +8110,7 @@ function formatAnnualImpactUnitLabel(unit: string, action = "avoided") {
 
 function expandedImpactUnitLabel(unit: string) {
   const normalized = stripAnnualUnitSuffix(unit).replace(/\s+/g, "").toLowerCase();
+  if (normalized === "kgco2e" || normalized === "kgco2eq") return "kilograms of carbon dioxide equivalent";
   if (normalized === "tco2e") return "metric tons of carbon dioxide equivalent";
   if (normalized === "kwh") return "kilowatt-hours";
   if (normalized === "therms") return "therms";
@@ -8905,6 +8881,8 @@ type DashboardImplementedRetrofit = {
   thermsReducedPerYear?: number | null;
   waterSavedPerYear?: number | null;
   wasteReducedPerYear?: number | null;
+  siteEuiReductionKbtuPerSquareFootPerYear?: number | null;
+  gridPeakDemandReductionKw?: number | null;
   certificationsSupported: RetrofitEnvironmentalImpact["certificationContribution"];
   documentReadiness: DashboardDocumentReadiness[];
 };
@@ -8973,6 +8951,8 @@ type DashboardEnvironmentalData = {
   totalThermsReducedPerYear: number | null;
   totalWaterSavedPerYear: number | null;
   totalWasteReducedPerYear: number | null;
+  totalSiteEuiReductionKbtuPerSquareFootPerYear: number | null;
+  totalGridPeakDemandReductionKw: number | null;
   projectedFiveYearCO2e: number | null;
   projectedTenYearCO2e: number | null;
   realized: DashboardMetric[];
@@ -9092,6 +9072,14 @@ function averageNullableNumbers(values: Array<number | null | undefined>) {
   return defined.length ? defined.reduce((sum, value) => sum + value, 0) / defined.length : null;
 }
 
+function dedupeDashboardRetrofitsById(retrofits: DashboardImplementedRetrofit[]) {
+  const byId = new Map<string, DashboardImplementedRetrofit>();
+  for (const retrofit of retrofits) {
+    byId.set(retrofit.id, retrofit);
+  }
+  return Array.from(byId.values());
+}
+
 function divideCents(value: number | null | undefined, divisor: number) {
   if (value == null || !Number.isFinite(value)) return null;
   return Math.round(value / divisor);
@@ -9120,11 +9108,52 @@ function dashboardMetric(label: string, value: string, subtext?: string, tone: D
   return { label, value, subtext, tone, unavailable };
 }
 
+function buildDashboardEnvironmentalMetrics(environmental: DashboardEnvironmentalData): DashboardMetric[] {
+  return [
+    dashboardMetric("Annual CO2e Reduced", formatDashboardNumber(environmental.totalCO2eReducedPerYear, "MT"), "Annual operational CO2e reduction", "green", environmental.totalCO2eReducedPerYear == null),
+    dashboardMetric("Water Conservation", formatDashboardNumber(environmental.totalWaterSavedPerYear, "gal"), "Annual water savings", "blue", environmental.totalWaterSavedPerYear == null),
+    dashboardMetric("Scope 1 Therm Reduction", formatDashboardNumber(environmental.totalThermsReducedPerYear, "therms"), "Annual natural gas savings", "green", environmental.totalThermsReducedPerYear == null),
+    dashboardMetric("Scope 2 Electricity Reduction", formatDashboardNumber(environmental.totalKwhSavedPerYear, "kWh"), "Annual electricity savings", "green", environmental.totalKwhSavedPerYear == null),
+    dashboardMetric("Site EUI Reduction", formatDashboardNumber(environmental.totalSiteEuiReductionKbtuPerSquareFootPerYear, "kBtu/sq ft/year"), "Annual energy intensity reduction", "green", environmental.totalSiteEuiReductionKbtuPerSquareFootPerYear == null),
+    dashboardMetric("Grid Peak-Demand Reduction", formatDashboardNumber(environmental.totalGridPeakDemandReductionKw, "kW"), "Annual peak demand reduction", "green", environmental.totalGridPeakDemandReductionKw == null),
+    dashboardMetric("Annual Waste Avoided", formatDashboardNumber(environmental.totalWasteReducedPerYear, "short tons"), "Annual waste avoided", "green", environmental.totalWasteReducedPerYear == null)
+  ];
+}
+
 function parseImpactValue(value: string | number | null | undefined) {
   if (typeof value === "number" && Number.isFinite(value)) return value;
   if (!value) return null;
   const parsed = Number(String(value).replace(/[^\d.-]/g, ""));
   return Number.isFinite(parsed) ? parsed : null;
+}
+
+function getSustainabilityImpactMetric(
+  impact: SampleSustainabilityImpact | null | undefined,
+  metricId:
+    | "waterConservationGallonsPerYear"
+    | "scope1ThermReductionPerYear"
+    | "scope2ElectricityReductionKwhPerYear"
+    | "siteEuiReductionKbtuPerSquareFootPerYear"
+    | "gridPeakDemandReductionKw"
+    | "annualOperationalCO2eReductionKgPerYear"
+    | "wasteAvoidedTonsPerYear"
+) {
+  const metric = impact?.metrics?.[metricId];
+  return metric && Number.isFinite(metric.value) ? metric : null;
+}
+
+function getSustainabilityImpactMetricValue(
+  impact: SampleSustainabilityImpact | null | undefined,
+  metricId:
+    | "waterConservationGallonsPerYear"
+    | "scope1ThermReductionPerYear"
+    | "scope2ElectricityReductionKwhPerYear"
+    | "siteEuiReductionKbtuPerSquareFootPerYear"
+    | "gridPeakDemandReductionKw"
+    | "annualOperationalCO2eReductionKgPerYear"
+    | "wasteAvoidedTonsPerYear"
+) {
+  return getSustainabilityImpactMetric(impact, metricId)?.value ?? null;
 }
 
 function buildDashboardDocumentReadiness(retrofit: RetrofitPreviewCard, index: number): DashboardDocumentReadiness[] {
@@ -9141,6 +9170,7 @@ function buildDashboardDocumentReadiness(retrofit: RetrofitPreviewCard, index: n
 function buildImplementedRetrofitPerformance(retrofit: RetrofitPreviewCard, sourceRetrofit: SampleRetrofitGroup | undefined, index: number): DashboardImplementedRetrofit | null {
   const implementationStatus = normalizeDashboardImplementationStatus(retrofit, sourceRetrofit);
   if (!implementationStatus) return null;
+  const sustainabilityImpact = retrofit.sustainabilityImpact || sourceRetrofit?.savingsPreview?.sustainabilityImpact || null;
   const sourceStatus =
     readLooseString(sourceRetrofit, ["implementationStatus", "projectStatus", "status", "stage"]) ||
     readLooseString(sourceRetrofit?.savingsPreview, ["implementationStatus", "projectStatus", "status", "stage"]);
@@ -9161,11 +9191,34 @@ function buildImplementedRetrofitPerformance(retrofit: RetrofitPreviewCard, sour
     null;
   const actualAnnualSavingsCents = readLooseNumber(sourceRetrofit?.savingsPreview, ["actualAnnualSavingsCents", "actualAnnualSavings"]) ?? null;
   const annualSavingsForProjection = actualAnnualSavingsCents ?? estimatedAnnualSavingsCents;
-  const co2eReducedPerYear = parseImpactValue(retrofit.environmentalImpact.overall.displayValue);
-  const kwhSavedPerYear = parseImpactValue(retrofit.environmentalImpact.resources.find((resource) => /kwh|electricity/i.test(resource.label + resource.unit))?.displayValue);
-  const thermsReducedPerYear = parseImpactValue(retrofit.environmentalImpact.resources.find((resource) => /therm|gas/i.test(resource.label + resource.unit))?.displayValue);
-  const waterSavedPerYear = parseImpactValue(retrofit.environmentalImpact.resources.find((resource) => /water|gallon/i.test(resource.label + resource.unit))?.displayValue);
-  const wasteReducedPerYear = parseImpactValue(retrofit.environmentalImpact.resources.find((resource) => /waste/i.test(resource.label + resource.unit))?.displayValue);
+  const co2eReducedPerYear = divideNumber(
+    getSustainabilityImpactMetricValue(sustainabilityImpact, "annualOperationalCO2eReductionKgPerYear"),
+    1000
+  );
+  const kwhSavedPerYear = getSustainabilityImpactMetricValue(
+    sustainabilityImpact,
+    "scope2ElectricityReductionKwhPerYear"
+  );
+  const thermsReducedPerYear = getSustainabilityImpactMetricValue(
+    sustainabilityImpact,
+    "scope1ThermReductionPerYear"
+  );
+  const waterSavedPerYear = getSustainabilityImpactMetricValue(
+    sustainabilityImpact,
+    "waterConservationGallonsPerYear"
+  );
+  const wasteReducedPerYear = getSustainabilityImpactMetricValue(
+    sustainabilityImpact,
+    "wasteAvoidedTonsPerYear"
+  );
+  const siteEuiReductionKbtuPerSquareFootPerYear = getSustainabilityImpactMetricValue(
+    sustainabilityImpact,
+    "siteEuiReductionKbtuPerSquareFootPerYear"
+  );
+  const gridPeakDemandReductionKw = getSustainabilityImpactMetricValue(
+    sustainabilityImpact,
+    "gridPeakDemandReductionKw"
+  );
 
   return {
     id: retrofit.id,
@@ -9193,6 +9246,8 @@ function buildImplementedRetrofitPerformance(retrofit: RetrofitPreviewCard, sour
     thermsReducedPerYear,
     waterSavedPerYear,
     wasteReducedPerYear,
+    siteEuiReductionKbtuPerSquareFootPerYear,
+    gridPeakDemandReductionKw,
     certificationsSupported: retrofit.environmentalImpact.certificationContribution,
     documentReadiness: buildDashboardDocumentReadiness(retrofit, index)
   };
@@ -9305,42 +9360,46 @@ function buildDashboardNextBestActions(implementedRetrofits: DashboardImplemente
 export function buildDashboardPerformanceData(payload: PortalRetrofitRecommendationsResponse | null, preview: UserRetrofitPreviewResult): DashboardViewModel {
   const sourceRetrofits = payload?.retrofits || [];
   const sourceById = new Map(sourceRetrofits.map((retrofit) => [retrofit.retrofitTypeId, retrofit]));
+  const previewById = new Map(preview.retrofits.map((retrofit) => [retrofit.id, retrofit]));
   const postImplementationDataset = payload?.dashboardPostImplementationDataset || null;
   const hasPostImplementationDataset = Boolean(postImplementationDataset);
   const implementedRetrofits = postImplementationDataset
-    ? buildImplementedRetrofitsFromDashboardDataset(postImplementationDataset)
+    ? buildImplementedRetrofitsFromDashboardDataset(postImplementationDataset, previewById)
     : preview.retrofits
       .map((retrofit, index) => buildImplementedRetrofitPerformance(retrofit, sourceById.get(retrofit.id), index))
       .filter((retrofit): retrofit is DashboardImplementedRetrofit => Boolean(retrofit));
+  const dedupedImplementedRetrofits = dedupeDashboardRetrofitsById(implementedRetrofits);
 
-  const projectCost = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.projectCostCents));
-  const incentivesReceived = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.incentivesReceivedCents));
-  const incentivesApproved = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.incentivesApprovedCents));
-  const incentivesPending = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.incentivesPendingCents));
-  const incentivesNotClaimed = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.incentivesNotClaimedCents));
-  const netProjectCost = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.netCostCents)) ?? (projectCost != null && incentivesReceived != null ? projectCost - incentivesReceived : null);
-  const annualSavings = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.actualAnnualSavingsCents ?? retrofit.estimatedAnnualSavingsCents));
+  const projectCost = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.projectCostCents));
+  const incentivesReceived = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.incentivesReceivedCents));
+  const incentivesApproved = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.incentivesApprovedCents));
+  const incentivesPending = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.incentivesPendingCents));
+  const incentivesNotClaimed = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.incentivesNotClaimedCents));
+  const netProjectCost = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.netCostCents)) ?? (projectCost != null && incentivesReceived != null ? projectCost - incentivesReceived : null);
+  const annualSavings = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.actualAnnualSavingsCents ?? retrofit.estimatedAnnualSavingsCents));
   const monthlySavings = divideCents(annualSavings, 12);
-  const averagePayback = averageNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.paybackYears));
-  const roiPercent = netProjectCost && annualSavings ? (annualSavings / netProjectCost) * 100 : averageNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.roiPercent));
-  const projectedFiveYearSavings = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.projectedFiveYearSavingsCents));
-  const projectedTenYearSavings = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.projectedTenYearSavingsCents));
+  const averagePayback = averageNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.paybackYears));
+  const roiPercent = netProjectCost && annualSavings ? (annualSavings / netProjectCost) * 100 : averageNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.roiPercent));
+  const projectedFiveYearSavings = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.projectedFiveYearSavingsCents));
+  const projectedTenYearSavings = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.projectedTenYearSavingsCents));
   const recoveredSoFar = sumNullableNumbers([incentivesReceived, annualSavings]);
-  const co2e = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.co2eReducedPerYear));
-  const kwh = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.kwhSavedPerYear));
-  const therms = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.thermsReducedPerYear));
-  const water = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.waterSavedPerYear));
-  const waste = sumNullableNumbers(implementedRetrofits.map((retrofit) => retrofit.wasteReducedPerYear));
+  const co2e = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.co2eReducedPerYear));
+  const kwh = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.kwhSavedPerYear));
+  const therms = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.thermsReducedPerYear));
+  const water = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.waterSavedPerYear));
+  const waste = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.wasteReducedPerYear));
+  const siteEui = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.siteEuiReductionKbtuPerSquareFootPerYear));
+  const peakDemand = sumNullableNumbers(dedupedImplementedRetrofits.map((retrofit) => retrofit.gridPeakDemandReductionKw));
   const financialLabels = ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
   const certifications = postImplementationDataset
     ? buildDashboardCertificationProgramsFromDataset(postImplementationDataset)
-    : buildDashboardCertificationPrograms(implementedRetrofits);
+    : buildDashboardCertificationPrograms(dedupedImplementedRetrofits);
   const nextActions = postImplementationDataset
     ? buildDashboardNextBestActionsFromDataset(postImplementationDataset)
-    : buildDashboardNextBestActions(implementedRetrofits, certifications);
+    : buildDashboardNextBestActions(dedupedImplementedRetrofits, certifications);
   const documentRows = postImplementationDataset
     ? aggregateDashboardDocumentReadinessFromDataset(postImplementationDataset)
-    : aggregateDashboardDocumentReadiness(implementedRetrofits);
+    : aggregateDashboardDocumentReadiness(dedupedImplementedRetrofits);
   const missingDocumentCount = documentRows.reduce((sum, row) => sum + row.missing, 0);
   const readinessTotal = documentRows.reduce((sum, row) => sum + row.ready + row.inReview + row.missing, 0);
   const readinessReady = documentRows.reduce((sum, row) => sum + row.ready, 0);
@@ -9348,9 +9407,9 @@ export function buildDashboardPerformanceData(payload: PortalRetrofitRecommendat
   const certificationProgress = averageNullableNumbers(certifications.map((program) => program.progressPercent));
   const basisLabel = postImplementationDataset
     ? dashboardBasisLabelFromDataset(postImplementationDataset)
-    : implementedRetrofits.length
-      ? implementedRetrofits.some((retrofit) => retrofit.actualAnnualSavingsCents != null)
-        ? implementedRetrofits.some((retrofit) => retrofit.estimatedAnnualSavingsCents != null && retrofit.actualAnnualSavingsCents == null)
+    : dedupedImplementedRetrofits.length
+      ? dedupedImplementedRetrofits.some((retrofit) => retrofit.actualAnnualSavingsCents != null)
+        ? dedupedImplementedRetrofits.some((retrofit) => retrofit.estimatedAnnualSavingsCents != null && retrofit.actualAnnualSavingsCents == null)
           ? "mixed"
           : "actual"
         : "modeled"
@@ -9390,7 +9449,7 @@ export function buildDashboardPerformanceData(payload: PortalRetrofitRecommendat
       dashboardMetric("Remaining before payback", formatDashboardCurrencyCents(netProjectCost != null && recoveredSoFar != null ? Math.max(netProjectCost - recoveredSoFar, 0) : null), "Projected recovery", "purple", netProjectCost == null || recoveredSoFar == null)
     ],
     cashFlowSeries,
-    topSavingsRetrofits: implementedRetrofits
+    topSavingsRetrofits: dedupedImplementedRetrofits
       .map((retrofit) => ({ label: retrofit.name, value: (retrofit.actualAnnualSavingsCents ?? retrofit.estimatedAnnualSavingsCents ?? 0) / 100 }))
       .filter((item) => item.value > 0)
       .sort((a, b) => b.value - a.value)
@@ -9403,31 +9462,60 @@ export function buildDashboardPerformanceData(payload: PortalRetrofitRecommendat
     totalThermsReducedPerYear: therms,
     totalWaterSavedPerYear: water,
     totalWasteReducedPerYear: waste,
+    totalSiteEuiReductionKbtuPerSquareFootPerYear: siteEui,
+    totalGridPeakDemandReductionKw: peakDemand,
     projectedFiveYearCO2e: co2e == null ? null : co2e * 5,
     projectedTenYearCO2e: co2e == null ? null : co2e * 10,
-    realized: [
-      dashboardMetric("CO2e reduced", formatDashboardNumber(co2e, "MT"), "Implemented impact", "green", co2e == null),
-      dashboardMetric("kWh saved", formatDashboardNumber(kwh, "kWh"), "Electricity savings", "green", kwh == null),
-      dashboardMetric("Therms reduced", formatDashboardNumber(therms, "therms"), "Natural gas savings", "green", therms == null)
-    ],
-    current: [
-      dashboardMetric("YTD CO2e reduced", formatDashboardNumber(co2e == null ? null : co2e / 2, "MT"), "Current period", "blue", co2e == null),
-      dashboardMetric("Water saved", formatDashboardNumber(water, "gal"), "Current tracked water", "blue", water == null),
-      dashboardMetric("Waste reduced", formatDashboardNumber(waste, "MT"), "Current tracked waste", "blue", waste == null)
-    ],
+    realized: buildDashboardEnvironmentalMetrics({
+      totalCO2eReducedPerYear: co2e,
+      totalKwhSavedPerYear: kwh,
+      totalThermsReducedPerYear: therms,
+      totalWaterSavedPerYear: water,
+      totalWasteReducedPerYear: waste,
+      totalSiteEuiReductionKbtuPerSquareFootPerYear: siteEui,
+      totalGridPeakDemandReductionKw: peakDemand,
+      projectedFiveYearCO2e: co2e == null ? null : co2e * 5,
+      projectedTenYearCO2e: co2e == null ? null : co2e * 10,
+      realized: [],
+      current: [],
+      projected: [],
+      impactSeries: [],
+      impactByRetrofit: [],
+      basis: [],
+      equivalencies: []
+    }),
+    current: buildDashboardEnvironmentalMetrics({
+      totalCO2eReducedPerYear: co2e,
+      totalKwhSavedPerYear: kwh,
+      totalThermsReducedPerYear: therms,
+      totalWaterSavedPerYear: water,
+      totalWasteReducedPerYear: waste,
+      totalSiteEuiReductionKbtuPerSquareFootPerYear: siteEui,
+      totalGridPeakDemandReductionKw: peakDemand,
+      projectedFiveYearCO2e: co2e == null ? null : co2e * 5,
+      projectedTenYearCO2e: co2e == null ? null : co2e * 10,
+      realized: [],
+      current: [],
+      projected: [],
+      impactSeries: [],
+      impactByRetrofit: [],
+      basis: [],
+      equivalencies: []
+    }),
     projected: [
       dashboardMetric("Projected 5-year CO2e", formatDashboardNumber(co2e == null ? null : co2e * 5, "MT"), "Future impact", "purple", co2e == null),
       dashboardMetric("Projected 10-year CO2e", formatDashboardNumber(co2e == null ? null : co2e * 10, "MT"), "Future impact", "purple", co2e == null),
       dashboardMetric("Next-action impact", nextActions.find((action) => action.estimatedCO2eImpact)?.projectedOutcome || "Unavailable", "Highest impact action", "purple", !nextActions.some((action) => action.estimatedCO2eImpact))
     ],
     impactSeries,
-    impactByRetrofit: implementedRetrofits
+    impactByRetrofit: dedupedImplementedRetrofits
       .map((retrofit) => ({ label: retrofit.name, value: retrofit.co2eReducedPerYear ?? 0 }))
       .filter((item) => item.value > 0)
       .sort((a, b) => b.value - a.value)
       .slice(0, 6),
     basis: [
       basisLabel === "actual" ? "Based on uploaded bills and actual utility changes." : basisLabel === "unavailable" ? "Impact tracking will appear after implemented retrofit data is available." : "Based on modeled retrofit methodology until actual utility changes are available.",
+      "Aggregated once per retrofit id from backend sustainability impact contracts.",
       `Last updated: ${payload?.generatedAt ? new Date(payload.generatedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Not available"}.`
     ],
     equivalencies: [
@@ -9447,7 +9535,7 @@ export function buildDashboardPerformanceData(payload: PortalRetrofitRecommendat
     gaps: [
       { id: "actions", label: "Missing Actions", count: nextActions.length, subtext: "Tasks and actions that need to be completed.", tone: "red" },
       { id: "documents", label: "Missing Documents", count: missingDocumentCount, subtext: "Documents that are required but not yet uploaded.", tone: "red" },
-      { id: "operational", label: "Operational Gaps", count: implementedRetrofits.filter((retrofit) => retrofit.implementationStatus !== "operational").length, subtext: "Operational items that must be addressed.", tone: "orange" },
+      { id: "operational", label: "Operational Gaps", count: dedupedImplementedRetrofits.filter((retrofit) => retrofit.implementationStatus !== "operational").length, subtext: "Operational items that must be addressed.", tone: "orange" },
       { id: "verification", label: "Verification Steps", count: certifications.filter((program) => program.projectedStatus !== "Ready to Apply").length, subtext: "Verification or approval steps still pending.", tone: "green" }
     ],
     milestones: nextActions.slice(0, 4).map((action, index) => ({
@@ -9474,16 +9562,16 @@ export function buildDashboardPerformanceData(payload: PortalRetrofitRecommendat
     financial,
     environmental,
     certifications: certificationData,
-    implementedRetrofits,
+    implementedRetrofits: dedupedImplementedRetrofits,
     properties: ["All properties", "Primary property"],
     selectedProperty: "All properties",
     periodLabel,
     generatedAt: payload?.generatedAt || preview.generatedAt || new Date().toISOString(),
     dataQuality: {
-      hasImplementedRetrofits: implementedRetrofits.length > 0,
+      hasImplementedRetrofits: dedupedImplementedRetrofits.length > 0,
       basisLabel,
-      notes: implementedRetrofits.length
-        ? [`Dashboard includes ${implementedRetrofits.length} implemented/tracking retrofit record(s).${hasPostImplementationDataset ? " Synthetic admin/test-case performance data is shown for preview only." : ""}`]
+      notes: dedupedImplementedRetrofits.length
+        ? [`Dashboard includes ${dedupedImplementedRetrofits.length} implemented/tracking retrofit record(s) after deduplication by retrofit id.${hasPostImplementationDataset ? " Synthetic admin/test-case performance data is shown for preview only." : ""}`]
         : ["No post-implementation retrofit records were found in the current payload. Dashboard sections render unavailable states until implementation data is connected."]
     }
   };
@@ -9541,7 +9629,13 @@ function normalizeDashboardCertificationStatus(value: string): RetrofitEnvironme
   return "Not evaluated yet";
 }
 
-function buildImplementedRetrofitsFromDashboardDataset(dataset: DashboardPostImplementationDataset): DashboardImplementedRetrofit[] {
+function buildImplementedRetrofitsFromDashboardDataset(
+  dataset: DashboardPostImplementationDataset,
+  fallbackRetrofitsById: Map<string, {
+    sustainabilityImpact?: SampleSustainabilityImpact | null;
+    savingsPreview?: { sustainabilityImpact?: SampleSustainabilityImpact | null } | null;
+  }> = new Map()
+): DashboardImplementedRetrofit[] {
   const properties = new Map(dashboardDatasetRecords(dataset, "properties").map((property) => [dashboardRecordString(property, "id"), property]));
   const documents = dashboardDatasetRecords(dataset, "documentRecords");
   return dashboardDatasetRecords(dataset, "implementedRetrofits")
@@ -9549,6 +9643,8 @@ function buildImplementedRetrofitsFromDashboardDataset(dataset: DashboardPostImp
       const status = normalizeDatasetImplementationStatus(dashboardRecordString(record, "status"));
       if (!status) return null;
       const property = properties.get(dashboardRecordString(record, "propertyId"));
+      const fallbackRetrofit = fallbackRetrofitsById.get(dashboardRecordString(record, "retrofitId"));
+      const fallbackImpact = fallbackRetrofit?.savingsPreview?.sustainabilityImpact || fallbackRetrofit?.sustainabilityImpact || null;
       const retrofitDocuments = documents.filter((document) => dashboardRecordString(document, "relatedRetrofitId") === dashboardRecordString(record, "id"));
       return {
         id: dashboardRecordString(record, "id"),
@@ -9575,11 +9671,31 @@ function buildImplementedRetrofitsFromDashboardDataset(dataset: DashboardPostImp
         projectedTenYearSavingsCents: (dashboardRecordNumber(record, "actualAnnualSavingsCents") ?? dashboardRecordNumber(record, "estimatedAnnualSavingsCents")) == null
           ? null
           : (dashboardRecordNumber(record, "actualAnnualSavingsCents") ?? dashboardRecordNumber(record, "estimatedAnnualSavingsCents") ?? 0) * 10,
-        co2eReducedPerYear: divideNumber(dashboardRecordNumber(record, "actualCO2eReducedKgPerYear"), 1000),
-        kwhSavedPerYear: dashboardRecordNumber(record, "actualKwhSavedPerYear"),
-        thermsReducedPerYear: dashboardRecordNumber(record, "actualThermsSavedPerYear"),
-        waterSavedPerYear: dashboardRecordNumber(record, "actualWaterSavedGallonsPerYear"),
-        wasteReducedPerYear: dashboardRecordNumber(record, "actualWasteReducedPerYear"),
+        co2eReducedPerYear:
+          divideNumber(dashboardRecordNumber(record, "actualCO2eReducedKgPerYear"), 1000) ??
+          divideNumber(getSustainabilityImpactMetricValue(fallbackImpact, "annualOperationalCO2eReductionKgPerYear"), 1000),
+        kwhSavedPerYear:
+          dashboardRecordNumber(record, "actualKwhSavedPerYear") ??
+          getSustainabilityImpactMetricValue(fallbackImpact, "scope2ElectricityReductionKwhPerYear"),
+        thermsReducedPerYear:
+          dashboardRecordNumber(record, "actualThermsSavedPerYear") ??
+          getSustainabilityImpactMetricValue(fallbackImpact, "scope1ThermReductionPerYear"),
+        waterSavedPerYear:
+          dashboardRecordNumber(record, "actualWaterSavedGallonsPerYear") ??
+          getSustainabilityImpactMetricValue(fallbackImpact, "waterConservationGallonsPerYear"),
+        wasteReducedPerYear:
+          dashboardRecordNumber(record, "actualWasteReducedPerYear") ??
+          getSustainabilityImpactMetricValue(fallbackImpact, "wasteAvoidedTonsPerYear"),
+        siteEuiReductionKbtuPerSquareFootPerYear:
+          dashboardRecordNumber(record, "actualSiteEuiReductionKbtuPerSquareFootPerYear") ??
+          dashboardRecordNumber(record, "actualSiteEuiReductionKbtuPerYear") ??
+          dashboardRecordNumber(record, "siteEuiReductionKbtuPerSquareFootPerYear") ??
+          getSustainabilityImpactMetricValue(fallbackImpact, "siteEuiReductionKbtuPerSquareFootPerYear"),
+        gridPeakDemandReductionKw:
+          dashboardRecordNumber(record, "actualGridPeakDemandReductionKw") ??
+          dashboardRecordNumber(record, "actualPeakDemandReductionKw") ??
+          dashboardRecordNumber(record, "gridPeakDemandReductionKw") ??
+          getSustainabilityImpactMetricValue(fallbackImpact, "gridPeakDemandReductionKw"),
         certificationsSupported: Array.isArray(record.certificationContributions)
           ? record.certificationContributions.filter(isPlainRecord).map((item) => ({
               program: dashboardRecordString(item, "program"),
@@ -11396,11 +11512,11 @@ function DashboardSummaryPage({ viewModel }: { viewModel: DashboardViewModel }) 
           <DashboardInlineAction label="View financial details" />
         </DashboardCard>
         <DashboardCard title="Environmental Snapshot">
-          <DashboardLineChart data={viewModel.environmental.impactSeries} valueSuffix=" MT" />
+          <DashboardLineChart data={viewModel.environmental.impactSeries} valueSuffix=" MT CO2e" />
           <div className="dashboard-mini-metric-list">
-            <DashboardMetricMini metric={dashboardMetric("kWh Saved", formatDashboardNumber(viewModel.environmental.totalKwhSavedPerYear, "kWh"), "Electricity savings", "green", viewModel.environmental.totalKwhSavedPerYear == null)} />
-            <DashboardMetricMini metric={dashboardMetric("Therms Reduced", formatDashboardNumber(viewModel.environmental.totalThermsReducedPerYear, "therms"), "Natural gas", "green", viewModel.environmental.totalThermsReducedPerYear == null)} />
-            <DashboardMetricMini metric={dashboardMetric("Water Saved", formatDashboardNumber(viewModel.environmental.totalWaterSavedPerYear, "gal"), "Water savings", "blue", viewModel.environmental.totalWaterSavedPerYear == null)} />
+            {buildDashboardEnvironmentalMetrics(viewModel.environmental).map((metric) => (
+              <DashboardMetricMini key={metric.label} metric={metric} />
+            ))}
           </div>
           <DashboardInlineAction label="View environmental details" />
         </DashboardCard>
@@ -11625,18 +11741,11 @@ function EnvironmentalOverview({ viewModel }: { viewModel: DashboardViewModel })
   const environmental = viewModel.environmental;
   return (
     <>
-      <DashboardKpiGrid metrics={[
-        dashboardMetric("Total CO2e Reduced / Year", formatDashboardNumber(environmental.totalCO2eReducedPerYear, "MT"), "Annual reduction", "green", environmental.totalCO2eReducedPerYear == null),
-        dashboardMetric("kWh Saved", formatDashboardNumber(environmental.totalKwhSavedPerYear, "kWh"), "Electricity savings", "green", environmental.totalKwhSavedPerYear == null),
-        dashboardMetric("Therms Reduced", formatDashboardNumber(environmental.totalThermsReducedPerYear, "therms"), "Natural gas savings", "green", environmental.totalThermsReducedPerYear == null),
-        dashboardMetric("Water Saved", formatDashboardNumber(environmental.totalWaterSavedPerYear, "gal"), "Water reduction", "blue", environmental.totalWaterSavedPerYear == null),
-        dashboardMetric("Waste Reduced", formatDashboardNumber(environmental.totalWasteReducedPerYear, "MT"), "Waste reduction", "green", environmental.totalWasteReducedPerYear == null),
-        dashboardMetric("Projected 10-Year CO2e Avoided", formatDashboardNumber(environmental.projectedTenYearCO2e, "MT"), "Projection", "purple", environmental.projectedTenYearCO2e == null)
-      ]} />
+      <DashboardKpiGrid metrics={buildDashboardEnvironmentalMetrics(environmental)} />
       <DashboardThreeStateCards realized={environmental.realized} current={environmental.current} projected={environmental.projected} />
       <div className="dashboard-two-column">
         <DashboardCard title="Cumulative CO2e Reduced Over Time">
-          <DashboardLineChart data={environmental.impactSeries} valueSuffix=" MT" large />
+          <DashboardLineChart data={environmental.impactSeries} valueSuffix=" MT CO2e" large />
         </DashboardCard>
         <DashboardCard title="Next Best Impact Actions">
           <DashboardActionList actions={viewModel.certifications.nextActions.filter((action) => action.category === "impact")} />
@@ -11646,11 +11755,13 @@ function EnvironmentalOverview({ viewModel }: { viewModel: DashboardViewModel })
       <div className="dashboard-three-column">
         <DashboardCard title="Impact Metrics">
           <div className="dashboard-mini-metric-list">
-            {environmental.current.map((metric) => <DashboardMetricMini key={metric.label} metric={metric} />)}
+            {buildDashboardEnvironmentalMetrics(environmental).map((metric) => (
+              <DashboardMetricMini key={metric.label} metric={metric} />
+            ))}
           </div>
         </DashboardCard>
         <DashboardCard title="Impact by Retrofit">
-          <DashboardHorizontalBars data={environmental.impactByRetrofit} valueSuffix=" MT" />
+          <DashboardHorizontalBars data={environmental.impactByRetrofit} valueSuffix=" MT CO2e" />
         </DashboardCard>
         <DashboardCard title="Impact Data & Methodology">
           <ul className="dashboard-check-list">
@@ -11666,15 +11777,10 @@ function EnvironmentalOverview({ viewModel }: { viewModel: DashboardViewModel })
 function EnvironmentalOutlook({ viewModel }: { viewModel: DashboardViewModel }) {
   return (
     <>
-      <DashboardKpiGrid metrics={[
-        dashboardMetric("This Month's Impact", formatDashboardNumber(divideNumber(viewModel.environmental.totalCO2eReducedPerYear, 12), "MT"), "Current month estimate", "green", viewModel.environmental.totalCO2eReducedPerYear == null),
-        dashboardMetric("Year-to-Date Impact", formatDashboardNumber(divideNumber(viewModel.environmental.totalCO2eReducedPerYear, 2), "MT"), "Current period", "green", viewModel.environmental.totalCO2eReducedPerYear == null),
-        dashboardMetric("Lifetime Impact", formatDashboardNumber(viewModel.environmental.projectedFiveYearCO2e, "MT"), "Since portfolio inception", "green", viewModel.environmental.projectedFiveYearCO2e == null),
-        dashboardMetric("Projected 5-Year Impact", formatDashboardNumber(viewModel.environmental.projectedFiveYearCO2e, "MT"), "Future impact", "purple", viewModel.environmental.projectedFiveYearCO2e == null)
-      ]} />
+      <DashboardKpiGrid metrics={buildDashboardEnvironmentalMetrics(viewModel.environmental)} />
       <div className="dashboard-two-column">
         <DashboardCard title="Impact Over Time">
-          <DashboardLineChart data={viewModel.environmental.impactSeries} valueSuffix=" MT" large />
+          <DashboardLineChart data={viewModel.environmental.impactSeries} valueSuffix=" MT CO2e" large />
         </DashboardCard>
         <DashboardCard title="Equivalencies">
           <div className="dashboard-equivalency-grid">
@@ -14046,6 +14152,7 @@ function RetrofitPreviewCardView({
     opportunity.eligibilityStatus === "needs review" ||
     opportunity.requiredInfo.includes("utility territory confirmation")
   );
+  const sustainabilityImpact = retrofit.sustainabilityImpact || null;
   const environmentalImpact = retrofit.environmentalImpact;
   const displayedEnvironmentalImpact = billDataLocked
     ? maskEnvironmentalImpactForNoBillData(environmentalImpact)
@@ -14283,15 +14390,6 @@ function RetrofitPreviewCardView({
     setActiveWorkspaceTab(tab);
   }
 
-  const kwhImpactResource = displayedEnvironmentalImpact.resources.find((resource) =>
-    /electricity|renewable/i.test(resource.label)
-  );
-  const thermImpactResource = displayedEnvironmentalImpact.resources.find((resource) =>
-    /gas|therm|thermal/i.test(resource.label)
-  );
-  const reductionImpactResource = displayedEnvironmentalImpact.resources.find((resource) =>
-    /energy|load/i.test(resource.label)
-  );
   const certificationRows = [
     {
       program: "LEED O+M",
@@ -14694,10 +14792,12 @@ function RetrofitPreviewCardView({
                   </div>
                   <UserPreviewTriageBadges surfaceId="overview.impact-card" />
                   <div className="estimate-info-list">
-                    <EstimateInfoRow label="CO₂e avoided per year" value={displayedEnvironmentalImpact.overall.displayValue === "?" ? displayedEnvironmentalImpact.overall.fallback || "Needs bills" : `${displayedEnvironmentalImpact.overall.displayValue} ${displayedEnvironmentalImpact.overall.unit}`} />
-                    <EstimateInfoRow label="kWh saved per year" value={kwhImpactResource?.displayValue || "Needs bill"} />
-                    <EstimateInfoRow label="LEED O+M" value={certificationRows[0].value} />
-                    <EstimateInfoRow label="Green Business" value={certificationRows[2].value} />
+                    <EstimateInfoRow
+                      label="Annual CO₂e avoided"
+                      value={displayedEnvironmentalImpact.overall.displayValue === "?"
+                        ? displayedEnvironmentalImpact.overall.fallback || "Needs bills"
+                        : `${displayedEnvironmentalImpact.overall.displayValue} ${displayedEnvironmentalImpact.overall.unit}`}
+                    />
                   </div>
                 </section>
               </div>
@@ -14934,15 +15034,9 @@ function RetrofitPreviewCardView({
                   </div>
                   <p>{impactPlainLanguageSentence(displayedEnvironmentalImpact.overall)}</p>
                 </div>
-                <EstimateImpactIllustration />
+                  <EstimateImpactIllustration />
               </section>
-              <h3>Additional impact metrics</h3>
-              <div className="estimate-impact-metric-grid">
-                <EstimateMetricCard icon={<MetricSavingsIcon />} label="kWh saved per year" value={kwhImpactResource?.displayValue || "Needs bill"} subtitle={kwhImpactResource?.unit || "kWh/yr"} />
-                <EstimateMetricCard icon={<MetricImpactIcon />} label="Reduction in energy use" value={reductionImpactResource?.displayValue || "Needs bill"} subtitle="Compared to baseline" />
-                <EstimateMetricCard icon={<MetricSavingsIcon />} label="Therms avoided per year" value={thermImpactResource?.displayValue || "Needs gas baseline"} subtitle={thermImpactResource?.unit || "therms/yr"} />
-                <EstimateMetricCard icon={<MetricCostIcon />} label="Utility cost savings per year" value={formatEstimateCentsPerPeriod(annualOperatingSavingsValue, "yr", "Needs bill")} subtitle="USD/yr" />
-              </div>
+              {sustainabilityImpact ? <SustainabilityImpactCard sustainabilityImpact={sustainabilityImpact} /> : null}
               <h3>Certification contribution</h3>
               <div
                 {...getUserPreviewTriageTargetProps({
@@ -18658,7 +18752,8 @@ function SustainabilityImpactCard({
     sustainabilityImpact.metrics.scope2ElectricityReductionKwhPerYear,
     sustainabilityImpact.metrics.siteEuiReductionKbtuPerSquareFootPerYear,
     sustainabilityImpact.metrics.gridPeakDemandReductionKw,
-    sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear
+    sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear,
+    sustainabilityImpact.metrics.wasteAvoidedTonsPerYear
   ].filter(Boolean) as SampleSustainabilityImpactMetric[];
 
   return (
