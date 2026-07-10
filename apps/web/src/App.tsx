@@ -1,5 +1,5 @@
 import { ChangeEvent, CSSProperties, DragEvent, FormEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { apiDelete, apiGet, apiPatch, apiPost, apiPut } from "./api";
+import { apiDelete, apiGet, apiPatch, apiPost, apiPut, isLocalDevelopmentHost } from "./api";
 import type { AuthCredential } from "./authTypes";
 import {
   AUTH_CREDENTIAL_STORAGE_KEY,
@@ -2882,22 +2882,25 @@ function ArrowUpRightIcon() {
 }
 
 const HOME_HOW_IT_WORKS_SECTION_ID = "home-how-it-works";
+const HOME_INSIGHTS_SECTION_ID = "home-insights";
+const HOME_DASHBOARD_SECTION_ID = "home-dashboard";
+const HOME_PRICING_SECTION_ID = "home-pricing";
 
-function scrollToHomeHowItWorksFallback() {
+function scrollToHomeSectionFallback(sectionId: string) {
   if (typeof window === "undefined") {
     return;
   }
 
-  const homeHowItWorksPath = `${pathForRoute("home")}#${HOME_HOW_IT_WORKS_SECTION_ID}`;
+  const homeSectionPath = `${pathForRoute("home")}#${sectionId}`;
 
   if (window.location.pathname !== pathForRoute("home")) {
-    window.history.pushState({}, "", homeHowItWorksPath);
+    window.history.pushState({}, "", homeSectionPath);
     window.dispatchEvent(new Event("popstate"));
     return;
   }
 
-  const section = document.getElementById(HOME_HOW_IT_WORKS_SECTION_ID);
-  window.history.replaceState({}, "", homeHowItWorksPath);
+  const section = document.getElementById(sectionId);
+  window.history.replaceState({}, "", homeSectionPath);
 
   if (!section) {
     return;
@@ -2906,6 +2909,10 @@ function scrollToHomeHowItWorksFallback() {
   const headerOffset = 96;
   const top = Math.max(0, section.getBoundingClientRect().top + window.scrollY - headerOffset);
   window.scrollTo({ behavior: "smooth", top });
+}
+
+function scrollToHomeHowItWorksFallback() {
+  scrollToHomeSectionFallback(HOME_HOW_IT_WORKS_SECTION_ID);
 }
 
 function PublicNav({
@@ -2922,7 +2929,6 @@ function PublicNav({
   onSignOut?: () => void;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isNavVisible, setIsNavVisible] = useState(true);
   const isMenuOpenRef = useRef(false);
   const lastScrollYRef = useRef(0);
@@ -2940,10 +2946,22 @@ function PublicNav({
     const updateNavVisibility = () => {
       const nextScrollY = Math.max(0, window.scrollY);
       const delta = nextScrollY - lastScrollYRef.current;
+      const homeInfographics = document.querySelector<HTMLElement>(".home-infographics-section");
+      const infographicsBounds = homeInfographics?.getBoundingClientRect();
+      const isInsideHomeHero = Boolean(infographicsBounds && infographicsBounds.top > 96);
+      const homeHowItWorks = document.getElementById("home-how-it-works");
+      const howItWorksBounds = homeHowItWorks?.getBoundingClientRect();
+      const isInsideHomeHowItWorks = Boolean(
+        howItWorksBounds && howItWorksBounds.top <= 96 && howItWorksBounds.bottom > 0
+      );
       const shouldAlwaysShow = nextScrollY < 24 || isMenuOpenRef.current;
       let nextVisible = isNavVisibleRef.current;
 
-      if (shouldAlwaysShow || delta < -upThreshold) {
+      if (isInsideHomeHowItWorks) {
+        nextVisible = false;
+      } else if (isInsideHomeHero) {
+        nextVisible = true;
+      } else if (shouldAlwaysShow || delta < -upThreshold) {
         nextVisible = true;
       } else if (delta > downThreshold) {
         nextVisible = false;
@@ -2986,24 +3004,26 @@ function PublicNav({
 
   function go(route: Route) {
     setIsMenuOpen(false);
-    setIsAboutOpen(false);
     navigate(route);
   }
 
   function signOutFromNav() {
     setIsMenuOpen(false);
-    setIsAboutOpen(false);
     onSignOut?.();
   }
 
   function openHowItWorks() {
     setIsMenuOpen(false);
-    setIsAboutOpen(false);
     if (onHowItWorksClick) {
       onHowItWorksClick();
       return;
     }
     scrollToHomeHowItWorksFallback();
+  }
+
+  function openHomeSection(sectionId: string) {
+    setIsMenuOpen(false);
+    scrollToHomeSectionFallback(sectionId);
   }
 
   function renderAuthAction() {
@@ -3023,53 +3043,27 @@ function PublicNav({
       <div className="navbar-inner">
         <Brand onClick={() => go("home")} />
         <nav aria-label="Primary" className="site-nav">
+          <button className="link-button" onClick={() => openHomeSection("home-overview")} type="button">
+            Overview
+          </button>
+          <button className="link-button" onClick={() => openHomeSection(HOME_INSIGHTS_SECTION_ID)} type="button">
+            Insights
+          </button>
           <button className="link-button" onClick={openHowItWorks} type="button">
             How It Works
           </button>
-          <button className="link-button" onClick={() => go("pricing")} type="button">
+          <button className="link-button" onClick={() => openHomeSection(HOME_DASHBOARD_SECTION_ID)} type="button">
+            Dashboard
+          </button>
+          <button className="link-button" onClick={() => openHomeSection(HOME_PRICING_SECTION_ID)} type="button">
             Pricing
           </button>
-          <div
-            className="nav-dropdown"
-            onMouseEnter={() => setIsAboutOpen(true)}
-            onMouseLeave={() => setIsAboutOpen(false)}
-          >
-            <button
-              aria-expanded={isAboutOpen}
-              aria-haspopup="menu"
-              className="link-button dropdown-trigger"
-              onBlur={(event) => {
-                if (!event.currentTarget.parentElement?.contains(event.relatedTarget as Node | null)) {
-                  setIsAboutOpen(false);
-                }
-              }}
-              onFocus={() => setIsAboutOpen(true)}
-              onClick={() => setIsAboutOpen((current) => !current)}
-              type="button"
-            >
-              About
-              <span aria-hidden="true" className="dropdown-caret">
-                ▾
-              </span>
-            </button>
-            {isAboutOpen ? (
-              <div className="dropdown-panel-wrap">
-                <div className="dropdown-panel" role="menu">
-                  {aboutLinks.map((item) => (
-                    <button className="dropdown-link" key={item.route} onClick={() => go(item.route)} role="menuitem" type="button">
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-          </div>
         </nav>
         <div className="nav-actions">
           {renderAuthAction()}
           {canStartScan ? (
             <button className="nav-cta" onClick={() => go("scan")} type="button">
-              Find my incentives
+              Get Started
             </button>
           ) : null}
         </div>
@@ -3086,29 +3080,30 @@ function PublicNav({
         </button>
         {canStartScan ? (
           <button className="mobile-cta" onClick={() => go("scan")} type="button">
-            Find incentives
+            Get Started
           </button>
         ) : null}
         {isMenuOpen ? (
           <div className="mobile-menu-panel">
+            <button className="link-button" onClick={() => openHomeSection("home-overview")} type="button">
+              Overview
+            </button>
+            <button className="link-button" onClick={() => openHomeSection(HOME_INSIGHTS_SECTION_ID)} type="button">
+              Insights
+            </button>
             <button className="link-button" onClick={openHowItWorks} type="button">
               How It Works
             </button>
-            <button className="link-button" onClick={() => go("pricing")} type="button">
+            <button className="link-button" onClick={() => openHomeSection(HOME_DASHBOARD_SECTION_ID)} type="button">
+              Dashboard
+            </button>
+            <button className="link-button" onClick={() => openHomeSection(HOME_PRICING_SECTION_ID)} type="button">
               Pricing
             </button>
-            <div className="mobile-about-group">
-              <span>About</span>
-              {aboutLinks.map((item) => (
-                <button className="mobile-sub-link" key={item.route} onClick={() => go(item.route)} type="button">
-                  {item.label}
-                </button>
-              ))}
-            </div>
             {renderAuthAction()}
             {canStartScan ? (
               <button className="nav-cta" onClick={() => go("scan")} type="button">
-                Find my incentives
+                Get Started
               </button>
             ) : null}
           </div>
@@ -3125,12 +3120,6 @@ function Footer({
   canStartScan?: boolean;
   navigate: (route: Route) => void;
 }) {
-  const siteLinks: Array<[string, Route]> = [["Pricing", "pricing"]];
-
-  if (canStartScan) {
-    siteLinks.push(["Get Started", "scan"]);
-  }
-
   return (
     <footer className="site-footer">
       <div className="footer-brand">
@@ -3139,14 +3128,22 @@ function Footer({
       </div>
       <nav aria-label="Site links" className="footer-links">
         <span className="footer-heading">Site</span>
+        <button className="footer-link" onClick={() => scrollToHomeSectionFallback("home-overview")} type="button">
+          Overview
+        </button>
+        <button className="footer-link" onClick={() => scrollToHomeSectionFallback(HOME_INSIGHTS_SECTION_ID)} type="button">
+          Insights
+        </button>
         <button className="footer-link" onClick={scrollToHomeHowItWorksFallback} type="button">
           How It Works
         </button>
-        {siteLinks.map(([label, route]) => (
-          <button className="footer-link" key={route} onClick={() => navigate(route)} type="button">
-            {label}
-          </button>
-        ))}
+        <button className="footer-link" onClick={() => scrollToHomeSectionFallback(HOME_DASHBOARD_SECTION_ID)} type="button">
+          Dashboard
+        </button>
+        <button className="footer-link" onClick={() => scrollToHomeSectionFallback(HOME_PRICING_SECTION_ID)} type="button">
+          Pricing
+        </button>
+        {canStartScan ? <button className="footer-link" onClick={() => navigate("scan")} type="button">Get Started</button> : null}
       </nav>
       <nav aria-label="Company links" className="footer-links">
         <span className="footer-heading">Company</span>
@@ -3318,7 +3315,7 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
             <p className="planet-scan-subhead">Billions in retrofit incentives exist while building owners lose billions to operating expenses.</p>
             <div className="planet-scan-action">
               <button className="planet-scan-cta planet-scan-primary" onClick={() => navigate("scan")} type="button">
-                Find my incentives
+                Get Started
                 <ArrowUpRightIcon />
               </button>
               <p>Free property scan · No commitment</p>
@@ -3327,6 +3324,10 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
           <div className="planet-scan-message planet-scan-message-static planet-scan-message-next">
             <h2 className="planet-scan-next-headline">RetroFi helps businesses find, compare, claim, and implement retrofit incentives.</h2>
             <p className="planet-scan-emphasis">Sustainable. Profitable. Practical.</p>
+            <button className="planet-scan-cta planet-scan-primary" onClick={() => navigate("scan")} type="button">
+              Get Started
+              <ArrowUpRightIcon />
+            </button>
           </div>
         </div>
       </div>
@@ -3773,7 +3774,13 @@ const homeRankedRetrofits = [
   }
 ];
 
-const homeSavingsBars = [28, 44, 58, 74, 92];
+const homeSavingsBars = [
+  { amount: "$420K", height: 28 },
+  { amount: "$680K", height: 44 },
+  { amount: "$910K", height: 58 },
+  { amount: "$1.16M", height: 74 },
+  { amount: "$1.42M", height: 92 }
+];
 const homeImpactPoints = [
   { label: "Year 1", value: 46 },
   { label: "Year 2", value: 125 },
@@ -3809,56 +3816,61 @@ const homeApplicationSteps = [
   }
 ];
 
-type HomeDashboardPreviewTab = "summary" | "savings" | "impact";
-
-const homeDashboardPreviewTabs: Array<{ id: HomeDashboardPreviewTab; label: string }> = [
-  { id: "summary", label: "Summary" },
-  { id: "savings", label: "Savings" },
-  { id: "impact", label: "Impact" }
-];
-
 const homeDashboardSummaryMetrics = [
   { label: "Total Project Cost", value: "$104K", note: "Across implemented retrofits" },
   { label: "Incentives Received", value: "$6K", note: "Received or approved" },
   { label: "Net Project Cost", value: "$98K", note: "After incentives" },
-  { label: "Certification Progress", value: "52%", note: "Average across programs" }
-];
-
-const homeDashboardImpactMetrics = [
+  { label: "Total Annual Savings", value: "$21K", note: "Estimated / modelled" },
   { label: "CO2e Reduced / Year", value: "14 MT", note: "Metric tons CO2e" },
-  { label: "kWh Saved", value: "111,520 kWh", note: "Electricity savings" },
-  { label: "Therms Reduced", value: "1,032 therms", note: "Natural gas" },
-  { label: "Water Saved", value: "69,694 gal", note: "Water savings" }
+  { label: "Certification Progress", value: "52%", note: "Average across programs" }
 ];
 
 const homeDashboardStatusStrip = [
   {
+    accent: "realized",
     label: "Realized",
-    values: ["$104K cost incurred", "$6K incentives received", "$21K annual savings"]
+    note: "Past performance (cumulative)",
+    values: [
+      { label: "Cost incurred", value: "$104K" },
+      { label: "Incentives received", value: "$6K" },
+      { label: "Annual savings", value: "$21K" }
+    ]
   },
   {
+    accent: "current",
     label: "Current",
-    values: ["$11K current savings", "$5K current incentives", "22% current ROI"]
+    note: "Current performance to date",
+    values: [
+      { label: "Current savings", value: "$11K" },
+      { label: "Current incentives", value: "$5K" },
+      { label: "Current ROI", value: "22%" }
+    ]
   },
   {
+    accent: "projected",
     label: "Projected",
-    values: ["$106K projected 5-year savings", "$213K projected 10-year savings", "$70K remaining before payback"]
+    note: "Future performance (forecast)",
+    values: [
+      { label: "Projected 5-year savings", value: "$106K" },
+      { label: "Projected 10-year savings", value: "$213K" },
+      { label: "Remaining before payback", value: "$70K" }
+    ]
   }
 ];
 
 const homeDashboardEnvironmentalPoints = [
-  "24,126 114",
-  "70,118 108",
-  "116,106 96",
-  "162,88 78",
-  "208,82 68",
-  "254,64 56",
-  "300,48 40"
+  "24,114",
+  "70,108",
+  "116,96",
+  "162,78",
+  "208,68",
+  "254,56",
+  "300,40"
 ].join(" ");
 
 function HomeDashboardMetricCard({ label, note, value }: { label: string; note: string; value: string }) {
   return (
-    <article className="home-dashboard-preview-metric">
+    <article className="home-dashboard-preview-metric" tabIndex={0}>
       <span className="home-dashboard-preview-icon"><LeafOutlineIcon /></span>
       <div>
         <p>{label}</p>
@@ -3871,119 +3883,37 @@ function HomeDashboardMetricCard({ label, note, value }: { label: string; note: 
 
 function HomeDashboardStatusStrip() {
   return (
-    <div className="home-dashboard-preview-status-strip">
+    <div
+      aria-label="Performance forecast cards. Scroll horizontally to explore."
+      className="home-dashboard-preview-status-strip"
+      tabIndex={0}
+    >
       {homeDashboardStatusStrip.map((group) => (
-        <article className="home-dashboard-preview-status" key={group.label}>
-          <h4>{group.label}</h4>
-          <ul>
-            {group.values.map((value) => (
-              <li key={value}>{value}</li>
+        <article className={`home-dashboard-preview-status is-${group.accent}`} key={group.label} tabIndex={0}>
+          <div className="home-dashboard-preview-status-heading">
+            <span className="home-dashboard-preview-status-icon"><LeafOutlineIcon /></span>
+            <div>
+              <h4>{group.label}</h4>
+              <p>{group.note}</p>
+            </div>
+          </div>
+          <dl>
+            {group.values.map((metric) => (
+              <div key={metric.label}>
+                <dt>{metric.value}</dt>
+                <dd>{metric.label}</dd>
+              </div>
             ))}
-          </ul>
+          </dl>
         </article>
       ))}
     </div>
   );
 }
 
-function HomeDashboardSummaryPanel() {
-  return (
-    <div className="home-dashboard-preview-panel">
-      <div className="home-dashboard-preview-metrics">
-        {homeDashboardSummaryMetrics.map((metric) => (
-          <HomeDashboardMetricCard key={metric.label} {...metric} />
-        ))}
-      </div>
-      <HomeDashboardStatusStrip />
-    </div>
-  );
-}
-
-function HomeDashboardSavingsPanel() {
-  return (
-    <div className="home-dashboard-preview-panel home-dashboard-preview-panel--savings">
-      <article className="home-dashboard-preview-card home-dashboard-preview-card--donut">
-        <div className="home-dashboard-preview-card-heading">
-          <h3>Financial Snapshot</h3>
-          <span>+$83,213</span>
-        </div>
-        <div className="home-dashboard-preview-donut-row">
-          <div aria-label="$6K incentives received" className="home-dashboard-preview-donut" role="img">
-            <span>$6K</span>
-            <small>Incentives received</small>
-          </div>
-          <dl className="home-dashboard-preview-legend">
-            <div>
-              <dt>Received</dt>
-              <dd>$6K</dd>
-            </div>
-            <div>
-              <dt>Pending</dt>
-              <dd>$36K</dd>
-            </div>
-            <div>
-              <dt>Not Yet Claimed</dt>
-              <dd>$41K</dd>
-            </div>
-          </dl>
-        </div>
-      </article>
-      <article className="home-dashboard-preview-card home-dashboard-preview-card--savings-total">
-        <span>Total Annual Savings</span>
-        <strong>$21K</strong>
-        <p>Estimated/modelled across implemented retrofits.</p>
-      </article>
-      <article className="home-dashboard-preview-card home-dashboard-preview-card--savings-total">
-        <span>Projected 10-year Savings</span>
-        <strong>$213K</strong>
-        <p>Forecast from current project performance.</p>
-      </article>
-      <article className="home-dashboard-preview-card home-dashboard-preview-action-card">
-        <span>Next Best Action</span>
-        <h3>Claim WSHFC Sustainable Energy Program</h3>
-        <p>Finish the rebate claim package so approved money moves from pending to received.</p>
-        <button className="home-dashboard-preview-link" type="button">
-          View next action
-          <ArrowUpRightIcon />
-        </button>
-      </article>
-    </div>
-  );
-}
-
-function HomeDashboardImpactPanel() {
-  return (
-    <div className="home-dashboard-preview-panel">
-      <div className="home-dashboard-preview-metrics">
-        {homeDashboardImpactMetrics.map((metric) => (
-          <HomeDashboardMetricCard key={metric.label} {...metric} />
-        ))}
-      </div>
-      <article className="home-dashboard-preview-card home-dashboard-preview-card--environment">
-        <div className="home-dashboard-preview-card-heading">
-          <h3>Environmental Snapshot</h3>
-          <span>9.2 MT</span>
-        </div>
-        <svg aria-label="Environmental savings trend" className="home-dashboard-preview-line" role="img" viewBox="0 0 324 140">
-          <g className="home-dashboard-preview-line-grid">
-            <path d="M24 36h276M24 72h276M24 108h276" />
-          </g>
-          <polyline points={homeDashboardEnvironmentalPoints} />
-          {homeDashboardEnvironmentalPoints.split(" ").map((point) => {
-            const [cx, cy] = point.split(",");
-            return <circle cx={cx} cy={cy} key={point} r="3" />;
-          })}
-        </svg>
-      </article>
-    </div>
-  );
-}
-
 function HomeDashboardPreviewSection() {
-  const [activeTab, setActiveTab] = useState<HomeDashboardPreviewTab>("summary");
-
   return (
-    <section aria-labelledby="home-dashboard-preview-heading" className="home-dashboard-preview-section">
+    <section aria-labelledby="home-dashboard-preview-heading" className="home-dashboard-preview-section" id={HOME_DASHBOARD_SECTION_ID}>
       <div className="home-dashboard-preview-inner">
         <header className="home-dashboard-preview-intro">
           <p>Performance dashboard</p>
@@ -4000,40 +3930,101 @@ function HomeDashboardPreviewSection() {
               <span>Cross-portfolio overview of implemented retrofits.</span>
             </div>
             <div aria-label="Dashboard preview filters" className="home-dashboard-preview-filters">
-              <span>Jul 1, 2025 - Jun 30, 2026</span>
-              <span>All properties</span>
+              <button className="home-dashboard-preview-filter" type="button">Jul 1, 2025 – Jun 30, 2026 <span aria-hidden="true">⌄</span></button>
+              <button className="home-dashboard-preview-filter" type="button">All properties <span aria-hidden="true">⌄</span></button>
             </div>
           </div>
 
-          <div aria-label="Dashboard preview views" className="home-dashboard-preview-tabs" role="tablist">
-            {homeDashboardPreviewTabs.map((tab) => (
-              <button
-                aria-controls={`home-dashboard-preview-panel-${tab.id}`}
-                aria-selected={activeTab === tab.id}
-                className="home-dashboard-preview-tab"
-                id={`home-dashboard-preview-tab-${tab.id}`}
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                role="tab"
-                type="button"
-              >
-                {tab.label}
-              </button>
-            ))}
+          <div aria-label="Dashboard sections" className="home-dashboard-preview-tabs">
+            <span className="home-dashboard-preview-tab-label is-current">Summary</span>
+            <span className="home-dashboard-preview-tab-label">Financial Performance</span>
+            <span className="home-dashboard-preview-tab-label">Environmental Impact</span>
+            <span className="home-dashboard-preview-tab-label">Certifications</span>
           </div>
 
-          <div
-            aria-labelledby={`home-dashboard-preview-tab-${activeTab}`}
-            className="home-dashboard-preview-tab-panel"
-            id={`home-dashboard-preview-panel-${activeTab}`}
-            key={activeTab}
-            role="tabpanel"
-          >
-            {activeTab === "summary" ? <HomeDashboardSummaryPanel /> : null}
-            {activeTab === "savings" ? <HomeDashboardSavingsPanel /> : null}
-            {activeTab === "impact" ? <HomeDashboardImpactPanel /> : null}
+          <div className="home-dashboard-preview-panel" id="home-dashboard-summary">
+            <div
+              aria-label="Dashboard key metrics. Scroll horizontally to explore."
+              className="home-dashboard-preview-metrics"
+              tabIndex={0}
+            >
+              {homeDashboardSummaryMetrics.map((metric) => (
+                <HomeDashboardMetricCard key={metric.label} {...metric} />
+              ))}
+            </div>
+            <HomeDashboardStatusStrip />
+          </div>
+
+          <div className="home-dashboard-preview-detail-grid">
+            <article className="home-dashboard-preview-card home-dashboard-preview-card--donut" id="home-dashboard-financial" tabIndex={0}>
+              <div className="home-dashboard-preview-card-heading">
+                <h3>Financial Snapshot</h3>
+                <span>+$83,213</span>
+              </div>
+              <div className="home-dashboard-preview-donut-row">
+                <div aria-label="$6K incentives received" className="home-dashboard-preview-donut" role="img">
+                  <span>$6K</span>
+                  <small>Incentives received</small>
+                </div>
+                <dl className="home-dashboard-preview-legend">
+                  <div><dt>Received</dt><dd>$6K</dd></div>
+                  <div><dt>Pending</dt><dd>$36K</dd></div>
+                  <div><dt>Not Yet Claimed</dt><dd>$41K</dd></div>
+                </dl>
+              </div>
+              <button className="home-dashboard-preview-link" type="button">View financial details <ArrowUpRightIcon /></button>
+            </article>
+
+            <article className="home-dashboard-preview-card home-dashboard-preview-card--environment" id="home-dashboard-environmental" tabIndex={0}>
+              <div className="home-dashboard-preview-card-heading">
+                <h3>Environmental Snapshot</h3>
+                <span>9.2 MT</span>
+              </div>
+              <svg aria-label="Environmental savings trend" className="home-dashboard-preview-line" role="img" viewBox="0 0 324 140">
+                <g className="home-dashboard-preview-line-grid"><path d="M24 36h276M24 72h276M24 108h276" /></g>
+                <polyline points={homeDashboardEnvironmentalPoints} />
+                {homeDashboardEnvironmentalPoints.split(" ").map((point) => {
+                  const [cx, cy] = point.split(",");
+                  return <circle cx={cx} cy={cy} key={point} r="3" />;
+                })}
+              </svg>
+              <div className="home-dashboard-preview-impact-row">
+                <span><strong>111,520 kWh</strong>Electricity savings</span>
+                <span><strong>1,032 therms</strong>Natural gas</span>
+                <span><strong>69,694 gal</strong>Water savings</span>
+              </div>
+              <button className="home-dashboard-preview-link" type="button">View environmental details <ArrowUpRightIcon /></button>
+            </article>
+
+            <article className="home-dashboard-preview-card home-dashboard-preview-card--certifications" id="home-dashboard-certifications" tabIndex={0}>
+              <div className="home-dashboard-preview-card-heading"><h3>Certification Progress</h3></div>
+              <div className="home-dashboard-preview-progress">
+                <div><span><strong>ENERGY STAR</strong><b>42%</b></span><i><em style={{ width: "42%" }} /></i></div>
+                <div><span><strong>LEED O+M readiness</strong><b>43%</b></span><i><em style={{ width: "43%" }} /></i></div>
+              </div>
+              <button className="home-dashboard-preview-link" type="button">View all certifications <ArrowUpRightIcon /></button>
+            </article>
+
+            <article className="home-dashboard-preview-card home-dashboard-preview-card--actions" tabIndex={0}>
+              <div className="home-dashboard-preview-card-heading"><h3>Next Best Action</h3></div>
+              <button className="home-dashboard-preview-action" type="button"><span>Claim WSHFC Sustainable Energy Program<small>Finish the rebate claim package.</small></span><ArrowUpRightIcon /></button>
+              <button className="home-dashboard-preview-action" type="button"><span>Upload post-install utility bill<small>Unlock incentive measurement.</small></span><ArrowUpRightIcon /></button>
+              <button className="home-dashboard-preview-action" type="button"><span>Verify post-install utility bills<small>Compare measured performance.</small></span><ArrowUpRightIcon /></button>
+            </article>
+
+            <article className="home-dashboard-preview-card home-dashboard-preview-card--retrofits" tabIndex={0}>
+              <div className="home-dashboard-preview-card-heading"><h3>Implemented Retrofits</h3></div>
+              <div className="home-dashboard-preview-table" role="table" aria-label="Implemented retrofits">
+                <div role="row"><strong role="columnheader">Retrofit</strong><strong role="columnheader">Installed</strong><strong role="columnheader">Savings</strong></div>
+                <div role="row"><span role="cell">Community solar</span><span role="cell">Jul 2025</span><span role="cell">$6K</span></div>
+                <div role="row"><span role="cell">Low-flow fixtures</span><span role="cell">Aug 2025</span><span role="cell">$1K</span></div>
+                <div role="row"><span role="cell">Air sealing</span><span role="cell">Sep 2025</span><span role="cell">$537</span></div>
+              </div>
+              <button className="home-dashboard-preview-link" type="button">View all retrofits <ArrowUpRightIcon /></button>
+            </article>
           </div>
         </div>
+        <CustomerPricingSection />
       </div>
     </section>
   );
@@ -4049,7 +4040,7 @@ function HomeInfographicSection({ navigate }: { navigate: (route: Route) => void
     .join(" ");
 
   return (
-    <section aria-labelledby="home-infographics-heading" className="home-infographics-section">
+    <section aria-labelledby="home-infographics-heading" className="home-infographics-section" id={HOME_INSIGHTS_SECTION_ID}>
       <div aria-hidden="true" className="home-greenery home-greenery--top-left">
         {Array.from({ length: 7 }, (_, index) => (
           <span key={index} />
@@ -4067,9 +4058,13 @@ function HomeInfographicSection({ navigate }: { navigate: (route: Route) => void
       </div>
       <div className="home-infographics-inner">
         <header className="home-infographics-header">
-          <p>Retrofit intelligence</p>
           <h2 id="home-infographics-heading">Know what to upgrade—and what it could be worth.</h2>
           <span>RetroFi turns property details into prioritized projects, financial estimates, and a clear path to available incentives.</span>
+          <ul className="home-proof-points" aria-label="RetroFi platform benefits">
+            <li><CheckIcon /> Property-specific matches</li>
+            <li><CheckIcon /> Implementation Support</li>
+            <li><CheckIcon /> Application-ready guidance</li>
+          </ul>
         </header>
 
         <div className="home-infographic-stage home-infographic-stage--primary">
@@ -4128,10 +4123,17 @@ function HomeInfographicSection({ navigate }: { navigate: (route: Route) => void
               <span>+13% vs. current spend</span>
             </div>
             <div aria-label="Five year annual savings growth" className="home-bar-chart" role="img">
-              {homeSavingsBars.map((height, index) => (
-                <i key={index} style={{ "--bar-height": `${height}%` } as CSSProperties}>
+              {homeSavingsBars.map((bar, index) => (
+                <button
+                  aria-label={`Year ${index + 1} estimated annual savings: ${bar.amount}`}
+                  className="home-chart-bar"
+                  key={bar.amount}
+                  style={{ "--bar-height": `${bar.height}%` } as CSSProperties}
+                  type="button"
+                >
+                  <strong>{bar.amount}</strong>
                   <span>{`YR ${index + 1}`}</span>
-                </i>
+                </button>
               ))}
             </div>
           </article>
@@ -4198,8 +4200,8 @@ function HomeInfographicSection({ navigate }: { navigate: (route: Route) => void
             <p>Ready to find opportunities for your property?</p>
             <span>Start with a free scan. Add utility data later for more precise estimates.</span>
           </div>
-          <button onClick={() => navigate("scan")} type="button">
-            Find my incentives
+          <button className={isLocalDevelopmentHost() ? "is-local-development" : undefined} onClick={() => navigate("scan")} type="button">
+            Get Started
             <ArrowUpRightIcon />
           </button>
         </div>
@@ -4208,16 +4210,30 @@ function HomeInfographicSection({ navigate }: { navigate: (route: Route) => void
   );
 }
 
+function HomeJourneyTransition() {
+  return (
+    <section aria-labelledby="home-journey-transition-heading" className="home-journey-transition">
+      <div className="home-journey-transition-copy">
+        <p>From insight to action</p>
+        <h2 id="home-journey-transition-heading">See how a clearer retrofit plan becomes a path forward.</h2>
+      </div>
+    </section>
+  );
+}
+
 function HowItWorksJourneySection({
   sectionId,
-  withDashboardHandoff = false
+  withDashboardHandoff = false,
+  embedded = false
 }: {
   sectionId?: string;
   withDashboardHandoff?: boolean;
+  embedded?: boolean;
 }) {
   const transitionStart = 0.38;
   const transitionEnd = 0.62;
   const journeyRef = useRef<HTMLElement | null>(null);
+  const journeyScrollRef = useRef<HTMLElement | null>(null);
   const [sectionProgress, setSectionProgress] = useState(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
     typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false
@@ -4489,6 +4505,100 @@ function HowItWorksJourneySection({
 
     if (!journey) {
       return undefined;
+    }
+
+    if (embedded) {
+      const scrollSurface = journeyScrollRef.current;
+
+      if (!scrollSurface) {
+        return undefined;
+      }
+
+      const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let pointerId: number | null = null;
+      let pointerStartX = 0;
+      let pointerStartScrollLeft = 0;
+
+      const getMaxScrollLeft = () => Math.max(0, scrollSurface.scrollWidth - scrollSurface.clientWidth);
+      const updateProgress = () => {
+        const maxScrollLeft = getMaxScrollLeft();
+        setSectionProgress(maxScrollLeft === 0 ? 0 : clampProgress(scrollSurface.scrollLeft / maxScrollLeft));
+      };
+      const handleWheel = (event: WheelEvent) => {
+        const horizontalDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+        const maxScrollLeft = getMaxScrollLeft();
+
+        if (
+          horizontalDelta === 0 ||
+          (horizontalDelta < 0 && scrollSurface.scrollLeft <= 0) ||
+          (horizontalDelta > 0 && scrollSurface.scrollLeft >= maxScrollLeft)
+        ) {
+          return;
+        }
+
+        event.preventDefault();
+        scrollSurface.scrollLeft = Math.min(maxScrollLeft, Math.max(0, scrollSurface.scrollLeft + horizontalDelta));
+      };
+      const handlePointerDown = (event: PointerEvent) => {
+        if (event.button !== 0) return;
+
+        pointerId = event.pointerId;
+        pointerStartX = event.clientX;
+        pointerStartScrollLeft = scrollSurface.scrollLeft;
+        scrollSurface.setPointerCapture(event.pointerId);
+      };
+      const handlePointerMove = (event: PointerEvent) => {
+        if (pointerId !== event.pointerId) return;
+
+        scrollSurface.scrollLeft = Math.min(
+          getMaxScrollLeft(),
+          Math.max(0, pointerStartScrollLeft + pointerStartX - event.clientX)
+        );
+      };
+      const releasePointer = (event: PointerEvent) => {
+        if (pointerId !== event.pointerId) return;
+
+        pointerId = null;
+        scrollSurface.releasePointerCapture(event.pointerId);
+      };
+      const handleKeyDown = (event: KeyboardEvent) => {
+        const scrollAmount = Math.max(180, scrollSurface.clientWidth * 0.6);
+        let nextScrollLeft: number | null = null;
+
+        if (event.key === "ArrowLeft") nextScrollLeft = scrollSurface.scrollLeft - scrollAmount;
+        if (event.key === "ArrowRight") nextScrollLeft = scrollSurface.scrollLeft + scrollAmount;
+        if (event.key === "Home") nextScrollLeft = 0;
+        if (event.key === "End") nextScrollLeft = getMaxScrollLeft();
+        if (nextScrollLeft === null) return;
+
+        event.preventDefault();
+        scrollSurface.scrollLeft = Math.min(getMaxScrollLeft(), Math.max(0, nextScrollLeft));
+      };
+      const updateMotionPreference = () => {
+        setPrefersReducedMotion(mediaQuery.matches);
+        updateProgress();
+      };
+
+      updateProgress();
+      scrollSurface.addEventListener("scroll", updateProgress, { passive: true });
+      scrollSurface.addEventListener("wheel", handleWheel, { passive: false });
+      scrollSurface.addEventListener("pointerdown", handlePointerDown);
+      scrollSurface.addEventListener("pointermove", handlePointerMove);
+      scrollSurface.addEventListener("pointerup", releasePointer);
+      scrollSurface.addEventListener("pointercancel", releasePointer);
+      scrollSurface.addEventListener("keydown", handleKeyDown);
+      mediaQuery.addEventListener("change", updateMotionPreference);
+
+      return () => {
+        scrollSurface.removeEventListener("scroll", updateProgress);
+        scrollSurface.removeEventListener("wheel", handleWheel);
+        scrollSurface.removeEventListener("pointerdown", handlePointerDown);
+        scrollSurface.removeEventListener("pointermove", handlePointerMove);
+        scrollSurface.removeEventListener("pointerup", releasePointer);
+        scrollSurface.removeEventListener("pointercancel", releasePointer);
+        scrollSurface.removeEventListener("keydown", handleKeyDown);
+        mediaQuery.removeEventListener("change", updateMotionPreference);
+      };
     }
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -4781,13 +4891,18 @@ function HowItWorksJourneySection({
       window.cancelAnimationFrame(animationFrame);
       resetDashboardHandoff();
     };
-  }, [stages.length, withDashboardHandoff, revealShare]);
+  }, [embedded, stages.length, withDashboardHandoff, revealShare]);
 
   return (
     <section
-      className={`how-it-works-journey-section${withDashboardHandoff ? " how-it-works-journey-section--home-handoff" : ""}`}
+      aria-label={embedded ? "How RetroFi works. Scroll horizontally to explore the journey." : undefined}
+      className={`how-it-works-journey-section${withDashboardHandoff ? " how-it-works-journey-section--home-handoff" : ""}${embedded ? " how-it-works-journey-section--home-embedded" : ""}`}
       id={sectionId}
-      ref={journeyRef}
+      ref={(element) => {
+        journeyRef.current = element;
+        journeyScrollRef.current = element;
+      }}
+      tabIndex={embedded ? 0 : undefined}
     >
       <div
         className="journey-canvas"
@@ -4900,6 +5015,235 @@ function HowItWorksJourneySection({
   );
 }
 
+function HomeHowItWorksSection({
+  navigate,
+  sectionId
+}: {
+  navigate: (route: Route) => void;
+  sectionId: string;
+}) {
+  const railRef = useRef<HTMLDivElement | null>(null);
+  const journeyDragRef = useRef<{ moved: boolean; pointerId: number; startScrollLeft: number; startX: number } | null>(null);
+  const suppressStepClickRef = useRef(false);
+  const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const [isKeyboardNavigation, setIsKeyboardNavigation] = useState(false);
+  const steps = [
+    {
+      title: "Create your account",
+      copy: "Add the basics about your property so RetroFi can tailor the experience.",
+      image: "/how-it-works/transformation-stage-01.jpg"
+    },
+    {
+      title: "Discover opportunities",
+      copy: "See the upgrades and incentives most relevant to your building.",
+      image: "/how-it-works/transformation-stage-02.jpg"
+    },
+    {
+      title: "Refine your estimates",
+      copy: "Add utility data when you are ready for more precise projections.",
+      image: "/how-it-works/transformation-stage-03.jpg"
+    },
+    {
+      title: "Review recommendations",
+      copy: "Compare expected savings, costs, incentives, and environmental impact.",
+      image: "/how-it-works/transformation-stage-04.jpg"
+    },
+    {
+      title: "Choose your retrofits",
+      copy: "Select the projects that fit your priorities, timeline, and budget.",
+      image: "/how-it-works/transformation-stage-05.jpg"
+    },
+    {
+      title: "Automate paperwork",
+      copy: "Prepare the forms and documentation required for selected projects.",
+      image: "/how-it-works/transformation-stage-06.jpg"
+    },
+    {
+      title: "Track your impact",
+      copy: "Follow savings, project status, and certification progress over time.",
+      image: "/how-it-works/transformation-stage-07-retrofi.jpg"
+    }
+  ];
+
+  const scrollRail = (direction: -1 | 1, animate = true) => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    const nextIndex = Math.min(steps.length - 1, Math.max(0, activeStepIndex + direction));
+    const nextStep = rail.querySelector<HTMLElement>(`[data-step-index="${nextIndex}"]`);
+    nextStep?.scrollIntoView({
+      behavior: animate && !window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "smooth" : "auto",
+      block: "nearest",
+      inline: "center"
+    });
+    setIsKeyboardNavigation(!animate);
+    setActiveStepIndex(nextIndex);
+  };
+
+  const activeStep = steps[activeStepIndex];
+
+  return (
+    <section aria-labelledby="home-how-it-works-heading" className="home-how-it-works-section" id={sectionId}>
+      <div aria-hidden="true" className="home-mist-transition">
+        <span className="home-mist-layer home-mist-layer--back" />
+        <span className="home-mist-layer home-mist-layer--middle" />
+        <span className="home-mist-layer home-mist-layer--front" />
+      </div>
+
+      <div className="home-how-it-works-panel">
+        <header className="home-how-it-works-header">
+          <div>
+            <p className="home-how-it-works-eyebrow">How it works</p>
+            <h2 id="home-how-it-works-heading">A clear path, whenever you need it.</h2>
+            <p className="home-how-it-works-intro">
+              Explore the process at your own pace—or head straight to your dashboard.
+            </p>
+          </div>
+          <button className="home-how-dashboard-cta" onClick={() => navigate("portal")} type="button">
+            View Dashboard
+            <ArrowUpRightIcon />
+          </button>
+        </header>
+
+        <div
+          className="home-how-journey"
+          onPointerDown={(event) => {
+            const rail = railRef.current;
+            if (!rail || event.button !== 0) return;
+
+            journeyDragRef.current = {
+              moved: false,
+              pointerId: event.pointerId,
+              startScrollLeft: rail.scrollLeft,
+              startX: event.clientX
+            };
+            event.currentTarget.setPointerCapture(event.pointerId);
+          }}
+          onPointerMove={(event) => {
+            const drag = journeyDragRef.current;
+            const rail = railRef.current;
+            if (!drag || !rail || drag.pointerId !== event.pointerId) return;
+
+            if (Math.abs(event.clientX - drag.startX) > 6) {
+              drag.moved = true;
+            }
+            rail.scrollLeft = drag.startScrollLeft + drag.startX - event.clientX;
+          }}
+          onPointerUp={(event) => {
+            const drag = journeyDragRef.current;
+            if (drag?.pointerId === event.pointerId) {
+              suppressStepClickRef.current = drag.moved;
+              journeyDragRef.current = null;
+              event.currentTarget.releasePointerCapture(event.pointerId);
+              window.setTimeout(() => {
+                suppressStepClickRef.current = false;
+              }, 0);
+            }
+          }}
+          onPointerCancel={() => {
+            journeyDragRef.current = null;
+          }}
+          onWheel={(event) => {
+            const rail = railRef.current;
+            const horizontalDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY)
+              ? event.deltaX
+              : event.shiftKey
+                ? event.deltaY
+                : 0;
+
+            if (!rail || horizontalDelta === 0) return;
+
+            event.preventDefault();
+            rail.scrollLeft += horizontalDelta;
+          }}
+        >
+          <div className={`home-how-scene${isKeyboardNavigation ? " is-keyboard-navigation" : ""}`}>
+            <div aria-hidden="true" className="home-how-scene-images">
+              {steps.map((step, index) => (
+                <img
+                  alt=""
+                  className={index === activeStepIndex ? "is-active" : undefined}
+                  decoding="async"
+                  key={step.image}
+                  loading={index < 2 ? "eager" : "lazy"}
+                  src={step.image}
+                />
+              ))}
+            </div>
+            <div aria-hidden="true" className="home-how-scene-vignette" />
+            <article aria-live="polite" className="home-how-scene-copy" key={activeStep.title}>
+              <p>
+                Step {String(activeStepIndex + 1).padStart(2, "0")} / {String(steps.length).padStart(2, "0")}
+              </p>
+              <h3>{activeStep.title}</h3>
+              <span>{activeStep.copy}</span>
+            </article>
+          </div>
+
+          <div className="home-how-rail-shell">
+          <div
+            aria-label="How RetroFi works"
+            className="home-how-steps-rail"
+            onKeyDown={(event) => {
+              if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+              event.preventDefault();
+              scrollRail(event.key === "ArrowLeft" ? -1 : 1, false);
+            }}
+            onScroll={(event) => {
+              const rail = event.currentTarget;
+              const railCenter = rail.scrollLeft + rail.clientWidth / 2;
+              const buttons = Array.from(rail.querySelectorAll<HTMLElement>("[data-step-index]"));
+              const nearest = buttons.reduce(
+                (best, button) => {
+                  const center = button.offsetLeft + button.offsetWidth / 2;
+                  const distance = Math.abs(center - railCenter);
+                  return distance < best.distance
+                    ? { distance, index: Number(button.dataset.stepIndex) }
+                    : best;
+                },
+                { distance: Number.POSITIVE_INFINITY, index: activeStepIndex }
+              );
+
+              if (nearest.index !== activeStepIndex) {
+                setIsKeyboardNavigation(false);
+                setActiveStepIndex(nearest.index);
+              }
+            }}
+            ref={railRef}
+            role="region"
+            tabIndex={0}
+          >
+            {steps.map((step, index) => (
+              <button
+                aria-current={index === activeStepIndex ? "step" : undefined}
+                className={`home-how-step${index === activeStepIndex ? " is-active" : ""}`}
+                data-step-index={index}
+                key={step.title}
+                onClick={(event) => {
+                  if (suppressStepClickRef.current) return;
+                  setIsKeyboardNavigation(false);
+                  setActiveStepIndex(index);
+                  event.currentTarget.scrollIntoView({
+                    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+                    block: "nearest",
+                    inline: "center"
+                  });
+                }}
+                type="button"
+              >
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                {step.title}
+              </button>
+            ))}
+          </div>
+          <p className="home-how-scroll-hint">Scroll horizontally to explore</p>
+        </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function HomePage({
   navigate,
   onHowItWorksClick,
@@ -4911,9 +5255,16 @@ function HomePage({
 }) {
   return (
     <PublicShell navigate={navigate} onHowItWorksClick={onHowItWorksClick} pageClassName="home-page" publicAuth={publicAuth} showFooter>
-      <PlanetScanHero navigate={navigate} />
+      <div id="home-overview">
+        <PlanetScanHero navigate={navigate} />
+      </div>
       <HomeInfographicSection navigate={navigate} />
-      <HowItWorksJourneySection sectionId={HOME_HOW_IT_WORKS_SECTION_ID} />
+      <div className="home-cloud-bridge">
+        <HomeJourneyTransition />
+        <div className="home-how-it-works-atmosphere">
+          <HowItWorksJourneySection embedded sectionId={HOME_HOW_IT_WORKS_SECTION_ID} />
+        </div>
+      </div>
       <HomeDashboardPreviewSection />
     </PublicShell>
   );
@@ -6900,6 +7251,243 @@ function UserDashboard({
         <ProfilePanel intake={payload.intake} user={payload.user} />
       )}
     </WorkspaceLayout>
+  );
+}
+
+type ReportPricingTrack = "homeowner" | "business" | "multifamily" | "nonprofit" | "agriculture" | "industrial";
+type UtilitySpendBand = "under_250" | "250_750" | "750_2000" | "2000_10000" | "10000_50000" | "over_50000";
+type LocationStrength = "low" | "normal" | "strong" | "very_strong";
+type ReportPropertySize = "small" | "normal" | "large" | "very_large";
+
+const REPORT_PRICING_BASES: Record<UtilitySpendBand, number> = {
+  under_250: 19,
+  "250_750": 29,
+  "750_2000": 49,
+  "2000_10000": 79,
+  "10000_50000": 129,
+  over_50000: 199
+};
+
+const REPORT_PRICING_TRACKS: Record<ReportPricingTrack, { label: string; multiplier: number }> = {
+  homeowner: { label: "Homeowner", multiplier: 0.8 },
+  business: { label: "Business / commercial", multiplier: 1 },
+  multifamily: { label: "Multifamily", multiplier: 1.1 },
+  nonprofit: { label: "Nonprofit / school / government", multiplier: 0.95 },
+  agriculture: { label: "Agriculture", multiplier: 1.05 },
+  industrial: { label: "Industrial / manufacturing", multiplier: 1.25 }
+};
+
+const REPORT_PRICING_LOCATION_MULTIPLIERS: Record<LocationStrength, number> = {
+  low: 0.9,
+  normal: 1,
+  strong: 1.1,
+  very_strong: 1.2
+};
+
+const REPORT_PRICING_SIZE_MULTIPLIERS: Record<ReportPropertySize, number> = {
+  small: 0.95,
+  normal: 1,
+  large: 1.07,
+  very_large: 1.15
+};
+
+function roundReportPrice(value: number) {
+  return Math.max(0, Math.round(value / 5) * 5);
+}
+
+export function calculateEstimatedReportPrice({
+  location,
+  propertySize,
+  track,
+  utilitySpend
+}: {
+  location: LocationStrength;
+  propertySize: ReportPropertySize;
+  track: ReportPricingTrack;
+  utilitySpend: UtilitySpendBand;
+}) {
+  const midpoint =
+    REPORT_PRICING_BASES[utilitySpend] *
+    REPORT_PRICING_TRACKS[track].multiplier *
+    REPORT_PRICING_LOCATION_MULTIPLIERS[location] *
+    REPORT_PRICING_SIZE_MULTIPLIERS[propertySize];
+
+  return {
+    high: roundReportPrice(midpoint * 1.35),
+    low: roundReportPrice(midpoint * 0.75),
+    midpoint
+  };
+}
+
+function CustomerPricingSection({ intake = null }: { intake?: IntakeRecord | null }) {
+  const [utilitySpend, setUtilitySpend] = useState<UtilitySpendBand | null>(null);
+  const [address, setAddress] = useState(intake?.site?.address || "");
+  const [businessType, setBusinessType] = useState<ReportPricingTrack | null>(null);
+  const estimate = utilitySpend && address.trim() && businessType
+    ? calculateEstimatedReportPrice({ location: "normal", propertySize: "normal", track: businessType, utilitySpend })
+    : null;
+
+  return (
+    <section className="customer-pricing-section" aria-labelledby="customer-pricing-title" id={HOME_PRICING_SECTION_ID}>
+      <div aria-hidden="true" className="customer-pricing-vines">
+        <svg className="customer-pricing-vine customer-pricing-vine--left" viewBox="0 0 260 760">
+          <path d="M48 760C13 650 142 620 104 504S8 387 72 280C128 187 72 103 172 0" />
+          <path d="M48 760C92 672 34 622 104 504S188 394 72 280C8 180 130 116 172 0" className="customer-pricing-tendril" />
+          <g className="customer-pricing-leaves">
+            <ellipse cx="78" cy="666" rx="18" ry="36" transform="rotate(42 78 666)" />
+            <ellipse cx="79" cy="552" rx="17" ry="34" transform="rotate(-47 79 552)" />
+            <ellipse cx="47" cy="402" rx="18" ry="36" transform="rotate(46 47 402)" />
+            <ellipse cx="106" cy="307" rx="16" ry="34" transform="rotate(-48 106 307)" />
+            <ellipse cx="102" cy="151" rx="18" ry="37" transform="rotate(44 102 151)" />
+            <ellipse cx="164" cy="56" rx="15" ry="32" transform="rotate(-45 164 56)" />
+          </g>
+        </svg>
+        <svg className="customer-pricing-vine customer-pricing-vine--right" viewBox="0 0 260 760">
+          <path d="M48 760C13 650 142 620 104 504S8 387 72 280C128 187 72 103 172 0" />
+          <path d="M48 760C92 672 34 622 104 504S188 394 72 280C8 180 130 116 172 0" className="customer-pricing-tendril" />
+          <g className="customer-pricing-leaves">
+            <ellipse cx="78" cy="666" rx="18" ry="36" transform="rotate(42 78 666)" />
+            <ellipse cx="79" cy="552" rx="17" ry="34" transform="rotate(-47 79 552)" />
+            <ellipse cx="47" cy="402" rx="18" ry="36" transform="rotate(46 47 402)" />
+            <ellipse cx="106" cy="307" rx="16" ry="34" transform="rotate(-48 106 307)" />
+            <ellipse cx="102" cy="151" rx="18" ry="37" transform="rotate(44 102 151)" />
+            <ellipse cx="164" cy="56" rx="15" ry="32" transform="rotate(-45 164 56)" />
+          </g>
+        </svg>
+      </div>
+      <div className="customer-pricing-heading">
+        <p className="eyebrow">Pricing</p>
+        <h2 id="customer-pricing-title">Pricing, made clear</h2>
+        <p>A straightforward estimate now. Your final price after bill upload.</p>
+      </div>
+
+      <div className="customer-pricing-layout">
+        <article className="pricing-journey-card" aria-label="How RetroFi report pricing works">
+          <PricingJourneyStep icon="01" text="Start with an estimate" description="See a clear, rounded report price range before you upload bills." />
+          <PricingJourneyStep icon="02" text="Confirm after bill upload" description="We confirm your final detailed report price using verified utility costs and your retrofit plan." />
+          <PricingJourneyStep icon="03" text="Move forward with confidence" description="You will always see the price before deciding what to do next." />
+        </article>
+
+        <div className="pricing-estimate-column">
+          <article className="pricing-estimator-card">
+            <div>
+              <p className="eyebrow">Quick estimate</p>
+              <h2>Get your estimated report price</h2>
+              <p>Answer three quick questions (~30s)</p>
+            </div>
+            <label className="pricing-address-field">
+              <span>Property address</span>
+              <input
+                autoComplete="street-address"
+                onChange={(event) => setAddress(event.target.value)}
+                placeholder="Enter your property address"
+                type="text"
+                value={address}
+              />
+              <small>We use this to confirm local program availability.</small>
+            </label>
+            <PricingChoiceGroup
+              label="Business type"
+              onChange={setBusinessType}
+              options={[
+                ["homeowner", "Homeowner"],
+                ["business", "Business / commercial"],
+                ["multifamily", "Multifamily"],
+                ["nonprofit", "Nonprofit / school / government"],
+                ["agriculture", "Agriculture"],
+                ["industrial", "Industrial / manufacturing"]
+              ] as Array<[ReportPricingTrack, string]>}
+              value={businessType}
+            />
+            <PricingChoiceGroup
+              label="Monthly utility spend"
+              onChange={setUtilitySpend}
+              options={[
+                ["under_250", "Under $250"],
+                ["250_750", "$250–$750"],
+                ["750_2000", "$750–$2,000"],
+                ["2000_10000", "$2,000–$10,000"],
+                ["10000_50000", "$10,000–$50,000"],
+                ["over_50000", "$50,000+"]
+              ] as Array<[UtilitySpendBand, string]>}
+              value={utilitySpend}
+            />
+          </article>
+          <div className="pricing-estimate-result-slot">
+            {estimate ? (
+              <div aria-live="polite" className="pricing-estimate-result is-ready">
+                <span>Estimated detailed report price</span>
+                <strong>${Math.round(estimate.midpoint).toLocaleString()}</strong>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </div>
+
+      <article className="funding-activation-fee-card">
+        <div>
+          <p className="eyebrow">Implementation support</p>
+          <h2>Funding Activation Fee</h2>
+          <p>If you choose to proceed with implementation help, RetroFi charges a prepaid fee based on a conservative estimate of incentive value in your selected retrofit.</p>
+          <small>We don't include operating savings and financing are not included in incentive value.</small>
+        </div>
+        <div className="funding-activation-rate-table" aria-label="Funding Activation Fee rates">
+          <div><span>Confidence-adjusted incentive value</span><span>Upfront fee rate</span></div>
+          <div><span>$0–$2,500</span><strong>6%</strong></div>
+          <div><span>$2,500–$10,000</span><strong>5%</strong></div>
+          <div><span>$10,000–$50,000</span><strong>4%</strong></div>
+          <div><span>$50,000+</span><strong>3%</strong></div>
+        </div>
+      </article>
+    </section>
+  );
+}
+
+function PricingJourneyStep({ description, icon, text }: { description: string; icon: string; text: string }) {
+  return (
+    <div className="pricing-journey-step">
+      <span aria-hidden="true" className="pricing-journey-icon">{icon}</span>
+      <div>
+        <h2>{text}</h2>
+        <p>{description}</p>
+      </div>
+    </div>
+  );
+}
+
+function PricingChoiceGroup<T extends string>({
+  label,
+  onChange,
+  options,
+  value
+}: {
+  label: string;
+  onChange: (value: T | null) => void;
+  options: Array<[T, string]>;
+  value: T | null;
+}) {
+  const fieldId = `pricing-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+  return (
+    <fieldset className={`pricing-choice-group${label === "Monthly utility spend" ? " pricing-choice-group--utility" : ""}${label === "Business type" ? " pricing-choice-group--business" : ""}`}>
+      <legend>{label}</legend>
+      <div>
+        {options.map(([optionValue, optionLabel]) => (
+          <label className="pricing-choice" key={optionValue}>
+            <input
+              checked={value === optionValue}
+              name={fieldId}
+              onChange={() => onChange(optionValue)}
+              onClick={() => {
+                if (value === optionValue) onChange(null);
+              }}
+              type="radio"
+              value={optionValue}
+            />
+            <span>{optionLabel}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
   );
 }
 
@@ -21694,6 +22282,9 @@ export function App() {
       if (window.location.pathname === "/how-it-works") {
         window.history.replaceState({}, "", `${pathForRoute("home")}#${HOME_HOW_IT_WORKS_SECTION_ID}`);
       }
+      if (window.location.pathname === "/pricing") {
+        window.history.replaceState({}, "", `${pathForRoute("home")}#${HOME_PRICING_SECTION_ID}`);
+      }
       const nextRoute = routeFromPath();
       if (window.location.pathname === "/database") {
         window.history.replaceState({}, "", pathForRoute(nextRoute));
@@ -21885,10 +22476,6 @@ export function App() {
           email: portalPreviewSearchParams.get("email") || ""
         }
       : null;
-
-  if (effectiveRoute === "pricing") {
-    return <PricingPage navigate={navigate} publicAuth={publicAuth} />;
-  }
 
   if (effectiveRoute === "about") {
     return <AboutPage navigate={navigate} publicAuth={publicAuth} />;

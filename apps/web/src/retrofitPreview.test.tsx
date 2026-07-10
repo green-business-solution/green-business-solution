@@ -21,6 +21,7 @@ import {
   buildDashboardPerformanceData,
   buildPersistedRetrofitDetailAnswers,
   buildSeededRetrofitDetailAnswers,
+  calculateEstimatedReportPrice,
   comparePreviewRetrofits,
   RetrofitRecommendationsPreview,
   buildRetrofitEnvironmentalImpactPreview,
@@ -48,6 +49,59 @@ import {
   RetrofitReadinessRow,
   UserPreviewProfileView,
 } from "./App";
+
+function buildFirstmateTaskFixture(overrides: Record<string, unknown> = {}) {
+  return {
+    id: "task-t1",
+    title: "Task",
+    kind: "codex",
+    repo: "green-business-solution",
+    project: null,
+    state: "working" as const,
+    blocked: false,
+    blockedBy: [],
+    recentStatus: null,
+    statusState: null,
+    since: null,
+    reportedAt: null,
+    responseNeeded: false,
+    canRespond: false,
+    hasReport: false,
+    reportUrl: null,
+    reportStatus: "none" as const,
+    reportActionLabel: null,
+    reportStatusLabel: null,
+    reportNote: null,
+    reportIsFinal: false,
+    reportReviewReady: false,
+    reportFeedbackMode: null,
+    reportFeedbackUnavailableReason: null,
+    canSendReportFeedback: false,
+    gptProRepairStatus: null,
+    gptProRepairUrl: null,
+    gptProRepairLabel: null,
+    gptProRepairFallback: false,
+    gptProRepairUnavailableReason: null,
+    ...overrides
+  };
+}
+
+describe("estimated report pricing", () => {
+  it("uses the selected utility, track, location, and size inputs to produce a rounded range", () => {
+    const estimate = calculateEstimatedReportPrice({
+      utilitySpend: "2000_10000",
+      track: "business",
+      location: "strong",
+      propertySize: "large"
+    });
+
+    expect(estimate).toMatchObject({
+      low: 70,
+      high: 125
+    });
+    expect(estimate.midpoint).toBeCloseTo(92.983, 3);
+  });
+});
 
 const liveShapedPayload = {
   generatedAt: "2026-06-30T12:00:00.000Z",

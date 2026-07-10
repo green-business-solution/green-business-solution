@@ -63,7 +63,7 @@ export function ScrollFrameScanner({ ariaLabelledBy, children, className, frames
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imagesRef = useRef<Array<HTMLImageElement | null>>([]);
   const loadedRef = useRef<boolean[]>([]);
-  const currentFrameRef = useRef(0);
+  const currentFrameRef = useRef(-1);
   const frameRequestRef = useRef<number | null>(null);
   const [isFirstFrameLoaded, setIsFirstFrameLoaded] = useState(false);
 
@@ -76,8 +76,10 @@ export function ScrollFrameScanner({ ariaLabelledBy, children, className, frames
     }
 
     let isDisposed = false;
-    let renderLoopFrame = 0;
+    let forceNextDraw = false;
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const primaryMessage = section.querySelector<HTMLElement>(".planet-scan-message-primary");
+    const nextMessage = section.querySelector<HTMLElement>(".planet-scan-message-next");
     imagesRef.current = Array.from({ length: frames.length }, () => null);
     loadedRef.current = Array.from({ length: frames.length }, () => false);
 
@@ -106,11 +108,11 @@ export function ScrollFrameScanner({ ariaLabelledBy, children, className, frames
       return clamp(-section.getBoundingClientRect().top / scrollDistance);
     };
 
-    const drawFrame = (frameIndex: number) => {
+    const drawFrame = (frameIndex: number, force = false) => {
       const bestFrameIndex = getBestLoadedFrameIndex(frameIndex);
       const image = bestFrameIndex >= 0 ? imagesRef.current[bestFrameIndex] : null;
 
-      if (!image) {
+      if (!image || (!force && bestFrameIndex === currentFrameRef.current)) {
         return;
       }
 
@@ -118,20 +120,50 @@ export function ScrollFrameScanner({ ariaLabelledBy, children, className, frames
       drawCoverImage(canvas, image);
     };
 
-    const requestDraw = () => {
+    const applyCopyMotion = (progress: number) => {
+      if (!primaryMessage || !nextMessage) {
+        return;
+      }
+
+      if (reducedMotionQuery.matches) {
+        primaryMessage.style.opacity = "1";
+        primaryMessage.style.filter = "blur(0)";
+        primaryMessage.style.transform = "translate3d(0, 0, 0)";
+        primaryMessage.style.pointerEvents = "auto";
+        nextMessage.style.opacity = "0";
+        nextMessage.style.filter = "blur(0)";
+        nextMessage.style.transform = "translate3d(0, 12px, 0)";
+        nextMessage.style.pointerEvents = "none";
+        return;
+      }
+
+      const copyOut = smoothstep(0.24, 0.42, progress);
+      const copyIn = smoothstep(0.4, 0.58, progress);
+      primaryMessage.style.opacity = String(1 - copyOut);
+      primaryMessage.style.filter = `blur(${(copyOut * 2).toFixed(2)}px)`;
+      primaryMessage.style.transform = `translate3d(0, ${(-20 * copyOut).toFixed(2)}px, 0)`;
+      primaryMessage.style.pointerEvents = copyOut > 0.8 ? "none" : "auto";
+      nextMessage.style.opacity = String(copyIn);
+      nextMessage.style.filter = `blur(${((1 - copyIn) * 2).toFixed(2)}px)`;
+      nextMessage.style.transform = `translate3d(0, ${(18 * (1 - copyIn)).toFixed(2)}px, 0)`;
+      nextMessage.style.pointerEvents = copyIn > 0.8 ? "auto" : "none";
+    };
+
+    const requestDraw = (force = false) => {
+      forceNextDraw = forceNextDraw || force;
+
       if (frameRequestRef.current !== null) {
         return;
       }
 
       frameRequestRef.current = window.requestAnimationFrame(() => {
         frameRequestRef.current = null;
-        const progress = reducedMotionQuery.matches ? 1 : getScrollProgress();
+        const shouldForceDraw = forceNextDraw;
+        forceNextDraw = false;
+        const progress = reducedMotionQuery.matches ? 0 : getScrollProgress();
         const frameIndex = Math.min(frames.length - 1, Math.max(0, Math.round(progress * (frames.length - 1))));
-        section.style.setProperty("--scroll-frame-progress", progress.toFixed(4));
-        section.style.setProperty("--scroll-frame-cue-opacity", String(Math.max(0, 1 - progress * 4)));
-        section.style.setProperty("--scroll-frame-copy-out", smoothstep(0.2, 0.44, progress).toFixed(4));
-        section.style.setProperty("--scroll-frame-copy-in", smoothstep(0.34, 0.56, progress).toFixed(4));
-        drawFrame(frameIndex);
+        applyCopyMotion(progress);
+        drawFrame(frameIndex, shouldForceDraw);
       });
     };
 
@@ -148,12 +180,12 @@ export function ScrollFrameScanner({ ariaLabelledBy, children, className, frames
 
         if (index === 0) {
           setIsFirstFrameLoaded(true);
-          drawCoverImage(canvas, image);
+          requestDraw(true);
         } else if (index === currentFrameRef.current) {
-          drawCoverImage(canvas, image);
+          requestDraw(true);
+        } else {
+          requestDraw();
         }
-
-        requestDraw();
       };
       image.src = src;
     };
@@ -167,36 +199,30 @@ export function ScrollFrameScanner({ ariaLabelledBy, children, className, frames
     };
 
     const handleResize = () => {
-      drawFrame(currentFrameRef.current);
+      requestDraw(true);
+    };
+    const handleScroll = () => {
       requestDraw();
     };
-
-    const renderLoop = () => {
-      if (isDisposed) {
-        return;
-      }
-
-      requestDraw();
-      renderLoopFrame = window.requestAnimationFrame(renderLoop);
+    const handleReducedMotionChange = () => {
+      requestDraw(true);
     };
 
     loadFrame(frames[0], 0);
     preloadRemainingFrames();
-    renderLoopFrame = window.requestAnimationFrame(renderLoop);
 
-    window.addEventListener("scroll", requestDraw, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
-    reducedMotionQuery.addEventListener("change", requestDraw);
+    reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
 
     return () => {
       isDisposed = true;
       if (frameRequestRef.current !== null) {
         window.cancelAnimationFrame(frameRequestRef.current);
       }
-      window.cancelAnimationFrame(renderLoopFrame);
-      window.removeEventListener("scroll", requestDraw);
+      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
-      reducedMotionQuery.removeEventListener("change", requestDraw);
+      reducedMotionQuery.removeEventListener("change", handleReducedMotionChange);
     };
   }, [frames]);
 

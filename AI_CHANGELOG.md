@@ -1,8 +1,35 @@
 # AI Changelog
 
-## 2026-07-09 - Codex (GPT-5) four-card dashboard CTA contrast
+## 2026-07-09 - Codex (GPT-5) local homepage CTA tweak
 
-- Restyled the post-transition “Get Started” CTA over the four-card dashboard to use a pale surface with dark-pine text, preserving clear text and icon contrast against the dark scene.
+- Added a localhost-only override for the homepage infographics CTA so the "Get Started" label renders white on the local live server while production styling stays unchanged.
+
+## 2026-07-09 - Codex (GPT-5) homepage pricing estimator
+
+- Added a homepage-system-aligned Pricing section directly beneath the homepage dashboard preview, pairing a simple three-step pricing journey with an accessible three-question report-price estimator.
+- Added rounded 75%–135% report-price ranges only after the visitor supplies a property address, business type, and monthly utility-spend range; neutral location and size assumptions are shown until bill upload confirms them.
+- Exposed the selected utility-spend base, track, location, and property-size multipliers beside the estimated range so customers can see the report-price formula and midpoint.
+- Removed the standalone Pricing route from the customer experience; legacy `/pricing` visits now land at the homepage pricing section.
+- Changed primary and footer site navigation into homepage section jump links for Overview, Insights, How It Works, Dashboard, and Pricing.
+- Added a separate informational Funding Activation Fee card with the confidence-adjusted incentive tiers and the operating-savings/financing exclusion.
+- Added focused coverage for the report-price calculation.
+
+## 2026-07-09 - Codex (GPT-5) homepage dashboard preview polish
+
+- Replaced the dashboard preview's linked section tabs with static labels so Financial Performance, Environmental Impact, and Certifications are descriptive headings rather than navigation.
+- Restyled the Next Best Action controls as high-contrast pale-green surfaces with pine text and a clear green accent, avoiding dark-on-dark combinations.
+- Excluded dashboard filters and action rows from the generic public-page dark-button selector so their local color treatment is not overridden.
+- Rebalanced the preview grid so the two lower cards each take half of the row instead of clustering on the left.
+
+## 2026-07-09 - Codex (GPT-5) homepage How It Works restoration
+
+- Restored the homepage to its original cinematic How It Works journey and its opening “From outdated building to high-performing business” screen.
+- Reframed the restored journey in a compact homepage container and made its transitions advance through horizontal wheel, trackpad, drag, touch, and keyboard scrolling instead of the removed numbered 01–07 tab rail.
+- Added a generated pale-mist-to-silver-cloud transition background and restrained “From insight to action” copy between the homepage infographic CTA and the How It Works journey.
+- Extended the same cloud atmosphere behind the rounded How It Works panel to remove the visible pale divider at the section handoff.
+- Flipped and overlapped the cloud layer behind the How It Works container so dense cloud detail rises into the section boundary instead of exposing a flat background.
+- Unified the transition and How It Works surround under one generated silver-to-slate cloud bridge, with a wide shared crossfade and a panel-top cool-gray blend.
+- Added a lower pale-mint mist fade around and within the How It Works canvas so the journey softens into the dashboard’s light background.
 
 ## 2026-07-09 - Codex (GPT-5) homepage dashboard preview section
 
@@ -2553,3 +2580,13 @@
 - Updated the v2 runtime bridge to distinguish grant-production action outcomes for no-calculable-value placeholders and non-grant workflows instead of collapsing them into generic suppression.
 - Regenerated grant/tax coverage and form-input audit reports, confirming all 87 form-input-required grant/rebate evaluations map to collection surfaces, and uploaded the regenerated generated-test-fixture manifest to S3.
 - Audited and tightened tax runtime readiness: confirmed tax-gate disqualifications now resolve to zero-value outcomes, local gross-receipts tax gaps are tax-return input gates, and the grant/tax coverage report separates tax opportunity and local-tax production action buckets.
+
+## 2026-07-08 - Codex (GPT-5) homepage dashboard preview rebuild
+
+- Rebuilt the homepage performance dashboard preview from the supplied visual reference with responsive KPI and forecast card rails, financial and environmental snapshots, certification progress, next actions, and implemented-retrofit details.
+- Contained horizontal overflow inside keyboard-focusable, touch-friendly card scrollers and added restrained hover, focus, and press feedback aligned with the homepage design system.
+
+## 2026-07-09 - Codex (GPT-5) homepage pricing botanical treatment
+
+- Gave the homepage pricing container the established premium card radius and added clipped, pointer-safe botanical side vines behind its content; desktop decoration is hidden on smaller screens.
+- Slightly increased the desktop visual height of the homepage How It Works journey while retaining the existing mobile height override.
