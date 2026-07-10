@@ -325,6 +325,27 @@ describe("Firstmate task DynamoDB snapshots", () => {
     expect(defaultRead.inactiveTaskCount).toBe(3);
     expect(defaultRead.hiddenByDefaultTaskCount).toBe(2);
 
+    const markdownLinkSnapshot = buildFirstmateTaskSnapshotFromDashboard(
+      {
+        generatedAt: "2026-07-09T12:00:00.000Z",
+        tasks: [
+          {
+            id: "linked-task-l1",
+            title: "Fix [docs](https://example.com/docs) title",
+            state: "working",
+            kind: "ship",
+            repo: "green-business-solution"
+          }
+        ]
+      },
+      {
+        now: new Date("2026-07-09T12:02:00.000Z"),
+        workspaceId: "retrofi"
+      }
+    );
+
+    expect(markdownLinkSnapshot.tasks[0].title).toBe("Fix docs title");
+
     const inclusiveRead = await readPublishedFirstmateTaskSnapshot({
       db,
       includeInactive: true,

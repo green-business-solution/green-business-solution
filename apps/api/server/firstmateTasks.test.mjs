@@ -1523,6 +1523,19 @@ describe("firstmate task reader", () => {
     });
     expect(tasks[0].title).not.toContain("https://github.com/retrofi/green-business-solution/pull/393");
   });
+
+  it("preserves markdown link labels while removing raw URLs from parsed task titles", () => {
+    const tasks = parseBacklogTasks(
+      "- [ ] backlog-link-p8 - Fix [docs](https://example.com/docs) title (repo: green-business-solution) (kind: ship) (since 2026-07-09)"
+    );
+
+    expect(tasks[0]).toMatchObject({
+      id: "backlog-link-p8",
+      title: "Fix docs title",
+      repo: "green-business-solution",
+      kind: "ship"
+    });
+  });
 });
 
 async function makeFirstmateHome() {

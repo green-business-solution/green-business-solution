@@ -812,7 +812,8 @@ function countTasksByState(tasks) {
 
 function stripUrlsFromDisplayText(value) {
   return String(value || "")
-    .replace(/\[[^\]]+\]\((https?:\/\/[^)\s]+)\)/g, "$1")
+    .replace(/!\[([^\]]*)\]\((https?:\/\/[^)\s]+)\)/g, "$1")
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, "$1")
     .replace(/https?:\/\/[^\s)]+/g, "")
     .replace(/\s+/g, " ")
     .trim();
