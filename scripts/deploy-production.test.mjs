@@ -71,7 +71,7 @@ describe("deploy-production fixture patching flow", () => {
 
   it("runs generated fixture download before matching savings patching", () => {
     expect(scriptSource).toMatch(
-      /ensure_generated_fixtures\(\)\s*\{[\s\S]*npm run fixtures:generated:download[\s\S]*npm run matching:test-case-savings[\s\S]*\}/
+      /ensure_generated_fixtures\(\)\s*\{[\s\S]*npm run fixtures:generated:download -- --force[\s\S]*npm run matching:test-case-savings[\s\S]*\}/
     );
   });
 
