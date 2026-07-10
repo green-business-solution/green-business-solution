@@ -173,6 +173,8 @@ Runtime records are split by domain so deployment and migration work can stay sc
 - `gbs-retrofit-recommendation-cache`: recommendation cache metadata keyed by `stateScope`/`stateKey`.
   The larger JSON payloads live in the runtime-cache S3 bucket.
 - `gbs-application-profiles`: application source/profile registry records keyed by `stateScope`/`stateKey`.
+- `gbs-firstmate-tasks`: sanitized Codex task snapshots and bounded report payloads keyed by
+  `stateScope`/`stateKey`.
 - `gbs-api-runtime-state`: small operational state keyed by `stateScope`/`stateKey`, such as Geocodio
   quota usage.
 

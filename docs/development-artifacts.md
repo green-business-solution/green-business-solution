@@ -65,9 +65,34 @@ AWS_PROFILE=retrofi-prod GBS_GENERATED_FIXTURE_BUCKET=gbs-retrofi-test-fixtures-
 
 ## Local Firstmate Tasks
 
-The admin `/tasks` page is disabled unless local Firstmate task access is explicitly enabled.
-For local captain workflow only, run the API with `RETROFI_ENABLE_FIRSTMATE_TASKS=1` and `RETROFI_FIRSTMATE_HOME=/Users/neer_kuchlous/Code/firstmate`.
-If local Google OAuth is not configured, set `RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS=1` to allow only the Firstmate tasks list, report, and response endpoints to run without admin sign-in.
+The admin `/tasks` page reads the production-safe Codex task snapshot from DynamoDB for authenticated RetroFi admins.
+Firstmate remains the authoritative task system.
+Publish sanitized snapshots from a trusted operator environment with a least-privilege AWS identity that can write only the Firstmate task snapshot table:
+
+```sh
+cd <retrofi-checkout> && RETROFI_FIRSTMATE_HOME=<firstmate-home> AWS_PROFILE=<firstmate-task-publisher> GBS_FIRSTMATE_TASKS_TABLE=gbs-firstmate-tasks npm run firstmate:tasks:sync -- --write
+```
+
+For a simple periodic publisher, install the same command in cron or launchd at the desired interval, for example every five minutes:
+
+```cron
+*/5 * * * * cd <retrofi-checkout> && RETROFI_FIRSTMATE_HOME=<firstmate-home> AWS_PROFILE=<firstmate-task-publisher> GBS_FIRSTMATE_TASKS_TABLE=gbs-firstmate-tasks npm run firstmate:tasks:sync -- --write >> <safe-log-dir>/retrofi-firstmate-task-sync.log 2>&1
+```
+
+The sync first writes a complete versioned snapshot, including bounded sanitized report payloads, then conditionally advances the manifest so stale publishes cannot retire current work.
+Only safe task fields and report markdown capped at 24000 characters are persisted.
+Completed and archived tasks stay in the snapshot and remain inactive.
+They are hidden by default only when no report review is pending.
+Completed or archived tasks with review-ready reports remain discoverable in the default admin view through the Reports ready area and count.
+Deploy the optional ingestion role by setting `GBS_FIRSTMATE_TASKS_INGESTION_PRINCIPAL_ARN` to the exact publisher role or user ARN before running `npm run deploy:production:data`.
+Leave it blank to create only the table and skip the writer role.
+The RetroFi Lambda role has read-only access to the snapshot table.
+
+For local captain workflow only, run the API with `RETROFI_ENABLE_FIRSTMATE_TASKS=1` and
+`RETROFI_FIRSTMATE_HOME=<firstmate-home>`.
+If local Google OAuth is not configured, set `RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS=1` to allow only
+Firstmate task reads, response, report feedback, and assignment endpoints to run without admin
+sign-in.
 The auth bypass is ignored when AWS Lambda runtime environment markers are present.
 The API reads Firstmate backlog, status, metadata, and `data/<task-id>/report.md` files without mutating them.
 For response-needed tasks with a live `window=` value in `state/<task-id>.meta`, the admin page can send a captain response through `<RETROFI_FIRSTMATE_HOME>/bin/fm-send.sh` using argument-based process execution.

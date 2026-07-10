@@ -19,7 +19,7 @@ The backend is a Node/Express API under `apps/api` that can run locally or as an
 Production runs at `https://retrofi.org`.
 Normal browser traffic enters CloudFront and serves static frontend assets from S3.
 Requests under `/api/*` route through CloudFront to API Gateway, then to the Lambda-wrapped Express app.
-The backend owns privileged access to DynamoDB, S3, Google OAuth flows, Geocodio usage tracking, retrofit recommendations, application profiles, generated runtime cache data, and private GPT Pro development-work artifacts.
+The backend owns privileged access to DynamoDB, S3, Google OAuth flows, Geocodio usage tracking, retrofit recommendations, application profiles, generated runtime cache data, sanitized Codex task snapshots, and private GPT Pro development-work artifacts.
 
 ## Major Components
 
@@ -59,7 +59,7 @@ Production uses `apps/api/server/lambda.mjs` to run the same Express app behind 
 The backend owns:
 
 - Google OAuth and account/session handling.
-- DynamoDB access for users, intake records, opportunities, dashboard performance, recommendation cache metadata, application profiles, and API runtime state.
+- DynamoDB access for users, intake records, opportunities, dashboard performance, recommendation cache metadata, application profiles, API runtime state, and read-only Codex task snapshots.
 - S3 presigned upload URLs, runtime cache object access, and private GPT Pro development-work artifact access.
 - Admin data access and review updates.
 - Retrofit matching, savings, tax, grant, application-profile, pre-retrofit form-answer, and GPT Pro work APIs.
@@ -72,6 +72,10 @@ Keep AWS access out of the browser.
 
 Durable runtime data lives in AWS.
 Current DynamoDB tables and S3 buckets are documented in `docs/data-model.md` and `docs/architecture-resource-map.md`.
+The `gbs-firstmate-tasks` DynamoDB table is a sanitized admin read model for Codex task state.
+Firstmate remains authoritative, a separate least-privilege publisher writes versioned snapshots, and the RetroFi Lambda role only reads the table.
+Snapshots keep completed and archived task records inactive and include only bounded sanitized report payloads for admin report viewing.
+Closed inactive tasks are hidden by default unless a report is still awaiting admin review.
 
 Committed data in `data/`, `public/`, and `test-fixtures/` includes source repair artifacts, generated review reports, public opportunity indexes, sample matching cases, and test fixtures.
 Do not treat committed fixtures as production truth when DynamoDB or S3 owns the runtime state.
