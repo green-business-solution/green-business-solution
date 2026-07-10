@@ -65,7 +65,10 @@ AWS_PROFILE=retrofi-prod GBS_GENERATED_FIXTURE_BUCKET=gbs-retrofi-test-fixtures-
 
 ## Local Firstmate Tasks
 
-The admin `/tasks` page reads the production-safe Codex task snapshot from DynamoDB for authenticated RetroFi admins.
+The admin `/tasks` page reads the manifest-selected production-safe Codex task snapshot from DynamoDB for authenticated RetroFi admins.
+It distinguishes unavailable, empty, warning, and current snapshot states.
+When the snapshot metadata includes source timestamps, it surfaces the source-generated and source-modified times in the admin notice.
+The Refresh button always refetches the latest snapshot response.
 Firstmate remains the authoritative task system.
 Publish sanitized snapshots from a trusted operator environment with a least-privilege AWS identity that can write only the Firstmate task snapshot table:
 
