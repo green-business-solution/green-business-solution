@@ -456,7 +456,7 @@ function estimatePeakFromLoadFactor({ modeledValue, loadFactor }) {
 function resolvePeakMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs }) {
   const peakDeltas = relevantDeltas(billLineDeltas, "peak_kw_delta");
   const directPeakKw = peakDeltas.map((delta) => toNumber(delta?.deltaValue)).filter(Number.isFinite);
-  if (peakDeltas.length) {
+  if (directPeakKw.length) {
     const value = -sumNumbers(directPeakKw);
     return {
       value,
@@ -473,6 +473,26 @@ function resolvePeakMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs }
         sourceInputs: sourceInputSummary(sourceModelInputs)
       }
     };
+  }
+
+  if (peakDeltas.length) {
+    return buildNotApplicableMetric({
+      value: 0,
+      provenanceState: "unavailable",
+      quality: {
+        confidence: "low",
+        source: "missing_input",
+        sourceVintage: "missing_input",
+        notes: ["Peak-demand bill deltas were present, but none contained a numeric kW change."]
+      },
+      assumptions: [
+        "Peak demand is unavailable until a direct peak delta contains at least one numeric kW value."
+      ],
+      trace: {
+        sourceDeltas: peakDeltas.map(sourceDeltaSummary),
+        sourceInputs: sourceInputSummary(sourceModelInputs)
+      }
+    });
   }
 
   const explicitPeakKw = toNumber(sourceModelInputs?.peak_kw_reduction);
