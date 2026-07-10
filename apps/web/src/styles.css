@@ -1694,6 +1694,26 @@ textarea {
   padding: 10px 12px;
 }
 
+.tasks-snapshot-message {
+  align-items: start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 6px;
+}
+
+.tasks-snapshot-message strong,
+.tasks-snapshot-message span {
+  min-width: 0;
+}
+
+.tasks-snapshot-message strong {
+  white-space: nowrap;
+}
+
+.tasks-snapshot-message span {
+  flex: 1 1 240px;
+}
+
 .tasks-section-stack {
   display: grid;
   gap: 16px;

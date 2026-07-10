@@ -16875,6 +16875,7 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
     reportsReady: 0,
     needsResponse: 0
   };
+  const workingTaskCount = response?.counts.working ?? response?.activeAgentCount ?? 0;
   const responseNeededTasks = response?.tasks.filter((task) => task.responseNeeded) || [];
   const reportReadyTasks = includeInactive
     ? []
@@ -16887,7 +16888,10 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
     : FIRSTMATE_TASK_SECTIONS.filter((section) => !["completed", "archived"].includes(section.state));
   const visibleTaskCount = response?.tasks.filter((task) => visibleSections.some((section) => section.state === task.state)).length || 0;
   const defaultTaskGroupCount = visibleTaskCount + reportReadyTasks.length;
-  const inactiveTaskCount = response?.hiddenByDefaultTaskCount ?? response?.inactiveTaskCount ?? ((response?.counts.completed || 0) + (response?.counts.archived || 0));
+  const inactiveTaskCount =
+    (response?.hiddenByDefaultTaskCount || 0) > 0
+      ? (response?.hiddenByDefaultTaskCount || 0)
+      : response?.inactiveTaskCount ?? ((response?.counts.completed || 0) + (response?.counts.archived || 0));
   const snapshotHasTasks = includeInactive
     ? (response?.totalTaskCount || 0) > 0
     : (response?.totalTaskCount || 0) > 0 || inactiveTaskCount > 0;
@@ -16919,7 +16923,7 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
       {notice ? <p className="tasks-notice-message">{notice}</p> : null}
       {error ? <p className="error-message">{error}</p> : null}
       {snapshotState ? (
-        <p className={`tasks-notice-message is-${snapshotState.tone}`.trim()}>
+        <p className={`tasks-notice-message tasks-snapshot-message is-${snapshotState.tone}`.trim()}>
           <strong>{snapshotState.title}</strong>
           <span>{snapshotState.text}</span>
         </p>
@@ -16927,8 +16931,8 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
 
       <div className="tasks-stats">
         <article>
-          <span>Active tasks</span>
-          <strong>{response?.activeAgentCount ?? 0}</strong>
+          <span>Working tasks</span>
+          <strong>{workingTaskCount}</strong>
         </article>
         <article>
           <span>Total tasks</span>

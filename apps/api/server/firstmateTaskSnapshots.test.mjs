@@ -146,6 +146,7 @@ describe("Firstmate task DynamoDB snapshots", () => {
     expect(activeTask.title).not.toContain("/Users/");
     expect(activeTask.title).not.toContain("admin@example.com");
     expect(activeTask.title).not.toContain("AKIA1234567890ABCDEF");
+    expect(activeTask.title).not.toContain("https://");
     expect(activeTask.recentStatus).not.toContain("/tmp/");
     expect(activeTask.recentStatus).not.toContain("hunter2");
     expect(activeTask.blockedBy).toEqual(["safe-blocker-b2"]);
@@ -169,6 +170,25 @@ describe("Firstmate task DynamoDB snapshots", () => {
       active: 1,
       completed: 1
     });
+  });
+
+  it("strips raw URLs from snapshot task titles before publishing", () => {
+    const snapshot = buildFirstmateTaskSnapshotFromDashboard(
+      buildDashboard([
+        {
+          id: "backlog-pr-url-p7",
+          title: "Repair title https://github.com/retrofi/green-business-solution/pull/393",
+          kind: "codex",
+          repo: "green-business-solution",
+          state: "working"
+        }
+      ])
+    );
+
+    expect(snapshot.tasks[0]).toMatchObject({
+      title: "Repair title"
+    });
+    expect(snapshot.tasks[0].title).not.toContain("https://github.com/retrofi/green-business-solution/pull/393");
   });
 
   it("keeps identical snapshot content on a stable version across repeat publishes", async () => {

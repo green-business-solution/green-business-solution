@@ -5,7 +5,7 @@ import path from "node:path";
 const taskIdPattern = /^[a-z0-9][a-z0-9._-]{0,120}$/i;
 const windowTargetPattern = /^[a-z0-9._:-]{1,180}$/i;
 const enabledValues = new Set(["1", "true", "yes", "on"]);
-const responseNeededStatusStates = new Set(["needs-decision", "blocked", "failed"]);
+const responseNeededStatusStates = new Set(["needs-decision", "failed"]);
 const reportFeedbackActions = new Set(["proceed", "changes-requested"]);
 const explicitReportStatuses = new Set(["final", "review-ready", "draft", "previous", "repair-ready"]);
 const repairReadyStatuses = new Set(["ready", "repair-ready", "needs-repair", "needs-gpt-pro-repair"]);
@@ -158,7 +158,7 @@ export async function readFirstmateTasksDashboard({ env = process.env, now = new
         const canSendReportFeedback = Boolean(reportArtifact.reviewReady && !gptProRepairReady);
         return {
           id: task.id,
-          title: task.title || titleFromTaskId(task.id),
+          title: stripUrlsFromDisplayText(task.title || titleFromTaskId(task.id)),
           kind: task.kind || "unknown",
           repo: task.repo || repoNameFromProject(task.project) || "unknown",
           project: task.project || null,
@@ -565,7 +565,7 @@ export function parseBacklogTasks(markdown) {
     tasks.push({
       ...baseTask(id),
       backlogState,
-      title: metadata.title || titleFromTaskId(id),
+      title: stripUrlsFromDisplayText(metadata.title || titleFromTaskId(id)),
       kind: metadata.kind,
       repo: metadata.repo,
       since: metadata.since,
@@ -657,11 +657,10 @@ function parseBacklogMetadata(rest) {
   const repo = firstMatch(rest, /\(repo:\s*([^)]+)\)/i);
   const since = firstMatch(rest, /\(since\s+([^)]+)\)/i);
   const reportedAt = firstMatch(rest, /\(reported\s+([^)]+)\)/i);
-  const title = rest
+  const title = stripUrlsFromDisplayText(rest)
     .replace(/\bdata\/[a-z0-9._-]+\/report\.md\b/gi, "")
     .replace(/\([^)]*\)/g, "")
     .replace(/\s*blocked-by:\s*[a-z0-9._-]+/gi, "")
-    .replace(/\s+/g, " ")
     .trim();
 
   return {
@@ -809,6 +808,14 @@ function countTasksByState(tasks) {
       needsResponse: 0
     }
   );
+}
+
+function stripUrlsFromDisplayText(value) {
+  return String(value || "")
+    .replace(/\[[^\]]+\]\((https?:\/\/[^)\s]+)\)/g, "$1")
+    .replace(/https?:\/\/[^\s)]+/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function compareTasks(left, right) {

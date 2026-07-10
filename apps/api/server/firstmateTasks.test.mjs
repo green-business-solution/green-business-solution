@@ -124,6 +124,42 @@ describe("firstmate task reader", () => {
     });
   });
 
+  it("keeps blocked tasks in the blocked section without treating them as captain response work", async () => {
+    const home = await makeFirstmateHome();
+    await writeFile(
+      home,
+      "data/backlog.md",
+      [
+        "# Backlog",
+        "",
+        "## In flight",
+        "- [ ] upstream-pr-393-b1 - Upstream PR 393 workflow approval blocker (repo: green-business-solution) (kind: ship) (since 2026-07-09)"
+      ].join("\n")
+    );
+    await writeFile(home, "state/upstream-pr-393-b1.meta", "window=firstmate:fm-upstream-pr-393-b1\nkind=ship\n");
+    await writeFile(home, "state/upstream-pr-393-b1.status", "blocked: awaiting external workflow approval\n");
+
+    const dashboard = await readFirstmateTasksDashboard({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      now: new Date("2026-07-09T12:00:00.000Z")
+    });
+
+    expect(dashboard.counts).toMatchObject({
+      blocked: 1,
+      needsResponse: 0
+    });
+    expect(dashboard.tasks.find((task) => task.id === "upstream-pr-393-b1")).toMatchObject({
+      state: "blocked",
+      blocked: true,
+      responseNeeded: false,
+      canRespond: false,
+      recentStatus: "awaiting external workflow approval"
+    });
+  });
+
   it("keeps in-flight backlog tasks active even when a status note says done", async () => {
     const home = await makeFirstmateHome();
     await writeFile(
@@ -1472,6 +1508,20 @@ describe("firstmate task reader", () => {
       kind: "scout",
       reportedAt: "2026-07-07"
     });
+  });
+
+  it("strips raw URLs from parsed task display titles while preserving the linked task metadata", () => {
+    const tasks = parseBacklogTasks(
+      "- [ ] backlog-pr-url-p7 - Repair title https://github.com/retrofi/green-business-solution/pull/393 (repo: green-business-solution) (kind: ship) (since 2026-07-09)"
+    );
+
+    expect(tasks[0]).toMatchObject({
+      id: "backlog-pr-url-p7",
+      title: "Repair title",
+      repo: "green-business-solution",
+      kind: "ship"
+    });
+    expect(tasks[0].title).not.toContain("https://github.com/retrofi/green-business-solution/pull/393");
   });
 });
 

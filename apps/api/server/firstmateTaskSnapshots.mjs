@@ -42,7 +42,7 @@ export function sanitizeFirstmateTaskForSnapshot(task) {
 
   return stripUndefined({
     id,
-    title: sanitizePublicText(task?.title || titleFromTaskId(id), 160),
+    title: sanitizeTaskDisplayTitle(task?.title || titleFromTaskId(id), 160),
     kind: sanitizeToken(task?.kind, "unknown"),
     repo: sanitizeRepo(task?.repo),
     project: null,
@@ -611,6 +611,10 @@ function sanitizePublicText(value, maxLength) {
   return collapsed.length > maxLength ? `${collapsed.slice(0, Math.max(0, maxLength - 1)).trim()}...` : collapsed;
 }
 
+function sanitizeTaskDisplayTitle(value, maxLength) {
+  return sanitizePublicText(stripUrlsFromDisplayText(value), maxLength);
+}
+
 function sanitizePublicMarkdown(value, maxLength) {
   const raw = String(value || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
   const sanitized = stripMarkdownForAdminPreview(raw).trim();
@@ -676,6 +680,14 @@ function containsUnsafeReportConstructs(value) {
 function sanitizeOptionalPublicText(value, maxLength) {
   const sanitized = sanitizePublicText(value, maxLength);
   return sanitized || null;
+}
+
+function stripUrlsFromDisplayText(value) {
+  return String(value || "")
+    .replace(/\[[^\]]+\]\((https?:\/\/[^)\s]+)\)/g, "$1")
+    .replace(/https?:\/\/[^\s)]+/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function sanitizeToken(value, fallback) {
