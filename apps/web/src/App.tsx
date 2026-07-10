@@ -1195,6 +1195,63 @@ type SampleSavingsPreview = {
     source?: string;
     value?: unknown;
   }> | null;
+  threeYearFinancialValue?: {
+    schemaVersion?: string;
+    modelVersion?: string;
+    metric?: string;
+    horizonYears?: number;
+    estimateStage?: string;
+    minimumThreeYearFinancialValueCents?: number | null;
+    maximumThreeYearFinancialValueCents?: number | null;
+    hasQuantifiedEstimate?: boolean;
+    oneTimeContributionCents?: {
+      minimum?: number | null;
+      maximum?: number | null;
+      quantifiable?: boolean;
+    };
+    recurringThreeYearContributionCents?: {
+      minimum?: number | null;
+      maximum?: number | null;
+      quantifiable?: boolean;
+    };
+    nearGuaranteedContributionCents?: {
+      minimum?: number | null;
+      maximum?: number | null;
+    };
+    nearGuaranteedOnlyMaximum?: {
+      minimum?: number | null;
+      maximum?: number | null;
+    };
+    uncertainContributionMaximumCents?: {
+      minimum?: number | null;
+      maximum?: number | null;
+    };
+    uncertainIncrementalUpsideCents?: {
+      minimum?: number | null;
+      maximum?: number | null;
+    };
+    completeness?: {
+      status?: "quantified" | "partially_quantified" | "unquantifiable";
+      minimumBoundStatus?: "quantified" | "unquantifiable";
+      maximumBoundStatus?: "quantified" | "unquantifiable";
+      reasons?: Array<{ id: string; reason: string }>;
+    } | null;
+    counts?: Record<string, unknown>;
+    rangeDrivers?: Array<{
+      id: string;
+      category?: string;
+      reason?: string;
+      source?: string;
+      value?: unknown;
+    }> | null;
+    opportunityBreakdown?: Array<Record<string, unknown>> | null;
+    scalingAssumptions?: Array<Record<string, unknown>> | null;
+    excludedContributions?: Array<Record<string, unknown>> | null;
+    calculationTrace?: {
+      steps?: SampleCalculationTraceStep[];
+      bounds?: Record<string, unknown>;
+    } | null;
+  } | null;
   threeYearOpportunityBreakdown?: Array<Record<string, unknown>> | null;
   opportunityBreakdown?: Array<Record<string, unknown>> | null;
 };
@@ -18847,10 +18904,19 @@ export function SavingsPreviewCard({
   const recurringNetCents = preview.netMonthlyRecurringSavingsCents ?? preview.monthlySavingsCents ?? 0;
   const traceSteps = preview.calculationTrace?.steps || [];
   const sustainabilityImpact = preview.sustainabilityImpact || null;
-  const threeYearMinimum = preview.minimumThreeYearFinancialValueCents;
-  const threeYearMaximum = preview.maximumThreeYearFinancialValueCents;
-  const rangeDrivers = preview.threeYearRangeDrivers || preview.rangeDrivers || null;
-  const rangeCompleteness = preview.threeYearFinancialValueCompleteness || null;
+  const threeYearFinancialValue = preview.threeYearFinancialValue || null;
+  const threeYearMinimum =
+    threeYearFinancialValue?.minimumThreeYearFinancialValueCents ??
+    preview.minimumThreeYearFinancialValueCents;
+  const threeYearMaximum =
+    threeYearFinancialValue?.maximumThreeYearFinancialValueCents ??
+    preview.maximumThreeYearFinancialValueCents;
+  const rangeDrivers =
+    threeYearFinancialValue?.rangeDrivers || preview.threeYearRangeDrivers || preview.rangeDrivers || null;
+  const rangeCompleteness =
+    threeYearFinancialValue?.completeness ||
+    preview.threeYearFinancialValueCompleteness ||
+    null;
   const threeYearHasBothBounds = Number.isFinite(threeYearMinimum as number | undefined) && Number.isFinite(threeYearMaximum as number | undefined);
   const threeYearCanShowSingleValue = threeYearMinimum != null && threeYearMaximum != null && threeYearMinimum === threeYearMaximum;
   const threeYearRangeAvailable = threeYearMinimum != null || threeYearMaximum != null;
