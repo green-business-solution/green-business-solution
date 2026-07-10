@@ -429,6 +429,12 @@ export function buildAdminTestCaseSavingsPreview({
     selectedIncentiveRules.length > 0 || selectedIncentivePackages.length > 0
       ? "Opportunity savings use source-backed incentive rules and reviewed v2 calculation packages when a matched rule is complete enough to include."
       : "No source-backed OpportunityIncentiveRule or v2 calculation package matched this retrofit preview, so opportunity savings are shown as $0.";
+  const paybackPeriodYears = calculatePaybackPeriodYears({
+    upfrontCostCents: estimate.upfrontCostCents,
+    upfrontSavingsCents: estimate.upfrontSavingsCents ?? null,
+    monthlyRecurringSavingsCents: estimate.monthlyRecurringSavingsCents ?? estimate.monthlySavingsCents ?? null,
+    annualRecurringSavingsCents: estimate.annualRecurringSavingsCents ?? estimate.annualSavingsCents ?? null
+  });
 
   return {
     schemaVersion: ADMIN_TEST_CASE_SAVINGS_SCHEMA_VERSION,
@@ -454,6 +460,16 @@ export function buildAdminTestCaseSavingsPreview({
     netAnnualRecurringSavingsCents: estimate.netAnnualRecurringSavingsCents ?? estimate.annualSavingsCents,
     monthlySavingsCents: estimate.monthlySavingsCents,
     annualSavingsCents: estimate.annualSavingsCents,
+    paybackPeriodYears,
+    paybackPeriodDetails: {
+      upfrontCostCents: estimate.upfrontCostCents ?? null,
+      upfrontSavingsCents: estimate.upfrontSavingsCents ?? null,
+      monthlyRecurringSavingsCents: estimate.monthlyRecurringSavingsCents ?? estimate.monthlySavingsCents ?? null,
+      annualRecurringSavingsCents: estimate.annualRecurringSavingsCents ?? estimate.annualSavingsCents ?? null,
+      normalizedAnnualRecurringSavingsCents:
+        estimate.annualRecurringSavingsCents ?? estimate.annualSavingsCents ?? normalizeMonthlyRecurringSavings(estimate.monthlyRecurringSavingsCents ?? estimate.monthlySavingsCents ?? null),
+      calculationBasis: "annual recurring savings with monthly values normalized to annual"
+    },
     costBreakdown: estimate.costBreakdown,
     savingsBreakdown: estimate.savingsBreakdown,
     billLineDeltas: estimate.billLineDeltas,
@@ -479,6 +495,33 @@ export function buildAdminTestCaseSavingsPreview({
     ],
     unsupportedReason: estimate.status === "blocked" ? "Savings preview is blocked by missing fixture inputs." : null
   };
+}
+
+export function calculatePaybackPeriodYears({
+  upfrontCostCents,
+  upfrontSavingsCents,
+  monthlyRecurringSavingsCents,
+  annualRecurringSavingsCents
+}) {
+  const upfront = firstFiniteNumber(upfrontCostCents, upfrontSavingsCents);
+  const annualRecurring =
+    firstFiniteNumber(annualRecurringSavingsCents) ?? normalizeMonthlyRecurringSavings(firstFiniteNumber(monthlyRecurringSavingsCents));
+  if (upfront == null || annualRecurring == null) return 0;
+  if (upfront === 0 || annualRecurring === 0) return 0;
+  if (Math.sign(upfront) === Math.sign(annualRecurring)) return 0;
+  return Math.abs(upfront) / Math.abs(annualRecurring);
+}
+
+function normalizeMonthlyRecurringSavings(monthlyRecurringSavingsCents) {
+  if (monthlyRecurringSavingsCents == null) return null;
+  return monthlyRecurringSavingsCents * 12;
+}
+
+function firstFiniteNumber(...values) {
+  for (const value of values) {
+    if (typeof value === "number" && Number.isFinite(value)) return value;
+  }
+  return null;
 }
 
 function buildFixture({
