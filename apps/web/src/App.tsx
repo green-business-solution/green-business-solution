@@ -16956,11 +16956,7 @@ function getFirstmateSnapshotState(response: FirstmateTasksResponse | null, snap
     };
   }
 
-<<<<<<< HEAD
   if (response.storageStatus === "dynamodb_empty" || !snapshotHasTasks) {
-=======
-  if (response.storageStatus === "dynamodb_empty" || !snapshotHasTasks) {
->>>>>>> 0492f5e (Fix tasks refresh cache and empty state)
     return {
       tone: "info",
       title: "No Codex tasks in the current snapshot",
