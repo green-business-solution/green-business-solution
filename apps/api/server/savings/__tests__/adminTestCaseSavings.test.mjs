@@ -73,6 +73,11 @@ describe("admin test-case savings generation", () => {
     expect(["calculated", "estimated", "partial", "unsupported"].includes(preview.status)).toBe(true);
     expect(["partial", "estimated", "calculated"].includes(sustainabilityImpact?.status)).toBe(true);
     expect(sustainabilityImpact?.metrics?.annualOperationalCO2eReductionKgPerYear?.unit).toBe("kg CO2e/year");
+    expect(preview.threeYearFinancialValue).toMatchObject({
+      schemaVersion: "three-year-financial-value-v1",
+      metric: "three_year_net_financial_value_equivalent",
+      estimateStage: "intro"
+    });
 
     for (const [metricId, metric] of Object.entries(sustainabilityImpact.metrics || {})) {
       expect(metric).toMatchObject({
