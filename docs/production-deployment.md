@@ -87,6 +87,9 @@ npm run deploy:production:data
 - `infra`: deploys the API and edge/frontend CloudFormation templates while reusing the existing Lambda zip.
 - `data`: ensures runtime prerequisites only.
 
+The deploy script force-refreshes generated fixtures before it rebuilds the admin test-case savings payloads and packages the API.
+That keeps `public/sample_matching_test_cases.json` aligned with the generated fixture archive instead of reusing a stale local copy.
+
 The artifact bucket has a lifecycle rule for `lambda/` package zips. The default retention is 30 days and
 can be overridden with `GBS_ARTIFACT_RETENTION_DAYS`.
 
