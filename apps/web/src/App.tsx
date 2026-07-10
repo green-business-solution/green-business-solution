@@ -1173,6 +1173,30 @@ type SampleSavingsPreview = {
   assumptions?: string[];
   unsupportedReason?: string | null;
   sustainabilityImpact?: SampleSustainabilityImpact | null;
+  minimumThreeYearFinancialValueCents?: number | null;
+  maximumThreeYearFinancialValueCents?: number | null;
+  threeYearFinancialValueCompleteness?: {
+    status?: "quantified" | "partially_quantified" | "unquantifiable";
+    minimumBoundStatus?: "quantified" | "unquantifiable";
+    maximumBoundStatus?: "quantified" | "unquantifiable";
+    reasons?: Array<{ id: string; reason: string }>;
+  } | null;
+  threeYearRangeDrivers?: Array<{
+    id: string;
+    category?: string;
+    reason?: string;
+    source?: string;
+    value?: unknown;
+  }> | null;
+  rangeDrivers?: Array<{
+    id: string;
+    category?: string;
+    reason?: string;
+    source?: string;
+    value?: unknown;
+  }> | null;
+  threeYearOpportunityBreakdown?: Array<Record<string, unknown>> | null;
+  opportunityBreakdown?: Array<Record<string, unknown>> | null;
 };
 
 type SampleSustainabilityImpact = {
@@ -18823,6 +18847,49 @@ export function SavingsPreviewCard({
   const recurringNetCents = preview.netMonthlyRecurringSavingsCents ?? preview.monthlySavingsCents ?? 0;
   const traceSteps = preview.calculationTrace?.steps || [];
   const sustainabilityImpact = preview.sustainabilityImpact || null;
+  const threeYearMinimum = preview.minimumThreeYearFinancialValueCents;
+  const threeYearMaximum = preview.maximumThreeYearFinancialValueCents;
+  const rangeDrivers = preview.threeYearRangeDrivers || preview.rangeDrivers || null;
+  const rangeCompleteness = preview.threeYearFinancialValueCompleteness || null;
+  const threeYearHasBothBounds = Number.isFinite(threeYearMinimum as number | undefined) && Number.isFinite(threeYearMaximum as number | undefined);
+  const threeYearCanShowSingleValue = threeYearMinimum != null && threeYearMaximum != null && threeYearMinimum === threeYearMaximum;
+  const threeYearRangeAvailable = threeYearMinimum != null || threeYearMaximum != null;
+  const threeYearRangeDisplay = threeYearCanShowSingleValue
+    ? formatSignedCents(threeYearMinimum)
+    : threeYearHasBothBounds
+      ? `${formatSignedCents(threeYearMinimum)} to ${formatSignedCents(threeYearMaximum)}`
+      : null;
+  const threeYearRangeStatusLabel = rangeCompleteness?.status === "quantified"
+    ? "Quantified"
+    : rangeCompleteness?.status === "partially_quantified"
+      ? "Partially quantified"
+      : rangeCompleteness?.status === "unquantifiable"
+        ? "Unquantifiable"
+        : threeYearRangeAvailable
+          ? "Uncertain"
+          : "Unavailable";
+
+  const threeYearAvailabilityExclusionNotice = "Conditional, disabled, quarantined, and archived opportunities are excluded from both bounds.";
+  const rangeBreakdownEntries =
+    threeYearCanShowSingleValue
+      ? [
+          {
+            label: "Estimated 3-year financial value",
+            value: formatSignedCents(threeYearMinimum)
+          }
+        ]
+      : threeYearHasBothBounds
+        ? [
+            {
+              label: "Estimated 3-year financial value (minimum)",
+              value: formatSignedCents(threeYearMinimum)
+            },
+            {
+              label: "Estimated 3-year financial value (maximum)",
+              value: formatSignedCents(threeYearMaximum)
+            }
+          ]
+        : null;
 
   return (
     <article className="data-card savings-preview-card">
@@ -18852,6 +18919,67 @@ export function SavingsPreviewCard({
           emptyMessage="No recurring savings or expenses calculated."
           amountSuffix="/month"
         />
+        <section className="savings-range-card">
+          <h4>Estimated 3-year financial value</h4>
+          <p className="muted-message">{threeYearAvailabilityExclusionNotice}</p>
+          {threeYearRangeAvailable ? (
+            <div className="three-year-value-grid">
+              {threeYearRangeDisplay && (
+                <div className="three-year-value-row">
+                  <strong>{threeYearRangeDisplay}</strong>
+                  <span>
+                    {threeYearCanShowSingleValue
+                      ? "Estimated value"
+                      : "Estimated range"}
+                  </span>
+                </div>
+              )}
+              {rangeBreakdownEntries ? (
+                <ul>
+                  {rangeBreakdownEntries.map((row) => (
+                    <li key={row.label}>
+                      <strong>{row.value}</strong>
+                      <span>{row.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+              <p>{threeYearRangeStatusLabel} estimate based on backend range bounds.</p>
+              <p>Estimated as one-time financial value plus three years of recurring value.</p>
+            </div>
+          ) : (
+            <div>
+              <strong>{threeYearRangeStatusLabel}</strong>
+              <p>Backend range bounds are not yet quantifiable.</p>
+              <p>This reflects partial or unquantifiable state in the estimate data.</p>
+            </div>
+          )}
+          {rangeCompleteness?.reasons && rangeCompleteness.reasons.length > 0 ? (
+            <details className="savings-trace" id="three-year-availability-state">
+              <summary>Show estimate completeness reasons</summary>
+              <ul>
+                {rangeCompleteness.reasons.map((item) => (
+                  <li key={item.id}>{item.reason}</li>
+                ))}
+              </ul>
+            </details>
+          ) : null}
+          {rangeDrivers && rangeDrivers.length > 0 ? (
+            <details className="savings-trace">
+              <summary>Show range drivers and provenance</summary>
+              <ul>
+                {rangeDrivers.map((driver) => (
+                  <li key={`${driver.id}-${driver.source || "driver"}`}>
+                    {driver.id}
+                    {driver.reason ? `: ${driver.reason}` : ""}
+                    {driver.category ? ` (${driver.category})` : ""}
+                    {driver.value != null ? ` (${formatRangeValue(driver.value)})` : ""}
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ) : null}
+        </section>
       </div>
 
       <div className="savings-summary-row">
@@ -19144,6 +19272,11 @@ function SavingsEquationCard({
       )}
     </section>
   );
+}
+
+function formatRangeValue(value: unknown) {
+  if (typeof value === "number" || typeof value === "string") return String(value);
+  return "Unavailable";
 }
 
 function formatSignedCents(value: number | null | undefined) {

@@ -1490,6 +1490,185 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("Not calculated");
   });
 
+  it("renders an equal three-year range as a single backend value", () => {
+    const html = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            minimumThreeYearFinancialValueCents: 122200,
+            maximumThreeYearFinancialValueCents: 122200,
+            threeYearFinancialValueCompleteness: {
+              status: "quantified",
+              minimumBoundStatus: "quantified",
+              maximumBoundStatus: "quantified",
+              reasons: []
+            }
+          } as any
+        }
+        squareFootage={10000}
+      />
+    );
+
+    expect(html).toContain("Estimated 3-year financial value");
+    expect(html).toContain("$1,222.00");
+    expect(html).not.toContain("to $1,222.00");
+    expect(html).toContain("Estimated value");
+  });
+
+  it("renders a true backend range for minimum and maximum three-year values", () => {
+    const html = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            minimumThreeYearFinancialValueCents: 3000,
+            maximumThreeYearFinancialValueCents: 5400,
+            threeYearFinancialValueCompleteness: {
+              status: "partially_quantified",
+              reasons: [
+                {
+                  id: "opportunity_cap",
+                  reason: "Program caps set a range ceiling"
+                }
+              ]
+            },
+            threeYearRangeDrivers: [
+              {
+                id: "opportunity_count",
+                category: "mandatory",
+                reason: "2 mandatory opportunities included"
+              },
+              {
+                id: "uncertainty",
+                category: "uncertain",
+                reason: "Optional opportunity value varies by award timing"
+              }
+            ]
+          } as any
+        }
+        squareFootage={10000}
+      />
+    );
+
+    expect(html).toContain("$30.00");
+    expect(html).toContain("to");
+    expect(html).toContain("$54.00");
+    expect(html).toContain("Show range drivers and provenance");
+    expect(html).toContain("2 mandatory opportunities included");
+  });
+
+  it("renders partial and unquantifiable three-year states without guaranteed totals", () => {
+    const html = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            minimumThreeYearFinancialValueCents: null,
+            maximumThreeYearFinancialValueCents: null,
+            threeYearFinancialValueCompleteness: {
+              status: "unquantifiable",
+              reasons: [
+                {
+                  id: "mandatory_recurring_missing",
+                  reason: "Mandatory recurring baseline is unavailable"
+                },
+                {
+                  id: "mandatory_onetime_missing",
+                  reason: "One-time baseline is unavailable"
+                }
+              ]
+            }
+          } as any
+        }
+        squareFootage={10000}
+      />
+    );
+
+    expect(html).toContain("<strong>Unquantifiable</strong>");
+    expect(html).toContain("Backend range bounds are not yet quantifiable.");
+    expect(html).toContain("Show estimate completeness reasons");
+    expect(html).toContain("Mandatory recurring baseline is unavailable");
+  });
+
+  it("renders negative and zero three-year values explicitly in backend range output", () => {
+    const negativeHtml = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            minimumThreeYearFinancialValueCents: -1200,
+            maximumThreeYearFinancialValueCents: 0,
+            threeYearFinancialValueCompleteness: {
+              status: "partially_quantified",
+              reasons: []
+            }
+          } as any
+        }
+        squareFootage={10000}
+      />
+    );
+
+    expect(negativeHtml).toContain("-$12.00");
+    expect(negativeHtml).toContain("$0.00");
+
+    const zeroHtml = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            minimumThreeYearFinancialValueCents: 0,
+            maximumThreeYearFinancialValueCents: 0,
+            threeYearFinancialValueCompleteness: {
+              status: "quantified",
+              reasons: []
+            }
+          } as any
+        }
+        squareFootage={10000}
+      />
+    );
+
+    expect(zeroHtml).toContain("Estimated value");
+    expect(zeroHtml).toContain("$0.00");
+  });
+
+  it("states that inactive opportunities are excluded from three-year bounds", () => {
+    const html = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            minimumThreeYearFinancialValueCents: 1500,
+            maximumThreeYearFinancialValueCents: 3500,
+            threeYearRangeDrivers: [
+              {
+                id: "opportunity_availability_status",
+                category: "scenario",
+                reason: "availability_conditional was excluded"
+              },
+              {
+                id: "opportunity_availability_status",
+                category: "scenario",
+                reason: "availability_archived was excluded"
+              }
+            ],
+            threeYearFinancialValueCompleteness: {
+              status: "partially_quantified",
+              reasons: []
+            }
+          } as any
+        }
+        squareFootage={10000}
+      />
+    );
+
+    expect(html).toContain("Conditional, disabled, quarantined, and archived opportunities are excluded from both bounds.");
+    expect(html).toContain("Show range drivers and provenance");
+    expect(html).toContain("availability_conditional was excluded");
+    expect(html).toContain("availability_archived was excluded");
+  });
+
   it("renders a clean before-click retrofit picker and hides the full workspace", () => {
     const multiRetrofitPayload = {
       ...liveShapedPayload,

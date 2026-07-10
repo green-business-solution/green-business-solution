@@ -2647,6 +2647,7 @@ dd {
 }
 
 .savings-equation-card,
+.savings-range-card,
 .savings-assumption-list,
 .savings-trace {
   background: #f7faf7;
@@ -2658,6 +2659,7 @@ dd {
 }
 
 .savings-equation-card h4,
+.savings-range-card h4,
 .savings-assumption-list h4 {
   color: #5e6d64;
   font-size: 11px;
@@ -2665,6 +2667,36 @@ dd {
   letter-spacing: 0;
   margin: 0;
   text-transform: uppercase;
+}
+
+.savings-range-card p,
+.savings-range-card strong {
+  margin: 0;
+}
+
+.three-year-value-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.three-year-value-row {
+  display: grid;
+  gap: 4px;
+}
+
+.three-year-value-grid ul {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.three-year-value-grid li {
+  align-items: center;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(108px, max-content) minmax(0, 1fr);
 }
 
 .savings-equation-list,
