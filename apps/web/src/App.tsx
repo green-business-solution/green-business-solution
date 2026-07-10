@@ -16813,13 +16813,16 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
         (task) => task.hasReport && task.reportReviewReady && ["completed", "archived"].includes(task.state)
       ) || [];
   const localAuthBypass = Boolean(response?.localAuthBypass);
-  const snapshotState = getFirstmateSnapshotState(response);
   const visibleSections = includeInactive
     ? FIRSTMATE_TASK_SECTIONS
     : FIRSTMATE_TASK_SECTIONS.filter((section) => !["completed", "archived"].includes(section.state));
   const visibleTaskCount = response?.tasks.filter((task) => visibleSections.some((section) => section.state === task.state)).length || 0;
   const defaultTaskGroupCount = visibleTaskCount + reportReadyTasks.length;
   const inactiveTaskCount = response?.hiddenByDefaultTaskCount ?? response?.inactiveTaskCount ?? ((response?.counts.completed || 0) + (response?.counts.archived || 0));
+  const snapshotHasTasks = includeInactive
+    ? (response?.totalTaskCount || 0) > 0
+    : (response?.totalTaskCount || 0) > 0 || inactiveTaskCount > 0;
+  const snapshotState = getFirstmateSnapshotState(response, snapshotHasTasks);
 
   return (
     <section className="tasks-page-panel">
@@ -16934,7 +16937,7 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
   );
 }
 
-function getFirstmateSnapshotState(response: FirstmateTasksResponse | null) {
+function getFirstmateSnapshotState(response: FirstmateTasksResponse | null, snapshotHasTasks: boolean) {
   if (!response) return null;
 
   if (!response.enabled) {
@@ -16953,7 +16956,7 @@ function getFirstmateSnapshotState(response: FirstmateTasksResponse | null) {
     };
   }
 
-  if (response.storageStatus === "dynamodb_empty" || response.totalTaskCount === 0) {
+  if (response.storageStatus === "dynamodb_empty" || !snapshotHasTasks) {
     return {
       tone: "info",
       title: "No Codex tasks in the current snapshot",

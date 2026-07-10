@@ -1981,7 +1981,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Reports ready");
     expect(source).toContain("Completed and archived tasks without pending report review are hidden by default.");
     expect(source).toContain("Active tasks");
-    expect(source).toContain("getFirstmateSnapshotState(response)");
+    expect(source).toContain("getFirstmateSnapshotState(response, snapshotHasTasks)");
     expect(source).toContain("Codex tasks snapshot warning");
     expect(source).toContain("Snapshot ");
     expect(source).toContain("manifest-selected snapshot");
