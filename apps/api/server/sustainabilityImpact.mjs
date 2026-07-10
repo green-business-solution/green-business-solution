@@ -31,8 +31,9 @@ function annualizeDelta(delta) {
   const value = toNumber(delta?.deltaValue);
   if (!Number.isFinite(value)) return null;
   const period = cleanText(delta?.period).toLowerCase();
+  if (period === "annual" || period === "year" || period === "yearly") return value;
   if (period === "monthly") return value * 12;
-  return value;
+  return null;
 }
 
 function sumNumbers(values) {
@@ -194,7 +195,7 @@ function buildNotApplicableMetric({ value = 0, assumptions, trace, quality, prov
 function resolveWaterMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs }) {
   const waterDeltas = relevantDeltas(billLineDeltas, "annual_water_use_delta");
   const directGallons = waterDeltas.map(convertWaterDeltaToGallons).filter(Number.isFinite);
-  if (waterDeltas.length) {
+  if (directGallons.length) {
     const value = -sumNumbers(directGallons);
     return {
       value,
@@ -274,7 +275,7 @@ function resolveWaterMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs 
 function resolveThermMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs }) {
   const thermDeltas = relevantDeltas(billLineDeltas, "annual_therms_delta");
   const directTherms = thermDeltas.map(convertGasDeltaToTherms).filter(Number.isFinite);
-  if (thermDeltas.length) {
+  if (directTherms.length) {
     const value = -sumNumbers(directTherms);
     return {
       value,
@@ -352,7 +353,7 @@ function resolveThermMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs 
 function resolveElectricMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs }) {
   const electricDeltas = relevantDeltas(billLineDeltas, "annual_kwh_delta");
   const directKwh = electricDeltas.map(convertElectricDeltaToKwh).filter(Number.isFinite);
-  if (electricDeltas.length) {
+  if (directKwh.length) {
     const value = -sumNumbers(directKwh);
     return {
       value,
@@ -793,9 +794,10 @@ function buildOperationalCO2eMetric({ sourceModelInputs, scope1Metric, scope2Met
   const anyEstimated = includedComponents.some((component) => component.status === "estimated");
   const anyIncreased = includedComponents.some((component) => component.status === "increased_consumption");
   const anyUnavailable = includedComponents.some((component) => component.status === "unavailable");
+  const anyNotApplicable = includedComponents.some((component) => component.status === "not_applicable");
   const provenanceState = allNotApplicable
     ? "not_applicable"
-    : anyUnavailable && availableComponents.length === 0
+    : anyUnavailable && !anyNotApplicable
       ? "unavailable"
       : anyEstimated
         ? "estimated"

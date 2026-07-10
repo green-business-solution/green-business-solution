@@ -139,6 +139,37 @@ describe("sustainability impact calculations", () => {
     expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.valueKgCO2ePerYear).toBeCloseTo(componentTotal, 6);
   });
 
+  it("keeps unsupported delta cadences unavailable instead of annualizing them", () => {
+    const impact = buildSustainabilityImpact({
+      squareFootage: 10000,
+      retrofitTypeId: "rt_modeled_electric_kwh_reduction",
+      sourceModelInputs: { stateCode: "CA" },
+      billLineDeltas: [
+        { id: "electric", domain: "electric", canonicalField: "annual_kwh_delta", deltaValue: -1200, unit: "kWh/week", period: "weekly" }
+      ]
+    });
+
+    expect(impact.metrics.scope2ElectricityReductionKwhPerYear.provenanceState).toBe("unavailable");
+    expect(impact.metrics.scope2ElectricityReductionKwhPerYear.value).toBe(0);
+    expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.provenanceState).toBe("unavailable");
+  });
+
+  it("marks mixed-coverage operational CO2e unavailable when one included scope is missing", () => {
+    const impact = buildSustainabilityImpact({
+      squareFootage: 10000,
+      retrofitTypeId: "rt_gas_to_electric",
+      sourceModelInputs: { stateCode: "CA" },
+      billLineDeltas: [
+        { id: "gas", domain: "gas", canonicalField: "annual_therms_delta", deltaValue: -12, unit: "therms/week", period: "weekly" },
+        { id: "electric", domain: "electric", canonicalField: "annual_kwh_delta", deltaValue: -1200, unit: "kWh/year", period: "annual" }
+      ]
+    });
+
+    expect(impact.metrics.scope2ElectricityReductionKwhPerYear.provenanceState).toBe("source_calculated");
+    expect(impact.metrics.scope1ThermReductionPerYear.provenanceState).toBe("unavailable");
+    expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.provenanceState).toBe("unavailable");
+  });
+
   it("attaches the sustainability impact contract to the admin savings preview", () => {
     const preview = buildAdminTestCaseSavingsPreview({
       sampleUserId: "sample_led",
