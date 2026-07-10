@@ -87,10 +87,10 @@ The next product work should not start with new GPT Pro research. Start by makin
 
 ## Working Rules For Future Agents
 
-- GitHub is the source of truth for code and docs.
+- GitHub is the source of truth for code, docs, workflow files, infrastructure templates, and project history.
 - AWS is the deployment target and runtime data store.
 - Do not put large GPT Pro prompt/output folders or generated fixtures back into Git unless there is a deliberate reason.
 - Use S3/dev-work archives for large development artifacts.
 - Do not use GPT Pro at runtime. GPT Pro is only an offline research/repair accelerator; imported outputs must pass deterministic validation before production use.
 - Before editing, check branch/status and pull only when clean.
-- After meaningful edits, update `AI_CHANGELOG.md`, commit, push, and deploy/apply AWS changes if runtime behavior, infrastructure, AWS data, or AWS configuration changed.
+- After meaningful edits, follow `AGENT_WORKFLOW.md`, commit, push when the supervising workflow allows it, and deploy/apply AWS changes if runtime behavior, infrastructure, AWS data, or AWS configuration changed.

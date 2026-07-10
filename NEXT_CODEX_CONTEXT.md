@@ -2,7 +2,7 @@
 
 Prepared for the next Neer Codex session.
 
-Last reviewed on July 9, 2026 against repository commit `84686e2` on branch `codex/ai-workflow-docs`, rebased onto `origin/main`.
+Last reviewed on July 9, 2026 against the first-pass root workflow structure on branch `fm/adopt-ai-workflow-f4`.
 
 ## Purpose
 
@@ -104,7 +104,7 @@ Important boundaries:
 - Browser code is untrusted and must never receive AWS credentials, backend secrets, OAuth client secrets, private keys, database credentials, or raw secret values.
 - Backend API owns Google OAuth, DynamoDB, S3 presigned URLs, matching, savings, tax, grants, application profiles, Geocodio usage state, and admin operations.
 - Runtime truth lives in AWS.
-- GitHub is the source of truth for code and docs.
+- GitHub is the source of truth for code, docs, workflow files, infrastructure templates, and project history.
 
 Useful local commands:
 
@@ -197,7 +197,8 @@ Before changing form-gate behavior, verify the active AWS catalog includes the r
 ## What Codex Has Finished
 
 Codex has adopted the durable AI workflow structure.
-This includes `ARCHITECTURE.md`, `RESOURCE_MAP.md`, `TASK_LIST.md`, `review.md`, `template.md`, ADRs, `AI_RESOURCES/`, updated `AGENTS.md`, and updated `AGENT_WORKFLOW.md`.
+This includes `ARCHITECTURE.md`, `RESOURCE_MAP.md`, `TASK_LIST.md`, `review.md`, `template.md`, ADRs, `AI_RESOURCES/`, updated `AGENTS.md`, updated `AGENT_WORKFLOW.md`, and `CLAUDE.md` as an agent-instruction symlink.
+`AI_RESOURCES/` and `template.md` are intentionally tracked workflow assets; add specialized skills or agent-only scripts there only when they are useful.
 
 Codex has reorganized the app into npm workspaces.
 Frontend dependencies and source live under `apps/web`.
@@ -290,7 +291,7 @@ Other important open items:
 - User-selected opportunity planning with dynamic recalculation.
 - Payback period information on the test cases page.
 - Automation for DSIRE collection, source repair, incentive extraction, tax dataset refresh, fixture regeneration, and repair escalation.
-- Decision about whether `docs/architecture-resource-map.md` should merge into root `RESOURCE_MAP.md`.
+- Keep `RESOURCE_MAP.md` and `docs/architecture-resource-map.md` synchronized as ownership changes.
 - Audit of docs and scripts that still assume legacy `gbs` production access or account `448016109714`.
 
 ## Application Prep Context
@@ -352,7 +353,8 @@ For runtime or user-facing changes, run the relevant local checks and perform a 
 
 ## Working Rules To Preserve
 
-After meaningful edits, update `AI_CHANGELOG.md`, commit, and push.
+After meaningful edits, commit and push.
+Record durable context in commits, pull requests, review evidence, ADRs, task notes, and the root workflow docs as appropriate.
 If runtime behavior, infrastructure, AWS data, or AWS configuration changed, deploy or apply the matching AWS change.
 
 Never commit secrets, `.env` files, credentials, tokens, private keys, local dumps, or raw secret values.
@@ -360,7 +362,7 @@ Never expose AWS credentials or backend secrets to frontend code.
 Keep browser clients untrusted.
 
 Do not manually edit `CHANGELOG.md` files or auto-generated files.
-`AI_CHANGELOG.md` is the repository's human-maintained LLM change record and should be updated for meaningful agent-authored changes.
+Do not recreate or update `AI_CHANGELOG.md`; it has been removed from the workflow.
 
 When writing long Markdown, keep each full sentence on its own physical line.
 Do not introduce em dashes in newly written prose.

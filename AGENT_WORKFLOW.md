@@ -1,84 +1,73 @@
 # Agent Workflow
 
-GitHub is the source of truth for this project.
-AWS is the source of truth for deployed runtime state and durable data.
+Use this workflow for meaningful AI-assisted changes in this repository.
+It adapts the `ai-workflow` review structure to RetroFi's monorepo, AWS deployment model, and fast shared iteration rule.
 
-## Fast-Iteration Rule
-
-This project is in early development.
-Agents should optimize for fast shared iteration over local-only polish.
-
-After making a meaningful change:
-
-1. Commit and push it to GitHub immediately.
-2. If the change affects deployed app behavior, infrastructure, AWS data, or AWS configuration, deploy/apply the corresponding AWS change immediately.
-3. Do not leave useful changes only on one laptop.
-4. Do not wait on human/user testing before sharing changes.
-5. Run quick practical smoke checks before pushing and deploying when the change affects code, configuration, infrastructure, AWS data, or runtime behavior.
-6. Do not delay GitHub/AWS sharing for broad or slow local test passes unless the user explicitly asks for deeper testing or the change is clearly risky.
-7. If quick agent-run checks are skipped, say so plainly in the final response and explain why.
-
-For documentation-only or instruction-only changes, a GitHub push is usually enough.
-For code or configuration that changes runtime behavior, assume AWS should be updated too unless there is no deployed AWS surface for that change yet.
+GitHub is the source of truth for code, docs, workflow files, infrastructure templates, and project history.
+AWS is the source of truth for deployed runtime state, durable data, customer uploads, generated fixtures, and cloud resource state.
 
 ## Start
 
-1. Run `git status --short --branch`.
-2. Identify the current branch.
-3. If the working tree is clean, fetch and sync with `origin/main`.
-4. If the working tree is dirty, summarize local changes before editing.
-5. Read the user request carefully.
-6. Inspect the relevant docs, code, scripts, data files, and infrastructure files.
-7. Read `ARCHITECTURE.md` for architecture-sensitive changes.
-8. Read `RESOURCE_MAP.md` before touching infrastructure, deployment, AWS data, path-routed checks, or deploy targets.
+1. Verify the current checkout, branch, and working tree with `git status --short --branch`.
+2. Pull, rebase, or fast-forward from GitHub when the working tree is clean and the current task allows synchronization.
+3. If the working tree is dirty, summarize local changes before editing and avoid overwriting work you did not make.
+4. Read the user request and identify whether it affects frontend code, API code, scripts, data, infrastructure, docs, workflow files, or AWS resources.
+5. Read [ARCHITECTURE.md](./ARCHITECTURE.md) and [RESOURCE_MAP.md](./RESOURCE_MAP.md) when the change touches system boundaries, deploy targets, AWS resources, runtime data, or path-routed checks.
+6. Inspect relevant docs, tests, scripts, and nearby code before editing.
+7. If the change may affect production routing, run or inspect the selector commands documented in [RESOURCE_MAP.md](./RESOURCE_MAP.md).
 
 ## Change
 
-1. Make the smallest coherent change.
-2. Follow existing project patterns.
-3. Avoid unrelated refactors.
-4. Keep secrets out of Git.
-5. Update docs when architecture, deployment behavior, resource ownership, review expectations, or AWS resources change.
-6. Update `AI_CHANGELOG.md` for meaningful LLM-authored changes.
+1. Make the smallest coherent change that satisfies the request.
+2. Follow existing project patterns and avoid unrelated runtime refactors.
+3. Keep browser code untrusted and keep secrets out of Git.
+4. Update docs when architecture, deployment behavior, resource ownership, product direction, review expectations, or workflow expectations change.
+5. Use ADRs for durable decisions that future agents should understand before changing the same area.
+6. Do not update `AI_CHANGELOG.md`; it has been removed from the workflow.
 
 ## Verify
 
-1. Review `git diff`.
-2. Use `RESOURCE_MAP.md` and the selector scripts to choose the smallest safe check set.
-3. Run targeted tests for touched logic.
-4. Run broader checks for shared, unknown, or cross-cutting changes.
-5. If deployment changed, verify the deployed endpoint or resource after deployment.
-6. Record checks that could not be run.
+1. Review the diff before running checks.
+2. Use `node scripts/select-ci-checks.mjs --format lines origin/main HEAD` or the changed-file stdin mode to select focused checks when the correct scope is not obvious.
+3. Run the smallest relevant command set that proves the change:
+   - API syntax: `npm run check -w @gbs/api`
+   - API tests: `npx vitest run apps/api`
+   - frontend typecheck: `npm run typecheck`
+   - frontend build: `npm run build`
+   - frontend tests: `npx vitest run apps/web`
+   - script tests: `npx vitest run scripts`
+   - all tests: `npm test`
+4. For docs-only and workflow-only changes, a diff review plus targeted selector tests is usually enough.
+5. Record checks that could not be run and explain why.
 
-Common checks:
+## Review
 
-```sh
-node scripts/select-ci-checks.mjs --format lines HEAD^ HEAD
-npm run check -w @gbs/api
-npm run typecheck
-npm test
-npm run build
-```
-
-## Review Gates
-
-Apply the A1, A2, and A3 gates from `review.md` after each meaningful slice of progress.
-For a small docs-only change, A2 may be limited to diff review and targeted link/readability checks.
-For runtime, data, infrastructure, auth, billing, deployment, or user-flow changes, run the relevant local checks and perform a broader A3 review.
+1. Apply the A1, A2, and A3 gates in [review.md](./review.md) for every meaningful slice of progress.
+2. If a gate fails, investigate, fix when practical, and rerun the relevant check.
+3. If a failure is unrelated to the current change, report it clearly and preserve the evidence.
+4. Leave review evidence in the pull request, task status, or final agent response.
 
 ## Finish
 
-1. Commit the corresponding changes to Git with a clear message.
-2. Push the commit to GitHub immediately.
-3. Deploy or apply the matching AWS change immediately when runtime behavior, infrastructure, AWS data, or AWS configuration changed.
-4. Prefer scoped deploy targets when the repository defines them.
-5. Use a full deploy for shared or unclear changes.
-6. Leave a concise summary with files changed, behavior changed, checks run, deployment target, and remaining risks.
+1. Commit meaningful repository changes with a clear message.
+2. During early development, push useful changes to GitHub promptly unless a supervising workflow explicitly asks for a local commit handoff first.
+3. Never push to the default branch from an agent task branch.
+4. Use `node scripts/select-production-deploy-targets.mjs --format lines origin/main HEAD` before deploying production changes.
+5. Deploy or apply AWS changes only when runtime app behavior, infrastructure, AWS data, or AWS configuration changed.
+6. Do not deploy for docs-only, workflow-only, or instruction-only changes.
+7. Provide a concise final summary with changed files, behavior changes, checks, deployment or AWS actions, and remaining risks.
 
-If an agent changes code directly on AWS, the same change must be copied back into the GitHub repo as soon as possible.
-Direct AWS edits should be treated as temporary hotfixes until they are committed and pushed.
+## Fast Shared Iteration
 
-Agents should avoid working on overlapping files at the same time.
+RetroFi is still in early development.
+Do not leave useful changes only on one laptop when the task expects shared progress.
+Human testing is not required before GitHub or AWS sharing, but agent-run checks and smoke tests still matter.
+Broad or slow local checks should not block sharing unless the user asks for deeper validation or the change is clearly risky.
+
+If an agent changes code directly on AWS, the same change must be copied back into GitHub as soon as possible.
+Direct AWS edits are temporary hotfixes until they are committed and pushed.
+
+Agents should avoid overlapping edits to the same files.
 If overlap is necessary, one agent should finish, commit, and push before the next agent starts.
 
 Exploratory local edits do not need to be committed if they are discarded before affecting the app, deployment, AWS, or shared repo state.

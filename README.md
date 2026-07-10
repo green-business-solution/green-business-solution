@@ -6,9 +6,11 @@ For the current website direction, user flow, intake decisions, and long-term pr
 
 ## Source of truth
 
-GitHub is the source of truth for this project. AWS is a deployment target and should not contain code changes that are missing from GitHub.
+GitHub is the source of truth for code, docs, workflow files, infrastructure templates, and project history.
+AWS is the deployment target and the source of truth for runtime data, customer uploads, runtime cache payloads, generated fixture archives, and durable cloud state.
 
-All LLM-assisted work must follow [AGENT_WORKFLOW.md](./AGENT_WORKFLOW.md), including committing changes, pushing them to GitHub, and explaining what changed.
+All LLM-assisted work must follow [AGENTS.md](./AGENTS.md), [AGENT_WORKFLOW.md](./AGENT_WORKFLOW.md), and the review gates in [review.md](./review.md).
+Use [ARCHITECTURE.md](./ARCHITECTURE.md) and [RESOURCE_MAP.md](./RESOURCE_MAP.md) before changing system boundaries, AWS resources, deploy routing, or production behavior.
 
 ## Development
 

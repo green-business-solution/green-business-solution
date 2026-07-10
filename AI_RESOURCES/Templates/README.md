@@ -5,6 +5,7 @@ This folder contains starter templates for repeatable project artifacts.
 ## Starter Files
 
 - `AGENTS.md`
+- `CLAUDE.md`
 - `AGENT_WORKFLOW.md`
 - `ARCHITECTURE.md`
 - `RESOURCE_MAP.md`

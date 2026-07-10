@@ -240,6 +240,6 @@ Current direction:
 
 Agents should update this document whenever product behavior, user flow, required fields, post-submit flow, privacy messaging, or opportunity-ranking direction changes.
 
-If a change is implementation-only and does not affect product direction, update `AI_CHANGELOG.md` but this file may not need changes.
+If a change is implementation-only and does not affect product direction, record context in the commit, pull request, review evidence, ADR, or task notes instead of editing this file.
 
 If a decision affects how the website should work or what the business goal is, update this file in the same commit as the code change.

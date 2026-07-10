@@ -3,6 +3,7 @@
 This file tells agents how to work in a repository.
 Keep it specific to the project.
 Update it when the workflow, checks, deployment process, protected files, or architecture rules change.
+`CLAUDE.md` can be a compatibility symlink to this file when Claude-family agents need the same entry point.
 
 ## Project Context
 
