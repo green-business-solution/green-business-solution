@@ -1,3 +1,5 @@
+import { normalizeAwardLikelihood } from "./awardLikelihood.mjs";
+
 export function summarizeMatchResult(result) {
   return {
     opportunityId: result.opportunityId,
@@ -16,6 +18,16 @@ export function summarizeMatchResult(result) {
     unresolvedRequirements: result.unresolvedRequirements.slice(0, 6),
     blockers: result.blockers.slice(0, 6),
     nextQuestion: result.nextQuestion,
+    requiresProgramApproval:
+      typeof result.requiresProgramApproval === "boolean" ? result.requiresProgramApproval : null,
+    approvalRequirements: result.approvalRequirements || [],
+    approvalStage: result.approvalStage || "unknown",
+    awardLikelihood: normalizeAwardLikelihood(result.awardLikelihood),
+    awardLikelihoodReason: result.awardLikelihoodReason || "",
+    awardLikelihoodEvidence: result.awardLikelihoodEvidence || "",
+    awardLikelihoodEvidenceText: result.awardLikelihoodEvidenceText || "",
+    awardLikelihoodEvidenceUrls: result.awardLikelihoodEvidenceUrls || [],
+    reviewStatus: result.reviewStatus || "not_audited",
     sourceSummary: result.sourceSummary
   };
 }

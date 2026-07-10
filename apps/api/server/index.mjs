@@ -16,6 +16,7 @@ import { fromIni } from "@aws-sdk/credential-providers";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchProfile.mjs";
 import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
+import { applyOpportunityAwardAuditOverlay } from "./matching/opportunityAwardAuditOverlay.mjs";
 import { buildPortalRetrofitPreviewShell, buildPortalRetrofitRecommendations } from "./retrofitRecommendations.mjs";
 import { resolveOpportunityApplicationSource } from "./applicationSources/ApplicationSourceResolver.mjs";
 import { resolveOfficialProgramWebsite } from "./applicationSources/OfficialProgramWebsiteResolver.mjs";
@@ -1249,14 +1250,15 @@ async function getCachedOpportunities() {
   if (!opportunitiesCache.promise) {
     opportunitiesCache.promise = scanAll(opportunitiesTable)
       .then((items) => {
+        const overlaidItems = applyOpportunityAwardAuditOverlay(items);
         opportunitiesCache = {
           loadedAt: Date.now(),
-          items,
+          items: overlaidItems,
           promise: null
         };
         retrofitRecommendationsCache.clear();
         retrofitRecommendationsPromiseCache.clear();
-        return items;
+        return overlaidItems;
       })
       .catch((error) => {
         opportunitiesCache.promise = null;

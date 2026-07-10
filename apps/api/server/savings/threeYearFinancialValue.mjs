@@ -1,4 +1,9 @@
 import { monthlyToAnnualCents } from "./formulas.mjs";
+import {
+  AWARD_LIKELIHOOD,
+  isNearGuaranteedAwardLikelihood,
+  normalizeAwardLikelihood
+} from "../matching/awardLikelihood.mjs";
 
 export const THREE_YEAR_FINANCIAL_VALUE_SCHEMA_VERSION = "three-year-financial-value-v1";
 export const THREE_YEAR_FINANCIAL_VALUE_METRIC = "three_year_net_financial_value_equivalent";
@@ -6,8 +11,6 @@ export const THREE_YEAR_FINANCIAL_VALUE_HORIZON_YEARS = 3;
 export const THREE_YEAR_FINANCIAL_VALUE_MODEL_VERSION = "three-year-financial-value-model-v1";
 
 const HORIZON_YEARS = THREE_YEAR_FINANCIAL_VALUE_HORIZON_YEARS;
-const LIKELIHOOD_UNKNOWN = "unknown";
-const LIKELIHOOD_NEAR_GUARANTEED = "near-guaranteed";
 
 export const THREE_YEAR_SCALING_ASSUMPTION_REGISTRY = {
   schemaVersion: "three-year-financial-value-scaling-assumptions-v1",
@@ -296,20 +299,6 @@ function addSignedInt(a, b) {
   return toIntegerCents(a + b);
 }
 
-function normalizeAwardLikelihood(raw) {
-  if (raw == null) return LIKELIHOOD_UNKNOWN;
-  const normalized = String(raw).trim().toLowerCase().replace(/_/g, "-");
-  if (normalized === LIKELIHOOD_NEAR_GUARANTEED) return LIKELIHOOD_NEAR_GUARANTEED;
-  if (["uncertain", "possible", "likely", "unknown"].includes(normalized)) return normalized;
-  if (["near guaranteed", "nearguaranteed", "high"].includes(normalized)) return LIKELIHOOD_NEAR_GUARANTEED;
-  if (["low", "unlikely"].includes(normalized)) return "uncertain";
-  return LIKELIHOOD_UNKNOWN;
-}
-
-function isNearGuaranteedLikelihood(likelihood) {
-  return likelihood === LIKELIHOOD_NEAR_GUARANTEED;
-}
-
 function isUnsupportedEntry(entry = {}) {
   const formula = String(entry.formula || "").toLowerCase();
   return formula === "unsupported_formula" || formula.includes("unsupported formula") || formula.includes("not_supported");
@@ -406,27 +395,12 @@ function buildOpportunityOrder(retrofitGroup = {}, selectedScenario = {}, groupe
   return [...orderedIds, ...extra];
 }
 
-function buildOneTimeBaseline({ selectedScenario = {}, estimate = {} }) {
-  const structuredEntries = Array.isArray(selectedScenario?.upfrontSavingsEntries)
-    ? selectedScenario.upfrontSavingsEntries.filter((entry) => !isUnsupportedEntry(entry))
-    : [];
-
-  const structuredOneTimeSource = structuredEntries.length > 0
-    ? toIntegerCents(structuredEntries.reduce((sum, entry) => sum + toIntegerCents(entry.amountCents || 0), 0))
-    : null;
-  if (structuredOneTimeSource !== null) {
-    return {
-      cents: structuredOneTimeSource,
-      source: "selected_scenario_upfront_entries",
-      missing: false
-    };
-  }
-
+function buildOneTimeBaseline({ estimate = {}, selectedOpportunityOneTimeCents = 0, hasSelectedOneTimeEntries = false }) {
   const oneTimeSavingsCents = parseFiniteNumber(estimate.oneTimeSavingsCents);
   if (oneTimeSavingsCents !== null) {
     return {
-      cents: toIntegerCents(oneTimeSavingsCents),
-      source: "estimate_oneTimeSavingsCents",
+      cents: toIntegerCents(oneTimeSavingsCents - selectedOpportunityOneTimeCents),
+      source: "estimate_oneTimeSavingsCents_minus_selected_opportunities",
       missing: false
     };
   }
@@ -434,8 +408,16 @@ function buildOneTimeBaseline({ selectedScenario = {}, estimate = {} }) {
   const upfrontSavingsCents = parseFiniteNumber(estimate.upfrontSavingsCents);
   if (upfrontSavingsCents !== null) {
     return {
-      cents: toIntegerCents(upfrontSavingsCents),
-      source: "estimate_upfrontSavingsCents",
+      cents: toIntegerCents(upfrontSavingsCents - selectedOpportunityOneTimeCents),
+      source: "estimate_upfrontSavingsCents_minus_selected_opportunities",
+      missing: false
+    };
+  }
+
+  if (hasSelectedOneTimeEntries) {
+    return {
+      cents: 0,
+      source: "selected_opportunities_only",
       missing: false
     };
   }
@@ -447,12 +429,12 @@ function buildOneTimeBaseline({ selectedScenario = {}, estimate = {} }) {
   };
 }
 
-function buildRecurringBaseline({ estimate = {} }) {
+function buildRecurringBaseline({ estimate = {}, selectedOpportunityRecurringAnnualCents = 0, hasSelectedRecurringEntries = false }) {
   const netAnnualRecurringSavingsCents = parseFiniteNumber(estimate.netAnnualRecurringSavingsCents);
   if (netAnnualRecurringSavingsCents !== null) {
     return {
-      cents: toIntegerCents(netAnnualRecurringSavingsCents),
-      source: "estimate_netAnnualRecurringSavingsCents",
+      cents: toIntegerCents(netAnnualRecurringSavingsCents - selectedOpportunityRecurringAnnualCents),
+      source: "estimate_netAnnualRecurringSavingsCents_minus_selected_opportunities",
       missing: false
     };
   }
@@ -461,8 +443,8 @@ function buildRecurringBaseline({ estimate = {} }) {
   const annualRecurringExpensesCents = parseFiniteNumber(estimate.annualRecurringExpensesCents);
   if (annualSavingsCents !== null && annualRecurringExpensesCents !== null) {
     return {
-      cents: toIntegerCents(annualSavingsCents - annualRecurringExpensesCents),
-      source: "annualSavingsMinusAnnualRecurringExpenses",
+      cents: toIntegerCents(annualSavingsCents - annualRecurringExpensesCents - selectedOpportunityRecurringAnnualCents),
+      source: "annualSavingsMinusAnnualRecurringExpensesAndSelectedOpportunities",
       missing: false
     };
   }
@@ -470,8 +452,10 @@ function buildRecurringBaseline({ estimate = {} }) {
   const netMonthlyRecurringSavingsCents = parseFiniteNumber(estimate.netMonthlyRecurringSavingsCents);
   if (netMonthlyRecurringSavingsCents !== null) {
     return {
-      cents: toIntegerCents(monthlyToAnnualCents(netMonthlyRecurringSavingsCents)),
-      source: "annualized_estimate_netMonthlyRecurringSavingsCents",
+      cents: toIntegerCents(
+        monthlyToAnnualCents(netMonthlyRecurringSavingsCents) - selectedOpportunityRecurringAnnualCents
+      ),
+      source: "annualized_estimate_netMonthlyRecurringSavingsCents_minus_selected_opportunities",
       missing: false
     };
   }
@@ -482,9 +466,17 @@ function buildRecurringBaseline({ estimate = {} }) {
   if (recurringSavingsCents !== null) {
     return {
       cents: monthlyRecurringSavingsCents !== null
-        ? toIntegerCents(monthlyToAnnualCents(monthlyRecurringSavingsCents))
-        : toIntegerCents(annualRecurringSavingsCents),
-      source: "legacyRecurringSavingsFallback",
+        ? toIntegerCents(monthlyToAnnualCents(monthlyRecurringSavingsCents) - selectedOpportunityRecurringAnnualCents)
+        : toIntegerCents(annualRecurringSavingsCents - selectedOpportunityRecurringAnnualCents),
+      source: "legacyRecurringSavingsFallbackMinusSelectedOpportunities",
+      missing: false
+    };
+  }
+
+  if (hasSelectedRecurringEntries) {
+    return {
+      cents: 0,
+      source: "selected_opportunities_only",
       missing: false
     };
   }
@@ -561,8 +553,28 @@ export function buildThreeYearFinancialValue({
   ];
 
   const groupedEntries = groupScenarioEntries(selectedEntries);
-  const oneTimeBaseline = buildOneTimeBaseline({ selectedScenario, estimate });
-  const recurringBaseline = buildRecurringBaseline({ estimate });
+  const selectedOpportunityOneTimeCents = toIntegerCents(
+    [...groupedEntries.values()].reduce((sum, contribution) => sum + contribution.oneTimeCents, 0)
+  );
+  const selectedOpportunityRecurringAnnualCents = toIntegerCents(
+    [...groupedEntries.values()].reduce((sum, contribution) => sum + contribution.recurringAnnualCents, 0)
+  );
+  const hasSelectedOneTimeEntries = selectedEntries.some(
+    (entry) => entry?.kind === "upfront_savings" && !isUnsupportedEntry(entry)
+  );
+  const hasSelectedRecurringEntries = selectedEntries.some(
+    (entry) => entry?.kind !== "upfront_savings" && !isUnsupportedEntry(entry)
+  );
+  const oneTimeBaseline = buildOneTimeBaseline({
+    estimate,
+    selectedOpportunityOneTimeCents,
+    hasSelectedOneTimeEntries
+  });
+  const recurringBaseline = buildRecurringBaseline({
+    estimate,
+    selectedOpportunityRecurringAnnualCents,
+    hasSelectedRecurringEntries
+  });
   const recurringThreeYearBaseline = recurringBaseline.cents === null ? null : addThreeYears(recurringBaseline.cents);
 
   const order = buildOpportunityOrder(retrofitGroup, selectedScenario, groupedEntries, alternativeScenarios);
@@ -586,7 +598,10 @@ export function buildThreeYearFinancialValue({
   let hasAnyOpportunityQuantified = false;
 
   for (const opportunityId of order) {
-    const opportunity = opportunityById.get(opportunityId) || { opportunityId, awardLikelihood: LIKELIHOOD_UNKNOWN };
+    const opportunity = opportunityById.get(opportunityId) || {
+      opportunityId,
+      awardLikelihood: AWARD_LIKELIHOOD.UNKNOWN
+    };
     const likelihood = normalizeAwardLikelihood(opportunity.awardLikelihood);
     const requiresProgramApproval = opportunity?.requiresProgramApproval === true;
     const contribution = groupedEntries.get(opportunityId) || {
@@ -617,22 +632,25 @@ export function buildThreeYearFinancialValue({
     }
 
     const oneTimeCents = toIntegerCents(contribution.oneTimeCents);
-    const recurringThreeYearCents = hasRecurring ? addThreeYears(toIntegerCents(contribution.recurringAnnualCents)) : null;
+    const recurringThreeYearCents = hasRecurring ? addThreeYears(toIntegerCents(contribution.recurringAnnualCents)) : 0;
     const contributionRange = buildContributionRangeForOpportunity(
       {
         oneTimeCents,
-        recurringThreeYearCents: recurringThreeYearCents ?? null
+        recurringThreeYearCents
       },
-      isNearGuaranteedLikelihood(likelihood)
+      isNearGuaranteedAwardLikelihood(likelihood)
     );
 
-    if (isNearGuaranteedLikelihood(likelihood)) {
+    if (isNearGuaranteedAwardLikelihood(likelihood)) {
       nearGuaranteedOneTimeMinimum = addSignedInt(nearGuaranteedOneTimeMinimum, contributionRange.oneTimeContributionCents.minimum);
       nearGuaranteedOneTimeMaximum = addSignedInt(nearGuaranteedOneTimeMaximum, contributionRange.oneTimeContributionCents.maximum);
       nearGuaranteedRecurringMinimum = addSignedInt(nearGuaranteedRecurringMinimum, contributionRange.recurringThreeYearContributionCents.minimum);
       nearGuaranteedRecurringMaximum = addSignedInt(nearGuaranteedRecurringMaximum, contributionRange.recurringThreeYearContributionCents.maximum);
     } else {
-      uncertainOneTimeMaximum = addSignedInt(uncertainOneTimeMaximum, contributionRange.uncertainContributionMaximumCents.maximum);
+      uncertainOneTimeMaximum = addSignedInt(
+        uncertainOneTimeMaximum,
+        contributionRange.oneTimeContributionCents.maximum
+      );
       uncertainRecurringMaximum = addSignedInt(uncertainRecurringMaximum, contributionRange.recurringThreeYearContributionCents.maximum);
     }
 
@@ -647,7 +665,7 @@ export function buildThreeYearFinancialValue({
       excludedReasons: excludedByAlternative || contribution.hasUnsupportedFormula ? [] : [],
       contributionTrace: {
         sourceIds: unique(contribution.sourceIds),
-        formulaSummary: isNearGuaranteedLikelihood(likelihood) ? "near-guaranteed" : "non-guaranteed"
+        formulaSummary: isNearGuaranteedAwardLikelihood(likelihood) ? "near-guaranteed" : "non-guaranteed"
       },
       rangeDrivers: [
         {
@@ -674,7 +692,7 @@ export function buildThreeYearFinancialValue({
 
     if (hasQuantifiedEstimate) {
       hasAnyOpportunityQuantified = true;
-      if (isNearGuaranteedLikelihood(likelihood)) {
+      if (isNearGuaranteedAwardLikelihood(likelihood)) {
         if (contributionRange.nearGuaranteedOnlyMaximumCents !== null) {
           rangeDrivers.push({
             id: "near_guaranteed_addition",
