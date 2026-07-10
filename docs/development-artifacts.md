@@ -4,6 +4,9 @@ Raw GPT Pro prompt/output work packets are stored outside Git in a private S3 bu
 
 Generated fixtures and synthetic test data use a separate private S3 bucket so fixture deploy/sync work
 does not mix with raw GPT prompt/output archives.
+The generated-fixture manifest lives at `data/generated_test_fixtures_manifest.json` and records the
+current bucket, prefix, object sizes, and SHA-256 checksums so downloads can verify integrity against
+production before local files are reused.
 
 ## GPT Pro Work
 
