@@ -1496,13 +1496,15 @@ describe("retrofit recommendations preview", () => {
         preview={
           {
             ...liveShapedPayload.retrofits[0].savingsPreview,
-            minimumThreeYearFinancialValueCents: 122200,
-            maximumThreeYearFinancialValueCents: 122200,
-            threeYearFinancialValueCompleteness: {
-              status: "quantified",
-              minimumBoundStatus: "quantified",
-              maximumBoundStatus: "quantified",
-              reasons: []
+            threeYearFinancialValue: {
+              minimumThreeYearFinancialValueCents: 122200,
+              maximumThreeYearFinancialValueCents: 122200,
+              completeness: {
+                status: "quantified",
+                minimumBoundStatus: "quantified",
+                maximumBoundStatus: "quantified",
+                reasons: []
+              }
             }
           } as any
         }
@@ -1522,29 +1524,31 @@ describe("retrofit recommendations preview", () => {
         preview={
           {
             ...liveShapedPayload.retrofits[0].savingsPreview,
-            minimumThreeYearFinancialValueCents: 3000,
-            maximumThreeYearFinancialValueCents: 5400,
-            threeYearFinancialValueCompleteness: {
-              status: "partially_quantified",
-              reasons: [
+            threeYearFinancialValue: {
+              minimumThreeYearFinancialValueCents: 3000,
+              maximumThreeYearFinancialValueCents: 5400,
+              completeness: {
+                status: "partially_quantified",
+                reasons: [
+                  {
+                    id: "opportunity_cap",
+                    reason: "Program caps set a range ceiling"
+                  }
+                ]
+              },
+              rangeDrivers: [
                 {
-                  id: "opportunity_cap",
-                  reason: "Program caps set a range ceiling"
+                  id: "opportunity_count",
+                  category: "mandatory",
+                  reason: "2 mandatory opportunities included"
+                },
+                {
+                  id: "uncertainty",
+                  category: "uncertain",
+                  reason: "Optional opportunity value varies by award timing"
                 }
               ]
-            },
-            threeYearRangeDrivers: [
-              {
-                id: "opportunity_count",
-                category: "mandatory",
-                reason: "2 mandatory opportunities included"
-              },
-              {
-                id: "uncertainty",
-                category: "uncertain",
-                reason: "Optional opportunity value varies by award timing"
-              }
-            ]
+            }
           } as any
         }
         squareFootage={10000}
@@ -1564,20 +1568,22 @@ describe("retrofit recommendations preview", () => {
         preview={
           {
             ...liveShapedPayload.retrofits[0].savingsPreview,
-            minimumThreeYearFinancialValueCents: null,
-            maximumThreeYearFinancialValueCents: null,
-            threeYearFinancialValueCompleteness: {
-              status: "unquantifiable",
-              reasons: [
-                {
-                  id: "mandatory_recurring_missing",
-                  reason: "Mandatory recurring baseline is unavailable"
-                },
-                {
-                  id: "mandatory_onetime_missing",
-                  reason: "One-time baseline is unavailable"
-                }
-              ]
+            threeYearFinancialValue: {
+              minimumThreeYearFinancialValueCents: null,
+              maximumThreeYearFinancialValueCents: null,
+              completeness: {
+                status: "unquantifiable",
+                reasons: [
+                  {
+                    id: "mandatory_recurring_missing",
+                    reason: "Mandatory recurring baseline is unavailable"
+                  },
+                  {
+                    id: "mandatory_onetime_missing",
+                    reason: "One-time baseline is unavailable"
+                  }
+                ]
+              }
             }
           } as any
         }
@@ -1597,11 +1603,13 @@ describe("retrofit recommendations preview", () => {
         preview={
           {
             ...liveShapedPayload.retrofits[0].savingsPreview,
-            minimumThreeYearFinancialValueCents: -1200,
-            maximumThreeYearFinancialValueCents: 0,
-            threeYearFinancialValueCompleteness: {
-              status: "partially_quantified",
-              reasons: []
+            threeYearFinancialValue: {
+              minimumThreeYearFinancialValueCents: -1200,
+              maximumThreeYearFinancialValueCents: 0,
+              completeness: {
+                status: "partially_quantified",
+                reasons: []
+              }
             }
           } as any
         }
@@ -1617,11 +1625,13 @@ describe("retrofit recommendations preview", () => {
         preview={
           {
             ...liveShapedPayload.retrofits[0].savingsPreview,
-            minimumThreeYearFinancialValueCents: 0,
-            maximumThreeYearFinancialValueCents: 0,
-            threeYearFinancialValueCompleteness: {
-              status: "quantified",
-              reasons: []
+            threeYearFinancialValue: {
+              minimumThreeYearFinancialValueCents: 0,
+              maximumThreeYearFinancialValueCents: 0,
+              completeness: {
+                status: "quantified",
+                reasons: []
+              }
             }
           } as any
         }
@@ -1639,23 +1649,25 @@ describe("retrofit recommendations preview", () => {
         preview={
           {
             ...liveShapedPayload.retrofits[0].savingsPreview,
-            minimumThreeYearFinancialValueCents: 1500,
-            maximumThreeYearFinancialValueCents: 3500,
-            threeYearRangeDrivers: [
-              {
-                id: "opportunity_availability_status",
-                category: "scenario",
-                reason: "availability_conditional was excluded"
-              },
-              {
-                id: "opportunity_availability_status",
-                category: "scenario",
-                reason: "availability_archived was excluded"
+            threeYearFinancialValue: {
+              minimumThreeYearFinancialValueCents: 1500,
+              maximumThreeYearFinancialValueCents: 3500,
+              rangeDrivers: [
+                {
+                  id: "opportunity_availability_status",
+                  category: "scenario",
+                  reason: "availability_conditional was excluded"
+                },
+                {
+                  id: "opportunity_availability_status",
+                  category: "scenario",
+                  reason: "availability_archived was excluded"
+                }
+              ],
+              completeness: {
+                status: "partially_quantified",
+                reasons: []
               }
-            ],
-            threeYearFinancialValueCompleteness: {
-              status: "partially_quantified",
-              reasons: []
             }
           } as any
         }
