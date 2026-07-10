@@ -12,6 +12,13 @@ const EPA_GHG_FACTORS_SOURCE = {
   reference: "EPA stationary combustion factors"
 };
 
+const EPA_WASTE_TIPPING_FEE_SOURCE = {
+  title: "Financial Estimates to Modernize Material Recovery Infrastructure",
+  publishedOn: "2024-12",
+  url: "https://www.epa.gov/system/files/documents/2024-12/financial_assessment_of_us_recycling_system_infrastructure.pdf",
+  reference: "EPA average tipping fee for municipal solid waste"
+};
+
 const EGRID2023_TOTAL_OUTPUT_EMISSION_RATES_LB_PER_MWH = {
   US: 770.9,
   CA: 430.0,
@@ -164,6 +171,22 @@ export function buildSourceLedgerEntry({
     source: {
       ...source,
       fallbackUsed
+    }
+  };
+}
+
+export function getWasteTippingFeeProxy() {
+  return {
+    usdPerShortTon: 53.72,
+    source: {
+      sourceType: "waste_tipping_fee_proxy",
+      sourceLabel: "EPA average tipping fee proxy",
+      sourceRegion: "US",
+      version: EPA_WASTE_TIPPING_FEE_SOURCE.title,
+      publishedOn: EPA_WASTE_TIPPING_FEE_SOURCE.publishedOn,
+      url: EPA_WASTE_TIPPING_FEE_SOURCE.url,
+      reference: EPA_WASTE_TIPPING_FEE_SOURCE.reference,
+      fallbackUsed: false
     }
   };
 }

@@ -583,6 +583,25 @@ describe("retrofit recommendations preview", () => {
     } as any;
 
     const preview = buildUserRetrofitPreviewResult(postInstallPayload);
+    const seededSustainabilityImpact = buildSustainabilityImpact({
+      squareFootage: 10000,
+      retrofitTypeId: "led_lighting",
+      sourceModelInputs: { stateCode: "CA" },
+      billLineDeltas: [
+        {
+          id: "electric",
+          domain: "electric",
+          canonicalField: "annual_kwh_delta",
+          deltaValue: -176,
+          unit: "kWh/year",
+          period: "annual",
+        },
+      ],
+    });
+    preview.retrofits[0] = {
+      ...preview.retrofits[0],
+      sustainabilityImpact: seededSustainabilityImpact,
+    } as any;
     const dashboard = buildDashboardPerformanceData(
       postInstallPayload,
       preview,
@@ -602,6 +621,25 @@ describe("retrofit recommendations preview", () => {
       dashboard.environmental.impactSeries.map((point) => point.projected),
     ).toEqual([0.9, 2.1]);
     expect(
+      dashboard.implementedRetrofits[0].siteEuiReductionKbtuPerSquareFootPerYear,
+    ).toBeCloseTo(0.0600512, 6);
+    expect(
+      dashboard.implementedRetrofits[0].gridPeakDemandReductionKw,
+    ).toBe(0);
+    expect(dashboard.implementedRetrofits[0].wasteReducedPerYear).toBe(0);
+    expect(dashboard.environmental.totalSiteEuiReductionKbtuPerSquareFootPerYear).toBeCloseTo(0.0600512, 6);
+    expect(dashboard.environmental.totalGridPeakDemandReductionKw).toBe(0);
+    expect(dashboard.environmental.totalWasteReducedPerYear).toBe(0);
+    expect(dashboard.environmental.realized.map((metric) => metric.label)).toEqual([
+      "Annual CO2e Reduced",
+      "Water Conservation",
+      "Scope 1 Therm Reduction",
+      "Scope 2 Electricity Reduction",
+      "Site EUI Reduction",
+      "Grid Peak-Demand Reduction",
+      "Annual Waste Avoided",
+    ]);
+    expect(
       dashboard.certifications.documentReadiness.reduce(
         (sum, row) => sum + row.ready,
         0,
@@ -620,6 +658,45 @@ describe("retrofit recommendations preview", () => {
     expect(dashboard.certifications.nextActions[0].title).toBe(
       "Upload completion photo",
     );
+  });
+
+  it("deduplicates seeded preview retrofits by retrofit id before aggregating sustainability totals", () => {
+    const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
+    const seededSustainabilityImpact = buildSustainabilityImpact({
+      squareFootage: 10000,
+      retrofitTypeId: "led_lighting",
+      sourceModelInputs: { stateCode: "CA" },
+      billLineDeltas: [
+        {
+          id: "electric",
+          domain: "electric",
+          canonicalField: "annual_kwh_delta",
+          deltaValue: -176,
+          unit: "kWh/year",
+          period: "annual",
+        },
+      ],
+    });
+    const implementedPreview = {
+      ...preview,
+      retrofits: preview.retrofits.map((retrofit) => ({
+        ...retrofit,
+        implementationStatus: "operational",
+        sustainabilityImpact: seededSustainabilityImpact,
+      })),
+    } as any;
+    const duplicatePreview = {
+      ...implementedPreview,
+      retrofits: [implementedPreview.retrofits[0], implementedPreview.retrofits[0]],
+    } as any;
+    const dashboard = buildDashboardPerformanceData(null, duplicatePreview);
+    const impact = seededSustainabilityImpact.metrics;
+
+    expect(dashboard.implementedRetrofits).toHaveLength(1);
+    expect(dashboard.environmental.totalCO2eReducedPerYear).toBeCloseTo(impact.annualOperationalCO2eReductionKgPerYear.value / 1000, 6);
+    expect(dashboard.environmental.totalSiteEuiReductionKbtuPerSquareFootPerYear).toBeCloseTo(impact.siteEuiReductionKbtuPerSquareFootPerYear.value, 6);
+    expect(dashboard.environmental.totalGridPeakDemandReductionKw).toBeCloseTo(impact.gridPeakDemandReductionKw.value, 6);
+    expect(dashboard.environmental.totalWasteReducedPerYear).toBeCloseTo(impact.wasteAvoidedTonsPerYear.value, 6);
   });
 
   it("defines the post-implementation dashboard structure and source-backed empty states", async () => {
@@ -2502,8 +2579,8 @@ describe("retrofit recommendations preview", () => {
     expect(componentSource).toContain("Annual operating savings");
     expect(componentSource).toContain('label="ROI"');
     expect(componentSource).toContain('subtitle="Average annual return"');
-    expect(componentSource).toContain('label="kWh saved per year"');
-    expect(componentSource).toContain('label="Therms avoided per year"');
+    expect(componentSource).toContain("Impact overview");
+    expect(componentSource).toContain("SustainabilityImpactCard");
     expect(workspaceSource).toContain(
       "{profile.included.length} included · {profile.excluded.length} excluded",
     );
@@ -2521,7 +2598,7 @@ describe("retrofit recommendations preview", () => {
       "impactPlainLanguageSentence(displayedEnvironmentalImpact.overall)",
     );
     expect(workspaceSource).not.toContain("avoided / year");
-    expect(workspaceSource).toContain("Additional impact metrics");
+    expect(workspaceSource).toContain("Impact overview");
     expect(workspaceSource).toContain("Certification contribution");
     expect(workspaceSource).toContain("EstimateImpactProjectionChart");
     expect(source).toContain("Cumulative CO2e avoided");

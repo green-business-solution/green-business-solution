@@ -135,6 +135,72 @@ describe("sustainability impact calculations", () => {
     ).toBeGreaterThan(0);
   });
 
+  it("returns waste avoided from a direct annual waste mass input and preserves sign semantics", () => {
+    const positiveImpact = buildSustainabilityImpact({
+      retrofitTypeId: "waste_reduction",
+      sourceModelInputs: {
+        annual_waste_avoided_tons: 4.25,
+      },
+    });
+
+    expect(positiveImpact.metrics.wasteAvoidedTonsPerYear.value).toBe(4.25);
+    expect(
+      positiveImpact.metrics.wasteAvoidedTonsPerYear.provenanceState,
+    ).toBe("estimated");
+    expect(positiveImpact.metrics.wasteAvoidedTonsPerYear.unit).toBe(
+      "short tons/year",
+    );
+
+    const negativeImpact = buildSustainabilityImpact({
+      retrofitTypeId: "waste_reduction",
+      sourceModelInputs: {
+        annual_waste_avoided_tons: -1.5,
+      },
+    });
+
+    expect(negativeImpact.metrics.wasteAvoidedTonsPerYear.value).toBe(-1.5);
+    expect(
+      negativeImpact.metrics.wasteAvoidedTonsPerYear.provenanceState,
+    ).toBe("increased_consumption");
+  });
+
+  it("estimates waste avoided from waste service savings using the EPA tipping-fee proxy", () => {
+    const impact = buildSustainabilityImpact({
+      retrofitTypeId: "waste_reduction",
+      billLineDeltas: [
+        {
+          id: "waste",
+          domain: "waste",
+          canonicalField: "total_waste_cost_delta",
+          deltaValue: -10744,
+          unit: "cents/year",
+          period: "annual",
+        },
+      ],
+    });
+
+    expect(impact.metrics.wasteAvoidedTonsPerYear.value).toBeCloseTo(2, 6);
+    expect(impact.metrics.wasteAvoidedTonsPerYear.provenanceState).toBe(
+      "estimated",
+    );
+    expect(impact.metrics.wasteAvoidedTonsPerYear.quality.source).toBe(
+      "reviewed_proxy",
+    );
+    expect(impact.metrics.wasteAvoidedTonsPerYear.trace.calculation).toEqual(
+      expect.objectContaining({
+        annualWasteCostSavingsCents: 10744,
+        annualWasteCostSavingsUsd: 107.44,
+        proxyUsdPerShortTon: 53.72,
+      }),
+    );
+    expect(impact.metrics.wasteAvoidedTonsPerYear.assumptions).toEqual(
+      expect.arrayContaining([expect.stringContaining("EPA")]),
+    );
+    expect(impact.metrics.wasteAvoidedTonsPerYear.assumptions.join(" ")).toContain(
+      "short ton",
+    );
+  });
+
   it("returns numeric zeros with not-applicable provenance when a retrofit cannot affect a stream", () => {
     const impact = buildSustainabilityImpact({
       retrofitTypeId: "leed_certification",
@@ -169,6 +235,10 @@ describe("sustainability impact calculations", () => {
     expect(
       impact.metrics.annualOperationalCO2eReductionKgPerYear.provenanceState,
     ).toBe("not_applicable");
+    expect(impact.metrics.wasteAvoidedTonsPerYear.value).toBe(0);
+    expect(impact.metrics.wasteAvoidedTonsPerYear.provenanceState).toBe(
+      "not_applicable",
+    );
   });
 
   it("keeps mixed not-applicable and source-calculated site EUI source-calculated in both directions", () => {

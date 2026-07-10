@@ -41,10 +41,11 @@ describe("admin test-case savings generation", () => {
         trace: expect.any(Object)
       });
       expect(Number.isFinite(metric.value)).toBe(true);
-      expect(["waterConservationGallonsPerYear", "scope1ThermReductionPerYear", "scope2ElectricityReductionKwhPerYear", "siteEuiReductionKbtuPerSquareFootPerYear", "gridPeakDemandReductionKw", "annualOperationalCO2eReductionKgPerYear"]).toContain(
+      expect(["waterConservationGallonsPerYear", "scope1ThermReductionPerYear", "scope2ElectricityReductionKwhPerYear", "siteEuiReductionKbtuPerSquareFootPerYear", "gridPeakDemandReductionKw", "annualOperationalCO2eReductionKgPerYear", "wasteAvoidedTonsPerYear"]).toContain(
         metricId
       );
     }
+    expect(Object.keys(sustainabilityImpact.metrics || {})).toHaveLength(7);
 
     const co2e = sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear;
     expect(co2e.trace?.components).toEqual(
@@ -73,6 +74,8 @@ describe("admin test-case savings generation", () => {
     );
     expect(sustainabilityImpact.metrics.waterConservationGallonsPerYear.value).toBe(0);
     expect(sustainabilityImpact.metrics.waterConservationGallonsPerYear.provenanceState).toBe("not_applicable");
+    expect(sustainabilityImpact.metrics.wasteAvoidedTonsPerYear.value).toBe(0);
+    expect(sustainabilityImpact.metrics.wasteAvoidedTonsPerYear.provenanceState).toBe("not_applicable");
   });
 
   it("builds unsupported service-only previews with contract-shaped sustainability impact", () => {
@@ -101,5 +104,7 @@ describe("admin test-case savings generation", () => {
     expect(preview.sustainabilityImpact?.metrics?.scope1ThermReductionPerYear?.provenanceState).toBe("not_applicable");
     expect(preview.sustainabilityImpact?.metrics?.scope2ElectricityReductionKwhPerYear?.provenanceState).toBe("not_applicable");
     expect(preview.sustainabilityImpact?.metrics?.siteEuiReductionKbtuPerSquareFootPerYear?.provenanceState).toBe("not_applicable");
+    expect(preview.sustainabilityImpact?.metrics?.wasteAvoidedTonsPerYear?.value).toBe(0);
+    expect(preview.sustainabilityImpact?.metrics?.wasteAvoidedTonsPerYear?.provenanceState).toBe("not_applicable");
   });
 });
