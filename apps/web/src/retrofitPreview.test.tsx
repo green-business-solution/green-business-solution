@@ -1,7 +1,18 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { RetroFiLogoLoader, RetroFiPageLoader, RetroFiProgressLoader, RetroFiSkeleton, clampRetroFiProgress } from "./components/RetroFiLoader";
-import { USER_PREVIEW_TRIAGE_ISSUES, isUserPreviewTriageModeEnabled } from "./userPreviewTriage";
+import {
+  RetroFiLogoLoader,
+  RetroFiPageLoader,
+  RetroFiProgressLoader,
+  RetroFiSkeleton,
+  clampRetroFiProgress,
+} from "./components/RetroFiLoader";
+import {
+  USER_PREVIEW_TRIAGE_ISSUES,
+  isUserPreviewTriageModeEnabled,
+} from "./userPreviewTriage";
+// @ts-expect-error Frontend tests intentionally reuse the backend sustainability builder for contract coverage.
+import { buildSustainabilityImpact } from "../../api/server/sustainabilityImpact.mjs";
 import {
   BILL_UPLOAD_STEPS,
   CUSTOMER_RETROFIT_UI_NAMES,
@@ -35,7 +46,7 @@ import {
   selectGptProBatchIdForIndex,
   selectGptProPromptPathForBatch,
   SavingsPreviewCard,
-  UserPreviewProfileView
+  UserPreviewProfileView,
 } from "./App";
 
 function buildFirstmateTaskFixture(overrides: Record<string, unknown> = {}) {
@@ -70,7 +81,7 @@ function buildFirstmateTaskFixture(overrides: Record<string, unknown> = {}) {
     gptProRepairLabel: null,
     gptProRepairFallback: false,
     gptProRepairUnavailableReason: null,
-    ...overrides
+    ...overrides,
   };
 }
 
@@ -78,7 +89,7 @@ const liveShapedPayload = {
   generatedAt: "2026-06-30T12:00:00.000Z",
   summary: {
     matchedRetrofitCount: 1,
-    matchedOpportunityCount: 1
+    matchedOpportunityCount: 1,
   },
   user: {
     userId: "user-1",
@@ -91,7 +102,7 @@ const liveShapedPayload = {
     googleLinked: false,
     isFakeUser: false,
     createdAt: "2026-06-01T00:00:00.000Z",
-    lastLoginAt: null
+    lastLoginAt: null,
   },
   intake: {
     userId: "user-1",
@@ -101,7 +112,7 @@ const liveShapedPayload = {
       email: "client@example.com",
       phone: null,
       roleTitle: null,
-      contactPreference: null
+      contactPreference: null,
     },
     business: {
       companyName: "Test Business",
@@ -109,7 +120,7 @@ const liveShapedPayload = {
       industry: "Restaurant",
       organizationType: "business",
       organizationSize: "small",
-      headquarters: "San Francisco, CA"
+      headquarters: "San Francisco, CA",
     },
     site: {
       address: "1 Market St",
@@ -117,7 +128,7 @@ const liveShapedPayload = {
       gasUtilityProvider: null,
       ownershipStatus: "leased",
       buildingType: "restaurant",
-      squareFootage: "5000"
+      squareFootage: "5000",
     },
     sustainability: {
       goals: "Reduce energy use",
@@ -125,13 +136,13 @@ const liveShapedPayload = {
       interestedImprovements: ["lighting"],
       monthlyUtilitySpend: "2000",
       timeline: "this_year",
-      notes: null
+      notes: null,
     },
     uploadedUtilityFiles: [],
     utilityExtractedValues: [],
     siteEnergyProfile: null,
     createdAt: "2026-06-01T00:00:00.000Z",
-    updatedAt: "2026-06-01T00:00:00.000Z"
+    updatedAt: "2026-06-01T00:00:00.000Z",
   },
   retrofits: [
     {
@@ -146,14 +157,19 @@ const liveShapedPayload = {
           id: "led_lighting:tax-inclusive-costs",
           questionId: "tax_inclusive_costs",
           retrofitId: "led_lighting",
-          question: "Do you want to enter costs with tax included, or should RetroFi estimate them for you?",
+          question:
+            "Do you want to enter costs with tax included, or should RetroFi estimate them for you?",
           answerType: "select",
-          options: ["Enter tax-inclusive numbers", "Estimate for me (tax included)"],
-          whyItMatters: "Our standardized values include tax, so this keeps your estimate consistent.",
+          options: [
+            "Enter tax-inclusive numbers",
+            "Estimate for me (tax included)",
+          ],
+          whyItMatters:
+            "Our standardized values include tax, so this keeps your estimate consistent.",
           affects: ["Project cost", "Tax benefits", "Payback"],
           canonicalInputKey: "project_cost_tax_inclusion_preference",
           collectionStage: "pre_opportunity_estimate",
-          collectionSurface: "retrofit_scope_form"
+          collectionSurface: "retrofit_scope_form",
         },
         {
           id: "led_lighting:fixtures",
@@ -163,7 +179,7 @@ const liveShapedPayload = {
           answerType: "number",
           canonicalInputKey: "fixture_count",
           collectionStage: "pre_opportunity_estimate",
-          collectionSurface: "retrofit_scope_form"
+          collectionSurface: "retrofit_scope_form",
         },
         {
           id: "led_lighting:quote",
@@ -174,8 +190,8 @@ const liveShapedPayload = {
           options: ["Yes", "No", "In progress"],
           canonicalInputKey: "project_quote_status",
           collectionStage: "pre_opportunity_estimate",
-          collectionSurface: "project_quote_upload"
-        }
+          collectionSurface: "project_quote_upload",
+        },
       ],
       savingsPreview: {
         status: "calculated",
@@ -200,22 +216,22 @@ const liveShapedPayload = {
             label: "Electricity Bill Savings",
             amountCents: 50000,
             period: "monthly",
-            formula: "fixture count x usage reduction"
-          }
+            formula: "fixture count x usage reduction",
+          },
         ],
         selectedIncentiveScenario: {
-          opportunityIds: ["opp-1"]
+          opportunityIds: ["opp-1"],
         },
         calculationTrace: {
           assumptions: [
             {
               label: "fixture count",
-              value: 100
-            }
+              value: 100,
+            },
           ],
-          steps: []
+          steps: [],
         },
-        assumptions: []
+        assumptions: [],
       },
       opportunities: [
         {
@@ -236,38 +252,60 @@ const liveShapedPayload = {
             state: "CA",
             sourceName: "Utility",
             programType: "rebate",
-            administrator: "Example Utility"
-          }
-        }
-      ]
-    }
-  ]
+            administrator: "Example Utility",
+          },
+        },
+      ],
+    },
+  ],
 } as any;
 
 describe("retrofit recommendations preview", () => {
   it("maps live-shaped API payload into preview sections without local mock production data", () => {
     const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
 
-    expect(preview.dataSourceLabel).toBe("Live/API backend recommendation data");
+    expect(preview.dataSourceLabel).toBe(
+      "Live/API backend recommendation data",
+    );
     expect(preview.topRecommendation?.retrofitName).toBe("LED Lighting");
-    expect(preview.retrofits[0].scenarios.map((scenario) => scenario.name)).toEqual([
+    expect(
+      preview.retrofits[0].scenarios.map((scenario) => scenario.name),
+    ).toEqual([
       "Scenario A: Low upfront cost",
       "Scenario B: Best payback",
       "Scenario C: Highest total savings",
-      "Scenario D: Certification-focused"
+      "Scenario D: Certification-focused",
     ]);
     expect(preview.retrofits[0].name).toBe("LED Lighting");
-    expect(preview.retrofits[0].metrics.estimatedUpfrontProjectCost).toBe(1200000);
+    expect(preview.retrofits[0].metrics.estimatedUpfrontProjectCost).toBe(
+      1200000,
+    );
     expect(preview.retrofits[0].metrics.upfrontFinancialIncentive).toBe(300000);
-    expect(preview.retrofits[0].opportunities[0].name).toBe("Utility LED Rebate");
-    expect(preview.retrofits[0].opportunities[0].sourceUrl).toBe("https://example.com/source");
-    expect(preview.retrofits[0].opportunities[0].applicationUrl).toBe("https://example.com/apply");
+    expect(preview.retrofits[0].opportunities[0].name).toBe(
+      "Utility LED Rebate",
+    );
+    expect(preview.retrofits[0].opportunities[0].sourceUrl).toBe(
+      "https://example.com/source",
+    );
+    expect(preview.retrofits[0].opportunities[0].applicationUrl).toBe(
+      "https://example.com/apply",
+    );
     expect(preview.retrofits[0].opportunities[0].programWebsiteUrl).toBeNull();
-    expect(preview.retrofits[0].opportunities[0].applicationMethod).toBe("utility portal");
-    expect(preview.retrofits[0].opportunities[0].valueCap).toBe("No cap stored");
-    expect(preview.retrofits[0].opportunities[0].eligibleCostBasis).toBe("Not stored for this opportunity");
-    expect(preview.retrofits[0].operatingSavings[0].name).toBe("Electricity Bill Savings");
-    expect(preview.retrofits[0].editableAssumptions[0].label).toBe("fixture count");
+    expect(preview.retrofits[0].opportunities[0].applicationMethod).toBe(
+      "utility portal",
+    );
+    expect(preview.retrofits[0].opportunities[0].valueCap).toBe(
+      "No cap stored",
+    );
+    expect(preview.retrofits[0].opportunities[0].eligibleCostBasis).toBe(
+      "Not stored for this opportunity",
+    );
+    expect(preview.retrofits[0].operatingSavings[0].name).toBe(
+      "Electricity Bill Savings",
+    );
+    expect(preview.retrofits[0].editableAssumptions[0].label).toBe(
+      "fixture count",
+    );
     expect(preview.estimateCompletenessPercent).toBeLessThanOrEqual(65);
     expect(preview.retrofits[0].confidenceLabel).toBe("Medium");
   });
@@ -279,8 +317,12 @@ describe("retrofit recommendations preview", () => {
     expect(dashboard.implementedRetrofits).toEqual([]);
     expect(dashboard.dataQuality.hasImplementedRetrofits).toBe(false);
     expect(dashboard.dataQuality.basisLabel).toBe("unavailable");
-    expect(dashboard.dataQuality.notes[0]).toContain("No post-implementation retrofit records");
-    expect(dashboard.summary.kpis.map((metric) => metric.value)).toContain("Unavailable");
+    expect(dashboard.dataQuality.notes[0]).toContain(
+      "No post-implementation retrofit records",
+    );
+    expect(dashboard.summary.kpis.map((metric) => metric.value)).toContain(
+      "Unavailable",
+    );
   });
 
   it("derives dashboard aggregates from implemented retrofit data when available", () => {
@@ -294,21 +336,28 @@ describe("retrofit recommendations preview", () => {
           savingsPreview: {
             ...liveShapedPayload.retrofits[0].savingsPreview,
             actualAnnualSavingsCents: 720000,
-            implementationStatus: "operational"
-          }
-        }
-      ]
+            implementationStatus: "operational",
+          },
+        },
+      ],
     } as any;
     const preview = buildUserRetrofitPreviewResult(implementedPayload);
-    const dashboard = buildDashboardPerformanceData(implementedPayload, preview);
+    const dashboard = buildDashboardPerformanceData(
+      implementedPayload,
+      preview,
+    );
 
     expect(dashboard.implementedRetrofits).toHaveLength(1);
-    expect(dashboard.implementedRetrofits[0].implementationStatus).toBe("operational");
+    expect(dashboard.implementedRetrofits[0].implementationStatus).toBe(
+      "operational",
+    );
     expect(dashboard.financial.totalProjectCostCents).toBe(1200000);
     expect(dashboard.financial.incentivesReceivedCents).toBe(300000);
     expect(dashboard.financial.totalAnnualSavingsCents).toBe(720000);
     expect(dashboard.financial.projectedTenYearSavingsCents).toBe(7200000);
-    expect(dashboard.summary.kpis.map((metric) => metric.label)).toContain("Total Annual Savings");
+    expect(dashboard.summary.kpis.map((metric) => metric.label)).toContain(
+      "Total Annual Savings",
+    );
     expect(dashboard.dataQuality.hasImplementedRetrofits).toBe(true);
     expect(dashboard.dataQuality.basisLabel).toBe("actual");
   });
@@ -326,7 +375,7 @@ describe("retrofit recommendations preview", () => {
         reportingPeriod: {
           startDate: "2025-07-01",
           endDate: "2026-06-30",
-          label: "Jul 1, 2025 - Jun 30, 2026"
+          label: "Jul 1, 2025 - Jun 30, 2026",
         },
         properties: [],
         implementedRetrofits: [
@@ -373,10 +422,10 @@ describe("retrofit recommendations preview", () => {
                 certificationName: "Green Business",
                 creditsEarned: 6,
                 creditsPossible: 10,
-                requirementIds: ["req-energy"]
-              }
-            ]
-          }
+                requirementIds: ["req-energy"],
+              },
+            ],
+          },
         ],
         monthlyPerformanceRecords: [
           {
@@ -399,7 +448,7 @@ describe("retrofit recommendations preview", () => {
             baselineWaterGallons: 0,
             actualWaterGallons: 0,
             estimatedWaterGallons: 0,
-            dataSource: "synthetic_admin_test_case"
+            dataSource: "synthetic_admin_test_case",
           },
           {
             id: "month-2025-08",
@@ -421,8 +470,8 @@ describe("retrofit recommendations preview", () => {
             baselineWaterGallons: 0,
             actualWaterGallons: 0,
             estimatedWaterGallons: 0,
-            dataSource: "synthetic_admin_test_case"
-          }
+            dataSource: "synthetic_admin_test_case",
+          },
         ],
         incentivePerformanceRecords: [
           {
@@ -435,7 +484,7 @@ describe("retrofit recommendations preview", () => {
             receivedAmountCents: 400000,
             pendingAmountCents: 0,
             notClaimedAmountCents: 0,
-            dataSource: "synthetic_admin_test_case"
+            dataSource: "synthetic_admin_test_case",
           },
           {
             id: "inc-pending",
@@ -447,8 +496,8 @@ describe("retrofit recommendations preview", () => {
             receivedAmountCents: 0,
             pendingAmountCents: 75000,
             notClaimedAmountCents: 25000,
-            dataSource: "synthetic_admin_test_case"
-          }
+            dataSource: "synthetic_admin_test_case",
+          },
         ],
         documentRecords: [
           {
@@ -457,7 +506,7 @@ describe("retrofit recommendations preview", () => {
             name: "Contractor invoice",
             documentType: "invoice",
             status: "verified",
-            requiredFor: "incentive"
+            requiredFor: "incentive",
           },
           {
             id: "doc-photo",
@@ -465,8 +514,8 @@ describe("retrofit recommendations preview", () => {
             name: "Completion photo",
             documentType: "completion_photo",
             status: "missing",
-            requiredFor: "certification"
-          }
+            requiredFor: "certification",
+          },
         ],
         certificationRecords: [
           {
@@ -485,8 +534,8 @@ describe("retrofit recommendations preview", () => {
             verifiedDocuments: 1,
             retrofitsContributing: ["perf-led"],
             nextActions: ["Upload completion photo"],
-            dataSource: "synthetic_admin_test_case"
-          }
+            dataSource: "synthetic_admin_test_case",
+          },
         ],
         certificationRequirements: [
           {
@@ -497,7 +546,7 @@ describe("retrofit recommendations preview", () => {
             status: "complete",
             pointsEarned: 6,
             pointsPossible: 10,
-            required: true
+            required: true,
           },
           {
             id: "req-docs",
@@ -507,14 +556,15 @@ describe("retrofit recommendations preview", () => {
             status: "missing",
             pointsEarned: 0,
             pointsPossible: 4,
-            required: true
-          }
+            required: true,
+          },
         ],
         nextBestActions: [
           {
             id: "action-doc",
             title: "Upload completion photo",
-            description: "Add the post-install photo needed for the rebate file.",
+            description:
+              "Add the post-install photo needed for the rebate file.",
             category: "document",
             priority: "high",
             priorityScore: 90,
@@ -525,15 +575,18 @@ describe("retrofit recommendations preview", () => {
             relatedDocumentId: "doc-photo",
             reason: "Missing proof blocks incentive closeout.",
             status: "open",
-            dataSource: "synthetic_admin_test_case"
-          }
+            dataSource: "synthetic_admin_test_case",
+          },
         ],
-        dataQuality: { status: "complete", notes: [], warnings: [] }
-      }
+        dataQuality: { status: "complete", notes: [], warnings: [] },
+      },
     } as any;
 
     const preview = buildUserRetrofitPreviewResult(postInstallPayload);
-    const dashboard = buildDashboardPerformanceData(postInstallPayload, preview);
+    const dashboard = buildDashboardPerformanceData(
+      postInstallPayload,
+      preview,
+    );
 
     expect(dashboard.dataQuality.basisLabel).toBe("modeled");
     expect(dashboard.periodLabel).toBe("Jul 1, 2025 - Jun 30, 2026");
@@ -541,30 +594,59 @@ describe("retrofit recommendations preview", () => {
     expect(dashboard.financial.incentivesReceivedCents).toBe(500000);
     expect(dashboard.financial.incentivesPendingCents).toBe(75000);
     expect(dashboard.financial.incentivesNotClaimedCents).toBe(25000);
-    expect(dashboard.financial.cashFlowSeries.map((point) => point.projected)).toEqual([-9600, -8900]);
+    expect(
+      dashboard.financial.cashFlowSeries.map((point) => point.projected),
+    ).toEqual([-9600, -8900]);
     expect(dashboard.financial.topSavingsRetrofits[0].value).toBe(8400);
-    expect(dashboard.environmental.impactSeries.map((point) => point.projected)).toEqual([0.9, 2.1]);
-    expect(dashboard.certifications.documentReadiness.reduce((sum, row) => sum + row.ready, 0)).toBe(1);
-    expect(dashboard.certifications.documentReadiness.reduce((sum, row) => sum + row.missing, 0)).toBe(1);
+    expect(
+      dashboard.environmental.impactSeries.map((point) => point.projected),
+    ).toEqual([0.9, 2.1]);
+    expect(
+      dashboard.certifications.documentReadiness.reduce(
+        (sum, row) => sum + row.ready,
+        0,
+      ),
+    ).toBe(1);
+    expect(
+      dashboard.certifications.documentReadiness.reduce(
+        (sum, row) => sum + row.missing,
+        0,
+      ),
+    ).toBe(1);
     expect(dashboard.certifications.programs[0].progressPercent).toBe(66);
-    expect(dashboard.certifications.programs[0].documentReadinessPercent).toBe(50);
-    expect(dashboard.certifications.nextActions[0].title).toBe("Upload completion photo");
+    expect(dashboard.certifications.programs[0].documentReadinessPercent).toBe(
+      50,
+    );
+    expect(dashboard.certifications.nextActions[0].title).toBe(
+      "Upload completion photo",
+    );
   });
 
   it("defines the post-implementation dashboard structure and source-backed empty states", async () => {
     const fsModuleName = "node:fs";
     const { readFileSync } = await import(fsModuleName);
     const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
-    const styles = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
+    const styles = readFileSync(
+      new URL("./styles.css", import.meta.url),
+      "utf8",
+    );
     const dashboardStart = source.indexOf("function DashboardPerformanceHub(");
-    const dashboardSource = source.slice(dashboardStart, source.indexOf("function RetrofitPickerView", dashboardStart));
+    const dashboardSource = source.slice(
+      dashboardStart,
+      source.indexOf("function RetrofitPickerView", dashboardStart),
+    );
     const mainPagesStart = source.indexOf("const DASHBOARD_MAIN_PAGES");
-    const mainPagesSource = source.slice(mainPagesStart, source.indexOf("const FINANCIAL_DASHBOARD_TABS", mainPagesStart));
+    const mainPagesSource = source.slice(
+      mainPagesStart,
+      source.indexOf("const FINANCIAL_DASHBOARD_TABS", mainPagesStart),
+    );
 
     expect(source).toContain("export function buildDashboardPerformanceData");
     expect(source).toContain("DASHBOARD_IMPLEMENTED_STATUSES");
     expect(source).toContain("normalizeDashboardImplementationStatus");
-    expect(source).toContain("No post-implementation retrofit records were found");
+    expect(source).toContain(
+      "No post-implementation retrofit records were found",
+    );
     expect(mainPagesSource).toContain("Summary");
     expect(mainPagesSource).toContain("Financial Performance");
     expect(mainPagesSource).toContain("Environmental Impact");
@@ -614,11 +696,35 @@ describe("retrofit recommendations preview", () => {
     const mappedIds = Object.keys(CUSTOMER_RETROFIT_UI_NAMES).sort();
 
     expect(mappedIds).toEqual(taxonomyIds);
-    expect(customerRetrofitUiName({ retrofitTypeId: "insulation_upgrade", displayName: "Insulation upgrade" })).toBe("Insulation");
-    expect(customerRetrofitUiName({ retrofitTypeId: "high_efficiency_hvac_replacement", displayName: "High-efficiency HVAC replacement" })).toBe("High-efficiency HVAC");
-    expect(customerRetrofitUiName({ retrofitTypeId: "engineering_feasibility_study", displayName: "Engineering feasibility study" })).toBe("Feasibility study");
-    expect(customerRetrofitUiName({ retrofitTypeId: "custom_led", displayName: "LED Lighting Upgrade" })).toBe("LED Lighting");
-    expect(Object.values(CUSTOMER_RETROFIT_UI_NAMES).filter((name) => /\b(retrofit|upgrade|replacement|installation|system)\b$/i.test(name))).toEqual([]);
+    expect(
+      customerRetrofitUiName({
+        retrofitTypeId: "insulation_upgrade",
+        displayName: "Insulation upgrade",
+      }),
+    ).toBe("Insulation");
+    expect(
+      customerRetrofitUiName({
+        retrofitTypeId: "high_efficiency_hvac_replacement",
+        displayName: "High-efficiency HVAC replacement",
+      }),
+    ).toBe("High-efficiency HVAC");
+    expect(
+      customerRetrofitUiName({
+        retrofitTypeId: "engineering_feasibility_study",
+        displayName: "Engineering feasibility study",
+      }),
+    ).toBe("Feasibility study");
+    expect(
+      customerRetrofitUiName({
+        retrofitTypeId: "custom_led",
+        displayName: "LED Lighting Upgrade",
+      }),
+    ).toBe("LED Lighting");
+    expect(
+      Object.values(CUSTOMER_RETROFIT_UI_NAMES).filter((name) =>
+        /\b(retrofit|upgrade|replacement|installation|system)\b$/i.test(name),
+      ),
+    ).toEqual([]);
   });
 
   it("does not label negative recurring impact as annual savings in retrofit tabs", () => {
@@ -637,16 +743,22 @@ describe("retrofit recommendations preview", () => {
             annualSavingsCents: -432000,
             monthlySavingsCents: -36000,
             netAnnualRecurringSavingsCents: -432000,
-            netMonthlyRecurringSavingsCents: -36000
-          }
-        }
-      ]
+            netMonthlyRecurringSavingsCents: -36000,
+          },
+        },
+      ],
     } as any;
     const preview = buildUserRetrofitPreviewResult(negativeImpactPayload);
 
-    expect(preview.retrofits[0].tabSummary.primaryMetricLabel).toBe("Net impact");
-    expect(preview.retrofits[0].tabSummary.fallback).toBe("Needs fuel baseline");
-    expect(String(preview.retrofits[0].tabSummary.primaryMetricValue || "")).not.toContain("-$");
+    expect(preview.retrofits[0].tabSummary.primaryMetricLabel).toBe(
+      "Net impact",
+    );
+    expect(preview.retrofits[0].tabSummary.fallback).toBe(
+      "Needs fuel baseline",
+    );
+    expect(
+      String(preview.retrofits[0].tabSummary.primaryMetricValue || ""),
+    ).not.toContain("-$");
   });
 
   it("renders all six sustainability metrics and calculation details from the backend contract", () => {
@@ -656,7 +768,7 @@ describe("retrofit recommendations preview", () => {
       quality: {
         confidence: "high",
         source: "bill_line_deltas",
-        notes: []
+        notes: [],
       },
       metrics: {
         waterConservationGallonsPerYear: {
@@ -669,8 +781,22 @@ describe("retrofit recommendations preview", () => {
           sourceField: "annual_water_use_delta",
           formulaId: "sustainability.water_conservation_v2",
           assumptions: ["Water deltas are treated as annual gallons."],
-          quality: { confidence: "high", source: "bill_line_deltas", notes: [] },
-          trace: { sourceDeltas: [{ id: "water", canonicalField: "annual_water_use_delta", deltaValue: -5000, unit: "gallons/year", period: "annual" }] }
+          quality: {
+            confidence: "high",
+            source: "bill_line_deltas",
+            notes: [],
+          },
+          trace: {
+            sourceDeltas: [
+              {
+                id: "water",
+                canonicalField: "annual_water_use_delta",
+                deltaValue: -5000,
+                unit: "gallons/year",
+                period: "annual",
+              },
+            ],
+          },
         },
         scope1ThermReductionPerYear: {
           id: "scope1ThermReductionPerYear",
@@ -681,9 +807,25 @@ describe("retrofit recommendations preview", () => {
           value: 12,
           sourceField: "annual_therms_delta",
           formulaId: "sustainability.scope1_therm_reduction_v2",
-          assumptions: ["Therm deltas are read directly from annual therm bill-line changes."],
-          quality: { confidence: "high", source: "bill_line_deltas", notes: [] },
-          trace: { sourceDeltas: [{ id: "therm", canonicalField: "annual_therms_delta", deltaValue: -12, unit: "therms/year", period: "annual" }] }
+          assumptions: [
+            "Therm deltas are read directly from annual therm bill-line changes.",
+          ],
+          quality: {
+            confidence: "high",
+            source: "bill_line_deltas",
+            notes: [],
+          },
+          trace: {
+            sourceDeltas: [
+              {
+                id: "therm",
+                canonicalField: "annual_therms_delta",
+                deltaValue: -12,
+                unit: "therms/year",
+                period: "annual",
+              },
+            ],
+          },
         },
         scope2ElectricityReductionKwhPerYear: {
           id: "scope2ElectricityReductionKwhPerYear",
@@ -694,9 +836,25 @@ describe("retrofit recommendations preview", () => {
           value: 1000,
           sourceField: "annual_kwh_delta",
           formulaId: "sustainability.scope2_kwh_reduction_v2",
-          assumptions: ["Electric deltas are read directly from annual kWh bill-line changes."],
-          quality: { confidence: "high", source: "bill_line_deltas", notes: [] },
-          trace: { sourceDeltas: [{ id: "kwh", canonicalField: "annual_kwh_delta", deltaValue: -1000, unit: "kWh/year", period: "annual" }] }
+          assumptions: [
+            "Electric deltas are read directly from annual kWh bill-line changes.",
+          ],
+          quality: {
+            confidence: "high",
+            source: "bill_line_deltas",
+            notes: [],
+          },
+          trace: {
+            sourceDeltas: [
+              {
+                id: "kwh",
+                canonicalField: "annual_kwh_delta",
+                deltaValue: -1000,
+                unit: "kWh/year",
+                period: "annual",
+              },
+            ],
+          },
         },
         siteEuiReductionKbtuPerSquareFootPerYear: {
           id: "siteEuiReductionKbtuPerSquareFootPerYear",
@@ -707,14 +865,32 @@ describe("retrofit recommendations preview", () => {
           value: 0.4612,
           sourceField: "annual_kwh_delta+annual_therms_delta",
           formulaId: "sustainability.site_eui_reduction_v2",
-          assumptions: ["Site EUI is computed from annual electric and gas bill-line deltas only."],
-          quality: { confidence: "high", source: "bill_line_deltas", notes: [] },
+          assumptions: [
+            "Site EUI is computed from annual electric and gas bill-line deltas only.",
+          ],
+          quality: {
+            confidence: "high",
+            source: "bill_line_deltas",
+            notes: [],
+          },
           trace: {
             sourceDeltas: [
-              { id: "kwh", canonicalField: "annual_kwh_delta", deltaValue: -1000, unit: "kWh/year", period: "annual" },
-              { id: "therm", canonicalField: "annual_therms_delta", deltaValue: -12, unit: "therms/year", period: "annual" }
-            ]
-          }
+              {
+                id: "kwh",
+                canonicalField: "annual_kwh_delta",
+                deltaValue: -1000,
+                unit: "kWh/year",
+                period: "annual",
+              },
+              {
+                id: "therm",
+                canonicalField: "annual_therms_delta",
+                deltaValue: -12,
+                unit: "therms/year",
+                period: "annual",
+              },
+            ],
+          },
         },
         gridPeakDemandReductionKw: {
           id: "gridPeakDemandReductionKw",
@@ -725,9 +901,25 @@ describe("retrofit recommendations preview", () => {
           value: 8,
           sourceField: "peak_kw_delta",
           formulaId: "sustainability.grid_peak_demand_reduction_v2",
-          assumptions: ["Peak demand changes are read directly from peak kW bill-line changes."],
-          quality: { confidence: "high", source: "bill_line_deltas", notes: [] },
-          trace: { sourceDeltas: [{ id: "peak", canonicalField: "peak_kw_delta", deltaValue: -8, unit: "kW", period: "monthly" }] }
+          assumptions: [
+            "Peak demand changes are read directly from peak kW bill-line changes.",
+          ],
+          quality: {
+            confidence: "high",
+            source: "bill_line_deltas",
+            notes: [],
+          },
+          trace: {
+            sourceDeltas: [
+              {
+                id: "peak",
+                canonicalField: "peak_kw_delta",
+                deltaValue: -8,
+                unit: "kW",
+                period: "monthly",
+              },
+            ],
+          },
         },
         annualOperationalCO2eReductionKgPerYear: {
           id: "annualOperationalCO2eReductionKgPerYear",
@@ -739,16 +931,42 @@ describe("retrofit recommendations preview", () => {
           sourceField: "annual_kwh_delta+annual_therms_delta",
           formulaId: "sustainability.operational_co2e_v2",
           assumptions: ["Operational CO2e is limited to Scope 1 and Scope 2."],
-          quality: { confidence: "high", source: "bill_line_deltas", sourceVintage: "2025 EPA factors", notes: [] },
+          quality: {
+            confidence: "high",
+            source: "bill_line_deltas",
+            sourceVintage: "2025 EPA factors",
+            notes: [],
+          },
           trace: {
             sourceDeltas: [
-              { id: "kwh", canonicalField: "annual_kwh_delta", deltaValue: -1000, unit: "kWh/year", period: "annual" },
-              { id: "therm", canonicalField: "annual_therms_delta", deltaValue: -12, unit: "therms/year", period: "annual" }
+              {
+                id: "kwh",
+                canonicalField: "annual_kwh_delta",
+                deltaValue: -1000,
+                unit: "kWh/year",
+                period: "annual",
+              },
+              {
+                id: "therm",
+                canonicalField: "annual_therms_delta",
+                deltaValue: -12,
+                unit: "therms/year",
+                period: "annual",
+              },
             ],
             boundary: {
-              included: ["Scope 1 direct on-site natural gas combustion", "Scope 2 purchased electricity use"],
-              excluded: ["water", "transportation", "waste", "refrigerants", "embodied carbon"],
-              note: "Operational CO2e is limited to direct combustion and purchased electricity."
+              included: [
+                "Scope 1 direct on-site natural gas combustion",
+                "Scope 2 purchased electricity use",
+              ],
+              excluded: [
+                "water",
+                "transportation",
+                "waste",
+                "refrigerants",
+                "embodied carbon",
+              ],
+              note: "Operational CO2e is limited to direct combustion and purchased electricity.",
             },
             components: [
               {
@@ -756,29 +974,43 @@ describe("retrofit recommendations preview", () => {
                 sourceMetricId: "scope1ThermReductionPerYear",
                 status: "source_calculated",
                 valueKgCO2ePerYear: 63.74,
-                factor: { sourceLabel: "EPA stationary combustion factor" }
+                factor: { sourceLabel: "EPA stationary combustion factor" },
               },
               {
                 scope: "Scope 2",
                 sourceMetricId: "scope2ElectricityReductionKwhPerYear",
                 status: "source_calculated",
                 valueKgCO2ePerYear: 195.04,
-                factor: { sourceLabel: "WECC California subregion output emission rate" }
-              }
+                factor: {
+                  sourceLabel: "WECC California subregion output emission rate",
+                },
+              },
             ],
-            valueKgCO2ePerYear: 258.78
-          }
-        }
-      }
+            valueKgCO2ePerYear: 258.78,
+          },
+        },
+      },
     } as any;
 
-    expect(sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear.value).toBeCloseTo(
-      sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear.trace.valueKgCO2ePerYear ?? 0,
-      6
+    expect(
+      sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear
+        .value,
+    ).toBeCloseTo(
+      sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear.trace
+        .valueKgCO2ePerYear ?? 0,
+      6,
     );
 
     const html = renderToStaticMarkup(
-      <SavingsPreviewCard preview={{ ...liveShapedPayload.retrofits[0].savingsPreview, sustainabilityImpact } as any} squareFootage={10000} />
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            sustainabilityImpact,
+          } as any
+        }
+        squareFootage={10000}
+      />,
     );
 
     expect(html).toContain("Sustainability impact");
@@ -798,11 +1030,53 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("Not calculated");
   });
 
+  it("renders mixed site EUI provenance as source calculated when one scope is not applicable", () => {
+    const sustainabilityImpact = buildSustainabilityImpact({
+      squareFootage: 10000,
+      retrofitTypeId: "rt_modeled_electric_kwh_reduction",
+      sourceModelInputs: { stateCode: "CA" },
+      billLineDeltas: [
+        {
+          id: "electric",
+          domain: "electric",
+          canonicalField: "annual_kwh_delta",
+          deltaValue: -176,
+          unit: "kWh/year",
+          period: "annual",
+        },
+      ],
+    });
+
+    const html = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            sustainabilityImpact,
+          } as any
+        }
+        squareFootage={10000}
+      />,
+    );
+
+    const siteEuiSectionStart = html.indexOf("Site EUI reduction");
+    const siteEuiSectionEnd = html.indexOf("Grid peak-demand reduction");
+    const siteEuiSection = html.slice(siteEuiSectionStart, siteEuiSectionEnd);
+
+    expect(html).toContain("Source calculated");
+    expect(html).toContain("0.06 kBtu/sq ft/year");
+    expect(siteEuiSection).not.toContain("No causal effect");
+  });
+
   it("renders unavailable, estimated, not-applicable, and increased-consumption sustainability states", () => {
     const sustainabilityImpact = {
       schemaVersion: "sustainability-impact-v2",
       status: "partial",
-      quality: { confidence: "mixed", source: "bill_line_deltas", notes: ["Missing square footage."] },
+      quality: {
+        confidence: "mixed",
+        source: "bill_line_deltas",
+        notes: ["Missing square footage."],
+      },
       metrics: {
         waterConservationGallonsPerYear: {
           id: "waterConservationGallonsPerYear",
@@ -813,8 +1087,14 @@ describe("retrofit recommendations preview", () => {
           value: 0,
           sourceField: "annual_water_use_delta",
           formulaId: "sustainability.water_conservation_v2",
-          assumptions: ["Water savings are not applicable for this retrofit archetype in the current model."],
-          quality: { confidence: "high", source: "not_applicable", notes: ["Water bill deltas were missing."] }
+          assumptions: [
+            "Water savings are not applicable for this retrofit archetype in the current model.",
+          ],
+          quality: {
+            confidence: "high",
+            source: "not_applicable",
+            notes: ["Water bill deltas were missing."],
+          },
         },
         scope1ThermReductionPerYear: {
           id: "scope1ThermReductionPerYear",
@@ -826,7 +1106,11 @@ describe("retrofit recommendations preview", () => {
           sourceField: "annual_therms_delta",
           formulaId: "sustainability.scope1_therm_reduction_v2",
           assumptions: [],
-          quality: { confidence: "high", source: "bill_line_deltas", notes: [] }
+          quality: {
+            confidence: "high",
+            source: "bill_line_deltas",
+            notes: [],
+          },
         },
         scope2ElectricityReductionKwhPerYear: {
           id: "scope2ElectricityReductionKwhPerYear",
@@ -838,7 +1122,11 @@ describe("retrofit recommendations preview", () => {
           sourceField: "annual_kwh_delta",
           formulaId: "sustainability.scope2_kwh_reduction_v2",
           assumptions: [],
-          quality: { confidence: "high", source: "bill_line_deltas", notes: [] }
+          quality: {
+            confidence: "high",
+            source: "bill_line_deltas",
+            notes: [],
+          },
         },
         siteEuiReductionKbtuPerSquareFootPerYear: {
           id: "siteEuiReductionKbtuPerSquareFootPerYear",
@@ -849,8 +1137,14 @@ describe("retrofit recommendations preview", () => {
           value: 0,
           sourceField: "annual_kwh_delta+annual_therms_delta",
           formulaId: "sustainability.site_eui_reduction_v2",
-          assumptions: ["Site EUI is unavailable until square footage and at least one energy stream are available."],
-          quality: { confidence: "low", source: "missing_input", notes: ["Square footage was missing or could not be parsed."] }
+          assumptions: [
+            "Site EUI is unavailable until square footage and at least one energy stream are available.",
+          ],
+          quality: {
+            confidence: "low",
+            source: "missing_input",
+            notes: ["Square footage was missing or could not be parsed."],
+          },
         },
         gridPeakDemandReductionKw: {
           id: "gridPeakDemandReductionKw",
@@ -862,7 +1156,11 @@ describe("retrofit recommendations preview", () => {
           sourceField: "peak_kw_delta",
           formulaId: "sustainability.grid_peak_demand_reduction_v2",
           assumptions: [],
-          quality: { confidence: "high", source: "bill_line_deltas", notes: [] }
+          quality: {
+            confidence: "high",
+            source: "bill_line_deltas",
+            notes: [],
+          },
         },
         annualOperationalCO2eReductionKgPerYear: {
           id: "annualOperationalCO2eReductionKgPerYear",
@@ -873,13 +1171,29 @@ describe("retrofit recommendations preview", () => {
           value: 131.3,
           sourceField: "annual_kwh_delta+annual_therms_delta",
           formulaId: "sustainability.operational_co2e_v2",
-          assumptions: ["Annual operational CO2e is limited to Scope 1 and Scope 2."],
-          quality: { confidence: "medium", source: "bill_line_deltas", sourceVintage: "2025 EPA factors", notes: [] },
+          assumptions: [
+            "Annual operational CO2e is limited to Scope 1 and Scope 2.",
+          ],
+          quality: {
+            confidence: "medium",
+            source: "bill_line_deltas",
+            sourceVintage: "2025 EPA factors",
+            notes: [],
+          },
           trace: {
             boundary: {
-              included: ["Scope 1 direct on-site natural gas combustion", "Scope 2 purchased electricity use"],
-              excluded: ["water", "transportation", "waste", "refrigerants", "embodied carbon"],
-              note: "Operational CO2e is limited to direct combustion and purchased electricity."
+              included: [
+                "Scope 1 direct on-site natural gas combustion",
+                "Scope 2 purchased electricity use",
+              ],
+              excluded: [
+                "water",
+                "transportation",
+                "waste",
+                "refrigerants",
+                "embodied carbon",
+              ],
+              note: "Operational CO2e is limited to direct combustion and purchased electricity.",
             },
             components: [
               {
@@ -887,33 +1201,48 @@ describe("retrofit recommendations preview", () => {
                 sourceMetricId: "scope1ThermReductionPerYear",
                 status: "increased_consumption",
                 valueKgCO2ePerYear: -63.74,
-                factor: { sourceLabel: "EPA stationary combustion factor" }
+                factor: { sourceLabel: "EPA stationary combustion factor" },
               },
               {
                 scope: "Scope 2",
                 sourceMetricId: "scope2ElectricityReductionKwhPerYear",
                 status: "estimated",
                 valueKgCO2ePerYear: 195.04,
-                factor: { sourceLabel: "WECC California subregion output emission rate" }
-              }
+                factor: {
+                  sourceLabel: "WECC California subregion output emission rate",
+                },
+              },
             ],
-            valueKgCO2ePerYear: 131.3
-          }
-        }
-      }
+            valueKgCO2ePerYear: 131.3,
+          },
+        },
+      },
     } as any;
 
-    const co2eMetric = sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear;
-    expect(co2eMetric.value).toBeCloseTo(co2eMetric.trace.valueKgCO2ePerYear ?? 0, 6);
+    const co2eMetric =
+      sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear;
+    expect(co2eMetric.value).toBeCloseTo(
+      co2eMetric.trace.valueKgCO2ePerYear ?? 0,
+      6,
+    );
     expect(
       (co2eMetric.trace.components || []).reduce(
-        (sum: number, component: { valueKgCO2ePerYear?: number | null }) => sum + Number(component.valueKgCO2ePerYear || 0),
-        0
-      )
+        (sum: number, component: { valueKgCO2ePerYear?: number | null }) =>
+          sum + Number(component.valueKgCO2ePerYear || 0),
+        0,
+      ),
     ).toBeCloseTo(co2eMetric.trace.valueKgCO2ePerYear ?? 0, 6);
 
     const html = renderToStaticMarkup(
-      <SavingsPreviewCard preview={{ ...liveShapedPayload.retrofits[0].savingsPreview, sustainabilityImpact } as any} squareFootage={null} />
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            sustainabilityImpact,
+          } as any
+        }
+        squareFootage={null}
+      />,
     );
 
     expect(html).toContain("Unavailable");
@@ -929,19 +1258,24 @@ describe("retrofit recommendations preview", () => {
       ...liveShapedPayload,
       summary: {
         matchedRetrofitCount: 7,
-        matchedOpportunityCount: 1
+        matchedOpportunityCount: 1,
       },
       retrofits: Array.from({ length: 7 }, (_, index) => ({
         ...liveShapedPayload.retrofits[0],
         retrofitTypeId: `led_lighting_${index + 1}`,
-        displayName: index === 0 ? "LED Lighting Upgrade" : `Retrofit Option ${index + 1}`,
+        displayName:
+          index === 0 ? "LED Lighting Upgrade" : `Retrofit Option ${index + 1}`,
         savingsPreview: {
           ...liveShapedPayload.retrofits[0].savingsPreview,
           retrofitTypeId: `led_lighting_${index + 1}`,
-          retrofitDisplayName: index === 0 ? "LED Lighting Upgrade" : `Retrofit Option ${index + 1}`
+          retrofitDisplayName:
+            index === 0
+              ? "LED Lighting Upgrade"
+              : `Retrofit Option ${index + 1}`,
         },
-        opportunities: index === 0 ? liveShapedPayload.retrofits[0].opportunities : []
-      }))
+        opportunities:
+          index === 0 ? liveShapedPayload.retrofits[0].opportunities : [],
+      })),
     } as any;
 
     const html = renderToStaticMarkup(
@@ -955,24 +1289,30 @@ describe("retrofit recommendations preview", () => {
         hideBillData={true}
         payload={multiRetrofitPayload}
         title="Retrofit Recommendations"
-      />
+      />,
     );
 
     expect(html).toContain("Retrieve your estimates");
-    expect(html).toContain("Upload your electric, water, gas, and waste bills to continue");
+    expect(html).toContain(
+      "Upload your electric, water, gas, and waste bills to continue",
+    );
     expect(html).toContain("Upload bills");
     expect(html).toContain("upload-cloud-icon");
     expect(html).not.toContain(">UP<");
     expect(html).not.toContain("Select a retrofit to explore");
-    expect(html).not.toContain("Choose one retrofit to see opportunities, detailed metrics, and next steps.");
+    expect(html).not.toContain(
+      "Choose one retrofit to see opportunities, detailed metrics, and next steps.",
+    );
     expect(html).toContain("Sort by");
-    expect(html).toContain("<option value=\"recommended\" selected=\"\">Recommended</option>");
-    expect(html).toContain("<option value=\"total_savings\">Savings</option>");
-    expect(html).toContain("<option value=\"payback\">Payback</option>");
-    expect(html).toContain("<option value=\"upfront_cost\">Cost</option>");
+    expect(html).toContain(
+      '<option value="recommended" selected="">Recommended</option>',
+    );
+    expect(html).toContain('<option value="total_savings">Savings</option>');
+    expect(html).toContain('<option value="payback">Payback</option>');
+    expect(html).toContain('<option value="upfront_cost">Cost</option>');
     expect(html).not.toContain("Search retrofits");
-    expect(html).toContain("aria-label=\"Grid view\"");
-    expect(html).toContain("aria-label=\"Panel view\"");
+    expect(html).toContain('aria-label="Grid view"');
+    expect(html).toContain('aria-label="Panel view"');
     expect(html).toContain("picker-view-icon");
     expect(html).not.toContain("picker-view-check-icon");
     expect(html).toContain(">Grid<");
@@ -982,14 +1322,16 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("retrofi-brand-icon");
     expect(html).not.toContain("sidebar-wordmark");
     expect(html).toContain("Retrofits");
-    expect(html).toContain("aria-expanded=\"false\"");
+    expect(html).toContain('aria-expanded="false"');
     expect(html).not.toContain("sidebar-retrofit-list");
     expect(html).not.toContain("sidebar-retrofit-item");
     expect(html).toContain("Profile info");
     expect(html).toContain("Dashboard");
     expect(html).toContain("Instructions");
-    expect(html.indexOf("Dashboard")).toBeLessThan(html.indexOf("Instructions"));
-    expect(html).toContain("data-instructions-nav-item=\"true\"");
+    expect(html.indexOf("Dashboard")).toBeLessThan(
+      html.indexOf("Instructions"),
+    );
+    expect(html).toContain('data-instructions-nav-item="true"');
     expect(html).toContain("Collapse retrofit navigation");
     expect(html).not.toContain("The Process");
     expect(html).not.toContain("Customer preview bar");
@@ -997,7 +1339,9 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("Collapse sidebar");
     expect(html).toContain("LED Lighting");
     expect(html).not.toContain("LED Lighting Upgrade");
-    expect(html).toContain("Replace existing lights with high-efficiency LEDs.");
+    expect(html).toContain(
+      "Replace existing lights with high-efficiency LEDs.",
+    );
     expect(html).not.toContain("Programs related to");
     expect(html).toContain("Savings");
     expect(html).toContain("Cost");
@@ -1008,18 +1352,30 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("metric-placeholder--question");
     expect(html).not.toContain("data-tooltip=");
     expect(html).toContain("Upload bills to estimate savings.");
-    expect(html).toContain("Answer retrofit-specific questions to estimate cost.");
-    expect(html).not.toContain("Answer retrofit-specific questions or add a quote");
-    expect(html).toContain("Upload bills and answer retrofit-specific questions to estimate payback.");
-    expect(html).not.toContain("Upload bills and answer retrofit-specific questions. Upload bills and answer retrofit-specific questions");
+    expect(html).toContain(
+      "Answer retrofit-specific questions to estimate cost.",
+    );
+    expect(html).not.toContain(
+      "Answer retrofit-specific questions or add a quote",
+    );
+    expect(html).toContain(
+      "Upload bills and answer retrofit-specific questions to estimate payback.",
+    );
+    expect(html).not.toContain(
+      "Upload bills and answer retrofit-specific questions. Upload bills and answer retrofit-specific questions",
+    );
     expect(html).toContain("metric-placeholder--both");
     expect(html).toContain("metric-savings-icon");
     expect(html).toContain("metric-cost-icon");
     expect(html).toContain("metric-payback-icon");
     expect(html).toContain("metric-impact-icon");
     expect(html).toContain("retrofit-picker-metric-label");
-    expect((html.match(/class=\"retrofit-picker-card\"/g) || []).length).toBe(6);
-    expect((html.match(/class=\"retrofit-readiness-row\"/g) || []).length).toBe(6);
+    expect((html.match(/class=\"retrofit-picker-card\"/g) || []).length).toBe(
+      6,
+    );
+    expect((html.match(/class=\"retrofit-readiness-row\"/g) || []).length).toBe(
+      6,
+    );
     expect(html).toContain("Bills");
     expect(html).toContain("Questions");
     expect(html).toContain("Estimate");
@@ -1053,9 +1409,9 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("Incentives included");
     expect(html).not.toContain("Operating savings included");
     expect(html).not.toContain("Active retrofit workspace tabs");
-    expect(html).not.toContain("data-workspace-tab=\"environmental\"");
-    expect(html).not.toContain("data-workspace-panel=\"environmental\"");
-    expect(html).not.toContain("data-workspace-panel=\"overview\"");
+    expect(html).not.toContain('data-workspace-tab="environmental"');
+    expect(html).not.toContain('data-workspace-panel="environmental"');
+    expect(html).not.toContain('data-workspace-panel="overview"');
     expect(html).not.toContain("Summary across selected retrofits");
     expect(html).not.toContain("No major missing inputs flagged");
     expect(html).not.toContain("Scenario B: Best payback");
@@ -1092,13 +1448,17 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("Open program source");
     expect(html).not.toContain("Included in current estimate");
     expect(html).not.toContain("View details");
-    expect(html).not.toContain("aria-label=\"Confirm retrofit plan\"");
+    expect(html).not.toContain('aria-label="Confirm retrofit plan"');
     expect(html).not.toContain("selected-scenario-grid");
     expect(html).not.toContain(">Goal:");
     expect(html).not.toContain("Premium insight");
-    expect(html).not.toContain("Preview-only until a safe persistence API is available");
+    expect(html).not.toContain(
+      "Preview-only until a safe persistence API is available",
+    );
     expect(html).not.toContain("Backend savings preview is available");
-    expect(html).not.toContain("Selected opportunities update counts now; financial recalculation requires the calculation engine");
+    expect(html).not.toContain(
+      "Selected opportunities update counts now; financial recalculation requires the calculation engine",
+    );
     expect(html).not.toContain("Financing ignored in V1");
     expect(html).not.toContain("SOURCE_DSIRE");
   });
@@ -1110,25 +1470,38 @@ describe("retrofit recommendations preview", () => {
       eyebrow: "Admin-only portal preview",
       intro: "Review recommended retrofits.",
       isLoading: false,
-      loadingMessage: "Loading live retrofit recommendations for this client...",
+      loadingMessage:
+        "Loading live retrofit recommendations for this client...",
       hideBillData: true,
       payload: liveShapedPayload as any,
-      title: "Retrofit Recommendations"
+      title: "Retrofit Recommendations",
     };
-    const offHtml = renderToStaticMarkup(<RetrofitRecommendationsPreview {...baseProps} />);
-    const onHtml = renderToStaticMarkup(<RetrofitRecommendationsPreview {...baseProps} triageMode />);
+    const offHtml = renderToStaticMarkup(
+      <RetrofitRecommendationsPreview {...baseProps} />,
+    );
+    const onHtml = renderToStaticMarkup(
+      <RetrofitRecommendationsPreview {...baseProps} triageMode />,
+    );
 
     expect(isUserPreviewTriageModeEnabled("?triage=1")).toBe(true);
     expect(isUserPreviewTriageModeEnabled("?triage=true")).toBe(true);
     expect(isUserPreviewTriageModeEnabled("?customerPreview=1")).toBe(false);
-    expect(Object.keys(USER_PREVIEW_TRIAGE_ISSUES)).toContain("picker.environmental-impact.placeholder");
-    expect(Object.keys(USER_PREVIEW_TRIAGE_ISSUES)).toContain("workspace.actions.discard-no-handler");
+    expect(Object.keys(USER_PREVIEW_TRIAGE_ISSUES)).toContain(
+      "picker.environmental-impact.placeholder",
+    );
+    expect(Object.keys(USER_PREVIEW_TRIAGE_ISSUES)).toContain(
+      "workspace.actions.discard-no-handler",
+    );
     expect(offHtml).not.toContain("review-triage-panel");
     expect(offHtml).not.toContain("data-review-triage-surface");
     expect(onHtml).toContain("review-triage-panel");
     expect(onHtml).toContain("Review triage overlay");
-    expect(onHtml).toContain("data-review-triage-surface=\"picker.environmental-impact\"");
-    expect(onHtml).toContain("The picker impact metric is returned by retrofitPickerEnvironmentalImpact()");
+    expect(onHtml).toContain(
+      'data-review-triage-surface="picker.environmental-impact"',
+    );
+    expect(onHtml).toContain(
+      "The picker impact metric is returned by retrofitPickerEnvironmentalImpact()",
+    );
     expect(onHtml).toContain("Remove review");
     expect(onHtml).toContain("Implement or repair");
     expect(onHtml).toContain("Rendering repair");
@@ -1154,8 +1527,8 @@ describe("retrofit recommendations preview", () => {
             confidence: "medium",
             sourceType: "unknown",
             sourceText: null,
-            sourcePath: null
-          }
+            sourcePath: null,
+          },
         ],
         siteEnergyProfile: {
           uploadedFileCount: 1,
@@ -1182,12 +1555,12 @@ describe("retrofit recommendations preview", () => {
               averageUnitCost: 20,
               usageUnit: "kWh",
               monthlySummaries: [],
-              lastUpdatedAt: "2026-06-01T00:00:00.000Z"
-            }
+              lastUpdatedAt: "2026-06-01T00:00:00.000Z",
+            },
           ],
-          lastUpdatedAt: "2026-06-01T00:00:00.000Z"
-        }
-      }
+          lastUpdatedAt: "2026-06-01T00:00:00.000Z",
+        },
+      },
     } as any;
 
     const shownHtml = renderToStaticMarkup(
@@ -1201,7 +1574,7 @@ describe("retrofit recommendations preview", () => {
         hideBillData={false}
         payload={payloadWithBills}
         title="Retrofit Recommendations"
-      />
+      />,
     );
     const hiddenHtml = renderToStaticMarkup(
       <RetrofitRecommendationsPreview
@@ -1214,7 +1587,7 @@ describe("retrofit recommendations preview", () => {
         hideBillData={true}
         payload={payloadWithBills}
         title="Retrofit Recommendations"
-      />
+      />,
     );
 
     expect(shownHtml).toContain("Retrofit readiness: Bills complete");
@@ -1237,7 +1610,7 @@ describe("retrofit recommendations preview", () => {
         processingStatus: "processed",
         uploadedAt: "2026-06-01T00:00:00.000Z",
         processedAt: "2026-06-01T00:00:00.000Z",
-        errorMessage: null
+        errorMessage: null,
       },
       {
         fileId: "sample-gas",
@@ -1251,7 +1624,7 @@ describe("retrofit recommendations preview", () => {
         processingStatus: "processed",
         uploadedAt: "2026-06-01T00:00:00.000Z",
         processedAt: "2026-06-01T00:00:00.000Z",
-        errorMessage: null
+        errorMessage: null,
       },
       {
         fileId: "sample-water",
@@ -1265,8 +1638,8 @@ describe("retrofit recommendations preview", () => {
         processingStatus: "processed",
         uploadedAt: "2026-06-01T00:00:00.000Z",
         processedAt: "2026-06-01T00:00:00.000Z",
-        errorMessage: null
-      }
+        errorMessage: null,
+      },
     ];
     const payloadWithThreeBills = {
       ...liveShapedPayload,
@@ -1299,7 +1672,7 @@ describe("retrofit recommendations preview", () => {
               averageUnitCost: null,
               usageUnit: null,
               monthlySummaries: [],
-              lastUpdatedAt: "2026-06-01T00:00:00.000Z"
+              lastUpdatedAt: "2026-06-01T00:00:00.000Z",
             },
             {
               utilityCategory: "gas",
@@ -1314,7 +1687,7 @@ describe("retrofit recommendations preview", () => {
               averageUnitCost: null,
               usageUnit: null,
               monthlySummaries: [],
-              lastUpdatedAt: "2026-06-01T00:00:00.000Z"
+              lastUpdatedAt: "2026-06-01T00:00:00.000Z",
             },
             {
               utilityCategory: "water_sewer",
@@ -1329,22 +1702,27 @@ describe("retrofit recommendations preview", () => {
               averageUnitCost: null,
               usageUnit: null,
               monthlySummaries: [],
-              lastUpdatedAt: "2026-06-01T00:00:00.000Z"
-            }
+              lastUpdatedAt: "2026-06-01T00:00:00.000Z",
+            },
           ],
-          lastUpdatedAt: "2026-06-01T00:00:00.000Z"
-        }
-      }
+          lastUpdatedAt: "2026-06-01T00:00:00.000Z",
+        },
+      },
     } as any;
-    const hydratedState = hydrateBillUploadStateFromIntake(payloadWithThreeBills.intake, getDefaultBillUploadState());
+    const hydratedState = hydrateBillUploadStateFromIntake(
+      payloadWithThreeBills.intake,
+      getDefaultBillUploadState(),
+    );
 
     expect(hydratedState.statuses).toEqual({
       electric: "uploaded",
       water: "uploaded",
       gas: "uploaded",
-      waste: "pending"
+      waste: "pending",
     });
-    expect(getBillUploadStepSummary(hydratedState).map((step) => step.id)).toEqual(["electric", "water", "gas"]);
+    expect(
+      getBillUploadStepSummary(hydratedState).map((step) => step.id),
+    ).toEqual(["electric", "water", "gas"]);
     expect(getBillUploadResumeIndex(hydratedState)).toBe(3);
     expect(hydratedState.files.electric?.name).toBe("hoa-mai-electric.pdf");
 
@@ -1359,11 +1737,13 @@ describe("retrofit recommendations preview", () => {
         hideBillData={false}
         payload={payloadWithThreeBills}
         title="Retrofit Recommendations"
-      />
+      />,
     );
 
     expect(html).toContain("Utility bills loaded");
-    expect(html).toContain("3 of 4 utility bill types are available for estimates.");
+    expect(html).toContain(
+      "3 of 4 utility bill types are available for estimates.",
+    );
     expect(html).toContain(">Review bills<");
     expect(html).not.toContain(">Upload bills</button>");
   });
@@ -1373,12 +1753,12 @@ describe("retrofit recommendations preview", () => {
       ...liveShapedPayload,
       source: {
         kind: "admin_test_case_preview",
-        sampleUserId: "sample-profile-user"
+        sampleUserId: "sample-profile-user",
       },
       user: {
         ...liveShapedPayload.user,
         passwordLinked: true,
-        isFakeUser: true
+        isFakeUser: true,
       },
       summary: {
         ...liveShapedPayload.summary,
@@ -1387,7 +1767,7 @@ describe("retrofit recommendations preview", () => {
         requiredTaxInputCount: 1,
         calculatedTaxBenefitCents: 120000,
         calculatedTaxLiabilityCents: 35000,
-        netTaxImpactCents: 85000
+        netTaxImpactCents: 85000,
       },
       taxRuntimePreview: {
         status: "needs_input",
@@ -1401,14 +1781,14 @@ describe("retrofit recommendations preview", () => {
             answerType: "select",
             collectionSurfaceLabel: "Profile",
             helperText: "Needed before opportunity values.",
-            requiredBeforeOpportunitySelection: true
-          }
+            requiredBeforeOpportunitySelection: true,
+          },
         ],
         totals: {
           includedBenefitCents: 30000,
           includedLiabilityCents: 5000,
-          includedAmountCents: 25000
-        }
+          includedAmountCents: 25000,
+        },
       },
       dashboardPostImplementationDataset: {
         schemaVersion: "dashboard-post-implementation-v1",
@@ -1421,7 +1801,7 @@ describe("retrofit recommendations preview", () => {
         reportingPeriod: {
           startDate: "2025-07-01",
           endDate: "2026-06-30",
-          label: "Jul 1, 2025 - Jun 30, 2026"
+          label: "Jul 1, 2025 - Jun 30, 2026",
         },
         properties: [{ id: "primary" }],
         implementedRetrofits: [{ id: "perf-led" }],
@@ -1431,13 +1811,13 @@ describe("retrofit recommendations preview", () => {
         certificationRecords: [],
         certificationRequirements: [],
         nextBestActions: [{ id: "next-action" }],
-        dataQuality: { status: "synthetic", notes: [], warnings: [] }
+        dataQuality: { status: "synthetic", notes: [], warnings: [] },
       },
       intake: {
         ...liveShapedPayload.intake,
         business: {
           ...liveShapedPayload.intake.business,
-          website: "example.test"
+          website: "example.test",
         },
         site: {
           ...liveShapedPayload.intake.site,
@@ -1452,8 +1832,8 @@ describe("retrofit recommendations preview", () => {
             countyName: "San Francisco County",
             placeName: "San Francisco",
             zip5: "94105",
-            censusTractGeoid: "06075061500"
-          }
+            censusTractGeoid: "06075061500",
+          },
         },
         uploadedUtilityFiles: [
           {
@@ -1468,8 +1848,8 @@ describe("retrofit recommendations preview", () => {
             processingStatus: "processed",
             uploadedAt: "2026-06-01T00:00:00.000Z",
             processedAt: "2026-06-01T00:00:00.000Z",
-            errorMessage: null
-          }
+            errorMessage: null,
+          },
         ],
         utilityExtractedValues: [
           {
@@ -1485,8 +1865,8 @@ describe("retrofit recommendations preview", () => {
             confidence: "medium",
             sourceType: "utility_pdf",
             sourceText: "raw OCR text must stay hidden",
-            sourcePath: "pdf.pages[0].tables[1]"
-          }
+            sourcePath: "pdf.pages[0].tables[1]",
+          },
         ],
         siteEnergyProfile: {
           siteId: "intake-1:primary",
@@ -1514,16 +1894,22 @@ describe("retrofit recommendations preview", () => {
               averageUnitCost: 0.2,
               usageUnit: "kWh",
               monthlySummaries: [],
-              lastUpdatedAt: "2026-06-01T00:00:00.000Z"
-            }
+              lastUpdatedAt: "2026-06-01T00:00:00.000Z",
+            },
           ],
-          lastUpdatedAt: "2026-06-01T00:00:00.000Z"
-        }
-      }
+          lastUpdatedAt: "2026-06-01T00:00:00.000Z",
+        },
+      },
     } as any;
     const preview = buildUserRetrofitPreviewResult(payloadWithProfileData);
-    const seededAnswers = buildSeededRetrofitDetailAnswers(preview.retrofits, payloadWithProfileData.intake);
-    const billUploadState = hydrateBillUploadStateFromIntake(payloadWithProfileData.intake, getDefaultBillUploadState());
+    const seededAnswers = buildSeededRetrofitDetailAnswers(
+      preview.retrofits,
+      payloadWithProfileData.intake,
+    );
+    const billUploadState = hydrateBillUploadStateFromIntake(
+      payloadWithProfileData.intake,
+      getDefaultBillUploadState(),
+    );
 
     const html = renderToStaticMarkup(
       <UserPreviewProfileView
@@ -1535,7 +1921,7 @@ describe("retrofit recommendations preview", () => {
         payload={payloadWithProfileData}
         preview={preview}
         seededDetailAnswers={seededAnswers}
-      />
+      />,
     );
 
     expect(html).toContain("Profile info");
@@ -1559,7 +1945,10 @@ describe("retrofit recommendations preview", () => {
     const single = confirmSingleEstimateState({}, firstAssumption.id);
     expect(single[firstAssumption.id]).toBe(true);
 
-    const all = confirmAllEstimateState({}, preview.retrofits[0].editableAssumptions);
+    const all = confirmAllEstimateState(
+      {},
+      preview.retrofits[0].editableAssumptions,
+    );
     expect(Object.values(all).every(Boolean)).toBe(true);
   });
 
@@ -1577,8 +1966,8 @@ describe("retrofit recommendations preview", () => {
         estimatedUpfrontProjectCost: 100000,
         recurringOperationalSavingsAnnual: 24000,
         paybackPeriodYears: 4,
-        roi: "24%"
-      }
+        roi: "24%",
+      },
     } as any;
     const billState = {
       ...getDefaultBillUploadState(),
@@ -1586,8 +1975,8 @@ describe("retrofit recommendations preview", () => {
         electric: "uploaded" as const,
         water: "pending" as const,
         gas: "pending" as const,
-        waste: "pending" as const
-      }
+        waste: "pending" as const,
+      },
     };
 
     expect(getRequiredBillTypesForRetrofit(retrofit)).toEqual(["electric"]);
@@ -1608,14 +1997,17 @@ describe("retrofit recommendations preview", () => {
           estimatedUpfrontProjectCost: null,
           recurringOperationalSavingsAnnual: null,
           paybackPeriodYears: null,
-          roi: null
-        }
+          roi: null,
+        },
       } as any,
       "recommended",
       new Map([
         [readyRetrofit.id, readiness],
-        [retrofit.id, getRetrofitReadiness(retrofit, getDefaultBillUploadState(), {})]
-      ])
+        [
+          retrofit.id,
+          getRetrofitReadiness(retrofit, getDefaultBillUploadState(), {}),
+        ],
+      ]),
     );
     expect(comparison).toBeLessThan(0);
   });
@@ -1624,11 +2016,20 @@ describe("retrofit recommendations preview", () => {
     const preview = buildUserRetrofitPreviewResult(liveShapedPayload);
     const retrofit = preview.retrofits[0];
     const formQuestions = getRetrofitFormQuestions(retrofit);
-    const seededAnswers = buildSeededRetrofitDetailAnswers(preview.retrofits, liveShapedPayload.intake as any);
+    const seededAnswers = buildSeededRetrofitDetailAnswers(
+      preview.retrofits,
+      liveShapedPayload.intake as any,
+    );
 
-    expect(formQuestions.length).toBeGreaterThan(retrofit.detailQuestions.length);
-    expect(formQuestions.map((question) => question.question)).toContain("Confirm project quote.");
-    expect(seededAnswers[`${retrofit.id}:tax-inclusive-costs`]).toContain("Estimate");
+    expect(formQuestions.length).toBeGreaterThan(
+      retrofit.detailQuestions.length,
+    );
+    expect(formQuestions.map((question) => question.question)).toContain(
+      "Confirm project quote.",
+    );
+    expect(seededAnswers[`${retrofit.id}:tax-inclusive-costs`]).toContain(
+      "Estimate",
+    );
     expect(areRetrofitQuestionsComplete(retrofit, seededAnswers)).toBe(true);
     expect(areRetrofitQuestionsComplete(retrofit, {})).toBe(false);
   });
@@ -1651,43 +2052,51 @@ describe("retrofit recommendations preview", () => {
               "led_lighting:tax-inclusive-costs",
               "led_lighting:fixtures",
               "led_lighting:quote",
-              "led_lighting:opportunity:project-quote"
+              "led_lighting:opportunity:project-quote",
             ],
             answers: {
               "led_lighting:tax-inclusive-costs": {
                 questionId: "led_lighting:tax-inclusive-costs",
                 question: "Tax inclusive?",
                 answerType: "select",
-                value: "Enter tax-inclusive numbers"
+                value: "Enter tax-inclusive numbers",
               },
               "led_lighting:fixtures": {
                 questionId: "led_lighting:fixtures",
                 question: "Fixture count?",
                 answerType: "number",
-                value: "88"
+                value: "88",
               },
               "led_lighting:quote": {
                 questionId: "led_lighting:quote",
                 question: "Quote?",
                 answerType: "select",
-                value: "In progress"
+                value: "In progress",
               },
               "led_lighting:opportunity:project-quote": {
                 questionId: "led_lighting:opportunity:project-quote",
                 question: "Confirm project quote.",
                 answerType: "text",
-                value: "Quote requested"
-              }
-            }
-          }
-        }
-      }
+                value: "Quote requested",
+              },
+            },
+          },
+        },
+      },
     };
-    const persistedAnswers = buildPersistedRetrofitDetailAnswers(preview.retrofits, savedIntake as any);
+    const persistedAnswers = buildPersistedRetrofitDetailAnswers(
+      preview.retrofits,
+      savedIntake as any,
+    );
 
     expect(persistedAnswers["led_lighting:fixtures"]).toBe("88");
     expect(areRetrofitQuestionsComplete(retrofit, persistedAnswers)).toBe(true);
-    expect(buildPersistedRetrofitDetailAnswers(preview.retrofits, liveShapedPayload.intake as any)).toEqual({});
+    expect(
+      buildPersistedRetrofitDetailAnswers(
+        preview.retrofits,
+        liveShapedPayload.intake as any,
+      ),
+    ).toEqual({});
   });
 
   it("adds required tax runtime fields to retrofit project questions", () => {
@@ -1700,33 +2109,41 @@ describe("retrofit recommendations preview", () => {
           {
             inputKey: "sf_business_activity_category",
             label: "San Francisco business activity category",
-            questionPrompt: "Which San Francisco business activity category applies?",
+            questionPrompt:
+              "Which San Francisco business activity category applies?",
             answerType: "text",
             valueType: "string",
-            helperText: "Use the annual business tax return activity schedule."
+            helperText: "Use the annual business tax return activity schedule.",
           },
           {
             inputKey: "sf_gross_receipts_tax_return_present",
             label: "San Francisco gross receipts tax return available",
-            questionPrompt: "Is the San Francisco gross receipts tax return or equivalent workpaper available?",
+            questionPrompt:
+              "Is the San Francisco gross receipts tax return or equivalent workpaper available?",
             answerType: "boolean",
-            valueType: "boolean_or_enum"
-          }
+            valueType: "boolean_or_enum",
+          },
         ],
         totals: {
           includedBenefitCents: 0,
           includedLiabilityCents: 0,
-          includedAmountCents: 0
-        }
-      }
+          includedAmountCents: 0,
+        },
+      },
     } as any);
 
     const retrofit = preview.retrofits[0];
     const questions = getRetrofitFormQuestions(retrofit);
 
-    expect(preview.missingInputs).toContain("San Francisco business activity category");
-    expect(questions.map((question) => question.question)).toContain("Which San Francisco business activity category applies?");
-    expect(questions.map((question) => question.question)).toContain("Is the San Francisco gross receipts tax return or equivalent workpaper available?");
+    expect(preview.missingInputs).toContain(
+      "San Francisco business activity category",
+    );
+    expect(questions.map((question) => question.question)).toContain(
+      "Which San Francisco business activity category applies?",
+    );
+    expect(questions.map((question) => question.question)).toContain(
+      "Is the San Francisco gross receipts tax return or equivalent workpaper available?",
+    );
     expect(areRetrofitQuestionsComplete(retrofit, {})).toBe(false);
   });
 
@@ -1738,7 +2155,7 @@ describe("retrofit recommendations preview", () => {
           id: "tax_credit_retrofit:taxable_income_cents",
           retrofitId: "tax_credit_retrofit",
           question: "What is your taxable income?",
-          answerType: "number"
+          answerType: "number",
         },
         {
           id: "tax_credit_retrofit:credit_carryforward",
@@ -1748,29 +2165,42 @@ describe("retrofit recommendations preview", () => {
           visibleIf: {
             field: "tax_credit_retrofit:taxable_income_cents",
             op: ">",
-            value: 0
-          }
-        }
-      ]
+            value: 0,
+          },
+        },
+      ],
     } as any;
 
-    expect(getRetrofitFormQuestions(retrofit, {}).map((question) => question.id)).toEqual([
-      "tax_credit_retrofit:taxable_income_cents"
-    ]);
-    expect(getRetrofitFormQuestions(retrofit, { "tax_credit_retrofit:taxable_income_cents": "0" }).map((question) => question.id)).toEqual([
-      "tax_credit_retrofit:taxable_income_cents"
-    ]);
-    expect(getRetrofitFormQuestions(retrofit, { "tax_credit_retrofit:taxable_income_cents": "2500000" }).map((question) => question.id)).toEqual([
+    expect(
+      getRetrofitFormQuestions(retrofit, {}).map((question) => question.id),
+    ).toEqual(["tax_credit_retrofit:taxable_income_cents"]);
+    expect(
+      getRetrofitFormQuestions(retrofit, {
+        "tax_credit_retrofit:taxable_income_cents": "0",
+      }).map((question) => question.id),
+    ).toEqual(["tax_credit_retrofit:taxable_income_cents"]);
+    expect(
+      getRetrofitFormQuestions(retrofit, {
+        "tax_credit_retrofit:taxable_income_cents": "2500000",
+      }).map((question) => question.id),
+    ).toEqual([
       "tax_credit_retrofit:taxable_income_cents",
-      "tax_credit_retrofit:credit_carryforward"
+      "tax_credit_retrofit:credit_carryforward",
     ]);
   });
 
   it("resumes bill upload state from the first incomplete or skipped bill and validates storage keys", () => {
-    expect(BILL_UPLOAD_STEPS.map((step) => step.id)).toEqual(["electric", "water", "gas", "waste"]);
+    expect(BILL_UPLOAD_STEPS.map((step) => step.id)).toEqual([
+      "electric",
+      "water",
+      "gas",
+      "waste",
+    ]);
     expect(BILL_UPLOAD_STEPS[0].title).toBe("Upload your electric bill");
     expect(BILL_UPLOAD_STEPS[1].title).toBe("Upload your water bill");
-    expect(getBillUploadStorageKey("profile-1", "intake-1")).toBe("retrofi.billUploadModalState:profile-1:intake-1");
+    expect(getBillUploadStorageKey("profile-1", "intake-1")).toBe(
+      "retrofi.billUploadModalState:profile-1:intake-1",
+    );
 
     const defaultState = getDefaultBillUploadState();
     expect(getBillUploadResumeIndex(defaultState)).toBe(0);
@@ -1781,29 +2211,57 @@ describe("retrofit recommendations preview", () => {
           electric: "uploaded",
           water: "skipped",
           gas: "pending",
-          waste: "pending"
-        }
-      })
+          waste: "pending",
+        },
+      }),
     ).toBe(1);
     expect(
       sanitizeBillUploadState({
         flowComplete: true,
-        files: { electric: { name: "bill.pdf", size: 1, type: "application/pdf", uploadedAt: "2026-07-03T00:00:00.000Z" } },
-        statuses: { electric: "uploaded", water: "bogus", gas: "skipped", waste: "pending" }
-      }).statuses
+        files: {
+          electric: {
+            name: "bill.pdf",
+            size: 1,
+            type: "application/pdf",
+            uploadedAt: "2026-07-03T00:00:00.000Z",
+          },
+        },
+        statuses: {
+          electric: "uploaded",
+          water: "bogus",
+          gas: "skipped",
+          waste: "pending",
+        },
+      }).statuses,
     ).toEqual({
       electric: "uploaded",
       water: "pending",
       gas: "skipped",
-      waste: "pending"
+      waste: "pending",
     });
   });
 
   it("accepts only supported bill-upload file types", () => {
-    expect(isSupportedBillUploadFile(new File(["a"], "bill.pdf", { type: "application/pdf" }))).toBe(true);
-    expect(isSupportedBillUploadFile(new File(["a"], "bill.png", { type: "image/png" }))).toBe(true);
-    expect(isSupportedBillUploadFile(new File(["a"], "bill.jpg", { type: "image/jpeg" }))).toBe(true);
-    expect(isSupportedBillUploadFile(new File(["a"], "bill.txt", { type: "text/plain" }))).toBe(false);
+    expect(
+      isSupportedBillUploadFile(
+        new File(["a"], "bill.pdf", { type: "application/pdf" }),
+      ),
+    ).toBe(true);
+    expect(
+      isSupportedBillUploadFile(
+        new File(["a"], "bill.png", { type: "image/png" }),
+      ),
+    ).toBe(true);
+    expect(
+      isSupportedBillUploadFile(
+        new File(["a"], "bill.jpg", { type: "image/jpeg" }),
+      ),
+    ).toBe(true);
+    expect(
+      isSupportedBillUploadFile(
+        new File(["a"], "bill.txt", { type: "text/plain" }),
+      ),
+    ).toBe(false);
   });
 
   it("opens the bill upload modal from the retrofits page instead of routing away", async () => {
@@ -1811,23 +2269,46 @@ describe("retrofit recommendations preview", () => {
     const { readFileSync } = await import(fsModuleName);
     const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
     const handleUploadIndex = source.indexOf("function handleUploadBills()");
-    const uploadHandlerEndIndex = source.indexOf("function toggleOpportunity", handleUploadIndex);
-    const uploadHandlerSource = source.slice(handleUploadIndex, uploadHandlerEndIndex);
-    const previewReturnIndex = source.indexOf("return (", source.indexOf("function RetrofitRecommendationsPreview"));
+    const uploadHandlerEndIndex = source.indexOf(
+      "function toggleOpportunity",
+      handleUploadIndex,
+    );
+    const uploadHandlerSource = source.slice(
+      handleUploadIndex,
+      uploadHandlerEndIndex,
+    );
+    const previewReturnIndex = source.indexOf(
+      "return (",
+      source.indexOf("function RetrofitRecommendationsPreview"),
+    );
     const mainCloseIndex = source.indexOf("</main>", previewReturnIndex);
-    const modalMountIndex = source.indexOf("<BillUploadModal", previewReturnIndex);
-    const instructionsModalIndex = source.indexOf("{showInstructionsModal", previewReturnIndex);
+    const modalMountIndex = source.indexOf(
+      "<BillUploadModal",
+      previewReturnIndex,
+    );
+    const instructionsModalIndex = source.indexOf(
+      "{showInstructionsModal",
+      previewReturnIndex,
+    );
 
     expect(uploadHandlerSource).toContain("setBillUploadModalOpen(true)");
-    expect(uploadHandlerSource).toContain("setBillUploadFocusStepId(getFirstIncompleteBillUploadStepId(effectiveBillUploadState) || null)");
+    expect(uploadHandlerSource).toContain(
+      "setBillUploadFocusStepId(getFirstIncompleteBillUploadStepId(effectiveBillUploadState) || null)",
+    );
     expect(uploadHandlerSource).not.toContain("scan-energy-data");
     expect(source).toContain("function BillUploadModal(");
     expect(source).toContain("initialState={effectiveBillUploadState}");
     expect(source).toContain("useState<BillUploadState>(() => initialState)");
     expect(source).toContain("function handleStepTabClick(index: number)");
-    expect(source).toContain("function handleRemoveBillUpload(stepId: BillUploadStepId)");
-    expect(source).toContain("currentStepUploaded ? `${currentStep.utilityLabel} bill uploaded` : currentStep.title");
-    expect(source).toContain('aria-current={index === currentStepIndex ? "step" : undefined}');
+    expect(source).toContain(
+      "function handleRemoveBillUpload(stepId: BillUploadStepId)",
+    );
+    expect(source).toContain(
+      "currentStepUploaded ? `${currentStep.utilityLabel} bill uploaded` : currentStep.title",
+    );
+    expect(source).toContain(
+      'aria-current={index === currentStepIndex ? "step" : undefined}',
+    );
     expect(source).toContain("bill-upload-remove-button");
     expect(modalMountIndex).toBeGreaterThan(mainCloseIndex);
     expect(modalMountIndex).toBeLessThan(instructionsModalIndex);
@@ -1838,49 +2319,91 @@ describe("retrofit recommendations preview", () => {
     const { readFileSync } = await import(fsModuleName);
     const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
     const tabsStart = source.indexOf("const workspaceTabs = [");
-    const tabsSource = source.slice(tabsStart, source.indexOf("] as const;", tabsStart));
-    const workspaceStart = source.indexOf("<article className={`estimate-workspace-shell");
-    const workspaceEnd = source.indexOf("\nfunction ApplicationPrepDrawer", workspaceStart);
-    const componentSource = source.slice(source.indexOf("function RetrofitPreviewCardView("), workspaceEnd);
+    const tabsSource = source.slice(
+      tabsStart,
+      source.indexOf("] as const;", tabsStart),
+    );
+    const workspaceStart = source.indexOf(
+      "<article className={`estimate-workspace-shell",
+    );
+    const workspaceEnd = source.indexOf(
+      "\nfunction ApplicationPrepDrawer",
+      workspaceStart,
+    );
+    const componentSource = source.slice(
+      source.indexOf("function RetrofitPreviewCardView("),
+      workspaceEnd,
+    );
     const workspaceSource = source.slice(workspaceStart, workspaceEnd);
-    const headerIndex = workspaceSource.indexOf("<header className=\"estimate-header\">");
-    const headerSource = workspaceSource.slice(headerIndex, workspaceSource.indexOf("</header>", headerIndex));
-    const tabBarIndex = workspaceSource.indexOf("<nav aria-label=\"Estimate workspace tabs\"");
-    const firstPanelIndex = workspaceSource.indexOf("data-workspace-panel=\"overview\"");
-    const applicationPanelStart = workspaceSource.indexOf("data-workspace-panel=\"application\"");
-    const applicationPanelSource = workspaceSource.slice(applicationPanelStart, workspaceSource.indexOf("</section>", applicationPanelStart));
+    const headerIndex = workspaceSource.indexOf(
+      '<header className="estimate-header">',
+    );
+    const headerSource = workspaceSource.slice(
+      headerIndex,
+      workspaceSource.indexOf("</header>", headerIndex),
+    );
+    const tabBarIndex = workspaceSource.indexOf(
+      '<nav aria-label="Estimate workspace tabs"',
+    );
+    const firstPanelIndex = workspaceSource.indexOf(
+      'data-workspace-panel="overview"',
+    );
+    const applicationPanelStart = workspaceSource.indexOf(
+      'data-workspace-panel="application"',
+    );
+    const applicationPanelSource = workspaceSource.slice(
+      applicationPanelStart,
+      workspaceSource.indexOf("</section>", applicationPanelStart),
+    );
     const modalStart = source.indexOf("function UnconfirmedRetrofitModal(");
-    const modalSource = source.slice(modalStart, source.indexOf("function FinancingPreviewDrawer", modalStart));
+    const modalSource = source.slice(
+      modalStart,
+      source.indexOf("function FinancingPreviewDrawer", modalStart),
+    );
 
-    expect(tabsSource).toContain("{ key: \"overview\", label: \"Overview\" }");
-    expect(tabsSource).toContain("{ key: \"financials\", label: \"Financials\" }");
-    expect(tabsSource).toContain("{ key: \"scenariosOpportunities\", label: \"Scenarios\" }");
-    expect(tabsSource).toContain("{ key: \"environmental\", label: \"Impact\" }");
-    expect(tabsSource).toContain("{ key: \"application\", label: \"Application Overview\" }");
-    expect(tabsSource).not.toContain("{ key: \"opportunities\", label: \"Opportunities\" }");
-    expect(tabsSource).not.toContain("{ key: \"scenarios\", label: \"Scenarios\" }");
+    expect(tabsSource).toContain('{ key: "overview", label: "Overview" }');
+    expect(tabsSource).toContain('{ key: "financials", label: "Financials" }');
+    expect(tabsSource).toContain(
+      '{ key: "scenariosOpportunities", label: "Scenarios" }',
+    );
+    expect(tabsSource).toContain('{ key: "environmental", label: "Impact" }');
+    expect(tabsSource).toContain(
+      '{ key: "application", label: "Application Overview" }',
+    );
+    expect(tabsSource).not.toContain(
+      '{ key: "opportunities", label: "Opportunities" }',
+    );
+    expect(tabsSource).not.toContain(
+      '{ key: "scenarios", label: "Scenarios" }',
+    );
     expect(tabsSource.match(/label:/g)).toHaveLength(5);
     const tabOrderIndexes = [
-      tabsSource.indexOf("{ key: \"overview\", label: \"Overview\" }"),
-      tabsSource.indexOf("{ key: \"scenariosOpportunities\", label: \"Scenarios\" }"),
-      tabsSource.indexOf("{ key: \"financials\", label: \"Financials\" }"),
-      tabsSource.indexOf("{ key: \"environmental\", label: \"Impact\" }"),
-      tabsSource.indexOf("{ key: \"application\", label: \"Application Overview\" }")
+      tabsSource.indexOf('{ key: "overview", label: "Overview" }'),
+      tabsSource.indexOf(
+        '{ key: "scenariosOpportunities", label: "Scenarios" }',
+      ),
+      tabsSource.indexOf('{ key: "financials", label: "Financials" }'),
+      tabsSource.indexOf('{ key: "environmental", label: "Impact" }'),
+      tabsSource.indexOf(
+        '{ key: "application", label: "Application Overview" }',
+      ),
     ];
     expect(tabOrderIndexes.every((index) => index >= 0)).toBe(true);
-    expect(tabOrderIndexes).toEqual([...tabOrderIndexes].sort((left, right) => left - right));
-    expect(tabsSource).not.toContain("{ key: \"requirements\"");
-    expect(tabsSource).not.toContain("{ key: \"more\"");
+    expect(tabOrderIndexes).toEqual(
+      [...tabOrderIndexes].sort((left, right) => left - right),
+    );
+    expect(tabsSource).not.toContain('{ key: "requirements"');
+    expect(tabsSource).not.toContain('{ key: "more"');
     expect(headerIndex).toBeGreaterThanOrEqual(0);
     expect(tabBarIndex).toBeGreaterThan(headerIndex);
     expect(firstPanelIndex).toBeGreaterThan(tabBarIndex);
     expect(workspaceSource).toContain("EstimateProgressStepper");
-    expect(source).toContain("label: \"Bills\"");
-    expect(source).toContain("label: \"Questions\"");
-    expect(source).toContain("label: \"Estimate\"");
-    expect(source).toContain("label: \"Implementation\"");
-    expect(source).toContain("label: \"Application\"");
-    expect(source).toContain("label: \"Dashboard\"");
+    expect(source).toContain('label: "Bills"');
+    expect(source).toContain('label: "Questions"');
+    expect(source).toContain('label: "Estimate"');
+    expect(source).toContain('label: "Implementation"');
+    expect(source).toContain('label: "Application"');
+    expect(source).toContain('label: "Dashboard"');
     expect(workspaceSource).toContain("Why this is recommended");
     expect(workspaceSource).toContain("One-time savings");
     expect(workspaceSource).toContain("Annual operating savings");
@@ -1894,11 +2417,17 @@ describe("retrofit recommendations preview", () => {
     expect(workspaceSource).toContain("Financials snapshot");
     expect(workspaceSource).toContain("Monthly");
     expect(workspaceSource).toContain("Annual");
-    expect(workspaceSource).toContain("setFinancialPeriod(\"monthly\")");
-    expect(workspaceSource).toContain("setFinancialPeriod(\"annual\")");
-    expect(workspaceSource).toContain("${financialPeriodLabel} operating savings");
-    expect(workspaceSource).toContain("${financialPeriodLabel} incentive savings");
-    expect(workspaceSource).toContain("financialPeriod === \"monthly\" ? \"mo\" : \"yr\"");
+    expect(workspaceSource).toContain('setFinancialPeriod("monthly")');
+    expect(workspaceSource).toContain('setFinancialPeriod("annual")');
+    expect(workspaceSource).toContain(
+      "${financialPeriodLabel} operating savings",
+    );
+    expect(workspaceSource).toContain(
+      "${financialPeriodLabel} incentive savings",
+    );
+    expect(workspaceSource).toContain(
+      'financialPeriod === "monthly" ? "mo" : "yr"',
+    );
     expect(workspaceSource).toContain("estimate-financial-equation-grid");
     expect(workspaceSource).toContain("One-time equation");
     expect(workspaceSource).toContain("Recurring monthly equation");
@@ -1928,46 +2457,56 @@ describe("retrofit recommendations preview", () => {
     expect(componentSource).toContain("scenario-opportunity-detail-panel");
     expect(componentSource).toContain("Prepare application");
     expect(workspaceSource).not.toContain("No additional requirements stored");
-    expect(workspaceSource).not.toContain("label=\"Length\"");
-    expect(workspaceSource).not.toContain("label=\"Impact note\"");
-    expect(workspaceSource).not.toContain("label=\"Source\" value");
-    expect(workspaceSource).not.toContain("<EstimateInfoRow label=\"Selected\"");
-    expect(workspaceSource).not.toContain("label=\"Help available\"");
+    expect(workspaceSource).not.toContain('label="Length"');
+    expect(workspaceSource).not.toContain('label="Impact note"');
+    expect(workspaceSource).not.toContain('label="Source" value');
+    expect(workspaceSource).not.toContain('<EstimateInfoRow label="Selected"');
+    expect(workspaceSource).not.toContain('label="Help available"');
     expect(workspaceSource).toContain("Scenario and opportunity comparison");
     expect(workspaceSource).toContain("Scenario opportunities");
     expect(workspaceSource).not.toContain("scenario-view-toggle");
     expect(workspaceSource).not.toContain("scenario-view-option");
-    expect(source).not.toContain("[\"tradeoffs\", \"Tradeoffs\"]");
-    expect(source).not.toContain("[\"summary\", \"Summary\"]");
-    expect(source).not.toContain("[\"review\", \"Review\"]");
-    expect(source).not.toContain("[\"guided\", \"Guided\"]");
+    expect(source).not.toContain('["tradeoffs", "Tradeoffs"]');
+    expect(source).not.toContain('["summary", "Summary"]');
+    expect(source).not.toContain('["review", "Review"]');
+    expect(source).not.toContain('["guided", "Guided"]');
     expect(workspaceSource).not.toContain("showScenarioMatrix");
     expect(workspaceSource).not.toContain("showScenarioTradeoffs");
     expect(workspaceSource).not.toContain("showScenarioSummary");
     expect(workspaceSource).not.toContain("showScenarioReview");
     expect(workspaceSource).not.toContain("showScenarioGuided");
-    expect(workspaceSource).not.toContain("scenario-comparison-recommended-ribbon");
+    expect(workspaceSource).not.toContain(
+      "scenario-comparison-recommended-ribbon",
+    );
     expect(workspaceSource).not.toContain("scenario-tradeoff-card");
     expect(workspaceSource).not.toContain("scenario-summary-preview");
     expect(workspaceSource).not.toContain("scenario-review-preview");
     expect(workspaceSource).not.toContain("scenario-guided-preview");
-    expect(workspaceSource).toContain("data-workspace-panel=\"scenariosOpportunities\"");
+    expect(workspaceSource).toContain(
+      'data-workspace-panel="scenariosOpportunities"',
+    );
     expect(workspaceSource).toContain("scenario-opportunity-workspace");
     expect(workspaceSource).toContain("Choose your scenario");
     expect(workspaceSource).toContain("Review opportunities in this scenario");
-    expect(workspaceSource).toContain("scenarioOpportunityDetail ? renderScenarioOpportunityDetailPanel(scenarioOpportunityDetail) : null");
+    expect(workspaceSource).toContain(
+      "scenarioOpportunityDetail ? renderScenarioOpportunityDetailPanel(scenarioOpportunityDetail) : null",
+    );
     expect(componentSource).toContain("scenarioOpportunityDetailSelection");
     expect(workspaceSource).toContain("scenario-opportunity-card-grid");
     expect(workspaceSource).toContain("scenario-opportunity-mini-table");
     expect(workspaceSource).toContain("scenario-opportunity-table");
-    expect(workspaceSource).toContain("Changes to included opportunities will automatically recalculate scenario metrics and recommendations");
+    expect(workspaceSource).toContain(
+      "Changes to included opportunities will automatically recalculate scenario metrics and recommendations",
+    );
     expect(componentSource).toContain("One-time savings");
     expect(componentSource).toContain("Annual operating savings");
     expect(componentSource).toContain('label="ROI"');
     expect(componentSource).toContain('subtitle="Average annual return"');
     expect(componentSource).toContain('label="kWh saved per year"');
     expect(componentSource).toContain('label="Therms avoided per year"');
-    expect(workspaceSource).toContain("{profile.included.length} included · {profile.excluded.length} excluded");
+    expect(workspaceSource).toContain(
+      "{profile.included.length} included · {profile.excluded.length} excluded",
+    );
     expect(workspaceSource).toContain('role="columnheader">Included</span>');
     expect(source).toContain("Lowest upfront cost");
     expect(source).toContain("Fastest payback");
@@ -1975,8 +2514,12 @@ describe("retrofit recommendations preview", () => {
     expect(workspaceSource).toContain("Main impact estimate");
     expect(workspaceSource).toContain("estimate-impact-copy");
     expect(workspaceSource).toContain("estimate-impact-value-row");
-    expect(workspaceSource).toContain("formatAnnualImpactUnitLabel(displayedEnvironmentalImpact.overall.unit)");
-    expect(workspaceSource).toContain("impactPlainLanguageSentence(displayedEnvironmentalImpact.overall)");
+    expect(workspaceSource).toContain(
+      "formatAnnualImpactUnitLabel(displayedEnvironmentalImpact.overall.unit)",
+    );
+    expect(workspaceSource).toContain(
+      "impactPlainLanguageSentence(displayedEnvironmentalImpact.overall)",
+    );
     expect(workspaceSource).not.toContain("avoided / year");
     expect(workspaceSource).toContain("Additional impact metrics");
     expect(workspaceSource).toContain("Certification contribution");
@@ -2008,8 +2551,10 @@ describe("retrofit recommendations preview", () => {
     expect(workspaceSource).not.toContain("Auto-saved just now");
     expect(workspaceSource).not.toContain("Download estimate");
     expect(workspaceSource).not.toContain("PDF summary");
-    expect(componentSource).toContain("appStatus?.status === \"customer_ready\"");
-    expect(source).toContain("applicationOverviewStatus?.status === \"reference_only\"");
+    expect(componentSource).toContain('appStatus?.status === "customer_ready"');
+    expect(source).toContain(
+      'applicationOverviewStatus?.status === "reference_only"',
+    );
     expect(workspaceSource).toContain("Funding exhausted — reference only");
     expect(workspaceSource).toContain("Application support not available yet");
     expect(source).not.toContain("opportunityImpactSupportedLabel");
@@ -2042,8 +2587,10 @@ describe("retrofit recommendations preview", () => {
     expect(modalSource).toContain("Discard changes");
     expect(modalSource).not.toContain("Add to plan");
     expect(modalSource).not.toContain("Continue editing");
-    expect(source).not.toContain("data-workspace-panel=\"requirements\"");
-    expect(source).not.toContain("{ key: \"requirements\", label: \"Requirements\" }");
+    expect(source).not.toContain('data-workspace-panel="requirements"');
+    expect(source).not.toContain(
+      '{ key: "requirements", label: "Requirements" }',
+    );
     expect(source).toContain("Preview as customer");
     expect(source).toContain("Hide bill data");
     expect(source).toContain("Hide form details");
@@ -2058,7 +2605,9 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("retrofitTypeId=");
     expect(source).toContain("Loading detailed opportunities and calculations");
     expect(source).toContain("queueAdminRecommendationPrecompute");
-    expect(source).toContain("/api/admin/client-retrofit-recommendations/precompute");
+    expect(source).toContain(
+      "/api/admin/client-retrofit-recommendations/precompute",
+    );
     expect(source).toContain("Detailed estimates could not load");
     expect(source).toContain("Detailed retrofit data could not load");
     expect(source).toContain("payloadCache");
@@ -2077,14 +2626,18 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("function RetrofitDetailFormModal(");
     expect(source).toContain("setActiveFormRetrofitId(retrofit.id)");
     expect(source).toContain("if (!readiness.questionsComplete)");
-    expect(source).toContain("buildSeededRetrofitDetailAnswers(preview.retrofits");
+    expect(source).toContain(
+      "buildSeededRetrofitDetailAnswers(preview.retrofits",
+    );
     expect(source).toContain("getRetrofitFormQuestions(retrofit)");
     expect(source).not.toContain("function UserPreviewTopBar");
     expect(source).toContain("Profile info");
-    expect(source).toContain("type UserPreviewPrimaryView = \"profile\" | \"retrofits\" | \"dashboard\"");
+    expect(source).toContain(
+      'type UserPreviewPrimaryView = "profile" | "retrofits" | "dashboard"',
+    );
     expect(source).toContain("export function UserPreviewProfileView");
     expect(source).toContain("onOpenProfile={handleProfileSelect}");
-    expect(source).toContain("activePrimaryView === \"profile\"");
+    expect(source).toContain('activePrimaryView === "profile"');
     expect(source).toContain("sidebar-profile-item");
     expect(source).toContain("Bill data is hidden in this admin preview.");
     expect(source).toContain("Dashboard");
@@ -2093,33 +2646,43 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Post Form Preview");
     expect(source).toContain("ADMIN_POST_FORM_PREVIEW_TAB");
     expect(source).toContain("postFormPreview");
-    expect(source).toContain("new URLSearchParams({ postFormPreview: \"1\" })");
+    expect(source).toContain('new URLSearchParams({ postFormPreview: "1" })');
     expect(source).toContain("useTypewriterSequence");
     expect(source).toContain("retrofi.instructionsOnboardingSeen");
     expect(source).toContain("retrofi.intakeJustCompleted");
     expect(source).toContain("Step 1: Upload your bills");
-    expect(source).toContain("Step 2: Choose a retrofit and answer a few questions");
-    expect(source).toContain("Step 3: Get your opportunities, metrics, and more");
-    expect(source).toContain("Step 4: Receive implementation and application support");
+    expect(source).toContain(
+      "Step 2: Choose a retrofit and answer a few questions",
+    );
+    expect(source).toContain(
+      "Step 3: Get your opportunities, metrics, and more",
+    );
+    expect(source).toContain(
+      "Step 4: Receive implementation and application support",
+    );
     expect(source).toContain("Step 5: View your dashboard");
-    expect(source).toContain("Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future selection.");
+    expect(source).toContain(
+      "Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future selection.",
+    );
     expect(source).toContain("process-editor-content");
     expect(source).toContain("process-editor-title");
     expect(source).toContain("process-number");
     expect(source).toContain("code-accent");
     expect(source).toContain("ProcessAccentText");
     expect(source).toContain("visibleProcessStepText");
-    expect(source).toContain("if (prefix.startsWith(text)) return \"\"");
+    expect(source).toContain('if (prefix.startsWith(text)) return ""');
     expect(source).toContain("getProcessTypingDelay");
-    expect(source).toContain("line.id.startsWith(\"step\") ? 34 : 20");
+    expect(source).toContain('line.id.startsWith("step") ? 34 : 20');
     expect(source).not.toContain("onboarding.md");
     expect(source).toContain("data-instructions-nav-item");
-    expect(source).toContain("role=\"dialog\"");
-    expect(source).toContain("aria-modal=\"true\"");
+    expect(source).toContain('role="dialog"');
+    expect(source).toContain('aria-modal="true"');
     expect(source).toContain("prefers-reduced-motion");
     expect(source).toContain("process-onboarding-flight");
     expect(source).toContain("sidebar-instructions-item");
-    expect(source).toContain("safeStorageSet(\"session\", INTAKE_JUST_COMPLETED_KEY, \"true\")");
+    expect(source).toContain(
+      'safeStorageSet("session", INTAKE_JUST_COMPLETED_KEY, "true")',
+    );
     expect(source).toContain("const activeNavRetrofitId = activeRetrofitId;");
     expect(source).not.toContain("activeRetrofitId || retrofits[0]?.id");
     expect(source).toContain("if (activeRetrofitId) setRetrofitsOpen(true)");
@@ -2130,7 +2693,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Grid</span>");
     expect(source).toContain("Panel</span>");
     expect(workspaceSource).toContain("data-workspace-tab");
-    expect(workspaceSource).toContain("data-workspace-panel=\"environmental\"");
+    expect(workspaceSource).toContain('data-workspace-panel="environmental"');
     expect(workspaceSource).not.toContain("Submit application");
     expect(workspaceSource).not.toContain("Send email");
     expect(workspaceSource).not.toContain("Autofill PDF");
@@ -2143,18 +2706,20 @@ describe("retrofit recommendations preview", () => {
     const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
     const userDashboardSource = source.slice(
       source.indexOf("function UserDashboard("),
-      source.indexOf("function mergePortalRetrofitRecommendationsPayload")
+      source.indexOf("function mergePortalRetrofitRecommendationsPayload"),
     );
     const adminPortalPreviewSource = source.slice(
       source.indexOf("function AdminClientPortalPreviewPage("),
-      source.indexOf("const ADMIN_OPPORTUNITIES_TAB")
+      source.indexOf("const ADMIN_OPPORTUNITIES_TAB"),
     );
     const adminUserPreviewSource = source.slice(
       source.indexOf("function AdminUserPreviewStandalonePage("),
-      source.indexOf("function buildUserPreviewOptions(")
+      source.indexOf("function buildUserPreviewOptions("),
     );
 
-    expect(userDashboardSource).toContain('profileFormWriteEndpoint="/api/portal/pre-retrofit-form-answers"');
+    expect(userDashboardSource).toContain(
+      'profileFormWriteEndpoint="/api/portal/pre-retrofit-form-answers"',
+    );
     expect(adminPortalPreviewSource).not.toContain("profileFormWriteEndpoint=");
     expect(adminUserPreviewSource).not.toContain("profileFormWriteEndpoint=");
   });
@@ -2166,12 +2731,16 @@ describe("retrofit recommendations preview", () => {
     const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
 
     expect(source).toContain("profileDetailRef");
-    expect(source).toContain("scrollIntoView({ behavior: \"smooth\", block: \"start\" })");
+    expect(source).toContain(
+      'scrollIntoView({ behavior: "smooth", block: "start" })',
+    );
     expect(source).toContain("focus({ preventScroll: true })");
-    expect(source).toContain("viewProfile(profile.profileId, \"view\")");
-    expect(source).toContain("viewProfile(profile.profileId, \"edit\")");
-    expect(source).toContain("open={profileDetailMode === \"edit\"}");
-    expect(source).toContain("selectedProfile?.profileId === profile.profileId ? \"is-selected\" : undefined");
+    expect(source).toContain('viewProfile(profile.profileId, "view")');
+    expect(source).toContain('viewProfile(profile.profileId, "edit")');
+    expect(source).toContain('open={profileDetailMode === "edit"}');
+    expect(source).toContain(
+      'selectedProfile?.profileId === profile.profileId ? "is-selected" : undefined',
+    );
     expect(css).toContain(".application-source-table tbody tr.is-selected");
     expect(css).toContain(".application-profile-detail:focus");
   });
@@ -2184,23 +2753,25 @@ describe("retrofit recommendations preview", () => {
 
     expect(source).toContain("function AppSessionRestoringPage");
     expect(source).toContain("function isAppChromeRoute(route: Route)");
-    expect(source).toContain("route === \"user-preview\"");
+    expect(source).toContain('route === "user-preview"');
     expect(source).toContain("return <AppSessionRestoringPage />");
     expect(source).toContain("return <SessionRestoringPage />");
 
     const publicRestoringSource = source.slice(
       source.indexOf("function SessionRestoringPage"),
-      source.indexOf("function AppSessionRestoringPage")
+      source.indexOf("function AppSessionRestoringPage"),
     );
     expect(publicRestoringSource).toContain("RetroFiPageLoader");
-    expect(publicRestoringSource).toContain("Checking your signed-in session...");
+    expect(publicRestoringSource).toContain(
+      "Checking your signed-in session...",
+    );
     expect(publicRestoringSource).not.toContain("PublicShell");
     expect(publicRestoringSource).not.toContain("sign-in-panel");
     expect(publicRestoringSource).not.toContain("RetroFiLogoLoader");
 
     const appRestoringSource = source.slice(
       source.indexOf("function AppSessionRestoringPage"),
-      source.indexOf("function isAppChromeRoute")
+      source.indexOf("function isAppChromeRoute"),
     );
     expect(appRestoringSource).toContain("RetroFiPageLoader");
     expect(appRestoringSource).not.toContain("PublicShell");
@@ -2217,47 +2788,59 @@ describe("retrofit recommendations preview", () => {
     const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
 
     const tasksRouteSource = source.slice(
-      source.indexOf("if (effectiveRoute === \"tasks\")"),
-      source.indexOf("if (effectiveRoute === \"chats\")")
+      source.indexOf('if (effectiveRoute === "tasks")'),
+      source.indexOf('if (effectiveRoute === "chats")'),
     );
     const chatsRouteSource = source.slice(
-      source.indexOf("if (effectiveRoute === \"chats\")"),
-      source.indexOf("if (effectiveRoute === \"task-report\")")
+      source.indexOf('if (effectiveRoute === "chats")'),
+      source.indexOf('if (effectiveRoute === "task-report")'),
     );
     const reportRouteSource = source.slice(
-      source.indexOf("if (effectiveRoute === \"task-report\")"),
-      source.indexOf("if (effectiveRoute === \"user-preview\")")
+      source.indexOf('if (effectiveRoute === "task-report")'),
+      source.indexOf('if (effectiveRoute === "user-preview")'),
     );
     const adminPreviewRouteSource = source.slice(
-      source.indexOf("if (effectiveRoute === \"user-preview\")"),
-      source.indexOf("if (effectiveRoute === \"portal-preview\")")
+      source.indexOf('if (effectiveRoute === "user-preview")'),
+      source.indexOf('if (effectiveRoute === "portal-preview")'),
     );
     const adminUserPreviewSource = source.slice(
       source.indexOf("function AdminUserPreviewStandalonePage("),
-      source.indexOf("function buildUserPreviewOptions(")
+      source.indexOf("function buildUserPreviewOptions("),
     );
 
     expect(tasksRouteSource).toContain("AdminTasksStandalonePage");
     expect(tasksRouteSource).toContain("SignInPage");
     expect(tasksRouteSource).toContain("return <UserDashboard");
-    expect(tasksRouteSource).not.toContain("return <LocalFirstmateTasksStandalonePage />");
-    expect(chatsRouteSource).toContain("return <LocalGptProChatsStandalonePage />");
+    expect(tasksRouteSource).not.toContain(
+      "return <LocalFirstmateTasksStandalonePage />",
+    );
+    expect(chatsRouteSource).toContain(
+      "return <LocalGptProChatsStandalonePage />",
+    );
     expect(chatsRouteSource).not.toContain("SignInPage");
     expect(reportRouteSource).toContain("AdminTaskReportStandalonePage");
     expect(reportRouteSource).toContain("SignInPage");
     expect(reportRouteSource).toContain("return <UserDashboard");
-    expect(reportRouteSource).not.toContain("return <LocalFirstmateTaskReportStandalonePage />");
+    expect(reportRouteSource).not.toContain(
+      "return <LocalFirstmateTaskReportStandalonePage />",
+    );
     expect(adminPreviewRouteSource).toContain("AdminUserPreviewStandalonePage");
     expect(adminPreviewRouteSource).toContain("SignInPage");
     expect(adminUserPreviewSource).toContain("user-preview-tasks-link");
-    expect(adminUserPreviewSource).toContain("href={pathForRoute(\"tasks\")}");
+    expect(adminUserPreviewSource).toContain('href={pathForRoute("tasks")}');
     expect(adminUserPreviewSource).toContain("Codex tasks");
-    expect(source).toContain("credential ? { headers: adminAuthHeaders(credential) } : {}");
+    expect(source).toContain(
+      "credential ? { headers: adminAuthHeaders(credential) } : {}",
+    );
     expect(source).toContain("Codex tasks require RetroFi admin sign-in.");
     expect(source).toContain("Reports ready");
-    expect(source).toContain("Completed and archived tasks without pending report review are hidden by default.");
+    expect(source).toContain(
+      "Completed and archived tasks without pending report review are hidden by default.",
+    );
     expect(source).toContain("Active tasks");
-    expect(source).toContain("getFirstmateSnapshotState(response, snapshotHasTasks)");
+    expect(source).toContain(
+      "getFirstmateSnapshotState(response, snapshotHasTasks)",
+    );
     expect(source).toContain("Codex tasks snapshot warning");
     expect(source).toContain("Snapshot ");
     expect(source).toContain("manifest-selected snapshot");
@@ -2272,23 +2855,23 @@ describe("retrofit recommendations preview", () => {
       counts: {
         active: 1,
         completed: 1,
-        needsResponse: 0
+        needsResponse: 0,
       },
       tasks: [
         buildFirstmateTaskFixture({
           id: "legacy-active-l1",
-          state: "active"
+          state: "active",
         }),
         buildFirstmateTaskFixture({
           id: "archived-task-a1",
-          state: "archived"
+          state: "archived",
         }),
         buildFirstmateTaskFixture({
           id: "review-ready-r1",
           state: "completed",
-          reportReviewReady: true
-        })
-      ]
+          reportReviewReady: true,
+        }),
+      ],
     });
 
     expect(normalized.counts).toMatchObject({
@@ -2296,17 +2879,25 @@ describe("retrofit recommendations preview", () => {
       working: 1,
       completed: 1,
       archived: 0,
-      needsResponse: 0
+      needsResponse: 0,
     });
-    expect(normalized.tasks.map((task) => [task.id, task.state, task.active])).toEqual([
+    expect(
+      normalized.tasks.map((task) => [task.id, task.state, task.active]),
+    ).toEqual([
       ["legacy-active-l1", "working", true],
       ["archived-task-a1", "archived", false],
-      ["review-ready-r1", "completed", false]
+      ["review-ready-r1", "completed", false],
     ]);
-    expect(normalized.tasks.map((task) => [task.id, task.defaultVisible, task.hiddenByDefault])).toEqual([
+    expect(
+      normalized.tasks.map((task) => [
+        task.id,
+        task.defaultVisible,
+        task.hiddenByDefault,
+      ]),
+    ).toEqual([
       ["legacy-active-l1", true, false],
       ["archived-task-a1", false, true],
-      ["review-ready-r1", true, false]
+      ["review-ready-r1", true, false],
     ]);
   });
 
@@ -2315,31 +2906,45 @@ describe("retrofit recommendations preview", () => {
     const { readFileSync } = await import(fsModuleName);
     const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
 
-    expect(source).toContain("The agent has already moved on, so the task list was refreshed.");
+    expect(source).toContain(
+      "The agent has already moved on, so the task list was refreshed.",
+    );
     expect(source).toContain("task is not waiting for a captain response");
     expect(source).toContain("await onStaleResponse(serverMessage)");
-    expect(source).not.toContain("/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/report-feedback");
-    expect(source).not.toContain("/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/assign");
+    expect(source).not.toContain(
+      "/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/report-feedback",
+    );
+    expect(source).not.toContain(
+      "/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/assign",
+    );
     expect(source).not.toContain("Looks good / Continue");
     expect(source).not.toContain("Request changes");
     expect(source).not.toContain("Assign Crewmate");
     expect(source).not.toContain("Report Feedback");
     expect(source).not.toContain("feedback.message ||");
     expect(source).not.toContain("task-report-feedback-toggle");
-    expect(source).toContain("rel=\"noreferrer\" target=\"_blank\"");
+    expect(source).toContain('rel="noreferrer" target="_blank"');
     expect(source).toContain("Go To Pro Repair Batch");
-    expect(source).toContain("const showGptProRepairAction = Boolean(task.showGptProRepairAction ?? task.gptProRepairReady)");
-    expect(source).toContain("task.showReportAction ?? Boolean(task.hasReport && task.reportUrl)");
+    expect(source).toContain(
+      "const showGptProRepairAction = Boolean(task.showGptProRepairAction ?? task.gptProRepairReady)",
+    );
+    expect(source).toContain(
+      "task.showReportAction ?? Boolean(task.hasReport && task.reportUrl)",
+    );
     expect(source).toContain("gptProRepairUnavailableReason");
-    expect(source).not.toContain("Opens the local /chats fallback for this GPT Pro repair task.");
-    expect(source).toContain("task.reportActionLabel || \"View Report\"");
-    expect(source).toContain("showReportAction && task.reportNote && !task.reportIsFinal");
+    expect(source).not.toContain(
+      "Opens the local /chats fallback for this GPT Pro repair task.",
+    );
+    expect(source).toContain('task.reportActionLabel || "View Report"');
+    expect(source).toContain(
+      "showReportAction && task.reportNote && !task.reportIsFinal",
+    );
     expect(source).toContain("task-report-status-note");
     expect(source).not.toContain("Looks good creates a continuation task");
 
     const taskRowSource = source.slice(
       source.indexOf("function FirstmateTaskRow"),
-      source.indexOf("function AdminTaskReportStandalonePage")
+      source.indexOf("function AdminTaskReportStandalonePage"),
     );
     expect(taskRowSource).toContain("{showGptProRepairAction ? (");
     expect(taskRowSource).not.toContain("setIsFeedbackOpen");
@@ -2377,16 +2982,14 @@ describe("retrofit recommendations preview", () => {
       gptProRepairUrl: null,
       gptProRepairLabel: null,
       gptProRepairFallback: false,
-      gptProRepairUnavailableReason: null
+      gptProRepairUnavailableReason: null,
     };
     const oldPayloadHtml = renderToStaticMarkup(
       <table>
         <tbody>
-          <FirstmateTaskRow
-            task={baseTask}
-          />
+          <FirstmateTaskRow task={baseTask} />
         </tbody>
-      </table>
+      </table>,
     );
 
     expect(oldPayloadHtml).toContain("See Report");
@@ -2403,11 +3006,11 @@ describe("retrofit recommendations preview", () => {
             task={{
               ...baseTask,
               hasReport: false,
-              reportUrl: null
+              reportUrl: null,
             }}
           />
         </tbody>
-      </table>
+      </table>,
     );
 
     expect(noReportHtml).toContain("No report");
@@ -2426,11 +3029,11 @@ describe("retrofit recommendations preview", () => {
               hasReport: false,
               reportUrl: null,
               canSendReportFeedback: false,
-              canAssign: true
+              canAssign: true,
             }}
           />
         </tbody>
-      </table>
+      </table>,
     );
 
     expect(queuedHtml).toContain("queued-follow-up-q1");
@@ -2444,19 +3047,35 @@ describe("retrofit recommendations preview", () => {
     const { readFileSync } = await import(fsModuleName);
     const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
     const homeMobileNavStart = css.indexOf("@media (max-width: 860px) {");
-    const homeMobileNavEnd = css.indexOf("@media (max-width: 768px)", homeMobileNavStart);
+    const homeMobileNavEnd = css.indexOf(
+      "@media (max-width: 768px)",
+      homeMobileNavStart,
+    );
     const homeMobileNavCss = css.slice(homeMobileNavStart, homeMobileNavEnd);
-    const homeSmallMobileStart = css.indexOf("@media (max-width: 520px)", homeMobileNavEnd);
-    const homeSmallMobileEnd = css.indexOf(".home-infographics-section", homeSmallMobileStart);
-    const homeSmallMobileCss = css.slice(homeSmallMobileStart, homeSmallMobileEnd);
+    const homeSmallMobileStart = css.indexOf(
+      "@media (max-width: 520px)",
+      homeMobileNavEnd,
+    );
+    const homeSmallMobileEnd = css.indexOf(
+      ".home-infographics-section",
+      homeSmallMobileStart,
+    );
+    const homeSmallMobileCss = css.slice(
+      homeSmallMobileStart,
+      homeSmallMobileEnd,
+    );
 
     expect(css).toContain(".public-page.home-page .navbar-inner");
     expect(css).toContain("background: transparent;");
     expect(homeMobileNavCss).toContain(".public-page.home-page .site-header");
-    expect(homeMobileNavCss).not.toContain(".public-page.home-page .navbar-inner");
+    expect(homeMobileNavCss).not.toContain(
+      ".public-page.home-page .navbar-inner",
+    );
     expect(homeMobileNavCss).not.toContain("backdrop-filter");
     expect(homeMobileNavCss).not.toContain("rgba(237, 248, 242, 0.58)");
-    expect(homeSmallMobileCss).toContain(".public-page.home-page .planet-scan-section.scroll-frame-scanner .planet-scan-title span");
+    expect(homeSmallMobileCss).toContain(
+      ".public-page.home-page .planet-scan-section.scroll-frame-scanner .planet-scan-title span",
+    );
     expect(homeSmallMobileCss).toContain("white-space: normal;");
   });
 
@@ -2466,14 +3085,16 @@ describe("retrofit recommendations preview", () => {
         label="Preparing your dashboard..."
         sublabel="Building savings, incentive, impact, and certification views"
         variant="dashboard"
-      />
+      />,
     );
 
     expect(html).toContain("retrofi-loader-page");
     expect(html).toContain("/retrofi-logo.png");
     expect(html).toContain("Preparing your dashboard...");
-    expect(html).toContain("Building savings, incentive, impact, and certification views");
-    expect(html).toContain("role=\"status\"");
+    expect(html).toContain(
+      "Building savings, incentive, impact, and certification views",
+    );
+    expect(html).toContain('role="status"');
   });
 
   it("clamps shared progress loader values between 0 and 100", () => {
@@ -2481,15 +3102,24 @@ describe("retrofit recommendations preview", () => {
     expect(clampRetroFiProgress(62)).toBe(62);
     expect(clampRetroFiProgress(130)).toBe(100);
 
-    const lowHtml = renderToStaticMarkup(<RetroFiProgressLoader indeterminate={false} progress={-10} />);
-    const highHtml = renderToStaticMarkup(<RetroFiProgressLoader indeterminate={false} progress={130} />);
+    const lowHtml = renderToStaticMarkup(
+      <RetroFiProgressLoader indeterminate={false} progress={-10} />,
+    );
+    const highHtml = renderToStaticMarkup(
+      <RetroFiProgressLoader indeterminate={false} progress={130} />,
+    );
 
     expect(lowHtml).toContain("0%");
     expect(highHtml).toContain("100%");
   });
 
   it("renders indeterminate progress without a fake percentage", () => {
-    const html = renderToStaticMarkup(<RetroFiProgressLoader indeterminate label="Preparing dashboard metrics" />);
+    const html = renderToStaticMarkup(
+      <RetroFiProgressLoader
+        indeterminate
+        label="Preparing dashboard metrics"
+      />,
+    );
 
     expect(html).toContain("retrofi-progress-fill--indeterminate");
     expect(html).not.toContain("retrofi-progress-percent");
@@ -2497,8 +3127,12 @@ describe("retrofit recommendations preview", () => {
   });
 
   it("renders compact circular logo loaders and skeleton placeholders", () => {
-    const logoHtml = renderToStaticMarkup(<RetroFiLogoLoader label="Saving..." size="sm" tone="modal" />);
-    const skeletonHtml = renderToStaticMarkup(<RetroFiSkeleton variant="chart" label="Loading chart" />);
+    const logoHtml = renderToStaticMarkup(
+      <RetroFiLogoLoader label="Saving..." size="sm" tone="modal" />,
+    );
+    const skeletonHtml = renderToStaticMarkup(
+      <RetroFiSkeleton variant="chart" label="Loading chart" />,
+    );
 
     expect(logoHtml).toContain("retrofi-logo-loader--sm");
     expect(logoHtml).toContain("retrofi-logo-spinner-ring");
@@ -2525,7 +3159,9 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain("height: 104px");
     expect(css).toContain(".retrofi-logo-loader--page .retrofi-logo-spinner");
     expect(css).toContain("height: 118px");
-    expect(css).toContain(".retrofi-logo-loader--page .retrofi-logo-spinner-mark");
+    expect(css).toContain(
+      ".retrofi-logo-loader--page .retrofi-logo-spinner-mark",
+    );
     expect(css).toContain("height: 64px");
   });
 
@@ -2534,12 +3170,24 @@ describe("retrofit recommendations preview", () => {
     const { readFileSync } = await import(fsModuleName);
     const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
 
-    expect(source).toContain("label={isPreviewCaseLoad ? \"Loading preview case...\" : \"Preparing your dashboard...\"}");
-    expect(source).toContain("Building savings, incentive, impact, and certification views");
-    expect(source).toContain("<RetroFiSkeleton key={index} variant=\"retrofit-card\"");
-    expect(source).toContain("<RetroFiLogoLoader label=\"Loading the client portal preview...\"");
-    expect(source).toContain("<RetroFiSkeleton variant=\"table\" rows={7} label=\"Loading ApplicationProfiles\"");
-    expect(source).not.toContain("<RetroFiLogoLoader label=\"Checking application prep...\"");
+    expect(source).toContain(
+      'label={isPreviewCaseLoad ? "Loading preview case..." : "Preparing your dashboard..."}',
+    );
+    expect(source).toContain(
+      "Building savings, incentive, impact, and certification views",
+    );
+    expect(source).toContain(
+      '<RetroFiSkeleton key={index} variant="retrofit-card"',
+    );
+    expect(source).toContain(
+      '<RetroFiLogoLoader label="Loading the client portal preview..."',
+    );
+    expect(source).toContain(
+      '<RetroFiSkeleton variant="table" rows={7} label="Loading ApplicationProfiles"',
+    );
+    expect(source).not.toContain(
+      '<RetroFiLogoLoader label="Checking application prep..."',
+    );
     expect(source).toContain("No retrofit recommendations yet.");
   });
 
@@ -2549,11 +3197,15 @@ describe("retrofit recommendations preview", () => {
     const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
     const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
 
-    expect(source).toContain("/api/application-profiles/approved?opportunityId=");
-    expect(source).toContain("status === \"customer_ready\"");
-    expect(source).toContain("status === \"reference_only\"");
+    expect(source).toContain(
+      "/api/application-profiles/approved?opportunityId=",
+    );
+    expect(source).toContain('status === "customer_ready"');
+    expect(source).toContain('status === "reference_only"');
     expect(source).toContain("Application prep not available yet.");
-    expect(source).toContain("const appReady = appStatus?.status === \"customer_ready\" && Boolean(appStatus.profile)");
+    expect(source).toContain(
+      'const appReady = appStatus?.status === "customer_ready" && Boolean(appStatus.profile)',
+    );
     expect(source).toContain("appReady ? (");
     expect(source).toContain("setApplicationPrepOpportunity(opportunity)");
     expect(source).toContain("View full application details");
@@ -2562,7 +3214,9 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Application form questions");
     expect(source).toContain("ApplicationPrepFormQuestionList");
     expect(source).toContain("No application is submitted automatically.");
-    expect(source).toContain("navigator.clipboard.writeText(applicationPrepChecklistText(profile))");
+    expect(source).toContain(
+      "navigator.clipboard.writeText(applicationPrepChecklistText(profile))",
+    );
     expect(source).toContain("Copy checklist");
     expect(source).toContain("applicationOverviewIsReady");
     expect(source).toContain("applicationOverviewReferenceOnly");
@@ -2583,31 +3237,55 @@ describe("retrofit recommendations preview", () => {
     expect(impact.overall.displayValue).toBe("?");
     expect(impact.overall.confidence).toBe("Needs data");
     expect(impact.overall.fallback).toContain("Needs bills");
-    expect(impact.resources.map((resource) => resource.label)).toContain("Electricity avoided");
-    expect(impact.resources.some((resource) => resource.displayValue === "Needs bills")).toBe(true);
+    expect(impact.resources.map((resource) => resource.label)).toContain(
+      "Electricity avoided",
+    );
+    expect(
+      impact.resources.some(
+        (resource) => resource.displayValue === "Needs bills",
+      ),
+    ).toBe(true);
     expect(impact.missingInfo).toContain("Upload bills");
     expect(impact.missingInfo).toContain("Answer retrofit-specific questions");
   });
 
   it("uses category-aware environmental impact fallback rows", () => {
     const solarImpact = buildRetrofitEnvironmentalImpactPreview(
-      { retrofitTypeId: "rooftop_solar_pv", parentCategory: "solar_renewable_electricity", isPhysicalRetrofit: true } as any,
-      []
+      {
+        retrofitTypeId: "rooftop_solar_pv",
+        parentCategory: "solar_renewable_electricity",
+        isPhysicalRetrofit: true,
+      } as any,
+      [],
     );
     const evImpact = buildRetrofitEnvironmentalImpactPreview(
-      { retrofitTypeId: "ev_charger_installation", parentCategory: "ev_charging_transportation", isPhysicalRetrofit: true } as any,
-      []
+      {
+        retrofitTypeId: "ev_charger_installation",
+        parentCategory: "ev_charging_transportation",
+        isPhysicalRetrofit: true,
+      } as any,
+      [],
     );
     const auditImpact = buildRetrofitEnvironmentalImpactPreview(
-      { retrofitTypeId: "energy_audit", parentCategory: "audits_studies_planning", isPhysicalRetrofit: false } as any,
-      []
+      {
+        retrofitTypeId: "energy_audit",
+        parentCategory: "audits_studies_planning",
+        isPhysicalRetrofit: false,
+      } as any,
+      [],
     );
 
-    expect(solarImpact.resources.map((resource) => resource.label)).toContain("Renewable electricity generated");
+    expect(solarImpact.resources.map((resource) => resource.label)).toContain(
+      "Renewable electricity generated",
+    );
     expect(solarImpact.missingInfo).toContain("Add system size");
-    expect(evImpact.resources.map((resource) => resource.label)).toContain("Fuel displaced");
+    expect(evImpact.resources.map((resource) => resource.label)).toContain(
+      "Fuel displaced",
+    );
     expect(evImpact.missingInfo).toContain("Add utilization estimate");
-    expect(auditImpact.overall.label).toBe("Potential emissions reduction identified");
+    expect(auditImpact.overall.label).toBe(
+      "Potential emissions reduction identified",
+    );
     expect(auditImpact.overall.displayValue).toBe("?");
   });
 
@@ -2616,13 +3294,39 @@ describe("retrofit recommendations preview", () => {
     const scenario = preview.retrofits[0].scenarios[0];
     const opportunity = preview.retrofits[0].opportunities[0];
 
-    expect(countScenarioSelectedOpportunities(scenario, { [opportunity.id]: true })).toBe(1);
-    expect(getScenarioSelectedOpportunityCount(scenario, { [opportunity.id]: true })).toBe(1);
-    expect(countScenarioSelectedOpportunities(scenario, { [opportunity.id]: false })).toBe(0);
-    expect(getOpportunityIncludedLabel(opportunity, true)).toBe("Not included yet — needs more information");
-    expect(getOpportunityIncludedLabel({ ...opportunity, includedState: "Included in current estimate" }, true)).toBe("Included in current estimate");
-    expect(getOpportunityIncludedLabel({ ...opportunity, includedState: "Not included in current estimate" }, false)).toBe("Not included in current estimate");
-    expect(getOpportunityIncludedLabel({ ...opportunity, includedState: "Not included yet — needs more information" }, false)).toBe("Not included yet — needs more information");
+    expect(
+      countScenarioSelectedOpportunities(scenario, { [opportunity.id]: true }),
+    ).toBe(1);
+    expect(
+      getScenarioSelectedOpportunityCount(scenario, { [opportunity.id]: true }),
+    ).toBe(1);
+    expect(
+      countScenarioSelectedOpportunities(scenario, { [opportunity.id]: false }),
+    ).toBe(0);
+    expect(getOpportunityIncludedLabel(opportunity, true)).toBe(
+      "Not included yet — needs more information",
+    );
+    expect(
+      getOpportunityIncludedLabel(
+        { ...opportunity, includedState: "Included in current estimate" },
+        true,
+      ),
+    ).toBe("Included in current estimate");
+    expect(
+      getOpportunityIncludedLabel(
+        { ...opportunity, includedState: "Not included in current estimate" },
+        false,
+      ),
+    ).toBe("Not included in current estimate");
+    expect(
+      getOpportunityIncludedLabel(
+        {
+          ...opportunity,
+          includedState: "Not included yet — needs more information",
+        },
+        false,
+      ),
+    ).toBe("Not included yet — needs more information");
   });
 
   it("does not include uncertain utility-territory opportunities in financial estimates", () => {
@@ -2632,13 +3336,13 @@ describe("retrofit recommendations preview", () => {
         ...liveShapedPayload.intake,
         business: {
           ...liveShapedPayload.intake.business,
-          headquarters: "Seattle, WA"
+          headquarters: "Seattle, WA",
         },
         site: {
           ...liveShapedPayload.intake.site,
           electricUtilityProvider: "Seattle City Light",
-          address: "Seattle, WA"
-        }
+          address: "Seattle, WA",
+        },
       },
       retrofits: [
         {
@@ -2648,14 +3352,15 @@ describe("retrofit recommendations preview", () => {
               ...liveShapedPayload.retrofits[0].opportunities[0],
               unresolvedRequirements: [],
               sourceSummary: {
-                ...liveShapedPayload.retrofits[0].opportunities[0].sourceSummary,
+                ...liveShapedPayload.retrofits[0].opportunities[0]
+                  .sourceSummary,
                 administrator: "Richland Energy Services",
-                sourceName: "Richland Energy Services"
-              }
-            }
-          ]
-        }
-      ]
+                sourceName: "Richland Energy Services",
+              },
+            },
+          ],
+        },
+      ],
     } as any;
 
     const preview = buildUserRetrofitPreviewResult(utilityMismatchPayload);
@@ -2663,8 +3368,12 @@ describe("retrofit recommendations preview", () => {
     const opportunity = retrofit.opportunities[0];
 
     expect(opportunity.eligibilityStatus).toBe("needs review");
-    expect(opportunity.requiredInfo).toContain("utility territory confirmation");
-    expect(opportunity.includedState).toBe("Not included yet — needs more information");
+    expect(opportunity.requiredInfo).toContain(
+      "utility territory confirmation",
+    );
+    expect(opportunity.includedState).toBe(
+      "Not included yet — needs more information",
+    );
     expect(opportunity.estimatedValue).toBeNull();
     expect(opportunity.whySelected).toContain("utility territory confirmation");
     expect(retrofit.missingInfo).toContain("utility territory confirmation");
@@ -2683,24 +3392,28 @@ describe("retrofit recommendations preview", () => {
             {
               id: "biomass_biogas_energy_system:tax-inclusive-costs",
               retrofitId: "biomass_biogas_energy_system",
-              question: "Do you want to enter costs with tax included, or should RetroFi estimate them for you?",
+              question:
+                "Do you want to enter costs with tax included, or should RetroFi estimate them for you?",
               answerType: "select",
-              options: ["Enter tax-inclusive numbers", "Estimate for me (tax included)"]
+              options: [
+                "Enter tax-inclusive numbers",
+                "Estimate for me (tax included)",
+              ],
             },
             {
               id: "biomass_biogas_energy_system:fuel-stream",
               retrofitId: "biomass_biogas_energy_system",
               question: "What fuel or waste stream would the system use?",
-              answerType: "text"
+              answerType: "text",
             },
             {
               id: "biomass_biogas_energy_system:feedstock",
               retrofitId: "biomass_biogas_energy_system",
               question: "What quantity of feedstock is available per month?",
-              answerType: "text"
-            }
+              answerType: "text",
+            },
           ],
-          opportunities: []
+          opportunities: [],
         },
         {
           ...liveShapedPayload.retrofits[0],
@@ -2710,45 +3423,66 @@ describe("retrofit recommendations preview", () => {
             {
               id: "solar_renewable_electricity:tax-inclusive-costs",
               retrofitId: "solar_renewable_electricity",
-              question: "Do you want to enter costs with tax included, or should RetroFi estimate them for you?",
+              question:
+                "Do you want to enter costs with tax included, or should RetroFi estimate them for you?",
               answerType: "select",
-              options: ["Enter tax-inclusive numbers", "Estimate for me (tax included)"]
+              options: [
+                "Enter tax-inclusive numbers",
+                "Estimate for me (tax included)",
+              ],
             },
             {
               id: "solar_renewable_electricity:roof-area",
               retrofitId: "solar_renewable_electricity",
               question: "What roof or site area is available?",
-              answerType: "number"
+              answerType: "number",
             },
             {
               id: "solar_renewable_electricity:roof-control",
               retrofitId: "solar_renewable_electricity",
               question: "Do you control the roof or site?",
               answerType: "select",
-              options: ["Yes", "No", "Shared", "Unknown"]
-            }
+              options: ["Yes", "No", "Shared", "Unknown"],
+            },
           ],
-          opportunities: []
-        }
-      ]
+          opportunities: [],
+        },
+      ],
     } as any;
     const preview = buildUserRetrofitPreviewResult(categoryPayload);
-    const biomassQuestions = preview.retrofits[0].detailQuestions.map((question) => question.question);
-    const solarQuestions = preview.retrofits[1].detailQuestions.map((question) => question.question);
+    const biomassQuestions = preview.retrofits[0].detailQuestions.map(
+      (question) => question.question,
+    );
+    const solarQuestions = preview.retrofits[1].detailQuestions.map(
+      (question) => question.question,
+    );
 
-    expect(biomassQuestions[0]).toContain("Do you want to enter costs with tax included");
-    expect(biomassQuestions).toContain("What fuel or waste stream would the system use?");
-    expect(biomassQuestions).toContain("What quantity of feedstock is available per month?");
-    expect(solarQuestions[0]).toContain("Do you want to enter costs with tax included");
+    expect(biomassQuestions[0]).toContain(
+      "Do you want to enter costs with tax included",
+    );
+    expect(biomassQuestions).toContain(
+      "What fuel or waste stream would the system use?",
+    );
+    expect(biomassQuestions).toContain(
+      "What quantity of feedstock is available per month?",
+    );
+    expect(solarQuestions[0]).toContain(
+      "Do you want to enter costs with tax included",
+    );
     expect(solarQuestions).toContain("What roof or site area is available?");
     expect(solarQuestions).toContain("Do you control the roof or site?");
-    expect(solarQuestions).not.toContain("What quantity or scope is being upgraded?");
+    expect(solarQuestions).not.toContain(
+      "What quantity or scope is being upgraded?",
+    );
   });
 
   it("keeps the home planet scan hero copy deterministic with the single reveal CTA", async () => {
     const fsModuleName = "node:fs";
     const { readFileSync } = await import(fsModuleName);
-    const appSource = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+    const appSource = readFileSync(
+      new URL("./App.tsx", import.meta.url),
+      "utf8",
+    );
     const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
     const heroStart = appSource.indexOf("function PlanetScanHero");
     const heroEnd = appSource.indexOf("function HomePage", heroStart);
@@ -2756,7 +3490,9 @@ describe("retrofit recommendations preview", () => {
 
     expect(heroSource).toContain("<span>Find the money</span>");
     expect(heroSource).toContain("<span>behind your next</span>");
-    expect(heroSource).toContain('<span className="planet-scan-title-accent">retrofit.</span>');
+    expect(heroSource).toContain(
+      '<span className="planet-scan-title-accent">retrofit.</span>',
+    );
     expect(heroSource).toContain("<span>Find, compare, and claim</span>");
     expect(heroSource).toContain("<span>retrofit incentives.</span>");
     expect(heroSource).not.toContain("<span>RetroFi helps you</span>");
@@ -2793,7 +3529,9 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".user-preview-sidebar-collapse");
     expect(css).toContain(".process-onboarding-modal");
     expect(css).toContain(".process-onboarding-flight");
-    expect(css).toContain("radial-gradient(circle at 50% 56%, rgba(24, 50, 82, 0.32), transparent 62%)");
+    expect(css).toContain(
+      "radial-gradient(circle at 50% 56%, rgba(24, 50, 82, 0.32), transparent 62%)",
+    );
     expect(css).toContain("backdrop-filter: none");
     expect(css).toContain("width: min(95.1vw, 2000px)");
     expect(css).toContain(".process-onboarding-modal .process-editor-content");
@@ -2822,7 +3560,9 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain("@keyframes instructions-nav-pulse");
     expect(css).not.toContain("onboarding.md");
     expect(css).not.toContain(".process-step-row > span");
-    expect(css).not.toContain("border-top: 1px solid var(--rf-border);\n  margin-top: 4px;\n  padding-top: 0;");
+    expect(css).not.toContain(
+      "border-top: 1px solid var(--rf-border);\n  margin-top: 4px;\n  padding-top: 0;",
+    );
     expect(css).toContain(".user-preview-admin-controls-button:hover");
     expect(css).toContain(".user-preview-customer-mode-button:hover");
     expect(css).toContain(".user-preview-form-toggle:hover");
@@ -2835,8 +3575,12 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".retrofit-preview-page .secondary-button:hover");
     expect(css).toContain(".retrofit-preview-page .workspace-tab:hover");
     expect(css).toContain(".retrofit-preview-page .command-summary-card:hover");
-    expect(css).toContain(".retrofit-preview-page .preview-accordion-trigger:hover");
-    expect(css).toContain(".retrofit-preview-page .preview-accordion-trigger:hover *");
+    expect(css).toContain(
+      ".retrofit-preview-page .preview-accordion-trigger:hover",
+    );
+    expect(css).toContain(
+      ".retrofit-preview-page .preview-accordion-trigger:hover *",
+    );
     expect(css).toContain(".workspace-tab.is-active");
     expect(css).toContain(".retrofit-tab.is-active");
     expect(css).toContain("background: var(--rf-green-soft)");
@@ -2848,7 +3592,9 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".retrofit-picker-grid");
     expect(css).toContain(".retrofit-picker-card");
     expect(css).toContain(".retrofit-picker-card.is-selected");
-    expect(css).toContain(".retrofit-picker-grid.is-panel .retrofit-picker-card");
+    expect(css).toContain(
+      ".retrofit-picker-grid.is-panel .retrofit-picker-card",
+    );
     expect(css).toContain("grid-template-columns: repeat(3, minmax(0, 1fr))");
     expect(css).toContain("@media (max-width: 1099px)");
     expect(css).toContain("@media (max-width: 719px)");
@@ -2868,11 +3614,17 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".retrofit-workspace-tabs");
     expect(css).toContain(".active-command-center");
     expect(css).toContain(".active-command-center-top");
-    expect(css).toContain(".estimate-workspace-shell.is-scenarios-opportunities");
+    expect(css).toContain(
+      ".estimate-workspace-shell.is-scenarios-opportunities",
+    );
     expect(css).toContain(".scenario-opportunity-workspace");
     expect(css).toContain(".scenario-opportunity-detail-panel");
-    expect(css).toContain(".retrofit-preview-page .scenario-opportunity-card:hover");
-    expect(css).toContain(".retrofit-preview-page .scenario-opportunity-table-row:hover");
+    expect(css).toContain(
+      ".retrofit-preview-page .scenario-opportunity-card:hover",
+    );
+    expect(css).toContain(
+      ".retrofit-preview-page .scenario-opportunity-table-row:hover",
+    );
     expect(css).toContain(".scenario-opportunity-table-row");
     expect(css).toContain(".workspace-panel");
     expect(css).toContain(".overview-command-grid");
@@ -2881,17 +3633,22 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".sticky-add-plan-footer");
     expect(css).toContain(".selected-scenario-rows");
     expect(css).toContain(".compact-detail-row");
-    const pickerCardRule = css.match(/(?:^|\n)\.retrofit-picker-card\s*{([^}]*)}/)?.[1] || "";
+    const pickerCardRule =
+      css.match(/(?:^|\n)\.retrofit-picker-card\s*{([^}]*)}/)?.[1] || "";
     expect(pickerCardRule).toContain("min-height: 228px;");
     expect(pickerCardRule).not.toContain("\n  height: 118px;");
 
-    const tabHoverRule = css.match(/\.retrofit-preview-page \.retrofit-tab:hover,[\s\S]*?{([\s\S]*?)}/)?.[1] || "";
+    const tabHoverRule =
+      css.match(
+        /\.retrofit-preview-page \.retrofit-tab:hover,[\s\S]*?{([\s\S]*?)}/,
+      )?.[1] || "";
     expect(tabHoverRule).not.toContain("#0f573c");
     expect(tabHoverRule).not.toContain("#176b4c");
 
-    const scenarioHoverRule = css.match(
-      /\.retrofit-preview-page \.scenario-card:hover,\n\.retrofit-preview-page \.scenario-opportunity-card:hover,\n\.retrofit-preview-page \.scenario-opportunity-table-row:hover\s*{([^}]*)}/
-    )?.[1] || "";
+    const scenarioHoverRule =
+      css.match(
+        /\.retrofit-preview-page \.scenario-card:hover,\n\.retrofit-preview-page \.scenario-opportunity-card:hover,\n\.retrofit-preview-page \.scenario-opportunity-table-row:hover\s*{([^}]*)}/,
+      )?.[1] || "";
     expect(scenarioHoverRule).toContain("background: var(--rf-green-soft)");
   });
 
@@ -2899,25 +3656,50 @@ describe("retrofit recommendations preview", () => {
     const batches = [
       {
         batchId: "current-batch",
-        promptFiles: [
-          { promptPath: "prompt_001_current.md" }
-        ]
+        promptFiles: [{ promptPath: "prompt_001_current.md" }],
       },
       {
         batchId: "repair-batch",
         promptFiles: [
           { promptPath: "prompt_001_default.md" },
-          { promptPath: "nested/prompt_002_repair.md" }
-        ]
-      }
+          { promptPath: "nested/prompt_002_repair.md" },
+        ],
+      },
     ] as any;
 
-    expect(selectGptProBatchIdForIndex(batches, "", "current-batch", "?batch=repair-batch")).toBe("repair-batch");
-    expect(selectGptProBatchIdForIndex(batches, "current-batch", "current-batch", "?batch=repair-batch")).toBe("current-batch");
-    expect(selectGptProBatchIdForIndex(batches, "", "current-batch", "?batch=missing")).toBe("current-batch");
-    expect(selectGptProPromptPathForBatch(batches[1], "", "?path=nested%2Fprompt_002_repair.md")).toBe(
-      "nested/prompt_002_repair.md"
-    );
-    expect(selectGptProPromptPathForBatch(batches[1], "", "?path=missing.md")).toBe("prompt_001_default.md");
+    expect(
+      selectGptProBatchIdForIndex(
+        batches,
+        "",
+        "current-batch",
+        "?batch=repair-batch",
+      ),
+    ).toBe("repair-batch");
+    expect(
+      selectGptProBatchIdForIndex(
+        batches,
+        "current-batch",
+        "current-batch",
+        "?batch=repair-batch",
+      ),
+    ).toBe("current-batch");
+    expect(
+      selectGptProBatchIdForIndex(
+        batches,
+        "",
+        "current-batch",
+        "?batch=missing",
+      ),
+    ).toBe("current-batch");
+    expect(
+      selectGptProPromptPathForBatch(
+        batches[1],
+        "",
+        "?path=nested%2Fprompt_002_repair.md",
+      ),
+    ).toBe("nested/prompt_002_repair.md");
+    expect(
+      selectGptProPromptPathForBatch(batches[1], "", "?path=missing.md"),
+    ).toBe("prompt_001_default.md");
   });
 });
