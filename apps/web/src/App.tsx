@@ -18764,7 +18764,7 @@ function formatImpactStatusLabel(status: string) {
   return status;
 }
 
-function formatImpactMetricValue(value: number | null, unit: string) {
+function formatImpactMetricValue(value: number | null | undefined, unit: string) {
   const numericValue = Number.isFinite(value) ? value : 0;
   return `${formatSignedNumber(numericValue)} ${unit}`;
 }
