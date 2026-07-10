@@ -72,6 +72,38 @@ describe("sustainability impact calculations", () => {
     expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.provenanceState).toBe("not_applicable");
   });
 
+  it("keeps mixed not-applicable and source-calculated site EUI source-calculated in both directions", () => {
+    const electricOnlyImpact = buildSustainabilityImpact({
+      squareFootage: 10000,
+      retrofitTypeId: "rt_modeled_electric_kwh_reduction",
+      sourceModelInputs: { stateCode: "CA" },
+      billLineDeltas: [
+        { id: "electric", domain: "electric", canonicalField: "annual_kwh_delta", deltaValue: -176, unit: "kWh/year", period: "annual" }
+      ]
+    });
+
+    expect(electricOnlyImpact.metrics.scope2ElectricityReductionKwhPerYear.provenanceState).toBe("source_calculated");
+    expect(electricOnlyImpact.metrics.scope1ThermReductionPerYear.provenanceState).toBe("not_applicable");
+    expect(electricOnlyImpact.metrics.siteEuiReductionKbtuPerSquareFootPerYear.value).toBeCloseTo(0.0600512, 6);
+    expect(electricOnlyImpact.metrics.siteEuiReductionKbtuPerSquareFootPerYear.provenanceState).toBe("source_calculated");
+    expect(electricOnlyImpact.metrics.siteEuiReductionKbtuPerSquareFootPerYear.status).toBe("source_calculated");
+
+    const gasOnlyImpact = buildSustainabilityImpact({
+      squareFootage: 10000,
+      retrofitTypeId: "rt_modeled_gas_therm_reduction",
+      sourceModelInputs: { stateCode: "CA" },
+      billLineDeltas: [
+        { id: "gas", domain: "gas", canonicalField: "annual_therms_delta", deltaValue: -12, unit: "therms/year", period: "annual" }
+      ]
+    });
+
+    expect(gasOnlyImpact.metrics.scope1ThermReductionPerYear.provenanceState).toBe("source_calculated");
+    expect(gasOnlyImpact.metrics.scope2ElectricityReductionKwhPerYear.provenanceState).toBe("not_applicable");
+    expect(gasOnlyImpact.metrics.siteEuiReductionKbtuPerSquareFootPerYear.value).toBeCloseTo(0.12, 6);
+    expect(gasOnlyImpact.metrics.siteEuiReductionKbtuPerSquareFootPerYear.provenanceState).toBe("source_calculated");
+    expect(gasOnlyImpact.metrics.siteEuiReductionKbtuPerSquareFootPerYear.status).toBe("source_calculated");
+  });
+
   it("estimates peak demand and CO2e from explicit fixture assumptions", () => {
     const impact = buildSustainabilityImpact({
       squareFootage: 10000,

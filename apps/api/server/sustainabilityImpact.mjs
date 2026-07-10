@@ -718,9 +718,7 @@ function buildSiteEuiMetric({ squareFootage, sourceSquareFootage, scope2Metric, 
         ? "estimated"
         : [scope2Metric.provenanceState, scope1Metric.provenanceState].includes("increased_consumption")
           ? "increased_consumption"
-            : [scope2Metric.provenanceState, scope1Metric.provenanceState].includes("not_applicable")
-            ? "not_applicable"
-            : "source_calculated";
+          : "source_calculated";
     return buildMetric({
       id: "siteEuiReductionKbtuPerSquareFootPerYear",
       label: "Site EUI reduction",

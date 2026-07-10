@@ -2,6 +2,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { RetroFiLogoLoader, RetroFiPageLoader, RetroFiProgressLoader, RetroFiSkeleton, clampRetroFiProgress } from "./components/RetroFiLoader";
 import { USER_PREVIEW_TRIAGE_ISSUES, isUserPreviewTriageModeEnabled } from "./userPreviewTriage";
+// @ts-expect-error Frontend tests intentionally reuse the backend sustainability builder for contract coverage.
+import { buildSustainabilityImpact } from "../../api/server/sustainabilityImpact.mjs";
 import {
   BILL_UPLOAD_STEPS,
   CUSTOMER_RETROFIT_UI_NAMES,
@@ -796,6 +798,36 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Show sustainability calculation details");
     expect(html).toContain("Calculated");
     expect(html).not.toContain("Not calculated");
+  });
+
+  it("renders mixed site EUI provenance as source calculated when one scope is not applicable", () => {
+    const sustainabilityImpact = buildSustainabilityImpact({
+      squareFootage: 10000,
+      retrofitTypeId: "rt_modeled_electric_kwh_reduction",
+      sourceModelInputs: { stateCode: "CA" },
+      billLineDeltas: [
+        {
+          id: "electric",
+          domain: "electric",
+          canonicalField: "annual_kwh_delta",
+          deltaValue: -176,
+          unit: "kWh/year",
+          period: "annual"
+        }
+      ]
+    });
+
+    const html = renderToStaticMarkup(
+      <SavingsPreviewCard preview={{ ...liveShapedPayload.retrofits[0].savingsPreview, sustainabilityImpact } as any} squareFootage={10000} />
+    );
+
+    const siteEuiSectionStart = html.indexOf("Site EUI reduction");
+    const siteEuiSectionEnd = html.indexOf("Grid peak-demand reduction");
+    const siteEuiSection = html.slice(siteEuiSectionStart, siteEuiSectionEnd);
+
+    expect(html).toContain("Source calculated");
+    expect(html).toContain("0.06 kBtu/sq ft/year");
+    expect(siteEuiSection).not.toContain("No causal effect");
   });
 
   it("renders unavailable, estimated, not-applicable, and increased-consumption sustainability states", () => {
