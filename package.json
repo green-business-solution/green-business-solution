@@ -8,6 +8,10 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently -k -n api,web -c blue,green \"npm run dev -w @gbs/api\" \"npm run dev -w @gbs/web\"",
+    "dev:local": "node scripts/dev-local.mjs",
+    "local:up": "node scripts/local-stack.mjs up",
+    "local:down": "node scripts/local-stack.mjs down",
+    "local:reset": "node scripts/local-stack.mjs reset",
     "dev:api": "npm run dev -w @gbs/api",
     "dev:client": "npm run dev -w @gbs/web",
     "build": "npm run build -w @gbs/web",

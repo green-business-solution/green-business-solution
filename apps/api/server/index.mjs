@@ -111,9 +111,17 @@ import {
 
 const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
 const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
+const isLocalStack = process.env.GBS_LOCAL_STACK === "1";
 const dataRegion = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
 const s3Region = process.env.GBS_ENERGY_DATA_BUCKET_REGION || process.env.AWS_REGION || dataRegion;
 const profile = process.env.AWS_PROFILE ?? (isLambdaRuntime ? "" : defaultGptProWorkProfile);
+const localDynamoEndpoint = process.env.GBS_DYNAMODB_ENDPOINT || "http://127.0.0.1:8000";
+const localS3Endpoint = process.env.GBS_S3_ENDPOINT || "http://127.0.0.1:9000";
+const localCredentials = {
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID || "local-access-key",
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "local-secret-key",
+  sessionToken: process.env.AWS_SESSION_TOKEN || "local-session-token"
+};
 const usersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
 const opportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
@@ -175,19 +183,45 @@ const adminEmails = new Set(
     .filter(Boolean)
 );
 
-const client = new DynamoDBClient({
-  region: dataRegion,
-  credentials: profile ? fromIni({ profile }) : undefined
-});
+const client = new DynamoDBClient(
+  isLocalStack
+    ? {
+        region: dataRegion,
+        endpoint: localDynamoEndpoint,
+        credentials: localCredentials
+      }
+    : {
+        region: dataRegion,
+        credentials: profile ? fromIni({ profile }) : undefined
+      }
+);
 const db = DynamoDBDocumentClient.from(client);
-const s3 = new S3Client({
-  region: s3Region,
-  credentials: profile ? fromIni({ profile }) : undefined
-});
-const gptProWorkS3 = new S3Client({
-  region: gptProWorkRegion,
-  credentials: gptProWorkProfile ? fromIni({ profile: gptProWorkProfile }) : undefined
-});
+const s3 = new S3Client(
+  isLocalStack
+    ? {
+        region: s3Region,
+        endpoint: localS3Endpoint,
+        forcePathStyle: true,
+        credentials: localCredentials
+      }
+    : {
+        region: s3Region,
+        credentials: profile ? fromIni({ profile }) : undefined
+      }
+);
+const gptProWorkS3 = new S3Client(
+  isLocalStack
+    ? {
+        region: gptProWorkRegion,
+        endpoint: localS3Endpoint,
+        forcePathStyle: true,
+        credentials: localCredentials
+      }
+    : {
+        region: gptProWorkRegion,
+        credentials: gptProWorkProfile ? fromIni({ profile: gptProWorkProfile }) : undefined
+      }
+);
 export const app = express();
 let activeServer = null;
 
