@@ -18712,7 +18712,11 @@ function SustainabilityImpactCard({
                 <ul>
                   {metric.trace.components.map((component) => (
                     <li key={`${metric.id}:${component.scope || component.sourceMetricId}`}>
-                      {component.scope || component.sourceMetricId}: {formatImpactMetricValue(component.valueKgCO2ePerYear || 0, "kg CO2e/year")}
+                      {component.scope || component.sourceMetricId}: {
+                        component.status === "unavailable"
+                          ? "Unavailable"
+                          : formatImpactMetricValue(component.valueKgCO2ePerYear, "kg CO2e/year")
+                      }
                       {component.factor?.sourceLabel ? ` - ${String(component.factor.sourceLabel)}` : ""}
                     </li>
                   ))}

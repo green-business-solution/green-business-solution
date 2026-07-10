@@ -822,10 +822,9 @@ function buildOperationalCO2eMetric({ sourceModelInputs, scope1Metric, scope2Met
   const anyEstimated = includedComponents.some((component) => component.status === "estimated");
   const anyIncreased = includedComponents.some((component) => component.status === "increased_consumption");
   const anyUnavailable = includedComponents.some((component) => component.status === "unavailable");
-  const anyNotApplicable = includedComponents.some((component) => component.status === "not_applicable");
   const provenanceState = allNotApplicable
     ? "not_applicable"
-    : anyUnavailable && !anyNotApplicable
+    : anyUnavailable
       ? "unavailable"
     : anyEstimated
         ? "estimated"
@@ -847,7 +846,7 @@ function buildOperationalCO2eMetric({ sourceModelInputs, scope1Metric, scope2Met
     label: "Annual operational CO2e reduction",
     unit: "kg CO2e/year",
     sourceField: "annual_kwh_delta+annual_therms_delta",
-      value: totalKg == null ? 0 : totalKg,
+    value: totalKg == null ? 0 : totalKg,
     provenanceState,
     formulaId: "sustainability.operational_co2e_v2",
     quality: {

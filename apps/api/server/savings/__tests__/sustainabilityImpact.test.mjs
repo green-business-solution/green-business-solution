@@ -218,6 +218,7 @@ describe("sustainability impact calculations", () => {
     expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.provenanceState).toBe("unavailable");
     expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.components[0].status).toBe("unavailable");
     expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.components[0].valueKgCO2ePerYear).toBeNull();
+    expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.components[1].valueKgCO2ePerYear).toBeGreaterThan(0);
     expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.value).toBe(0);
     expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.valueKgCO2ePerYear).toBeNull();
   });
