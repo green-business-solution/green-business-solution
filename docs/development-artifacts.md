@@ -69,6 +69,9 @@ The admin `/tasks` page reads the manifest-selected production-safe Codex task s
 It distinguishes unavailable, empty, warning, and current snapshot states.
 When the snapshot metadata includes source timestamps, it surfaces the source-generated and source-modified times in the admin notice.
 The Refresh button always refetches the latest snapshot response.
+The summary card labeled Working tasks counts only tasks still in active work states.
+Blocked tasks stay in the blocked section and do not move into the Needs response bucket just because they are blocked.
+The Show inactive control uses the snapshot's inactive counts, including the hidden-by-default count when that is present.
 Firstmate remains the authoritative task system.
 Publish sanitized snapshots from a trusted operator environment with a least-privilege AWS identity that can write only the Firstmate task snapshot table:
 

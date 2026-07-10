@@ -178,6 +178,8 @@ Runtime records are split by domain so deployment and migration work can stay sc
   Published snapshots also carry manifest metadata such as `sourceGeneratedAt` and
   `sourceModifiedAtEpochMs` so the admin UI can show whether the current manifest-selected snapshot
   is fresh, empty, or unavailable.
+  Snapshot task titles are display-safe and strip raw `http(s)` URLs while preserving link labels and related task metadata.
+  Published snapshot counts also include inactive and hidden-by-default totals so the admin `/tasks` view can report inactive work without recalculating it from the live UI state.
 - `gbs-api-runtime-state`: small operational state keyed by `stateScope`/`stateKey`, such as Geocodio
   quota usage.
 
