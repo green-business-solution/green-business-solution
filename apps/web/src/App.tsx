@@ -16855,7 +16855,7 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
 
       <div className="tasks-stats">
         <article>
-          <span>Active agents</span>
+          <span>Active tasks</span>
           <strong>{response?.activeAgentCount ?? 0}</strong>
         </article>
         <article>
