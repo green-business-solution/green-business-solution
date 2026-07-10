@@ -132,6 +132,7 @@ export async function writePersistentRetrofitRecommendations({
   const now = new Date().toISOString();
   const fingerprint = retrofitRecommendationsFingerprint(user, intake, cacheVersion);
   const s3Key = persistentRetrofitRecommendationsS3Key(user, fingerprint);
+  const isLocalStack = process.env.GBS_LOCAL_STACK === "1";
   try {
     await s3.send(
       new PutObjectCommand({
@@ -139,7 +140,7 @@ export async function writePersistentRetrofitRecommendations({
         Key: s3Key,
         Body: JSON.stringify(payload),
         ContentType: "application/json",
-        ServerSideEncryption: "AES256"
+        ...(isLocalStack ? {} : { ServerSideEncryption: "AES256" })
       })
     );
     await db.send(

@@ -2,20 +2,29 @@ import { execFile } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { DynamoDBClient, CreateTableCommand, DescribeTableCommand, ListTablesCommand } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBClient,
+  CreateTableCommand,
+  DescribeTableCommand,
+  ListTablesCommand,
+  waitUntilTableExists
+} from "@aws-sdk/client-dynamodb";
 import { PutObjectCommand, S3Client, HeadBucketCommand, CreateBucketCommand } from "@aws-sdk/client-s3";
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 import crypto from "node:crypto";
+import { buildFixtureRetrofitRecommendationsPayload } from "../apps/api/server/fixtureRetrofitRecommendations.mjs";
+import { writePersistentRetrofitRecommendations } from "../apps/api/server/retrofitRecommendationsCache.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const composeFile = path.join(repoRoot, "docker-compose.local.yml");
 const localDataRoot = path.join(repoRoot, ".local");
+const operationTimeoutMs = 15000;
 const localModeEnv = {
   GBS_LOCAL_STACK: "1",
   GBS_AWS_REGION: "us-east-2",
   AWS_REGION: "us-east-2",
-  AWS_ACCESS_KEY_ID: "local-access-key",
-  AWS_SECRET_ACCESS_KEY: "local-access-key",
+  AWS_ACCESS_KEY_ID: "localaccesskey",
+  AWS_SECRET_ACCESS_KEY: "localsecretkey",
   AWS_EC2_METADATA_DISABLED: "true",
   GBS_DYNAMODB_ENDPOINT: "http://127.0.0.1:8000",
   GBS_S3_ENDPOINT: "http://127.0.0.1:9000",
@@ -60,6 +69,17 @@ function exec(command, args, options = {}) {
   });
 }
 
+async function sendWithTimeout(client, command, label) {
+  const timeout = new Promise((_, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error(`${label} timed out after ${operationTimeoutMs}ms`));
+    }, operationTimeoutMs);
+    timer.unref?.();
+  });
+
+  return Promise.race([client.send(command), timeout]);
+}
+
 async function waitFor(fn, description, timeoutMs = 120000) {
   const startedAt = Date.now();
   let lastError = null;
@@ -92,8 +112,7 @@ async function localClients() {
     endpoint: localModeEnv.GBS_DYNAMODB_ENDPOINT,
     credentials: {
       accessKeyId: localModeEnv.AWS_ACCESS_KEY_ID,
-      secretAccessKey: localModeEnv.AWS_SECRET_ACCESS_KEY,
-      sessionToken: localModeEnv.AWS_SESSION_TOKEN
+      secretAccessKey: localModeEnv.AWS_SECRET_ACCESS_KEY
     }
   });
   const s3 = new S3Client({
@@ -102,39 +121,59 @@ async function localClients() {
     forcePathStyle: true,
     credentials: {
       accessKeyId: localModeEnv.AWS_ACCESS_KEY_ID,
-      secretAccessKey: localModeEnv.AWS_SECRET_ACCESS_KEY,
-      sessionToken: localModeEnv.AWS_SESSION_TOKEN
+      secretAccessKey: localModeEnv.AWS_SECRET_ACCESS_KEY
     }
   });
   return { ddb, db: DynamoDBDocumentClient.from(ddb), s3 };
 }
 
+async function closeClients(clients) {
+  clients?.db?.destroy?.();
+  clients?.ddb?.destroy?.();
+  clients?.s3?.destroy?.();
+}
+
 async function ensureBucket(s3, bucket) {
+  console.log(`[local-stack] ensuring bucket ${bucket}`);
   try {
-    await s3.send(new HeadBucketCommand({ Bucket: bucket }));
+    await sendWithTimeout(s3, new HeadBucketCommand({ Bucket: bucket }), `HeadBucket ${bucket}`);
   } catch {
-    await s3.send(new CreateBucketCommand({ Bucket: bucket }));
+    await sendWithTimeout(s3, new CreateBucketCommand({ Bucket: bucket }), `CreateBucket ${bucket}`);
   }
 }
 
 async function ensureTable(ddb, table) {
+  console.log(`[local-stack] checking table ${table.TableName}`);
   try {
-    await ddb.send(new DescribeTableCommand({ TableName: table.TableName }));
+    await sendWithTimeout(ddb, new DescribeTableCommand({ TableName: table.TableName }), `DescribeTable ${table.TableName}`);
   } catch {
-    await ddb.send(new CreateTableCommand(table));
+    console.log(`[local-stack] creating table ${table.TableName}`);
+    await sendWithTimeout(ddb, new CreateTableCommand(table), `CreateTable ${table.TableName}`);
+    console.log(`[local-stack] waiting for table ${table.TableName}`);
+    await waitUntilTableExists({ client: ddb, maxWaitTime: 60 }, { TableName: table.TableName });
   }
 }
 
 async function waitForInfra() {
-  const { ddb, s3 } = await localClients();
-  await waitFor(async () => {
-    await ddb.send(new ListTablesCommand({ Limit: 1 }));
-    return true;
-  }, "DynamoDB Local");
-  await waitFor(async () => {
-    await s3.send(new HeadBucketCommand({ Bucket: "gbs-local-runtime-cache" })).catch(() => {});
-    return true;
-  }, "MinIO");
+  const clients = await localClients();
+  try {
+    await waitFor(async () => {
+      await sendWithTimeout(clients.ddb, new ListTablesCommand({ Limit: 1 }), "DynamoDB Local readiness");
+      return true;
+    }, "DynamoDB Local");
+    await waitFor(async () => {
+      await sendWithTimeout(clients.s3, new HeadBucketCommand({ Bucket: "gbs-local-runtime-cache" }), "MinIO readiness").catch(
+        () => {}
+      );
+      return true;
+    }, "MinIO");
+  } finally {
+    await closeClients(clients);
+  }
+}
+
+function hashPublicUploadToken(value) {
+  return crypto.createHash("sha256").update(String(value || "").trim()).digest("hex");
 }
 
 async function seedUsersAndIntakes(db, s3) {
@@ -246,7 +285,7 @@ async function seedUsersAndIntakes(db, s3) {
       utilitySummaries: [],
       lastUpdatedAt: now
     },
-    energyDataUploadSession: { tokenHash: "local-upload-token", issuedAt: now, expiresAt: "2027-01-01T00:00:00.000Z" },
+    energyDataUploadSession: { tokenHash: hashPublicUploadToken("local-upload-token"), issuedAt: now, expiresAt: "2027-01-01T00:00:00.000Z" },
     createdAt: now,
     updatedAt: now
   };
@@ -301,19 +340,194 @@ async function seedUsersAndIntakes(db, s3) {
   }));
 }
 
+async function seedRetrofitRecommendationCache(db, s3) {
+  const sampleUsers = JSON.parse(await fs.readFile(path.join(repoRoot, "data", "sample_user_profiles.json"), "utf8"));
+  const testCases = JSON.parse(await fs.readFile(path.join(repoRoot, "public", "sample_matching_test_cases.json"), "utf8"));
+  const sampleUser = sampleUsers.find((item) => item.sampleUserId === "california-endowment-hq");
+  const testCase = (testCases.testCases || []).find((item) => item.sampleUserId === "california-endowment-hq");
+  if (!sampleUser || !testCase) {
+    return;
+  }
+
+  const now = new Date("2026-07-10T00:00:00.000Z");
+  const intake = {
+    userId: sampleUser.sampleUserId,
+    submissionId: "intake_sample_california-endowment-hq",
+    contact: {
+      fullName: sampleUser.fullName,
+      email: sampleUser.email,
+      phone: sampleUser.phone
+    },
+    business: {
+      companyName: sampleUser.companyName,
+      organizationType: "nonprofit",
+      organizationSize: sampleUser.organizationSize,
+      industry: sampleUser.primaryActivityText,
+      headquarters: sampleUser.siteAddress
+    },
+    site: {
+      address: sampleUser.siteAddress,
+      electricUtilityProvider: sampleUser.electricUtilityProvider,
+      gasUtilityProvider: sampleUser.gasUtilityProvider,
+      ownershipStatus: "Own",
+      buildingType: sampleUser.buildingType,
+      squareFootage: sampleUser.squareFootage,
+      derivedFieldsPlanned: ["State", "County", "City", "ZIP", "Utility territory"],
+      derivedFieldsStatus: "partially_resolved"
+    },
+    sustainability: {
+      goals: "Test preview parity",
+      currentChallenges: "Synthetic",
+      interestedImprovements: ["lighting", "hvac", "controls"],
+      timeline: "0-6 months"
+    },
+    uploadedUtilityFiles: sampleUser.uploadedUtilityFiles || [],
+    utilityExtractedValues: sampleUser.utilityExtractedValues || [],
+    siteEnergyProfile: sampleUser.siteEnergyProfile,
+    energyDataUploadSession: { tokenHash: hashPublicUploadToken("local-upload-token"), issuedAt: now.toISOString(), expiresAt: "2027-01-01T00:00:00.000Z" },
+    createdAt: now.toISOString(),
+    updatedAt: now.toISOString()
+  };
+  const user = {
+    userId: "sample_california-endowment-hq",
+    role: "client",
+    status: "active",
+    fullName: sampleUser.fullName,
+    email: sampleUser.email,
+    companyName: sampleUser.companyName,
+    authProvider: "password",
+    googleLinked: false,
+    isFakeUser: true,
+    sampleUserId: "california-endowment-hq",
+    passwordUsername: sampleUser.email,
+    createdAt: now.toISOString(),
+    updatedAt: now.toISOString()
+  };
+  const payload = buildFixtureRetrofitRecommendationsPayload({ formQuestionCatalog: null, intake, now, testCase, user });
+  const previousLocalStackFlag = process.env.GBS_LOCAL_STACK;
+  process.env.GBS_LOCAL_STACK = "1";
+  try {
+    await writePersistentRetrofitRecommendations({
+      bucket: localModeEnv.GBS_RUNTIME_CACHE_BUCKET,
+      db,
+      intake,
+      payload,
+      s3,
+      table: localModeEnv.GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE,
+      user
+    });
+  } finally {
+    if (previousLocalStackFlag === undefined) {
+      delete process.env.GBS_LOCAL_STACK;
+    } else {
+      process.env.GBS_LOCAL_STACK = previousLocalStackFlag;
+    }
+  }
+  console.log("[local-stack] seeded fixture retrofit cache for california-endowment-hq");
+}
+
+function normalizeOpportunitySeed(opportunity) {
+  const now = "2026-07-10T00:00:00.000Z";
+  return {
+    ...opportunity,
+    sourceKey: opportunity.sourceKey || opportunity.sourceName || "SOURCE_DSIRE",
+    sourceName: opportunity.sourceName || "DSIRE",
+    status: opportunity.status || "active",
+    reviewStatus: opportunity.reviewStatus || "approved",
+    lifecycleStatus: opportunity.lifecycleStatus || "active",
+    canonicalTitle: opportunity.canonicalTitle || opportunity.opportunityName,
+    normalizedTitle: opportunity.normalizedTitle || String(opportunity.opportunityName || "").toLowerCase(),
+    summary: opportunity.summary || opportunity.opportunityName,
+    category: opportunity.category || "Commercial",
+    stateName: opportunity.stateName || "California",
+    sourceCreatedAt: opportunity.sourceCreatedAt || now,
+    lastUpdated: opportunity.lastUpdated || now
+  };
+}
+
+async function seedOpportunities(db) {
+  const opportunities = JSON.parse(await fs.readFile(path.join(repoRoot, "public", "retrofit_opportunity_index.json"), "utf8"));
+  const selectedOpportunityIds = [
+    "SOURCE_DSIRE:dsire_program_id:5738",
+    "SOURCE_DSIRE:dsire_program_id:3831",
+    "SOURCE_DSIRE:dsire_program_id:5170",
+    "SOURCE_DSIRE:dsire_program_id:4342",
+    "SOURCE_DSIRE:dsire_program_id:3659",
+    "SOURCE_DSIRE:dsire_program_id:4835"
+  ];
+  const parentRetrofitsByOpportunityId = new Map();
+  for (const retrofit of opportunities.retrofits) {
+    for (const opportunity of retrofit.opportunities || []) {
+      if (!selectedOpportunityIds.includes(opportunity.opportunityId)) {
+        continue;
+      }
+
+      const existing = parentRetrofitsByOpportunityId.get(opportunity.opportunityId) || [];
+      existing.push({
+        retrofitTypeId: retrofit.retrofitTypeId,
+        displayName: retrofit.displayName,
+        parentCategory: retrofit.parentCategory,
+        isPhysicalRetrofit: retrofit.isPhysicalRetrofit
+      });
+      parentRetrofitsByOpportunityId.set(opportunity.opportunityId, existing);
+    }
+  }
+
+  const selectedRecords = [];
+  for (const opportunityId of selectedOpportunityIds) {
+    const parentRetrofits = parentRetrofitsByOpportunityId.get(opportunityId) || [];
+    const baseOpportunity = opportunities.retrofits.flatMap((retrofit) => retrofit.opportunities || []).find((item) => item.opportunityId === opportunityId);
+    if (!baseOpportunity) {
+      continue;
+    }
+
+    const primaryRetrofit = parentRetrofits[0] || {};
+    selectedRecords.push(
+      normalizeOpportunitySeed({
+        ...baseOpportunity,
+        retrofitTypeId: primaryRetrofit.retrofitTypeId || baseOpportunity.retrofitTypeId || null,
+        displayName: primaryRetrofit.displayName || baseOpportunity.displayName || null,
+        parentCategory: primaryRetrofit.parentCategory || baseOpportunity.parentCategory || null,
+        isPhysicalRetrofit: primaryRetrofit.isPhysicalRetrofit ?? baseOpportunity.isPhysicalRetrofit ?? null,
+        retrofitTypes: parentRetrofits
+      })
+    );
+  }
+
+  for (const record of selectedRecords) {
+    console.log(`[local-stack] seeding opportunity ${record.opportunityId}`);
+    await db.send(
+      new PutCommand({
+        TableName: localModeEnv.GBS_OPPORTUNITIES_TABLE,
+        Item: record
+      })
+    );
+  }
+}
+
 async function seedStack() {
   await ensureDocker();
+  console.log("[local-stack] starting containers");
   await compose(["up", "-d"]);
+  console.log("[local-stack] waiting for services");
   await waitForInfra();
-  const { ddb, db, s3 } = await localClients();
-  for (const table of tables) {
-    await ensureTable(ddb, table);
+  const clients = await localClients();
+  try {
+    for (const table of tables) {
+      await ensureTable(clients.ddb, table);
+    }
+    await seedOpportunities(clients.db);
+    console.log("[local-stack] seeding users and intakes");
+    await seedUsersAndIntakes(clients.db, clients.s3);
+    await seedRetrofitRecommendationCache(clients.db, clients.s3);
+  } finally {
+    await closeClients(clients);
   }
-  await seedUsersAndIntakes(db, s3);
   console.log("Local stack seeded.");
 }
 
 async function downStack() {
+  console.log("[local-stack] stopping containers");
   await compose(["down", "-v"]);
 }
 

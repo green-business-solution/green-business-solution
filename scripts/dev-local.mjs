@@ -4,8 +4,8 @@ import process from "node:process";
 const env = {
   ...process.env,
   GBS_LOCAL_STACK: "1",
-  AWS_ACCESS_KEY_ID: "local-access-key",
-  AWS_SECRET_ACCESS_KEY: "local-access-key",
+  AWS_ACCESS_KEY_ID: "localaccesskey",
+  AWS_SECRET_ACCESS_KEY: "localsecretkey",
   AWS_EC2_METADATA_DISABLED: "true",
   GBS_DYNAMODB_ENDPOINT: "http://127.0.0.1:8000",
   GBS_S3_ENDPOINT: "http://127.0.0.1:9000",
