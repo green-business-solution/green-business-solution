@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -62,5 +63,27 @@ describe("deploy-production runtime-data overrides", () => {
     expect(overrides).toContain(
       "FirstmateTasksIngestionPrincipalArn=arn:aws:iam::059310317821:role/firstmate-task-publisher"
     );
+  });
+});
+
+describe("deploy-production fixture patching flow", () => {
+  const scriptSource = fs.readFileSync(scriptPath, "utf8");
+
+  it("runs generated fixture download before matching savings patching", () => {
+    expect(scriptSource).toMatch(
+      /ensure_generated_fixtures\(\)\s*\{[\s\S]*npm run fixtures:generated:download[\s\S]*npm run matching:test-case-savings[\s\S]*\}/
+    );
+  });
+
+  it("calls ensure_generated_fixtures before frontend build and API packaging", () => {
+    const ensureCall = scriptSource.indexOf("  ensure_generated_fixtures");
+    const buildFrontEndCall = scriptSource.indexOf("    build_frontend");
+    const packageApiCall = scriptSource.indexOf("    package_api_lambda");
+
+    expect(ensureCall).toBeGreaterThan(-1);
+    expect(buildFrontEndCall).toBeGreaterThan(-1);
+    expect(packageApiCall).toBeGreaterThan(-1);
+    expect(ensureCall).toBeLessThan(buildFrontEndCall);
+    expect(ensureCall).toBeLessThan(packageApiCall);
   });
 });

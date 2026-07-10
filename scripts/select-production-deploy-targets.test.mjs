@@ -49,6 +49,16 @@ describe("select-production-deploy-targets", () => {
       "frontend"
     ]);
   });
+
+  it("routes deploy shell changes conservative", () => {
+    expect(classifyFiles(["scripts/deploy-production.sh"]).targets).toEqual([
+      "ci",
+      "data",
+      "api",
+      "infra",
+      "frontend"
+    ]);
+  });
 });
 
 function lockfile(options = {}) {
