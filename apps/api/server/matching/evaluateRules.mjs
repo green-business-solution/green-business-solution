@@ -1,6 +1,7 @@
 import { UTILITY_DISPLAY_NAMES, unique } from "./ontologies.mjs";
 import { buildingTypesOverlap } from "./facilityEligibility.mjs";
 import { classifyRetrofitsForOpportunity } from "./retrofitTaxonomy.mjs";
+import { normalizeAwardLikelihood } from "./awardLikelihood.mjs";
 
 export function evaluateOpportunityForUser(userMatchProfile, opportunity, matchProfile, { now = new Date() } = {}) {
   const offerResults = matchProfile.offers.map((offer) => evaluateOffer(userMatchProfile, opportunity, matchProfile, offer, { now }));
@@ -11,12 +12,7 @@ export function evaluateOpportunityForUser(userMatchProfile, opportunity, matchP
     return {
       opportunityId: opportunity.opportunityId,
       opportunityName: opportunity.canonicalTitle || opportunity.normalizedTitle || opportunity.opportunityId,
-      requiresProgramApproval: opportunity.requiresProgramApproval,
-      approvalRequirements: opportunity.approvalRequirements || [],
-      approvalStage: opportunity.approvalStage || "unknown",
-      awardLikelihood: opportunity.awardLikelihood || "unknown",
-      awardLikelihoodEvidence: opportunity.awardLikelihoodEvidence || "",
-      reviewStatus: opportunity.reviewStatus || "not_audited",
+      ...awardAuditFields(opportunity),
       offerId: null,
       retrofitTypeIds: retrofitTypes.map((retrofit) => retrofit.retrofitTypeId),
       retrofitTypes,
@@ -63,12 +59,7 @@ function evaluateOffer(user, opportunity, profile, offer, { now }) {
   return {
     opportunityId: opportunity.opportunityId,
     opportunityName: opportunity.canonicalTitle || opportunity.normalizedTitle || opportunity.opportunityId,
-    requiresProgramApproval: opportunity.requiresProgramApproval,
-    approvalRequirements: opportunity.approvalRequirements || [],
-    approvalStage: opportunity.approvalStage || "unknown",
-    awardLikelihood: opportunity.awardLikelihood || "unknown",
-    awardLikelihoodEvidence: opportunity.awardLikelihoodEvidence || "",
-    reviewStatus: opportunity.reviewStatus || "not_audited",
+    ...awardAuditFields(opportunity),
     offerId: offer.offerId,
     retrofitTypeIds: retrofitTypes.map((retrofit) => retrofit.retrofitTypeId),
     retrofitTypes,
@@ -90,6 +81,21 @@ function evaluateOffer(user, opportunity, profile, offer, { now }) {
       programType: opportunity.programType || null,
       administrator: opportunity.administrator || null
     }
+  };
+}
+
+function awardAuditFields(opportunity) {
+  return {
+    requiresProgramApproval:
+      typeof opportunity?.requiresProgramApproval === "boolean" ? opportunity.requiresProgramApproval : null,
+    approvalRequirements: opportunity?.approvalRequirements || [],
+    approvalStage: opportunity?.approvalStage || "unknown",
+    awardLikelihood: normalizeAwardLikelihood(opportunity?.awardLikelihood),
+    awardLikelihoodReason: opportunity?.awardLikelihoodReason || "",
+    awardLikelihoodEvidence: opportunity?.awardLikelihoodEvidence || "",
+    awardLikelihoodEvidenceText: opportunity?.awardLikelihoodEvidenceText || "",
+    awardLikelihoodEvidenceUrls: opportunity?.awardLikelihoodEvidenceUrls || [],
+    reviewStatus: opportunity?.reviewStatus || "not_audited"
   };
 }
 

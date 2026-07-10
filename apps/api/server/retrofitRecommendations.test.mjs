@@ -472,6 +472,7 @@ describe("portal retrofit recommendations", () => {
           approvalRequirements: [],
           approvalStage: "none",
           awardLikelihood: "possible",
+          awardLikelihoodReason: "The evidence remains inconclusive.",
           awardLikelihoodEvidence: "Potential outcomes based on reviewed criteria.",
           reviewStatus: "needs_followup"
         })
@@ -485,6 +486,7 @@ describe("portal retrofit recommendations", () => {
       approvalRequirements: [],
       approvalStage: "none",
       awardLikelihood: "possible",
+      awardLikelihoodReason: "The evidence remains inconclusive.",
       awardLikelihoodEvidence: "Potential outcomes based on reviewed criteria.",
       reviewStatus: "needs_followup"
     });
@@ -510,7 +512,8 @@ describe("portal retrofit recommendations", () => {
       requiresProgramApproval: true,
       approvalRequirements: ["official permit", "energy audit"],
       approvalStage: "before_installation",
-      awardLikelihood: "likely",
+      awardLikelihood: "near-guaranteed",
+      awardLikelihoodReason: "The benefit is statutory.",
       awardLikelihoodEvidence: "Evidence shows clear award cadence.",
       reviewStatus: "audited"
     });
@@ -519,7 +522,8 @@ describe("portal retrofit recommendations", () => {
       requiresProgramApproval: true,
       approvalRequirements: ["official permit", "energy audit"],
       approvalStage: "before_installation",
-      awardLikelihood: "likely",
+      awardLikelihood: "near_guaranteed",
+      awardLikelihoodReason: "The benefit is statutory.",
       awardLikelihoodEvidence: "Evidence shows clear award cadence.",
       reviewStatus: "audited"
     });

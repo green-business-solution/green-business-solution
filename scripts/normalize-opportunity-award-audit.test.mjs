@@ -7,6 +7,7 @@ import {
   countRecordsByOpportunity,
   normalizeAndValidateReview,
   normalizeFromManifest,
+  reassessCanonicalOverlay,
   normalizeApprovalStage as normalizeApprovalStageValue
 } from "./normalize-opportunity-award-audit.mjs";
 
@@ -17,6 +18,36 @@ afterEach(async () => {
 });
 
 describe("normalize-opportunity-award-audit", () => {
+  it("keeps the committed overlay fully reconciled with exact reassessment counts", async () => {
+    const overlay = JSON.parse(
+      await fs.readFile(new URL("../data/opportunity_award_audit_overlay.v1.json", import.meta.url), "utf8")
+    );
+
+    expect(overlay.reconciliation).toMatchObject({
+      ok: true,
+      expectedOpportunityCount: 1514,
+      reviewedOpportunityCount: 1514,
+      missingOpportunityCount: 0,
+      duplicateOpportunityCount: 0,
+      extraOutputCount: 0,
+      rejectedOpportunityCount: 0
+    });
+    expect(Object.keys(overlay.records)).toHaveLength(1514);
+    expect(overlay.counts.awardLikelihoodBeforeReassessment).toEqual({
+      likely: 980,
+      possible: 366,
+      unknown: 41,
+      unlikely: 127
+    });
+    expect(overlay.counts.awardLikelihood).toEqual({
+      likely: 931,
+      near_guaranteed: 49,
+      possible: 366,
+      unknown: 41,
+      unlikely: 127
+    });
+  });
+
   it("maps combined legacy approval stages into canonical multiple", () => {
     const normalized = normalizeApprovalStageValue("pre_construction_application_and_post_completion_verification");
 
@@ -86,23 +117,32 @@ describe("normalize-opportunity-award-audit", () => {
     expect(normalized.normalized?.normalization.awardEvidenceNormalization.officialEvidenceUrls).toEqual([]);
   });
 
-  it("maps awardLikelihood near_guaranteed and rare to canonical values with trace", () => {
-    const nearGuaranteed = normalizeAndValidateReview({
-      opportunityId: "opp-a1",
-      requiresProgramApproval: true,
-      approvalRequirements: ["official source evidence"],
-      approvalStage: "before_installation",
-      awardLikelihood: "near_guaranteed",
-      awardLikelihoodReason: "Strong proof in source.",
-      evidenceUrls: ["https://program.example.com/evidence"],
-      evidenceText: "Reviewed with examples.",
-      reviewedAt: "2026-07-01T00:00:00.000Z",
-      reviewStatus: "audited",
-      awardLikelihoodEvidence: "Mapped likelihood signal."
-    });
+  it("preserves supported near_guaranteed values and normalizes legacy rare with trace", () => {
+    const nearGuaranteed = normalizeAndValidateReview(
+      {
+        opportunityId: "opp-a1",
+        requiresProgramApproval: false,
+        approvalRequirements: [],
+        approvalStage: "none",
+        awardLikelihood: "near_guaranteed",
+        awardLikelihoodReason: "The credit is statutory and not competitively awarded.",
+        evidenceUrls: ["https://program.example.com/evidence"],
+        evidenceText: "A qualifying filer receives the benefit by law.",
+        reviewedAt: "2026-07-01T00:00:00.000Z",
+        reviewStatus: "audited",
+        awardLikelihoodEvidence: "Mapped likelihood signal."
+      },
+      { opportunityRecord: { programType: "Personal Tax Credit" } }
+    );
     expect(nearGuaranteed.ok).toBe(true);
-    expect(nearGuaranteed.normalized?.awardLikelihood).toBe("likely");
-    expect(nearGuaranteed.normalized?.normalization.awardLikelihoodMethod).toBe("legacy_near_guaranteed");
+    expect(nearGuaranteed.normalized?.awardLikelihood).toBe("near_guaranteed");
+    expect(nearGuaranteed.normalized?.normalization.awardLikelihoodMethod).toBe("canonical");
+    expect(nearGuaranteed.normalized?.normalization.awardLikelihoodReassessment).toMatchObject({
+      canonicalBeforeReassessment: "likely",
+      canonicalAfterReassessment: "near_guaranteed",
+      programType: "Personal Tax Credit",
+      decision: "restored_near_guaranteed_from_preserved_evidence"
+    });
 
     const rare = normalizeAndValidateReview({
       opportunityId: "opp-a2",
@@ -120,6 +160,28 @@ describe("normalize-opportunity-award-audit", () => {
     expect(rare.ok).toBe(true);
     expect(rare.normalized?.awardLikelihood).toBe("unlikely");
     expect(rare.normalized?.normalization.awardLikelihoodMethod).toBe("legacy_rare");
+  });
+
+  it("keeps funding-constrained near_guaranteed source values conservative and flagged", () => {
+    const normalized = normalizeAndValidateReview({
+      opportunityId: "opp-a4",
+      requiresProgramApproval: false,
+      approvalRequirements: [],
+      approvalStage: "after_installation",
+      awardLikelihood: "near_guaranteed",
+      awardLikelihoodReason: "Claims use objective rules but remain subject to program funding.",
+      evidenceUrls: ["https://program.example.com/evidence"],
+      evidenceText: "The rebate is paid while program funds remain.",
+      reviewedAt: "2026-07-01T00:00:00.000Z",
+      reviewStatus: "audited"
+    });
+
+    expect(normalized.normalized?.awardLikelihood).toBe("likely");
+    expect(normalized.normalized?.normalization.awardLikelihoodReassessment).toMatchObject({
+      decision: "retained_likely_funding_constrained",
+      canonicalAfterReassessment: "likely",
+      flags: ["funding_or_budget_constraint"]
+    });
   });
 
   it("maps requiresProgramApproval string unknown to null and marks follow-up", () => {
@@ -245,6 +307,53 @@ describe("normalize-opportunity-award-audit", () => {
       method: "legacy_mapping",
       requiresManualAttention: false
     });
+  });
+
+  it("reassesses an existing overlay without changing preserved audit evidence", () => {
+    const existing = {
+      schemaVersion: "opportunity_award_audit_overlay.v1",
+      source: { expectedOpportunityCount: 1, reviewedOpportunityCount: 1 },
+      reconciliation: { ok: true, errors: 0, warnings: 4, missingOpportunityCount: 0, duplicateOpportunityCount: 0, extraOutputCount: 0 },
+      counts: { awardLikelihood: { likely: 1 }, awardLikelihoodMethod: { legacy_near_guaranteed: 1 } },
+      records: {
+        "opp-1": {
+          requiresProgramApproval: true,
+          approvalRequirements: ["routine filing"],
+          approvalStage: "before_purchase",
+          awardLikelihood: "likely",
+          awardLikelihoodReason: "The credit is statutory and not competitively awarded.",
+          evidenceText: "A qualifying filer receives the benefit by law.",
+          reviewStatus: "audited",
+          evidenceUrls: { normalized: ["https://example.gov/form"], original: ["https://example.gov/form"], malformed: [] },
+          auditTrace: {
+            sourceTrace: { awardLikelihoodSource: "near_guaranteed", rawApprovalStage: "tax_return_filing" },
+            approvalStage: { canonical: "before_purchase", method: "keyword_pre" }
+          }
+        }
+      }
+    };
+
+    const reassessed = reassessCanonicalOverlay(existing, {
+      programTypesByOpportunityId: { "opp-1": "Personal Tax Credit" },
+      overlayCreatedAt: "2026-07-10T00:00:00.000Z"
+    });
+
+    expect(reassessed.records["opp-1"]).toMatchObject({
+      requiresProgramApproval: true,
+      awardLikelihood: "near_guaranteed",
+      awardLikelihoodReason: existing.records["opp-1"].awardLikelihoodReason,
+      evidenceText: existing.records["opp-1"].evidenceText,
+      evidenceUrls: existing.records["opp-1"].evidenceUrls
+    });
+    expect(reassessed.records["opp-1"].auditTrace.approvalStage).toEqual(
+      existing.records["opp-1"].auditTrace.approvalStage
+    );
+    expect(reassessed.source.awardLikelihoodReassessment).toMatchObject({
+      before: { likely: 1 },
+      after: { near_guaranteed: 1 }
+    });
+    expect(reassessed.counts.awardLikelihoodMethodBeforeRepair).toEqual({ legacy_near_guaranteed: 1 });
+    expect(reassessed.counts.awardLikelihoodMethod).toEqual({ canonical: 1 });
   });
 
   it("counts records for reporting and official-evidence coverage", () => {

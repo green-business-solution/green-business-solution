@@ -158,8 +158,10 @@ describe("matching pipeline", () => {
       requiresProgramApproval: true,
       approvalRequirements: ["utility review", "site inspection"],
       approvalStage: "before_installation",
-      awardLikelihood: "likely",
+      awardLikelihood: "near-guaranteed",
+      awardLikelihoodReason: "The benefit is statutory and nondiscretionary.",
       awardLikelihoodEvidence: "Reviewed in program docs.",
+      awardLikelihoodEvidenceText: "Official text states that qualifying applicants receive the benefit.",
       reviewStatus: "audited"
     };
     const profile = buildOpportunityMatchProfile(opportunity, { now });
@@ -169,8 +171,10 @@ describe("matching pipeline", () => {
       requiresProgramApproval: true,
       approvalRequirements: ["utility review", "site inspection"],
       approvalStage: "before_installation",
-      awardLikelihood: "likely",
+      awardLikelihood: "near_guaranteed",
+      awardLikelihoodReason: "The benefit is statutory and nondiscretionary.",
       awardLikelihoodEvidence: "Reviewed in program docs.",
+      awardLikelihoodEvidenceText: "Official text states that qualifying applicants receive the benefit.",
       reviewStatus: "audited"
     });
     expect(result.offerId).toBeDefined();

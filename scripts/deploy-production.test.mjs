@@ -69,6 +69,10 @@ describe("deploy-production runtime-data overrides", () => {
 describe("deploy-production fixture patching flow", () => {
   const scriptSource = fs.readFileSync(scriptPath, "utf8");
 
+  it("packages the canonical award-audit overlay with the API", () => {
+    expect(scriptSource).toContain("copy_data_file data/opportunity_award_audit_overlay.v1.json");
+  });
+
   it("runs generated fixture download before matching savings patching", () => {
     expect(scriptSource).toMatch(
       /ensure_generated_fixtures\(\)\s*\{[\s\S]*npm run fixtures:generated:download -- --force[\s\S]*npm run matching:test-case-savings[\s\S]*\}/
