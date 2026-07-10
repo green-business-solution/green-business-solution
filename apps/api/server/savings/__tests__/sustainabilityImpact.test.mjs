@@ -113,6 +113,21 @@ describe("sustainability impact calculations", () => {
     expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.components[1].factor.fallbackUsed).toBe(true);
   });
 
+  it("uses a top-level state code when source model inputs do not include one", () => {
+    const impact = buildSustainabilityImpact({
+      squareFootage: 10000,
+      retrofitTypeId: "rt_modeled_electric_kwh_reduction",
+      stateCode: "CA",
+      sourceModelInputs: {
+        modeled_kwh_reduction: 4000,
+        peak_load_factor: 0.8
+      }
+    });
+
+    expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.components[1].factor.sourceRegion).toBe("CAMX");
+    expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.components[1].factor.fallbackUsed).toBe(false);
+  });
+
   it("preserves increased consumption signs and does not double count non-energy streams", () => {
     const impact = buildSustainabilityImpact({
       squareFootage: null,
@@ -168,6 +183,8 @@ describe("sustainability impact calculations", () => {
     expect(impact.metrics.scope2ElectricityReductionKwhPerYear.provenanceState).toBe("source_calculated");
     expect(impact.metrics.scope1ThermReductionPerYear.provenanceState).toBe("unavailable");
     expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.provenanceState).toBe("unavailable");
+    expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.components[0].status).toBe("unavailable");
+    expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.components[0].valueKgCO2ePerYear).toBeNull();
   });
 
   it("attaches the sustainability impact contract to the admin savings preview", () => {

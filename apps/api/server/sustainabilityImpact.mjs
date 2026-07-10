@@ -754,10 +754,10 @@ function buildSiteEuiMetric({ squareFootage, sourceSquareFootage, scope2Metric, 
 function buildOperationalCO2eMetric({ sourceModelInputs, scope1Metric, scope2Metric }) {
   const electricityFactor = getElectricityEmissionFactor({ stateCode: sourceModelInputs?.stateCode });
   const gasFactor = getNaturalGasEmissionFactor();
-  const scope2Value = Number.isFinite(scope2Metric.value) ? scope2Metric.value : 0;
-  const scope1Value = Number.isFinite(scope1Metric.value) ? scope1Metric.value : 0;
-  const scope2Kg = scope2Value * electricityFactor.kgPerKwh;
-  const scope1Kg = scope1Value * gasFactor.kgCo2ePerTherm;
+  const scope2Value = Number.isFinite(scope2Metric.value) ? scope2Metric.value : null;
+  const scope1Value = Number.isFinite(scope1Metric.value) ? scope1Metric.value : null;
+  const scope2Kg = scope2Value == null ? null : scope2Value * electricityFactor.kgPerKwh;
+  const scope1Kg = scope1Value == null ? null : scope1Value * gasFactor.kgCo2ePerTherm;
 
   const components = [
     {
@@ -789,7 +789,9 @@ function buildOperationalCO2eMetric({ sourceModelInputs, scope1Metric, scope2Met
 
   const allNotApplicable = components.every((component) => component.status === "not_applicable");
   const includedComponents = components.filter((component) => component.status !== "not_applicable");
-  const availableComponents = includedComponents.filter((component) => component.status !== "unavailable");
+  const availableComponents = includedComponents.filter(
+    (component) => component.status !== "unavailable" && Number.isFinite(component.valueKgCO2ePerYear)
+  );
   const totalKg = sumNumbers(availableComponents.map((component) => component.valueKgCO2ePerYear));
   const anyEstimated = includedComponents.some((component) => component.status === "estimated");
   const anyIncreased = includedComponents.some((component) => component.status === "increased_consumption");
@@ -858,21 +860,24 @@ export function buildSustainabilityImpact({
   sourceSquareFootage = null,
   retrofitTypeId = null,
   retrofitDisplayName = null,
-  sourceModelInputs = {}
+  sourceModelInputs = {},
+  stateCode = null
 }) {
+  const resolvedSourceModelInputs =
+    stateCode && !sourceModelInputs?.stateCode ? { ...sourceModelInputs, stateCode } : sourceModelInputs;
   const waterMetric = resolveWaterMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs });
-  const scope1Metric = resolveThermMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs });
-  const scope2Metric = resolveElectricMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs });
+  const scope1Metric = resolveThermMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs: resolvedSourceModelInputs });
+  const scope2Metric = resolveElectricMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs: resolvedSourceModelInputs });
   const peakMetric = resolvePeakMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs });
   const siteEuiMetric = buildSiteEuiMetric({
     squareFootage,
     sourceSquareFootage,
     scope1Metric,
     scope2Metric,
-    sourceModelInputs
+    sourceModelInputs: resolvedSourceModelInputs
   });
   const co2eMetric = buildOperationalCO2eMetric({
-    sourceModelInputs,
+    sourceModelInputs: resolvedSourceModelInputs,
     scope1Metric,
     scope2Metric
   });
