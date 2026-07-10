@@ -37,6 +37,8 @@ The runtime stacks create:
 
 Set `GBS_FIRSTMATE_TASKS_INGESTION_PRINCIPAL_ARN` before deploying runtime data to create an optional least-privilege ingestion role for publishing task snapshots with
 `scripts/sync-firstmate-tasks-to-dynamodb.mjs`.
+When the variable is blank or unset, the deploy script omits the CloudFormation override so an existing stack value is preserved.
+On a new stack, the template default remains blank and the writer role is skipped.
 
 The uploaded utility/energy file bucket remains `gbs-retrofi-org-energy-data-...`; it is now only for
 customer utility/energy uploads, not generated runtime cache payloads.
