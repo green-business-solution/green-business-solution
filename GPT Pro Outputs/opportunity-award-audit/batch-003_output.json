@@ -3,7 +3,533 @@
   "batchId": "batch-003",
   "inputFile": "batch-003_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.763Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T13:39:27Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22232",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an individual Pennsylvania resident whose household income is within the current program limit.",
+        "The purchase or lease must involve a currently eligible alternative-fuel vehicle that meets the purchase-price, vehicle-age, mileage, dealer, ownership, and Pennsylvania registration requirements that apply.",
+        "The applicant must submit the eGrants application and supporting purchase and registration information within six months after the vehicle purchase.",
+        "The application remains subject to Department of Environmental Protection review and the limited funding available when the application is filed."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The only mapped retrofit is a stationary fuel-cell system, while the current official program is a consumer rebate for purchasing a qualifying alternative-fuel vehicle. A stationary fuel-cell installation therefore does not match the documented award scope.",
+      "evidenceUrls": [
+        "https://www.pa.gov/agencies/dep/programs-and-services/grants-loans-rebates/alternative-fuel-vehicle-rebates-for-consumers"
+      ],
+      "evidenceText": "Pennsylvania DEP describes a resident vehicle-purchase rebate submitted through eGrants within six months of purchase and paid only while funding is available; it does not describe a rebate for a stationary fuel-cell system.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22474",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Qualified refueling or recharging property must have been placed in service no later than June 30, 2026.",
+        "The property must be installed in an eligible low-income community or non-urban census tract.",
+        "Business property must satisfy original-use, depreciation, and business-use requirements.",
+        "The taxpayer must retain cost, location, installation, and business-use records and claim the credit on Form 8911.",
+        "Prevailing-wage and apprenticeship requirements must be met to claim the higher business credit rate when applicable."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "This is a statutory tax credit rather than a competitive award, but the placed-in-service deadline passed on June 30, 2026. The project date, census-tract qualification, tax posture, and applicable labor requirements are not provided.",
+      "evidenceUrls": [
+        "https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit"
+      ],
+      "evidenceText": "Current IRS guidance limits the credit to qualified property placed in service through June 30, 2026, requires an eligible census tract, and directs businesses to claim the credit on Form 8911 with supporting records.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22475",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Qualified refueling or recharging property must have been placed in service no later than June 30, 2026.",
+        "The installation must be at the taxpayer's main home and in an eligible low-income community or non-urban census tract.",
+        "The taxpayer must be the original user of the qualified property.",
+        "The taxpayer must retain purchase, installation, location, and eligibility records and claim the credit on Form 8911.",
+        "The nonrefundable credit is limited by the taxpayer's federal income-tax liability."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The credit is objective when all statutory conditions are met, but the placed-in-service deadline passed on June 30, 2026 and no project date, eligible-tract determination, main-home status, or tax-liability information is supplied.",
+      "evidenceUrls": [
+        "https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit",
+        "https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit-for-individuals"
+      ],
+      "evidenceText": "IRS guidance requires qualifying property at a main home in an eligible census tract, original use by the taxpayer, placement in service by June 30, 2026, and a Form 8911 claim supported by records.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22212",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "The refueling or electric-vehicle recharging property must be located in New York.",
+        "The property must be used at least 50 percent in a trade or business carried on in New York.",
+        "The installation must meet the statutory definition of alternative-fuel vehicle refueling property or electric-vehicle recharging property.",
+        "Grant-funded costs must be excluded from the credit basis.",
+        "The taxpayer must file the applicable New York credit form and retain installation and cost records."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The credit is noncompetitive and formula-based for qualifying New York business-use EV charging or alternative-fuel refueling property. A stand-alone battery storage system is not documented as qualifying property, so the likelihood applies to the EV-charger mappings rather than battery storage alone.",
+      "evidenceUrls": [
+        "https://www.tax.ny.gov/pit/credits/alt_fuels_elec_vehicles.htm",
+        "https://www.tax.ny.gov/forms/current-forms/ct/ct637i.htm",
+        "https://www.tax.ny.gov/forms/current-forms/it/it637i.htm"
+      ],
+      "evidenceText": "New York provides a nonrefundable credit for qualifying refueling or EV-recharging property located and used primarily in a New York trade or business, subject to the applicable tax form, cost basis, and recapture rules.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4698",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must serve an eligible Ameren Illinois business electric or gas account and use a currently qualifying measure.",
+        "Preapproval must be obtained before purchase orders, equipment purchases, or installation for Custom, Retro-Commissioning, Metering and Monitoring, Feasibility Study, New Construction, Strategic Energy Management, pilot, special, and other designated projects.",
+        "Standard incentive requests above the current preapproval threshold must be approved before project commitment.",
+        "The applicant must submit the applicable application, technical documentation, W-9, invoices, and payment request.",
+        "The project must pass any required technical review, verification, or inspection and remain within available program funds."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program is an objective utility-incentive pathway rather than a scored competition. An eligible customer with a qualifying measure, timely preapproval where required, complete final documentation, and available funds is generally positioned for payment.",
+      "evidenceUrls": [
+        "https://amerenillinoissavings.com/business/incentives-services/",
+        "https://amerenillinoissavings.com/wp-content/uploads/2026/01/ApplicationGuide-2026_Rev01.01.pdf"
+      ],
+      "evidenceText": "The 2026 application guide identifies projects that require approval before commitment, allows many smaller standard projects to proceed without preapproval, and requires final invoices, review, and possible inspection before payment.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3812",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "The purchaser must have an eligible Ameren Illinois electric or gas account for the applicable product.",
+        "The product must be a currently qualifying instant-incentive item.",
+        "The purchase must be made through a participating distributor or other authorized sales channel.",
+        "The purchaser must provide the account and installation information needed for point-of-sale eligibility validation.",
+        "Product quantity, installation-location, and other current program limits must be satisfied."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "For an eligible account buying a qualifying product through a participating distributor, the incentive is applied at purchase rather than competitively selected or separately approved.",
+      "evidenceUrls": [
+        "https://amerenillinoissavings.com/business/incentives-services/instant-incentives/",
+        "https://amerenillinoissavings.com/ally/instant-incentives-contractors/"
+      ],
+      "evidenceText": "Ameren Illinois states that participating distributors apply the discount at purchase with no separate customer rebate application, after confirming the customer, product, and installation information.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3171",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "The purchaser must be an eligible Ameren Illinois residential delivery customer for the applicable product.",
+        "The product or equipment must meet the current model, efficiency, fuel, and installation specifications.",
+        "The purchase must use the designated marketplace, retailer, contractor, or participating distributor pathway.",
+        "Account verification, product limits, installation-location requirements, and any contractor requirements must be satisfied.",
+        "The customer must retain the transaction and installation records required by the specific offer."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current residential incentives are largely instant discounts or marketplace rebates with objective account and product rules. Payment is likely for a qualifying customer and product, although the process and eligible measures differ by offer.",
+      "evidenceUrls": [
+        "https://amerenillinoissavings.com/residential/products-discounts-and-rebates/",
+        "https://amerenillinoissavings.com/residential/products-discounts-and-rebates/hvac-and-water-heating-discounts/",
+        "https://amerenillinoissavings.com/residential/ev-home-charger/"
+      ],
+      "evidenceText": "Ameren Illinois lists current residential product discounts and rebates, including qualifying HVAC, water-heating, appliance, thermostat, and EV home-charger offers delivered through specified purchase channels.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22553",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The renewable generator or energy-storage system must be interconnected to Ameren Illinois under the applicable distributed-generation process.",
+        "The rebate request must cover a qualifying smart inverter associated with the interconnected system.",
+        "The applicant must own the generator, storage system, and inverter or otherwise hold the contractual right to claim the rebate.",
+        "An energy-storage system included in the rebate application must be charged by an on-site renewable generator.",
+        "The applicant must submit the distributed-generation rebate application, system documentation, and any required interconnection or ownership records."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The rebate is noncompetitive for qualifying interconnected distributed-generation or renewable-charged storage systems using eligible smart inverters. Generic submetering or a stand-alone battery that does not meet the renewable-charging and interconnection conditions is not enough.",
+      "evidenceUrls": [
+        "https://www.ameren.com/service/renewables/solar",
+        "https://www.ameren.com/service/renewables/developers"
+      ],
+      "evidenceText": "Ameren Illinois describes smart-inverter rebates for customers interconnecting renewable generation or energy storage, requires the applicant to own or control the claim, and requires storage in the application to be charged by on-site renewable generation.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5862",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The home must be served by an eligible Ameren Missouri residential electric account.",
+        "The customer must enroll through the current FastTrack HVAC PAYS pathway and use a participating contractor.",
+        "The contractor must assess the home, determine qualifying equipment and savings, and present an approved project offer.",
+        "The offer must meet the program's savings-to-tariff-charge requirements and identify any customer copayment.",
+        "The customer must accept the offer before installation and satisfy program installation and verification requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current official HVAC pathway is eligibility- and savings-based rather than competitively scored, so an approved contractor offer is likely to proceed. The official program structure now differs from the legacy rebate title in the source record and should be reconciled before production use.",
+      "evidenceUrls": [
+        "https://www.ameren.com/efficiency/programs/hvac-pays",
+        "https://www.amerenmissourisavings.com/"
+      ],
+      "evidenceText": "Ameren Missouri currently directs residential HVAC projects through FastTrack HVAC PAYS, where a participating contractor determines eligibility, produces an offer, and installs after customer acceptance; costs may include a tariff charge and copayment.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4845",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be a homeowner or renter receiving electricity from a currently participating Efficiency Smart municipal utility.",
+        "The product must be new, installed at the participating service address, and meet the current qualifying-product specifications.",
+        "The applicant must submit the rebate application within the stated post-purchase deadline and no later than the annual final deadline.",
+        "A purchase receipt or invoice and a recent electric bill or other account evidence must be provided.",
+        "The application remains subject to verification, program limits, and available funds."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The rebate is noncompetitive and uses published product and customer rules. A participating-utility customer who purchases an eligible product and submits complete documentation on time is generally likely to receive the rebate.",
+      "evidenceUrls": [
+        "https://www.efficiencysmart.org/home-energy-rebates/apply",
+        "https://www.efficiencysmart.org/home-energy-rebates"
+      ],
+      "evidenceText": "Efficiency Smart limits residential rebates to homeowners or renters in participating communities, requires a new qualifying product installed at the service address, and requires a timely application with receipt and account documentation.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1615",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must serve an eligible Anaheim Public Utilities business electric account.",
+        "The proposed equipment or project must meet the current measure-specific efficiency and installation requirements.",
+        "The applicant must follow the applicable reservation or application timing rules for the selected measure and must not rely on approval for unlisted work.",
+        "The applicant must submit the required application, W-9, invoices, equipment documentation, and permits or inspection records where applicable.",
+        "The project must pass any required utility review or verification and remain within current funding and incentive limits."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Anaheim's business rebates are noncompetitive, measure-specific incentives. An eligible business with a listed measure, correct application timing, complete documents, and available funds is generally likely to be paid, but eligibility cannot be inferred for every mapped retrofit without the relevant measure form.",
+      "evidenceUrls": [
+        "https://www.anaheim.net/5353/Business-Energy-Rebates",
+        "https://www.anaheim.net/2543/Air-Conditioner-Incentive"
+      ],
+      "evidenceText": "Anaheim Public Utilities publishes separate business rebate pathways and measure forms, with customer, equipment, application, documentation, funding, and inspection conditions that vary by project type.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22277",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The site and fleet must satisfy Anaheim Public Utilities' current customer and fleet eligibility rules.",
+        "A reservation request must be approved and a reservation number issued before engineering, equipment purchase, or installation begins.",
+        "The project must obtain required permits and complete installation within the reservation period.",
+        "The applicant must submit final invoices, W-9, utility-account evidence, fleet documentation, equipment information, and final permit records.",
+        "The completed project remains subject to final program review, verification, current caps, and available funds."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is a noncompetitive reservation-based rebate. An eligible fleet project that secures approval before work, completes within the reservation term, and supplies the required final documents is generally likely to receive payment.",
+      "evidenceUrls": [
+        "https://www.anaheim.net/5889/EV-Fleet-Charger-Infrastructure-Rebate"
+      ],
+      "evidenceText": "Anaheim requires fleet applicants to obtain a reservation approval before project work, complete permitting and installation within the reservation period, and submit final cost, account, fleet, and permit documents for rebate review.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22275",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Anaheim Public Utilities residential customer installing a qualifying private EV charger.",
+        "The charger and installation must satisfy the current equipment, location, and customer requirements.",
+        "The installation must receive the required City permit and final approval before the rebate application is completed.",
+        "The applicant must submit receipts or invoices, the final permit, a utility bill, photographs, and other requested documentation.",
+        "The installation may be inspected and remains subject to current limits and available funds."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current private-charger rebate uses objective customer, equipment, permit, and documentation rules. An eligible completed installation with a final permit and complete application is generally likely to be approved while funds remain.",
+      "evidenceUrls": [
+        "https://www.anaheim.net/593/Private-EV-Charger-Rebate"
+      ],
+      "evidenceText": "Anaheim's current private EV charger page instructs customers to complete the permitted installation and then apply with purchase records, final permit, utility-account evidence, photographs, and any requested inspection.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22276",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant and site must satisfy Anaheim Public Utilities' current public-access charger and customer requirements.",
+        "The applicant must obtain a rebate reservation and approval before equipment purchase, construction, or installation.",
+        "The project must obtain permits, remain publicly accessible as required, and be completed within the reservation period.",
+        "The applicant must submit final invoices, W-9, account evidence, equipment records, photographs, and final permit documentation.",
+        "The project remains subject to final review, verification, current incentive limits, and available funds."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program is a noncompetitive reservation rebate. A compliant public-access charger project with timely preapproval, completed permitting, and complete final documentation is generally likely to be paid.",
+      "evidenceUrls": [
+        "https://www.anaheim.net/3312/Public-EV-Charger-Rebate"
+      ],
+      "evidenceText": "Anaheim requires public-charger applicants to reserve funds and obtain approval before installation, complete the permitted project within the reservation term, and submit final project and cost documents for review.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1614",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an Anaheim Public Utilities residential customer in good standing at an eligible completed and occupied dwelling.",
+        "The purchased or installed product must appear on the current residential rebate list and meet all measure-specific specifications.",
+        "The application must be submitted after purchase or installation and within the current filing deadline.",
+        "The applicant must provide itemized receipts or invoices, model or efficiency documentation, account evidence, and permits where required.",
+        "The utility may inspect the installation, and approval remains subject to program limits and available funds."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The residential rebates are noncompetitive and use published customer, product, documentation, and timing rules. A qualifying customer with a listed measure and a complete timely claim is generally likely to receive payment.",
+      "evidenceUrls": [
+        "https://www.anaheim.net/936/Energy-Rebates-Programs",
+        "https://www.anaheim.net/1481/Rebate-Guidelines-Application"
+      ],
+      "evidenceText": "Anaheim's residential guidelines require an eligible utility account, a qualifying product installed at the service address, a post-purchase application with receipts and supporting records, and possible verification before payment.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1625",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The business must satisfy Anaheim Public Utilities' current small-business account and program eligibility rules.",
+        "The business must request and complete the program's no-cost energy and water assessment.",
+        "Only measures identified and approved through the assessment may proceed under the direct-install offer.",
+        "The customer must accept any stated cost responsibility and authorize installation before work is scheduled.",
+        "The installed measures remain subject to inspection, program limits, and available funds."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The direct-install pathway is not competitively scored. A qualifying small business that completes the assessment and accepts the approved scope is generally likely to receive the offered measures, subject to funding and installation verification.",
+      "evidenceUrls": [
+        "https://www.anaheim.net/965/Small-Business-Energy-Water-Direct-Insta"
+      ],
+      "evidenceText": "Anaheim's direct-install process begins with customer eligibility screening and an assessment, followed by approval of the measure scope, customer acceptance, scheduled installation, and inspection.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4577",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The property and applicant must meet Anne Arundel County's current ownership, building, and tax-account requirements.",
+        "The building must obtain a qualifying high-performance certification or satisfy the specific certification standard named in the applicable application.",
+        "The applicant must submit the correct property-tax credit application by the stated deadline with certification and supporting project records.",
+        "The county must review and approve the application before the credit is applied.",
+        "The credit cannot exceed the applicable county property-tax liability and remains subject to statutory limits."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The credit is an objective county tax benefit for a qualifying certified high-performance building, not a competitive grant. Individual LED, HVAC, geothermal, or biomass measures do not establish eligibility by themselves without the required building-level certification and approved application.",
+      "evidenceUrls": [
+        "https://www.aacounty.org/finance/tax-information/tax-credits-exemptions",
+        "https://www.aacounty.org/sites/default/files/2023-10/high-performance-building-residential.pdf",
+        "https://www.aacounty.org/sites/default/files/2023-10/High-Performance-Building-Commercial.pdf"
+      ],
+      "evidenceText": "Anne Arundel County lists residential and commercial high-performance building tax-credit applications and applies approved credits against county property-tax liability after review of the required certification and supporting documents.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2908",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must own an eligible Anne Arundel County residential property and have the relevant county tax account.",
+        "The installed equipment must meet the county definition of qualifying solar equipment or a qualifying geothermal ground-loop device.",
+        "The applicant must submit the applicable one-time property-tax credit application by the stated deadline.",
+        "Receipts, project-cost documentation, installation records, and any lease cost statement required by the form must be supplied.",
+        "The county must approve the application, and the credit is limited by county tax liability and statutory caps."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The one-time property-tax credits are noncompetitive for qualifying solar or geothermal equipment with complete documentation. A generic high-efficiency HVAC replacement does not qualify unless it includes the required geothermal ground-loop equipment.",
+      "evidenceUrls": [
+        "https://www.aacounty.org/finance/tax-information/tax-credits-exemptions",
+        "https://www.aacounty.org/sites/default/files/2023-03/Geothermal_Tax_Credit_App.pdf",
+        "https://www.aacounty.org/sites/default/files/2023-03/Solar-Energy-Tax-Credit-Application.pdf"
+      ],
+      "evidenceText": "Anne Arundel County identifies separate one-time residential credits for qualifying solar equipment and geothermal ground-loop devices, requires a county application and cost records, and limits the credit to applicable property-tax liability.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3409",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must be installed at an eligible Anoka Municipal Utility commercial account.",
+        "The equipment or control measure must meet the current prescriptive or custom program criteria.",
+        "The applicant must complete and sign the applicable rebate application and provide itemized invoices and equipment documentation.",
+        "A custom project must include a project summary and documented energy-savings calculations for utility review.",
+        "The utility must approve the claim, and payment remains subject to current program terms and funds."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The utility rebate is noncompetitive and uses objective account, equipment, invoice, and savings-documentation rules. Approval is generally likely for a qualifying prescriptive measure or an accepted custom project with complete records.",
+      "evidenceUrls": [
+        "https://www.anokamunicipalutility.com/381/Commercial-Rebates"
+      ],
+      "evidenceText": "Anoka Municipal Utility requires an eligible utility account, a signed application and invoices for commercial rebates, and additional project and energy-savings documentation for custom requests.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1932",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must have an eligible Anoka Municipal Utility residential account and install the product at that service address.",
+        "The product must be new and meet the current qualifying model, efficiency, and installation requirements.",
+        "The applicant must submit the applicable rebate form with itemized purchase or installation documentation and account information.",
+        "The application must be submitted within the deadline stated for the specific product.",
+        "The utility must verify and approve the claim under current program limits and available funds."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current residential rebates are noncompetitive and tied to published products and documentation. A qualifying utility customer with an eligible purchase and a complete timely application is generally likely to be paid.",
+      "evidenceUrls": [
+        "https://www.anokamunicipalutility.com/384/Residential-Rebates",
+        "https://anokamunicipalutility.com/617/Residential-LED-Lights-Rebate",
+        "https://anokamunicipalutility.com/614/Residential-Clothes-Washer-Rebate"
+      ],
+      "evidenceText": "Anoka Municipal Utility lists current residential rebates and requires qualifying products, customer and installation information, purchase records, and submission within the product-specific filing period.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5853",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The facility must be an eligible Appalachian Power non-residential customer in Virginia and must not be excluded by tariff or program rules.",
+        "The project must install new qualifying equipment and may not claim a duplicate incentive for the same measure.",
+        "Applications for larger, custom, or otherwise designated projects must be submitted and accepted before installation; only qualifying smaller requests may use the limited retroactive pathway.",
+        "Custom projects must provide baseline, proposed-equipment, cost, and energy-savings documentation and use the required Trade Ally or technical process.",
+        "The applicant must provide final invoices and pass any required pre-installation or post-installation inspection and final review."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The business program is a noncompetitive utility incentive with published eligibility and application rules. A qualifying project with timely submission, complete technical and final records, and required inspections is generally likely to be paid.",
+      "evidenceUrls": [
+        "https://takechargeva.com/programs/for-your-business/business-energy-solutions",
+        "https://takechargeva.com/resource/frequently-asked-questions"
+      ],
+      "evidenceText": "Appalachian Power's Virginia business program requires eligible new equipment and program documentation, limits retroactive applications to certain smaller incentives filed promptly after installation, and reviews or inspects custom and larger projects before payment.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5821",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The home must have an active individually metered Appalachian Power residential account in Virginia.",
+        "The selected measure must meet the current program's product, fuel, equipment, and home eligibility requirements.",
+        "Home-performance work must begin with the required assessment and use a participating contractor; self-installed work is not eligible for contractor-pathway rebates.",
+        "The participating contractor must submit the required project and rebate documentation, or the customer must use the designated post-purchase application for qualifying appliances.",
+        "The project or purchase remains subject to final verification, current limits, and available program funds."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential programs are objective, noncompetitive pathways. An eligible customer using the required assessment, contractor, or appliance-claim process is generally likely to receive the applicable incentive.",
+      "evidenceUrls": [
+        "https://takechargeva.com/programs/for-your-home",
+        "https://takechargeva.com/programs/for-your-home/home-performance-home-energy-assessments",
+        "https://takechargeva.com/resource/frequently-asked-questions"
+      ],
+      "evidenceText": "Appalachian Power requires a qualifying Virginia residential account, participating-contractor assessment and submission for home-performance work, and the designated customer application for eligible appliance purchases.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2458",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must serve an eligible APS business account and use a measure currently offered through an APS business-solution pathway.",
+        "The customer must work with the applicable APS energy advisor, Trade Ally, contractor, or program representative to confirm eligibility and process requirements.",
+        "The proposed equipment and project must meet current technical, savings, installation, and customer requirements.",
+        "The applicant must provide the requested project, cost, equipment, and account documentation.",
+        "The completed project must pass any required inspection, testing, or savings verification before incentive payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "APS business incentives are noncompetitive and use program-specific eligibility and verification. A project confirmed by the applicable advisor or Trade Ally and completed to current requirements is generally likely to receive the approved incentive.",
+      "evidenceUrls": [
+        "https://www.aps.com/en/Business/Save-Money-and-Energy/Business-Solutions",
+        "https://www.aps.com/en/Business/Save-Money-and-Energy/Multifamily"
+      ],
+      "evidenceText": "APS directs business customers to current solution-specific rebate and advisory pathways, where an advisor or Trade Ally confirms qualification and completed projects may require inspection, testing, and documentation before payment.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1716",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "The purchaser must have an eligible APS residential account.",
+        "The item must be a currently qualifying product offered through the APS Marketplace or another current APS residential offer.",
+        "The customer must verify the APS account during checkout and satisfy product quantity and installation-location limits.",
+        "The purchase and installation must follow the current product-specific terms.",
+        "Legacy HVAC, duct, and insulation measures must not be assumed eligible without a current APS offer expressly covering them."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Current official evidence supports instant APS Marketplace discounts for selected products, including smart thermostats, but does not corroborate the legacy record's broad HVAC, duct-sealing, and insulation rebate scope. The current match is therefore only partially supported.",
+      "evidenceUrls": [
+        "https://www.aps.com/en/Residential/Save-Money-and-Energy/Your-Energy-Your-Options",
+        "https://marketplace.aps.com/default/heating-cooling/smart-thermostats",
+        "https://www.aps.com/en/Residential/Save-Money-and-Energy/New-Homes"
+      ],
+      "evidenceText": "APS currently promotes account-verified instant Marketplace rebates for selected products, while its Residential ENERGY STAR New Homes program states that it was discontinued on January 1, 2026; no current official page reviewed confirms the full legacy retrofit scope.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22726",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Arizona homeowner-occupant under the current rollout and must meet the household-income or categorical-eligibility rules.",
+        "The applicant must provide the required identity, residence, ownership, and income or categorical-eligibility documentation.",
+        "The project must be a qualifying residential electrification or appliance measure and meet current equipment and project caps.",
+        "Program eligibility and project approval must be obtained before a retail purchase or through the contractor workflow; retroactive purchases are not eligible.",
+        "Contractor-pathway work must use the assigned or approved contractor, follow the approved agreement, and pass required post-installation verification."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Arizona HEAR is an eligibility-based, noncompetitive rebate. A qualifying homeowner who completes income verification and receives approval before purchase or installation is generally likely to receive the authorized rebate, subject to caps and funds. Generic commercial or industrial process electrification is outside the documented residential scope.",
+      "evidenceUrls": [
+        "https://efficiencyarizona.com/",
+        "https://efficiencyarizona.com/the-hear-program/",
+        "https://efficiencyarizona.com/frequently-asked-questions/",
+        "https://efficiencyarizona.com/retail/"
+      ],
+      "evidenceText": "Efficiency Arizona requires homeowner eligibility and income verification, approval before a retail purchase or contractor work, qualifying residential electrification measures, approved contractors for installed work, and post-installation review where applicable.",
+      "reviewedAt": "2026-07-10T13:39:27Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

@@ -3,7 +3,543 @@
   "batchId": "batch-058",
   "inputFile": "batch-058_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.785Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T16:23:14Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5708",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Receive residential electric service from a participating TVA local power company at the installation address.",
+        "Install a measure currently eligible for an EnergyRight rebate and meet the applicable equipment, efficiency, and installation specifications.",
+        "Use a contractor in TVA's Quality Contractor Network for rebate-eligible work.",
+        "Have the contractor submit the completed project and required rebate documentation through the EnergyRight process.",
+        "Complete the customer redemption step and allow any quality-assurance verification required before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "TVA's current residential rebates are prescriptive rather than competitively scored. A participating local-power-company customer with qualifying work completed by a Quality Contractor Network contractor is likely to receive the rebate after submission, redemption, and verification.",
+      "evidenceUrls": [
+        "https://energyright.com/residential/rebates/"
+      ],
+      "evidenceText": "TVA EnergyRight currently lists residential rebates for qualifying heat pumps, central air conditioning, geothermal systems, duct work, air sealing, and insulation. Rebate-eligible upgrades must use a Quality Contractor Network contractor, who submits the project before the customer redeems the rebate.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5709",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Receive residential electric service from a participating TVA local power company at the installation address.",
+        "Install a measure currently eligible for an EnergyRight rebate and meet the applicable equipment, efficiency, and installation specifications.",
+        "Use a contractor in TVA's Quality Contractor Network for rebate-eligible work.",
+        "Have the contractor submit the completed project and required rebate documentation through the EnergyRight process.",
+        "Complete the customer redemption step and allow any quality-assurance verification required before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "TVA's current residential rebates are prescriptive rather than competitively scored. A participating local-power-company customer with qualifying work completed by a Quality Contractor Network contractor is likely to receive the rebate after submission, redemption, and verification.",
+      "evidenceUrls": [
+        "https://energyright.com/residential/rebates/"
+      ],
+      "evidenceText": "TVA EnergyRight currently lists residential rebates for qualifying heat pumps, central air conditioning, geothermal systems, duct work, air sealing, and insulation. Rebate-eligible upgrades must use a Quality Contractor Network contractor, who submits the project before the customer redeems the rebate.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5352",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible TXU Energy medium or large business customer and sign or renew an eligible business electricity agreement for the required term.",
+        "Complete a qualifying facility improvement, such as an eligible LED lighting upgrade.",
+        "Submit the requested project, purchase, installation, and cost documentation under the GreenBack rebate process.",
+        "Satisfy the current offer terms and any TXU Energy review or verification before the rebate check is issued."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "GreenBack uses a defined contractual and documentation-based process rather than competitive project ranking. An eligible business that completes a qualifying LED project and submits the required records is likely to receive the stated rebate, subject to the offer terms.",
+      "evidenceUrls": [
+        "https://www.txu.com/business-electricity/medium-large-business/txu-greenback-rebates"
+      ],
+      "evidenceText": "TXU Energy's current GreenBack offer allows eligible business customers to earn rebate dollars for facility improvements, including LED lighting, after signing or renewing an eligible electricity agreement, completing the upgrade, and submitting documentation.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22595",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible U.S. Virgin Islands resident, small business, or nonprofit under the current Equitable E-Mobility rules.",
+        "Purchase a qualifying new or used electric vehicle or qualifying electric bicycle within the program's eligibility period.",
+        "Submit the required purchase, applicant, registration, and other supporting records through the first-come rebate process.",
+        "A charger-only installation does not qualify because the current program rebates vehicles and electric bicycles rather than EV charging equipment."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current official program does not fund EV charger installation. It provides rebates for qualifying electric vehicles and electric bicycles, so the mapped charger retrofit is unlikely to receive an award under this opportunity.",
+      "evidenceUrls": [
+        "https://energy.vi.gov/eem/"
+      ],
+      "evidenceText": "The Virgin Islands Energy Office currently describes Equitable E-Mobility rebates for qualifying new or used electric vehicles and electric bicycles on a first-come basis. The official program page does not list EV charging-station installation as a reimbursable measure.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5495",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible WAPA customer proposing a qualifying grid-connected distributed-energy resource, which may include battery storage.",
+        "Submit the Net Energy Billing application with system design, equipment, site, ownership, and other required technical records.",
+        "Obtain applicable permits and complete WAPA's interconnection review, including any required study or interconnection agreement.",
+        "Install and commission the approved system and complete metering or inspection requirements before exporting energy.",
+        "Comply with the program's ongoing billing, safety, and interconnection conditions to receive credits for eligible exported electricity."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "NEB is an interconnection and exported-energy credit mechanism rather than an automatic battery purchase rebate. A storage project can participate, but approval and value depend on technical review, permitting, interconnection, and actual eligible exports.",
+      "evidenceUrls": [
+        "https://energy.vi.gov/neb/"
+      ],
+      "evidenceText": "The current Virgin Islands Net Energy Billing program accepts grid-connected distributed resources including battery storage. Participation requires an application and WAPA interconnection approval, after which qualifying exported energy can receive bill credits.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22621",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible full-time U.S. Virgin Islands resident, homeowner, small business, or nonprofit with an active WAPA account.",
+        "Purchase and install a new qualifying grid-interactive battery system within the current capacity range and meeting the listed safety certifications.",
+        "Obtain the required DPNR permit and any applicable final electrical approval for the installation.",
+        "Submit the application with identification, tax or eligibility records, WAPA account evidence, receipts, equipment specifications, permits, and installation photographs.",
+        "Apply while first-come program funds remain and pass any document or field verification required before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "VIBES provides a published per-kilowatt-hour rebate for qualifying installed batteries and uses objective eligibility, safety, permitting, and documentation rules. A complete conforming claim is likely to be paid while first-come funds remain.",
+      "evidenceUrls": [
+        "https://energy.vi.gov/vibes/",
+        "https://energy.vi.gov/wp-content/uploads/2025/04/VIBES-Rebate-Application-SEP-BIL_Final.pdf"
+      ],
+      "evidenceText": "The current VIBES materials offer up to $6,000 for qualifying 3-to-21-kWh grid-interactive battery systems. The application requires an eligible applicant and WAPA account, certified equipment, permitting, proof of purchase and installation, and supporting records; funding is first-come and limited.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3119",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible UniSource Energy Services residential electric customer at the installation address.",
+        "Use a licensed participating contractor for the qualifying heating, cooling, duct-sealing, or related service.",
+        "Install equipment or complete work that meets the current program's technical and efficiency specifications.",
+        "Provide the customer, equipment, and installation information needed for the participating contractor and program implementer to verify eligibility.",
+        "Allow any required quality-control review before the instant rebate or contractor-applied discount is finalized."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current program delivers defined instant rebates through participating contractors rather than ranking applicants. A qualifying customer and installation are likely to receive the rebate after routine eligibility and quality verification.",
+      "evidenceUrls": [
+        "https://www.uesaz.com/efficient-home-program/"
+      ],
+      "evidenceText": "UniSource currently offers residential instant rebates for qualifying ENERGY STAR air-conditioning and heat-pump equipment, duct sealing, and related services through licensed participating contractors. The contractor applies the incentive after program eligibility verification.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5209",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Place qualifying solar electric generation or qualifying standalone energy-storage property in the applicable Vermont tax classification.",
+        "For the property-tax exemption, satisfy the statutory system-size and use conditions, including the applicable net-metered or off-grid conditions for small solar systems.",
+        "For standalone storage, remain below the statutory exemption threshold or calculate the uniform capacity tax when the system meets or exceeds that threshold.",
+        "File and pay any annual uniform-capacity-tax return required for a taxable system and retain records supporting system capacity and eligibility."
+      ],
+      "approvalStage": "before_operation",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "The exemption and uniform capacity tax treatment arise by statute rather than discretionary program selection. A system that satisfies the legal definitions and thresholds should receive the prescribed treatment, subject to ordinary tax administration.",
+      "evidenceUrls": [
+        "https://legislature.vermont.gov/statutes/section/32/215/08701",
+        "https://legislature.vermont.gov/statutes/section/32/125/03802"
+      ],
+      "evidenceText": "Vermont law establishes a uniform capacity tax for solar plants and larger standalone storage systems and exempts specified small solar and storage systems. The treatment is determined by statutory capacity and use conditions rather than a competitive award decision.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2118",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Qualify for ElecTel Cooperative Federal Credit Union membership and borrower eligibility.",
+        "Own an eligible residence and propose an improvement currently eligible for the energy-efficient loan, such as qualifying HVAC or insulation work.",
+        "Submit the loan application with the requested borrower, property, project, contractor, and cost documentation.",
+        "Pass ElecTel's credit, income, repayment, collateral, and other underwriting requirements.",
+        "Accept the approved loan terms and execute the financing documents before funds are disbursed."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program finances a defined set of efficiency improvements, but financing is not an entitlement. Approval depends on borrower-specific membership and credit underwriting, repayment capacity, project documentation, and accepted loan terms.",
+      "evidenceUrls": [
+        "https://electel.org/apply/energy-efficient-loans/",
+        "https://www.union-power.com/member-resources/electel-credit-union/"
+      ],
+      "evidenceText": "ElecTel currently accepts applications for energy-efficient home-improvement loans covering measures such as heat pumps, insulation, weather stripping, windows, and doors. Loan amount and funding remain subject to credit-union eligibility, underwriting, and executed financing documents.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22398",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible United Cooperative Services member and install the equipment at a member location served by the cooperative.",
+        "Purchase and install a new qualifying Level 2 electric-vehicle charger.",
+        "Enroll and operate the charger under the current Beat the Peak or delayed-charging requirements stated by the program.",
+        "Submit the current rebate form, itemized receipt, equipment information, and installation documentation within 60 days.",
+        "Allow inspection or verification and apply while first-come rebate funds remain available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Level 2 charger rebate is prescriptive and uses objective member, equipment, charging-schedule, filing, and documentation rules. A timely qualifying claim is likely to be paid while limited funds remain.",
+      "evidenceUrls": [
+        "https://ucs.net/rebate-programs",
+        "https://ucs.net/sites/default/files/2026%20REBATE%20BROCHURE%20FINAL.pdf"
+      ],
+      "evidenceText": "United Cooperative Services' 2026 materials list a Level 2 EV charger rebate, require Beat the Peak participation and delayed charging, and require the application and supporting documents within 60 days. Rebates are first-come, fund-limited, and may be inspected.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2084",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible United Cooperative Services member and install the measure at a member residence served by the cooperative.",
+        "Purchase and install a new measure that meets the current technical and efficiency specifications for the selected rebate.",
+        "For attic insulation, complete the required cooperative energy audit before installation.",
+        "For a Level 2 charger, satisfy the current Beat the Peak enrollment and charging-schedule conditions.",
+        "Submit the application, itemized receipts, model and efficiency records, and other required documentation within 60 days.",
+        "Remain within the household rebate cap, allow inspection or verification, and apply while funds remain."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "United Cooperative Services publishes fixed residential rebates for the mapped HVAC, water-heating, insulation, thermostat, geothermal, and Level 2 charging measures. Complete qualifying claims are likely to be approved after any required audit or verification, subject to caps and available funds.",
+      "evidenceUrls": [
+        "https://ucs.net/rebate-programs",
+        "https://ucs.net/sites/default/files/2026%20REBATE%20BROCHURE%20FINAL.pdf"
+      ],
+      "evidenceText": "The cooperative's 2026 rebate materials list air-source and geothermal heat pumps, heat-pump water heaters, smart thermostats, attic insulation, and Level 2 chargers. Applications are generally due within 60 days, funds are limited, and inspection may be required; insulation requires an audit before work.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4710",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible United Power commercial or industrial member and install the equipment on the cooperative's distribution system.",
+        "Obtain advance authorization from the Key Accounts team when the selected measure or project scope requires it.",
+        "Purchase and install new equipment that meets the current measure-specific technical requirements.",
+        "Submit the application and itemized invoices, specifications, and installation records within 90 days after completion.",
+        "Pass United Power's installation verification and remain within annual member caps and available program funds.",
+        "Confirm current eligibility before proceeding for legacy mapped measures not clearly listed in the accessible 2026 catalog, including low-flow fixtures and certain walk-in refrigeration upgrades."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current rebates for supported measures such as qualifying LED lighting, variable-speed drives, and electric material-handling equipment are rule-based and likely after timely filing and verification. The current official catalog does not clearly substantiate every legacy mapped category.",
+      "evidenceUrls": [
+        "https://www.unitedpower.com/commercial-rebates",
+        "https://www.unitedpower.com/rebates"
+      ],
+      "evidenceText": "United Power's current commercial materials require new qualifying equipment, member service, itemized receipts, application within 90 days, and installation verification. Current pages expressly identify measures including preauthorized LED lighting, variable-speed drives, and electric forklifts or pallet jacks, with annual caps and limited funds.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2106",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible United Power residential member with permanent electric service at the installation address.",
+        "Purchase and install a measure currently covered by the cooperative, such as a qualifying air-source or ground-source heat pump or eligible EV make-ready wiring or panel work.",
+        "Meet the applicable technical, replacement, contractor, permitting, and equipment-certification requirements.",
+        "Submit the claim within 90 days with the invoice, AHRI or product data, photographs, and other measure-specific evidence.",
+        "For thermostat-related benefits, enroll an eligible device in the current demand-response offering and comply with its participation rules.",
+        "Allow inspection or verification and apply while measure-specific funds remain available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "United Power's current heat-pump and EV make-ready incentives are prescriptive, so a qualifying documented installation is likely to receive payment while funds remain. The older broad mapping also includes categories, such as a generic energy-management-system rebate, that are not clearly confirmed by current materials.",
+      "evidenceUrls": [
+        "https://www.unitedpower.com/rebates",
+        "https://www.unitedpower.com/heat-pumps",
+        "https://www.unitedpower.com/ev-rebates"
+      ],
+      "evidenceText": "United Power currently publishes 2026 heat-pump rebates and fund-limited EV make-ready wiring or panel incentives. Claims generally require permanent service, qualifying equipment, invoices and technical records, submission within 90 days, and possible inspection; the current thermostat pathway is participation-based rather than a simple purchase rebate.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1374",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Unitil New Hampshire commercial or industrial electric customer.",
+        "Contact Unitil or NHSaves and submit the proposed retrofit for review before purchasing or installing equipment when required.",
+        "Complete the applicable energy assessment, project proposal, savings analysis, and technical documentation for a prescriptive or custom project.",
+        "Receive program preapproval or an incentive offer before implementing the approved scope.",
+        "Complete the project and submit invoices, equipment records, and completion documentation.",
+        "Pass any post-installation inspection or savings verification before payment, and confirm current measure eligibility for legacy categories not expressly listed."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Unitil and NHSaves use a structured preapproval and completion process for current business efficiency projects, making payment likely for an approved project completed as authorized. The accessible current materials do not expressly confirm every legacy mapping, including all geothermal and automated-demand-response variants.",
+      "evidenceUrls": [
+        "https://unitil.com/rebates/commercial-and-industrial-retrofit-program-nh",
+        "https://unitil.com/rebates/small-business-energy-efficiency-services-nh"
+      ],
+      "evidenceText": "Unitil's current New Hampshire business programs begin with utility or NHSaves review, may include a no-cost assessment and incentive proposal, and require approval before covered retrofit work. Current pathways support prescriptive and custom improvements, including controls, motors, and variable-frequency drives, followed by completion verification.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22740",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Unitil Massachusetts electric customer or qualifying commercial site under the applicable Ready2Charge pathway.",
+        "Submit the program application, questionnaire, site information, and proposed charger or make-ready scope before purchase or installation.",
+        "Receive written preapproval and use approved charging equipment, network providers, and project specifications.",
+        "Use a properly licensed electrician, obtain required permits and inspections, and comply with residential time-of-use or commercial public-access conditions as applicable.",
+        "Complete the approved installation and submit final invoices, photographs, permits, and other closeout documentation.",
+        "Pass final program verification and, for commercial sites, satisfy ongoing operation and maintenance obligations."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Ready2Charge requires project-specific preapproval, site and equipment review, permitting, and final closeout. Eligible residential and commercial projects can receive support, but approval and award amount depend on the proposed site, charger type, program budget, and completed conditions.",
+      "evidenceUrls": [
+        "https://unitil.com/electric-vehicles/ev-Ready2Charge-program",
+        "https://unitil.com/rebates/ev-ready2charge-commercial-rebate-program-ma"
+      ],
+      "evidenceText": "Unitil's current Massachusetts Ready2Charge materials require application and approval before charger purchase or installation. Residential projects use qualifying Level 2 equipment and time-of-use participation, while commercial pathways can support Level 2 and DC fast-charging infrastructure after site review, permitting, installation, and final documentation.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1373",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Unitil New Hampshire residential electric customer for the selected measure.",
+        "Purchase and install qualifying heating, cooling, appliance, or thermostat equipment, or enroll through the Home Energy Performance pathway for weatherization.",
+        "Complete any required preverification, home energy assessment, or contractor qualification before work begins.",
+        "Submit the current rebate or enrollment materials with invoices, model numbers, efficiency ratings, and installation records.",
+        "Allow inspection, performance verification, or demand-response enrollment checks before or after payment.",
+        "Confirm current eligibility for legacy mapped measures, such as a general LED-lighting rebate, that are not clearly shown in the accessible current portfolio."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current Unitil and NHSaves residential offerings use objective equipment, assessment, and documentation rules, so qualifying claims are generally likely to be paid. Some legacy mapped categories are not clearly supported by the present official portfolio and require measure-level confirmation.",
+      "evidenceUrls": [
+        "https://unitil.com/rebates/energy-starr-heating-cooling-nh",
+        "https://unitil.com/rebates/home-energy-performance-nh",
+        "https://unitil.com/rebates/energy-starr-appliances-and-electronics-nh",
+        "https://unitil.com/rebates/connectedsolutions-wi-fi-thermostat-program-nh"
+      ],
+      "evidenceText": "Unitil currently offers New Hampshire residential rebates for qualifying heating and cooling equipment and ENERGY STAR appliances, a Home Energy Performance assessment and weatherization pathway, and a connected-thermostat demand-response incentive. Each pathway has measure-specific application, eligibility, and verification requirements.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4820",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Unitil New Hampshire nonresidential natural-gas customer at the installation address.",
+        "Purchase and install qualifying commercial gas heating, water-heating, controls, or food-service equipment that meets current specifications.",
+        "Obtain utility preapproval before purchase or installation when required for a direct or custom rebate pathway, or use an eligible participating distributor for an instant incentive.",
+        "Submit the applicable application with invoices, product specifications, account information, and installation records when the incentive is not processed at the point of sale.",
+        "Allow Unitil or NHSaves to inspect or verify the equipment and installation before final payment."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current New Hampshire gas-business incentives are prescriptive and can be delivered through participating distributors or direct utility claims. A qualifying customer and installation are likely to receive the stated incentive after any required preapproval and verification.",
+      "evidenceUrls": [
+        "https://unitil.com/rebates/natural-gas-commercial-heating-equipment-nh",
+        "https://nhsaves.com/commercial-foodservice-equipment/",
+        "https://nhsaves.com/commercial-municipal-electric-gas-water-heating-equipment/"
+      ],
+      "evidenceText": "Current Unitil and NHSaves materials provide New Hampshire nonresidential incentives for qualifying gas heating and water-heating equipment and high-efficiency food-service equipment such as fryers, ovens, and steamers. Depending on the pathway, incentives use utility preapproval or participating-distributor processing plus documentation and verification.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4822",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Unitil New Hampshire residential natural-gas customer for the selected current offer.",
+        "Purchase and install qualifying gas heating, boiler-control, water-heating, or thermostat equipment, or use the Home Energy Performance pathway for recommended weatherization.",
+        "Complete the required home assessment or prequalification before weatherization work when applicable.",
+        "Submit the current application with invoices, equipment specifications, account information, and installation documentation.",
+        "Allow inspection or verification before payment.",
+        "Confirm eligibility separately for legacy mapped categories not supported by current residential gas materials, including battery storage, industrial waste-heat recovery, and general LED lighting."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Current Unitil and NHSaves programs support several mapped gas-heating, water-heating, thermostat, and weatherization measures, but the older opportunity mapping also includes materially unrelated battery, industrial, and lighting categories. Award is possible only for a measure confirmed under a current pathway.",
+      "evidenceUrls": [
+        "https://nhsaves.com/residential/natural-gas-heating-furnaces-boilers/",
+        "https://nhsaves.com/residential/natural-gas-heating-equipment/",
+        "https://nhsaves.com/residential/natural-gas-thermostat/",
+        "https://unitil.com/rebates/home-energy-performance-nh"
+      ],
+      "evidenceText": "Current New Hampshire materials document Unitil residential gas incentives for qualifying furnaces, boilers, controls, water heating, and thermostats, plus assessment-based Home Energy Performance weatherization. They do not substantiate the legacy battery-storage, industrial waste-heat-recovery, or broad LED mappings.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4527",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Upper Peninsula Power Company residential electric customer at the installation address.",
+        "Purchase and install a product or system currently covered by UPPCO, such as a qualifying heat pump, heat-pump water heater, or listed ENERGY STAR household appliance.",
+        "Meet the applicable product, efficiency, installation, and replacement requirements.",
+        "Submit the online rebate request with the required product information and receipt within the purchase calendar year.",
+        "Receive UPPCO approval before the rebate is applied as a bill credit and allow any requested verification.",
+        "Confirm measure eligibility for legacy categories not precisely matched by current materials, including a generic non-heat-pump HVAC replacement and commercial dishwasher equipment."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "UPPCO's current heat-pump, heat-pump-water-heater, and ENERGY STAR household-product rebates are prescriptive and likely after a timely documented claim. The legacy mapping is broader than the current catalog, especially for commercial dishwashers and generic HVAC replacements.",
+      "evidenceUrls": [
+        "https://ee.uppco.com/uppco-residential-energy/",
+        "https://ee.uppco.com/heatpump/",
+        "https://ee.uppco.com/uppco-energy-star/"
+      ],
+      "evidenceText": "UPPCO currently lists residential heat-pump incentives and rebates for heat-pump water heaters and ENERGY STAR household products, including refrigerators, freezers, washers, dryers, dishwashers, and room air conditioners. The customer submits product and receipt information for approval and a bill credit.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5313",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Use an eligible lender, borrower, and commercial-scale biorefinery, renewable-chemical, or biobased-product manufacturing project.",
+        "Submit a letter of intent at least 30 days before the Phase 1 application.",
+        "Provide the required technical, economic, market, ownership, financial, equity, and project-feasibility information for Phase 1 eligibility review and ranking.",
+        "Receive an invitation based on Phase 1 evaluation before submitting the full Phase 2 application.",
+        "Complete Phase 2 environmental, engineering, financial, credit, collateral, and due-diligence review.",
+        "Obtain USDA approval and satisfy all lender, equity, closing, and guarantee conditions before funds are advanced."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Section 9003 is a large, project-specific loan-guarantee program with ranked Phase 1 review and extensive invited Phase 2 underwriting. An eligible project can be approved, but technical merit, commercial feasibility, equity, credit, environmental review, and USDA selection make an award nonautomatic.",
+      "evidenceUrls": [
+        "https://www.rd.usda.gov/programs-services/energy-programs/biorefinery-renewable-chemical-and-biobased-product-manufacturing-program"
+      ],
+      "evidenceText": "USDA currently processes Section 9003 loan guarantees through a two-phase process. Applicants submit a letter of intent and ranked Phase 1 package; selected applicants are invited to Phase 2 for full technical, environmental, financial, and credit review before a guarantee can be approved.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2511",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible agricultural producer or rural small business and locate the project at an eligible rural site, subject to the program's agricultural exceptions.",
+        "Use a qualifying renewable-energy system, such as eligible geothermal or biomass, and demonstrate commercial availability and technical merit.",
+        "Provide the required energy assessment, audit, technical report, project budget, permits, and environmental information.",
+        "Secure an eligible lender and pass lender underwriting for character, capacity, capital, collateral, and project conditions.",
+        "Provide the required borrower contribution and satisfy the applicable project-cost and guarantee limits.",
+        "Obtain USDA environmental clearance and loan-guarantee approval before beginning controlled construction or incurring prohibited costs."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "REAP guaranteed loans are accepted year-round, but approval depends on borrower and rural eligibility, project technical merit, environmental review, borrower contribution, lender underwriting, collateral, and USDA guarantee approval. A technically eligible retrofit does not itself assure financing.",
+      "evidenceUrls": [
+        "https://www.rd.usda.gov/programs-services/energy-programs/rural-energy-america-program-renewable-energy-systems-energy-efficiency-improvement-guaranteed-loans"
+      ],
+      "evidenceText": "USDA currently accepts REAP guaranteed-loan applications year-round for eligible rural small businesses and agricultural producers. Renewable biomass and geothermal projects can qualify, but applications require technical and energy documentation, lender credit underwriting, environmental review, borrower participation, and USDA approval before construction.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22661",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Wait for UDOT to issue a new Phase II or successor NEVI request for applications because no current open Utah application round was identified.",
+        "Propose a site and high-power charging configuration that satisfies the future solicitation's corridor, spacing, public-access, reliability, interoperability, and federal NEVI technical rules.",
+        "Provide the required nonfederal match, site control, utility coordination, environmental, permitting, operations, maintenance, and financial documentation.",
+        "Submit a complete competitive application by the future deadline and pass administrative and technical evaluation.",
+        "Receive a conditional selection, complete contracting and federal authorization conditions, and construct the approved project before reimbursement."
+      ],
+      "approvalStage": "none",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "Utah's prior Phase 1.A application closed in 2024 and conditional awards were issued in January 2025. The official page indicates future Phase II planning but does not provide a current open solicitation, so a new applicant is unlikely to receive an award now.",
+      "evidenceUrls": [
+        "https://udotinput.utah.gov/evplan?HTTPSRedirected=true"
+      ],
+      "evidenceText": "UDOT's current Utah NEVI page records the closed Phase 1.A request and January 2025 conditional awards and describes future Phase II activity. As of the current page update, no open application package or present submission deadline is listed for a new charging-site proposal.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5406",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or control an eligible commercial or industrial property in a Utah city or county participating in C-PACE.",
+        "Develop a permanently affixed eligible project, which may include battery energy storage, with a qualified contractor or project developer.",
+        "Submit the property, ownership, project, cost, savings, and financial information required for program eligibility review.",
+        "Obtain acceptable financing and pass a private capital provider's property, equity, payment-history, and transaction underwriting.",
+        "Obtain written consent from each existing mortgage holder.",
+        "Receive program-administrator approval and execute the financing, special-assessment, and closing documents before construction funds are released."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Utah C-PACE expressly allows battery-storage projects, but financing is transaction-specific. Property eligibility, project review, private-capital underwriting, mortgage-holder consent, accepted terms, and assessment closing must all succeed before funding.",
+      "evidenceUrls": [
+        "https://utahcpace.com/",
+        "https://utahcpace.com/property-owners/owners-how-we-help/",
+        "https://utahcpace.com/property-owners/owners-faqs/"
+      ],
+      "evidenceText": "Utah C-PACE currently lists battery storage as an eligible commercial-property improvement. Owners work through program eligibility review, contractor project development, private-capital underwriting, mortgage-holder consent, and financial and special-assessment closing before funds become available.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2668",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a current Utilities District of Western Indiana REMC residential member and install the system at an eligible year-round single-family residence served by the cooperative.",
+        "Purchase and install a qualifying new air-source, dual-fuel, ductless mini-split, or geothermal heat-pump system meeting the 2026 technical specifications.",
+        "Provide the itemized invoice, AHRI certificate, equipment and installation information, and any other required records.",
+        "Submit the application within 90 days after installation, during the same calendar year, and no later than the current program deadline.",
+        "Remain within the percentage-of-cost and measure limits, apply while first-come funds remain, and allow pre- or post-installation inspection."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "UDWI REMC's 2026 HVAC rebates are prescriptive and use clear member, residence, equipment, filing, and documentation criteria. A qualifying timely heat-pump claim is likely to be paid while first-come funds remain.",
+      "evidenceUrls": [
+        "https://www.udwiremc.com/my-services/member-programs/rebates/",
+        "https://www.udwiremc.com/wp-content/uploads/2026/01/2026_Res.HVAC-Rebate-App.pdf",
+        "https://www.udwiremc.com/wp-content/uploads/2026/01/2026_Residential_HVAC_Terms_Conditions.pdf"
+      ],
+      "evidenceText": "UDWI REMC's current 2026 residential HVAC program covers qualifying air-source, dual-fuel, mini-split, and geothermal heat pumps. Claims require member service, an eligible residence, technical compliance, invoice and AHRI records, filing within 90 days and the same calendar year, and possible inspection; funds are first-come.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2241",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Vera Water and Power residential electric customer at the installation address.",
+        "Purchase and install a measure currently covered by the applicable residential form, such as a qualifying heat pump, smart thermostat, heat-pump water heater, insulation, window, exterior door, or Level 2 EV charger.",
+        "Meet the selected measure's product, efficiency, electric-heating, contractor, certification, and installation conditions, including approved-equipment-list rules where applicable.",
+        "Complete any measure-specific preinspection or preauthorization required before work.",
+        "Submit the current rebate form with receipts, model and serial information, installation date, contractor records, photographs, and other requested evidence.",
+        "Allow Vera to verify the installation and apply while current program funds and measure limits remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Vera's current residential incentives are measure-specific and prescriptive across the mapped heat-pump, thermostat, water-heating, weatherization, window, door, and Level 2 charging categories. A complete qualifying claim is likely after any required preinspection and verification.",
+      "evidenceUrls": [
+        "https://verawaterandpower.com/rebates-savings/residential-incentives/",
+        "https://verawaterandpower.com/rebates-savings/weatherization-attic-roof-floor-wall-door-window-patiodoor-rebate-form/",
+        "https://verawaterandpower.com/rebates-savings/appliance-rebate-form/",
+        "https://verawaterandpower.com/rebates-savings/smart-thermostat-rebate-form/"
+      ],
+      "evidenceText": "Vera's current residential incentive materials list rebates for qualifying ducted and ductless heat pumps, smart thermostats, heat-pump water heaters, insulation, windows, patio or exterior doors, and qualifying Level 2 chargers. Measure-specific forms require purchase and installation records and may impose equipment-list, electric-heating, contractor, or verification conditions.",
+      "reviewedAt": "2026-07-10T16:23:14Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

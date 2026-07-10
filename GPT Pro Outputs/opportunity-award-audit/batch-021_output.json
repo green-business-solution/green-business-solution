@@ -3,7 +3,517 @@
   "batchId": "batch-021",
   "inputFile": "batch-021_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.769Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T14:19:47Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4448",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Alaska public borrower, such as a regional educational attendance area, the University of Alaska, a state agency, or a municipality, financing permanent improvements to an owned building.",
+        "Complete an Alaska Housing Finance Corporation-approved investment-grade audit that identifies eligible measures, costs, and energy savings.",
+        "Submit the signed loan application with authorizing resolutions, ownership or title information, project contracts and costs, and required financial records.",
+        "Demonstrate acceptable repayment capacity, including the program's debt-service-coverage requirement, and satisfy underwriting, collateral, and closing conditions.",
+        "Receive the applicable AHFC commitment or board approval, close the loan, and complete approved improvements within the required implementation period."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Financing is not an entitlement: AHFC evaluates audit results, repayment capacity, security, project documentation, and loan size before issuing a commitment, with additional board approval for larger loans.",
+      "evidenceUrls": [
+        "https://www.ahfc.us/efficiency/non-residential-buildings/energy-efficiency-revolving-loan-fund-aeerlp",
+        "https://www.ahfc.us/download_file/view/72/664",
+        "https://www.ahfc.us/download_file/view/73/664"
+      ],
+      "evidenceText": "AHFC requires an approved investment-grade audit, a complete public-borrower application, financial and ownership documentation, underwriting, loan commitment and closing, followed by timely completion of approved improvements.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3801",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Apply for an eligible energy-efficiency project at an existing Tennessee public K-12 school facility.",
+        "Propose work that has not already been completed or fully funded and that meets the program's technical feasibility and maximum-payback requirements.",
+        "Submit engineering calculations, cost and savings assumptions, utility data, measure descriptions, and other requested supporting records.",
+        "Pursue available Tennessee Valley Authority incentives where applicable.",
+        "Receive technical review and Energy Efficient Schools Council loan approval, execute the financing documents, and obtain authorization before beginning the funded work."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The initiative uses project-specific technical and economic review followed by Council approval and executed loan documents. Eligibility alone does not assure that a proposed school project will be financed.",
+      "evidenceUrls": [
+        "https://eesi.tvaenergyrightsolutions.com/",
+        "https://www.tn.gov/eesi/eesi-resource-center.html",
+        "https://www.tn.gov/eesi/application-forms.html"
+      ],
+      "evidenceText": "The current EESI process requires a Tennessee public-school application, engineering and savings support, technical review, Council approval and fully executed financing before a notice to proceed is issued.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1683",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own Arizona property containing equipment or components that satisfy the statutory renewable-energy, energy-efficiency or combined-heat-and-power definitions.",
+        "Provide the county assessor with documentation of the equipment's acquisition and installation costs and any information needed to establish statutory qualification.",
+        "Submit the documentation within the statutory valuation schedule, including the special March 31 timing rule when applicable.",
+        "Permit the assessor to verify the property and apply the required zero additional valuation treatment."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The tax treatment is statutory and objective, but it depends on timely cost documentation and the county assessor's determination that the installed property fits the covered categories.",
+      "evidenceUrls": [
+        "https://www.azleg.gov/ars/42/11054.htm"
+      ],
+      "evidenceText": "Arizona law directs assessors to add no value for qualifying energy equipment when the owner supplies acquisition and installation cost documentation within the required valuation timeline.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22420",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Iowa applicant, such as an individual, business, rural electric cooperative or municipal utility, proposing qualifying energy infrastructure.",
+        "Submit a complete IowaGrants application by a quarterly deadline with project scope, budget, ownership, financing, schedule, permits and other required supporting material.",
+        "Demonstrate technical feasibility, eligible use of proceeds, repayment capacity and acceptable collateral or security.",
+        "Pass program eligibility review, credit underwriting and loan-committee evaluation.",
+        "Receive Iowa Economic Development Authority board approval and execute the required loan and security documents."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Loans are awarded through underwriting, committee review and an IEDA board decision. A technically eligible biomass or biogas project can qualify, but credit, security, project quality and available funds remain discretionary gates.",
+      "evidenceUrls": [
+        "https://opportunityiowa.gov/community/energy/grants-funding/eirl-program",
+        "https://opportunityiowa.gov/media/5007/download?inline="
+      ],
+      "evidenceText": "Iowa's current revolving-loan process uses quarterly applications, eligibility and credit review, loan-committee evaluation, board approval, and formal closing requirements for qualifying energy-infrastructure projects.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22074",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Wisconsin municipality, university, school, hospital, manufacturer or other organization covered by the applicable solicitation.",
+        "Propose an eligible energy-innovation project, such as a qualifying energy-storage project, and provide the required narrative, technical, savings, budget and match documentation.",
+        "Submit a complete application through the Public Service Commission grants system by the funding-round deadline.",
+        "Pass completeness and merit review and receive discretionary award selection by the Commissioners.",
+        "Execute the grant agreement and satisfy procurement, reporting, verification and reimbursement requirements if selected."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "Round 6 closed on July 1, 2026, and the official page states that applications are not currently being accepted. A new applicant has no present award route unless another solicitation opens.",
+      "evidenceUrls": [
+        "https://psc.wi.gov/Pages/ServiceType/OEI/EnergyInnovationGrantProgram.aspx",
+        "https://psc.wi.gov/Documents/OEI/EIGP/9709-FG-2026%20EIGP%20Round%206%20Application%20Webinar%20Slides.pdf"
+      ],
+      "evidenceText": "Wisconsin's latest Energy Innovation Grant round used completeness, merit and Commission selection review, but Round 6 is now closed and the program is not currently accepting applications.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4581",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible commercial or industrial electric customer of a participating Michigan municipal utility.",
+        "Purchase or install a measure listed in the current city-specific commercial and industrial program, or coordinate a custom project with an Energy Smart advisor before proceeding.",
+        "Submit the applicable municipal application with invoices, equipment specifications, installation information and other required supporting records.",
+        "Complete any requested project review, inspection or savings verification.",
+        "Apply within the applicable program-year deadlines and while municipal incentive funds remain available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program offers published municipal rebates through an administrative application process rather than competitive ranking. A qualifying, documented project is likely to be paid, subject to city rules, verification and available funds.",
+      "evidenceUrls": [
+        "https://mienergysmart.com/commercial-industrial-program",
+        "https://mienergysmart.com/cities"
+      ],
+      "evidenceText": "Michigan Energy Smart currently provides city-specific commercial and industrial applications for qualifying equipment and directs custom projects to program advisors for project review.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3947",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible residential electric customer in a participating Michigan municipal-utility community.",
+        "Purchase and install a product or measure covered by the current city-specific residential program.",
+        "Submit the applicable municipal rebate application with the receipt or invoice, product information and any required installation documentation.",
+        "Meet the measure-specific timing, customer, equipment and quantity limits.",
+        "Apply while the participating municipality's program funds remain available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Energy Smart publishes measure-specific municipal rebates and applications rather than competitively scoring residential claims. A timely, complete and qualifying claim is likely to receive the stated rebate while funds remain.",
+      "evidenceUrls": [
+        "https://mienergysmart.com/residential-programs",
+        "https://mienergysmart.com/cities"
+      ],
+      "evidenceText": "The current residential program serves qualifying customers in participating municipal communities and requires the applicable city application and purchase or installation documentation for listed products.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2766",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Purchase a product expressly covered by the Texas ENERGY STAR sales-tax holiday during the annual statutory holiday period.",
+        "Ensure the product carries the required ENERGY STAR qualification and stays within any applicable price ceiling, including the limits for air conditioners and refrigerators.",
+        "Complete the sale, delivery or qualifying layaway transaction within the holiday's transaction-timing rules.",
+        "Do not claim the exemption for excluded products; heat pumps are expressly excluded from the holiday."
+      ],
+      "approvalStage": "before_operation",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "No application or exemption certificate is required. A retailer should apply the statutory exemption automatically when the product, price and transaction date satisfy the published holiday rules.",
+      "evidenceUrls": [
+        "https://comptroller.texas.gov/taxes/publications/96-1331.php"
+      ],
+      "evidenceText": "Texas provides an annual automatic sales-tax exemption for listed ENERGY STAR products during the holiday; the 2026 event ran May 23 through May 25, with product-specific price limits and exclusions.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22580",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Connecticut electric customer with a qualifying site and storage project.",
+        "Apply through an eligible contractor, third-party owner or aggregator using equipment and a participation pathway allowed by the current program manual.",
+        "Submit the reservation application with customer, site, service-account, contract, technical and ownership information and any applicable commercial fee.",
+        "Pass completeness, technical and program approval review, including the applicable senior-management or board approval threshold for large commercial incentives.",
+        "Install, interconnect and commission the approved system, then enroll it for required performance participation and data access."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program follows defined incentive and reservation rules rather than competitive project ranking. A qualifying project is likely to receive the approved incentive after technical review, installation, interconnection and enrollment, subject to program capacity.",
+      "evidenceUrls": [
+        "https://energystoragect.com/contractor-resources/",
+        "https://energystoragect.com/wp-content/uploads/2026/02/ESS-Program-Manual-Revised-for-02112026-CLEAN.pdf",
+        "https://energystoragect.com/program-changes-for-april-1-2026/"
+      ],
+      "evidenceText": "Connecticut's current storage manual requires an eligible market partner, a complete reservation and technical review, approved equipment, installation and interconnection, and ongoing performance-program enrollment before all incentives are earned.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:f69ab77394818965:energy-survey",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Silicon Valley Power business customer.",
+        "Request the no-cost energy survey and coordinate a site-visit appointment with the utility.",
+        "Provide the engineer reasonable access to the facility, equipment and relevant operating or utility information.",
+        "Allow Silicon Valley Power to evaluate the site and prepare its recommendations and financial analysis."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The survey is a free utility technical-assistance service, not a competitive cash award. A qualifying business customer that requests and accommodates the assessment is likely to receive it, subject to scheduling and staff capacity.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/save-money"
+      ],
+      "evidenceText": "Silicon Valley Power offers business customers a free on-site survey by a qualified engineer, followed by recommended improvements, financial analysis and identification of applicable rebates.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22522",
+      "requiresProgramApproval": "unknown",
+      "approvalRequirements": [
+        "EnergyUnited's board suspended the utility's energy-efficiency rebate programs effective December 31, 2025; no current application or approval route for a new residential heat-pump rebate was verified."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The board-approved suspension removed the current routine rebate path. A new heat-pump claim is unlikely to receive an award unless EnergyUnited formally reinstates or replaces the program.",
+      "evidenceUrls": [
+        "https://www.energyunited.com/wp-content/uploads/2025/08/July-2025-Board-Meeting-Minutes.pdf"
+      ],
+      "evidenceText": "EnergyUnited board minutes record approval to suspend the energy-efficiency rebate programs effective December 31, 2025.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1271",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Be the eligible building owner or an eligible designer that receives a valid allocation from a qualifying tax-exempt building owner.",
+        "Use qualifying energy-efficient commercial-building property whose construction began on or before June 30, 2026.",
+        "Demonstrate the required whole-building energy-cost savings through certification by a qualified individual and retain the supporting technical records.",
+        "For a designer claim, obtain and retain the required allocation documentation from the building owner.",
+        "Complete Form 7205 and claim the deduction on the applicable federal income-tax return."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "Section 179D is a statutory tax deduction, not a competitively awarded program. A taxpayer with qualifying property, the required certification and a properly filed Form 7205 should receive the deduction, subject to ordinary IRS examination.",
+      "evidenceUrls": [
+        "https://www.irs.gov/credits-deductions/energy-efficient-commercial-buildings-deduction",
+        "https://www.irs.gov/forms-pubs/about-form-7205",
+        "https://www.irs.gov/newsroom/faqs-for-modification-of-sections-25c-25d-25e-30c-30d-45l-45w-and-179d-under-public-law-119-21-139-stat-72-july-4-2025-commonly-known-as-the-one-big-beautiful-bill-obbb"
+      ],
+      "evidenceText": "The IRS requires qualifying commercial-building property, certified energy savings and Form 7205; current federal law terminates the deduction for property whose construction begins after June 30, 2026.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22094",
+      "requiresProgramApproval": "unknown",
+      "approvalRequirements": [
+        "EnergyUnited's board suspended the utility's energy-efficiency rebate programs effective December 31, 2025; no current application or approval route for a new residential efficiency rebate was verified."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current official evidence shows a board-approved suspension rather than an active claim process. A new residential efficiency claim is unlikely to be awarded unless the utility announces a replacement or reinstatement.",
+      "evidenceUrls": [
+        "https://www.energyunited.com/wp-content/uploads/2025/08/July-2025-Board-Meeting-Minutes.pdf"
+      ],
+      "evidenceText": "EnergyUnited board minutes state that its energy-efficiency rebate programs were to be suspended effective December 31, 2025.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22317",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Entergy Louisiana customer at the installation address.",
+        "Purchase and install a qualifying new electric-vehicle charger, such as an eligible ENERGY STAR Level 2 unit or qualifying DC fast charger.",
+        "Submit the online eTech application with the Entergy account, service address and charger information.",
+        "Provide the purchase invoice or other proof within 180 days, installation or installed-equipment photographs, serial-number evidence and any requested installation documentation.",
+        "Accept the program terms and do not claim an ineligible like-for-like replacement of existing electric equipment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "eTech publishes fixed charger rebates and a defined documentation review rather than competitive selection. A qualifying Entergy Louisiana customer with a complete timely application should ordinarily receive the rebate.",
+      "evidenceUrls": [
+        "https://entergyetech.com/electric-vehicles/",
+        "https://entergyetech.com/apply-online"
+      ],
+      "evidenceText": "Entergy eTech currently lists fixed rebates for qualifying Level 2 and DC fast chargers and requires an online application, account and equipment details, invoices and installation evidence.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5789",
+      "requiresProgramApproval": "unknown",
+      "approvalRequirements": [
+        "Entergy Louisiana states that its residential energy-efficiency programs are temporarily paused while a new implementation partner is onboarded; no current new-project application requirements were published on the reviewed official page."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "A paused program has no current routine intake or approval path. New residential projects are unlikely to receive an award until Entergy Louisiana launches the announced expanded program and publishes active terms.",
+      "evidenceUrls": [
+        "https://www.entergylouisiana.com/energyefficiency"
+      ],
+      "evidenceText": "Entergy Louisiana's current energy-efficiency page says the programs are temporarily paused during partner onboarding and directs customers to check back for the 2026 launch.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5532",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Entergy Arkansas agricultural or other qualifying nonresidential customer.",
+        "Propose an eligible agricultural efficiency measure that meets current technical and cost-effectiveness requirements.",
+        "Before purchase or installation, submit the signed application with contractor quotes, engineering or savings calculations, specifications and required measure worksheets.",
+        "Pass technical review and any required pre-installation inspection and receive a written incentive reservation.",
+        "Complete the approved project by the authorization deadline, submit final invoices and completion records, and pass any post-installation verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The agricultural program uses published eligibility, preapproval and verification rules rather than competitive ranking. An approved project is likely to receive its reserved incentive after timely completion, subject to the annual budget.",
+      "evidenceUrls": [
+        "https://www.entergyarkansas.com/energyefficiency/business/agricultural-solutions",
+        "https://www.entergyarkansas.com/wp-content/uploads/2025/06/AG_program_manual.pdf"
+      ],
+      "evidenceText": "The 2026 agricultural manual requires preapproval before purchase, a complete technical application, incentive reservation, timely installation, final documentation and possible post-installation inspection.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3681",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Entergy Arkansas institutional customer, such as a school, higher-education institution, government, municipality, nonprofit or faith-based organization.",
+        "Execute the required participant agreement and submit a project application with scope, costs, expected savings and technical documentation.",
+        "Meet the program's eligibility, energy-savings and cost-effectiveness requirements.",
+        "Receive project review, any required pre-installation inspection and an incentive reservation before implementation.",
+        "Complete the approved project by the program deadline and submit final invoices and verification records for any required post-installation review."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "CitySmart provides project incentives through eligibility, cost-effectiveness and verification review rather than competitive scoring. A properly reserved and completed eligible project is likely to be paid, subject to program funds.",
+      "evidenceUrls": [
+        "https://www.entergyarkansas.com/energyefficiency/business/citysmart",
+        "https://www.entergyarkansas.com/wp-content/uploads/2025/06/CitySmart_Program_Manual.pdf"
+      ],
+      "evidenceText": "The 2026 CitySmart manual requires an eligible institutional participant, a signed agreement and project application, program review and funding reservation, timely completion and final verification.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3682",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Entergy Arkansas large commercial or industrial customer, generally with qualifying peak demand and without an applicable opt-out.",
+        "Enroll in the program and execute the required participation agreement.",
+        "Submit a feasibility-study funding request with the proposed scope, consultant or trade-ally proposal, costs, deliverables, preliminary savings calculations and evidence of capacity to implement recommended projects.",
+        "Meet the program's minimum potential-savings and other technical criteria and receive case-by-case selection while study funds remain available.",
+        "Submit an acceptable completed study for the initial co-funding payment and implement qualifying recommended projects to earn any conditional remaining payment."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Feasibility-study support is selected case by case, is first-come and budget-limited, and part of the payment depends on later project implementation. A compliant request can succeed, but funding is not routine.",
+      "evidenceUrls": [
+        "https://www.entergyarkansas.com/energyefficiency/business/large-commercial",
+        "https://www.entergyarkansas.com/wp-content/uploads/2025/06/CI_Custom_Program_Manual.pdf"
+      ],
+      "evidenceText": "Entergy Arkansas's 2026 large C&I manual evaluates study requests individually, requires preliminary savings and implementation support, limits co-funding, and conditions part of payment on completed efficiency projects.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22273",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Entergy Arkansas customer at the installation address.",
+        "Purchase and install a qualifying new electric-vehicle charger, such as an eligible ENERGY STAR Level 2 unit or qualifying DC fast charger.",
+        "Submit the online eTech application with the Entergy account, service address and charger information.",
+        "Provide the purchase invoice or other proof within 180 days, installation or installed-equipment photographs, serial-number evidence and any requested installation documentation.",
+        "Accept the program terms and do not claim an ineligible like-for-like replacement of existing electric equipment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "eTech provides fixed charger rebates through a defined administrative claim process. A qualifying Entergy Arkansas customer with complete, timely documentation should ordinarily receive the published amount.",
+      "evidenceUrls": [
+        "https://entergyetech.com/electric-vehicles/",
+        "https://entergyetech.com/apply-online"
+      ],
+      "evidenceText": "Entergy eTech publishes fixed rebates for qualifying Level 2 and DC fast chargers and requires an online application, purchase proof, installation evidence and equipment identification.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3680",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Entergy Arkansas residential customer and property for the selected residential program pathway.",
+        "Enroll through the applicable program process and use an authorized program trade ally where required.",
+        "Complete the required assessment or install equipment and measures that meet current program specifications.",
+        "Execute participation forms, provide requested customer and property information, and supply invoices or other completion documentation.",
+        "Allow installation verification or inspection and apply while current program funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Entergy Arkansas maintains active residential pathways using eligibility, assessment, equipment and verification rules rather than competitive ranking. A qualifying participant is likely to receive the applicable service or incentive, subject to measure findings and funds.",
+      "evidenceUrls": [
+        "https://www.entergyarkansas.com/energyefficiency/residential",
+        "https://www.entergyarkansas.com/energyefficiency/residential/home-energy-solutions-program"
+      ],
+      "evidenceText": "Entergy Arkansas currently lists residential efficiency programs, including Home Energy Solutions, with customer enrollment, authorized trade-ally assessment, approved measures and program verification.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5494",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Entergy Arkansas small-business customer within the program's demand threshold.",
+        "Work with a participating trade ally to complete an assessment and identify qualifying measures.",
+        "Review and sign the project proposal and provide the customer, facility, measure, cost and savings information required for program evaluation.",
+        "Receive program confirmation that the proposed project is complete, eligible and cost-effective before proceeding under the incentive pathway.",
+        "Complete the installation, provide final records and permit any requested post-installation inspection while program funds remain available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program provides trade-ally-delivered, measure-based incentives rather than competitive grants. A qualifying small-business project that passes proposal review and verification is likely to receive the incentive, subject to budget availability.",
+      "evidenceUrls": [
+        "https://www.entergyarkansas.com/energyefficiency/business/small-business",
+        "https://www.entergyarkansas.com/wp-content/uploads/2025/06/Small_Business_Program_Manual.pdf"
+      ],
+      "evidenceText": "The 2026 Small Business manual requires an eligible account, participating trade-ally assessment, a signed and reviewed project proposal, qualifying installation and final verification, with waitlisting possible when funds are committed.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22338",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Entergy Mississippi customer at the installation address.",
+        "Purchase and install a qualifying new electric-vehicle charger, such as an eligible ENERGY STAR Level 2 unit or qualifying DC fast charger.",
+        "Submit the online eTech application with the Entergy account, service address and charger information.",
+        "Provide the purchase invoice or other proof within 180 days, installation or installed-equipment photographs, serial-number evidence and any requested installation documentation.",
+        "Accept the program terms and do not claim an ineligible like-for-like replacement of existing electric equipment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "eTech uses published fixed rebates and administrative verification rather than competitive selection. A qualifying Entergy Mississippi customer with a complete timely submission should ordinarily receive the rebate.",
+      "evidenceUrls": [
+        "https://entergyetech.com/electric-vehicles/",
+        "https://entergyetech.com/apply-online"
+      ],
+      "evidenceText": "Entergy eTech currently offers fixed rebates for eligible Level 2 and DC fast chargers and requires account, purchase, installation and equipment-identification documentation.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22542",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Entergy Mississippi retail residential customer with the qualifying system at the primary residence.",
+        "Meet the tariff's low-to-moderate-income test, including the applicable household-income limit.",
+        "Obtain an approved net-metering interconnection agreement for an eligible renewable distributed-generation facility that satisfies system-size and annual-usage limits.",
+        "Complete the company-approved energy audit and provide proof of installation and other required eligibility documentation.",
+        "Pass Entergy Mississippi verification and inspection and apply on a first-come basis while the annual incentive budget remains available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The tariff establishes a fixed one-time incentive using objective income, residence, system, interconnection and audit criteria. A fully qualifying customer is likely to receive payment, subject to verification and the annual first-come budget.",
+      "evidenceUrls": [
+        "https://www.entergymississippi.com/wp-content/uploads/eml_nem.pdf",
+        "https://www.entergymississippi.com/net-metering"
+      ],
+      "evidenceText": "Entergy Mississippi's net-metering tariff provides a one-time low-to-moderate-income incentive for qualifying primary-residence renewable systems after income certification, interconnection approval, an energy audit, installation proof and inspection.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22605",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Entergy Mississippi retail residential customer with an approved distributed-generation interconnection or net-metering agreement.",
+        "Install a qualifying battery system meeting the tariff's minimum usable-storage requirement.",
+        "Enroll in the Battery Demand Response program and certify compliance with its operating and participation conditions.",
+        "Do not also apply for or receive the mutually exclusive low-to-moderate-income distributed-generation incentive.",
+        "Submit the required records and apply on a first-come basis while the annual battery-incentive budget remains available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The tariff provides a fixed battery incentive through objective interconnection, capacity and demand-response enrollment criteria. A compliant customer is likely to receive payment, subject to verification and the annual first-come funding cap.",
+      "evidenceUrls": [
+        "https://www.entergymississippi.com/wp-content/uploads/eml_nem.pdf",
+        "https://www.entergymississippi.com/net-metering"
+      ],
+      "evidenceText": "Entergy Mississippi's tariff offers a one-time residential battery incentive for qualifying interconnected systems that meet the storage threshold and enroll in Battery Demand Response, subject to a first-come annual budget.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5793",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Entergy Mississippi residential customer for the selected audit, direct-install or heating-and-cooling pathway.",
+        "Use an authorized or participating program trade ally and provide access and permission for the required assessment or installation.",
+        "For heating-and-cooling rebates, install qualifying equipment meeting current efficiency requirements and have the trade ally submit the application within the required post-installation period.",
+        "Provide the invoice, model and serial information, AHRI certification and other required installation documentation.",
+        "Permit program verification or inspection and apply while program-year funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential programs use published eligibility and equipment rules, authorized trade allies and administrative verification rather than competitive selection. A complete qualifying audit service or equipment claim is likely to be approved, subject to funds.",
+      "evidenceUrls": [
+        "https://www.entergymississippi.com/energyefficiency/residential",
+        "https://www.entergymississippi.com/energyefficiency/residential/energy-audit",
+        "https://www.entergymississippi.com/energyefficiency/residential/heating-cooling",
+        "https://www.entergymississippi.com/wp-content/uploads/heating-cooling-terms-conditions.pdf"
+      ],
+      "evidenceText": "Entergy Mississippi currently offers authorized-trade-ally energy audits and residential heating and cooling rebates with qualifying-equipment, timely application, invoice, AHRI-documentation and verification requirements.",
+      "reviewedAt": "2026-07-10T14:19:47Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

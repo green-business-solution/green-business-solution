@@ -3,7 +3,548 @@
   "batchId": "batch-015",
   "inputFile": "batch-015_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.767Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T14:00:11Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22329",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Use the program path that matches the customer and site: residential electric service for a home charger, business electric service for public Level 2 charging, or commercial electric/combo service for a future DC fast-charger round.",
+        "For the home path, have an eligible EV or plug-in hybrid associated with the service address, install a qualified Level 2 charger at the primary residence, enroll in the required nighttime rate, and provide vehicle, installation, and charging-schedule documentation.",
+        "For public Level 2 charging, operate an eligible hospitality or multifamily site, install at least two ports, receive a rebate commitment, become operational within six months, and meet data-sharing, signage, parking, and applicable time-of-use requirements.",
+        "For DC fast charging, wait for an open application round and then meet the commercial-service, site-control, equipment-capacity, certification, and five-year uptime requirements; the current round is fully subscribed.",
+        "Submit the final invoice, installation evidence, and other path-specific documents for Consumers Energy review before payment."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The residential home-charger path uses objective eligibility and documentation rules, but public Level 2 rebates are limited and require selection, while the DC fast-charger round is currently fully subscribed. A qualifying applicant therefore has a viable path, but an award is not uniformly available across all mapped charger types.",
+      "evidenceUrls": [
+        "https://www.consumersenergy.com/residential/savings-and-clean-energy/electric-vehicles/home-charger-rebates",
+        "https://www.consumersenergy.com/residential/savings-and-clean-energy/electric-vehicles/level-2-charging-station-rebates",
+        "https://www.consumersenergy.com/residential/savings-and-clean-energy/electric-vehicles/dc-fast-charger-rebates"
+      ],
+      "evidenceText": "Current PowerMIDrive materials offer a residential Level 2 installation rebate and a limited public Level 2 rebate process. The DC fast-charger program is fully subscribed and is not accepting new applications pending a later round.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4299",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible Consumers Energy business electric account and install the project at the served business site.",
+        "Select a currently qualifying electric prescriptive measure or propose a custom project with documented electric-energy savings.",
+        "For a custom or major facility project, contact the program before work begins and complete the required project review, application, and savings analysis.",
+        "For a prescriptive project, complete the qualifying work and submit the rebate application with itemized invoices, product specifications, and other measure-specific documentation.",
+        "Permit program verification or inspection and satisfy current funding, technical, and submission requirements before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program publishes a broad catalog of prescriptive business rebates and directs customers to apply after completing qualifying work. Custom projects add pre-project review, but compliant prescriptive claims are generally processed under objective measure and documentation rules, subject to verification and available funds.",
+      "evidenceUrls": [
+        "https://www.consumersenergy.com/business/savings-and-energy-solutions/rebates-and-discounts",
+        "https://www.consumersenergy.com/business/savings-and-energy-solutions/rebates-and-discounts/custom-business-incentives"
+      ],
+      "evidenceText": "Consumers Energy currently advertises rebates for more than 450 business products and directs customers to apply after work is complete. Its custom-incentive page instructs customers to make contact before major facility updates and provides application support for custom savings projects.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3595",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Receive Consumers Energy residential electric service at the installation address and meet the measure-specific home and service-type eligibility rules.",
+        "Install equipment or envelope improvements that meet the current efficiency, product, and installation specifications for the claimed rebate.",
+        "For heating and cooling rebates, use a participating trade ally; the contractor must submit the application electronically.",
+        "Provide a complete current application and required documentation, including an itemized invoice and applicable equipment model, serial, efficiency, or certification information; heating and cooling applications are due within 30 days of completion.",
+        "Comply with permits and codes and allow transaction verification or a post-installation quality-control inspection; incentives remain subject to available funds."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential program uses published 2026 eligibility tables, contractor-submitted applications for HVAC, and objective documentation requirements. A correctly installed qualifying measure with a timely and complete claim is likely to receive the stated rebate, subject to verification and first-come funding.",
+      "evidenceUrls": [
+        "https://www.consumersenergy.com/residential/savings-and-clean-energy/rebates",
+        "https://www.consumersenergy.com/residential/savings-and-clean-energy/rebates/heating-and-cooling",
+        "https://www.consumersenergy.com/-/media/CE/Documents/residential/save-money-and-energy/rebates/hvac/res-programs.pdf",
+        "https://www.consumersenergy.com/-/media/CE/Documents/residential/save-money-and-energy/rebates/windows-and-insulation-rebate-application.pdf"
+      ],
+      "evidenceText": "The 2026 residential materials identify electric-customer measures, require participating trade allies for HVAC, require complete applications and invoices, and reserve verification and inspection rights. HVAC submissions are due within 30 days, and incentive funds are first-come, first-served.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3594",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible Consumers Energy business natural-gas account and install the project at the served business site.",
+        "Select a currently qualifying gas prescriptive measure or propose a custom project with documented natural-gas savings.",
+        "For a custom or major facility project, contact the program before work begins and complete the required project review, application, and savings analysis.",
+        "For a prescriptive project, complete the qualifying work and submit the rebate application with itemized invoices, product specifications, and other measure-specific documentation.",
+        "Permit program verification or inspection and satisfy current funding, technical, and submission requirements before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Consumers Energy maintains a broad prescriptive business-rebate process and a separate custom path for larger or nonstandard savings projects. Prescriptive gas measures that meet current specifications and documentation rules are generally formulaic, while custom measures require prior engagement and savings approval.",
+      "evidenceUrls": [
+        "https://www.consumersenergy.com/business/savings-and-energy-solutions/rebates-and-discounts",
+        "https://www.consumersenergy.com/business/savings-and-energy-solutions/rebates-and-discounts/custom-business-incentives"
+      ],
+      "evidenceText": "The current business program offers a large catalog of equipment rebates and accepts applications after qualifying work. Custom projects require contact before major updates and program assistance through the application and savings-review process.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4300",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Receive Consumers Energy residential natural-gas service at the installation address and meet each measure's home, heating-fuel, and service eligibility rules.",
+        "Install qualifying gas heating, water-heating, thermostat, insulation, window, or door measures that meet current efficiency and product specifications.",
+        "For heating and cooling rebates, use a participating trade ally and have that contractor submit the application electronically.",
+        "Provide the current application, itemized invoice, and applicable make, model, serial, efficiency, certification, or envelope documentation; heating and cooling applications are due within 30 days of completion.",
+        "Comply with permits and codes and allow transaction verification or post-installation inspection; incentives remain subject to available funds."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current 2026 residential materials provide objective gas-customer eligibility, equipment specifications, and documentation rules. Complete qualifying claims submitted through the required contractor or application channel are likely to be paid, subject to verification and first-come funding.",
+      "evidenceUrls": [
+        "https://www.consumersenergy.com/residential/savings-and-clean-energy/rebates",
+        "https://www.consumersenergy.com/residential/savings-and-clean-energy/rebates/heating-and-cooling",
+        "https://www.consumersenergy.com/-/media/CE/Documents/residential/save-money-and-energy/rebates/hvac/res-programs.pdf",
+        "https://www.consumersenergy.com/-/media/CE/Documents/residential/save-money-and-energy/rebates/windows-and-insulation-rebate-application.pdf"
+      ],
+      "evidenceText": "Current 2026 materials list natural-gas customer measures, require participating trade allies for HVAC, require complete applications and itemized invoices, and allow verification or inspection. HVAC submissions are due within 30 days and funding is first-come, first-served.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2475",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Consumers Power Inc. residential customer and install the qualifying measure at the CPI-served residence.",
+        "Use a measure currently listed by the program and meet its equipment, efficiency, installation, and replacement requirements.",
+        "Follow the applicable instant-rebate or customer-application path and provide account, product, purchase, and installation information.",
+        "For insulation, document existing conditions before work; preapproval is strongly encouraged, electric primary heating and minimum insulation requirements apply, and an audit, photographs, or field verification may be required.",
+        "Submit final paid invoices or receipts and required photographs or certifications, and pass any final inspection or documentation review before payment."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "CPI's current administrator site lists active residential rebates and instant-rebate channels for multiple mapped measures. Most awards are prescriptive after proof of purchase and installation; insulation has additional condition-verification and possible inspection requirements but is still rules-based rather than competitive.",
+      "evidenceUrls": [
+        "https://cpi.coop/rebates/",
+        "https://directefficiency.com/cpi-rebates/",
+        "https://directefficiency.com/cpi-insulation-rebate/"
+      ],
+      "evidenceText": "The current CPI rebate hub lists residential windows, doors, insulation, appliances, thermostats, heat-pump equipment, and Level 2 charging. The insulation rules strongly encourage preapproval and require evidence of existing and completed conditions before final approval.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:bcdeae04c5863d3b:continuous-energy-improvement",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a qualifying business customer of both Southern California Edison and Southern California Gas Company.",
+        "Have executive sponsorship and designate a project manager or energy champion as the program point of contact.",
+        "Commit appropriate financial and staff resources and be able to articulate business priorities and energy or carbon goals.",
+        "Commit to incorporating sustainability, energy efficiency, employee awareness, and training into organizational practices.",
+        "Participate in the approximately two-year assessment, planning, implementation, measurement, and continuous-improvement process and receive program acceptance while capacity and funds remain available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "CEI is a no-cost technical-assistance engagement for organizations that meet substantial organizational-commitment criteria, not an automatic equipment rebate. Participation is limited to qualifying dual-utility customers and is offered first-come, first-served while program resources remain available.",
+      "evidenceUrls": [
+        "https://www.sce.com/business/save-costs-energy/savings-strategies/building-improvement",
+        "https://www.sce.com/sites/default/files/inline-files/CEIFactSheet.pdf"
+      ],
+      "evidenceText": "SCE's current building-improvement page describes a no-cost, roughly two-year Continuous Energy Improvement engagement. The linked qualification sheet requires service from both utilities, executive sponsorship, dedicated staff and resources, and organizational commitment; participation is first-come while funds are available.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:controls-program",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Silicon Valley Power business customer with the project installed at an SVP-served Santa Clara facility.",
+        "Install a new control system or significantly expand or upgrade an existing HVAC or process control system; automated control strategies must account for more than 80% of estimated savings, and simple reprogramming is not eligible under this program.",
+        "Submit a signed application, project narrative, engineering savings calculations, commissioning plan, and any required measurement-and-verification information.",
+        "Complete a pre-installation inspection and obtain written SVP preapproval before implementation or installation.",
+        "Complete the project by the preapproval deadline, obtain a post-installation inspection within the required period, and submit final invoices and documentation.",
+        "Recommission the controls annually and verify persistent savings for the performance-based payment schedule; project eligibility and approved savings remain at SVP's discretion and subject to funding."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The Controls Program is custom, performance-based, and expressly discretionary. It requires engineering review, written preapproval, commissioning, inspections, and several years of verified savings, so a technically strong project may be approved but payment is not automatic or fully fixed at application.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/41502/638868861154100000"
+      ],
+      "evidenceText": "The current SVP page requires pre-installation inspection and written preapproval. Controls projects must be new or major HVAC or process-control upgrades with more than 80% of savings from automated strategies, annual recommissioning, and performance payments based on verified savings over multiple years.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5136",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Corn Belt Energy member business or farm and install the project at the participating cooperative account location.",
+        "Use the current PowerMoves prescriptive, custom, or new-construction path that matches the project and satisfy the applicable 2026 technical criteria.",
+        "For custom projects, submit the general application and custom worksheet before purchasing equipment; for new construction or major rehabilitation, engage the program and submit the project information form before breaking ground.",
+        "For prescriptive retrofits, submit the completed general application and measure worksheet with invoices, product data, certifications, and other required supporting documents.",
+        "Place the equipment in operation and allow project review or inspection; final payment remains subject to complete documentation, program approval, and available funds."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "PowerMoves publishes current 2026 prescriptive applications for common business measures, making compliant retrofit claims generally formulaic. Custom and new-construction projects require earlier program involvement and project approval, but the opportunity is not presented as a competitive award program.",
+      "evidenceUrls": [
+        "https://www.powermoves.com/rebates/business/",
+        "https://www.powermoves.com/wp-content/uploads/2026/01/2026-Web-CI-Booklet.pdf",
+        "https://www.powermoves.com/wp-content/uploads/2026/01/2026-Prescriptive-Lighting.pdf",
+        "https://www.powermoves.com/wp-content/uploads/2026/01/2026-Prescriptive-Non-Lighting.pdf",
+        "https://www.powermoves.com/wp-content/uploads/2026/01/2026-Custom-Rebates.pdf"
+      ],
+      "evidenceText": "PowerMoves currently provides 2026 prescriptive lighting and non-lighting applications, a custom-rebate route, and a new-construction route. Custom applications are required before purchase, and new-construction engagement is expected before ground is broken.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4234",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a residential member of Corn Belt Energy or another participating PowerMoves cooperative and install the equipment at the eligible account address.",
+        "Purchase and install a measure covered by a current 2026 application and meet its efficiency, equipment-size, installation, and replacement criteria.",
+        "Provide the member account information, completed online or paper application, paid invoice, equipment make and model, and applicable AHRI certificate or other technical documentation.",
+        "Provide load calculations, contractor information, or other measure-specific documents when required by the current form.",
+        "Submit within the current form's deadline and allow eligibility verification before the cooperative or program administrator issues payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "PowerMoves has current 2026 residential applications for the principal mapped heat-pump, geothermal, water-heating, and thermostat measures. Awards are based on published equipment and documentation criteria rather than competitive scoring, so a complete qualifying claim is likely to be approved.",
+      "evidenceUrls": [
+        "https://www.powermoves.com/rebates/residential/",
+        "https://www.powermoves.com/wp-content/uploads/2026/01/2026-Power-Moves-Air-Source-Heat-Pump-Rebate.pdf",
+        "https://www.powermoves.com/wp-content/uploads/2026/01/2026-Geothermal-Heat-Pump-Rebate-Application.pdf",
+        "https://www.powermoves.com/wp-content/uploads/2026/01/2026-Power-Moves-Pump-Water-Heater-Rebate-Application.pdf"
+      ],
+      "evidenceText": "The current residential page provides an online portal and measure-specific 2026 applications. The forms require cooperative-member, equipment, invoice, and technical information for program review before a rebate is issued.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:496",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Operate a new or expanding business in a qualifying Montana industry and meet the applicable minimum investment threshold for qualifying improvements or modernized processes.",
+        "Submit an application and project plan to the affected county, city, or town; approval may be sought before construction, and an applicant that does not seek advance approval must apply by March 1 of the first benefit year.",
+        "Have all applicant property taxes paid in full before the local governing body grants approval.",
+        "Complete the required public-notice and public-hearing process and obtain a separate local resolution approving the project and defining the qualifying property or improvements.",
+        "Submit the locally approved application to the Montana Department of Revenue for the assessment change and maintain the qualifying ownership and use conditions to avoid termination or recapture."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The abatement is limited to specified industries and investment levels and requires a discretionary local resolution after notice and a public hearing. The mapped retrofit technology alone does not establish eligibility; approval depends on the broader industrial expansion project and local-government decision.",
+      "evidenceUrls": [
+        "https://revenue.mt.gov/property/property-tax-exemptions/new-or-expanding-industries-property-tax-abatement",
+        "https://mca.legmt.gov/bills/mca/title_0150/chapter_0240/part_0140/section_0020/0150-0240-0140-0020.html"
+      ],
+      "evidenceText": "The current Department of Revenue page limits the benefit to locally approved new or expanding qualifying industries and investment in improvements. Montana law requires a project application, public notice and hearing, a separate local resolution, and subsequent state assessment action.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2264",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Coweta-Fayette EMC member and install the qualifying equipment at the member residence.",
+        "For an existing home, use a currently listed measure and make the qualifying purchase within the preceding 12 months.",
+        "For a Level 2 charger, install a 240-volt NRTL- or UL-approved charging station with the required NEMA 14-50 outlet.",
+        "Provide the member, purchase, equipment, and installation information requested by Coweta-Fayette EMC Energy Services for rebate review.",
+        "For a SmartChoice new-home path, complete the program's construction-stage visual inspections and final verification in addition to the measure requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current SmartChoice page publishes fixed rebates and straightforward product and recency criteria for existing homes. A qualifying member with a timely purchase and requested proof is likely to receive the rebate, while the new-home path includes additional inspection requirements.",
+      "evidenceUrls": [
+        "https://utility.org/smart-choice-home/",
+        "https://utility.org/ev/"
+      ],
+      "evidenceText": "Coweta-Fayette EMC currently lists fixed existing-home rebates for thermostats, Level 2 charging, HVAC replacement, and heat-pump water heaters. Purchases must be within 12 months, and the charger must satisfy the stated safety certification and outlet requirements.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2077",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible Cowlitz PUD commercial or industrial account and install the measure at the served property.",
+        "Choose a currently supported measure and meet its electric-heating, efficiency, equipment, and installation specifications.",
+        "Obtain an audit and preapproval before any commercial lighting project; obtain advance approval for shell measures when required.",
+        "Submit the applicable project-information or rebate form with final invoice, product data, and an AHRI certificate or other technical documentation for HVAC measures.",
+        "Permit Cowlitz PUD review or inspection and verify the current rebate amount and requirements before relying on payment."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Cowlitz PUD offers prescriptive commercial rebates for current lighting, HVAC, heat-pump water-heating, insulation, and controls measures. Lighting and some shell work must be approved in advance, but compliant projects with complete forms and invoices are generally processed under published rules.",
+      "evidenceUrls": [
+        "https://www.cowlitzpud.org/efficiency/commercial-rebates/",
+        "https://www.cowlitzpud.org/efficiency/contractors/"
+      ],
+      "evidenceText": "Cowlitz PUD's current commercial page states that lighting projects must be audited and preapproved. Its contractor resources require measure-specific forms, invoices and technical documents and also identify advance approval for lighting and shell measures.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2075",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have eligible Cowlitz PUD residential electric service at the installation address and meet the measure-specific heating-fuel and property requirements.",
+        "Install a currently qualifying HVAC, water-heating, weatherization, window, thermostat, or appliance measure that meets the applicable technical specifications.",
+        "For ducted or ductless heat pumps, use the required participating contractor process, obtain permits, and submit the rebate form with the AHRI certificate and final invoice.",
+        "Obtain preapproval before insulation or window work and use a contractor licensed and bonded in Washington when contractor installation is used.",
+        "Submit the applicable receipts, forms, checklists, and final project evidence and allow program review or inspection before the rebate is finalized."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The residential offerings are prescriptive and supported by current forms and contractor instructions. HVAC and envelope paths have defined contractor, permit, preapproval, and documentation rules, so a compliant project is likely to be approved rather than competitively selected.",
+      "evidenceUrls": [
+        "https://www.cowlitzpud.org/efficiency/residential-programs/residential-efficiency-programs/",
+        "https://www.cowlitzpud.org/efficiency/contractors/"
+      ],
+      "evidenceText": "Current Cowlitz PUD contractor guidance requires forms, AHRI documentation and final invoices for heat pumps, and preapproval for insulation and windows. The program may verify installation and changes rebate amounts periodically.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2794",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a currently eligible CPS Energy commercial applicant: a small business with a system under 100 kW AC, a school, or a nonprofit organization; residential solar rebates are not currently offered.",
+        "Use a CPS Energy registered solar contractor, which manages the rebate and interconnection application process.",
+        "Submit the proposed system and required design, site, equipment, and customer documentation through the applicable commercial interconnection and solar-rebate process before construction milestones that require approval.",
+        "Complete required permits, inspections, interconnection authorization, and final invoice or installation documentation.",
+        "Stay within the current incentive caps and satisfy all CPS Energy technical and program requirements; CPS Energy may refuse noncompliant payment requests."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "A current rebate remains available only for specified commercial, school, and nonprofit projects, and the registered contractor must manage program and interconnection review. Residential projects are no longer eligible, and commercial payment remains subject to technical approval, caps, and allocated funds.",
+      "evidenceUrls": [
+        "https://www.cpsenergy.com/en/my-business/savenow/rooftop-solar-comm.html"
+      ],
+      "evidenceText": "CPS Energy currently allocates solar-rebate funds to small commercial systems, schools, and nonprofits and states that residential rebates are not offered. A registered solar contractor manages the application, and commercial incentives are capped and subject to CPS Energy requirements.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2036",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible CPS Energy residential account for the installation address.",
+        "Purchase and install a measure that is included in the current residential rebate offering and meets its efficiency, product, sizing, installation, and replacement requirements.",
+        "Create a rebate account using the CPS Energy account information or use the current paper application.",
+        "Complete all required application fields and submit the invoice, product information, and other measure-specific documents.",
+        "Allow the program administrator to review the claim and resolve any missing documentation before final approval and payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "CPS Energy's current residential portal provides direct online and paper claim paths for qualifying HVAC and home-energy measures. The process is documentation-based rather than competitive, so a complete eligible claim is likely to be approved after routine review.",
+      "evidenceUrls": [
+        "https://resi-savenow.cpsenergy.com/",
+        "https://resi-savenow.cpsenergy.com/cps-energy/en/savings/hvac-rebates/",
+        "https://resi-savenow.cpsenergy.com/cps-energy/en/savings/home-energy-rebates/"
+      ],
+      "evidenceText": "The current residential program provides online and paper applications for HVAC, insulation, cool-roof, and other home measures. Applicants must use their CPS Energy account information, complete all fields, and submit the required documents for status review.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:myenergycenter_com",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Receive bundled SDG&E commercial or industrial service on an eligible rate schedule.",
+        "Have maximum monthly demand of at least 20 kW, or expected demand at that level, for 12 consecutive months.",
+        "Do not take electric commodity service through Community Choice Aggregation or direct access, which are excluded from CPP-D eligibility.",
+        "Enroll in the Critical Peak Pricing plan through My Energy Center or the assigned account representative and maintain current event-notification contacts.",
+        "Manage load during event periods to realize savings; energy use not covered by a capacity reservation is billed at the event rate."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Eligible bundled-service customers can enroll after rate-plan verification, but this is a pricing program rather than a fixed retrofit award. The financial outcome depends on the customer's ability to shift or reduce usage during critical-peak events and can be negative if load is not managed.",
+      "evidenceUrls": [
+        "https://www.sdge.com/businesses/savings-center/energy-management-programs/demand-response/critical-peak-pricing",
+        "https://myenergycenter.com/"
+      ],
+      "evidenceText": "SDG&E currently limits CPP-D to bundled commercial or industrial customers with at least 20 kW of demand for 12 consecutive months and excludes CCA and direct-access customers. Savings depend on reducing or shifting usage during event periods.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2288",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Crow Wing Power member and install the equipment or service at a location where Crow Wing Power supplies electricity.",
+        "Purchase and install a currently qualifying product or service and meet its ENERGY STAR, efficiency, replacement, load-control, and account-limit rules.",
+        "Submit the completed online or downloadable rebate form with member, equipment, contractor, and installation information.",
+        "Include a dated sales or service receipt with the submission within 90 days of purchase.",
+        "Allow the cooperative to review the claim; measure-specific load-management enrollment or other verification may be required, and normal processing is stated as eight to twelve weeks."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Crow Wing Power publishes current fixed residential rebates and straightforward member, installation, receipt, and product rules. A complete claim for a listed measure is likely to be approved after routine review, although some measures require load-management participation.",
+      "evidenceUrls": [
+        "https://cwpower.com/rebates",
+        "https://cwpower.com/sites/default/files/Rebates/2026%20Rebates/ASHP%20Rebate%20Form%20-%20updated_0.pdf",
+        "https://cwpower.com/sites/default/files/Rebates/2026%20Rebates/Heat%20Pump%20WH%20Rebate%20Form.pdf"
+      ],
+      "evidenceText": "The 2026 Crow Wing Power materials require installation at a cooperative-served address, a complete form, and a dated receipt submitted within 90 days. The cooperative states an eight-to-twelve-week review period and applies measure-specific limits and controls.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3578",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Cuivre River Electric Cooperative member and install the qualifying measure at the member account location.",
+        "Use a measure currently listed by the cooperative, such as a qualifying ground-source heat pump, dual-fuel or mini-split heat pump, advanced thermostat, heat-pump water heater, or insulation installed with an eligible ground-source heat pump.",
+        "Meet the current efficiency ratings, equipment-size, replacement, backup-fuel, cost-share, and per-account limits for the selected measure.",
+        "Submit the applicable rebate application with account information, paid invoice, equipment details, AHRI documentation, and proof of any required fossil-fuel installation or related work.",
+        "Do not assume eligibility for retrofit types that are not listed in the current rebate offering; obtain cooperative confirmation and final claim approval."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "For measures expressly listed on the current cooperative page, rebate amounts and technical thresholds are prescriptive, making approval likely with a complete qualifying claim. The current offering is narrower than the input mapping, so unlisted windows, general insulation, EV charging, or pump projects should not be presumed eligible.",
+      "evidenceUrls": [
+        "https://www.cuivre.com/rebates"
+      ],
+      "evidenceText": "Cuivre River Electric currently lists prescriptive rebates for selected heat pumps, qualifying insulation tied to ground-source heat pumps, smart thermostats, heat-pump water heaters, and business lighting. The page does not establish eligibility for every retrofit type mapped to the opportunity.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:custom-measure-rebates-heat-recovery-chillers-and-heat-pump-pool-heaters",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a nonresidential Silicon Valley Power customer with the project at an SVP-served facility.",
+        "Install one of the currently identified custom measures: a heat-recovery chiller that reduces or eliminates natural-gas use, or a heat-pump pool heater that replaces a gas-fired boiler as the primary pool-water heat source.",
+        "Consult an SVP Energy Engineer during project design and provide the engineering, savings, cost, equipment, and operating information required by the custom-measure application.",
+        "Complete a pre-installation inspection and obtain written SVP preapproval before purchasing or installing the project.",
+        "Complete a post-installation inspection within the required period and submit final invoices and supporting documentation for final approval.",
+        "Meet current funding and program rules; broader retrofit labels do not independently qualify unless SVP approves the project under this specific or another program."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "This is a custom, engineering-reviewed electrification rebate limited to two currently named applications. Written preapproval and final verification are mandatory, and SVP determines eligibility, so a well-matched project can receive an award but approval is not routine for the broader set of mapped retrofits.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/71429/637902891309870000"
+      ],
+      "evidenceText": "SVP's current electrification page limits this custom offering to heat-recovery chillers and heat-pump pool heaters with specified gas-displacement functions. The standard process requires an energy-engineer review, pre-installation inspection, written preapproval, post-installation inspection, and final documentation.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:customer-directed-electrification-rebate",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a nonresidential Silicon Valley Power customer with the project installed at an SVP-served facility.",
+        "Replace or retrofit natural-gas-fired equipment with efficient electric equipment that performs the same function and reduces or eliminates natural-gas use.",
+        "Exclude self-generation, cogeneration, removable equipment, and projects installed before application preapproval.",
+        "Consult an SVP Energy Engineer during design and submit the signed application, project description, energy-savings calculations, and other required technical information.",
+        "Complete a pre-installation inspection and obtain written preapproval before installation, then complete the post-installation inspection and submit final invoices and documentation.",
+        "Pass SVP's final review of calculated and verified gas and electric savings; approval and payment remain subject to SVP discretion and funding."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program is a custom savings-based rebate for projects not served by another electrification offering. It requires design-stage engineering review, written preapproval, inspections, and verified savings, and SVP expressly retains approval discretion.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/77781/638886947877900000"
+      ],
+      "evidenceText": "The current program covers nonresidential gas-to-electric projects that reduce gas use while preserving the equipment function. Self-generation and cogeneration are ineligible, and SVP requires design consultation, preapproval before installation, inspections, documentation, and verified savings.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:customer-directed-rebate",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Silicon Valley Power business customer and locate the project at an SVP-served facility.",
+        "Propose a permanently installed energy-efficiency project that decreases facility electric use and is not adequately covered by a standard rebate.",
+        "Exclude self-generation, cogeneration, fuel switching, removable equipment, and projects installed or completed before application preapproval; the mapped combined-heat-and-power retrofit is therefore not eligible under this program.",
+        "Consult an SVP Energy Engineer and submit the appropriate standard or performance-based application, project description, savings calculations, and required technical documents.",
+        "Complete the pre-installation inspection and obtain written preapproval before installation, then complete post-installation inspection, invoice submission, and any required measurement and verification.",
+        "Receive SVP final approval; approved savings, rebate amount, and eligibility remain subject to SVP discretion, cost caps, and available funding."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "This custom program can support unique electric-efficiency projects, but it requires engineering approval and verified savings and expressly excludes cogeneration and self-generation. Because one mapped retrofit is ineligible and all projects are discretionary, an award is possible rather than likely across the opportunity as mapped.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/41500/638875757591930000"
+      ],
+      "evidenceText": "SVP currently requires written preapproval before installation for Customer Directed Rebates and reviews custom savings calculations and final project evidence. Self-generation, cogeneration and fuel-switching projects are ineligible, so combined heat and power does not qualify under this offering.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2260",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Dakota Electric business member and install the project at a qualifying cooperative service location.",
+        "Use a currently offered agriculture, audit, EV charging, custom, forklift, foodservice, HVAC, lighting, motor, drive, refrigeration, or other eligible business measure and meet the applicable technical criteria.",
+        "Obtain preapproval before any commercial EV charging rebate and coordinate early with Dakota Electric for public DC fast charging, custom grants, studies, or other projects requiring project-specific review.",
+        "Submit the current measure form with account information, invoices, equipment specifications, savings or study information, and contractor documentation as applicable.",
+        "Allow program verification and satisfy current program limits; funds are limited and awarded first-come, first-served."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Dakota Electric currently publishes a broad set of business rebate forms with prescriptive criteria, so common qualifying measures are likely to be paid after documentation review. EV charging and custom or study projects require preapproval or additional evaluation, and all awards remain subject to limited first-come funding.",
+      "evidenceUrls": [
+        "https://www.dakotaelectric.com/member-services/programs-rebates/for-your-business/energy-wise-rebates/"
+      ],
+      "evidenceText": "Dakota Electric's business page was updated in July 2026 and lists active rebate forms across the mapped categories. It states that funds are limited and first-come and that all commercial EV charging rebates require preapproval.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2259",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Dakota Electric residential member and install the qualifying measure at a cooperative-served address.",
+        "Purchase and install a currently listed product that meets the applicable ENERGY STAR, efficiency, equipment-size, installation, and per-account rules.",
+        "Use a registered contractor where the program requires quality installation; those rebate applications are submitted through the registered-contractor channel.",
+        "Enroll in applicable load-management programs and allow additional metering when required for certain water-heating or heating equipment.",
+        "Submit through MyDEA or the current measure form with the paid invoice, model and efficiency information, and any other required supporting documents.",
+        "Pass application review while limited first-come funding remains available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential page publishes fixed rebate amounts and defined equipment and contractor rules for many mapped measures. Complete claims are generally formulaic, although some HVAC applications are restricted to registered contractors and certain equipment must join a load-management program.",
+      "evidenceUrls": [
+        "https://www.dakotaelectric.com/member-services/programs-rebates/for-your-home/energy-wise-rebates/",
+        "https://www.dakotaelectric.com/2026/02/27/2026-rebates/"
+      ],
+      "evidenceText": "Dakota Electric's current residential page lists active rebates, identifies registered-contractor-only applications for certain HVAC measures, and requires load-management enrollment or metering for selected equipment. Funding is limited and first-come, first-served.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22334",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Dakota Electric residential member with a valid cooperative account at the charger installation address.",
+        "Enroll the charging circuit on one of Dakota Electric's eligible metered EV programs, currently the Storage or Time-of-Use option.",
+        "Install a dedicated 240-volt EV charging circuit, approved charging equipment, and the required submeter socket in conformance with Dakota Electric specifications.",
+        "Obtain the state electrical inspection and have Dakota Electric install the program submeter; program enrollment is not complete until the meter is installed.",
+        "For the current rebate, install on or after January 1, 2026 and submit the completed form and electrician's wiring invoice within one year of the invoice date; charger and vehicle invoices do not qualify.",
+        "Complete final account and documentation review; the rebate is limited to one payment per EV charging circuit and remains subject to program changes."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current packet provides an objective $500 rebate path after installation on an eligible metered program, electrical inspection, submeter activation, and timely submission of the electrician invoice. These are operational eligibility conditions rather than competitive selection criteria.",
+      "evidenceUrls": [
+        "https://www.dakotaelectric.com/member-services/programs-rebates/for-your-home/electric-vehicle-charging/",
+        "https://www.dakotaelectric.com/wp-content/uploads/2024/05/Electric-Vehicle-Packet_0426_NEW-RATES.pdf"
+      ],
+      "evidenceText": "Dakota Electric's current EV page offers up to $500 for installation on a metered charging program. The 2026 packet requires a dedicated circuit and submeter, a passed electrical inspection, meter installation, a completed form, and the electrician's invoice within one year.",
+      "reviewedAt": "2026-07-10T14:00:11Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

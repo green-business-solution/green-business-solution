@@ -3,7 +3,535 @@
   "batchId": "batch-054",
   "inputFile": "batch-054_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.784Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T16:30:46Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22803",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or use the property through an organization or institution that qualifies for an underlying District real-property tax exemption.",
+        "Limit the relevant property use to qualifying solar generation, solar-generated-energy storage, an ENERGY STAR-compliant solar energy management system, or electric-vehicle charging.",
+        "File Form FP-300 through MyTax.DC.gov with the required organizational, ownership, and property-use documentation if an exemption determination is needed.",
+        "Provide any additional information requested by the Office of Tax and Revenue and receive its exemption determination."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "District law protects the real-property tax exemption for specified solar, storage, energy-management, and charging uses when the underlying entity and property qualify. Approval is likely after objective eligibility and documentation are verified, but it depends on an Office of Tax and Revenue determination rather than title alone.",
+      "evidenceUrls": [
+        "https://code.dccouncil.gov/us/dc/council/code/sections/47-1005",
+        "https://otr.cfo.dc.gov/publication/exemption-dc-real-property-taxes"
+      ],
+      "evidenceText": "Current District law preserves qualifying exempt-property treatment for listed solar, storage, energy-management, and EV-charging uses, and OTR administers exemption applications through Form FP-300.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3334",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible nonresidential property in a Sonoma County jurisdiction participating in SCEIP.",
+        "Obtain the signatures of all legal property owners and satisfy current property-tax, mortgage-payment, default, bankruptcy, and other property-eligibility conditions.",
+        "Propose an eligible permanently affixed energy, water, renewable-energy, or resilience improvement and document its scope and cost.",
+        "Submit the SCEIP financing application and supporting property and project records.",
+        "Receive program approval and execute the voluntary contractual assessment and financing documents before funding."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Current SCEIP financing is available through a defined commercial PACE process, but approval depends on property, ownership, payment-history, legal, and project review. The current official page does not establish a stand-alone energy audit as an independently financeable award.",
+      "evidenceUrls": [
+        "https://sonomacounty.ca.gov/administrative-support-and-fiscal-services/county-administrators-office/energy-and-sustainability/sceip-financing"
+      ],
+      "evidenceText": "Sonoma County currently describes SCEIP as nonresidential property-assessed financing with owner, property-payment, legal, and permanently affixed improvement requirements.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1990",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a South Alabama Electric Cooperative member for the preceding 12 consecutive months and own the residence receiving the improvement.",
+        "Use the loan for an eligible existing-structure improvement, such as qualifying insulation, windows, doors, or high-efficiency electric heat-pump equipment.",
+        "Submit the ERC loan application with requested identity, income, debt, project, and contractor information.",
+        "Satisfy the cooperative's credit-reporting and good-credit requirements.",
+        "Receive loan approval and complete the financing documents before funds are released."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The cooperative publishes a defined member loan pathway, but approval depends on membership tenure, home ownership, project eligibility, income and debt information, and credit review. Eligible equipment alone does not secure financing.",
+      "evidenceUrls": [
+        "https://southaec.com/energy-savings/erc-loan-program/"
+      ],
+      "evidenceText": "The current ERC program requires 12 months of membership, home ownership, an eligible existing-home improvement, a completed financial application, and satisfactory credit.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22665",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Respond to a future South Carolina Department of Transportation NEVI procurement when an application or request for proposals is released.",
+        "Assemble an eligible site-host, developer, charging-network, utility, and other project team and document site control and readiness.",
+        "Meet the solicitation's federal and state corridor, public-access, charger, uptime, payment, networking, accessibility, Buy America, environmental, and operating requirements.",
+        "Submit a complete technical and financial proposal, including eligible costs and the required nonfederal cost share, by the procurement deadline.",
+        "Receive competitive selection and execute the required funding agreement before purchasing equipment or beginning construction."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "SCDOT's current materials describe an updated plan and continuing reevaluation of the procurement approach, with application and scoring details still forthcoming. Without a current open solicitation or final selection rules, award likelihood cannot be estimated reliably.",
+      "evidenceUrls": [
+        "https://southcarolina-ev.com/",
+        "https://southcarolina-ev.com/industry.html"
+      ],
+      "evidenceText": "Current South Carolina NEVI materials state that the siting and procurement approach is being reevaluated and that future applicants will face competitive federal and state requirements.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2115",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a current South Central Indiana REMC residential member and install the measure at a year-round home served by the cooperative.",
+        "Purchase and install new qualifying HVAC, heat-pump, geothermal, or other currently listed equipment that meets the applicable efficiency and AHRI requirements.",
+        "Submit the current application, itemized invoice, AHRI certificate, and required before-and-after photographs or other measure documentation.",
+        "File within 90 days of installation, in the same calendar year, and no later than the current program deadline.",
+        "Allow inspection or other verification and comply with per-member limits and available-funding rules."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The 2026 rebate program uses published technical and documentation criteria rather than competitive scoring. A member with eligible equipment and a complete, timely claim is likely to receive the rebate, subject to inspection, program limits, and available funds.",
+      "evidenceUrls": [
+        "https://www.sciremc.com/save-energy-money/rebates-credits/",
+        "https://www.sciremc.com/save-energy-money/rebates-credits/airsource/"
+      ],
+      "evidenceText": "Current 2026 materials require a served year-round residence, qualifying equipment, invoices and ratings documentation, filing within 90 days and the program year, and possible inspection.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22660",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Respond to a future South Dakota Department of Transportation NEVI solicitation when an application or procurement is opened.",
+        "Propose an eligible direct-current fast-charging site along the approved alternative-fuel-corridor network.",
+        "Document site control, utility coordination, project readiness, eligible costs, technical compliance, and the required private or other nonfederal cost share.",
+        "Submit a complete proposal under the then-current federal and state NEVI requirements.",
+        "Receive competitive selection and execute the funding agreement before purchasing or constructing the project."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "The current SDDOT page documents the statewide fast-charging plan and anticipated funding structure but does not provide an open application or current selection round. Award likelihood is therefore unknown until a solicitation and evaluation process are published.",
+      "evidenceUrls": [
+        "https://dot.sd.gov/projects-studies/planning/south-dakota-ev-fast-charging-plan/"
+      ],
+      "evidenceText": "SDDOT currently presents a NEVI planning framework for corridor DC fast charging and anticipated public-private cost sharing, but no open award intake was verified.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2615",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible South Jersey Gas residential customer for the installation address and selected program pathway.",
+        "Install qualifying high-efficiency heating, water-heating, thermostat, weatherization, or whole-home measures that meet current program specifications.",
+        "Use a participating contractor, assessment, or program enrollment process when required by the selected pathway.",
+        "Submit the application or rebate claim with account information, invoices, model data, and installation documentation.",
+        "Permit inspection or verification and comply with incentive caps, pathway rules, and available-funding conditions."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "South Jersey Gas currently maintains rule-based residential HVAC, whole-home, weatherization, assessment, and product incentive pathways. A qualifying and fully documented claim is likely to be paid, although not every technology mapped to the older opportunity was directly confirmed on the current pages.",
+      "evidenceUrls": [
+        "https://www.southjerseygas.com/rebate-offers",
+        "https://www.southjerseygas.com/save-energy-money/energy-efficiency-programs",
+        "https://sjgsaveenergy.clearesult.com/"
+      ],
+      "evidenceText": "Current official materials support residential HVAC and water-heating rebates, whole-home improvements, weatherization, assessments, and selected smart-product offers, subject to program rules and funding.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1465",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own the eligible single-family or duplex property, be listed on its deed, and have at least one applicant listed on the South Jersey Gas account.",
+        "Keep the utility account in an eligible owner's name and propose a qualifying HVAC, new-customer, or whole-home project within the published financing range.",
+        "Use a participating contractor and submit the on-bill repayment application with property, utility-account, project, and financial documentation.",
+        "Satisfy the applicable 12-month utility-payment-history review or general credit review when sufficient utility history is unavailable.",
+        "Receive program and financing approval and execute the repayment agreement before project funding."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program offers a defined zero-interest on-bill repayment route, but approval depends on deed and account ownership, property and project eligibility, participating-contractor use, utility payment history or credit review, and final financing approval.",
+      "evidenceUrls": [
+        "https://nj.energyfinancesolutions.com/for-homeowners/south-jersey-gas-on-bill-repayment-program/"
+      ],
+      "evidenceText": "The current financing page requires eligible owner-occupant documentation, an SJG account, a participating contractor, a qualifying project, and utility-payment or credit review before approval.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2307",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a South Kentucky RECC member and complete the measure at an eligible residence served by the cooperative.",
+        "Meet the current measure-specific conditions for heat-pump replacement, electric-resistance retrofit, geothermal, smart-thermostat enrollment, or Button Up weatherization.",
+        "For weatherization, coordinate the required pre-work and post-work energy-advisor or blower-door steps before claiming the incentive.",
+        "Submit the applicable application, equipment ratings, invoices, account information, and other required documentation.",
+        "Allow inspection or verification and comply with current measure caps and program terms."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "South Kentucky RECC currently publishes fixed incentives for qualifying heat pumps, geothermal systems, heat-pump water heaters, thermostats, and weatherization pathways. A member that follows the applicable pre-work steps and submits a complete claim is likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://www.skrecc.com/high-efficiency-heat-pump-2025",
+        "https://www.skrecc.com/heat-pump-retrofit-0",
+        "https://www.skrecc.com/button",
+        "https://www.skrecc.com/simple-saver-programs"
+      ],
+      "evidenceText": "Current cooperative pages list heat-pump, geothermal, water-heating, thermostat, and weatherization incentives with measure-specific eligibility, documentation, and testing requirements.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3861",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a South River EMC member and install the measure at an eligible residence served by the cooperative.",
+        "Install currently qualifying HVAC, geothermal, heat-pump water-heating, insulation, air-sealing, or other documented efficiency measures that meet program specifications.",
+        "Use a North Carolina-licensed contractor or participating weatherization provider where the selected measure requires one.",
+        "Submit the current application within the applicable filing period, generally with invoices or receipts, product ratings, and installation documentation.",
+        "Pass any required inspection or verification and remain within program and funding limits."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "South River EMC currently offers objective member rebates for qualifying heating and cooling, water heating, and weatherization measures. A complete claim meeting the technical, contractor, timing, and inspection rules is likely to be approved, subject to available funds.",
+      "evidenceUrls": [
+        "https://www.sremc.com/rebates-efficiency-tips",
+        "https://www.sremc.com/energy-star-heating-cooling",
+        "https://www.sremc.com/weatherization",
+        "https://www.sremc.com/energy-efficient-water-heating"
+      ],
+      "evidenceText": "Current cooperative materials document member rebates for qualifying heat pumps and geothermal systems, efficient water heating, and weatherization, with applications and inspection or verification requirements.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3351",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a South River EMC member and install the solar water-heating system at a property served by the cooperative.",
+        "Use qualifying certified solar-thermal collectors and systems with required freeze, overheat, orientation, and other technical protections.",
+        "Use a qualified licensed or certified contractor.",
+        "Register the system as required with the North Carolina Utilities Commission and complete the cooperative's renewable-energy-credit rights documentation.",
+        "Submit the rebate application and supporting equipment and installation records and pass South River EMC compliance verification."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The cooperative documents a fixed solar water-heating rebate with specific certification, contractor, registration, documentation, and compliance conditions. A qualifying system that completes those steps is likely to receive the rebate, subject to current funds and terms.",
+      "evidenceUrls": [
+        "https://www.sremc.com/energy-efficient-water-heating",
+        "https://www.sremc.com/form/water-heating-pool-pump-rebate"
+      ],
+      "evidenceText": "South River EMC's water-heating program documents a solar-thermal rebate and requires certified equipment, qualified installation, state registration, renewable-credit documentation, and cooperative verification.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4148",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Southeast Colorado Power Association member for the installation address.",
+        "Select a measure shown on the current rebate forms and meet its equipment, efficiency, installation, and customer requirements.",
+        "Purchase and install the qualifying equipment and retain an itemized receipt or invoice and applicable technical documentation.",
+        "Submit the completed current application, IRS Form W-9, and supporting records within 90 days of installation.",
+        "Allow program verification and comply with current incentive limits and available-funding conditions."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "SECPA maintains a prescriptive member rebate process with current applications and a 90-day documentation rule. A claim for a currently listed measure is likely to be paid after review, but not every technology mapped to the older opportunity was directly confirmed on the current official page.",
+      "evidenceUrls": [
+        "https://secpa.com/rebates"
+      ],
+      "evidenceText": "The current rebate page provides applications for appliances, heat pumps and other HVAC equipment, EV charging, motors and variable-speed drives, and requires receipts, a W-9, and timely filing.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5138",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Southeastern Electric Cooperative member for the project location.",
+        "Install qualifying commercial or residential heat-pump equipment or a currently eligible commercial lighting replacement.",
+        "For lighting, replace existing equipment, comply with fixture or lamp disposal requirements, and remain within location-level incentive limits.",
+        "Submit the applicable rebate application with invoices, equipment information, and other required installation records.",
+        "Place the equipment in operation and permit cooperative inspection or verification before payment."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The cooperative publishes fixed member incentives for qualifying heat pumps and lighting replacements. A complete claim is likely to be awarded after equipment eligibility, operation, documentation, and any inspection are verified.",
+      "evidenceUrls": [
+        "https://southeasternelectric.com/member-rebates-incentives/",
+        "https://southeasternelectric.com/member-rebates-incentives/heat-pumps/"
+      ],
+      "evidenceText": "Current member pages describe heat-pump and lighting incentives, invoice and recycling requirements for lighting, equipment operation, and cooperative inspection.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2445",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Southeastern Electric Cooperative member with an eligible property and project.",
+        "Use the financing for qualifying electric heating or cooling equipment, doors, windows, insulation, or another currently eligible improvement; fossil-fuel equipment is not eligible.",
+        "Submit the loan application, credit authorization, project proposal, and requested financial and property information.",
+        "Pass the cooperative's credit review and receive Board approval, and execute any required mortgage, security, and automatic-payment documents.",
+        "Complete the approved installation and place the equipment in operation before loan proceeds are disbursed."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The cooperative offers a defined low-interest financing route, but approval is borrower-specific and requires credit review, Board action, eligible project use, and execution of security and repayment documents. Funds are not released merely because equipment qualifies.",
+      "evidenceUrls": [
+        "https://southeasternelectric.com/member-rebates-incentives/"
+      ],
+      "evidenceText": "Current cooperative guidance limits loans to eligible electric equipment and home improvements, requires credit review and Board approval, and withholds disbursement until installation and operation.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3573",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Southeastern Indiana REMC member and install the measure at a residence served by the cooperative.",
+        "Purchase and install new qualifying air-source, mini-split, geothermal, or heat-pump water-heating equipment meeting current AHRI, SEER2, HSPF2, UEF, or other specifications.",
+        "Complete installation before submitting the application.",
+        "Submit the signed current application, paid invoice or receipt, AHRI certificate or other efficiency documentation within 90 days and within the current program year.",
+        "Comply with per-account and percentage-of-cost limits and permit verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The 2026 program publishes prescriptive equipment and filing requirements rather than competitive selection. A served member with qualifying equipment and a timely, complete claim is likely to receive the rebate after administrative review.",
+      "evidenceUrls": [
+        "https://www.seiremc.com/rebates",
+        "https://www.seiremc.com/forms",
+        "https://www.seiremc.com/minisplitheatpumprebate",
+        "https://www.seiremc.com/geothermalheatpumprebate",
+        "https://www.seiremc.com/waterheaterrebate"
+      ],
+      "evidenceText": "Current 2026 forms and pages cover qualifying air-source, mini-split, geothermal, and water-heating equipment and require installation, invoices, ratings records, and filing within 90 days and the program year.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22684",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or manage an eligible multifamily property served by Southern California Edison and/or SoCalGas and meet the selected pathway's unit-count, location, or hard-to-reach criteria.",
+        "Submit the property-owner interest form and provide site, utility, building, and contact information for eligibility screening.",
+        "Complete the program's technical assessment and develop a package of eligible measures meeting the applicable whole-building or common-area savings thresholds, or qualify for the small-property direct-install pathway.",
+        "Receive project and incentive approval before implementation when required by the selected pathway.",
+        "Complete the approved work and satisfy final documentation, inspection, savings verification, and closeout requirements."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "SoCalREN currently offers several multifamily pathways, but participation and incentive approval depend on utility territory, property characteristics, technical assessment, measure package, and minimum savings or hard-to-reach criteria. Eligibility does not by itself establish an award.",
+      "evidenceUrls": [
+        "https://socalren.org/multifamily/property-owners"
+      ],
+      "evidenceText": "The current property-owner page describes utility-territory and building-size eligibility, whole-building and common-area savings thresholds, a small hard-to-reach pathway, and an interest-form intake process.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2667",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Southern Indiana Power member and install the equipment at a residence served by the cooperative.",
+        "Purchase and install qualifying air-source, mini-split, geothermal, or heat-pump water-heating equipment meeting the current technical and AHRI or UEF requirements.",
+        "Submit the signed 2026 application with an itemized invoice or receipt and the required equipment ratings, model, serial-number, and installation information.",
+        "File within 90 days of installation and by the current annual deadline.",
+        "Allow inspection or verification and comply with cost, program-year, and available-funding limits."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current 2026 HVAC and water-heating applications use objective customer, equipment, documentation, and timing rules. A complete qualifying claim is likely to be paid, but the current official materials do not clearly substantiate the older energy-management-system mapping.",
+      "evidenceUrls": [
+        "https://www.southernindianapower.com/energy-efficiency/rebates/",
+        "https://www.southernindianapower.com/wp-content/uploads/2026_Residential_HVAC_Rebate_Application.pdf",
+        "https://www.southernindianapower.com/wp-content/uploads/2026_Residential_Water_Heater_Rebate_Application.pdf"
+      ],
+      "evidenceText": "Current 2026 official applications document qualifying HVAC, geothermal, and heat-pump water-heater rebates with service-location, efficiency, invoice, ratings, and 90-day filing requirements; a residential energy-management rebate was not verified.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2591",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a commercial or industrial electric customer of a participating Southern Minnesota Municipal Power Agency member utility.",
+        "Use the current member-utility 2026 business application for a listed refrigeration, energy-management, or other eligible efficiency measure.",
+        "Meet the applicable equipment, installation, customer, and technical specifications.",
+        "Obtain preapproval or a pre-installation inspection for custom or other projects when required by the selected application.",
+        "Submit invoices, model and quantity data, savings calculations, and other required records and permit post-installation verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "SMMPA member utilities publish current prescriptive and custom business rebate forms. A participating utility customer with an eligible project, any required preapproval, and complete final documentation is likely to receive the incentive, subject to utility terms and available funds.",
+      "evidenceUrls": [
+        "https://smmpa.com/",
+        "https://smmpa.com/members/preston"
+      ],
+      "evidenceText": "Current SMMPA member materials provide 2026 business applications for lighting, HVAC, refrigeration, motors, energy management, and custom projects, with measure-specific approval and documentation rules.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2592",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a residential electric customer of a participating Southern Minnesota Municipal Power Agency member utility.",
+        "Use the current local 2026 residential application and purchase or install a product or measure listed by that member utility.",
+        "Meet the applicable ENERGY STAR, equipment-efficiency, installation, and service-location requirements.",
+        "Submit the signed claim with a dated receipt or itemized invoice, model information, account information, and any required installation documents by the applicable deadline.",
+        "Permit verification and comply with per-customer, per-measure, and available-funding limits."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Participating SMMPA utilities maintain current 2026 residential rebate forms with objective product and documentation rules. A complete claim for a currently listed measure is likely to be paid, although not every broad technology mapped to the historical opportunity was directly verified on the current member pages.",
+      "evidenceUrls": [
+        "https://smmpa.com/",
+        "https://smmpa.com/members/preston"
+      ],
+      "evidenceText": "Current member pages publish 2026 residential forms for ENERGY STAR products, cooling and motor-related measures, and EV charging; the full historical list of mapped technologies was not independently confirmed.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22060",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Southern Power District nonresidential customer and complete the project at a served business, industrial, agricultural, or institutional facility.",
+        "Install a currently qualifying lighting, commercial HVAC, heat-pump, geothermal, or custom efficiency measure meeting the applicable technical specifications.",
+        "Obtain written preapproval before ordering equipment when the expected incentive meets the published large-project threshold or when the project uses the custom or industrial path.",
+        "Install, commission, and place the approved equipment in service.",
+        "Submit the signed application, invoices, equipment data, and required savings analysis and permit final inspection or verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current EnergyWise business program provides rule-based prescriptive and custom incentives. A qualifying project that secures required advance approval and submits complete closeout documentation is likely to receive payment, but the mapped low-flow fixture measure was not directly confirmed on the current page.",
+      "evidenceUrls": [
+        "https://southernpd.energywisenebraska.com/business/"
+      ],
+      "evidenceText": "The current business page documents lighting, commercial HVAC, and custom or industrial incentives, advance approval for large or custom projects, installation and commissioning, invoices, savings records, and verification.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3625",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Southern Power District residential customer and install the measure at a served residence.",
+        "Meet the current technical conditions for the selected heat pump, geothermal system, smart thermostat, heat-pump water heater, attic insulation, induction range, or other listed measure.",
+        "Install and place the qualifying equipment in operation, or complete the qualifying insulation work.",
+        "Submit the signed application with invoices or receipts, AHRI documentation or other proof of qualification, and required owner or installer certifications.",
+        "Allow random inspection or other verification and comply with current caps and program terms."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential program publishes fixed incentives and objective measure-specific rules. An eligible customer with a qualifying installation and complete application is likely to receive the rebate after administrative review and any selected verification.",
+      "evidenceUrls": [
+        "https://southernpd.energywisenebraska.com/residential/"
+      ],
+      "evidenceText": "Current residential materials document heat-pump, geothermal, thermostat, water-heating, attic-insulation, and induction incentives with signed applications, receipts or ratings records, and possible verification.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22380",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Southern Public Power District or qualifying Nebraska Public Power District wholesale-utility customer for the charging site.",
+        "For a DC fast-charging project, obtain written approval before ordering equipment and meet the current public-access, minimum-power, port, and operating requirements.",
+        "Submit site-control, utility-service, charger, project-cost, tax-status, and location or economic-feasibility documentation.",
+        "Complete the approved installation within the commitment period and place the equipment in service.",
+        "Provide final invoices, photographs, commissioning and data-sharing records, and pass final verification."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program provides an established approval and reimbursement path, but larger public-charging projects require advance review and written commitment and may be evaluated for location and economic feasibility. A qualifying proposal is therefore possible rather than automatic.",
+      "evidenceUrls": [
+        "https://southernpd.energywisenebraskagoev.com/",
+        "https://southernpd.energywisenebraskagoev.com/wp-content/uploads/EVCommercialChargerApplication.pdf"
+      ],
+      "evidenceText": "Current GoEV materials require advance written approval for DC fast charging, public access and technical conditions, site and cost documentation, installation within the commitment period, and final proof and verification.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3579",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Southwest Electric Cooperative member in good standing and meet the applicable annual-use or service-location requirements.",
+        "Install a currently documented qualifying heat pump, geothermal system, heat-pump water heater, insulation or shell improvement, or complete the cooperative's energy-audit pathway.",
+        "Meet measure-specific equipment, backup-heat, sizing, load-calculation, installation, and cost requirements.",
+        "For the audit pathway, schedule and pay for the approved audit before corrective work and implement eligible recommendations from the report.",
+        "Submit the applicable application, invoices, ratings or calculations, and other required records and pass on-site inspection or verification."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The cooperative currently documents prescriptive heat-pump, geothermal, water-heating, and audit-linked building-shell incentives. A member meeting those rules is likely to receive the applicable rebate, but current charger and efficient-pump incentives mapped to the older record were not verified.",
+      "evidenceUrls": [
+        "https://www.swec.org/rebates-audits",
+        "https://www.swec.org/electric-vehicles"
+      ],
+      "evidenceText": "Current official materials support HVAC, geothermal, heat-pump water-heater, insulation-related and audit incentives with member, technical, documentation, cost-cap, and inspection conditions; a current charger or efficient-pump rebate was not confirmed.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3880",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be the customer of record for an active eligible Southwest Gas Nevada commercial meter.",
+        "Purchase and install currently qualifying natural-gas equipment in 2026 and meet the applicable efficiency, size, and installation specifications.",
+        "Submit the signed 2026 commercial rebate application with account information, itemized invoices, manufacturer and model data, quantities, and installation records by January 31, 2027.",
+        "Provide additional documentation requested by Southwest Gas and permit inspection or verification.",
+        "Comply with measure caps and available-funding conditions, and confirm solar water-heating eligibility separately before relying on that mapped measure."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Southwest Gas publishes a current rule-based Nevada commercial rebate application for qualifying natural-gas equipment. A complete eligible claim is likely to be paid, but the current ordinary commercial materials did not clearly substantiate the historical solar water-heating mapping.",
+      "evidenceUrls": [
+        "https://www.swgas.com/en/commercial-rebates-and-promotions",
+        "https://www.swgas.com/en/rebates-and-promotions-search-business-nevada",
+        "https://www.swgas.com/1409208977742/SWG_2026_NV_COM_Rebate_Application.pdf"
+      ],
+      "evidenceText": "The 2026 Nevada commercial application documents eligible customer and meter status, qualifying natural-gas furnaces and commercial cooking equipment, invoices and model data, a January 31, 2027 deadline, verification, and funding limits.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3964",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be the customer of record for an active eligible Southwest Gas Arizona commercial natural-gas meter and satisfy the applicable conservation-program rate or surcharge conditions.",
+        "Use the correct current pathway: a 2026 prescriptive application for listed equipment, the custom program for project-specific gas savings, or the commercial solar water-heating reservation and final-application process.",
+        "For custom and solar projects, obtain written approval or reservation before purchasing equipment or beginning installation and submit the required savings, modeling, commissioning, contractor, and certification information.",
+        "For prescriptive measures, purchase and install qualifying equipment in 2026 and submit the signed application, invoices, model data, and installation records by the published deadline.",
+        "Complete final project documentation and permit inspection, commissioning review, or other verification while funds remain available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Southwest Gas currently provides objective prescriptive, custom, and solar pathways for Arizona commercial customers. Listed prescriptive measures are likely to be paid after a complete claim, while combined heat and power and boiler-control projects require project-specific custom review and are not established by the title alone.",
+      "evidenceUrls": [
+        "https://www.swgas.com/en/commercial-rebates-and-promotions",
+        "https://www.swgas.com/1409208978087/SWG_2026_AZ_COM_Rebate_Application.pdf",
+        "https://www.swgas.com/1409181751686/SWG_AZ_Custom_Commercial_Rebate_Application.pdf",
+        "https://www.swgas.com/1409206103066/SWG_2026_AZ_COM_SOLAR_Rebate_Reservation.pdf",
+        "https://www.swgas.com/1409208977599/SWG_2026_AZ_RES_SOLAR_Rebate_Application.pdf"
+      ],
+      "evidenceText": "Current 2026 Arizona materials provide prescriptive rebates for listed gas and water-saving equipment, advance-approved custom incentives based on verified gas savings, and a reservation process for commercial solar water heating.",
+      "reviewedAt": "2026-07-10T16:30:46Z",
+      "reviewStatus": "needs_followup"
+    }
+  ]
 }

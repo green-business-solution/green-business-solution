@@ -445,4 +445,83 @@ describe("portal retrofit recommendations", () => {
     expect(payload.retrofits[0].retrofitTypeId).toBe("led_lighting_retrofit");
     expect(payload.retrofits[0].savingsPreview?.retrofitTypeId).toBe("led_lighting_retrofit");
   });
+  it("propagates award-audit fields into recommendation payload opportunities", () => {
+    const intake = baseIntake();
+    const payload = buildPortalRetrofitRecommendations({
+      formQuestionCatalog: testFormQuestionCatalog,
+      user: {
+        userId: intake.userId,
+        role: "client",
+        status: "active",
+        fullName: "Test Client",
+        email: "client@example.com",
+        companyName: "Retrofit Test Co",
+        authProvider: "google",
+        googleLinked: true,
+        isFakeUser: false,
+        createdAt: now.toISOString(),
+        lastLoginAt: now.toISOString()
+      },
+      intake,
+      opportunities: [
+        makeOpportunity({
+          opportunityId: "audit-payload-opportunity",
+          canonicalTitle: "PG&E Business LED Rebate",
+          technologies: ["LED Lighting"],
+          requiresProgramApproval: false,
+          approvalRequirements: [],
+          approvalStage: "none",
+          awardLikelihood: "possible",
+          awardLikelihoodEvidence: "Potential outcomes based on reviewed criteria.",
+          reviewStatus: "needs_followup"
+        })
+      ],
+      now
+    });
+
+    const opportunity = payload.retrofits[0].opportunities[0];
+    expect(opportunity).toMatchObject({
+      requiresProgramApproval: false,
+      approvalRequirements: [],
+      approvalStage: "none",
+      awardLikelihood: "possible",
+      awardLikelihoodEvidence: "Potential outcomes based on reviewed criteria.",
+      reviewStatus: "needs_followup"
+    });
+  });
+
+  it("passes award-audit fields through explain-match summary payloads", () => {
+    const summary = summarizeMatchResult({
+      opportunityId: "opp-audit-1",
+      opportunityName: "Municipal Rebates",
+      offerId: null,
+      retrofitTypeIds: ["led_lighting_retrofit"],
+      retrofitTypes: [],
+      sourceUrl: "https://example.com/program",
+      websiteUrl: "https://example.com/program",
+      applicationUrl: "https://example.com/program/apply",
+      eligibilityStatus: "eligible",
+      rankScore: 0.81,
+      opportunityDataConfidence: 0.92,
+      userProfileCompleteness: 0.8,
+      matchedReasons: ["reason-a"],
+      unresolvedRequirements: [],
+      blockers: [],
+      requiresProgramApproval: true,
+      approvalRequirements: ["official permit", "energy audit"],
+      approvalStage: "before_installation",
+      awardLikelihood: "likely",
+      awardLikelihoodEvidence: "Evidence shows clear award cadence.",
+      reviewStatus: "audited"
+    });
+
+    expect(summary).toMatchObject({
+      requiresProgramApproval: true,
+      approvalRequirements: ["official permit", "energy audit"],
+      approvalStage: "before_installation",
+      awardLikelihood: "likely",
+      awardLikelihoodEvidence: "Evidence shows clear award cadence.",
+      reviewStatus: "audited"
+    });
+  });
 });

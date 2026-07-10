@@ -3,7 +3,542 @@
   "batchId": "batch-029",
   "inputFile": "batch-029_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.774Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T14:18:24Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5791",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The commercial property and proposed energy project must pass Kentucky PACE's initial eligibility screening.",
+        "Use a Kentucky PACE-registered contractor to identify eligible improvements and quantify projected energy savings.",
+        "Submit the Energy Project Application and the requested property, operating, and financial documentation.",
+        "Obtain acceptable financing terms from a registered private capital provider.",
+        "Obtain written consent from every existing mortgage holder before a PACE special assessment is added to the property tax bill.",
+        "Execute the financing and assessment documents and complete financial closing before project funds are released."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "PACE funding is not automatic because property and project screening, private-capital underwriting and terms, mortgage-holder consent, and closing must all succeed. An eligible battery or other energy project can be financed, but approval remains property- and transaction-specific.",
+      "evidenceUrls": [
+        "https://kypace.org/property-owners/",
+        "https://kypace.org/resources/"
+      ],
+      "evidenceText": "Kentucky PACE requires initial eligibility review, a registered contractor and quantified savings, financial documentation for capital-provider review, written mortgage-holder consent, acceptance of financing terms, and financial closing before funds become available.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3696",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The household must be served by Kentucky Power and satisfy the program's income qualification under the designated federal poverty guidelines.",
+        "For full weatherization services, the home must generally use electric heat and average at least 700 kilowatt-hours per month.",
+        "A non-electric-heated home may qualify for limited measures if it has electric water heating and averages at least 700 kilowatt-hours per month from November through March.",
+        "Apply through the appropriate local community action agency and provide the household, income, utility-usage, and property information needed for eligibility review.",
+        "Complete the agency's assessment and allow approved weatherization work and verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program is an income- and usage-qualified weatherization service rather than a competitive award. A household that meets the published thresholds and completes community-action-agency screening is likely to receive the applicable audit and efficiency measures, subject to program capacity.",
+      "evidenceUrls": [
+        "https://www.kentuckypower.com/savings/home/targeted-energy-efficiency",
+        "https://www.kentuckypower.com/lib/docs/savings/energyefficiencyprograms/TEE_Program_Quick_Reference_Guide.pdf"
+      ],
+      "evidenceText": "Kentucky Power provides weatherization through community action agencies for income-qualified customers. Published criteria use heating type and average electricity consumption, and eligible services include audits, air-leakage reduction, insulation, duct sealing, and efficient lighting.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3951",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The site must be an eligible LG&E or KU commercial or industrial electric customer that pays the applicable demand-side-management mechanism; gas-only customers are not eligible.",
+        "Submit the applicable Business Rebate application and all project-specific technical and customer information.",
+        "For an energy-audit rebate, apply in conjunction with another qualifying rebate category and implement qualifying high-efficiency improvements.",
+        "For a LEED major-renovation rebate, complete an eligible renovation and provide approved LEED certification documentation and the qualifying energy-related point and building-area information.",
+        "Provide acceptable proof of payment and any invoices, calculations, certifications, or site-verification access requested by the program."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current audit and LEED incentives use published customer, project, certification, and documentation rules rather than competitive ranking. A qualifying project with a complete claim is likely to be paid after review and any site verification.",
+      "evidenceUrls": [
+        "https://lge-ku.com/bizrebates",
+        "https://lge-ku.com/bizrebates/help"
+      ],
+      "evidenceText": "LG&E and KU currently offer an energy-audit rebate tied to another qualifying improvement and LEED renovation rebates based on approved energy-related certification points and building size. Claims require eligible electric service, application materials, and proof of payment.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22778",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must own an eligible Pennsylvania single-family or residential building of up to four units that is owner-occupied as a primary or secondary home and affixed to a permanent foundation.",
+        "Select an eligible energy project and use a National Energy Improvement Fund pre-approved contractor.",
+        "Submit the KEEP loan application and the borrower, property, contractor, and project information required by the program.",
+        "Pass the lender's credit review and accept the approved amount, rate, term, and loan documents before financing is issued.",
+        "Complete the approved work and any completion confirmation required before contractor payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "KEEP is financing rather than an entitlement incentive. Property and project eligibility are defined, but approval depends on borrower-specific credit underwriting, the approved loan amount and terms, and use of a participating contractor.",
+      "evidenceUrls": [
+        "https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/keep-home-energy-loan"
+      ],
+      "evidenceText": "Pennsylvania's KEEP program finances eligible home-energy projects through pre-approved contractors and is administered by the National Energy Improvement Fund. Eligible owners may apply for fixed-term loans, but each loan is subject to a credit decision.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3169",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an existing Kissimmee Utility Authority customer at the installation address.",
+        "Complete the required in-home energy audit before rebate approval.",
+        "Purchase and install a measure currently listed by KUA and satisfy its measure-specific equipment, installation, contractor, and customer-class rules.",
+        "Submit the application, receipts, model or efficiency information, installation evidence, and other requested documentation within 60 days of purchase or installation.",
+        "Allow any requested post-installation verification; payment is subject to KUA approval and available program funds."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "KUA's rebates are prescriptive bill credits with published customer, audit, measure, documentation, and verification conditions. A currently qualifying installation is likely to receive the credit after review, although rebates remain contingent on available funds.",
+      "evidenceUrls": [
+        "https://kua.com/energy-conservation/rebates/"
+      ],
+      "evidenceText": "KUA's current rebate page requires an in-home energy audit before approval, an existing KUA account, timely documentation, and program review. Current offerings include HVAC, thermostat, water-heating, insulation, duct, commercial-lighting, and Level 2 charging measures.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22752",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an existing KUA residential customer at the charger installation address.",
+        "Purchase and install a Level 2 home electric-vehicle charger.",
+        "Submit proof of purchase and a photograph showing the installed charger, together with the required customer and application information.",
+        "Submit all requested documentation within the program's stated post-purchase or post-installation period.",
+        "Allow an on-site post-verification inspection if KUA requests one; the bill credit remains subject to approval and available funds."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The charger rebate has objective customer, equipment, installation, evidence, and verification conditions rather than competitive selection. A timely, complete claim for a qualifying installed charger is likely to be credited while funds remain.",
+      "evidenceUrls": [
+        "https://kua.com/energy-conservation/rebates/",
+        "https://kua.com/energy-conservation/rebates/level-2-home-ev-charger-rebate/"
+      ],
+      "evidenceText": "KUA requires purchase and installation of a Level 2 home charger, proof of purchase, and an installed photograph, and may conduct a post-verification inspection. General rebate terms require an existing KUA customer and make payment contingent on approval and funding.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2113",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be a KIUC commercial member with a proposed energy-saving project.",
+        "Contact KIUC before purchase or installation and develop an energy plan with a KIUC-approved trade ally or supplier.",
+        "Submit the proposed scope, equipment, costs, projected savings, and other project information for advance review.",
+        "The project must pass KIUC's total-resource-cost feasibility test and meet the program's technical requirements.",
+        "KIUC must confirm funding availability and approve the project before equipment is purchased or installed.",
+        "Complete the authorized work and provide final documentation or verification required under the approved project arrangement."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "KIUC evaluates each commercial proposal for cost effectiveness, technical compliance, and available funds before work begins. Approval is therefore project-specific rather than automatic, including for a proposed LED-lighting scope.",
+      "evidenceUrls": [
+        "https://kiuc.coop/commercial-programs"
+      ],
+      "evidenceText": "KIUC requires commercial members to work with an approved trade ally, submit projects before purchase or installation, and pass a total-resource-cost test. Incentive participation depends on KIUC requirements and funding availability and is not a simple post-purchase rebate.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:597",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be a KIUC member replacing an existing electric water heater or an eligible nonfunctioning solar water-heating system.",
+        "Install a complete qualifying solar water-heating system, including panels and tank; a partial-system installation does not qualify.",
+        "Use a participating solar contractor, who initiates or submits the program application.",
+        "Choose the zero-interest loan rather than the alternative rebate for the same installation.",
+        "Apply through the program's lending partner, Gather Federal Credit Union, and satisfy its borrower underwriting and loan-document requirements before financing."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The project can qualify under clear KIUC equipment and contractor rules, but receipt of the loan also depends on Gather Federal Credit Union's borrower underwriting and execution of financing documents. Technical eligibility alone does not ensure financing.",
+      "evidenceUrls": [
+        "https://kiuc.coop/solar-water-heating-programs"
+      ],
+      "evidenceText": "KIUC offers members a zero-interest solar water-heating loan for a qualifying whole-system replacement submitted through a participating solar contractor. KIUC identifies Gather Federal Credit Union as the loan-program partner.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:598",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be a KIUC member replacing an existing electric water heater or an eligible nonfunctioning solar water-heating system.",
+        "Install a complete qualifying solar water-heating system, including both panels and tank.",
+        "Use a participating solar contractor to prepare and submit the application.",
+        "Choose the rebate rather than the alternative zero-interest loan for the same installation.",
+        "Provide the project and installation documentation required for KIUC review and approval."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The rebate is a published, noncompetitive amount for a qualifying whole-system replacement submitted through a participating contractor. A conforming member project is likely to be approved after routine program review.",
+      "evidenceUrls": [
+        "https://kiuc.coop/solar-water-heating-programs"
+      ],
+      "evidenceText": "KIUC offers a solar water-heating rebate for qualifying whole-system replacements by members. A participating solar contractor applies, and the member selects either the rebate or the separate zero-interest loan option.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22079",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The installation must serve an eligible Kootenai Electric Cooperative nonresidential member and satisfy the selected measure's current technical and building-use rules.",
+        "Obtain advance review or preapproval when required or recommended, particularly for lighting and custom scopes.",
+        "Purchase and install eligible new equipment and use qualified contractors where the measure requires professional installation.",
+        "Submit the applicable application within 90 days of purchase or installation with invoices, product data, calculations, and other measure-specific documentation.",
+        "Complete any final inspection, document review, or savings verification requested by the program."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current KEC pathways are measure-specific and generally prescriptive. A nonresidential member with qualifying lighting or heat-pump equipment, a timely complete application, and successful verification is likely to receive the stated rebate, subject to program limits.",
+      "evidenceUrls": [
+        "https://directefficiency.com/kec-commercial-rebates/",
+        "https://directefficiency.com/kec-commercial-lighting-rebate/",
+        "https://directefficiency.com/kec-commercial-ductless-heat-pump-rebate/"
+      ],
+      "evidenceText": "KEC's current implementation pages provide nonresidential rebates for lighting and qualifying heat-pump measures. Applications are generally due within 90 days and require measure-specific technical records, invoices, and possible inspection or final verification.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2453",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The installation must serve an eligible Kootenai Electric Cooperative residential member account.",
+        "Purchase and install a measure currently listed by KEC and satisfy the measure-specific efficiency, replacement, building, and equipment requirements.",
+        "Use a licensed or otherwise qualified contractor and provide AHRI or other certification where required for HVAC and related work.",
+        "For a Level 2 charger, use qualifying listed equipment and provide the required charger, purchase, and installation information.",
+        "Submit the applicable application within 90 days of purchase or installation with invoices, receipts, product data, and installation evidence.",
+        "Allow KEC or its program implementer to inspect or verify the installation."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "KEC publishes objective residential rebate pathways for the mapped HVAC, water-heating, envelope, appliance, thermostat, and charging measures. A timely qualifying claim is likely to be paid after documentation and any inspection.",
+      "evidenceUrls": [
+        "https://directefficiency.com/kec-residential-rebates/",
+        "https://directefficiency.com/kec-air-source-heat-pump-upgrade-rebate/",
+        "https://directefficiency.com/kec-level-2-ev-charger-rebate/"
+      ],
+      "evidenceText": "The current KEC residential catalog lists heat pumps, geothermal, heat-pump water heaters, insulation, exterior doors, efficient laundry equipment, thermostats, and Level 2 chargers. Claims use measure-specific forms, technical evidence, filing deadlines, and verification rights.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22084",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must be installed at an eligible La Plata Electric Association commercial member site in LPEA's service territory.",
+        "Use a currently qualifying efficiency or beneficial-electrification measure and meet its technical, equipment, installation, and customer-class requirements.",
+        "Contact LPEA before beginning work when the measure requires advance eligibility confirmation, including public or commercial electric-vehicle charging and custom projects.",
+        "Submit the application within 90 days of the latest purchase, completed installation, or certificate of occupancy date.",
+        "Provide receipts, specifications, installation records, and an IRS Form W-9 when required, and allow inspection or verification.",
+        "Remain within applicable per-member caps and available program funds."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "LPEA's current commercial rebates are generally rule-based and include heat pumps, heat-pump water heaters, charging equipment, lighting-related projects, and custom electrification. A qualifying timely claim is likely after review, while public charging and custom scopes require advance confirmation.",
+      "evidenceUrls": [
+        "https://lpea.coop/rebates",
+        "https://lpea.coop/public-or-commercial-ev-charging-station-rebates",
+        "https://lpea.coop/heat-pump-water-heater-rebates"
+      ],
+      "evidenceText": "LPEA's 2026 rebate program requires applications within 90 days, applies annual member caps, and may require a W-9. Commercial charging requires contact before work, and current heat-pump and water-heating pages specify service-territory, equipment, document, and inspection conditions.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3571",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The installation must serve an eligible LPEA residential member and be located in LPEA's service territory.",
+        "Purchase and install a measure currently covered by LPEA and satisfy its product, efficiency, installation, and replacement conditions.",
+        "For income-qualified amounts, complete the Colorado income-verification process and provide the required confirmation or self-attestation materials.",
+        "Submit the measure-specific application within 90 days of the latest purchase, completed installation, or certificate of occupancy date.",
+        "Provide receipts, specifications, installation evidence, and an IRS Form W-9 when required; allow LPEA inspection or program verification.",
+        "For an EV charger, meet service-territory and charging-schedule requirements and provide the requested charger and installation records."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "LPEA maintains current prescriptive residential incentives for major mapped electrification measures, including heat pumps, water heating, thermostats, EV charging, induction equipment, and weatherization-linked work. Payment is likely for a current qualifying measure with a timely complete claim, subject to caps and funds.",
+      "evidenceUrls": [
+        "https://lpea.coop/rebates",
+        "https://lpea.coop/heat-pump-rebatesmini-split-system-rebates",
+        "https://lpea.coop/heat-pump-water-heater-rebates",
+        "https://lpea.coop/stackable-financial-incentives-home-electrification"
+      ],
+      "evidenceText": "LPEA's current 2026 materials describe standard and income-qualified residential rebates, a 90-day filing rule, annual caps, technical criteria, receipts and W-9 documentation, funding limits, and inspection rights for listed electrification and efficiency measures.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22282",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant's permanent residence must receive electricity from LADWP.",
+        "Purchase a qualifying used battery-electric or plug-in hybrid vehicle and submit the application within 12 months of purchase.",
+        "The vehicle must appear on LADWP's approved list, fall within the applicable model-year range, and remain within the program's prior-rebate limits for that vehicle.",
+        "Provide vehicle ownership, registration, purchase, residency, and other required application documents.",
+        "For the enhanced rebate, maintain qualifying EZ-SAVE or Lifeline participation for the required period and pass LADWP verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current program awards rebates for purchasing a qualifying used electric or plug-in hybrid vehicle, not for installing an EV charger. A charger-only retrofit therefore does not match this opportunity even though LADWP has separate charger programs.",
+      "evidenceUrls": [
+        "https://www.ladwp.com/residential-services/programs-and-rebates-residential/electric-vehicles/used-electric-vehicle-rebate-program",
+        "https://www.ladwp.com/residential-services/programs-and-rebates-residential/electric-vehicles"
+      ],
+      "evidenceText": "LADWP's Used EV Rebate is tied to a qualifying used vehicle purchase, residence in LADWP electric territory, an application within 12 months, vehicle-list and model-year rules, and supporting ownership records. It does not reimburse charger installation.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5685",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Develop an eligible renewable-energy project within the applicable LADWP program area and capacity limits.",
+        "Submit the FiT application and required project, site-control, ownership, team-experience, fee, deposit, and technical information.",
+        "Obtain project and capacity acceptance under the current program process.",
+        "Complete LADWP interconnection review and any required engineering studies, upgrades, permits, and approvals.",
+        "Execute the Standard Offer Power Purchase Agreement, FiT Interconnection Agreement, supplier data, and business-compliance documents.",
+        "Construct, test, and place the approved project in service under the executed agreements."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "FiT is a long-term energy-purchase contracting pathway, not a simple equipment rebate. A rooftop solar project must secure program capacity, pass technical and interconnection review, execute multiple contracts, and reach commercial operation, so approval is possible but materially project-specific.",
+      "evidenceUrls": [
+        "https://www.ladwp.com/commercial-services/programs-and-rebates-commercial/feed-tariff-fit-program"
+      ],
+      "evidenceText": "LADWP's current FiT program purchases output from eligible local renewable projects under a long-term standard power-purchase agreement. Applicants must also complete interconnection and supplier or business-compliance contracting before an approved project can operate.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1866",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an LADWP commercial customer in good standing with a current monthly Facilities Charge greater than 200 kilowatts for the Commercial Lighting Incentive Program.",
+        "Develop a qualifying lighting or lighting-controls project using products that meet the current program listing requirements.",
+        "Submit the complete project application, workbook, scope, existing-condition information, photographs, and supporting documents before purchase or installation.",
+        "Receive LADWP approval or a notice to proceed before purchasing, installing, or operating the qualifying equipment.",
+        "The project must produce at least 25 percent lighting energy savings and be completed within the approved reservation period.",
+        "Submit final invoices and completion documents and pass any required post-installation inspection or savings verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "CLIP uses a defined preapproval and savings-validation process. A qualifying commercial customer whose LED project meets product and minimum-savings rules and is completed under an approved reservation is likely to receive the calculated incentive, subject to first-come funding.",
+      "evidenceUrls": [
+        "https://www.ladwp.com/commercial-services/programs-and-rebates-commercial/commercial-lighting-incentive-program",
+        "https://www.ladwp.com/sites/default/files/2024-07/CLIP%20Terms%20and%20Conditions.pdf",
+        "https://www.ladwp.com/sites/default/files/2024-07/CLIP%20Program%20Requirements.pdf"
+      ],
+      "evidenceText": "LADWP's Commercial Lighting Incentive Program requires an eligible large commercial account, qualifying listed lighting, advance approval before purchase or installation, at least 25 percent energy savings, timely completion, final documents, and possible inspection. Funding is limited and first-come.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1867",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The installation address must have eligible LADWP residential electric service and the applicant must satisfy the applicable customer or property-owner rules.",
+        "Purchase and install a currently qualifying heat-pump HVAC system, heat-pump water heater, window, cool-roof product, or other listed measure.",
+        "Meet the measure-specific efficiency, size, product-list, permit, contractor, and installation requirements.",
+        "Submit the rebate application after purchase and installation and within the stated filing period.",
+        "Provide receipts or invoices, model and efficiency records, permit or contractor information, photographs, and other required evidence.",
+        "Allow LADWP to inspect or otherwise verify the installation before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Consumer Rebate Program is prescriptive and currently lists all mapped measure categories. A qualifying residential installation with complete technical and purchase records is likely to be approved after routine review and any verification.",
+      "evidenceUrls": [
+        "https://www.ladwp.com/residential-services/assistance-programs/consumer-rebate-program",
+        "https://www.ladwp.com/sites/default/files/2026-02/2024_FACT_SHEETS_CRP_Eng_042024.pdf"
+      ],
+      "evidenceText": "LADWP's current Consumer Rebate Program lists heat-pump HVAC, heat-pump water heaters, ENERGY STAR windows, and cool roofs. Customers apply after purchase and installation and must provide measure-specific purchase, efficiency, installation, and verification records.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2541",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must serve an eligible Lake City Public Utilities business account.",
+        "Contact the utility's business rebate representative and select the applicable current business rebate pathway or form.",
+        "Purchase and install equipment that meets the current measure-specific efficiency, product-list, replacement, and installation rules.",
+        "Submit the completed application with itemized invoices, model and efficiency data, calculations, and any contractor or installation records required by the selected measure.",
+        "Complete any advance review, custom-project analysis, or post-installation verification required by Lake City or its program administrator."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Lake City's 2026 business program provides current forms and representative support for lighting, HVAC, refrigeration, motors, and related efficiency projects. A conforming project is likely to receive the measure-specific rebate after review, although custom scopes may require advance analysis.",
+      "evidenceUrls": [
+        "https://smmpa.com/members/lake-city",
+        "https://smmpa.com/members/lake-city-business-contacts"
+      ],
+      "evidenceText": "SMMPA's current Lake City member page publishes 2026 business rebate materials and a business contact process. The program catalog covers lighting, heating and cooling, refrigeration, food-service, motor, and custom efficiency categories.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2543",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must have an eligible Lake City Public Utilities residential account at the installation address.",
+        "Use a measure covered by a current Lake City or SMMPA residential rebate form and meet its product, efficiency, purchase-date, and installation rules.",
+        "Submit the current measure-specific application with receipts, model information, certification, and installation records.",
+        "Complete any contractor, inspection, load-control, or verification requirements stated for the selected measure.",
+        "Confirm current eligibility directly with the utility for mapped measures that are not identified on the accessible 2026 residential form index."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Lake City has an active 2026 residential rebate portfolio, but the accessible official index clearly confirms only part of the legacy mapped measure set. An applicant is likely only when the specific retrofit appears on a current form and satisfies that form's conditions; otherwise eligibility is unresolved.",
+      "evidenceUrls": [
+        "https://smmpa.com/members/lake-city"
+      ],
+      "evidenceText": "The current Lake City page publishes 2026 forms for ENERGY STAR products, EV chargers, cooling equipment and tune-ups, circulator pumps, and furnace fan motors. The page does not clearly substantiate every legacy mapped category, so measure-level confirmation is still needed.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2256",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The installation must serve an eligible Lake Country Power member account.",
+        "Purchase and install a measure currently offered in Lake Country Power's 2026 rebate portfolio and satisfy its measure-specific technical and replacement rules.",
+        "Use qualified or licensed contractors and provide product-list, AHRI, ENERGY STAR, or other certification where required.",
+        "Enroll qualifying heat-pump or EV charging equipment in the required load-control, off-peak, or metering arrangement when the selected rebate requires it.",
+        "Submit the application with receipts, model information, installation evidence, and other required documents within the applicable filing period.",
+        "Allow Lake Country Power to inspect or verify the installation before issuing the rebate."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Lake Country Power lists current 2026 rebates for heat pumps, geothermal, lighting, appliances, refrigeration replacement, and EV charging. These are generally prescriptive, so a member meeting the selected measure's equipment, load-control, documentation, and inspection rules is likely to be paid.",
+      "evidenceUrls": [
+        "https://lakecountrypower.coop/rates-and-rebates"
+      ],
+      "evidenceText": "Lake Country Power's current 2026 rebate page lists central and ductless air-source heat pumps, ground-source heat pumps, ENERGY STAR appliances, EV charging, lighting, and refrigerator or freezer measures. Member service provides current forms and measure-specific requirements.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5564",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The household and installation must be in Lake County and satisfy the applicable C4 or Energy Smart Colorado residency and property rules.",
+        "Complete a home energy assessment when required so the program can identify and document recommended retrofit improvements.",
+        "Select an eligible energy-efficiency improvement and obtain project or contractor information sufficient for program review.",
+        "Submit the rebate or financial-assistance application and any requested household, project-cost, income, utility, and contractor documentation.",
+        "Receive program approval for the proposed scope and complete the authorized work before final reimbursement or support is issued."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "C4 currently advertises formula-based retrofit support, but detailed current application terms and the precise eligibility of each mapped measure are not fully published on the accessible pages. An audit-recommended eligible project may receive support, but award likelihood cannot be treated as routine until project-level approval.",
+      "evidenceUrls": [
+        "https://www.c4leadville.org/home-energy-assessment",
+        "https://www.c4leadville.org/energy-resource-center"
+      ],
+      "evidenceText": "C4 currently offers free assessments to full-time Lake County residents and advertises energy-efficiency retrofit rebates equal to 50 percent of project cost up to the household cap. Assessments produce recommended improvements and connect households with rebates, financing, and additional assistance.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3577",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be a qualifying Lake Region Electric Cooperative commercial or agricultural customer.",
+        "Contact LREC's energy management team and submit the proposed electric-efficiency, audit, engineering, or design scope for review.",
+        "The project must involve an eligible improvement or service, such as lighting, HVAC, refrigeration, controls, motors, drives, compressed air, or qualifying engineering assistance.",
+        "Provide project costs, technical specifications, projected energy impacts, and other information requested to determine the grant amount and conditions.",
+        "Receive LREC approval before relying on grant funding and complete the authorized work and final documentation or verification."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "LREC states that grants are available to qualifying commercial customers for a broad set of mapped electric-efficiency projects. The process is project-reviewed rather than automatic, but an eligible, cost-supported scope is likely to receive assistance subject to program approval and funds.",
+      "evidenceUrls": [
+        "https://www.lrec.coop/energy-services/ag-commercial-energy-grants/",
+        "https://www.lrec.coop/energy-services/rebates-loans-and-tax-credits/"
+      ],
+      "evidenceText": "LREC's current commercial grant page covers electric-efficiency improvements, audits, and engineering or design assistance for existing and new facilities. Eligible examples include lighting, HVAC, refrigeration, refrigerated-case controls, motors, drives, and compressed-air systems.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3576",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The installation must serve an eligible Lake Region Electric Cooperative member account.",
+        "Purchase or install the qualifying measure during the current 2026 eligibility period and meet the published efficiency, capacity, product, and account limits.",
+        "Use a qualified contractor where required and provide the applicable equipment certification and installation information.",
+        "For a Level 2 EV charger, meet the charger and account requirements and complete any required EV rate, submetering, or load-management enrollment.",
+        "Submit the rebate application no later than December 15, 2026, with invoices, receipts, certifications, and other required documentation.",
+        "Apply while program funds remain and allow LREC to verify the installation."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "LREC's 2026 page publishes fixed residential rebates for air-source and geothermal heat pumps, heat-pump water heaters, and Level 2 chargers. A member meeting the technical, timing, documentation, and any load-management conditions is likely to receive payment while funds remain.",
+      "evidenceUrls": [
+        "https://www.lrec.coop/energy-services/rebates-loans-and-tax-credits/",
+        "https://www.lrec.coop/energy-services/electric-vehicles/",
+        "https://www.lrec.coop/energy-services/energy-wise-residential-program-guide/"
+      ],
+      "evidenceText": "LREC's current 2026 rebate center lists ductless and ducted air-source heat pumps, geothermal systems, ENERGY STAR heat-pump water heaters, and Level 2 charger installation. Purchases and installations must fall within the stated period, applications are due by December 15, and funds are limited.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3617",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Lakeland Electric commercial customer in a qualifying rate class.",
+        "Complete a Lakeland Electric commercial energy audit before beginning the proposed conservation work.",
+        "Work with the assigned account executive to identify proposed demand-reduction measures and receive approval before implementation.",
+        "Complete the approved improvements and provide project invoices and other completion documentation.",
+        "Pass Lakeland Electric's post-installation site visit and verification before the bill credit is issued.",
+        "The project remains subject to program approval, customer limits, and available funding."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current commercial conservation incentive is based on approved demand-reduction improvements. The energy audit is a prerequisite used to develop an eligible project, not the standalone measure that earns the rebate, so the mapped audit by itself is unlikely to receive an award.",
+      "evidenceUrls": [
+        "https://lakelandelectric.com/news/___commercial-customers-conservation-rebate",
+        "https://lakelandelectric.com/programs-and-services"
+      ],
+      "evidenceText": "Lakeland Electric's commercial process requires an audit before work, account-executive review and approval of conservation measures, completed improvements, invoices, and a final site visit. The incentive is tied to verified demand reduction rather than payment for the audit alone.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3616",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be a current Lakeland Electric residential customer at the installation address.",
+        "Purchase, install, or service a currently qualifying appliance, heat-pump HVAC system, thermostat, or other listed measure and satisfy its technical requirements.",
+        "For attic insulation, obtain the required Lakeland Electric pre-installation inspection and rebate certificate before adding insulation.",
+        "Use a licensed HVAC contractor for qualifying heat-pump replacement and provide the receipt, model information, efficiency rating, and AHRI certificate.",
+        "Submit a valid request within 90 days of purchase, installation, or service with the account and measure-specific records.",
+        "Receive Lakeland Electric approval and any required inspection before the utility-bill credit or payment is issued."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Lakeland Electric currently provides prescriptive residential rebates for heat-pump HVAC, heat-pump water heaters, Wi-Fi thermostats, efficient appliances, and attic insulation. A current customer who follows the selected measure's preinspection, contractor, filing, and document rules is likely to be approved.",
+      "evidenceUrls": [
+        "https://lakelandelectric.com/programs-and-services/energy"
+      ],
+      "evidenceText": "Lakeland Electric's current energy page lists residential appliance, thermostat, heat-pump water-heater, heat-pump HVAC, maintenance, and attic-insulation rebates. Claims generally require current residential service, submission within 90 days, receipts and product records, and approval; insulation requires an audit before work.",
+      "reviewedAt": "2026-07-10T14:18:24Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

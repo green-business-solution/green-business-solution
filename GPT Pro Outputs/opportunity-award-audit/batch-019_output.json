@@ -3,7 +3,541 @@
   "batchId": "batch-019",
   "inputFile": "batch-019_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.769Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T14:01:16Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1144",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible nonresidential Efficiency Maine participant and install a measure that meets the current Commercial and Industrial Prescriptive Initiative specifications.",
+        "Use a Qualified Partner or otherwise satisfy the current contractor and installer requirements.",
+        "Obtain written preapproval before ordering equipment or starting work when required, including all HVAC projects, Small Business Pathway projects, and projects seeking at least $5,000 in incentives.",
+        "Submit the complete incentive application, invoices, product data, and required completion documentation.",
+        "Permit any required post-installation inspection and verification before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current offering is a prescriptive incentive program rather than a competitively ranked solicitation. Once any required advance approval is obtained and a qualifying completed project passes document and installation review, payment is likely, subject to available funds and final program acceptance.",
+      "evidenceUrls": [
+        "https://www.efficiencymaine.com/docs/EFFICIENCY-MAINE-CI-PRESCRIPTIVE-INCENTIVE-PROGRAM-TERMS-and-CONDITIONS.pdf",
+        "https://www.efficiencymaine.com/at-work/"
+      ],
+      "evidenceText": "The 2026 terms require program approval, advance approval for designated projects, supporting invoices and specifications, and satisfactory post-installation verification before an incentive is paid.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5442",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Maine residential customer or property owner and complete a measure covered by the current residential program.",
+        "Use a Registered Residential Vendor where the selected rebate pathway requires one.",
+        "Complete income verification and any required incentive reservation before work when seeking an enhanced income-qualified rebate.",
+        "Submit the current claim form, itemized invoices, equipment or installation records, and other measure-specific documentation by the applicable deadline.",
+        "Allow inspection or verification when requested by Efficiency Maine."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Efficiency Maine maintains active, measure-specific residential claim pathways. Standard qualifying claims are generally administrative rather than competitive, so a properly installed and documented measure is likely to receive the published rebate after any required income or reservation review.",
+      "evidenceUrls": [
+        "https://www.efficiencymaine.com/at-home/residential-forms/",
+        "https://www.efficiencymaine.com/at-home/residential-heat-pump-rebates/",
+        "https://www.efficiencymaine.com/at-home/insulation-rebates-up-to-8000/",
+        "https://www.efficiencymaine.com/docs/Residential-Heat-Pump-Claim-Form.pdf"
+      ],
+      "evidenceText": "Current residential forms include active heat-pump, geothermal, biomass, and weatherization claim routes, plus income-verification and reservation forms for enhanced rebates.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5796",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a qualifying business electric customer of Estes Park, Fort Collins, Longmont, or Loveland.",
+        "Install a measure that meets the current Efficiency Works Business technical and customer requirements.",
+        "Obtain preapproval before ordering equipment or starting work for projects over $10,000 and for designated measures such as certain variable-frequency-drive, public EV-charging, custom, or study projects.",
+        "Submit proof of purchase, specifications, invoices, and the completed application within 45 days of project completion.",
+        "Permit records review or on-site verification and remain within current funding and incentive caps."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program uses published prescriptive and reviewed incentive pathways rather than competitive scoring. A qualifying project that follows the correct preapproval route and submits timely documentation is likely to be paid, although incentives are first-come and subject to available funds.",
+      "evidenceUrls": [
+        "https://efficiencyworks.org/wp-content/uploads/2025/02/Efficiency-Works-Business-Programs-Guide.pdf",
+        "https://efficiencyworks.org/for-your-business-rebates-and-incentives/"
+      ],
+      "evidenceText": "The current business guide defines participating-utility eligibility, designated preapproval rules, a 45-day filing period, documentation requirements, verification rights, and limited first-come funding.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5798",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a residential electric customer of a participating Efficiency Works utility.",
+        "Use a participating service provider for retrofit work when the selected measure requires that delivery channel.",
+        "Complete any required home assessment and install equipment or envelope measures that meet current specifications.",
+        "Submit the rebate application, invoices, and measure-specific records within 45 days of completion.",
+        "Allow program verification or inspection when requested."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current residential rebates follow defined customer, provider, equipment, and documentation rules and are not competitively ranked. A compliant claim is likely after routine program review and verification.",
+      "evidenceUrls": [
+        "https://efficiencyworks.org/wp-content/uploads/2025/02/Efficiency-Works-Residential-Programs-Guide-2026.pdf",
+        "https://efficiencyworks.org/for-your-home-rebates-and-incentives/",
+        "https://efficiencyworks.org/wp-content/uploads/2025/02/Homes-Service-Providers-Guide.pdf"
+      ],
+      "evidenceText": "The 2026 residential materials require participating-utility service, applicable service-provider and assessment steps, qualifying installations, timely claims, supporting records, and possible verification.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3841",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an El Paso Electric nonresidential customer in New Mexico and qualify for the applicable commercial demand-based program path.",
+        "Purchase or install a currently eligible electric efficiency product or project that meets the published technical requirements.",
+        "Submit the applicable program application or transaction records, invoices, model information, and contractor or installation documentation.",
+        "Satisfy program quality-control, savings-validation, and inspection requirements.",
+        "Remain within current incentive limits and available program funding."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "El Paso Electric currently offers defined New Mexico business rebate and discount pathways for qualifying projects. Approval is generally based on customer, measure, documentation, and verification rules rather than competitive ranking, making a compliant project likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://www.epelectric.com/energy-efficiency/new-mexico-business-energy-efficiency",
+        "https://www.epelectric.com/energy-efficiency/new-mexico-business-energy-efficiency/commercial-comprehensive",
+        "https://www.epelectric.com/el-paso-electric/uploads/energy-efficiency/59166_9_1614919_filed-040126.pdf"
+      ],
+      "evidenceText": "Current New Mexico business pages offer incentives for qualifying commercial projects, and the 2026 portfolio filing describes implementer validation, quality control, savings verification, and incentive limits.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22040",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an El Paso Electric residential customer in New Mexico at the home receiving service.",
+        "Meet the current low-income eligibility threshold and complete the required self-certification or other income documentation.",
+        "Schedule and complete the EnergyWorks home energy assessment.",
+        "Allow the authorized program contractor to install the approved no-cost measures.",
+        "Provide access for program quality-control or post-installation verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current program provides no-cost improvements through an income-qualification and home-assessment process rather than competitive selection. A customer who qualifies and permits the authorized work is likely to receive approved services.",
+      "evidenceUrls": [
+        "https://www.epelectric.com/energy-efficiency/new-mexico-residential-energy-efficiency-programs/residential-low-income",
+        "https://www.epelectric.com/el-paso-electric/uploads/energy-efficiency/59166_9_1614919_filed-040126.pdf"
+      ],
+      "evidenceText": "El Paso Electric directs eligible New Mexico households to EnergyWorks for a free assessment and publishes income self-certification resources. The 2026 filing describes the hard-to-reach income-qualified delivery pathway.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3842",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an El Paso Electric residential customer in New Mexico.",
+        "Purchase and install a currently qualifying residential efficiency measure in the current program year.",
+        "Meet the measure-specific equipment, certification, installation, and customer rules.",
+        "Submit the required application or claim with invoices, model information, certificates, photographs, or other specified records.",
+        "Permit verification or inspection and remain within current program limits and funding."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Residential Comprehensive Program publishes prescriptive rebates for qualifying upgrades. A timely claim meeting the customer, equipment, documentation, and verification rules is likely to be approved.",
+      "evidenceUrls": [
+        "https://www.epelectric.com/energy-efficiency/new-mexico-residential-energy-efficiency-programs/residential-comprehensive",
+        "https://www.epelectric.com/energy-efficiency/new-mexico-residential-energy-efficiency-programs",
+        "https://www.epelectric.com/el-paso-electric/uploads/energy-efficiency/59166_9_1614919_filed-040126.pdf"
+      ],
+      "evidenceText": "Current New Mexico residential pages list active qualifying upgrades and rebate applications. Measure pages require current-year purchase and installation, model or certification evidence, and program verification.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3838",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible El Paso Electric residential customer in Texas.",
+        "Use the applicable participating-contractor, implementer, or customer application pathway for the selected measure.",
+        "Obtain a project reservation or other advance authorization before installation when the applicable measure or delivery path requires it.",
+        "Install qualifying equipment or envelope measures and provide invoices, model data, photographs, permits, or other required records.",
+        "Pass applicable pre-installation or post-installation inspection and savings verification."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "El Paso Electric's current Texas residential portfolio offers rule-based rebates and discounts. Qualifying projects that use the correct delivery path and pass documentation and inspection checks are likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://www.epelectric.com/energy-efficiency/texas-residential-energy-efficiency-programs",
+        "https://www.epelectric.com/el-paso-electric/uploads/PDFs/2025-tx-res-program-manual.pdf",
+        "https://www.epelectric.com/el-paso-electric/uploads/energy-efficiency/59166_9_1614919_filed-040126.pdf"
+      ],
+      "evidenceText": "Current Texas residential pages advertise rebates and discounts, while the current-linked manual and 2026 filing describe project reservations, implementer review, documentation, inspections, and verified savings.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4593",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Confirm that the project is being accepted through the current Texas Large Commercial Plus pathway rather than the legacy SCORE program name.",
+        "Be an eligible El Paso Electric Texas public-sector, school, municipal, county, or other qualifying large commercial customer.",
+        "Submit the physical energy-efficiency project for review before installation and document forecast demand and energy savings.",
+        "Install eligible measures and provide invoices, technical data, completion records, and measurement-and-verification information.",
+        "Pass program inspection and verified-savings review."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "El Paso Electric's current 2026 portfolio routes schools and governmental customers through Large Commercial Plus rather than a separately named SCORE offering. The only mapped activity is building benchmarking, which legacy SCORE materials treated as technical assistance rather than a cash incentive for an installed savings measure, so this record is unlikely to produce an award as mapped.",
+      "evidenceUrls": [
+        "https://www.epelectric.com/energy-efficiency/texas-business-energy-efficiency",
+        "https://www.epelectric.com/energy-efficiency/texas-business-energy-efficiency/large-commercial-plus/eligible-projects",
+        "https://www.epelectric.com/el-paso-electric/uploads/energy-efficiency/59166_9_1614919_filed-040126.pdf",
+        "https://www.epelectric.com/el-paso-electric/uploads/2020-epe-score-program-manual-final.pdf"
+      ],
+      "evidenceText": "The current filing places schools and government facilities in Large Commercial Plus and ties incentives to installed, verified demand savings. The historical SCORE manual distinguished benchmarking assistance from cash incentives.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3840",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible El Paso Electric Texas nonresidential customer.",
+        "Use the Small Commercial path for demand below 100 kilowatts at one site or below 250 kilowatts in aggregate, or the current Large Commercial Plus path for larger customers.",
+        "Apply through a participating contractor or approved self-sponsor and obtain project reservation or approval before installation when required.",
+        "Install currently eligible measures that produce qualifying demand or energy savings.",
+        "Submit invoices, product and savings documentation, and pass inspection or measurement-and-verification review."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Texas business portfolio provides defined small- and large-commercial incentive paths. Projects are reviewed for eligibility and verified savings rather than ranked competitively, so an approved and properly completed project is likely to receive the calculated incentive.",
+      "evidenceUrls": [
+        "https://www.epelectric.com/energy-efficiency/texas-business-energy-efficiency",
+        "https://www.epelectric.com/energy-efficiency/texas-business-energy-efficiency/texas-small-commercial",
+        "https://www.epelectric.com/energy-efficiency/texas-business-energy-efficiency/large-commercial-plus/eligible-projects",
+        "https://www.epelectric.com/el-paso-electric/uploads/energy-efficiency/59166_9_1614919_filed-040126.pdf"
+      ],
+      "evidenceText": "Current El Paso Electric pages define small- and large-commercial customer paths, contractor or self-sponsor participation, eligible savings projects, incentive limits, and post-project verification.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22228",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Pennsylvania owner, operator, governmental entity, or non-governmental applicant under a current Electric Cargo Handling solicitation.",
+        "Propose an eligible replacement or repower of qualifying diesel cargo-handling equipment with an approved all-electric alternative.",
+        "Submit a complete competitive application before purchasing or installing equipment.",
+        "Provide the required applicant match and satisfy equipment-scrappage conditions for replaced units.",
+        "Execute an award agreement and complete reimbursement, reporting, and verification requirements."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Driving PA Forward still identifies cargo-handling equipment as a supported project category, but a current open Electric Cargo Handling funding round, deadline, and available budget were not verified. Without an active solicitation, current award likelihood cannot be determined.",
+      "evidenceUrls": [
+        "https://www.pa.gov/agencies/dep/programs-and-services/air/driving-pa-forward",
+        "https://www.pa.gov/agencies/dep/programs-and-services/air/driving-pa-forward/driving-pa-forward-grant-and-rebate-awards",
+        "https://www.pa.gov/agencies/dep/programs-and-services/grants-loans-rebates"
+      ],
+      "evidenceText": "Current Pennsylvania DEP materials retain Driving PA Forward and publish cargo-handling award history, but no active 2026 Electric Cargo Handling application window was established from the official pages.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22166",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Use an eligible Delaware public-access, fleet, workplace, multifamily, or other qualifying site and install a qualifying Level 2 charging station purchased and installed on or after May 1, 2026.",
+        "Register as a Delaware eSupplier before payment processing.",
+        "Submit the pre-application and receive DNREC's written approval before purchasing or installing the charging equipment.",
+        "Complete the approved installation within one year of the approval letter.",
+        "Submit final paid invoices, equipment and site documentation, photographs, and other closeout records."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Delaware program has a defined first-come rebate pool and objective site, equipment, preapproval, and reimbursement rules. A preapproved project completed and documented within the required period is likely to receive the stated rebate while funds remain.",
+      "evidenceUrls": [
+        "https://dnrec.delaware.gov/climate-coastal-energy/clean-transportation/ev-charging-equipment-rebates/",
+        "https://documents.dnrec.delaware.gov/energy/transportation-program/Public-Access-Fleet-Workplace-Charging-Station-Rebate-Program-Guidelines.pdf",
+        "https://documents.dnrec.delaware.gov/energy/transportation-program/EV-Charging-Station-Rebate-Pre-Application.pdf"
+      ],
+      "evidenceText": "The current program requires DNREC approval before purchase or installation, eSupplier registration, qualifying Level 2 equipment, completion within one year, and final paid documentation. Funding is first-come.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22250",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Vermont sole proprietor, partnership, corporation, nonprofit, municipality, or other approved borrower.",
+        "Use the financing to purchase and install an eligible EV charging station in Vermont and make the financed station available for public use.",
+        "Submit a complete VEDA or State Infrastructure Bank loan application with project, ownership, site-control, permitting, and financial records.",
+        "Satisfy credit, repayment-capacity, collateral, and other underwriting requirements.",
+        "Receive loan approval, execute closing documents, and comply with approved-use and disbursement conditions."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program offers favorable financing for eligible public-use charging projects, but it is a loan rather than an entitlement. Approval depends on borrower-specific underwriting, project readiness, security, and closing conditions, so an unreviewed applicant has only a possible likelihood.",
+      "evidenceUrls": [
+        "https://www.veda.org/financing-options/vermont-commercial-financing/electric-vehicle-charging-station-loan-program/",
+        "https://www.veda.org/financing-options/other-financing-option/state-infrastructure-bank-program/"
+      ],
+      "evidenceText": "VEDA currently finances public-use EV charging stations for eligible Vermont borrowers. The project and borrower remain subject to application review, credit underwriting, approval, and loan closing.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22371",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Hawaii Energy business or multifamily participant with a qualifying site.",
+        "Purchase, install, and activate a qualifying networked Level 2 or DC fast charging station that meets current technical and availability rules.",
+        "Submit the completed application within 12 months of project completion.",
+        "Provide final paid invoices, equipment specifications, a W-9, installation photographs, and other required records.",
+        "Pass program review and remain in the first-complete funding queue; no funding reservation is created by applying."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Hawaii Energy continues to accept applications but states that additional State funding is awaited and payment occurs only after funding arrives. A complete eligible project can enter the queue, but funds cannot be reserved, so award is possible rather than likely at present.",
+      "evidenceUrls": [
+        "https://hawaiienergy.com/for-business/rebates-for-business/electric-vehicle-charging-stations/",
+        "https://hawaiienergy.com/wp-content/uploads/rebate-summary-sheet.pdf"
+      ],
+      "evidenceText": "The current EV charging page accepts completed applications without prior approval, requires invoices, specifications, tax and photo records, and states that payment is pending additional State funding on a first-complete basis.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22160",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Propose an eligible publicly accessible Colorado DC fast-charging project under the current State or federal funding lane.",
+        "Demonstrate site control, utility coordination, permitting readiness, and compliance with applicable location or corridor requirements.",
+        "Meet current charging-power, connector, networking, uptime, payment, public-access, and other technical standards.",
+        "Provide the required non-program match and a complete project budget and implementation plan.",
+        "Receive competitive selection and execute the grant agreement before beginning reimbursable construction."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Colorado distributes relevant infrastructure funding through competitively reviewed DC fast-charging plaza rounds. A technically eligible application can be selected, but awards depend on comparative review, priority locations, project readiness, and available funds.",
+      "evidenceUrls": [
+        "https://energyoffice.colorado.gov/ev-fast-charging-plazas",
+        "https://www.codot.gov/programs/innovativemobility/electrification/nevi-plan",
+        "https://socgov27.my.site.com/CEOEVGrants/s/"
+      ],
+      "evidenceText": "Colorado's current NEVI plan states that funds are distributed through the DC Fast-Charging Plazas Program. Projects are location- and standards-dependent and require application, selection, match, and an executed agreement.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22174",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Own or operate a fleet subject to the Illinois annual user fee, generally a fleet of at least 10 covered vehicles in the statutory Covered Area.",
+        "Register the relevant vehicle as an electric vehicle meeting the statutory exemption.",
+        "Maintain the correct vehicle and fleet classification when the annual fee is assessed."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current Illinois statute exempts qualifying electric fleet vehicles from an annual fleet fee. It does not provide an incentive for purchasing or installing EV charging equipment, so the mapped charger retrofit is unlikely to receive an award from this opportunity.",
+      "evidenceUrls": [
+        "https://www.ilga.gov/Legislation/ILCS/Articles?ActID=1608&Chapter=ENVIRONMENTAL+SAFETY&ChapterID=36&MajorTopic=HEALTH+AND+SAFETY&Print=True"
+      ],
+      "evidenceText": "Effective June 1, 2026, Illinois law exempts electric vehicles from the annual user fee imposed on certain fleets. The exemption applies to vehicles and registration, not charging-station installations.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22156",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Purchase or lease a qualifying new electric, plug-in hybrid, or eligible hydrogen vehicle.",
+        "Title and register the qualifying vehicle in Colorado and satisfy the applicable purchase-price, model-year, and taxpayer rules.",
+        "Complete the required dealer assignment form for a point-of-sale credit or retain the required records and claim the credit on the Colorado income-tax return."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "Colorado's current credit applies to qualifying vehicles, not EV charging equipment. Because the mapped retrofit is charger installation, this opportunity is unlikely to produce an award for the mapped project.",
+      "evidenceUrls": [
+        "https://tax.colorado.gov/income-tax-topics-innovative-motor-vehicle-credit",
+        "https://tax.colorado.gov/electric-vehicle-tax-credits",
+        "https://tax.colorado.gov/DR0618"
+      ],
+      "evidenceText": "Colorado's current innovative motor-vehicle credit is claimed for qualifying purchased or leased vehicles through dealer assignment or a tax return. It does not fund charger installation.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22181",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Purchase or lease a qualifying electric vehicle through an eligible participating dealer or approved direct-to-consumer manufacturer pathway.",
+        "Complete income verification or obtain advance program approval when required for an enhanced individual, governmental, or designated commercial rebate.",
+        "Submit the required vehicle purchase, title, dealer, and customer documentation within the applicable filing period.",
+        "Purchase an eligible off-peak charger through Efficiency Maine and install and connect it to Wi-Fi within 90 days when that condition applies.",
+        "Satisfy program verification and retain the vehicle and equipment as required by the current manual."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The active Efficiency Maine award is a vehicle rebate. An off-peak charger may be a condition of receiving or retaining that vehicle rebate, but the program does not provide a separate award for the charger installation mapped to this record, making award for the mapped retrofit unlikely.",
+      "evidenceUrls": [
+        "https://www.efficiencymaine.com/docs/EV_Rebate_Program_Manual.pdf",
+        "https://www.efficiencymaine.com/docs/Instructions-for-Dealers.pdf",
+        "https://www.efficiencymaine.com/electric-vehicle-incentives-for-low-and-moderate-income/",
+        "https://www.efficiencymaine.com/electric-vehicle-incentives-for-businesses-and-organizations/"
+      ],
+      "evidenceText": "The June 2026 manual governs rebates for qualifying vehicle purchases. It requires an eligible off-peak charger for designated recipients, but treats charger installation and connectivity as a vehicle-rebate condition rather than a separate charger incentive.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_25406",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible SDG&E electric account and identify the EV charging load to be separately billed.",
+        "Use a submetering product or EV charging device listed on the applicable approved product list.",
+        "Use SDG&E or an approved Meter Data Management Agent to provide validated submeter data.",
+        "Submit the required service-enrollment, customer-authorization, account, and device information.",
+        "Complete device validation and satisfy ongoing data, communications, and tariff requirements."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is a tariff and billing enrollment rather than a competitive cash award. An eligible SDG&E customer using approved equipment and data services is likely to be enrolled after routine account and device validation.",
+      "evidenceUrls": [
+        "https://www.sdge.com/business/electric-vehicles/lovelectric/ev-charging-station-submeter-billing",
+        "https://www.sdge.com/sites/default/files/documents/2025-05/S2590016-EVSubmeterBillingOptionInformation-FS.Final_.pdf"
+      ],
+      "evidenceText": "SDG&E's current submeter-billing option requires approved metering equipment, authorized meter-data service, customer enrollment, and validation before EV charging usage receives separate billing treatment.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22210",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have submitted a complete Make-Ready application before the applicable utility deadline; new applications are no longer accepted.",
+        "Locate the legacy project in a participating New York utility territory and satisfy the applicable site and customer requirements.",
+        "Use an approved contractor and qualifying equipment from the required vetted product list.",
+        "Complete utility design, interconnection, agreement, installation, documentation, and inspection requirements.",
+        "Remain eligible under the archived program rules and the utility's legacy application review."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The Joint Utilities state that new Make-Ready applications stopped being accepted on April 21, 2026. Only completed legacy applications submitted before utility deadlines remain under review, so a new charger or make-ready project is unlikely to receive an award.",
+      "evidenceUrls": [
+        "https://jointutilitiesofny.org/ev/make-ready",
+        "https://jointutilitiesofny.org/ev/make-ready/approved-contractors",
+        "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7BA060329B-0000-CA14-A7CC-DA1E760F944B%7D&DocTitle=National+Grid+EV+Make-Ready+Implementation+Plan-Rev+10"
+      ],
+      "evidenceText": "The official Joint Utilities page says no new applications have been accepted since April 21, 2026, and retains rules only for completed applications filed before utility deadlines.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22167",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have generated the credit from a qualifying Georgia business charger purchase and installation before the January 1, 2026 repeal took effect, or have an otherwise valid legacy carryforward.",
+        "Be a qualifying business enterprise and keep the charger installed in Georgia under the legacy statutory conditions.",
+        "Obtain any required Georgia Environmental Protection Division certification for the legacy charger.",
+        "Retain purchase, installation, location, certification, and tax records and claim any remaining allowable amount on the applicable Georgia return."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "Georgia repealed the Electric Vehicle Charger Credit effective January 1, 2026. No new installation can generate the credit; only unusual legacy claims or carryforwards may remain, making a current award rare.",
+      "evidenceUrls": [
+        "https://dor.georgia.gov/electric-vehicle-charger-credit",
+        "https://dor.georgia.gov/repealed-tax-credits"
+      ],
+      "evidenceText": "Georgia Department of Revenue identifies credit code 119 as repealed effective January 1, 2026. The former credit was limited to qualifying Georgia business chargers and the lesser of 10 percent of cost or $2,500.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22507",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Vermont for-profit business, nonprofit, municipality, property owner, or lessee at a qualifying commercial location.",
+        "Be served by Green Mountain Power or another acceptable participating utility and install charging for employees, customers, or the public.",
+        "Use equipment accepted by the utility and submit the project scope, costs, site-control, permitting, and installation records.",
+        "Provide financial statements, payment history, credit information, tax-compliance records, guarantees, and other underwriting documentation.",
+        "Receive loan approval and commitment before funding, then complete installation and pass required verification before disbursement."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program can finance a large share of an eligible workplace charging project, but approval depends on borrower credit, financial and tax review, site eligibility, utility-vetted equipment, and post-installation verification. Technical eligibility alone does not secure the loan.",
+      "evidenceUrls": [
+        "https://www.veda.org/financing-options/vermont-commercial-financing/ev-charging-station-loan-program/ev-workplace-charging"
+      ],
+      "evidenceText": "VEDA's current workplace charging loan requires an eligible Vermont commercial site and borrower, utility-accepted equipment, detailed financial underwriting, approval before commitment, and installation verification before funds are released.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22172",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Be a corporation that owns or leases qualified public alternative-fuel refueling property in the District of Columbia.",
+        "Purchase and install qualifying public charging equipment by the end of the 2026 taxable year.",
+        "Claim only eligible equipment and labor costs and exclude land, an existing refueling property, and structural construction costs.",
+        "Maintain invoices, installation records, public-use evidence, and other tax documentation.",
+        "Claim the nonrefundable credit on the corporate franchise-tax return, limited to current tax liability, with any allowable remainder carried forward for up to two years."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "District law provides a formulaic credit equal to 50 percent of qualifying equipment and labor costs through tax year 2026. For a corporation meeting the public-use, cost, documentation, and tax-liability rules, the statutory credit is near guaranteed rather than competitively selected.",
+      "evidenceUrls": [
+        "https://code.dccouncil.gov/us/dc/council/code/sections/47-1807.10",
+        "https://otr.cfo.dc.gov/sites/default/files/dc/sites/otr/publication/attachments/2025_D-20_Book_Final_wLinks_02272026.pdf"
+      ],
+      "evidenceText": "Current District law allows corporations a 50-percent credit for qualifying public charging equipment and labor through tax year 2026. The credit is nonrefundable, excludes land and structures, and is limited to tax liability with a two-year carryforward.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22173",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Be a District resident who owns or leases a qualified private residence or qualified public refueling property in the District.",
+        "Purchase and install qualifying charging equipment by the end of the 2026 taxable year.",
+        "Claim only eligible equipment and labor costs and exclude land, an existing refueling property, and structural construction costs.",
+        "Maintain invoices, installation records, residence or public-use evidence, and other tax documentation.",
+        "Claim the nonrefundable credit on the individual income-tax return, subject to the $1,000 private-residence or $10,000 public-property limit and current tax liability."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "District law provides a formulaic 50-percent credit through tax year 2026, with stated per-station limits. A resident meeting the property, cost, documentation, and tax-liability rules is near guaranteed the statutory credit because there is no competitive selection.",
+      "evidenceUrls": [
+        "https://code.dccouncil.gov/us/dc/council/code/sections/47-1806.12",
+        "https://otr.cfo.dc.gov/sites/default/files/dc/sites/otr/publication/attachments/2025_D40_Book_Final_wLinks_030526_v1.0.pdf"
+      ],
+      "evidenceText": "Current District law allows residents a 50-percent charging-equipment and labor credit through tax year 2026, capped at $1,000 for a private residence or $10,000 for qualified public property. It is nonrefundable and limited to tax liability.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3415",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Elk River Municipal Utilities commercial customer.",
+        "Propose a project in a currently supported commercial category such as lighting, HVAC and controls, refrigeration, industrial equipment, food service, or another approved efficiency measure.",
+        "Contact ERMU or Frontier Energy and submit the applicable rebate or project information.",
+        "Provide equipment specifications, proposed savings or scope, invoices, contractor and installation records, and other requested documentation.",
+        "Complete the qualifying installation and pass program review or verification while funding remains available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "ERMU currently directs commercial customers to active rebate categories administered with Frontier Energy. These are generally prescriptive or project-reviewed incentives rather than competitively ranked grants, so a qualifying documented project is likely to receive the applicable rebate.",
+      "evidenceUrls": [
+        "https://www.ermumn.com/programs-rebates/commercial-rebates"
+      ],
+      "evidenceText": "ERMU's current commercial page lists active lighting, HVAC and controls, refrigeration, industrial, food-service, data-center, and related rebate categories and directs customers to Frontier Energy for project review.",
+      "reviewedAt": "2026-07-10T14:01:16Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

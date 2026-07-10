@@ -128,6 +128,54 @@ describe("matching pipeline", () => {
     expect(result.blockers.join(" ")).toMatch(/does not match required utility/);
   });
 
+  it("propagates award-audit fields from opportunity records into matching results", () => {
+    const user = normalizeUserProfile({
+      organizationType: "Commercial Business",
+      siteAddress: "1200 Market Street, Philadelphia, PA 19107",
+      electricUtilityProvider: "Pepco",
+      ownershipStatus: "Own",
+      buildingType: "Office",
+      squareFootage: "18000",
+      interestedImprovements: ["LED lighting"]
+    });
+    const opportunity = {
+      opportunityId: "test-audit-fields",
+      canonicalTitle: "PA Small Business Efficiency Rebate",
+      sourceKey: "SOURCE_DSIRE",
+      sourceName: "DSIRE",
+      sourceUrl: "https://program.example.com",
+      websiteUrl: "https://program.example.com",
+      applicationUrl: "https://program.example.com/apply",
+      state: "PA",
+      status: "active",
+      category: "Financial Incentive",
+      programType: "Rebate Program",
+      summary: "Commercial customers may receive incentives for efficient lighting.",
+      technologies: ["LED Lighting"],
+      sectors: ["Commercial"],
+      dataQuality: { status: "clean" },
+      contentHash: "abc",
+      requiresProgramApproval: true,
+      approvalRequirements: ["utility review", "site inspection"],
+      approvalStage: "before_installation",
+      awardLikelihood: "likely",
+      awardLikelihoodEvidence: "Reviewed in program docs.",
+      reviewStatus: "audited"
+    };
+    const profile = buildOpportunityMatchProfile(opportunity, { now });
+    const result = evaluateOpportunityForUser(user, opportunity, profile, { now });
+
+    expect(result).toMatchObject({
+      requiresProgramApproval: true,
+      approvalRequirements: ["utility review", "site inspection"],
+      approvalStage: "before_installation",
+      awardLikelihood: "likely",
+      awardLikelihoodEvidence: "Reviewed in program docs.",
+      reviewStatus: "audited"
+    });
+    expect(result.offerId).toBeDefined();
+  });
+
   it("treats reviewed opportunities with no utility restriction language as pass", () => {
     const user = normalizeUserProfile({
       organizationType: "Commercial Business",

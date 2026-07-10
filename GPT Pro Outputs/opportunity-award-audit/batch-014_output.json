@@ -3,7 +3,594 @@
   "batchId": "batch-014",
   "inputFile": "batch-014_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.767Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T13:59:00Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5355",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Eligible Hawaii Energy commercial account and project site",
+        "Qualifying currently offered efficiency measure and equipment",
+        "Completed and signed commercial incentive application",
+        "Current W-9, product specifications, and itemized proof of purchase",
+        "Eligibility worksheet and any measure-specific supporting documents",
+        "Preapproval before work for measures or custom projects that require it",
+        "Post-installation review or inspection when requested",
+        "Program funds remaining"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Listed prescriptive efficiency measures are generally paid after eligibility and documentation review, although custom projects, measure-specific preapproval, and available funds remain conditions.",
+      "evidenceUrls": [
+        "https://hawaiienergy.com/for-business/rebates-for-business/",
+        "https://hawaiienergy.com/for-business/how-to-apply-for-a-rebate/"
+      ],
+      "evidenceText": "The current commercial program lists lighting, HVAC, building-envelope, refrigeration, pumps and motors, and water-heating incentives. Rooftop photovoltaic and battery systems are not shown as standard commercial rebates and need separate confirmation.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22588",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Eligible Vermont business or institutional customer and project site",
+        "Qualifying lighting, refrigeration, or other listed business measure",
+        "Compliance with current product and installation specifications",
+        "Measure-specific rebate form or approved point-of-sale pathway",
+        "Invoice or receipt and product or model documentation",
+        "Approved contractor or retailer where the selected pathway requires one",
+        "Preapproval for custom or explicitly preapproved projects",
+        "Completion by the applicable deadline while funds remain"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current standard business rebates and instant discounts are largely formulaic for qualifying equipment and complete documentation; custom offers require prior approval and remain subject to program funds.",
+      "evidenceUrls": [
+        "https://www.efficiencyvermont.com/rebates/list?cat=&hvacfilter=&type=biz",
+        "https://www.efficiencyvermont.com/Media/Default/docs/trade-partners/technical-resources/EVT%20Business%20Offerings%202026%20Final.pdf"
+      ],
+      "evidenceText": "The 2026 business offerings include commercial lighting and refrigeration-related incentives. The claim method varies by measure and can be an instant discount, a standard rebate application, or a custom offer.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22561",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Customer of a listed participating South Dakota municipal utility",
+        "Qualifying measure and equipment under the current business program",
+        "Applicable complete and signed rebate application",
+        "Invoices or receipts and required product specifications or model data",
+        "Preapproval before ordering, purchasing, or installing when required",
+        "Completion and claim submission while first-come funds remain"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Prescriptive business rebates are generally available to eligible participating-utility customers with complete claims, but some projects require advance approval and all incentives are subject to first-come funding.",
+      "evidenceUrls": [
+        "https://www.brightenergysolutions.com/members",
+        "https://www.brightenergysolutions.com/resources/business",
+        "https://d23r6s4dwed217.cloudfront.net/general-uploads/BES_2026_Business_TriFold_Brochure.pdf"
+      ],
+      "evidenceText": "The current member list identifies twelve participating South Dakota utilities. The 2026 business materials state that incentives are first come, first served and that specified projects must be approved before equipment is ordered or installed.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22560",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Customer of a listed participating North Dakota municipal utility",
+        "Qualifying measure and equipment under the current business program",
+        "Applicable complete and signed rebate application",
+        "Invoices or receipts and required product specifications or model data",
+        "Preapproval before ordering, purchasing, or installing when required",
+        "Completion and claim submission while first-come funds remain"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Prescriptive business rebates are generally available to eligible participating-utility customers with complete claims, but some projects require advance approval and all incentives are subject to first-come funding.",
+      "evidenceUrls": [
+        "https://www.brightenergysolutions.com/members",
+        "https://www.brightenergysolutions.com/resources/business",
+        "https://d23r6s4dwed217.cloudfront.net/general-uploads/BES_2026_Business_TriFold_Brochure.pdf"
+      ],
+      "evidenceText": "The current member list identifies five participating North Dakota utilities. The 2026 business materials state that incentives are first come, first served and that specified projects must be approved before equipment is ordered or installed.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5512",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Eligible Vermont nonresidential borrower",
+        "Qualifying renewable-energy, energy-efficiency, or energy-technology project",
+        "Eligible use of proceeds and no impermissible refinancing of existing assets",
+        "Complete loan application with project, ownership, and financial documentation",
+        "Acceptable credit, repayment capacity, collateral, and project economics",
+        "Internal or board loan approval as applicable",
+        "Executed financing documents before disbursement"
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program is active, but financing is not automatic; VEDA evaluates borrower credit, repayment, collateral, project economics, loan structure, and approval authority case by case.",
+      "evidenceUrls": [
+        "https://www.veda.org/financing-options/vermont-commercial-financing/commercial-energy-loan-program/"
+      ],
+      "evidenceText": "VEDA may finance eligible Vermont nonresidential energy projects, with loan amount, term, project-cost share, security, and approval route determined through underwriting.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5218",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Qualifying Wisconsin nonresidential facility served by a participating utility",
+        "Eligible existing building and required controls or trending capability",
+        "Use of a registered retro-commissioning service provider",
+        "Program enrollment approval before the study proceeds",
+        "Audit and workbook submission within the program timeline",
+        "Program approval of the audit and incentive agreement",
+        "Implementation of selected measures within the required period",
+        "Final workbook, invoices, verification, and signed completion notice"
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current retro-commissioning pathway is structured and milestone based; an eligible enrolled project that completes the approved study, implementation, and verification steps is likely to receive the calculated incentive.",
+      "evidenceUrls": [
+        "https://focusonenergy.com/business/building-optimization",
+        "https://assets.focusonenergy.com/production/docs/business/BI-RCx-Application-Fillable-2026.pdf"
+      ],
+      "evidenceText": "The 2026 program requires enrollment, a registered service provider, an approved audit and incentive agreement, timely implementation, and final project verification before payment.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5362",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Eligible Rhode Island commercial-scale project under a current funding block or request",
+        "Complete application before the active deadline or funding-block exhaustion",
+        "Required site-control, ownership, technical, budget, contractor, and interconnection documents",
+        "Renewable Energy Fund review and written award or reservation",
+        "Submission of award-letter conditions and execution of the grant agreement",
+        "Installation and utility interconnection of the approved system",
+        "Completion documentation and required inspection or closeout review"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Awards require formal review and reservation within limited funding blocks; an approved reserved project remains eligible for payment only after installation, interconnection, and closeout.",
+      "evidenceUrls": [
+        "https://commerceri.com/renewable-energy-fund/"
+      ],
+      "evidenceText": "The current commercial-scale materials are centered on solar photovoltaic projects and energy storage. Solar carports and associated storage can fit the current scope, while biomass or biogas eligibility is not established by the current materials.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22764",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "An open Maryland Energy Administration funding opportunity",
+        "Applicant, site, ownership, and project eligibility under the new funding notice",
+        "Complete application during the published submission period",
+        "Application before available funds are exhausted",
+        "Written award or reservation and executed grant agreement",
+        "Installation, reporting, and closeout under the grant terms"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "The fiscal-year 2026 Commercial and Canopy Solar budget is exhausted and no current application round is available; a future fiscal-year 2027 opportunity is anticipated but its final terms and funding are not yet established.",
+      "evidenceUrls": [
+        "https://energy.maryland.gov/business/Pages/Commercial-Solar.aspx"
+      ],
+      "evidenceText": "The official program page states that fiscal-year 2026 funding is exhausted and that future fiscal-year 2027 grant opportunities are anticipated for summer or fall 2026.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5503",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Qualifying business-owned or business-operated solar photovoltaic property",
+        "Compliance with statutory size, date, ownership, and locality conditions",
+        "Complete notarized Virginia Energy certification application",
+        "Project owner, developer, capacity, and component information",
+        "Copy of the initial utility interconnection request or agreement",
+        "Virginia Energy certification",
+        "Submission of the certification to the applicable local tax authority"
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Certification is a noncompetitive statutory process for qualifying systems, but the resulting exemption still depends on the project meeting capacity, date, ownership, and applicable local tax conditions.",
+      "evidenceUrls": [
+        "https://energy.virginia.gov/renewable-energy/SolarPower.shtml",
+        "https://energy.virginia.gov/renewable-energy/documents/Solar%20and%20Storage%20Pollution%20Control%20Certification%20rev.%2001-06-2026.pdf",
+        "https://law.lis.virginia.gov/vacode/title58.1/chapter36/section58.1-3660/"
+      ],
+      "evidenceText": "Virginia Energy determines whether commercial solar and storage equipment qualifies as certified pollution-control property. The current form requires notarization, system details, and interconnection evidence.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:commercial-solar-rebate-program",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Silicon Valley Power commercial customer and eligible project site",
+        "Solar photovoltaic system from 50 kilowatts through 1 megawatt",
+        "System sizing not exceeding the current annual-usage limit",
+        "Complete signed application and required technical, contract, and interconnection documents",
+        "Written preapproval before project work begins",
+        "Installation within the reservation period",
+        "Permission to operate or completed interconnection",
+        "Final invoice, completion documents, and any required inspection",
+        "Program funds remaining"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program requires technical review and written preapproval and is first come, first served while funds remain; an approved reserved project must still meet the installation and interconnection deadlines.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/82360/638850641502800000"
+      ],
+      "evidenceText": "The current commercial solar offer applies to qualifying photovoltaic systems and requires approval before work. It does not provide a low-flow plumbing-fixture rebate, so that related retrofit is outside this opportunity.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22529",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Eligible applicant, site, use category, and currently funded Vermont county",
+        "Preliminary application before the current deadline and before funds are committed",
+        "Accurate ownership, site, utility, parking, public-access, and proposed-use information",
+        "Program eligibility screening",
+        "Qualifying charger design, site plan, cost estimate, and applicant match",
+        "Design and estimate approval before installation",
+        "Executed grant agreement and landowner authorization when applicable",
+        "Licensed, code-compliant installation within the required project period",
+        "Closeout documents and ongoing operability obligations"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program is active but first come, first served, geographically limited, and partly subscribed; a preliminary application does not guarantee funding and the site design and estimate must be approved before installation.",
+      "evidenceUrls": [
+        "https://www.chargevermont.com/",
+        "https://www.chargevermont.com/apply/",
+        "https://www.chargevermont.com/faqs/",
+        "https://www.chargevermont.com/workplace-chargers/"
+      ],
+      "evidenceText": "Current Charge Vermont funding is available only for specified counties and use categories through the published deadline or until funds are committed. Some categories or service areas are already fully subscribed.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22597",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Eligible community-based organization, public entity, or qualified partnership",
+        "Qualifying Illinois community-solar planning or predevelopment scope",
+        "Required state grant registrations and prequalification",
+        "Complete notice-of-funding application during an open round",
+        "Competitive evaluation of community ownership, equity, local benefits, feasibility, and budget",
+        "Selection and any required grant negotiation",
+        "Executed grant agreement, reporting, and performance compliance"
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "The current notice of funding is closed and applications are already under review or negotiation; a new applicant cannot presently obtain an award, and the program is not a direct subscriber rebate.",
+      "evidenceUrls": [
+        "https://dceo.illinois.gov/ceja/ceja-program-announcements.html",
+        "https://www.illinoisworknet.com/CEJA/Pages/CEJACSES.aspx",
+        "https://omb.illinois.gov/public/gata/csfa/Program.aspx?csfa=3055"
+      ],
+      "evidenceText": "The program funds eligible entities to plan and develop community-solar projects through a competitive grant process. It does not award a rebate to an individual or business merely for taking a community-solar subscription.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22108",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Eligible Con Edison commercial, nonprofit, or multifamily building and account",
+        "Qualifying real-time energy-management system and approved project scope",
+        "Participating contractor or other program-approved delivery path",
+        "Complete application with baseline, site, system, and cost documentation",
+        "Notice to Proceed before installation",
+        "Installed and operational approved system",
+        "Completion certificate, trend data, and energy-savings calculations",
+        "Con Edison final verification and no duplicate incentive"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "A qualifying real-time energy-management project can receive a calculated incentive after approval and verified savings, but the mapped general HVAC-replacement and battery projects are not themselves the current RTEM offer.",
+      "evidenceUrls": [
+        "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/real-time-energy-management-systems"
+      ],
+      "evidenceText": "The current official offer is for monitoring, analytics, and control systems that produce verified energy savings. HVAC controls may fit; ordinary HVAC equipment replacement and battery storage are not established as eligible RTEM measures.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1808",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Concord Municipal Light Plant commercial account and eligible site",
+        "Qualifying equipment and measure-specific technical compliance",
+        "Signed application, customer authorization, terms, and product specifications",
+        "Program approval before installation when required",
+        "Pre-installation inspection when required",
+        "Installation of the approved scope",
+        "Completion acknowledgement, itemized invoices, and disposal or tax documents when applicable",
+        "Post-installation inspection or final review",
+        "First-come funds remaining"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current commercial rebates are structured for eligible CMLP customers and approved measures; complete projects are generally paid after required preapproval, documentation, and inspection, subject to available funds.",
+      "evidenceUrls": [
+        "https://concordma.gov/1989/Rebates-for-your-Business",
+        "https://www.concordma.gov/2003/Commercial-Lighting-Rebates---HELP"
+      ],
+      "evidenceText": "CMLP currently offers commercial efficiency assistance and rebates. The HELP lighting pathway requires application materials and CMLP approval before installation, with completion documents and possible pre- and post-inspections.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1807",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Eligible Concord Municipal Light Plant residential account and property",
+        "Qualifying new equipment and measure-specific efficiency requirements",
+        "Licensed and code-compliant installation",
+        "Required permits and final inspections",
+        "Claim within the applicable post-inspection filing period",
+        "Paid invoices, equipment model information, and efficiency documentation",
+        "Whole-home form, load calculation, or other technical documents when applicable",
+        "No duplicate incentive for the same equipment"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Residential rebates are generally formulaic for qualifying equipment, inspections, and timely documentation. Optional preapproval is operational guidance and does not by itself reduce the likelihood of a compliant claim.",
+      "evidenceUrls": [
+        "https://concordma.gov/1752/Your-Home",
+        "https://concordma.gov/3024/Heat-Pump-Rebates-for-Your-Home"
+      ],
+      "evidenceText": "Current CMLP residential pathways include heat-pump and other home-energy incentives. Measure-specific forms, inspections, and deadlines apply; solar and electric-vehicle charging use their own dedicated CMLP processes.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3728",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Eligible Concord Municipal Light Plant customer and project site",
+        "Qualifying photovoltaic system and applicable rebate cap",
+        "Interconnection application, one-line diagram, equipment specifications, rebate form, and signed contract",
+        "Required permits and customer acknowledgements",
+        "Written Approval to Install before installation",
+        "Installation consistent with the approved design",
+        "Final electrical and site inspections",
+        "Approval to Operate and final payment documentation"
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The solar rebate is a defined, noncompetitive incentive for qualifying CMLP projects that obtain approval before installation and complete interconnection, inspection, and final-document requirements.",
+      "evidenceUrls": [
+        "https://concordma.gov/2029/Solar-Panels"
+      ],
+      "evidenceText": "CMLP currently states a photovoltaic rebate amount and cap and requires engineering review, written approval to install, final inspections, and approval to operate before the rebate is issued.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5424",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Eligible small or medium business or nonprofit with qualifying Con Edison service",
+        "Participating contractor assessment and project proposal",
+        "Qualifying equipment, scope, and savings calculations",
+        "Accepted project application and customer authorization",
+        "Agreement to the required customer cost share",
+        "Installation of the approved scope",
+        "Completion documentation and final verification",
+        "No duplicate incentive for the same measure"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current small-business pathway uses participating contractors and applies approved incentives as a project discount; eligible projects with complete applications and verified installation are generally likely to receive the calculated benefit.",
+      "evidenceUrls": [
+        "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/small-business",
+        "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/small-business/savings-for-your-small-medium-business"
+      ],
+      "evidenceText": "Con Edison currently offers contractor-delivered efficiency upgrades for eligible small and medium businesses and nonprofits, with incentives commonly applied directly to the contractor invoice after project approval.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4691",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Eligible Con Edison commercial or industrial account and current-program measure",
+        "Participating contractor or approved program-development pathway",
+        "Complete application, scope, quote, calculations, product data, tax form, and measure documents",
+        "Pre-installation inspection when required",
+        "Preliminary incentive offer and written Notice to Proceed before work",
+        "Installation of the approved scope within the project deadline",
+        "Completion form and itemized invoices",
+        "Post-installation inspection and final engineering or savings review",
+        "No duplicate incentive"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current commercial and industrial program has a defined approval and verification sequence; eligible projects that wait for the Notice to Proceed and deliver the approved savings are generally likely to receive the final calculated incentive.",
+      "evidenceUrls": [
+        "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/save-with-energy-efficiency-upgrades",
+        "https://www.coned.com/-/media/files/coned/documents/save-energy-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/commercial-and-industrial-program/program-manual.pdf",
+        "https://www.coned.com/-/media/files/coned/documents/save-energy-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-commercial-industrial-buildings-customers/commercial-and-industrial-program/program-application.pdf"
+      ],
+      "evidenceText": "The current program manual requires application review, any preinspection, a written Notice to Proceed, approved installation, completion documents, and final savings verification. Current support includes HVAC, refrigeration, envelope, and building-control measures; ordinary lighting-control eligibility requires measure-specific confirmation.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22163",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Connecticut resident purchasing or leasing an eligible vehicle",
+        "Currently eligible new or used battery-electric or plug-in-hybrid model",
+        "Vehicle base price below the current program cap",
+        "Purchase or lease through an eligible licensed Connecticut dealer or approved manufacturer",
+        "Dealer-submitted standard rebate application and transaction documents",
+        "Income or environmental-justice qualification and voucher for Rebate Plus when applicable",
+        "Compliance with program ownership or lease conditions"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current CHEAPR program awards vehicle purchase or lease incentives only for eligible battery-electric and plug-in-hybrid vehicles. A stationary fuel-cell energy system, which is the mapped retrofit, is outside the current program scope.",
+      "evidenceUrls": [
+        "https://portal.ct.gov/DEEP/Air/Mobile-Sources/CHEAPR/CHEAPR---Home"
+      ],
+      "evidenceText": "CHEAPR is currently a Connecticut resident vehicle rebate. The official page lists battery-electric and plug-in-hybrid vehicles and does not list a stationary fuel-cell system incentive.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2448",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Connexus Energy commercial member and qualifying project site",
+        "Qualifying installed measure and current efficiency specification",
+        "Complete measure-specific application by the current deadline",
+        "Invoices, specifications, model data, and tax or payment documents as required",
+        "Custom-project preapproval before work when applicable",
+        "Inspection or savings verification when requested",
+        "Program funds remaining"
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current prescriptive business rebates are generally formulaic for eligible Connexus members and complete claims, while custom projects require advance approval and all incentives remain subject to available funds.",
+      "evidenceUrls": [
+        "https://www.connexusenergy.com/business/save-money-and-energy/programs-and-rebates"
+      ],
+      "evidenceText": "The current business page lists lighting, variable-frequency drives, HVAC, kitchen equipment, forklifts, compressed air, and electric-vehicle incentives. Low-flow plumbing fixtures are not expressly listed and would require custom-program confirmation.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22333",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Connexus Energy member and charger installed in the service territory",
+        "Qualifying new Level 2 charging equipment",
+        "Eligible vehicle or plug-in-hybrid documentation when required by the pathway",
+        "Compliance with applicable rate, meter, or load-management requirements",
+        "Signed application by the current program deadline",
+        "Itemized invoices or receipts and equipment model documentation",
+        "Electrical inspection or other installation verification when required",
+        "First-come program funds remaining"
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current charger rebates use defined eligibility and documentation rules; a qualifying Connexus member with an eligible Level 2 installation and complete timely claim is generally likely to receive the rebate while funds remain.",
+      "evidenceUrls": [
+        "https://www.connexusenergy.com/residential/save-money-and-energy/rebates-and-programs/electric-vehicles",
+        "https://www.connexusenergy.com/residential/save-money-and-energy/rebates-and-programs/electric-vehicles/electric-vehicle-charger-rebate",
+        "https://www.connexusenergy.com/business/save-money-and-energy/programs-and-rebates"
+      ],
+      "evidenceText": "Connexus currently offers residential and business Level 2 charger incentives with measure-specific rebate amounts, documentation, deadlines, and first-come funding conditions.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3406",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Connexus Energy residential member and eligible property",
+        "Qualifying new equipment meeting the current efficiency specification",
+        "Installation during the current program period",
+        "Qualified or registered installer submission where required",
+        "Signed application, invoice, model, and efficiency-certification documents",
+        "Measure-specific inspection, load-control, or off-peak enrollment when required",
+        "Program funds remaining"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current residential rebates are prescriptive and generally paid for qualifying equipment and complete documentation; installer, inspection, load-control, and funding conditions vary by measure.",
+      "evidenceUrls": [
+        "https://www.connexusenergy.com/residential/save-money-and-energy/rebates-and-programs",
+        "https://www.connexusenergy.com/download_file/view/48dcb0bd-fa98-4abb-ba8c-0fe21bf03163/631"
+      ],
+      "evidenceText": "Current Connexus residential offerings include heating and cooling, water heating, electric vehicles, and related efficiency programs. Several HVAC pathways require qualified-installer documentation and current equipment certifications.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1307",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Eligible South Carolina state agency, public institution, school district, local government, or qualifying nonprofit",
+        "Qualifying energy-efficiency project and eligible project costs",
+        "Documented projected energy savings and technical analysis",
+        "Complete loan application with project budget, organizational, and financial documents",
+        "South Carolina Energy Office technical and credit approval",
+        "Signed loan documents before project work begins",
+        "Compliance with repayment, procurement, reporting, and monitoring requirements"
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "ConserFund is active, but each loan depends on eligible-borrower status, documented savings, technical review, credit approval, financing limits, and execution of loan documents before work.",
+      "evidenceUrls": [
+        "https://energy.sc.gov/programs/funding/loans/conserfund"
+      ],
+      "evidenceText": "The current official page describes a revolving energy-efficiency loan for eligible South Carolina public and nonprofit borrowers. HVAC efficiency can fit; biomass or biogas eligibility is not established by the current page and needs project-specific confirmation.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22388",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Ownership or lease of a compatible electric vehicle or compatible charger",
+        "Charging within the Con Edison service area in New York City or Westchester County",
+        "Eligible standard electric rate rather than an excluded time-of-use rate",
+        "Creation of a SmartCharge New York account",
+        "Successful connection of the vehicle or charger and ongoing charging-data access",
+        "Qualifying charging behavior for the applicable reward",
+        "Valid payment-account information for incentive disbursement"
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "SmartCharge awards behavioral charging rewards after enrollment and measured performance, but it does not reimburse the purchase or installation of an EV charger, which is the mapped retrofit opportunity.",
+      "evidenceUrls": [
+        "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-vehicle-rewards"
+      ],
+      "evidenceText": "The current program pays cash rewards for off-peak charging by a compatible connected vehicle or charger. It is not a charger-equipment or installation rebate.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3291",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Current Consolidated Cooperative residential electric member",
+        "Qualifying new and unused listed equipment",
+        "Compliance with the current model, efficiency, sizing, and installation criteria",
+        "Application within the stated claim period",
+        "Receipt or invoice and required model or certification documents",
+        "Technician, installer, electrical, or inspection verification when required",
+        "Load-control agreement for measures that require participation",
+        "First-come program funds remaining"
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current residential rebates are defined bill-credit incentives for eligible members and listed equipment; complete claims that meet the measure-specific verification rules are generally likely to be approved while funds remain.",
+      "evidenceUrls": [
+        "https://www.consolidated.coop/electric/residential/rebates/"
+      ],
+      "evidenceText": "The cooperative currently publishes residential rebate criteria, document requirements, claim timing, and first-come funding conditions for qualifying heating, cooling, water-heating, refrigeration, thermostat, and charging equipment.",
+      "reviewedAt": "2026-07-10T13:59:00Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

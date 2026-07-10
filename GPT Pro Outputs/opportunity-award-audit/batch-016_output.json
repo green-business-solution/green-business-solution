@@ -3,7 +3,527 @@
   "batchId": "batch-016",
   "inputFile": "batch-016_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.768Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T13:58:58Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:data-center-program",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Silicon Valley Power business customer in Santa Clara with a data center that meets the current program size threshold.",
+        "Propose an electric-efficiency project that reduces eligible data-center energy use and is not self-generation, cogeneration, or fuel switching.",
+        "Submit the program application with the project narrative, cost information, and engineering energy-savings calculations.",
+        "Obtain written Silicon Valley Power preapproval before purchase, construction, or installation begins.",
+        "Complete required post-installation inspection, invoices, commissioning, measurement and verification, and final documentation."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current program is a custom, engineering-reviewed rebate rather than a competitive grant. A qualifying data-center electric-efficiency project that receives advance approval and passes final verification is likely to be paid, but the supplied cogeneration and low-flow-fixture mappings are not supported by the current program rules.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/41504/638881794790570000"
+      ],
+      "evidenceText": "Silicon Valley Power requires engineering preapproval before work and final verification afterward. Cooling and fan efficiency may qualify; cogeneration, self-generation, fuel switching, and low-flow water fixtures are not supported by the current Data Center Program.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22229",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Propose new publicly accessible DC fast charging or hydrogen fueling at a strategic Pennsylvania location serving light-duty vehicles.",
+        "Meet the applicable eligible-cost, cost-share, site, equipment, and public-access requirements of a current funding round.",
+        "Submit the technical, site, budget, ownership, and supporting documentation required by the current solicitation.",
+        "Receive competitive selection by the Pennsylvania Department of Environmental Protection.",
+        "Execute the award agreement and satisfy construction, reporting, verification, and reimbursement requirements if selected."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Pennsylvania currently describes the program as a competitive grant, but the official pages reviewed did not identify a current application window, deadline, or selection denominator. The published award page primarily documents earlier rounds, so present award likelihood cannot be estimated without a current solicitation.",
+      "evidenceUrls": [
+        "https://www.pa.gov/agencies/dep/programs-and-services/grants-loans-rebates",
+        "https://www.pa.gov/agencies/dep/programs-and-services/air/driving-pa-forward/driving-pa-forward-grant-and-rebate-awards"
+      ],
+      "evidenceText": "Pennsylvania lists a competitive cost-share grant for publicly accessible DC fast charging and hydrogen fueling, but no current application round was verified on the official pages reviewed.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22793",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Apply through an eligible Maryland local education agency for an eligible public-school decarbonization project.",
+        "Use an eligible area of interest and provide the required school or district scope, budget, readiness, need, and supporting documentation.",
+        "Submit a complete signed application by the applicable funding-round deadline.",
+        "Receive formula or competitive program selection, as applicable to the area of interest.",
+        "Execute a grant agreement and satisfy project, reporting, procurement, and reimbursement requirements before payment."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The official Maryland Energy Administration page identifies the fiscal-year 2026 opportunity as closed. A new application cannot presently receive an award unless a later funding round is announced.",
+      "evidenceUrls": [
+        "https://energy.maryland.gov/Pages/SchoolDecarbonization.aspx",
+        "https://energy.maryland.gov/SiteAssets/Pages/SchoolDecarbonization/FY26%20AOI1%20Capacity%20Building.pdf"
+      ],
+      "evidenceText": "Maryland's fiscal-year 2026 Decarbonizing Public Schools Program is closed. The round used formula and competitive review paths and required a complete local-education-agency application and grant agreement.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1158",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Be a Montana corporate income-tax filer with a qualifying investment in a building used for business purposes.",
+        "The investment must qualify as energy-conserving property and substantially reduce the energy required for the building.",
+        "Claim the deduction on the applicable Montana corporate income-tax return.",
+        "Attach the required detailed schedule and retain invoices, technical support, and other substantiation for Department of Revenue review."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "This is a statutory tax deduction rather than a discretionary award program. A filer with a qualifying investment and adequate substantiation should receive the deduction through ordinary tax-return processing, subject to audit or adjustment.",
+      "evidenceUrls": [
+        "https://revenue.mt.gov/publications/montana-form-cit-instructions",
+        "https://revenue.mt.gov/files/Forms/Montana-Form-CIT-Instructions/2025_Montana_Form_CIT_Instructions.pdf"
+      ],
+      "evidenceText": "Montana corporate return instructions allow the energy-conserving-investment deduction for qualifying business-building investments that substantially reduce energy use and require a detailed supporting schedule.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22165",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Delaware resident or Delaware business purchasing or leasing a currently qualifying clean vehicle.",
+        "Meet the current vehicle technology, model-year, sales-price, ownership, and Delaware registration requirements.",
+        "For a lease, meet the program's minimum lease-term requirement.",
+        "Receive the rebate through a participating dealer or complete the applicant registration and application process.",
+        "Submit the claim within the current filing period with purchase or lease, title, registration, and other required documentation."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current program uses published vehicle, applicant, timing, and documentation rules rather than competitive ranking. A qualifying purchase or lease with a complete timely claim is likely to receive the rebate after administrative review.",
+      "evidenceUrls": [
+        "https://dnrec.delaware.gov/climate-coastal-energy/clean-transportation/vehicle-rebates/"
+      ],
+      "evidenceText": "Delaware currently offers clean-vehicle rebates through participating dealers or direct applicant claims and requires qualifying vehicles, Delaware title and registration, and timely purchase or lease documentation.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22304",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible Delaware Electric Cooperative residential account and bundled electric service where required.",
+        "Own or lease a compatible electric vehicle and enroll it through the cooperative's current managed-charging platform.",
+        "Authorize the required vehicle or charger data access and load-control functionality.",
+        "Comply with charging-event, notification, opt-out, and minimum-participation requirements.",
+        "Keep the account, device connection, and program enrollment in good standing for credit settlement."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current tariff and cooperative materials describe a standard managed-charging enrollment and bill-credit process. An eligible connected participant who remains enrolled and follows event requirements is likely to receive the applicable credits.",
+      "evidenceUrls": [
+        "https://www.delaware.coop/btp",
+        "https://www.delaware.coop/press-room/save-energy-ev-and-thermostat-programs",
+        "https://www.delaware.coop/sites/default/files/2025-03/Tariff%20-%20Revised%20March%202025.pdf"
+      ],
+      "evidenceText": "Delaware Electric Cooperative's managed-charging program requires an eligible account, a compatible connected vehicle or charging device, data and control authorization, and continued compliance with event and participation rules.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4386",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Delaware Electric Cooperative customer and own the eligible solar photovoltaic system installed in cooperative territory.",
+        "Use a program-approved contractor and meet current equipment, interconnection, ownership, and renewable-credit requirements.",
+        "Submit Part One of the application with the required proposal and account documentation to request a funding reservation before installation or interconnection.",
+        "Receive program verification and a funding reservation while funds remain available.",
+        "Complete the system and submit Part Two with interconnection and final project documentation within the reservation period."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current official program supports solar photovoltaic grants through a first-come funding reservation and final claim process. The supplied HVAC, geothermal, and solar-water-heating mappings are not substantiated by the current cooperative grant site, so the opportunity is only partially supported for the listed retrofit set.",
+      "evidenceUrls": [
+        "https://solargrantdelaware.com/",
+        "https://solargrantdelaware.com/eligibility/",
+        "https://solargrantdelaware.com/application-process/"
+      ],
+      "evidenceText": "The current Delaware Electric Cooperative grant site supports customer-owned solar photovoltaic systems through a two-part reservation and final-claim process. It does not currently substantiate the mapped HVAC, geothermal, or solar-water-heating measures.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22319",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Confirm that a currently open Delmarva Power fleet, charging, or successor EVsmart offering applies to the Maryland account and project.",
+        "Meet the applicable current customer, site, charger, make-ready, ownership, and use requirements.",
+        "Submit the current project or fleet application and receive any required approval before incentive-funded work.",
+        "Complete installation, activation, documentation, data-sharing, and verification requirements of the active offering."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "Maryland's current official electric-system-planning report states that the principal EVsmart residential, multifamily, workplace, and public-charging rebate offerings ended in 2023 or 2025. Limited fleet or successor activity may remain, but the broad historical rebate opportunity is not currently available as listed.",
+      "evidenceUrls": [
+        "https://www.psc.state.md.us/wp-content/uploads/2026/01/2025-CSNA-Report-on-Electric-System-Planning-Final.pdf"
+      ],
+      "evidenceText": "The current Maryland Public Service Commission report says the major Delmarva EVsmart residential, multifamily, workplace, and public-charging rebate offerings have ended; only narrower fleet or future successor pathways may remain.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3733",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Delmarva Power Maryland commercial or industrial customer and use the correct small-business, prescriptive, custom, or combined-heat-and-power pathway.",
+        "Use a participating service provider where the selected pathway requires one.",
+        "Submit the application, equipment specifications, cost information, and savings calculations before purchase or construction.",
+        "Obtain program approval before ordering equipment or starting work when required.",
+        "Complete the project and provide invoices, commissioning, savings documentation, and access for pre-installation or post-installation inspection."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current program offers prescriptive and custom business incentives under published pathways. A qualifying project that obtains required advance approval and passes final documentation and verification is likely to receive payment rather than being competitively ranked.",
+      "evidenceUrls": [
+        "https://homeenergysavings.delmarva.com/md/business/overview",
+        "https://homeenergysavings.delmarva.com/md/business/faqs"
+      ],
+      "evidenceText": "Delmarva Power's current Maryland business program requires the correct customer and project pathway, advance application and approval before purchase for applicable projects, and final invoices and verification before payment.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:630",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Delmarva Power Delaware customer and own an eligible renewable-energy system at the service location.",
+        "Use an eligible technology and meet current equipment, sizing, installer, interconnection, renewable-credit, and cost requirements.",
+        "Complete the current online grant application and provide the utility account, contractor, proposal, technical, and cost documentation.",
+        "Obtain any required program reservation, technical approval, or interconnection approval.",
+        "Submit final installation, inspection, interconnection, payment-registration, and claim documentation within the current deadline."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Delaware Green Energy Program publishes objective technology and claim rules for Delmarva Power customers. A qualifying system with a complete timely application is likely to receive the grant after program and interconnection review, subject to current funding and caps.",
+      "evidenceUrls": [
+        "https://dnrec.delaware.gov/climate-coastal-energy/renewable/assistance/",
+        "https://documents.dnrec.delaware.gov/energy/services/GreenEnergy/Documents/DPL/GEP-Incentives.pdf"
+      ],
+      "evidenceText": "Delaware's current Delmarva Power Green Energy rules cover eligible solar photovoltaic, geothermal, solar water-heating, and wind systems and require customer eligibility, technical compliance, application records, and timely final claim documentation.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4504",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Delmarva Power Maryland residential customer and use a participating Home Performance with ENERGY STAR contractor.",
+        "Complete the required comprehensive home-energy assessment before selecting improvements.",
+        "Use approved energy modeling and install eligible recommended measures that meet current program specifications.",
+        "Complete required final testing and quality-assurance verification.",
+        "Have the contractor submit the rebate claim with invoices and required documentation within the current filing period."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program uses a defined assessment, modeled-upgrade, testing, and contractor-claim process rather than competitive selection. A qualifying project completed through the approved pathway is likely to receive the incentive after verification.",
+      "evidenceUrls": [
+        "https://homeenergysavings.delmarva.com/md/residential/home-performance-with-energy-star-program",
+        "https://homeenergysavings.delmarva.com/md/residential/home-performance-with-energy-star-program/contractor/process"
+      ],
+      "evidenceText": "Delmarva Power's current Home Performance program requires a participating-contractor assessment, approved modeling, eligible upgrades, final testing, and a contractor-submitted rebate claim.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3744",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible Delmarva Power Maryland residential account for the installation address.",
+        "Purchase and install a currently listed qualifying appliance, thermostat, water heater, or heating and cooling measure.",
+        "Meet the applicable efficiency, equipment, fuel, installation, and contractor or distributor requirements.",
+        "Use the instant-discount channel where offered or submit the post-purchase claim with receipt, model, serial, and installation documentation.",
+        "Submit within the measure-specific filing period and permit verification when requested."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current residential offers use prescriptive equipment specifications and administrative documentation review. A qualifying customer using the correct instant-discount or claim pathway is likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://homeenergysavings.delmarva.com/md/residential/rebates",
+        "https://homeenergysavings.delmarva.com/md/residential/appliance-rebate-program",
+        "https://homeenergysavings.delmarva.com/md/residential/hvac-efficiency-program"
+      ],
+      "evidenceText": "Delmarva Power currently provides Maryland residential appliance, water-heating, thermostat, and heating-and-cooling incentives through qualifying product rules, instant discounts, or documented post-purchase claims.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3580",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Delta-Montrose Electric Association member in the program service area.",
+        "Meet the current household-income or other weatherization eligibility requirements administered with the program partner.",
+        "Complete the intake and comprehensive home-energy audit.",
+        "Allow approved contractors to complete the selected no-cost efficiency and weatherization measures.",
+        "Provide access for installation, quality assurance, and final verification."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current program provides free audits and weatherization services to eligible members through an intake and audit process. An income-qualified member who completes intake and permits the approved work is likely to receive services, subject to program capacity.",
+      "evidenceUrls": [
+        "https://www.dmea.com/efficiency"
+      ],
+      "evidenceText": "DMEA's current efficiency page offers income-qualified members a comprehensive audit and no-cost weatherization improvements through program intake, approved installation, and verification.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:56574423e5e2b946:demand-response-aggregator-options",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible Southern California Edison nonresidential account with the required interval metering and service characteristics.",
+        "Enroll through a registered demand-response aggregator or obtain approval for an eligible self-aggregation arrangement.",
+        "Complete the applicable enrollment, data-access, baseline, and program forms.",
+        "Submit capacity or load-reduction nominations and comply with event notification and dispatch requirements.",
+        "Deliver verified load reduction for settlement under the applicable demand-response tariff or program."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current SCE demand-response aggregator programs pay enrolled customers for nominated and verified load reduction under published settlement rules. Approval and payment depend on account eligibility and measured performance, not competitive project selection.",
+      "evidenceUrls": [
+        "https://www.sce.com/business/save-costs-energy/savings-strategies/what-is-demand-response",
+        "https://www.sce.com/business/save-costs-energy/savings-strategies-for-businesses/what-is-demand-response/demand-response-eligibility",
+        "https://www.sce.com/business/save-costs-energy/savings-strategies-for-businesses/what-is-demand-response/capacity-bidding-program-elect-aggregators",
+        "https://www.sce.com/sites/default/files/custom-files/PDF_Files/Auto_DR_Program_Handbook_Q1_2026_Final-h3_A11Y.pdf"
+      ],
+      "evidenceText": "SCE requires eligible interval-metered accounts, aggregator or approved self-aggregator enrollment, nominations, and verified event load reduction. Automated controls may support performance but are not automatically paid merely because they are installed.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_13556",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible San Diego Gas and Electric nonresidential account under the selected demand-response program.",
+        "Enroll directly where permitted or through an eligible third-party demand-response provider or aggregator.",
+        "Complete the applicable enrollment, data-access, metering, baseline, and nomination requirements.",
+        "Comply with event notification, dispatch, and participation rules.",
+        "Achieve verified load reduction for incentive settlement."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current SDG&E demand-response programs reward eligible enrolled nonresidential customers for verified load reduction. A compliant participant is likely to receive settlement for measured performance, although installing automated controls alone does not create an equipment rebate.",
+      "evidenceUrls": [
+        "https://www.sdge.com/businesses/savings-center/energy-management-programs/demand-response",
+        "https://www.sdge.com/businesses/savings-center/energy-management-programs/demand-response/capacity-bidding-program",
+        "https://www.sdge.com/businesses/savings-center/energy-management-programs/demand-response/emergency-load-reduction"
+      ],
+      "evidenceText": "SDG&E currently offers nonresidential demand-response pathways with direct or aggregator enrollment and financial rewards based on verified event load reduction rather than automatic reimbursement for controls equipment.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22443",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an individual homeowner or renter served by a participating Efficiency Smart municipal utility.",
+        "Purchase and install a new product that appears on the current eligible residential rebate list.",
+        "Meet the applicable product, efficiency, quantity, installation, and customer requirements.",
+        "Submit the claim with proof of purchase, product details, and required account information within the current filing deadline.",
+        "Apply while program funds remain available and permit administrative verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Efficiency Smart uses published product and customer criteria with a standard claim process rather than competitive ranking. An eligible resident with a timely complete claim is likely to receive the rebate while funds remain available.",
+      "evidenceUrls": [
+        "https://www.efficiencysmart.org/home-energy-rebates",
+        "https://www.efficiencysmart.org/home-energy-rebates/apply"
+      ],
+      "evidenceText": "Efficiency Smart currently requires a resident of a participating utility, a qualifying newly purchased product, proof of purchase, and a timely claim while funds are available.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4387",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain a current eligible municipal-utility account in a participating Delaware Municipal Electric Corporation community.",
+        "Own and install an eligible renewable-energy system within the municipal utility's service territory.",
+        "Submit the signed grant-reservation application before installation with the system description, proposal or purchase commitment, and current utility bill.",
+        "Receive DEMEC evaluation and municipal approval of the funding reservation before proceeding.",
+        "Complete the system within the reservation period and submit the final claim, interconnection, inspection, invoice, and other required documentation."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current municipal Green Energy Program uses a defined reservation and final-claim process. A qualifying customer who secures a reservation before installation and completes the required system and documentation is likely to receive the grant, subject to available funds.",
+      "evidenceUrls": [
+        "https://www.demecinc.net/member-energy-grants/",
+        "https://www.demecinc.net/wp-content/uploads/2025/11/DEMEC-Green-Energy-Regs-06202023-CURRENT.pdf"
+      ],
+      "evidenceText": "DEMEC requires an eligible municipal-utility customer to obtain a grant reservation before installation and then complete the system and final claim with utility, interconnection, inspection, and cost records.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2039",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Denton Municipal Electric customer at the installation address.",
+        "Install a currently listed qualifying efficiency, electrification, or solar measure that meets the applicable technical requirements.",
+        "Obtain permits and inspections where the selected measure requires them.",
+        "Submit the current application with invoices, equipment details, photographs, and other measure-specific documentation within the filing period.",
+        "Apply while the current program budget remains available and allow utility verification."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Denton currently accepts GreenSense applications and publishes measure and documentation rules. A qualifying customer with a timely complete claim is likely to receive the incentive, subject to budget availability and verification.",
+      "evidenceUrls": [
+        "https://www.cityofdenton.com/1192/Sustainability-Incentives"
+      ],
+      "evidenceText": "Denton currently accepts GreenSense incentive applications and requires an eligible electric account, qualifying measures, timely documentation, permits or inspections where applicable, and available program funds.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5809",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The property must be an eligible Maryland affordable multifamily housing project serving low- or moderate-income residents under current program rules.",
+        "The owner must provide property, ownership, affordability, financing, and project documentation.",
+        "A qualified energy professional must complete the required audit, analysis, and project certification.",
+        "Submit the funding request with scope, savings, cost, and supporting records for Maryland Department of Housing and Community Development review and underwriting.",
+        "Execute the grant or loan agreement before funded installation and complete inspection, reporting, and compliance requirements."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "MEEHA financing is project-specific and requires technical review, affordability eligibility, underwriting, and an executed funding agreement. A complete eligible project may be funded, but approval is not automatic and depends on program resources and project review.",
+      "evidenceUrls": [
+        "https://dhcd.maryland.gov/Energy-Home-Repair/pages/multifamily-energy-program/meeha.aspx"
+      ],
+      "evidenceText": "Maryland's MEEHA program finances eligible affordable multifamily efficiency work through owner application, qualified-energy-professional analysis, department review and underwriting, a funding agreement, and final inspection and compliance.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4206",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The property and improvements must qualify under the District of Columbia commercial PACE program.",
+        "Obtain a participating capital provider's term sheet and satisfy its financial underwriting requirements.",
+        "Complete the required third-party technical validation of project eligibility, costs, and savings or generation assumptions.",
+        "Provide the program application, title and ownership records, mortgage-lender consent, risk disclosures, fees, and closing documentation.",
+        "Receive program approval and complete and record the special-assessment financing documents before construction funding."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "DC PACE is private project financing secured through a public assessment, not an automatic rebate. Closing depends on technical eligibility, capital-provider underwriting, mortgage-lender consent, program approval, and recorded financing documents.",
+      "evidenceUrls": [
+        "https://dcgreenbank.com/pace/",
+        "https://dcgreenbank.com/wp-content/uploads/2022/04/DC-PACE-Application-Process-Revised-3-1-2022-1.pdf"
+      ],
+      "evidenceText": "DC PACE requires a capital-provider term sheet, technical validation, underwriting, lender and title documentation, program approval, and recorded assessment documents before financing closes.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4828",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Diverse Power member with an existing residence served by the cooperative.",
+        "Install a currently listed qualifying heat pump, water-heating, thermostat, insulation, air-sealing, or related measure that meets technical requirements.",
+        "Complete and submit required blower-door or duct testing before work for whole-house, insulation, infiltration, or duct-sealing measures when applicable.",
+        "Use qualified or certified installers where the selected measure requires them.",
+        "Submit the rebate claim with test records, invoices, equipment documentation, and permit or inspection records within the filing period."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current cooperative program uses published measure specifications and a standard claim process. A qualifying existing-home project that completes required pre-work testing and submits a complete claim is likely to receive the rebate.",
+      "evidenceUrls": [
+        "https://www.diversepower.com/energy-tools/rebates/",
+        "https://www.diversepower.com/resources/home-energy-audit/"
+      ],
+      "evidenceText": "Diverse Power currently requires eligible member projects, qualifying equipment or envelope work, pre-work blower or duct testing for specified measures, and final invoices and technical documentation.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2266",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The new home must be served by Diverse Power and meet the current code and program construction requirements.",
+        "Install currently qualifying heat-pump or geothermal equipment that meets the applicable efficiency, sizing, water-heating, and installer conditions.",
+        "Complete permanent electric service, final equipment installation, permits, and inspections before the claim.",
+        "Submit the builder or eligible claimant application with equipment, construction, invoice, and inspection documentation within the current filing period.",
+        "Pass cooperative review and any requested field verification."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current new-construction rebates are prescriptive and paid after code, equipment, and documentation review rather than competitive selection. A compliant completed home is likely to receive the rebate.",
+      "evidenceUrls": [
+        "https://www.diversepower.com/energy-tools/rebates/"
+      ],
+      "evidenceText": "Diverse Power's current new-construction rebates require a served home, code-compliant construction, qualifying heat-pump or geothermal equipment, final installation and inspections, and a timely documented claim.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1968",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Dixie Electric Cooperative member financing a currently qualifying residential energy-efficiency or heat-pump project.",
+        "Provide the project proposal, contractor, equipment, cost, and other documentation required by the current loan program.",
+        "Complete the cooperative or participating lender loan application.",
+        "Satisfy credit, repayment, and any security or account-standing requirements.",
+        "Execute the approved financing agreement before loan proceeds are released."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The cooperative's indexed official material confirms that financing depends on credit approval, so energy-project eligibility alone does not assure funding. The current official program page was inaccessible, preventing verification of detailed loan terms and eligible measures.",
+      "evidenceUrls": [
+        "https://www.dixie.coop/energy-efficiency-program"
+      ],
+      "evidenceText": "Dixie Electric Cooperative's indexed official material confirms an energy-efficiency financing pathway subject to credit approval, but the current official program page could not be accessed to verify detailed terms.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "source_inaccessible"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1970",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Dixie Electric Cooperative residential member at the installation address.",
+        "Install a currently qualifying heat-pump upgrade or replacement that meets the cooperative's present equipment and configuration rules.",
+        "Submit the current rebate application with account, contractor, invoice, model, efficiency, and installation documentation.",
+        "Complete any required permit, inspection, or cooperative verification before payment."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Indexed official material indicates that Dixie Electric offers rebates for qualifying heat-pump upgrades, but the current official program pages were inaccessible. Current equipment criteria, deadlines, documentation, and funding status could not be verified, so award likelihood cannot be rated reliably.",
+      "evidenceUrls": [
+        "https://www.dixie.coop/energy-efficiency-program",
+        "https://www.dixie.coop/manufacturedhomeprogram"
+      ],
+      "evidenceText": "Dixie Electric Cooperative's indexed official pages indicate heat-pump upgrade rebates, but the current pages could not be accessed to verify present eligibility, claim, and funding rules.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "source_inaccessible"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:214",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Use an eligible Nebraska property and propose an energy-saving project covered by the current loan program.",
+        "Obtain required project forms, contractor bids or estimates, equipment information, and supporting technical documentation.",
+        "Apply through a participating Nebraska lender and satisfy its credit and repayment underwriting.",
+        "Receive Nebraska Department of Water, Energy, and Environment technical review, fund reservation, and a Commitment Agreement before purchase or construction.",
+        "Do not contract for or begin the project before the lender's notice to proceed, and complete the work and final documentation within the required period."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program combines project technical review with private-lender credit underwriting. An eligible project may receive below-market financing, but approval depends on borrower credit, lender participation, department commitment, and compliance with the pre-work prohibition.",
+      "evidenceUrls": [
+        "https://dwee.nebraska.gov/state-energy-information/dollar-energy-saving-loans"
+      ],
+      "evidenceText": "Nebraska's current loan program requires a participating lender's credit approval, department technical review and commitment, project forms and bids, and no purchase or construction before notice to proceed.",
+      "reviewedAt": "2026-07-10T13:58:58Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

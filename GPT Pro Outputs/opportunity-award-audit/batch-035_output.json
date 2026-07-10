@@ -3,7 +3,529 @@
   "batchId": "batch-035",
   "inputFile": "batch-035_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.776Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T14:54:28Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4735",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a MidAmerican Energy residential customer at an Iowa service address, with MidAmerican providing the primary electricity or natural gas to the qualifying equipment.",
+        "Purchase and place new qualifying equipment in service during the 2026 program year and satisfy the measure-specific efficiency, sizing and installation specifications.",
+        "For an HVAC instant discount, purchase through a participating provider; for a rebate, submit the claim within 90 days of purchase or by December 31, 2026, whichever is earlier.",
+        "Provide an itemized receipt or invoice and all required account, model, certification and installation documentation.",
+        "Allow MidAmerican to verify the equipment or installation and apply while program funds remain available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Iowa offering uses published customer, equipment, timing and documentation rules rather than competitive scoring. A qualifying instant-discount purchase or complete timely rebate claim is likely to be approved, subject to available program funds and verification.",
+      "evidenceUrls": [
+        "https://www.midamericanenergy.com/home-discounts-and-rebates",
+        "https://www.midamericanenergy.com/ia_qualifications-and-conditions"
+      ],
+      "evidenceText": "MidAmerican's 2026 Iowa residential materials list instant discounts and rebates, require MidAmerican service to the equipment, new qualifying equipment, timely submission with an itemized invoice, and permit verification.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4193",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a MidAmerican Energy Nebraska residential natural-gas customer on an eligible residential rate at the installation address.",
+        "Use MidAmerican natural gas as the primary fuel for the qualifying heating equipment and install new equipment meeting the current measure specifications.",
+        "Purchase, install and place the equipment in operation during the applicable 2026 program period.",
+        "Submit the rebate application within 90 days of the dealer invoice or by the program's final filing deadline, whichever occurs first.",
+        "Provide the itemized invoice, manufacturer and model information, AHRI or other required efficiency certification, and allow verification if requested."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Nebraska program is a prescriptive natural-gas rebate with objective account, equipment, installation and filing requirements. A qualifying customer with a complete timely claim is likely to receive the rebate after administrative review and any requested verification.",
+      "evidenceUrls": [
+        "https://www.midamericanenergy.com/ne-residential-rebates",
+        "https://www.midamericanenergy.com/ne_qualifications-and-conditions"
+      ],
+      "evidenceText": "MidAmerican's current Nebraska residential materials require eligible natural-gas service, qualifying new equipment, installation before application, a timely claim, supporting invoice and efficiency records, and possible verification.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22552",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a MidAmerican Energy residential customer at an Illinois service address, with MidAmerican providing the primary electricity or natural gas to the qualifying equipment.",
+        "Purchase and place new qualifying equipment in service during the 2026 program year and satisfy the applicable equipment and installation specifications.",
+        "Use a participating provider for an HVAC instant discount, or submit the applicable rebate claim within 90 days of purchase or by December 31, 2026, whichever is earlier.",
+        "Submit an itemized receipt or invoice and required model, ENERGY STAR, efficiency, account and installation documentation.",
+        "Allow installation verification when requested and apply while program funds remain available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Illinois offering is formulaic and based on published customer, measure and documentation criteria. A qualifying purchase through the instant-discount channel or a complete timely rebate application is likely to be paid, subject to available funds and verification.",
+      "evidenceUrls": [
+        "https://www.midamericanenergy.com/home-discounts-and-rebates",
+        "https://www.midamericanenergy.com/il_qualifications-and-conditions"
+      ],
+      "evidenceText": "MidAmerican's 2026 Illinois residential materials provide equipment-specific instant discounts and rebates and require qualifying service, new equipment, timely documentation and possible verification.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2234",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Middle Tennessee Electric member and own the home and property where the heat-pump system will be installed.",
+        "Obtain a proposal for an eligible heat-pump project through Middle Tennessee Electric or a TVA EnergyRight Quality Contractor Network participant.",
+        "Submit the financing application and project information before relying on program financing for the installation.",
+        "Pass the independent credit review and any account or borrower eligibility checks.",
+        "Execute the loan, security or fixture-filing documents and agree to repay the approved amount through the electric bill."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program offers a defined heat-pump financing route, but approval depends on borrower-specific credit review, property ownership, project eligibility and execution of loan documents. An eligible project therefore has a possible, not automatic, financing outcome.",
+      "evidenceUrls": [
+        "https://mte.com/HeatPumpLoan"
+      ],
+      "evidenceText": "Middle Tennessee Electric describes TVA-backed heat-pump financing for qualifying homeowners, with contractor coordination, independent credit review, loan documentation and repayment on the electric bill.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1299",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Midstate Electric Cooperative commercial or industrial member at the project location.",
+        "Install a measure covered by the cooperative's current commercial and industrial incentive specifications or obtain advance review for a nonstandard project when required.",
+        "Meet the applicable equipment, efficiency, installation and project-completion requirements.",
+        "Submit the current incentive application, itemized invoices and technical supporting records within 180 days after project completion.",
+        "Complete any inspection, savings review or other verification requested by Midstate Electric."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Midstate publishes a noncompetitive incentive pathway with measure-specific requirements and a defined post-completion filing period. A qualifying member project with a complete claim is likely to receive the incentive after review and verification.",
+      "evidenceUrls": [
+        "https://www.midstateelectric.coop/energy-efficiency/incentives/commercial-industrial/"
+      ],
+      "evidenceText": "Midstate Electric's current commercial and industrial incentive page directs eligible projects to current forms and requires submission within 180 days of project completion.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1296",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Midstate Electric Cooperative residential member at the installation address.",
+        "Purchase and install a new measure covered by the cooperative's current residential incentive specifications.",
+        "Meet all equipment-efficiency, sizing, contractor, installation and operating requirements applicable to the measure.",
+        "Submit the current application with the itemized receipt or invoice and required product or installation records within 180 days after completion.",
+        "Allow Midstate Electric to inspect or otherwise verify the measure if requested."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The residential incentives follow published measure and documentation rules and are not competitively ranked. A timely, fully documented claim for a qualifying installation is likely to be approved after ordinary review.",
+      "evidenceUrls": [
+        "https://www.midstateelectric.coop/energy-efficiency/incentives/residential/"
+      ],
+      "evidenceText": "Midstate Electric's current residential incentive page lists qualifying measures and states that projects must be submitted within 180 days of completion using the applicable documentation.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3187",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Midwest Energy customer in good standing and current on utility payments at the project location.",
+        "Request and complete the program energy audit so Midwest Energy can identify eligible improvements and develop a conservation plan.",
+        "Have a proposed improvement satisfy the program's energy-savings and cost-effectiveness requirements for repayment through the meter-based surcharge.",
+        "Use a contractor that has executed the program master agreement and obtain any required owner, landlord or tenant consent.",
+        "Accept the approved conservation plan and execute the How$mart agreement before installation and surcharge billing."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current official process focuses on customer payment standing, an energy audit, an approved conservation plan and project economics rather than competitive selection. A customer with a cost-effective approved scope and required consents is likely to receive financing.",
+      "evidenceUrls": [
+        "https://www.mwenergy.com/environmental/energy-efficiency/howsmart"
+      ],
+      "evidenceText": "Midwest Energy's current How$mart process begins with an audit, produces an approved conservation plan, uses participating contractors and repays project costs through a location-based utility surcharge designed around expected savings.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5156",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a current Minnesota Energy Resources nonresidential natural-gas customer or an eligible property owner at a served facility.",
+        "Purchase and install new equipment or measures that reduce natural-gas use and meet the current business rebate specifications.",
+        "Obtain program preapproval before installing a custom project and obtain advance approval of any required measurement-and-verification plan.",
+        "For prescriptive measures, submit the signed application, final itemized invoice and required product certifications within 60 days after installation.",
+        "Permit pre-installation or post-installation inspection, savings verification and other documentation review when requested."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Prescriptive rebates use objective specifications and custom projects follow a defined preapproval and savings-review process. A qualifying, documented project is likely to be awarded after the applicable review, subject to available funds.",
+      "evidenceUrls": [
+        "https://www.minnesotaenergyresources.com/savings/business/rebates",
+        "https://www.minnesotaenergyresources.com/savings/business/pdf/forcedair-rebates.pdf",
+        "https://www.minnesotaenergyresources.com/savings/business/pdf/custom-rebates.pdf"
+      ],
+      "evidenceText": "Minnesota Energy Resources' current business forms require eligible gas service, qualifying new measures, final invoices and timely applications; custom projects require advance review and may require inspection and measurement and verification.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3312",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Construct an eligible single-family home or townhouse in the Minnesota Energy Resources service area with natural gas as the primary heating fuel.",
+        "Enroll the project and provide plans and specifications for the program's residential energy specialist review.",
+        "Coordinate the required framing, insulation and final construction inspections.",
+        "Complete final blower-door, infrared, duct-leakage and HERS or RESNET performance testing and submit the resulting documentation.",
+        "Demonstrate that the completed home performs at least 20 percent better than the applicable energy-code baseline."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program provides tiered incentives under a published whole-home performance standard. An enrolled project that completes the required inspections and demonstrates the stated performance improvement is likely to receive its calculated incentive.",
+      "evidenceUrls": [
+        "https://www.minnesotaenergyresources.com/partners/builders/home-energy"
+      ],
+      "evidenceText": "The current Home Energy Excellence offering uses plan review, construction inspections, final diagnostic testing and HERS analysis, with incentives for qualifying homes that exceed the code baseline by the required margin.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4787",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible affordable-housing developer, housing agency, nonprofit, property manager or owner with a qualifying one-to-four-unit dwelling or townhouse served by Minnesota Energy Resources.",
+        "Document the property's qualifying low-income use, occupancy, rental classification, use restriction or other accepted affordable-housing status.",
+        "Purchase and install a measure currently eligible under the Affordable Housing Rebate Program and meet its equipment and installation specifications.",
+        "Submit the application within 60 days after installation with the dated itemized invoice and required affordable-housing or income documentation.",
+        "Allow program verification and apply while the limited rebate budget remains available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current successor offering applies published affordable-housing, equipment and filing criteria rather than competitive scoring. A qualifying property and measure with complete low-income documentation is likely to receive the rebate, although the current measure list is narrower than the legacy opportunity title may imply.",
+      "evidenceUrls": [
+        "https://www.minnesotaenergyresources.com/partners/builders/affordable-housing-rebates",
+        "https://www.minnesotaenergyresources.com/partners/builders/pdf/affordable-housing-rebates.pdf"
+      ],
+      "evidenceText": "Minnesota Energy Resources currently administers Affordable Housing Rebates for qualifying low-income housing organizations and properties, requiring eligibility documentation, a qualifying installation, a dated invoice and an application within 60 days.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22091",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Construct an eligible new residence in the Minnesota Energy Resources service area.",
+        "Install qualifying high-efficiency natural-gas equipment or other builder measures covered by the current construction rebate schedule.",
+        "Meet the applicable AHRI, HVI, ENERGY STAR, equipment-efficiency and installation specifications.",
+        "Submit the builder application and dated itemized invoice within 60 days after installation, with all required certifications and project information.",
+        "Comply with per-equipment limits, permit verification if requested and apply while funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The builder rebates are prescriptive and use published equipment, documentation and timing rules. A qualifying new-construction installation with a complete timely application is likely to be approved after administrative review.",
+      "evidenceUrls": [
+        "https://www.minnesotaenergyresources.com/partners/builders/construction-rebates",
+        "https://www.minnesotaenergyresources.com/partners/builders/pdf/builders_construction_rebates.pdf"
+      ],
+      "evidenceText": "The current construction-rebate materials list eligible high-efficiency equipment and building measures, require supporting certifications and invoices, and require application within 60 days after installation.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3310",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Minnesota Energy Resources residential natural-gas customer at an existing home in the service area.",
+        "Purchase and install a currently qualifying heating, ventilation, duct, envelope or related measure that meets the published specifications.",
+        "Use an authorized insulation contractor and complete required pre-installation and post-installation diagnostic testing for insulation or air-sealing measures where applicable.",
+        "Submit the signed rebate application and dated itemized invoice within 60 days after installation with required model, efficiency and contractor documentation.",
+        "Allow inspection or other verification and apply while program funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential program uses published measure and documentation standards. Eligible installations with required contractor testing and a complete timely claim are likely to receive the stated rebate after review.",
+      "evidenceUrls": [
+        "https://www.minnesotaenergyresources.com/savings/rebates",
+        "https://www.minnesotaenergyresources.com/savings/insulation-rebates"
+      ],
+      "evidenceText": "Minnesota Energy Resources currently offers existing-home rebates with measure-specific efficiency rules, a 60-day filing requirement and, for insulation work, authorized contractors plus pre- and post-work blower-door testing.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5143",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a residential customer of a Minnesota municipal utility participating in Missouri River Energy Services' Bright Energy Solutions program.",
+        "Select the customer's local utility and confirm that it currently offers a rebate for the proposed measure.",
+        "Purchase and install a new product or system that meets the local utility's current equipment and installation specifications.",
+        "Submit the utility-specific application with receipts, model information and any required contractor or certification records by the local deadline.",
+        "Complete any local utility inspection, load-control enrollment or other verification required for the selected rebate."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Bright Energy Solutions routes customers to current prescriptive offers administered by participating municipal utilities. A qualifying local-utility customer with a complete claim is likely to receive the rebate, although exact terms vary by utility and measure.",
+      "evidenceUrls": [
+        "https://www.brightenergysolutions.com/members"
+      ],
+      "evidenceText": "Bright Energy Solutions' current member directory identifies participating Minnesota public-power utilities and directs customers to utility-specific residential rebates and application requirements.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5753",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible commercial, industrial, multifamily, nonprofit, faith-based or agricultural property in a Minnesota jurisdiction that participates in MinnPACE.",
+        "Develop an eligible energy-efficiency, renewable-energy, water, resilience or electric-vehicle infrastructure project supported by the required technical study or audit.",
+        "Obtain contractor pricing and secure a willing private capital provider for the proposed financing.",
+        "Satisfy property and borrower underwriting, including title, tax, mortgage, bankruptcy, financial and project-cost requirements.",
+        "Obtain written consent or acknowledgment from existing mortgage lenders and receive MinnPACE and local-jurisdiction approval of the special assessment.",
+        "Execute the financing and assessment documents and complete closing before MinnPACE funding is disbursed."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "MinnPACE can finance a broad range of eligible improvements, but funding is privately underwritten and also requires property review, mortgage-lender consent, program approval and a special-assessment closing. Project eligibility alone does not make financing automatic.",
+      "evidenceUrls": [
+        "https://minnpace.com/lending/pace-loans/",
+        "https://minnpace.com/about-minnpace/for-property-owners/",
+        "https://minnpace.com/wp-content/uploads/2025/08/Admin-Guidelines-2025.pdf"
+      ],
+      "evidenceText": "MinnPACE's current property-owner and lending materials require an eligible property and improvement, technical support, a capital provider, lender consent, underwriting and execution of the special-assessment financing documents.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22130",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Minnesota Power commercial, industrial, multifamily or agricultural customer at the project location.",
+        "Purchase and install a measure that meets the current business incentive specifications and produces eligible electric savings.",
+        "Obtain advance program involvement or approval for a custom, new-construction or other project when the applicable pathway requires it.",
+        "Submit the rebate application, itemized invoice and required equipment or savings documentation within 24 months of the invoice, receipt or installation date.",
+        "Complete any pre-installation or post-installation site verification and provide energy-use information requested by Minnesota Power."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Minnesota Power publishes business incentives with a defined application and verification process rather than competitive ranking. A qualifying project with timely invoices and any required advance review is likely to receive the calculated incentive.",
+      "evidenceUrls": [
+        "https://www.mnpower.com/ProgramsRebates/BusinessIncentives"
+      ],
+      "evidenceText": "Minnesota Power's current business page covers commercial, industrial, multifamily and agricultural customers, requires invoices and project verification, and allows applications within the stated 24-month period.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1522",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a residential retail customer of Minnesota Power or another participating utility for the selected rebate.",
+        "Purchase and install a new product during the current program year that meets the applicable efficiency, capacity and equipment-list requirements.",
+        "Use a participating or qualified-installation contractor where required; for qualifying heat-pump installations, have the contractor submit the rebate documentation.",
+        "For customer-filed appliance or water-heating claims, submit the current application and dated receipt by the measure-specific deadline.",
+        "Provide model, serial, AHRI, ENERGY STAR or installation records as required and permit verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The residential rebates are prescriptive and depend on customer status, qualifying equipment and complete documentation. A timely claim for an eligible installation is likely to be approved after normal program review.",
+      "evidenceUrls": [
+        "https://www.mnpower.com/ProgramsRebates/RebatesAndSavings",
+        "https://www.mnpower.com/ProgramsRebates/ASHPRebates",
+        "https://www.mnpower.com/ProgramsRebates/ASHPMiniSplitRebate",
+        "https://www.mnpower.com/ProgramsRebates/WaterHeaterRebate"
+      ],
+      "evidenceText": "Minnesota Power's current residential materials list program-year equipment standards, participating-utility eligibility, contractor submission for heat pumps and receipt-based customer claims for other measures.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3282",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Construct a new home in the Minnesota Power service area with electricity as the primary heating source and meet the program's required ventilation standard.",
+        "Enroll or contact the residential new-construction program and provide the project and building information needed for technical assistance and rebate calculation.",
+        "Install qualifying efficiency measures and retain itemized receipts and specifications for the completed work.",
+        "Schedule and pass the required final home-performance inspection, including blower-door testing and other available diagnostic verification.",
+        "Submit the final project documentation required for Minnesota Power to calculate and issue the rebate."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program calculates an incentive from completed eligible work and final performance verification. Plan review and mid-construction assistance may be optional, but an eligible completed home that passes the required final inspection is likely to receive its calculated rebate.",
+      "evidenceUrls": [
+        "https://www.mnpower.com/RNC",
+        "https://www.mnpower.com/CustomerService/ResidentialConstruction"
+      ],
+      "evidenceText": "Minnesota Power's current new-construction program serves primarily electric-heated homes, offers optional earlier technical assistance and requires a final inspection with diagnostic testing and project documentation for rebate calculation.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2253",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Minnesota Valley Electric Cooperative commercial, industrial or agricultural member at the project location.",
+        "Install equipment covered by a current prescriptive rebate or propose a qualifying custom project that reduces electric demand or energy use.",
+        "Obtain advance review or approval before purchase or installation when required for a custom project or by the applicable form.",
+        "Submit the current application with itemized invoices, equipment specifications, savings calculations and other required records.",
+        "Allow site inspection or savings verification and apply while the limited first-come incentive budget remains available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "MVEC offers published prescriptive rebates and a defined custom-grant route. A qualifying member project with required preapproval, documentation and verification is likely to be funded, subject to the stated first-come budget limits.",
+      "evidenceUrls": [
+        "https://www.mvec.net/savings/business-programs/"
+      ],
+      "evidenceText": "MVEC's current business programs provide prescriptive rebates, custom energy grants and technical assistance for commercial, industrial and agricultural members, with current forms and limited first-come funds.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2251",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Minnesota Valley Electric Cooperative member at the residence where the qualifying equipment is installed.",
+        "Purchase and install new equipment that meets the current rebate's efficiency, capacity, contractor and installation requirements.",
+        "Enroll qualifying heating, water-heating, electric-vehicle or other controlled equipment in Energy Wise, off-peak or load-management service when the selected rebate requires it.",
+        "Submit the current rebate application with the dated receipt, model information and required contractor or certification records within 90 days or the measure-specific filing period.",
+        "Allow field verification when required and comply with per-customer, per-equipment and available-funding limits."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program uses published measure and member requirements rather than competitive selection. A qualifying new installation with timely documentation and any required Energy Wise enrollment is likely to receive a bill-credit rebate.",
+      "evidenceUrls": [
+        "https://www.mvec.net/savings/rebates/"
+      ],
+      "evidenceText": "MVEC's current residential rebate page requires membership, new qualifying equipment, dated receipts, timely filing and measure-specific contractor, Energy Wise or field-verification conditions.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4812",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Xcel Energy Minnesota business electric or natural-gas customer for the equipment and service address.",
+        "Purchase and install new equipment that meets the current prescriptive efficiency and installation specifications, or obtain custom-efficiency preapproval before ordering, purchasing or installing equipment.",
+        "Complete the applicable rebate application and submit a paid, itemized invoice within 24 months after installation or the invoice date.",
+        "Provide AHRI certification, manufacturer data, photographs, savings calculations or other measure-specific technical support when required.",
+        "Allow pre-installation or post-installation inspection and comply with incentive caps and other current program limits."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Xcel's Minnesota business rebates use published equipment and documentation criteria, with advance review for custom work and post-installation claims for prescriptive measures. A qualifying complete submission is likely to receive the calculated rebate.",
+      "evidenceUrls": [
+        "https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates/hvac-r",
+        "https://mn.my.xcelenergy.com/s/business/lighting-equipment-rebates/business-lighting-efficiency",
+        "https://www.xcelenergy.com/staticfiles/xe-responsive/Business%20Programs%20%26%20Rebates/Equipment%20Rebates/17-9181%20%2804-24%29%20MN-HVAC-R_app%20January%201%2C%202024%2C%20or%20later%201%20042224.pdf"
+      ],
+      "evidenceText": "Xcel Energy's current Minnesota business materials require eligible service, qualifying installed equipment, a completed application and paid invoice, technical certifications where applicable, and permit inspections; custom work requires advance approval.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22453",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a residential customer of a participating Minnkota member cooperative or municipal utility.",
+        "Confirm with the local utility that the proposed product or system is currently eligible under PowerSavers and meets the applicable efficiency and installation requirements.",
+        "Purchase and install the qualifying equipment and enroll in off-peak or load-control service when the selected measure or local utility requires it.",
+        "Submit the current local-utility or PowerSavers application with receipts, model information and required contractor or certification documents.",
+        "Complete any local inspection or verification and comply with local deadlines and available-funding limits."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "PowerSavers residential incentives are administered through participating local utilities under published measure criteria. A qualifying customer with a complete local application is likely to receive the incentive, subject to utility-specific rules and funding.",
+      "evidenceUrls": [
+        "https://www.minnkota.com/our-programs/residential-programs"
+      ],
+      "evidenceText": "Minnkota's current residential page lists PowerSavers incentives for qualifying high-efficiency equipment and directs customers to their participating cooperative or municipal utility for forms and local requirements.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5528",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a business customer of a participating Minnkota member cooperative or municipal utility.",
+        "Install a measure meeting a current prescriptive PowerSavers business specification or develop a qualifying custom electric-efficiency project.",
+        "Obtain prior program approval before purchasing or installing equipment for a custom project.",
+        "Submit the applicable local or PowerSavers application with itemized invoices, equipment data and required savings calculations.",
+        "Allow project inspection and savings verification and comply with local deadlines, incentive limits and available funds."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The business program offers prescriptive incentives and a formula-based custom pathway rather than competitive ranking. A qualifying project with required custom preapproval or a complete prescriptive claim is likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://www.minnkota.com/our-programs/business-programs"
+      ],
+      "evidenceText": "Minnkota's current business page lists prescriptive HVAC, lighting, variable-speed-drive and food-service incentives and states that custom projects require approval before equipment purchase or installation.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5527",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a customer of a participating Minnkota member cooperative or municipal utility offering the applicable electric-technology incentive.",
+        "Install qualifying electric heating, water-heating or electric-vehicle charging equipment meeting the current technical requirements.",
+        "Enroll the equipment in off-peak, demand-response or other load-control service when required by the selected technology or local utility; eligible air-source and mini-split heat pumps may follow the published non-off-peak pathway.",
+        "Submit the local utility's rebate application with proof of purchase, installation and equipment specifications.",
+        "Permit local utility verification and comply with local program deadlines, control terms and available-funding limits."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The incentives use published technology and load-management criteria and are administered by participating local utilities. A qualifying installation with any required control enrollment and complete documentation is likely to receive the local rebate.",
+      "evidenceUrls": [
+        "https://www.minnkota.com/our-programs/rebates-energy-incentives"
+      ],
+      "evidenceText": "Minnkota's current rebate page describes local-utility incentives for electric heating, water heating and EV charging, including technology-specific off-peak and demand-response requirements.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22639",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Respond to a future Mississippi Department of Transportation solicitation, procurement or funding notice; no current direct applicant intake was verified.",
+        "Propose an eligible charging site and project consistent with Mississippi's approved NEVI deployment plan and applicable Alternative Fuel Corridor requirements.",
+        "Meet 23 CFR Part 680 and all applicable federal and state technical, accessibility, cybersecurity, environmental, utility, operation and maintenance requirements.",
+        "Submit the site-control, utility, technical, cost, financial and operational documentation required by the eventual solicitation.",
+        "Receive MDOT project selection, required federal authorization and an executed funding or procurement agreement before construction."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Mississippi has an approved NEVI deployment framework, but current official materials did not establish an open application round, current project-selection criteria or an award pipeline for outside applicants. Award likelihood cannot be determined until MDOT publishes a current solicitation.",
+      "evidenceUrls": [
+        "https://mdot.ms.gov/portal/electric_vehicle_charging_infrastructure",
+        "https://mdot.ms.gov/portal/nevi_funding_opportunities",
+        "https://mdot.ms.gov/documents/Planning/Transportation%20Asset%20Management%20/EV/MS%20EV%20Infrastructure%20Deployment%20Plan.pdf"
+      ],
+      "evidenceText": "MDOT's official materials describe Mississippi's NEVI deployment plan and future station procurement, but a current open applicant process and current project-level award rules were not verified.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4242",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Locate or expand in Mississippi a qualifying business that manufactures or assembles systems or components used in clean, renewable or alternative energy generation.",
+        "Commit to at least $50 million in qualifying capital investment and creation of at least 250 new full-time jobs.",
+        "Apply to the Mississippi Development Authority and obtain certification as an eligible clean-energy business enterprise before claiming the incentives.",
+        "Document the facility, construction schedule, investment, employment, payroll and other performance commitments required by MDA and the Department of Revenue.",
+        "Submit the Department of Revenue economic-incentives application with the MDA certification and obtain the required sales-and-use-tax authorization or direct-pay permit.",
+        "Maintain qualifying purchases, tax returns, employment and investment records and comply with any certification or incentive-agreement conditions."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The initiative offers statutory tax incentives, but only for very large qualifying manufacturing projects and only after MDA certification and Department of Revenue processing. A project may receive the incentives if it satisfies the substantial investment, job and documentation requirements, but approval is not routine for an unreviewed applicant.",
+      "evidenceUrls": [
+        "https://www.dor.ms.gov/sites/default/files/resources/Incentives%20and%20Credits/2026%20Incentive%20Booklet%20v1.2.pdf",
+        "https://www.dor.ms.gov/sites/default/files/General%20Forms/ApplicationforEconomicIncentivesfillablecopy.pdf",
+        "https://www.sos.ms.gov/adminsearch/ACCode/00000851c.pdf"
+      ],
+      "evidenceText": "Mississippi's current incentive materials require a qualifying clean-energy manufacturing or assembly project, at least $50 million of investment, 250 new full-time jobs, MDA certification and Department of Revenue application and tax-permit compliance.",
+      "reviewedAt": "2026-07-10T14:54:28Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

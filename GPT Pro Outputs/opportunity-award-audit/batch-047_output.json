@@ -3,7 +3,521 @@
   "batchId": "batch-047",
   "inputFile": "batch-047_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.780Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T15:25:59Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:146",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The installed property must satisfy the applicable Massachusetts statutory exemption: a qualifying solar or wind facility, qualifying co-located storage, a qualifying fuel cell, or a project covered by a valid municipal payment-in-lieu-of-tax agreement.",
+        "For the ordinary solar or wind pathway, demonstrate the applicable annual-load, system-size, incentive, permission-to-operate, or municipal agreement condition in General Laws chapter 59, section 5, clause Forty-fifth.",
+        "For a fuel-cell claim, document that the system meets clause Forty-fifth B, including the installation-date and property-energy-use limits.",
+        "Provide the local assessor with ownership, placed-in-service, capacity, production, annual-load, interconnection, incentive, storage-integration, and agreement records needed to verify the exemption.",
+        "File any local abatement application or appeal within the municipal property-tax deadlines if the assessor does not initially apply the exemption."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The exemption is statutory for systems that satisfy the detailed technology and use tests, but the mapped set is mixed: a qualifying fuel cell can fit, co-located storage may fit, and solar water heating or standalone storage is not clearly covered by the ordinary electricity-facility pathway. Local assessor review or a negotiated municipal agreement therefore materially affects the outcome.",
+      "evidenceUrls": [
+        "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter59/Section5",
+        "https://www.mass.gov/info-details/ask-dls-solar-abatement-applications"
+      ],
+      "evidenceText": "Massachusetts law conditions renewable-energy, co-located storage, and fuel-cell property exemptions on specified technology, annual-use, size, documentation, or municipal-agreement tests, with local assessors administering exemption and abatement determinations.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:54",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [],
+      "approvalStage": "unknown",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "Indiana eliminated the solar, wind, hydroelectric, and geothermal property-tax deductions for assessment dates beginning January 1, 2025. A new retrofit therefore has no current award pathway under this legacy record; only previously applicable assessment-period matters could remain.",
+      "evidenceUrls": [
+        "https://www.in.gov/dlgf/files/2025-memos/250612-Cockerill-Memo-Legislation-Affecting-Deductions%2C-Exemptions%2C-and-Credits.pdf",
+        "https://www.in.gov/dlgf/files/2025-presentations/250618-FAQ-Webinar-Legislative-Update.pdf"
+      ],
+      "evidenceText": "Indiana Department of Local Government Finance guidance states that 2025 legislation eliminated the renewable-energy property-tax deductions for assessment dates beginning January 1, 2025.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:75",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The property must be actually and regularly used predominantly to produce and generate electricity using a qualifying renewable resource or technology.",
+        "For an application first filed after December 31, 2016, document the construction or installation completion date because the exemption is limited to the ten taxable years immediately following the completion year.",
+        "Submit the initial exemption application and supporting ownership, use, technology, capacity, completion, and valuation records to the county appraiser for forwarding to the Kansas Board of Tax Appeals.",
+        "Obtain a Kansas Board of Tax Appeals exemption order and file the required annual exemption claim with the county during the approved term.",
+        "Exclude thermal-only equipment and standalone battery storage unless the facts establish that the property is predominantly used as part of qualifying renewable electricity generation."
+      ],
+      "approvalStage": "before_operation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Kansas provides an objective ten-year exemption for qualifying renewable electricity-generation property, but every claim requires Board of Tax Appeals approval and annual continuation filings. Several mapped retrofits, including thermal-only systems and standalone storage, do not independently satisfy the electricity-generation test.",
+      "evidenceUrls": [
+        "https://www.ksrevenue.gov/pdf/RenEnergyExempt-BESS.pdf",
+        "https://www.ksrevenue.gov/pvdptexemptions.html",
+        "https://ksrevisor.gov/statutes/chapters/ch79/079_002_0001.html"
+      ],
+      "evidenceText": "Kansas requires renewable-energy exemptions to be applied for through the county and granted by the Board of Tax Appeals; post-2016 projects receive a ten-year term, and standalone storage that is not predominantly used for qualifying generation is not exempt.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3216",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible renewable-energy facility or business and identify the specific property proposed for a company-specific Renaissance Zone.",
+        "Secure the consent and required resolution or application from the local governmental unit and provide the project, investment, employment, tax-impact, site-control, and economic-benefit information requested by MEDC.",
+        "Negotiate and execute a development agreement containing the project commitments, reporting duties, zone boundaries, and duration.",
+        "Obtain Michigan Strategic Fund review and recommendation followed by State Administrative Board designation.",
+        "Obtain any additional agricultural recommendation required for a facility relying on agricultural crops or residues as feedstock."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Renewable Energy Renaissance Zones are discretionary, company-specific economic-development designations rather than automatic tax benefits. Approval depends on local consent, project merits, negotiated commitments, Michigan Strategic Fund action, and final State Administrative Board designation within a statutorily limited program.",
+      "evidenceUrls": [
+        "https://www.michiganbusiness.org/globalassets/documents/reports/fact-sheets/renewableenergyrenzones.pdf",
+        "https://www.michiganbusiness.org/globalassets/documents/reports/legislative-reports/cy2023-renaissance-zone-annual-report.pdf",
+        "https://www.michiganbusiness.org/about-medc/michigan-strategic-fund/"
+      ],
+      "evidenceText": "Michigan describes these zones as company-specific designations for renewable-energy businesses, limited in number and requiring local participation, Michigan Strategic Fund recommendation, State Administrative Board approval, and a development agreement.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3233",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Develop an eligible renewable-energy or energy-storage facility meeting the current minimum generating-capacity, operating-life, permitting, and Nevada-location requirements.",
+        "Meet the applicable capital-investment, employment, Nevada-residency, wage, health-insurance, and prohibited-public-funding conditions.",
+        "Submit the complete confidential and public-redacted application packages, required spreadsheet schedules, supporting records, and filing fee to the Governor's Office of Energy.",
+        "Complete the fiscal-impact review and public contested-case hearing and respond to requests for additional evidence.",
+        "Receive the Director's favorable determination, execute the abatement agreement, and complete annual compliance reporting throughout the abatement term."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Nevada's abatement is available only to substantial projects that clear quantitative investment, labor, operating, and public-benefit standards. The required fiscal review, public hearing, and Director determination make it a merits-based approval rather than a routine entitlement.",
+      "evidenceUrls": [
+        "https://www.energy.nv.gov/programs/renewable-energy-tax-abatement-reta-program/",
+        "https://www.energy.nv.gov/programs/renewable-energy-tax-abatement-reta-program/reta-program-requirements/",
+        "https://www.energy.nv.gov/programs/renewable-energy-tax-abatement-reta-program/reta-application-process/"
+      ],
+      "evidenceText": "The current Nevada program requires a qualifying large facility, economic and labor standards, detailed application packages, fiscal analysis, a public hearing, a Director decision, an abatement agreement, and continuing compliance reports.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:576",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Purchase qualifying machinery and equipment used directly in generating electricity from an eligible renewable source; storage must be integral to an otherwise qualifying generation system rather than a standalone use.",
+        "For an eligible solar system rated at 100 kilowatts or less, provide the seller with the required buyer's retail sales-tax exemption certificate at the time of purchase.",
+        "For larger solar systems and other qualifying renewable generation, pay the tax when required, obtain the applicable Department of Labor and Industries labor-standards certification, and submit the Department of Revenue refund or remittance application with invoices and project records.",
+        "Complete the purchase, installation, certification, and claim within the current statutory effective period, which ends January 1, 2030.",
+        "Retain capacity, equipment, installation, tax-paid, certification, and generation-use records for Department review."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Washington uses published, noncompetitive statutory claim pathways. A qualifying small solar purchase can receive the exemption at sale, while larger or other eligible generation can receive it after labor certification and Department of Revenue review. Some mapped thermal or standalone-storage systems fall outside the electricity-generation scope, but a compliant claim is likely to be allowed.",
+      "evidenceUrls": [
+        "https://dor.wa.gov/forms-publications/publications-subject/tax-topics/clean-energy-renewable-energy-equipment",
+        "https://dor.wa.gov/forms-publications/publications-subject/special-notices/sales-and-use-tax-exemption-purchases-and-installation-solar-energy-systems",
+        "https://app.leg.wa.gov/RCW/default.aspx?cite=82.08.962"
+      ],
+      "evidenceText": "Washington provides a point-of-sale certificate route for qualifying small solar systems and a labor-certification plus tax-refund route for larger or other qualifying renewable electricity-generation equipment through the end of 2029.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3223",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "The purchased property must meet Wisconsin's statutory renewable-energy sales-tax exemption, including the applicable solar, wind, or biogas use and system-integration requirements.",
+        "Provide the seller with a properly completed Wisconsin exemption certificate when claiming the exemption at purchase, or follow the Department of Revenue refund process if tax was paid in error.",
+        "Retain invoices, equipment descriptions, exemption certificates, and records showing the exempt renewable-energy use.",
+        "Do not treat standalone storage or unrelated equipment as exempt unless it independently falls within the statutory and administrative definitions."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The benefit is a statutory, noncompetitive sales-tax exemption generally claimed with the seller rather than through advance Department approval. When the property and its use fit the law and the exemption certificate is complete, allowance is likely; mixed or standalone equipment requires closer classification.",
+      "evidenceUrls": [
+        "https://docs.legis.wisconsin.gov/statutes/statutes/77/iii/54",
+        "https://docs.legis.wisconsin.gov/code/admin_code/tax/11/III/10",
+        "https://www.revenue.wi.gov/Pages/FAQS/pcs-s-exempt.aspx"
+      ],
+      "evidenceText": "Wisconsin law and administrative rules establish a renewable-energy sales-tax exemption that purchasers normally document to sellers with an exemption certificate; Department preapproval is not the ordinary claim step.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4068",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Install a renewable-resource system that meets South Dakota's technology, use, and statutory size conditions for the valuation exemption.",
+        "Provide system type, capacity, installation, cost, and property information to the county Director of Equalization as needed for assessment.",
+        "Confirm that the assessor applies the statutory renewable-resource value exclusion and use the ordinary property-valuation appeal process if the assessment is disputed.",
+        "Observe any technology-specific duration limits, including the rules applicable to geothermal systems."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "South Dakota's current guidance identifies this as a formulaic property-valuation exemption and states that no application is required. A system that clearly fits the statute should ordinarily receive the exclusion during county assessment, although mapped equipment that does not meet the renewable-resource definition would not.",
+      "evidenceUrls": [
+        "https://sdlegislature.gov/Statutes/10-4-44",
+        "https://dor.sd.gov/businesses/taxes/property-tax/"
+      ],
+      "evidenceText": "South Dakota law provides a renewable-resource valuation exemption administered by the county Director of Equalization, and current state property-tax materials identify the benefit as requiring no separate application.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:154",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Install an alternative-energy system that meets Montana Code and administrative-rule definitions for the ten-year installation-cost exemption.",
+        "Submit current Form AB-14 to the local Montana Department of Revenue field office by March 1 for consideration in the current tax year.",
+        "Identify the property, describe the system, state installation start and completion dates, and provide documentation supporting the total installation cost.",
+        "Permit the Department to inspect the property and energy system and respond to any request for supplemental information.",
+        "Receive Department approval before the exempt value is applied to the assessment."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Montana has a defined application and inspection pathway, but the Department must determine that the installed system satisfies the alternative-energy statute and rules. Geothermal, solar-thermal, and qualifying biomass systems may fit, while a generic high-efficiency HVAC replacement does not qualify merely because it is efficient.",
+      "evidenceUrls": [
+        "https://revenuefiles.mt.gov/files/Forms/Property_Tax_Exemption_Application_for_Installation_of_an_Alternative_Energy_System_.pdf",
+        "https://mtrevenue.gov/property/"
+      ],
+      "evidenceText": "Current Form AB-14 requires a March 1 filing, installation-cost documentation, Department review, and a property visit before approval of the ten-year alternative-energy-system exemption.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:158",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "The installed system must meet Nevada Revised Statutes section 701A.200 and be designed, constructed, or installed in or adjacent to a building or agricultural irrigation system to heat or cool the building or its water using a renewable energy source.",
+        "Maintain design, equipment, installation, and energy-source records sufficient for the county assessor to classify the system correctly.",
+        "Review the property assessment and use the ordinary assessment appeal process if the qualified system's value is included contrary to the statute."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "Nevada lists the qualified energy-system exemption as requiring no application. A properly documented ground-source geothermal system used to heat or cool a building or its water falls directly within the statutory function, making the exemption near automatic subject to assessor classification and ordinary audit or appeal.",
+      "evidenceUrls": [
+        "https://www.leg.state.nv.us/nrs/nrs-701a.html#NRS701ASec200",
+        "https://tax.nv.gov/wp-content/uploads/2025/03/2025-Property-Tax-Elements-Applications.pdf"
+      ],
+      "evidenceText": "Nevada's current property-tax exemption list classifies qualified renewable heating and cooling energy systems under section 701A.200 as exempt with no application required.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:173",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own property containing a device that qualifies under Texas Tax Code section 11.27 as a solar- or wind-powered energy device.",
+        "File current Form 50-123 with the chief appraiser of the county appraisal district by the applicable exemption deadline.",
+        "Describe the device and property and provide cost, installation, energy-use, ownership, and technical records requested by the appraisal district.",
+        "Receive the chief appraiser's exemption determination and pursue the appraisal-review-board process if denied.",
+        "Do not claim the exemption for ordinary replacement windows or a biomass or biogas system unless the particular property independently meets the statutory solar- or wind-powered-device definition."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "Texas has a routine approval process for qualifying solar- and wind-powered devices, but the mapped retrofits are window replacement and biomass or biogas equipment. Those technologies do not ordinarily satisfy the statute, so an award under this record is unlikely absent unusual facts establishing a qualifying solar- or wind-powered device.",
+      "evidenceUrls": [
+        "https://comptroller.texas.gov/taxes/property-tax/exemptions/",
+        "https://comptroller.texas.gov/forms/50-123.pdf",
+        "https://statutes.capitol.texas.gov/Docs/TX/htm/TX.11.htm#11.27"
+      ],
+      "evidenceText": "Texas requires an application to the county chief appraiser and limits this exemption to property used as a qualifying solar- or wind-powered energy device.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:44",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Purchase tangible personal property that will be incorporated into a qualifying Vermont net-metering system, a qualifying off-grid home or business energy system, or a qualifying solar hot-water system.",
+        "For solar hot water, limit the exempt property to components directly necessary to capture, convert, or store solar energy for water heating.",
+        "Document the system classification and exempt use to the seller and retain invoices and supporting records for tax review.",
+        "Treat combined heat and power or biomass property as exempt only when the complete system satisfies the referenced net-metering or off-grid statutory definitions."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Vermont's exemption is statutory and noncompetitive, with no separate program award decision. Solar hot-water components expressly fit when directly necessary, while the other mapped technologies qualify only if incorporated into a statutory net-metering or off-grid system. A properly classified purchase is therefore likely to receive the exemption.",
+      "evidenceUrls": [
+        "https://legislature.vermont.gov/statutes/section/32/233/09741"
+      ],
+      "evidenceText": "Vermont statute exempts property incorporated into qualifying net-metering or off-grid energy systems and directly necessary solar hot-water equipment; the exemption is claimed through the taxable purchase rather than a competitive approval process.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:248",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Complete and place in service a Utah commercial renewable-energy system using an eligible technology, such as solar photovoltaic, wind, geothermal, hydro, biomass, or qualifying renewable thermal equipment, before the statutory phaseout applies.",
+        "Submit the Office of Energy Development electronic application with applicant, site, technology, cost, completion, invoice, and technical documentation.",
+        "Pay the nonrefundable $15 application fee.",
+        "Receive Office of Energy Development certification and the TC-40E tax form, then claim the approved credit through the Utah State Tax Commission.",
+        "Exclude a standalone battery or generic high-efficiency HVAC equipment unless it is part of and eligible under an approved renewable-energy system."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The commercial credit is formulaic rather than competitively ranked: qualifying systems receive a refundable credit equal to ten percent of eligible cost, up to $50,000, after Office of Energy Development certification. Several mapped renewable technologies fit, although standalone storage and generic HVAC do not.",
+      "evidenceUrls": [
+        "https://energy.utah.gov/homepage/tax-credits/renewable-energy-systems-tax-credit/"
+      ],
+      "evidenceText": "Utah currently accepts commercial RESTC applications for specified renewable technologies, charges a $15 fee, and issues the tax form only after approval; the credit is refundable at ten percent of eligible cost up to $50,000.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:83",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Install an eligible non-solar residential renewable-energy system in Utah, such as qualifying wind, geothermal, hydro, biomass, or renewable thermal technology, before the statutory phaseout applies.",
+        "Do not claim a residential state credit for solar photovoltaic systems installed in 2024 or later or for a home battery, which the current program expressly excludes.",
+        "Submit the Office of Energy Development electronic application with residence, technology, cost, completion, invoice, and technical documentation.",
+        "Pay the nonrefundable $15 application fee and receive Office of Energy Development certification and TC-40E before claiming the credit on the Utah return.",
+        "Treat generic high-efficiency HVAC equipment as eligible only when it is the qualifying geothermal or renewable-thermal system itself."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Utah still certifies residential credits for several non-solar renewable technologies, but current rules exclude residential solar photovoltaic systems installed from 2024 onward and exclude home batteries. Because two prominent mapped technologies are expressly unavailable and the remaining mappings require technology-specific review, the overall likelihood is possible.",
+      "evidenceUrls": [
+        "https://energy.utah.gov/homepage/tax-credits/renewable-energy-systems-tax-credit/"
+      ],
+      "evidenceText": "Utah's current residential RESTC excludes solar photovoltaic systems installed in 2024 or later and home batteries, while retaining a nonrefundable credit for qualifying wind, geothermal, hydro, biomass, and certain renewable thermal systems after certification.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22798",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "The property must fall within Rhode Island's renewable-energy property-tax valuation or exemption rules and any ordinance adopted by the municipality.",
+        "For a commercial grid-connected electric-generation system, provide the municipal assessor with the initial and final interconnection documents and applicable program-enrollment records.",
+        "Allow the assessor to apply the statewide capacity-based valuation formula or the municipality's authorized exemption treatment.",
+        "Confirm that the equipment is an eligible renewable electric-generation resource; a thermal-only ground-source heat pump or biomass heating system is not automatically within the alternating-current generation formula.",
+        "Use the municipal property-tax appeal process if the classification or valuation is disputed."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Rhode Island supplies a formula and exemption framework rather than a competitive award, but implementation depends on the system category and municipal tax treatment. The mapped geothermal and biomass retrofits may be thermal rather than grid-connected electric generation, so the favorable valuation cannot be assumed from the retrofit labels alone.",
+      "evidenceUrls": [
+        "https://rules.sos.ri.gov/regulations/part/300-00-00-2",
+        "https://tax.ri.gov/"
+      ],
+      "evidenceText": "Rhode Island's active rule directs municipal treatment of renewable-energy property, including documentation and a capacity-based valuation method for qualifying commercial grid-connected systems, while other property may receive statutory or local exemption treatment.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5665",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Develop a Renewable Portfolio Standard-eligible electric generating facility with nameplate capacity no greater than three megawatts in the service territory of a participating investor-owned utility.",
+        "Register with the utility's ReMAT solicitation system and submit a complete program participation request with site control, technology, project, pricing-product, and development information.",
+        "Obtain required interconnection approvals and qualifying-facility status and satisfy the utility's queue, product-category, and available-capacity rules.",
+        "Accept the offered fixed price and execute the standard ReMAT power-purchase agreement and required security or milestone documents.",
+        "Meet ongoing construction, commercial-operation, metering, delivery, and contract-compliance requirements; a ground-source heat pump is not an electric generator, while biomass or biogas must independently be RPS eligible."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "ReMAT remains an active standard-contract feed-in tariff, but an applicant must have an RPS-eligible generator, secure interconnection, clear the utility queue and available-capacity limits, and execute the contract. The mapped geothermal heat-pump retrofit is not generation, while a qualifying biomass or biogas generator can compete for a contract.",
+      "evidenceUrls": [
+        "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/electric-power-procurement/rps/rps-procurement-programs/renewable-market-adjusting-tariff",
+        "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/electric-power-procurement/rps/rps-procurement-programs",
+        "https://www.sce.com/about-sce/energy-procurement/solicitations/remat"
+      ],
+      "evidenceText": "The CPUC describes ReMAT as a fixed-price standard-contract program for RPS-eligible generators up to three megawatts, with participation handled through the investor-owned utilities' application, queue, interconnection, and contracting processes.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4557",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [],
+      "approvalStage": "unknown",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "MassCEC states that it is no longer accepting applications for the Solar Hot Water Program. New projects therefore have no current award path under this legacy record; only administration of previously accepted awards could remain.",
+      "evidenceUrls": [
+        "https://www.masscec.com/solar-hot-water-installer-resources"
+      ],
+      "evidenceText": "MassCEC's current installer resource page states that applications are no longer being accepted for the Solar Hot Water Program.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:137",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Install a qualifying alternative-energy device in an Idaho residence owned or occupied by the taxpayer, using a technology allowed by the current Idaho instructions.",
+        "Retain invoices, installation dates, system descriptions, and records supporting the taxpayer's qualifying cost and Idaho residential use.",
+        "Claim the allowable deduction on the current Idaho Form 39R or Form 39NR schedule, subject to the annual percentage and dollar limits and carryforward schedule.",
+        "Do not treat an ordinary high-efficiency HVAC replacement as qualifying unless it is the qualifying geothermal or other listed alternative-energy system."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is a formulaic state income-tax deduction rather than a competitive award or certification program. A taxpayer with a listed device and adequate cost records can claim the scheduled deduction directly, subject to normal return review; geothermal and qualifying biomass systems can fit, while generic HVAC cannot.",
+      "evidenceUrls": [
+        "https://tax.idaho.gov/taxes/income-tax/individual-income/forms/",
+        "https://tax.idaho.gov/wp-content/uploads/forms/EFO00088/EFO00088_03-02-2026.pdf"
+      ],
+      "evidenceText": "Current Idaho instructions allow a residential alternative-energy-device deduction claimed on the income-tax return, generally at 40 percent in the first year and 20 percent in each of the next three years, subject to annual limits.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:740",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a customer of a Wisconsin utility participating in Focus on Energy and install an eligible solar photovoltaic system at the qualifying residential or business site.",
+        "Use equipment and an installation that satisfy the current 2026 solar rebate specifications and place the system into operation during the eligible period.",
+        "Submit the current application and all required invoices, equipment, installation, interconnection, and tax-credit attestation records within 60 days after the system is placed into operation and no later than August 31, 2026.",
+        "Permit Focus on Energy to verify the project and satisfy any request for additional documentation.",
+        "Remain within available program funding and the published per-system rebate limits."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The 2026 solar rebate is active and uses a published, noncompetitive payment formula. A participating-utility customer with a qualifying installed system and a complete, timely application is likely to be paid, subject to available funds and final verification.",
+      "evidenceUrls": [
+        "https://focusonenergy.com/residential/solar-for-homes",
+        "https://focusonenergy.com/business/renewables",
+        "https://assets.focusonenergy.com/production/docs/trade-ally/0226_FOCUS_RES_6607440_FS_Solar-Rebates-App_Updates_FILL.pdf"
+      ],
+      "evidenceText": "Focus on Energy's 2026 solar pages publish residential and business rebates and require applications within 60 days after installation, with a final submission deadline of August 31, 2026.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:727",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Receive a subsidy provided directly or indirectly by a public utility to a customer for purchasing or installing an energy-conservation measure with respect to a dwelling unit.",
+        "Exclude only the amount that satisfies Internal Revenue Code section 136 and retain utility, payment, dwelling, measure, invoice, and installation records.",
+        "Reduce the tax basis of the affected property by the excluded subsidy and avoid claiming an inconsistent duplicate tax benefit.",
+        "Report the transaction consistently on the applicable federal return; no separate IRS program application or award approval is required."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "The benefit is a statutory federal gross-income exclusion, not a competitive or discretionary award. When the payment is a qualifying public-utility energy-conservation subsidy for a dwelling unit and the taxpayer applies the required basis adjustment, the exclusion follows by law, subject only to ordinary IRS examination.",
+      "evidenceUrls": [
+        "https://uscode.house.gov/view.xhtml?req=%28title%3A26+section%3A136+edition%3Aprelim%29",
+        "https://www.irs.gov/publications/p525"
+      ],
+      "evidenceText": "Internal Revenue Code section 136 excludes qualifying public-utility energy-conservation subsidies for dwelling units from gross income and requires a corresponding basis reduction; it does not establish a separate application process.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:666",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Receive a subsidy provided directly or indirectly by a public utility to a customer for purchasing or installing an energy-conservation measure with respect to a dwelling unit.",
+        "Exclude only the amount that satisfies Internal Revenue Code section 136 and retain utility, payment, dwelling, measure, invoice, and installation records.",
+        "Reduce the tax basis of the affected property by the excluded subsidy and avoid claiming an inconsistent duplicate tax benefit.",
+        "Report the transaction consistently on the federal individual income-tax return; no separate IRS program application or award approval is required."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "The personal benefit is a statutory federal gross-income exclusion rather than a competitively awarded incentive. A qualifying utility subsidy for a dwelling-unit energy-conservation measure is excluded by law when the taxpayer applies the required basis treatment, subject to normal IRS review.",
+      "evidenceUrls": [
+        "https://uscode.house.gov/view.xhtml?req=%28title%3A26+section%3A136+edition%3Aprelim%29",
+        "https://www.irs.gov/publications/p525"
+      ],
+      "evidenceText": "Federal law excludes qualifying public-utility energy-conservation subsidies for dwelling units from gross income and requires a corresponding basis reduction, without a separate award application.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5144",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a residential customer of the specific Bright Energy Solutions member utility whose current page lists the selected rebate.",
+        "Purchase or install a currently listed qualifying product or project and satisfy the measure-specific efficiency, size, connectivity, contractor, and installation requirements.",
+        "Complete the utility-specific rebate form and submit the required invoice, model and serial information, proof of installation, customer account information, and contractor records.",
+        "Submit the claim within the applicable program deadline and permit verification when requested.",
+        "Confirm the selected mapped retrofit is actually listed for the member utility; the current Manilla offering supports HVAC, geothermal, heat-pump water heating, smart thermostats, Level 2 charging, selected lighting, laundry, and residential dishwashers, but not every retrofit associated with the DSIRE record."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Bright Energy Solutions maintains active, measure-specific rebates, so a qualifying listed measure can be paid after routine document review. The DSIRE record, however, aggregates multiple utilities and includes several retrofit mappings not shown on the current Manilla residential page, making award dependent on the actual member utility and measure.",
+      "evidenceUrls": [
+        "https://www.brightenergysolutions.com/members/manilla-municipal-utilities?rebates=residential",
+        "https://www.brightenergysolutions.com/members"
+      ],
+      "evidenceText": "The current Manilla Municipal Utilities page lists thirteen residential rebate categories and requires use of the measure-specific downloadable claim process; eligibility varies by Bright Energy Solutions member utility and measure.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1289",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a customer of a Wisconsin utility participating in Focus on Energy and choose a measure offered through the current residential pathway.",
+        "Install or purchase equipment meeting the current efficiency, sizing, product-list, contractor, and installation requirements for that measure.",
+        "Use a participating Trade Ally, obtain an assessment, reservation, or preapproval when the selected pathway requires it, including applicable whole-home or custom work.",
+        "Receive the instant discount or submit the current rebate claim with invoices, equipment specifications, installation records, and any income-qualification documents by the applicable deadline.",
+        "Permit inspection or other project verification when requested and remain within available funds."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Focus on Energy currently offers published residential incentives for heating and cooling, smart thermostats, geothermal systems, insulation, and air sealing. These are generally administrative rather than competitive, so a qualifying measure following its specific pathway is likely to receive the incentive after any required verification.",
+      "evidenceUrls": [
+        "https://focusonenergy.com/residential",
+        "https://focusonenergy.com/residential-rebates-and-discounts",
+        "https://focusonenergy.com/residential/heating-and-cooling",
+        "https://focusonenergy.com/residential/insulation-and-air-sealing"
+      ],
+      "evidenceText": "Focus on Energy's current residential pages provide active measure-specific rebates and instant discounts for qualifying HVAC, thermostat, geothermal, insulation, and air-sealing projects, with pathway-specific documentation and verification.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1368",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an electric-utility ratepayer on Hawaii Island, Lanai, Maui, Molokai, or Oahu; Kauai customers are not eligible for Hawaii Energy rebates.",
+        "Select equipment or work listed in the current July 1, 2026 through June 30, 2027 residential offering and meet its product, efficiency, sizing, replacement, trade-in, and installation conditions.",
+        "Use a participating retailer or approved contractor when the measure requires one so that the instant rebate or program work order can be issued correctly.",
+        "Submit or cause the contractor to submit the complete rebate documentation, including invoices, specifications, customer authorization, and any required photographs or verification records.",
+        "Complete any inspection or supplemental review requested by Hawaii Energy and apply while funding remains; mapped window replacement and variable-frequency-drive work are not listed as ordinary residential rebates."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Hawaii Energy launched a current 2026-2027 residential offering with formulaic rebates for central and mini-split cooling, heat-pump water heaters, refrigerators, and lighting. Several mapped retrofits fit, while windows, variable-frequency drives, and broad refrigeration equipment do not clearly match the residential list, so the outcome depends on the actual measure.",
+      "evidenceUrls": [
+        "https://hawaiienergy.com/news/hawaii-energy-announces-2026-2027-rebates-to-help-residents-and-businesses-lower-energy-costs/",
+        "https://hawaiienergy.com/for-homes/rebates/",
+        "https://hawaiienergy.com/for-homes/rebates/hvac/",
+        "https://hawaiienergy.com/for-homes/rebates/water-heating/"
+      ],
+      "evidenceText": "Hawaii Energy's July 2026 announcement establishes current residential rebates through June 30, 2027, while funds last, for cooling, water heating, refrigerators, and lighting, limited to ratepayers on Hawaii Island, Lanai, Maui, Molokai, and Oahu.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2325",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Vermont residential, rental, or other property customer for the specific current Efficiency Vermont offer.",
+        "Purchase and install qualifying equipment or complete qualifying work under the measure-specific technical, contractor, product-list, and installation rules.",
+        "Use an Efficiency Excellence Network contractor, participating retailer, utility partner, or other approved channel when required for the selected measure.",
+        "Obtain any required project assessment, custom approval, or income verification and submit invoices, equipment records, installation documentation, and the current claim form.",
+        "Permit inspection or verification and confirm that the mapped measure is currently offered; heat pumps, ground-source systems, weatherization, and biomass heating have clear pathways, while generic windows, low-flow fixtures, and broad LED retrofits are not uniformly listed."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Efficiency Vermont's current 2026 catalog includes active, published incentives for heat pumps, ground-source systems, heat-pump water heaters, weatherization, controls, and wood or pellet heating. These pathways are generally formulaic, making payment likely for a qualifying and documented project, although not every mapped retrofit is currently supported.",
+      "evidenceUrls": [
+        "https://www.efficiencyvermont.com/rebates/list?type=res",
+        "https://www.efficiencyvermont.com/news-blog/news/efficiency-vermont-announces-2026-rebates-to-help-vermonters-achieve-their-home-energy-goals-in-the-new-year",
+        "https://www.efficiencyvermont.com/Media/Default/docs/printable-resources/GeneralInfoForHomes/efficiency-vermont-homeowner-flyer.pdf"
+      ],
+      "evidenceText": "Efficiency Vermont's current residential catalog and 2026 announcement show active cash-back, instant-discount, and custom pathways for heat pumps, geothermal, water heating, weatherization, controls, and biomass heating, with measure-specific review and documentation.",
+      "reviewedAt": "2026-07-10T15:25:59Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }
