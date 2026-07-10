@@ -16777,6 +16777,7 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
       if (includeInactive) params.set("includeInactive", "1");
       const query = params.toString();
       const nextResponse = await apiGet<FirstmateTasksResponse>(`/api/admin/firstmate/tasks${query ? `?${query}` : ""}`, {
+        cache: "no-store",
         ...(credential ? { headers: adminAuthHeaders(credential) } : {})
       });
       setResponse(normalizeFirstmateTasksResponse(nextResponse));
