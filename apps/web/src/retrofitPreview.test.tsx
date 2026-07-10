@@ -85,6 +85,7 @@ function buildFirstmateTaskFixture(overrides: Record<string, unknown> = {}) {
     gptProRepairFallback: false,
     gptProRepairUnavailableReason: null,
     ...overrides,
+    ...overrides
   };
 }
 
