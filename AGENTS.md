@@ -4,6 +4,7 @@ This file is the entry point for coding agents working in the RetroFi / Green Bu
 Keep it specific to this project and update it when workflow, checks, deployment rules, protected files, or project boundaries change.
 
 All coding agents working in this repository must follow [AGENT_WORKFLOW.md](./AGENT_WORKFLOW.md).
+`CLAUDE.md` is a compatibility symlink to this file for Claude-family agents.
 Read [review.md](./review.md) before finalizing a meaningful change.
 
 ## Project Context
