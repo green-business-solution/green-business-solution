@@ -328,9 +328,11 @@ ensure_artifact_bucket() {
 ensure_generated_fixtures() {
   echo "Ensuring generated test fixtures are available..."
   if [ -n "${PROFILE}" ]; then
-    AWS_PROFILE="${PROFILE}" AWS_REGION="${REGION}" GBS_GENERATED_FIXTURE_BUCKET="${TEST_FIXTURES_BUCKET}" npm run fixtures:generated:download -- --force
+    AWS_PROFILE="${PROFILE}" AWS_REGION="${REGION}" GBS_GENERATED_FIXTURE_BUCKET="${TEST_FIXTURES_BUCKET}" \
+      npm run fixtures:generated:download -- --force
   else
-    AWS_REGION="${REGION}" GBS_GENERATED_FIXTURE_BUCKET="${TEST_FIXTURES_BUCKET}" npm run fixtures:generated:download -- --force
+    AWS_REGION="${REGION}" GBS_GENERATED_FIXTURE_BUCKET="${TEST_FIXTURES_BUCKET}" \
+      npm run fixtures:generated:download -- --force
   fi
 
   echo "Rebuilding admin test-case savings payloads from downloaded fixtures..."
