@@ -9081,9 +9081,9 @@ function mergeDashboardImplementedRetrofits(
   const preferArray = <T,>(current: T[] | undefined, next: T[]) => (current && current.length ? current : next);
   return {
     id: existing.id,
-    name: preferDefined(existing.name, incoming.name),
-    propertyName: preferDefined(existing.propertyName, incoming.propertyName),
-    category: preferDefined(existing.category, incoming.category),
+    name: existing.name ?? incoming.name ?? "",
+    propertyName: existing.propertyName ?? incoming.propertyName ?? "",
+    category: existing.category ?? incoming.category ?? "",
     installedDate: preferDefined(existing.installedDate, incoming.installedDate),
     implementationStatus: existing.implementationStatus,
     sourceStatus: preferDefined(existing.sourceStatus, incoming.sourceStatus),
