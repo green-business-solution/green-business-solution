@@ -735,7 +735,7 @@ function parseStatusText(text) {
 }
 
 function resolveTaskState(task) {
-  if (task.statusState === "done" || task.backlogState === "completed") {
+  if (task.backlogState === "completed") {
     return "completed";
   }
 

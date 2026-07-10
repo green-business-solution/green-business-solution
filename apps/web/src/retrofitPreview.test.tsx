@@ -1980,6 +1980,11 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Codex tasks require RetroFi admin sign-in.");
     expect(source).toContain("Reports ready");
     expect(source).toContain("Completed and archived tasks without pending report review are hidden by default.");
+    expect(source).toContain("Active tasks");
+    expect(source).toContain("getFirstmateSnapshotState(response, snapshotHasTasks)");
+    expect(source).toContain("Codex tasks snapshot warning");
+    expect(source).toContain("Snapshot ");
+    expect(source).toContain("manifest-selected snapshot");
   });
 
   it("normalizes legacy Firstmate task payloads into the production task state model", () => {

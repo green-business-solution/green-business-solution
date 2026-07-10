@@ -175,6 +175,9 @@ Runtime records are split by domain so deployment and migration work can stay sc
 - `gbs-application-profiles`: application source/profile registry records keyed by `stateScope`/`stateKey`.
 - `gbs-firstmate-tasks`: sanitized Codex task snapshots and bounded report payloads keyed by
   `stateScope`/`stateKey`.
+  Published snapshots also carry manifest metadata such as `sourceGeneratedAt` and
+  `sourceModifiedAtEpochMs` so the admin UI can show whether the current manifest-selected snapshot
+  is fresh, empty, or unavailable.
 - `gbs-api-runtime-state`: small operational state keyed by `stateScope`/`stateKey`, such as Geocodio
   quota usage.
 

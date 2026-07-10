@@ -619,6 +619,8 @@ type FirstmateTasksResponse = {
   source?: "local" | "dynamodb";
   storageStatus?: string;
   snapshotVersion?: string;
+  sourceGeneratedAt?: string | null;
+  sourceModifiedAtEpochMs?: number | null;
   inactiveHidden?: boolean;
   inactiveTaskCount?: number;
   hiddenByDefaultTaskCount?: number;
@@ -16775,6 +16777,7 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
       if (includeInactive) params.set("includeInactive", "1");
       const query = params.toString();
       const nextResponse = await apiGet<FirstmateTasksResponse>(`/api/admin/firstmate/tasks${query ? `?${query}` : ""}`, {
+        cache: "no-store",
         ...(credential ? { headers: adminAuthHeaders(credential) } : {})
       });
       setResponse(normalizeFirstmateTasksResponse(nextResponse));
@@ -16808,8 +16811,8 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
   const reportReadyTasks = includeInactive
     ? []
     : response?.tasks.filter(
-      (task) => task.hasReport && task.reportReviewReady && ["completed", "archived"].includes(task.state)
-    ) || [];
+        (task) => task.hasReport && task.reportReviewReady && ["completed", "archived"].includes(task.state)
+      ) || [];
   const localAuthBypass = Boolean(response?.localAuthBypass);
   const visibleSections = includeInactive
     ? FIRSTMATE_TASK_SECTIONS
@@ -16817,6 +16820,10 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
   const visibleTaskCount = response?.tasks.filter((task) => visibleSections.some((section) => section.state === task.state)).length || 0;
   const defaultTaskGroupCount = visibleTaskCount + reportReadyTasks.length;
   const inactiveTaskCount = response?.hiddenByDefaultTaskCount ?? response?.inactiveTaskCount ?? ((response?.counts.completed || 0) + (response?.counts.archived || 0));
+  const snapshotHasTasks = includeInactive
+    ? (response?.totalTaskCount || 0) > 0
+    : (response?.totalTaskCount || 0) > 0 || inactiveTaskCount > 0;
+  const snapshotState = getFirstmateSnapshotState(response, snapshotHasTasks);
 
   return (
     <section className="tasks-page-panel">
@@ -16843,10 +16850,16 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
 
       {notice ? <p className="tasks-notice-message">{notice}</p> : null}
       {error ? <p className="error-message">{error}</p> : null}
+      {snapshotState ? (
+        <p className={`tasks-notice-message is-${snapshotState.tone}`.trim()}>
+          <strong>{snapshotState.title}</strong>
+          <span>{snapshotState.text}</span>
+        </p>
+      ) : null}
 
       <div className="tasks-stats">
         <article>
-          <span>Active agents</span>
+          <span>Active tasks</span>
           <strong>{response?.activeAgentCount ?? 0}</strong>
         </article>
         <article>
@@ -16923,6 +16936,42 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
       ) : null}
     </section>
   );
+}
+
+function getFirstmateSnapshotState(response: FirstmateTasksResponse | null, snapshotHasTasks: boolean) {
+  if (!response) return null;
+
+  if (!response.enabled) {
+    return {
+      tone: "warning",
+      title: "Codex tasks unavailable",
+      text: response.reason || "Codex task snapshots are not available in this environment."
+    };
+  }
+
+  if (response.warnings?.length) {
+    return {
+      tone: "warning",
+      title: "Codex tasks snapshot warning",
+      text: response.warnings[0]
+    };
+  }
+
+  if (response.storageStatus === "dynamodb_empty" || !snapshotHasTasks) {
+    return {
+      tone: "info",
+      title: "No Codex tasks in the current snapshot",
+      text: "The manifest-selected snapshot is current, but it does not contain any tasks yet."
+    };
+  }
+
+  return {
+    tone: "info",
+    title: `Snapshot ${response.snapshotVersion ? response.snapshotVersion.slice(0, 8) : "current"} loaded`,
+    text: response.sourceModifiedAtEpochMs
+      ? `Current manifest-selected snapshot refreshed from source changes at ${new Date(response.sourceModifiedAtEpochMs).toLocaleString()}.`
+      : "Current manifest-selected snapshot refreshed from DynamoDB."
+  };
 }
 
 function FirstmateNeedsResponseSection({
