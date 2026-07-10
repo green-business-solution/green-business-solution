@@ -435,6 +435,7 @@ export function buildAdminTestCaseSavingsPreview({
     upfrontSavingsCents: estimate.upfrontSavingsCents ?? null,
     monthlyRecurringSavingsCents: estimate.monthlyRecurringSavingsCents ?? estimate.monthlySavingsCents ?? null,
     annualRecurringSavingsCents: estimate.annualRecurringSavingsCents ?? estimate.annualSavingsCents ?? null
+  });
   const threeYearFinancialValue = buildThreeYearFinancialValue({
     retrofitGroup,
     estimate,
