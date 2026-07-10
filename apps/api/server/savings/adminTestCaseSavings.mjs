@@ -1,6 +1,7 @@
 import { calculateRetrofitSavingsEstimate } from "./engine.mjs";
 import { selectV2PackagesForRetrofitGroup } from "./v2RuntimeIncentives.mjs";
 import { buildSustainabilityImpact, normalizeSquareFootage } from "../sustainabilityImpact.mjs";
+import { buildThreeYearFinancialValue } from "./threeYearFinancialValue.mjs";
 
 export const ADMIN_TEST_CASE_SAVINGS_SCHEMA_VERSION = "admin-test-case-savings-v2";
 
@@ -434,6 +435,12 @@ export function buildAdminTestCaseSavingsPreview({
     upfrontSavingsCents: estimate.upfrontSavingsCents ?? null,
     monthlyRecurringSavingsCents: estimate.monthlyRecurringSavingsCents ?? estimate.monthlySavingsCents ?? null,
     annualRecurringSavingsCents: estimate.annualRecurringSavingsCents ?? estimate.annualSavingsCents ?? null
+  const threeYearFinancialValue = buildThreeYearFinancialValue({
+    retrofitGroup,
+    estimate,
+    normalizedProfile,
+    opportunityIncentiveRules: selectedIncentiveRules,
+    opportunityCalculationPackages: selectedIncentivePackages
   });
 
   return {
@@ -493,7 +500,8 @@ export function buildAdminTestCaseSavingsPreview({
       incentiveAssumption,
       "This is not a customer quote or final savings estimate."
     ],
-    unsupportedReason: estimate.status === "blocked" ? "Savings preview is blocked by missing fixture inputs." : null
+    unsupportedReason: estimate.status === "blocked" ? "Savings preview is blocked by missing fixture inputs." : null,
+    threeYearFinancialValue
   };
 }
 
