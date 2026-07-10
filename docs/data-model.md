@@ -183,6 +183,11 @@ Runtime records are split by domain so deployment and migration work can stay sc
 
 The former shared `gbs-runtime-state` table has been split into those domain tables.
 
+Admin test-case savings previews also include a derived `sustainabilityImpact` contract.
+It is calculated from bill-line deltas and square footage at read time and is not stored as a separate table record.
+The contract currently exposes water conservation, Scope 1 therm reduction, Scope 2 electricity reduction,
+site EUI reduction, and grid peak-demand reduction, along with per-metric formula IDs, assumptions, quality, and trace data.
+
 ## S3 Buckets
 
 - `gbs-retrofi-org-energy-data-...`: customer uploaded utility bills and Green Button files under

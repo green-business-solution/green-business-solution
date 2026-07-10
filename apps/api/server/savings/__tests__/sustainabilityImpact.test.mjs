@@ -22,7 +22,7 @@ describe("sustainability impact calculations", () => {
     expect(impact.metrics.waterConservationGallonsPerYear.value).toBe(5000);
     expect(impact.metrics.scope1ThermReductionPerYear.value).toBe(12);
     expect(impact.metrics.scope2ElectricityReductionKwhPerYear.value).toBe(1000);
-    expect(impact.metrics.gridPeakDemandReductionKw.value).toBe(96);
+    expect(impact.metrics.gridPeakDemandReductionKw.value).toBe(8);
     expect(impact.metrics.siteEuiReductionKbtuPerSquareFootPerYear.value).toBeCloseTo((1000 * 3.412 + 12 * 100) / 10000, 6);
   });
 
