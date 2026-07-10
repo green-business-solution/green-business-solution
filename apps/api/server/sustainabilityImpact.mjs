@@ -712,6 +712,9 @@ function buildSiteEuiMetric({ squareFootage, sourceSquareFootage, scope2Metric, 
   const boundary = buildBoundaryNote();
 
   if (parsedSquareFootage && applicableMetrics.length > 0) {
+    // Preserve source-calculated provenance whenever any included scope is source-backed.
+    // The all-not-applicable case is handled below so mixed not_applicable/source_calculated
+    // combinations do not get downgraded to not_applicable.
     const provenanceState = unavailableIncluded
       ? "unavailable"
       : [scope2Metric.provenanceState, scope1Metric.provenanceState].includes("estimated")
