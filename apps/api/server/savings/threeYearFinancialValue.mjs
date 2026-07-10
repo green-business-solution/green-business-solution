@@ -4,6 +4,12 @@ import {
   isNearGuaranteedAwardLikelihood,
   normalizeAwardLikelihood
 } from "../matching/awardLikelihood.mjs";
+import {
+  OPPORTUNITY_AVAILABILITY_STATUS,
+  opportunityAvailabilityStatus
+} from "../matching/opportunityLifecycle.mjs";
+import { applyOpportunityAvailabilityOverlay } from "../matching/opportunityAvailabilityOverlay.mjs";
+import { applyOpportunityAwardAuditOverlay } from "../matching/opportunityAwardAuditOverlay.mjs";
 
 export const THREE_YEAR_FINANCIAL_VALUE_SCHEMA_VERSION = "three-year-financial-value-v1";
 export const THREE_YEAR_FINANCIAL_VALUE_METRIC = "three_year_net_financial_value_equivalent";
@@ -539,6 +545,12 @@ export function buildThreeYearFinancialValue({
   opportunityIncentiveRules = [],
   opportunityCalculationPackages = []
 }) {
+  const auditedRetrofitGroup = {
+    ...retrofitGroup,
+    opportunities: applyOpportunityAvailabilityOverlay(
+      applyOpportunityAwardAuditOverlay(retrofitGroup.opportunities || [])
+    )
+  };
   const selectedScenario = estimate.selectedIncentiveScenario || {};
   const alternativeScenarios = Array.isArray(estimate.alternativeScenarios) ? estimate.alternativeScenarios : [];
 
@@ -577,10 +589,10 @@ export function buildThreeYearFinancialValue({
   });
   const recurringThreeYearBaseline = recurringBaseline.cents === null ? null : addThreeYears(recurringBaseline.cents);
 
-  const order = buildOpportunityOrder(retrofitGroup, selectedScenario, groupedEntries, alternativeScenarios);
+  const order = buildOpportunityOrder(auditedRetrofitGroup, selectedScenario, groupedEntries, alternativeScenarios);
   const opportunityById = new Map(
-    Array.isArray(retrofitGroup.opportunities)
-      ? retrofitGroup.opportunities.map((opportunity) => [opportunity?.opportunityId, opportunity]).filter(([opportunityId]) => typeof opportunityId === "string")
+    Array.isArray(auditedRetrofitGroup.opportunities)
+      ? auditedRetrofitGroup.opportunities.map((opportunity) => [opportunity?.opportunityId, opportunity]).filter(([opportunityId]) => typeof opportunityId === "string")
       : []
   );
 
@@ -603,6 +615,8 @@ export function buildThreeYearFinancialValue({
       awardLikelihood: AWARD_LIKELIHOOD.UNKNOWN
     };
     const likelihood = normalizeAwardLikelihood(opportunity.awardLikelihood);
+    const availabilityStatus = opportunityAvailabilityStatus(opportunity);
+    const rangeEligible = availabilityStatus === OPPORTUNITY_AVAILABILITY_STATUS.ACTIVE;
     const requiresProgramApproval = opportunity?.requiresProgramApproval === true;
     const contribution = groupedEntries.get(opportunityId) || {
       oneTimeCents: 0,
@@ -618,7 +632,18 @@ export function buildThreeYearFinancialValue({
     const hasRecurring = contribution.hasRecurring;
     const hasSummary = contribution.sourceIds.length > 0;
     const hasUnsupportedFormula = contribution.hasUnsupportedFormula;
-    const hasQuantifiedEstimate = hasSummary && !contribution.hasUnsupportedFormula;
+    const hasQuantifiedEstimate = rangeEligible && hasSummary && !contribution.hasUnsupportedFormula;
+
+    if (!rangeEligible) {
+      excludedContributions.push({
+        opportunityId,
+        reason: "opportunity_not_active",
+        amountCents: 0,
+        metadata: {
+          availabilityStatus
+        }
+      });
+    }
 
     if (hasUnsupportedFormula) {
       excludedContributions.push({
@@ -635,18 +660,18 @@ export function buildThreeYearFinancialValue({
     const recurringThreeYearCents = hasRecurring ? addThreeYears(toIntegerCents(contribution.recurringAnnualCents)) : 0;
     const contributionRange = buildContributionRangeForOpportunity(
       {
-        oneTimeCents,
-        recurringThreeYearCents
+        oneTimeCents: rangeEligible ? oneTimeCents : 0,
+        recurringThreeYearCents: rangeEligible ? recurringThreeYearCents : 0
       },
-      isNearGuaranteedAwardLikelihood(likelihood)
+      rangeEligible && isNearGuaranteedAwardLikelihood(likelihood)
     );
 
-    if (isNearGuaranteedAwardLikelihood(likelihood)) {
+    if (rangeEligible && isNearGuaranteedAwardLikelihood(likelihood)) {
       nearGuaranteedOneTimeMinimum = addSignedInt(nearGuaranteedOneTimeMinimum, contributionRange.oneTimeContributionCents.minimum);
       nearGuaranteedOneTimeMaximum = addSignedInt(nearGuaranteedOneTimeMaximum, contributionRange.oneTimeContributionCents.maximum);
       nearGuaranteedRecurringMinimum = addSignedInt(nearGuaranteedRecurringMinimum, contributionRange.recurringThreeYearContributionCents.minimum);
       nearGuaranteedRecurringMaximum = addSignedInt(nearGuaranteedRecurringMaximum, contributionRange.recurringThreeYearContributionCents.maximum);
-    } else {
+    } else if (rangeEligible) {
       uncertainOneTimeMaximum = addSignedInt(
         uncertainOneTimeMaximum,
         contributionRange.oneTimeContributionCents.maximum
@@ -656,13 +681,15 @@ export function buildThreeYearFinancialValue({
 
     const breakdown = {
       opportunityId,
+      availabilityStatus,
+      rangeEligible,
       awardLikelihood: likelihood,
       requiresProgramApproval,
       selected: opportunitySelected,
       hasQuantifiedEstimate,
       oneTimeContributionCents: contributionRange.oneTimeContributionCents,
       recurringThreeYearContributionCents: contributionRange.recurringThreeYearContributionCents,
-      excludedReasons: excludedByAlternative || contribution.hasUnsupportedFormula ? [] : [],
+      excludedReasons: rangeEligible ? [] : [`availability_${availabilityStatus}`],
       contributionTrace: {
         sourceIds: unique(contribution.sourceIds),
         formulaSummary: isNearGuaranteedAwardLikelihood(likelihood) ? "near-guaranteed" : "non-guaranteed"
@@ -671,6 +698,10 @@ export function buildThreeYearFinancialValue({
         {
           id: "opportunity_award_likelihood",
           value: likelihood
+        },
+        {
+          id: "opportunity_availability_status",
+          value: availabilityStatus
         }
       ]
     };

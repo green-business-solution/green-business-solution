@@ -1,4 +1,5 @@
 import { normalizeAwardLikelihood } from "./awardLikelihood.mjs";
+import { opportunityAvailabilityStatus } from "./opportunityLifecycle.mjs";
 
 export function summarizeMatchResult(result) {
   return {
@@ -18,6 +19,8 @@ export function summarizeMatchResult(result) {
     unresolvedRequirements: result.unresolvedRequirements.slice(0, 6),
     blockers: result.blockers.slice(0, 6),
     nextQuestion: result.nextQuestion,
+    availabilityStatus: opportunityAvailabilityStatus(result),
+    availabilityLifecycle: result.availabilityLifecycle || null,
     requiresProgramApproval:
       typeof result.requiresProgramApproval === "boolean" ? result.requiresProgramApproval : null,
     approvalRequirements: result.approvalRequirements || [],

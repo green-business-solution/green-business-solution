@@ -8,7 +8,13 @@ import { buildOpportunityMatchProfile } from "../apps/api/server/matching/buildO
 import { evaluateOpportunityForUser } from "../apps/api/server/matching/evaluateRules.mjs";
 import { summarizeMatchResult } from "../apps/api/server/matching/explainMatch.mjs";
 import { normalizeUserProfile } from "../apps/api/server/matching/normalizeUserProfile.mjs";
-import { isVisibleAvailability, isVisibleOpportunity } from "../apps/api/server/matching/opportunityLifecycle.mjs";
+import { applyOpportunityAvailabilityOverlay } from "../apps/api/server/matching/opportunityAvailabilityOverlay.mjs";
+import { applyOpportunityAwardAuditOverlay } from "../apps/api/server/matching/opportunityAwardAuditOverlay.mjs";
+import {
+  isMatchableOpportunity,
+  isVisibleAvailability,
+  isVisibleOpportunity
+} from "../apps/api/server/matching/opportunityLifecycle.mjs";
 import { buildRetrofitGroupsFromEligibleResults } from "../apps/api/server/retrofitRecommendations.mjs";
 import {
   RETROFIT_TAXONOMY_VERSION,
@@ -64,9 +70,12 @@ const opportunityIncentiveRules = readOpportunityIncentiveRules(incentiveRulesPa
 const opportunityIncentiveCalculationPackages = readOpportunityIncentiveCalculationPackages(incentiveCalculationPackagesPath);
 const opportunityDataRepairsByOpportunityId = readOpportunityDataRepairs(existingOpportunityDataRepairsPaths);
 const opportunityRecords = sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws();
-const archivedOpportunityCount = opportunityRecords.filter((opportunity) => !isVisibleOpportunity(opportunity)).length;
-const candidateOpportunities = opportunityRecords
-  .filter(isVisibleOpportunity)
+const auditedOpportunityRecords = applyOpportunityAvailabilityOverlay(
+  applyOpportunityAwardAuditOverlay(opportunityRecords)
+);
+const archivedOpportunityCount = auditedOpportunityRecords.filter((opportunity) => !isVisibleOpportunity(opportunity)).length;
+const candidateOpportunities = auditedOpportunityRecords
+  .filter(isMatchableOpportunity)
   .map(applyOpportunityDataRepair)
   .map(applyFacilityReview)
   .map(applyUtilityReview);

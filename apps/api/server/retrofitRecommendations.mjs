@@ -5,7 +5,9 @@ import { summarizeMatchResult } from "./matching/explainMatch.mjs";
 import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchProfile.mjs";
 import { evaluateOpportunityForUser } from "./matching/evaluateRules.mjs";
 import { normalizeUserProfile } from "./matching/normalizeUserProfile.mjs";
-import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
+import { applyOpportunityAvailabilityOverlay } from "./matching/opportunityAvailabilityOverlay.mjs";
+import { applyOpportunityAwardAuditOverlay } from "./matching/opportunityAwardAuditOverlay.mjs";
+import { isMatchableOpportunity, isVisibleAvailability } from "./matching/opportunityLifecycle.mjs";
 import { classifyRetrofitsForOpportunity, RETROFIT_TYPES, RETROFIT_TYPES_BY_ID } from "./matching/retrofitTaxonomy.mjs";
 import { buildAdminTestCaseSavingsPreview } from "./savings/adminTestCaseSavings.mjs";
 import { buildTaxProfileRuntimePreview } from "./savings/taxProfileRuntime.mjs";
@@ -82,8 +84,11 @@ export function buildPortalRetrofitRecommendations({ formQuestionCatalog, intake
   const calculationDate = now.toISOString().slice(0, 10);
   const taxRuntimePreview = buildTaxRuntimePreviewForProfile(normalizedProfile);
   const requestedRetrofitTypeIds = normalizeRetrofitTypeIdFilter(retrofitTypeIds);
-  const eligibleResults = (opportunities || [])
-    .filter(isVisibleOpportunity)
+  const auditedOpportunities = applyOpportunityAvailabilityOverlay(
+    applyOpportunityAwardAuditOverlay(opportunities || [])
+  );
+  const eligibleResults = auditedOpportunities
+    .filter(isMatchableOpportunity)
     .map((opportunity) => buildEvaluatedOpportunity({ normalizedProfile, now, opportunity, requestedRetrofitTypeIds }))
     .filter(Boolean)
     .filter((result) => result.eligibilityStatus === "eligible");

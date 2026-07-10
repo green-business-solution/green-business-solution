@@ -77,7 +77,11 @@ describe("buildThreeYearFinancialValue", () => {
     expect(result.oneTimeContributionCents).toMatchObject({ minimum: 700, maximum: 700 });
     expect(result.recurringThreeYearContributionCents).toMatchObject({ minimum: 29400, maximum: 29400 });
     expect(result.nearGuaranteedContributionCents).toEqual({ minimum: 1100, maximum: 1100 });
-    expect(result.opportunityBreakdown[0].awardLikelihood).toBe("near_guaranteed");
+    expect(result.opportunityBreakdown[0]).toMatchObject({
+      availabilityStatus: "active",
+      rangeEligible: true,
+      awardLikelihood: "near_guaranteed"
+    });
     expect(result.opportunityBreakdown[0].requiresProgramApproval).toBe(true);
     expect(result.minimumThreeYearFinancialValueCents).toBe(31200);
     expect(result.maximumThreeYearFinancialValueCents).toBe(31200);
@@ -164,6 +168,105 @@ describe("buildThreeYearFinancialValue", () => {
       expect(result.maximumThreeYearFinancialValueCents).toBe(250);
     }
   );
+
+  it.each(["conditional", "disabled", "quarantined", "archived"])(
+    "zeros both bounds for quantified %s opportunities even when near guaranteed",
+    (availabilityStatus) => {
+      const estimate = baseEstimate({
+        oneTimeSavingsCents: 500,
+        netAnnualRecurringSavingsCents: 0,
+        selectedIncentiveScenario: {
+          id: `scenario-${availabilityStatus}`,
+          opportunityIds: ["opp-1"],
+          opportunityCount: 1,
+          upfrontSavingsEntries: [
+            {
+              kind: "upfront_savings",
+              opportunityId: "opp-1",
+              amountCents: 500,
+              formula: "fixed_amount",
+              incentiveRuleId: "rule-1"
+            }
+          ],
+          recurringSavingsEntries: []
+        }
+      });
+
+      const result = buildThreeYearFinancialValue({
+        retrofitGroup: fixture([
+          {
+            opportunityId: "opp-1",
+            availabilityStatus,
+            awardLikelihood: "near_guaranteed"
+          }
+        ]),
+        estimate
+      });
+
+      expect(result.minimumThreeYearFinancialValueCents).toBe(0);
+      expect(result.maximumThreeYearFinancialValueCents).toBe(0);
+      expect(result.opportunityBreakdown[0]).toMatchObject({
+        availabilityStatus,
+        rangeEligible: false,
+        awardLikelihood: "near_guaranteed",
+        hasQuantifiedEstimate: false,
+        oneTimeContributionCents: { minimum: 0, maximum: 0 },
+        excludedReasons: [`availability_${availabilityStatus}`]
+      });
+      expect(result.excludedContributions).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            opportunityId: "opp-1",
+            reason: "opportunity_not_active",
+            amountCents: 0,
+            metadata: { availabilityStatus }
+          })
+        ])
+      );
+    }
+  );
+
+  it("applies the authoritative disposition overlay before calculating the range", () => {
+    const opportunityId = "SOURCE_DSIRE:dsire_program_id:1106";
+    const estimate = baseEstimate({
+      oneTimeSavingsCents: 400,
+      netAnnualRecurringSavingsCents: 0,
+      selectedIncentiveScenario: {
+        id: "authoritative-disposition",
+        opportunityIds: [opportunityId],
+        opportunityCount: 1,
+        upfrontSavingsEntries: [
+          {
+            kind: "upfront_savings",
+            opportunityId,
+            amountCents: 400,
+            formula: "fixed_amount",
+            incentiveRuleId: "rule-authoritative"
+          }
+        ],
+        recurringSavingsEntries: []
+      }
+    });
+
+    const result = buildThreeYearFinancialValue({
+      retrofitGroup: fixture([
+        {
+          opportunityId,
+          availabilityStatus: "active",
+          awardLikelihood: "near_guaranteed"
+        }
+      ]),
+      estimate
+    });
+
+    expect(result.minimumThreeYearFinancialValueCents).toBe(0);
+    expect(result.maximumThreeYearFinancialValueCents).toBe(0);
+    expect(result.opportunityBreakdown[0]).toMatchObject({
+      availabilityStatus: "disabled",
+      rangeEligible: false,
+      awardLikelihood: "unknown"
+    });
+  });
 
   it("keeps missing likelihood unknown and preserves approval flag", () => {
     const estimate = baseEstimate({
