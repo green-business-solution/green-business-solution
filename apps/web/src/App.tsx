@@ -18720,7 +18720,7 @@ function deriveSustainabilityImpact(preview: SampleSavingsPreview, squareFootage
   );
   const therms = sum(thermDeltas.map((delta): number => Number(annualize(delta))));
   const kwh = sum(kwhDeltas.map((delta): number => Number(annualize(delta))));
-  const peak = sum(peakDeltas.map((delta): number => Number(annualize(delta))));
+  const peak = sum(peakDeltas.map((delta): number => Number(delta.deltaValue ?? 0)));
   const parsedSquareFootage = Number(squareFootage);
   const eui = Number.isFinite(parsedSquareFootage) && parsedSquareFootage > 0 ? ((kwh * 3.412) + (therms * 100)) / parsedSquareFootage : null;
 
@@ -18733,7 +18733,9 @@ function deriveSustainabilityImpact(preview: SampleSavingsPreview, squareFootage
   } satisfies SampleSustainabilityImpact["metrics"];
 
   const statuses = Object.values(metrics).map((metric) => metric.status);
-  const status = statuses.some((value) => value === "unavailable") ? "partial" : "calculated";
+  const status = statuses.some((value) => value === "unavailable" || value === "increased_consumption")
+    ? "partial"
+    : "calculated";
 
   return {
     schemaVersion: "sustainability-impact-v1",

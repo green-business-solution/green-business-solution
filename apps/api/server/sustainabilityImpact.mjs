@@ -154,7 +154,7 @@ export function buildSustainabilityImpact({
     .filter(Number.isFinite)
     .reduce((sum, value) => sum + value, 0);
   const peakKw = peakDeltas
-    .map(annualizeDelta)
+    .map((delta) => toNumber(delta?.deltaValue))
     .filter(Number.isFinite)
     .reduce((sum, value) => sum + value, 0);
 
