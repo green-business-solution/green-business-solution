@@ -3,12 +3,10 @@ export const AWARD_LIKELIHOOD = Object.freeze({
   LIKELY: "likely",
   POSSIBLE: "possible",
   UNLIKELY: "unlikely",
-  UNKNOWN: "unknown",
+  UNKNOWN: "unknown"
 });
 
-export const CANONICAL_AWARD_LIKELIHOODS = Object.freeze(
-  Object.values(AWARD_LIKELIHOOD),
-);
+export const CANONICAL_AWARD_LIKELIHOODS = Object.freeze(Object.values(AWARD_LIKELIHOOD));
 
 const canonicalAwardLikelihoods = new Set(CANONICAL_AWARD_LIKELIHOODS);
 const legacyAwardLikelihoods = new Map([
@@ -18,7 +16,7 @@ const legacyAwardLikelihoods = new Map([
   ["high", AWARD_LIKELIHOOD.LIKELY],
   ["uncertain", AWARD_LIKELIHOOD.POSSIBLE],
   ["rare", AWARD_LIKELIHOOD.UNLIKELY],
-  ["low", AWARD_LIKELIHOOD.UNLIKELY],
+  ["low", AWARD_LIKELIHOOD.UNLIKELY]
 ]);
 
 function asNormalizedString(value) {
@@ -35,7 +33,7 @@ export function normalizeAwardLikelihoodWithTrace(value) {
       method: "missing",
       requiresManualAttention: true,
       notes: ["awardLikelihood was missing."],
-      original,
+      original
     };
   }
 
@@ -45,7 +43,7 @@ export function normalizeAwardLikelihoodWithTrace(value) {
       method: "canonical",
       requiresManualAttention: false,
       notes: [],
-      original,
+      original
     };
   }
 
@@ -56,7 +54,7 @@ export function normalizeAwardLikelihoodWithTrace(value) {
       method: `legacy_${normalized.replace(/[^a-z0-9]+/g, "_")}`,
       requiresManualAttention: false,
       notes: [`Mapped legacy awardLikelihood ${original} to ${legacy}.`],
-      original,
+      original
     };
   }
 
@@ -65,7 +63,7 @@ export function normalizeAwardLikelihoodWithTrace(value) {
     method: "manual_review_required",
     requiresManualAttention: true,
     notes: [`Unrecognized awardLikelihood: ${original}`],
-    original,
+    original
   };
 }
 

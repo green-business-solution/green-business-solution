@@ -1,5 +1,4 @@
 import { normalizeAwardLikelihood } from "./awardLikelihood.mjs";
-import { opportunityAvailabilityStatus } from "./opportunityLifecycle.mjs";
 
 export function summarizeMatchResult(result) {
   return {
@@ -19,12 +18,8 @@ export function summarizeMatchResult(result) {
     unresolvedRequirements: result.unresolvedRequirements.slice(0, 6),
     blockers: result.blockers.slice(0, 6),
     nextQuestion: result.nextQuestion,
-    availabilityStatus: opportunityAvailabilityStatus(result),
-    availabilityLifecycle: result.availabilityLifecycle || null,
     requiresProgramApproval:
-      typeof result.requiresProgramApproval === "boolean"
-        ? result.requiresProgramApproval
-        : null,
+      typeof result.requiresProgramApproval === "boolean" ? result.requiresProgramApproval : null,
     approvalRequirements: result.approvalRequirements || [],
     approvalStage: result.approvalStage || "unknown",
     awardLikelihood: normalizeAwardLikelihood(result.awardLikelihood),
@@ -33,7 +28,7 @@ export function summarizeMatchResult(result) {
     awardLikelihoodEvidenceText: result.awardLikelihoodEvidenceText || "",
     awardLikelihoodEvidenceUrls: result.awardLikelihoodEvidenceUrls || [],
     reviewStatus: result.reviewStatus || "not_audited",
-    sourceSummary: result.sourceSummary,
+    sourceSummary: result.sourceSummary
   };
 }
 
@@ -48,11 +43,7 @@ export function groupMatchResults(results) {
   return Object.fromEntries(
     [...groups.entries()].map(([status, rows]) => [
       status,
-      rows.sort(
-        (a, b) =>
-          b.rankScore - a.rankScore ||
-          b.opportunityDataConfidence - a.opportunityDataConfidence,
-      ),
-    ]),
+      rows.sort((a, b) => b.rankScore - a.rankScore || b.opportunityDataConfidence - a.opportunityDataConfidence)
+    ])
   );
 }

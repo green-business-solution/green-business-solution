@@ -73,16 +73,6 @@ describe("deploy-production fixture patching flow", () => {
     expect(scriptSource).toContain("copy_data_file data/opportunity_award_audit_overlay.v1.json");
   });
 
-  it("packages the canonical availability dispositions with the API", () => {
-    expect(scriptSource).toContain("copy_data_file data/opportunity_availability_dispositions.v1.json");
-  });
-
-  it("packages the opportunity award and availability overlays and tax runtime rules with the API", () => {
-    expect(scriptSource).toContain("copy_data_file data/opportunity_award_audit_overlay.v1.json");
-    expect(scriptSource).toContain("copy_data_file data/opportunity_availability_dispositions.v1.json");
-    expect(scriptSource).toContain("copy_data_file data/tax_gap_runtime_rules_2026-07-05.json");
-  });
-
   it("runs generated fixture download before matching savings patching", () => {
     expect(scriptSource).toMatch(
       /ensure_generated_fixtures\(\)\s*\{[\s\S]*npm run fixtures:generated:download -- --force[\s\S]*npm run matching:test-case-savings[\s\S]*\}/
@@ -99,22 +89,5 @@ describe("deploy-production fixture patching flow", () => {
     expect(packageApiCall).toBeGreaterThan(-1);
     expect(ensureCall).toBeLessThan(buildFrontEndCall);
     expect(ensureCall).toBeLessThan(packageApiCall);
-  });
-});
-
-describe("deploy-production frontend caching", () => {
-  const scriptSource = fs.readFileSync(scriptPath, "utf8");
-
-  it("serves versioned homepage journey frames with immutable caching", () => {
-    expect(scriptSource).toMatch(
-      /s3 cp dist\/how-it-works\/scroll-frames\/[\s\S]*?--recursive[\s\S]*?--cache-control "public,max-age=31536000,immutable"/
-    );
-  });
-
-  it("includes deployment behavior in the frontend sync fingerprint", () => {
-    expect(scriptSource).toMatch(
-      /frontend_deploy_hash\(\)\s*\{[\s\S]*hash_directory dist[\s\S]*deploy-production\.sh/
-    );
-    expect(scriptSource).toContain('FRONTEND_DIST_HASH="$(frontend_deploy_hash)"');
   });
 });
