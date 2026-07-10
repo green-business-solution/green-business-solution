@@ -85,7 +85,7 @@ Completed and archived tasks stay in the snapshot and remain inactive.
 They are hidden by default only when no report review is pending.
 Completed or archived tasks with review-ready reports remain discoverable in the default admin view through the Reports ready area and count.
 Deploy the optional ingestion role by setting `GBS_FIRSTMATE_TASKS_INGESTION_PRINCIPAL_ARN` to the exact publisher role or user ARN before running `npm run deploy:production:data`.
-Leave it blank to create only the table and skip the writer role.
+Leave it blank to preserve any existing stack value and skip adding a writer role when the stack is created fresh.
 The RetroFi Lambda role has read-only access to the snapshot table.
 
 For local captain workflow only, run the API with `RETROFI_ENABLE_FIRSTMATE_TASKS=1` and

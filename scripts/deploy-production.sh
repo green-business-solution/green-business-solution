@@ -258,21 +258,16 @@ ensure_energy_data_bucket() {
 
 deploy_runtime_data_stack() {
   echo "Deploying runtime DynamoDB stack ${RUNTIME_DATA_STACK_NAME} in ${DATA_REGION}..."
+  local runtime_data_parameter_overrides=()
+  while IFS= read -r runtime_data_parameter_override; do
+    runtime_data_parameter_overrides+=("${runtime_data_parameter_override}")
+  done < <(runtime_data_parameter_overrides)
   aws_data_region cloudformation deploy \
     --stack-name "${RUNTIME_DATA_STACK_NAME}" \
     --template-file infra/runtime-data.yaml \
     --capabilities CAPABILITY_NAMED_IAM \
     --parameter-overrides \
-      "ManageCoreRuntimeTables=${MANAGE_CORE_RUNTIME_TABLES}" \
-      "UsersTable=${USERS_TABLE}" \
-      "IntakeTable=${INTAKE_TABLE}" \
-      "OpportunitiesTable=${OPPORTUNITIES_TABLE}" \
-      "DashboardPerformanceTable=${DASHBOARD_PERFORMANCE_TABLE}" \
-      "RetrofitRecommendationCacheTable=${RETROFIT_RECOMMENDATION_CACHE_TABLE}" \
-      "ApplicationProfilesTable=${APPLICATION_PROFILES_TABLE}" \
-      "ApiRuntimeStateTable=${API_RUNTIME_STATE_TABLE}" \
-      "FirstmateTasksTable=${FIRSTMATE_TASKS_TABLE}" \
-      "FirstmateTasksIngestionPrincipalArn=${FIRSTMATE_TASKS_INGESTION_PRINCIPAL_ARN}"
+      "${runtime_data_parameter_overrides[@]}"
 
   echo "Deploying runtime bucket stack ${RUNTIME_BUCKETS_STACK_NAME} in ${REGION}..."
   aws_region cloudformation deploy \
@@ -285,6 +280,23 @@ deploy_runtime_data_stack() {
       "DevWorkBucketName=${DEV_WORK_BUCKET}" \
       "RuntimeCacheRetentionDays=${RUNTIME_CACHE_RETENTION_DAYS}" \
       "FormQuestionCatalogVersionRetentionDays=${FORM_CATALOG_VERSION_RETENTION_DAYS}"
+}
+
+runtime_data_parameter_overrides() {
+  printf '%s\n' \
+    "ManageCoreRuntimeTables=${MANAGE_CORE_RUNTIME_TABLES}" \
+    "UsersTable=${USERS_TABLE}" \
+    "IntakeTable=${INTAKE_TABLE}" \
+    "OpportunitiesTable=${OPPORTUNITIES_TABLE}" \
+    "DashboardPerformanceTable=${DASHBOARD_PERFORMANCE_TABLE}" \
+    "RetrofitRecommendationCacheTable=${RETROFIT_RECOMMENDATION_CACHE_TABLE}" \
+    "ApplicationProfilesTable=${APPLICATION_PROFILES_TABLE}" \
+    "ApiRuntimeStateTable=${API_RUNTIME_STATE_TABLE}" \
+    "FirstmateTasksTable=${FIRSTMATE_TASKS_TABLE}"
+
+  if [ -n "${FIRSTMATE_TASKS_INGESTION_PRINCIPAL_ARN}" ]; then
+    printf '%s\n' "FirstmateTasksIngestionPrincipalArn=${FIRSTMATE_TASKS_INGESTION_PRINCIPAL_ARN}"
+  fi
 }
 
 ensure_artifact_bucket() {
@@ -569,85 +581,91 @@ sync_frontend() {
   echo "Site: ${site_url}"
 }
 
-cd "${ROOT_DIR}"
-select_targets "$@"
+main() {
+  cd "${ROOT_DIR}"
+  select_targets "$@"
 
-ACCOUNT_ID="$(aws_global sts get-caller-identity --query Account --output text)"
-ARTIFACT_BUCKET="${ARTIFACT_BUCKET:-gbs-retrofi-org-artifacts-${ACCOUNT_ID}-${REGION}}"
-ENERGY_DATA_BUCKET="${GBS_ENERGY_DATA_BUCKET:-gbs-retrofi-org-energy-data-${ACCOUNT_ID}}"
-RUNTIME_CACHE_BUCKET="${GBS_RUNTIME_CACHE_BUCKET:-gbs-retrofi-org-runtime-cache-${ACCOUNT_ID}}"
-TEST_FIXTURES_BUCKET="${GBS_TEST_FIXTURES_BUCKET:-${GBS_GENERATED_FIXTURE_BUCKET:-gbs-retrofi-test-fixtures-${ACCOUNT_ID}-${REGION}}}"
-DEV_WORK_BUCKET="${GBS_DEV_WORK_BUCKET:-gbs-retrofi-dev-work-${ACCOUNT_ID}-${REGION}}"
-LAMBDA_CODE_KEY="lambda/gbs-api-$(date -u +%Y%m%d%H%M%S).zip"
-DEPLOY_STATE_PREFIX="${GBS_DEPLOY_STATE_PREFIX:-deploy-state}"
-API_PACKAGE_STATE_KEY="${DEPLOY_STATE_PREFIX}/api-package.sha256"
-FRONTEND_DIST_STATE_KEY="${DEPLOY_STATE_PREFIX}/frontend-dist.sha256"
-DEPLOYED_LAMBDA_CODE_BUCKET=""
-DEPLOYED_LAMBDA_CODE_KEY=""
-API_PACKAGE_HASH=""
-API_PACKAGE_CHANGED=0
-FRONTEND_DIST_HASH=""
+  ACCOUNT_ID="$(aws_global sts get-caller-identity --query Account --output text)"
+  ARTIFACT_BUCKET="${ARTIFACT_BUCKET:-gbs-retrofi-org-artifacts-${ACCOUNT_ID}-${REGION}}"
+  ENERGY_DATA_BUCKET="${GBS_ENERGY_DATA_BUCKET:-gbs-retrofi-org-energy-data-${ACCOUNT_ID}}"
+  RUNTIME_CACHE_BUCKET="${GBS_RUNTIME_CACHE_BUCKET:-gbs-retrofi-org-runtime-cache-${ACCOUNT_ID}}"
+  TEST_FIXTURES_BUCKET="${GBS_TEST_FIXTURES_BUCKET:-${GBS_GENERATED_FIXTURE_BUCKET:-gbs-retrofi-test-fixtures-${ACCOUNT_ID}-${REGION}}}"
+  DEV_WORK_BUCKET="${GBS_DEV_WORK_BUCKET:-gbs-retrofi-dev-work-${ACCOUNT_ID}-${REGION}}"
+  LAMBDA_CODE_KEY="lambda/gbs-api-$(date -u +%Y%m%d%H%M%S).zip"
+  DEPLOY_STATE_PREFIX="${GBS_DEPLOY_STATE_PREFIX:-deploy-state}"
+  API_PACKAGE_STATE_KEY="${DEPLOY_STATE_PREFIX}/api-package.sha256"
+  FRONTEND_DIST_STATE_KEY="${DEPLOY_STATE_PREFIX}/frontend-dist.sha256"
+  DEPLOYED_LAMBDA_CODE_BUCKET=""
+  DEPLOYED_LAMBDA_CODE_KEY=""
+  API_PACKAGE_HASH=""
+  API_PACKAGE_CHANGED=0
+  FRONTEND_DIST_HASH=""
 
-if [ "${RUN_CI}" -eq 1 ]; then
-  deploy_github_actions_stack
-fi
-
-if [ "${RUN_DATA}" -eq 1 ]; then
-  ensure_data_prerequisites
-fi
-
-if [ "${RUN_FRONTEND}" -eq 1 ] || [ "${RUN_API}" -eq 1 ]; then
-  ensure_generated_fixtures
-fi
-
-if [ "${RUN_FRONTEND}" -eq 1 ]; then
-  build_frontend
-  FRONTEND_DIST_HASH="$(hash_directory dist)"
-fi
-
-if [ "${RUN_API}" -eq 1 ]; then
-  package_api_lambda
-fi
-
-if [ "${RUN_API}" -eq 1 ]; then
-  ensure_artifact_bucket
-  API_PACKAGE_HASH="$(hash_directory "${LAMBDA_PACKAGE_DIR}")"
-  DEPLOYED_API_PACKAGE_HASH="$(s3_object_text "${ARTIFACT_BUCKET}" "${API_PACKAGE_STATE_KEY}")"
-  if [ -n "${DEPLOYED_API_PACKAGE_HASH}" ] && [ "${DEPLOYED_API_PACKAGE_HASH}" = "${API_PACKAGE_HASH}" ]; then
-    echo "API package hash unchanged (${API_PACKAGE_HASH}); skipping Lambda upload and API stack update."
-    RUN_API=0
-  else
-    echo "API package hash: ${API_PACKAGE_HASH}"
-    upload_lambda_package
-    DEPLOYED_LAMBDA_CODE_BUCKET="${ARTIFACT_BUCKET}"
-    DEPLOYED_LAMBDA_CODE_KEY="${LAMBDA_CODE_KEY}"
-    API_PACKAGE_CHANGED=1
+  if [ "${RUN_CI}" -eq 1 ]; then
+    deploy_github_actions_stack
   fi
-fi
 
-if [ "${RUN_API}" -eq 0 ] && [ "${RUN_INFRA}" -eq 1 ]; then
-  if api_stack_exists; then
-    DEPLOYED_LAMBDA_CODE_BUCKET="$(api_stack_parameter LambdaCodeBucket)"
-    DEPLOYED_LAMBDA_CODE_KEY="$(api_stack_parameter LambdaCodeKey)"
-  else
-    DEPLOYED_LAMBDA_CODE_BUCKET="$(stack_parameter LambdaCodeBucket)"
-    DEPLOYED_LAMBDA_CODE_KEY="$(stack_parameter LambdaCodeKey)"
+  if [ "${RUN_DATA}" -eq 1 ]; then
+    ensure_data_prerequisites
   fi
-fi
 
-if [ "${RUN_API}" -eq 1 ] || [ "${RUN_INFRA}" -eq 1 ]; then
-  deploy_api_stack "${DEPLOYED_LAMBDA_CODE_BUCKET}" "${DEPLOYED_LAMBDA_CODE_KEY}"
-  if [ "${API_PACKAGE_CHANGED}" -eq 1 ]; then
-    put_s3_text "${ARTIFACT_BUCKET}" "${API_PACKAGE_STATE_KEY}" "${API_PACKAGE_HASH}"
+  if [ "${RUN_FRONTEND}" -eq 1 ] || [ "${RUN_API}" -eq 1 ]; then
+    ensure_generated_fixtures
   fi
-fi
 
-if [ "${RUN_INFRA}" -eq 1 ]; then
-  deploy_edge_stack "$(api_stack_output ApiDomainName)"
-fi
+  if [ "${RUN_FRONTEND}" -eq 1 ]; then
+    build_frontend
+    FRONTEND_DIST_HASH="$(hash_directory dist)"
+  fi
 
-if [ "${RUN_FRONTEND}" -eq 1 ]; then
-  sync_frontend
-fi
+  if [ "${RUN_API}" -eq 1 ]; then
+    package_api_lambda
+  fi
 
-echo "Production deploy target(s) completed."
+  if [ "${RUN_API}" -eq 1 ]; then
+    ensure_artifact_bucket
+    API_PACKAGE_HASH="$(hash_directory "${LAMBDA_PACKAGE_DIR}")"
+    DEPLOYED_API_PACKAGE_HASH="$(s3_object_text "${ARTIFACT_BUCKET}" "${API_PACKAGE_STATE_KEY}")"
+    if [ -n "${DEPLOYED_API_PACKAGE_HASH}" ] && [ "${DEPLOYED_API_PACKAGE_HASH}" = "${API_PACKAGE_HASH}" ]; then
+      echo "API package hash unchanged (${API_PACKAGE_HASH}); skipping Lambda upload and API stack update."
+      RUN_API=0
+    else
+      echo "API package hash: ${API_PACKAGE_HASH}"
+      upload_lambda_package
+      DEPLOYED_LAMBDA_CODE_BUCKET="${ARTIFACT_BUCKET}"
+      DEPLOYED_LAMBDA_CODE_KEY="${LAMBDA_CODE_KEY}"
+      API_PACKAGE_CHANGED=1
+    fi
+  fi
+
+  if [ "${RUN_API}" -eq 0 ] && [ "${RUN_INFRA}" -eq 1 ]; then
+    if api_stack_exists; then
+      DEPLOYED_LAMBDA_CODE_BUCKET="$(api_stack_parameter LambdaCodeBucket)"
+      DEPLOYED_LAMBDA_CODE_KEY="$(api_stack_parameter LambdaCodeKey)"
+    else
+      DEPLOYED_LAMBDA_CODE_BUCKET="$(stack_parameter LambdaCodeBucket)"
+      DEPLOYED_LAMBDA_CODE_KEY="$(stack_parameter LambdaCodeKey)"
+    fi
+  fi
+
+  if [ "${RUN_API}" -eq 1 ] || [ "${RUN_INFRA}" -eq 1 ]; then
+    deploy_api_stack "${DEPLOYED_LAMBDA_CODE_BUCKET}" "${DEPLOYED_LAMBDA_CODE_KEY}"
+    if [ "${API_PACKAGE_CHANGED}" -eq 1 ]; then
+      put_s3_text "${ARTIFACT_BUCKET}" "${API_PACKAGE_STATE_KEY}" "${API_PACKAGE_HASH}"
+    fi
+  fi
+
+  if [ "${RUN_INFRA}" -eq 1 ]; then
+    deploy_edge_stack "$(api_stack_output ApiDomainName)"
+  fi
+
+  if [ "${RUN_FRONTEND}" -eq 1 ]; then
+    sync_frontend
+  fi
+
+  echo "Production deploy target(s) completed."
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "$@"
+fi
