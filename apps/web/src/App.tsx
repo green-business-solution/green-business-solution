@@ -9072,10 +9072,54 @@ function averageNullableNumbers(values: Array<number | null | undefined>) {
   return defined.length ? defined.reduce((sum, value) => sum + value, 0) / defined.length : null;
 }
 
+function mergeDashboardImplementedRetrofits(
+  existing: DashboardImplementedRetrofit,
+  incoming: DashboardImplementedRetrofit
+): DashboardImplementedRetrofit {
+  const preferDefined = <T,>(current: T | null | undefined, next: T | null | undefined) =>
+    current != null ? current : next;
+  const preferArray = <T,>(current: T[] | undefined, next: T[]) => (current && current.length ? current : next);
+  return {
+    id: existing.id,
+    name: preferDefined(existing.name, incoming.name),
+    propertyName: preferDefined(existing.propertyName, incoming.propertyName),
+    category: preferDefined(existing.category, incoming.category),
+    installedDate: preferDefined(existing.installedDate, incoming.installedDate),
+    implementationStatus: existing.implementationStatus,
+    sourceStatus: preferDefined(existing.sourceStatus, incoming.sourceStatus),
+    projectCostCents: preferDefined(existing.projectCostCents, incoming.projectCostCents),
+    incentivesReceivedCents: preferDefined(existing.incentivesReceivedCents, incoming.incentivesReceivedCents),
+    incentivesApprovedCents: preferDefined(existing.incentivesApprovedCents, incoming.incentivesApprovedCents),
+    incentivesPendingCents: preferDefined(existing.incentivesPendingCents, incoming.incentivesPendingCents),
+    incentivesNotClaimedCents: preferDefined(existing.incentivesNotClaimedCents, incoming.incentivesNotClaimedCents),
+    netCostCents: preferDefined(existing.netCostCents, incoming.netCostCents),
+    estimatedAnnualSavingsCents: preferDefined(existing.estimatedAnnualSavingsCents, incoming.estimatedAnnualSavingsCents),
+    actualAnnualSavingsCents: preferDefined(existing.actualAnnualSavingsCents, incoming.actualAnnualSavingsCents),
+    actualMonthlySavingsCents: preferDefined(existing.actualMonthlySavingsCents, incoming.actualMonthlySavingsCents),
+    paybackYears: preferDefined(existing.paybackYears, incoming.paybackYears),
+    roiPercent: preferDefined(existing.roiPercent, incoming.roiPercent),
+    projectedFiveYearSavingsCents: preferDefined(existing.projectedFiveYearSavingsCents, incoming.projectedFiveYearSavingsCents),
+    projectedTenYearSavingsCents: preferDefined(existing.projectedTenYearSavingsCents, incoming.projectedTenYearSavingsCents),
+    co2eReducedPerYear: preferDefined(existing.co2eReducedPerYear, incoming.co2eReducedPerYear),
+    kwhSavedPerYear: preferDefined(existing.kwhSavedPerYear, incoming.kwhSavedPerYear),
+    thermsReducedPerYear: preferDefined(existing.thermsReducedPerYear, incoming.thermsReducedPerYear),
+    waterSavedPerYear: preferDefined(existing.waterSavedPerYear, incoming.waterSavedPerYear),
+    wasteReducedPerYear: preferDefined(existing.wasteReducedPerYear, incoming.wasteReducedPerYear),
+    siteEuiReductionKbtuPerSquareFootPerYear: preferDefined(
+      existing.siteEuiReductionKbtuPerSquareFootPerYear,
+      incoming.siteEuiReductionKbtuPerSquareFootPerYear
+    ),
+    gridPeakDemandReductionKw: preferDefined(existing.gridPeakDemandReductionKw, incoming.gridPeakDemandReductionKw),
+    certificationsSupported: preferArray(existing.certificationsSupported, incoming.certificationsSupported),
+    documentReadiness: preferArray(existing.documentReadiness, incoming.documentReadiness)
+  };
+}
+
 function dedupeDashboardRetrofitsById(retrofits: DashboardImplementedRetrofit[]) {
   const byId = new Map<string, DashboardImplementedRetrofit>();
   for (const retrofit of retrofits) {
-    byId.set(retrofit.id, retrofit);
+    const existing = byId.get(retrofit.id);
+    byId.set(retrofit.id, existing ? mergeDashboardImplementedRetrofits(existing, retrofit) : retrofit);
   }
   return Array.from(byId.values());
 }
