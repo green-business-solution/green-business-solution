@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-019",
+  "inputFile": "batch-019_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T13:18:15.769Z",
+  "reviews": [],
+  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+}

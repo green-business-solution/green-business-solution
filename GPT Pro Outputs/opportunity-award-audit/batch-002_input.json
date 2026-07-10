@@ -1,0 +1,1082 @@
+{
+  "batchId": "batch-002",
+  "batchIndex": 2,
+  "totalBatches": 61,
+  "schemaVersion": "opportunity-award-audit-batch-input.v1",
+  "sourcePath": "public/retrofit_opportunity_index.json",
+  "generatedAt": "2026-07-10T13:18:15.762Z",
+  "opportunityCount": 25,
+  "opportunities": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:21861",
+      "opportunityName": "Agricultural Energy Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/21861/agricultural-energy-program",
+      "websiteUrl": "https://energy.ri.gov/energy-efficiency/farm-energy-programs",
+      "applicationUrl": null,
+      "state": "RI",
+      "programType": "Grant Program",
+      "administrator": "Office of Energy Resources",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "solar_water_heating_system",
+          "displayName": "Solar water heating system",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "biomass_biogas_energy_system",
+          "displayName": "Biomass / biogas energy system",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "battery_storage_system",
+          "displayName": "Battery storage system",
+          "parentCategory": "energy_storage_resilience",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_audit",
+          "displayName": "Energy audit",
+          "parentCategory": "audits_studies_planning",
+          "isPhysicalRetrofit": false
+        }
+      ],
+      "relatedRetrofitCount": 7
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4056",
+      "opportunityName": "Agricultural Lighting and Equipment Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4056/agricultural-lighting-and-equipment-rebate-program",
+      "websiteUrl": "https://www.efficiencyvermont.com/products-technologies/agricultural-equipment",
+      "applicationUrl": null,
+      "state": "VT",
+      "programType": "Rebate Program",
+      "administrator": "Efficiency Vermont",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "low_flow_fixture_retrofit",
+          "displayName": "Low-flow fixture retrofit",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "waste_heat_recovery",
+          "displayName": "Waste heat recovery",
+          "parentCategory": "compressed_air_industrial",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "efficient_ventilation_system",
+          "displayName": "Efficient ventilation system",
+          "parentCategory": "indoor_air_quality_ventilation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 5
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5251",
+      "opportunityName": "Aiken Electric Cooperative Inc - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5251/aiken-electric-cooperative-inc-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "http://www.aikenco-op.org/water-heater/",
+      "applicationUrl": null,
+      "state": "SC",
+      "programType": "Rebate Program",
+      "administrator": "Aiken Electric Cooperative Inc",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:78",
+      "opportunityName": "Air-Quality Improvement Tax Incentives",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/78/air-quality-improvement-tax-incentives",
+      "websiteUrl": null,
+      "applicationUrl": null,
+      "state": "OH",
+      "programType": "Other Incentive",
+      "administrator": "Ohio Department of Development",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "biomass_biogas_energy_system",
+          "displayName": "Biomass / biogas energy system",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "battery_storage_system",
+          "displayName": "Battery storage system",
+          "parentCategory": "energy_storage_resilience",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5799",
+      "opportunityName": "Alabama Commercial PACE financing program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5799/alabama-commercial-pace-financing-program",
+      "websiteUrl": "https://www.pacenation.org/pace-programs/",
+      "applicationUrl": null,
+      "state": "AL",
+      "programType": "PACE Financing",
+      "administrator": "Alabama Department of Economic and Community Affairs",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_audit",
+          "displayName": "Energy audit",
+          "parentCategory": "audits_studies_planning",
+          "isPhysicalRetrofit": false
+        }
+      ],
+      "relatedRetrofitCount": 5
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22738",
+      "opportunityName": "Alabama Power - Electric Forklift Rebate",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22738/alabama-power-electric-forklift-rebate",
+      "websiteUrl": "https://www.alabamapower.com/business/save-money-and-energy/offers-for-business-customers/electric-forklifts-and-etrus-.html",
+      "applicationUrl": null,
+      "state": "AL",
+      "programType": "Rebate Program",
+      "administrator": "Alabama Power Co.",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "dc_fast_charger_installation",
+          "displayName": "DC fast charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "electric_forklift_material_handling",
+          "displayName": "Electric forklift / material handling equipment",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 4
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22739",
+      "opportunityName": "Alabama Power - EV Home Charger Rebate",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22739/alabama-power-ev-home-charger-rebate",
+      "websiteUrl": "https://www.alabamapower.com/residential/save-money-and-energy/electric-vehicles/ev-home-charger-rebate.html",
+      "applicationUrl": null,
+      "state": "AL",
+      "programType": "Rebate Program",
+      "administrator": "Alabama Power Co.",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22546",
+      "opportunityName": "Alabama Power - Make Ready Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22546/alabama-power-make-ready-program",
+      "websiteUrl": "https://www.alabamapower.com/business/business-customers-and-services/electric-transportation-business-programs/make-ready-program.html",
+      "applicationUrl": null,
+      "state": "AL",
+      "programType": "Rebate Program",
+      "administrator": "Alabama Power Co.",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "window_replacement",
+          "displayName": "Window replacement",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "dc_fast_charger_installation",
+          "displayName": "DC fast charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_make_ready_electrical_upgrade",
+          "displayName": "EV make-ready electrical upgrade",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 5
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22483",
+      "opportunityName": "Alabama Power - Smart Thermostat Reimbursement",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22483/alabama-power-smart-thermostat-reimbursement",
+      "websiteUrl": "https://www.alabamapower.com/residential/save-money-and-energy/energy-saving-products/rebates-and-incentives.html",
+      "applicationUrl": null,
+      "state": "AL",
+      "programType": "Rebate Program",
+      "administrator": "Alabama Power Co",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1611",
+      "opportunityName": "Alameda Municipal Power - Commercial New Construction Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1611/alameda-municipal-power-commercial-new-construction-rebate-program",
+      "websiteUrl": "https://www.alamedamp.com/243/New-Construction",
+      "applicationUrl": null,
+      "state": "CA",
+      "programType": "Rebate Program",
+      "administrator": "Alameda Municipal Power",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 3
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1613",
+      "opportunityName": "Alameda Municipal Power - Commercial Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1613/alameda-municipal-power-commercial-rebate-program",
+      "websiteUrl": "https://www.alamedamp.com/217/Businesses",
+      "applicationUrl": null,
+      "state": "CA",
+      "programType": "municipal utility commercial rebate, customized rebate, EV, and new construction incentive program",
+      "administrator": "Alameda Municipal Power",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "lighting_controls_retrofit",
+          "displayName": "Lighting controls retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "efficient_ice_machine",
+          "displayName": "Efficient ice machine",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "window_replacement",
+          "displayName": "Window replacement",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "window_film_shading_retrofit",
+          "displayName": "Window film / shading retrofit",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_fryer",
+          "displayName": "High-efficiency fryer",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_oven",
+          "displayName": "High-efficiency oven",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_steamer",
+          "displayName": "High-efficiency steamer",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "induction_cooking_equipment",
+          "displayName": "Induction cooking equipment",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 14
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22274",
+      "opportunityName": "Alameda Municipal Power - Electric Vehicle Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22274/alameda-municipal-power-electric-vehicle-rebate-program",
+      "websiteUrl": "https://www.alamedamp.com/349/Electric-Vehicles",
+      "applicationUrl": null,
+      "state": "CA",
+      "programType": "Rebate Program",
+      "administrator": "Alameda Municipal Power",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3357",
+      "opportunityName": "Alameda Municipal Power - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3357/alameda-municipal-power-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.alamedamp.com/407/Rebates-and-Incentives",
+      "applicationUrl": null,
+      "state": "CA",
+      "programType": "Rebate Program",
+      "administrator": "Alameda Municipal Power",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "rooftop_solar_pv",
+          "displayName": "Rooftop solar PV",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "induction_cooking_equipment",
+          "displayName": "Induction cooking equipment",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 8
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22666",
+      "opportunityName": "Alaska - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22666/alaska-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
+      "websiteUrl": "https://www.akenergyauthority.org/What-We-Do/Alternative-Energy-and-Energy-Efficiency-Programs/Electric-Vehicles/EV-Infrastructure-Implementation-Plan#:~:text=Through%20the%20NEVI%20program%2C%20Alaska,and%20urban%20areas%20across%20Alaska.",
+      "applicationUrl": null,
+      "state": "AK",
+      "programType": "Grant Program",
+      "administrator": "Alaska Energy Authority",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 3
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22263",
+      "opportunityName": "Alaska Power and Telephone - AMP-UP Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22263/alaska-power-and-telephone-amp-up-program",
+      "websiteUrl": "https://www.aptalaska.com/amp-up/",
+      "applicationUrl": null,
+      "state": "AK",
+      "programType": "Rebate Program",
+      "administrator": "Alaska Power and Telephone",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1931",
+      "opportunityName": "Alexandria Light and Power - Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1931/alexandria-light-and-power-commercial-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.alputilities.com/rebate-category/business/",
+      "applicationUrl": null,
+      "state": "MN",
+      "programType": "Rebate Program",
+      "administrator": "Alexandria Light and Power",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "window_replacement",
+          "displayName": "Window replacement",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_management_system",
+          "displayName": "Energy management system",
+          "parentCategory": "building_controls_energy_management",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "electric_forklift_material_handling",
+          "displayName": "Electric forklift / material handling equipment",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_commercial_dishwasher",
+          "displayName": "High-efficiency commercial dishwasher",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_oven",
+          "displayName": "High-efficiency oven",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "variable_frequency_drive_retrofit",
+          "displayName": "Variable frequency drive retrofit",
+          "parentCategory": "motors_pumps_fans_drives",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "efficient_fan_blower_replacement",
+          "displayName": "Efficient fan/blower replacement",
+          "parentCategory": "motors_pumps_fans_drives",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "demand_controlled_ventilation",
+          "displayName": "Demand-controlled ventilation",
+          "parentCategory": "indoor_air_quality_ventilation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 14
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1930",
+      "opportunityName": "Alexandria Light and Power - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1930/alexandria-light-and-power-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "http://www.alputilities.com/residential/rebates.php",
+      "applicationUrl": null,
+      "state": "MN",
+      "programType": "Rebate Program",
+      "administrator": "Alexandria Light and Power",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "window_replacement",
+          "displayName": "Window replacement",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "low_flow_fixture_retrofit",
+          "displayName": "Low-flow fixture retrofit",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_laundry_equipment",
+          "displayName": "High-efficiency laundry equipment",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 9
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4971",
+      "opportunityName": "Alliant Energy Interstate Power and Light - Commercial and Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4971/alliant-energy-interstate-power-and-light-commercial-and-industrial-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.alliantenergy.com/waystosave/rebatesandmarketplace/rebatelocatortool",
+      "applicationUrl": null,
+      "state": "IA",
+      "programType": "Rebate Program",
+      "administrator": "Alliant Energy-IP&L",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "exterior_site_lighting_retrofit",
+          "displayName": "Exterior/site lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "anti_sweat_heater_controls",
+          "displayName": "Anti-sweat heater controls",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 6
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1574",
+      "opportunityName": "Alliant Energy Interstate Power and Light - Farm Equipment Energy Efficiency Incentives",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1574/alliant-energy-interstate-power-and-light-farm-equipment-energy-efficiency-incentives",
+      "websiteUrl": "https://www.alliantenergy.com/waystosave/rebatesandmarketplace/rebatelocatortool",
+      "applicationUrl": null,
+      "state": "IA",
+      "programType": "Rebate Program",
+      "administrator": "Alliant Energy",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "variable_frequency_drive_retrofit",
+          "displayName": "Variable frequency drive retrofit",
+          "parentCategory": "motors_pumps_fans_drives",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "pump_fan_controls_retrofit",
+          "displayName": "Pump/fan controls retrofit",
+          "parentCategory": "motors_pumps_fans_drives",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 4
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1570",
+      "opportunityName": "Alliant Energy Interstate Power and Light - Residential Energy Efficiency Rebate Programs",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1570/alliant-energy-interstate-power-and-light-residential-energy-efficiency-rebate-programs",
+      "websiteUrl": "https://www.alliantenergy.com/waystosave/rebatesandmarketplace/rebatelocatortool?utm_source=WS&utm_campaign=Legacy&utm_medium=WaysToSave/Rebates/RebateLocatorTool",
+      "applicationUrl": null,
+      "state": "IA",
+      "programType": "Rebate Program",
+      "administrator": "Alliant Energy",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_furnace_retrofit",
+          "displayName": "High-efficiency furnace retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 9
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22158",
+      "opportunityName": "ALT Fuels Colorado",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22158/alt-fuels-colorado",
+      "websiteUrl": "http://cleanairfleets.org/programs/alt-fuels-colorado",
+      "applicationUrl": null,
+      "state": "CO",
+      "programType": "Grant Program",
+      "administrator": null,
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3650",
+      "opportunityName": "Alternative and Clean Energy Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3650/alternative-and-clean-energy-program",
+      "websiteUrl": "https://dced.pa.gov/programs/alternative-clean-energy-program-ace/",
+      "applicationUrl": null,
+      "state": "PA",
+      "programType": "Loan Program",
+      "administrator": "Department of Community and Economic Development; Department of Environmental Protection",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "biomass_biogas_energy_system",
+          "displayName": "Biomass / biogas energy system",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 3
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2567",
+      "opportunityName": "Alternative Energy Product Manufacturers Tax Credit",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2567/alternative-energy-product-manufacturers-tax-credit",
+      "websiteUrl": "https://www.tax.newmexico.gov/forms-publications/",
+      "applicationUrl": null,
+      "state": "NM",
+      "programType": "Industry Recruitment/Support",
+      "administrator": "New Mexico Energy, Minerals and Natural Resources Department",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "fuel_cell_system",
+          "displayName": "Fuel cell system",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:604",
+      "opportunityName": "Alternative Energy Revolving Loan Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/604/alternative-energy-revolving-loan-program",
+      "websiteUrl": "https://deq.mt.gov/energy/Programs/AERLP",
+      "applicationUrl": null,
+      "state": "MT",
+      "programType": "Loan Program",
+      "administrator": "Montana Department of Environmental Quality",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "biomass_biogas_energy_system",
+          "displayName": "Biomass / biogas energy system",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1070",
+      "opportunityName": "Alternative Energy Sales Tax Exemption",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1070/alternative-energy-sales-tax-exemption",
+      "websiteUrl": null,
+      "applicationUrl": null,
+      "state": "UT",
+      "programType": "Sales Tax Incentive",
+      "administrator": "Utah State Tax Commission",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "biomass_biogas_energy_system",
+          "displayName": "Biomass / biogas energy system",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 3
+    }
+  ]
+}

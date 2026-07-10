@@ -1,0 +1,1160 @@
+{
+  "batchId": "batch-044",
+  "batchIndex": 44,
+  "totalBatches": 61,
+  "schemaVersion": "opportunity-award-audit-batch-input.v1",
+  "sourcePath": "public/retrofit_opportunity_index.json",
+  "generatedAt": "2026-07-10T13:18:15.780Z",
+  "opportunityCount": 25,
+  "opportunities": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4125",
+      "opportunityName": "Piedmont Natural Gas - Residential Equipment Efficiency Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4125/piedmont-natural-gas-residential-equipment-efficiency-program",
+      "websiteUrl": "https://www.piedmontng.com/Home/Save-Energy-and-Money/Residential-Energy-Efficiency-Resources",
+      "applicationUrl": null,
+      "state": "NC",
+      "programType": "Rebate Program",
+      "administrator": null,
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_furnace_retrofit",
+          "displayName": "High-efficiency furnace retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4199",
+      "opportunityName": "Piedmont Natural Gas - Residential Equipment Efficiency Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4199/piedmont-natural-gas-residential-equipment-efficiency-program",
+      "websiteUrl": "https://www.piedmontng.com/Home/Save-Energy-and-Money/Residential-Energy-Efficiency-Resources",
+      "applicationUrl": null,
+      "state": "SC",
+      "programType": "Rebate Program",
+      "administrator": null,
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_furnace_retrofit",
+          "displayName": "High-efficiency furnace retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2966",
+      "opportunityName": "Platte-Clay Electric Cooperative - Residential and Commercial Energy Efficiency Rebates",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2966/platte-clay-electric-cooperative-residential-and-commercial-energy-efficiency-rebates",
+      "websiteUrl": "http://www.pcec.coop/products/energy-product-rebates/",
+      "applicationUrl": null,
+      "state": "MO",
+      "programType": "Rebate Program",
+      "administrator": "Platte-Clay Electric Cooperative",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 8
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2289",
+      "opportunityName": "Plumas-Sierra REC - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2289/plumas-sierra-rec-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.psrec.coop/energy/rebates/",
+      "applicationUrl": null,
+      "state": "CA",
+      "programType": "Rebate Program",
+      "administrator": "Plumas-Sierra REC",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_laundry_equipment",
+          "displayName": "High-efficiency laundry equipment",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_commercial_dishwasher",
+          "displayName": "High-efficiency commercial dishwasher",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 10
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2990",
+      "opportunityName": "PNM - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2990/pnm-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.pnm.com/rebates",
+      "applicationUrl": null,
+      "state": "NM",
+      "programType": "Rebate Program",
+      "administrator": "PNM",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "window_replacement",
+          "displayName": "Window replacement",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_laundry_equipment",
+          "displayName": "High-efficiency laundry equipment",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_commercial_dishwasher",
+          "displayName": "High-efficiency commercial dishwasher",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "induction_cooking_equipment",
+          "displayName": "Induction cooking equipment",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 8
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22406",
+      "opportunityName": "PNM EV Charger Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22406/pnm-ev-charger-rebate-program",
+      "websiteUrl": "https://evready.pnm.com/apply/pnm",
+      "applicationUrl": null,
+      "state": "NM",
+      "programType": "Rebate Program",
+      "administrator": "PNM",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "dc_fast_charger_installation",
+          "displayName": "DC fast charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 3
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2212",
+      "opportunityName": "Port Angeles Public Works & Utilities - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2212/port-angeles-public-works-and-utilities-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "http://wa-portangeles.civicplus.com/790/Residential-Conservation-Rebates",
+      "applicationUrl": null,
+      "state": "WA",
+      "programType": "Rebate Program",
+      "administrator": "Port Angeles Public Works and Utilities",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1036",
+      "opportunityName": "Portfolio Energy Credits",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1036/portfolio-energy-credits",
+      "websiteUrl": "https://www.nvtrec.com",
+      "applicationUrl": null,
+      "state": "NV",
+      "programType": "Performance-Based Incentive",
+      "administrator": "Public Utilities Commission of Nevada",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "solar_water_heating_system",
+          "displayName": "Solar water heating system",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "rooftop_solar_pv",
+          "displayName": "Rooftop solar PV",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1674",
+      "opportunityName": "Portland General Electric - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1674/portland-general-electric-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.portlandgeneral.com/residential/energy-savings/special-offers-incentives",
+      "applicationUrl": null,
+      "state": "OR",
+      "programType": "Rebate Program",
+      "administrator": "Portland General Electric",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_furnace_retrofit",
+          "displayName": "High-efficiency furnace retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "duct_sealing_and_insulation",
+          "displayName": "Duct sealing and duct insulation",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_gas_water_heater",
+          "displayName": "High-efficiency gas water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 8
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22375",
+      "opportunityName": "Portland General Electric (PGE) - EV Charging Station Commercial & Multifamily Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22375/portland-general-electric-pge-ev-charging-station-commercial-and-multifamily-rebate-program",
+      "websiteUrl": "https://portlandgeneral.com/energy-choices/electric-vehicles-charging/business-charging-fleets/ev-charging-pilot-program-business",
+      "applicationUrl": null,
+      "state": "OR",
+      "programType": "Rebate Program",
+      "administrator": "Portland General Electric",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22374",
+      "opportunityName": "Portland General Electric (PGE) - Residential EV Charging Pilot Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22374/portland-general-electric-pge-residential-ev-charging-pilot-program",
+      "websiteUrl": "https://portlandgeneral.com/energy-choices/electric-vehicles-charging/charging-your-ev/ev-charging-pilot-program-home",
+      "applicationUrl": null,
+      "state": "OR",
+      "programType": "Rebate Program",
+      "administrator": "Portland General Electric",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22321",
+      "opportunityName": "Potomac Edison - EV Driven Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22321/potomac-edison-ev-driven-program",
+      "websiteUrl": "https://www.evdrivenpe.com/",
+      "applicationUrl": null,
+      "state": "MD",
+      "programType": "Rebate Program",
+      "administrator": "Potomac Edison",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "dc_fast_charger_installation",
+          "displayName": "DC fast charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 3
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4815",
+      "opportunityName": "Poudre Valley REA - Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4815/poudre-valley-rea-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.pvrea.com/rebates",
+      "applicationUrl": null,
+      "state": "CO",
+      "programType": "Rebate Program",
+      "administrator": "Poudre Valley REA",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "lighting_controls_retrofit",
+          "displayName": "Lighting controls retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "dc_fast_charger_installation",
+          "displayName": "DC fast charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "induction_cooking_equipment",
+          "displayName": "Induction cooking equipment",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 11
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:115",
+      "opportunityName": "Power Project Loan Fund",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/115/power-project-loan-fund",
+      "websiteUrl": "https://www.akenergyauthority.org/What-We-Do/Grants-Loans/Power-Project-Fund",
+      "applicationUrl": null,
+      "state": "AK",
+      "programType": "Loan Program",
+      "administrator": "Alaska Industrial Development and Export Authority",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "biomass_biogas_energy_system",
+          "displayName": "Biomass / biogas energy system",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "battery_storage_system",
+          "displayName": "Battery storage system",
+          "parentCategory": "energy_storage_resilience",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 3
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_15131",
+      "opportunityName": "Power Your Drive for Fleets",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "sourceUrl": "https://www.sdge.com/business/electric-vehicles/lovelectric",
+      "websiteUrl": "https://www.sdge.com/node/15131",
+      "applicationUrl": "https://www.sdge.com/node/15131",
+      "state": "CA",
+      "programType": "utility_program",
+      "administrator": "SDG&E",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "fleet_charging_infrastructure",
+          "displayName": "Fleet charging infrastructure",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22438",
+      "opportunityName": "PPL Electric Utilities - Business Incentive Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22438/ppl-electric-utilities-business-incentive-program",
+      "websiteUrl": "https://www.pplelectricbusinesssavings.com/ppl-business/incentives/overview/",
+      "applicationUrl": null,
+      "state": "PA",
+      "programType": "Rebate Program",
+      "administrator": null,
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "combined_heat_and_power_system",
+          "displayName": "Combined heat and power system",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "biomass_biogas_energy_system",
+          "displayName": "Biomass / biogas energy system",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3853",
+      "opportunityName": "PPL Electric Utilities - Commercial, Industrial and Agricultural Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3853/ppl-electric-utilities-commercial-industrial-and-agricultural-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.pplelectricbusinesssavings.com/ppl-business/incentives/overview/",
+      "applicationUrl": null,
+      "state": "PA",
+      "programType": "Rebate Program",
+      "administrator": "PPL Electric Utilities",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "exterior_site_lighting_retrofit",
+          "displayName": "Exterior/site lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "combined_heat_and_power_system",
+          "displayName": "Combined heat and power system",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 4
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3854",
+      "opportunityName": "PPL Electric Utilities - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3854/ppl-electric-utilities-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.pplelectricsavings.com/HomeEquipment/Products",
+      "applicationUrl": null,
+      "state": "PA",
+      "programType": "Rebate Program",
+      "administrator": "PPL Electric Utilities",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "window_replacement",
+          "displayName": "Window replacement",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_audit",
+          "displayName": "Energy audit",
+          "parentCategory": "audits_studies_planning",
+          "isPhysicalRetrofit": false
+        }
+      ],
+      "relatedRetrofitCount": 9
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2553",
+      "opportunityName": "Preston Public Utilities - Commercial & Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2553/preston-public-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+      "websiteUrl": "http://www.SaveEnergyInPreston.com",
+      "applicationUrl": null,
+      "state": "MN",
+      "programType": "Rebate Program",
+      "administrator": "Preston Public Utilities",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "walk_in_cooler_freezer_upgrade",
+          "displayName": "Walk-in cooler/freezer upgrade",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "refrigeration_controls_retrofit",
+          "displayName": "Refrigeration controls retrofit",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "anti_sweat_heater_controls",
+          "displayName": "Anti-sweat heater controls",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_management_system",
+          "displayName": "Energy management system",
+          "parentCategory": "building_controls_energy_management",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "low_flow_fixture_retrofit",
+          "displayName": "Low-flow fixture retrofit",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_motor_replacement",
+          "displayName": "High-efficiency motor replacement",
+          "parentCategory": "motors_pumps_fans_drives",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "efficient_air_compressor",
+          "displayName": "Efficient air compressor",
+          "parentCategory": "compressed_air_industrial",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 11
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2552",
+      "opportunityName": "Preston Public Utilities - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2552/preston-public-utilities-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "http://www.SaveEnergyInPreston.com",
+      "applicationUrl": null,
+      "state": "MN",
+      "programType": "Rebate Program",
+      "administrator": "Preston Public Utilities",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_furnace_retrofit",
+          "displayName": "High-efficiency furnace retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_commercial_dishwasher",
+          "displayName": "High-efficiency commercial dishwasher",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 9
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3106",
+      "opportunityName": "Prince George's County - Solar and Geothermal Residential Property Tax Credit",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3106/prince-george-s-county-solar-and-geothermal-residential-property-tax-credit",
+      "websiteUrl": null,
+      "applicationUrl": null,
+      "state": "MD",
+      "programType": "Property Tax Incentive",
+      "administrator": "Prince George's County Office of Finance",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2554",
+      "opportunityName": "Princeton PUC - Commercial & Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2554/princeton-puc-commercial-and-industrial-energy-efficiency-rebate-program",
+      "websiteUrl": "http://www.SaveEnergyInPrinceton.com",
+      "applicationUrl": null,
+      "state": "MN",
+      "programType": "Rebate Program",
+      "administrator": "Princeton PUC",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "walk_in_cooler_freezer_upgrade",
+          "displayName": "Walk-in cooler/freezer upgrade",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "refrigeration_controls_retrofit",
+          "displayName": "Refrigeration controls retrofit",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "anti_sweat_heater_controls",
+          "displayName": "Anti-sweat heater controls",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_management_system",
+          "displayName": "Energy management system",
+          "parentCategory": "building_controls_energy_management",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "low_flow_fixture_retrofit",
+          "displayName": "Low-flow fixture retrofit",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_motor_replacement",
+          "displayName": "High-efficiency motor replacement",
+          "parentCategory": "motors_pumps_fans_drives",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "efficient_air_compressor",
+          "displayName": "Efficient air compressor",
+          "parentCategory": "compressed_air_industrial",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 11
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
+      "opportunityName": "Princeton PUC - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2555/princeton-puc-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "http://www.SaveEnergyInPrinceton.com",
+      "applicationUrl": null,
+      "state": "MN",
+      "programType": "Rebate Program",
+      "administrator": "Princeton PUC",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_furnace_retrofit",
+          "displayName": "High-efficiency furnace retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_commercial_dishwasher",
+          "displayName": "High-efficiency commercial dishwasher",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 10
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2287",
+      "opportunityName": "Priority Permit Processing for Green Buildings",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2287/priority-permit-processing-for-green-buildings",
+      "websiteUrl": null,
+      "applicationUrl": null,
+      "state": "HI",
+      "programType": "Green Building Incentive",
+      "administrator": null,
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "leed_certification",
+          "displayName": "LEED certification",
+          "parentCategory": "certifications_compliance",
+          "isPhysicalRetrofit": false
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2789",
+      "opportunityName": "Property Tax Abatement for Production and Manufacturing Facilities",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2789/property-tax-abatement-for-production-and-manufacturing-facilities",
+      "websiteUrl": "https://archive.legmt.gov/bills/mca/title_0150/chapter_0240/part_0310/section_0110/0150-0240-0310-0110.html",
+      "applicationUrl": null,
+      "state": "MT",
+      "programType": "Industry Recruitment/Support",
+      "administrator": "Montana Department of Revenue",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "biomass_biogas_energy_system",
+          "displayName": "Biomass / biogas energy system",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    }
+  ]
+}

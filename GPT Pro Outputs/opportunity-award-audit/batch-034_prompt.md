@@ -1,0 +1,987 @@
+# GPT Pro Opportunity Award Audit Prompt
+
+You are auditing one batch of unique Retrofit opportunities for official program approval process and award likelihood.
+Return strict JSON only. No markdown, prose, or explanations outside JSON.
+Do not infer eligibility from title text alone.
+Use current official program sources as the evidence base and ignore outdated pages when they conflict.
+Use `unknown` where evidence is insufficient and do not guess.
+Do not lower award likelihood because a source says "optional" user action or "follow instructions" steps exist.
+Treat those instructions as operational conditions that may still keep the opportunity likely to be awarded.
+Do not include any confidence score field.
+
+Output object requirements:
+
+- Return one JSON object only.
+- Top-level object:
+  - `schemaVersion`: `opportunity-award-audit-output.v1`
+  - `batchId`: current batch id
+  - `inputFile`: current input file name
+  - `inputRecordCount`: integer
+  - `generatedAt`: ISO timestamp
+  - `reviews`: array of exactly one object per audited opportunity
+- Each `review` object must include:
+  - opportunityId
+  - requiresProgramApproval
+  - approvalRequirements
+  - approvalStage
+  - awardLikelihood
+  - awardLikelihoodReason
+  - evidenceUrls
+  - evidenceText
+  - reviewedAt
+  - reviewStatus
+- `approvalRequirements` and `evidenceUrls` must be arrays.
+- `awardLikelihood` must be one of:
+  - `near_guaranteed`, `likely`, `possible`, `unlikely`, `rare`, `unknown`
+- `reviewStatus` must be one of:
+  - `audited`, `source_inaccessible`, `not_audited`, `needs_followup`, `needs_evidence`
+- `reviewedAt` must be ISO 8601 date-time.
+
+Input file: batch-034_input.json
+Output file to write: batch-034_output.json
+Schema file: GPT Pro Outputs/opportunity-award-audit/opportunity-award-audit-schema.json
+Batch 34 of 61
+This batch has 25 opportunities, positions 826-850.
+
+Use current official sources for evidence and include evidence URLs only as plain raw URLs.
+`evidenceText` should be concise and non-URL text.
+
+Targets JSON:
+```json
+[
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22638",
+    "opportunityName": "Massachusetts - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22638/massachusetts-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
+    "websiteUrl": "https://www.mass.gov/massdot-nevi-plan",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Grant Program",
+    "administrator": "Massachusetts Department of Transportation",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ev_make_ready_electrical_upgrade",
+        "displayName": "EV make-ready electrical upgrade",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22185",
+    "opportunityName": "MassEVIP Fleets Charging Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22185/massevip-fleets-charging-program",
+    "websiteUrl": "https://www.mass.gov/how-to/apply-for-massevip-fleets-incentives",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Grant Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22188",
+    "opportunityName": "MassEVIP Multi-Unit Dwelling (MUD) and Educational Campus Charging Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22188/massevip-multi-unit-dwelling-mud-and-educational-campus-charging-program",
+    "websiteUrl": "https://www.mass.gov/how-to/apply-for-massevip-multi-unit-dwelling-educational-campus-charging-incentives",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Grant Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22187",
+    "opportunityName": "MassEVIP Public Access Charging (PAC) Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22187/massevip-public-access-charging-pac-program",
+    "websiteUrl": "https://www.mass.gov/how-to/apply-for-massevip-public-access-charging-incentives",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Grant Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22186",
+    "opportunityName": "MassEVIP Workplace and Fleet Charging Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22186/massevip-workplace-and-fleet-charging-program",
+    "websiteUrl": "https://www.mass.gov/how-to/apply-for-massevip-workplace-fleet-charging-incentives",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Grant Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "fleet_charging_infrastructure",
+        "displayName": "Fleet charging infrastructure",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22744",
+    "opportunityName": "MassSAVE (Electric) - CI Connected Solutions Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22744/masssave-electric-ci-connected-solutions-program",
+    "websiteUrl": "https://www.masssave.com/en/business/programs-and-services/commercialconnectedsolutions",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Performance-Based Incentive",
+    "administrator": "Cape Light Compact, Unitil, National Grid, NSTAR, Western Massachusetts Electric",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:4791",
+    "opportunityName": "MassSAVE (Electric) - Commercial New Construction/Major Renovation Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4791/masssave-electric-commercial-new-construction-major-renovation-program",
+    "websiteUrl": "http://www.masssave.com/en/business/incentive-programs/new-construction-renovation",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Rebate Program",
+    "administrator": "Cape Light Compact, Unitil, National Grid, NSTAR, Western Massachusets Electric",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "lighting_controls_retrofit",
+        "displayName": "Lighting controls retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "solar_water_heating_system",
+        "displayName": "Solar water heating system",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "window_replacement",
+        "displayName": "Window replacement",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_management_system",
+        "displayName": "Energy management system",
+        "parentCategory": "building_controls_energy_management",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "combined_heat_and_power_system",
+        "displayName": "Combined heat and power system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_commercial_dishwasher",
+        "displayName": "High-efficiency commercial dishwasher",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "waste_heat_recovery",
+        "displayName": "Waste heat recovery",
+        "parentCategory": "compressed_air_industrial",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 12
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22743",
+    "opportunityName": "MassSAVE (Electric) - Connected Solutions Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22743/masssave-electric-connected-solutions-program",
+    "websiteUrl": "https://www.masssave.com/residential/rebates-and-incentives/battery-storage-and-evs/batteries",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Performance-Based Incentive",
+    "administrator": "Cape Light Compact, Unitil, National Grid, NSTAR, Western Massachusetts Electric",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3211",
+    "opportunityName": "McMinnville Water & Light - Commercial Energy Efficiency Rebate Programs",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3211/mcminnville-water-and-light-commercial-energy-efficiency-rebate-programs",
+    "websiteUrl": "https://www.mc-power.com/energy-efficiency/commercial-energy-programs/",
+    "applicationUrl": null,
+    "state": "OR",
+    "programType": "Rebate Program",
+    "administrator": "McMinnville Water & Light",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3963",
+    "opportunityName": "McMinnville Water and Light - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3963/mcminnville-water-and-light-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.mc-power.com/energy-efficiency/energy-efficiency-rebates-incentives/",
+    "applicationUrl": null,
+    "state": "OR",
+    "programType": "Rebate Program",
+    "administrator": "McMinnville Water & Light",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "duct_sealing_and_insulation",
+        "displayName": "Duct sealing and duct insulation",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "window_replacement",
+        "displayName": "Window replacement",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_laundry_equipment",
+        "displayName": "High-efficiency laundry equipment",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 9
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:215",
+    "opportunityName": "MDA - Energy Efficiency Revolving Loan Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/215/mda-energy-efficiency-revolving-loan-program",
+    "websiteUrl": "https://mississippi.org/doing-business/incentives/",
+    "applicationUrl": null,
+    "state": "MS",
+    "programType": "Loan Program",
+    "administrator": "Mississippi Development Authority",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "lighting_controls_retrofit",
+        "displayName": "Lighting controls retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 5
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22041",
+    "opportunityName": "MEA- Data Center Energy Efficiency Grant Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22041/mea-data-center-energy-efficiency-grant-program",
+    "websiteUrl": "https://energy.maryland.gov/business/Pages/incentives/empowermdcigp.aspx",
+    "applicationUrl": null,
+    "state": "MD",
+    "programType": "Grant Program",
+    "administrator": "Maryland Energy Administration (MEA)",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "lighting_controls_retrofit",
+        "displayName": "Lighting controls retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "combined_heat_and_power_system",
+        "displayName": "Combined heat and power system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 5
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:678",
+    "opportunityName": "Met-Ed / Penelec Sustainable Energy Fund",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/678/met-ed-penelec-sustainable-energy-fund",
+    "websiteUrl": "https://bccf.org/overview-sustainable-energy-funds/",
+    "applicationUrl": null,
+    "state": "PA",
+    "programType": "Grant Program",
+    "administrator": "Berks County Community Foundation",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "solar_water_heating_system",
+        "displayName": "Solar water heating system",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "combined_heat_and_power_system",
+        "displayName": "Combined heat and power system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "biomass_biogas_energy_system",
+        "displayName": "Biomass / biogas energy system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1051",
+    "opportunityName": "Metropolitan Edison Company SEF Loans (FirstEnergy Territory)",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1051/metropolitan-edison-company-sef-loans-firstenergy-territory",
+    "websiteUrl": "http://www.metedpenelecsef.org/index.php?option=com_content&view=article&id=86",
+    "applicationUrl": null,
+    "state": "PA",
+    "programType": "Loan Program",
+    "administrator": "Berks County Community Foundation",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:4932",
+    "opportunityName": "Miami-Dade County - Florida PACE Finance Programs",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4932/miami-dade-county-florida-pace-finance-programs",
+    "websiteUrl": "https://www.miamidade.gov/global/economy/resilience/energy.page",
+    "applicationUrl": null,
+    "state": "FL",
+    "programType": "PACE Financing",
+    "administrator": "Miami-Dade County",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3128",
+    "opportunityName": "Miami-Dade County - Green Building Expedited Plan Review",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3128/miami-dade-county-green-building-expedited-plan-review",
+    "websiteUrl": "https://www.miamidade.gov/permits/home.asp?cat=build&subcat=plan&filter1=green",
+    "applicationUrl": null,
+    "state": "FL",
+    "programType": "Green Building Incentive",
+    "administrator": "Miami-Dade County, District 8",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "solar_water_heating_system",
+        "displayName": "Solar water heating system",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "rooftop_solar_pv",
+        "displayName": "Rooftop solar PV",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22712",
+    "opportunityName": "Michigan - Home Efficiency Rebate (HER) Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22712/michigan-home-efficiency-rebate-her-program",
+    "websiteUrl": "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs",
+    "applicationUrl": null,
+    "state": "MI",
+    "programType": "Rebate Program",
+    "administrator": "Department of Environment, Great Lakes, and Energy",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22711",
+    "opportunityName": "Michigan - Home Electrification and Appliance Rebate (HEAR) Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22711/michigan-home-electrification-and-appliance-rebate-hear-program",
+    "websiteUrl": "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs",
+    "applicationUrl": null,
+    "state": "MI",
+    "programType": "Rebate Program",
+    "administrator": "Michigan Department of Environment, Great Lakes, and Energy",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 5
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22647",
+    "opportunityName": "Michigan - National Electric Vehicle Infrastructure (NEVI) Formula Grant Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22647/michigan-national-electric-vehicle-infrastructure-nevi-formula-grant-program",
+    "websiteUrl": "https://www.michigan.gov/mdot/travel/mobility/initiatives/nevi",
+    "applicationUrl": null,
+    "state": "MI",
+    "programType": "Grant Program",
+    "administrator": "Michigan Department of Transportation",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:4521",
+    "opportunityName": "Michigan Local PACE Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4521/michigan-local-pace-program",
+    "websiteUrl": null,
+    "applicationUrl": null,
+    "state": "MI",
+    "programType": "PACE Financing",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:4633",
+    "opportunityName": "Michigan Saves - Business Energy Financing",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4633/michigan-saves-business-energy-financing",
+    "websiteUrl": "https://michigansaves.org/commercial-buildings/",
+    "applicationUrl": null,
+    "state": "MI",
+    "programType": "Loan Program",
+    "administrator": "Michigan Saves",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "lighting_controls_retrofit",
+        "displayName": "Lighting controls retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "solar_water_heating_system",
+        "displayName": "Solar water heating system",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 8
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:4632",
+    "opportunityName": "Michigan Saves - Home Energy Loan Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4632/michigan-saves-home-energy-loan-program",
+    "websiteUrl": "https://michigansaves.org/residential-homes/",
+    "applicationUrl": null,
+    "state": "MI",
+    "programType": "Loan Program",
+    "administrator": "Michigan Saves",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3508",
+    "opportunityName": "MidAmerican Energy - Commercial Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3508/midamerican-energy-commercial-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.midamericanenergy.com/business-discounts-and-rebates",
+    "applicationUrl": null,
+    "state": "IA",
+    "programType": "Rebate Program",
+    "administrator": "MidAmerican Energy",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "exterior_site_lighting_retrofit",
+        "displayName": "Exterior/site lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 5
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:4730",
+    "opportunityName": "MidAmerican Energy - Illinois Business Programs and Rebates",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4730/midamerican-energy-illinois-business-programs-and-rebates",
+    "websiteUrl": "https://www.midamericanenergy.com/il-business-rebates",
+    "applicationUrl": null,
+    "state": "IL",
+    "programType": "Rebate Program",
+    "administrator": "MidAmerican Energy Company",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "exterior_site_lighting_retrofit",
+        "displayName": "Exterior/site lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_commercial_dishwasher",
+        "displayName": "High-efficiency commercial dishwasher",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_oven",
+        "displayName": "High-efficiency oven",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_audit",
+        "displayName": "Energy audit",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 10
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3507",
+    "opportunityName": "MidAmerican Energy - Residential Energy Efficiency Rebate Programs",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3507/midamerican-energy-residential-energy-efficiency-rebate-programs",
+    "websiteUrl": "https://www.midamericanenergy.com/il-ee-rebates",
+    "applicationUrl": null,
+    "state": "IL",
+    "programType": "Rebate Program",
+    "administrator": "MidAmerican Energy Company",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 5
+  }
+]
+```
+

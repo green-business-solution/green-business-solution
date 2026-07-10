@@ -1,0 +1,1040 @@
+{
+  "batchId": "batch-025",
+  "batchIndex": 25,
+  "totalBatches": 61,
+  "schemaVersion": "opportunity-award-audit-batch-input.v1",
+  "sourcePath": "public/retrofit_opportunity_index.json",
+  "generatedAt": "2026-07-10T13:18:15.772Z",
+  "opportunityCount": 25,
+  "opportunities": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1106",
+      "opportunityName": "GMP Cow Power",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1106/gmp-cow-power",
+      "websiteUrl": "https://greenmountainpower.com/help/cow-power/",
+      "applicationUrl": null,
+      "state": "VT",
+      "programType": "Performance-Based Incentive",
+      "administrator": "Green Mountain Power Corporation",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "submetering_energy_monitoring",
+          "displayName": "Submetering / energy monitoring system",
+          "parentCategory": "building_controls_energy_management",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "biomass_biogas_energy_system",
+          "displayName": "Biomass / biogas energy system",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:f4ae5887bd3fcdc9:gogreen-business-energy-financing",
+      "opportunityName": "GoGreen Business Energy Financing",
+      "sourceName": "Southern California Edison Business Programs",
+      "sourceUrl": "https://www.sce.com/business/smart-energy-solar/energy-efficiency-programs",
+      "websiteUrl": "https://www.sce.com/business/smart-energy-solar/energy-efficiency-programs",
+      "applicationUrl": "https://www.sce.com/business/tools/Financing-Programs",
+      "state": "CA",
+      "programType": "financing",
+      "administrator": "Southern California Edison",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "refrigeration_controls_retrofit",
+          "displayName": "Refrigeration controls retrofit",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_management_system",
+          "displayName": "Energy management system",
+          "parentCategory": "building_controls_energy_management",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "battery_storage_system",
+          "displayName": "Battery storage system",
+          "parentCategory": "energy_storage_resilience",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 6
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2540",
+      "opportunityName": "Grand Marais PUC - Commercial & Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2540/grand-marais-puc-commercial-and-industrial-energy-efficiency-rebate-program",
+      "websiteUrl": "http://www.SaveEnergyInGrandMarais.com",
+      "applicationUrl": null,
+      "state": "MN",
+      "programType": "Rebate Program",
+      "administrator": "Grand Marais PUC",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "walk_in_cooler_freezer_upgrade",
+          "displayName": "Walk-in cooler/freezer upgrade",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "refrigeration_controls_retrofit",
+          "displayName": "Refrigeration controls retrofit",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "anti_sweat_heater_controls",
+          "displayName": "Anti-sweat heater controls",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_management_system",
+          "displayName": "Energy management system",
+          "parentCategory": "building_controls_energy_management",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "low_flow_fixture_retrofit",
+          "displayName": "Low-flow fixture retrofit",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_motor_replacement",
+          "displayName": "High-efficiency motor replacement",
+          "parentCategory": "motors_pumps_fans_drives",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "efficient_air_compressor",
+          "displayName": "Efficient air compressor",
+          "parentCategory": "compressed_air_industrial",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 11
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
+      "opportunityName": "Grand Marais PUC - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2539/grand-marais-puc-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "http://www.SaveEnergyInGrandMarais.com",
+      "applicationUrl": null,
+      "state": "MN",
+      "programType": "Rebate Program",
+      "administrator": "Grand Marais PUC",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_furnace_retrofit",
+          "displayName": "High-efficiency furnace retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_commercial_dishwasher",
+          "displayName": "High-efficiency commercial dishwasher",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 10
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2195",
+      "opportunityName": "Grays Harbor PUD - Non-Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2195/grays-harbor-pud-non-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.ghpud.org/energy-efficiency",
+      "applicationUrl": null,
+      "state": "WA",
+      "programType": "Rebate Program",
+      "administrator": "Grays Harbor PUD",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "window_replacement",
+          "displayName": "Window replacement",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_management_system",
+          "displayName": "Energy management system",
+          "parentCategory": "building_controls_energy_management",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "demand_controlled_kitchen_ventilation",
+          "displayName": "Demand-controlled kitchen ventilation",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 10
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2478",
+      "opportunityName": "Grays Harbor PUD - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2478/grays-harbor-pud-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.ghpud.org/energy-efficiency/residential-programs/",
+      "applicationUrl": null,
+      "state": "WA",
+      "programType": "Rebate Program",
+      "administrator": "Grays Harbor PUD",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "duct_sealing_and_insulation",
+          "displayName": "Duct sealing and duct insulation",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_laundry_equipment",
+          "displayName": "High-efficiency laundry equipment",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_audit",
+          "displayName": "Energy audit",
+          "parentCategory": "audits_studies_planning",
+          "isPhysicalRetrofit": false
+        }
+      ],
+      "relatedRetrofitCount": 7
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3575",
+      "opportunityName": "Great Lakes Energy - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3575/great-lakes-energy-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.gtlakes.com/energy-wise/",
+      "applicationUrl": null,
+      "state": "MI",
+      "programType": "Rebate Program",
+      "administrator": "Great Lakes Energy",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_laundry_equipment",
+          "displayName": "High-efficiency laundry equipment",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "induction_cooking_equipment",
+          "displayName": "Induction cooking equipment",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 10
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4067",
+      "opportunityName": "Green Communities Grant Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4067/green-communities-grant-program",
+      "websiteUrl": "http://www.mass.gov/eea/energy-utilities-clean-tech/green-communities/gc-grant-program/",
+      "applicationUrl": null,
+      "state": "MA",
+      "programType": "Grant Program",
+      "administrator": "Massachusetts Department of Energy Resources",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "energy_management_system",
+          "displayName": "Energy management system",
+          "parentCategory": "building_controls_energy_management",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4330",
+      "opportunityName": "Green Energy Production Facility Tax Credit",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4330/green-energy-production-facility-tax-credit",
+      "websiteUrl": "https://www.tn.gov/environment/sustainability/funding/green-energy.html",
+      "applicationUrl": null,
+      "state": "TN",
+      "programType": "Industry Recruitment/Support",
+      "administrator": "Tennessee Department of Revenue",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "solar_water_heating_system",
+          "displayName": "Solar water heating system",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "battery_storage_system",
+          "displayName": "Battery storage system",
+          "parentCategory": "energy_storage_resilience",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 3
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5216",
+      "opportunityName": "Green Energy Property Tax Assessment",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5216/green-energy-property-tax-assessment",
+      "websiteUrl": null,
+      "applicationUrl": null,
+      "state": "TN",
+      "programType": "Property Tax Incentive",
+      "administrator": "Tennessee Comptroller of the Treasury",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "battery_storage_system",
+          "displayName": "Battery storage system",
+          "parentCategory": "energy_storage_resilience",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22564",
+      "opportunityName": "Green Mountain Power Bring Your Own Device Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22564/green-mountain-power-bring-your-own-device-program",
+      "websiteUrl": "https://greenmountainpower.com/rebates-programs/home-energy-storage/bring-your-own-device/",
+      "applicationUrl": null,
+      "state": "VT",
+      "programType": "Rebate Program",
+      "administrator": "Green Mountain Power",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "battery_storage_system",
+          "displayName": "Battery storage system",
+          "parentCategory": "energy_storage_resilience",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22587",
+      "opportunityName": "Green Mountain Power Energy Efficiency Rebates",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22587/green-mountain-power-energy-efficiency-rebates",
+      "websiteUrl": "https://greenmountainpower.com/rebates-programs/home-and-yard/",
+      "applicationUrl": null,
+      "state": "VT",
+      "programType": "Rebate Program",
+      "administrator": "Green Mountain Power",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "induction_cooking_equipment",
+          "displayName": "Induction cooking equipment",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 4
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22404",
+      "opportunityName": "Green Mountain Power EV Charging Station Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22404/green-mountain-power-ev-charging-station-program",
+      "websiteUrl": "https://greenmountainpower.com/rebates-programs/electric-vehicles/in-home-ev-charger/",
+      "applicationUrl": null,
+      "state": "VT",
+      "programType": "Rebate Program",
+      "administrator": null,
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_lodging",
+      "opportunityName": "GRID-Lodging",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+      "websiteUrl": "https://mendotagroup.com/sdge-grid-lodging",
+      "applicationUrl": "https://mendotagroup.com/sdge-grid-lodging",
+      "state": "CA",
+      "programType": "rebate",
+      "administrator": "SDG&E",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "automated_demand_response_controls",
+          "displayName": "Automated demand response controls",
+          "parentCategory": "building_controls_energy_management",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:aesc_inc_com_groceries_restaurants_and_food_storage_program",
+      "opportunityName": "Groceries, Restaurants and Food Storage Program",
+      "sourceName": "San Diego Gas & Electric Business Programs",
+      "sourceUrl": "https://www.sdge.com/business/save-energy-and-money",
+      "websiteUrl": "https://aesc-inc.com/groceries-restaurants-and-food-storage-program",
+      "applicationUrl": "https://aesc-inc.com/groceries-restaurants-and-food-storage-program",
+      "state": "CA",
+      "programType": "rebate",
+      "administrator": "SDG&E",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "automated_demand_response_controls",
+          "displayName": "Automated demand response controls",
+          "parentCategory": "building_controls_energy_management",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "battery_storage_system",
+          "displayName": "Battery storage system",
+          "parentCategory": "energy_storage_resilience",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 3
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3980",
+      "opportunityName": "Gross Receipts Tax Exemption for Sales of Wind and Solar Systems to Government Entities",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3980/gross-receipts-tax-exemption-for-sales-of-wind-and-solar-systems-to-government-entities",
+      "websiteUrl": null,
+      "applicationUrl": null,
+      "state": "NM",
+      "programType": "Sales Tax Incentive",
+      "administrator": "New Mexico Taxation & Revenue Department",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "solar_water_heating_system",
+          "displayName": "Solar water heating system",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "rooftop_solar_pv",
+          "displayName": "Rooftop solar PV",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "small_wind_turbine",
+          "displayName": "Small wind turbine",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 3
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1773",
+      "opportunityName": "Groton Utilities - Commercial & Industrial Energy Efficiency Rebate Programs",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1773/groton-utilities-commercial-and-industrial-energy-efficiency-rebate-programs",
+      "websiteUrl": "https://ct-grotonutilities.civicplus.com/209/Commercial-Industrial-Incentives",
+      "applicationUrl": null,
+      "state": "CT",
+      "programType": "Rebate Program",
+      "administrator": "Groton Utilities",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1772",
+      "opportunityName": "Groton Utilities - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1772/groton-utilities-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://grotonutilities.com/energy-conservation/rebate-center/",
+      "applicationUrl": null,
+      "state": "CT",
+      "programType": "Rebate Program",
+      "administrator": "Groton Utilities",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 5
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3322",
+      "opportunityName": "Guadalupe Valley Electric Cooperative - Residential Energy Efficiency Rebate Programs",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3322/guadalupe-valley-electric-cooperative-residential-energy-efficiency-rebate-programs",
+      "websiteUrl": "https://www.gvec.org/electric/rebates/",
+      "applicationUrl": null,
+      "state": "TX",
+      "programType": "Rebate Program",
+      "administrator": "Guadalupe Valley Electric Cooperative",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "battery_storage_system",
+          "displayName": "Battery storage system",
+          "parentCategory": "energy_storage_resilience",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 6
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22589",
+      "opportunityName": "Guam - Photovoltaic Property Tax Exemption",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22589/guam-photovoltaic-property-tax-exemption",
+      "websiteUrl": null,
+      "applicationUrl": null,
+      "state": "GU",
+      "programType": "Property Tax Incentive",
+      "administrator": null,
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "rooftop_solar_pv",
+          "displayName": "Rooftop solar PV",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2817",
+      "opportunityName": "Gulf Power - Residential Energy Efficiency Programs",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2817/gulf-power-residential-energy-efficiency-programs",
+      "websiteUrl": "https://www.fpl.com/save/lower-my-bill.html?=icidHT6",
+      "applicationUrl": null,
+      "state": "FL",
+      "programType": "Rebate Program",
+      "administrator": "Gulf Power Company",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22299",
+      "opportunityName": "Gunnison County Electric - Electric Vehicle Rebates",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22299/gunnison-county-electric-electric-vehicle-rebates",
+      "websiteUrl": "https://www.gcea.coop/ev-rebates",
+      "applicationUrl": null,
+      "state": "CO",
+      "programType": "Rebate Program",
+      "administrator": "Gunnison County Electric",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3372",
+      "opportunityName": "Gunnison County Electric - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3372/gunnison-county-electric-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "http://www.gcea.coop/content/rebates",
+      "applicationUrl": null,
+      "state": "CO",
+      "programType": "Rebate Program",
+      "administrator": "Gunnison County Electric Association, Inc.",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "electric_forklift_material_handling",
+          "displayName": "Electric forklift / material handling equipment",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "low_flow_fixture_retrofit",
+          "displayName": "Low-flow fixture retrofit",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "induction_cooking_equipment",
+          "displayName": "Induction cooking equipment",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "variable_frequency_drive_retrofit",
+          "displayName": "Variable frequency drive retrofit",
+          "parentCategory": "motors_pumps_fans_drives",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_star_certification",
+          "displayName": "ENERGY STAR certification",
+          "parentCategory": "certifications_compliance",
+          "isPhysicalRetrofit": false
+        }
+      ],
+      "relatedRetrofitCount": 12
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2832",
+      "opportunityName": "Harford County - Property Tax Credit for Solar and Geothermal Devices",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2832/harford-county-property-tax-credit-for-solar-and-geothermal-devices",
+      "websiteUrl": "https://www.harfordcountymd.gov/DocumentCenter/View/27251/Solar-Geothermal-Energy-ApplicationPDF",
+      "applicationUrl": null,
+      "state": "MD",
+      "programType": "Property Tax Incentive",
+      "administrator": "Harford County Department of the Treasury",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4911",
+      "opportunityName": "Harris County - Property Tax Abatement for Green Commercial Buildings",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4911/harris-county-property-tax-abatement-for-green-commercial-buildings",
+      "websiteUrl": "https://hcoed.harriscountytx.gov/gbta.aspx",
+      "applicationUrl": null,
+      "state": "TX",
+      "programType": "Property Tax Incentive",
+      "administrator": "Harris County",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "leed_certification",
+          "displayName": "LEED certification",
+          "parentCategory": "certifications_compliance",
+          "isPhysicalRetrofit": false
+        }
+      ],
+      "relatedRetrofitCount": 1
+    }
+  ]
+}
