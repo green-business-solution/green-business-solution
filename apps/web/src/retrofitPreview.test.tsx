@@ -34,6 +34,7 @@ import {
   sanitizeBillUploadState,
   selectGptProBatchIdForIndex,
   selectGptProPromptPathForBatch,
+  SavingsPreviewCard,
   UserPreviewProfileView
 } from "./App";
 
@@ -646,6 +647,180 @@ describe("retrofit recommendations preview", () => {
     expect(preview.retrofits[0].tabSummary.primaryMetricLabel).toBe("Net impact");
     expect(preview.retrofits[0].tabSummary.fallback).toBe("Needs fuel baseline");
     expect(String(preview.retrofits[0].tabSummary.primaryMetricValue || "")).not.toContain("-$");
+  });
+
+  it("renders all five sustainability metrics and calculation details from the backend contract", () => {
+    const sustainabilityImpact = {
+      schemaVersion: "sustainability-impact-v1",
+      status: "calculated",
+      quality: {
+        confidence: "high",
+        source: "bill_line_deltas",
+        notes: []
+      },
+      metrics: {
+        waterConservationGallonsPerYear: {
+          id: "waterConservationGallonsPerYear",
+          label: "Water conservation",
+          unit: "gallons/year",
+          status: "calculated",
+          value: 5000,
+          sourceField: "annual_water_use_delta",
+          formulaId: "sustainability.water_conservation_v1",
+          assumptions: ["Water deltas are treated as annual gallons."],
+          quality: { confidence: "high", source: "bill_line_deltas", notes: [] },
+          trace: { sourceDeltas: [{ id: "water", canonicalField: "annual_water_use_delta", deltaValue: -5000, unit: "gallons/year", period: "annual" }] }
+        },
+        scope1ThermReductionPerYear: {
+          id: "scope1ThermReductionPerYear",
+          label: "Scope 1 therm reduction",
+          unit: "therms/year",
+          status: "calculated",
+          value: 12,
+          sourceField: "annual_therms_delta",
+          formulaId: "sustainability.scope1_therm_reduction_v1",
+          assumptions: ["Therm deltas are read directly from annual therm bill-line changes."],
+          quality: { confidence: "high", source: "bill_line_deltas", notes: [] },
+          trace: { sourceDeltas: [{ id: "therm", canonicalField: "annual_therms_delta", deltaValue: -12, unit: "therms/year", period: "annual" }] }
+        },
+        scope2ElectricityReductionKwhPerYear: {
+          id: "scope2ElectricityReductionKwhPerYear",
+          label: "Scope 2 electricity reduction",
+          unit: "kWh/year",
+          status: "calculated",
+          value: 1000,
+          sourceField: "annual_kwh_delta",
+          formulaId: "sustainability.scope2_kwh_reduction_v1",
+          assumptions: ["Electric deltas are read directly from annual kWh bill-line changes."],
+          quality: { confidence: "high", source: "bill_line_deltas", notes: [] },
+          trace: { sourceDeltas: [{ id: "kwh", canonicalField: "annual_kwh_delta", deltaValue: -1000, unit: "kWh/year", period: "annual" }] }
+        },
+        siteEuiReductionKbtuPerSquareFootPerYear: {
+          id: "siteEuiReductionKbtuPerSquareFootPerYear",
+          label: "Site EUI reduction",
+          unit: "kBtu/sq ft/year",
+          status: "calculated",
+          value: 0.5,
+          sourceField: "annual_kwh_delta+annual_therms_delta",
+          formulaId: "sustainability.site_eui_reduction_v1",
+          assumptions: ["Site EUI is computed from annual electric and gas bill-line deltas only."],
+          quality: { confidence: "high", source: "bill_line_deltas", notes: [] },
+          trace: {
+            sourceDeltas: [
+              { id: "kwh", canonicalField: "annual_kwh_delta", deltaValue: -1000, unit: "kWh/year", period: "annual" },
+              { id: "therm", canonicalField: "annual_therms_delta", deltaValue: -12, unit: "therms/year", period: "annual" }
+            ]
+          }
+        },
+        gridPeakDemandReductionKw: {
+          id: "gridPeakDemandReductionKw",
+          label: "Grid peak-demand reduction",
+          unit: "kW",
+          status: "calculated",
+          value: 8,
+          sourceField: "peak_kw_delta",
+          formulaId: "sustainability.grid_peak_demand_reduction_v1",
+          assumptions: ["Peak demand changes are read directly from peak kW bill-line changes."],
+          quality: { confidence: "high", source: "bill_line_deltas", notes: [] },
+          trace: { sourceDeltas: [{ id: "peak", canonicalField: "peak_kw_delta", deltaValue: -8, unit: "kW", period: "monthly" }] }
+        }
+      }
+    } as any;
+
+    const html = renderToStaticMarkup(
+      <SavingsPreviewCard preview={{ ...liveShapedPayload.retrofits[0].savingsPreview, sustainabilityImpact } as any} squareFootage={10000} />
+    );
+
+    expect(html).toContain("Sustainability impact");
+    expect(html).toContain("Water conservation");
+    expect(html).toContain("gallons/year");
+    expect(html).toContain("Scope 1 therm reduction");
+    expect(html).toContain("therms/year");
+    expect(html).toContain("Scope 2 electricity reduction");
+    expect(html).toContain("kWh/year");
+    expect(html).toContain("Site EUI reduction");
+    expect(html).toContain("kBtu/sq ft/year");
+    expect(html).toContain("Grid peak-demand reduction");
+    expect(html).toContain("Show sustainability calculation details");
+    expect(html).toContain("Calculated");
+  });
+
+  it("renders unavailable and increased-consumption sustainability states", () => {
+    const html = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            sustainabilityImpact: {
+              schemaVersion: "sustainability-impact-v1",
+              status: "partial",
+              quality: { confidence: "mixed", source: "bill_line_deltas", notes: ["Missing square footage."] },
+              metrics: {
+                waterConservationGallonsPerYear: {
+                  id: "waterConservationGallonsPerYear",
+                  label: "Water conservation",
+                  unit: "gallons/year",
+                  status: "unavailable",
+                  value: null,
+                  sourceField: "annual_water_use_delta",
+                  formulaId: "sustainability.water_conservation_v1",
+                  assumptions: [],
+                  quality: { confidence: "low", source: "missing_input", notes: ["Water bill deltas were missing."] }
+                },
+                scope1ThermReductionPerYear: {
+                  id: "scope1ThermReductionPerYear",
+                  label: "Scope 1 therm reduction",
+                  unit: "therms/year",
+                  status: "increased_consumption",
+                  value: -12,
+                  sourceField: "annual_therms_delta",
+                  formulaId: "sustainability.scope1_therm_reduction_v1",
+                  assumptions: [],
+                  quality: { confidence: "high", source: "bill_line_deltas", notes: [] }
+                },
+                scope2ElectricityReductionKwhPerYear: {
+                  id: "scope2ElectricityReductionKwhPerYear",
+                  label: "Scope 2 electricity reduction",
+                  unit: "kWh/year",
+                  status: "calculated",
+                  value: 1000,
+                  sourceField: "annual_kwh_delta",
+                  formulaId: "sustainability.scope2_kwh_reduction_v1",
+                  assumptions: [],
+                  quality: { confidence: "high", source: "bill_line_deltas", notes: [] }
+                },
+                siteEuiReductionKbtuPerSquareFootPerYear: {
+                  id: "siteEuiReductionKbtuPerSquareFootPerYear",
+                  label: "Site EUI reduction",
+                  unit: "kBtu/sq ft/year",
+                  status: "unavailable",
+                  value: null,
+                  sourceField: "annual_kwh_delta+annual_therms_delta",
+                  formulaId: "sustainability.site_eui_reduction_v1",
+                  assumptions: [],
+                  quality: { confidence: "low", source: "missing_input", notes: ["Square footage was missing or could not be parsed."] }
+                },
+                gridPeakDemandReductionKw: {
+                  id: "gridPeakDemandReductionKw",
+                  label: "Grid peak-demand reduction",
+                  unit: "kW",
+                  status: "calculated",
+                  value: 8,
+                  sourceField: "peak_kw_delta",
+                  formulaId: "sustainability.grid_peak_demand_reduction_v1",
+                  assumptions: [],
+                  quality: { confidence: "high", source: "bill_line_deltas", notes: [] }
+                }
+              }
+            }
+          } as any
+        }
+        squareFootage={null}
+      />
+    );
+
+    expect(html).toContain("Unavailable");
+    expect(html).toContain("Increased consumption");
   });
 
   it("renders a clean before-click retrofit picker and hides the full workspace", () => {

@@ -2848,6 +2848,133 @@ dd {
   color: #16231b;
 }
 
+.sustainability-impact-card {
+  background: #f7faf7;
+  border: 1px solid #e4ebe6;
+  border-radius: 6px;
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+}
+
+.sustainability-impact-header,
+.sustainability-impact-metric-header {
+  align-items: start;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.sustainability-impact-header h4,
+.sustainability-impact-details h5,
+.sustainability-impact-metric h5 {
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.sustainability-impact-header p,
+.sustainability-impact-details p,
+.sustainability-impact-metric p {
+  color: #4f5e56;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.sustainability-impact-header strong {
+  color: #16231b;
+  font-size: 12px;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.sustainability-impact-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sustainability-impact-metric {
+  background: #ffffff;
+  border: 1px solid #dfe8e2;
+  border-radius: 6px;
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 9px 10px;
+}
+
+.sustainability-impact-metric strong {
+  color: #16231b;
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+}
+
+.sustainability-impact-status {
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 850;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+.sustainability-impact-status--calculated {
+  background: #e5f7eb;
+  color: #167345;
+}
+
+.sustainability-impact-status--partial {
+  background: #fff4db;
+  color: #8f6500;
+}
+
+.sustainability-impact-status--unavailable {
+  background: #f2f4f3;
+  color: #66746c;
+}
+
+.sustainability-impact-status--increased_consumption {
+  background: #fde8e4;
+  color: #a13c2f;
+}
+
+.sustainability-impact-status--neutral {
+  background: #edf2ef;
+  color: #52625a;
+}
+
+.sustainability-impact-details {
+  background: #ffffff;
+  border: 1px solid #dfe8e2;
+  border-radius: 6px;
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+}
+
+.sustainability-impact-details summary {
+  cursor: pointer;
+  font-weight: 850;
+}
+
+.sustainability-impact-details-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.sustainability-impact-details-grid section {
+  border-top: 1px solid #e4ebe6;
+  display: grid;
+  gap: 6px;
+  padding-top: 8px;
+}
+
+.sustainability-impact-details-grid ul {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: 18px;
+}
+
 .review-filters {
   background: #ffffff;
   border: 1px solid #dce3dd;
