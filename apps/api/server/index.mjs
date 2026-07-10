@@ -118,9 +118,8 @@ const profile = process.env.AWS_PROFILE ?? (isLambdaRuntime ? "" : defaultGptPro
 const localDynamoEndpoint = process.env.GBS_DYNAMODB_ENDPOINT || "http://127.0.0.1:8000";
 const localS3Endpoint = process.env.GBS_S3_ENDPOINT || "http://127.0.0.1:9000";
 const localCredentials = {
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID || "local-access-key",
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "local-secret-key",
-  sessionToken: process.env.AWS_SESSION_TOKEN || "local-session-token"
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID || "localaccesskey",
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "localsecretkey"
 };
 const usersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
@@ -1802,6 +1801,7 @@ async function getUserRecord(userId) {
 async function buildCachedPortalRetrofitRecommendations({ user, intake, now = new Date(), persist = true, retrofitTypeIds = [] }) {
   const requestedRetrofitTypeIds = normalizeRetrofitTypeIdList(retrofitTypeIds);
   const formQuestionCatalog = await loadRuntimeFormQuestionCatalog();
+  const sampleTestCaseById = isLocalStack ? await loadSampleMatchingTestCaseByIdMap() : null;
   const catalogCacheVersion = retrofitRecommendationCacheVersionForCatalog(formQuestionCatalog);
   const cached = readCachedRetrofitRecommendations(user, intake, requestedRetrofitTypeIds, catalogCacheVersion);
   if (cached) {
@@ -1844,6 +1844,25 @@ async function buildCachedPortalRetrofitRecommendations({ user, intake, now = ne
           now,
           retrofitTypeIds: requestedRetrofitTypeIds
         });
+        if (
+          isLocalStack &&
+          !requestedRetrofitTypeIds.length &&
+          !payload.retrofits.length &&
+          isPreviewableFakeClientUser(user, sampleTestCaseById)
+        ) {
+          const fixturePayload = buildFixtureRetrofitRecommendationsPayload({
+            formQuestionCatalog,
+            user,
+            intake,
+            testCase: sampleTestCaseById.get(cleanText(user.sampleUserId)),
+            now
+          });
+          if (fixturePayload) {
+            writeCachedRetrofitRecommendations(user, intake, fixturePayload, requestedRetrofitTypeIds, catalogCacheVersion);
+            await writePersistentRetrofitRecommendations(user, intake, fixturePayload, catalogCacheVersion);
+            return fixturePayload;
+          }
+        }
         writeCachedRetrofitRecommendations(user, intake, payload, requestedRetrofitTypeIds, catalogCacheVersion);
         if (persist && requestedRetrofitTypeIds.length === 0) {
           await writePersistentRetrofitRecommendations(user, intake, payload, catalogCacheVersion);
