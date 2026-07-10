@@ -3,7 +3,7 @@ import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 
 export const persistentRetrofitRecommendationsStateScope = "retrofitRecommendations";
-export const persistentRetrofitRecommendationsCacheVersion = "2026-07-04-selected-retrofit-detail-v2";
+export const persistentRetrofitRecommendationsCacheVersion = "2026-07-09-sustainability-impact-v1";
 
 function cleanText(value) {
   return typeof value === "string" ? value.trim() : "";

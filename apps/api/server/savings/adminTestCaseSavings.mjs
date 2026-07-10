@@ -1,5 +1,6 @@
 import { calculateRetrofitSavingsEstimate } from "./engine.mjs";
 import { selectV2PackagesForRetrofitGroup } from "./v2RuntimeIncentives.mjs";
+import { buildSustainabilityImpact, normalizeSquareFootage } from "../sustainabilityImpact.mjs";
 
 export const ADMIN_TEST_CASE_SAVINGS_SCHEMA_VERSION = "admin-test-case-savings-v2";
 
@@ -415,6 +416,11 @@ export function buildAdminTestCaseSavingsPreview({
     taxGeographyRules
   });
   const estimate = calculateRetrofitSavingsEstimate(fixture);
+  const sustainabilityImpact = buildSustainabilityImpact({
+    billLineDeltas: estimate.billLineDeltas || [],
+    squareFootage: normalizeSquareFootage(normalizedProfile?.site?.squareFootage?.value),
+    sourceSquareFootage: normalizedProfile?.site?.squareFootage || null
+  });
   const incentiveAssumption =
     selectedIncentiveRules.length > 0 || selectedIncentivePackages.length > 0
       ? "Opportunity savings use source-backed incentive rules and reviewed v2 calculation packages when a matched rule is complete enough to include."
@@ -447,6 +453,7 @@ export function buildAdminTestCaseSavingsPreview({
     costBreakdown: estimate.costBreakdown,
     savingsBreakdown: estimate.savingsBreakdown,
     billLineDeltas: estimate.billLineDeltas,
+    sustainabilityImpact,
     incentiveCalculationPackageSummaries: estimate.incentiveCalculationPackageSummaries || [],
     incentiveCalculationPackageCounts: estimate.incentiveCalculationPackageCounts || {
       matchedPackageCount: 0,
@@ -821,6 +828,11 @@ function unsupportedPreview({ retrofitGroup, sampleUserId, reason }) {
     costBreakdown: [],
     savingsBreakdown: [],
     billLineDeltas: [],
+    sustainabilityImpact: buildSustainabilityImpact({
+      billLineDeltas: [],
+      squareFootage: null,
+      sourceSquareFootage: null
+    }),
     selectedIncentiveScenario: null,
     alternativeScenarios: [],
     calculationTrace: null,
