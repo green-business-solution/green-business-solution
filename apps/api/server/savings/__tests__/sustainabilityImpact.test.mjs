@@ -154,6 +154,23 @@ describe("sustainability impact calculations", () => {
     expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.valueKgCO2ePerYear).toBeCloseTo(componentTotal, 6);
   });
 
+  it("treats mixed-coverage site EUI as unavailable when an included stream is missing", () => {
+    const impact = buildSustainabilityImpact({
+      squareFootage: 10000,
+      retrofitTypeId: "rt_gas_to_electric",
+      sourceModelInputs: { stateCode: "CA" },
+      billLineDeltas: [
+        { id: "gas", domain: "gas", canonicalField: "annual_therms_delta", deltaValue: -12, unit: "therms/week", period: "weekly" },
+        { id: "electric", domain: "electric", canonicalField: "annual_kwh_delta", deltaValue: -1200, unit: "kWh/year", period: "annual" }
+      ]
+    });
+
+    expect(impact.metrics.scope2ElectricityReductionKwhPerYear.provenanceState).toBe("source_calculated");
+    expect(impact.metrics.scope1ThermReductionPerYear.provenanceState).toBe("unavailable");
+    expect(impact.metrics.siteEuiReductionKbtuPerSquareFootPerYear.provenanceState).toBe("unavailable");
+    expect(impact.metrics.siteEuiReductionKbtuPerSquareFootPerYear.value).toBe(0);
+  });
+
   it("keeps unsupported delta cadences unavailable instead of annualizing them", () => {
     const impact = buildSustainabilityImpact({
       squareFootage: 10000,
@@ -185,6 +202,8 @@ describe("sustainability impact calculations", () => {
     expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.provenanceState).toBe("unavailable");
     expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.components[0].status).toBe("unavailable");
     expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.components[0].valueKgCO2ePerYear).toBeNull();
+    expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.value).toBe(0);
+    expect(impact.metrics.annualOperationalCO2eReductionKgPerYear.trace.valueKgCO2ePerYear).toBeNull();
   });
 
   it("attaches the sustainability impact contract to the admin savings preview", () => {

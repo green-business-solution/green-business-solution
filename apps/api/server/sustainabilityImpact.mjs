@@ -677,23 +677,28 @@ function resolvePeakMetric({ billLineDeltas, retrofitTypeId, sourceModelInputs }
 
 function buildSiteEuiMetric({ squareFootage, sourceSquareFootage, scope2Metric, scope1Metric, sourceModelInputs }) {
   const parsedSquareFootage = normalizeSquareFootage(squareFootage);
-  const scope2Value = Number.isFinite(scope2Metric.value) ? scope2Metric.value : 0;
-  const scope1Value = Number.isFinite(scope1Metric.value) ? scope1Metric.value : 0;
-  const euiBase = parsedSquareFootage ? ((scope2Value * KWH_TO_KBTU) + (scope1Value * THERM_TO_KBTU)) / parsedSquareFootage : null;
+  const scopeMetrics = [scope2Metric, scope1Metric];
+  const applicableMetrics = scopeMetrics.filter((metric) => metric.provenanceState !== "not_applicable");
+  const unavailableIncluded = applicableMetrics.some((metric) => metric.provenanceState === "unavailable");
+  const availableScope2Value = scope2Metric.provenanceState === "not_applicable" || !Number.isFinite(scope2Metric.value) ? null : scope2Metric.value;
+  const availableScope1Value = scope1Metric.provenanceState === "not_applicable" || !Number.isFinite(scope1Metric.value) ? null : scope1Metric.value;
+  const euiBase = parsedSquareFootage && !unavailableIncluded
+    ? ((availableScope2Value || 0) * KWH_TO_KBTU + (availableScope1Value || 0) * THERM_TO_KBTU) / parsedSquareFootage
+    : null;
   const sourceDeltas = [
     ...(scope2Metric.trace?.sourceDeltas || []),
     ...(scope1Metric.trace?.sourceDeltas || [])
   ];
   const boundary = buildBoundaryNote();
 
-  if (parsedSquareFootage && (scope2Metric.provenanceState !== "unavailable" || scope1Metric.provenanceState !== "unavailable")) {
-    const provenanceState = [scope2Metric.provenanceState, scope1Metric.provenanceState].includes("unavailable")
+  if (parsedSquareFootage && applicableMetrics.length > 0) {
+    const provenanceState = unavailableIncluded
       ? "unavailable"
       : [scope2Metric.provenanceState, scope1Metric.provenanceState].includes("estimated")
-      ? "estimated"
-      : [scope2Metric.provenanceState, scope1Metric.provenanceState].includes("increased_consumption")
-        ? "increased_consumption"
-          : [scope2Metric.provenanceState, scope1Metric.provenanceState].includes("not_applicable")
+        ? "estimated"
+        : [scope2Metric.provenanceState, scope1Metric.provenanceState].includes("increased_consumption")
+          ? "increased_consumption"
+            : [scope2Metric.provenanceState, scope1Metric.provenanceState].includes("not_applicable")
             ? "not_applicable"
             : "source_calculated";
     return buildMetric({
@@ -754,8 +759,11 @@ function buildSiteEuiMetric({ squareFootage, sourceSquareFootage, scope2Metric, 
 function buildOperationalCO2eMetric({ sourceModelInputs, scope1Metric, scope2Metric }) {
   const electricityFactor = getElectricityEmissionFactor({ stateCode: sourceModelInputs?.stateCode });
   const gasFactor = getNaturalGasEmissionFactor();
-  const scope2Value = Number.isFinite(scope2Metric.value) ? scope2Metric.value : null;
-  const scope1Value = Number.isFinite(scope1Metric.value) ? scope1Metric.value : null;
+  const scopeMetrics = [scope1Metric, scope2Metric];
+  const applicableMetrics = scopeMetrics.filter((metric) => metric.provenanceState !== "not_applicable");
+  const unavailableIncluded = applicableMetrics.some((metric) => metric.provenanceState === "unavailable");
+  const scope2Value = scope2Metric.provenanceState === "not_applicable" || !Number.isFinite(scope2Metric.value) ? null : scope2Metric.value;
+  const scope1Value = scope1Metric.provenanceState === "not_applicable" || !Number.isFinite(scope1Metric.value) ? null : scope1Metric.value;
   const scope2Kg = scope2Value == null ? null : scope2Value * electricityFactor.kgPerKwh;
   const scope1Kg = scope1Value == null ? null : scope1Value * gasFactor.kgCo2ePerTherm;
 
@@ -764,7 +772,7 @@ function buildOperationalCO2eMetric({ sourceModelInputs, scope1Metric, scope2Met
       scope: "Scope 1",
       sourceMetricId: scope1Metric.id,
       status: scope1Metric.provenanceState,
-      valueKgCO2ePerYear: scope1Kg,
+      valueKgCO2ePerYear: scope1Metric.provenanceState === "unavailable" ? null : scope1Kg,
       unit: "kg CO2e/year",
       factor: {
         ...gasFactor.source,
@@ -778,7 +786,7 @@ function buildOperationalCO2eMetric({ sourceModelInputs, scope1Metric, scope2Met
       scope: "Scope 2",
       sourceMetricId: scope2Metric.id,
       status: scope2Metric.provenanceState,
-      valueKgCO2ePerYear: scope2Kg,
+      valueKgCO2ePerYear: scope2Metric.provenanceState === "unavailable" ? null : scope2Kg,
       unit: "kg CO2e/year",
       factor: {
         ...electricityFactor.source,
@@ -789,10 +797,8 @@ function buildOperationalCO2eMetric({ sourceModelInputs, scope1Metric, scope2Met
 
   const allNotApplicable = components.every((component) => component.status === "not_applicable");
   const includedComponents = components.filter((component) => component.status !== "not_applicable");
-  const availableComponents = includedComponents.filter(
-    (component) => component.status !== "unavailable" && Number.isFinite(component.valueKgCO2ePerYear)
-  );
-  const totalKg = sumNumbers(availableComponents.map((component) => component.valueKgCO2ePerYear));
+  const availableComponents = includedComponents.filter((component) => Number.isFinite(component.valueKgCO2ePerYear));
+  const totalKg = unavailableIncluded ? null : sumNumbers(availableComponents.map((component) => component.valueKgCO2ePerYear));
   const anyEstimated = includedComponents.some((component) => component.status === "estimated");
   const anyIncreased = includedComponents.some((component) => component.status === "increased_consumption");
   const anyUnavailable = includedComponents.some((component) => component.status === "unavailable");
@@ -801,7 +807,7 @@ function buildOperationalCO2eMetric({ sourceModelInputs, scope1Metric, scope2Met
     ? "not_applicable"
     : anyUnavailable && !anyNotApplicable
       ? "unavailable"
-      : anyEstimated
+    : anyEstimated
         ? "estimated"
         : anyIncreased
           ? "increased_consumption"
@@ -821,7 +827,7 @@ function buildOperationalCO2eMetric({ sourceModelInputs, scope1Metric, scope2Met
     label: "Annual operational CO2e reduction",
     unit: "kg CO2e/year",
     sourceField: "annual_kwh_delta+annual_therms_delta",
-    value: totalKg,
+      value: totalKg == null ? 0 : totalKg,
     provenanceState,
     formulaId: "sustainability.operational_co2e_v2",
     quality: {
