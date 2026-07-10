@@ -419,7 +419,11 @@ export function buildAdminTestCaseSavingsPreview({
   const sustainabilityImpact = buildSustainabilityImpact({
     billLineDeltas: estimate.billLineDeltas || [],
     squareFootage: normalizeSquareFootage(normalizedProfile?.site?.squareFootage?.value),
-    sourceSquareFootage: normalizedProfile?.site?.squareFootage || null
+    sourceSquareFootage: normalizedProfile?.site?.squareFootage || null,
+    retrofitTypeId: retrofitGroup?.retrofitTypeId || null,
+    retrofitDisplayName: retrofitGroup?.displayName || null,
+    sourceModelInputs: template.userAnswers || {},
+    stateCode: normalizedProfile?.site?.geo?.stateCode || normalizedProfile?.site?.addressStructured?.stateCode || null
   });
   const incentiveAssumption =
     selectedIncentiveRules.length > 0 || selectedIncentivePackages.length > 0
@@ -468,6 +472,7 @@ export function buildAdminTestCaseSavingsPreview({
     calculationTrace: estimate.calculationTrace,
     assumptions: [
       ...template.assumptions,
+      "Peak-demand estimates use a documented template assumption or direct fixture capacity rather than annualizing kWh without an explicit load-factor assumption.",
       "Admin test-case fixture uses fixed project inputs until real project inputs are collected.",
       incentiveAssumption,
       "This is not a customer quote or final savings estimate."
@@ -600,7 +605,8 @@ function electricTemplate({
   equipmentCostCents,
   laborCostCents,
   laborRequired = true,
-  assumptions = []
+  assumptions = [],
+  peakLoadFactor = 0.8
 }) {
   return {
     engineSlug: "electric_kwh_reduction",
@@ -612,9 +618,13 @@ function electricTemplate({
     userAnswers: {
       unit_count: 1,
       modeled_kwh_reduction: modeledKwhReduction,
-      equipment_cost_cents: equipmentCostCents
+      equipment_cost_cents: equipmentCostCents,
+      peak_load_factor: peakLoadFactor
     },
-    assumptions
+    assumptions: [
+      ...assumptions,
+      `Peak-demand estimates use an explicit ${peakLoadFactor.toFixed(2)} load-factor assumption when no direct kW delta is available.`
+    ]
   };
 }
 
@@ -652,9 +662,13 @@ function gasToElectricTemplate({ thermsAvoided, addedKwh, equipmentCostCents, la
       unit_count: 1,
       annual_therms_avoided: thermsAvoided,
       modeled_new_electric_kwh: addedKwh,
-      equipment_cost_cents: equipmentCostCents
+      equipment_cost_cents: equipmentCostCents,
+      peak_load_factor: 0.8
     },
-    assumptions
+    assumptions: [
+      ...assumptions,
+      "Peak-demand estimates use an explicit 0.80 load-factor assumption when no direct kW delta is available."
+    ]
   };
 }
 

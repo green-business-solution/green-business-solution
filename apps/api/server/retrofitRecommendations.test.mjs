@@ -239,8 +239,10 @@ describe("portal retrofit recommendations", () => {
     expect(payload.retrofits.every((retrofit) => retrofit.opportunities.length === 0)).toBe(true);
     expect(payload.retrofits.every((retrofit) => retrofit.savingsPreview?.status === "calculated")).toBe(true);
     expect(payload.retrofits[0].savingsPreview?.annualSavingsCents).toBeGreaterThan(0);
-    expect(payload.retrofits[0].savingsPreview?.sustainabilityImpact?.status).toBe("partial");
+    expect(payload.retrofits[0].savingsPreview?.sustainabilityImpact?.status).toBe("estimated");
     expect(payload.retrofits[0].savingsPreview?.sustainabilityImpact?.metrics?.scope2ElectricityReductionKwhPerYear?.value).toBeGreaterThan(0);
+    expect(payload.retrofits[0].savingsPreview?.sustainabilityImpact?.metrics?.siteEuiReductionKbtuPerSquareFootPerYear?.value).toBeGreaterThan(0);
+    expect(payload.retrofits[0].savingsPreview?.sustainabilityImpact?.metrics?.annualOperationalCO2eReductionKgPerYear?.value).toBeGreaterThan(0);
   });
 
   it("exposes mandatory pre-opportunity tax inputs when local tax workflow inputs are missing", () => {
