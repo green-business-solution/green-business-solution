@@ -54,7 +54,7 @@ Use `scripts/copy-s3-bucket-versions-between-profiles.mjs` only for explicit leg
 Restore locally:
 
 ```sh
-AWS_PROFILE=retrofi-prod GBS_GENERATED_FIXTURE_BUCKET=gbs-retrofi-test-fixtures-059310317821-us-east-1 npm run fixtures:generated:download
+AWS_PROFILE=retrofi-prod GBS_GENERATED_FIXTURE_BUCKET=gbs-retrofi-test-fixtures-059310317821-us-east-1 npm run fixtures:generated:download -- --force
 ```
 
 Upload refreshed fixtures:

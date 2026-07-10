@@ -328,9 +328,23 @@ ensure_artifact_bucket() {
 ensure_generated_fixtures() {
   echo "Ensuring generated test fixtures are available..."
   if [ -n "${PROFILE}" ]; then
-    AWS_PROFILE="${PROFILE}" AWS_REGION="${REGION}" GBS_GENERATED_FIXTURE_BUCKET="${TEST_FIXTURES_BUCKET}" npm run fixtures:generated:download
+    AWS_PROFILE="${PROFILE}" AWS_REGION="${REGION}" GBS_GENERATED_FIXTURE_BUCKET="${TEST_FIXTURES_BUCKET}" \
+      npm run fixtures:generated:download -- --force
   else
-    AWS_REGION="${REGION}" GBS_GENERATED_FIXTURE_BUCKET="${TEST_FIXTURES_BUCKET}" npm run fixtures:generated:download
+    AWS_REGION="${REGION}" GBS_GENERATED_FIXTURE_BUCKET="${TEST_FIXTURES_BUCKET}" \
+      npm run fixtures:generated:download -- --force
+  fi
+
+  echo "Rebuilding admin test-case savings payloads from downloaded fixtures..."
+  if [ -f public/sample_matching_test_cases.json ]; then
+    if [ -n "${PROFILE}" ]; then
+      AWS_PROFILE="${PROFILE}" AWS_REGION="${REGION}" npm run matching:test-case-savings
+    else
+      AWS_REGION="${REGION}" npm run matching:test-case-savings
+    fi
+  else
+    echo "Required deploy public fixture is missing after download: public/sample_matching_test_cases.json" >&2
+    exit 1
   fi
 }
 

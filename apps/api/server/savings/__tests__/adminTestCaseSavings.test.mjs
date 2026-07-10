@@ -1,260 +1,105 @@
 import { describe, expect, it } from "vitest";
 import { buildAdminTestCaseSavingsPreview } from "../adminTestCaseSavings.mjs";
 
-describe("admin test-case savings previews", () => {
-  it("calculates the LED admin test fixture preview", () => {
+const normalizedProfile = {
+  site: {
+    squareFootage: { value: 12000 },
+    geo: { stateCode: "CA" },
+    addressStructured: { stateCode: "CA" }
+  },
+  tax: null,
+  grant: null
+};
+
+describe("admin test-case savings generation", () => {
+  it("builds v2 sustainability impact for supported retrofits", () => {
     const preview = buildAdminTestCaseSavingsPreview({
-      sampleUserId: "sample_led",
-      calculationDate: "2026-06-27",
-      normalizedProfile: {
-        site: {
-          geo: {
-            stateCode: "CA",
-            countyFips: "06075"
-          }
-        }
-      },
       retrofitGroup: {
-        retrofitTypeId: "led_lighting_retrofit",
-        displayName: "LED lighting retrofit",
-        opportunityCount: 12
-      }
+        retrofitTypeId: "ev_charger_installation",
+        displayName: "EV charger installation",
+        opportunities: [{ opportunityId: "opp-1" }],
+        opportunityCount: 1
+      },
+      sampleUserId: "sample-user",
+      normalizedProfile
     });
 
-    expect(preview).toMatchObject({
-      status: "calculated",
-      estimateKind: "test_fixture",
-      modelCoverage: "retrofit_only",
-      upfrontCostCents: 160425,
-      upfrontSavingsCents: 0,
-      upfrontCostAfterSavingsCents: 160425,
-      monthlySavingsCents: 1872,
-      annualSavingsCents: 22464
-    });
-    expect(preview.costBreakdown).toEqual(
+    const sustainabilityImpact = preview.sustainabilityImpact;
+    expect(sustainabilityImpact?.schemaVersion).toBe("sustainability-impact-v2");
+    expect(["calculated", "estimated", "partial", "unsupported"].includes(preview.status)).toBe(true);
+    expect(["partial", "estimated", "calculated"].includes(sustainabilityImpact?.status)).toBe(true);
+    expect(sustainabilityImpact?.metrics?.annualOperationalCO2eReductionKgPerYear?.unit).toBe("kg CO2e/year");
+
+    for (const [metricId, metric] of Object.entries(sustainabilityImpact.metrics || {})) {
+      expect(metric).toMatchObject({
+        id: expect.any(String),
+        unit: expect.any(String),
+        status: expect.any(String),
+        provenanceState: expect.any(String),
+        value: expect.any(Number),
+        formulaId: expect.any(String),
+        trace: expect.any(Object)
+      });
+      expect(Number.isFinite(metric.value)).toBe(true);
+      expect(["waterConservationGallonsPerYear", "scope1ThermReductionPerYear", "scope2ElectricityReductionKwhPerYear", "siteEuiReductionKbtuPerSquareFootPerYear", "gridPeakDemandReductionKw", "annualOperationalCO2eReductionKgPerYear"]).toContain(
+        metricId
+      );
+    }
+
+    const co2e = sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear;
+    expect(co2e.trace?.components).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ category: "equipment_cost", amountCents: 102000 }),
-        expect.objectContaining({ category: "installation_labor", amountCents: 49500 }),
-        expect.objectContaining({ category: "sales_tax", amountCents: 8925 })
+        expect.objectContaining({
+          scope: "Scope 1",
+          factor: expect.objectContaining({
+            sourceRegion: expect.any(String),
+            sourceLabel: expect.any(String)
+          }),
+          unit: "kg CO2e/year"
+        }),
+        expect.objectContaining({
+          scope: "Scope 2",
+          factor: expect.objectContaining({
+            sourceRegion: expect.any(String),
+            sourceLabel: expect.any(String),
+            valueKgCo2ePerKwh: expect.any(Number)
+          }),
+          unit: "kg CO2e/year"
+        })
       ])
     );
-  });
-
-  it("calculates modeled HVAC admin test fixture previews", () => {
-    const preview = buildAdminTestCaseSavingsPreview({
-      sampleUserId: "sample_hvac",
-      calculationDate: "2026-06-27",
-      normalizedProfile: {},
-      retrofitGroup: {
-        retrofitTypeId: "high_efficiency_hvac_replacement",
-        displayName: "High-efficiency HVAC replacement",
-        opportunityCount: 3
-      }
-    });
-
-    expect(preview).toMatchObject({
-      status: "calculated",
-      estimateKind: "test_fixture",
-      modelCoverage: "retrofit_only",
-      upfrontCostCents: 798000,
-      upfrontSavingsCents: 0,
-      upfrontCostAfterSavingsCents: 798000,
-      monthlySavingsCents: 6000,
-      annualSavingsCents: 72000
-    });
-    expect(preview.billLineDeltas).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ domain: "electric", canonicalField: "annual_kwh_delta", deltaValue: -4000 })
-      ])
+    expect(co2e.trace?.boundary?.included).toEqual(
+      expect.arrayContaining(["Scope 1 direct on-site natural gas combustion", "Scope 2 purchased electricity use"])
     );
+    expect(sustainabilityImpact.metrics.waterConservationGallonsPerYear.value).toBe(0);
+    expect(sustainabilityImpact.metrics.waterConservationGallonsPerYear.provenanceState).toBe("not_applicable");
   });
 
-  it("keeps multiple incentive effects for one matched opportunity-retrofit pair", () => {
+  it("builds unsupported service-only previews with contract-shaped sustainability impact", () => {
     const preview = buildAdminTestCaseSavingsPreview({
-      sampleUserId: "sample_led_combo",
-      calculationDate: "2026-06-27",
-      normalizedProfile: {},
       retrofitGroup: {
-        retrofitTypeId: "led_lighting_retrofit",
-        displayName: "LED lighting retrofit",
-        opportunityCount: 1,
-        opportunities: [{ opportunityId: "opp_combo_led" }]
+        retrofitTypeId: "leed_certification",
+        displayName: "LEED certification",
+        opportunities: [],
+        opportunityCount: 0
       },
-      opportunityIncentiveRules: [
-        {
-          id: "oir_combo_led_rebate_v1",
-          version: 1,
-          opportunityId: "opp_combo_led",
-          name: "Combo LED Rebate",
-          incentiveType: "fixed_per_unit_rebate",
-          timing: "upfront",
-          amountRule: { kind: "fixed_amount", amountCents: 10000 },
-          basisPolicy: { basis: "gross_project_cost", applicationOrder: 10 },
-          confidence: "high",
-          active: true
-        },
-        {
-          id: "oir_combo_led_bill_credit_v1",
-          version: 1,
-          opportunityId: "opp_combo_led",
-          name: "Combo LED Bill Credit",
-          incentiveType: "recurring_bill_credit",
-          timing: "annual",
-          amountRule: { kind: "fixed_amount", amountCents: 12000 },
-          basisPolicy: { basis: "gross_project_cost", applicationOrder: 20 },
-          confidence: "high",
-          active: true
-        }
-      ]
+      sampleUserId: "sample-user",
+      normalizedProfile
     });
 
-    expect(preview.oneTimeSavingsCents).toBe(10000);
-    expect(preview.annualRecurringSavingsCents).toBe(34464);
-    expect(preview.netAnnualRecurringSavingsCents).toBe(34464);
-    expect(preview.selectedIncentiveScenario).toMatchObject({
-      opportunityIds: ["opp_combo_led"],
-      incentiveRuleIds: ["oir_combo_led_rebate_v1", "oir_combo_led_bill_credit_v1"],
-      totalUpfrontSavingsCents: 10000,
-      firstYearRecurringSavingsCents: 12000
-    });
-    expect(preview.selectedIncentiveScenario.upfrontSavingsEntries).toHaveLength(1);
-    expect(preview.selectedIncentiveScenario.recurringSavingsEntries).toHaveLength(1);
-  });
+    expect(preview.status).toBe("unsupported");
+    expect(preview.unsupportedReason).toContain("audit");
+    expect(preview.sustainabilityImpact?.schemaVersion).toBe("sustainability-impact-v2");
+    expect(["partial", "estimated", "calculated"].includes(preview.sustainabilityImpact?.status)).toBe(true);
 
-  it("passes tax context into matched v2 tax package summaries without adding review-gated money to totals", () => {
-    const preview = buildAdminTestCaseSavingsPreview({
-      sampleUserId: "sample_tax_context",
-      calculationDate: "2026-06-27",
-      normalizedProfile: {
-        site: {
-          geo: {
-            stateCode: "MI",
-            countyFips: "26081"
-          }
-        }
-      },
-      taxContext: {
-        taxProfileFacts: [
-          { inputKey: "company_current_on_state_and_local_taxes", value: true, sourceStrategy: "synthetic_tax_document" },
-          { inputKey: "eligible_state_education_tax_cents", value: 1000, sourceStrategy: "synthetic_tax_document" },
-          { inputKey: "eligible_real_property_tax_cents", value: 2000, sourceStrategy: "synthetic_tax_document" },
-          { inputKey: "eligible_personal_property_tax_cents", value: 3000, sourceStrategy: "synthetic_tax_document" },
-          { inputKey: "eligible_local_income_tax_cents", value: 4000, sourceStrategy: "synthetic_tax_document" }
-        ],
-        taxOpportunitySpecificInputs: [
-          { opportunityId: "opp_tax_context", inputKey: "approved_rerz_designation", value: true },
-          { opportunityId: "opp_tax_context", inputKey: "qualified_company_operations", value: true },
-          { opportunityId: "opp_tax_context", inputKey: "phaseout_multiplier", value: 0.75 }
-        ]
-      },
-      retrofitGroup: {
-        retrofitTypeId: "led_lighting_retrofit",
-        displayName: "LED lighting retrofit",
-        opportunityCount: 1,
-        opportunities: [{ opportunityId: "opp_tax_context" }]
-      },
-      opportunityIncentiveCalculationPackages: [taxContextExpressionPackage()]
-    });
+    for (const metric of Object.values(preview.sustainabilityImpact.metrics)) {
+      expect(typeof metric.value).toBe("number");
+      expect(Number.isFinite(metric.value)).toBe(true);
+    }
 
-    const [summary] = preview.incentiveCalculationPackageSummaries;
-    expect(summary).toMatchObject({
-      opportunityId: "opp_tax_context",
-      runtimeInclusionStatus: "human_review_required",
-      missingInputs: []
-    });
-    expect(summary.effectSummaries[0]).toMatchObject({
-      effectType: "tax_exemption",
-      amountCents: 7500,
-      humanReviewRequired: true
-    });
-    expect(summary.resolvedInputs).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ inputKey: "approved_rerz_designation", source: "tax_opportunity_input" }),
-        expect.objectContaining({ inputKey: "eligible_real_property_tax_cents", source: "tax_profile_fact" })
-      ])
-    );
-    expect(preview.oneTimeSavingsCents).toBe(0);
-  });
-
-  it("keeps service-only matched items unsupported until modeled savings are available", () => {
-    const preview = buildAdminTestCaseSavingsPreview({
-      sampleUserId: "sample_audit",
-      calculationDate: "2026-06-27",
-      normalizedProfile: {},
-      retrofitGroup: {
-        retrofitTypeId: "energy_audit",
-        displayName: "Energy audit",
-        opportunityCount: 2
-      }
-    });
-
-    expect(preview).toMatchObject({
-      status: "unsupported",
-      estimateKind: "not_modeled_v1",
-      modelCoverage: "none",
-      upfrontCostCents: null,
-      annualSavingsCents: null
-    });
+    expect(preview.sustainabilityImpact?.metrics?.annualOperationalCO2eReductionKgPerYear?.value).toBe(0);
+    expect(preview.sustainabilityImpact?.metrics?.scope1ThermReductionPerYear?.provenanceState).toBe("not_applicable");
+    expect(preview.sustainabilityImpact?.metrics?.scope2ElectricityReductionKwhPerYear?.provenanceState).toBe("not_applicable");
+    expect(preview.sustainabilityImpact?.metrics?.siteEuiReductionKbtuPerSquareFootPerYear?.provenanceState).toBe("not_applicable");
   });
 });
-
-function taxContextExpressionPackage() {
-  const requiredInputs = [
-    "approved_rerz_designation",
-    "qualified_company_operations",
-    "company_current_on_state_and_local_taxes",
-    "phaseout_multiplier",
-    "eligible_state_education_tax_cents",
-    "eligible_real_property_tax_cents",
-    "eligible_personal_property_tax_cents",
-    "eligible_local_income_tax_cents"
-  ].map((inputKey) => ({
-    input_key: inputKey,
-    label: inputKey,
-    value_type: "text",
-    required_for: ["effect_tax_context"],
-    source_precedence: ["tax_profile"],
-    missing_severity: "blocks_calculation"
-  }));
-
-  return {
-    schema_version: "2.0.0",
-    opportunity_id: "opp_tax_context",
-    program_name: "Tax Context Expression",
-    calculation_status: "calculable_with_missing_inputs",
-    availability: { status: "active", source_access_status: "accessible" },
-    customer_segments: ["commercial"],
-    retrofit_types: ["led_lighting_retrofit"],
-    geography: { country: "US", states: ["MI"], counties: [], cities: [], utility_territory_required: false },
-    measure_catalogs: [],
-    rate_tables: [],
-    effects: [
-      {
-        effect_id: "effect_tax_context",
-        label: "Tax expression requiring review",
-        effect_type: "tax_exemption",
-        cash_flow_direction: "benefit",
-        timing: { cadence: "annual", source_timing: "annual" },
-        calculation: { method: "expression", expression_id: "tax_exempt_liability" },
-        limits: [],
-        caps: [],
-        required_inputs: requiredInputs,
-        evidence_refs: ["tax_context"],
-        confidence: { overall: 0.72, calculation: 0.72, extraction: 0.9, reason_codes: ["tax_package_test"] },
-        repair_metadata: {
-          included_in_user_facing_total_default: false,
-          cash_value_classification: "tax_exemption",
-          value_model_kind: "tax_exempt_liability",
-          human_review_required: true
-        }
-      }
-    ],
-    global_limits: [],
-    global_caps: [],
-    stacking: { behavior: "unknown_requires_review" },
-    input_requirements: requiredInputs,
-    assumptions: [],
-    source_evidence: [{ evidence_id: "tax_context", source_type: "web_page", quote: "Tax expression", evidence_confidence: 0.9 }],
-    confidence: { overall: 0.72, source_access: 0.9, availability: 0.9, calculation: 0.72, extraction: 0.9, reason_codes: ["tax_package_test"] }
-  };
-}

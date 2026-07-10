@@ -27,6 +27,8 @@ Browser traffic enters CloudFront on `retrofi.org`.
 `scripts/select-production-deploy-targets.mjs` encodes this routing. GitHub Actions uses it on pushes to
 `main`; local agents can use `npm run deploy:production:auto` with `GBS_DEPLOY_BASE_SHA` and
 `GBS_DEPLOY_HEAD_SHA`.
+Changes to `scripts/deploy-production.sh` are routed conservatively to every production target because the
+deploy shell now owns fixture refresh, savings regeneration, and package/build orchestration.
 
 ## CloudFormation Stacks
 

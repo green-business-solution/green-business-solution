@@ -61,13 +61,14 @@ The script:
 
 1. Deploys the GitHub Actions OIDC/deploy-role bootstrap stack.
 2. Deploys/updates the runtime DynamoDB and runtime bucket stacks, alert sender, and energy-data S3 bucket configuration.
-3. Builds the Vite frontend.
-4. Packages the Express API as a Lambda zip using the `apps/api` workspace runtime dependencies.
-5. Uploads the Lambda package to the artifact S3 bucket.
-6. Deploys or updates the API stack.
-7. Deploys or updates the edge/frontend stack with the API origin output.
-8. Syncs `dist/` to the frontend S3 bucket.
-9. Invalidates CloudFront.
+3. Force-refreshes generated fixtures and rebuilds the admin test-case savings payloads from the downloaded fixtures.
+4. Builds the Vite frontend.
+5. Packages the Express API as a Lambda zip using the `apps/api` workspace runtime dependencies.
+6. Uploads the Lambda package to the artifact S3 bucket.
+7. Deploys or updates the API stack.
+8. Deploys or updates the edge/frontend stack with the API origin output.
+9. Syncs `dist/` to the frontend S3 bucket.
+10. Invalidates CloudFront.
 
 The same script also supports narrower production targets:
 
@@ -86,6 +87,9 @@ npm run deploy:production:data
 - `api`: packages and uploads a new Lambda zip, then deploys the API stack with that Lambda artifact.
 - `infra`: deploys the API and edge/frontend CloudFormation templates while reusing the existing Lambda zip.
 - `data`: ensures runtime prerequisites only.
+
+The deploy script force-refreshes generated fixtures, rebuilds the admin test-case savings payloads from those fixtures, and then packages the API.
+That keeps `public/sample_matching_test_cases.json` aligned with the generated fixture archive instead of reusing a stale local copy.
 
 The artifact bucket has a lifecycle rule for `lambda/` package zips. The default retention is 30 days and
 can be overridden with `GBS_ARTIFACT_RETENTION_DAYS`.
