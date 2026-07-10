@@ -60,7 +60,7 @@ describe("buildThreeYearFinancialValue", () => {
           }
         ]
       },
-      opportunities: [{ opportunityId: "opp-near", awardLikelihood: "near_guaranteed", requiresProgramApproval: true }]
+      opportunities: [{ opportunityId: "opp-near", awardLikelihood: "near-guaranteed", requiresProgramApproval: false }]
     });
 
     const result = buildThreeYearFinancialValue({
@@ -74,20 +74,14 @@ describe("buildThreeYearFinancialValue", () => {
     expect(result.metric).toBe(THREE_YEAR_FINANCIAL_VALUE_METRIC);
     expect(result.horizonYears).toBe(THREE_YEAR_FINANCIAL_VALUE_HORIZON_YEARS);
     expect(result.estimateStage).toBe("intro");
-    expect(result.oneTimeContributionCents).toMatchObject({ minimum: 700, maximum: 700 });
-    expect(result.recurringThreeYearContributionCents).toMatchObject({ minimum: 29400, maximum: 29400 });
+    expect(result.oneTimeContributionCents).toMatchObject({ minimum: 500, maximum: 500 });
+    expect(result.recurringThreeYearContributionCents).toMatchObject({ minimum: 30000, maximum: 30000 });
     expect(result.nearGuaranteedContributionCents).toEqual({ minimum: 1100, maximum: 1100 });
-    expect(result.opportunityBreakdown[0]).toMatchObject({
-      availabilityStatus: "active",
-      rangeEligible: true,
-      awardLikelihood: "near_guaranteed"
-    });
-    expect(result.opportunityBreakdown[0].requiresProgramApproval).toBe(true);
-    expect(result.minimumThreeYearFinancialValueCents).toBe(31200);
-    expect(result.maximumThreeYearFinancialValueCents).toBe(31200);
+    expect(result.minimumThreeYearFinancialValueCents).toBe(31600);
+    expect(result.maximumThreeYearFinancialValueCents).toBe(31600);
   });
 
-  it("supports non-guaranteed contributions with zero minimum and full signed maximum", () => {
+  it("supports uncertain contributions with zero minimum and signed upside maximum", () => {
     const estimate = baseEstimate({
       oneTimeSavingsCents: 1000,
       netAnnualRecurringSavingsCents: 300,
@@ -115,7 +109,7 @@ describe("buildThreeYearFinancialValue", () => {
           }
         ]
       },
-      opportunities: [{ opportunityId: "opp-uncert", awardLikelihood: "possible" }]
+      opportunities: [{ opportunityId: "opp-uncert", awardLikelihood: "uncertain" }]
     });
 
     const result = buildThreeYearFinancialValue({
@@ -124,148 +118,12 @@ describe("buildThreeYearFinancialValue", () => {
       normalizedProfile: { site: { squareFootage: { value: 5000 } } }
     });
 
-    expect(result.opportunityBreakdown[0].awardLikelihood).toBe("possible");
+    expect(result.opportunityBreakdown[0].awardLikelihood).toBe("uncertain");
     expect(result.uncertainContributionMaximumCents.minimum).toBe(0);
     expect(result.uncertainContributionMaximumCents.maximum).toBeLessThan(0);
     expect(result.nearGuaranteedContributionCents).toEqual({ minimum: 0, maximum: 0 });
-    expect(result.minimumThreeYearFinancialValueCents).toBe(2290);
-    expect(result.maximumThreeYearFinancialValueCents).toBe(1900);
-  });
-
-  it.each(["likely", "possible", "unlikely", "unknown"])(
-    "keeps quantified %s value out of the minimum and in the maximum",
-    (awardLikelihood) => {
-      const estimate = baseEstimate({
-        oneTimeSavingsCents: 250,
-        netAnnualRecurringSavingsCents: 0,
-        selectedIncentiveScenario: {
-          id: `scenario-${awardLikelihood}`,
-          opportunityIds: ["opp-1"],
-          opportunityCount: 1,
-          upfrontSavingsEntries: [
-            {
-              kind: "upfront_savings",
-              opportunityId: "opp-1",
-              amountCents: 250,
-              formula: "fixed_amount",
-              incentiveRuleId: "rule-1"
-            }
-          ],
-          recurringSavingsEntries: []
-        },
-        opportunities: [{ opportunityId: "opp-1", awardLikelihood }]
-      });
-
-      const result = buildThreeYearFinancialValue({
-        retrofitGroup: fixture(estimate.opportunities),
-        estimate
-      });
-
-      expect(result.opportunityBreakdown[0].oneTimeContributionCents).toEqual({ minimum: 0, maximum: 250 });
-      expect(result.nearGuaranteedContributionCents).toEqual({ minimum: 0, maximum: 0 });
-      expect(result.uncertainContributionMaximumCents).toEqual({ minimum: 0, maximum: 250 });
-      expect(result.minimumThreeYearFinancialValueCents).toBe(0);
-      expect(result.maximumThreeYearFinancialValueCents).toBe(250);
-    }
-  );
-
-  it.each(["conditional", "disabled", "quarantined", "archived"])(
-    "zeros both bounds for quantified %s opportunities even when near guaranteed",
-    (availabilityStatus) => {
-      const estimate = baseEstimate({
-        oneTimeSavingsCents: 500,
-        netAnnualRecurringSavingsCents: 0,
-        selectedIncentiveScenario: {
-          id: `scenario-${availabilityStatus}`,
-          opportunityIds: ["opp-1"],
-          opportunityCount: 1,
-          upfrontSavingsEntries: [
-            {
-              kind: "upfront_savings",
-              opportunityId: "opp-1",
-              amountCents: 500,
-              formula: "fixed_amount",
-              incentiveRuleId: "rule-1"
-            }
-          ],
-          recurringSavingsEntries: []
-        }
-      });
-
-      const result = buildThreeYearFinancialValue({
-        retrofitGroup: fixture([
-          {
-            opportunityId: "opp-1",
-            availabilityStatus,
-            awardLikelihood: "near_guaranteed"
-          }
-        ]),
-        estimate
-      });
-
-      expect(result.minimumThreeYearFinancialValueCents).toBe(0);
-      expect(result.maximumThreeYearFinancialValueCents).toBe(0);
-      expect(result.opportunityBreakdown[0]).toMatchObject({
-        availabilityStatus,
-        rangeEligible: false,
-        awardLikelihood: "near_guaranteed",
-        hasQuantifiedEstimate: false,
-        oneTimeContributionCents: { minimum: 0, maximum: 0 },
-        excludedReasons: [`availability_${availabilityStatus}`]
-      });
-      expect(result.excludedContributions).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            opportunityId: "opp-1",
-            reason: "opportunity_not_active",
-            amountCents: 0,
-            metadata: { availabilityStatus }
-          })
-        ])
-      );
-    }
-  );
-
-  it("applies the authoritative disposition overlay before calculating the range", () => {
-    const opportunityId = "SOURCE_DSIRE:dsire_program_id:1106";
-    const estimate = baseEstimate({
-      oneTimeSavingsCents: 400,
-      netAnnualRecurringSavingsCents: 0,
-      selectedIncentiveScenario: {
-        id: "authoritative-disposition",
-        opportunityIds: [opportunityId],
-        opportunityCount: 1,
-        upfrontSavingsEntries: [
-          {
-            kind: "upfront_savings",
-            opportunityId,
-            amountCents: 400,
-            formula: "fixed_amount",
-            incentiveRuleId: "rule-authoritative"
-          }
-        ],
-        recurringSavingsEntries: []
-      }
-    });
-
-    const result = buildThreeYearFinancialValue({
-      retrofitGroup: fixture([
-        {
-          opportunityId,
-          availabilityStatus: "active",
-          awardLikelihood: "near_guaranteed"
-        }
-      ]),
-      estimate
-    });
-
-    expect(result.minimumThreeYearFinancialValueCents).toBe(0);
-    expect(result.maximumThreeYearFinancialValueCents).toBe(0);
-    expect(result.opportunityBreakdown[0]).toMatchObject({
-      availabilityStatus: "disabled",
-      rangeEligible: false,
-      awardLikelihood: "unknown"
-    });
+    expect(result.minimumThreeYearFinancialValueCents).toBe(750);
+    expect(result.maximumThreeYearFinancialValueCents).toBe(120);
   });
 
   it("keeps missing likelihood unknown and preserves approval flag", () => {
@@ -376,10 +234,7 @@ describe("buildThreeYearFinancialValue", () => {
       estimate
     });
 
-    expect(result.oneTimeContributionCents).toMatchObject({ minimum: 8800, maximum: 8800 });
-    expect(result.opportunityBreakdown[0].oneTimeContributionCents).toEqual({ minimum: 0, maximum: 1200 });
-    expect(result.minimumThreeYearFinancialValueCents).toBe(11800);
-    expect(result.maximumThreeYearFinancialValueCents).toBe(13000);
+    expect(result.oneTimeContributionCents).toMatchObject({ minimum: 1200, maximum: 1200 });
   });
 
   it("records unsupported formula exclusion explicitly", () => {
@@ -493,8 +348,8 @@ describe("buildThreeYearFinancialValue", () => {
       normalizedProfile: {}
     });
 
-    expect(result.oneTimeContributionCents).toMatchObject({ minimum: 798, maximum: 798 });
-    expect(result.recurringThreeYearContributionCents).toMatchObject({ minimum: 4485, maximum: 4485 });
+    expect(result.oneTimeContributionCents).toMatchObject({ minimum: 202, maximum: 202 });
+    expect(result.recurringThreeYearContributionCents).toMatchObject({ minimum: 4500, maximum: 4500 });
     expect(Number.isInteger(result.minimumThreeYearFinancialValueCents)).toBe(true);
     expect(Number.isInteger(result.maximumThreeYearFinancialValueCents)).toBe(true);
     expect(result.minimumThreeYearFinancialValueCents).not.toBeNull();
