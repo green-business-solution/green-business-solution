@@ -21,6 +21,7 @@ import {
   buildDashboardPerformanceData,
   buildPersistedRetrofitDetailAnswers,
   buildSeededRetrofitDetailAnswers,
+  calculateEstimatedReportPrice,
   comparePreviewRetrofits,
   RetrofitRecommendationsPreview,
   buildRetrofitEnvironmentalImpactPreview,
@@ -84,6 +85,23 @@ function buildFirstmateTaskFixture(overrides: Record<string, unknown> = {}) {
     ...overrides,
   };
 }
+
+describe("estimated report pricing", () => {
+  it("uses the selected utility, track, location, and size inputs to produce a rounded range", () => {
+    const estimate = calculateEstimatedReportPrice({
+      utilitySpend: "2000_10000",
+      track: "business",
+      location: "strong",
+      propertySize: "large"
+    });
+
+    expect(estimate).toMatchObject({
+      low: 70,
+      high: 125
+    });
+    expect(estimate.midpoint).toBeCloseTo(92.983, 3);
+  });
+});
 
 const liveShapedPayload = {
   generatedAt: "2026-06-30T12:00:00.000Z",
