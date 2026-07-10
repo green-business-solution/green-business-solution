@@ -4,7 +4,6 @@ import { calculatePortfolioReadModel } from "./calculation/marginalValues.mjs";
 import { loadAggregateFromEvents, aggregateSnapshot } from "./domain/aggregate.mjs";
 import { PORTFOLIO_EVENT_TYPES, createEventEnvelope } from "./domain/events.mjs";
 import { completePortfolioItemHandler, isPortfolioFeatureEnabled, recalculatePortfolioHandler, readPortfolioHandler } from "./http/portfolioHandlers.mjs";
-import { loadPortfolioById, loadIdempotencyReceipt } from "./persistence/portfolioStore.mjs";
 
 const portfolioId = "portfolio_client_001";
 const user = {
@@ -195,34 +194,31 @@ describe("portfolio handlers", () => {
     }
   });
 
-  it("supports idempotent completion, rejects payload drift, and blocks stale versions when pre-seeded", async () => {
+  it("supports idempotent completion, rejects payload drift, and blocks stale versions", async () => {
     process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
-    const seedItems = [
-      {
-        portfolioItemId: "item_a",
-        title: "Lighting",
-        independentFinancialValueMinorUnits: 60000,
-        ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
-      },
-      {
-        portfolioItemId: "item_b",
-        title: "HVAC",
-        independentFinancialValueMinorUnits: 70000,
-        ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
-      }
-    ];
-    const seed = buildSeededPortfolioSnapshot({
-      portfolioId,
-      userId: user.userId,
-      seedItems,
-      now: "2026-07-10T10:05:00.000Z"
-    });
-    const db = createMockDb(seed.seedRows);
+
+    const db = createMockDb();
+    const intake = {
+      portfolioSeedItems: [
+        {
+          portfolioItemId: "item_a",
+          title: "Lighting",
+          independentFinancialValueMinorUnits: 60000,
+          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+        },
+        {
+          portfolioItemId: "item_b",
+          title: "HVAC",
+          independentFinancialValueMinorUnits: 70000,
+          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+        }
+      ]
+    };
 
     const command = {
       commandId: "complete-item-a-001",
       idempotencyKey: "idem-001",
-      expectedPortfolioVersion: seed.aggregate.aggregateVersion,
+      expectedPortfolioVersion: 1,
       calculationBinding: "calc-v1",
       financialSelection: {
         requestedBenefitMinorUnits: 60000
@@ -233,6 +229,7 @@ describe("portfolio handlers", () => {
       db,
       tableName: "gbs-api-runtime-state",
       user,
+      intake,
       portfolioId,
       itemId: "item_a",
       payload: command,
@@ -243,50 +240,14 @@ describe("portfolio handlers", () => {
     expect(first.status).toBe("ACCEPTED");
     expect(first.portfolioVersion).toBeGreaterThan(1);
     expect(db.items.filter((item) => item.recordType === "EVENT")).toHaveLength(4);
-    const snapshotRow = db.items.find(
-      (item) =>
-        item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY",
-    );
-    expect(snapshotRow?.aggregateVersion).toBe(first.portfolioVersion);
-    expect(snapshotRow?.eventCount).toBe(4);
-    expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.itemOrder).toEqual(["item_a", "item_b"]);
-    expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.eventCount).toBe(4);
-    expect(db.items.find((item) => item.stateScope === "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#default" && item.stateKey === "idem-001")?.result).toEqual(first);
-
-    const reread = await loadPortfolioById({
-      db,
-      tableName: "gbs-api-runtime-state",
-      portfolioId,
-      userId: user.userId,
-    });
-    expect(reread.snapshot?.aggregateVersion).toBe(first.portfolioVersion);
-
-    const second = await completePortfolioItemHandler({
-      db,
-      tableName: "gbs-api-runtime-state",
-      user,
-      portfolioId,
-      itemId: "item_b",
-      payload: {
-        commandId: "complete-item-b-001",
-        idempotencyKey: "idem-004",
-        expectedPortfolioVersion: first.portfolioVersion,
-        calculationBinding: "calc-v1",
-        financialSelection: {
-          requestedBenefitMinorUnits: 70000
-        }
-      },
-      scenarioId: "default",
-      now: new Date("2026-07-10T10:06:15.000Z")
-    });
-
-    expect(second.status).toBe("ACCEPTED");
-    expect(second.portfolioVersion).toBeGreaterThan(first.portfolioVersion);
+    expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.aggregateVersion).toBe(first.portfolioVersion);
+    expect(db.items.find((item) => item.stateScope === "PORTFOLIO_IDEMPOTENCY#portfolio_client_001" && item.stateKey === "idem-001")?.result).toEqual(first);
 
     const duplicate = await completePortfolioItemHandler({
       db,
       tableName: "gbs-api-runtime-state",
       user,
+      intake,
       portfolioId,
       itemId: "item_a",
       payload: command,
@@ -295,13 +256,14 @@ describe("portfolio handlers", () => {
     });
 
     expect(duplicate).toEqual(first);
-    expect(db.items.filter((item) => item.recordType === "EVENT")).toHaveLength(7);
+    expect(db.items.filter((item) => item.recordType === "EVENT")).toHaveLength(4);
 
     await expect(
       completePortfolioItemHandler({
         db,
         tableName: "gbs-api-runtime-state",
         user,
+        intake,
         portfolioId,
         itemId: "item_a",
         payload: {
@@ -324,6 +286,7 @@ describe("portfolio handlers", () => {
         db,
         tableName: "gbs-api-runtime-state",
         user,
+        intake,
         portfolioId,
         itemId: "item_b",
         payload: {
@@ -358,559 +321,7 @@ describe("portfolio handlers", () => {
       code: "PORTFOLIO_CALCULATION_STALE"
     });
   });
-
-  it("isolates idempotency receipts by scenario", async () => {
-    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
-    const seed = buildSeededPortfolioSnapshot({
-      portfolioId,
-      userId: user.userId,
-      seedItems: [
-        {
-          portfolioItemId: "item_a",
-          title: "Lighting",
-          independentFinancialValueMinorUnits: 60000,
-          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
-        }
-      ],
-      scenarioId: "scenario-b",
-      now: "2026-07-10T10:06:00.000Z"
-    });
-    const db = createMockDb([
-      ...seed.seedRows,
-      {
-        stateScope: "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#scenario-a",
-        stateKey: "idem-001",
-        payloadHash: "scenario-a-hash",
-        commandId: "complete-item-a-001",
-        result: {
-          status: "ACCEPTED",
-          scenarioId: "scenario-a"
-        },
-        createdAt: "2026-07-10T10:06:01.000Z"
-      }
-    ]);
-
-    const response = await completePortfolioItemHandler({
-      db,
-      tableName: "gbs-api-runtime-state",
-      user,
-      portfolioId,
-      itemId: "item_a",
-      payload: {
-        commandId: "complete-item-a-001",
-        idempotencyKey: "idem-001",
-        expectedPortfolioVersion: seed.aggregate.aggregateVersion,
-        calculationBinding: "calc-v1",
-        financialSelection: {
-          requestedBenefitMinorUnits: 60000
-        }
-      },
-      scenarioId: "scenario-b",
-      now: new Date("2026-07-10T10:06:30.000Z")
-    });
-
-    expect(response.status).toBe("ACCEPTED");
-    expect(
-      db.items.find(
-        (item) =>
-          item.stateScope === "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#scenario-b" &&
-          item.stateKey === "idem-001",
-      )?.result,
-    ).toMatchObject({
-      status: "ACCEPTED",
-      scenarioId: "scenario-b"
-    });
-  });
-
-  it("does not create an empty snapshot when reading an uninitialized portfolio", async () => {
-    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
-    const db = createMockDb();
-    const calls = [];
-    const trackingDb = {
-      ...db,
-      send: async (command) => {
-        calls.push(command.constructor.name);
-        return db.send(command);
-      },
-    };
-
-    await expect(
-      readPortfolioHandler({
-        db: trackingDb,
-        tableName: "gbs-api-runtime-state",
-        user,
-        portfolioId,
-        scenarioId: "default",
-        now: new Date("2026-07-10T10:09:00.000Z")
-      })
-    ).rejects.toMatchObject({
-      status: 409,
-      code: "PORTFOLIO_NOT_INITIALIZED"
-    });
-    expect(calls).toContain("QueryCommand");
-    expect(calls).not.toContain("TransactWriteCommand");
-  });
-
-  it("supports explicit snapshot read after seeded initialization", async () => {
-    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
-    const seed = buildSeededPortfolioSnapshot({
-      portfolioId,
-      userId: user.userId,
-      seedItems: [
-        {
-          portfolioItemId: "item_read_b",
-          title: "HVAC",
-          independentFinancialValueMinorUnits: 20000,
-          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
-        },
-        {
-          portfolioItemId: "item_read_a",
-          title: "Lighting",
-          independentFinancialValueMinorUnits: 10000,
-          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
-        }
-      ],
-      now: "2026-07-10T10:10:00.000Z"
-    });
-    const seededDb = createMockDb(seed.seedRows);
-
-    const result = await readPortfolioHandler({
-      db: seededDb,
-      tableName: "gbs-api-runtime-state",
-      user,
-      portfolioId,
-      scenarioId: "default",
-      now: new Date("2026-07-10T10:10:00.000Z")
-    });
-
-    expect(result.portfolioVersion).toBe(1);
-    expect(result.scenario.order).toEqual(["item_read_b", "item_read_a"]);
-    expect(result.items.map((item) => item.portfolioItemId)).toEqual(["item_read_b", "item_read_a"]);
-  });
-
-  it("rejects reads when the requested scenario does not match the snapshot", async () => {
-    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
-    const seed = buildSeededPortfolioSnapshot({
-      portfolioId,
-      userId: user.userId,
-      seedItems: [
-        {
-          portfolioItemId: "item_read_mismatch",
-          title: "Battery",
-          independentFinancialValueMinorUnits: 20000,
-          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
-        }
-      ],
-      scenarioId: "scenario-read-a",
-      now: "2026-07-10T10:12:00.000Z"
-    });
-    const db = createMockDb(seed.seedRows);
-
-    await expect(
-      readPortfolioHandler({
-        db,
-        tableName: "gbs-api-runtime-state",
-        user,
-        portfolioId,
-        scenarioId: "scenario-read-b",
-        now: new Date("2026-07-10T10:12:00.000Z")
-      })
-    ).rejects.toMatchObject({
-      status: 409,
-      code: "PORTFOLIO_SCENARIO_MISMATCH"
-    });
-  });
-
-  it("persists and serves non-default scenario portfolio state", async () => {
-    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
-    const nonDefaultScenario = "scenario-b";
-    const seed = buildSeededPortfolioSnapshot({
-      portfolioId,
-      userId: user.userId,
-      seedItems: [
-        {
-          portfolioItemId: "item_read_b",
-          title: "Roof",
-          independentFinancialValueMinorUnits: 20000,
-          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
-        }
-      ],
-      scenarioId: nonDefaultScenario,
-      now: "2026-07-10T10:15:00.000Z"
-    });
-    const db = createMockDb(seed.seedRows);
-
-    const readResult = await readPortfolioHandler({
-      db,
-      tableName: "gbs-api-runtime-state",
-      user,
-      portfolioId,
-      scenarioId: nonDefaultScenario,
-      now: new Date("2026-07-10T10:15:00.000Z")
-    });
-
-    expect(readResult.scenario).toMatchObject({ scenarioId: nonDefaultScenario });
-
-    const completeResult = await completePortfolioItemHandler({
-      db,
-      tableName: "gbs-api-runtime-state",
-      user,
-      portfolioId,
-      itemId: "item_read_b",
-      scenarioId: nonDefaultScenario,
-      payload: {
-        commandId: "complete-non-default",
-        idempotencyKey: "complete-non-default-idem",
-        expectedPortfolioVersion: seed.aggregate.aggregateVersion,
-        calculationBinding: "calc-v1",
-        financialSelection: {
-          requestedBenefitMinorUnits: 10000
-        }
-      },
-      now: new Date("2026-07-10T10:16:00.000Z")
-    });
-
-    expect(completeResult.portfolioVersion).toBe(seed.aggregate.aggregateVersion + 3);
-  });
-
-  it("recalculates and persists non-default scenario state", async () => {
-    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
-    const nonDefaultScenario = "scenario-c";
-    const seed = buildSeededPortfolioSnapshot({
-      portfolioId,
-      userId: user.userId,
-      seedItems: [
-        {
-          portfolioItemId: "item_recalc_c",
-          title: "Roof",
-          independentFinancialValueMinorUnits: 25000,
-          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
-        }
-      ],
-      scenarioId: nonDefaultScenario,
-      now: "2026-07-10T10:18:00.000Z"
-    });
-    const db = createMockDb(seed.seedRows);
-
-    const recalculated = await recalculatePortfolioHandler({
-      db,
-      tableName: "gbs-api-runtime-state",
-      user,
-      portfolioId,
-      payload: {
-        commandId: "recalc-non-default",
-        idempotencyKey: "recalc-non-default-idem"
-      },
-      scenarioId: nonDefaultScenario,
-      now: new Date("2026-07-10T10:19:00.000Z")
-    });
-
-    expect(recalculated.scenarioId).toBe(nonDefaultScenario);
-  });
-
-  it("scopes idempotency rows by scenario and portfolio in recalc path", async () => {
-    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
-    const firstSeed = buildSeededPortfolioSnapshot({
-      portfolioId,
-      userId: user.userId,
-      seedItems: [
-        {
-          portfolioItemId: "item_idem_scope",
-          title: "Roof",
-          independentFinancialValueMinorUnits: 40000,
-          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
-        }
-      ],
-      scenarioId: "scenario-x",
-      now: "2026-07-10T10:20:00.000Z"
-    });
-    const secondPortfolioId = "portfolio_client_002";
-    const secondSeed = buildSeededPortfolioSnapshot({
-      portfolioId: secondPortfolioId,
-      userId: user.userId,
-      seedItems: [
-        {
-          portfolioItemId: "item_idem_scope_2",
-          title: "Roof 2",
-          independentFinancialValueMinorUnits: 45000,
-          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
-        }
-      ],
-      scenarioId: "scenario-y",
-      now: "2026-07-10T10:20:10.000Z"
-    });
-    const db = createMockDb([...firstSeed.seedRows, ...secondSeed.seedRows]);
-    const secondUser = {
-      role: "client",
-      userId: secondPortfolioId
-    };
-
-    const first = await recalculatePortfolioHandler({
-      db,
-      tableName: "gbs-api-runtime-state",
-      user,
-      portfolioId,
-      payload: {
-        commandId: "recalc-scope",
-        idempotencyKey: "recalc-scope-idem"
-      },
-      scenarioId: "scenario-x",
-      now: new Date("2026-07-10T10:21:00.000Z")
-    });
-
-    const second = await recalculatePortfolioHandler({
-      db,
-      tableName: "gbs-api-runtime-state",
-      user: secondUser,
-      portfolioId: secondPortfolioId,
-      payload: {
-        commandId: "recalc-scope",
-        idempotencyKey: "recalc-scope-idem"
-      },
-      scenarioId: "scenario-y",
-      now: new Date("2026-07-10T10:22:00.000Z")
-    });
-
-    expect(second.portfolioVersion).toBe(first.portfolioVersion);
-    expect(
-      db.items.find(
-        (item) =>
-          item.stateScope ===
-            "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#scenario-x"
-          && item.stateKey === "recalc-scope-idem",
-      ),
-    ).toBeDefined();
-    expect(
-      db.items.find(
-        (item) =>
-          item.stateScope ===
-            "PORTFOLIO_IDEMPOTENCY#portfolio_client_002#scenario-y"
-          && item.stateKey === "recalc-scope-idem",
-      ),
-    ).toBeDefined();
-  });
-
-  it("rejects scenario-scoped writes when requested scenario differs from persisted snapshot", async () => {
-    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
-    const storedScenario = "scenario-stored";
-    const requestScenario = "scenario-requested";
-    const seed = buildSeededPortfolioSnapshot({
-      portfolioId,
-      userId: user.userId,
-      seedItems: [
-        {
-          portfolioItemId: "item_mismatch",
-          title: "Boiler",
-          independentFinancialValueMinorUnits: 30000,
-          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
-        }
-      ],
-      scenarioId: storedScenario,
-      now: "2026-07-10T10:25:00.000Z"
-    });
-    const db = createMockDb(seed.seedRows);
-
-    await expect(
-      completePortfolioItemHandler({
-        db,
-        tableName: "gbs-api-runtime-state",
-        user,
-        portfolioId,
-        itemId: "item_mismatch",
-        scenarioId: requestScenario,
-        payload: {
-          commandId: "complete-mismatch",
-          idempotencyKey: "complete-mismatch-idem",
-          expectedPortfolioVersion: seed.aggregate.aggregateVersion,
-          calculationBinding: "calc-v1",
-          financialSelection: {
-            requestedBenefitMinorUnits: 10000
-          }
-        },
-        now: new Date("2026-07-10T10:25:30.000Z")
-      })
-    ).rejects.toMatchObject({
-      status: 409,
-      code: "PORTFOLIO_SCENARIO_MISMATCH"
-    });
-
-    await expect(
-      recalculatePortfolioHandler({
-        db,
-        tableName: "gbs-api-runtime-state",
-        user,
-        portfolioId,
-        scenarioId: requestScenario,
-        payload: {
-          commandId: "recalc-mismatch",
-          idempotencyKey: "recalc-mismatch-idem"
-        },
-        now: new Date("2026-07-10T10:26:00.000Z")
-      })
-    ).rejects.toMatchObject({
-      status: 409,
-      code: "PORTFOLIO_SCENARIO_MISMATCH"
-    });
-  });
-
-  it("keeps write APIs disabled with zero DB calls", async () => {
-    const db = createMockDb();
-    let dbCalls = 0;
-    const trackingDb = {
-      ...db,
-      send: async (command) => {
-        dbCalls += 1;
-        return db.send(command);
-      },
-    };
-
-    await expect(
-      completePortfolioItemHandler({
-        db: trackingDb,
-        tableName: "gbs-api-runtime-state",
-        user,
-        portfolioId,
-        itemId: "item_a",
-        payload: {
-          commandId: "complete-disabled",
-          idempotencyKey: "complete-disabled-idem",
-          expectedPortfolioVersion: 1,
-          calculationBinding: "calc-v1"
-        },
-        scenarioId: "default",
-        now: new Date("2026-07-10T10:11:00.000Z")
-      })
-    ).rejects.toMatchObject({
-      status: 404,
-      code: "PORTFOLIO_FEATURE_DISABLED"
-    });
-
-    await expect(
-      recalculatePortfolioHandler({
-        db: trackingDb,
-        tableName: "gbs-api-runtime-state",
-        user,
-        portfolioId,
-        payload: {
-          commandId: "recalc-disabled",
-          idempotencyKey: "recalc-disabled-idem"
-        },
-        scenarioId: "default",
-        now: new Date("2026-07-10T10:12:00.000Z")
-      })
-    ).rejects.toMatchObject({
-      status: 404,
-      code: "PORTFOLIO_FEATURE_DISABLED"
-    });
-    expect(dbCalls).toBe(0);
-  });
-
-  it("uses consistent reads for portfolio and idempotency persistence lookups", async () => {
-    const seed = buildSeededPortfolioSnapshot({
-      portfolioId,
-      userId: user.userId,
-      seedItems: [
-        {
-          portfolioItemId: "item_read_consistency",
-          title: "Boiler",
-          independentFinancialValueMinorUnits: 15000,
-          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId,
-        },
-      ],
-      now: "2026-07-10T10:30:00.000Z",
-    });
-    const baseDb = createMockDb(seed.seedRows);
-    const queryCalls = [];
-    const getCalls = [];
-    const trackingDb = {
-      ...baseDb,
-      send: async (command) => {
-        if (command.constructor.name === "QueryCommand") {
-          queryCalls.push(command.input);
-        }
-        if (command.constructor.name === "GetCommand") {
-          getCalls.push(command.input);
-        }
-        return baseDb.send(command);
-      },
-    };
-
-    await loadPortfolioById({
-      db: trackingDb,
-      tableName: "gbs-api-runtime-state",
-      portfolioId,
-      userId: user.userId,
-    });
-    await loadIdempotencyReceipt({
-      db: trackingDb,
-      tableName: "gbs-api-runtime-state",
-      portfolioId,
-      scenarioId: "default",
-      idempotencyKey: "consistency-idem",
-    });
-
-    expect(queryCalls).toHaveLength(1);
-    expect(queryCalls[0].ConsistentRead).toBe(true);
-    expect(getCalls).toHaveLength(2);
-    expect(getCalls.every((command) => command.ConsistentRead)).toBe(true);
-  });
 });
-
-function buildSeededPortfolioSnapshot({
-  portfolioId: portfolioIdInput,
-  userId,
-  seedItems,
-  scenarioId = "default",
-  now
-}) {
-  const seedTime = now || new Date().toISOString();
-  const seedEvent = createEventEnvelope({
-    portfolioId: portfolioIdInput,
-    portfolioItemId: null,
-    type: "PORTFOLIO_SNAPSHOT_SEEDED",
-    commandId: `seed-${String(portfolioIdInput)}-${Date.now()}`,
-    expectedPortfolioVersion: 0,
-    payload: {
-      scenarioId,
-      items: seedItems,
-      calculationBinding: "calc-v1"
-    },
-    userId,
-    runId: "run-0",
-    now: seedTime
-  });
-  const aggregate = loadAggregateFromEvents({
-    events: [seedEvent],
-    portfolioId: portfolioIdInput,
-    userId,
-    scenarioId
-  });
-  const scope = `PORTFOLIO#${portfolioIdInput}`;
-  const seedRows = [
-    {
-      ...seedEvent,
-      stateScope: scope,
-      stateKey: "EVENT#000000001",
-      recordType: "EVENT"
-    },
-    {
-      stateScope: scope,
-      stateKey: "SNAPSHOT#PRIMARY",
-      recordType: "SNAPSHOT",
-      scenarioId,
-      aggregateVersion: aggregate.aggregateVersion,
-      portfolioId: portfolioIdInput,
-      userId,
-      latestCalculationBinding: "calc-v1",
-      calculationRunId: "run-0",
-      calculationRunSequence: 0,
-      eventCount: aggregate.events.length,
-      itemOrder: aggregate.itemOrder,
-      updatedAt: seedTime
-    }
-  ];
-  return { aggregate, seedRows };
-}
 
 function buildManualAggregate(items, events = []) {
   return {

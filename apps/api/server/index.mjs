@@ -75,6 +75,11 @@ import {
   writePersistentRetrofitRecommendations as writePersistentRetrofitRecommendationsToStore
 } from "./retrofitRecommendationsCache.mjs";
 import {
+  completePortfolioItemHandler,
+  recalculatePortfolioHandler,
+  readPortfolioHandler
+} from "./portfolio/http/portfolioHandlers.mjs";
+import {
   cleanGptProWorkPrefix,
   defaultGptProWorkBucket,
   defaultGptProWorkLocalFallbackRoot,
@@ -3840,6 +3845,63 @@ app.get("/api/portal/retrofit-recommendations", async (req, res) => {
         retrofitTypeIds: retrofitTypeId ? [retrofitTypeId] : []
       })
     );
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/portal/retrofit-portfolios/:portfolioId", async (req, res) => {
+  try {
+    const user = await requireAuthenticatedUserFromRequest(req);
+    const intake = await getIntake(user.userId);
+    const scenarioId = cleanText(req.query.scenarioId || "default");
+    const result = await readPortfolioHandler({
+      db,
+      tableName: apiRuntimeStateTable,
+      user,
+      portfolioId: req.params.portfolioId,
+      intake,
+      scenarioId,
+      now: new Date()
+    });
+    res.json(result);
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/portal/retrofit-portfolios/:portfolioId/items/:itemId/commands/complete", async (req, res) => {
+  try {
+    const user = await requireAuthenticatedUserFromRequest(req);
+    const intake = await getIntake(user.userId);
+    const result = await completePortfolioItemHandler({
+      db,
+      tableName: apiRuntimeStateTable,
+      user,
+      intake,
+      portfolioId: req.params.portfolioId,
+      itemId: req.params.itemId,
+      payload: req.body || {},
+      now: new Date()
+    });
+    res.json(result);
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/portal/retrofit-portfolios/:portfolioId/commands/recalculate", async (req, res) => {
+  try {
+    const user = await requireAuthenticatedUserFromRequest(req);
+    const result = await recalculatePortfolioHandler({
+      db,
+      tableName: apiRuntimeStateTable,
+      user,
+      portfolioId: req.params.portfolioId,
+      payload: req.body || {},
+      now: new Date()
+    });
+    res.json(result);
   } catch (error) {
     handleError(res, error);
   }

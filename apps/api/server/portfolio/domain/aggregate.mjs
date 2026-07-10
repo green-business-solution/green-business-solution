@@ -4,7 +4,7 @@ import {
   isKnownEventType,
   normalizeEnvelope,
   eventFingerprint,
-  sortEventsForReplay,
+  sortEventsForReplay
 } from "./events.mjs";
 
 const defaultAggregate = {
@@ -26,15 +26,11 @@ const defaultAggregate = {
     correctedEventCount: 0,
     totalLedgerEntries: 0,
     lastCalculationStartedAt: null,
-    latestCalculationRun: null,
-  },
+    latestCalculationRun: null
+  }
 };
 
-export function buildEmptyAggregate({
-  portfolioId,
-  userId,
-  scenarioId = "default",
-}) {
+export function buildEmptyAggregate({ portfolioId, userId, scenarioId = "default" }) {
   return {
     aggregateType: defaultAggregate.aggregateType,
     aggregateVersion: 0,
@@ -54,35 +50,25 @@ export function buildEmptyAggregate({
       correctedEventCount: 0,
       totalLedgerEntries: 0,
       lastCalculationStartedAt: null,
-      latestCalculationRun: null,
-    },
+      latestCalculationRun: null
+    }
   };
 }
 
-export function loadAggregateFromEvents({
-  events = [],
-  portfolioId,
-  userId,
-  scenarioId = "default",
-}) {
+export function loadAggregateFromEvents({ events = [], portfolioId, userId, scenarioId = "default" }) {
   const aggregate = buildEmptyAggregate({ portfolioId, userId, scenarioId });
   const sortedEvents = sortEventsForReplay(Array.isArray(events) ? events : []);
 
   for (const rawEvent of sortedEvents) {
     const event = normalizeEnvelope(rawEvent);
     if (!isKnownEventType(event.type)) continue;
-    if (portfolioId && event.portfolioId && event.portfolioId !== portfolioId)
-      continue;
+    if (portfolioId && event.portfolioId && event.portfolioId !== portfolioId) continue;
 
     if (event.type === PORTFOLIO_EVENT_TYPES.SNAPSHOT_SEEDED) {
-      aggregate.scenarioId = String(
-        event.payload?.scenarioId || scenarioId || aggregate.scenarioId,
-      );
+      aggregate.scenarioId = String(event.payload?.scenarioId || scenarioId || aggregate.scenarioId);
       aggregate.itemOrder = [];
       aggregate.items = {};
-      const seedItems = Array.isArray(event.payload?.items)
-        ? event.payload.items
-        : [];
+      const seedItems = Array.isArray(event.payload?.items) ? event.payload.items : [];
       for (const item of seedItems) {
         const normalized = normalizePortfolioItem(item);
         if (!normalized.portfolioItemId) continue;
@@ -107,35 +93,20 @@ export function loadAggregateFromEvents({
         completedAt: event.occurredAt,
         completedCommandId: event.commandId,
         completedRunId: event.runId,
-        completedCalculationBinding:
-          event.payload?.calculationBinding ||
-          existing.completedCalculationBinding ||
-          null,
+        completedCalculationBinding: event.payload?.calculationBinding || existing.completedCalculationBinding || null,
         financialSelection: {
-          requestedBenefitMinorUnits: toMinorUnits(
-            event.payload?.financialSelection?.requestedBenefitMinorUnits,
-          ),
+          requestedBenefitMinorUnits: toMinorUnits(event.payload?.financialSelection?.requestedBenefitMinorUnits)
         },
         completedSource: {
-          requestedBenefitMinorUnits: toMinorUnits(
-            event.payload?.financialSelection?.requestedBenefitMinorUnits,
-          ),
+          requestedBenefitMinorUnits: toMinorUnits(event.payload?.financialSelection?.requestedBenefitMinorUnits),
           financialModelId: cleanOptional(event.payload?.financialModelId),
-          ruleFamilyId: cleanOptional(event.payload?.ruleFamilyId),
+          ruleFamilyId: cleanOptional(event.payload?.ruleFamilyId)
         },
-        reservedAt: event.occurredAt,
+        reservedAt: event.occurredAt
       };
-      aggregate.completedItemOrder = addUnique(
-        aggregate.completedItemOrder,
-        itemId,
-      );
-      aggregate.itemOrder = reorderWithCompletion(
-        aggregate.itemOrder,
-        itemId,
-        aggregate.completedItemOrder,
-      );
-      aggregate.derived.lastCalculationStartedAt =
-        aggregate.derived.lastCalculationStartedAt || event.occurredAt;
+      aggregate.completedItemOrder = addUnique(aggregate.completedItemOrder, itemId);
+      aggregate.itemOrder = reorderWithCompletion(aggregate.itemOrder, itemId, aggregate.completedItemOrder);
+      aggregate.derived.lastCalculationStartedAt = aggregate.derived.lastCalculationStartedAt || event.occurredAt;
     }
 
     if (event.type === PORTFOLIO_EVENT_TYPES.ITEM_CORRECTED) {
@@ -152,12 +123,9 @@ export function loadAggregateFromEvents({
         lifecycle: "ABANDONED",
         correctedAt: event.occurredAt,
         correctedByCommandId: event.commandId,
-        correctedReason: cleanOptional(event.payload?.reason),
+        correctedReason: cleanOptional(event.payload?.reason)
       };
-      aggregate.abandonedItemOrder = addUnique(
-        aggregate.abandonedItemOrder,
-        itemId,
-      );
+      aggregate.abandonedItemOrder = addUnique(aggregate.abandonedItemOrder, itemId);
       aggregate.derived.correctedEventCount += 1;
     }
 
@@ -175,19 +143,16 @@ export function loadAggregateFromEvents({
         lifecycle: aggregate.items[itemId].lifecycle || "ABANDONED",
         abandonedAt: event.occurredAt,
         abandonedByCommandId: event.commandId,
-        abandonedReason: cleanOptional(event.payload?.reason),
+        abandonedReason: cleanOptional(event.payload?.reason)
       };
-      aggregate.abandonedItemOrder = addUnique(
-        aggregate.abandonedItemOrder,
-        itemId,
-      );
+      aggregate.abandonedItemOrder = addUnique(aggregate.abandonedItemOrder, itemId);
     }
 
     if (event.type === PORTFOLIO_EVENT_TYPES.BENEFIT_LEDGER_ENTRY_RECORDED) {
       aggregate.derived.totalLedgerEntries += 1;
       aggregate.derived.lastRunLedgerEntries = {
         [String(event.runId || "run-0")]: true,
-        ...aggregate.derived.lastRunLedgerEntries,
+        ...aggregate.derived.lastRunLedgerEntries
       };
     }
 
@@ -199,9 +164,7 @@ export function loadAggregateFromEvents({
       if (event.runId) {
         aggregate.derived.latestCalculationRun = event.runId;
       }
-      aggregate.derived.calculationReason =
-        cleanOptional(event.payload?.reason) ||
-        aggregate.derived.calculationReason;
+      aggregate.derived.calculationReason = cleanOptional(event.payload?.reason) || aggregate.derived.calculationReason;
     }
 
     aggregate.events.push(event);
@@ -210,28 +173,17 @@ export function loadAggregateFromEvents({
   }
 
   aggregate.snapshotHash = aggregateFingerprint(aggregate);
-  aggregate.latestCommandId = aggregate.events.length
-    ? aggregate.events[aggregate.events.length - 1].commandId
-    : null;
+  aggregate.latestCommandId = aggregate.events.length ? aggregate.events[aggregate.events.length - 1].commandId : null;
 
   return aggregate;
 }
 
-export function aggregateSnapshot({
-  aggregate,
-  calculationRunId = null,
-  scenarioId = null,
-}) {
-  const ids =
-    Array.isArray(aggregate.itemOrder) && aggregate.itemOrder.length
-      ? aggregate.itemOrder
-      : Object.keys(aggregate.items || {}).sort((a, b) =>
-          String(a).localeCompare(String(b)),
-        );
+export function aggregateSnapshot({ aggregate, calculationRunId = null, scenarioId = null }) {
+  const ids = Array.isArray(aggregate.itemOrder) && aggregate.itemOrder.length
+    ? aggregate.itemOrder
+    : Object.keys(aggregate.items || {}).sort((a, b) => String(a).localeCompare(String(b)));
 
-  const orderedItems = ids
-    .map((itemId) => aggregate.items[itemId])
-    .filter(Boolean);
+  const orderedItems = ids.map((itemId) => aggregate.items[itemId]).filter(Boolean);
 
   return {
     schemaVersion: "portfolio-snapshot-v1",
@@ -243,13 +195,9 @@ export function aggregateSnapshot({
     itemCount: orderedItems.length,
     itemOrder: ids,
     lifecycleCounts: {
-      HYPOTHETICAL: orderedItems.filter(
-        (item) => (item.status || "HYPOTHETICAL") === "HYPOTHETICAL",
-      ).length,
-      COMPLETED: orderedItems.filter((item) => item.status === "COMPLETED")
-        .length,
-      ABANDONED: orderedItems.filter((item) => item.status === "ABANDONED")
-        .length,
+      HYPOTHETICAL: orderedItems.filter((item) => (item.status || "HYPOTHETICAL") === "HYPOTHETICAL").length,
+      COMPLETED: orderedItems.filter((item) => item.status === "COMPLETED").length,
+      ABANDONED: orderedItems.filter((item) => item.status === "ABANDONED").length
     },
     items: orderedItems,
     aggregateHash: aggregate.snapshotHash,
@@ -258,8 +206,8 @@ export function aggregateSnapshot({
     derived: {
       eventCount: aggregate.derived.totalEvents,
       correctedEventCount: aggregate.derived.correctedEventCount,
-      totalLedgerEntries: aggregate.derived.totalLedgerEntries,
-    },
+      totalLedgerEntries: aggregate.derived.totalLedgerEntries
+    }
   };
 }
 
@@ -274,15 +222,9 @@ export function aggregateFingerprint(aggregate) {
     userId: cleanOptional(aggregate.userId),
     scenarioId: cleanOptional(aggregate.scenarioId) || "default",
     aggregateVersion: Number(aggregate.aggregateVersion || 0),
-    itemOrder: Array.isArray(aggregate.itemOrder)
-      ? [...aggregate.itemOrder]
-      : [],
-    completedItemOrder: Array.isArray(aggregate.completedItemOrder)
-      ? [...aggregate.completedItemOrder]
-      : [],
-    abandonedItemOrder: Array.isArray(aggregate.abandonedItemOrder)
-      ? [...aggregate.abandonedItemOrder]
-      : [],
+    itemOrder: Array.isArray(aggregate.itemOrder) ? [...aggregate.itemOrder] : [],
+    completedItemOrder: Array.isArray(aggregate.completedItemOrder) ? [...aggregate.completedItemOrder] : [],
+    abandonedItemOrder: Array.isArray(aggregate.abandonedItemOrder) ? [...aggregate.abandonedItemOrder] : [],
     items: Object.keys(aggregate.items || {})
       .sort((a, b) => String(a).localeCompare(String(b)))
       .map((itemId) => normalizeAggregateItem(aggregate.items[itemId], itemId)),
@@ -291,13 +233,9 @@ export function aggregateFingerprint(aggregate) {
       totalEvents: Number(aggregate.derived?.totalEvents || 0),
       correctedEventCount: Number(aggregate.derived?.correctedEventCount || 0),
       totalLedgerEntries: Number(aggregate.derived?.totalLedgerEntries || 0),
-      lastCalculationStartedAt: cleanOptional(
-        aggregate.derived?.lastCalculationStartedAt,
-      ),
-      latestCalculationRun: cleanOptional(
-        aggregate.derived?.latestCalculationRun,
-      ),
-    },
+      lastCalculationStartedAt: cleanOptional(aggregate.derived?.lastCalculationStartedAt),
+      latestCalculationRun: cleanOptional(aggregate.derived?.latestCalculationRun)
+    }
   });
 }
 
@@ -307,15 +245,12 @@ function normalizePortfolioItem(item) {
     lifecycle: normalizeLifecycle(item.lifecycle),
     status: normalizeStatus(item.status),
     title: cleanOptional(item.title) || "Retrofit item",
-    independentFinancialValueMinorUnits: Number.isInteger(
-      item.independentFinancialValueMinorUnits,
-    )
+    independentFinancialValueMinorUnits: Number.isInteger(item.independentFinancialValueMinorUnits)
       ? item.independentFinancialValueMinorUnits
       : toMinorUnits(item.independentFinancialValueMinorUnits),
     financialModelId: cleanOptional(item.financialModelId),
-    ruleFamilyId:
-      cleanOptional(item.ruleFamilyId) || "fixed-unit-cap-family-v1",
-    sequenceHint: cleanOptional(item.sequenceHint),
+    ruleFamilyId: cleanOptional(item.ruleFamilyId) || "fixed-unit-cap-family-v1",
+    sequenceHint: cleanOptional(item.sequenceHint)
   };
 }
 
@@ -325,9 +260,7 @@ function normalizeLifecycle(value) {
 }
 
 function normalizeStatus(value) {
-  return value === "ABANDONED" || value === "COMPLETED"
-    ? value
-    : "HYPOTHETICAL";
+  return value === "ABANDONED" || value === "COMPLETED" ? value : "HYPOTHETICAL";
 }
 
 function cleanOptional(value) {
@@ -360,9 +293,7 @@ function normalizeAggregateItem(item, portfolioItemId) {
     lifecycle: normalizeLifecycle(normalized.lifecycle),
     status: normalizeStatus(normalized.status),
     title: cleanOptional(normalized.title),
-    independentFinancialValueMinorUnits: toMinorUnits(
-      normalized.independentFinancialValueMinorUnits,
-    ),
+    independentFinancialValueMinorUnits: toMinorUnits(normalized.independentFinancialValueMinorUnits),
     financialModelId: cleanOptional(normalized.financialModelId),
     ruleFamilyId: cleanOptional(normalized.ruleFamilyId),
     sequenceHint: cleanOptional(normalized.sequenceHint),
@@ -371,13 +302,9 @@ function normalizeAggregateItem(item, portfolioItemId) {
     correctedAt: cleanOptional(normalized.correctedAt),
     correctedReason: cleanOptional(normalized.correctedReason),
     abandonedReason: cleanOptional(normalized.abandonedReason),
-    completedCalculationBinding: cleanOptional(
-      normalized.completedCalculationBinding,
-    ),
+    completedCalculationBinding: cleanOptional(normalized.completedCalculationBinding),
     financialSelection: {
-      requestedBenefitMinorUnits: toMinorUnits(
-        normalized.financialSelection?.requestedBenefitMinorUnits,
-      ),
-    },
+      requestedBenefitMinorUnits: toMinorUnits(normalized.financialSelection?.requestedBenefitMinorUnits)
+    }
   };
 }

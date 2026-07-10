@@ -9,17 +9,15 @@ export function traceForCalculation({ items, capResult }) {
     steps: items.map((item) => ({
       portfolioItemId: item.portfolioItemId,
       status: item.status,
-      independentFinancialValueMinorUnits:
-        item.independentFinancialValueMinorUnits,
-      requestedBenefitMinorUnits:
-        item.financialSelection?.requestedBenefitMinorUnits || 0,
-      marginalAwardMinorUnits: item.scenarioMarginalValueMinorUnits || 0,
+      independentFinancialValueMinorUnits: item.independentFinancialValueMinorUnits,
+      requestedBenefitMinorUnits: item.financialSelection?.requestedBenefitMinorUnits || 0,
+      marginalAwardMinorUnits: item.scenarioMarginalValueMinorUnits || 0
     })),
     grossPotentialMinorUnits: capResult.grossPotentialMinorUnits,
     remainingMarginalMinorUnits: capResult.remainingMarginalMinorUnits,
     remainingBudgetMinorUnits: capResult.remainingBudgetMinorUnits,
     reasonCodes: capResult.remainingMarginalReasonCodes,
-    exhaustedOpportunities: capResult.exhaustedOpportunities,
+    exhaustedOpportunities: capResult.exhaustedOpportunities
   };
 }
 
@@ -31,19 +29,13 @@ export function canonicalizeLedgerEntries(entries = []) {
       amountMinorUnits: Number(entry.amountMinorUnits || 0),
       portfolioItemId: String(entry.portfolioItemId || ""),
       ruleFamilyId: String(entry.ruleFamilyId || ""),
-      ruleVersion: String(entry.ruleVersion || ""),
+      ruleVersion: String(entry.ruleVersion || "")
     }))
-    .sort(
-      (a, b) =>
-        a.sequence - b.sequence ||
-        a.portfolioItemId.localeCompare(b.portfolioItemId) ||
-        a.action.localeCompare(b.action),
+    .sort((a, b) =>
+      a.sequence - b.sequence || a.portfolioItemId.localeCompare(b.portfolioItemId) || a.action.localeCompare(b.action)
     );
 }
 
 export function ledgerSignature(entries = []) {
-  return crypto
-    .createHash("sha256")
-    .update(JSON.stringify(canonicalizeLedgerEntries(entries)))
-    .digest("hex");
+  return crypto.createHash("sha256").update(JSON.stringify(canonicalizeLedgerEntries(entries))).digest("hex");
 }
