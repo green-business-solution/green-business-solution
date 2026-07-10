@@ -124,6 +124,41 @@ describe("firstmate task reader", () => {
     });
   });
 
+  it("keeps in-flight backlog tasks active even when a status note says done", async () => {
+    const home = await makeFirstmateHome();
+    await writeFile(
+      home,
+      "data/backlog.md",
+      [
+        "# Backlog",
+        "",
+        "## In flight",
+        "- [ ] implement-sustainability-metrics-t7 - Implement sustainability calculations on the admin test-cases page (repo: green-business-solution) (kind: ship) (since 2026-07-09)",
+        "## Done",
+        "- [x] finished-task-f1 - Finished task (repo: green-business-solution) (kind: scout) (reported 2026-07-09)"
+      ].join("\n")
+    );
+    await writeFile(home, "state/implement-sustainability-metrics-t7.status", "done: PR 15 is open and the work is still in flight\n");
+    await writeFile(home, "data/finished-task-f1/report.md", "# Done\n\nReport body.\n");
+
+    const dashboard = await readFirstmateTasksDashboard({
+      env: {
+        RETROFI_ENABLE_FIRSTMATE_TASKS: "1",
+        RETROFI_FIRSTMATE_HOME: home
+      },
+      now: new Date("2026-07-09T12:00:00.000Z")
+    });
+
+    expect(dashboard.tasks.find((task) => task.id === "implement-sustainability-metrics-t7")).toMatchObject({
+      state: "active",
+      recentStatus: "PR 15 is open and the work is still in flight"
+    });
+    expect(dashboard.tasks.find((task) => task.id === "finished-task-f1")).toMatchObject({
+      state: "completed",
+      hasReport: true
+    });
+  });
+
   it("reports local bypass mode only when the server has enabled it", async () => {
     const home = await makeFirstmateHome();
     await writeFile(home, "data/backlog.md", "- [ ] local-task-l1 - Local task (repo: green-business-solution) (kind: ship) (since 2026-07-08)\n");

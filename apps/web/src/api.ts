@@ -35,7 +35,10 @@ export async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
   let response: Response;
 
   try {
-    response = await fetch(path, init);
+    response = await fetch(path, {
+      cache: "no-store",
+      ...init
+    });
   } catch {
     throw new Error(unreachableApiMessage());
   }

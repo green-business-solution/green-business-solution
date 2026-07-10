@@ -619,6 +619,8 @@ type FirstmateTasksResponse = {
   source?: "local" | "dynamodb";
   storageStatus?: string;
   snapshotVersion?: string;
+  sourceGeneratedAt?: string | null;
+  sourceModifiedAtEpochMs?: number | null;
   inactiveHidden?: boolean;
   inactiveTaskCount?: number;
   hiddenByDefaultTaskCount?: number;
@@ -16808,9 +16810,10 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
   const reportReadyTasks = includeInactive
     ? []
     : response?.tasks.filter(
-      (task) => task.hasReport && task.reportReviewReady && ["completed", "archived"].includes(task.state)
-    ) || [];
+        (task) => task.hasReport && task.reportReviewReady && ["completed", "archived"].includes(task.state)
+      ) || [];
   const localAuthBypass = Boolean(response?.localAuthBypass);
+  const snapshotState = getFirstmateSnapshotState(response);
   const visibleSections = includeInactive
     ? FIRSTMATE_TASK_SECTIONS
     : FIRSTMATE_TASK_SECTIONS.filter((section) => !["completed", "archived"].includes(section.state));
@@ -16843,6 +16846,12 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
 
       {notice ? <p className="tasks-notice-message">{notice}</p> : null}
       {error ? <p className="error-message">{error}</p> : null}
+      {snapshotState ? (
+        <p className={`tasks-notice-message is-${snapshotState.tone}`.trim()}>
+          <strong>{snapshotState.title}</strong>
+          <span>{snapshotState.text}</span>
+        </p>
+      ) : null}
 
       <div className="tasks-stats">
         <article>
@@ -16923,6 +16932,42 @@ function FirstmateTasksPanel({ credential }: { credential: AuthCredential | null
       ) : null}
     </section>
   );
+}
+
+function getFirstmateSnapshotState(response: FirstmateTasksResponse | null) {
+  if (!response) return null;
+
+  if (!response.enabled) {
+    return {
+      tone: "warning",
+      title: "Codex tasks unavailable",
+      text: response.reason || "Codex task snapshots are not available in this environment."
+    };
+  }
+
+  if (response.warnings?.length) {
+    return {
+      tone: "warning",
+      title: "Codex tasks snapshot warning",
+      text: response.warnings[0]
+    };
+  }
+
+  if (response.storageStatus === "dynamodb_empty" || response.totalTaskCount === 0) {
+    return {
+      tone: "info",
+      title: "No Codex tasks in the current snapshot",
+      text: "The manifest-selected snapshot is current, but it does not contain any tasks yet."
+    };
+  }
+
+  return {
+    tone: "info",
+    title: `Snapshot ${response.snapshotVersion ? response.snapshotVersion.slice(0, 8) : "current"} loaded`,
+    text: response.sourceModifiedAtEpochMs
+      ? `Current manifest-selected snapshot refreshed from source changes at ${new Date(response.sourceModifiedAtEpochMs).toLocaleString()}.`
+      : "Current manifest-selected snapshot refreshed from DynamoDB."
+  };
 }
 
 function FirstmateNeedsResponseSection({
