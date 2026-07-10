@@ -258,8 +258,10 @@ ensure_energy_data_bucket() {
 
 deploy_runtime_data_stack() {
   echo "Deploying runtime DynamoDB stack ${RUNTIME_DATA_STACK_NAME} in ${DATA_REGION}..."
-  local runtime_data_parameter_overrides
-  mapfile -t runtime_data_parameter_overrides < <(runtime_data_parameter_overrides)
+  local runtime_data_parameter_overrides=()
+  while IFS= read -r runtime_data_parameter_override; do
+    runtime_data_parameter_overrides+=("${runtime_data_parameter_override}")
+  done < <(runtime_data_parameter_overrides)
   aws_data_region cloudformation deploy \
     --stack-name "${RUNTIME_DATA_STACK_NAME}" \
     --template-file infra/runtime-data.yaml \
