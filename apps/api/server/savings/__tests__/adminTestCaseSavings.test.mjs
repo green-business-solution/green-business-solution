@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildAdminTestCaseSavingsPreview } from "../adminTestCaseSavings.mjs";
+import { buildAdminTestCaseSavingsPreview, calculatePaybackPeriodYears } from "../adminTestCaseSavings.mjs";
 
 const normalizedProfile = {
   site: {
@@ -12,6 +12,50 @@ const normalizedProfile = {
 };
 
 describe("admin test-case savings generation", () => {
+  it("calculates backend-owned payback from annualized recurring savings and preserves details", () => {
+    expect(
+      calculatePaybackPeriodYears({
+        upfrontCostCents: 120000,
+        monthlyRecurringSavingsCents: -5000
+      })
+    ).toBe(2);
+    expect(
+      calculatePaybackPeriodYears({
+        upfrontCostCents: 120000,
+        annualRecurringSavingsCents: -60000
+      })
+    ).toBe(2);
+    expect(
+      calculatePaybackPeriodYears({
+        upfrontCostCents: 120000,
+        annualRecurringSavingsCents: 60000
+      })
+    ).toBe(0);
+    expect(
+      calculatePaybackPeriodYears({
+        upfrontCostCents: 120000,
+        annualRecurringSavingsCents: 0
+      })
+    ).toBe(0);
+
+    const preview = buildAdminTestCaseSavingsPreview({
+      retrofitGroup: {
+        retrofitTypeId: "high_efficiency_hvac_replacement",
+        displayName: "High-efficiency HVAC replacement",
+        opportunities: [{ opportunityId: "opp-1" }],
+        opportunityCount: 1
+      },
+      sampleUserId: "sample-user",
+      normalizedProfile
+    });
+
+    expect(preview.paybackPeriodYears).not.toBeNull();
+    expect(preview.paybackPeriodDetails).toMatchObject({
+      calculationBasis: "annual recurring savings with monthly values normalized to annual"
+    });
+    expect(preview.sustainabilityImpact?.metrics?.annualOperationalCO2eReductionKgPerYear?.provenanceState).toBeDefined();
+  });
+
   it("builds v2 sustainability impact for supported retrofits", () => {
     const preview = buildAdminTestCaseSavingsPreview({
       retrofitGroup: {

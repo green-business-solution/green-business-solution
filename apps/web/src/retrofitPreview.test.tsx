@@ -44,6 +44,8 @@ import {
   selectGptProBatchIdForIndex,
   selectGptProPromptPathForBatch,
   SavingsPreviewCard,
+  RetrofitPickerView,
+  RetrofitReadinessRow,
   UserPreviewProfileView,
 } from "./App";
 
@@ -1105,6 +1107,148 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Source calculated");
     expect(html).toContain("0.06 kBtu/sq ft/year");
     expect(siteEuiSection).not.toContain("No causal effect");
+  });
+
+  it("renders the backend payback field and backend CO2e field on retrofit overview cards", () => {
+    const sustainabilityImpact = buildSustainabilityImpact({
+      billLineDeltas: [
+        {
+          id: "electric",
+          domain: "electric",
+          canonicalField: "annual_kwh_delta",
+          deltaValue: -5000,
+          unit: "kWh/year",
+          period: "annual"
+        }
+      ],
+      squareFootage: 10000,
+      retrofitTypeId: "rt_modeled_electric_kwh_reduction",
+      sourceModelInputs: { stateCode: "CA" }
+    });
+    const preview = {
+      ...liveShapedPayload.retrofits[0].savingsPreview,
+      paybackPeriodYears: 3.25,
+      paybackPeriodDetails: {
+        upfrontCostCents: 2600000,
+        annualRecurringSavingsCents: 800000,
+        normalizedAnnualRecurringSavingsCents: 800000,
+        calculationBasis: "annual recurring savings with monthly values normalized to annual"
+      },
+      sustainabilityImpact: {
+        ...sustainabilityImpact,
+        metrics: {
+          ...sustainabilityImpact.metrics,
+          annualOperationalCO2eReductionKgPerYear: {
+            ...sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear,
+            value: 1234.5,
+            provenanceState: "source_calculated"
+          }
+        }
+      }
+    } as any;
+
+    const cardHtml = renderToStaticMarkup(
+      <SavingsPreviewCard preview={preview} squareFootage={10000} />
+    );
+    expect(cardHtml).toContain("Payback period");
+    expect(cardHtml).toContain("3.3 years");
+    expect(cardHtml).toContain("annual recurring savings with monthly values normalized to annual");
+
+    const overviewHtml = renderToStaticMarkup(
+      <RetrofitPickerView
+        activeRetrofitId={liveShapedPayload.retrofits[0].retrofitTypeId}
+        displayedRetrofits={[
+          {
+            ...buildUserRetrofitPreviewResult(liveShapedPayload).retrofits[0],
+            sustainabilityImpact: preview.sustainabilityImpact,
+            metrics: {
+              ...buildUserRetrofitPreviewResult(liveShapedPayload).retrofits[0].metrics,
+              paybackPeriodYears: preview.paybackPeriodYears
+            }
+          } as any
+        ]}
+        emptyMessage=""
+        isLoading={false}
+        loadingMessage="Loading"
+        hideBillData={false}
+        uploadedBillStepCount={4}
+        retrofitReadinessById={new Map([
+          [
+            liveShapedPayload.retrofits[0].retrofitTypeId,
+            { billsComplete: true, questionsComplete: true, estimateComplete: true }
+          ]
+        ])}
+        onCloseDetails={() => {}}
+        onSelectRetrofit={() => {}}
+        onSetViewMode={() => {}}
+        onShowMore={() => {}}
+        onShowLess={() => {}}
+        onSortChange={() => {}}
+        onUploadBills={() => {}}
+        pickerViewMode="grid"
+        pickerVisibleCount={1}
+        sortBy="recommended"
+      />
+    );
+
+    expect(overviewHtml).toContain("Environmental impact");
+    expect(overviewHtml).toContain("1,234.5 kg CO2e/year");
+    expect(overviewHtml).toContain("Source calculated");
+  });
+
+  it("renders a zero cumulative CO2e series without unknown states when the backend metric is zero", () => {
+    const sustainabilityImpact = buildSustainabilityImpact({
+      billLineDeltas: [
+        {
+          id: "electric",
+          domain: "electric",
+          canonicalField: "annual_kwh_delta",
+          deltaValue: 0,
+          unit: "kWh/year",
+          period: "annual"
+        }
+      ],
+      squareFootage: 10000,
+      retrofitTypeId: "rt_modeled_electric_kwh_reduction",
+      sourceModelInputs: { stateCode: "CA" }
+    });
+    const zeroPreview = {
+      ...liveShapedPayload.retrofits[0].savingsPreview,
+      sustainabilityImpact: {
+        ...sustainabilityImpact,
+        projectionSeriesKgPerYear: Array.from({ length: 10 }, () => 0),
+        metrics: {
+          ...sustainabilityImpact.metrics,
+          annualOperationalCO2eReductionKgPerYear: {
+            ...sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear,
+            value: 0,
+            provenanceState: "source_calculated"
+          }
+        }
+      }
+    } as any;
+
+    const html = renderToStaticMarkup(<SavingsPreviewCard preview={zeroPreview} squareFootage={10000} />);
+
+    expect(html).toContain("Cumulative CO2e avoided");
+    expect(html).toContain("0 tCO2e");
+    expect(html).not.toContain("Annual operational CO2e reduction is needed before the cumulative chart can be drawn.");
+  });
+
+  it("renders readiness circles as 0, 1, and 3 completed states", () => {
+    const zeroHtml = renderToStaticMarkup(
+      <RetrofitReadinessRow billsComplete={false} estimateComplete={false} questionsComplete={false} />
+    );
+    const oneHtml = renderToStaticMarkup(
+      <RetrofitReadinessRow billsComplete={true} estimateComplete={false} questionsComplete={false} />
+    );
+    const threeHtml = renderToStaticMarkup(
+      <RetrofitReadinessRow billsComplete={true} estimateComplete={false} questionsComplete={true} />
+    );
+
+    expect((zeroHtml.match(/is-complete/g) || []).length).toBe(0);
+    expect((oneHtml.match(/is-complete/g) || []).length).toBe(1);
+    expect((threeHtml.match(/is-complete/g) || []).length).toBe(3);
   });
 
   it("renders unavailable, estimated, not-applicable, and increased-consumption sustainability states", () => {

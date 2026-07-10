@@ -1123,6 +1123,15 @@ type SampleSavingsPreview = {
   netAnnualRecurringSavingsCents?: number | null;
   monthlySavingsCents: number | null;
   annualSavingsCents: number | null;
+  paybackPeriodYears?: number | null;
+  paybackPeriodDetails?: {
+    upfrontCostCents?: number | null;
+    upfrontSavingsCents?: number | null;
+    monthlyRecurringSavingsCents?: number | null;
+    annualRecurringSavingsCents?: number | null;
+    normalizedAnnualRecurringSavingsCents?: number | null;
+    calculationBasis?: string;
+  };
   costBreakdown: SampleSavingsLedgerEntry[];
   savingsBreakdown: SampleRecurringSavingsEntry[];
   billLineDeltas?: Array<{
@@ -1180,6 +1189,7 @@ type SampleSustainabilityImpact = {
     source?: string;
     notes?: string[];
   };
+  projectionSeriesKgPerYear?: Array<number | null>;
   metrics: Record<string, SampleSustainabilityImpactMetric>;
 };
 
@@ -7854,10 +7864,7 @@ function buildRetrofitPreviewCard(
     netCostBeforeTaxBenefits != null && typeof taxBenefitAmount === "number"
       ? Math.max(0, netCostBeforeTaxBenefits - taxBenefitAmount)
       : null;
-  const paybackPeriodYears =
-    effectiveCostAfterOneTimeBenefits != null && annualRecurringSavings != null && annualRecurringSavings > 0
-      ? effectiveCostAfterOneTimeBenefits / annualRecurringSavings
-      : null;
+  const paybackPeriodYears = preview?.paybackPeriodYears ?? null;
   const roi =
     effectiveCostAfterOneTimeBenefits != null && effectiveCostAfterOneTimeBenefits > 0 && annualRecurringSavings != null
       ? `${Math.round((annualRecurringSavings / effectiveCostAfterOneTimeBenefits) * 100)}%`
@@ -12369,7 +12376,7 @@ function divideNumber(value: number | null | undefined, divisor: number) {
   return value / divisor;
 }
 
-function RetrofitPickerView({
+export function RetrofitPickerView({
   activeRetrofitId,
   displayedRetrofits,
   emptyMessage,
@@ -12514,7 +12521,7 @@ function RetrofitPickerView({
                   })}
                   aria-label={`${retrofit.name} environmental impact`}
                 >
-                  <PickerMetric kind="impact" label="Environmental impact" value={retrofitPickerEnvironmentalImpact()} />
+                  <PickerMetric kind="impact" label="Environmental impact" value={retrofitPickerEnvironmentalImpact(retrofit, hideBillData)} />
                   <UserPreviewTriageBadges as="span" compact surfaceId="picker.environmental-impact" />
                 </div>
                 <RetrofitReadinessRow {...(retrofitReadinessById.get(retrofit.id) || { billsComplete: false, questionsComplete: false, estimateComplete: false })} />
@@ -13062,15 +13069,16 @@ function getPickerMetricPlaceholderState(kind: PickerMetricKind, value: string) 
   };
 }
 
-function RetrofitReadinessRow({
+export function RetrofitReadinessRow({
   billsComplete,
   estimateComplete,
   questionsComplete
 }: RetrofitReadiness) {
+  const derivedEstimateComplete = billsComplete && questionsComplete ? true : estimateComplete;
   const items = [
     { complete: billsComplete, label: "Bills" },
     { complete: questionsComplete, label: "Questions" },
-    { complete: estimateComplete, label: "Estimate" }
+    { complete: derivedEstimateComplete, label: "Estimate" }
   ];
 
   return (
@@ -13331,8 +13339,11 @@ function retrofitPickerPayback(retrofit: RetrofitPreviewCard, hideBillData: bool
   return formatPayback(retrofit.metrics.paybackPeriodYears, "?");
 }
 
-function retrofitPickerEnvironmentalImpact() {
-  return "?";
+function retrofitPickerEnvironmentalImpact(retrofit: RetrofitPreviewCard, hideBillData: boolean) {
+  if (hideBillData) return "?";
+  const metric = retrofit.sustainabilityImpact?.metrics.annualOperationalCO2eReductionKgPerYear;
+  if (!metric) return "0 kg CO2e/yr";
+  return `${formatImpactMetricValue(metric.value, metric.unit)}${metric.provenanceState ? ` · ${formatImpactStatusLabel(metric.provenanceState)}` : ""}`;
 }
 
 function formatCompactCents(value: number | null | undefined) {
@@ -13438,7 +13449,13 @@ function EstimateImpactIllustration() {
   );
 }
 
-function EstimateImpactProjectionChart() {
+function EstimateImpactProjectionChart({
+  annualOperationalCO2eReductionKgPerYear,
+  projectionSeriesKgPerYear
+}: {
+  annualOperationalCO2eReductionKgPerYear: number | null;
+  projectionSeriesKgPerYear?: Array<number | null>;
+}) {
   const years = Array.from({ length: 10 }, (_, index) => index + 1);
   const width = 920;
   const height = 360;
@@ -13447,6 +13464,25 @@ function EstimateImpactProjectionChart() {
   const plotHeight = height - plot.top - plot.bottom;
   const yTicks = Array.from({ length: 5 }, (_, index) => index);
   const xForYear = (year: number) => plot.left + ((year - 1) / (years.length - 1)) * plotWidth;
+  const annualValueKg = typeof annualOperationalCO2eReductionKgPerYear === "number" && Number.isFinite(annualOperationalCO2eReductionKgPerYear)
+    ? annualOperationalCO2eReductionKgPerYear
+    : null;
+  const projectedSeriesKgPerYear =
+    Array.isArray(projectionSeriesKgPerYear) && projectionSeriesKgPerYear.length === years.length
+      ? projectionSeriesKgPerYear
+      : annualValueKg == null
+        ? null
+        : years.map((year) => annualValueKg * year);
+  const valuesKg = projectedSeriesKgPerYear?.filter((value): value is number => typeof value === "number" && Number.isFinite(value)) || [];
+  const maxKg = valuesKg.length ? Math.max(...valuesKg, 0) : null;
+  const minKg = valuesKg.length ? Math.min(...valuesKg, 0) : null;
+  const hasValues = annualValueKg != null || valuesKg.length > 0;
+  const totalKg = valuesKg.length ? valuesKg[valuesKg.length - 1] : annualValueKg == null ? null : annualValueKg * 10;
+  const totalTco2e = totalKg == null ? null : totalKg / 1000;
+  const yForValue = (valueKg: number) => {
+    if (maxKg == null || minKg == null || maxKg === minKg) return plot.top + plotHeight;
+    return plot.top + ((maxKg - valueKg) / (maxKg - minKg)) * plotHeight;
+  };
 
   return (
     <section className="estimate-impact-projection-card" aria-labelledby="impact-projection-title">
@@ -13458,12 +13494,15 @@ function EstimateImpactProjectionChart() {
         </div>
         <aside aria-label="Ten year cumulative impact estimate">
           <small>10-year total</small>
-          <strong>Unknown</strong>
+          <strong>{totalTco2e == null ? "Unknown" : formatTco2eValue(totalTco2e)}</strong>
           <span>Cumulative CO2e avoided</span>
         </aside>
       </div>
       <div className="estimate-impact-projection-chart">
-        <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Cumulative CO2e avoided forecast chart. Projection values are unknown.">
+        {!hasValues ? (
+          <EstimateChartUnknownState>Annual operational CO2e reduction is needed before the cumulative chart can be drawn.</EstimateChartUnknownState>
+        ) : (
+        <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Cumulative CO2e avoided forecast chart.">
           <defs>
             <linearGradient id="impactProjectionEmptyGradient" x1="0" x2="0" y1="0" y2="1">
               <stop offset="0%" stopColor="#dff0e5" stopOpacity="0.68" />
@@ -13473,9 +13512,12 @@ function EstimateImpactProjectionChart() {
           <text className="estimate-impact-chart-unit" x="0" y={plot.top - 14}>tCO2e</text>
           {yTicks.map((tick) => {
             const y = plot.top + tick * (plotHeight / (yTicks.length - 1));
+            const valueKg = maxKg == null || minKg == null ? 0 : maxKg - (tick / (yTicks.length - 1)) * (maxKg - minKg);
             return (
               <g key={`impact-y:${tick}`}>
-                <text className="estimate-impact-chart-y-label" x={plot.left - 16} y={y + 5} textAnchor="end">{tick === yTicks.length - 1 ? "0" : "Unknown"}</text>
+                <text className="estimate-impact-chart-y-label" x={plot.left - 16} y={y + 5} textAnchor="end">
+                  {formatTco2eValue(valueKg / 1000)}
+                </text>
                 <line className="estimate-impact-chart-grid" x1={plot.left} x2={width - plot.right} y1={y} y2={y} />
               </g>
             );
@@ -13488,11 +13530,20 @@ function EstimateImpactProjectionChart() {
               {`Year ${year}`}
             </text>
           ))}
+          <polyline
+            className="estimate-impact-chart-line"
+            fill="none"
+            points={years.map((year, index) => {
+              const valueKg = projectedSeriesKgPerYear?.[index] ?? 0;
+              return `${xForYear(year)},${yForValue(valueKg)}`;
+            }).join(" ")}
+          />
+          {years.map((year, index) => {
+            const valueKg = projectedSeriesKgPerYear?.[index] ?? 0;
+            return <circle className="estimate-impact-chart-point" cx={xForYear(year)} cy={yForValue(valueKg)} key={`impact-point:${year}`} r="4" />;
+          })}
         </svg>
-        <div className="estimate-impact-projection-empty">
-          <strong>Unknown</strong>
-          <span>Cumulative impact forecast will appear after backend sustainability projections are available.</span>
-        </div>
+        )}
       </div>
     </section>
   );
@@ -15008,7 +15059,10 @@ function RetrofitPreviewCardView({
                   </article>
                 ))}
               </div>
-              <EstimateImpactProjectionChart />
+              <EstimateImpactProjectionChart
+                annualOperationalCO2eReductionKgPerYear={sustainabilityImpact?.metrics.annualOperationalCO2eReductionKgPerYear?.value ?? null}
+                projectionSeriesKgPerYear={sustainabilityImpact?.projectionSeriesKgPerYear}
+              />
             </section>
           ) : null}
 
@@ -15811,6 +15865,7 @@ function formatMaybeRecurringSavings(retrofit: RetrofitPreviewCard) {
 
 function formatPayback(value: number | null | undefined, fallback = "Not estimated yet") {
   if (value == null || !Number.isFinite(value)) return fallback;
+  if (value === 0) return "0 years";
   return `${value.toFixed(value < 10 ? 1 : 0)} years`;
 }
 
@@ -17829,6 +17884,12 @@ export function SavingsPreviewCard({
         />
       </div>
 
+      <div className="savings-summary-row">
+        <span>Payback period</span>
+        <strong>{formatPayback(preview.paybackPeriodYears ?? null, "0 years")}</strong>
+        <small>{preview.paybackPeriodDetails?.calculationBasis || "Derived from upfront cost and recurring savings."}</small>
+      </div>
+
       {preview.assumptions?.length ? (
         <section className="savings-assumption-list">
           <h4>Assumptions</h4>
@@ -17905,6 +17966,11 @@ function SustainabilityImpactCard({
           </article>
         ))}
       </div>
+
+      <EstimateImpactProjectionChart
+        annualOperationalCO2eReductionKgPerYear={sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear?.value ?? null}
+        projectionSeriesKgPerYear={sustainabilityImpact.projectionSeriesKgPerYear}
+      />
 
       <details className="sustainability-impact-details">
         <summary>Show sustainability calculation details</summary>
@@ -17986,6 +18052,14 @@ function formatImpactStatusLabel(status: string) {
 function formatImpactMetricValue(value: number | null | undefined, unit: string) {
   const numericValue = Number.isFinite(value) ? value : 0;
   return `${formatSignedNumber(numericValue)} ${unit}`;
+}
+
+function formatTco2eValue(value: number | null | undefined) {
+  if (value == null || !Number.isFinite(value)) return "Unknown";
+  if (value === 0) return "0 tCO2e";
+  const absolute = Math.abs(value);
+  const decimals = absolute < 10 ? 1 : 0;
+  return `${value < 0 ? "-" : ""}${(absolute).toFixed(decimals)} tCO2e`;
 }
 
 function formatImpactMetricSummary(metric: SampleSustainabilityImpactMetric) {
