@@ -1259,10 +1259,12 @@ type SampleSavingsPreview = {
 
 type SampleSustainabilityImpact = {
   schemaVersion: string;
-  status: "calculated" | "partial" | "unavailable";
+  status: "calculated" | "estimated" | "partial" | "unavailable";
   source?: {
     sourceSquareFootage?: unknown;
     billLineDeltaCount?: number;
+    retrofitTypeId?: string | null;
+    retrofitDisplayName?: string | null;
   };
   quality?: {
     confidence?: string;
@@ -1276,18 +1278,21 @@ type SampleSustainabilityImpactMetric = {
   id: string;
   label: string;
   unit: string;
-  status: "calculated" | "neutral" | "increased_consumption" | "partial" | "unavailable";
-  value: number | null;
+  status: "source_calculated" | "estimated" | "not_applicable" | "increased_consumption" | "unavailable";
+  provenanceState?: "source_calculated" | "estimated" | "not_applicable" | "increased_consumption" | "unavailable";
+  value: number;
   sourceField: string;
   formulaId: string;
   assumptions?: string[];
   quality?: {
     confidence?: string;
     source?: string;
+    sourceVintage?: string;
     notes?: string[];
   };
   trace?: {
     sourceSquareFootage?: unknown;
+    sourceInputs?: Record<string, unknown>;
     sourceDeltas?: Array<{
       id?: string | null;
       domain?: string | null;
@@ -1297,6 +1302,25 @@ type SampleSustainabilityImpactMetric = {
       period?: string | null;
       savingsCents?: number | null;
     }>;
+    boundary?: {
+      included?: string[];
+      excluded?: string[];
+      note?: string;
+    };
+    sourceWindow?: {
+      sourceDateStart?: string;
+      sourceDateEnd?: string;
+      sourceVintage?: string;
+    };
+    calculation?: Record<string, unknown>;
+    components?: Array<{
+      scope?: string;
+      sourceMetricId?: string;
+      status?: string;
+      valueKgCO2ePerYear?: number | null;
+      factor?: Record<string, unknown>;
+    }>;
+    valueKgCO2ePerYear?: number | null;
   };
 };
 
@@ -18555,7 +18579,7 @@ export function SavingsPreviewCard({
   const recurringEquationLines = buildRecurringEquationLines(recurringEntries);
   const recurringNetCents = preview.netMonthlyRecurringSavingsCents ?? preview.monthlySavingsCents ?? 0;
   const traceSteps = preview.calculationTrace?.steps || [];
-  const sustainabilityImpact = preview.sustainabilityImpact || deriveSustainabilityImpact(preview, squareFootage);
+  const sustainabilityImpact = preview.sustainabilityImpact || null;
 
   return (
     <article className="data-card savings-preview-card">
@@ -18633,7 +18657,8 @@ function SustainabilityImpactCard({
     sustainabilityImpact.metrics.scope1ThermReductionPerYear,
     sustainabilityImpact.metrics.scope2ElectricityReductionKwhPerYear,
     sustainabilityImpact.metrics.siteEuiReductionKbtuPerSquareFootPerYear,
-    sustainabilityImpact.metrics.gridPeakDemandReductionKw
+    sustainabilityImpact.metrics.gridPeakDemandReductionKw,
+    sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear
   ].filter(Boolean) as SampleSustainabilityImpactMetric[];
 
   return (
@@ -18641,7 +18666,7 @@ function SustainabilityImpactCard({
       <div className="sustainability-impact-header">
         <div>
           <h4>Sustainability impact</h4>
-          <p>Backend-owned metric contract for admin review and later customer preview reuse.</p>
+          <p>Backend-owned numeric metrics with provenance, estimates, and factor notes for admin review.</p>
         </div>
         <strong>{formatImpactStatusLabel(sustainabilityImpact.status)}</strong>
       </div>
@@ -18651,11 +18676,12 @@ function SustainabilityImpactCard({
           <article className="sustainability-impact-metric" key={metric.id}>
             <div className="sustainability-impact-metric-header">
               <h5>{metric.label}</h5>
-              <span className={`sustainability-impact-status sustainability-impact-status--${metric.status}`}>
-                {formatImpactStatusLabel(metric.status)}
+              <span className={`sustainability-impact-status sustainability-impact-status--${metric.provenanceState || metric.status}`}>
+                {formatImpactStatusLabel(metric.provenanceState || metric.status)}
               </span>
             </div>
             <strong>{formatImpactMetricValue(metric.value, metric.unit)}</strong>
+            <p>{formatImpactMetricSummary(metric)}</p>
             <p>{metric.unit}</p>
           </article>
         ))}
@@ -18668,12 +18694,44 @@ function SustainabilityImpactCard({
             <section key={`${metric.id}-details`}>
               <h5>{metric.label}</h5>
               <p>{metric.formulaId}</p>
+              <p>{formatImpactMetricSummary(metric)}</p>
+              <p>
+                {formatImpactQuality(metric)}
+              </p>
               {metric.assumptions?.length ? (
                 <ul>
                   {metric.assumptions.map((assumption) => (
                     <li key={assumption}>{assumption}</li>
                   ))}
                 </ul>
+              ) : null}
+              {metric.trace?.calculation ? (
+                <pre className="sustainability-impact-trace-json">{JSON.stringify(metric.trace.calculation, null, 2)}</pre>
+              ) : null}
+              {metric.trace?.components?.length ? (
+                <ul>
+                  {metric.trace.components.map((component) => (
+                    <li key={`${metric.id}:${component.scope || component.sourceMetricId}`}>
+                      {component.scope || component.sourceMetricId}: {
+                        component.status === "unavailable"
+                          ? "Unavailable"
+                          : formatImpactMetricValue(component.valueKgCO2ePerYear, "kg CO2e/year")
+                      }
+                      {component.factor?.sourceLabel ? ` - ${String(component.factor.sourceLabel)}` : ""}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+              {metric.trace?.boundary ? (
+                <div className="sustainability-impact-boundary">
+                  <p>{metric.trace.boundary.note}</p>
+                  {metric.trace.boundary.included?.length ? (
+                    <p>Included: {metric.trace.boundary.included.join(", ")}</p>
+                  ) : null}
+                  {metric.trace.boundary.excluded?.length ? (
+                    <p>Excluded: {metric.trace.boundary.excluded.join(", ")}</p>
+                  ) : null}
+                </div>
               ) : null}
               {metric.quality?.notes?.length ? (
                 <p>{metric.quality.notes.join(" ")}</p>
@@ -18695,101 +18753,47 @@ function SustainabilityImpactCard({
   );
 }
 
-function deriveSustainabilityImpact(preview: SampleSavingsPreview, squareFootage: number | string | null): SampleSustainabilityImpact | null {
-  const billLineDeltas = preview.billLineDeltas || [];
-  if (!billLineDeltas.length) return null;
-
-  const grouped = (canonicalField: string) =>
-    billLineDeltas.filter((delta) => delta.canonicalField === canonicalField);
-  const annualize = (delta: { deltaValue: number; period: string }) => {
-    if (delta.period === "monthly") return delta.deltaValue * 12;
-    return delta.deltaValue;
-  };
-  const sum = (values: Array<number | null>) => values.reduce((total: number, value) => total + Number(value ?? 0), 0);
-  const waterDeltas = grouped("annual_water_use_delta");
-  const thermDeltas = grouped("annual_therms_delta");
-  const kwhDeltas = grouped("annual_kwh_delta");
-  const peakDeltas = grouped("peak_kw_delta");
-  const water = sum(
-    waterDeltas.map((delta): number => {
-      const unit = String(delta.unit || "").toLowerCase();
-      const annual = annualize(delta);
-      if (unit.includes("ccf")) return Number(annual) * 748.052;
-      return Number(annual);
-    })
-  );
-  const therms = sum(thermDeltas.map((delta): number => Number(annualize(delta))));
-  const kwh = sum(kwhDeltas.map((delta): number => Number(annualize(delta))));
-  const peak = sum(peakDeltas.map((delta): number => Number(delta.deltaValue ?? 0)));
-  const parsedSquareFootage = Number(squareFootage);
-  const eui = Number.isFinite(parsedSquareFootage) && parsedSquareFootage > 0 ? ((kwh * 3.412) + (therms * 100)) / parsedSquareFootage : null;
-
-  const metrics = {
-    waterConservationGallonsPerYear: buildImpactMetric("waterConservationGallonsPerYear", "Water conservation", waterDeltas.length ? -water : null, "gallons/year", "annual_water_use_delta", waterDeltas),
-    scope1ThermReductionPerYear: buildImpactMetric("scope1ThermReductionPerYear", "Scope 1 therm reduction", thermDeltas.length ? -therms : null, "therms/year", "annual_therms_delta", thermDeltas),
-    scope2ElectricityReductionKwhPerYear: buildImpactMetric("scope2ElectricityReductionKwhPerYear", "Scope 2 electricity reduction", kwhDeltas.length ? -kwh : null, "kWh/year", "annual_kwh_delta", kwhDeltas),
-    siteEuiReductionKbtuPerSquareFootPerYear: buildImpactMetric("siteEuiReductionKbtuPerSquareFootPerYear", "Site EUI reduction", eui == null ? null : -eui, "kBtu/sq ft/year", "annual_kwh_delta+annual_therms_delta", [...kwhDeltas, ...thermDeltas]),
-    gridPeakDemandReductionKw: buildImpactMetric("gridPeakDemandReductionKw", "Grid peak-demand reduction", peakDeltas.length ? -peak : null, "kW", "peak_kw_delta", peakDeltas)
-  } satisfies SampleSustainabilityImpact["metrics"];
-
-  const statuses = Object.values(metrics).map((metric) => metric.status);
-  const status = statuses.some((value) => value === "unavailable" || value === "increased_consumption")
-    ? "partial"
-    : "calculated";
-
-  return {
-    schemaVersion: "sustainability-impact-v1",
-    status,
-    quality: {
-      confidence: status === "calculated" ? "high" : "mixed",
-      source: "bill_line_deltas",
-      notes: status === "partial" ? ["One or more sustainability metrics could not be calculated from this fixture."] : []
-    },
-    metrics
-  };
-}
-
-function buildImpactMetric(
-  id: string,
-  label: string,
-  value: number | null,
-  unit: string,
-  sourceField: string,
-  sourceDeltas: Array<{ id?: string | null; canonicalField?: string | null; deltaValue?: number | null; unit?: string | null; period?: string | null; savingsCents?: number | null }>
-): SampleSustainabilityImpactMetric {
-  const status = value == null ? "unavailable" : value > 0 ? "calculated" : value < 0 ? "increased_consumption" : "neutral";
-  return {
-    id,
-    label,
-    unit,
-    status,
-    value,
-    sourceField,
-    formulaId: `sustainability.${id}`,
-    assumptions: [],
-    quality: {
-      confidence: value == null ? "low" : "high",
-      source: "bill_line_deltas",
-      notes: value == null ? [`No usable source data was available for ${label.toLowerCase()}.`] : []
-    },
-    trace: {
-      sourceDeltas
-    }
-  };
-}
-
 function formatImpactStatusLabel(status: string) {
+  if (status === "source_calculated") return "Source calculated";
   if (status === "calculated") return "Calculated";
+  if (status === "estimated") return "Estimated";
   if (status === "partial") return "Partial";
   if (status === "unavailable") return "Unavailable";
   if (status === "increased_consumption") return "Increased consumption";
-  if (status === "neutral") return "Neutral";
+  if (status === "not_applicable") return "No causal effect";
   return status;
 }
 
-function formatImpactMetricValue(value: number | null, unit: string) {
-  if (value == null || !Number.isFinite(value)) return "Not calculated";
-  return `${formatSignedNumber(value)} ${unit}`;
+function formatImpactMetricValue(value: number | null | undefined, unit: string) {
+  const numericValue = Number.isFinite(value) ? value : 0;
+  return `${formatSignedNumber(numericValue)} ${unit}`;
+}
+
+function formatImpactMetricSummary(metric: SampleSustainabilityImpactMetric) {
+  const provenanceState = metric.provenanceState || metric.status;
+  if (provenanceState === "not_applicable") {
+    return "No causal effect for this retrofit, shown as 0.";
+  }
+  if (provenanceState === "estimated") {
+    return "Estimated from reviewed fixture assumptions.";
+  }
+  if (provenanceState === "source_calculated") {
+    return "Calculated directly from source bill-line deltas.";
+  }
+  if (provenanceState === "increased_consumption") {
+    return "Added consumption is shown with a negative sign.";
+  }
+  if (provenanceState === "unavailable") {
+    return "Shown as 0 until source data or an explicit estimate is available.";
+  }
+  return "";
+}
+
+function formatImpactQuality(metric: SampleSustainabilityImpactMetric) {
+  const confidence = metric.quality?.confidence ? `Confidence: ${metric.quality.confidence}` : "Confidence: not listed";
+  const source = metric.quality?.source ? `Source: ${metric.quality.source}` : "Source: not listed";
+  const vintage = metric.quality?.sourceVintage ? `Vintage: ${metric.quality.sourceVintage}` : "";
+  return [confidence, source, vintage].filter(Boolean).join(" | ");
 }
 
 function formatSignedNumber(value: number | null | undefined) {
