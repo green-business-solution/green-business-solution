@@ -1,0 +1,993 @@
+# GPT Pro Opportunity Award Audit Prompt
+
+You are auditing one batch of unique Retrofit opportunities for official program approval process and award likelihood.
+Return strict JSON only. No markdown, prose, or explanations outside JSON.
+Do not infer eligibility from title text alone.
+Use current official program sources as the evidence base and ignore outdated pages when they conflict.
+Use `unknown` where evidence is insufficient and do not guess.
+Do not lower award likelihood because a source says "optional" user action or "follow instructions" steps exist.
+Treat those instructions as operational conditions that may still keep the opportunity likely to be awarded.
+Do not include any confidence score field.
+
+Output object requirements:
+
+- Return one JSON object only.
+- Top-level object:
+  - `schemaVersion`: `opportunity-award-audit-output.v1`
+  - `batchId`: current batch id
+  - `inputFile`: current input file name
+  - `inputRecordCount`: integer
+  - `generatedAt`: ISO timestamp
+  - `reviews`: array of exactly one object per audited opportunity
+- Each `review` object must include:
+  - opportunityId
+  - requiresProgramApproval
+  - approvalRequirements
+  - approvalStage
+  - awardLikelihood
+  - awardLikelihoodReason
+  - evidenceUrls
+  - evidenceText
+  - reviewedAt
+  - reviewStatus
+- `approvalRequirements` and `evidenceUrls` must be arrays.
+- `awardLikelihood` must be one of:
+  - `near_guaranteed`, `likely`, `possible`, `unlikely`, `rare`, `unknown`
+- `reviewStatus` must be one of:
+  - `audited`, `source_inaccessible`, `not_audited`, `needs_followup`, `needs_evidence`
+- `reviewedAt` must be ISO 8601 date-time.
+
+Input file: batch-007_input.json
+Output file to write: batch-007_output.json
+Schema file: GPT Pro Outputs/opportunity-award-audit/opportunity-award-audit-schema.json
+Batch 7 of 61
+This batch has 25 opportunities, positions 151-175.
+
+Use current official sources for evidence and include evidence URLs only as plain raw URLs.
+`evidenceText` should be concise and non-URL text.
+
+Targets JSON:
+```json
+[
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22324",
+    "opportunityName": "Braintree Electric Light Department - Bring Your Own Charger Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22324/braintree-electric-light-department-bring-your-own-charger-program",
+    "websiteUrl": "https://braintree-ev.ene.org/ev-charging-guide/#rebates-incentives",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Rebate Program",
+    "administrator": "Braintree Electric Light Department",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:f69ab77394818965:bright-start-for-new-business",
+    "opportunityName": "Bright Start for New Business",
+    "sourceName": "Silicon Valley Power Business Programs",
+    "sourceUrl": "https://www.siliconvalleypower.com/businesses/save-money",
+    "websiteUrl": "https://www.siliconvalleypower.com/businesses/save-money",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "rebate",
+    "administrator": "Silicon Valley Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "low_flow_fixture_retrofit",
+        "displayName": "Low-flow fixture retrofit",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_audit",
+        "displayName": "Energy audit",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1974",
+    "opportunityName": "Bristol Tennessee Electric Service - Energy Savings Loan Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1974/bristol-tennessee-electric-service-energy-savings-loan-program",
+    "websiteUrl": "http://www.btes.net/index.php/electric/electric-programs/energy-savings-loan-program/",
+    "applicationUrl": null,
+    "state": "TN",
+    "programType": "Loan Program",
+    "administrator": "Bristol Tennessee Electric Service",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5254",
+    "opportunityName": "Brownsville Public Utilities Board - Residential/Small Commercial Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5254/brownsville-public-utilities-board-residential-small-commercial-rebate-program",
+    "websiteUrl": "https://www.brownsville-pub.com/gogreen/rebate-programs/",
+    "applicationUrl": null,
+    "state": "TX",
+    "programType": "Rebate Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "window_replacement",
+        "displayName": "Window replacement",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_toilet_urinal",
+        "displayName": "High-efficiency toilet / urinal replacement",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 6
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:2631",
+    "opportunityName": "Bryan Texas Utilities - SmartBUSINESS Commercial Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2631/bryan-texas-utilities-smartbusiness-commercial-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.btutilities.com/smartbusiness",
+    "applicationUrl": null,
+    "state": "TX",
+    "programType": "Rebate Program",
+    "administrator": "Bryan Texas Utilities",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5411",
+    "opportunityName": "Bryan Texas Utilities - SmartHOME Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5411/bryan-texas-utilities-smarthome-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.btutilities.com/energy-efficiency/smarthome-programs/",
+    "applicationUrl": null,
+    "state": "TX",
+    "programType": "Rebate Program",
+    "administrator": "Bryan Texas Utilities",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:ef0850c0e097a7f9:building-operator-certification-training-scholarships",
+    "opportunityName": "Building Operator Certification Training Scholarships",
+    "sourceName": "Silicon Valley Power Business Programs",
+    "sourceUrl": "https://www.siliconvalleypower.com/businesses/building-operator-certification-training-scholarships",
+    "websiteUrl": "https://www.siliconvalleypower.com/businesses/building-operator-certification-training-scholarships",
+    "applicationUrl": "https://www.siliconvalleypower.com/home/showpublisheddocument/81658/638882619359170000",
+    "state": "CA",
+    "programType": "grant",
+    "administrator": "Silicon Valley Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "low_flow_fixture_retrofit",
+        "displayName": "Low-flow fixture retrofit",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:building-optimization-rebate",
+    "opportunityName": "Building Optimization Rebate",
+    "sourceName": "Silicon Valley Power Business Programs",
+    "sourceUrl": "https://www.siliconvalleypower.com/businesses/rebates",
+    "websiteUrl": "https://www.siliconvalleypower.com/businesses/rebates",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "rebate",
+    "administrator": "Silicon Valley Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "building_automation_system",
+        "displayName": "Building automation system",
+        "parentCategory": "building_controls_energy_management",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_management_system",
+        "displayName": "Energy management system",
+        "parentCategory": "building_controls_energy_management",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "low_flow_fixture_retrofit",
+        "displayName": "Low-flow fixture retrofit",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1630",
+    "opportunityName": "Burbank Water & Power - Energy Solutions Business Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1630/burbank-water-and-power-energy-solutions-business-rebate-program",
+    "websiteUrl": "https://www.burbankwaterandpower.com/incentives-for-businesses/energy-solutions-business-rebate-programs",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "Rebate Program",
+    "administrator": "Burbank Water and Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "thermal_energy_storage",
+        "displayName": "Thermal energy storage",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "low_flow_fixture_retrofit",
+        "displayName": "Low-flow fixture retrofit",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_motor_replacement",
+        "displayName": "High-efficiency motor replacement",
+        "parentCategory": "motors_pumps_fans_drives",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 7
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1660",
+    "opportunityName": "Burbank Water & Power - Green Building Incentive Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1660/burbank-water-and-power-green-building-incentive-program",
+    "websiteUrl": "https://burbankwaterandpower.com/conservation/commercial-programs-rebates/leed-incentive-program",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "Green Building Incentive",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "leed_certification",
+        "displayName": "LEED certification",
+        "parentCategory": "certifications_compliance",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1659",
+    "opportunityName": "Burbank Water & Power - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1659/burbank-water-and-power-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.burbankwaterandpower.com/conservation/residential-programs-rebates/residential-rebates",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "Rebate Program",
+    "administrator": "Burbank Water & Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 5
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22279",
+    "opportunityName": "Burbank Water and Power - Electric Vehicle Charger Rebate",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22279/burbank-water-and-power-electric-vehicle-charger-rebate",
+    "websiteUrl": "https://www.burbankwaterandpower.com/leadthecharge",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "Rebate Program",
+    "administrator": "Burbank Water and Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "dc_fast_charger_installation",
+        "displayName": "DC fast charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22066",
+    "opportunityName": "Burbank Water and Power - LEED Certification Incentive Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22066/burbank-water-and-power-leed-certification-incentive-program",
+    "websiteUrl": "https://www.burbankwaterandpower.com/conservation/commercial-programs-rebates/leed-incentive-program",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "Rebate Program",
+    "administrator": "Burbank Water and Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "leed_certification",
+        "displayName": "LEED certification",
+        "parentCategory": "certifications_compliance",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22103",
+    "opportunityName": "Burlington Electric Department - Commercial Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22103/burlington-electric-department-commercial-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.burlingtonelectric.com/commercial/",
+    "applicationUrl": null,
+    "state": "VT",
+    "programType": "Rebate Program",
+    "administrator": "Burlington Electric Department",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "waste_heat_recovery",
+        "displayName": "Waste heat recovery",
+        "parentCategory": "compressed_air_industrial",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22102",
+    "opportunityName": "Burlington Electric Department - Commercial On-Bill Financing Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22102/burlington-electric-department-commercial-on-bill-financing-program",
+    "websiteUrl": "https://www.burlingtonelectric.com/on-bill-financing",
+    "applicationUrl": null,
+    "state": "VT",
+    "programType": "Loan Program",
+    "administrator": "Burlington Electric Department",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:4636",
+    "opportunityName": "Burlington Electric Department - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4636/burlington-electric-department-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.burlingtonelectric.com/rebate-form",
+    "applicationUrl": null,
+    "state": "VT",
+    "programType": "Rebate Program",
+    "administrator": "Burlington Electric Department",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_recovery_ventilation_retrofit",
+        "displayName": "Energy recovery ventilation retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "window_replacement",
+        "displayName": "Window replacement",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_laundry_equipment",
+        "displayName": "High-efficiency laundry equipment",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "induction_cooking_equipment",
+        "displayName": "Induction cooking equipment",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "efficient_fan_blower_replacement",
+        "displayName": "Efficient fan/blower replacement",
+        "parentCategory": "motors_pumps_fans_drives",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "waste_heat_recovery",
+        "displayName": "Waste heat recovery",
+        "parentCategory": "compressed_air_industrial",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 12
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3762",
+    "opportunityName": "Business Energy Efficiency Loan Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3762/business-energy-efficiency-loan-program",
+    "websiteUrl": "http://www.nhbfa.com/businessenergyloan/",
+    "applicationUrl": null,
+    "state": "NH",
+    "programType": "Loan Program",
+    "administrator": "New Hampshire Business Finance Authority",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "energy_audit",
+        "displayName": "Energy audit",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5140",
+    "opportunityName": "Business Energy Efficiency Rebate (Offered by 11 Utilities)",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5140/business-energy-efficiency-rebate-offered-by-11-utilities",
+    "websiteUrl": "https://www.brightenergysolutions.com/find-a-rebate/",
+    "applicationUrl": null,
+    "state": "SD",
+    "programType": "Rebate Program",
+    "administrator": "Bright Energy Solutions/Missouri River Energy Services",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5145",
+    "opportunityName": "Business Energy Efficiency Rebate (Offered by 18 Utilities)",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5145/business-energy-efficiency-rebate-offered-by-18-utilities",
+    "websiteUrl": "http://www.brightenergysolutions.com/find-a-rebate/",
+    "applicationUrl": null,
+    "state": "IA",
+    "programType": "Rebate Program",
+    "administrator": "Bright Energy Solutions/Missouri River Energy Services",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 5
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5101",
+    "opportunityName": "Business Energy Efficiency Rebates (Offered by 5 Utilities)",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5101/business-energy-efficiency-rebates-offered-by-5-utilities",
+    "websiteUrl": "http://www.brightenergysolutions.com/find-a-rebate/",
+    "applicationUrl": null,
+    "state": "ND",
+    "programType": "Rebate Program",
+    "administrator": "Bright Energy Solutions/Missouri River Energy Services",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "window_replacement",
+        "displayName": "Window replacement",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_management_system",
+        "displayName": "Energy management system",
+        "parentCategory": "building_controls_energy_management",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "electric_forklift_material_handling",
+        "displayName": "Electric forklift / material handling equipment",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 9
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:658",
+    "opportunityName": "Business Energy Investment Tax Credit (ITC)",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/658/business-energy-investment-tax-credit-itc",
+    "websiteUrl": null,
+    "applicationUrl": null,
+    "state": "US",
+    "programType": "Corporate Tax Credit",
+    "administrator": "U.S. Internal Revenue Service",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "solar_water_heating_system",
+        "displayName": "Solar water heating system",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "combined_heat_and_power_system",
+        "displayName": "Combined heat and power system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "biomass_biogas_energy_system",
+        "displayName": "Biomass / biogas energy system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "thermal_energy_storage",
+        "displayName": "Thermal energy storage",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "microgrid_system",
+        "displayName": "Microgrid system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 9
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3331",
+    "opportunityName": "Butler Rural Electric Cooperative - Energy Efficiency Improvement Loan Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3331/butler-rural-electric-cooperative-energy-efficiency-improvement-loan-program",
+    "websiteUrl": "https://www.butlerrural.coop/low-interest-loans",
+    "applicationUrl": null,
+    "state": "OH",
+    "programType": "Loan Program",
+    "administrator": "Butler Rural Electric Cooperative, Inc.",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "energy_audit",
+        "displayName": "Energy audit",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3329",
+    "opportunityName": "Butler Rural Electric Cooperative - Residential Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3329/butler-rural-electric-cooperative-residential-rebate-program",
+    "websiteUrl": "https://www.butlerrural.coop/geothermal-rebates",
+    "applicationUrl": null,
+    "state": "OH",
+    "programType": "Rebate Program",
+    "administrator": "Butler Rural Electric Cooperative, Inc.",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_furnace_retrofit",
+        "displayName": "High-efficiency furnace retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 5
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5878",
+    "opportunityName": "C-PACE: Colorado Commercial Property Assessed Clean Energy",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5878/c-pace-colorado-commercial-property-assessed-clean-energy",
+    "websiteUrl": "http://copace.com/",
+    "applicationUrl": null,
+    "state": "CO",
+    "programType": "PACE Financing",
+    "administrator": "Sustainable Real Estate Solutions, Inc",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "retro_commissioning_study",
+        "displayName": "Retro-commissioning study",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22591",
+    "opportunityName": "C-PACE: Efficiency Maine",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22591/c-pace-efficiency-maine",
+    "websiteUrl": "https://www.efficiencymaine.com/c-pace/",
+    "applicationUrl": null,
+    "state": "ME",
+    "programType": "PACE Financing",
+    "administrator": "Efficiency Maine Trust",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  }
+]
+```
+

@@ -1,0 +1,933 @@
+# GPT Pro Opportunity Award Audit Prompt
+
+You are auditing one batch of unique Retrofit opportunities for official program approval process and award likelihood.
+Return strict JSON only. No markdown, prose, or explanations outside JSON.
+Do not infer eligibility from title text alone.
+Use current official program sources as the evidence base and ignore outdated pages when they conflict.
+Use `unknown` where evidence is insufficient and do not guess.
+Do not lower award likelihood because a source says "optional" user action or "follow instructions" steps exist.
+Treat those instructions as operational conditions that may still keep the opportunity likely to be awarded.
+Do not include any confidence score field.
+
+Output object requirements:
+
+- Return one JSON object only.
+- Top-level object:
+  - `schemaVersion`: `opportunity-award-audit-output.v1`
+  - `batchId`: current batch id
+  - `inputFile`: current input file name
+  - `inputRecordCount`: integer
+  - `generatedAt`: ISO timestamp
+  - `reviews`: array of exactly one object per audited opportunity
+- Each `review` object must include:
+  - opportunityId
+  - requiresProgramApproval
+  - approvalRequirements
+  - approvalStage
+  - awardLikelihood
+  - awardLikelihoodReason
+  - evidenceUrls
+  - evidenceText
+  - reviewedAt
+  - reviewStatus
+- `approvalRequirements` and `evidenceUrls` must be arrays.
+- `awardLikelihood` must be one of:
+  - `near_guaranteed`, `likely`, `possible`, `unlikely`, `rare`, `unknown`
+- `reviewStatus` must be one of:
+  - `audited`, `source_inaccessible`, `not_audited`, `needs_followup`, `needs_evidence`
+- `reviewedAt` must be ISO 8601 date-time.
+
+Input file: batch-021_input.json
+Output file to write: batch-021_output.json
+Schema file: GPT Pro Outputs/opportunity-award-audit/opportunity-award-audit-schema.json
+Batch 21 of 61
+This batch has 25 opportunities, positions 501-525.
+
+Use current official sources for evidence and include evidence URLs only as plain raw URLs.
+`evidenceText` should be concise and non-URL text.
+
+Targets JSON:
+```json
+[
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:4448",
+    "opportunityName": "Energy Efficiency Revolving Loan Fund Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4448/energy-efficiency-revolving-loan-fund-program",
+    "websiteUrl": "https://www.ahfc.us/efficiency/non-residential-buildings/energy-efficiency-revolving-loan-fund-aeerlp#:~:text=The%20Alaska%20Energy%20Efficiency%20Revolving,or%20municipalities%20in%20the%20state.&text=All%20of%20the%20improvements%20must,365%20days%20of%",
+    "applicationUrl": null,
+    "state": "AK",
+    "programType": "Loan Program",
+    "administrator": "Alaska Housing Finance Corporation",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "energy_audit",
+        "displayName": "Energy audit",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3801",
+    "opportunityName": "Energy Efficient Schools Initiative - Loans",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3801/energy-efficient-schools-initiative-loans",
+    "websiteUrl": "https://www.tn.gov/eesi/apply-now.html",
+    "applicationUrl": null,
+    "state": "TN",
+    "programType": "Loan Program",
+    "administrator": "Energy Efficient Schools Initiative",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "lighting_controls_retrofit",
+        "displayName": "Lighting controls retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "building_automation_system",
+        "displayName": "Building automation system",
+        "parentCategory": "building_controls_energy_management",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "retro_commissioning_study",
+        "displayName": "Retro-commissioning study",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 7
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1683",
+    "opportunityName": "Energy Equipment Property Tax Exemption",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1683/energy-equipment-property-tax-exemption",
+    "websiteUrl": null,
+    "applicationUrl": null,
+    "state": "AZ",
+    "programType": "Property Tax Incentive",
+    "administrator": "Arizona Department of Revenue",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "window_replacement",
+        "displayName": "Window replacement",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "combined_heat_and_power_system",
+        "displayName": "Combined heat and power system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "biomass_biogas_energy_system",
+        "displayName": "Biomass / biogas energy system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22420",
+    "opportunityName": "Energy Infrastructure Revolving Loan Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22420/energy-infrastructure-revolving-loan-program",
+    "websiteUrl": "https://www.iowaeda.com/iowa-energy-office/energy-loans/",
+    "applicationUrl": null,
+    "state": "IA",
+    "programType": "Loan Program",
+    "administrator": "Iowa Economic Development Authority",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "biomass_biogas_energy_system",
+        "displayName": "Biomass / biogas energy system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22074",
+    "opportunityName": "Energy Innovation Grant Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22074/energy-innovation-grant-program",
+    "websiteUrl": "https://psc.wi.gov/Pages/Programs/OEI/EnergyInnovationGrantProgram.aspx",
+    "applicationUrl": null,
+    "state": "WI",
+    "programType": "Grant Program",
+    "administrator": "Public Service Commission of Wisconsin",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:4581",
+    "opportunityName": "Energy Smart - Commercial and Industrial Energy Efficiency Rebate Program (17 Municipalities)",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4581/energy-smart-commercial-and-industrial-energy-efficiency-rebate-program-17-municipalities",
+    "websiteUrl": "https://mienergysmart.com/cities/",
+    "applicationUrl": null,
+    "state": "MI",
+    "programType": "Rebate Program",
+    "administrator": "Franklin Energy",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "lighting_controls_retrofit",
+        "displayName": "Lighting controls retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "hvac_controls_retrofit",
+        "displayName": "HVAC controls retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "variable_frequency_drive_retrofit",
+        "displayName": "Variable frequency drive retrofit",
+        "parentCategory": "motors_pumps_fans_drives",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_audit",
+        "displayName": "Energy audit",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 9
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3947",
+    "opportunityName": "Energy Smart - Residential Energy Efficiency Rebate Program (19 Municipalities)",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3947/energy-smart-residential-energy-efficiency-rebate-program-19-municipalities",
+    "websiteUrl": "https://mienergysmart.com/residential-programs/",
+    "applicationUrl": null,
+    "state": "MI",
+    "programType": "Rebate Program",
+    "administrator": "Franklin Energy",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_laundry_equipment",
+        "displayName": "High-efficiency laundry equipment",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 7
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:2766",
+    "opportunityName": "ENERGY STAR Sales Tax Holiday for Energy-Efficient Products",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2766/energy-star-sales-tax-holiday-for-energy-efficient-products",
+    "websiteUrl": "https://comptroller.texas.gov/taxes/publications/96-1331.php",
+    "applicationUrl": null,
+    "state": "TX",
+    "programType": "Sales Tax Incentive",
+    "administrator": "Comptroller of Public Accounts",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22580",
+    "opportunityName": "Energy Storage Solutions Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22580/energy-storage-solutions-program",
+    "websiteUrl": "https://energystoragect.com/",
+    "applicationUrl": null,
+    "state": "CT",
+    "programType": "Rebate Program",
+    "administrator": "Connecticut Green Bank",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "resilience_backup_power_system",
+        "displayName": "Resilience / backup power system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:f69ab77394818965:energy-survey",
+    "opportunityName": "Energy Survey",
+    "sourceName": "Silicon Valley Power Business Programs",
+    "sourceUrl": "https://www.siliconvalleypower.com/businesses/save-money",
+    "websiteUrl": "https://www.siliconvalleypower.com/businesses/save-money",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "technical_assistance",
+    "administrator": "Silicon Valley Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "low_flow_fixture_retrofit",
+        "displayName": "Low-flow fixture retrofit",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22522",
+    "opportunityName": "Energy United - Residential Heat Pump Rebate",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22522/energy-united-residential-heat-pump-rebate",
+    "websiteUrl": "https://www.energyunited.com/energy-services/rebates/pev-programs/",
+    "applicationUrl": null,
+    "state": "NC",
+    "programType": "Rebate Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1271",
+    "opportunityName": "Energy-Efficient Commercial Buildings Tax Deduction",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1271/energy-efficient-commercial-buildings-tax-deduction",
+    "websiteUrl": "https://www.irs.gov/credits-deductions/energy-efficient-commercial-buildings-deduction",
+    "applicationUrl": null,
+    "state": "US",
+    "programType": "Corporate Tax Deduction",
+    "administrator": "U.S. Internal Revenue Service",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22094",
+    "opportunityName": "EnergyUnited (Electric) - Residential Energy Efficiency Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22094/energyunited-electric-residential-energy-efficiency-program",
+    "websiteUrl": "https://www.energyunited.com/energy-services/rebates/energy-efficiency-rebates/",
+    "applicationUrl": null,
+    "state": "NC",
+    "programType": "Rebate Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22317",
+    "opportunityName": "Entergy (Louisiana and Gulf States) - eTech Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22317/entergy-louisiana-and-gulf-states-etech-program",
+    "websiteUrl": "https://entergyetech.com/electric-vehicles/",
+    "applicationUrl": null,
+    "state": "LA",
+    "programType": "Rebate Program",
+    "administrator": "Entergy (Louisiana and Gulf States)",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "dc_fast_charger_installation",
+        "displayName": "DC fast charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5789",
+    "opportunityName": "Entergy (Louisiana and Gulf States) - Residential Energy Efficiency Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5789/entergy-louisiana-and-gulf-states-residential-energy-efficiency-program",
+    "websiteUrl": "https://www.entergylouisiana.com/energyefficiency/residential",
+    "applicationUrl": null,
+    "state": "LA",
+    "programType": "Rebate Program",
+    "administrator": "Entergy Solutions",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5532",
+    "opportunityName": "Entergy Arkansas - Agricultural Energy Solutions Program Rebates",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5532/entergy-arkansas-agricultural-energy-solutions-program-rebates",
+    "websiteUrl": "https://www.entergyarkansas.com/energyefficiency/business/agricultural-solutions",
+    "applicationUrl": null,
+    "state": "AR",
+    "programType": "Rebate Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3681",
+    "opportunityName": "Entergy Arkansas - CitySmart Energy Efficiency Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3681/entergy-arkansas-citysmart-energy-efficiency-program",
+    "websiteUrl": "https://www.entergyarkansas.com/energyefficiency/business/citysmart",
+    "applicationUrl": null,
+    "state": "AR",
+    "programType": "Rebate Program",
+    "administrator": "Entergy Arkansas, Inc.",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_management_system",
+        "displayName": "Energy management system",
+        "parentCategory": "building_controls_energy_management",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "low_flow_fixture_retrofit",
+        "displayName": "Low-flow fixture retrofit",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "building_benchmarking_compliance",
+        "displayName": "Building benchmarking compliance",
+        "parentCategory": "certifications_compliance",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3682",
+    "opportunityName": "Entergy Arkansas - Commercial and Industrial Energy Efficiency Programs",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3682/entergy-arkansas-commercial-and-industrial-energy-efficiency-programs",
+    "websiteUrl": "https://www.entergyarkansas.com/energyefficiency/business",
+    "applicationUrl": null,
+    "state": "AR",
+    "programType": "Rebate Program",
+    "administrator": "Entergy Arkansas, Inc.",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "engineering_feasibility_study",
+        "displayName": "Engineering feasibility study",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22273",
+    "opportunityName": "Entergy Arkansas - eTech Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22273/entergy-arkansas-etech-program",
+    "websiteUrl": "https://entergyetech.com/electric-vehicles/",
+    "applicationUrl": null,
+    "state": "AR",
+    "programType": "Rebate Program",
+    "administrator": "Entergy Arkansas",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "dc_fast_charger_installation",
+        "displayName": "DC fast charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3680",
+    "opportunityName": "Entergy Arkansas - Residential Energy Efficiency Programs",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3680/entergy-arkansas-residential-energy-efficiency-programs",
+    "websiteUrl": "https://www.entergy-arkansas.com/your_home/save_money/ee/residential-solutions/",
+    "applicationUrl": null,
+    "state": "AR",
+    "programType": "Rebate Program",
+    "administrator": "Entergy Arkansas, Inc.",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "duct_sealing_and_insulation",
+        "displayName": "Duct sealing and duct insulation",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 8
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5494",
+    "opportunityName": "Entergy Arkansas - Small Business Energy Efficiency Programs",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5494/entergy-arkansas-small-business-energy-efficiency-programs",
+    "websiteUrl": "http://www.entergyarkansas.com/smallbusiness",
+    "applicationUrl": null,
+    "state": "AR",
+    "programType": "Rebate Program",
+    "administrator": "Entergy Arkansas",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "lighting_controls_retrofit",
+        "displayName": "Lighting controls retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "duct_sealing_and_insulation",
+        "displayName": "Duct sealing and duct insulation",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 7
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22338",
+    "opportunityName": "Entergy Mississippi - eTech Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22338/entergy-mississippi-etech-program",
+    "websiteUrl": "https://entergyetech.com/electric-vehicles/",
+    "applicationUrl": null,
+    "state": "MS",
+    "programType": "Rebate Program",
+    "administrator": "Entergy Mississippi",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "dc_fast_charger_installation",
+        "displayName": "DC fast charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22542",
+    "opportunityName": "Entergy Mississippi - Low-to-Moderate Income Residential Incentive Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22542/entergy-mississippi-low-to-moderate-income-residential-incentive-program",
+    "websiteUrl": "https://www.entergy-mississippi.com/your_home/tariffs/",
+    "applicationUrl": null,
+    "state": "MS",
+    "programType": "Rebate Program",
+    "administrator": "Entergy Mississippi",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "automated_demand_response_controls",
+        "displayName": "Automated demand response controls",
+        "parentCategory": "building_controls_energy_management",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "biomass_biogas_energy_system",
+        "displayName": "Biomass / biogas energy system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22605",
+    "opportunityName": "Entergy Mississippi - Residential Demand Response Battery Incentive Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22605/entergy-mississippi-residential-demand-response-battery-incentive-program",
+    "websiteUrl": "https://www.entergy-mississippi.com/your_home/tariffs/",
+    "applicationUrl": null,
+    "state": "MS",
+    "programType": "Rebate Program",
+    "administrator": "Entergy Mississippi",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "automated_demand_response_controls",
+        "displayName": "Automated demand response controls",
+        "parentCategory": "building_controls_energy_management",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5793",
+    "opportunityName": "Entergy Mississippi- Residential Energy Efficiency Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5793/entergy-mississippi-residential-energy-efficiency-program",
+    "websiteUrl": "http://www.entergy-mississippi.com/your_home/save_money/EE/residential-solutions.aspx",
+    "applicationUrl": null,
+    "state": "MS",
+    "programType": "Rebate Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_audit",
+        "displayName": "Energy audit",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 2
+  }
+]
+```
+

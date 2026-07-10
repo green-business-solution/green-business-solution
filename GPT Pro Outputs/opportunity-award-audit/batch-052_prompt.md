@@ -1,0 +1,1125 @@
+# GPT Pro Opportunity Award Audit Prompt
+
+You are auditing one batch of unique Retrofit opportunities for official program approval process and award likelihood.
+Return strict JSON only. No markdown, prose, or explanations outside JSON.
+Do not infer eligibility from title text alone.
+Use current official program sources as the evidence base and ignore outdated pages when they conflict.
+Use `unknown` where evidence is insufficient and do not guess.
+Do not lower award likelihood because a source says "optional" user action or "follow instructions" steps exist.
+Treat those instructions as operational conditions that may still keep the opportunity likely to be awarded.
+Do not include any confidence score field.
+
+Output object requirements:
+
+- Return one JSON object only.
+- Top-level object:
+  - `schemaVersion`: `opportunity-award-audit-output.v1`
+  - `batchId`: current batch id
+  - `inputFile`: current input file name
+  - `inputRecordCount`: integer
+  - `generatedAt`: ISO timestamp
+  - `reviews`: array of exactly one object per audited opportunity
+- Each `review` object must include:
+  - opportunityId
+  - requiresProgramApproval
+  - approvalRequirements
+  - approvalStage
+  - awardLikelihood
+  - awardLikelihoodReason
+  - evidenceUrls
+  - evidenceText
+  - reviewedAt
+  - reviewStatus
+- `approvalRequirements` and `evidenceUrls` must be arrays.
+- `awardLikelihood` must be one of:
+  - `near_guaranteed`, `likely`, `possible`, `unlikely`, `rare`, `unknown`
+- `reviewStatus` must be one of:
+  - `audited`, `source_inaccessible`, `not_audited`, `needs_followup`, `needs_evidence`
+- `reviewedAt` must be ISO 8601 date-time.
+
+Input file: batch-052_input.json
+Output file to write: batch-052_output.json
+Schema file: GPT Pro Outputs/opportunity-award-audit/opportunity-award-audit-schema.json
+Batch 52 of 61
+This batch has 25 opportunities, positions 1276-1300.
+
+Use current official sources for evidence and include evidence URLs only as plain raw URLs.
+`evidenceText` should be concise and non-URL text.
+
+Targets JSON:
+```json
+[
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1947",
+    "opportunityName": "Shakopee Public Utilities - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1947/shakopee-public-utilities-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://shakopeeutilities.com/residential/2024-residential-rebates-2/",
+    "applicationUrl": null,
+    "state": "MN",
+    "programType": "Rebate Program",
+    "administrator": "Shakopee Public Utilities",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_laundry_equipment",
+        "displayName": "High-efficiency laundry equipment",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_commercial_dishwasher",
+        "displayName": "High-efficiency commercial dishwasher",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 7
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22799",
+    "opportunityName": "SHELD Greenhouse Gas Reduction Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22799/sheld-greenhouse-gas-reduction-rebate-program",
+    "websiteUrl": "https://www.sheld.org/pages/forms/greenhouse-gas-reduction-rebates/",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Rebate Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5875",
+    "opportunityName": "Show Me PACE",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5875/show-me-pace",
+    "websiteUrl": "http://www.showmepace.org/",
+    "applicationUrl": null,
+    "state": "MO",
+    "programType": "PACE Financing",
+    "administrator": "Missouri Energy Initiative (MEI)",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22809",
+    "opportunityName": "Shrewsbury Electric - Commercial Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22809/shrewsbury-electric-commercial-energy-efficiency-rebate-program",
+    "websiteUrl": "https://selco.shrewsburyma.gov/commercial-rebates-incentives/",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Rebate Program",
+    "administrator": "Shrewsbury Electric & Cable Operations",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "dc_fast_charger_installation",
+        "displayName": "DC fast charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1929",
+    "opportunityName": "Shrewsbury Electric - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1929/shrewsbury-electric-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.selco.shrewsburyma.gov/efficiency-renewables",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Rebate Program",
+    "administrator": "MMWEC",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_laundry_equipment",
+        "displayName": "High-efficiency laundry equipment",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "induction_cooking_equipment",
+        "displayName": "Induction cooking equipment",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "efficient_fan_blower_replacement",
+        "displayName": "Efficient fan/blower replacement",
+        "parentCategory": "motors_pumps_fans_drives",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 10
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1924",
+    "opportunityName": "Silicon Valley Power - Commercial Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1924/silicon-valley-power-commercial-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.siliconvalleypower.com/businesses/rebates",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "Rebate Program",
+    "administrator": "Silicon Valley Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "walk_in_cooler_freezer_upgrade",
+        "displayName": "Walk-in cooler/freezer upgrade",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "anti_sweat_heater_controls",
+        "displayName": "Anti-sweat heater controls",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "building_automation_system",
+        "displayName": "Building automation system",
+        "parentCategory": "building_controls_energy_management",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_fryer",
+        "displayName": "High-efficiency fryer",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_oven",
+        "displayName": "High-efficiency oven",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "induction_cooking_equipment",
+        "displayName": "Induction cooking equipment",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "demand_controlled_kitchen_ventilation",
+        "displayName": "Demand-controlled kitchen ventilation",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 12
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1920",
+    "opportunityName": "Silicon Valley Power - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1920/silicon-valley-power-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.siliconvalleypower.com/residents/rebates-6214",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "Rebate Program",
+    "administrator": "Silicon Valley Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_laundry_equipment",
+        "displayName": "High-efficiency laundry equipment",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "induction_cooking_equipment",
+        "displayName": "Induction cooking equipment",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 5
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:2961",
+    "opportunityName": "Singing River Electric Power Association - Comfort Advantage Home Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2961/singing-river-electric-power-association-comfort-advantage-home-program",
+    "websiteUrl": "https://singingriver.com/my-home/comfort-advantage/",
+    "applicationUrl": null,
+    "state": "MS",
+    "programType": "Rebate Program",
+    "administrator": "Singing River Electric Power Association",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1185",
+    "opportunityName": "Small Business Advantage Grant Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1185/small-business-advantage-grant-program",
+    "websiteUrl": "https://www.dep.pa.gov/Citizens/GrantsLoansRebates/SmallBusinessOmbudsmanOffice/Pages/Small%20Business%20Advantage%20Grant.aspx",
+    "applicationUrl": null,
+    "state": "PA",
+    "programType": "Grant Program",
+    "administrator": "Small Business Ombudsman, Department of Environmental Protection",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "window_replacement",
+        "displayName": "Window replacement",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:f69ab77394818965:small-business-efficiency-services",
+    "opportunityName": "Small Business Efficiency Services",
+    "sourceName": "Silicon Valley Power Business Programs",
+    "sourceUrl": "https://www.siliconvalleypower.com/businesses/save-money",
+    "websiteUrl": "https://www.siliconvalleypower.com/businesses/save-money",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "technical_assistance",
+    "administrator": "Silicon Valley Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "low_flow_fixture_retrofit",
+        "displayName": "Low-flow fixture retrofit",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22716",
+    "opportunityName": "Small Business Energy Loans",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22716/small-business-energy-loans",
+    "websiteUrl": "https://www.efficiencymaine.com/small-business-energy-loans/",
+    "applicationUrl": null,
+    "state": "ME",
+    "programType": "Loan Program",
+    "administrator": "Efficiency Maine",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1186",
+    "opportunityName": "Small Business Pollution Prevention Assistance Account Loan Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1186/small-business-pollution-prevention-assistance-account-loan-program",
+    "websiteUrl": "https://www.dep.pa.gov/Citizens/GrantsLoansRebates/SmallBusinessOmbudsmanOffice/Pages/PPAA%20Loan.aspx#:~:text=The%20Small%20Business%20Pollution%20Prevention,waste%2C%20pollution%20or%20energy%20use.&text=Reduce%20the%20production%20of%20waste%20at%20the",
+    "applicationUrl": null,
+    "state": "PA",
+    "programType": "Loan Program",
+    "administrator": "Pennsylvania Department of Environmental Protection and Department of Community and Economic Development",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5205",
+    "opportunityName": "Small Scale CHP and Fuel Cell Incentive Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5205/small-scale-chp-and-fuel-cell-incentive-program",
+    "websiteUrl": "http://www.njcleanenergy.com/commercial-industrial/programs/combined-heat-power/combined-heat-power",
+    "applicationUrl": null,
+    "state": "NJ",
+    "programType": "Grant Program",
+    "administrator": "TRC Solutions",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "fuel_cell_system",
+        "displayName": "Fuel cell system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "combined_heat_and_power_system",
+        "displayName": "Combined heat and power system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "biomass_biogas_energy_system",
+        "displayName": "Biomass / biogas energy system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5361",
+    "opportunityName": "Small Scale Solar Grants (Commerce RI)",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5361/small-scale-solar-grants-commerce-ri",
+    "websiteUrl": "https://commerceri.com/renewable-energy-fund/",
+    "applicationUrl": null,
+    "state": "RI",
+    "programType": "Grant Program",
+    "administrator": "Commerce RI",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "solar_water_heating_system",
+        "displayName": "Solar water heating system",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "rooftop_solar_pv",
+        "displayName": "Rooftop solar PV",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_audit",
+        "displayName": "Energy audit",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:4266",
+    "opportunityName": "SMECO - Non-Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4266/smeco-non-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.smeco.coop/energy-efficiency/commercial-programs/business-solutions/",
+    "applicationUrl": null,
+    "state": "MD",
+    "programType": "Rebate Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "refrigeration_controls_retrofit",
+        "displayName": "Refrigeration controls retrofit",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3574",
+    "opportunityName": "SMECO - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3574/smeco-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.smeco.coop/energy-efficiency/residential-programs/",
+    "applicationUrl": null,
+    "state": "MD",
+    "programType": "Rebate Program",
+    "administrator": "Southern Maryland Electric Cooperative",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "automated_demand_response_controls",
+        "displayName": "Automated demand response controls",
+        "parentCategory": "building_controls_energy_management",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 6
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5696",
+    "opportunityName": "SMECO- Small Business/Non-Profit Solutions",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5696/smeco-small-business-non-profit-solutions",
+    "websiteUrl": "https://www.smeco.coop/energy-efficiency/commercial-programs/small-business/",
+    "applicationUrl": null,
+    "state": "MD",
+    "programType": "Rebate Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "refrigeration_controls_retrofit",
+        "displayName": "Refrigeration controls retrofit",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22800",
+    "opportunityName": "SMUD - Battery Storage Incentive Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22800/smud-battery-storage-incentive-program",
+    "websiteUrl": "https://www.smud.org/Going-Green/Battery-storage/Homeowner",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "Rebate Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22290",
+    "opportunityName": "SMUD - Commercial Electric Vehicle Incentive Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22290/smud-commercial-electric-vehicle-incentive-program",
+    "websiteUrl": "https://www.smud.org/en/Going-Green/Electric-Vehicles/Business",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "Rebate Program",
+    "administrator": "SMUD",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "dc_fast_charger_installation",
+        "displayName": "DC fast charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1917",
+    "opportunityName": "SMUD - Commercial Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1917/smud-commercial-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.smud.org/en/Business-Solutions-and-Rebates/Business-Rebates",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "Rebate Program",
+    "administrator": "Sacramento Municipal Utility District",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "induction_cooking_equipment",
+        "displayName": "Induction cooking equipment",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1916",
+    "opportunityName": "SMUD - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1916/smud-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.smud.org/en/Rebates-and-Savings-Tips/Rebates-for-My-Home",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "Rebate Program",
+    "administrator": "Sacramento Municipal Utility District",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_laundry_equipment",
+        "displayName": "High-efficiency laundry equipment",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "induction_cooking_equipment",
+        "displayName": "Induction cooking equipment",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 6
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:2239",
+    "opportunityName": "Snohomish County PUD No 1 - Commercial and Industrial Energy Efficiency Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2239/snohomish-county-pud-no-1-commercial-and-industrial-energy-efficiency-program",
+    "websiteUrl": "https://www.snopud.com/?p=2048",
+    "applicationUrl": null,
+    "state": "WA",
+    "programType": "Rebate Program",
+    "administrator": "Snohomish County PUD",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "anti_sweat_heater_controls",
+        "displayName": "Anti-sweat heater controls",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "waste_heat_recovery",
+        "displayName": "Waste heat recovery",
+        "parentCategory": "compressed_air_industrial",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 7
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:2237",
+    "opportunityName": "Snohomish County PUD No 1 - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2237/snohomish-county-pud-no-1-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.snopud.com/save-energy/residential/rebates/",
+    "applicationUrl": null,
+    "state": "WA",
+    "programType": "Rebate Program",
+    "administrator": "Snohomish County PUD",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "duct_sealing_and_insulation",
+        "displayName": "Duct sealing and duct insulation",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_laundry_equipment",
+        "displayName": "High-efficiency laundry equipment",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 10
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:4952",
+    "opportunityName": "SoCalGas - Custom Non-Residential Energy Efficiency Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4952/socalgas-custom-non-residential-energy-efficiency-program",
+    "websiteUrl": "https://www.socalgas.com/business/savings/equipment-rebates",
+    "applicationUrl": "https://eecp.socalgas.com",
+    "state": "CA",
+    "programType": "utility non-residential natural gas rebate and custom efficiency incentive program",
+    "administrator": "Southern California Gas Company",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "hvac_controls_retrofit",
+        "displayName": "HVAC controls retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_boiler_retrofit",
+        "displayName": "High-efficiency boiler retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "boiler_controls_burner_retrofit",
+        "displayName": "Boiler controls / burner retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "solar_water_heating_system",
+        "displayName": "Solar water heating system",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_laundry_equipment",
+        "displayName": "High-efficiency laundry equipment",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_commercial_dishwasher",
+        "displayName": "High-efficiency commercial dishwasher",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_fryer",
+        "displayName": "High-efficiency fryer",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_oven",
+        "displayName": "High-efficiency oven",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_steamer",
+        "displayName": "High-efficiency steamer",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "pump_fan_controls_retrofit",
+        "displayName": "Pump/fan controls retrofit",
+        "parentCategory": "motors_pumps_fans_drives",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "waste_heat_recovery",
+        "displayName": "Waste heat recovery",
+        "parentCategory": "compressed_air_industrial",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "steam_trap_replacement",
+        "displayName": "Steam trap replacement",
+        "parentCategory": "compressed_air_industrial",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 14
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:2508",
+    "opportunityName": "SoCalGas - Multi-Family Residential Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2508/socalgas-multi-family-residential-rebate-program",
+    "websiteUrl": "https://www.socalgas.com/business/savings/rebates-and-incentives/property-managers-and-owners",
+    "applicationUrl": null,
+    "state": "CA",
+    "programType": "Rebate Program",
+    "administrator": "Southern California Gas Company",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_oven",
+        "displayName": "High-efficiency oven",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  }
+]
+```
+

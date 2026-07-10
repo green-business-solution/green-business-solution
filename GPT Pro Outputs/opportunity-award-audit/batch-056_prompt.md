@@ -1,0 +1,1119 @@
+# GPT Pro Opportunity Award Audit Prompt
+
+You are auditing one batch of unique Retrofit opportunities for official program approval process and award likelihood.
+Return strict JSON only. No markdown, prose, or explanations outside JSON.
+Do not infer eligibility from title text alone.
+Use current official program sources as the evidence base and ignore outdated pages when they conflict.
+Use `unknown` where evidence is insufficient and do not guess.
+Do not lower award likelihood because a source says "optional" user action or "follow instructions" steps exist.
+Treat those instructions as operational conditions that may still keep the opportunity likely to be awarded.
+Do not include any confidence score field.
+
+Output object requirements:
+
+- Return one JSON object only.
+- Top-level object:
+  - `schemaVersion`: `opportunity-award-audit-output.v1`
+  - `batchId`: current batch id
+  - `inputFile`: current input file name
+  - `inputRecordCount`: integer
+  - `generatedAt`: ISO timestamp
+  - `reviews`: array of exactly one object per audited opportunity
+- Each `review` object must include:
+  - opportunityId
+  - requiresProgramApproval
+  - approvalRequirements
+  - approvalStage
+  - awardLikelihood
+  - awardLikelihoodReason
+  - evidenceUrls
+  - evidenceText
+  - reviewedAt
+  - reviewStatus
+- `approvalRequirements` and `evidenceUrls` must be arrays.
+- `awardLikelihood` must be one of:
+  - `near_guaranteed`, `likely`, `possible`, `unlikely`, `rare`, `unknown`
+- `reviewStatus` must be one of:
+  - `audited`, `source_inaccessible`, `not_audited`, `needs_followup`, `needs_evidence`
+- `reviewedAt` must be ISO 8601 date-time.
+
+Input file: batch-056_input.json
+Output file to write: batch-056_output.json
+Schema file: GPT Pro Outputs/opportunity-award-audit/opportunity-award-audit-schema.json
+Batch 56 of 61
+This batch has 25 opportunities, positions 1376-1400.
+
+Use current official sources for evidence and include evidence URLs only as plain raw URLs.
+`evidenceText` should be concise and non-URL text.
+
+Targets JSON:
+```json
+[
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5399",
+    "opportunityName": "Sustainable Energy Utility - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5399/sustainable-energy-utility-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.dcseu.com/homes",
+    "applicationUrl": null,
+    "state": "DC",
+    "programType": "Rebate Program",
+    "administrator": "Sustainable Energy Utility",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "induction_cooking_equipment",
+        "displayName": "Induction cooking equipment",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 6
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5167",
+    "opportunityName": "Sustainable Energy Utility (Electric & Gas) - Commercial and Multifamily Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5167/sustainable-energy-utility-electric-and-gas-commercial-and-multifamily-rebate-program",
+    "websiteUrl": "https://www.dcseu.com/commercial-and-multifamily",
+    "applicationUrl": null,
+    "state": "DC",
+    "programType": "Rebate Program",
+    "administrator": "District of Columbia Sustainable Energy Utility",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "lighting_controls_retrofit",
+        "displayName": "Lighting controls retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_laundry_equipment",
+        "displayName": "High-efficiency laundry equipment",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 7
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22397",
+    "opportunityName": "SWEPCO - EV Residential Charging Station Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22397/swepco-ev-residential-charging-station-rebate-program",
+    "websiteUrl": "https://www.swepco.com/clean-energy/electric-cars/charging-station",
+    "applicationUrl": null,
+    "state": "TX",
+    "programType": "Rebate Program",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3172",
+    "opportunityName": "Tacoma Power - Commercial and Industrial Energy Efficiency Rebate Programs",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3172/tacoma-power-commercial-and-industrial-energy-efficiency-rebate-programs",
+    "websiteUrl": "https://www.mytpu.org/your-business/ways-to-save/rebate-forms-information.htm",
+    "applicationUrl": null,
+    "state": "WA",
+    "programType": "Rebate Program",
+    "administrator": "Tacoma Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "lighting_controls_retrofit",
+        "displayName": "Lighting controls retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 7
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3176",
+    "opportunityName": "Tacoma Power - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3176/tacoma-power-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.mytpu.org/ways-to-save/residential-incentives/",
+    "applicationUrl": null,
+    "state": "WA",
+    "programType": "Rebate Program",
+    "administrator": "Tacoma Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "duct_sealing_and_insulation",
+        "displayName": "Duct sealing and duct insulation",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "window_replacement",
+        "displayName": "Window replacement",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_irrigation_controller",
+        "displayName": "Smart irrigation controller",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 11
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3355",
+    "opportunityName": "Tampa Electric - Commercial Energy Efficiency Rebate Programs",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3355/tampa-electric-commercial-energy-efficiency-rebate-programs",
+    "websiteUrl": "http://www.tampaelectric.com/business/saveenergy/",
+    "applicationUrl": null,
+    "state": "FL",
+    "programType": "Rebate Program",
+    "administrator": "Tampa Electric",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_management_system",
+        "displayName": "Energy management system",
+        "parentCategory": "building_controls_energy_management",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "variable_frequency_drive_retrofit",
+        "displayName": "Variable frequency drive retrofit",
+        "parentCategory": "motors_pumps_fans_drives",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_audit",
+        "displayName": "Energy audit",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 4
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1356",
+    "opportunityName": "Tampa Electric - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1356/tampa-electric-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "http://www.tampaelectric.com/residential/saveenergy/",
+    "applicationUrl": null,
+    "state": "FL",
+    "programType": "Rebate Program",
+    "administrator": "Tampa Electric",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "window_replacement",
+        "displayName": "Window replacement",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_audit",
+        "displayName": "Energy audit",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 7
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22807",
+    "opportunityName": "Taunton Municipal Lighting Plant - EV and Level 2 EV Charging Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22807/taunton-municipal-lighting-plant-ev-and-level-2-ev-charging-program",
+    "websiteUrl": "https://www.tmlp.com/178/EV-Program",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Rebate Program",
+    "administrator": "Taunton Municipal Lighting Plant (TMLP)",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22806",
+    "opportunityName": "Taunton Municipal Lighting Plant - Heat Pump Residential Rebate",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22806/taunton-municipal-lighting-plant-heat-pump-residential-rebate",
+    "websiteUrl": "https://www.tmlp.com/182/Heat-Pump-Zero-Interest-Loan-Residential",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Rebate Program",
+    "administrator": "Taunton Municipal Lighting Plant (TMLP)",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 5
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:4561",
+    "opportunityName": "Taunton Municipal Lighting Plant - Home and Outdoor Appliance Rebate",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/4561/taunton-municipal-lighting-plant-home-and-outdoor-appliance-rebate",
+    "websiteUrl": "https://www.tmlp.com/179/Home-and-Outdoor-Appliance-Rebate",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Rebate Program",
+    "administrator": "Taunton Municipal Lighting Plant (TMLP)",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 5
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22805",
+    "opportunityName": "Taunton Municipal Lighting Plant - Residential Heat Pump & Zero-Interest Loan",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22805/taunton-municipal-lighting-plant-residential-heat-pump-and-zero-interest-loan",
+    "websiteUrl": "https://www.tmlp.com/182/Heat-Pump-Zero-Interest-Loan-Residential",
+    "applicationUrl": null,
+    "state": "MA",
+    "programType": "Loan Program",
+    "administrator": "Taunton Municipal Lighting Plant (TMLP)",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:381",
+    "opportunityName": "Tax Abatement for Solar Manufacturers",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/381/tax-abatement-for-solar-manufacturers",
+    "websiteUrl": "http://dor.wa.gov/content/findtaxesandrates/bandotax",
+    "applicationUrl": null,
+    "state": "WA",
+    "programType": "Industry Recruitment/Support",
+    "administrator": "Washington State Department of Revenue",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "rooftop_solar_pv",
+        "displayName": "Rooftop solar PV",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:5550",
+    "opportunityName": "Tax Credit for Forest Derived Biomass",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5550/tax-credit-for-forest-derived-biomass",
+    "websiteUrl": "https://dor.wa.gov/taxes-rates/tax-incentives/tax-incentive-programs#Energy",
+    "applicationUrl": null,
+    "state": "WA",
+    "programType": "Industry Recruitment/Support",
+    "administrator": "Washington State Department of Revenue",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "biomass_biogas_energy_system",
+        "displayName": "Biomass / biogas energy system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22490",
+    "opportunityName": "Tax Credit for Residential Energy Storage Systems",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22490/tax-credit-for-residential-energy-storage-systems",
+    "websiteUrl": "https://tax.colorado.gov/DR1307",
+    "applicationUrl": null,
+    "state": "CO",
+    "programType": "Personal Tax Credit",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 1
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:2742",
+    "opportunityName": "Tax Exemption for Large-Scale Renewable Energy Projects",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2742/tax-exemption-for-large-scale-renewable-energy-projects",
+    "websiteUrl": "https://revenue.ky.gov/Business/Sales-Use-Tax/Pages/default.aspx",
+    "applicationUrl": null,
+    "state": "KY",
+    "programType": "Sales Tax Incentive",
+    "administrator": null,
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "solar_water_heating_system",
+        "displayName": "Solar water heating system",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "biomass_biogas_energy_system",
+        "displayName": "Biomass / biogas energy system",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:104",
+    "opportunityName": "Tax Exemption for Renewable Energy Generation",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/104/tax-exemption-for-renewable-energy-generation",
+    "websiteUrl": null,
+    "applicationUrl": null,
+    "state": "WV",
+    "programType": "Corporate Tax Exemption",
+    "administrator": "West Virginia Division of Energy",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "rooftop_solar_pv",
+        "displayName": "Rooftop solar PV",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "small_wind_turbine",
+        "displayName": "Small wind turbine",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3262",
+    "opportunityName": "Taylor County RECC - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3262/taylor-county-recc-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "http://www.tcrecc.com/rebates.php",
+    "applicationUrl": null,
+    "state": "KY",
+    "programType": "Rebate Program",
+    "administrator": "Taylor County RECC",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22590",
+    "opportunityName": "Tennessee C-PACER Financing",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22590/tennessee-c-pacer-financing",
+    "websiteUrl": "https://tnpace.org/",
+    "applicationUrl": null,
+    "state": "TN",
+    "programType": "PACE Financing",
+    "administrator": "TENNESSEE PACE",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "resilience_backup_power_system",
+        "displayName": "Resilience / backup power system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3117",
+    "opportunityName": "TEP - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3117/tep-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://www.tep.com/efficient-home-program/",
+    "applicationUrl": null,
+    "state": "AZ",
+    "programType": "Rebate Program",
+    "administrator": "Tucson Electric Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "duct_sealing_and_insulation",
+        "displayName": "Duct sealing and duct insulation",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 3
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:3118",
+    "opportunityName": "TEP Business Energy Solutions",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3118/tep-business-energy-solutions",
+    "websiteUrl": "https://www.tep.com/business-energy-solutions/commercial-program/program-process/",
+    "applicationUrl": null,
+    "state": "AZ",
+    "programType": "Rebate Program",
+    "administrator": "Tucson Electric Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "hvac_controls_retrofit",
+        "displayName": "HVAC controls retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "energy_management_system",
+        "displayName": "Energy management system",
+        "parentCategory": "building_controls_energy_management",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "low_flow_fixture_retrofit",
+        "displayName": "Low-flow fixture retrofit",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "retro_commissioning_study",
+        "displayName": "Retro-commissioning study",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 7
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1544",
+    "opportunityName": "Texas-New Mexico Power Company - Commercial Market Transformation Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1544/texas-new-mexico-power-company-commercial-market-transformation-program",
+    "websiteUrl": "https://tnmp.com/energy-efficiency/commercial/large",
+    "applicationUrl": null,
+    "state": "TX",
+    "programType": "Rebate Program",
+    "administrator": "Texas-New Mexico Power",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "lighting_controls_retrofit",
+        "displayName": "Lighting controls retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "exterior_site_lighting_retrofit",
+        "displayName": "Exterior/site lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "building_automation_system",
+        "displayName": "Building automation system",
+        "parentCategory": "building_controls_energy_management",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_commercial_dishwasher",
+        "displayName": "High-efficiency commercial dishwasher",
+        "parentCategory": "commercial_kitchen_foodservice",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 9
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1543",
+    "opportunityName": "Texas-New Mexico Power Company - Residential and Hard-to-Reach Standard Offer Programs",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1543/texas-new-mexico-power-company-residential-and-hard-to-reach-standard-offer-programs",
+    "websiteUrl": "https://tnmpefficiency.com/residential.php#existing-homes",
+    "applicationUrl": null,
+    "state": "TX",
+    "programType": "Rebate Program",
+    "administrator": "Frontier Energy",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "led_lighting_retrofit",
+        "displayName": "LED lighting retrofit",
+        "parentCategory": "lighting",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+        "displayName": "Smart thermostat / zoning retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "duct_sealing_and_insulation",
+        "displayName": "Duct sealing and duct insulation",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_water_heater",
+        "displayName": "Heat pump water heater",
+        "parentCategory": "water_heating",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "rooftop_solar_pv",
+        "displayName": "Rooftop solar PV",
+        "parentCategory": "solar_renewable_electricity",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "low_flow_fixture_retrofit",
+        "displayName": "Low-flow fixture retrofit",
+        "parentCategory": "water_efficiency",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 12
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:1510",
+    "opportunityName": "The Energy Cooperative - Residential Energy Efficiency Rebate Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1510/the-energy-cooperative-residential-energy-efficiency-rebate-program",
+    "websiteUrl": "https://myenergycoop.com/rebate-programs/",
+    "applicationUrl": null,
+    "state": "OH",
+    "programType": "Rebate Program",
+    "administrator": "The Energy Cooperative",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ground_source_geothermal_heat_pump",
+        "displayName": "Ground-source / geothermal heat pump",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+        "displayName": "High-efficiency refrigeration equipment",
+        "parentCategory": "refrigeration",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "ev_charger_installation",
+        "displayName": "EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "level_2_ev_charger_installation",
+        "displayName": "Level 2 EV charger installation",
+        "parentCategory": "ev_charging_transportation",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 6
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:22779",
+    "opportunityName": "The Green Energy Loan Fund (GELF)",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22779/the-green-energy-loan-fund-gelf",
+    "websiteUrl": "https://www.reinvestment.com/gelf/",
+    "applicationUrl": null,
+    "state": "PA",
+    "programType": "Loan Program",
+    "administrator": "Reinvestment Fund",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "energy_audit",
+        "displayName": "Energy audit",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      },
+      {
+        "retrofitTypeId": "retro_commissioning_study",
+        "displayName": "Retro-commissioning study",
+        "parentCategory": "audits_studies_planning",
+        "isPhysicalRetrofit": false
+      }
+    ],
+    "relatedRetrofitCount": 2
+  },
+  {
+    "opportunityId": "SOURCE_DSIRE:dsire_program_id:2443",
+    "opportunityName": "Tideland EMC - Weatherization Loan Program",
+    "sourceName": "DSIRE",
+    "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2443/tideland-emc-weatherization-loan-program",
+    "websiteUrl": "https://www.tidelandemc.com/member-service/products-services/weatherization-loans",
+    "applicationUrl": null,
+    "state": "NC",
+    "programType": "Loan Program",
+    "administrator": "Tideland EMC",
+    "availabilityStatus": "unknown",
+    "relatedRetrofits": [
+      {
+        "retrofitTypeId": "high_efficiency_hvac_replacement",
+        "displayName": "High-efficiency HVAC replacement",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "heat_pump_hvac_retrofit",
+        "displayName": "Heat pump HVAC retrofit",
+        "parentCategory": "hvac_space_conditioning",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "insulation_upgrade",
+        "displayName": "Insulation upgrade",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "air_sealing_weatherization",
+        "displayName": "Air sealing / weatherization",
+        "parentCategory": "building_envelope",
+        "isPhysicalRetrofit": true
+      },
+      {
+        "retrofitTypeId": "battery_storage_system",
+        "displayName": "Battery storage system",
+        "parentCategory": "energy_storage_resilience",
+        "isPhysicalRetrofit": true
+      }
+    ],
+    "relatedRetrofitCount": 5
+  }
+]
+```
+

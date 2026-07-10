@@ -1,0 +1,1058 @@
+{
+  "batchId": "batch-029",
+  "batchIndex": 29,
+  "totalBatches": 61,
+  "schemaVersion": "opportunity-award-audit-batch-input.v1",
+  "sourcePath": "public/retrofit_opportunity_index.json",
+  "generatedAt": "2026-07-10T13:18:15.774Z",
+  "opportunityCount": 25,
+  "opportunities": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5791",
+      "opportunityName": "Kentucky PACE Financing",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5791/kentucky-pace-financing",
+      "websiteUrl": "https://kypace.org/property-owners/",
+      "applicationUrl": null,
+      "state": "KY",
+      "programType": "PACE Financing",
+      "administrator": null,
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "battery_storage_system",
+          "displayName": "Battery storage system",
+          "parentCategory": "energy_storage_resilience",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3696",
+      "opportunityName": "Kentucky Power - Targeted Energy Efficiency Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3696/kentucky-power-targeted-energy-efficiency-program",
+      "websiteUrl": "https://www.kentuckypower.com/save/residential/programs/TargetedEnergyEfficiencyProgram.aspx",
+      "applicationUrl": null,
+      "state": "KY",
+      "programType": "Rebate Program",
+      "administrator": "Kentucky Power",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "duct_sealing_and_insulation",
+          "displayName": "Duct sealing and duct insulation",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_audit",
+          "displayName": "Energy audit",
+          "parentCategory": "audits_studies_planning",
+          "isPhysicalRetrofit": false
+        }
+      ],
+      "relatedRetrofitCount": 5
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3951",
+      "opportunityName": "Kentucky Utilities Company and Louisville Gas & Electric- Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3951/kentucky-utilities-company-and-louisville-gas-and-electric-commercial-energy-efficiency-rebate-program",
+      "websiteUrl": "https://lge-ku.com/bizrebates",
+      "applicationUrl": null,
+      "state": "KY",
+      "programType": "Rebate Program",
+      "administrator": "Kentucky Utilities Company and Louisville Gas & Electric",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "energy_audit",
+          "displayName": "Energy audit",
+          "parentCategory": "audits_studies_planning",
+          "isPhysicalRetrofit": false
+        },
+        {
+          "retrofitTypeId": "leed_certification",
+          "displayName": "LEED certification",
+          "parentCategory": "certifications_compliance",
+          "isPhysicalRetrofit": false
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22778",
+      "opportunityName": "Keystone Energy Efficiency Program (KEEP) Home Energy Loan",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22778/keystone-energy-efficiency-program-keep-home-energy-loan",
+      "websiteUrl": "https://www.pa.gov/agencies/dep/programs-and-services/energy-programs-office/financial-options/energy-accelerator-program/keep-home-energy-loan",
+      "applicationUrl": null,
+      "state": "PA",
+      "programType": "Loan Program",
+      "administrator": "National Energy Improvement Fund",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "energy_management_system",
+          "displayName": "Energy management system",
+          "parentCategory": "building_controls_energy_management",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 4
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3169",
+      "opportunityName": "Kissimmee Utility Authority - Residential & Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3169/kissimmee-utility-authority-residential-and-commercial-energy-efficiency-rebate-program",
+      "websiteUrl": "https://kua.com/energy-conservation-and-renewables/kua-rebates-and-participating-contractors/",
+      "applicationUrl": null,
+      "state": "FL",
+      "programType": "Rebate Program",
+      "administrator": "Kissimmee Utility Authority",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 9
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22752",
+      "opportunityName": "Kissimmee Utility Authority - Residential Electric Vehicle Charger Rebate",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22752/kissimmee-utility-authority-residential-electric-vehicle-charger-rebate",
+      "websiteUrl": "https://kua.com/energy-conservation/rebates/level-2-home-ev-charger-rebate/",
+      "applicationUrl": null,
+      "state": "FL",
+      "programType": "Rebate Program",
+      "administrator": null,
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 2
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2113",
+      "opportunityName": "KIUC - Energy Wise Commercial Energy Efficiency Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2113/kiuc-energy-wise-commercial-energy-efficiency-program",
+      "websiteUrl": "https://kiuc.coop/commercial-programs",
+      "applicationUrl": null,
+      "state": "HI",
+      "programType": "Rebate Program",
+      "administrator": "Kauai Island Utility Cooperative",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:597",
+      "opportunityName": "KIUC - Solar Water Heating Loan Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/597/kiuc-solar-water-heating-loan-program",
+      "websiteUrl": "https://www.kiuc.coop/solar-water-heating-programs",
+      "applicationUrl": null,
+      "state": "HI",
+      "programType": "Loan Program",
+      "administrator": "County of Kauai Housing Agency",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "solar_water_heating_system",
+          "displayName": "Solar water heating system",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:598",
+      "opportunityName": "KIUC - Solar Water Heating Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/598/kiuc-solar-water-heating-rebate-program",
+      "websiteUrl": "https://www.kiuc.coop/solar-water-heating-programs",
+      "applicationUrl": null,
+      "state": "HI",
+      "programType": "Rebate Program",
+      "administrator": "Kauai Island Utility Coop",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "solar_water_heating_system",
+          "displayName": "Solar water heating system",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22079",
+      "opportunityName": "Kootenai Electric Cooperative - Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22079/kootenai-electric-cooperative-commercial-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.directefficiency.com/kec-commercial-rebates/",
+      "applicationUrl": null,
+      "state": "ID",
+      "programType": "Rebate Program",
+      "administrator": "Kootenai Electric Cooperative",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 3
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2453",
+      "opportunityName": "Kootenai Electric Cooperative - Residential Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2453/kootenai-electric-cooperative-residential-efficiency-rebate-program",
+      "websiteUrl": "https://www.directefficiency.com/kec-residential-rebates/",
+      "applicationUrl": null,
+      "state": "ID",
+      "programType": "Rebate Program",
+      "administrator": "Kootenai Electric Cooperative",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_furnace_retrofit",
+          "displayName": "High-efficiency furnace retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "exterior_door_replacement",
+          "displayName": "Exterior door replacement",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_laundry_equipment",
+          "displayName": "High-efficiency laundry equipment",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 11
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22084",
+      "opportunityName": "La Plata Electric Association - Commercial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22084/la-plata-electric-association-commercial-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.lpea.coop/rebate-programs",
+      "applicationUrl": null,
+      "state": "CO",
+      "programType": "Rebate Program",
+      "administrator": "La Plata Electric Association",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 7
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3571",
+      "opportunityName": "La Plata Electric Association - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3571/la-plata-electric-association-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.lpea.coop/rebate-programs",
+      "applicationUrl": null,
+      "state": "CO",
+      "programType": "Rebate Program",
+      "administrator": "La Plata Electric Association",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "air_sealing_weatherization",
+          "displayName": "Air sealing / weatherization",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "induction_cooking_equipment",
+          "displayName": "Induction cooking equipment",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 10
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22282",
+      "opportunityName": "LADWP - Charge Up LA Used Electric Vehicle Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/22282/ladwp-charge-up-la-used-electric-vehicle-program",
+      "websiteUrl": "https://www.ladwp.com/residential-services/programs-and-rebates-residential/electric-vehicles/used-electric-vehicle-rebate-program",
+      "applicationUrl": null,
+      "state": "CA",
+      "programType": "Rebate Program",
+      "administrator": "LADWP",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5685",
+      "opportunityName": "LADWP - Feed-in Tariff (FiT) Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5685/ladwp-feed-in-tariff-fit-program",
+      "websiteUrl": "https://www.ladwp.com/fit",
+      "applicationUrl": null,
+      "state": "CA",
+      "programType": "Feed-in Tariff",
+      "administrator": null,
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "rooftop_solar_pv",
+          "displayName": "Rooftop solar PV",
+          "parentCategory": "solar_renewable_electricity",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1866",
+      "opportunityName": "LADWP - Non-Residential Energy Efficiency Incentive Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1866/ladwp-non-residential-energy-efficiency-incentive-program",
+      "websiteUrl": "https://www.ladwp.com/ladwp/faces/ladwp/commercial/c-savemoney/c-sm-rebatesandprograms?_adf.ctrl-state=xdtic14o8_17&_afrLoop=398868286639744",
+      "applicationUrl": null,
+      "state": "CA",
+      "programType": "Rebate Program",
+      "administrator": "Los Angeles Department of Water and Power",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1867",
+      "opportunityName": "LADWP - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/1867/ladwp-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.ladwp.com/residential-services/assistance-programs/consumer-rebate-program",
+      "applicationUrl": null,
+      "state": "CA",
+      "programType": "Rebate Program",
+      "administrator": "Los Angeles Department of Water and Power",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "window_replacement",
+          "displayName": "Window replacement",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "cool_roof_reflective_roof",
+          "displayName": "Cool roof / reflective roof coating",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 5
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2541",
+      "opportunityName": "Lake City Utilities - Commercial & Industrial Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2541/lake-city-utilities-commercial-and-industrial-energy-efficiency-rebate-program",
+      "websiteUrl": "http://www.SaveEnergyInLakeCity.com",
+      "applicationUrl": null,
+      "state": "MN",
+      "programType": "Rebate Program",
+      "administrator": "Lake City Utilities",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "walk_in_cooler_freezer_upgrade",
+          "displayName": "Walk-in cooler/freezer upgrade",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "anti_sweat_heater_controls",
+          "displayName": "Anti-sweat heater controls",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 6
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2543",
+      "opportunityName": "Lake City Utilities - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2543/lake-city-utilities-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "http://www.SaveEnergyInLakeCity.com",
+      "applicationUrl": null,
+      "state": "MN",
+      "programType": "Rebate Program",
+      "administrator": "Lake City Utilities",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_furnace_retrofit",
+          "displayName": "High-efficiency furnace retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_commercial_dishwasher",
+          "displayName": "High-efficiency commercial dishwasher",
+          "parentCategory": "commercial_kitchen_foodservice",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 10
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2256",
+      "opportunityName": "Lake Country Power - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/2256/lake-country-power-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.lakecountrypower.coop/rates-and-rebates",
+      "applicationUrl": null,
+      "state": "MN",
+      "programType": "Rebate Program",
+      "administrator": "Lake Country Power",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_furnace_retrofit",
+          "displayName": "High-efficiency furnace retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "efficient_fan_blower_replacement",
+          "displayName": "Efficient fan/blower replacement",
+          "parentCategory": "motors_pumps_fans_drives",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 11
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5564",
+      "opportunityName": "Lake County - Energy Smart Colorado Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/5564/lake-county-energy-smart-colorado-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.c4leadville.org/home-energy-assessment",
+      "applicationUrl": null,
+      "state": "CO",
+      "programType": "Rebate Program",
+      "administrator": "Cloud City Conservation Center",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 3
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3577",
+      "opportunityName": "Lake Region Electric Cooperative - Agriculture and Commercial Energy Efficiency Grant Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3577/lake-region-electric-cooperative-agriculture-and-commercial-energy-efficiency-grant-program",
+      "websiteUrl": "http://www.lrec.coop/products-service/ag-commercial-energy-grants",
+      "applicationUrl": null,
+      "state": "MN",
+      "programType": "Grant Program",
+      "administrator": "Lake Region Electric Cooperative",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "led_lighting_retrofit",
+          "displayName": "LED lighting retrofit",
+          "parentCategory": "lighting",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "refrigeration_controls_retrofit",
+          "displayName": "Refrigeration controls retrofit",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 4
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3576",
+      "opportunityName": "Lake Region Electric Cooperative - Residential Energy Efficiency Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3576/lake-region-electric-cooperative-residential-energy-efficiency-rebate-program",
+      "websiteUrl": "https://www.lrec.coop/energy-services/rebates-loans-and-tax-credits/",
+      "applicationUrl": null,
+      "state": "MN",
+      "programType": "Rebate Program",
+      "administrator": "Lake Region Electric Cooperative",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ground_source_geothermal_heat_pump",
+          "displayName": "Ground-source / geothermal heat pump",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_water_heater",
+          "displayName": "Heat pump water heater",
+          "parentCategory": "water_heating",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "ev_charger_installation",
+          "displayName": "EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "level_2_ev_charger_installation",
+          "displayName": "Level 2 EV charger installation",
+          "parentCategory": "ev_charging_transportation",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 6
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3617",
+      "opportunityName": "Lakeland Electric - Commercial Conservation Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3617/lakeland-electric-commercial-conservation-rebate-program",
+      "websiteUrl": "https://lakelandelectric.com/news/___commercial-customers-conservation-rebate",
+      "applicationUrl": null,
+      "state": "FL",
+      "programType": "Rebate Program",
+      "administrator": "Lakeland Electric",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "energy_audit",
+          "displayName": "Energy audit",
+          "parentCategory": "audits_studies_planning",
+          "isPhysicalRetrofit": false
+        }
+      ],
+      "relatedRetrofitCount": 1
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3616",
+      "opportunityName": "Lakeland Electric - Residential Conservation Rebate Program",
+      "sourceName": "DSIRE",
+      "sourceUrl": "https://programs.dsireusa.org/system/program/detail/3616/lakeland-electric-residential-conservation-rebate-program",
+      "websiteUrl": "https://lakelandelectric.com/programs-and-services/energy",
+      "applicationUrl": null,
+      "state": "FL",
+      "programType": "Rebate Program",
+      "administrator": "Lakeland Electric",
+      "availabilityStatus": "unknown",
+      "relatedRetrofits": [
+        {
+          "retrofitTypeId": "high_efficiency_hvac_replacement",
+          "displayName": "High-efficiency HVAC replacement",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "heat_pump_hvac_retrofit",
+          "displayName": "Heat pump HVAC retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "smart_thermostat_zoning_retrofit",
+          "displayName": "Smart thermostat / zoning retrofit",
+          "parentCategory": "hvac_space_conditioning",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_refrigeration_equipment",
+          "displayName": "High-efficiency refrigeration equipment",
+          "parentCategory": "refrigeration",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "insulation_upgrade",
+          "displayName": "Insulation upgrade",
+          "parentCategory": "building_envelope",
+          "isPhysicalRetrofit": true
+        },
+        {
+          "retrofitTypeId": "high_efficiency_laundry_equipment",
+          "displayName": "High-efficiency laundry equipment",
+          "parentCategory": "water_efficiency",
+          "isPhysicalRetrofit": true
+        }
+      ],
+      "relatedRetrofitCount": 6
+    }
+  ]
+}
