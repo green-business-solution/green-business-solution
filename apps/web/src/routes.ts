@@ -37,8 +37,8 @@ export function routePathMatchFromPath(
   pathname = typeof window === "undefined" ? "/" : window.location.pathname
 ): RoutePathMatch {
   if (pathname === "/" || pathname === "/for-businesses") return { isKnownPath: true, route: "home" };
-  if (pathname === "/how-it-works") return { isKnownPath: true, route: "how-it-works" };
-  if (pathname === "/pricing") return { isKnownPath: true, route: "pricing" };
+  if (pathname === "/how-it-works") return { isKnownPath: true, route: "home" };
+  if (pathname === "/pricing") return { isKnownPath: true, route: "home" };
   if (pathname === "/database") return { isKnownPath: true, route: "admin" };
   if (pathname === "/about") return { isKnownPath: true, route: "about" };
   if (pathname === "/about/mission") return { isKnownPath: true, route: "about-mission" };
