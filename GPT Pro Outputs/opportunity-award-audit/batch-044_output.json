@@ -3,7 +3,534 @@
   "batchId": "batch-044",
   "inputFile": "batch-044_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.780Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T15:08:16Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4125",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Piedmont Natural Gas residential customer in North Carolina and install the equipment at a qualifying served residence.",
+        "Replace existing natural-gas equipment with a new measure on the current North Carolina rebate schedule and satisfy the listed fuel, capacity, efficiency, installation, and replacement specifications.",
+        "Submit the current rebate application with the paid invoice or receipt and required manufacturer, model, efficiency, contractor, installation-date, and account information.",
+        "Postmark or otherwise submit the claim within 90 days after installation and comply with any measure-specific limits.",
+        "Allow Piedmont Natural Gas or its program administrator to validate customer, equipment, installation, and payment eligibility before issuing the rebate."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current North Carolina program uses published customer, replacement-equipment, efficiency, documentation, and 90-day filing rules rather than competitive selection. A complete qualifying claim is likely to be paid after validation.",
+      "evidenceUrls": [
+        "https://www.piedmontng.com/home/save-energy-and-money/residential-energy-efficiency-resources",
+        "https://gasadvantage-hpp.piedmontng.com/docs/NC_application_rebate.pdf"
+      ],
+      "evidenceText": "Piedmont's current North Carolina materials provide residential equipment rebates after qualifying installation, supporting documentation, and timely post-installation application review.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4199",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Piedmont Natural Gas residential customer in South Carolina and install the equipment at a qualifying served residence.",
+        "Replace existing natural-gas equipment with a new measure on the current South Carolina rebate schedule and satisfy the listed fuel, capacity, efficiency, installation, and replacement specifications.",
+        "Submit the current rebate application with the paid invoice or receipt and required manufacturer, model, efficiency, contractor, installation-date, and account information.",
+        "Postmark or otherwise submit the claim within 90 days after installation and comply with any measure-specific limits.",
+        "Allow Piedmont Natural Gas or its program administrator to validate customer, equipment, installation, and payment eligibility before issuing the rebate."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current South Carolina program uses published customer, replacement-equipment, efficiency, documentation, and 90-day filing rules rather than competitive selection. A complete qualifying claim is likely to be paid after validation.",
+      "evidenceUrls": [
+        "https://www.piedmontng.com/home/save-energy-and-money/residential-energy-efficiency-resources",
+        "https://gasadvantage.piedmontng.com/docs/SC_application_rebate.pdf"
+      ],
+      "evidenceText": "Piedmont's current South Carolina materials provide residential equipment rebates after qualifying installation, supporting documentation, and timely post-installation application review.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2966",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Platte-Clay Electric Cooperative member and install the measure at a qualifying member account or facility.",
+        "Select equipment appearing in the current rebate offering and meet the applicable efficiency, size, replacement, installation, dealer, and product-certification specifications.",
+        "For business lighting projects, complete the required lighting audit or program determination before installation and obtain the project-specific incentive amount.",
+        "Submit the applicable application with paid receipts or invoices, model and efficiency documentation, installation information, and any requested account or contractor records.",
+        "Observe current per-member, percentage-of-cost, equipment-count, and annual incentive limits and permit verification if requested."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Platte-Clay publishes current prescriptive rebate amounts and technical rules. Business lighting requires an advance audit or determination, while other listed measures generally follow a documented claim process; compliant projects are likely to receive the stated incentive subject to program caps.",
+      "evidenceUrls": [
+        "https://pcec.coop/products/energy-product-rebates/"
+      ],
+      "evidenceText": "The cooperative's current rebate page lists residential and business measures, equipment specifications, certified-dealer conditions, lighting-audit requirements, and project and annual cost caps.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2289",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Plumas-Sierra Rural Electric Cooperative member and install the measure at a qualifying member property.",
+        "Use the current rebate form for the selected residential or commercial measure and satisfy its equipment, efficiency, installation, and replacement specifications.",
+        "Submit paid receipts or invoices, model and efficiency information, contractor or installation records, and any measure-specific supporting documents.",
+        "File the rebate request within six months after purchase or installation.",
+        "Comply with the current rule that the rebate may not exceed 50 percent of eligible project cost and allow program verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "PSREC currently offers objective measure-specific rebates with a six-month filing period and a published project-cost cap. A complete claim for a currently listed measure is likely to be paid after review, although the legacy opportunity's broad retrofit mapping must be matched to the correct current form.",
+      "evidenceUrls": [
+        "https://www.psrec.coop/energy-solutions/rebates/",
+        "https://www.psrec.coop/energy-solutions/rebates/commercial-heating-cooling-rebates/",
+        "https://www.psrec.coop/energy-solutions/rebates/insulation/"
+      ],
+      "evidenceText": "PSREC's current rebate portal uses measure-specific forms, requires timely receipts and technical documentation, and caps rebates at half of eligible project cost.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2990",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible PNM residential electric customer and purchase or install the measure for a qualifying PNM-served residence.",
+        "Select a product or project that appears in the current PNM residential rebate offering and meets the current qualified-model, efficiency, installation, and customer specifications.",
+        "Use the applicable instant-discount, online, or mail-in claim pathway and provide the receipt or invoice, model information, installation records, account information, and other requested documents.",
+        "Complete a PNM Home Energy Checkup or other prerequisite only when the current measure-specific offer requires it.",
+        "Submit within the applicable program period and permit eligibility or installation verification."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "PNM currently offers noncompetitive residential incentives through instant and claim-based pathways with defined product and documentation rules. A qualifying current measure is likely to receive the stated benefit, but several broad legacy retrofit labels are not independently established by the current residential pages.",
+      "evidenceUrls": [
+        "https://www.pnm.com/homerebates",
+        "https://www.pnm.com/rebates-and-savings"
+      ],
+      "evidenceText": "PNM's current residential pages direct customers to qualified products, instant discounts, online or mail claims, and measure-specific prerequisites and verification.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22406",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible PNM residential or commercial electric customer and install charging equipment at a qualifying PNM-served site.",
+        "Purchase and install a charger on PNM's current qualified-products list and meet the applicable Level 2 or DC fast-charging power, connectivity, installation, and use requirements.",
+        "Use PNM Easy Install with an authorized contractor for an instant project pathway or submit the applicable post-installation application directly.",
+        "Provide the charger receipt, final installation invoice, account and site information, equipment records, and an electrical permit or other installation documentation when required.",
+        "Observe the current address, port, installation-rebate, income-qualified, project-cost, and available-funding limits."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "PNM publishes current charger, installation, product-list, documentation, and incentive-cap rules and offers both authorized-contractor and direct-application routes. A complete qualifying project is likely to be awarded while program funds remain available.",
+      "evidenceUrls": [
+        "https://ev.pnm.com/residential-ev-charger-rebates/",
+        "https://ev.pnm.com/commercial/",
+        "https://ev.pnm.com/easy-install/",
+        "https://ev.pnm.com/wp-content/uploads/PNM-EV-Charger_Qualified-Products-List_secure.pdf"
+      ],
+      "evidenceText": "PNM currently provides residential and commercial charger and installation incentives through qualified-product, authorized-contractor, permit, documentation, and program-cap rules.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2212",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a City of Port Angeles electric utility customer and improve an eligible existing building served by the utility.",
+        "Select a currently qualifying conservation measure and satisfy the applicable equipment, efficiency, property, and installation specifications.",
+        "Obtain City approval before beginning the project or purchasing equipment when required by the conservation rebate process.",
+        "Use a City Authorized Contractor for covered work except for any measure the current rules expressly exempt from that contractor requirement.",
+        "Submit the required application, invoices, technical records, and completion documentation and permit inspection or verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The City requires prior approval and, for most covered measures, an authorized contractor, but these are operational gates under a defined utility rebate process rather than competitive scoring. A project approved in advance and completed as authorized is likely to receive the incentive after final verification.",
+      "evidenceUrls": [
+        "https://www.cityofpa.us/CivicAlerts.asp?AID=1378&ARC=2665",
+        "https://www.cityofpa.us/CivicSend/ViewMessage/Message/288301"
+      ],
+      "evidenceText": "Port Angeles requires utility customers to obtain advance approval for qualifying existing-building conservation work and generally use City Authorized Contractors before final rebate verification.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1036",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or control a qualifying Nevada renewable-electricity facility that meets the current Portfolio Energy Credit program technology and facility-size rules.",
+        "Create an NVTREC account and obtain administrator approval before registering the facility.",
+        "Submit the facility application with ownership, technology, capacity, location, interconnection, meter, and other required eligibility records and receive facility approval.",
+        "Maintain compliant revenue-quality metering and submit quarterly generation data within the program's reporting deadline.",
+        "Receive administrator certification of the reported generation before credits are issued to the account and maintain ongoing facility eligibility."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "NVTREC currently accepts only qualifying renewable-electric generation facilities above its stated size threshold and issues credits only after account, facility, metering, and quarterly-data approval. Rooftop solar may qualify only at sufficient scale, while solar water heating is not supported as renewable-electric generation by the current official rules.",
+      "evidenceUrls": [
+        "https://www.nvtrec.com/",
+        "https://www.nvtrec.com/UI/Guest/FAQPage.aspx"
+      ],
+      "evidenceText": "The Nevada tracking system currently requires approved accounts and facilities, applies a facility-size threshold, and certifies quarterly metered renewable-electric generation before posting credits.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1674",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Portland General Electric residential customer and use the current PGE or Energy Trust of Oregon pathway covering the selected measure.",
+        "Choose a currently eligible product or project and satisfy the published equipment, efficiency, replacement, property, and installation specifications.",
+        "Use an approved or participating trade ally when the current measure requires one and obtain any measure-specific assessment or authorization.",
+        "Submit the applicable application or receive the authorized instant incentive with invoices, model and efficiency records, contractor information, and completion documentation.",
+        "Complete any final inspection, quality assurance, or eligibility verification and apply while the current offer and funding remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "PGE currently directs residential customers to active measure-specific incentives delivered through PGE and Energy Trust pathways. Qualifying claims are generally processed against published rules, but the legacy umbrella title and broad gas, electric, and weatherization mappings require selection of the correct current offer.",
+      "evidenceUrls": [
+        "https://portlandgeneral.com/save-money/save-money-home/special-offers-incentives",
+        "https://portlandgeneral.com/save-money/save-money-home/heating-cooling/high-efficiency-heat-pumps",
+        "https://portlandgeneral.com/save-money/save-money-home/get-started-saving"
+      ],
+      "evidenceText": "PGE's current residential savings pages route customers to active equipment and weatherization offers with measure-specific contractor, application, and verification requirements.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22375",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a qualifying PGE nonresidential customer or eligible multifamily site and install charging equipment on a qualifying PGE account.",
+        "Use currently qualified charging hardware, approved network or software, and an eligible installation configuration and meet the applicable Level 2 or DC fast-charging specifications.",
+        "Optionally obtain an approved fund reservation before installation to hold rebate funds during the reservation period.",
+        "Complete the installation within the applicable project period and submit the registration and rebate application within 365 days with invoices, W-9, equipment information, photographs, and other required records.",
+        "Obtain property-owner authorization for leased sites and satisfy applicable operations, maintenance, data-sharing, inspection, and available-funding conditions."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "PGE publishes objective current equipment, project, documentation, and payment rules. A reservation is optional and can protect funding, but its optional nature does not make an otherwise qualifying completed application materially less awardable.",
+      "evidenceUrls": [
+        "https://portlandgeneral.com/energy-choices/electric-vehicles-charging/business-charging-fleets/business-ev-charging-rebates",
+        "https://portlandgeneral.com/energy-choices/electric-vehicles-charging/business-charging-fleets/business-ev-charging-rebates/business-ev-charging-rebates-faq"
+      ],
+      "evidenceText": "PGE's current business and multifamily EV program offers published Level 2 and fast-charging rebates through optional fund reservation, timely installation, detailed final application, and ongoing program conditions.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22374",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be the account holder or authorized co-account holder on an eligible PGE residential account and own or lease a qualifying electric or plug-in hybrid vehicle.",
+        "Install or enroll through a currently supported home-charging pathway using qualifying hardwired Level 2 equipment or eligible vehicle telematics, as applicable.",
+        "Meet the current installation, electrical, equipment, connectivity, and service-territory requirements.",
+        "Submit the application with account, vehicle, charger, purchase, installation, and any income-qualification documents required for the selected incentive tier.",
+        "Complete smart-charging connection or enrollment and comply with applicable participation, vehicle-count, verification, and ongoing-program terms."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "PGE currently operates defined home-charging and smart-charging pathways with objective account, vehicle, equipment, documentation, and enrollment rules. An eligible complete enrollment is likely to receive the applicable incentive.",
+      "evidenceUrls": [
+        "https://portlandgeneral.com/energy-choices/electric-vehicles-charging/charging-your-ev/charging-your-ev-at-home",
+        "https://portlandgeneral.com/charge-faster",
+        "https://portlandgeneral.com/pge-plus-static"
+      ],
+      "evidenceText": "PGE currently provides residential charging support through qualifying Level 2 installation or telematics pathways, application review, and required smart-charging enrollment.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22321",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "No new Potomac Edison residential charger-rebate applications can be submitted because the official program allocation reached maximum capacity.",
+        "Only an already-submitted claim or a separately available current multifamily, public-charging, or rate-program pathway may be considered under its own eligibility and documentation rules.",
+        "Participation in current EV-only time-of-use service or use of public charging does not itself create eligibility for the closed residential capital rebate."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "Potomac Edison's official Maryland EV materials state that the residential charger-rebate allocation reached maximum capacity and that new residential applications are no longer accepted. A new applicant is therefore unlikely to receive an award under this legacy opportunity.",
+      "evidenceUrls": [
+        "https://www.firstenergycorp.com/help/electric-vehicles/maryland-ev/maryland-ev/ev-faqs.html",
+        "https://www.firstenergycorp.com/help/electric-vehicles/maryland-ev/maryland-ev.html"
+      ],
+      "evidenceText": "The current official Potomac Edison EV FAQ says the residential charger-rebate allocation is full and new applications are no longer accepted.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4815",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a qualifying Poudre Valley Rural Electric Association member and purchase or install the measure for a qualifying member account or property.",
+        "Select a measure on the current residential, business, agricultural, or EV rebate list and meet its equipment, efficiency, installation, certification, and replacement rules.",
+        "Purchase the product before applying unless the current measure-specific instructions require advance contact or authorization.",
+        "Submit the application within 90 days with the paid receipt or invoice, model and efficiency records, installation details, and any measure-specific documents.",
+        "Comply with current percentage-of-cost, port, project, account, annual, and available-funding limits and permit verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "PVREA currently publishes objective member, equipment, documentation, 90-day filing, and cost-cap rules. A complete qualifying claim is likely to be paid after review while rebate funds remain available.",
+      "evidenceUrls": [
+        "https://pvrea.coop/for-members/rebates/",
+        "https://pvrea.coop/for-members/residential-services/rebates/",
+        "https://pvrea.coop/for-members/rebates/ev-rebates/"
+      ],
+      "evidenceText": "PVREA's current rebate pages require eligible membership, qualifying equipment, purchase and installation records, a 90-day application, and compliance with current caps and funding limits.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:115",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Alaska electric utility, local government, independent power producer, or other applicant permitted by the current Power Project Fund rules.",
+        "Propose an eligible power-generation, transmission, distribution, storage, energy-efficiency, conservation, or related power-facility project.",
+        "Submit a complete loan application with the required fee and project scope, cost, schedule, ownership, technical, environmental, financial, management, and repayment information.",
+        "Demonstrate technical and economic feasibility, an acceptable repayment source, creditworthiness, collateral or security, and compliance with applicable permits and laws.",
+        "Obtain any required Alaska Energy Authority or board approval and legislative authorization for a loan above the current statutory threshold before closing."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The fund is an underwritten loan program rather than an automatic rebate. Eligible projects may receive flexible financing, but approval depends on project feasibility, repayment, security, program review, and legislative authorization for larger loans.",
+      "evidenceUrls": [
+        "https://www.akenergyauthority.org/What-We-Do/Grants-Loans/Power-Project-Fund",
+        "https://www.akenergyauthority.org/LinkClick.aspx?fileticket=b5HojzTCXmB1OSolLTgwDg%3D%3D&portalid=0"
+      ],
+      "evidenceText": "The Alaska Energy Authority currently evaluates Power Project Fund applications through technical and financial underwriting, required application materials and fees, repayment and security review, and additional authorization for large loans.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_15131",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or lease an eligible fleet site in SDG&E territory and plan to electrify at least the current minimum number of qualifying medium- or heavy-duty fleet vehicles.",
+        "Submit an interest form and fleet growth and charging-load information and pass SDG&E's site, electrical-capacity, physical-inspection, engineering, and program-eligibility review.",
+        "Select the applicable utility-owned or customer-owned make-ready option and execute the required program, easement, ownership, cost, data, operations, and maintenance agreements.",
+        "Use approved charging equipment and comply with design, permitting, metering, rate, construction, commissioning, inspection, and closeout requirements.",
+        "Maintain the fleet charging site and required vehicle, charger, operations, and usage data for the applicable participation period and satisfy current rebate or cost-share caps."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Power Your Drive for Fleets provides substantial utility make-ready support and possible customer-side or charger rebates, but projects must pass site feasibility and engineering review, execute program agreements, and complete a multi-stage construction and verification process. Approval is therefore project-specific rather than automatic.",
+      "evidenceUrls": [
+        "https://www.sdge.com/business/electric-vehicles/power-your-drive-for-fleets"
+      ],
+      "evidenceText": "SDG&E's current fleet program screens medium- and heavy-duty electrification projects through interest, site assessment, design, agreement, construction, commissioning, data, and long-term operations requirements.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22438",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible PPL Electric business customer and locate the project at a qualifying PPL Electric account.",
+        "For combined heat and power, submit the project through the current distributed-energy or custom incentive pathway and document eligible electric savings, generation, equipment, design, and operating assumptions.",
+        "Obtain written program confirmation before relying on eligibility for a biomass or biogas project because the current public incentive schedule expressly lists solar and combined heat and power but does not independently establish biomass eligibility.",
+        "Submit the portal application with a recent bill, project quote, specifications, savings calculations, W-9, authorization forms, and other project-specific records; optional preapproval may be used to reserve funds.",
+        "Complete and commission the approved project and submit final invoices, completion documentation, and any required engineering or site verification while funds remain available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "PPL's current Phase V schedule expressly supports solar and combined heat and power, but distributed-energy projects require project-specific savings and engineering review and funds are finite. The legacy biomass or biogas mapping is not established by the current published schedule and needs written confirmation.",
+      "evidenceUrls": [
+        "https://www.pplelectricbusinesssavings.com/ppl-business/incentives-overview",
+        "https://www.pplelectricbusinesssavings.com/ppl-business/incentives-overview/custom-incentives/",
+        "https://www.pplelectricbusinesssavings.com/ppl-business/resources/how-to-apply-for-incentives/",
+        "https://www.pplelectricbusinesssavings.com/ppl-business/resources/faqs"
+      ],
+      "evidenceText": "PPL's current Phase V business program lists solar and combined heat and power incentives and requires project documentation, optional fund reservation, final engineering review, and completion verification; biomass eligibility is not publicly established.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3853",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible PPL Electric commercial, industrial, institutional, nonprofit, government, or agricultural customer with a qualifying project account.",
+        "Select the appropriate current prescriptive, custom, direct-discount, solar, or combined-heat-and-power pathway and meet its measure, baseline, equipment, savings, installation, and replacement rules.",
+        "Submit the application with a current electric bill, quote, product specifications, savings calculations or estimator, W-9, contractor and authorization information, and any measure-specific documents.",
+        "Use optional preapproval or fund reservation when appropriate and obtain mandatory project-specific review where the selected pathway requires it.",
+        "Install and commission the project as submitted, provide final invoices and completion records, and pass any final engineering, desk, or site verification while Phase V funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "PPL's current Phase V program offers published incentives for lighting, HVAC, controls, custom projects, solar, and combined heat and power. Most qualifying projects follow objective technical and documentation rules, so a complete compliant project is likely to receive payment after final review.",
+      "evidenceUrls": [
+        "https://www.pplelectricbusinesssavings.com/ppl-business/",
+        "https://www.pplelectricbusinesssavings.com/ppl-business/incentives-overview",
+        "https://www.pplelectricbusinesssavings.com/ppl-business/resources/how-to-apply-for-incentives/",
+        "https://www.pplelectricbusinesssavings.com/ppl-business/resources/faqs"
+      ],
+      "evidenceText": "PPL's current Phase V business program covers lighting, HVAC, controls, custom efficiency, solar, and combined heat and power through application, documentation, optional reservation, installation, and final verification.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3854",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible PPL Electric residential customer and install or purchase the measure for a qualifying residential account.",
+        "Choose a product or project currently listed by PPL, such as eligible HVAC, water-heating, appliance, thermostat, insulation, or air-sealing measures, and meet all product and installation specifications.",
+        "Use a qualified Trade Ally when required or recommended for the selected project and complete any income-eligibility process for an enhanced offer.",
+        "Apply online or by mail with the itemized invoice or receipt, model information, AHRI certificate or other efficiency records, contractor information, and required signatures.",
+        "Submit by the current deadline and pass desk, field, or random verification; do not assume that broad legacy mappings such as general windows, audits, or commercial food-service equipment are currently eligible."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "PPL currently lists residential HVAC, water-heating, appliance, thermostat, insulation, and air-sealing rebates with objective application and product rules. A qualifying listed measure is likely to be paid, but several legacy mapped measures are broader than the current public product catalog.",
+      "evidenceUrls": [
+        "https://pplelectricsavings.com/ppl/homeequipment/products",
+        "https://pplelectricsavings.com/ppl/homeequipment/how-to-apply-for-a-rebate",
+        "https://pplelectric.com/myrebate"
+      ],
+      "evidenceText": "PPL's current residential catalog and application guidance cover listed home equipment and weatherization products through online or mail claims, invoices, technical records, and verification.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2553",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a qualifying Preston Public Utilities commercial, industrial, institutional, or agricultural electric customer.",
+        "Use the applicable 2026 SMMPA business rebate form for lighting, HVAC, refrigeration, food service, motors, compressed air, retrocommissioning, aerosol sealing, or a custom project.",
+        "Meet the form's baseline, equipment, efficiency, operating-hours, replacement, installation, and qualifying-product requirements.",
+        "Contact the utility or energy-services representative before proceeding when a custom, complex, or pre-review project requires project-specific eligibility or savings confirmation.",
+        "Submit invoices, receipts, equipment schedules, calculations, model and efficiency information, contractor records, and completion documentation and permit verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Preston's official SMMPA member page publishes a broad set of current 2026 business forms matching the mapped lighting, HVAC, refrigeration, controls, motors, and compressed-air measures. A technically compliant, documented project is likely to receive the prescribed or approved custom rebate.",
+      "evidenceUrls": [
+        "https://smmpa.com/members/preston"
+      ],
+      "evidenceText": "The official Preston member page publishes 2026 business rebate forms for lighting, HVAC, refrigeration, food service, motors, compressed air, retrocommissioning, aerosol sealing, and custom projects.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2552",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a qualifying Preston Public Utilities residential electric customer and install or purchase the measure for a qualifying account.",
+        "Use the applicable 2026 residential form and select a currently listed ENERGY STAR product, EV charger, cooling, heat-pump, furnace-fan, pump, or aerosol-sealing measure.",
+        "Meet the current product-certification, model, efficiency, installation, replacement, and customer specifications.",
+        "Submit the current form with the paid receipt or invoice, model and efficiency records, installation information, and any required contractor or account documentation.",
+        "Observe current measure and household limits and permit review or inspection; confirm eligibility separately for any broad legacy food-service or commercial-equipment mapping."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Preston publishes current 2026 residential forms for ENERGY STAR products, EV chargers, cooling, heat pumps, furnace-fan motors, pumps, and sealing. Qualifying listed products are likely to be rebated after documentation review, but the legacy commercial-foodservice mapping is not independently established as a residential measure.",
+      "evidenceUrls": [
+        "https://smmpa.com/members/preston"
+      ],
+      "evidenceText": "The official Preston member page provides current 2026 residential rebate forms for ENERGY STAR products, EV chargers, cooling, heat pumps, motors, pumps, and aerosol sealing.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3106",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own the qualifying Prince George's County residential property and be responsible for the property-tax account receiving the credit.",
+        "Install a qualifying solar-energy or geothermal-energy system; a general HVAC replacement is insufficient unless it meets the geothermal-system definition and current county rules.",
+        "Apply within the current post-installation period using the Alternative Energy Tax Credit application and provide the property, account, system, cost, installation, and contractor information requested.",
+        "Attach an invoice identifying the installed system and work, proof that eligible costs were paid in full, and any lease or ownership documents applicable to the system.",
+        "Sign and notarize the required certification and accept county eligibility review, credit calculation, fiscal-year availability, and any wait-list placement."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The county maintains an official Alternative Energy property-tax credit application with objective solar and geothermal documentation rules, but the application includes county approval, credit calculation, and wait-list administration. A qualifying application may therefore be awarded, but timing is not assured.",
+      "evidenceUrls": [
+        "https://www.princegeorgescountymd.gov/departments-offices/finance/property-tax-credits/residential",
+        "https://www.princegeorgescountymd.gov/sites/default/files/Alternative-Energy-Tax-Credit-Application"
+      ],
+      "evidenceText": "Prince George's County currently lists the residential Alternative Energy tax credit and requires a sworn application with system invoice, paid-cost evidence, ownership or lease records, contractor information, and county review that may include wait-list placement.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2554",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a qualifying Princeton Public Utilities commercial, industrial, institutional, or agricultural electric customer.",
+        "Use the applicable 2026 SMMPA business rebate form for lighting, HVAC, refrigeration, food service, motors, compressed air, retrocommissioning, aerosol sealing, or a custom project.",
+        "Meet the form's baseline, equipment, efficiency, operating-hours, replacement, installation, and qualifying-product requirements.",
+        "Contact the utility or energy-services representative before proceeding when a custom, complex, or pre-review project requires project-specific eligibility or savings confirmation.",
+        "Submit invoices, receipts, equipment schedules, calculations, model and efficiency information, contractor records, and completion documentation and permit verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Princeton's official SMMPA member page publishes a broad set of current 2026 business forms matching the mapped lighting, HVAC, refrigeration, controls, motors, and compressed-air measures. A technically compliant, documented project is likely to receive the prescribed or approved custom rebate.",
+      "evidenceUrls": [
+        "https://smmpa.com/members/princeton"
+      ],
+      "evidenceText": "The official Princeton member page publishes 2026 business rebate forms for lighting, HVAC, refrigeration, food service, motors, compressed air, retrocommissioning, aerosol sealing, and custom projects.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2555",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a qualifying Princeton Public Utilities residential electric customer and install or purchase the measure for a qualifying account.",
+        "Use the applicable 2026 residential form and select a currently listed ENERGY STAR product, EV charger, cooling, heat-pump, furnace-fan, pump, or aerosol-sealing measure.",
+        "Meet the current product-certification, model, efficiency, installation, replacement, and customer specifications.",
+        "Submit the current form with the paid receipt or invoice, model and efficiency records, installation information, and any required contractor or account documentation.",
+        "Observe current measure and household limits and permit review or inspection; confirm eligibility separately for any broad legacy food-service or commercial-equipment mapping."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Princeton publishes current 2026 residential forms for ENERGY STAR products, EV chargers, cooling, heat pumps, furnace-fan motors, pumps, and sealing. Qualifying listed products are likely to be rebated after documentation review, but the legacy commercial-foodservice mapping is not independently established as a residential measure.",
+      "evidenceUrls": [
+        "https://smmpa.com/members/princeton"
+      ],
+      "evidenceText": "The official Princeton member page provides current 2026 residential rebate forms for ENERGY STAR products, EV chargers, cooling, heat pumps, motors, pumps, and aerosol sealing.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2287",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a private entity submitting a county building, construction, or development-related permit application in Hawaii.",
+        "Design the project to incorporate LEED Silver, Two Green Globes, or another state-approved nationally recognized consensus-based energy and environmental building standard.",
+        "Submit the normal county permit application and the plans, certifications, rating-system records, or other documents the county requires to establish priority-processing eligibility.",
+        "Receive the county agency's qualification determination for placement in the priority-processing procedure.",
+        "Continue to satisfy all ordinary substantive permit, code, review, correction, fee, and approval requirements because priority status does not guarantee permit approval."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Hawaii law directs each county permitting agency to provide no-additional-cost priority processing to qualifying private projects using specified green-building standards. A documented qualifying applicant is likely to receive priority handling, although the underlying permit remains subject to normal approval.",
+      "evidenceUrls": [
+        "https://www.capitol.hawaii.gov/hrscurrent/Vol02_Ch0046-0115/HRS0046/HRS_0046-0019_0006.htm"
+      ],
+      "evidenceText": "Hawaii law requires county agencies to establish no-cost priority permit processing for private projects using LEED Silver, Two Green Globes, or a comparable approved standard, without automatic permit approval.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2789",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own taxable Montana property that is a facility or equipment category currently eligible under the renewable-energy and energy-production property-tax-abatement statute.",
+        "For a qualifying facility, have commenced construction after June 1, 2007 and pay the statutory prevailing wage during construction; for qualifying research and development equipment, meet the applicable placed-in-service date and value limits.",
+        "Submit the Department of Environmental Quality certification application on the department's current form with sufficient facility, technology, ownership, construction, wage, cost, and operating information.",
+        "Receive a Department of Environmental Quality certification of eligibility before the reduced taxable-value treatment is applied by tax authorities.",
+        "Maintain substantial compliance throughout the qualifying period because certification may be revoked and the abatement forfeited for noncompliance."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current Montana law identifies biogas, biomass gasification, geothermal, renewable-energy manufacturing, and other eligible facility categories and directs the Department of Environmental Quality to certify qualifying applicants. The benefit is statutory rather than competitive, so a compliant certified facility is likely to receive the reduced assessment.",
+      "evidenceUrls": [
+        "https://mca.legmt.gov/bills/mca/title_0150/chapter_0240/part_0310/section_0110/0150-0240-0310-0110.html",
+        "https://mca.legmt.gov/bills/mca/title_0150/chapter_0240/part_0310/section_0120/0150-0240-0310-0120.html"
+      ],
+      "evidenceText": "The 2025 Montana Code provides a 50-percent taxable-value assessment for certified qualifying energy facilities or equipment and requires Department of Environmental Quality application, certification, prevailing-wage compliance, and ongoing substantial compliance.",
+      "reviewedAt": "2026-07-10T15:08:16Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

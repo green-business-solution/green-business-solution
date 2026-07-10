@@ -3,7 +3,555 @@
   "batchId": "batch-057",
   "inputFile": "batch-057_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.784Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T16:24:06Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2187",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible commercial, industrial, or dairy/agricultural project served by Tillamook PUD.",
+        "Request and complete the PUD energy audit before any project work begins.",
+        "Install only measures accepted through the audit or rebate process.",
+        "Submit invoices and any other requested project documentation.",
+        "Allow Tillamook PUD to inspect the completed project."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current program uses a noncompetitive pre-audit and completion-inspection process. An eligible project that follows the approved scope and documentation rules is ordinarily positioned for payment, subject to program terms and available funds.",
+      "evidenceUrls": [
+        "https://www.tpud.org/ways-to-save/commercial-dairy-programs/"
+      ],
+      "evidenceText": "Current Tillamook PUD guidance states that an audit must be completed before any work to qualify for a rebate or loan, and that the PUD inspects the project after completion.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2185",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Tillamook PUD residential customer for the installation address.",
+        "Purchase and install a measure that meets the current program specifications.",
+        "Submit the rebate request within 90 days of purchase.",
+        "Include the purchase invoice and any measure-specific supporting documents.",
+        "Allow Tillamook PUD to verify or inspect the installed equipment if requested."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is an active, rules-based rebate process rather than a competitive award. Timely applications with qualifying equipment and complete proof of purchase are likely to be approved, subject to verification and program availability.",
+      "evidenceUrls": [
+        "https://www.tpud.org/ways-to-save/appliance-water-heater-rebates/"
+      ],
+      "evidenceText": "Current Tillamook PUD guidance requires the rebate request within 90 days of purchase, a copy of the purchase invoice, and compliance with verification or inspection requirements.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2283",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a member of a participating Kentucky Touchstone Energy cooperative.",
+        "Confirm that the member cooperative offers the specific rebate or participation program.",
+        "Meet the applicable property, equipment, usage, and membership criteria for that program.",
+        "Complete any required pre-work energy review, approval, or inspection before beginning the project.",
+        "Submit the cooperative application and complete any post-work review, enrollment, data-sharing, or verification steps."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The umbrella site directs applicants to individual cooperatives, and offerings and procedures vary. Awards are generally rules-based where a cooperative participates, but availability cannot be assumed across all listed cooperatives or measures.",
+      "evidenceUrls": [
+        "https://togetherwesaveky.com/rebate-programs",
+        "https://togetherwesaveky.com/ev-program"
+      ],
+      "evidenceText": "The current statewide site directs members to their local cooperative for available rebates. Its EV program requires a residential-rate member of a participating cooperative, compatible equipment, application processing, and an approval email.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3652",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible home in the Town of Babylon.",
+        "Complete the Self Check Home Inventory and provide two years of utility-use data, or coordinate with program staff if the data are unavailable.",
+        "Complete the program energy audit with a Town-licensed, BPI-certified contractor.",
+        "Select eligible improvements based on the audit and use a Town-licensed contractor.",
+        "Execute the Town financing and repayment documents before the Town funds the work."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current program has a defined intake, audit, approved-contractor, and financing-contract path and states that personal credit history is not required. Approval remains tied to an eligible property, scope, and completed program documents.",
+      "evidenceUrls": [
+        "https://www.townofbabylonny.gov/145/Green-Homes",
+        "https://www.townofbabylonny.gov/925/How-it-works",
+        "https://www.townofbabylonny.gov/faq.aspx?TID=137"
+      ],
+      "evidenceText": "Applicants submit a home inventory and utility data before a Town-arranged audit. The Town can finance approved improvements, pay the contractor directly, and establish a separate homeowner repayment contract.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22737",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an existing Ipswich Electric Light Department residential customer of record with an account in good standing.",
+        "Use an eligible lithium-ion battery brand with rated storage capacity within the current program range.",
+        "Observe the one-rebate-per-electric-account limit.",
+        "Enroll the battery in Connected Homes before submitting the rebate application.",
+        "Submit a complete application and supporting documentation and satisfy any requested inspection or verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The active rebate has objective customer, equipment, and enrollment criteria. A complete application is likely to be approved when those requirements are met, although IELD retains review discretion and the program is conditioned on available funds.",
+      "evidenceUrls": [
+        "https://www.ipswichma.gov/1035/Residential-Battery",
+        "https://www.ipswichma.gov/1069/ReSource-Terms-and-Conditions"
+      ],
+      "evidenceText": "IELD limits the rebate to qualifying residential lithium-ion batteries and requires Connected Homes enrollment before the rebate application. General terms require an existing customer of record in good standing and make payment conditional on completed work, review, and available funds.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22497",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Ipswich Electric Light Department customer with a proposed system that meets current size, shading, azimuth, and program ownership rules.",
+        "Obtain IELD interconnection preapproval and all required permits before applying for the rebate.",
+        "Directly purchase the system or finance it with a loan; leased systems and power purchase agreements are ineligible.",
+        "Submit proof of property ownership, shade report, contractor agreement, participant agreement, and interconnection agreement for initial approval.",
+        "Complete installation, obtain permission to operate, and submit the project completion and any change documents for final payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program has a defined initial approval and final completion process with objective technical and ownership criteria. Qualifying projects that secure interconnection approval before work and submit both document sets are likely to receive the rebate, subject to final review and funds.",
+      "evidenceUrls": [
+        "https://www.ipswichma.gov/814/Solar-PV",
+        "https://nextzero.org/ipswich/solar-rebates/"
+      ],
+      "evidenceText": "Interconnection preapproval and required permits precede the rebate application. The initial package includes ownership, shade, contract, participant, and interconnection documents; final forms and IELD permission to operate are required after completion.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:teas_sdge_com",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Submit the TEAS interest form.",
+        "Provide information about the fleet, site, existing charging or electrical infrastructure, and electrification goals and challenges.",
+        "Participate in the advisor intake and provide requested project or utility data.",
+        "Work with the TEAS advisor to define the applicable technical-assistance scope and next steps."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "TEAS is a noncompetitive advisory service with a straightforward intake process. Applicants who provide the requested project information are likely to receive planning assistance, although the exact advisory scope is determined during intake.",
+      "evidenceUrls": [
+        "https://teas.sdge.com/",
+        "https://teas.sdge.com/interest-form"
+      ],
+      "evidenceText": "SDG&E asks applicants to submit an interest form describing their fleet, current infrastructure, and electrification goals and challenges; a TEAS advisor then provides next-step planning support.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22683",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an existing multifamily property with at least five units in San Luis Obispo, Santa Barbara, or Ventura County.",
+        "Receive utility service from PG&E, SCE, or SoCalGas, including the listed community-choice customers.",
+        "Submit the multifamily interest form and work with a 3C-REN Technical Assistant to confirm fit.",
+        "Complete the site assessment and define an eligible project scope before finalizing work whenever possible.",
+        "Reserve applicable rebates and provide detailed project-cost documentation.",
+        "Complete the approved upgrades and any required inspection or completion verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current program offers active rebates and technical assistance under objective property and utility criteria. Eligible owners who engage the Technical Assistant, reserve incentives, document costs, and complete the approved work are likely to be paid.",
+      "evidenceUrls": [
+        "https://www.3c-ren.org/multifamily/",
+        "https://www.3c-ren.org/frequently-asked-questions/"
+      ],
+      "evidenceText": "The current program requires an existing property with five or more units in one of three counties and qualifying utility service. Enrollment starts with an interest form, followed by Technical Assistant review, a site assessment, rebate reservation, cost documentation, and completion review.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1925",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a current customer with an active Truckee Donner PUD account applicable to the rebate.",
+        "Select a measure that appears on the current Residential Home Upgrades list and meets its measure-specific specifications.",
+        "Purchase and install eligible new equipment or complete eligible services within the applicable application window, commonly 90 days.",
+        "Submit a signed application with dated receipts, contractor invoices, model information, photographs, permits, or other measure-specific documents.",
+        "Allow TDPUD to verify the equipment and installation if requested.",
+        "Apply while measure-specific program funds remain available where the form states a first-come limit."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "TDPUD currently offers multiple home-upgrade rebates, but the active measure list and requirements are narrower and more measure-specific than the legacy opportunity record. A currently listed measure with a timely, complete application is payable, while an outdated or unmatched measure is not.",
+      "evidenceUrls": [
+        "https://www.tdpud.org/residential-home-upgrades",
+        "https://www.tdpud.org/heat-pump-hot-water-heaters",
+        "https://www.tdpud.org/ev-charging-at-home"
+      ],
+      "evidenceText": "TDPUD currently lists home-upgrade rebates and online applications. Current forms require an active account, eligible new equipment, timely submission, receipts or contractor invoices, photographs and other measure-specific proof, with verification and first-come funding conditions for some measures.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22774",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Tucson Electric Power residential customer with electric service in the applicant name.",
+        "Have a qualifying grid-connected battery operating consistently with its interconnection agreement.",
+        "Ensure the name and address on the TEP account and battery registration match.",
+        "Allow the supported battery manufacturer to control charging and discharging during program events.",
+        "Maintain a reliable continuous internet connection for the battery.",
+        "Apply through the applicable manufacturer enrollment channel and receive acceptance.",
+        "Remain a TEP customer and deliver measurable event performance to receive seasonal bill credits."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Enrollment is based on stated customer, battery, interconnection, and connectivity criteria rather than competition. Accepted systems are likely to earn a reward, but the payment amount is formula-based and varies with seasonal event performance and continued eligibility.",
+      "evidenceUrls": [
+        "https://www.tep.com/energy-storage-rewards/"
+      ],
+      "evidenceText": "TEP requires a residential account in the participant name, a qualifying grid-connected battery, matching account and battery information, manufacturer control permission, and continuous internet. Applications are reviewed for acceptance, and bill credits are based on average event performance.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22271",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a TEP residential customer and install the charger at the TEP service address.",
+        "Purchase a new eligible networked Level 2 or higher charger rather than a used, refurbished, portable, or otherwise excluded unit.",
+        "Submit the application within 60 days of purchase unless an instant marketplace rebate was already received.",
+        "Provide valid proof of purchase and a photograph of the device serial number.",
+        "Be on an active time-of-use rate plan and remain on it for at least two years.",
+        "Maintain a stable internet connection for the charger and allow site verification if requested.",
+        "Apply while rebate funding remains available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The rebate is rules-based, but the official page reports only 22 percent of program funds remaining and states that incentives depend on funding availability. A complete eligible application may be approved, but timely submission is material.",
+      "evidenceUrls": [
+        "https://www.tep.com/electric-vehicles/"
+      ],
+      "evidenceText": "TEP offers up to $300 for a new networked Level 2 charger, with a 60-day application deadline, proof of purchase, serial-number photo, time-of-use enrollment, internet connectivity, and site verification. The current page reports 22 percent of rebate funds remaining.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22071",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an active Turlock Irrigation District customer of record and remain active throughout the rebate process.",
+        "Install qualifying equipment in a facility served by TID and meet all measure-specific efficiency requirements.",
+        "Obtain TID preapproval before purchasing or installing any qualifying equipment.",
+        "Complete purchase and installation within six months of preapproval.",
+        "Submit a complete signed application with detailed invoices, equipment data, and cut sheets.",
+        "Allow any required pre-inspection and the required post-installation inspection.",
+        "Apply while first-come program funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "TID expressly requires preapproval and states that applications are processed first-come until funds are exhausted and that acceptance is not a guarantee. A compliant project can receive a rebate, but available funding and TID final discretion make an award only possible.",
+      "evidenceUrls": [
+        "https://www.tid.org/customer-service/rebates-and-savings/for-business/"
+      ],
+      "evidenceText": "All proposed commercial rebates require TID preapproval before purchase or installation. The offer expires after six months, invoices and equipment data are required, inspections may occur before and after installation, and funding is first-come with no guarantee from application acceptance.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1926",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible TID residential customer for a residence in the TID service area.",
+        "Purchase and install a currently eligible product that meets all measure-specific requirements.",
+        "Submit the rebate application within six months of the product purchase date.",
+        "Include proof of purchase and all measure-specific supporting documents.",
+        "Allow TID inspection and verification of the installation.",
+        "Apply while first-come program funds remain available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current rebate process is objective, but TID states that funds are first-come and not guaranteed and that approval remains at its sole discretion. A timely complete application can be paid only while the applicable program remains funded.",
+      "evidenceUrls": [
+        "https://www.tid.org/customer-service/rebates-and-savings/residential-rebates/"
+      ],
+      "evidenceText": "TID requires installation at a residence in its service area, proof of purchase, a complete application within six months, and inspection or verification. The current terms state that funds are first-come and not guaranteed.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22122",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible business, industrial, commercial, institutional, or government project served by a participating TVA local power company.",
+        "Use a Preferred Partners Network contractor, or contact TVA for assistance if the selected contractor is not in the network.",
+        "Define the project scope, meet the applicable technology efficiency and minimum-incentive requirements, and sign the incentive application.",
+        "Obtain the formal Application Approval Notice before removing or installing equipment when preapproval is required.",
+        "Complete the project within the approved installation period and comply with applicable laws and program standards.",
+        "Submit completion documentation and allow any required pre- or post-installation inspection.",
+        "Receive final TVA approval while program funding remains available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "TVA offers standardized, noncompetitive incentives through participating local power companies and vetted contractors. An eligible project that receives required preapproval and passes completion review is likely to be paid, although final approval and funding availability still apply.",
+      "evidenceUrls": [
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/find-a-contractor/"
+      ],
+      "evidenceText": "Applications are routed through the Preferred Partners Network. Most projects require preapproval and a formal Application Approval Notice before work; final incentive eligibility is subject to TVA review, applicable efficiency rules, inspections, caps, and available funding.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22123",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible business, industrial, commercial, institutional, or government project served by a participating TVA local power company.",
+        "Use a Preferred Partners Network contractor, or contact TVA for assistance if the selected contractor is not in the network.",
+        "Define the project scope, meet the applicable technology efficiency and minimum-incentive requirements, and sign the incentive application.",
+        "Obtain the formal Application Approval Notice before removing or installing equipment when preapproval is required.",
+        "Complete the project within the approved installation period and comply with applicable laws and program standards.",
+        "Submit completion documentation and allow any required pre- or post-installation inspection.",
+        "Receive final TVA approval while program funding remains available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "TVA offers standardized, noncompetitive incentives through participating local power companies and vetted contractors. An eligible project that receives required preapproval and passes completion review is likely to be paid, although final approval and funding availability still apply.",
+      "evidenceUrls": [
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/find-a-contractor/"
+      ],
+      "evidenceText": "Applications are routed through the Preferred Partners Network. Most projects require preapproval and a formal Application Approval Notice before work; final incentive eligibility is subject to TVA review, applicable efficiency rules, inspections, caps, and available funding.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22124",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible business, industrial, commercial, institutional, or government project served by a participating TVA local power company.",
+        "Use a Preferred Partners Network contractor, or contact TVA for assistance if the selected contractor is not in the network.",
+        "Define the project scope, meet the applicable technology efficiency and minimum-incentive requirements, and sign the incentive application.",
+        "Obtain the formal Application Approval Notice before removing or installing equipment when preapproval is required.",
+        "Complete the project within the approved installation period and comply with applicable laws and program standards.",
+        "Submit completion documentation and allow any required pre- or post-installation inspection.",
+        "Receive final TVA approval while program funding remains available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "TVA offers standardized, noncompetitive incentives through participating local power companies and vetted contractors. An eligible project that receives required preapproval and passes completion review is likely to be paid, although final approval and funding availability still apply.",
+      "evidenceUrls": [
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/find-a-contractor/"
+      ],
+      "evidenceText": "Applications are routed through the Preferred Partners Network. Most projects require preapproval and a formal Application Approval Notice before work; final incentive eligibility is subject to TVA review, applicable efficiency rules, inspections, caps, and available funding.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22125",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible business, industrial, commercial, institutional, or government project served by a participating TVA local power company.",
+        "Use a Preferred Partners Network contractor, or contact TVA for assistance if the selected contractor is not in the network.",
+        "Define the project scope, meet the applicable technology efficiency and minimum-incentive requirements, and sign the incentive application.",
+        "Obtain the formal Application Approval Notice before removing or installing equipment when preapproval is required.",
+        "Complete the project within the approved installation period and comply with applicable laws and program standards.",
+        "Submit completion documentation and allow any required pre- or post-installation inspection.",
+        "Receive final TVA approval while program funding remains available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "TVA offers standardized, noncompetitive incentives through participating local power companies and vetted contractors. An eligible project that receives required preapproval and passes completion review is likely to be paid, although final approval and funding availability still apply.",
+      "evidenceUrls": [
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/find-a-contractor/"
+      ],
+      "evidenceText": "Applications are routed through the Preferred Partners Network. Most projects require preapproval and a formal Application Approval Notice before work; final incentive eligibility is subject to TVA review, applicable efficiency rules, inspections, caps, and available funding.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22126",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible business, industrial, commercial, institutional, or government project served by a participating TVA local power company.",
+        "Use a Preferred Partners Network contractor, or contact TVA for assistance if the selected contractor is not in the network.",
+        "Define the project scope, meet the applicable technology efficiency and minimum-incentive requirements, and sign the incentive application.",
+        "Obtain the formal Application Approval Notice before removing or installing equipment when preapproval is required.",
+        "Complete the project within the approved installation period and comply with applicable laws and program standards.",
+        "Submit completion documentation and allow any required pre- or post-installation inspection.",
+        "Receive final TVA approval while program funding remains available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "TVA offers standardized, noncompetitive incentives through participating local power companies and vetted contractors. An eligible project that receives required preapproval and passes completion review is likely to be paid, although final approval and funding availability still apply.",
+      "evidenceUrls": [
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/find-a-contractor/"
+      ],
+      "evidenceText": "Applications are routed through the Preferred Partners Network. Most projects require preapproval and a formal Application Approval Notice before work; final incentive eligibility is subject to TVA review, applicable efficiency rules, inspections, caps, and available funding.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22127",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible business, industrial, commercial, institutional, or government project served by a participating TVA local power company.",
+        "Use a Preferred Partners Network contractor, or contact TVA for assistance if the selected contractor is not in the network.",
+        "Define the project scope, meet the applicable technology efficiency and minimum-incentive requirements, and sign the incentive application.",
+        "Obtain the formal Application Approval Notice before removing or installing equipment when preapproval is required.",
+        "Complete the project within the approved installation period and comply with applicable laws and program standards.",
+        "Submit completion documentation and allow any required pre- or post-installation inspection.",
+        "Receive final TVA approval while program funding remains available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "TVA offers standardized, noncompetitive incentives through participating local power companies and vetted contractors. An eligible project that receives required preapproval and passes completion review is likely to be paid, although final approval and funding availability still apply.",
+      "evidenceUrls": [
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/find-a-contractor/"
+      ],
+      "evidenceText": "Applications are routed through the Preferred Partners Network. Most projects require preapproval and a formal Application Approval Notice before work; final incentive eligibility is subject to TVA review, applicable efficiency rules, inspections, caps, and available funding.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22128",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible business, industrial, commercial, institutional, or government project served by a participating TVA local power company.",
+        "Use a Preferred Partners Network contractor, or contact TVA for assistance if the selected contractor is not in the network.",
+        "Define the project scope, meet the applicable technology efficiency and minimum-incentive requirements, and sign the incentive application.",
+        "Obtain the formal Application Approval Notice before removing or installing equipment when preapproval is required.",
+        "Complete the project within the approved installation period and comply with applicable laws and program standards.",
+        "Submit completion documentation and allow any required pre- or post-installation inspection.",
+        "Receive final TVA approval while program funding remains available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "TVA offers standardized, noncompetitive incentives through participating local power companies and vetted contractors. An eligible project that receives required preapproval and passes completion review is likely to be paid, although final approval and funding availability still apply.",
+      "evidenceUrls": [
+        "https://energyright.com/business-industry/incentives/applying-for-incentives/",
+        "https://energyright.com/business-industry/find-a-contractor/"
+      ],
+      "evidenceText": "Applications are routed through the Preferred Partners Network. Most projects require preapproval and a formal Application Approval Notice before work; final incentive eligibility is subject to TVA review, applicable efficiency rules, inspections, caps, and available funding.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5703",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a homeowner or renter at an eligible property served by a participating TVA local power company.",
+        "Confirm that the local power company participates and that the selected upgrade is currently offered for the property.",
+        "Use a TVA-vetted, licensed, and insured Quality Contractor Network contractor for the rebate-eligible upgrade.",
+        "Install equipment that meets the TVA standards in effect on the installation date.",
+        "Have the contractor submit the completed rebate to TVA EnergyRight.",
+        "Use the emailed redemption code to claim the rebate and provide any requested information."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current process is standardized and noncompetitive: a Quality Contractor Network member completes the eligible work and submits the rebate, then the customer claims it. Local power company participation and property eligibility must first be confirmed.",
+      "evidenceUrls": [
+        "https://energyright.com/residential/rebates/",
+        "https://energyright.com/residential/faq/"
+      ],
+      "evidenceText": "Residential availability depends on the participating local power company and property. All rebate-eligible upgrades must be completed by a Quality Contractor Network member; the contractor submits the rebate, and the customer claims it with an emailed redemption code.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5704",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a homeowner or renter at an eligible property served by a participating TVA local power company.",
+        "Confirm that the local power company participates and that the selected upgrade is currently offered for the property.",
+        "Use a TVA-vetted, licensed, and insured Quality Contractor Network contractor for the rebate-eligible upgrade.",
+        "Install equipment that meets the TVA standards in effect on the installation date.",
+        "Have the contractor submit the completed rebate to TVA EnergyRight.",
+        "Use the emailed redemption code to claim the rebate and provide any requested information."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current process is standardized and noncompetitive: a Quality Contractor Network member completes the eligible work and submits the rebate, then the customer claims it. Local power company participation and property eligibility must first be confirmed.",
+      "evidenceUrls": [
+        "https://energyright.com/residential/rebates/",
+        "https://energyright.com/residential/faq/"
+      ],
+      "evidenceText": "Residential availability depends on the participating local power company and property. All rebate-eligible upgrades must be completed by a Quality Contractor Network member; the contractor submits the rebate, and the customer claims it with an emailed redemption code.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5705",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a homeowner or renter at an eligible property served by a participating TVA local power company.",
+        "Confirm that the local power company participates and that the selected upgrade is currently offered for the property.",
+        "Use a TVA-vetted, licensed, and insured Quality Contractor Network contractor for the rebate-eligible upgrade.",
+        "Install equipment that meets the TVA standards in effect on the installation date.",
+        "Have the contractor submit the completed rebate to TVA EnergyRight.",
+        "Use the emailed redemption code to claim the rebate and provide any requested information."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current process is standardized and noncompetitive: a Quality Contractor Network member completes the eligible work and submits the rebate, then the customer claims it. Local power company participation and property eligibility must first be confirmed.",
+      "evidenceUrls": [
+        "https://energyright.com/residential/rebates/",
+        "https://energyright.com/residential/faq/"
+      ],
+      "evidenceText": "Residential availability depends on the participating local power company and property. All rebate-eligible upgrades must be completed by a Quality Contractor Network member; the contractor submits the rebate, and the customer claims it with an emailed redemption code.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5706",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a homeowner or renter at an eligible property served by a participating TVA local power company.",
+        "Confirm that the local power company participates and that the selected upgrade is currently offered for the property.",
+        "Use a TVA-vetted, licensed, and insured Quality Contractor Network contractor for the rebate-eligible upgrade.",
+        "Install equipment that meets the TVA standards in effect on the installation date.",
+        "Have the contractor submit the completed rebate to TVA EnergyRight.",
+        "Use the emailed redemption code to claim the rebate and provide any requested information."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current process is standardized and noncompetitive: a Quality Contractor Network member completes the eligible work and submits the rebate, then the customer claims it. Local power company participation and property eligibility must first be confirmed.",
+      "evidenceUrls": [
+        "https://energyright.com/residential/rebates/",
+        "https://energyright.com/residential/faq/"
+      ],
+      "evidenceText": "Residential availability depends on the participating local power company and property. All rebate-eligible upgrades must be completed by a Quality Contractor Network member; the contractor submits the rebate, and the customer claims it with an emailed redemption code.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5707",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a homeowner or renter at an eligible property served by a participating TVA local power company.",
+        "Confirm that the local power company participates and that the selected upgrade is currently offered for the property.",
+        "Use a TVA-vetted, licensed, and insured Quality Contractor Network contractor for the rebate-eligible upgrade.",
+        "Install equipment that meets the TVA standards in effect on the installation date.",
+        "Have the contractor submit the completed rebate to TVA EnergyRight.",
+        "Use the emailed redemption code to claim the rebate and provide any requested information."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current process is standardized and noncompetitive: a Quality Contractor Network member completes the eligible work and submits the rebate, then the customer claims it. Local power company participation and property eligibility must first be confirmed.",
+      "evidenceUrls": [
+        "https://energyright.com/residential/rebates/",
+        "https://energyright.com/residential/faq/"
+      ],
+      "evidenceText": "Residential availability depends on the participating local power company and property. All rebate-eligible upgrades must be completed by a Quality Contractor Network member; the contractor submits the rebate, and the customer claims it with an emailed redemption code.",
+      "reviewedAt": "2026-07-10T16:24:06Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

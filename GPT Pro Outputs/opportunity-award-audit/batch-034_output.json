@@ -3,7 +3,527 @@
   "batchId": "batch-034",
   "inputFile": "batch-034_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.776Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T14:46:13Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22638",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Participate through a MassDOT-contracted NEVI vendor, approved subcontractor, or accepted site-host arrangement because the direct vendor solicitation is closed.",
+        "Use a site and charging configuration that satisfies the applicable NEVI corridor, public-access, power, reliability, interoperability, accessibility, and federal-compliance requirements.",
+        "Obtain MassDOT approval of the proposed site, scope, utility coordination, design, construction schedule, and work order before deployment.",
+        "Complete permitting, construction, commissioning, reporting, and required operations and maintenance under the applicable MassDOT contract."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "MassDOT states that its NEVI contracting used a single solicitation round and has already contracted with three vendors. A new applicant has no current direct grant competition and would need a role under an existing vendor contract, making a new standalone award rare.",
+      "evidenceUrls": [
+        "https://www.mass.gov/massdot-nevi-plan",
+        "https://www.mass.gov/info-details/nevi-section-5-contracting",
+        "https://www.mass.gov/news/healey-driscoll-administration-announces-vendors-selected-to-advance-the-national-electric-vehicle-infrastructure-nevi-program-in-massachusetts"
+      ],
+      "evidenceText": "MassDOT's current NEVI contracting page says the program used its only solicitation round, and the state announced contracts with Applegreen Electric, Global Partners, and Weston & Sampson for site deployment.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22185",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Resolve the legacy record's program identity before applying: the current MassEVIP Fleet Vehicles program funds qualifying electric vehicles for public entities, not charging-station installation.",
+        "For a vehicle award, be an eligible Massachusetts public entity, select a qualifying vehicle and acquisition method, and submit the current Fleet Vehicles application and required records before the applicable purchase or lease commitment.",
+        "For fleet charging infrastructure, instead use the current Workplace and Fleet Charging Program and satisfy its applicant, site, charger, pre-purchase approval, contract, installation, and reimbursement requirements.",
+        "Receive MassDEP review and a written award or executed contract before incurring costs that require advance authorization."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current official MassEVIP program with the fleet name supports public-entity vehicle purchases or leases, while charging infrastructure is funded through a separate Workplace and Fleet Charging pathway. The legacy Fleets Charging record therefore does not provide a current direct award route for the mapped charger retrofit.",
+      "evidenceUrls": [
+        "https://www.mass.gov/massachusetts-electric-vehicle-incentive-program-massevip",
+        "https://www.mass.gov/how-to/apply-for-massevip-fleet-vehicles-incentives",
+        "https://www.mass.gov/how-to/apply-for-massevip-workplace-fleet-charging-incentives"
+      ],
+      "evidenceText": "MassDEP currently separates Fleet Vehicles incentives for public-entity EV acquisitions from Workplace and Fleet Charging incentives for Level 1 and Level 2 charging stations. Funds remain available, but the legacy record's charger mapping does not match the current Fleet Vehicles offering.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22188",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible owner or manager of a qualifying Massachusetts multi-unit dwelling or educational-campus site.",
+        "Propose eligible new Level 1 or Level 2 charging equipment and provide the required site, parking, ownership or authorization, cost, utility, and equipment documentation.",
+        "Submit the MassEVIP application before purchasing equipment or beginning incentive-dependent work.",
+        "Receive MassDEP approval and complete any required contract or pending-award steps before installation.",
+        "Install and maintain the approved stations, then submit invoices, proof of payment, photographs, commissioning or network records, and other closeout documentation for reimbursement."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "MassDEP currently lists available funds and an active application for this first-come program. It uses published applicant, site, equipment, documentation, and reimbursement rules rather than competitive project ranking, so a complete qualifying project is likely to be funded while funds remain.",
+      "evidenceUrls": [
+        "https://www.mass.gov/massachusetts-electric-vehicle-incentive-program-massevip",
+        "https://www.mass.gov/how-to/apply-for-massevip-multi-unit-dwelling-educational-campus-charging-incentives",
+        "https://www.mass.gov/forms/massevip-multi-unit-dwelling-and-educational-campus-mudc-charging-program-application"
+      ],
+      "evidenceText": "The current MassEVIP page says funds remain available, and the MUDC offering has an active application for owners of multi-unit dwellings and educational campuses seeking charging stations.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22187",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible owner or manager of a Massachusetts property with qualifying publicly accessible parking.",
+        "Propose eligible public-access charging equipment and document site control, public availability, equipment, utility service, project costs, and required matching funds.",
+        "Submit the current PAC application before purchasing or installing incentive-dependent equipment.",
+        "Receive MassDEP approval and complete the required award or contract process before proceeding.",
+        "Complete installation, public-access and operating obligations, and submit invoices, proof of payment, photographs, and other payment documentation for final review."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current PAC program is active, first-come, and based on objective property, access, charger, cost-share, and documentation rules. A compliant project that obtains advance approval is likely to receive reimbursement while program funds remain.",
+      "evidenceUrls": [
+        "https://www.mass.gov/massachusetts-electric-vehicle-incentive-program-massevip",
+        "https://www.mass.gov/how-to/apply-for-massevip-public-access-charging-incentives",
+        "https://www.mass.gov/forms/massevip-public-access-charging-pac-program-application"
+      ],
+      "evidenceText": "MassDEP currently reports available MassEVIP funds and provides an active PAC application. Current requirements state that funding is considered first-come until funds are exhausted.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22186",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Massachusetts employer or fleet operator with a qualifying workplace or fleet charging site.",
+        "Propose eligible new Level 1 or Level 2 charging stations and document site control, parking or fleet use, utility service, equipment, costs, and required applicant contribution.",
+        "Apply before purchasing equipment or beginning incentive-dependent construction.",
+        "Receive MassDEP approval and execute any required award contract before installation.",
+        "Install, operate, and maintain the approved stations and submit invoices, proof of payment, photographs, commissioning or networking records, and other closeout documents for reimbursement."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "MassDEP currently lists funds as available and provides an active workplace and fleet charging application. The program is an eligibility-based incentive rather than a scored grant competition, so a conforming approved project is likely to be reimbursed while funds remain.",
+      "evidenceUrls": [
+        "https://www.mass.gov/massachusetts-electric-vehicle-incentive-program-massevip",
+        "https://www.mass.gov/how-to/apply-for-massevip-workplace-fleet-charging-incentives"
+      ],
+      "evidenceText": "The current Workplace and Fleet Charging Program supports employers and fleet operators acquiring and installing Level 1 and Level 2 stations, and MassDEP states that MassEVIP funds remain available.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22744",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible commercial or industrial electric account with a participating Massachusetts program sponsor.",
+        "Enroll qualifying controllable load, battery storage, or other approved demand-response resources through an approved curtailment service provider or the sponsor's direct-participation process.",
+        "Complete the program application, equipment, metering, interval-data, operational, and communication requirements and receive enrollment acceptance.",
+        "Remain available for called events and follow event dispatch or curtailment instructions during the applicable performance season.",
+        "Allow the sponsor to measure and verify average demand reduction or contribution before calculating and paying the performance incentive."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Commercial ConnectedSolutions is a current performance-based pathway with published enrollment and measurement rules, not a competitive award. An accepted resource that performs during events is likely to receive an incentive, although the amount depends on verified demand reduction.",
+      "evidenceUrls": [
+        "https://www.masssave.com/business/rebates-offers-services/commercialconnectedsolutions"
+      ],
+      "evidenceText": "Mass Save currently allows commercial customers to participate through a curtailment service provider or directly, and bases incentives on measured reductions or load shifting during demand events.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4791",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible commercial customer of a participating Mass Save sponsor with a qualifying new-construction or major-renovation project.",
+        "Engage the sponsor early enough for the applicable whole-building, systems, or equipment pathway and submit the required application, plans, specifications, model, estimates, and project schedule before affected work is installed.",
+        "Meet the current pathway's electrification, efficiency, code-baseline, controls, commissioning, and measure-specific technical requirements; incentives for new fossil-fuel equipment are no longer generally available.",
+        "Receive sponsor technical review, any required memorandum or incentive authorization, and approval of the proposed scope before construction proceeds.",
+        "Build the approved design, provide invoices and completion records, and pass commissioning, inspection, modeling reconciliation, or post-occupancy verification required by the selected pathway."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Mass Save maintains active, defined new-construction and major-renovation pathways. Projects that engage early, satisfy current electrification and technical rules, receive advance approval, and are completed as approved are likely to receive the calculated incentive, subject to final verification and funds.",
+      "evidenceUrls": [
+        "https://www.masssave.com/business/rebates-offers-services/new-construction-and-major-renovations",
+        "https://www.masssave.com/business/rebates-offers-services/new-construction-and-major-renovations/high-performance-buildings"
+      ],
+      "evidenceText": "Current Mass Save materials direct projects into whole-building, systems, or equipment pathways, require early coordination and design review, and pay incentives after construction and verification. New fossil-fuel incentives were discontinued for affected projects beginning in 2025.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22743",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible residential electric account with Cape Light Compact, Eversource, or National Grid and a qualifying battery or inverter configuration.",
+        "Install or already own an eligible battery system and enroll it through a participating battery manufacturer or approved program channel.",
+        "Complete the enrollment, account, device, internet or communication, data-sharing, and utility-verification requirements and receive program acceptance.",
+        "Allow the battery to discharge or reduce grid demand during called events, subject to the program's operating rules.",
+        "Maintain eligible participation through the season so the sponsor can calculate payment from verified average event contribution."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential battery offering uses published device and account eligibility plus measured event performance rather than competitive selection. A successfully enrolled and communicating battery is likely to earn an incentive, with the payment amount determined by actual performance.",
+      "evidenceUrls": [
+        "https://www.masssave.com/residential/rebates-offers-services/battery-storage-and-evs/batteries",
+        "https://www.masssave.com/residential/rebates-offers-services/connectedsolutions"
+      ],
+      "evidenceText": "Mass Save currently offers battery incentives to eligible residential customers who enroll qualifying systems and allow measured discharge during demand-response events.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3211",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible McMinnville Water & Light commercial electric customer with a qualifying project in its service area.",
+        "Submit the proposed scope, equipment specifications, contractor bid or cost estimate, and other requested technical information before purchase or installation.",
+        "Obtain McMinnville Water & Light preapproval because the utility states that all conservation incentives and rebates require advance approval.",
+        "Install the approved equipment in compliance with applicable codes, permits, and program specifications.",
+        "Submit final invoices and completion records and permit any inspection or verification before payment."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The utility's current commercial program uses advance technical approval and final documentation rather than competitive scoring. A qualifying preapproved project that is installed as authorized is likely to receive the incentive after verification, subject to program funds.",
+      "evidenceUrls": [
+        "https://www.mc-power.com/energy-efficiency/commercial-energy-programs/"
+      ],
+      "evidenceText": "McMinnville Water & Light's current commercial energy page states that all conservation incentives and rebates require preapproval and directs customers to coordinate project details with the utility.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3963",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible McMinnville Water & Light residential electric customer and select a measure currently listed for the customer's home and equipment type.",
+        "Meet the measure-specific efficiency, installation, existing-equipment, contractor, and household or property requirements.",
+        "Follow the selected offer's advance-contact or preapproval instructions before purchase or installation whenever required.",
+        "Submit the current rebate application with itemized invoices, model or efficiency documentation, installation information, and any required contractor or permit records.",
+        "Allow McMinnville Water & Light to inspect or verify the project before issuing the rebate."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "McMinnville Water & Light currently publishes residential efficiency rebates and incentives with measure-specific qualification and documentation rules. A customer who follows any required advance steps and submits a complete qualifying claim is likely to receive the rebate after review.",
+      "evidenceUrls": [
+        "https://www.mc-power.com/energy-efficiency/energy-efficiency-rebates-incentives/"
+      ],
+      "evidenceText": "The current residential hub lists energy-efficiency rebates and incentives and directs customers to the applicable measure requirements, forms, and utility review process.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:215",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Mississippi borrower proposing a capital improvement that conserves energy or uses commercially feasible renewable-energy technology.",
+        "Contact the Mississippi Development Authority Energy Division and submit the current loan application and requested organizational, project, technical, cost, savings, and schedule information.",
+        "Demonstrate that the project and technology are commercially feasible and fall within the program's eligible energy-conservation categories and financing limits.",
+        "Pass borrower credit, repayment-capacity, collateral, and other financial underwriting and provide any required environmental, procurement, or ownership documentation.",
+        "Receive MDA project approval and execute the loan documents before funds are disbursed or restricted work begins."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The revolving fund is a loan program, not an entitlement rebate. A technically eligible project must also pass borrower-specific financial underwriting and MDA approval, so financing is possible but not likely until credit and project review are complete.",
+      "evidenceUrls": [
+        "https://mississippi.org/doing-business/incentives/"
+      ],
+      "evidenceText": "MDA currently describes low-interest revolving loans of up to the published limit for commercially feasible energy-conservation and renewable-energy capital improvements, including HVAC, lighting, and insulation projects.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22041",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Wait for an open Maryland Energy Administration commercial, industrial, and data-center grant funding notice; the fiscal-year 2026 application round is no longer open.",
+        "Be an eligible Maryland commercial, industrial, nonprofit, or data-center applicant with a project that exceeds applicable code, standard practice, or baseline energy performance.",
+        "Submit a complete competitive proposal during the future notice period with the required technical scope, baseline, energy savings, budget, schedule, organizational, and public-benefit information.",
+        "Achieve sufficient evaluation or ranking under the funding notice and receive a written award.",
+        "Execute the grant agreement before unauthorized work and comply with project, reporting, reimbursement, measurement, and closeout conditions."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "MEA's current page states that fiscal-year 2026 grant agreements are being distributed and directs prospective fiscal-year 2027 applicants to watch for a future notice. There is no open current application, and future grants will require competitive review, so a new award is presently rare.",
+      "evidenceUrls": [
+        "https://energy.maryland.gov/business/Pages/incentives/empowermdcigp.aspx"
+      ],
+      "evidenceText": "The current MEA commercial, industrial, and data-center page says fiscal-year 2026 grant agreements are being distributed and that information for a future fiscal-year 2027 opportunity will be posted later.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:678",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible nonprofit, government entity, or qualifying small business in the Met-Ed or Penelec service territory with an owner-occupied existing building.",
+        "Use a recent energy assessment and propose measures eligible under the current grant round.",
+        "Have submitted a letter of intent during the closed April 15 through May 15, 2026 intake and receive an invitation to file a full application.",
+        "Submit the invited full application by the current July 15, 2026 deadline with the required scope, budget, savings, organizational, and project documentation.",
+        "Receive Sustainable Energy Fund advisory-board approval and complete the grant agreement, installation, reporting, and verification requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The 2026 letter-of-intent gate has closed, so a new applicant cannot enter the current round. In addition, the current grant announcement focuses on lighting, high-efficiency HVAC, commercial kitchen, and refrigeration measures and does not substantiate the mapped solar water heating, CHP, biomass, or battery projects.",
+      "evidenceUrls": [
+        "https://bccf.org/grants-energy-efficiency/",
+        "https://bccf.org/funds/sustainable-energy-fund/"
+      ],
+      "evidenceText": "The current 2026 grant round uses a closed letter-of-intent stage followed by invitation-only full applications due July 15 and lists a narrower set of eligible building-efficiency measures than the retrofits mapped to this record.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1051",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible for-profit or nonprofit applicant with a qualifying sustainable-energy or high-impact efficiency project in the Met-Ed or Penelec service territory.",
+        "Submit an initial inquiry and provide sufficient project, site, technology, ownership, cost, energy, and repayment information for staff screening.",
+        "Provide a recent energy audit, feasibility analysis, or other technical support when applicable and complete an invited online application.",
+        "Pass staff due diligence, any site visit, and Sustainable Energy Fund advisory-committee review.",
+        "If approved by the fund, pass JARI financial underwriting and execute the loan and security documents before receiving proceeds."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The fund is currently accepting inquiries on a rolling basis, but loans require project due diligence, committee approval, and separate financial underwriting. A battery or other clean-energy project may qualify, but eligibility alone does not make financing likely before those reviews.",
+      "evidenceUrls": [
+        "https://bccf.org/met-ed-penelec-sustainable-energy-fund-loan-opportunity/",
+        "https://bccf.org/funds/sustainable-energy-fund/"
+      ],
+      "evidenceText": "The current loan page says inquiries are accepted while funds are available and describes staff screening, an invited application, due diligence, advisory-committee review, and JARI underwriting for approved projects.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4932",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible property in unincorporated Miami-Dade County or another participating local jurisdiction.",
+        "Select a County-authorized PACE district or provider and confirm that the proposed battery-storage system is an eligible PACE improvement under that provider's current rules.",
+        "Complete the provider's property, ownership, mortgage, financial, project-cost, contractor, and disclosure review and obtain any required lender consent.",
+        "Execute the PACE financing and voluntary non-ad valorem assessment documents before funding.",
+        "Use properly licensed contractors, obtain all required permits, pass inspections, and obtain final project approval."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Miami-Dade currently authorizes PACE financing but does not administer or guarantee provider approvals. The reviewed County page does not confirm standalone battery storage as an eligible measure, and provider underwriting terms vary, so the award probability cannot be determined without provider-specific evidence.",
+      "evidenceUrls": [
+        "https://www.miamidade.gov/global/environment/resilience/energy.page"
+      ],
+      "evidenceText": "The County currently authorizes private PACE districts for eligible properties and makes property owners responsible for provider selection, financing agreements, permits, inspections, and final approvals. Standalone battery eligibility is not stated on the reviewed County page.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3128",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have a project in the applicable Miami-Dade permitting jurisdiction that qualifies as certified green new construction or under the renewable-energy exception for an addition, alteration, repair, or accessory structure.",
+        "Submit the Sustainable Buildings Program new-project request and identify the requested expedited green-building review.",
+        "For a certification-based project, provide the required Florida Green Building Coalition or U.S. Green Building Council registration or certification letter; for an exception project, document the qualifying renewable-energy feature.",
+        "Submit the complete building or solar permit application, signed and sealed plans, supporting calculations and product records, and required fees.",
+        "Receive the expedited plan-review determinations and all underlying permit approvals before construction."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Expedited review is an administrative service for projects meeting published green-building or renewable-energy criteria, not a competitively limited grant. A complete qualifying request is likely to receive expedited handling, although the underlying permit still must pass technical review.",
+      "evidenceUrls": [
+        "https://www.miamidade.gov/global/economy/building/expedited-programs-services.page",
+        "https://www.miamidade.gov/global/permit.page?Mduid_permit=per1534367624683394"
+      ],
+      "evidenceText": "Miami-Dade currently offers expedited green-building review for qualifying certified construction and provides an exception pathway for certain alterations or accessory work using solar, wind, or other renewable energy. A separate complete permit application remains required.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22712",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Michigan household and residence in an area currently accepting MiHER applications; observe the temporary limitation on new income-qualified applications in the Detroit District.",
+        "Complete the household and property application, income or program-eligibility verification, and receive approval before incentive-dependent work begins.",
+        "Use a MiHER-approved contractor and complete the required home assessment and modeled project report.",
+        "Adopt an approved whole-home scope that is projected to achieve at least the required energy savings; a stand-alone HVAC replacement qualifies only if it is included in the approved modeled package.",
+        "Complete the authorized work and pass homeowner signoff, post-installation inspection, project verification, and final rebate review."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Michigan's current Home Efficiency Rebate pathway is active for qualifying low- and moderate-income residents and uses objective household, assessment, modeled-savings, contractor, and verification rules. An approved whole-home project is likely to receive the rebate, subject to regional funding and the temporary Detroit intake limitation.",
+      "evidenceUrls": [
+        "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs",
+        "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs/get-rebate",
+        "https://www.michigan.gov/egle/faqs/climate-and-energy/home-energy-rebates-program"
+      ],
+      "evidenceText": "MiHER currently requires application approval, an approved contractor, a home assessment, an authorized modeled scope, completed work, and post-installation verification. The HER pathway requires a qualifying whole-home modeled energy reduction, and Detroit District intake has a temporary limitation.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22711",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Michigan household at or below the current HEAR income limit and a residence in an area currently accepting MiHER applications; observe the temporary Detroit District intake limitation.",
+        "Complete the household, property, ownership or landlord, and income-eligibility application and receive approval before purchasing or installing rebate-dependent equipment.",
+        "Use a MiHER-approved contractor and complete the required home assessment and approved project scope.",
+        "Install only currently eligible electrification or weatherization measures that meet the technical and cost rules and are not impermissibly double-funded or retroactive.",
+        "Complete homeowner signoff, post-installation inspection, project verification, and final rebate processing."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Michigan's current HEAR pathway is active and noncompetitive for qualifying income-eligible households, with published application, contractor, measure, and verification steps. A preapproved project using eligible equipment is likely to receive the rebate, subject to regional funds and temporary intake restrictions.",
+      "evidenceUrls": [
+        "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs",
+        "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs/get-rebate",
+        "https://www.michigan.gov/egle/faqs/climate-and-energy/home-energy-rebates-program"
+      ],
+      "evidenceText": "MiHER currently requires income and household approval before work, use of an approved contractor, an assessment and approved scope, and post-installation verification. HEAR covers eligible electrification and weatherization measures and does not pay retroactive projects.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22647",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Submit through an eligible proposer or project team responding to Michigan's open NEVI Round 3 request for proposals by August 7, 2026.",
+        "Use a site shown as eligible under the Round 3 materials and provide the required site-control, utility site-assessment or support letter, permitting, cost, schedule, team, and financial information.",
+        "Design, build, operate, and maintain a publicly accessible station with at least four networked DC fast-charging ports capable of simultaneously delivering at least 150 kilowatts per port and meeting all federal and state NEVI requirements.",
+        "Use qualified electrical and charging-infrastructure personnel, including applicable EVITP-certified workers, and satisfy cybersecurity, payment, uptime, accessibility, data, and interoperability requirements.",
+        "Achieve sufficient technical and price evaluation, receive an award, and execute the MDOT contract before incurring reimbursable project costs."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Michigan Round 3 is currently open, but funding is awarded through a competitive design-build-operate-maintain procurement with substantial site, technical, utility, cost, and long-term operating requirements. A compliant proposal has a possible rather than likely award until ranked and selected.",
+      "evidenceUrls": [
+        "https://www.michigan.gov/mdot/business/contractors/innovativecontracting/national-electric-vehicle-infrastructure-3",
+        "https://www.michigan.gov/mdot/travel/mobility/initiatives/nevi"
+      ],
+      "evidenceText": "MDOT issued NEVI Round 3 on June 8, 2026, with proposals due August 7, 2026. The procurement requires eligible sites, utility coordination, at least four public 150-kilowatt DC ports, federal compliance, and long-term operation and maintenance.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4521",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or control an eligible private commercial, industrial, agricultural, nonprofit, multifamily, or other qualifying property in a Michigan local government participating in Lean & Green Michigan PACE.",
+        "Confirm with the program administrator and capital provider that the proposed EV charging infrastructure qualifies as an eligible PACE improvement under current program and statutory rules.",
+        "Develop a technically and financially viable project using the required audit, savings model, engineering, scope, cost, and contractor information.",
+        "Secure private PACE financing and any required mortgage-lender consent, and satisfy capital-provider underwriting.",
+        "Execute the special assessment and program documents and receive final participating-local-government approval and recording of the assessment before funding."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Michigan PACE has a defined active approval pathway, but financing depends on project economics, private underwriting, lender consent, and local approval. The reviewed official program material does not expressly confirm stand-alone EV charging eligibility, so that mapping requires follow-up before an award can be considered likely.",
+      "evidenceUrls": [
+        "https://leanandgreenmi.com/faq/"
+      ],
+      "evidenceText": "Lean & Green Michigan describes eligibility screening, technical and savings review, private financing, special-assessment documents, and local-government approval. The reviewed page does not specifically identify stand-alone EV charging as an eligible measure.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4633",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Michigan commercial, nonprofit, multifamily, public, or other qualifying property owner or business with a currently eligible energy project.",
+        "Use a Michigan Saves authorized contractor to develop the project scope, eligible improvements, costs, and available incentives.",
+        "Submit a commercial financing application to a participating lender with the required business, ownership, project, and financial information.",
+        "Pass lender credit, repayment, collateral, and other underwriting and execute the financing documents before work begins.",
+        "Complete the approved installation and provide any required completion, invoice, contractor, or inspection records."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Michigan Saves currently supports a broad set of commercial improvements, including EV charging and the mapped efficiency measures, but the benefit is financing subject to applicant-specific lender underwriting. Project eligibility therefore makes approval possible, not likely, until credit review is complete.",
+      "evidenceUrls": [
+        "https://michigansaves.org/commercial-loans/"
+      ],
+      "evidenceText": "Michigan Saves directs commercial applicants to work with an authorized contractor, apply through a participating commercial lender, obtain financing approval before work, and then complete the approved project. Current eligible examples include lighting, HVAC, water heating, food-service equipment, and EV charging.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4632",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or occupy an eligible Michigan home and select a currently qualifying energy improvement.",
+        "Obtain an estimate from a Michigan Saves authorized contractor and use the contractor's project identification information in the financing application.",
+        "Submit the residential loan application with the required identity, income, property, project, and requested financing information.",
+        "Pass participating-lender credit and repayment underwriting and execute the loan documents before installation.",
+        "Complete the approved work and provide any required contractor, invoice, completion, or inspection documentation."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Michigan Saves currently finances insulation, air sealing, windows, HVAC, water heating, and related home improvements, but approval depends on borrower-specific lender underwriting. An eligible project has a possible award until the applicant passes credit review and closes the loan.",
+      "evidenceUrls": [
+        "https://michigansaves.org/home-energy-improvements/"
+      ],
+      "evidenceText": "The current home-energy financing process requires an authorized-contractor estimate, an online loan application using the contractor's project identifier, lender approval, and completion of the financed improvements after approval.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3508",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible MidAmerican Energy Iowa nonresidential customer and have MidAmerican provide the primary electricity or natural gas to the incentivized equipment.",
+        "Purchase and install new equipment meeting the current measure-specific qualifications during the 2026 program period.",
+        "For an Instant Discount, buy through a participating provider and allow account and equipment eligibility to be validated at the transaction; for custom, direct-assistance, retro-commissioning, or similar projects, obtain written preapproval before purchase or installation.",
+        "Submit the complete application, itemized invoices, equipment data, cost, scope, savings, and other requested records for any non-instant pathway.",
+        "Permit on-site or document verification, including required prepayment verification for projects exceeding the published threshold."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "MidAmerican's current Iowa business offerings use prescriptive instant discounts or defined preapproved project pathways and are issued first-come while funds remain. A qualifying customer and measure that follows the correct channel is likely to receive the benefit after any required verification.",
+      "evidenceUrls": [
+        "https://www.midamericanenergy.com/business-discounts-and-rebates",
+        "https://www.midamericanenergy.com/sites/Satellite?c=Page&childpagename=MEC%2FPage%2FStandardPage%2FLayout&cid=1529683765256&d=Touch&packedargs=d%3DTouch&pagename=MEC%2FPrimaryWrapper"
+      ],
+      "evidenceText": "MidAmerican currently offers Iowa business Instant Discounts and project incentives. Current conditions require utility service to the equipment, qualifying 2026 installation, complete documentation, advance written approval for custom and related pathways, and verification for larger incentives.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4730",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible MidAmerican Energy Illinois nonresidential customer and have MidAmerican provide the primary electricity or natural gas to the incentivized equipment.",
+        "Purchase and install new qualifying equipment during the 2026 program period and comply with applicable codes and current measure specifications.",
+        "Use a participating provider for Instant Discounts, or submit the required application and obtain advance approval or reservation where the selected business pathway requires it.",
+        "Provide complete invoices, equipment, scope, cost, savings, account, and other supporting documentation.",
+        "Allow MidAmerican or its implementation contractors to verify installation and project records, including required on-site review for incentives above the published threshold."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The 2026 Illinois business program publishes objective customer, equipment, documentation, and verification rules and issues rebates first-come until approved funds are exhausted. A complete qualifying project using the correct purchase or preapproval channel is likely to be paid.",
+      "evidenceUrls": [
+        "https://www.midamericanenergy.com/business-discounts-and-rebates",
+        "https://www.midamericanenergy.com/il-bus-qualifications-conditions"
+      ],
+      "evidenceText": "MidAmerican's current Illinois business conditions require qualifying new equipment installed in 2026, complete applications and documentation, first-come funding, and on-site verification for larger awards; current business discounts cover lighting, HVAC, water heating, refrigeration, and food-service equipment.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3507",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible MidAmerican Energy Illinois residential customer and have MidAmerican provide the primary electricity or natural gas to the incentivized equipment.",
+        "Purchase, install, and operate new equipment meeting the current measure-specific qualifications during the 2026 program period.",
+        "For an Instant Discount, purchase through a participating provider; for a prescriptive rebate, submit the online application within 90 days of the dealer invoice or by December 31, 2026, whichever occurs first.",
+        "Provide an itemized receipt or invoice and all requested account, model, efficiency, installation, and contractor information.",
+        "Allow MidAmerican or its contractor to inspect or otherwise verify the equipment and claim before or after payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Illinois residential program uses objective customer, product, timing, and documentation rules and provides instant discounts or first-come rebates while funds remain. A qualifying purchase with a complete timely claim is likely to receive the stated benefit after validation.",
+      "evidenceUrls": [
+        "https://www.midamericanenergy.com/home-discounts-and-rebates",
+        "https://www.midamericanenergy.com/il_qualifications-and-conditions"
+      ],
+      "evidenceText": "MidAmerican's current Illinois residential conditions require eligible equipment installed in 2026, a participating provider for instant discounts or an online rebate claim within 90 days, supporting invoices, and first-come funding through the program deadline.",
+      "reviewedAt": "2026-07-10T14:46:13Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

@@ -3,7 +3,534 @@
   "batchId": "batch-026",
   "inputFile": "batch-026_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.772Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T14:18:05Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2674",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Harrison REMC residential customer and install the equipment at a qualifying primary, year-round residence served by the cooperative.",
+        "Install a new qualifying air-source, dual-fuel, ductless mini-split, or geothermal heat-pump system that meets the 2026 efficiency and application specifications.",
+        "Submit the completed rebate application with the paid itemized invoice, AHRI certificate or other required equipment documentation, and account information within the applicable filing period.",
+        "Observe the program's equipment-count and useful-life limits and the rule that the rebate may not exceed 50 percent of equipment cost.",
+        "Allow Harrison REMC to verify or inspect the installation before issuing the utility-bill credit."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Harrison REMC publishes a current, noncompetitive 2026 HVAC rebate schedule with objective customer, equipment, documentation, cost-cap, and verification rules. A timely qualifying claim is likely to be credited after review.",
+      "evidenceUrls": [
+        "https://www.harrisonremc.com/hvac-heat-pump-rebate-form/",
+        "https://www.harrisonremc.com/wp-content/uploads/2025/12/2026_Residential_HVAC_Rebate_Application.pdf"
+      ],
+      "evidenceText": "The current Harrison REMC HVAC page and 2026 application list heat-pump rebate tiers, residential-service eligibility, required invoices and AHRI documentation, filing limits, a 50-percent equipment-cost cap, and utility verification.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22630",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must be selected, procured, or contracted by the Hawaii Department of Transportation as part of Hawaii's NEVI deployment rather than submitted as a general customer rebate claim.",
+        "The site must be an HDOT-approved public fast-charging location and satisfy applicable Alternative Fuel Corridor or state deployment priorities.",
+        "The station design must meet NEVI power, port-count, public-access, reliability, payment, interoperability, operations, maintenance, and data-reporting requirements.",
+        "The project sponsor or contractor must document site control, design, schedule, eligible costs, non-federal share, operations, maintenance, and other procurement or agreement requirements.",
+        "Required environmental review, federal compliance, HDOT agreement, and FHWA authorization must be completed before reimbursement-eligible work proceeds."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "Current HDOT materials describe project-specific state deployment and contracted public DC fast-charging sites, not an open direct customer grant. An unselected general applicant is therefore unlikely to receive an award; only an HDOT-selected or contracted project can advance to federal authorization and reimbursement.",
+      "evidenceUrls": [
+        "https://hidot.hawaii.gov/highways/hawaii-nevi-state-plan/",
+        "https://hidot.hawaii.gov/highways/files/2025/09/20250911-HDOT-letter-Submitting-2025-NEVI-Plan-for-FY26-funding-approved-by-FHWA.pdf"
+      ],
+      "evidenceText": "HDOT's current NEVI materials describe state-selected public DC fast-charging deployment, federal station standards, project agreements, and authorization requirements. No open general customer rebate or standard direct-application award path was verified.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3870",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or control an eligible Hawaii commercial, industrial, agricultural, nonprofit, multifamily, condominium, or qualifying leasehold property; one-to-four-unit residential property is not eligible.",
+        "Use the financing for an eligible energy, water, renewable-energy, resiliency, or battery-storage improvement that will be permanently affixed to the property.",
+        "Keep property taxes and mortgage obligations current and satisfy the program's solvency, bankruptcy, title, and property-status requirements.",
+        "Select a qualified capital provider and pass that provider's project and borrower underwriting.",
+        "Obtain required mortgage-holder consent and any owner, tenant, association, or governmental approvals.",
+        "Submit the HI C-PACER application and supporting project documents to HGIA, receive program approval, execute the assessment contract, and record the assessment lien before closing."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "HI C-PACER is financing, not an entitlement rebate. A technically eligible battery or other improvement still depends on property eligibility, private capital-provider underwriting, mortgage-holder consent, HGIA review, negotiated terms, and closing documents.",
+      "evidenceUrls": [
+        "https://gems.hawaii.gov/hi-c-pacer/",
+        "https://gems.hawaii.gov/wp-content/uploads/2024/06/HI-C-PACER-Program-Guide_2026-05.pdf",
+        "https://gems.hawaii.gov/wp-content/uploads/2025/05/HI-C-Pacer-Application_Template.docx"
+      ],
+      "evidenceText": "The current HI C-PACER program guide requires an eligible nonresidential property and permanently affixed improvement, qualified capital-provider financing, property and borrower diligence, required lender consent, HGIA review, and execution and recording of the assessment documents.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3589",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Haywood EMC member seeking financing for an eligible heat-pump or weatherization project.",
+        "Submit the project and loan request through the cooperative's current financing pathway with ElecTel Cooperative Federal Credit Union.",
+        "Provide the borrower, property, contractor, scope, and cost information required for the loan review.",
+        "Pass the applicable credit check and lender underwriting before funds are committed.",
+        "Use loan proceeds only for the approved heat-pump or weatherization work and satisfy the closing and repayment terms."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The available official evidence describes financing of eligible member projects subject to an approved credit check. Project eligibility alone does not secure the loan, so award depends on borrower-specific underwriting.",
+      "evidenceUrls": [
+        "https://www.haywoodemc.com/energy-efficiency/heat-pumps/heat-pump-weatherization-loan/",
+        "https://www.haywoodemc.com/energy-efficiency/heat-pumps/"
+      ],
+      "evidenceText": "Haywood EMC's current official search results identify a member heat-pump and weatherization loan through ElecTel Cooperative Federal Credit Union and state that an approved credit check is required. The full program page was not accessible during review.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "source_inaccessible"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2692",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an active Heartland REMC account for the installation address.",
+        "Use the applicable PowerMoves or Heartland REMC pathway and do not claim both incentives for the same equipment.",
+        "Purchase and install a qualifying 2026 air-source heat pump or ground-source geothermal system that meets the published efficiency and sizing requirements.",
+        "Submit the current application with the paid invoice, equipment model and rating information, AHRI documentation where required, and customer and installation details.",
+        "Complete any verification requested by Heartland REMC and remain within the published per-system or per-ton limits."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Heartland REMC's current 2026 program provides prescriptive heat-pump and geothermal rebates under published technical and documentation rules. A qualifying, nonduplicative claim is likely to be approved after utility review.",
+      "evidenceUrls": [
+        "https://www.heartlandremc.com/rebates/",
+        "https://www.heartlandremc.com/s/2026-Residential-Energy-Efficiency-Program.pdf"
+      ],
+      "evidenceText": "Heartland REMC's current page and 2026 program document list air-source and geothermal incentives, require service at the installation address and supporting equipment documentation, and prohibit duplicate PowerMoves and Heartland rebates.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6849d4cc60567610:heat-pump-air-conditioner-rebates-conversion-to-all-electric-heating-and-cooling",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Silicon Valley Power nonresidential electric customer at the Santa Clara project site.",
+        "Replace natural-gas space heating with an eligible all-electric heat-pump heating and cooling system and, when claimed, qualifying associated electrical infrastructure.",
+        "Submit the project scope, equipment information, calculations, and application and obtain written SVP preapproval before purchasing or installing the equipment.",
+        "Install the approved equipment in accordance with program specifications and applicable codes and permits.",
+        "Submit final invoices, equipment documentation, and other closeout records and pass any required post-installation inspection or verification."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "SVP currently publishes a prescriptive business electrification rebate with a required preapproval and final verification process rather than competitive selection. An approved qualifying conversion is likely to receive the calculated rebate after complete closeout documentation.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/71431/637902892215200000"
+      ],
+      "evidenceText": "SVP's current business electrification page requires nonresidential customers converting gas space heating to qualifying electric heat pumps to obtain preapproval before installation and complete final documentation and verification. The current source does not support the record's low-flow-fixture mapping.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:heat-pump-water-heater-rebate",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Silicon Valley Power nonresidential customer at the installation site.",
+        "Replace an eligible gas or electric-resistance water heater with a qualifying commercial heat-pump water heater meeting the current efficiency specification.",
+        "Submit the application, equipment information, project scope, and requested supporting records and obtain written preapproval before purchase or installation.",
+        "Permit any required pre-installation inspection and install the approved system in accordance with program and code requirements.",
+        "Submit the final paid invoice, equipment cut sheets and model information, and other closeout records and pass post-installation verification."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "SVP's current heat-pump-water-heater rebate uses published equipment and claim rules with mandatory preapproval, not competitive ranking. A conforming approved installation is likely to be paid after final document and inspection review.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/75953/638881818060600000"
+      ],
+      "evidenceText": "SVP's current business rebate page and application require a qualifying heat-pump water heater, preapproval and possible preinspection before installation, and final invoices, product records, and post-installation verification. The other HVAC, gas-water-heater, storage, and fixture mappings are not supported by this offer.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22763",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a qualifying Summit County resident, business, or property participant for the 2026 Solarize Summit campaign.",
+        "Enroll through the campaign and complete the offered site assessment and project proposal process with the participating installer.",
+        "Select a qualifying solar photovoltaic project and sign the installer contract by July 15, 2026.",
+        "Complete required utility interconnection, permitting, installation, and inspection steps.",
+        "Submit any records required for the installer discount or local rebate and apply while the limited local rebate funding remains available."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The 2026 campaign was still open at the July 10 review date and offers a defined installer discount through a selected-contractor process. A qualifying participant who signs by July 15 is likely to receive the campaign discount, although separate local rebates are limited by funding.",
+      "evidenceUrls": [
+        "https://highcountryconservation.org/solarize-summit/"
+      ],
+      "evidenceText": "The current Solarize Summit page describes a 2026 solar campaign for local homes and businesses, a free site assessment and proposal, a July 15, 2026 contract deadline, an installer discount, and additional local rebates subject to limited funds.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3354",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Pennsylvania small business or individual proposing the design, construction, or major renovation of a qualifying high-performance building.",
+        "Design the project to satisfy the applicable high-performance building standards and include only eligible project costs.",
+        "Submit a complete Commonwealth Financing Authority application with the required project description, plans, budget, financing information, supporting documents, and application fee.",
+        "Provide the required matching funds and demonstrate a complete and feasible financing plan.",
+        "Receive discretionary Commonwealth Financing Authority approval and execute the grant agreement before drawing funds.",
+        "Complete the approved project and provide required progress, cost, certification, and closeout documentation."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The High Performance Building grant is a discretionary project award with match, project-quality, cost, documentation, and authority-approval requirements. Meeting baseline eligibility allows consideration but does not make the grant automatic.",
+      "evidenceUrls": [
+        "https://dced.pa.gov/programs/high-performance-building-program-hpb/",
+        "https://dced.pa.gov/download/high-performance-building-program-hpb-guidelines/"
+      ],
+      "evidenceText": "Pennsylvania DCED describes HPB grants for qualifying high-performance building projects, with a formal CFA application, required match, project and financing documentation, published caps, and discretionary approval and agreement steps.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3602",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Pennsylvania small business or individual proposing an eligible high-performance building design, construction, or major-renovation project.",
+        "Meet the applicable building-performance standards and eligible-cost rules and provide the required project contribution or financing structure.",
+        "Submit a complete Commonwealth Financing Authority application, project plans, budget, contractor and cost information, financial records, and the application fee.",
+        "Demonstrate repayment capacity and satisfy the loan's underwriting, security, collateral, and other financing requirements.",
+        "Receive Commonwealth Financing Authority approval, accept the commitment terms, and execute the loan documents before disbursement.",
+        "Complete the approved work and provide required construction, expenditure, certification, and closeout records."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "HPB loans require both qualifying project review and borrower-specific financing approval. Eligibility for a high-performance building project does not assure underwriting, authority approval, acceptable security, or available financing terms.",
+      "evidenceUrls": [
+        "https://dced.pa.gov/programs/high-performance-building-program-hpb/",
+        "https://dced.pa.gov/download/high-performance-building-program-hpb-guidelines/"
+      ],
+      "evidenceText": "Pennsylvania DCED's current HPB materials describe formal project applications, published loan limits and terms, financial and project documentation, borrower underwriting, CFA approval, commitment, and closing requirements.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22734",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Hingham Municipal Lighting Plant customer installing and owning a qualifying solar photovoltaic system at an eligible Hingham service location.",
+        "Submit the solar interconnection application and required system design, equipment, installer, site, and electrical information as the first program step.",
+        "Receive HMLP interconnection and incentive approval before energizing the system or claiming the rebate.",
+        "Complete required permitting, inspection, metering, labeling, and utility interconnection work.",
+        "Submit final invoices, installed-system records, and any other rebate closeout documentation required by HMLP."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "HMLP currently offers a capacity-based solar rebate through a defined interconnection and documentation process. An eligible customer-owned system that receives approval and completes the required inspections is likely to receive the published rebate, subject to program limits.",
+      "evidenceUrls": [
+        "https://www.hmlp.com/solar/",
+        "https://www.hmlp.com/solar/residential/",
+        "https://www.hmlp.com/service-forms/solar-interconnection/"
+      ],
+      "evidenceText": "HMLP's current solar pages direct customers to begin with an interconnection application and describe a customer-owned photovoltaic rebate subject to system, inspection, metering, and documentation requirements. The target record's LED-lighting mapping is not supported.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22300",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Holy Cross Energy member or approved workplace charging participant with the charging installation in the HCE service territory.",
+        "For a home charger, select an approved Level 2 charger, apply through Charge at Home, and accept the applicable flexible-rate or program participation agreement.",
+        "For workplace charging, submit the proposed site, charger, cost, ownership, and operating information and receive program approval before relying on reimbursement.",
+        "Purchase, install, activate, and connect the approved equipment in accordance with electrical, permit, and program requirements.",
+        "Submit required receipts, serial numbers, photographs, installation records, and other closeout information within the stated deadlines and allow verification.",
+        "For limited workplace funding, complete the project while the approved allocation remains available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "HCE's current home and workplace charger pathways use defined equipment, enrollment, documentation, and verification conditions. A preapproved and properly completed project is likely to receive the stated incentive, although workplace support is limited and first-come.",
+      "evidenceUrls": [
+        "https://www.holycross.com/member-programs/charge-at-home",
+        "https://www.holycross.com/member-programs/charge-at-home/apply-for-ev-charger",
+        "https://www.holycross.com/member-programs/charge-at-work",
+        "https://www.holycross.com/rebate-rules"
+      ],
+      "evidenceText": "Holy Cross Energy currently requires program enrollment or project approval, qualifying Level 2 equipment, installation and activation, receipts and identifying records, participation terms, and verification; workplace incentives are limited and first-come.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:389",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Holy Cross Energy member installing an eligible new net-metered solar system or qualifying battery-storage system in the HCE service territory.",
+        "For solar, submit the interconnection and incentive materials and receive the HCE approval letter before construction.",
+        "For battery storage, use eligible equipment, complete the Power+FLEX enrollment process, and accept the current capacity and dispatch participation agreement.",
+        "Complete permitting, installation, inspections, commissioning, interconnection, and authorization-to-operate requirements.",
+        "Submit invoices, equipment records, installed-capacity information, and other required final documents.",
+        "Maintain any required multiyear battery availability and performance obligations after enrollment."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current HCE solar and battery offerings have published, noncompetitive approval and performance conditions. A conforming preapproved solar or enrolled storage project is likely to receive the stated incentive, but current sources do not substantiate the record's legacy geothermal, biomass, or energy-monitoring mappings.",
+      "evidenceUrls": [
+        "https://www.holycross.com/member-programs/go-solar",
+        "https://www.holycross.com/member-programs/powerplus"
+      ],
+      "evidenceText": "HCE's current Go Solar program requires approval before construction and interconnection closeout; Power+FLEX offers a capacity-based battery incentive under eligible-equipment, enrollment, commissioning, and multiyear participation requirements.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2045",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Holy Cross Energy residential member in good standing and install the measure at an eligible residence in the service territory.",
+        "Purchase and install a currently eligible HVAC, insulation, air-sealing, or other residential measure that meets the 2026 technical and contractor requirements.",
+        "Obtain any required assessment, preapproval, testing, permit, or demand-response enrollment specified for the measure.",
+        "Submit the residential rebate application with itemized invoices, equipment or material records, contractor information, test results, and other measure-specific documentation within the current filing period.",
+        "Remain within the account-level annual cap and permit HCE to inspect or otherwise verify the completed work."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "HCE publishes current 2026 residential rebate categories and general claim rules. Most supported measures are prescriptive, so a timely claim meeting customer, technical, documentation, and verification requirements is likely to be paid, subject to annual caps and available funds.",
+      "evidenceUrls": [
+        "https://www.holycross.com/member-programs/energy-efficiency-and-rebates/residential-rebates-2026",
+        "https://www.holycross.com/rebate-rules",
+        "https://www.holycross.com/member-programs/energy-efficiency-and-rebates/residential-rebate-application"
+      ],
+      "evidenceText": "Holy Cross Energy's current residential materials list 2026 efficiency rebates, require eligible member accounts and qualifying installed measures, and call for timely applications, invoices, measure-specific records, caps, and possible inspection or verification.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1338",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible commercial, industrial, or residential investment property served by Holyoke Gas & Electric and maintain the utility account in good standing for the required period.",
+        "Keep local property taxes current and satisfy the program's ownership, lien, property, and borrower eligibility conditions.",
+        "Submit the CEAP application, installer supplement, deed, contractor quote, equipment specifications, project scope, and requested financial or property records before work.",
+        "Pass HG&E's case-by-case project and financing review and obtain any required Commission approval for a larger loan.",
+        "Execute the financing and lien agreements before beginning the approved work and complete the project within the required period.",
+        "After installation, submit invoices, permits, completion records, and other closeout documents and allow inspection before final payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "CEAP is zero-interest financing reviewed case by case, not a prescriptive rebate. Approval depends on the property, account and tax status, project scope, financing review, legal documents, and—above the program threshold—Commission action.",
+      "evidenceUrls": [
+        "https://www.hged.com/commercial/ee-business/ceap/default.aspx"
+      ],
+      "evidenceText": "HG&E's current CEAP page requires an eligible property owner and account, current taxes, a detailed application and contractor proposal, case-by-case approval, financing and lien documents, completion records, and possible inspection; larger loans require Commission approval.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1337",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible one-to-four-unit residential property served by Holyoke Gas & Electric and maintain the utility account in good standing for the required period.",
+        "Keep property taxes current and satisfy the program's ownership, lien, and borrower eligibility rules.",
+        "Complete any required energy audit or project review and obtain a qualifying contractor quote and scope.",
+        "Submit the REAP application, deed, contractor and equipment information, and requested financial and property documentation before work.",
+        "Receive HG&E financing approval, obtain any required Commission approval for a larger loan, and execute the financing and lien documents before installation.",
+        "Submit final invoices, permits, completion certifications, and other closeout records and pass any required verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "REAP is zero-interest financing subject to applicant, property, account, tax, project, and legal review. Even an eligible energy-audit or improvement project is not funded until HG&E approves the financing and the owner executes the required documents.",
+      "evidenceUrls": [
+        "https://www.hged.com/residential/ee-home/reap/default.aspx"
+      ],
+      "evidenceText": "HG&E's current REAP page describes owner and property eligibility, account and tax requirements, project documentation, financing and lien approval before work, possible Commission approval for larger loans, and post-installation closeout review.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1188",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own and occupy an eligible one-to-four-unit Minnesota property as the primary residence.",
+        "Use the loan for a currently eligible home-energy improvement such as qualifying HVAC or insulation work.",
+        "Provide the required licensed or registered contractor bid, project scope, cost, and equipment or material information.",
+        "Submit the loan application and borrower, income, credit, property, mortgage, and other underwriting documents requested by the lender and program.",
+        "Satisfy credit, repayment, mortgage-security, title, and available-funding requirements and execute the loan and security documents before funding.",
+        "Complete the approved work and provide final invoices and other completion documentation required for disbursement."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The MHFA Home Energy Loan finances eligible improvements but remains subject to borrower credit, property, mortgage-security, contractor, project, and funding review. Technical eligibility alone does not assure loan approval.",
+      "evidenceUrls": [
+        "https://www.mncee.org/mhfa-home-energy-loan"
+      ],
+      "evidenceText": "CEE's current program page describes a mortgage-secured loan for owner-occupied one-to-four-unit homes, eligible energy work, contractor-bid requirements, program and credit guidelines, and availability of funds.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2426",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Oregon residential customer of a utility participating in Energy Trust of Oregon programs and install the measure at an eligible existing home.",
+        "Select a measure currently listed for 2026 and meet its equipment, efficiency, sizing, installation, and existing-condition specifications.",
+        "Use an eligible contractor or trade ally and obtain any required preauthorization, testing, or project documentation specified for the measure.",
+        "Submit the current incentive application with invoices, product and model information, installation details, and required test or contractor records within the applicable deadline.",
+        "Permit quality-assurance review or inspection and complete any corrective actions before payment."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Energy Trust's current 2026 residential incentives for supported HVAC and envelope measures use published technical and documentation criteria. A compliant claim is likely after quality review, but the current documents do not support the record's battery-storage mapping and some legacy thermostat incentives have been discontinued.",
+      "evidenceUrls": [
+        "https://insider.energytrust.org/wp-content/uploads/Residential-Multifamily.pdf",
+        "https://insider.energytrust.org/wp-content/uploads/Specifications-Manual.pdf"
+      ],
+      "evidenceText": "Energy Trust's official 2026 residential and multifamily tables and specifications list current heat-pump and insulation incentives, application and technical requirements, and quality-assurance procedures. The mapped storage measure is not substantiated by these current residential materials.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5739",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Connecticut Eversource or United Illuminating electric customer who owns a qualifying one-to-four-unit residence, condominium, mobile home, or other property type accepted by the program.",
+        "Complete the Home Energy Solutions assessment and identify an eligible improvement before the project begins.",
+        "Use a Capital for Change-approved contractor and ensure the proposed work meets the current Home Energy Solutions measure requirements.",
+        "Request an eligible micro-loan amount and submit the customer, property, project, contractor, and financing information required for approval.",
+        "Do not start or complete the financed work until the loan documents have been approved and executed.",
+        "Complete the approved project and repay the loan through the electric-bill mechanism under the executed terms."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program offers defined zero-interest micro-loans for HES-identified work, but the applicant must complete the assessment, use an approved contractor, receive financing approval, and execute documents before work. Financing is therefore possible rather than automatic.",
+      "evidenceUrls": [
+        "https://www.capitalforchange.org/hes-micro-loan"
+      ],
+      "evidenceText": "Capital for Change's current page requires an eligible Eversource or UI customer and property, a Home Energy Solutions assessment, an approved contractor, an eligible unstarted project, and completed loan documents before work, with repayment through the electric bill.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3581",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or occupy an eligible existing Vermont single-family home and apply while current program funding remains available.",
+        "Use an Efficiency Excellence Network contractor participating in Home Performance with ENERGY STAR.",
+        "Complete required pre-work diagnostic, blower-door, combustion-safety, and health-and-safety testing and develop a qualifying air-sealing or insulation scope.",
+        "Have the contractor submit the project and income documentation, when applicable, and receive program preapproval before relying on the incentive.",
+        "Complete the approved work within the preapproval period and achieve the required leakage reduction and program specifications.",
+        "Complete post-work testing and submit final invoices, test results, and closeout records for Efficiency Vermont review and payment."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Efficiency Vermont's current program uses objective contractor, testing, scope, savings, income, and documentation rules and issues a time-limited preapproval. A properly completed preapproved project is likely to receive the incentive while funding remains.",
+      "evidenceUrls": [
+        "https://www.efficiencyvermont.com/rebates/list/home-performance-with-energy-star"
+      ],
+      "evidenceText": "The current Home Performance with ENERGY STAR page requires an eligible existing Vermont home, an approved network contractor, pre- and post-work testing, program preapproval, a qualifying leakage reduction, final documentation, and funding availability.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3559",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own a qualifying property in Howard County and use the applicable high-performance-building or geothermal tax-credit pathway.",
+        "For a high-performance building, hold the required county building permit and qualifying LEED or comparable certification at the applicable level.",
+        "For geothermal equipment, install a qualifying system, obtain the required Department of Inspections, Licenses and Permits certification, and document eligible costs within the prescribed period.",
+        "Submit the complete county tax-credit application and supporting permits, certifications, invoices, and property information by the pathway's annual deadline.",
+        "Receive Department of Finance review and approval and comply with restrictions on duplicate or overlapping county credits."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current 2026 high-performance-building application deadline was April 1, 2026, and the geothermal application deadline was June 30, 2026. Both had passed by the July 10 audit date, and no later current-cycle application was verified.",
+      "evidenceUrls": [
+        "https://www.howardcountymd.gov/finance/tax-credits",
+        "https://www.howardcountymd.gov/finance/resource/commercial-tax-credit-application"
+      ],
+      "evidenceText": "Howard County's current tax-credit page and 2026 applications require permits or certifications, cost and property documentation, and annual filing. The 2026 deadlines were April 1 for high-performance buildings and June 30 for geothermal devices.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5189",
+      "requiresProgramApproval": "unknown",
+      "approvalRequirements": [],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Hudson Light & Power's current official rebate page lists a solar rebate, but it does not expose current eligibility, application, interconnection, documentation, funding, or payment rules sufficient to determine the approval process or award probability. The record's window-film mapping is also unsupported.",
+      "evidenceUrls": [
+        "https://www.hudsonlight.com/rebates"
+      ],
+      "evidenceText": "The current Hudson Light & Power rebate page confirms that a solar rebate is listed but does not provide a current program form or enough process detail to audit approval and award likelihood.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "needs_evidence"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3348",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Hutchinson Utilities Commission residential customer and install the measure at the qualifying service address.",
+        "Purchase and install a product or system included in the current Bright Energy Solutions residential rebate catalog and meet its technical and installation specifications.",
+        "Use the current measure-specific application and satisfy any stated preapproval, contractor, permit, testing, recycling, or program-enrollment condition.",
+        "Submit the application with the paid invoice, manufacturer and model information, efficiency ratings, installation details, and other form-specific documents by the applicable deadline.",
+        "Allow Hutchinson Utilities Commission or Bright Energy Solutions to verify the installation and approve the claim before payment."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current HUC Bright Energy Solutions page publishes multiple prescriptive residential rebates and application forms. A complete claim for a currently listed measure is likely to be paid after objective document and installation review, subject to measure rules and funding.",
+      "evidenceUrls": [
+        "https://www.brightenergysolutions.com/members/hutchinson-utilities-commission?rebates=residential"
+      ],
+      "evidenceText": "The current Hutchinson Utilities Commission residential catalog lists 2026 applications for supported HVAC, heat-pump, water-heating, thermostat, lighting, appliance, and EV-charging measures. The current page does not substantiate the record's low-flow-fixture or commercial-dishwasher mappings.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:bcdeae04c5863d3b:hvac-optimization-program",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Southern California Edison business customer with an HVAC system suitable for the current optimization offering.",
+        "Engage through the program or its qualified service-provider process and permit the required system assessment and service planning.",
+        "Implement the approved HVAC optimization, controls, maintenance, or commissioning work using the program's technical and installation standards.",
+        "Participate in required quality-control, contractor, measurement, and performance-reporting activities.",
+        "Receive program acceptance or verification of the completed optimization services."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "SCE's current page confirms a ratepayer-funded HVAC optimization service with technical, contractor, quality-control, and reporting elements, but it does not publish a current direct financial award, application, selection, or payment rule. Award likelihood cannot be determined from the accessible official evidence.",
+      "evidenceUrls": [
+        "https://www.sce.com/business/save-costs-energy/savings-strategies/building-improvement"
+      ],
+      "evidenceText": "SCE currently describes holistic HVAC optimization delivered through trained providers with quality control and performance reporting. The accessible page does not state a customer cash incentive or a complete public approval and payment process.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "needs_evidence"
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:hvac-system-and-heat-pump-rebates",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Silicon Valley Power nonresidential customer at the Santa Clara installation site.",
+        "Select an eligible HVAC system or heat pump that meets the current technical, capacity, efficiency, and project-replacement requirements.",
+        "Use the current application and calculator or worksheet and submit the project scope, equipment, customer, and cost information for written preapproval before purchase or installation.",
+        "Permit any required pre-installation review or inspection and install only the approved equipment in accordance with codes and program specifications.",
+        "Submit paid invoices, equipment cut sheets, efficiency records, installation details, and other final documentation and pass post-installation inspection or verification.",
+        "Comply with the applicable incentive cap and any prohibition on duplicate SVP incentives for the same project cost."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "SVP's current business HVAC and heat-pump rebates are prescriptive and require written preapproval and final verification rather than competitive scoring. A qualifying approved project is likely to receive the calculated rebate after complete closeout review.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/53818/638874783876570000",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/80859/638868864084830000"
+      ],
+      "evidenceText": "SVP's current business rebate page, HVAC application, and heat-pump materials require technical eligibility and written preapproval before installation, followed by invoices, equipment records, and inspection or verification. The low-flow-fixture mapping is not supported by this offer.",
+      "reviewedAt": "2026-07-10T14:18:05Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

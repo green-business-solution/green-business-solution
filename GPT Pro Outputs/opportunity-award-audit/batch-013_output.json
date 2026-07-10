@@ -3,7 +3,561 @@
   "batchId": "batch-013",
   "inputFile": "batch-013_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.767Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T14:00:50Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3308",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Colorado Natural Gas customer for the service and measure receiving the incentive.",
+        "For a prescriptive rebate, install currently qualifying equipment or building-envelope work and retain the required invoice, model, efficiency, and contractor documentation.",
+        "For a custom commercial or industrial project, contact the program before installation, execute the participation documents, complete the required audit or savings review, and receive an incentive reservation.",
+        "Complete the approved work and permit post-installation inspection or savings verification when required.",
+        "Submit the claim while the applicable program budget remains available."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current prescriptive rebates use published eligibility and documentation rules, while custom projects use an audit, reservation, and verification pathway rather than competitive ranking. A compliant project is generally payable while funds remain.",
+      "evidenceUrls": [
+        "https://www.coloradonaturalgas.com/Rebates",
+        "https://coloradonaturalgas.com/commercial-efficiency-program"
+      ],
+      "evidenceText": "Colorado Natural Gas currently lists residential prescriptive rebates and a commercial custom process requiring early participation, savings review, incentive reservation, completion, and inspection.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5349",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or improve an eligible existing residential property in Colorado.",
+        "Use the financing for a currently eligible RENU improvement and confirm program scope for any mapped measure not expressly listed in the current product description.",
+        "Select a RENU-authorized contractor and apply through a participating credit union or lender.",
+        "Pass borrower credit, income, project, and lender underwriting requirements.",
+        "Execute the approved loan documents before installation or disbursement and complete the project under the lender and program terms."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "RENU is financing rather than an automatic rebate. Approval depends on borrower underwriting, an eligible project scope, an authorized contractor, and execution of the loan before work; some mapped measures are not expressly identified on the current program page.",
+      "evidenceUrls": [
+        "https://cocleanenergyfund.com/products/residential-products/renu/"
+      ],
+      "evidenceText": "The current RENU product finances listed residential energy improvements through authorized contractors and participating lenders, subject to credit and project approval.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4220",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Register the builder for the current program year and submit the required builder participation application and tax documentation.",
+        "Construct an eligible new home in Colorado Springs Utilities service territory.",
+        "Use an independent certified RESNET HERS rater and meet the current maximum HERS Index requirement.",
+        "Obtain the applicable LEED certification when claiming the LEED incentive component.",
+        "Submit the completed home report, rating, certifications, and other required records within the program deadline after final inspection.",
+        "Permit utility inspection or verification and apply while program funds remain."
+      ],
+      "approvalStage": "before_operation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The builder program uses objective annual enrollment, HERS performance, certification, and documentation requirements. A properly registered and verified qualifying home is likely to receive the published incentive, subject to available funds.",
+      "evidenceUrls": [
+        "https://www.csu.org/business-efficiency/builder-incentives",
+        "https://www.csu.org/hubfs/Document%20Library/BIPBuilderParticipationApp.pdf"
+      ],
+      "evidenceText": "Current builder materials require annual registration, an independent HERS rating, timely post-construction reporting, and supporting certification before payment.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1748",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible Colorado Springs Utilities business account for the utility service associated with the measure.",
+        "Select a currently offered qualifying HVAC, water-efficiency, irrigation, or custom measure and satisfy its technical specifications.",
+        "Obtain program approval before purchase or installation for custom projects and any other pathway identified as preapproval-required.",
+        "Use licensed contractors, permits, assessments, or inspections where the selected measure requires them.",
+        "Submit the current application with itemized invoices, equipment data, savings calculations, and completion documentation as applicable.",
+        "Permit post-installation inspection or verification and apply while funds remain available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current business offerings combine objective prescriptive rebates with preapproved custom pathways. A qualifying project that follows the correct sequence is generally likely to be paid after documentation and verification.",
+      "evidenceUrls": [
+        "https://www.csu.org/rebates-incentives/",
+        "https://www.csu.org/rebates-incentives/business-custom-energy",
+        "https://www.csu.org/rebates-incentives/business-water-efficiency",
+        "https://www.csu.org/rebates-incentives/business-irrigation-controller"
+      ],
+      "evidenceText": "Colorado Springs Utilities currently lists business rebates and states that custom projects require approval before purchase, followed by completion records and verification.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1753",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have the applicable Colorado Springs Utilities residential account and service at the installation address.",
+        "Purchase and install a currently qualifying product or measure during the applicable program year.",
+        "Obtain required permits and final inspection for HVAC, heat-pump water-heater, or other permit-controlled work.",
+        "Submit the current rebate application with itemized receipts, model and efficiency information, and contractor documentation by the stated deadline.",
+        "Permit inspection or verification when requested and apply while program funds remain."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The residential rebates are generally formula-based and use published equipment, service, permit, receipt, and submission requirements. A complete qualifying claim is likely to be approved while funds remain.",
+      "evidenceUrls": [
+        "https://www.csu.org/rebates-incentives/residential-rules",
+        "https://www.csu.org/rebates-incentives/",
+        "https://www.csu.org/hubfs/Document-Library/RESRebateApplication.pdf?hsLang=en"
+      ],
+      "evidenceText": "Current residential rules require eligible utility service, current-year installation, receipts and equipment records, timely filing, and permits or final inspection for specified measures.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5238",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be served by Columbia Gas of Kentucky and complete the current low-income program screening through the designated community-action administrator.",
+        "Provide household, income, account, occupancy, and property documentation requested during eligibility review.",
+        "Have an existing furnace that the program determines is old, nonworking, or inefficient and appropriate for replacement.",
+        "Receive program authorization before the furnace is replaced.",
+        "Complete any required assessment, contractor access, installation, and final verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program may replace an eligible low-income customer's qualifying furnace at no cost, but the award depends on household screening, furnace condition, program authorization, and available program capacity rather than a simple post-purchase claim.",
+      "evidenceUrls": [
+        "https://www.columbiagasky.com/energy-efficiency/for-your-home"
+      ],
+      "evidenceText": "Columbia Gas of Kentucky directs customers to eligibility screening for possible no-cost replacement of an old, nonworking, or inefficient furnace.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4127",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Columbia Gas of Virginia residential customer with an existing home and the required natural-gas service or primary heating configuration for the selected measure.",
+        "Purchase and install currently qualifying equipment during the applicable program period.",
+        "Meet the published model, efficiency, installation, and contractor requirements.",
+        "Submit the completed rebate application with invoice, proof of payment, account information, and equipment documentation by the deadline.",
+        "Permit inspection or verification when selected and apply while funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "WarmWise rebates are based on published customer, equipment, installation, and claim requirements rather than competitive scoring. A qualifying complete claim is likely to be paid, subject to verification and available funds.",
+      "evidenceUrls": [
+        "https://www.columbiagasva.com/energy-efficiency/for-your-home/available-rebates"
+      ],
+      "evidenceText": "The current Virginia residential rebate page lists qualifying gas equipment and thermostats, documentation requirements, possible inspection, and limited first-come funding.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22569",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Columbia Rural Electric Association commercial or agricultural member with the qualifying electric service at the project site.",
+        "Contact the cooperative before purchase or installation to confirm the current measure, incentive, and required case-by-case review.",
+        "Obtain any required preapproval or incentive commitment before starting the project.",
+        "Install qualifying equipment in accordance with the approved scope and applicable codes.",
+        "Submit the current application with invoices, model data, technical documentation, and completion records.",
+        "Permit inspection or verification and apply while program funds remain."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The cooperative states that commercial and agricultural rebates are evaluated case by case and remain subject to available funds. Eligibility therefore permits review but does not make an award automatic.",
+      "evidenceUrls": [
+        "https://www.columbiarea.coop/energy-efficiency/rebate-offers/",
+        "https://www.columbiarea.coop/wp-content/uploads/Commercial-Energy-Efficiency-Rebate-Form-20210330.pdf"
+      ],
+      "evidenceText": "Columbia REA currently lists commercial and agricultural efficiency rebates, with applications reviewed case by case and paid only after required documentation and verification.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22565",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Columbia Rural Electric Association residential member with qualifying service at the installation address.",
+        "Install a currently listed qualifying HVAC, thermostat, duct, water-heating, weatherization, or appliance measure within the active program period.",
+        "Use a qualified contractor and meet the current equipment, testing, code, and installation requirements.",
+        "Obtain preapproval before multifamily weatherization, multiple-project combinations, or any other measure identified as preapproval-required.",
+        "Submit the current application with invoices and technical records within the measure-specific filing period.",
+        "Permit program inspection or verification and apply while funds remain."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current residential forms publish objective equipment, contractor, timing, and documentation rules. Standard qualifying claims are likely to be paid, while specified multifamily or combined projects require advance approval.",
+      "evidenceUrls": [
+        "https://www.columbiarea.coop/energy-efficiency/rebate-offers/",
+        "https://www.columbiarea.coop/wp-content/uploads/Residential-Heating-and-Cooling-HVAC-10012025.pdf",
+        "https://www.columbiarea.coop/residential-weatherization-10012025-b/"
+      ],
+      "evidenceText": "Current Columbia REA residential materials list HVAC, duct, thermostat, water-heating, appliance, and weatherization rebates with filing deadlines and preapproval for specified projects.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2152",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Columbia River PUD commercial customer with qualifying electric service at the project site.",
+        "Contact the PUD for a project review or energy evaluation before purchase when the selected measure requires advance coordination.",
+        "Install a currently qualifying lighting, HVAC, thermostat, refrigeration, kitchen, insulation, or related measure meeting the current specifications.",
+        "Use qualified contractors and comply with applicable permits and codes.",
+        "Submit the required application, invoices, model data, and completion documentation.",
+        "Permit inspection or verification before final payment when requested and apply while funds remain."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The PUD offers current business efficiency assistance and rebates through defined measure pathways. A qualifying project that is coordinated as required and passes documentation and verification is generally likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://www.crpud.net/ways-to-save/at-work/free-energy-evaluations/",
+        "https://www.crpud.net/ways-to-save/at-work/lighting/lighting-retrofits/",
+        "https://www.crpud.net/ways-to-save/at-work/heating-and-cooling/air-source-heat-pumps/",
+        "https://www.crpud.net/ways-to-save/at-work/insulation-windows/insulation-upgrade/",
+        "https://www.crpud.net/ways-to-save/at-work/commercial-kitchen-and-refrigeration-programs/"
+      ],
+      "evidenceText": "Columbia River PUD currently offers business evaluations and measure-specific efficiency incentives, with project coordination, qualifying equipment, documentation, and verification requirements.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3232",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Columbia Rural Electric Association agricultural member with qualifying electric service.",
+        "Submit the variable-frequency-drive project for cooperative review and obtain written preapproval before purchase or installation.",
+        "Provide the required equipment, motor-load, operating-hour, cost, and projected-savings information.",
+        "Install the approved drive and associated controls in accordance with the approved scope and applicable code.",
+        "Submit invoices, completion records, and any required operating or commissioning information.",
+        "Permit post-installation verification and apply while current program funds remain."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current variable-frequency-drive incentive requires project-specific preapproval, technical information, cost limits, and post-installation documentation. Approval is therefore project- and budget-dependent rather than automatic.",
+      "evidenceUrls": [
+        "https://www.columbiarea.coop/energy-efficiency/rebate-offers/",
+        "https://www.columbiarea.coop/wp-content/uploads/Variable-Frequency-Drives-10012025.pdf"
+      ],
+      "evidenceText": "Columbia REA's current agricultural variable-frequency-drive form requires advance approval, project data, invoices, and verification, with payment subject to program limits and funds.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5765",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Columbia Rural Electric Association commercial member with qualifying electric service at the project site.",
+        "Contact the cooperative before purchase or installation to confirm the current equipment category and case-by-case incentive review.",
+        "Obtain any required preapproval or incentive commitment before starting work.",
+        "Install qualifying HVAC or thermostat equipment in accordance with the approved scope and applicable code.",
+        "Submit the application with invoices, model and efficiency documentation, and completion records.",
+        "Permit inspection or verification and apply while program funds remain."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Commercial rebates are evaluated case by case and remain subject to available funds. A technically eligible project may receive an award, but eligibility alone does not establish likely payment before project review.",
+      "evidenceUrls": [
+        "https://www.columbiarea.coop/energy-efficiency/rebate-offers/",
+        "https://www.columbiarea.coop/wp-content/uploads/Commercial-Energy-Efficiency-Rebate-Form-20210330.pdf"
+      ],
+      "evidenceText": "Columbia REA currently lists commercial HVAC and thermostat rebates but states that commercial incentives are reviewed case by case and require supporting project documentation.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3231",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Columbia Rural Electric Association residential member with qualifying service at the installation address.",
+        "Install a currently listed qualifying HVAC, duct, water-heating, weatherization, window, or appliance measure within the active program period.",
+        "Use a qualified contractor and meet current equipment, testing, code, and installation specifications.",
+        "Obtain preapproval before multifamily weatherization, multiple-project combinations, or any other measure identified as preapproval-required.",
+        "Submit the current application with invoices and technical records within the measure-specific filing period.",
+        "Permit inspection or verification and apply while funds remain."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The cooperative's current residential forms use objective equipment, contractor, filing, and documentation rules. Standard compliant claims are likely to be paid, while specified multifamily or combined projects require advance approval.",
+      "evidenceUrls": [
+        "https://www.columbiarea.coop/energy-efficiency/rebate-offers/",
+        "https://www.columbiarea.coop/wp-content/uploads/Residential-Heating-and-Cooling-HVAC-10012025.pdf",
+        "https://www.columbiarea.coop/residential-weatherization-10012025-b/"
+      ],
+      "evidenceText": "Current Columbia REA residential materials support multiple HVAC, duct, weatherization, water-heating, window, and appliance measures with deadlines, documentation, and specified preapproval conditions.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4213",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Columbia Water & Light commercial electric customer at the project site.",
+        "Request the required preauthorization and site review before purchasing or installing lighting or HVAC equipment.",
+        "Install equipment meeting the current efficiency, sizing, control, and contractor requirements.",
+        "Obtain applicable permits and complete any required duct, commissioning, or installation inspection.",
+        "Submit invoices, specifications, completion records, and the final incentive request within the applicable deadline.",
+        "Permit final inspection and apply while program funds remain available."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current commercial lighting and HVAC programs use a defined preauthorization, installation, documentation, and inspection sequence rather than competitive selection. An approved compliant project is likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://www.como.gov/utilities/columbia-power-partners/commercial-programs-and-tools/",
+        "https://www.como.gov/utilities/columbia-power-partners/commercial-programs-and-tools/commercial-lighting-incentive-program/",
+        "https://www.como.gov/utilities/columbia-power-partners/commercial-programs-and-tools/air-conditioner-heat-pump-rebates/"
+      ],
+      "evidenceText": "Columbia Water & Light currently requires advance approval for commercial lighting and HVAC incentives, followed by qualifying installation, invoices, and inspection.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2981",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Columbia Water & Light residential electric customer at the project address.",
+        "Use the applicable current pathway for HVAC, weatherization, water heating, windows, or Level 2 electric-vehicle charging.",
+        "For Home Performance measures, complete the initial energy assessment and obtain recommendations before starting work.",
+        "Use qualified contractors, obtain required permits, and install equipment or improvements meeting current specifications.",
+        "Submit invoices, assessment or testing results, equipment data, and the final application by the applicable deadline.",
+        "Permit post-installation inspection or verification and apply while funds remain."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current residential offerings use objective measure-specific requirements. Home Performance work requires an assessment before installation, and qualifying completed projects are generally likely to be paid after documentation and inspection.",
+      "evidenceUrls": [
+        "https://www.como.gov/utilities/columbia-power-partners/residential-programs-and-tools/",
+        "https://www.como.gov/utilities/columbia-power-partners/residential-programs-and-tools/home-performance-rebates-and-loans/",
+        "https://www.como.gov/utilities/columbia-power-partners/residential-programs-and-tools/air-conditioner-and-heat-pump-rebates/"
+      ],
+      "evidenceText": "Columbia Water & Light currently lists residential HVAC, Home Performance, electrification, water-heating, insulation, window, and Level 2 charging pathways with assessment, permit, documentation, and inspection rules.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2434",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Columbia Water & Light residential electric customer at the installation address.",
+        "Install currently qualifying central air-conditioning, air-source heat-pump, or eligible geothermal equipment.",
+        "Use a qualified contractor, obtain the required permit, and meet current sizing, efficiency, and installation specifications.",
+        "Submit the rebate application, paid invoice, equipment records, and permit information within the current filing period.",
+        "Permit utility inspection or verification and apply while funds remain.",
+        "Confirm eligibility through a separate current program before treating an efficient pump replacement as covered by this HVAC rebate."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current official page supports air-conditioning, air-source heat-pump, and eligible geothermal rebates, but it does not substantiate the mapped efficient-pump replacement. The documented HVAC measures are likely after review, while the full legacy mapping needs reconciliation.",
+      "evidenceUrls": [
+        "https://www.como.gov/utilities/columbia-power-partners/residential-programs-and-tools/air-conditioner-and-heat-pump-rebates/",
+        "https://www.como.gov/utilities/columbia-power-partners/residential-programs-and-tools/"
+      ],
+      "evidenceText": "Current Columbia Water & Light materials document residential air-conditioning, heat-pump, and eligible geothermal rebates with permit, invoice, deadline, and inspection requirements; efficient pump replacement is not documented there.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2628",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Columbia Water & Light electric customer with a qualifying solar project at the service address.",
+        "Consult the utility and submit the applicable solar rebate, net-metering, and interconnection materials before installation or system energization.",
+        "Use qualifying photovoltaic modules, inverters, metering, and licensed installation meeting current technical and code requirements.",
+        "Complete permits, inspection, interconnection approval, and permission to operate.",
+        "Submit final invoices, system data, and production or completion documentation required for the rebate.",
+        "Confirm another current program before treating window film or general submetering and energy monitoring as eligible solar-rebate measures."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current program supports qualifying solar photovoltaic systems through rebate and interconnection review, but the mapped window-film and general monitoring measures are not solar-rebate measures. The opportunity is therefore only partially aligned with the target mapping.",
+      "evidenceUrls": [
+        "https://www.como.gov/utilities/columbia-power-partners/solar/solar-rebates/",
+        "https://www.como.gov/utilities/columbia-power-partners/solar/net-metering/"
+      ],
+      "evidenceText": "Columbia Water & Light currently requires solar-project coordination, interconnection, inspection, and final documentation; its solar pages do not document window-film or general submetering incentives.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5836",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The former standalone Maryland Combined Heat and Power grant intake is inactive, so no current application can be approved under that program.",
+        "For a future or successor solicitation, confirm that the applicant, site, CHP technology, fuel, and project costs meet the new notice's eligibility rules.",
+        "Submit a complete application during an open funding period and pass any technical, cost-effectiveness, scoring, and ranking review.",
+        "Receive a formal award and execute the grant agreement before incurring reimbursable project costs.",
+        "Confirm that any biomass or biogas configuration is expressly eligible under the active successor solicitation."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The Maryland Energy Administration identifies the standalone CHP program as inactive and does not provide a current application pathway. A project could only proceed through a future or successor solicitation with separate selection and agreement requirements.",
+      "evidenceUrls": [
+        "https://energy.maryland.gov/business/Pages/MEACHP.aspx"
+      ],
+      "evidenceText": "The official Maryland page states that the standalone Combined Heat and Power program is inactive and directs interested parties to consider other or successor opportunities.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5317",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible ComEd nonresidential account for the installation site.",
+        "Purchase a currently qualifying LED lighting product through a participating distributor or other approved instant-discount channel.",
+        "Provide the account, installation-site, product, quantity, and customer information required for point-of-sale validation.",
+        "Permit the distributor or program to retain claim records and verify installation or eligibility.",
+        "Confirm a separate current program before treating a low-flow plumbing fixture as eligible under the lighting-discount offering.",
+        "Complete the transaction while instant-discount funds and qualifying products remain available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Current materials support instant discounts for qualifying business lighting through participating market channels, but the mapped low-flow fixture is not a lighting measure. The LED portion is awardable after validation; the full opportunity mapping needs confirmation.",
+      "evidenceUrls": [
+        "https://secure.comed.com/WaystoSave/ToolsAndResources/Pages/FindaServiceProvider.aspx",
+        "https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt0dd576334f989cef/69399b2a685dab31f7bc8caa/2026_ComEd_Application_EESPParticipation_FINAL_2.pdf?branch=prod_alias"
+      ],
+      "evidenceText": "ComEd's current business channels include instant lighting discounts through participating providers; current evidence does not place low-flow plumbing fixtures in that lighting program.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22233",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible ComEd customer with a qualifying distributed-generation or permanently installed storage project.",
+        "Submit and obtain approval for the required interconnection application and install compliant smart-inverter and metering equipment.",
+        "For storage, meet the current requirement that the system be associated with qualifying distributed generation and satisfy capacity and operational conditions.",
+        "Receive permission to operate before final rebate approval where required.",
+        "Submit a complete signed rebate application with invoices, proof of payment, equipment data, and interconnection documentation.",
+        "Permit inspection or verification when requested.",
+        "Confirm separate treatment for community-solar subscriptions or general submetering, which are not documented as direct equipment rebates under this offering."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current program provides formula-based rebates for qualifying distributed generation and storage after interconnection and documentation review. The mapped community-solar subscription and general monitoring categories are not direct claimant equipment rebates, so the legacy mapping is only partially supported.",
+      "evidenceUrls": [
+        "https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/bltceb8d9495434223b/695be67c33699162b6ea350c/20065_Net_Metering_FAQ_2025_1223A.pdf",
+        "https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt2810b689df2e361f/67741700adc7815acf7dba44/DGRebate_TermsConditions-2024-v2.pdf"
+      ],
+      "evidenceText": "Current ComEd materials require eligible generation or associated storage, interconnection approval, permission to operate, a complete rebate claim, and possible inspection; community-solar subscriptions are not direct equipment rebates.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3166",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible ComEd residential account for the installation or purchase address.",
+        "Use the current measure-specific pathway and select equipment or products meeting the applicable efficiency and qualifying-product requirements.",
+        "Use a participating retailer, distributor, contractor, or Energy Efficiency Service Provider where the pathway requires one.",
+        "Obtain any required preapproval, assessment, or instant-discount validation before purchase or installation.",
+        "Submit invoices, equipment data, contractor records, and completion documentation for post-installation claims and permit verification or inspection.",
+        "Confirm current eligibility separately for mapped categories not clearly documented in the current residential offering, including any ground-source, low-flow, laundry, or induction measure."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "ComEd currently operates standardized residential product, HVAC, thermostat, lighting, and whole-home pathways. Supported measures are generally likely to receive an incentive after the applicable point-of-sale or contractor review, although several legacy mapped categories need current confirmation.",
+      "evidenceUrls": [
+        "https://secure.comed.com/WaystoSave/ToolsAndResources/Pages/FindaServiceProvider.aspx",
+        "https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt0dd576334f989cef/69399b2a685dab31f7bc8caa/2026_ComEd_Application_EESPParticipation_FINAL_2.pdf?branch=prod_alias"
+      ],
+      "evidenceText": "Current ComEd materials identify residential lighting, product, thermostat, heating-and-cooling, home-savings, multifamily, and whole-home electrification pathways, with participating-provider and verification requirements.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3074",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible ComEd business account and select the correct current pathway for the proposed measure.",
+        "Use a participating Energy Efficiency Service Provider, distributor, or other approved market actor when the pathway requires one.",
+        "For standard, custom, industrial, retro-commissioning, or other project-based incentives, submit the project before purchase or installation when preapproval is required.",
+        "Provide equipment specifications, baseline and savings data, cost information, and other technical documentation requested during review.",
+        "Install the approved equipment or measures and submit invoices, completion records, and final savings documentation.",
+        "Permit inspection, measurement, or verification and complete the project while program funds remain."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The 2026 business portfolio includes instant, standard, custom, industrial, refrigeration, HVAC, controls, drives, compressed-air, and retro-commissioning pathways. Awards are generally likely for qualifying projects that follow the correct preapproval or point-of-sale process and pass verification.",
+      "evidenceUrls": [
+        "https://secure.comed.com/WaystoSave/ToolsAndResources/Pages/FindaServiceProvider.aspx",
+        "https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt0dd576334f989cef/69399b2a685dab31f7bc8caa/2026_ComEd_Application_EESPParticipation_FINAL_2.pdf?branch=prod_alias"
+      ],
+      "evidenceText": "ComEd's current business portfolio covers instant discounts and project-based incentives for lighting, HVAC, controls, refrigeration, drives, compressed air, custom efficiency, and retro-commissioning, subject to pathway-specific approval and verification.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:comfortablyca_com",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible SDG&E customer site and use the qualifying equipment for an eligible end-use application.",
+        "Select equipment appearing on the current Comfortably CA qualified-product list or obtain any required engineering review for a nonstandard or large product.",
+        "Purchase through a participating distributor and provide the customer, installation-site, equipment, and contractor information needed for the distributor's claim.",
+        "Install the equipment in accordance with program, code, and manufacturer requirements and retain requested records.",
+        "Allow the distributor and program administrator to validate the transaction and incentive.",
+        "Confirm how much of the distributor incentive will be passed through to the customer because the program does not guarantee a direct customer rebate."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Comfortably CA pays incentives through participating distributors rather than promising a direct rebate to the end customer. A qualifying HVAC transaction may receive a program incentive, but distributor participation, product qualification, available funds, and pass-through terms affect the customer award.",
+      "evidenceUrls": [
+        "https://www.comfortablyca.com/sdge/faqs/",
+        "https://www.comfortablyca.com/sdge/contractors/",
+        "https://www.comfortablyca.com/sdge/distributors/",
+        "https://www.comfortablyca.com/sdge/sites/sdge/files/2026-05/Comfortably%20CA%20QPL_2026.pdf"
+      ],
+      "evidenceText": "Current Comfortably CA materials state that incentives are claimed by participating distributors for qualifying products and that any customer price reduction depends on the distributor's pass-through practice.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5650",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "No new FY 2026 application can be submitted because that round has completed selection and agreements have been distributed.",
+        "For a future round, be an eligible Maryland commercial or industrial applicant with a project and costs meeting the current funding notice.",
+        "Submit a complete application by the future deadline with the required project scope, budget, savings, technical, and organizational documentation.",
+        "Pass threshold review, competitive scoring, and rank-order selection within available funds.",
+        "Receive a formal award and execute the grant agreement before beginning costs that require pre-agreement authorization.",
+        "Confirm that a stand-alone retro-commissioning study is eligible under the future notice rather than assuming eligibility from the legacy record."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The FY 2026 Commercial and Industrial grant round is no longer accepting applications and agreements have been distributed. A future award would require a new solicitation, competitive scoring and ranking, and an executed agreement, so a current new applicant is unlikely to receive an award.",
+      "evidenceUrls": [
+        "https://energy.maryland.gov/business/Pages/incentives/empowermdcigp.aspx",
+        "https://energy.maryland.gov/business/SiteAssets/Pages/incentives/empowermdcigp/FY26%20C%26I%20Grant%20Program%20FOA%20V02.pdf"
+      ],
+      "evidenceText": "Maryland's current program page states that FY 2026 award agreements have been distributed and points prospective applicants to a future FY 2027 update; the completed round used competitive scoring and grant agreements.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2437",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible existing-building customer of a participating utility in Oregon or southwest Washington.",
+        "For a standard incentive, install a currently qualifying measure and meet the applicable equipment, contractor, and technical specifications.",
+        "Submit the current incentive form with the invoice, tax form, specifications, and other required documentation within the filing period after installation.",
+        "For a custom project, contact Energy Trust before purchase or installation, complete the technical analysis, and receive a written incentive offer or preapproval.",
+        "Complete the project in accordance with the approved scope and submit final cost and completion records.",
+        "Permit post-installation inspection, commissioning, or savings verification and apply while funds remain."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Energy Trust's current Existing Buildings program provides published standard incentives and a defined custom preapproval path. Qualifying standard claims and preapproved custom projects are generally likely to be paid after complete documentation and verification.",
+      "evidenceUrls": [
+        "https://insider.energytrust.org/programs/existing-buildings/",
+        "https://blog.energytrust.org/a-step-by-step-guide-to-applying-for-existing-buildings-cash-incentives/",
+        "https://blog.energytrust.org/custom-projects-made-easy-how-to-uncover-energy-savings-in-any-project/"
+      ],
+      "evidenceText": "The current Existing Buildings program distinguishes standard post-installation claims from custom projects requiring early technical review, a written incentive offer, final invoices, and verification.",
+      "reviewedAt": "2026-07-10T14:00:50Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

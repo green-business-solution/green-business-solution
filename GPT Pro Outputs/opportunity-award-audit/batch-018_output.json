@@ -3,7 +3,536 @@
   "batchId": "batch-018",
   "inputFile": "batch-018_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.768Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T13:54:24Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2296",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Duke Energy Indiana residential or builder customer for the measure claimed.",
+        "The installed equipment or building-envelope measure must meet the current Smart $aver efficiency and technical specifications.",
+        "A participating contractor must be used where the measure-specific rules require one.",
+        "The installation must be completed and supported by an application containing the invoice, equipment identifiers, and other requested project documentation.",
+        "Duke Energy must verify eligibility and approve the rebate claim."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is a formula-based rebate rather than a competitive award. A compliant customer with a qualifying installation and complete documentation is ordinarily approved, subject to program verification and current terms.",
+      "evidenceUrls": [
+        "https://www.duke-energy.com/home/products/smart-saver",
+        "https://www.duke-energy.com/home/products/smart-saver/hvac-install"
+      ],
+      "evidenceText": "The current Smart $aver process requires qualifying work, measure-specific documentation, and Duke Energy approval. The program states that approved rebates generally arrive four to six weeks after a complete application is received.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3605",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Duke Energy South Carolina residential electric customer for the measure claimed.",
+        "The installed equipment or building-envelope measure must meet the current Smart $aver efficiency and technical specifications.",
+        "A participating contractor must be used where the measure-specific rules require one.",
+        "The installation must be completed and supported by an application containing the invoice, equipment identifiers, and other requested project documentation.",
+        "Duke Energy must verify eligibility and approve the rebate claim."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is a formula-based rebate rather than a competitive award. A compliant customer with a qualifying installation and complete documentation is ordinarily approved, subject to program verification and current terms.",
+      "evidenceUrls": [
+        "https://www.duke-energy.com/home/products/smart-saver",
+        "https://www.duke-energy.com/home/products/smart-saver/hvac-install"
+      ],
+      "evidenceText": "The current Smart $aver process requires qualifying work, measure-specific documentation, and Duke Energy approval. The program states that approved rebates generally arrive four to six weeks after a complete application is received.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3465",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Duke Energy Carolinas residential electric customer in North Carolina for the measure claimed.",
+        "The installed equipment or building-envelope measure must meet the current Smart $aver efficiency and technical specifications.",
+        "A participating contractor must be used where the measure-specific rules require one.",
+        "The installation must be completed and supported by an application containing the invoice, equipment identifiers, and other requested project documentation.",
+        "Duke Energy must verify eligibility and approve the rebate claim."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is a formula-based rebate rather than a competitive award. A compliant customer with a qualifying installation and complete documentation is ordinarily approved, subject to program verification and current terms.",
+      "evidenceUrls": [
+        "https://www.duke-energy.com/home/products/smart-saver",
+        "https://www.duke-energy.com/home/products/smart-saver/hvac-install"
+      ],
+      "evidenceText": "The current Smart $aver process requires qualifying work, measure-specific documentation, and Duke Energy approval. The program states that approved rebates generally arrive four to six weeks after a complete application is received.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22624",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Duke Energy Florida business electric customer.",
+        "The project must install qualifying electrical make-ready infrastructure for Level 2 or faster charging.",
+        "Claimed costs must be eligible infrastructure costs; charger hardware, software, and permit fees are not covered by the credit.",
+        "The work must be completed and documented with paid invoices and requested project details.",
+        "Duke Energy Florida must review and approve the credit application and may verify the installation."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The credit is a defined customer incentive for eligible charging make-ready work, not a ranked grant. Approval is likely when the customer, installation, costs, and documentation satisfy the current rules.",
+      "evidenceUrls": [
+        "https://www.duke-energy.com/business/products/ev-complete/charger-prep-credit",
+        "https://investors.duke-energy.com/news/news-details/2025/New-Duke-Energy-programs-offer-Florida-customers-more-choices-related-to-electric-vehicles/default.aspx"
+      ],
+      "evidenceText": "Duke Energy Florida identifies the Charger Prep Credit as a one-time credit for qualifying electrical infrastructure needed for Level 2 or faster charging. The official description excludes charger equipment, software, and permitting expenses from eligible costs.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22741",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Duke Energy Florida residential electric customer.",
+        "The customer must enroll an eligible electric vehicle or Level 2 charging arrangement in the program.",
+        "The customer must provide or authorize the charging data needed for program administration.",
+        "Charging must comply with the designated weekday off-peak windows; weekends and designated holidays may be charged at any time under the current rules.",
+        "Duke Energy Florida must approve enrollment and confirm ongoing compliance."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "The current program is a permanent, formulaic monthly bill credit with no stated enrollment cap. Once an eligible customer is enrolled and follows the charging schedule, the credit is expected rather than competitively awarded.",
+      "evidenceUrls": [
+        "https://www.duke-energy.com/home/products/ev-complete/off-peak-credit",
+        "https://investors.duke-energy.com/news/news-details/2025/New-Duke-Energy-programs-offer-Florida-customers-more-choices-related-to-electric-vehicles/default.aspx"
+      ],
+      "evidenceText": "The official program provides a monthly bill credit to enrolled residential customers who charge during specified off-peak periods. Duke Energy states that the program is permanent and no longer has an enrollment limit.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1421",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Duke Energy Florida business electric customer.",
+        "The project must use a current prescriptive measure or satisfy the technical and savings requirements for a custom incentive.",
+        "Custom projects and any other measures identified by the program must receive preapproval before equipment is ordered or installed.",
+        "The applicant must submit the required application, equipment specifications, project-cost information, invoices, and energy-savings documentation.",
+        "Duke Energy may perform technical review or post-installation verification before approving payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Prescriptive incentives are formula-based, and compliant custom projects can also be approved after technical review. Award remains subject to measure eligibility, required preapproval, complete documentation, verification, and available program funding.",
+      "evidenceUrls": [
+        "https://www.duke-energy.com/business/products/smartsaver",
+        "https://www.duke-energy.com/business/products/smartsaver/faq",
+        "https://www.duke-energy.com/Business/Products/SmartSaver/Custom-Incentives-FL?jur=FL01"
+      ],
+      "evidenceText": "Duke Energy's current business Smart $aver materials distinguish prescriptive incentives from custom projects. The custom path requires coordination and approval, while completed projects must supply the documentation needed to confirm eligibility and incentive payment.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22602",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The historical applicant had to be an eligible Indiana school district or other qualifying school-bus operator in Duke Energy Indiana's service area.",
+        "The proposal had to cover a qualifying electric school bus and associated charging infrastructure and provide the requested project information.",
+        "Duke Energy had to select the project within the six-bus pilot allocation, including the stated priority for schools with higher free or reduced-price lunch participation.",
+        "Selected participants had to execute program agreements and complete the equipment and verification requirements.",
+        "No current application pathway is identified because the two-year pilot has ended."
+      ],
+      "approvalStage": "none",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "Duke Energy Indiana described this as a two-year, six-bus pilot launched on October 1, 2022. That pilot period ended in 2024, and the current Duke Energy EV initiatives page does not present an open Indiana school-bus application.",
+      "evidenceUrls": [
+        "https://news.duke-energy.com/releases/duke-energy-indiana-plans-two-year-electric-transportation-pilot-programs",
+        "https://www.duke-energy.com/energy-education/electric-vehicles/ev-initiatives"
+      ],
+      "evidenceText": "The official launch announcement limited this pilot to six school buses and stated that it would run for two years beginning October 1, 2022. No current open enrollment is shown on Duke Energy's active EV initiatives page.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22551",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The historical applicant had to be an eligible Duke Energy Indiana residential electric customer.",
+        "The customer had to use an eligible Level 2 charging arrangement and enroll through the pilot administrator.",
+        "Enrollment was limited to 500 customers on a first-come basis.",
+        "Participants had to provide charging information and satisfy the monitored off-peak charging requirements to earn quarterly credits.",
+        "No current application pathway is identified because the two-year pilot has ended."
+      ],
+      "approvalStage": "none",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "The official announcement described a two-year pilot beginning October 1, 2022, capped at 500 participating customers. The stated pilot period ended in 2024, and Duke Energy's current EV initiatives page does not show open Indiana enrollment.",
+      "evidenceUrls": [
+        "https://news.duke-energy.com/releases/duke-energy-indiana-plans-two-year-electric-transportation-pilot-programs",
+        "https://www.duke-energy.com/energy-education/electric-vehicles/ev-initiatives"
+      ],
+      "evidenceText": "The Indiana off-peak pilot offered quarterly credits for two years to no more than 500 residential customers. The current Duke Energy EV initiatives page does not identify an active Indiana off-peak credit enrollment.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3968",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Duke Energy Progress residential electric customer in South Carolina for the measure claimed.",
+        "The installed equipment or building-envelope measure must meet the current Smart $aver efficiency and technical specifications.",
+        "A participating contractor must be used where the measure-specific rules require one.",
+        "The installation must be completed and supported by an application containing the invoice, equipment identifiers, and other requested project documentation.",
+        "Duke Energy must verify eligibility and approve the rebate claim."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is a formula-based rebate rather than a competitive award. A compliant customer with a qualifying installation and complete documentation is ordinarily approved, subject to program verification and current terms.",
+      "evidenceUrls": [
+        "https://www.duke-energy.com/home/products/smart-saver",
+        "https://www.duke-energy.com/home/products/smart-saver/hvac-install"
+      ],
+      "evidenceText": "The current Smart $aver process requires qualifying work, measure-specific documentation, and Duke Energy approval. The program states that approved rebates generally arrive four to six weeks after a complete application is received.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4687",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The property must be in Duluth and receive natural gas service from ComfortSystems.",
+        "A home energy analysis must identify eligible improvements with a simple payback of no more than 20 years.",
+        "The borrower must have adequate property equity for the required second mortgage or lien and satisfy the program's credit and underwriting review.",
+        "The applicant must provide two contractor bids, or two material bids for an eligible do-it-yourself project, plus any required owner consent.",
+        "The borrower must accept the loan documents and required automatic payment arrangement before financing is approved."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The loan is available for qualifying projects, but approval depends on an energy analysis, property equity, lien position, documentation, and borrower underwriting. Those financial gates make approval materially less automatic than a standard rebate.",
+      "evidenceUrls": [
+        "https://comfortsystemsduluth.com/realtors-home-owners/home-energy-loans"
+      ],
+      "evidenceText": "ComfortSystems lists a current home-energy loan with project, payback, equity, lien, bid, and repayment requirements. The published maximum is higher for owner-occupied homes than for rental units, and approval occurs before financing is issued.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3873",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The facility must be an eligible commercial or industrial customer served by Duquesne Light Company.",
+        "The project must use a current prescriptive measure or demonstrate eligible electric-energy savings under the custom path.",
+        "The applicant must provide the required application package, which may include a utility bill, scope of work, operating hours, equipment specifications, and itemized invoice.",
+        "Custom projects must complete the program's technical review and any required preinstallation coordination.",
+        "The application must be submitted within the current program deadline, including the stated post-installation filing window, and remains subject to available funds."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current business program offers published prescriptive rebates and a defined custom-incentive formula. A qualifying, documented project is likely to be paid, although custom review, deadlines, verification, and available funding still apply.",
+      "evidenceUrls": [
+        "https://www.duqenergyefficiency.com/business-solutions",
+        "https://www.duqenergyefficiency.com/rebates-available",
+        "https://www.duqenergyefficiency.com/faq",
+        "https://www.duqenergyefficiency.com/apply-now"
+      ],
+      "evidenceText": "Duquesne Light's current business efficiency phase began in June 2026 and offers prescriptive and custom incentives. The official application guidance lists supporting records and requires timely submission after project completion.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22376",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an active Duquesne Light Company electric customer.",
+        "The customer must own or lease an eligible electric vehicle.",
+        "The customer must submit the current online EV Bonus Cash claim with account and vehicle information.",
+        "Duquesne Light must verify the customer and vehicle before issuing the one-time payment.",
+        "The current official benefit is an EV ownership or lease incentive and is not conditioned on installing an EV charger."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current successor incentive is a fixed one-time benefit, not a competitive award. An eligible Duquesne Light customer who supplies verifiable vehicle and account information is likely to receive it.",
+      "evidenceUrls": [
+        "https://duquesnelight.com/energy-money-savings/electric-vehicles",
+        "https://duquesnelight.com/energy-money-savings/electric-vehicles/ev-charging"
+      ],
+      "evidenceText": "Duquesne Light currently advertises EV Bonus Cash for customers who own or lease an electric vehicle. The official current program is tied to verified EV ownership or leasing rather than to charger-installation costs.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3876",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "No current residential rebate application is available while Duquesne Light refreshes the program.",
+        "When applications reopen, the claimant will need to be an eligible Duquesne Light residential customer.",
+        "The equipment or home-improvement measure will need to meet the then-current technical specifications.",
+        "The claimant will need to submit purchase and installation documentation and complete program verification.",
+        "Duquesne Light or its implementation contractor must approve the claim before payment."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "The current official residential program page says rebates are not yet available and the program is being refreshed. A new award is therefore not presently attainable even though a successor program may reopen later.",
+      "evidenceUrls": [
+        "https://duquesne.clearesult.com/",
+        "https://duquesnelight.com/energy-money-savings/rebates-incentives"
+      ],
+      "evidenceText": "The current residential rebate site states that energy rebates are not available yet. Duquesne Light's own rebate page likewise says the program is being refreshed and directs customers to check back.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22194",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must have purchased or leased a qualifying battery-electric or plug-in hybrid vehicle during the current eligibility period ending October 31, 2027.",
+        "The applicant must open and maintain an E-ZPass Minnesota account and pay the ordinary account balance and fees.",
+        "The applicant must submit proof of purchase, lease, or title transfer and satisfy vehicle-type verification.",
+        "Only one incentive is available per person under the current rules.",
+        "MnDOT must approve the documentation and apply the toll credit to the eligible account."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "The incentive is a fixed toll credit for verified qualifying vehicles rather than a competitive selection. Approval is expected when the applicant submits valid proof, maintains the required account, and meets the one-per-person rule.",
+      "evidenceUrls": [
+        "https://www.dot.state.mn.us/ezpassmn/news.html"
+      ],
+      "evidenceText": "MnDOT's current E-ZPass Minnesota information extends the qualifying vehicle period through October 31, 2027 and specifies fixed credits for battery-electric and plug-in hybrid vehicles. Documentation and an active toll account are required.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5452",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The property must be an eligible existing residential or commercial building in Eagle County and meet the applicable utility-account requirements.",
+        "The applicant must complete the required home energy assessment or business walkthrough when the measure-specific rules call for it.",
+        "The equipment or efficiency improvement must meet the current technical and project-specific requirements.",
+        "The project must be completed and operational before application, and the applicant must submit the invoice, photographs, specifications, and other required records within 90 days.",
+        "Walking Mountains may inspect the project, and payment remains subject to program approval and available first-come funds."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program uses published rebate rules rather than competitive scoring. A timely, complete claim for a qualifying project is likely to be approved, but limited funds, project caps, and possible inspection prevent treating payment as unconditional.",
+      "evidenceUrls": [
+        "https://www.walkingmountains.org/sustainability-hub/weatherization-energy-efficiency-and-safety-rebates/",
+        "https://www.walkingmountains.org/sustainability-hub/energy-efficiency-programs/rebates-incentives/"
+      ],
+      "evidenceText": "Walking Mountains requires completed and operating projects, supporting invoices and project records, and timely filing. The official guidance also states that funds are limited and may be awarded on a first-come basis.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22786",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The solar project must be located in an eligible Eagle County jurisdiction identified by the current program.",
+        "The system must be a qualifying grid-tied, net-metered solar photovoltaic installation.",
+        "Where the rebate matches a Holy Cross Energy incentive, the applicant must satisfy and document the related utility-incentive requirements.",
+        "The system must be completed and operational before application, with invoice, photographs, specifications, utility information, and other requested records submitted within 90 days.",
+        "Walking Mountains must approve the claim, and payment remains subject to location-specific eligibility and available funds."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The solar rebate follows published location, system, and documentation rules instead of competitive ranking. A qualifying, timely claim is likely to be approved, although the jurisdiction limits, matching-incentive conditions, verification, and funding remain material.",
+      "evidenceUrls": [
+        "https://www.walkingmountains.org/sustainability-hub/energy-efficiency-programs/solar-energy-and-storage/solarize-eagle-county/solar-and-storage-rebates/",
+        "https://www.walkingmountains.org/sustainability-hub/energy-efficiency-programs/rebates-incentives/"
+      ],
+      "evidenceText": "Walking Mountains lists a current Eagle County solar photovoltaic rebate with jurisdiction and utility-program conditions. General rebate rules require the system to be installed and operating before a documented claim is filed.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5250",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an East Central Electric Cooperative member in good standing at an eligible residence.",
+        "A current cooperative home energy audit must be completed before the weatherization work.",
+        "The claimed improvements must be recommended in the auditor's report and satisfy the program's residence and energy-use requirements.",
+        "The applicant must submit the completed application and paid receipts within 90 days of the work.",
+        "The cooperative must verify the work and approve the rebate, which is limited by the published percentage and maximum amount."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current weatherization benefit is formula-based and tied to a cooperative audit. A member who completes the recommended work and files the required receipts on time is likely to be approved, subject to verification and the rebate cap.",
+      "evidenceUrls": [
+        "https://www.ecoec.com/rebates",
+        "https://www.ecoec.com/energy-efficiency-services",
+        "https://ecoec.com/sites/default/files/documents/Rebates/Home%20Energy%20Audit%20Weatherization%20Rebate%20Application_0.pdf"
+      ],
+      "evidenceText": "The cooperative's current weatherization form requires a recent energy audit, audit-recommended improvements, timely receipts, and cooperative verification. The published rebate covers part of eligible costs up to a stated maximum.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3413",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible East Central Energy business member or account holder.",
+        "The project must satisfy a current prescriptive measure specification or the savings and cost-effectiveness rules for a custom project.",
+        "Custom projects, commercial EV charging, and any other designated measures must receive cooperative preapproval before installation.",
+        "The applicant must complete the installation and provide the signed application, itemized invoices, equipment specifications, and requested savings or operating data by the current deadline.",
+        "East Central Energy must verify the completed project, and payment remains subject to incentive caps and available annual funds."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current commercial rebates use published formulas and technical criteria rather than ranked competition. A preapproved and properly documented project is likely to be paid, but custom review, annual deadlines, caps, and funding availability still apply.",
+      "evidenceUrls": [
+        "https://www.eastcentralenergy.com/rebates-commercial",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Business%20accounts/2026/2026%20Custom%20Energy%20Rebates-FILLABLE.pdf",
+        "https://eastcentralenergy.com/sites/default/files/documents/Business%20accounts/2026/2026%20Commercial%20EV%20Charging-FILLABLE.pdf"
+      ],
+      "evidenceText": "East Central Energy's 2026 business materials require preapproval for designated project types and supporting invoices and specifications after installation. The current forms also state incentive caps, deadlines, and funding limits.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22362",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an active East Central Energy member at the eligible primary residence.",
+        "The customer must install a qualifying metered Level 2 charger under the current program requirements.",
+        "The customer must enroll the charging load on the applicable time-of-use or off-peak storage rate and satisfy the required metering configuration.",
+        "The applicant must submit the rebate or bill-credit documentation and permit cooperative verification of the installation.",
+        "East Central Energy must approve the enrollment and incentive, subject to current program availability."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential charger benefit is a fixed bill credit for members who install qualifying metered Level 2 charging and enroll on the required rate. Approval is likely after the installation and rate conditions are verified.",
+      "evidenceUrls": [
+        "https://www.eastcentralenergy.com/electric-vehicle-charger-rebate",
+        "https://www.eastcentralenergy.com/sites/default/files/documents/Energy%20Services/2026%20programs%20%26%20rebates/EVs_2026.pdf"
+      ],
+      "evidenceText": "East Central Energy's current EV materials offer a fixed residential bill credit for a metered Level 2 charger connected to an eligible time-of-use or off-peak program. The rules tie payment to the primary residence, rate enrollment, and installation verification.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2258",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible East Central Energy residential member.",
+        "The equipment or measure must be purchased and installed during the current program year in the cooperative's service area and meet the applicable efficiency specification.",
+        "The applicant must submit the signed current form, original receipt or invoice, model information, and any required AHRI certificate or equipment specifications.",
+        "Load-control, time-of-use, or off-peak enrollment must be completed for measures that require it.",
+        "East Central Energy must approve the claim, and payment is subject to first-come annual funding."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program provides published residential incentives for qualifying equipment and is not competitively ranked. Complete, timely claims are likely to be paid, but equipment-specific controls, documentation, and limited annual funds remain conditions.",
+      "evidenceUrls": [
+        "https://www.eastcentralenergy.com/residential-rebates",
+        "https://www.eastcentralenergy.com/rebate-rules"
+      ],
+      "evidenceText": "East Central Energy's current residential rules require qualifying current-year purchases and installations, supporting receipts and equipment information, and any measure-specific rate or control enrollment. Rebates are first-come and subject to available funds.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3194",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an Eau Claire Energy Cooperative member with the eligible equipment installed on cooperative lines.",
+        "The equipment must meet the current measure-specific efficiency and installation requirements.",
+        "The applicant must submit the current incentive form, itemized invoice showing price and installation date, model or AHRI information, and proof of installation within the stated filing period.",
+        "Do-it-yourself installations must include the additional photographic or other evidence required by the cooperative.",
+        "The cooperative must approve the claim, and payment is subject to current incentive availability and limited funds."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The cooperative's current incentives are formula-based. A member with qualifying equipment and a complete application filed within the published window is likely to receive payment, subject to verification and funding.",
+      "evidenceUrls": [
+        "https://www.ecec.com/energy-efficiency/save_energy_and_money",
+        "https://documents.ecec.com/documents/incentives/heating-and-cooling/Incentive_HVAC.pdf"
+      ],
+      "evidenceText": "Eau Claire Energy Cooperative's current forms require installation on cooperative lines, equipment and invoice documentation, and timely filing. The cooperative may require additional proof for self-installed equipment and states that funds are limited.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2008",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Edmond Electric residential customer.",
+        "A certified residential energy audit must be completed before installation for the current heat-pump rebate path.",
+        "The installed heat-pump or geothermal equipment must meet the current efficiency and technical requirements and use a licensed contractor unless the stated do-it-yourself exception applies.",
+        "Required permits must be closed, and the project must pass Edmond Electric's post-installation inspection.",
+        "The applicant must submit the signed forms, invoice, equipment data, and removed-unit information within 90 days for utility approval."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Edmond Electric publishes objective rebate conditions rather than competitively scoring applicants. A customer who completes the required pre-audit, qualifying installation, permits, inspection, and timely documentation is likely to be approved.",
+      "evidenceUrls": [
+        "https://www.edmondok.gov/1271/Rebates-Programs",
+        "https://www.edmondok.gov/1278/Heat-Pump-Rebates"
+      ],
+      "evidenceText": "The current heat-pump rebate rules require a preinstallation energy audit and a post-installation utility inspection. They also specify equipment, contractor or limited do-it-yourself, permit, invoice, and 90-day filing requirements.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22046",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The borrower must own or have an eligible ownership interest in a qualifying Maine residential property and meet the current occupancy requirements for the selected loan product.",
+        "The financed work must be an eligible Efficiency Maine home-energy upgrade.",
+        "Applicants seeking income-based terms must first complete the required income-eligibility verification within the allowed period.",
+        "The borrower must create the required Green Bank account and submit the loan application, project scope, contractor or cost information, and requested financial records.",
+        "The program lender must complete credit and underwriting review and approve the loan before financing is issued."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program offers current financing for eligible upgrades, but a loan is not automatic. Borrower eligibility, credit and underwriting, project eligibility, and any income-verification requirements can all affect approval.",
+      "evidenceUrls": [
+        "https://www.efficiencymaine.com/home-energy-loans/",
+        "https://www.efficiencymaine.com/at-home/"
+      ],
+      "evidenceText": "Efficiency Maine currently offers home-energy loans for qualifying residential upgrades through its financing process. The official page requires a loan application and identifies additional eligibility approval for income-based terms.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22714",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Maine demand-metered commercial, nonprofit, institutional, or government electric customer.",
+        "The proposed behind-the-meter battery must be approved before installation and must not export energy to the grid.",
+        "The system must meet the current minimum power, round-trip efficiency, interval-data, warranty, and safety-certification requirements.",
+        "The applicant must submit the technical, financial, and project information required by the current program opportunity and be selected for an award and contract.",
+        "After installation, the participant must complete dispatch events, provide data, and achieve validated demand reduction to receive annual performance payments."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "This is not an automatic equipment rebate. Projects require preinstallation review, formal selection and contracting, and subsequent performance validation over multiple years, so award and payment are possible but not assured by eligibility alone.",
+      "evidenceUrls": [
+        "https://www.efficiencymaine.com/energy-storage-system-projects/",
+        "https://www.efficiencymaine.com/opportunities/"
+      ],
+      "evidenceText": "Efficiency Maine's current large-battery program requires approval before installation, defined technical qualifications, a formal contract, and verified dispatch performance. Annual payments are based on validated summer demand reduction over a five-year participation period.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5324",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must purchase a new eligible ENERGY STAR appliance covered by a current Efficiency Maine offer, such as a qualifying clothes washer or heat-pump water heater.",
+        "The appliance must be installed at an eligible Maine address and satisfy the current model and installation rules.",
+        "The customer must use the participating instant-discount process or submit the applicable mail-in claim with a receipt showing the purchase date, price, and model within the published deadline.",
+        "The claim must comply with the current per-address and non-duplication limits, including the restriction against receiving both instant and mail-in heat-pump water-heater incentives for the same unit.",
+        "Efficiency Maine or the participating retailer must validate eligibility before the discount or rebate is issued."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "Current appliance incentives are fixed point-of-sale or mail-in benefits rather than competitive awards. An eligible model installed in Maine with valid proof and no duplicate claim should receive the published benefit.",
+      "evidenceUrls": [
+        "https://www.efficiencymaine.com/at-home/clothes-washer-rebate-2/",
+        "https://www.efficiencymaine.com/at-home/heat-pump-water-heater-program/",
+        "https://www.efficiencymaine.com/in-store-instant-discounts/"
+      ],
+      "evidenceText": "Efficiency Maine currently publishes fixed incentives for qualifying ENERGY STAR appliances, including clothes washers and heat-pump water heaters. The heat-pump water-heater rules provide an instant or mail-in path with receipt, timing, address, and duplicate-incentive controls; space-heating heat-pump rebates are administered separately.",
+      "reviewedAt": "2026-07-10T13:54:24Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

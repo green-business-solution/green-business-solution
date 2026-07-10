@@ -3,7 +3,546 @@
   "batchId": "batch-048",
   "inputFile": "batch-048_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.781Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T15:11:02Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5141",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a residential customer of a participating Bright Energy Solutions municipal utility in South Dakota and use the program offered by that utility.",
+        "Purchase and install a measure that is currently listed by the local utility and meets the applicable equipment, efficiency, installation, and customer requirements.",
+        "Submit the current rebate form with the utility account information, itemized invoice or receipt, equipment make and model, installation details, and other measure-specific documentation.",
+        "Use a qualified installer where the selected measure requires one and obtain any required permits or inspections.",
+        "Allow program or utility verification and apply within the current filing period while funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Bright Energy Solutions uses participating-utility rebate menus and an administrative claim process rather than competitive selection. A qualifying, timely, documented residential claim is likely to be paid, although eligible measures and amounts vary by utility and the current official materials do not substantiate every legacy mapped measure.",
+      "evidenceUrls": [
+        "https://www.brightenergysolutions.com/find-a-rebate/",
+        "https://www.brightenergysolutions.com/members",
+        "https://www.brightenergysolutions.com/members/watertown-municipal-utilities?rebates=residential",
+        "https://www.brightenergysolutions.com/electric-vehicles"
+      ],
+      "evidenceText": "Current Bright Energy Solutions materials direct customers to their participating municipal utility, provide local residential rebate forms, and require qualifying equipment, purchase and installation records, and claim review. The current program also identifies qualifying Level 2 charging incentives.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5100",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a residential customer of a participating Bright Energy Solutions municipal utility in North Dakota and use the program offered by that utility.",
+        "Purchase and install a measure that is currently listed by the local utility and meets the applicable equipment, efficiency, installation, and customer requirements.",
+        "Submit the current rebate form with the utility account information, itemized invoice or receipt, equipment make and model, installation details, and other measure-specific documentation.",
+        "Use a qualified installer where the selected measure requires one and obtain any required permits or inspections.",
+        "Allow program or utility verification and apply within the current filing period while funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Bright Energy Solutions uses participating-utility rebate menus and an administrative claim process rather than competitive selection. A qualifying, timely, documented residential claim is likely to be paid, although eligible measures and amounts vary by utility and the current official materials do not substantiate every legacy mapped measure.",
+      "evidenceUrls": [
+        "https://www.brightenergysolutions.com/find-a-rebate/",
+        "https://www.brightenergysolutions.com/members",
+        "https://www.brightenergysolutions.com/members/valley-city-public-works?rebates=residential",
+        "https://www.brightenergysolutions.com/electric-vehicles"
+      ],
+      "evidenceText": "Current Bright Energy Solutions materials direct customers to their participating municipal utility, provide local residential rebate forms, and require qualifying equipment, purchase and installation records, and claim review. The current program also identifies qualifying Level 2 charging incentives.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3144",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Oregon residential customer or property owner in a currently participating Energy Trust utility territory and use the applicable existing-home incentive pathway.",
+        "Install a measure that is included in the current residential offering and meets its equipment, efficiency, dwelling, fuel, contractor, and installation requirements.",
+        "Submit the current residential application within the stated deadline, generally within 60 days after the work is completed.",
+        "Provide an itemized invoice, equipment and installation records, contractor information, and all measure-specific supporting documents.",
+        "Provide a contractor-signed Form 350CC when required for a homeowner-submitted application and permit verification or inspection when requested."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Energy Trust maintains objective residential incentive pathways with a standard application and document review. A current qualifying HVAC or other listed measure is likely to receive the published incentive after review, but the older program title does not establish a current general clothes-washer rebate.",
+      "evidenceUrls": [
+        "https://form.energytrust.org/"
+      ],
+      "evidenceText": "Energy Trust's current residential application requires eligible utility service, a currently qualifying completed measure, timely submission, invoices and installation documentation, and additional contractor certification when applicable.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5152",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible one- to four-unit Illinois residence served by Ameren Illinois, ComEd, Nicor Gas, North Shore Gas, or Peoples Gas and maintain an eligible active utility account.",
+        "Propose an energy-efficiency project and loan amount within the current program limits and use an approved contractor or other accepted project pathway.",
+        "Submit the loan application and required identity, income, credit, property, utility-account, contractor, and project-cost documentation.",
+        "Receive preliminary and final financing approval, execute the loan documents, and complete any required cancellation period before work begins.",
+        "Complete the approved project, submit the completion certificate and final invoices, and pass the final utility and program eligibility review before funding."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The Illinois Energy Loan has an active, defined financing process, but approval depends on borrower credit, income and property underwriting, utility-account eligibility, accepted project scope, executed loan documents, and final completion review. Technical project eligibility alone does not assure financing.",
+      "evidenceUrls": [
+        "https://www.ilenergyloan.com/"
+      ],
+      "evidenceText": "The current Illinois Energy Loan serves eligible one- to four-unit homeowners in the listed utility territories and requires a credit application, project and contractor documentation, final loan approval before work, and completion verification before funds are released.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2680",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible existing Vermont long-term rental property with one to four dwelling units and satisfy the current property and tenancy rules.",
+        "Use an Efficiency Excellence Network contractor and submit the project for program review before beginning the qualifying work.",
+        "Treat the building as required by the current pathway, complete pre- and post-work blower-door and health-and-safety testing, and achieve the minimum required air-leakage reduction.",
+        "Provide the required rent, tenant-income or other eligibility attestations together with the contractor proposal, scope, test records, invoices, and completion documentation.",
+        "Complete the approved project within the reservation period and pass final program verification while funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Efficiency Vermont's current rental pathway uses published property, contractor, testing, and documentation standards and can reserve an approved incentive for a defined period. A conforming project is likely to be paid after final verification rather than being competitively ranked.",
+      "evidenceUrls": [
+        "https://www.efficiencyvermont.com/rebates/list/home-performance-rental"
+      ],
+      "evidenceText": "The current rental offering covers eligible one- to four-unit long-term rental properties, requires an approved contractor, advance project review, building testing and leakage reduction, supporting eligibility records, and final verification before payment.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:118",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Be an eligible Arizona individual taxpayer and install a qualifying solar-energy device at an Arizona residence owned by the taxpayer.",
+        "Purchase rather than lease the qualifying device and ensure the equipment and installation satisfy the statutory solar or wind device definition.",
+        "Obtain the seller's required certification or retain the documentation required for a qualifying self-installation.",
+        "Maintain purchase, installation, residence, ownership, and device records supporting the credit.",
+        "File Arizona Forms 310 and 301 with the individual income-tax return and apply the nonrefundable credit subject to the cumulative per-residence limit and available tax liability."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "Arizona law provides a formulaic nonrefundable credit equal to 25 percent of qualifying solar or wind device costs, subject to a $1,000 cumulative per-residence limit. A taxpayer satisfying the ownership, purchase, device, documentation, and tax-liability rules is near guaranteed the statutory credit because no competitive selection is involved.",
+      "evidenceUrls": [
+        "https://azdor.gov/forms/tax-credits-forms/credit-solar-energy-devices",
+        "https://azdor.gov/sites/default/files/document/FORMS_CREDIT_2025_310_i.pdf",
+        "https://azdor.gov/sites/default/files/document/FORMS_CREDIT_2025_310_f.pdf",
+        "https://www.azleg.gov/ars/43/01083.htm"
+      ],
+      "evidenceText": "Current Arizona forms and statute provide a 25-percent residential solar-energy-device credit with a $1,000 cumulative limit, require purchase and supporting certification, and exclude ordinary appliances and lighting from the qualifying-device definition.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:80",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Be a New York resident and install or use qualifying solar-energy-system equipment at the taxpayer's principal New York residence.",
+        "Purchase the system, enter an eligible lease, or enter a qualifying written power-purchase agreement that satisfies the current statutory and form requirements.",
+        "Use the system to generate electricity or provide solar heating, cooling, or hot water and retain contracts, invoices, installation records, and proof of principal-residence use.",
+        "Calculate the credit at 25 percent of qualified expenditures subject to the $5,000 maximum and applicable allocation rules.",
+        "File Form IT-255 with the New York personal income-tax return and carry forward any allowable unused nonrefundable credit for no more than five years."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "New York's residential solar credit is a formulaic personal income-tax credit rather than a competitive award. A taxpayer with qualifying principal-residence solar water-heating or other eligible solar equipment and sufficient tax liability is near guaranteed the statutory credit after filing the required form.",
+      "evidenceUrls": [
+        "https://www.tax.ny.gov/pit/credits/solar_energy_system_equipment_credit.htm",
+        "https://www.tax.ny.gov/pdf/current_forms/it/it255i.pdf",
+        "https://www.tax.ny.gov/pdf/current_forms/it/it255_fill_in.pdf"
+      ],
+      "evidenceText": "Current New York materials allow a credit for qualifying solar electricity, heating, cooling, and hot-water systems at a principal residence, generally equal to 25 percent of qualified expenditures up to $5,000, with a five-year carryforward.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4874",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Purchase wood, wood pellets, or compressed wood products that qualify as residential heating fuel under New York sales-tax rules.",
+        "Use the fuel for residential heating and apply the mixed-use allocation rules when the purchase also serves a nonresidential use.",
+        "Claim the New York State and Metropolitan Commuter Transportation District exemption at the time of sale or use the applicable refund process when tax was paid in error.",
+        "Check the current local sales-tax treatment because counties and cities may elect different treatment.",
+        "Retain receipts and records supporting the product type, residential heating use, and any tax-exempt or taxable allocation."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current incentive is a sales-tax exemption for qualifying residential wood heating fuel, not an incentive for purchasing or replacing HVAC equipment. It therefore has an unlikely award outcome for the mapped high-efficiency HVAC retrofit even though the fuel tax exemption itself is formulaic when its conditions are met.",
+      "evidenceUrls": [
+        "https://www.tax.ny.gov/pubs_and_bulls/tg_bulletins/st/residential_energy.htm",
+        "https://www.tax.ny.gov/forms/publications/st/pub718r.htm"
+      ],
+      "evidenceText": "New York's current guidance exempts qualifying wood and wood products used for residential heating from state sales tax, subject to use and local-tax rules. It does not provide an equipment rebate for an HVAC replacement.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4454",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Operate an eligible nonresidential facility in a service territory accepted by the current Illinois Smart Energy retro-commissioning offering.",
+        "Submit the current application with facility, ownership or operating authority, contact, utility, building-system, and project-interest information.",
+        "Pass the program's facility and scope screening and provide requested utility data, operating schedules, control-system information, and other technical records.",
+        "Cooperate with the on-site assessment, interviews, testing, trend review, and development of the findings and recommendations report.",
+        "Complete any implementation, measurement, or follow-up steps required for the selected assistance or incentive pathway."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current offering is an individualized technical-assistance and retro-commissioning service, not an automatic fixed grant. Acceptance depends on facility and scope screening, available program capacity, and cooperation with the assessment, so participation is possible but not assured from title-level eligibility alone.",
+      "evidenceUrls": [
+        "https://smartenergy.illinois.edu/rcx/",
+        "https://energysense.uillinois.edu/"
+      ],
+      "evidenceText": "Illinois Smart Energy currently accepts retro-commissioning applications, follows up with applicants, and provides facility assessment, recommendations, reporting, and implementation assistance after project screening.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:bcdeae04c5863d3b:retrocommissioning-program",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Southern California Edison business customer whose account pays the applicable public-purpose or public-goods charge.",
+        "Own or operate a commercial building that satisfies the current size, conditioned-space, controls, central-plant, and equipment-condition screening criteria.",
+        "Request the retrocommissioning consultation and provide facility, account, building-system, operating, and energy-use information requested by SCE or its program implementer.",
+        "Permit site access and cooperate with system review, data analysis, testing, and identification of operational improvements.",
+        "Complete any accepted implementation and verification steps associated with the recommendations or a related incentive pathway."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "SCE presents retrocommissioning as a no-cost consultation for buildings that pass several technical screening conditions, not as an automatic equipment rebate. A qualifying facility may be accepted, but participation depends on program screening and the mapped energy-management-system purchase is not itself guaranteed an incentive.",
+      "evidenceUrls": [
+        "https://www.sce.com/business/save-costs-energy/savings-strategies/building-improvement"
+      ],
+      "evidenceText": "SCE's current building-improvement page offers retrocommissioning consultation to qualifying commercial buildings with specified customer, size, controls, and central-plant characteristics and describes potential operational energy savings rather than a guaranteed equipment award.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3464",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain the RG&E electric or combination electric-and-gas service required by the selected current residential pathway and meet the dwelling and account rules.",
+        "Select a currently offered qualifying measure, such as an eligible clean-heat system, heat-pump water heater, or smart-thermostat participation option, and meet its product and replacement requirements.",
+        "Use a participating clean-heat contractor where required and obtain any required equipment sizing, replacement, permit, or installation documentation.",
+        "Complete the measure-specific enrollment, point-of-sale process, or post-installation application and provide invoices, model information, account records, and contractor documentation.",
+        "Allow utility or program verification and comply with current deadlines, funding limits, and participation terms."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "RG&E maintains current prescriptive residential clean-heat, water-heating, and smart-thermostat pathways with published customer and documentation rules. A qualifying submission is likely after review, although the older DSIRE record's broad appliance and combustion-equipment mapping is not fully supported by the current official offerings.",
+      "evidenceUrls": [
+        "https://www.rge.com/residential-rebates-and-programs",
+        "https://www.rge.com/smartenergy/rebatesandprograms/nys-clean-heat-rebate-program",
+        "https://www.rge.com/smartenergy/rebatesandprograms/smartsavingsrewards"
+      ],
+      "evidenceText": "Current RG&E materials provide residential clean-heat, heat-pump water-heater, and smart-thermostat pathways with service-territory, participating-contractor, equipment, enrollment, application, and verification requirements.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4245",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible RG&E nonresidential electric customer for the project site and select a measure in the current commercial and industrial prescriptive or custom offering.",
+        "Submit the applicable portal application, equipment specifications, project scope, cost information, savings calculations for custom work, and other required technical records.",
+        "Obtain written preapproval before purchase or construction for custom projects and other projects that meet the current advance-review threshold.",
+        "Install the approved qualifying equipment and retain itemized invoices, contractor records, permits, commissioning information, and proof of payment.",
+        "Submit final completion documents by the applicable deadline and permit inspection or savings verification before payment."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "RG&E currently provides prescriptive and custom nonresidential incentives under published technical and documentation pathways. A conforming prescriptive claim or preapproved custom project is likely to be paid after completion review, subject to measure eligibility, caps, verification, and available funds.",
+      "evidenceUrls": [
+        "https://www.rge.com/smartenergy/businesssolutions/commercialandindustrial",
+        "https://www.rge.com/documents/d/rge/nyseg-rge-ci-rebates-catalog"
+      ],
+      "evidenceText": "Current RG&E commercial and industrial materials cover prescriptive and custom electric efficiency measures, require project and equipment documentation, mandate advance approval for designated projects, and condition payment on completed installation and verification.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4304",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible RG&E small-business customer and satisfy the current electric-demand or gas-usage limits for the site.",
+        "Select equipment or work included in the current small-business program and meet the applicable technical, replacement, contractor, and installation specifications.",
+        "Submit the program application or portal record with the utility account, project scope, equipment information, estimated costs, and any requested pre-installation documentation.",
+        "Complete the qualifying installation and provide invoices, model numbers, contractor or self-install records, permits, and proof of payment.",
+        "Permit inspection or verification and comply with current project deadlines, incentive caps, and available-funding conditions."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "RG&E's current small-business program uses published customer-size, measure, and documentation requirements rather than competitive scoring and can cover more than lighting. A qualifying completed project is likely to receive the applicable incentive after review and verification.",
+      "evidenceUrls": [
+        "https://www.rge.com/smartenergy/businesssolutions/smallbusiness",
+        "https://www.rge.com/documents/d/rge/nyseg-rge-small-business-catalog"
+      ],
+      "evidenceText": "Current RG&E small-business materials specify customer-size limits, list eligible equipment and improvement categories, and require application, project records, invoices, and possible inspection before payment.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4575",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible RG&E nonresidential natural-gas customer for the project site and select a measure in the current commercial and industrial prescriptive or custom offering.",
+        "Submit the applicable portal application, equipment specifications, project scope, cost information, savings calculations for custom work, and other required technical records.",
+        "Obtain written preapproval before purchase or construction for custom projects and other projects that meet the current advance-review threshold.",
+        "Install the approved qualifying gas equipment, controls, or process measure and retain itemized invoices, contractor records, permits, commissioning information, and proof of payment.",
+        "Submit final completion documents by the applicable deadline and permit inspection or savings verification before payment."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "RG&E currently provides prescriptive and custom nonresidential gas incentives under published technical and documentation pathways. A conforming prescriptive claim or preapproved custom project is likely to be paid after completion review, subject to measure eligibility, caps, verification, and available funds.",
+      "evidenceUrls": [
+        "https://www.rge.com/smartenergy/businesssolutions/commercialandindustrial",
+        "https://www.rge.com/documents/d/rge/nyseg-rge-ci-rebates-catalog"
+      ],
+      "evidenceText": "Current RG&E commercial and industrial materials cover prescriptive and custom natural-gas efficiency measures, require project and equipment documentation, mandate advance approval for designated projects, and condition payment on completed installation and verification.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22725",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Rhode Island household and satisfy the current income, residence, utility, and geographic requirements for the applicable HEAR pathway.",
+        "Complete the required income verification and project or product eligibility review before purchasing equipment or starting work.",
+        "Receive the required preapproval, reservation, or retail coupon and use a participating retailer or approved contractor where the selected measure requires one.",
+        "Purchase and install currently qualifying equipment, such as an eligible heat pump, heat-pump water heater, electric cooking product, or supporting electrical upgrade, in compliance with technical and consumer-protection rules.",
+        "Submit invoices, product and contractor records, permits, completion documentation, and any requested inspection or verification evidence."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Rhode Island's current HEAR pathways use objective income, product, contractor, and documentation rules and require approval before purchase. An eligible household with a reserved or approved qualifying project is likely to receive the rebate after completion verification, but commercial ovens and general industrial process-electrification equipment are outside the verified residential scope.",
+      "evidenceUrls": [
+        "https://energy.ri.gov/energy-incentives/home-energy-rebate-programs",
+        "https://energy.ri.gov/press-releases/rhode-island-office-energy-resources-announces-expansion-home-electrification-and",
+        "https://energy.ri.gov/sites/g/files/xkgbur741/files/2026-04/HEAR%20Program%20-%20Contractors%20Trifold%20Brochure%20ENGLISH%202026-04.pdf",
+        "https://energy.ri.gov/sites/g/files/xkgbur741/files/2026-04/HEAR%20Program%20Consumer%20Protection%20Plan%20Retail%20Path.pdf"
+      ],
+      "evidenceText": "Current Rhode Island HEAR materials require income and project eligibility review before purchase, preapproval or a retail coupon, qualifying residential electrification equipment, participating contractors or retailers where applicable, completion documents, and possible inspection.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5440",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible commercial, industrial, nonprofit, agricultural, or multifamily property in a Rhode Island municipality participating in the C-PACE program.",
+        "Develop a qualifying energy, renewable-energy, water, resilience, or alternative-fuel-infrastructure project that satisfies the program's technical and statutory requirements.",
+        "Apply through the program and an approved capital provider with property, ownership, tax-status, project, engineering, cost, savings, and financial documentation.",
+        "Obtain mortgage-holder consent and satisfy title, tax, bankruptcy, insurance, underwriting, and other capital-provider and program conditions.",
+        "Receive program approval, execute the financing and assessment documents, and complete any required recording before financing closes."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Rhode Island C-PACE can finance eligible projects but is not an automatic rebate. Closing depends on municipal availability, technical eligibility, capital-provider underwriting, mortgage-holder consent, title and tax status, and execution of the special-assessment documents.",
+      "evidenceUrls": [
+        "https://www.riib.org/solutions/programs/commercial-property-assessed-clean-energy/",
+        "https://www.riib.org/wp-content/uploads/2025/01/RI_C-PACE_Financing_Application_Form-1.pdf",
+        "https://www.riib.org/wp-content/uploads/2023/06/RI_C-PACE_Program_Guide_June_28_2023.pdf"
+      ],
+      "evidenceText": "Rhode Island Infrastructure Bank's current C-PACE materials require an eligible property and project, an approved capital provider, technical and financial review, mortgage-holder consent, and executed assessment and financing documents before closing.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3023",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible Rhode Island Energy small-business account and operate a facility accepted by the current small-business program.",
+        "Request participation and provide the utility account, facility, contact, operating, and energy-use information requested by the program.",
+        "Permit program personnel or the implementation contractor to conduct the no-cost on-site facility assessment.",
+        "Review the proposed efficiency measures, costs, incentives, and customer contribution and sign the project proposal if proceeding with installation.",
+        "Provide access for installation and any required post-installation inspection or verification."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current small-business program offers a defined no-cost facility assessment and project-development pathway rather than a competitively scored grant. An eligible small-business customer is likely to receive the audit after enrollment and scheduling, with subsequent installation incentives dependent on the accepted proposal.",
+      "evidenceUrls": [
+        "https://www.rienergy.com/site/ways-to-save/save-money-with-rebates-and-incentives/savings-for-your-business/small-business-program",
+        "https://www.rienergy.com/site/-/media/rie-jss-app/home/ways-to-save/rebates-and-savings-programs/commercial-savings/instant-commercial-rebates/small-business-program/rie4638_ri_smb.ashx",
+        "https://energy.ri.gov/incentives"
+      ],
+      "evidenceText": "Current Rhode Island Energy materials describe a no-cost small-business on-site assessment followed by a proposal and, when accepted, equipment installation and verification.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5756",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Be an eligible Rhode Island Energy commercial or industrial electric customer and install the product at an eligible service address.",
+        "Purchase a currently qualifying commercial product, such as eligible lighting, HVAC, heat-pump, control, refrigeration, or food-service equipment, through a participating distributor or dealer.",
+        "Meet the current product-list, efficiency, replacement, quantity, customer, and installation requirements.",
+        "Provide the account and site information requested at the point of sale so the participating seller can validate eligibility and apply the instant discount.",
+        "Retain purchase and installation records and permit post-purchase verification when requested."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current instant commercial rebate pathway provides point-of-sale discounts for qualifying products purchased through participating sellers and is not competitively ranked. A qualifying customer and product are likely to receive the discount after routine eligibility validation, subject to current lists and funding.",
+      "evidenceUrls": [
+        "https://www.rienergy.com/site/ways-to-save/save-money-with-rebates-and-incentives/savings-for-your-business/instant-commercial-rebates",
+        "https://energy.ri.gov/incentives",
+        "https://www.rienergy.com/site/-/media/rie-jss-app/home/ways-to-save/rebates-and-savings-programs/commercial-savings/0125_RIE_CM_4747382_Foodservice_FLY_Updates_CLEAN-Final.ashx?hash=A71F781A400113CA76864FB28F2DC3DA&sc_lang=en"
+      ],
+      "evidenceText": "Current Rhode Island Energy and Office of Energy Resources materials list instant commercial discounts for qualifying lighting, HVAC, heat-pump, refrigeration, and food-service products purchased through participating market actors, with customer and product eligibility validation.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3021",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible Rhode Island Energy commercial natural-gas account for the installation site.",
+        "Select a currently qualifying gas furnace, boiler, water-heating, control, process, or custom efficiency measure and meet its technical and replacement requirements.",
+        "Use a licensed or otherwise qualified installer and obtain required permits and inspections.",
+        "Submit the current rebate or custom-project application with the account number, project scope, equipment specifications, invoices, installation records, and savings calculations when applicable.",
+        "Obtain advance approval for custom or otherwise designated projects and permit final inspection or savings verification before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Rhode Island Energy currently offers published commercial gas equipment rebates and custom efficiency pathways. A qualifying prescriptive claim or preapproved custom project is likely to be paid after documentation and verification, subject to current terms and available funds.",
+      "evidenceUrls": [
+        "https://energy.ri.gov/incentives",
+        "https://www.rienergy.com/site/ways-to-save/save-money-with-rebates-and-incentives/natural-gas-heating"
+      ],
+      "evidenceText": "Current Rhode Island materials identify commercial natural-gas incentives for qualifying boilers, furnaces, water-heating equipment, controls, and custom projects, with measure-specific applications, technical documentation, advance review where required, and verification.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3024",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible Rhode Island Energy residential natural-gas account at the installation address.",
+        "Purchase and install a currently qualifying furnace, boiler, smart thermostat, or other listed residential gas-heating measure that meets the required efficiency and replacement specifications.",
+        "Use a licensed contractor where required and obtain applicable permits and inspections.",
+        "Submit the current rebate application with the utility account number, itemized invoice, equipment make and model, efficiency information, contractor and installation records, and proof of payment.",
+        "Apply within the stated deadline and allow Rhode Island Energy or its program implementer to verify the installation."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential gas-heating program uses published equipment rebates and an administrative claim process rather than competitive selection. A qualifying, timely, fully documented installation is likely to receive the applicable rebate after validation.",
+      "evidenceUrls": [
+        "https://energy.ri.gov/incentives",
+        "https://www.rienergy.com/site/ways-to-save/save-money-with-rebates-and-incentives/natural-gas-heating",
+        "https://rienergy.com/site/landing-page/Comfort"
+      ],
+      "evidenceText": "Current Rhode Island materials list residential natural-gas heating and smart-thermostat rebates and require an eligible account, qualifying equipment, installation records, invoices, timely application, and possible verification.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2813",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a nonresidential Richland Energy Services electric customer for the project site.",
+        "Contact the utility's energy-efficiency specialist and submit the proposed lighting scope, existing and proposed fixture information, equipment specifications, costs, and savings information before installation.",
+        "Demonstrate that the project satisfies the current wattage-reduction, cost, payback, equipment, and recycling requirements.",
+        "Permit the required pre-installation inspection and receive a signed incentive agreement or other written approval before beginning the project.",
+        "Complete the approved work within the authorized period and submit final invoices, installation records, disposal or recycling documentation, and any required post-installation verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Richland's current commercial lighting program uses objective project, savings, and cost rules and reserves incentives through advance review rather than competitive ranking. A project that receives preapproval and satisfies the final documentation and inspection requirements is likely to be paid.",
+      "evidenceUrls": [
+        "https://www.richlandwa.gov/departments/energy-services/energy-efficiency/commercial-industrial-programs"
+      ],
+      "evidenceText": "Richland currently requires nonresidential customer eligibility, advance project coordination, a pre-installation inspection, specified lighting savings and cost criteria, a signed agreement, and final project documentation before incentive payment.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2837",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Richland Energy Services residential electric customer and property owner for the installation address.",
+        "Select a currently qualifying residential measure, such as an eligible heat pump, ductless system, heat-pump water heater, insulation, window or door, or certified Level 2 electric-vehicle charger.",
+        "Meet the measure-specific electric-heating, existing-equipment, efficiency, contractor, product-certification, multifamily, permit, and installation requirements.",
+        "Use an authorized contractor where required and obtain advance approval for multifamily or other designated projects before work.",
+        "Submit the current application with the utility account, itemized invoice, equipment and installation records, permits and inspections, and allow final verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Richland maintains current, measure-specific residential rebates and loan pathways with published technical and documentation rules. A qualifying project is likely to receive the applicable rebate after required advance review and completion verification, although eligibility varies significantly by measure and heating configuration.",
+      "evidenceUrls": [
+        "https://www.richlandwa.gov/departments/energy-services/energy-efficiency/residential-programs-and-rebates",
+        "https://www.richlandwa.gov/home/showpublisheddocument/8182",
+        "https://www.richlandwa.gov/home/showpublisheddocument/14515"
+      ],
+      "evidenceText": "Current Richland materials list residential rebates for heat pumps, ductless systems, heat-pump water heaters, insulation, windows and doors, and certified Level 2 chargers, with customer, contractor, technical, permit, application, and verification requirements.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22733",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Qualify under a current Ride Clean Mass driver or fleet pathway, including the applicable Massachusetts residency or operating, platform, trip, mileage, licensing, and vehicle-use requirements.",
+        "Purchase or rent a qualifying battery-electric vehicle from an eligible dealer or rental provider within the current transaction and program dates.",
+        "Complete any optional eligibility check or other preliminary step used to confirm likely eligibility before the transaction.",
+        "Submit the final rebate application with the driver's license, vehicle purchase or rental agreement, platform or fleet credentials, rides or mileage records, and other required proof.",
+        "Comply with program terms, funding availability, retention and use requirements, and any post-award verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "Ride Clean Mass currently rebates qualifying electric-vehicle purchases and rentals for eligible drivers and fleets; it does not provide a charger-installation rebate. The mapped EV-charger retrofit is therefore unlikely to receive an award from this opportunity even though a qualifying vehicle transaction may be approved through the standard application process.",
+      "evidenceUrls": [
+        "https://ridecleanmass.org/",
+        "https://ridecleanmass.org/wp-content/uploads/2026/03/Program-Revamp-Guidelines-3-23-26.pdf",
+        "https://ridecleanmass.org/terms/"
+      ],
+      "evidenceText": "Current Ride Clean Mass materials provide rebates for eligible electric-vehicle purchases or rentals by qualifying Massachusetts drivers and fleets and require transaction, licensing, platform, trip or mileage, and application documentation. Charger installation is not the funded activity.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4851",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible River Falls Municipal Utilities business electric customer at the project site.",
+        "Develop a qualifying energy-efficiency project and complete the applicable Focus on Energy process, including advance approval before implementation when required.",
+        "Receive a qualifying Focus on Energy incentive for the project and satisfy the River Falls bonus-match measure, cost, and customer rules.",
+        "Submit the River Falls application with the Focus on Energy application or approval, proof of Focus payment, itemized sales receipts or invoices, equipment and installation records, and proof of project cost.",
+        "Permit utility inspection, remain within the combined incentive and installed-cost limits, and apply while the limited first-come funding remains available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "River Falls currently offers a defined local bonus match for business projects that first qualify for a Focus on Energy incentive. A project that obtains the underlying approval and submits the required completion and payment records is likely to receive the local bonus, subject to the cost cap and limited first-come funds.",
+      "evidenceUrls": [
+        "https://rfmu.org/929/RFMU-Efficiency-Programs---Businesses",
+        "https://rfmu.org/930/Focus-on-Energy-Programs---Businesses",
+        "https://rfmu.org/DocumentCenter/View/1000/Business-Incentive-for-Energy-Efficiency"
+      ],
+      "evidenceText": "Current River Falls materials offer a business incentive tied to a qualifying Focus on Energy award, require Focus advance approval where applicable, impose a combined-cost limit, and require receipts, Focus records, an application, and possible inspection.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4194",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible River Falls Municipal Utilities residential electric account at the installation address and satisfy the applicable owner, tenant, property, and utility-service rules.",
+        "Purchase and install a currently qualifying measure, such as an eligible air-source heat pump, heat-pump water heater, smart thermostat, or certified Level 2 or Level 3 electric-vehicle charger.",
+        "Meet the selected pathway's product-certification, efficiency, existing-system, installation, renewable-program, Focus on Energy, contractor, and permit requirements.",
+        "Submit the current measure-specific application within its deadline with the account number, invoice or receipt, make and model, serial number where required, installation records, and proof of payment.",
+        "Allow inspection or verification and comply with current funding, equipment-use, and participation conditions."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "River Falls currently provides defined residential incentives for qualifying heat pumps, heat-pump water heaters, smart thermostats, and EV chargers through administrative claim pathways. A conforming claim is likely after review, but the current official materials do not substantiate a general rooftop-solar rebate under this opportunity.",
+      "evidenceUrls": [
+        "https://www.rfmu.org/928/RFMU-Efficiency-Programs---Residential",
+        "https://www.rfmu.org/DocumentCenter/View/7132/RiverFalls_PowerfulChoices_RIV-ResidentialMultiFam_Flyer_85x11_Final",
+        "https://www.rfcity.org/DocumentCenter/View/7129/RiverFalls_PowerfulChoices_EV-Charger_Flyer_85x11_Final",
+        "https://www.rfmu.org/DocumentCenter/View/7133/RiverFalls_PowerfulChoices_Smart-Thermostats_Flyer_85x11_Final"
+      ],
+      "evidenceText": "Current River Falls materials list residential efficiency, EV-charger, and smart-thermostat incentives with customer and equipment eligibility, timely application, invoices and model information, and possible verification. Rooftop solar was not verified as a current rebate measure.",
+      "reviewedAt": "2026-07-10T15:11:02Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

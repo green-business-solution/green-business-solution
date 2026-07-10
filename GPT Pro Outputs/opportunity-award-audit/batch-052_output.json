@@ -3,7 +3,534 @@
   "batchId": "batch-052",
   "inputFile": "batch-052_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.783Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T16:28:40Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1947",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an active Shakopee Public Utilities residential electric or water customer for the applicable measure.",
+        "Purchase and install a new residential product or system that meets the current ENERGY STAR or program efficiency specifications.",
+        "Use the measure-specific electric or water rebate pathway and satisfy any service, installation, and quantity limits.",
+        "Submit the current rebate claim with the customer account, itemized receipt or invoice, model information, and other requested documentation by the applicable deadline.",
+        "Permit Shakopee Public Utilities to verify customer, product, and installation eligibility before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current 2026 residential program uses published, prescriptive eligibility and documentation rules. A qualifying residential claim is likely to be paid after review, but the supplied commercial dishwasher and commercial-refrigeration mappings are not supported by the residential offering.",
+      "evidenceUrls": [
+        "https://shakopeeutilities.com/2026-residential-rebates/"
+      ],
+      "evidenceText": "Shakopee Public Utilities currently lists 2026 residential rebates for qualifying appliances, LED lighting, central cooling, air-source and ground-source heat pumps, and related household measures, with account and claim documentation requirements.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22799",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible South Hadley Electric Light Department customer with the charger installed at an eligible service address.",
+        "Purchase and install a currently qualifying connected Level 2 charger and meet the program equipment and connectivity requirements.",
+        "Use a licensed electrician, obtain required permits, and complete the applicable electrical inspection.",
+        "Enroll the charger in the current scheduled-charging or Connected Homes pathway and complete the required participation term.",
+        "Submit the rebate application with proof of purchase, equipment, account, installation, and participation documentation."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current charger rebate follows objective customer, equipment, installation, enrollment, and participation rules rather than competitive selection. A compliant participant is likely to receive the rebate after the required term and verification.",
+      "evidenceUrls": [
+        "https://www.sheld.org/pages/forms/greenhouse-gas-reduction-rebates/",
+        "https://www.sheld.org/pages/forms/electric-vehicle-incentives/"
+      ],
+      "evidenceText": "SHELD currently offers qualifying connected-charger incentives tied to permitted installation, program enrollment, scheduled-charging participation, and submission of purchase and device records.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5875",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Use an eligible commercial property in a Missouri municipality that participates in Show Me PACE.",
+        "Propose a permanent qualifying energy-efficiency or renewable-energy improvement with documented savings and a savings-to-investment ratio above the program minimum.",
+        "Provide the technical project proposal, costs, savings analysis, ownership, property, tax, and lien information required by the program and capital provider.",
+        "Obtain written consent from each existing mortgage lender.",
+        "Pass private capital-provider underwriting and program eligibility review, then execute the PACE assessment and financing documents before funding."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "C-PACE financing is not automatic: approval depends on municipality participation, project economics, mortgage-lender consent, property standing, private underwriting, and closing. The current official materials do not expressly confirm a standalone battery-storage project, so the supplied mapping needs project-specific confirmation.",
+      "evidenceUrls": [
+        "https://www.showmepace.com/getting-started",
+        "https://www.showmepace.com/commercial"
+      ],
+      "evidenceText": "Show Me PACE requires a participating Missouri jurisdiction, a qualifying permanent project with favorable economics, mortgage-lender consent, property and financial documentation, private capital underwriting, and program closing.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22809",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible SELCO commercial, municipal, industrial, general-service customer, or other currently allowed applicant for the selected measure.",
+        "Propose a qualifying commercial heat-pump or electric-vehicle charging project meeting current equipment, networking, connector, demand-response, and site requirements as applicable.",
+        "Submit the measure-specific application before work with contractor quotes, equipment specifications, AHRI documentation for heat pumps, or site and electrical plans for charging equipment.",
+        "Receive written SELCO project approval before purchasing equipment, beginning construction, or installing the measure.",
+        "Complete required permits and inspections and submit final invoices, equipment records, and completion documentation for payment review."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "SELCO publishes defined preapproval and closeout paths for commercial heat pumps and EV charging. A conforming, preapproved project is likely to be paid after installation verification, although the broad high-efficiency-HVAC mapping should be limited to currently qualifying commercial heat-pump work.",
+      "evidenceUrls": [
+        "https://selco.shrewsburyma.gov/commercial-rebates-incentives/",
+        "https://selco.shrewsburyma.gov/electric/commercial/rebates-and-incentives/commercial-heat-pump-rebate/",
+        "https://selco.shrewsburyma.gov/electric/commercial/rebates-and-incentives/commercial-ev-charger-rebate/"
+      ],
+      "evidenceText": "Current SELCO commercial materials require advance project review for qualifying heat pumps and EV charging, followed by permits, inspections, invoices, and final verification.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1929",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible SELCO residential electric customer and install the measure at the qualifying Shrewsbury service address.",
+        "Purchase and install equipment or complete weatherization work that meets the current NextZero measure specifications.",
+        "Use licensed or participating contractors and provide AHRI, model, efficiency, invoice, and installation records where required.",
+        "Complete a home assessment, recommended weatherization, post-installation inspection, or other measure-specific step when required for the selected incentive tier.",
+        "Submit the complete current application within the applicable purchase, installation, and filing period."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current NextZero offerings use objective residential equipment, assessment, inspection, and documentation rules. Qualifying claims are likely to be paid, but the supplied generic efficient-fan or blower mapping and broad HVAC category are not independently established by the current program pages.",
+      "evidenceUrls": [
+        "https://nextzero.org/shrewsbury/",
+        "https://nextzero.org/shrewsbury/appliances/",
+        "https://nextzero.org/shrewsbury/heat-pumps/",
+        "https://nextzero.org/shrewsbury/heat-pumps/weatherization/"
+      ],
+      "evidenceText": "Shrewsbury NextZero currently provides residential appliance, heat-pump, thermostat, water-heating, and weatherization incentives with measure-specific assessments, contractor records, inspections, and filing deadlines.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1924",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Silicon Valley Power business customer with an eligible project at a Santa Clara service address.",
+        "Use the applicable prescriptive, electrification, or custom pathway and meet the current equipment and energy-savings specifications.",
+        "Have the customer register and submit the project application with signed forms, specifications, costs, and savings documentation.",
+        "Complete any required pre-installation inspection and obtain written Silicon Valley Power approval before purchasing or installing equipment.",
+        "Finish the approved project within the authorization period and submit invoices, closeout records, and access for post-installation inspection or savings verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current business program covers the principal mapped lighting, HVAC, water-heating, refrigeration, controls, and food-service measures through published prescriptive or reviewed custom pathways. A technically qualifying project that obtains advance approval and passes final verification is likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/rebates",
+        "https://www.siliconvalleypower.com/businesses/electrification-programs-rebates"
+      ],
+      "evidenceText": "Silicon Valley Power currently requires business customers to submit project details, complete pre-inspection and written approval when required, and provide final invoices and installation verification before rebate payment.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1920",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an active Silicon Valley Power residential customer and install the measure in an eligible existing residence served by the utility.",
+        "Purchase and install a new qualifying heat pump, heat-pump water heater, EV charger, laundry appliance, induction appliance, or other currently listed product.",
+        "Meet the current model, efficiency, installation, and permit requirements for the selected measure.",
+        "Submit the application with paid invoice, model and serial information, installation records, and permit proof when applicable.",
+        "File within the current measure deadline, generally including the program filing period after purchase or installation."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential electrification program provides prescriptive rebates under published customer, product, permit, and documentation rules. A complete claim for a qualifying existing-home installation is likely to be paid after administrative review.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/residents/electrification-programs",
+        "https://www.siliconvalleypower.com/residents/rebates/residential-electrification-program-rules"
+      ],
+      "evidenceText": "Current Silicon Valley Power rules support qualifying existing-home heat pumps, heat-pump water heaters, EV charging, laundry, and induction equipment and require timely claims with purchase, model, installation, and permit records.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2961",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Singing River Electric member with an eligible residence in the cooperative service area.",
+        "Use the applicable new-home or existing-home conversion pathway and install a qualifying high-efficiency heat pump or geothermal system.",
+        "Meet the current efficiency and equipment-certification requirements, including applicable AHRI or ARI certification.",
+        "Provide the equipment, contractor, installation, and member information required by the Comfort Advantage process.",
+        "Complete any program verification or inspection required before the incentive is issued."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Comfort Advantage publishes defined member, equipment, efficiency, and conversion requirements rather than a competitive selection process. A qualifying documented installation is likely to receive the stated incentive after verification.",
+      "evidenceUrls": [
+        "https://singingriver.com/my-home/comfort-advantage/"
+      ],
+      "evidenceText": "Singing River Electric currently describes Comfort Advantage incentives for qualifying high-efficiency heat-pump and geothermal installations, including equipment-certification and program-verification requirements.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1185",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "When a funding round is open, be a Pennsylvania small business with no more than the program employee limit and an eligible in-state project.",
+        "Propose an eligible energy-efficiency or pollution-prevention project that meets the minimum cost-savings or resource-reduction threshold.",
+        "Submit the online application, calculations, contractor quotes, project budget, and business documentation before the round closes.",
+        "Do not begin disallowed work before the applicable program start date and complete the project within the award period.",
+        "Submit completion, invoice, payment, and performance documentation for reimbursement after award."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The official 2025-2026 application period closed on March 13, 2026, and the project-completion date was June 30, 2026. No later open round was verified as of the audit date, so a new application is unlikely to receive an award unless Pennsylvania announces another cycle.",
+      "evidenceUrls": [
+        "https://www.pa.gov/agencies/dep/programs-and-services/grants-loans-rebates/small-business-ombudsmans-office/small-business-advantage-grant"
+      ],
+      "evidenceText": "Pennsylvania states that the 2025-2026 Small Business Advantage Grant round closed March 13, 2026 and required awarded work to be completed by June 30, 2026.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:f69ab77394818965:small-business-efficiency-services",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Silicon Valley Power small-business customer in Santa Clara.",
+        "Request or accept the no-cost energy survey and provide reasonable site and operating information for the assessment.",
+        "Select a currently qualifying electric-efficiency project identified through the service or otherwise accepted by the utility.",
+        "Obtain Silicon Valley Power project preapproval before purchasing or installing the proposed measures.",
+        "Complete the approved work and submit invoices, completion records, and access for final verification."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current service provides a defined survey and project-support path, but the supplied opportunity maps only to a low-flow water fixture, which is not supported by the current electric-efficiency materials reviewed. An award is possible for a qualifying efficiency project, not established for that mapped measure.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/save-money",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/84829/638965616141770000"
+      ],
+      "evidenceText": "Silicon Valley Power offers small businesses a no-cost energy survey, project assistance, enhanced qualifying rebates, and preapproval-based implementation support for electric-efficiency measures such as lighting, HVAC, controls, and food-service equipment.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22716",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Efficiency Maine small-business customer in the applicable utility rate or demand class.",
+        "Use the loan for a currently eligible heat-pump or variable-refrigerant-flow retrofit completed through a Qualified Partner.",
+        "Apply for and pass lender prequalification for an amount within the current program range.",
+        "Submit the project proposal, utility information, and required records for Efficiency Maine project preapproval.",
+        "Sign the approved work scope and loan documents before installation and submit the completion form after the project is finished."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program has a defined project pathway, but financing depends on both lender underwriting and Efficiency Maine project approval. A technically eligible retrofit therefore has a possible, not automatic, funding outcome.",
+      "evidenceUrls": [
+        "https://www.efficiencymaine.com/small-business-energy-loans/"
+      ],
+      "evidenceText": "Efficiency Maine currently offers small-business heat-pump and variable-refrigerant-flow loans through Qualified Partners, with lender prequalification, program project approval, signed loan documents, and completion confirmation.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1186",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Pennsylvania small business with no more than the program employee limit at the project site.",
+        "Use the financing for an eligible project that reduces energy use, pollution, or waste and satisfies the current cost and payback rules.",
+        "Submit the technical eligibility application and supporting project, savings, cost, and business information to the Department of Environmental Protection.",
+        "Receive the Department of Environmental Protection technical approval letter.",
+        "Submit the financial application to the Department of Community and Economic Development and pass credit, repayment, collateral, and closing review."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The loan requires separate technical eligibility approval and borrower-specific financial underwriting. Eligible energy projects can be financed, but approval is not assured solely because the proposed equipment qualifies.",
+      "evidenceUrls": [
+        "https://www.pa.gov/agencies/dep/programs-and-services/grants-loans-rebates/small-business-ombudsmans-office/ppaa-loan-program"
+      ],
+      "evidenceText": "Pennsylvania currently administers the PPAA loan through Department of Environmental Protection technical approval followed by Department of Community and Economic Development financial review and loan closing.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5205",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible New Jersey customer proposing a qualifying combined-heat-and-power or fuel-cell project at an eligible site.",
+        "Meet the current technology, system-size, efficiency, fuel, interconnection, cost, and program requirements.",
+        "Submit the technical and financial application with equipment, engineering, cost, energy-use, savings, and project-development documentation before installation.",
+        "Receive program approval and an incentive commitment before purchasing or constructing the project.",
+        "Complete the project, satisfy commissioning and performance milestones, and submit invoices, inspection, and verification records before each payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "CHP and fuel-cell projects receive project-specific technical and financial review before commitment and milestone payments. Current official materials substantiate CHP and fuel cells, but not a standalone biomass or biogas system unless it is part of a qualifying CHP configuration.",
+      "evidenceUrls": [
+        "https://cleanenergy.nj.gov/programs/energy-efficiency/combined-heat-and-power-fuel-cell-program",
+        "https://cleanenergy.nj.gov/programs/energy-efficiency"
+      ],
+      "evidenceText": "New Jersey currently accepts applications for technically reviewed CHP and fuel-cell incentives that require advance commitment and project, commissioning, inspection, and performance documentation.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5361",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Rhode Island homeowner or microbusiness using a qualifying project and installer under the current Renewable Energy Fund rules.",
+        "Propose an eligible net-metered photovoltaic or solar domestic hot-water system; claim a storage adder only with a qualifying concurrent renewable-energy award.",
+        "Have the selected installer submit the complete application during an open 2026 funding round with design, cost, ownership, technical, and interconnection information.",
+        "Receive a Commerce Rhode Island award letter and execute the grant agreement before installation begins.",
+        "Complete installation and interconnection and submit final invoices, completion records, and access for quality-assurance inspection before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The 2026 program uses limited funding rounds and requires formal selection, an award letter, and a grant agreement before construction. Solar photovoltaic, solar hot-water, and qualifying storage adders are supported, but an energy audit is preparatory rather than a separately funded retrofit.",
+      "evidenceUrls": [
+        "https://commerceri.com/renewable-energy-fund/",
+        "https://assets.simpleviewinc.com/simpleview/image/upload/v1/clients/rhodeisland/Small_Scale_Flyer_38730e17-9e3b-4e0f-b749-f9b8352c70bc.pdf"
+      ],
+      "evidenceText": "Commerce Rhode Island lists multiple 2026 small-scale funding rounds and requires installer application, award documents before installation, interconnection, completion records, and quality-assurance review. Current materials cover solar photovoltaic, solar hot water, and a concurrent storage adder.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4266",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible SMECO non-residential customer with an active account at the project site.",
+        "Propose a qualifying prescriptive or custom lighting, HVAC, refrigeration, controls, or other electric-efficiency project.",
+        "Submit the project application with equipment, cost, operating, and savings information before purchasing or installing equipment.",
+        "Receive SMECO preapproval before committing to the project.",
+        "Complete the approved scope and submit final invoices, specifications, completion records, and access for inspection or savings verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "SMECO currently offers prescriptive and custom business incentives under a mandatory advance-approval process. A qualifying project that receives preapproval and submits complete closeout records is likely to be paid, subject to program limits and funding.",
+      "evidenceUrls": [
+        "https://www.smeco.coop/energy-efficiency/commercial-programs/business-solutions/",
+        "https://www.smeco.coop/faqs/can-i-receive-incentives-for-projects-where-the-equipment-has-already-been-purchased/"
+      ],
+      "evidenceText": "SMECO requires business projects to obtain approval before equipment purchase or installation and supports current lighting, HVAC, refrigeration, and custom efficiency pathways followed by final documentation and verification.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3574",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible SMECO residential customer or member with the measure installed at a qualifying service address.",
+        "Purchase and install a currently qualifying HVAC system, heat-pump water heater, smart thermostat, appliance, or connected-control measure.",
+        "Use an authorized contractor, distributor, retailer, or program enrollment route when required for the selected incentive.",
+        "Meet current model, efficiency, installation, connectivity, and participation requirements.",
+        "Provide the customer account, itemized purchase or installation records, model data, and any enrollment or verification information requested by SMECO."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Most mapped HVAC, heat-pump water-heater, thermostat, and connected-control measures have current objective incentive or enrollment paths. A compliant customer is likely to receive the applicable benefit, but the current official pages reviewed do not clearly substantiate the broad high-efficiency-refrigeration mapping.",
+      "evidenceUrls": [
+        "https://www.smeco.coop/energy-efficiency/residential-programs/heating-cooling-rebates/",
+        "https://www.smeco.coop/energy-efficiency/residential-programs/appliance-rebates/heat-pump-water-heaters/",
+        "https://www.smeco.coop/energy-efficiency/residential-programs/appliance-rebates/smart-thermostats/",
+        "https://www.smeco.coop/energy-efficiency/residential-programs/smarttemp/switch2earn/"
+      ],
+      "evidenceText": "SMECO currently provides residential heating and cooling, heat-pump water-heater, smart-thermostat, and connected-device incentives through measure-specific contractor, retailer, claim, or enrollment channels.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5696",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible SMECO small-business or nonprofit customer with qualifying existing equipment at the project site.",
+        "Request and complete the program no-cost energy analysis.",
+        "Accept a program-approved project scope, incentive contribution, and customer cost share for qualifying measures.",
+        "Complete the approved lighting, refrigeration, or related retrofit through the program process.",
+        "Provide access for installation confirmation, final inspection, and any required closeout documentation."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current small-business and nonprofit offering uses a structured energy analysis and approved retrofit scope, with incentives covering a large share of eligible project cost. A qualifying customer that accepts and completes the approved work is likely to receive the program contribution.",
+      "evidenceUrls": [
+        "https://www.smeco.coop/energy-efficiency/commercial-programs/small-business/"
+      ],
+      "evidenceText": "SMECO currently offers eligible small businesses and nonprofits a no-cost energy analysis and incentives for approved retrofits of existing lighting, refrigeration, and other efficiency equipment, followed by project completion verification.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22800",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible SMUD residential customer with a new qualifying battery energy-storage system at the service address.",
+        "Complete the battery interconnection process and receive permission to operate.",
+        "Use a currently eligible battery manufacturer or integration pathway and enroll within the current period after permission to operate.",
+        "Move to the required Solar and Storage Rate and authorize the program controls and data access.",
+        "Accept the current multi-year participation commitment and pass enrollment and system verification before payment."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current incentive follows published system, interconnection, rate, enrollment, control, and participation requirements rather than competitive scoring. A qualifying newly interconnected battery that enrolls on time is likely to be paid after successful verification, subject to available program funds.",
+      "evidenceUrls": [
+        "https://www.smud.org/Going-Green/Battery-storage/Homeowner"
+      ],
+      "evidenceText": "SMUD currently offers a homeowner battery incentive after permission to operate, timely enrollment, use of an eligible system, transition to the required rate, authorization of program controls, and a multi-year participation commitment.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22290",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a qualifying SMUD commercial customer with the charging project located in SMUD territory.",
+        "Install new qualifying Level 2 or direct-current fast charging equipment that meets the current program and utility requirements.",
+        "Submit the PowerClerk application before construction with the customer account, site plan, electrical one-line, charger specifications, costs, and project documentation.",
+        "Receive SMUD incentive reservation or project approval before purchasing or constructing the installation.",
+        "Use licensed, permitted installation and satisfy applicable metering, inspection, networking, and data requirements.",
+        "Submit the final payment request with invoices, permits, photographs, and completion records after installation."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "SMUD provides a current reservation and payment pathway for qualifying commercial Level 2 and fast-charging projects. A fully documented project that receives an advance reservation and completes the approved scope is likely to receive the incentive while funds remain.",
+      "evidenceUrls": [
+        "https://www.smud.org/Going-Green/Electric-Vehicles/Business",
+        "https://www.smud.org/-/media/Documents/Going-Green/EVs/Commercial-EV-Program-Manual.ashx"
+      ],
+      "evidenceText": "SMUD currently requires commercial charging applicants to secure an incentive reservation before construction, then complete permitting, installation, inspection, and a documented final payment request.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1917",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible SMUD business customer with an existing qualifying facility or project in SMUD territory.",
+        "Use the applicable Complete Energy Solutions, prescriptive, or custom incentive route for the selected measure.",
+        "Complete the required site assessment or submit technical baseline, cost, equipment, and energy-savings documentation.",
+        "Obtain required SMUD technical review and preapproval before purchasing or installing equipment, particularly for custom or larger projects.",
+        "Complete the approved installation and submit final invoices, equipment records, commissioning information, and access for inspection or savings verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current business portfolio directly supports heat-pump HVAC, heat-pump water heating, refrigeration, induction, and related measures through prescriptive or managed-project pathways. A qualifying project that follows the applicable approval and closeout process is likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://www.smud.org/Business-Solutions-and-Rebates/Business-Rebates",
+        "https://www.smud.org/Business-Solutions-and-Rebates/Business-Rebates/Complete-Energy-Solutions-Program",
+        "https://www.smud.org/Business-Solutions-and-Rebates/Business-Rebates/Custom-Incentives"
+      ],
+      "evidenceText": "SMUD currently offers business incentives through managed prescriptive and custom pathways that require assessment or technical review, advance approval when applicable, completed installation records, and final verification.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1916",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible SMUD residential customer and install the product at a qualifying service address.",
+        "Purchase and install a currently qualifying heat pump, smart thermostat, heat-pump water heater, appliance, induction product, or other listed measure.",
+        "Use a participating contractor or retailer when required for the selected instant or contractor-delivered incentive.",
+        "Meet current equipment, efficiency, installation, permit, and replacement requirements.",
+        "Submit or complete the measure-specific claim with account, receipt or invoice, model, installation, and photograph or permit records when requested."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "SMUD currently offers the mapped household measures through objective point-of-sale, participating-contractor, or post-installation claim channels. A qualifying purchase or installation is likely to receive the listed rebate after measure-specific validation.",
+      "evidenceUrls": [
+        "https://www.smud.org/Rebates-and-Savings-Tips/Rebates-for-My-Home",
+        "https://www.smud.org/Rebates-and-Savings-Tips/Rebates-for-My-Home/Home-Appliances-and-Electronics-Rebates",
+        "https://www.smud.org/Rebates-and-Savings-Tips/Rebates-for-My-Home/Heating-and-Cooling-Rebates"
+      ],
+      "evidenceText": "SMUD currently lists residential heating and cooling, water-heating, thermostat, appliance, laundry, and induction incentives with measure-specific retailer, contractor, receipt, model, installation, and permit requirements.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2239",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Snohomish County PUD business customer with the project installed at a qualifying service location.",
+        "Propose a currently qualifying HVAC, controls, refrigeration, envelope, motor, fan, pump, or custom energy-efficiency measure.",
+        "Submit the project application with equipment specifications, costs, baseline information, and savings calculations as applicable.",
+        "Receive PUD preapproval before purchasing or installing equipment.",
+        "Complete the approved project and provide final invoices, installation records, and access for post-installation inspection or savings verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current business program explicitly supports most mapped HVAC, thermostat, refrigeration, anti-sweat, insulation, fan, and pump measures under mandatory preapproval. A conforming project is likely to be paid, but waste-heat recovery was not expressly identified and requires custom-project confirmation.",
+      "evidenceUrls": [
+        "https://www.snopud.com/save-energy/business/rebates/all/"
+      ],
+      "evidenceText": "Snohomish County PUD currently lists 2026 business incentives for heat pumps, controls, variable-speed fans and pumps, insulation, refrigeration, and anti-sweat controls and requires project approval before installation.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2237",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Snohomish County PUD residential customer with the measure installed in a qualifying home.",
+        "Purchase and install an active qualifying heat pump, thermostat, duct, water-heating, insulation, air-sealing, or laundry measure.",
+        "Use a PUD-registered contractor for contractor-delivered heat-pump, weatherization, or water-heating incentives when required.",
+        "Submit any customer-filed product rebate within the current deadline with receipt, model, account, and installation documentation.",
+        "Complete applicable permits, inspections, and PUD verification.",
+        "Do not rely on a new EV-charger rebate: the official charger offer ended for purchases after December 31, 2025."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Most mapped home-efficiency measures remain available through objective contractor or post-purchase rebate routes, so a compliant active-measure claim is likely. The mapped EV-charger and Level 2 charger opportunity is no longer current because that rebate ended after 2025 purchases.",
+      "evidenceUrls": [
+        "https://www.snopud.com/save-energy/residential/rebates/",
+        "https://www.snopud.com/save-energy/residential/rebates/ev-chargers/"
+      ],
+      "evidenceText": "Snohomish County PUD currently offers residential heat-pump, thermostat, duct, water-heating, weatherization, and appliance rebates, while its official EV-charger page states that the charger rebate ended for purchases after December 31, 2025.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4952",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible SoCalGas non-residential customer with a qualifying natural-gas efficiency project at the service location.",
+        "Propose a custom retrofit, retrocommissioning, process, or systems project with measurable gas savings that is not appropriately handled as a standard prescriptive rebate.",
+        "Submit baseline, engineering, cost, operating, equipment, and savings documentation for program technical and cost-effectiveness review before installation.",
+        "Receive written project approval and an incentive reservation before purchasing, constructing, or installing the measure.",
+        "Complete the approved scope and provide final invoices, commissioning records, inspection access, and measurement or savings-verification documentation before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Customized incentives remain an official business pathway, but every project depends on engineering savings, cost-effectiveness, technical eligibility, advance reservation, available funding, and final verification. Award is therefore possible rather than routine, especially while program delivery transitions toward third-party implementation.",
+      "evidenceUrls": [
+        "https://www.socalgas.com/business/savings/equipment-rebates",
+        "https://www.socalgas.com/sites/default/files/2026-05/2025_EE_Annual_Report_0.pdf",
+        "https://eecp.socalgas.com"
+      ],
+      "evidenceText": "SoCalGas currently advertises customized business incentives, and its latest efficiency report describes the calculated-incentive route for custom retrofit and retrocommissioning projects, with advance review, reservation, implementation, and savings verification.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2508",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be the owner, manager, or authorized applicant for an eligible existing multifamily property served by SoCalGas.",
+        "Purchase and install a new qualifying natural-gas oven that replaces eligible existing natural-gas equipment and meets the current product specifications.",
+        "Complete the purchase and installation within the current 2026 program period.",
+        "Submit the signed rebate application with a recent matching SoCalGas bill, paid itemized invoice or receipt, model information, and installation records by the current deadline.",
+        "Remain within program limits and permit SoCalGas to inspect or otherwise verify the equipment and installation before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current multifamily application provides a prescriptive rebate route for qualifying natural-gas ovens under objective property, equipment, timing, and documentation rules. A complete timely claim is likely to be paid after review while funds remain.",
+      "evidenceUrls": [
+        "https://www.socalgas.com/savings/multifamily-rebates",
+        "https://www.socalgas.com/sites/default/files/2026-03/SCG-Multifamily-Application.pdf"
+      ],
+      "evidenceText": "SoCalGas currently provides a 2026 multifamily rebate application covering qualifying natural-gas equipment, including eligible ovens, and requires an existing multifamily property, current utility bill, paid itemized records, timely filing, and possible verification.",
+      "reviewedAt": "2026-07-10T16:28:40Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

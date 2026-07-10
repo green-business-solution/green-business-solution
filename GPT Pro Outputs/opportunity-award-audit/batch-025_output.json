@@ -3,7 +3,538 @@
   "batchId": "batch-025",
   "inputFile": "batch-025_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.772Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T14:17:59Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1106",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "For customer participation, hold an active Green Mountain Power account and submit the Cow Power rider enrollment form or enroll by phone.",
+        "Select 25%, 50%, or 100% of electricity usage and authorize the additional four-cent-per-kilowatt-hour rider charge.",
+        "For farm energy payments, be accepted as a participating Vermont farm producing qualifying renewable generation.",
+        "Any Renewable Development Fund incentive requires approval through the independently overseen fund; current public materials do not publish the farm application or selection criteria."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "The current official page explains customer enrollment, payments to participating farms, and a development fund, but it does not publish an application, eligibility standards, or selection process for a new farm biogas or monitoring retrofit. Retrofit award likelihood cannot be determined from the available evidence.",
+      "evidenceUrls": [
+        "https://greenmountainpower.com/help/cow-power/"
+      ],
+      "evidenceText": "GMP describes a voluntary customer rider whose charges support qualifying farm renewable energy and may be deposited in an independently overseen development fund. The page does not state how a farm applies for or receives a development incentive.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "needs_evidence"
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:f4ae5887bd3fcdc9:gogreen-business-energy-financing",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a California business or nonprofit receiving energy from an eligible investor-owned utility or community choice aggregator.",
+        "Meet at least one program size test: no more than 100 employees, less than $16 million in annual revenue, or the applicable Small Business Administration size standard.",
+        "Finance eligible clean-energy measures and use a participating contractor or project developer where program rules require one.",
+        "Apply through a participating finance company and satisfy its credit underwriting, documentation, and financing terms.",
+        "Have the completed financing agreement and project enrolled under GoGreen Business requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Program eligibility is rules-based, but financing is issued by independent participating finance companies and remains subject to lender underwriting, credit approval, available products, and acceptable project documentation.",
+      "evidenceUrls": [
+        "https://www.treasurer.ca.gov/caeatfa/gogreen/business",
+        "https://www.gogreenfinancing.com/business/"
+      ],
+      "evidenceText": "The state program is active statewide for qualifying small businesses and nonprofits and supports efficiency, clean generation, storage, and EV charging measures. Participating finance companies make the financing decision.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2540",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Grand Marais Public Utility commercial or industrial electric customer.",
+        "Install a measure listed in the current Southern Minnesota Municipal Power Agency rebate portfolio and meet its technical specifications.",
+        "Use the applicable current-year application and provide itemized invoices, equipment specifications, and other requested documentation.",
+        "Obtain preapproval before ordering or beginning work when the applicable custom-project or measure form requires it.",
+        "Submit the completed claim within the stated deadline and while program funds remain available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current rebates are prescriptive and noncompetitive for qualifying utility customers. Approval is generally likely when the measure, documentation, timing, and any required preapproval conditions are satisfied.",
+      "evidenceUrls": [
+        "https://www.ci.grand-marais.mn.us/energy-efficiency",
+        "https://smmpa.com/members/grand-marais"
+      ],
+      "evidenceText": "Grand Marais PUC and its power supplier direct business customers to a current portfolio of energy-efficiency rebate forms. Prescriptive projects use a documented claim process, while custom projects may require advance review.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2539",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Grand Marais Public Utility residential electric customer.",
+        "Purchase or install a measure covered by the current Southern Minnesota Municipal Power Agency residential rebate portfolio.",
+        "Meet the measure-specific efficiency, equipment, installation, and customer eligibility rules.",
+        "Submit the correct current-year form with receipts, invoices, model information, and any required contractor documentation.",
+        "File by the applicable deadline and within program caps and available funding."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential offering is a noncompetitive prescriptive rebate program. A compliant claim is likely to be paid, subject to measure limits, deadlines, verification, and available funds.",
+      "evidenceUrls": [
+        "https://www.ci.grand-marais.mn.us/energy-efficiency",
+        "https://smmpa.com/members/grand-marais"
+      ],
+      "evidenceText": "Grand Marais PUC directs residents to active residential rebate forms covering qualifying efficiency equipment and electrification measures. Claims require the applicable form and purchase or installation records.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2195",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Grays Harbor PUD commercial, agricultural, or industrial electric customer.",
+        "Confirm that the proposed measure is covered and meets current program specifications.",
+        "Contact the program before project commitment when the applicable measure or custom project requires an incentive estimate or preauthorization.",
+        "Submit the commercial rebate application with invoices, equipment data, and other requested project records.",
+        "Permit utility verification or inspection and avoid duplicate incentives for the same eligible cost."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The PUD currently offers flexible, noncompetitive business incentives. Qualifying projects are likely to receive payment after the required eligibility review, documentation, and verification, subject to funding.",
+      "evidenceUrls": [
+        "https://www.ghpud.org/energy-efficiency/commercial-programs/",
+        "https://www.ghpud.org/energy-efficiency/commercial-programs/commercial-programs-rebate-application/"
+      ],
+      "evidenceText": "Grays Harbor PUD maintains current commercial efficiency programs and a business rebate application. The programs serve small and large commercial, agricultural, and industrial customers and may require project-specific review.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2478",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Grays Harbor PUD residential electric customer and use the equipment in an eligible residence.",
+        "Purchase or install a currently covered measure that satisfies the program's efficiency and installation specifications.",
+        "Use qualified contractors, permits, or inspections when the applicable measure requires them.",
+        "Submit the correct residential application with itemized receipts, invoices, model information, and other requested records.",
+        "Meet the measure-specific filing deadline; appliance applications, for example, must be received within 60 days of purchase or delivery."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Residential rebates are prescriptive and noncompetitive. A properly documented eligible purchase or installation is likely to be approved, subject to measure-specific conditions and available funds.",
+      "evidenceUrls": [
+        "https://www.ghpud.org/energy-efficiency/residential-programs/",
+        "https://www.ghpud.org/energy-efficiency/residential-programs/residential-rebate-application-for-appliance-rebate-programs/"
+      ],
+      "evidenceText": "The PUD lists active residential rebate applications for energy-efficiency and appliance measures. Current appliance rules require ENERGY STAR certification, an itemized receipt, and filing within 60 days.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3575",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an active Great Lakes Energy residential electric member.",
+        "Purchase or install new, eligible equipment during calendar year 2026 and meet the measure-specific efficiency criteria.",
+        "Submit the rebate request within 60 days of purchase or installation, as applicable.",
+        "Provide receipts, invoices, model and serial information, and AHRI or NEEP documentation when required.",
+        "Use a properly licensed Michigan contractor for HVAC work when required and comply with program cost caps and available-funds rules."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The 2026 Energy Wise residential rebates are prescriptive and noncompetitive. Eligible members with timely, complete documentation are likely to receive the stated rebate, subject to caps and remaining funds.",
+      "evidenceUrls": [
+        "https://www.gtlakes.com/energy-wise/",
+        "https://www.gtlakes.com/energy-wise/2026-ew-residential-appliances/",
+        "https://www.gtlakes.com/energy-wise/2026-ew-residential-hvac/",
+        "https://www.gtlakes.com/energy-wise/2026-ew-terms-and-conditions/"
+      ],
+      "evidenceText": "Great Lakes Energy publishes current 2026 residential appliance and HVAC rebate rules. Applicants must be residential electric members, use eligible new equipment, provide purchase and installation records, and generally apply within 60 days.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4067",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a municipality designated as a Massachusetts Green Community and eligible for the current competitive round.",
+        "Submit an application under the current Program Opportunity Notice by the stated deadline, currently October 9, 2026.",
+        "Propose eligible municipal energy projects and provide the required technical scope, energy-savings calculations, budget, schedule, and supporting documents.",
+        "Satisfy program scoring, cost-effectiveness, prior-grant performance, and available-funding considerations.",
+        "Execute the grant agreement and comply with procurement, reporting, installation, and closeout requirements if selected."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program is active and has a current application deadline, but awards are competitive and depend on application quality, program priorities, scoring, and available funds rather than automatic entitlement.",
+      "evidenceUrls": [
+        "https://www.mass.gov/green-communities-grant-opportunities",
+        "https://www.mass.gov/info-details/being-a-green-community",
+        "https://www.mass.gov/info-details/green-communities-grants"
+      ],
+      "evidenceText": "Massachusetts lists an October 9, 2026 deadline for the biannual Green Communities Competitive Grant. Funding is limited to designated Green Communities and is awarded through a reviewed municipal application.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4330",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The facility must produce electricity using qualifying clean-energy technology, or store electricity produced entirely from qualifying clean-energy technologies.",
+        "Submit the applicable Tennessee Department of Environment and Conservation certification application with complete facility, equipment, contract, and project information.",
+        "Submit the Supplemental Green Energy Production Facility Tax Form for Department of Revenue processing.",
+        "Receive TDEC certification and any required Department of Revenue authorization before using tax-exempt purchasing authority or claiming the applicable credit or refund.",
+        "Maintain records showing that purchases and equipment are used by the certified electricity-production or qualifying storage facility."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Approval is rules-based but requires substantive facility certification and tax review. The mapped ground-source HVAC and solar water-heating retrofits do not qualify merely because they use geothermal or solar energy; they must be part of a qualifying electricity-production facility, and storage must meet the clean-energy sourcing rule.",
+      "evidenceUrls": [
+        "https://www.tn.gov/environment/sustainability/funding/green-energy.html",
+        "https://www.tn.gov/revenue/taxes/sales-and-use-tax/exemptions-certificates-credits.html",
+        "https://www.tn.gov/revenue/taxes/sales-and-use-tax/forms.html"
+      ],
+      "evidenceText": "TDEC accepts certification applications year-round for qualifying electricity-production and clean-energy storage facilities. Applicants also submit a supplemental tax form to Revenue; ordinary geothermal HVAC or solar thermal use is not enough without qualifying electricity production.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5216",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Operate qualifying property that generates electricity through a TDEC-certified green energy production facility, or qualifying certified storage property.",
+        "Obtain and retain the Tennessee Department of Environment and Conservation facility certification.",
+        "File the applicable property schedule or statement and provide installed-cost, location, equipment, and certification records to the responsible assessor or Comptroller office.",
+        "Meet the filing timing applicable to the property class and the first year for which the special valuation is claimed.",
+        "Limit the claim to property actually covered by the certified generation or storage facility rather than generic geothermal HVAC or battery equipment."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The special valuation is rules-based once the facility and property qualify, but it requires TDEC certification and property-assessment filings. Generic ground-source heat pumps or batteries are not automatically eligible unless they are part of a qualifying certified electricity-production or storage facility.",
+      "evidenceUrls": [
+        "https://www.tn.gov/environment/sustainability/funding/green-energy.html",
+        "https://comptroller.tn.gov/content/dam/cot/sap/documents/ad-valorem/2026/2026EL_SOL.pdf"
+      ],
+      "evidenceText": "Current Tennessee materials require green-energy facility certification and property reporting. The 2026 solar ad valorem instructions require certification or a qualifying schedule and specify the first-year filing process for the special valuation.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22564",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Green Mountain Power customer with a battery model currently accepted by the program.",
+        "Install and commission the battery in accordance with interconnection, electrical, and manufacturer requirements.",
+        "Enroll the device through the designated platform and select the amount and duration of stored power to share during peak events.",
+        "Keep the battery operational, connected, and controllable for program dispatches and comply with the enrollment agreement.",
+        "Provide account, device, installer, and payment information needed to validate enrollment."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program is an active, noncompetitive device-enrollment offering with published compatible batteries and per-kilowatt incentives. A qualifying, connected system is likely to receive the rebate after successful enrollment and continued participation.",
+      "evidenceUrls": [
+        "https://greenmountainpower.com/rebates-programs/home-energy-storage/bring-your-own-device/"
+      ],
+      "evidenceText": "GMP currently offers up to $10,500 based on the enrolled battery power and discharge duration. Customers choose an eligible battery and agree to share stored energy during peak periods.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22587",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Green Mountain Power customer and use the rebated equipment at the served property.",
+        "Purchase and install a currently eligible heat pump, heat-pump water heater, induction appliance, or other covered measure meeting the published specifications.",
+        "Use the required contractor, participating retailer, or program channel where the specific rebate requires one.",
+        "Submit the current rebate form with proof of purchase, installation records, model information, and account details by the stated deadline.",
+        "Provide income documentation only when seeking an enhanced income-qualified incentive."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current GMP rebates are prescriptive and noncompetitive. Eligible equipment claims are likely to be paid when the customer, product, installation, documentation, and deadline rules are met.",
+      "evidenceUrls": [
+        "https://greenmountainpower.com/rebates-programs/home-heating-cooling/",
+        "https://greenmountainpower.com/rebates-programs/home-and-yard/heat-pump/",
+        "https://greenmountainpower.com/rebates-programs/home-and-yard/heat-pump-water-heater/",
+        "https://greenmountainpower.com/rebates-programs/home-and-yard/induction-cooktop-rebate/"
+      ],
+      "evidenceText": "GMP publishes active rebates for heat pumps, heat-pump water heaters, and induction cooking equipment. Claims use measure-specific purchase, installation, contractor, and customer documentation, with enhanced amounts available for some income-qualified customers.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22404",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Green Mountain Power customer with a new or used all-electric vehicle registered at the GMP account address.",
+        "Own the home or obtain landlord approval and have a smart meter and reliable internet service.",
+        "Request and install the program's Level 2 charger, keep it connected to GMP through Wi-Fi, and enroll it on an eligible discounted charging rate.",
+        "For installation reimbursement, purchase or lease the vehicle in 2026, successfully connect the charger, and submit the installation receipt.",
+        "Provide Vermont vehicle registration and the requested customer, property, charger, and reimbursement information."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current home-charging offer is a noncompetitive enrollment program. Customers meeting the vehicle, property, connectivity, rate, and documentation rules are likely to receive the charger and applicable installation reimbursement.",
+      "evidenceUrls": [
+        "https://greenmountainpower.com/rebates-programs/electric-vehicles/in-home-ev-charger/"
+      ],
+      "evidenceText": "GMP currently provides a Level 2 charger while the customer remains enrolled, discounted charging rates, and up to $650 in installation support. Qualification depends on an all-electric vehicle, address registration, property permission, smart metering, internet connectivity, and rate enrollment.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:mendotagroup_com_sdge_grid_lodging",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The site must be an eligible lodging business in SDG&E service territory with an active electric or gas account that pays the Public Purpose Program surcharge.",
+        "Provide at least 12 consecutive months of usable energy data and pass any additional screening for sites above one megawatt of peak demand.",
+        "Participate through an enrolled aggregator or qualify to self-aggregate and submit a project consistent with the normalized-metered-energy-consumption rules.",
+        "Avoid duplicate ratepayer-funded incentives for the same measure cost and have no disqualifying recent or planned change in on-site generation.",
+        "Install the approved project by December 31, 2027 or before funds are fully allocated, then document installation and measured savings for payment."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The mapped retrofit is automated demand-response controls, but the current program expressly does not pay incentives for demand-response technologies. Controls can qualify only when structured as an energy-efficiency project that produces reliable metered energy savings, so a stand-alone demand-response-controls award is unlikely.",
+      "evidenceUrls": [
+        "https://www.sdge.com/business/save-energy-and-money",
+        "https://mendotagroup.com/sdge-grid-lodging/",
+        "https://mendotagroup.com/sdge-grid-lodging-aggregator/"
+      ],
+      "evidenceText": "GRID-Lodging is an aggregator-delivered, pay-for-performance efficiency program for lodging customers. It measures savings at the meter and pays an installation portion followed by performance payments, while explicitly excluding demand-response technologies as the incentivized measure.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:aesc_inc_com_groceries_restaurants_and_food_storage_program",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an SDG&E customer operating an eligible grocery, restaurant, or food-storage facility in the service territory.",
+        "Work through an enrolled aggregator, which screens customer and project eligibility and manages program participation.",
+        "Use an approved deemed, population-level normalized-metered-energy-consumption, or site-level normalized-metered-energy-consumption pathway.",
+        "Implement an eligible efficiency or demand-savings project and provide the records and access needed for installation and savings verification.",
+        "Avoid duplicate reimbursement of the same project cost and apply while first-come program funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Refrigeration efficiency projects fit the program's target market, but approval and payment depend on aggregator screening, the selected savings pathway, measurable results, and available funds. Battery storage or automated demand-response equipment is not automatically eligible merely by equipment type.",
+      "evidenceUrls": [
+        "https://www.sdge.com/business/save-energy-and-money",
+        "https://aesc-inc.com/grfs-program"
+      ],
+      "evidenceText": "The active GRFS program serves grocery, restaurant, and food-storage customers through enrolled aggregators. Savings may be paid through metered-performance or deemed-rebate pathways, and funds are available on a first-come basis until exhausted.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3980",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "The seller must have receipts before July 1, 2034 from selling qualifying wind-generation, solar-generation, energy-storage, or related grid-connection equipment.",
+        "The buyer must be the United States, the State of New Mexico, or a governmental unit, subdivision, agency, department, or instrumentality of the federal or state government as defined by statute.",
+        "The equipment must be for a wind or solar electric-generation facility or a qualifying energy-storage facility; ordinary solar water heating without electricity generation does not qualify under this provision.",
+        "Maintain invoices, contracts, buyer documentation, and any nontaxable-transaction certificate or alternative evidence required for audit support.",
+        "Report the deduction on the applicable New Mexico gross-receipts tax return and do not claim a prohibited overlapping credit for the same expenditure."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is a statutory tax deduction rather than a competitive award. A qualifying seller-to-government transaction is likely to receive the benefit when correctly reported and documented, although solar thermal equipment must be used to generate electricity rather than merely heat water.",
+      "evidenceUrls": [
+        "https://www.nmlegis.gov/sessions/24%20Regular/final/HB0252.PDF",
+        "https://www.tax.newmexico.gov/businesses/gross-receipts-overview/"
+      ],
+      "evidenceText": "Current New Mexico law permits a gross-receipts deduction through June 30, 2034 for qualifying wind, solar-electric-generation, energy-storage, and related equipment sold to defined federal or state government entities. The benefit is claimed through tax reporting rather than discretionary program selection.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1773",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Groton Utilities commercial or industrial electric customer with the account in good standing.",
+        "Submit the project for mandatory utility preapproval before purchase, commitment, or installation when required by the program.",
+        "Install eligible equipment and comply with the approved scope, efficiency specifications, and any inspection requirements.",
+        "Submit the completed rebate application and supporting invoices within 30 days after installation.",
+        "Remain within the published limits of $25,000 per unit, $50,000 per owner federal tax ID in a consecutive 12-month period, and 80% of total project cost."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The utility requires preapproval, limits awards, and states that rebates above a customer's annual conservation-fund contribution are at utility discretion. An eligible project can be approved, but the outcome is not automatic.",
+      "evidenceUrls": [
+        "https://grotonutilities.com/209/Commercial-Industrial-Incentives"
+      ],
+      "evidenceText": "Groton Utilities publishes current commercial and industrial rebate caps and requires utility review. Larger rebate amounts can depend on preapproval and the utility's discretion, with payment limited to a portion of project cost.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1772",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Groton Utilities or Bozrah Light and Power residential customer for the applicable measure.",
+        "Purchase and install equipment or complete a service covered by the current residential rebate center.",
+        "Meet the measure-specific product, contractor, installation, quantity, and maximum-rebate rules.",
+        "Submit the linked application with account information, proof of purchase, invoices, and any requested model or contractor documentation.",
+        "For weatherization measures, complete the required assessment or approved service pathway when specified."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The residential rebates are published, prescriptive, and noncompetitive. A customer meeting the measure-specific rules and submitting a complete claim is likely to receive the rebate, subject to program limits and funding.",
+      "evidenceUrls": [
+        "https://grotonutilities.com/238/Rebates---Groton-Utilities-Residential"
+      ],
+      "evidenceText": "The current rebate center lists active applications for attic insulation, HVAC and mini-splits, heat-pump water heaters, smart thermostats, and related residential measures, with stated measure and customer caps.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3322",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Guadalupe Valley Electric Cooperative member with the equipment installed at a served location.",
+        "For HVAC, use a licensed contractor, install qualifying matched equipment, and provide the required sizing, AHRI, invoice, and inspection documentation.",
+        "For a Level 2 EV charger, use eligible equipment and a licensed electrician and provide proof of the vehicle, invoice, permit or inspection records, and installation evidence.",
+        "For thermostat or battery incentives, enroll an eligible connected device in Peak-Time Payback and comply with connectivity and dispatch terms.",
+        "Submit the applicable rebate or enrollment form within the stated deadline and comply with per-site, per-account, and no-duplicate-funding limits."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "GVEC's current incentives are prescriptive or enrollment-based rather than competitive. Eligible members are likely to receive them after documentation, inspection, and successful connected-device enrollment where applicable.",
+      "evidenceUrls": [
+        "https://www.gvec.org/electric/rebates/",
+        "https://www.gvec.org/electric/hvac-rebate/",
+        "https://www.gvec.org/ev-rebate/",
+        "https://www.gvec.org/peak-time-payback/"
+      ],
+      "evidenceText": "GVEC currently lists HVAC, EV charger, thermostat, and battery incentives. HVAC and EV claims require technical and installation records, while battery and thermostat rewards depend on enrollment in the cooperative's connected-device peak program.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22589",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Install qualifying photovoltaic solar panels or photovoltaic roof tiles on a building subject to Guam real-estate taxation.",
+        "Retain property, purchase, and installation records showing the value attributable to the photovoltaic equipment.",
+        "Ensure that only the value added by the qualifying photovoltaic panels or roof tiles is excluded from the assessed improvements.",
+        "Use the normal property-tax correction or appeal process if the assessor includes the excluded photovoltaic value."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "Current Guam law directly excludes the value added by photovoltaic solar panels and photovoltaic roof tiles from taxable real-estate improvements. The benefit is statutory and noncompetitive, so it should apply when the property and equipment facts are correctly reflected in the assessment.",
+      "evidenceUrls": [
+        "https://archives.guamlegislature.gov/37th_Guam_Legislature/Public_Laws_37th/Public%20Law%20No.%2037-11.pdf"
+      ],
+      "evidenceText": "Public Law 37-11 amended Guam's real-estate tax definition of improvements to exclude value added by photovoltaic solar panels and photovoltaic roof tiles installed on buildings.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2817",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Florida Power & Light residential customer in Northwest Florida, the territory formerly served under the Gulf Power name.",
+        "For the air-conditioning rebate, install a qualifying new indoor and outdoor system through an FPL-approved participating independent contractor.",
+        "For the ceiling-insulation rebate, meet the existing-insulation and upgrade requirements and use an approved participating contractor.",
+        "Allow any required eligibility verification or inspection and provide the contractor with the customer and property information needed for the instant rebate.",
+        "Have the contractor apply the rebate as an invoice credit under the current FPL Northwest program."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The legacy Gulf Power program name is superseded, but current FPL Northwest programs still provide prescriptive HVAC and ceiling-insulation rebates. Eligible work completed through approved contractors is likely to receive the instant invoice credit.",
+      "evidenceUrls": [
+        "https://www.fpl.com/northwest/save/programs.html",
+        "https://www.fpl.com/save/programs/ac-rebate.html",
+        "https://www.fpl.com/northwest/save/programs/insulation.html",
+        "https://newsroom.fpl.com/2022-01-01-FPL-completes-integration-of-Gulf-Power-expands-Americas-best-energy-value-to-Northwest-Florida"
+      ],
+      "evidenceText": "Gulf Power was integrated into FPL and Northwest Florida customers are now served under FPL. The current Northwest program advertises instant rebates for qualifying high-efficiency air conditioning and ceiling insulation installed through approved contractors.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22299",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Gunnison County Electric Association customer and install the charging equipment within the GCEA service area.",
+        "Install new eligible Level 2 charging equipment and comply with electrical-code, permitting, and inspection requirements.",
+        "Submit the rebate application within 90 days of installation with an itemized invoice and requested equipment and installation documentation.",
+        "Enroll a residential charging station on the required time-of-use rate when applicable.",
+        "Comply with the current per-project rebate percentage, dollar cap, and any account limits."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The EV charging rebate is a current, prescriptive, noncompetitive offering. A service-area installation meeting the equipment, documentation, deadline, and rate-enrollment rules is likely to receive the published rebate.",
+      "evidenceUrls": [
+        "https://www.gcea.coop/energy-efficiency/electric-vehicles/ev-rebates/",
+        "https://www.gcea.coop/faqs/ev-charging-station-rebate/"
+      ],
+      "evidenceText": "GCEA states that EV rebates apply to installations in its service area and must be requested within 90 days. The current Level 2 charger incentive is subject to an equipment and installation-cost cap and residential time-of-use enrollment.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3372",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Gunnison County Electric Association member and install the measure within the GCEA service area.",
+        "Install new equipment that is currently covered and meets the applicable efficiency, technology, sizing, or certification criteria.",
+        "Use qualified contractors, permits, and inspections when required by the measure.",
+        "Submit the rebate request within 90 days of installation with invoices, product specifications, and other requested records.",
+        "Comply with current per-account, per-equipment, and duplicate-incentive limits."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "GCEA and Tri-State maintain a current prescriptive rebate portfolio. Eligible service-area installations with timely and complete documentation are likely to be paid, although every mapped retrofit must be checked against the current measure list.",
+      "evidenceUrls": [
+        "https://www.gcea.coop/energy-efficiency/rebates/",
+        "https://www.gcea.coop/energy-efficiency/rebates/appliance-rebates/",
+        "https://www.gcea.coop/energy-efficiency/rebates/heating-cooling-rebates/electric-heat-pump-air-source-central-ground-source/"
+      ],
+      "evidenceText": "GCEA partners with Tri-State on current energy-efficiency rebates. Published measure pages require service-area installation, new qualifying equipment, supporting records, and generally a rebate request within 90 days.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2832",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own taxable residential or nonresidential property in Harford County and install a qualifying solar or geothermal energy device.",
+        "The device must be used for qualifying heating, cooling, hot-water, or electricity purposes and meet applicable national safety and performance standards.",
+        "Submit the one-time county application with actual-cost documentation, receipts, and the required owner certification.",
+        "Apply by October 1 before the first tax year for which the credit is sought.",
+        "Remain within the credit limit of the lesser of the statutory per-device amount or the county property-tax liability; awards are also subject to the annual county program cap and order received."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The credit is statutory and processed in application order rather than competitively. A qualifying device with a timely, complete application is likely to receive the credit, although the annual county cap may defer payment. A generic high-efficiency HVAC system does not qualify unless it is a qualifying geothermal device.",
+      "evidenceUrls": [
+        "https://www.harfordcountymd.gov/3466/Real-Property-Tax-Credit-Information",
+        "https://www.harfordcountymd.gov/DocumentCenter/View/27251/Solar-Geothermal-Energy-ApplicationPDF",
+        "https://ecode360.com/9371765"
+      ],
+      "evidenceText": "Harford County maintains an application for a one-time solar and geothermal property-tax credit. The application requires device and actual-cost documentation, has an October 1 filing date, and is subject to per-device and annual program limits.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4911",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Develop qualifying new commercial construction in Harris County and register the project for LEED or an equivalent Green Business Certification Inc. certification before applying.",
+        "Submit the county application before commencing construction.",
+        "Pay the nonrefundable $1,000 application fee and provide the project narrative, budget, site records, certification registration, compliance statements, tax-account information, and other checklist documents.",
+        "Meet the applicable minimum added-value threshold and ultimately obtain the claimed green-building certification level.",
+        "Receive a favorable economic-development review, approval of an abatement agreement by Harris County Commissioners Court, complete construction, and satisfy ongoing agreement and reporting conditions."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The county may recommend a partial abatement, but approval requires substantive economic review and favorable action by Commissioners Court. Certification, investment thresholds, documentation, and timing are mandatory, so the benefit is not automatic.",
+      "evidenceUrls": [
+        "https://hcoed.harriscountytx.gov/gbta.aspx",
+        "https://hcoed.harriscountytx.gov/docs/TA/2026_2028_HC_Green_Tax_Abatement_Appl_Instructions_CheckList_02122026.pdf",
+        "https://hcoed.harriscountytx.gov/docs/TA/2026_2028_HC_Tax_Abatement_Guidelines.pdf"
+      ],
+      "evidenceText": "Harris County's current 2026-2028 materials require preconstruction application, green-building registration, a fee, extensive financial and project documentation, minimum investment, achieved certification, economic review, and Commissioners Court approval.",
+      "reviewedAt": "2026-07-10T14:17:59Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

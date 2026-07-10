@@ -3,7 +3,556 @@
   "batchId": "batch-031",
   "inputFile": "batch-031_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.775Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T14:51:27Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:6e6b359eb5fc98c0:lighting-rebate",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Silicon Valley Power business customer at an eligible Santa Clara service location.",
+        "Submit the signed lighting application, rebate-calculator results, equipment schedule, and energy-savings documentation.",
+        "Complete the required pre-installation inspection and receive written Silicon Valley Power approval before purchasing or installing equipment.",
+        "Install eligible lighting fixtures or controls in accordance with the approved scope and current technical requirements.",
+        "Request post-installation inspection within the program window and provide invoices, product records, and final documentation for payment approval.",
+        "Confirm the selected measure is currently supported; low-flow water fixtures are not part of the lighting rebate, and the temporary exterior and networked-lighting bonus ended June 30, 2026."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current lighting rebate follows a defined administrative preapproval and verification process rather than competitive selection. A conforming lighting project is likely to be paid after written approval and final verification, but the supplied low-flow-fixture mapping is unsupported and the temporary bonus has expired.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/rebates",
+        "https://www.siliconvalleypower.com/home/showpublisheddocument/41518/638875751693230000"
+      ],
+      "evidenceText": "Silicon Valley Power requires a signed application and savings calculations, a pre-installation inspection and written approval, followed by installation, post-installation inspection, invoices, final approval, and payment. Current lighting materials do not support low-flow fixtures.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3332",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Lincoln Electric System residential or business electric customer at the installation address.",
+        "Select a currently offered measure and equipment that meets the applicable efficiency, sizing, installation, and product requirements.",
+        "Use a participating contractor or the current customer and contractor submission pathway required for the selected residential measure.",
+        "For business projects, contact Lincoln Electric System and obtain any required project authorization before installation.",
+        "Submit the required invoice, equipment, installation, customer, and tax documentation and allow program verification.",
+        "Apply while the annual first-come program budget remains available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Sustainable Energy Program publishes objective measure requirements and uses first-come administrative review rather than competitive scoring. The current program page reports remaining 2026 funding, so a complete qualifying claim is likely while funds remain.",
+      "evidenceUrls": [
+        "https://www.les.com/sustainability/sustainable-energy-program"
+      ],
+      "evidenceText": "Lincoln Electric System lists current residential and business incentives for qualifying HVAC, heat-pump water-heating, geothermal, and envelope measures, with participating-contractor or program-contact steps and first-come annual funding.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22485",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Corridor Energy Cooperative commercial member whose applicable account demand is greater than 75 kW.",
+        "Install a currently eligible prescriptive measure or submit a qualifying custom efficiency project.",
+        "Provide advance notice or obtain preapproval before work when the current form requires it for a large rebate or custom project.",
+        "For custom projects, submit the project scope, cost, baseline, savings calculations, and other technical information before installation and allow the stated review period.",
+        "Submit the current rebate form with itemized invoices, model and serial information, and measure-specific supporting records.",
+        "Pass any project inspection, savings review, or installation verification requested by the cooperative."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Corridor Energy Cooperative publishes prescriptive commercial rebates and a defined custom-project review route. A compliant project is likely to receive the calculated rebate, although large and custom projects require advance coordination and remain subject to program review and limits.",
+      "evidenceUrls": [
+        "https://corridorenergy.coop/rebates/commercial-custom/"
+      ],
+      "evidenceText": "The current commercial program covers accounts above 75 kW and lists HVAC, electric-vehicle charging, variable-frequency-drive, and custom efficiency measures. Custom work requires advance approval and supporting technical and cost documentation.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2447",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Corridor Energy Cooperative residential member or small-commercial member with applicable account demand below 75 kW.",
+        "Purchase and install a currently listed qualifying product or system that meets all measure-specific requirements.",
+        "Use a qualified installer and obtain permits or inspections when required for the selected measure.",
+        "Submit the current rebate application within three months of purchase or installation.",
+        "Provide the itemized invoice, model and serial numbers, efficiency documentation, and any required photographs, registration, or inspection records.",
+        "Allow the cooperative to verify customer, equipment, and installation eligibility before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential and small-commercial rebates are prescriptive and not competitively awarded. A timely and complete claim for qualifying equipment is likely to be approved after administrative verification.",
+      "evidenceUrls": [
+        "https://corridorenergy.coop/rebates/residential-small-commercial-rebates/"
+      ],
+      "evidenceText": "Corridor Energy Cooperative lists current rebates for customers below 75 kW, including qualifying heat pumps, geothermal systems, heat-pump water heaters, Level 2 chargers, and induction cooking, with a three-month claim deadline and invoice and equipment documentation.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2545",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Litchfield Public Utilities commercial or industrial customer for the project site.",
+        "Select a measure covered by a current 2026 business rebate form or obtain approval for a qualifying custom project.",
+        "Contact program staff and obtain any required preapproval before purchasing or installing custom or otherwise preauthorized equipment.",
+        "Install equipment that meets the current measure-specific efficiency and installation requirements.",
+        "Submit the applicable form with itemized invoices, equipment specifications, project-cost information, and savings documentation.",
+        "Complete any inspection, commissioning, or post-installation verification required by the program.",
+        "Confirm unsupported mappings separately; the current business forms reviewed do not substantiate a low-flow water-fixture rebate."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Litchfield currently provides a broad set of business rebate forms and a custom-project route using objective technical and documentation review. A qualifying documented project is likely to receive an incentive, but the legacy low-flow-fixture mapping was not verified.",
+      "evidenceUrls": [
+        "https://smmpa.com/members/litchfield"
+      ],
+      "evidenceText": "The current Litchfield member page provides 2026 business forms for lighting, cooling, heat pumps, drives, pumps, refrigeration, controls, motors, compressed air, retrocommissioning, and custom projects. No current low-flow-fixture form was found.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2544",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Litchfield Public Utilities residential customer at the installation address.",
+        "Use a currently offered residential rebate form and purchase equipment that meets its technical and customer requirements.",
+        "Use qualified installation, permits, and inspections when required by the selected product or project.",
+        "Submit the applicable 2026 form with the itemized receipt or invoice, model information, and required product or installation records.",
+        "Allow program review and any requested verification before the rebate is issued.",
+        "Confirm current eligibility for each mapped legacy measure because the reviewed current page does not substantiate every listed heat-pump, geothermal, water-heating, or dishwasher category."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Litchfield maintains current residential rebate forms for selected products, cooling, electric-vehicle charging, sealing, and motor measures. Award is possible through those active pathways, but several technologies mapped to the older broad program were not confirmed in the current official materials.",
+      "evidenceUrls": [
+        "https://smmpa.com/members/litchfield"
+      ],
+      "evidenceText": "Litchfield's current 2026 residential materials include ENERGY STAR products, electric-vehicle chargers, cooling equipment and tune-ups, sealing, and selected motor and pump measures. The current page does not clearly support every legacy mapped technology.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5567",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible New Jersey local or state governmental entity, public school or agency, state college or university, or qualifying nonprofit organization.",
+        "Apply for eligible facilities that the applicant owns or provide the required owner authorization and documentation for leased facilities.",
+        "Submit the current Local Government Energy Audit application with facility, utility-account, usage, and organizational documentation.",
+        "Pass New Jersey's applicant and facility eligibility review.",
+        "Coordinate audit scheduling and provide auditors access to the facilities, systems, records, and operating information needed for the assessment.",
+        "Review and use the completed audit report in accordance with program requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program offers no-cost audits through an objective eligibility and scheduling process rather than competitive grant scoring. An eligible public or nonprofit applicant that submits complete facility information is likely to receive the audit, subject to program capacity.",
+      "evidenceUrls": [
+        "https://cleanenergy.nj.gov/programs/energy-efficiency/local-government-energy-audit-lgea-program",
+        "https://cleanenergy.nj.gov/support/energy-efficiency/lgea-faqs"
+      ],
+      "evidenceText": "New Jersey's current program provides no-cost energy audits for eligible governmental, educational, and nonprofit facilities after application and facility review, followed by scheduling, site access, data collection, and delivery of an audit report.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5892",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Wyoming local governmental entity for the applicable audit or retrofit funding pathway.",
+        "Apply during an active Wyoming Energy Authority application period and submit the required organizational and facility information.",
+        "Complete a qualifying WYLite or other accepted energy audit when required before requesting retrofit funding.",
+        "Limit the proposed retrofit to measures supported by the audit and current program rules.",
+        "Provide the required project scope, cost estimates, procurement records, schedule, and supporting documentation.",
+        "Provide the required cash match for the retrofit grant and receive written award approval before committing controlled project costs.",
+        "Complete the approved work and submit reimbursement, inspection, and closeout documentation."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Wyoming publishes an audit and local-government retrofit pathway, but retrofit awards require an audit-supported project, a cash match, formal review, available funds, and an active application cycle. Eligibility alone does not make funding automatic.",
+      "evidenceUrls": [
+        "https://wyoenergy.org/financing/"
+      ],
+      "evidenceText": "The Wyoming Energy Authority describes free local-government energy audits and retrofit grants with audit-supported measures, a published maximum award, a required local match, and annual application timing.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4248",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible property within a Missouri jurisdiction or clean-energy development district that currently offers a PACE program.",
+        "Propose an energy-efficiency or renewable-energy improvement accepted by the local program.",
+        "Submit the property, project, contractor, cost, savings, and other documentation required by the applicable clean-energy development board or administrator.",
+        "Obtain private-capital underwriting and any required consent from an existing mortgage holder.",
+        "Receive program or board approval and execute the financing and special-assessment documents before the financed work begins.",
+        "Complete the approved project and satisfy verification and assessment-recording requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Missouri law authorizes locally administered PACE financing, not an automatic statewide award. Financing is possible where a participating district exists, but approval depends on local program rules, project review, private underwriting, property status, and assessment contracting.",
+      "evidenceUrls": [
+        "https://dnr.mo.gov/energy/what-were-doing/citizens-guide-rules-regulations"
+      ],
+      "evidenceText": "Missouri's official energy guidance describes clean-energy development boards that may create local PACE programs and finance approved efficiency or renewable projects through property special assessments.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5321",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible Connecticut commercial, nonprofit, industrial, or qualifying multifamily property in a municipality participating in C-PACE.",
+        "Propose a permanently affixed qualifying clean-energy, efficiency, resilience, or storage improvement.",
+        "Submit the C-PACE application with property, project, contractor, technical, cost, and expected-performance documentation.",
+        "Obtain financing approval from a participating private capital provider.",
+        "Obtain written consent from each existing mortgage holder when required.",
+        "Receive Connecticut Green Bank program approval and execute the benefit-assessment and financing documents before closing.",
+        "Complete the approved project and provide required completion and verification records."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Connecticut C-PACE is an active financing mechanism, but it is not an entitlement. Approval depends on property and project eligibility, technical review, private-capital underwriting, mortgage-holder consent, and successful financing closing.",
+      "evidenceUrls": [
+        "https://www.ctgreenbank.com/resources/c-pace-faq/",
+        "https://www.ctgreenbank.com/building-solutions/c-pace/c-pace-for-mortgage-holders/",
+        "https://www.ctgreenbank.com/c-pace-application/"
+      ],
+      "evidenceText": "Connecticut Green Bank requires an eligible participating-municipality property and qualifying project, a program application, capital-provider financing, mortgage-holder consent, program review, and execution of a benefit assessment before funding.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22669",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible North Carolina commercial, industrial, agricultural, nonprofit, or qualifying multifamily property in a city or county that has opted into NC C-PACE.",
+        "Propose a qualifying energy-efficiency, renewable-energy, water, resilience, or storage project under the current program rules.",
+        "Submit the owner application and required property, engineering, contractor, cost, and projected-performance documentation.",
+        "Secure financing from a participating private capital provider and pass its underwriting.",
+        "Obtain required consent from existing lienholders or mortgage holders.",
+        "Receive program approval and complete the local assessment and financing documents before project funding.",
+        "Complete the approved work and satisfy final reporting and verification requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "NC C-PACE is available only in local governments that opt in and uses private capital. A qualifying project can obtain financing, but approval depends on locality participation, technical review, lender consent, underwriting, and execution of the assessment documents.",
+      "evidenceUrls": [
+        "https://edpnc.com/nc-cpace/"
+      ],
+      "evidenceText": "The current statewide NC C-PACE program is administered by the Economic Development Partnership of North Carolina for participating localities and requires an eligible property and project, private financing, lienholder consent, program review, and assessment closing.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3531",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible Virginia commercial or qualifying multifamily property in a locality that has adopted or joined an active C-PACE program.",
+        "Propose a qualifying energy, water, renewable, resilience, or storage improvement under the applicable local or statewide program rules.",
+        "Submit the property, project, engineering, contractor, cost, and performance documentation required by the program administrator.",
+        "Obtain financing approval from a participating capital provider.",
+        "Obtain consent from existing mortgage holders or lienholders as required.",
+        "Receive program and locality approval and execute the special-assessment and financing documents before funding.",
+        "Complete the project and satisfy inspection, reporting, and closeout requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Virginia C-PACE provides a structured financing route, but financing is conditional on local participation, project eligibility, capital-provider underwriting, mortgage-holder consent, and program approval. It is therefore possible rather than automatic.",
+      "evidenceUrls": [
+        "https://www.energy.virginia.gov/energy-efficiency/PACE.shtml"
+      ],
+      "evidenceText": "Virginia's current C-PACE guidance explains that local authorization is required and that eligible commercial and larger multifamily projects proceed through program administration, private financing, lender consent, and a special assessment.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3534",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible commercial property in an Oklahoma county with an active C-PACE program.",
+        "Propose a qualifying energy, water, renewable, resilience, or related capital improvement under the participating county's rules.",
+        "Use an energy audit or feasibility study as part of a qualifying financed project when the program permits that soft cost; a standalone audit benefit must be confirmed separately.",
+        "Submit the project, property, ownership, technical, cost, and contractor documentation required by the program administrator and county.",
+        "Secure private financing and pass capital-provider underwriting.",
+        "Obtain required mortgage-holder consent and execute the county assessment and financing documents after approval.",
+        "Complete and verify the approved project."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Oklahoma C-PACE operates in participating counties and can finance qualifying project development costs, but approval depends on county participation, project eligibility, underwriting, lender consent, and closing. The supplied standalone energy-audit mapping was not independently verified.",
+      "evidenceUrls": [
+        "https://oklahomacpace.org/",
+        "https://oklahomacpace.org/participating-counties/"
+      ],
+      "evidenceText": "Oklahoma C-PACE identifies participating counties and a private-capital process for eligible commercial projects. An audit may support an approved financed project, but the current materials reviewed do not establish a separate standalone audit award.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4252",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible New Hampshire commercial, industrial, nonprofit, or qualifying multifamily property in a municipality or county that has adopted C-PACER.",
+        "Develop a qualifying energy-efficiency, renewable-energy, water, resilience, or related project under the current program requirements.",
+        "Work with an approved or acceptable capital provider and submit the required preapplication and project package.",
+        "Provide an energy assessment or other technical support demonstrating the eligible project scope; eligible audit and feasibility costs must be tied to the financed project.",
+        "Obtain existing mortgage-holder consent.",
+        "Receive New Hampshire Business Finance Authority and local approval, then execute and record the assessment and financing documents.",
+        "Complete the approved project and provide final verification documentation."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "New Hampshire C-PACER has a defined application and closing pathway, but financing depends on local adoption, project review, capital-provider underwriting, mortgage-holder consent, and recording of the assessment. Eligible audit costs do not create a separate automatic award.",
+      "evidenceUrls": [
+        "https://nhbfa.com/loans/c-pacer/",
+        "https://nhbfa.com/loans/c-pacer/c-pacer-eligibility-requirements/"
+      ],
+      "evidenceText": "The current C-PACER program requires an opted-in locality, eligible property and project, capital-provider submission, technical support, mortgage-holder consent, Business Finance Authority review, and local recording of the assessment.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5747",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Arkansas state agency, public higher-education institution, municipality, county, school district, or other qualifying public entity.",
+        "Coordinate with the Arkansas Energy Office and follow the applicable public procurement and project-development process.",
+        "Select a qualified energy service company through the required process when using an Arkansas Energy Performance Contract.",
+        "Complete an investment-grade energy audit and develop a project whose guaranteed savings and scope support the proposed financing.",
+        "Obtain governing-body, contract, financing, and bond approvals required under applicable state and local law before project execution.",
+        "Execute the approved performance contract and financing documents.",
+        "Complete installation and ongoing measurement, verification, reporting, and savings-guarantee obligations."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The Arkansas pathway can finance approved public-sector efficiency projects, but it requires procurement, an investment-grade audit, project economics, governing-body and financing authorization, and contract execution. Approval is project specific rather than automatic.",
+      "evidenceUrls": [
+        "https://adeq.state.ar.us/energy/initiatives/performance.aspx"
+      ],
+      "evidenceText": "Arkansas describes a standardized public-sector energy-performance-contracting process using qualified energy service companies, investment-grade audits, project and financing approvals, installation, and long-term measurement and verification, with statutory authority for local energy-efficiency project bonds.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4283",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Confirm that the Massachusetts city or town where the property is located has adopted and funded an active Energy Revolving Loan Fund under the enabling statute.",
+        "Own or otherwise qualify for an eligible property under that municipality's local rules.",
+        "Complete an eligible energy audit and agree to implement the conservation measures required by the statute and local program.",
+        "Submit the local application with the audit, project scope, costs, contractor information, property information, and repayment documentation.",
+        "Receive local administrator approval within the available fund balance.",
+        "Execute the betterment agreement, lien, or other repayment and security documents required by the municipality before disbursement.",
+        "Complete and verify the approved work."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Massachusetts law authorizes municipalities to create revolving loan funds, but the statewide statute does not identify a particular active, funded local program for this opportunity. Award likelihood cannot be determined until the property municipality and its current fund rules and balance are known.",
+      "evidenceUrls": [
+        "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleVII/Chapter44/Section53E3~4"
+      ],
+      "evidenceText": "Massachusetts law permits a city or town to establish an Energy Revolving Loan Fund, adopt local rules, require an energy audit and specified conservation measures, approve loans only within the fund balance, and secure repayment through a betterment agreement.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3538",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible Wisconsin commercial, nonprofit, or qualifying multifamily property in a participating PACE Wisconsin community.",
+        "Propose a permanently affixed qualifying energy-efficiency, water, renewable-energy, or related improvement.",
+        "For battery storage, demonstrate that the system is connected to and supports an eligible renewable-energy improvement or obtain specific program confirmation for another configuration.",
+        "Complete the preapplication and submit an energy assessment, property, project, contractor, cost, and savings documentation.",
+        "Secure financing from an approved capital provider and obtain existing mortgage-lender consent.",
+        "Receive final program approval and execute the financing and special-charge documents before starting financed construction.",
+        "Complete the approved work and provide final project records and verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "PACE Wisconsin offers a structured financing route, but approval requires a participating community, technical review, capital-provider underwriting, lender consent, and final program approval. Current program guidance supports storage paired with renewable energy, while standalone battery eligibility remains uncertain.",
+      "evidenceUrls": [
+        "https://www.pacewi.org/property-owner-faq.html",
+        "https://www.pacewi.org/project-center.html",
+        "https://www.pacewi.org/uploads/9/1/4/6/91467782/wi_pace_program_guidelines_02_01_2022_v3.3.pdf"
+      ],
+      "evidenceText": "PACE Wisconsin requires an eligible property in a participating community, an energy assessment, private capital, mortgage-lender consent, and final program approval. Its official guidance treats qualifying storage as part of a renewable-energy improvement rather than clearly approving every standalone battery project.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3561",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Confirm that the Oregon city, county, or other local government has adopted and currently operates an applicable local financing or assessment program.",
+        "Own an eligible property within that program's jurisdiction.",
+        "Confirm that the proposed battery-storage system or broader utility improvement is eligible under the local ordinance and program rules.",
+        "Submit the local application with property, technical, contractor, project-cost, and expected-performance documentation.",
+        "Pass any required financial review and obtain mortgage-holder consent if required by the local program.",
+        "Receive local approval and execute the financing and assessment documents before work begins.",
+        "Complete and verify the approved improvement."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Oregon law authorizes local financing and assessment programs, but the opportunity does not identify a specific operating locality, current fund, or battery-storage eligibility rule. Award likelihood cannot be established without the local program and property location.",
+      "evidenceUrls": [
+        "https://www.oregonlegislature.gov/bills_laws/ors/ors223.html"
+      ],
+      "evidenceText": "Oregon statutes authorize local governments to create programs that finance qualifying utility improvements through property assessments. Actual availability, eligible technologies, underwriting, and approval procedures are set locally.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3527",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible California property within the jurisdiction of a public agency that currently offers the selected PACE program.",
+        "Apply through a California-licensed PACE program administrator authorized for that local program.",
+        "Confirm that the proposed HVAC, geothermal, envelope, or battery-storage measure is eligible under that specific administrator's current rules.",
+        "Submit the property, project, contractor, cost, equipment, and other documentation required for program and ability-to-pay review.",
+        "Satisfy property-tax status, mortgage, lien, underwriting, and consumer or commercial disclosure requirements applicable to the selected program.",
+        "Receive program approval and execute the assessment contract before installation begins.",
+        "Complete the work and satisfy final inspection or documentation requirements before contractor payment or project closeout."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "California PACE financing remains available through local public agencies and licensed administrators, but approval is program and property specific and includes underwriting and assessment-contract requirements. The legacy record's administrator and broad battery mapping do not identify the actual current financing pathway.",
+      "evidenceUrls": [
+        "https://dfpi.ca.gov/regulated-industries/property-assessed-clean-energy-pace-program-administrators/",
+        "https://dfpi.ca.gov/consumers/housing/pace/"
+      ],
+      "evidenceText": "California's current PACE framework uses local public agencies and state-licensed program administrators. Property owners must meet the selected program's project, financial, tax, disclosure, contract, and completion requirements; the California Energy Commission is not the direct project administrator.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5109",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible New Jersey commercial, industrial, agricultural, nonprofit, or qualifying multifamily property in a municipality participating in Garden State C-PACE.",
+        "Propose an eligible energy-efficiency, renewable-energy, water, resilience, or battery-storage project under the current program guidelines.",
+        "Work with a qualified capital provider and qualified technical reviewer.",
+        "Submit the property, project, engineering, contractor, cost, savings, and financing documentation required by the New Jersey Economic Development Authority.",
+        "Obtain consent from each existing mortgage holder.",
+        "Receive program eligibility approval and complete the municipal assessment, recording, and financing closing before disbursement.",
+        "Complete the project and provide required completion certification and verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Garden State C-PACE is currently launched and accepts applications, including qualifying battery-storage projects. Financing nevertheless depends on municipal participation, technical review, private-capital underwriting, mortgage-holder consent, NJEDA approval, and assessment closing.",
+      "evidenceUrls": [
+        "https://www.njeda.gov/c-pace/"
+      ],
+      "evidenceText": "New Jersey's current Garden State C-PACE program covers eligible commercial and other qualifying properties and includes battery electric storage among eligible improvements. It requires qualified project parties, lender consent, NJEDA review, municipal assessment, and financing closing.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2983",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Confirm that the Virginia county, city, or town has adopted an ordinance establishing the special tax classification and current tax rate for energy-efficient buildings.",
+        "Own a building that satisfies the local ordinance and the state qualifying standard.",
+        "Demonstrate the required energy performance beyond the applicable code or obtain an accepted certification such as LEED, Green Globes, EarthCraft, or ENERGY STAR as provided by law.",
+        "Submit the certification, building, ownership, and local application documentation by the locality's deadline.",
+        "Receive classification approval from the local assessing or finance authority.",
+        "Maintain any continuing qualification or recertification required by the locality."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Virginia law permits but does not require localities to create this tax classification, and each locality sets the rate and administrative process. Without a specified locality and ordinance, the availability and likelihood of the tax benefit are unknown.",
+      "evidenceUrls": [
+        "https://law.lis.virginia.gov/vacode/title58.1/chapter32/section58.1-3221.2/"
+      ],
+      "evidenceText": "Virginia law authorizes a locality to tax qualifying energy-efficient buildings at a different rate and recognizes performance beyond code and certifications including LEED. The benefit exists only where the locality adopts an ordinance and approves the classification.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2363",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Confirm that the applicable Maryland county or municipality has enacted a current high-performance-building property-tax-credit program.",
+        "Own an eligible property and satisfy the local program's building type, construction, rehabilitation, and timing rules.",
+        "Obtain LEED Silver or a locally accepted comparable high-performance-building standard.",
+        "Submit the local tax-credit application with the certification, ownership, property, construction, and cost documentation required by the jurisdiction.",
+        "Receive approval from the local tax, finance, or assessing authority.",
+        "Comply with the locally established credit amount, duration, recertification, and reporting conditions."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Maryland law authorizes local jurisdictions to create the credit and lets them set the amount, duration, eligibility, and procedures. Because no locality is specified, current program availability and award likelihood cannot be determined.",
+      "evidenceUrls": [
+        "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gtp&section=9-242"
+      ],
+      "evidenceText": "Maryland law permits Baltimore City, a county, or a municipality to grant a property-tax credit for a high-performance building, generally defined through LEED Silver or a comparable standard, with all material terms established by local law.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:232",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Confirm that the applicable Maryland county or municipality has enacted a current property-tax credit for renewable-energy or energy-conservation devices.",
+        "Own an eligible property and install a device covered by the local law, such as a qualifying geothermal heating or cooling system.",
+        "Meet the local equipment, installation, permit, ownership, and in-service-date requirements.",
+        "Submit the local application with invoices, equipment specifications, installation records, and any certification requested by the jurisdiction.",
+        "Receive approval from the local tax, finance, or assessing authority.",
+        "Comply with the locally established credit percentage, duration, cap, and continuing conditions."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "The Maryland statute is enabling and leaves adoption and material credit terms to each local government. Without a specific participating jurisdiction, a current geothermal credit and its likelihood cannot be established.",
+      "evidenceUrls": [
+        "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gtp&section=9-203"
+      ],
+      "evidenceText": "Maryland law authorizes local governments to grant a property-tax credit for specified renewable-energy and energy-conservation devices, including systems used for heating and cooling, but each jurisdiction decides whether to offer the credit and sets its terms.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:45",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Confirm that the Vermont municipality has legal authority and current voter approval or ratification to enter the relevant tax-stabilization or exemption agreement.",
+        "Own a qualifying alternate-energy generating plant within the municipality and meet the statutory technology and capacity limits.",
+        "Demonstrate that the specific project is covered by the statute; rooftop solar electric generation may qualify, while solar thermal, combined heat and power, and biomass mappings require separate legal confirmation.",
+        "Negotiate the facility valuation, tax amount, term, and other conditions with the municipality.",
+        "Obtain municipal approval and execute the written contract.",
+        "File or record the agreement as required and maintain all permits and continuing project qualifications."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "The Vermont statute creates a discretionary municipal contracting route rather than a uniform statewide exemption. Availability depends on municipal voter authority and negotiation, and several technologies mapped to the opportunity are not clearly covered by the current statutory definition.",
+      "evidenceUrls": [
+        "https://legislature.vermont.gov/statutes/section/24/075/02741"
+      ],
+      "evidenceText": "Vermont law permits a municipality, with required voter authority, to contract for the valuation and taxation of a qualifying alternate-energy electric-generating plant. The statute sets technology and size limits and expressly does not create a universal automatic exemption.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:60",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Confirm that the New Hampshire municipality has adopted the applicable solar-energy, energy-storage, or renewable-generation property-tax exemption.",
+        "Own taxable property with a system that meets the statutory definition for the locally adopted exemption.",
+        "Submit the current property-tax exemption application to the local assessing officials by the applicable statutory deadline.",
+        "Provide the system description, ownership, installation, cost or valuation, interconnection, and other documentation requested by the municipality.",
+        "Receive a favorable decision from the local assessing officials.",
+        "Appeal or renew the application only through the procedures and timelines provided by state and local law."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "New Hampshire law allows municipalities to adopt several renewable-energy and storage exemptions, but adoption and exemption amounts vary locally. Without the municipality and its current vote or ordinance, eligibility and award likelihood are unknown.",
+      "evidenceUrls": [
+        "https://www.gc.nh.gov/rsa/html/V/72/72-mrg.htm",
+        "https://www.gc.nh.gov/rsa/html/V/72/72-87.htm",
+        "https://www.revenue.nh.gov/sites/g/files/ehbemt736/files/documents/pa-29-permanent-appl-property-tax-credit-form.pdf"
+      ],
+      "evidenceText": "New Hampshire statutes authorize locally adopted property-tax exemptions for defined solar, renewable-generation, and energy-storage systems. Property owners apply through the local assessing process using the state form, and the municipality determines the exemption under its adopted provisions.",
+      "reviewedAt": "2026-07-10T14:51:27Z",
+      "reviewStatus": "needs_followup"
+    }
+  ]
 }

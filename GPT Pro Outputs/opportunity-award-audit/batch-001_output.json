@@ -3,7 +3,571 @@
   "batchId": "batch-001",
   "inputFile": "batch-001_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.762Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T13:30:52Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4342",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Project must be eligible residential new construction or a qualifying gut rehabilitation in an Eversource or UI electric service territory.",
+        "A certified HERS rater must be engaged and the project application and plans must be submitted before or early in construction.",
+        "The project must meet current program all-electric, technical, and HERS performance requirements.",
+        "Required inspections, testing, and documentation must be completed.",
+        "A complete final As-Built package must be submitted within the program deadline and accepted by the utility."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current program uses an objective technical and documentation pathway rather than competitive scoring. A qualifying project is generally paid after the utility accepts the complete final submission, although technical review and funding conditions still apply.",
+      "evidenceUrls": [
+        "https://www.energizect.com/your-home/solutions-list/residential-new-construction-program",
+        "https://www.energizect.com/media/14596/download?inline=",
+        "https://www.energizect.com/media/11376/download?inline="
+      ],
+      "evidenceText": "Current 2026 materials require a certified HERS rater, utility review, performance testing, and a final As-Built package. Incentive payment follows approval of the completed project submission.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5738",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Connecticut utility customer for the specific current rebate measure.",
+        "Equipment and installation must satisfy the current efficiency, sizing, and product-list requirements.",
+        "A participating HPIN, Home Energy Solutions, or other approved contractor must be used where the measure requires one.",
+        "Any measure-specific registration or authorization required before work must be completed before installation.",
+        "The signed claim, itemized invoice, certifications, and equipment documentation must be submitted by the applicable deadline.",
+        "The customer must permit program inspection or verification and may not claim a prohibited duplicate incentive."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "These are generally formula-based rebates for customers and equipment that meet published requirements. Approval remains dependent on complete documentation, measure-specific sequencing, inspection, and available funds.",
+      "evidenceUrls": [
+        "https://www.energizect.com/rebates-incentives",
+        "https://www.energizect.com/rebates-incentives/heating-cooling/heat-pumps/residential-air-source",
+        "https://www.energizect.com/media/12241/download?inline=",
+        "https://www.energizect.com/resources/document-library"
+      ],
+      "evidenceText": "Current rebate materials require eligible utility service, qualifying equipment, participating contractors where specified, timely claims, invoices, and possible inspection. Rebate approval is measure-specific rather than competitive.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22423",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The corporate taxpayer must own an eligible New Mexico sustainable building project.",
+        "The building must complete the applicable qualifying certification or approved sustainable-building work.",
+        "A complete online application and supporting certification and project documentation must be submitted to EMNRD.",
+        "EMNRD must issue a certificate of eligibility, subject to the annual credit cap and certificate timing.",
+        "The approved credit must be claimed with the New Mexico Taxation and Revenue Department on the applicable corporate return."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The credit follows objective certification and agency-documentation requirements rather than a competitive selection process. A compliant project is likely to receive a certificate, although annual caps may defer when the certificate can be used.",
+      "evidenceUrls": [
+        "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
+        "https://www.emnrd.nm.gov/ecmd/tax-incentives/energy-conserving-products/"
+      ],
+      "evidenceText": "EMNRD reviews completed-project documentation and issues a certificate of eligibility before the corporate taxpayer claims the credit with the Taxation and Revenue Department. Annual caps can affect certificate timing.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22424",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The individual taxpayer must own an eligible New Mexico sustainable building project.",
+        "The building must complete the applicable qualifying certification or approved sustainable-building work.",
+        "A complete online application and supporting certification and project documentation must be submitted to EMNRD.",
+        "EMNRD must issue a certificate of eligibility, subject to the annual credit cap and certificate timing.",
+        "The approved credit must be claimed with the New Mexico Taxation and Revenue Department on the applicable personal income tax return."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The credit follows objective certification and agency-documentation requirements rather than a competitive selection process. A compliant project is likely to receive a certificate, although annual caps may defer when the certificate can be used.",
+      "evidenceUrls": [
+        "https://www.emnrd.nm.gov/ecmd/tax-incentives/sustainable-building-tax-credit-sbtc/",
+        "https://www.emnrd.nm.gov/ecmd/tax-incentives/energy-conserving-products/"
+      ],
+      "evidenceText": "EMNRD reviews completed-project documentation and issues a certificate of eligibility before the individual taxpayer claims the credit with the Taxation and Revenue Department. Annual caps can affect certificate timing.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22441",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must be submitted through an Illinois Shines Approved Vendor.",
+        "A complete Part I application, required site and contract documents, interconnection information, fees, and disclosures must be submitted.",
+        "The project must pass program verification and obtain available block capacity or selection where a category is oversubscribed.",
+        "The Illinois Commerce Commission must approve the project for an Adjustable Block Program contract.",
+        "The Approved Vendor must execute the REC contract and provide required collateral.",
+        "The system must be built and interconnected, followed by a complete Part II submission and program verification."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Projects must pass verification and Commission approval, and some categories can be subject to block capacity limits, waitlists, scoring, or random selection. Eligibility alone therefore does not make an award likely.",
+      "evidenceUrls": [
+        "https://illinoisshines.com/wp-content/uploads/2026/04/Illinois-Shines-2026-27-Program-Guidebook.pdf",
+        "https://illinoisshines.com/program-documents/",
+        "https://illinoisshines.com/project-status-demo/"
+      ],
+      "evidenceText": "The 2026-27 Guidebook requires Approved Vendor submission, Part I verification, Commission approval, REC contracting, construction and interconnection, and Part II verification. Capacity limits and category-specific selection can affect acceptance.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4594",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The customer and air-conditioning system must be eligible in the applicable AEP Texas service territory.",
+        "Service or replacement must be performed by a trained participating CoolSaver contractor.",
+        "The contractor must maintain the required program agreement, training, tools, and documentation.",
+        "The measure must qualify and receive any required preapproval before incentive funds are reserved.",
+        "The contractor must complete the tune-up or replacement and submit required system data and supporting records.",
+        "The customer and contractor must permit program verification or inspection."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "CoolSaver is a standardized contractor-delivered incentive rather than a competitively scored grant. A qualifying service is likely to be paid when a participating contractor follows the process and funds are reserved, but annual funding is limited.",
+      "evidenceUrls": [
+        "https://aeptxsaves.com/",
+        "https://aeptxsaves.com/commercial-programs/",
+        "https://aeptxsaves.com/contractor-portal/"
+      ],
+      "evidenceText": "The current AEP Texas program lists air-conditioning tune-ups and replacement and requires participating providers, project qualification, preapproval where applicable, documentation, and verification. Incentives are available while program funds remain.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3831",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The facility must be an eligible nonresidential AEP Texas customer.",
+        "The customer or service provider must enroll through the current Commercial Solutions pathway.",
+        "Project scope, technical data, and estimated savings must be submitted before installation.",
+        "The project must receive program preapproval and an incentive reservation before work when required.",
+        "Qualifying measures must be installed in accordance with the approved scope.",
+        "Invoices, completion records, savings documentation, and any requested verification must be submitted."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program generally pays approved, verified projects under published program rules rather than selecting among scored applicants. The main uncertainties are project qualification, reservation timing, verified savings, and remaining annual funds.",
+      "evidenceUrls": [
+        "https://aeptxsaves.com/commercial-programs/",
+        "https://aeptxsaves.com/contractor-portal/"
+      ],
+      "evidenceText": "Current AEP Texas materials require eligible nonresidential service, project qualification and preapproval before incentive reservation, followed by installation documentation and verification. Funding is first-come while the annual budget remains.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5170",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible school or school district facility in the participating AEP Texas service territory.",
+        "The school must enroll and coordinate the proposed project with the SCORE program.",
+        "Project scope, technical information, and estimated savings must be reviewed before installation.",
+        "The project must receive any required preapproval and incentive reservation before work starts.",
+        "Approved measures must be completed in accordance with the program schedule.",
+        "Completion documents, invoices, savings records, and requested verification must be provided."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "SCORE uses a technical-assistance and verified-savings pathway, not competitive grant scoring. Qualifying school projects are likely to receive the approved incentive when reservations, completion deadlines, and verification requirements are met.",
+      "evidenceUrls": [
+        "https://aeptxsaves.com/",
+        "https://aeptxsaves.com/contractor-portal/"
+      ],
+      "evidenceText": "AEP Texas currently lists SCORE for schools and requires project qualification, preapproval and reservation where applicable, completed installation records, and savings verification. Incentives depend on available annual program funds.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5171",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible municipal, local-government, or other qualifying public facility in the AEP Texas service territory.",
+        "The applicant must enroll and coordinate planning or benchmarking and the proposed project through CitySmart.",
+        "Project scope, technical information, and estimated savings must be submitted before installation.",
+        "The project must receive any required preapproval and incentive reservation before work starts.",
+        "Approved measures must be installed in accordance with the accepted scope and schedule.",
+        "Completion records, invoices, savings documentation, and requested verification must be provided."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "CitySmart follows a structured technical-assistance and verified-project process rather than competitive scoring. An eligible, preapproved public-sector project is likely to be paid after successful completion and verification, subject to available funds.",
+      "evidenceUrls": [
+        "https://aeptxsaves.com/",
+        "https://aeptxsaves.com/contractor-portal/"
+      ],
+      "evidenceText": "AEP Texas currently lists CitySmart for public-sector customers and requires project qualification, preapproval and reservation where applicable, completion documentation, and savings verification. Annual funds are limited.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5822",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible SWEPCO Louisiana residential customer under a current measure pathway.",
+        "The proposed HVAC or weatherization measure must meet current program specifications.",
+        "An approved participating contractor must prepare the quote and perform the installation.",
+        "The incentive must be documented in the project quote or other required customer paperwork.",
+        "The contractor must complete and submit the required installation and incentive documentation.",
+        "The customer must permit inspection or verification when selected."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current residential pathways are standardized contractor-delivered incentives. A qualifying customer and measure are likely to receive the incentive when an approved contractor completes the paperwork, although the current official pages do not substantiate every measure formerly grouped under the legacy umbrella.",
+      "evidenceUrls": [
+        "https://swepcosolutions.com/programs/residential-programs/louisiana-hvac-incentive-program/",
+        "https://swepcosolutions.com/programs/residential-programs/louisiana-weatherization-program/",
+        "https://swepcosolutions.com/rebates/"
+      ],
+      "evidenceText": "Current SWEPCO Louisiana residential pages substantiate approved-contractor HVAC and weatherization incentives, with the incentive shown in the quote, contractor paperwork, and possible inspection. The legacy umbrella's full historical product list is not carried forward on the current pages.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5823",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must be at an eligible SWEPCO Louisiana nonresidential site and include qualifying energy-efficiency measures.",
+        "The customer sponsor or market actor must register and enroll in the current program.",
+        "A complete application and pre-installation checklist must be submitted before work begins.",
+        "The project must receive program-manager preapproval and a signed program agreement.",
+        "The approved project must be completed within the applicable program deadline.",
+        "Post-installation invoices, photographs, customer acknowledgment, and other completion documents must be submitted.",
+        "The project must pass final inspection or savings verification before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The 2026 program follows an objective preapproval, agreement, completion, and verification sequence. A compliant reserved project is likely to be paid, but applications are not guaranteed once the program budget is fully committed.",
+      "evidenceUrls": [
+        "https://swepcosolutions.com/programs/business-programs/louisiana-commercial-solutions-standard-offer-program/",
+        "https://swepcosolutions.com/wp-content/uploads/2026/05/2026-SWEPCO-Louisiana-Large-Commercial-Overview-1.pdf"
+      ],
+      "evidenceText": "The 2026 program requires enrollment, a pre-installation submission, program-manager approval, a signed agreement, completion documents, and final verification. Incentive commitments depend on the remaining program budget.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4835",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must have an eligible Appalachian Power West Virginia residential account.",
+        "The product or service must meet the current program's efficiency and installation requirements.",
+        "A Home Performance assessment and approved contractor must be used for measures that follow the Home Performance pathway.",
+        "The current claim form, itemized receipt or invoice, and required model, AHRI, or contractor information must be submitted by the applicable deadline.",
+        "Program quantity limits and anti-duplication rules must be satisfied.",
+        "The customer must permit inspection or verification where required or selected."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "These are generally published, formula-based rebates rather than competitively selected awards. A qualifying claim is likely to be approved when submitted on time with complete records, subject to limited funds and inspection.",
+      "evidenceUrls": [
+        "https://takechargewv.com/rebates",
+        "https://takechargewv.com/resource/frequently-asked-questions",
+        "https://takechargewv.com/resources/docs/0125_APCoWV_RES_4932741_2025_Rebate_Forms_FLY_CentralAC_FILL2.pdf"
+      ],
+      "evidenceText": "Current materials require eligible West Virginia service, qualifying equipment or a Home Performance pathway, timely forms and invoices, and possible inspection. Published forms state that rebates are limited by available program funds.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3659",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The site and measure must be eligible under a current PSO business rebate pathway.",
+        "All custom projects and any prescriptive project meeting the applicable threshold must obtain written preapproval before ordering or installation.",
+        "The applicant must submit complete technical, cost, savings, and customer documentation.",
+        "PSO must issue written authorization or approve the application before work where preapproval is required.",
+        "The project must be completed within the authorized completion period.",
+        "Final invoices, specifications, completion documents, and any requested post-installation review must be submitted."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Prescriptive measures can be relatively predictable, but the umbrella also includes custom and other pathways subject to PSO discretion, project-specific preapproval, verified savings, and limited funds. Without a specific measure and approval record, award probability is only possible.",
+      "evidenceUrls": [
+        "https://powerforwardwithpso.com/support/for-businesses/",
+        "https://www.psobusinessrebates.com/",
+        "https://powerforwardwithpso.com/wp-content/uploads/2025/12/PSO-Business-Rebates-Application-w-TC-v26.pdf"
+      ],
+      "evidenceText": "The 2026 business terms require preapproval for custom projects and specified prescriptive projects, prohibit premature commitments where approval is required, and condition payment on completion documents and review. Submission alone does not create an entitlement.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3823",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must have an active eligible PSO residential account.",
+        "The purchased product or delivered service must satisfy the current measure specifications.",
+        "A participating provider must be used for pathways that deliver an instant discount or diagnostic service.",
+        "The customer must request the instant discount or submit the online claim, receipt, invoice, and required equipment information.",
+        "Any ENERGY STAR, AHRI, sizing, or installation conditions for the measure must be met.",
+        "The customer must permit diagnostic testing or program verification where applicable and meet the current deadline."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current residential offerings are generally standardized rebates or instant discounts for eligible customers and measures. Approval is likely after the required provider or claim process, while remaining subject to program limits, documentation, and verification.",
+      "evidenceUrls": [
+        "https://powerforwardwithpso.com/rebates/",
+        "https://powerforwardwithpso.com/tuneup/"
+      ],
+      "evidenceText": "PSO currently offers residential rebates and participating-provider services with measure-specific eligibility, receipts or provider documentation, and verification. These pathways are not competitively scored.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3654",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must be at an eligible SWEPCO Arkansas commercial, industrial, agricultural, or qualifying new-construction site under the current pathway.",
+        "The customer or contractor must submit project details and an incentive application and coordinate with an Energy Advisor.",
+        "The proposed scope and estimated savings must be reviewed before completion.",
+        "Qualifying measures must be installed as described in the approved application.",
+        "The program must be notified when installation is complete.",
+        "A post-installation inspection and savings verification must be completed.",
+        "The final incentive is based on verified eligible savings and approved project records."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current pathway uses project review and verified energy savings rather than competitive scoring. A qualifying project is likely to be paid after inspection, though the final amount can change with verified savings and program funding.",
+      "evidenceUrls": [
+        "https://swepcosolutions.com/programs/business-programs/arkansas-commercial-and-industrial-energy-efficiency-pathway/"
+      ],
+      "evidenceText": "The current Arkansas business pathway requires project submission, Energy Advisor coordination, installation, post-installation inspection, and verified savings. Final incentive payment is based on the verified project.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3642",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible SWEPCO Arkansas residential customer.",
+        "The measure or Home Performance project must meet current program eligibility and technical requirements.",
+        "A participating or approved contractor must perform the applicable work.",
+        "The customer or contractor may reserve funds before installation and must follow the program's current sequencing instructions.",
+        "The contractor must submit the required installation and incentive documentation.",
+        "The customer must permit inspection or verification when required or selected."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current Arkansas residential pathways are standardized incentives delivered through approved contractors. The recommended reservation is operational and does not make the award competitive; a qualifying completed project is likely to be paid while funds remain.",
+      "evidenceUrls": [
+        "https://swepcosolutions.com/programs/residential-programs/arkansas-residential-energy-improvement-pathway/",
+        "https://swepcosolutions.com/programs/residential-programs/arkansas-home-performance-with-energy-star-pathway/"
+      ],
+      "evidenceText": "Current Arkansas residential pages require approved contractors, qualifying installations, contractor paperwork, and possible verification. The program recommends a funding reservation before work but treats it as an operational step rather than competitive selection.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3661",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The solar project must serve an eligible AEP Texas customer and satisfy the current program's photovoltaic requirements.",
+        "The project must be submitted through an enrolled Approved Market Actor.",
+        "The market actor and installers must satisfy licensing, insurance, staffing, agreement, and guidebook requirements.",
+        "A complete project application must be submitted and preapproved before installation and incentive reservation.",
+        "Required permitting and interconnection steps must be completed.",
+        "Final invoices, photographs, equipment records, interconnection documentation, and verification must be accepted."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "A qualifying project must obtain preapproval and a first-come funding reservation through an Approved Market Actor. Because annual solar funds can be fully reserved, eligibility alone does not make an award likely.",
+      "evidenceUrls": [
+        "https://aeptxsaves.com/residential-programs/smart-source/",
+        "https://aeptxsaves.com/contractor-portal/"
+      ],
+      "evidenceText": "The current SMART Source pathway requires Approved Market Actor enrollment, licensed and insured installation capacity, project preapproval before reservation, interconnection, final documentation, and verification. Funding is first-come until reserved.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3669",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The solar project must serve an eligible AEP Texas customer and satisfy the current program's photovoltaic requirements.",
+        "The project must be submitted through an enrolled Approved Market Actor.",
+        "The market actor and installers must satisfy licensing, insurance, staffing, agreement, and guidebook requirements.",
+        "A complete project application must be submitted and preapproved before installation and incentive reservation.",
+        "Required permitting and interconnection steps must be completed.",
+        "Final invoices, photographs, equipment records, interconnection documentation, and verification must be accepted."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "A qualifying project must obtain preapproval and a first-come funding reservation through an Approved Market Actor. Because annual solar funds can be fully reserved, eligibility alone does not make an award likely.",
+      "evidenceUrls": [
+        "https://aeptxsaves.com/residential-programs/smart-source/",
+        "https://aeptxsaves.com/contractor-portal/"
+      ],
+      "evidenceText": "The current SMART Source pathway requires Approved Market Actor enrollment, licensed and insured installation capacity, project preapproval before reservation, interconnection, final documentation, and verification. Funding is first-come until reserved.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4365",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must serve an eligible AES Indiana business account that has not opted out of applicable efficiency programs.",
+        "The equipment or project must qualify under a current prescriptive, custom, midstream, commissioning, or related business pathway.",
+        "Custom and new-construction projects must obtain preapproval before purchase, commitment, or installation.",
+        "Prescriptive projects must be installed within the applicable program period and submitted on the current signed application.",
+        "Itemized invoices, equipment specifications, AHRI data where applicable, and other required technical records must be provided.",
+        "The project must avoid prohibited duplicate incentives and permit site inspection or verification.",
+        "AES Indiana must approve the application while program funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Most prescriptive measures use published requirements and are likely to be paid after complete review. Custom projects add preapproval and savings uncertainty, while all pathways remain subject to verification and first-come program funding.",
+      "evidenceUrls": [
+        "https://www.aesindiana.com/your-business",
+        "https://www.aesindiana.com/custom-incentives",
+        "https://www.aesindiana.com/sites/aesvault.com/files/2026-01/AES-Indiana-Prescriptive-HVAC-Application-January-09-2026.pdf"
+      ],
+      "evidenceText": "Current AES Indiana business materials distinguish prescriptive and custom pathways, require preapproval for custom work, and require signed applications, invoices, specifications, and possible inspection. Payments remain subject to eligibility and available funds.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22549",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible AES Indiana commercial customer.",
+        "Charging equipment must primarily support commercially owned or operated electric vehicles rather than primarily personal commuter vehicles.",
+        "The project must use qualifying Level 2 or DC fast charging equipment and an approved or qualifying network provider.",
+        "A complete application must be submitted before construction begins.",
+        "Project costs, site information, equipment, and any disadvantaged-community qualification for an enhanced tier must be documented.",
+        "The project must receive a first-come reservation or approval before installation.",
+        "Final installation and verification records must be accepted before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current EV charging rebate pathway is first-come and project-specific, with eligibility restrictions on vehicle use and equipment. A compliant reserved project can be paid, but applicants without a reservation face material funding uncertainty.",
+      "evidenceUrls": [
+        "https://aesindiana-ev.clearesult.com/aesin/evse-rebates/",
+        "https://www.aesindiana.com/your-business"
+      ],
+      "evidenceText": "The current AES Indiana EV charging rebate pathway covers qualifying commercial Level 2 and DC fast charging, instructs applicants to apply before construction, and awards qualified applications first-come. Final payment requires project documentation and verification.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22775",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be a District of Columbia homeowner or renter who is at least 18 years old and lives in an eligible residence.",
+        "Household income must be at or below 80 percent of area median income or established through an accepted categorical-eligibility program.",
+        "The home must have an eligible existing natural-gas or oil heating, water-heating, or cooking system.",
+        "The applicant must submit the current application, utility bills, income documentation, and utility-data authorizations.",
+        "Eligibility and income records must remain current while the application is waitlisted.",
+        "The applicant must permit ownership verification, a home walkthrough, contractor access, and required quality-control and code inspections.",
+        "DCSEU must approve the applicant and home, issue the required homeowner agreement, and authorize work before installation."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program has objective income and housing criteria, but current official materials state that all applications are waitlisted because fiscal-year funding is limited and that an application does not guarantee services.",
+      "evidenceUrls": [
+        "https://www.dcseu.com/ahep-sfa-apply",
+        "https://www.dcseu.com/affordable-home-electrification",
+        "https://www.dcseu.com/uploads/documents/applications/homeowners-renters/dcseu-print-ahep-sfa-application.pdf"
+      ],
+      "evidenceText": "Current FY 2026 materials require income and residence documentation, utility authorizations, ownership verification, a home walkthrough, a homeowner agreement, and DCSEU authorization before work. All applications are currently waitlisted because funding is limited.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:56574423e5e2b946:agricultural-and-pumping-interruptible-ap-i-program",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The account must be served by SCE on an eligible agricultural or pumping rate.",
+        "The account must have measured demand of at least 37 kilowatts or connected load of at least 50 horsepower.",
+        "The account may not be on an excluded tariff option.",
+        "The customer must designate the participating account and submit an AP-I contract for SCE approval.",
+        "A qualifying interval meter and an accessible, suitable location for the load-control device must be available.",
+        "The customer must satisfy control-device installation and compliance requirements within the allowed period.",
+        "The customer must accept the minimum enrollment term and required interruption events."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "AP-I is an eligibility-based tariff enrollment program rather than a competitive award. An account that satisfies the rate, load, metering, contract, and control-device requirements is likely to receive monthly credits during compliant enrollment.",
+      "evidenceUrls": [
+        "https://www.sce.com/customer-service-center/help-center/rebate-savings/business-savings/agricultural-pumping-interruptible-program",
+        "https://www.sce.com/sites/default/files/custom-files/PDF_Files/AP-I_Fact_Sheet_0601_WCAG.pdf",
+        "https://www.sce.com/business/save-costs-energy/savings-strategies-for-businesses/what-is-demand-response/demand-response-eligibility"
+      ],
+      "evidenceText": "SCE requires an eligible agricultural or pumping rate, minimum demand or horsepower, an approved contract, interval metering, a suitable control-device location, and event compliance. Monthly bill credits follow active qualifying enrollment.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4495",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The corporate taxpayer must own eligible agricultural biomass transported to a qualifying renewable energy facility.",
+        "The taxpayer must retain volume or weight tickets and transportation records.",
+        "EMNRD Form 8, Form 9, and supporting tickets must be submitted for a certificate of transportation.",
+        "The EMNRD certificate must be submitted with the applicable Taxation and Revenue Department approval form.",
+        "The credit must be approved by the Taxation and Revenue Department before it is claimed.",
+        "The approved credit must be claimed on the corporate return using the required claim form and applicable carryforward or transfer rules."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is a documented statutory tax-credit process rather than competitive selection. A taxpayer with qualifying biomass transportation records is likely to receive the credit after EMNRD certification and tax-department approval.",
+      "evidenceUrls": [
+        "https://www.emnrd.nm.gov/ecmd/tax-incentives/agricultural-biomass-income-tax-credit/",
+        "https://realfile.tax.newmexico.gov/rpd-41362-ins.pdf",
+        "https://www.tax.newmexico.gov/tax-professionals/tax-credits-overview-forms/"
+      ],
+      "evidenceText": "Current agency materials require biomass transportation tickets, an EMNRD certificate of transportation, Taxation and Revenue Department credit approval, and the applicable corporate claim form. The credit is documentation-based rather than competitive.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4496",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The individual taxpayer must own eligible agricultural biomass transported to a qualifying renewable energy facility.",
+        "The taxpayer must retain volume or weight tickets and transportation records.",
+        "EMNRD Form 8, Form 9, and supporting tickets must be submitted for a certificate of transportation.",
+        "The EMNRD certificate must be submitted with the applicable Taxation and Revenue Department approval form.",
+        "The credit must be approved by the Taxation and Revenue Department before it is claimed.",
+        "The approved credit must be claimed on the personal income tax return using the required claim form and applicable carryforward or transfer rules."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is a documented statutory tax-credit process rather than competitive selection. A taxpayer with qualifying biomass transportation records is likely to receive the credit after EMNRD certification and tax-department approval.",
+      "evidenceUrls": [
+        "https://www.emnrd.nm.gov/ecmd/tax-incentives/agricultural-biomass-income-tax-credit/",
+        "https://realfile.tax.newmexico.gov/rpd-41362-ins.pdf",
+        "https://www.tax.newmexico.gov/tax-professionals/tax-credits-overview-forms/"
+      ],
+      "evidenceText": "Current agency materials require biomass transportation tickets, an EMNRD certificate of transportation, Taxation and Revenue Department credit approval, and the applicable personal-income-tax claim form. The credit is documentation-based rather than competitive.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5513",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Vermont resident farmer, majority farmer-owned agricultural or forest business, or qualifying operator, owner, or lessee.",
+        "The proposed project must be an eligible agricultural renewable-energy or energy-efficiency investment.",
+        "The applicant must discuss the project and financing request with a VACC loan officer.",
+        "A complete loan application, project budget, business and financial records, and supporting documentation must be submitted.",
+        "The applicant must demonstrate adequate cash flow, project viability, useful-life alignment, and acceptable credit or collateral.",
+        "The financing share, rate, term, and conditions must be negotiated and approved through underwriting."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "This is discretionary financing subject to project and borrower underwriting, not an automatic rebate. Eligibility permits an application, but approval depends on cash flow, creditworthiness, collateral, project viability, and negotiated terms.",
+      "evidenceUrls": [
+        "https://www.veda.org/financing-options/vermont-agricultural-financing/agricultural-energy-loan-program/"
+      ],
+      "evidenceText": "VACC evaluates eligible agricultural energy projects through a loan application and underwriting process. Rates, terms, and the financed portion depend on cash flow, useful life, borrower strength, and project viability.",
+      "reviewedAt": "2026-07-10T13:30:52Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }

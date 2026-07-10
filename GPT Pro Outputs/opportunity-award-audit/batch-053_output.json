@@ -3,7 +3,539 @@
   "batchId": "batch-053",
   "inputFile": "batch-053_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.783Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T09:24:45-07:00",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1463",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible SoCalGas nonresidential customer with qualifying natural-gas service at the installation site.",
+        "Purchase and install new equipment that appears on the current business rebate schedule and meets the applicable efficiency, fuel, replacement, installation, and quantity requirements.",
+        "Complete the purchase and installation within the eligible program period and submit the current application by the stated deadline.",
+        "Provide a paid itemized invoice and the required account, site, manufacturer, model, efficiency, quantity, and installation information.",
+        "Permit SoCalGas or its program administrator to verify the customer, equipment, installation, and claimed costs, including an inspection when requested, and remain within program caps and available funding."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "SoCalGas publishes prescriptive business equipment rebates with objective customer, equipment, installation, documentation, and timing rules rather than competitive scoring. A complete qualifying claim is likely to be paid after administrative review and any requested verification, subject to current measure availability, caps, and program funds.",
+      "evidenceUrls": [
+        "https://www.socalgas.com/business/savings/equipment-rebates"
+      ],
+      "evidenceText": "Current SoCalGas business materials require eligible gas service, qualifying new equipment, a timely documented application, and program verification before rebate payment.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2513",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible SoCalGas nonresidential customer with an account and project that satisfy the current financing rules.",
+        "Use a qualifying energy-efficiency project that participates in an applicable SoCalGas rebate or incentive pathway and meets the program's technical, savings, payback, and financing limits.",
+        "Maintain an account in good standing and satisfy the program's repayment and creditworthiness requirements.",
+        "Submit the financing application, project scope, estimated costs, savings calculations, contractor information, and other required documents before purchasing or installing the measures.",
+        "Receive written project and financing approval, execute the financing agreement, complete the approved installation, and provide final invoices and verification records before loan funding or on-bill repayment begins."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The zero-percent financing pathway requires advance technical review, customer and repayment qualification, an approved energy-efficiency project, and available first-come program funds. A conforming project can be financed, but approval is not automatic because underwriting, project economics, meter-level limits, and budget availability materially affect the decision.",
+      "evidenceUrls": [
+        "https://www.socalgas.com/business/savings/energy-saving-tips-and-tools/energy-efficiency-programs/zero-percent-financing"
+      ],
+      "evidenceText": "SoCalGas currently requires eligible business service, an approved qualifying efficiency project, advance financing review, executed loan documents, and completed-project verification.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1461",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible SoCalGas residential customer and install the equipment at a qualifying existing residence served by SoCalGas.",
+        "Purchase and install a product that is currently listed for a residential rebate and meets the applicable fuel, product, efficiency, installation, and replacement requirements.",
+        "Complete the purchase and installation within the current eligibility period before submitting the claim.",
+        "Submit the rebate application with the customer and installation-site information, itemized receipt or invoice, model number, and required product-label or installation photographs.",
+        "Allow SoCalGas or its administrator to validate the account, equipment, installation, and documentation and to inspect the installation when requested."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The residential offering is a rules-based rebate process, not a competitive award. An eligible customer with a currently qualifying natural-gas product and a complete documented claim is likely to receive the rebate after validation, subject to measure limits and available program funds.",
+      "evidenceUrls": [
+        "https://www.socalgas.com/savings/rebates-and-incentives"
+      ],
+      "evidenceText": "Current SoCalGas residential materials direct customers to install a qualifying product and submit a documented claim that remains subject to account, product, and installation verification.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5682",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or control the environmental attributes of a qualifying solar facility that satisfies Pennsylvania Alternative Energy Portfolio Standards eligibility and geographic rules.",
+        "Create a PennAEPS account and submit a complete facility-certification application with ownership, equipment, capacity, location, interconnection, placed-in-service, and metering documentation.",
+        "Receive a Pennsylvania alternative-energy-system certification number for the facility.",
+        "Register the certified facility in PJM Generation Attribute Tracking System and establish compliant revenue-quality metering and generation reporting.",
+        "Report generation accurately, preserve credit ownership records, and comply with transfer, retirement, audit, and continuing-certification requirements."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Facility certification and credit creation are administrative, rules-based processes. A qualifying solar facility with complete documentation and compliant metering is likely to be certified and generate credits; selling the credits is optional, and neither a buyer nor a market price is guaranteed.",
+      "evidenceUrls": [
+        "https://pennaeps.com/",
+        "https://pennaeps.com/resources/registration-instructions/",
+        "https://www.puc.pa.gov/filing-resources/issues-laws-regulations/aeps-act/"
+      ],
+      "evidenceText": "Pennsylvania's current AEPS process requires facility certification and PJM-GATS registration before verified solar generation can create alternative energy credits.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:243",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Purchase a solar energy system or component that falls within Florida's current statutory sales-tax exemption and applicable certification rules.",
+        "Ensure the seller applies the exemption only to qualifying solar equipment and separately accounts for taxable items or services when required.",
+        "Provide any purchaser certificate or representation requested by the seller and retain invoices, component descriptions, certifications, and installation records for audit.",
+        "Do not treat ordinary HVAC, boiler, combined-heat-and-power, fuel-cell, or standalone storage equipment as eligible unless it independently satisfies the current solar-system exemption."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "Florida's current solar-equipment sales-tax exemption is statutory and ordinarily applies at the sale when the purchased property meets the legal definition and documentation rules. The current official law does not substantiate a general exemption for the title's broad CHP and conventional-equipment mappings, so those items should not be assumed eligible.",
+      "evidenceUrls": [
+        "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0200-0299%2F0212%2FSections%2F0212.08.html",
+        "https://energyresearch.ucf.edu/consumer/energy-policy/"
+      ],
+      "evidenceText": "Current Florida law provides a point-of-sale exemption for qualifying solar energy systems and components; it does not establish a general sales-tax exemption for ordinary CHP, HVAC, boiler, fuel-cell, or standalone-storage equipment under this record.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4977",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own the residential property where the eligible energy or resilience improvement will be installed and be located in a state and area currently served by SELF.",
+        "Include all required property titleholders and, where applicable, a spouse in the application and loan documents.",
+        "Provide income, identity, housing-payment, property-tax, mortgage, debt, and other records needed to establish ability to repay and program eligibility.",
+        "Use an eligible project scope, contractor, and written proposal that satisfy SELF's current product and underwriting requirements.",
+        "Receive final credit and project approval, execute the loan documents, and comply with contractor-disbursement, completion, and verification requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "SELF does not rely solely on a minimum credit score, but it conducts full ability-to-repay, property, borrower, contractor, and project underwriting. A qualifying improvement may receive financing, while household finances, existing obligations, title issues, project suitability, and final underwriting can still result in denial or changed terms.",
+      "evidenceUrls": [
+        "https://solarenergyloanfund.org/loan/solar-pv-loans/",
+        "https://solarenergyloanfund.org/contractor-faq/"
+      ],
+      "evidenceText": "SELF currently finances qualifying residential solar, battery, and energy improvements only after borrower ability-to-repay, property, contractor, and project review.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:49",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Be a Hawaii business taxpayer that owns and places a qualifying solar or wind energy system in service in Hawaii.",
+        "Meet the current technology, system-output, eligible-cost, placed-in-service, credit-cap, and any utility or permitting requirements applicable to the system.",
+        "Complete Form N-342 and any required Form N-342A or N-342C schedules, certifications, and cost-allocation worksheets.",
+        "Claim the allowable credit on the applicable Hawaii corporate income-tax return and observe carryover, refundable-credit election, basis, and recapture rules.",
+        "Retain contracts, invoices, proof of payment, permits, interconnection records, specifications, and placed-in-service documentation for Department of Taxation review."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "The Renewable Energy Technologies Income Tax Credit is a statutory, noncompetitive tax benefit with no current repeal date. A corporate taxpayer that places a qualifying system in service, computes the credit correctly, and files the required forms should receive the allowable credit through ordinary return processing, subject to audit and statutory caps.",
+      "evidenceUrls": [
+        "https://tax.hawaii.gov/geninfo/renewable/",
+        "https://tax.hawaii.gov/forms/a1_b1_3corp/"
+      ],
+      "evidenceText": "Hawaii's current corporate forms include the renewable-energy credit schedules, and the Department of Taxation states that the statutory credit currently has no repeal date.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:50",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Be a Hawaii individual taxpayer that owns and places a qualifying solar or wind energy system in service in Hawaii.",
+        "Meet the current technology, system-output, eligible-cost, placed-in-service, credit-cap, and any utility or permitting requirements applicable to the system.",
+        "Complete Form N-342 and any required Form N-342A or N-342C schedules, certifications, and cost-allocation worksheets.",
+        "Claim the allowable credit on the applicable Hawaii individual income-tax return and observe carryover, refundable-credit election, basis, and recapture rules.",
+        "Retain contracts, invoices, proof of payment, permits, interconnection records, specifications, and placed-in-service documentation for Department of Taxation review."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "The Renewable Energy Technologies Income Tax Credit is a statutory, noncompetitive tax benefit with no current repeal date. An individual taxpayer that places a qualifying system in service, computes the credit correctly, and files the required forms should receive the allowable credit through ordinary return processing, subject to audit and statutory caps.",
+      "evidenceUrls": [
+        "https://tax.hawaii.gov/geninfo/renewable/",
+        "https://tax.hawaii.gov/forms/a1_b1_1income/"
+      ],
+      "evidenceText": "Hawaii's current individual forms include the renewable-energy credit schedules, and the Department of Taxation states that the statutory credit currently has no repeal date.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:119",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Purchase property that meets Arizona's statutory definition of a solar energy device, which includes specified systems that collect, transfer, or store solar energy and qualifying wind-generator systems.",
+        "Purchase from or use a retailer or solar-energy contractor registered with the Arizona Department of Revenue as required for the applicable retail or use-tax treatment.",
+        "Have the seller or contractor apply the statutory retail tax-base deduction or use-tax exemption to the qualifying device and separately state taxable property or services when required.",
+        "Retain the invoice, equipment description, seller or contractor information, and installation records sufficient to substantiate the exemption in an audit.",
+        "Do not claim submetering or monitoring equipment as a standalone exempt device unless it is an integral qualifying component of the covered energy system."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "Arizona's treatment is statutory and noncompetitive. A purchase of a qualifying solar energy device, including a wind-generator system within the statutory definition, from the required registered seller or contractor should receive the tax treatment at the transaction, subject to correct classification and audit.",
+      "evidenceUrls": [
+        "https://www.azleg.gov/ars/42/05061.htm",
+        "https://www.azleg.gov/ars/42/05159.htm",
+        "https://www.azleg.gov/ars/42/05001.htm",
+        "https://azdor.gov/transaction-privilege-tax/contracting-guidelines/modification-contracting"
+      ],
+      "evidenceText": "Current Arizona statutes provide retail and use-tax treatment for qualifying solar energy devices and expressly include qualifying wind-generator systems in the governing definition.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3352",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Pennsylvania business, economic-development organization, political subdivision, or other applicant class allowed by the current Alternative and Clean Energy Program.",
+        "Propose an eligible Pennsylvania alternative-energy, clean-energy, energy-efficiency, or energy-conservation project and limit the request to eligible costs.",
+        "Provide the required applicant match, application fee, project budget, financing plan, technical studies, site-control records, permits, schedules, ownership information, and economic or energy-impact documentation.",
+        "Avoid beginning disqualifying project work or incurring ineligible costs before the applicable program authorization.",
+        "Receive Commonwealth Financing Authority approval and satisfy commitment, closing, security, reporting, and continuing-compliance conditions."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current official pathway is the broader Alternative and Clean Energy Program, under which grants and loans are reviewed and approved by the Commonwealth Financing Authority. Eligible solar-related projects may compete for assistance, but approval is discretionary and depends on project merits, match, documentation, financing, and available funds.",
+      "evidenceUrls": [
+        "https://dced.pa.gov/programs/alternative-clean-energy-program-ace/",
+        "https://dced.pa.gov/programs-funding/commonwealth-financing-authority-cfa/cfa-interest-rates/"
+      ],
+      "evidenceText": "Pennsylvania's current official source identifies the Alternative and Clean Energy Program, not a separate stand-alone Solar Energy Incentives Program, and requires a complete application and Commonwealth Financing Authority approval.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5945",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Pennsylvania business, economic-development organization, political subdivision, or other applicant class allowed by the Solar Energy Program.",
+        "Propose an eligible Pennsylvania solar generation, solar-use, or solar-equipment-manufacturing project and limit the loan request to eligible costs.",
+        "Provide at least one dollar of applicant match for each three dollars of requested loan assistance and pay the current application fee.",
+        "Submit complete technical, financial, ownership, site-control, permitting, project-cost, repayment, collateral, and schedule documentation before project authorization.",
+        "Receive Commonwealth Financing Authority loan approval, pay the applicable commitment fee, execute closing and security documents, and comply with disbursement, reporting, and performance conditions."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Solar Energy Program loans require a complete preproject application, borrower and project financial review, match, security, and a discretionary Commonwealth Financing Authority decision. A well-supported eligible project can be approved, but the loan is not automatic and remains dependent on underwriting, authority approval, and available funds.",
+      "evidenceUrls": [
+        "https://dced.pa.gov/programs/solar-energy-program-sep/",
+        "https://dced.pa.gov/programs-funding/commonwealth-financing-authority-cfa/cfa-interest-rates/"
+      ],
+      "evidenceText": "Pennsylvania's current Solar Energy Program offers project loans through a matched, fee-based application that requires Commonwealth Financing Authority approval and loan closing.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22791",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Pennsylvania business, economic-development organization, political subdivision, or other applicant class allowed by the Solar Energy Program.",
+        "Propose an eligible Pennsylvania solar generation, solar-use, or solar-equipment-manufacturing project and limit the grant request to eligible costs.",
+        "Provide at least one dollar of applicant match for each dollar of requested grant assistance and pay the current application fee.",
+        "Submit complete technical, financial, ownership, site-control, permitting, project-cost, schedule, public-benefit, and energy-production documentation before project authorization.",
+        "Receive a Commonwealth Financing Authority grant award, execute the commitment and grant agreement, transfer solar renewable energy credits when required for grant-funded photovoltaic generation, and comply with reporting and performance conditions."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Solar Energy Program grants are discretionary, matched awards requiring a complete preproject application and Commonwealth Financing Authority approval. An eligible, well-documented project may receive funding, but competitive demand, public benefit, match, project readiness, and available funds materially affect the outcome.",
+      "evidenceUrls": [
+        "https://dced.pa.gov/programs/solar-energy-program-sep/"
+      ],
+      "evidenceText": "Pennsylvania's current Solar Energy Program offers matched grants for eligible solar projects only after application review and Commonwealth Financing Authority approval.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1218",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Purchase a system that meets Minnesota's statutory definition of a solar energy system, including the qualifying equipment and integral components covered by the exemption.",
+        "Have the seller apply the sales-tax exemption to the qualifying system and separately account for taxable nonqualifying property or services.",
+        "Provide a completed exemption certificate when the seller requests one.",
+        "Retain the purchase agreement, invoice, system description, component records, and installation documentation for Minnesota Department of Revenue review."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "Minnesota's solar-energy-system sales-tax exemption is statutory and noncompetitive. A transaction that consists of qualifying solar equipment and is properly documented should receive the exemption at the sale, subject to seller classification and Department of Revenue audit.",
+      "evidenceUrls": [
+        "https://www.revisor.mn.gov/statutes/cite/297A.67",
+        "https://www.revenue.state.mn.us/guide/nontaxable-sales"
+      ],
+      "evidenceText": "Current Minnesota law exempts qualifying solar energy systems from sales tax, with the seller administering the transaction and retaining exemption documentation.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5245",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Own qualifying personal property located in the District of Columbia that is a system using exclusively solar energy or a cogeneration system meeting the statutory definition.",
+        "Classify only qualifying system property as exempt and exclude ordinary equipment that is not part of the covered solar or cogeneration system.",
+        "Report the property and claimed exemption accurately on Form FP-31 when a personal-property return is otherwise required and file through MyTax.DC.gov by the applicable deadline.",
+        "Retain ownership, location, cost, equipment, operating-use, production, installation, and placed-in-service records for Office of Tax and Revenue review."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "Current District law provides a statutory personal-property tax exemption, rather than a discretionary credit, for qualifying exclusively solar and cogeneration systems. A taxpayer that correctly classifies and reports qualifying property should receive the exemption through ordinary tax administration, subject to audit.",
+      "evidenceUrls": [
+        "https://code.dccouncil.gov/us/dc/council/code/sections/47-1508",
+        "https://otr.cfo.dc.gov/page/personal-property-tax",
+        "https://otr.cfo.dc.gov/publication/2026-personal-property-tax-instructions-fp-31"
+      ],
+      "evidenceText": "District law currently exempts qualifying exclusively solar and cogeneration systems from personal-property tax, while the annual FP-31 process remains subject to Office of Tax and Revenue review.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1804",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Be a South Carolina corporate taxpayer that owns and installs a qualifying solar-energy, small-hydropower, or geothermal-energy property in South Carolina.",
+        "Use the system for a qualifying statutory purpose such as water heating, space heating, air cooling, daylighting, heat reclamation, demand response, or electricity generation.",
+        "Meet the applicable technical, certification, placed-in-service, eligible-cost, credit-percentage, annual-cap, and carryforward rules.",
+        "Complete Form TC-38 and attach or retain the required system certifications, cost calculations, invoices, and placed-in-service information.",
+        "Claim the allowable credit on the corporate income-tax return and retain documentation for Department of Revenue review."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "South Carolina's credit is statutory and noncompetitive. A corporate taxpayer with a qualifying solar, small-hydropower, or geothermal system and a correctly completed TC-38 should receive the allowable credit through normal return processing, subject to annual limits, carryforward rules, and audit; ordinary controls or HVAC qualify only when part of a covered energy system.",
+      "evidenceUrls": [
+        "https://dor.sc.gov/tax-credits/tax-credits-forms",
+        "https://www.scstatehouse.gov/code/t12c006.php"
+      ],
+      "evidenceText": "Current South Carolina law and tax forms provide a post-installation income-tax credit for qualifying solar, small-hydropower, and geothermal systems, subject to system-use, certification, cap, and filing rules.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1803",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Be a South Carolina individual taxpayer that owns and installs a qualifying solar-energy, small-hydropower, or geothermal-energy property in South Carolina.",
+        "Use the system for a qualifying statutory purpose such as water heating, space heating, air cooling, daylighting, heat reclamation, demand response, or electricity generation.",
+        "Meet the applicable technical, certification, placed-in-service, eligible-cost, credit-percentage, annual-cap, and carryforward rules.",
+        "Complete Form TC-38 and attach or retain the required system certifications, cost calculations, invoices, and placed-in-service information.",
+        "Claim the allowable credit on the individual income-tax return and retain documentation for Department of Revenue review."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "South Carolina's credit is statutory and noncompetitive. An individual taxpayer with a qualifying solar, small-hydropower, or geothermal system and a correctly completed TC-38 should receive the allowable credit through normal return processing, subject to annual limits, carryforward rules, and audit; ordinary controls or HVAC qualify only when part of a covered energy system.",
+      "evidenceUrls": [
+        "https://dor.sc.gov/tax-credits/tax-credits-forms",
+        "https://www.scstatehouse.gov/code/t12c006.php"
+      ],
+      "evidenceText": "Current South Carolina law and tax forms provide a post-installation income-tax credit for qualifying solar, small-hydropower, and geothermal systems, subject to system-use, certification, cap, and filing rules.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22790",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Pennsylvania public school entity and own or control the school facility where the project will be installed.",
+        "Propose an eligible photovoltaic or solar-thermal project, including eligible energy storage and related equipment where permitted by current guidelines.",
+        "Complete the required energy, site, structural, design, cost, financing, match, schedule, procurement, and public-benefit analysis and provide site-control documentation.",
+        "Obtain or demonstrate a credible path to required permits, utility interconnection, inspections, and other project approvals.",
+        "Submit a complete application during an active funding round and receive Department of Community and Economic Development and Commonwealth Financing Authority approval.",
+        "Execute the grant agreement and comply with procurement, prevailing-wage or labor requirements when applicable, construction, reporting, reimbursement, inspection, and performance obligations."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Solar for Schools is a discretionary grant program with defined applicant and project rules but limited appropriations and Commonwealth Financing Authority approval. A ready, eligible school project can receive an award in an active round, while application timing, match, project quality, competing demand, and available funds prevent an assured outcome.",
+      "evidenceUrls": [
+        "https://dced.pa.gov/programs/solar-for-schools-grant-program-s4s/",
+        "https://dced.pa.gov/solar-for-schools-grant-program-frequently-asked-questions/",
+        "https://dced.pa.gov/download/solar-for-schools-grant-program-guidelines/"
+      ],
+      "evidenceText": "Current Pennsylvania materials restrict the program to eligible school entities and solar projects and require a complete round-specific application, authority approval, and grant-agreement compliance.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22111",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Develop an eligible Massachusetts solar photovoltaic project interconnected to a participating Eversource, National Grid, or Unitil distribution company and meet the current SMART 3.0 technology, site, ownership, sizing, and program rules.",
+        "Submit a PowerClerk Statement of Qualification application with the application fee and required site-control, interconnection, permitting, ownership, equipment, land-use, production, and adder documentation.",
+        "Avoid prohibited significant physical work before preliminary qualification where the current rules impose that restriction.",
+        "Receive a Preliminary Statement of Qualification, reserve the applicable capacity and compensation rate, and complete the project within the reservation period.",
+        "Install and interconnect the approved project, obtain permission to operate, establish compliant metering, and submit final as-built, interconnection, production, and energy-storage documentation.",
+        "Receive a Final Statement of Qualification after the applicable distribution-company tariff and payment mechanism are effective and maintain ongoing metering, reporting, and program compliance."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "SMART 3.0 is accepting applications and issuing preliminary qualifications, but the current official program page states that the tariff term begins only after distribution-company tariff approval and a Final Statement of Qualification. A conforming project can reserve eligibility, while final qualification and payment remain dependent on project completion, utility implementation, and final program review.",
+      "evidenceUrls": [
+        "https://www.mass.gov/info-details/smart-30-program-details",
+        "https://www.mass.gov/statement-of-qualification-applications",
+        "https://www.mass.gov/solar-massachusetts-renewable-target-smart"
+      ],
+      "evidenceText": "Massachusetts currently accepts SMART 3.0 qualification applications and uses preliminary and final qualification stages; the incentive term starts only after the applicable tariff is approved and final qualification is issued.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22566",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible nonresidential customer of Portland General Electric or Pacific Power in Oregon with a proposed solar or battery-storage project covered by the current Energy Trust development-assistance offering.",
+        "Work through an eligible Energy Trust solar trade ally and create the separate PowerClerk development-assistance project before beginning the reimbursable study or planning work.",
+        "Submit the required project, customer, site, utility, system concept, contractor, scope, cost, and incentive-reservation information.",
+        "Complete a qualifying feasibility or development report addressing resource, design, economics, permitting, interconnection, siting, and other required technical topics and provide the paid invoice.",
+        "Receive Energy Trust technical review and final approval of the development-assistance project before reimbursement."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Solar Development Assistance and Battery Storage Development Assistance offerings reimburse defined planning costs through a published PowerClerk and technical-review process rather than competitive scoring. A timely reserved study that meets the report and invoice requirements is likely to be approved, subject to customer eligibility and available funds.",
+      "evidenceUrls": [
+        "https://insider.energytrust.org/energy-trust-announces-solar-incentives-for-2026-and-key-end-of-year-dates-for-2025/",
+        "https://insider.energytrust.org/development-assistance-and-installation-incentives-are-now-separate-powerclerk-projects/",
+        "https://insider.energytrust.org/solar-development-assistance-application-available-in-powerclerk/"
+      ],
+      "evidenceText": "Energy Trust's current development-assistance offerings replace the legacy Solar Planning title and require advance PowerClerk reservation, an eligible trade ally, a qualifying study, invoice documentation, and technical approval.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5688",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or control the renewable attributes of a solar resource that satisfies Maryland Renewable Portfolio Standard technology, location, interconnection, and placed-in-service requirements.",
+        "Submit a complete Maryland Public Service Commission renewable-energy-facility certification application with ownership, system, capacity, location, interconnection, metering, and placed-in-service records.",
+        "Receive a Maryland renewable-energy-facility certification number for the solar resource.",
+        "Register the certified facility in PJM Generation Attribute Tracking System and establish compliant metering and generation reporting.",
+        "For on-site or behind-the-meter generation, submit the required Maryland generation reports and maintain credit ownership, transfer, retirement, and audit records."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Maryland certification and credit creation are rules-based administrative processes. A qualifying solar resource with complete documentation and compliant metering is likely to be certified and create SRECs; registration does not guarantee a buyer or market price, and non-solar monitoring equipment alone is not an eligible resource.",
+      "evidenceUrls": [
+        "https://www.psc.state.md.us/electricity/solar-renewable-portfolio-standard-documents-rps/",
+        "https://www.psc.state.md.us/electricity/maryland-renewable-energy-portfolio-standard-program-frequently-asked-questions/"
+      ],
+      "evidenceText": "Maryland currently requires Public Service Commission facility certification and PJM-GATS registration before verified qualifying solar generation can create SRECs.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5686",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or control the renewable attributes of a solar facility that meets District of Columbia Renewable Portfolio Standard technology and geographic or feeder requirements.",
+        "Submit the Commission's current online certification application with ownership, location, equipment, capacity, as-built, interconnection, permission-to-operate, and metering documentation.",
+        "Receive a District of Columbia Public Service Commission certification order or facility number.",
+        "Register the certified facility in PJM Generation Attribute Tracking System and establish compliant meter reading and generation reporting.",
+        "Maintain geographic eligibility, renewable-attribute ownership, transfer, retirement, and continuing-compliance records."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "District certification and SREC creation use published eligibility and documentation rules. A qualifying facility with complete as-built, interconnection, and metering records is likely to be certified and create credits, while credit sales and market value remain separate and are not guaranteed.",
+      "evidenceUrls": [
+        "https://dcpsc.org/utility-information/electric/rps.aspx",
+        "https://dcpsc.org/Orders-and-Regulations/PSC-Reports-to-the-DC-Council/Renewable-Energy-Portfolio-Standard.aspx"
+      ],
+      "evidenceText": "The District's current RPS process requires Commission certification and PJM-GATS registration before qualifying solar generation can create District-eligible SRECs.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5690",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own the SRECs from a qualifying Delaware-interconnected or otherwise eligible solar photovoltaic facility that has completed the required state and PJM-GATS registration and metering steps.",
+        "Submit a valid bid or application during an open SREC Delaware procurement or spot-market window and satisfy the applicable ownership, system-tier, vintage, quantity, and documentation rules.",
+        "Accept the applicable procurement or auction terms if the bid is selected.",
+        "Transfer the offered SRECs in PJM Generation Attribute Tracking System using the required Spot Market or other specified transfer type and meet the stated transfer deadline.",
+        "Maintain facility, ownership, generation, transfer, and payment records and comply with program verification and contract obligations."
+      ],
+      "approvalStage": "before_operation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current SREC Delaware structure includes operational instructions for transferring credits through procurement and spot-market processes, but bid selection, clearing price, eligible volume, and the timing of open windows are competitive or market-dependent. A valid eligible bid may be accepted, but an award is not assured.",
+      "evidenceUrls": [
+        "https://delcode.delaware.gov/title26/c001/sc03a/index.html",
+        "https://srecdelaware.com/",
+        "https://srecdelaware.com/procurements/",
+        "https://srecdelaware.com/instructions-for-srec-transfer-in-pjm-gats/"
+      ],
+      "evidenceText": "Current Delaware materials administer SREC purchases through procurement and spot-market transfer procedures, with bid acceptance and price dependent on the active solicitation and market results.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1234",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "For the mapped battery measure, purchase qualifying residential energy-storage-system equipment installed in or on a New York residence during the statutory June 1, 2024 through May 31, 2028 exemption period.",
+        "Ensure the seller applies the state and applicable local sales-tax exemption only to qualifying equipment and installation services and separately accounts for taxable items.",
+        "Retain the contract, invoice, system specifications, residence and installation records, and any exemption certificate requested by the seller.",
+        "For a claim under the separate solar-equipment exemption, demonstrate that the property is qualifying residential or commercial solar-energy equipment or an integral component of that system rather than standalone commercial storage."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "New York currently provides a statutory sales-tax exemption for qualifying residential energy-storage equipment and installation through May 31, 2028, and a separate exemption for qualifying solar-energy systems. A properly classified residential battery transaction should receive the exemption at the sale, but the legacy Solar Sales Tax Exemption title does not establish a general exemption for standalone commercial batteries.",
+      "evidenceUrls": [
+        "https://www.tax.ny.gov/pubs_and_bulls/tg_bulletins/st/solar_energy_equipment.htm",
+        "https://www.tax.ny.gov/pubs_and_bulls/tg_bulletins/st/quick_reference_guide_for_taxable_and_exempt_property_and_services.htm",
+        "https://www.nysenate.gov/legislation/laws/TAX/1115"
+      ],
+      "evidenceText": "Current New York guidance separately exempts qualifying solar equipment and qualifying residential energy-storage equipment; the temporary residential storage exemption runs through May 31, 2028.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:506",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Hawaii Energy residential electric ratepayer on Hawaii Island, Lanai, Maui, Molokai, or Oahu; Kauai customers are not served by this program.",
+        "Install a new qualifying solar-thermal water-heating system or an approved photovoltaic-direct water-heating system that meets current equipment, sizing, installation, warranty, and customer requirements.",
+        "Use a participating Hawaii Energy residential solar-water-heating contractor.",
+        "Have the contractor apply the instant rebate to the customer invoice and submit the required customer, utility-account, equipment, installation, invoice, and completion documentation.",
+        "Permit Hawaii Energy to verify or inspect the installation and apply while the current first-come program budget remains available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Hawaii Energy publishes an instant, contractor-delivered rebate with objective customer, territory, system, and installation requirements. A qualifying project completed by a participating contractor is likely to receive the invoice credit after program submission and verification, subject to current funds.",
+      "evidenceUrls": [
+        "https://hawaiienergy.com/for-homes/solar-water-heating/",
+        "https://hawaiienergy.com/clean-energy-allies/residential-solar-water-heating-contractors/",
+        "https://hawaiienergy.com/news/hawaii-energy-boosts-solar-water-heater-rebates-to-offset-loss-of-federal-tax-credits/"
+      ],
+      "evidenceText": "Hawaii Energy currently offers an instant residential solar-water-heating rebate through participating contractors for eligible ratepayers on the program's five covered island service areas.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22417",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own and occupy an eligible Oregon home served by Portland General Electric or Pacific Power and satisfy the current Solar Within Reach customer rules.",
+        "For installations completed on or after June 1, 2026, document household income at or below 150 percent of the applicable area median income and complete the required income-verification process.",
+        "Install a qualifying customer-owned solar photovoltaic system, and any eligible paired battery, that meets current equipment, design, interconnection, permitting, warranty, and ownership requirements.",
+        "Use an Energy Trust solar trade ally and have the trade ally submit and reserve the incentive in PowerClerk before installation or other disqualifying project activity.",
+        "Execute the customer agreement, complete installation in the eligible program period, obtain jurisdictional approval and utility interconnection, and submit invoices, photos, inspection records, and final closeout documents.",
+        "Allow Energy Trust verification and remain within the applicable utility, project, household, incentive-step, and available-funding limits."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Solar Within Reach uses published income, utility, ownership, trade-ally, system, reservation, and closeout rules rather than competitive ranking. A qualifying household with a properly reserved and completed project is likely to receive the incentive after verification, subject to the current incentive step and available funds.",
+      "evidenceUrls": [
+        "https://insider.energytrust.org/energy-trust-announces-solar-incentives-for-2026-and-key-end-of-year-dates-for-2025/",
+        "https://insider.energytrust.org/june-1-transition-to-area-median-income-ami-for-income-qualified-programs-2/",
+        "https://insider.energytrust.org/convert-2026-installations-to-the-increased-2026-incentive-rates/"
+      ],
+      "evidenceText": "Energy Trust's current 2026 materials require an eligible PGE or Pacific Power household, income qualification, a trade-ally PowerClerk reservation, qualifying customer-owned equipment, and final installation verification.",
+      "reviewedAt": "2026-07-10T09:24:45-07:00",
+      "reviewStatus": "audited"
+    }
+  ]
 }

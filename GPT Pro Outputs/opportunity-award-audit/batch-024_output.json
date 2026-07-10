@@ -3,7 +3,529 @@
   "batchId": "batch-024",
   "inputFile": "batch-024_input.json",
   "inputRecordCount": 25,
-  "generatedAt": "2026-07-10T13:18:15.771Z",
-  "reviews": [],
-  "notes": "Awaiting GPT Pro review. Replace reviews array with audited records."
+  "generatedAt": "2026-07-10T14:20:55Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22703",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Forest Grove Light & Power residential customer with an eligible customer-owned solar photovoltaic system.",
+        "Submit the applicable Level I interconnection application and technical documents and obtain utility approval before installation or energization.",
+        "Obtain required permits and inspections and complete the utility witness test or other final interconnection verification.",
+        "Submit the incentive payment form with required invoices, system information, and customer documentation."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The City publishes fixed residential solar incentives and an objective interconnection and payment process. A qualifying project that receives advance interconnection approval and passes final verification is likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://www.forestgrove-or.gov/213/Net-Metering-Residential-Solar",
+        "https://www.forestgrove-or.gov/DocumentCenter/View/245/Level-I-Interconnection-Application-PDF",
+        "https://www.forestgrove-or.gov/DocumentCenter/View/244/Interconnection-Incentive-Payment-Form-PDF"
+      ],
+      "evidenceText": "Forest Grove currently publishes residential solar incentives and requires utility interconnection review before operation, permits and inspection, final testing, and a separate incentive payment submission.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3619",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Fort Pierce Utilities Authority residential electric customer for the installation address.",
+        "Purchase and install a measure that is listed on the current residential electric rebate form and meets its equipment and installation specifications.",
+        "Submit the completed application with itemized invoices, receipts, model information, and other measure-specific documentation by the program deadline.",
+        "Permit FPUA to inspect or otherwise verify the installation when requested.",
+        "Apply while the current program remains open and rebate funds remain available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "FPUA uses published, measure-specific rebate amounts and an administrative claim process rather than competitive selection. A timely, complete claim for a currently listed measure is likely to be paid while funds remain.",
+      "evidenceUrls": [
+        "https://fpua.com/ways-to-save/",
+        "https://fpua.com/wp-content/uploads/2025/10/Residential-Electric-Rebate-Form-Updated-10-2-25.pdf"
+      ],
+      "evidenceText": "The current FPUA form lists residential electric rebates for qualifying HVAC, insulation, refrigeration, room air-conditioning, and solar water-heating measures and makes payment first-come, documentation-based, and subject to inspection and available funds.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5166",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Fort Pierce Utilities Authority residential electric customer at the installation address.",
+        "Install a new qualifying domestic solar water-heating system that meets the current certification and equipment requirements.",
+        "Use an appropriately licensed Florida contractor and comply with applicable permit and installation requirements.",
+        "Submit the current rebate form with the original contractor invoice and required system documentation by the program deadline.",
+        "Permit FPUA inspection or verification and apply while funds remain available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current FPUA schedule expressly lists a fixed solar water-heating rebate. A properly certified installation with a timely, complete contractor-backed claim is likely to receive payment while program funds remain.",
+      "evidenceUrls": [
+        "https://fpua.com/ways-to-save/",
+        "https://fpua.com/wp-content/uploads/2025/10/Residential-Electric-Rebate-Form-Updated-10-2-25.pdf"
+      ],
+      "evidenceText": "FPUA currently lists a solar water-heater rebate and requires a qualifying certified system, licensed installation, an original contractor invoice, a completed application, and possible inspection.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3319",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "No current application is available because Four County EMC states that it no longer offers Comfort Loans to members."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "The official Four County EMC page states that the cooperative has discontinued its Comfort Loan program. A new applicant therefore has no current award pathway under this named opportunity.",
+      "evidenceUrls": [
+        "https://www.fourcty.org/energy-efficiency/energy-efficiency-loans/"
+      ],
+      "evidenceText": "Four County EMC's current loan page states that it no longer offers Comfort Loans to members.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3320",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Four County EMC member for the service address.",
+        "Purchase or install a product or system that is included in the cooperative's current rebate or bill-credit offerings.",
+        "Meet the current ENERGY STAR, heat-pump, appliance, or other measure-specific qualifications.",
+        "Submit proof of purchase, equipment information, account information, and any measure-specific form or contractor documentation.",
+        "Allow utility verification or inspection when required by the selected measure."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Four County EMC currently publishes objective member rebates and bill credits rather than a competitive award process. A qualifying member claim is likely to be approved, although the current offering is narrower than the legacy opportunity record.",
+      "evidenceUrls": [
+        "https://www.fourcty.org/energy-efficiency/rebates/",
+        "https://www.fourcty.org/faqs/heat-pump-rebates-2/"
+      ],
+      "evidenceText": "Four County EMC currently lists member rebates or bill credits for specified qualifying appliances and heat-pump measures. Proof of purchase and measure-specific eligibility are required; not every legacy-mapped technology is currently supported.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2080",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Franklin County PUD residential electric customer.",
+        "Purchase or install a product or improvement currently listed by the residential rebate program and meet its specifications.",
+        "Contact the utility before work where the selected insulation or other measure requires advance coordination.",
+        "Submit the current application with the receipt, invoice, product information, and other required documentation within 60 days of purchase or installation.",
+        "Permit utility review or inspection when requested."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Franklin PUD publishes standard residential rebates with clear product and filing rules. An eligible customer who follows the measure-specific process and submits complete records within 60 days is likely to receive the rebate.",
+      "evidenceUrls": [
+        "https://www.franklinpud.com/programs-services/energy-efficiency/rebates-incentive-programs/"
+      ],
+      "evidenceText": "Franklin PUD currently lists rebates for qualifying ENERGY STAR laundry equipment, selected thermostats, insulation, and other measures, with an application and receipt generally due within 60 days.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1450",
+      "requiresProgramApproval": "unknown",
+      "approvalRequirements": [],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "GRU's current business incentive pages do not publish a combined heat and power rebate or application pathway matching this opportunity. Current offerings are materially different, and the solar feed-in tariff is suspended.",
+      "evidenceUrls": [
+        "https://www.gru.com/My-Business/Content/Rebates/Rebates-Incentives-for-Your-Business",
+        "https://www.gru.com/My-Business/Lower-My-Bill/Save-Energy"
+      ],
+      "evidenceText": "GRU's current business pages list natural-gas equipment incentives, net metering, and selected conservation offers, but they do not substantiate a current combined heat and power rebate. The solar feed-in tariff is identified as suspended.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3285",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Garland Power & Light customer for the installation address.",
+        "Purchase and install a measure currently listed under the EnergySaver program and meet all equipment, efficiency, contractor, and installation requirements.",
+        "Use a licensed contractor where required and obtain applicable permits and inspections.",
+        "Submit the completed claim with itemized invoices, product or AHRI information, and other required documentation within 30 days of installation.",
+        "Allow GP&L verification and apply before the current program period or available funding ends."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "EnergySaver provides published, measure-specific rebates and an administrative review process. A qualifying GP&L customer with timely documentation is likely to receive payment, subject to verification and remaining annual funds.",
+      "evidenceUrls": [
+        "https://www.gpltexas.org/save-energy-money/energysaver-program"
+      ],
+      "evidenceText": "GP&L currently lists EnergySaver rebates for qualifying HVAC, heat pumps, room air conditioners, whole-house weatherization, and commercial lighting. Claims are time-limited, documentation-based, and subject to program funding.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5858",
+      "requiresProgramApproval": "unknown",
+      "approvalRequirements": [
+        "No current solar-rebate claim form or payment criteria are published on GP&L's official program pages.",
+        "A solar installation must separately satisfy City permitting, GP&L interconnection review, final documentation, function testing, bidirectional metering, and permission-to-operate requirements."
+      ],
+      "approvalStage": "none",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "GP&L currently publishes solar installation and net-metering requirements but does not publish the named EnergySaver solar rebate. Interconnection approval does not establish a current rebate award.",
+      "evidenceUrls": [
+        "https://www.gpltexas.org/residential/solar-installation-requirements",
+        "https://www.gpltexas.org/save-energy-money/energysaver-program"
+      ],
+      "evidenceText": "The current solar page requires permitting, utility review, testing, metering, and permission to operate. The current EnergySaver rebate page does not list a solar photovoltaic rebate.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:978",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own qualifying alternative-energy property that uses a recognized nonfossil form of energy or qualifying low-emission wood or biomass technology.",
+        "Place the system in service and satisfy the current statutory definitions, use, and property-value limitations.",
+        "File the Montana Department of Revenue property-tax exemption application with ownership, location, system, installation-date, and cost documentation.",
+        "Provide additional information requested by the Department or local assessor and receive approval of the exemption claim."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Montana law provides a noncompetitive property-tax exemption for qualifying alternative-energy systems. A timely, documented application that satisfies the statutory technology and property conditions is likely to be approved after routine review.",
+      "evidenceUrls": [
+        "https://mca.legmt.gov/bills/mca/title_0150/chapter_0060/part_0020/section_0240/0150-0060-0020-0240.html",
+        "https://revenuefiles.mt.gov/files/Forms/Property_Tax_Exemption_Application_for_Installation_of_an_Alternative_Energy_System_.pdf"
+      ],
+      "evidenceText": "Current Montana law exempts specified value added by qualifying alternative-energy systems for ten years, subject to statutory caps. The Department of Revenue provides an application requiring system, ownership, location, date, and cost information.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22719",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Georgia household at or below the applicable income limit, generally no more than 150 percent of area median income.",
+        "Create and submit the required application through the State's Neighborly portal with income, identity, occupancy, ownership, and utility documentation.",
+        "Select a currently eligible electrification, appliance, wiring, insulation, or air-sealing measure and obtain program eligibility or project approval before contractor-installed work begins.",
+        "Use a program-approved contractor where required and comply with any measure-specific fuel-switching, product, and installation rules.",
+        "Submit purchase, installation, and completion records and pass final program verification while funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Georgia's HEAR program uses income and measure eligibility screening rather than competitive scoring. An eligible household that completes the required approval, contractor, documentation, and verification steps is likely to receive the applicable rebate while funds remain.",
+      "evidenceUrls": [
+        "https://energyrebates.georgia.gov/home-electrification-and-appliance-rebates",
+        "https://energyrebates.georgia.gov/eligibility",
+        "https://energyrebates.georgia.gov/how-do-i-how-apply"
+      ],
+      "evidenceText": "Georgia currently accepts HEAR applications through Neighborly and requires household-income verification, eligible products and projects, approved contractors for specified measures, and purchase and installation documentation before reimbursement.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22635",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Respond to an open Georgia Department of Transportation NEVI procurement or solicitation for an eligible charging site.",
+        "Meet current NEVI corridor, public-access, charger, uptime, payment, networking, Buy America, and other federal and State technical requirements.",
+        "Document site control, utility coordination, project readiness, eligible costs, and the required nonfederal cost share.",
+        "Submit a complete technical and financial proposal by the procurement deadline.",
+        "Receive competitive selection and execute the required State and federal funding agreements before construction."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "GDOT's current Round 2 page identifies selected developers rather than an open application intake. A future award would require a new procurement and competitive selection, so a new applicant is unlikely to receive funding under the completed round.",
+      "evidenceUrls": [
+        "https://nevi-gdot.hub.arcgis.com/pages/round2",
+        "https://www.dot.ga.gov/systems/ProjectDocuments/GANEVI/GDOT%20NEVI%20Plan.pdf",
+        "https://www.dot.ga.gov/systems/ProjectDocuments/GANEVI/Bid%20Express%20Guidance.pdf"
+      ],
+      "evidenceText": "GDOT's current Round 2 materials identify selected charging-site developers and describe a procurement-based NEVI process. No current open application window for a new Round 2 award was verified.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4656",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Georgia Power commercial customer on a qualifying business tariff.",
+        "Select equipment or a project included in the current Commercial Energy Efficiency Program and meet its technical and installation requirements.",
+        "Create the program application and obtain any project-specific eligibility review or preapproval required before commitment or installation.",
+        "Use a participating or otherwise qualified contractor where the selected measure requires one.",
+        "Complete the project and upload invoices, equipment data, W-9, and other supporting documents within 60 days of project completion.",
+        "Permit program inspection or verification and comply with funding and incentive limits."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "CEEP is a current, rule-based utility incentive program rather than a scored grant. A qualifying customer that follows any required preapproval and submits complete final documentation is likely to receive the incentive, subject to verification and funds.",
+      "evidenceUrls": [
+        "https://www.georgiapower.com/business/products-programs/efficiency-maintenance/ceep.html",
+        "https://www.georgiapower.com/content/dam/georgia-power/pdfs/programs/ceep/ceep-terms-conditions-2026.pdf"
+      ],
+      "evidenceText": "Georgia Power's current CEEP process requires an eligible business account, qualifying equipment, an application, measure-specific contractor and approval steps, project completion, and supporting documents within 60 days.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22309",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain permanent Georgia Power commercial or industrial electric service at the installation address.",
+        "Install new qualifying Level 2 or DC fast charging equipment and any required dedicated electrical infrastructure in accordance with current equipment and safety specifications.",
+        "Use a licensed contractor and obtain applicable permits and final inspections.",
+        "Optionally request preapproval or eligibility review before installation; this step is operational rather than competitive.",
+        "Submit the rebate application within six months of installation with paid invoices, charger and circuit information, permits, photographs, W-9, and other required records.",
+        "Pass Georgia Power's final review and any inspection while funds remain available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Business EV Charger Plus rebate is formula-based and does not rank applicants competitively. A qualifying installation with a timely, complete claim is likely to be paid after review, subject to program caps and available funds.",
+      "evidenceUrls": [
+        "https://www.georgiapower.com/business/products-programs/business-solutions/electric-transportation-business-programs/electric-vehicle-charger-rebate.html",
+        "https://www.georgiapower.com/content/dam/georgia-power/pdfs/business-pdfs/business-ev-charger-plus-terms-conditions.pdf"
+      ],
+      "evidenceText": "Georgia Power currently offers business charger rebates for eligible commercial accounts, qualifying new charging equipment and circuits, licensed installation, and a documented claim submitted within six months. Preapproval is available but is not a competitive selection gate.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22509",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Georgia Power residential customer and meet the current household-income limit, generally no more than 300 percent of the federal poverty guidelines.",
+        "Submit the EASE application with household, income, utility, occupancy, and property documentation.",
+        "Complete program eligibility review and an in-home energy assessment.",
+        "Obtain landlord or property-owner authorization where required.",
+        "Accept the program-approved scope and allow the assigned contractor to install the approved efficiency measures.",
+        "Complete any required final inspection, quality assurance, or closeout documentation."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "EASE follows an income-screening and home-assessment pathway rather than competitive scoring. A qualifying household is likely to receive the approved no-cost improvements, subject to assessment findings, health and safety conditions, contractor capacity, and funds.",
+      "evidenceUrls": [
+        "https://www.georgiapower.com/residential/assistance/ease.html"
+      ],
+      "evidenceText": "Georgia Power's current EASE program requires income and account eligibility, an application, an in-home assessment, an approved work scope, and installation by program contractors, with assistance generally capped per home.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3175",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Georgia Power residential customer at the installation address.",
+        "Purchase and install a measure that appears on the current Home Energy Improvement Program list and meets all product, efficiency, contractor, and installation specifications.",
+        "Use an affiliated, licensed, or otherwise qualified contractor where the selected measure requires one and obtain applicable permits or inspections.",
+        "Submit the application within 60 days of installation with paid invoices, model and serial data, AHRI or ENERGY STAR records, photographs, and other measure-specific documentation.",
+        "Permit Georgia Power verification and comply with per-home, measure, and funding limits."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "HEIP provides published, noncompetitive residential rebates. A current qualifying measure with a timely, complete claim is likely to receive payment after review, although the legacy record includes some technologies not necessarily covered by the current list.",
+      "evidenceUrls": [
+        "https://www.georgiapower.com/residential/solutions/home-solutions/heip.html",
+        "https://www.georgiapower.com/content/dam/georgia-power/pdfs/programs/heip/HEIP_Preconditions_Requirements_2026.pdf"
+      ],
+      "evidenceText": "Georgia Power's current HEIP page lists measure-specific residential rebates and requires qualifying equipment and installation, a timely application, invoices and technical records, and possible verification. Only currently listed measures qualify.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22308",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Georgia Power residential customer at a qualifying single-family home or townhome.",
+        "Install a qualifying Level 2 charger on a dedicated 208- or 240-volt circuit during the current eligible installation period.",
+        "Use a licensed electrician and obtain required permits and final inspections.",
+        "Submit the application within six months of installation with paid invoices, charger and circuit information, installation records, and other required documentation.",
+        "Pass Georgia Power review and any verification while rebate funds remain available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential charger rebate is a published, fixed incentive rather than a competitive award. An eligible customer with a compliant installation and timely documentation is likely to receive the rebate while funds remain.",
+      "evidenceUrls": [
+        "https://www.georgiapower.com/residential/solutions/electric-vehicles/ev-rebates.html",
+        "https://www.georgiapower.com/content/dam/georgia-power/pdfs/residential-pdfs/residential-ev-charger-rebate-program-terms-and-conditions.pdf"
+      ],
+      "evidenceText": "Georgia Power currently offers a residential Level 2 charger rebate for qualifying homes and installations completed in the eligible period. Claims require licensed installation, a dedicated circuit, paid invoices, and filing within six months.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-308",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Propose an eligible California distributed clean-hydrogen project with hydrogen production of no more than five metric tons per day and co-located hydrogen storage and onsite end use.",
+        "Submit a complete application through ECAMS by August 19, 2026, including the project narrative, team, scope of work, schedule, budget, metrics, commitments, and required declarations.",
+        "Demonstrate site and project readiness, eligible costs and match, environmental compliance, technical feasibility, and alignment with the solicitation's clean-hydrogen objectives.",
+        "Pass administrative screening, technical scoring, rank-order selection, and California Energy Commission approval.",
+        "Execute a grant agreement before incurring costs that require award authorization and complete all reporting, verification, and closeout requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "H2ONSITE is a competitive clean-hydrogen demonstration solicitation. The supplied retrofit mapping is standalone battery storage, while the official scope requires hydrogen production, hydrogen storage, and onsite hydrogen end use; a battery-only project is therefore unlikely to be awarded.",
+      "evidenceUrls": [
+        "https://www.energy.ca.gov/solicitations/2026-06/gfo-25-308-distributed-clean-hydrogen-production-onsite-end-use-h2onsite",
+        "https://www.energy.ca.gov/sites/default/files/2026-06/00_GFO-25-308_Solicitation_Manual_ada.docx",
+        "https://ecams.energy.ca.gov/s/login/"
+      ],
+      "evidenceText": "The active CEC solicitation closes August 19, 2026 and funds integrated distributed clean-hydrogen production, hydrogen storage, and onsite end use. It is not a general battery-storage grant and requires competitive application review and an executed agreement.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-603",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Propose eligible publicly accessible high-powered DC fast-charging stations that support light-duty electric-vehicle travel along qualifying California corridors.",
+        "Document applicant eligibility, site control, utility coordination, charger and station design, permits, environmental review, project readiness, and compliance with NEVI and federal requirements.",
+        "Provide the required 20 percent match and a complete allowable-cost budget.",
+        "Submit the complete application through ECAMS by October 16, 2026.",
+        "Pass administrative screening, technical evaluation, minimum-score requirements, and cost-per-CCS-port ranking.",
+        "Receive formal CEC approval and execute the grant agreement and any required federal authorization before funded work."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "This is a competitive, rank-ordered solicitation with substantial funding but no official success-rate denominator. A fully compliant project can be selected, but eligibility and a complete application do not make an award likely.",
+      "evidenceUrls": [
+        "https://www.energy.ca.gov/solicitations/2026-02/gfo-25-603-californias-national-electric-vehicle-infrastructure-formula",
+        "https://www.energy.ca.gov/sites/default/files/2026-07/00_GFO-25-603_Solicitation_Manual_Addendum_02_ada.docx",
+        "https://www.energy.ca.gov/sites/default/files/2026-03/GFO-25-603_NEVI_6_Pre-Application_Workshop_Slides_ADA.pdf",
+        "https://ecams.energy.ca.gov/s/login/"
+      ],
+      "evidenceText": "CEC lists GFO-25-603 as active through October 16, 2026, with up to 79 million dollars for publicly accessible high-powered DC fast charging. Applications are screened, technically evaluated, and ranked by cost per CCS port before formal approval.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-605",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible applicant proposing reliable electric charging at an eligible California school-bus site under one of the solicitation's funding lanes.",
+        "Meet the selected lane's applicant, fleet, site, charger, resilience, utility, project-readiness, cost, and match requirements.",
+        "Submit the required ECAMS application by August 31, 2026, including declarations and all lane-specific narrative, budget, site, environmental, commitment, and technical documents.",
+        "For the first-come lane, pass eligibility review while lane funds remain; for the competitive lanes, pass screening and scoring and rank within available funds.",
+        "Receive CEC approval, execute the grant agreement, and complete installation, reporting, commissioning, and verification requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "RECESS combines a narrowly eligible first-come lane with competitive lanes. Without a specified applicant, school-bus site, and lane, an award is possible but cannot be considered likely.",
+      "evidenceUrls": [
+        "https://www.energy.ca.gov/solicitations/2026-04/gfo-25-605-reliable-electric-charging-eligible-school-bus-sites-recess",
+        "https://www.energy.ca.gov/sites/default/files/2026-06/00_GFO-25-605%20Solicitation_Manual_Addendum_02_ada.docx",
+        "https://ecams.energy.ca.gov/s/login/"
+      ],
+      "evidenceText": "CEC lists RECESS as active through August 31, 2026 for eligible school-bus charging sites. Award treatment depends on the funding lane, with lane-specific eligibility, application, review, agreement, and verification requirements.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-607",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Propose an eligible California hydrogen-refueling infrastructure project serving on-road fuel-cell electric vehicles.",
+        "Meet the solicitation's applicant, site, station, renewable-hydrogen, capacity, cost, match, permitting, and project-readiness requirements.",
+        "Submit the complete application through ECAMS by July 20, 2026, including the narrative, scope, schedule, budget, site and readiness documentation, commitments, environmental materials, and declarations.",
+        "Pass administrative screening, technical scoring, rank-order selection, and formal CEC approval.",
+        "Execute the grant agreement before award-dependent work and complete construction, commissioning, reporting, and verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "HIPO is an active but narrowly scoped competitive grant for hydrogen refueling stations. The supplied generic fuel-cell-system and EV-charger mappings do not establish an eligible hydrogen-refueling project, so an award under the mapped retrofit record is unlikely.",
+      "evidenceUrls": [
+        "https://www.energy.ca.gov/solicitations/2026-04/gfo-25-607-clean-transportation-program-hydrogen-infrastructure-project",
+        "https://www.energy.ca.gov/sites/default/files/2026-06/GFO-25-607_Solicitation_Manual_Addendum_02_ada.docx",
+        "https://ecams.energy.ca.gov/s/login/"
+      ],
+      "evidenceText": "The active CEC solicitation closes July 20, 2026 and is limited to hydrogen-refueling infrastructure for on-road fuel-cell electric vehicles. It is competitive and does not fund an ordinary fuel-cell system or electric-vehicle charger merely because those technologies are related to clean transportation.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-608",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible entity proposing a California EV HOME program project that connects residents with electric-vehicle information, incentives, home-charging facilitation, outreach, messaging, or other eligible program services.",
+        "Submit a complete ECAMS application by August 18, 2026 with the narrative, team and resumes, scope of work, schedule, budget, past performance, commitments, environmental information, and declarations.",
+        "Meet the solicitation's applicant, project, eligible-cost, match, management, community-engagement, and performance requirements.",
+        "Pass administrative screening, achieve the required technical score, and rank within the available funding.",
+        "Receive formal CEC approval, execute the grant agreement, and complete all implementation, reporting, and verification requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "EV HOME is a scored competitive grant for program administrators, not a direct per-charger rebate. Eligible, high-scoring proposals may be awarded, but the official materials provide no defensible success rate and submission alone does not assure selection.",
+      "evidenceUrls": [
+        "https://www.energy.ca.gov/solicitations/2026-05/gfo-25-608-electric-vehicle-hub-outreach-messaging-and-equipment-ev-home",
+        "https://www.energy.ca.gov/sites/default/files/2026-05/00_GFO-25-608_Att_00_Solicitation_Manual_ada.docx",
+        "https://www.energy.ca.gov/sites/default/files/2026-06/GFO-25-608_Pre-Application_Workshop_ada.pdf",
+        "https://ecams.energy.ca.gov/s/login/"
+      ],
+      "evidenceText": "CEC lists EV HOME as active through August 18, 2026, with up to 10 million dollars for competitive EV adoption, outreach, navigation, and home-charging facilitation projects. Proposals must pass screening, scoring, ranking, and formal award approval.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_CA_ENERGY_COMMISSION:cec_solicitation_number:GFO-25-902",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Apply for and receive or be selected for an award under an eligible federal geothermal-energy funding opportunity identified by the CEC solicitation.",
+        "Demonstrate that the applicant, California project, federal award, and requested State cost share satisfy the applicable category and timing requirements.",
+        "Submit the required ECAMS application by the category-specific deadline with the federal application or award records, narrative, team, scope, schedules, budgets, commitments, feasibility documentation, environmental materials, and declarations.",
+        "Pass CEC eligibility and technical review and receive formal funding approval.",
+        "Execute the CEC grant agreement and comply with both federal and State cost-share, reporting, environmental, and closeout requirements."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "The opportunity requires an eligible federal geothermal award before State cost-share approval. The supplied record only identifies a generic ground-source heat-pump retrofit and provides no federal funding opportunity, federal award, or project-category evidence, so award likelihood cannot be established.",
+      "evidenceUrls": [
+        "https://www.energy.ca.gov/solicitations/2026-06/gfo-25-902-cost-share-federal-geothermal-energy-funding-opportunities",
+        "https://www.energy.ca.gov/sites/default/files/2026-06/00_GFO-25-902_Solicitation_Manual_Addendum_01_ada.docx",
+        "https://ecams.energy.ca.gov/s/login/"
+      ],
+      "evidenceText": "GFO-25-902 provides State cost share only for applicants tied to specified federal geothermal funding opportunities. Current official materials do not establish that an ordinary building ground-source heat-pump project qualifies without an eligible federal application and award.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "needs_evidence"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22280",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Glendale Water and Power customer for the residential, multifamily, or commercial charger pathway.",
+        "Purchase and install new qualifying Level 2 or other currently eligible charging equipment that meets electrical-safety and program specifications.",
+        "Use a licensed electrical contractor and obtain required permits and final inspection approval.",
+        "For residential claims, submit the application within six months with itemized receipts, charger and installation photographs, vehicle documentation, permit records, W-9, and other required information.",
+        "For applicable multifamily or commercial projects, obtain any available reservation before completion or submit the final claim within the stated period.",
+        "Permit GWP inspection or verification and apply while first-come program funds remain."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "GWP currently publishes objective charger-rebate requirements for eligible customers. A compliant project with a timely, complete submission is likely to receive the rebate, subject to program caps, verification, and available funds.",
+      "evidenceUrls": [
+        "https://www.glendaleca.gov/government/departments/glendale-water-and-power/electric-vehicles",
+        "https://www.glendaleca.gov/home/showpublisheddocument/71835/638664140234770000",
+        "https://www.glendaleca.gov/home/showpublisheddocument/75578/638566528342430000"
+      ],
+      "evidenceText": "GWP currently offers residential and nonresidential EV-charging rebates with customer, charger, licensed-installation, permit, invoice, photograph, vehicle, timing, and verification requirements. Funding is first-come and limited.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1689",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Glendale Water and Power residential customer and install the product at the served residence.",
+        "Purchase and install a product or measure that is listed in the current Smart Home Rebate Program and meets all ENERGY STAR, WaterSense, efficiency, model, and installation requirements.",
+        "Apply within 12 months of purchase or installation using the current rebate process.",
+        "Submit itemized receipts or invoices and all measure-specific labels, model information, AHRI records, photographs, permit records, and contractor documentation.",
+        "Comply with household, product-quantity, cost, and program-funding limits and permit GWP verification or inspection."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Smart Home program uses published, noncompetitive product rebates. An eligible customer with a currently listed product and complete documentation is likely to receive payment, although the legacy opportunity mapping is broader than the current measure list.",
+      "evidenceUrls": [
+        "https://www.glendaleca.gov/government/departments/glendale-water-and-power/residential-customers/residential-programs/smart-home-rebate-program"
+      ],
+      "evidenceText": "GWP's current Smart Home program publishes measure-specific residential rebates effective November 1, 2025 and requires a qualifying customer and product, timely filing, receipts and technical records, and compliance with program limits and verification rules.",
+      "reviewedAt": "2026-07-10T14:20:55Z",
+      "reviewStatus": "audited"
+    }
+  ]
 }
