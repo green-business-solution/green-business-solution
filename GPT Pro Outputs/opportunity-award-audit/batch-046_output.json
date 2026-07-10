@@ -1,0 +1,539 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-046",
+  "inputFile": "batch-046_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T15:18:35Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Own or occupy Arizona property where an existing fireplace is converted to a qualifying wood stove, wood fireplace, or gas-fired fireplace.",
+        "Use equipment that satisfies the applicable federal, state, or local performance requirements for the claimed conversion.",
+        "Claim only qualifying conversion costs, subject to the statutory 500-dollar maximum, and exclude taxes, interest, and finance charges.",
+        "Retain invoices and other records sufficient to substantiate the deduction if the Arizona Department of Revenue reviews the return."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "This is a statutory deduction rather than a discretionary award. A taxpayer completing the specifically qualifying fireplace conversion and retaining adequate substantiation should receive the deduction through ordinary return processing; a general HVAC replacement that is not such a conversion does not qualify.",
+      "evidenceUrls": [
+        "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2025_140Booklet.pdf",
+        "https://azdor.gov/sites/default/files/document/FORMS_INDIVIDUAL_2025_140i.pdf"
+      ],
+      "evidenceText": "Arizona's current individual-return instructions allow a deduction of up to 500 dollars for converting an existing fireplace to specified qualifying wood- or gas-fired equipment and require supporting records.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4785",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Enbridge Gas Wyoming commercial customer with an active meter on a qualifying general-service rate.",
+        "Purchase and install a new business measure that meets the current ThermWise equipment, efficiency, installation, and customer specifications.",
+        "Use the applicable Wyoming application and submit the signed form with invoices, equipment data, and proof of installation after completion.",
+        "Obtain project-specific review or approval before purchase when the selected custom or specialized pathway requires it.",
+        "Complete any inspection, records review, or other verification requested by Enbridge Gas."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "ThermWise publishes prescriptive business rebates with objective customer, equipment, installation, and documentation requirements. A complete qualifying Wyoming claim is likely to be paid after review, while custom or specialized measures remain subject to advance project approval and available program funding.",
+      "evidenceUrls": [
+        "https://www.enbridgegas.com/utwyid/save-money/thermwise/business-rebates",
+        "https://www.enbridgegas.com/utwyid/save-money/thermwise"
+      ],
+      "evidenceText": "Current ThermWise business materials cover Wyoming commercial HVAC, water-heating, controls, weatherization, foodservice, laundry, and related measures and require eligible service, qualifying installation, a signed application, supporting documents, and possible verification.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4786",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Construct an eligible residential property served by Enbridge Gas in Wyoming.",
+        "Install qualifying high-efficiency gas equipment or satisfy an eligible whole-home or builder-program standard.",
+        "Submit the applicable Wyoming builder application, worksheets, IRS Form W-9, invoices, ratings, and other required supporting records.",
+        "File the rebate request within six months after gas service is turned on.",
+        "Coordinate multifamily projects, inspections, or third-party rating requirements with the program when applicable."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The active builder program states clear construction, equipment, documentation, and filing requirements rather than competitive scoring. A conforming Wyoming project submitted within the stated period is likely to receive the published rebate after administrative review.",
+      "evidenceUrls": [
+        "https://www.enbridgegas.com/utwyid/save-money/thermwise/builder-rebates",
+        "https://www.enbridgegas.com/utwyid/save-money/thermwise"
+      ],
+      "evidenceText": "Current ThermWise builder materials provide Wyoming application routes for qualifying new homes and equipment and require supporting documents and filing within six months of gas-service turn-on.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4774",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Enbridge Gas residential customer in Wyoming.",
+        "Purchase and install a currently qualifying appliance, HVAC, control, or weatherization measure that meets the published specifications.",
+        "Use a ThermWise-authorized contractor for air sealing, duct work, insulation, or other measures where the current rules require one.",
+        "Complete any required multifamily pre-qualification inspection before applicable weatherization work.",
+        "Submit the Wyoming rebate application with purchase, equipment, contractor, and installation documentation and satisfy any verification request."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "ThermWise residential rebates are generally prescriptive and rule-based. An eligible customer with a qualifying completed measure, the required contractor or pre-inspection, and a complete claim is likely to receive payment after review.",
+      "evidenceUrls": [
+        "https://www.enbridgegas.com/utwyid/save-money/thermwise/appliance-rebates",
+        "https://www.enbridgegas.com/utwyid/save-money/thermwise/weatherization-rebates",
+        "https://www.enbridgegas.com/utwyid/save-money/thermwise"
+      ],
+      "evidenceText": "Current Wyoming ThermWise pages list eligible residential equipment and weatherization measures, application paths, authorized-contractor conditions, multifamily inspection rules, documentation, and verification requirements.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22437",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Randolph Electric Membership Corporation member and qualify for membership in ElecTel Cooperative Federal Credit Union.",
+        "Use the financing for an eligible owner-occupied residential energy-efficiency improvement such as qualifying HVAC or insulation work.",
+        "Submit the loan application with the project proposal, contractor information, cost records, and any other required documentation.",
+        "Pass ElecTel's borrower-specific credit, income, debt, identity, and other underwriting requirements.",
+        "Accept the approved loan terms and complete the financing documents before funds are disbursed."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program provides a defined efficiency-loan pathway, but financing is not an entitlement. Approval depends on ElecTel membership, borrower creditworthiness, project eligibility, documentation, and the lender's final underwriting decision.",
+      "evidenceUrls": [
+        "https://www.randolphemc.com/energy-solutions/save-energy-money/electel-credit-unit-financing/",
+        "https://electel.org/apply/energy-efficient-loans/",
+        "https://electel.org/join-now/who-can-join/"
+      ],
+      "evidenceText": "Randolph EMC directs members to ElecTel financing for eligible home energy improvements. ElecTel requires membership, a loan application, project information, and credit underwriting before financing is approved.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4595",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Reading Municipal Light Department nonresidential customer and install the project at an RMLD-served facility.",
+        "Use a currently supported commercial heat-pump or custom efficiency pathway and meet its technical, retrofit, cost, and customer requirements.",
+        "Submit the project scope, equipment specifications, savings calculations, contractor information, and other required materials and obtain RMLD's written preapproval before installation where required.",
+        "Use licensed contractors, permits, and code-compliant installation where required.",
+        "After completion, submit final invoices, photographs, commissioning or performance records, and permit documentation and allow RMLD inspection or verification.",
+        "Confirm a separate current pathway for any general LED lighting retrofit because the current custom rebate expressly excludes lighting fixtures, luminaires, and lamps; the listed LED offer is limited to municipal holiday lighting."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current RMLD programs provide rule-based custom HVAC and commercial heat-pump rebates, so a qualifying mapped HVAC project is likely to be paid after required preapproval and final verification. The broad LED-lighting mapping is not supported by the current custom program and needs separate confirmation.",
+      "evidenceUrls": [
+        "https://www.rmld.com/195/Commercial-Custom-Rebate",
+        "https://www.rmld.com/313/Commercial-Heat-Pump-Rebate",
+        "https://www.rmld.com/207/Commercial-Rebates"
+      ],
+      "evidenceText": "RMLD currently offers commercial custom and heat-pump rebates with written preapproval, technical documentation, and final inspection. The custom program excludes lighting fixtures, luminaires, and lamps; the commercial list shows only a municipal holiday-lighting LED offer.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4605",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible RMLD residential or qualifying small-commercial customer at the proposed solar site.",
+        "Propose a new grid-connected photovoltaic system within the applicable program size and ownership limits.",
+        "Submit the distributed-generation or interconnection application and obtain RMLD approval before installation.",
+        "Use qualifying equipment and licensed installers and obtain required electrical, building, and local permits.",
+        "Complete construction, inspection, metering, permission-to-operate, and final rebate documentation within the program deadlines."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The solar rebate follows a defined interconnection, construction, inspection, and claim process rather than competitive ranking. An eligible system that obtains advance approval and satisfies the final technical and documentation requirements is likely to receive the applicable rebate, subject to current caps and funds.",
+      "evidenceUrls": [
+        "https://www.rmld.com/189/Residential-Small-Commercial-Solar-Rebat",
+        "https://www.rmld.com/194/Commercial-Solar-Rebate-20-kW",
+        "https://www.rmld.com/199/Solar-Resources"
+      ],
+      "evidenceText": "RMLD's current renewable-generation materials require advance interconnection review, qualifying grid-connected solar equipment, permits and inspections, permission to operate, and final rebate records.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1829",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Install the project at an eligible primary residence in RMLD territory.",
+        "Use a qualifying whole-home air-source, ground-source, or other currently supported heat-pump system meeting the applicable sizing and performance requirements.",
+        "Complete qualifying weatherization through the approved Abode pathway or document prior qualifying air sealing and insulation where the current heat-pump rules require it.",
+        "Provide Manual J or other required design records, contractor proposals, equipment data, and any fossil-fuel-system disconnection or retention attestation.",
+        "Obtain program approval and submit final invoices, permits, installation records, and verification documentation without claiming a prohibited duplicate incentive."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "RMLD's residential heat-pump and weatherization pathway uses published technical, contractor, sequencing, and documentation rules. A qualifying household that follows the required approval process and completes the verified work is likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://www.rmld.com/188/Heat-Pump-Rebate-or-0-Interest-Loan"
+      ],
+      "evidenceText": "The current RMLD heat-pump offering links incentives to qualifying whole-home systems, load calculations, approved weatherization or documented prior work, contractor and permit records, and final program verification.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:recharge-rebate",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible California commercial customer or business acquiring a qualifying Class 4 through Class 6 vehicle conversion under the current ReCharge program.",
+        "Use a California Air Resources Board-authorized electric conversion kit and a participating retailer or converter.",
+        "Satisfy the applicable SCE-territory, charging, business-size, vehicle-use, community-location, and ownership requirements.",
+        "Provide the retailer or program administrator the customer, vehicle, conversion, registration, account, and other claim documentation.",
+        "Pass program validation so the participating retailer can apply the approved rebate to the qualifying vehicle transaction."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current ReCharge Rebate supports qualifying medium-duty commercial vehicle conversions. It does not provide a standalone incentive for purchasing or installing EV charging equipment, so the mapped charger retrofit is unlikely to receive an award from this opportunity.",
+      "evidenceUrls": [
+        "https://www.sce.com/business/smart-energy-solar/evs-for-business",
+        "https://commercialevrebates.sce.com/consumer/recharge",
+        "https://commercialevrebates.sce.com/consumer/pdf/Commercial_EV_Rebates_Program_Customer_Terms_and_Conditions.pdf"
+      ],
+      "evidenceText": "Current SCE materials describe a participating-retailer rebate for qualifying Class 4 through Class 6 commercial vehicles converted to electric drive. The program benefit is tied to the vehicle conversion, not charger installation.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3066",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Red River Valley Rural Electric Cooperative member.",
+        "Use the loan for a qualifying air-source, ground-source, or other approved heat-pump installation at the cooperative-served property.",
+        "Submit the credit application, contractor proposal or bid, equipment information, and other project documentation before financing.",
+        "Pass the cooperative's credit review and satisfy any collateral, security-interest, lien, insurance, or notarization requirements.",
+        "Execute the approved loan documents and provide final invoices or completion records before disbursement or account settlement."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The cooperative offers a defined heat-pump financing route, but loan approval depends on member credit, project eligibility, documentation, security requirements, and final execution of the financing documents.",
+      "evidenceUrls": [
+        "https://rrvrea.com/member-services-ps"
+      ],
+      "evidenceText": "Red River Valley REA's current member-services materials describe heat-pump financing that requires a member credit application, project documentation, cooperative approval, loan and security documents, and final installation records.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22526",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Submit Redding Electric Utility's EV Charging Project Information Form for the proposed commercial charging project.",
+        "Provide site plans, a one-line diagram, charging-equipment specifications, anticipated load, operating profile, and other requested project information.",
+        "Obtain REU project approval before applying for the electrical permit or beginning construction.",
+        "Complete any required distribution-system study, utility design, service upgrade, permitting, installation, and inspection requirements.",
+        "After an eligible installation, submit the applicable incentive request and final cost, equipment, inspection, and commissioning records."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "The current official page establishes a mandatory utility review and post-installation incentive step, but it does not publish the current incentive schedule, available funding, or complete award criteria. The probability of receiving a charger incentive cannot be determined from the accessible official evidence.",
+      "evidenceUrls": [
+        "https://www.cityofredding.gov/government/departments/redding_electric_utility/going_green/commercial_ev_charging_program.php"
+      ],
+      "evidenceText": "REU requires commercial EV charging projects to be reviewed and approved before permitting and directs completed eligible projects to an incentive application. Current payment amounts and complete award terms were not available on the reviewed page.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "needs_evidence"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2584",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Redwood Falls Public Utilities commercial or industrial customer and install the measure at the served facility.",
+        "Use the current 2026 business rebate form for qualifying lighting, HVAC, heat-pump, refrigeration, foodservice, aerosol-sealing, custom, or other supported work.",
+        "Meet the measure-specific equipment, efficiency, installation, cost, and customer requirements.",
+        "Obtain advance approval for custom or other project-reviewed measures when the applicable form requires it.",
+        "Submit invoices, model and specification records, contractor information, savings calculations, and other requested documents and permit inspection or verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The city and its Bright Energy Solutions administrator publish current business rebate forms across the mapped efficiency categories. These incentives are generally prescriptive or project-reviewed rather than competitively scored, so a complete qualifying project is likely to receive payment after any required advance review and verification.",
+      "evidenceUrls": [
+        "https://ci.redwood-falls.mn.us/public-utilities/energy-star-rebates/",
+        "https://smmpa.com/members/redwood-falls"
+      ],
+      "evidenceText": "Current Redwood Falls materials provide 2026 business applications for lighting, cooling and heat pumps, ground-source systems, refrigeration, foodservice, aerosol sealing, and custom efficiency projects, with measure-specific documentation and approval rules.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2582",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Redwood Falls Public Utilities residential customer and install the measure at the served residence.",
+        "Select a product or project covered by a current residential rebate form, such as qualifying cooling equipment, ENERGY STAR products, EV charging equipment, furnace-fan motors, or aerosol sealing.",
+        "Meet the applicable product, efficiency, installation, account, and timing requirements.",
+        "Submit the current application with the paid invoice or receipt, product model and certification information, and any required contractor or inspection records.",
+        "Complete program review and any requested verification while the applicable offer remains available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Current official materials substantiate several residential rebates, including cooling, selected ENERGY STAR products, EV charging, furnace-fan motors, and aerosol sealing. They do not verify every broad retrofit category mapped to the legacy opportunity, so an award is possible only for a measure covered by the current forms.",
+      "evidenceUrls": [
+        "https://ci.redwood-falls.mn.us/public-utilities/energy-star-rebates/",
+        "https://smmpa.com/members/redwood-falls"
+      ],
+      "evidenceText": "Redwood Falls currently posts 2026 residential rebate forms for selected products and projects, but the reviewed materials do not confirm every legacy-mapped HVAC, geothermal, refrigeration, water-heating, and foodservice category.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4450",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Purchase qualifying bioheating fuel used for space heating or hot-water production in a residential building located in New York.",
+        "Use fuel containing at least six percent biodiesel and determine the eligible credit from the gallons purchased and biodiesel blend percentage, subject to the statutory per-gallon limit.",
+        "Retain invoices showing the purchase date, number of gallons, biodiesel percentage, and other information needed to substantiate the credit.",
+        "Complete Form CT-241 and claim the refundable credit with the applicable New York corporation tax return."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current credit is based on purchases of qualifying bioheating fuel, not on installing windows or a biomass or biogas energy system. Those mapped capital retrofits therefore are unlikely to receive an award from this opportunity.",
+      "evidenceUrls": [
+        "https://www.tax.ny.gov/pit/credits/clean_heating_fuel_credit.htm",
+        "https://www.tax.ny.gov/pdf/current_forms/ct/ct241i.pdf",
+        "https://www.tax.ny.gov/pdf/current_forms/ct/ct241.pdf"
+      ],
+      "evidenceText": "New York's current corporate credit is calculated from qualifying biodiesel-blended heating-fuel purchases for residential heating and is claimed on Form CT-241. It is not an equipment or building-envelope incentive.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:734",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Own or otherwise qualify to claim the federal clean-electricity production credit for a qualifying electricity-generating facility placed in service after 2024.",
+        "Use a facility whose electricity has a qualifying greenhouse-gas emissions rate and satisfy the applicable construction, placed-in-service, ownership, sale, metering, and related-party rules.",
+        "Measure eligible electricity produced and sold to an unrelated person or otherwise used in a qualifying metered transaction under the current rules.",
+        "Satisfy prevailing-wage, apprenticeship, domestic-content, energy-community, or other adjustment requirements when claiming the corresponding enhanced amount.",
+        "File Form 7211 and Form 3800 with the federal return and complete IRS pre-filing registration when using elective payment or credit transfer."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current successor production credit applies to electricity generated by a qualifying zero-emissions facility. A ground-source heat pump or battery installation does not independently qualify, and combined heat and power or biomass equipment qualifies only if the resulting facility satisfies the federal generation and emissions rules. The broad mapped retrofit record is therefore unlikely to produce a credit.",
+      "evidenceUrls": [
+        "https://www.irs.gov/credits-deductions/clean-electricity-production-credit",
+        "https://www.irs.gov/forms-pubs/about-form-7211",
+        "https://www.irs.gov/pub/irs-pdf/i7211.pdf",
+        "https://www.irs.gov/instructions/i3800"
+      ],
+      "evidenceText": "Current IRS guidance treats the clean-electricity production credit as a tax credit for measured electricity from qualifying low- or zero-emissions generating facilities, with annual tax forms and pre-filing registration for transfer or elective payment.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3567",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Illinois borrower or property owner proposing a qualifying renewable-energy or energy-efficiency project.",
+        "Submit the Illinois Finance Authority application with the borrower, site, technology, project-cost, financing, environmental, and development information required for the selected bond or C-PACE pathway.",
+        "Secure a participating lender, bond purchaser, or capital provider willing to underwrite and finance the project.",
+        "For C-PACE, locate the property in an established program area and satisfy assessment, mortgage-holder consent, contractor, savings, and local-program requirements.",
+        "Receive all required IFA staff, board, lender, local-government, and closing approvals before financing proceeds are available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "IFA can facilitate financing for eligible renewable and efficiency projects, but financing depends on project structure, private-capital underwriting, statutory eligibility, local C-PACE availability where used, and formal authority and closing approvals. Eligibility alone does not assure financing.",
+      "evidenceUrls": [
+        "https://www.il-fa.com/programs/private-activity-bonds/",
+        "https://www.il-fa.com/programs/c-pace/",
+        "https://www.il-fa.com/programs/"
+      ],
+      "evidenceText": "Current IFA materials provide private-activity bond and C-PACE routes for qualifying capital projects. Both require project applications, third-party financing, eligibility and legal review, formal approvals, and completed closing documents.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22419",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Own qualifying renewable-energy-resource property within the statutory capacity limit at the South Carolina property.",
+        "Use an energy-storage system that satisfies the statutory definition and is integrated with or located as required in relation to the qualifying renewable-energy property.",
+        "Meet applicable safety, performance, electrical, interconnection, and installation requirements.",
+        "Provide the local assessor any ownership, capacity, equipment, location, or interconnection records needed to apply the exemption."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The exemption is statutory for qualifying small renewable-energy property and associated energy storage, but the current law does not establish that every standalone battery installation qualifies. A battery integrated with qualifying renewable property may receive the exemption; a generic standalone storage retrofit may not.",
+      "evidenceUrls": [
+        "https://www.scstatehouse.gov/code/t12c037.php"
+      ],
+      "evidenceText": "South Carolina law exempts specified small renewable-energy-resource property and qualifying associated energy storage from property taxation. Applicability depends on the statutory capacity, system relationship, and property definitions.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:145",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Purchase equipment directly relating to a qualifying solar, wind-powered, or heat-pump system used for the energy needs of the purchaser's principal residence in Massachusetts.",
+        "Ensure the purchased property is within the statutory equipment exemption rather than a general HVAC product unrelated to a qualifying heat-pump system.",
+        "Provide the seller a properly completed Form ST-12 or other documentation when the vendor requires an exempt-use certificate.",
+        "Retain invoices, system information, and exemption records in case the Massachusetts Department of Revenue reviews the transaction."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The sales-tax exemption is statutory and directly covers qualifying residential heat-pump equipment, including ground-source systems. A documented qualifying purchase is likely to receive exempt treatment at the point of sale; an ordinary non-heat-pump HVAC replacement is outside the exemption.",
+      "evidenceUrls": [
+        "https://www.mass.gov/guides/sales-and-use-tax",
+        "https://www.mass.gov/doc/form-st-12-exempt-use-certificate/download",
+        "https://budget.digital.mass.gov/govbudget/fy25/tax-expenditure-budget/sales-tax/exemptions-for-specified-uses-of-products-services/3-405/"
+      ],
+      "evidenceText": "Massachusetts exempts equipment directly related to qualifying residential solar, wind, and heat-pump systems. Vendors may require Form ST-12 to document the exempt use.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5422",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Develop a new or expanded South Dakota facility with at least 20 million dollars in project costs, or a qualifying equipment-upgrade project with at least 2 million dollars in equipment costs.",
+        "Submit the Reinvestment Payment Program application with project costs, sales-and-use-tax estimates, financing, employment, economic-impact, schedule, permitting, and community information.",
+        "Demonstrate that the payment is instrumental to the project proceeding in South Dakota.",
+        "Receive a discretionary award recommendation and approval from the South Dakota Board of Economic Development.",
+        "Complete the approved project and provide final eligible-cost and tax-payment documentation before reimbursement."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "The current reimbursement program is limited to very large facilities or multimillion-dollar equipment upgrades and requires a discretionary economic-development award. A typical small-wind retrofit is far below the minimum project thresholds, so an award for the mapped project is rare.",
+      "evidenceUrls": [
+        "https://sdgoed.com/program/rpp/",
+        "https://sdgoed.com/wp-content/uploads/2025/04/RPP-Application-4.09.2025.pdf",
+        "https://sdgoed.com/wp-content/uploads/2026/02/Public-Records-RPP-CY2025.pdf"
+      ],
+      "evidenceText": "South Dakota's current Reinvestment Payment Program requires at least 20 million dollars in new-facility project costs or 2 million dollars in qualifying equipment upgrades, a detailed application, proof the incentive is instrumental, board approval, and final tax verification.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3080",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an applicant type eligible under the current Alaska Renewable Energy Fund request for applications.",
+        "Propose a qualifying renewable heat or electricity project that provides public or community benefit in Alaska.",
+        "Submit a complete application with resource, engineering, site-control, permitting, environmental, schedule, budget, match, economic, operations, and applicant-capacity information.",
+        "Pass Alaska Energy Authority eligibility, technical, economic, benefit, readiness, and risk evaluation and rank sufficiently for recommendation.",
+        "Receive legislative appropriation and any required executive concurrence, then execute and comply with the grant agreement."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The Renewable Energy Fund uses a competitive multi-stage evaluation and recommendations are funded only through legislative appropriation. Qualifying geothermal or biomass projects may be selected, but application eligibility and technical merit do not assure an award.",
+      "evidenceUrls": [
+        "https://www.akenergyauthority.org/REF",
+        "https://www.akenergyauthority.org/Portals/0/What%20We%20Do/Grants%20%26%20Loans/Renewable%20Energy%20Fund/REF%20Round%2018%20Request%20for%20Applications%20-%20FINAL_1.pdf?ver=pHP_cmULvfTQnchowd5gLA%3D%3D"
+      ],
+      "evidenceText": "AEA's current fund process accepts eligible renewable heat and power proposals, conducts technical and economic evaluation and ranking, recommends projects, and depends on legislative appropriation before grant agreements are issued.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5523",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Develop an eligible Rhode Island distributed-generation project using a currently qualifying technology such as solar photovoltaic, wind, small hydropower, or anaerobic digestion.",
+        "Meet the applicable project-size, site-control, interconnection, equipment, metering, permitting, and tariff requirements.",
+        "Submit the Renewable Energy Growth application, tax documentation, technical records, and any required installer or applicant training materials.",
+        "For small-scale projects, apply while the applicable first-come enrollment block remains open; for commercial-scale projects, apply during an open enrollment and obtain a capacity award.",
+        "Complete installation, utility inspection, permission to operate, metering, and final enrollment requirements before performance payments begin."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program offers defined enrollment routes, but availability depends on technology, project scale, annual capacity blocks, interconnection, and, for commercial projects, selection during an open enrollment. Rooftop solar or qualifying anaerobic digestion may receive an award; a monitoring system alone does not.",
+      "evidenceUrls": [
+        "https://energy.ri.gov/renewable-energy/wind/renewable-energy-growth-program-reg-program",
+        "https://ripuc.ri.gov/Docket-25-52-REG",
+        "https://energy.ri.gov/incentives"
+      ],
+      "evidenceText": "Rhode Island's current Renewable Energy Growth framework supports qualifying distributed-generation technologies through tariff enrollment, with first-come small-project capacity and open-enrollment selection for larger projects, followed by interconnection and operating verification.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5396",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have become eligible for South Carolina's clean-energy-manufacturing credit no later than the tax year ending December 31, 2020.",
+        "Operate a qualifying South Carolina manufacturing facility for clean-energy systems or components and satisfy the legacy minimum investment and high-wage job-creation requirements.",
+        "Notify the South Carolina Department of Revenue of the intent to claim the credit and submit the prior-year qualifying-expense certification request by the statutory deadline.",
+        "Receive Department of Revenue certification and allocation of the qualifying expenditures before claiming the credit.",
+        "Observe the 500,000-dollar annual and 5-million-dollar aggregate caps and use any unused certified credit within the 15-year carryforward period."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "The statute closed new eligibility after tax years ending December 31, 2020 and applies to large clean-energy manufacturers, not ordinary geothermal or battery retrofit purchasers. Only a legacy qualifying manufacturer with certified expenditures or an unused carryforward has a plausible claim, making a new mapped retrofit award rare.",
+      "evidenceUrls": [
+        "https://www.scstatehouse.gov/code/t12c006.php"
+      ],
+      "evidenceText": "South Carolina Code Section 12-6-3588 limits the credit to qualifying clean-energy manufacturers that became eligible by December 31, 2020, requires substantial investment and high-wage jobs, and uses Department of Revenue expense certification with annual, aggregate, and carryforward limits.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1237",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Purchase a product or component specifically included in Rhode Island's renewable-energy sales-and-use-tax exemption, such as qualifying geothermal heat-pump equipment or solar-thermal collector equipment.",
+        "Ensure components are manufacturer-specified or sold for incorporation into the qualifying exempt system under the applicable tax guidance.",
+        "Provide the vendor a properly completed exemption certificate or other required documentation at the time of purchase or when claiming a use-tax exemption.",
+        "Retain invoices, product specifications, and exemption records sufficient to substantiate the transaction."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The exemption is statutory and current tax guidance expressly supports qualifying geothermal and solar-thermal equipment. A properly documented eligible purchase is likely to receive exempt treatment; a generic high-efficiency HVAC product that is not part of a listed renewable system does not qualify.",
+      "evidenceUrls": [
+        "https://tax.ri.gov/guidance/declaratory-rulings/ruling-request-no-2018-01",
+        "https://tax.ri.gov/guidance/declaratory-rulings/ruling-request-no-2019-02",
+        "https://tax.ri.gov/sites/g/files/xkgbur541/files/2021-09/exemption-certificate.pdf"
+      ],
+      "evidenceText": "Rhode Island tax guidance applies the renewable-products exemption to qualifying geothermal heat-pump and solar-thermal equipment and explains component and exemption-certificate documentation requirements.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5754",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Pennsylvania applicant proposing a qualifying geothermal or wind project.",
+        "Submit the Commonwealth Financing Authority application before making a disqualifying project commitment and include the required fee and matching contribution.",
+        "Provide site control, project scope, engineering, energy-production or savings, permits, environmental, budget, financing, ownership, and applicant financial documentation.",
+        "Pass technical, financial, legal, and program review and receive Commonwealth Financing Authority board approval.",
+        "For a loan, satisfy underwriting and security requirements; for any award, execute the agreement and comply with construction, reimbursement, reporting, and verification terms."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current program provides grants and loans for eligible geothermal and wind projects, but awards are discretionary and depend on complete project review, match, funding, and CFA board action. Ground-source geothermal may fit; a generic HVAC or air-source heat-pump replacement does not qualify merely by being efficient.",
+      "evidenceUrls": [
+        "https://dced.pa.gov/programs/renewable-energy-program-rep-geothermal-wind-projects/",
+        "https://dced.pa.gov/programs-funding/commonwealth-financing-authority-cfa/energy-programs/"
+      ],
+      "evidenceText": "Pennsylvania's current Renewable Energy Program is limited to qualifying geothermal and wind projects and requires a pre-project CFA application, match, technical and financial documentation, board approval, and award or loan closing conditions.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2388",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Own property that qualifies under Colorado's current renewable-energy generation facility, renewable-energy personal property, or applicable assessment rules.",
+        "Provide the state or local assessor any required declaration, ownership, cost, capacity, production, operating, and placed-in-service information.",
+        "Comply with the applicable centrally assessed or locally assessed filing schedule and any permit or assessor-notification requirements.",
+        "Use the ordinary protest or appeal process if the statutory valuation is disputed.",
+        "Do not treat a ground-source building HVAC heat pump as a geothermal generation facility unless the assessor confirms a separate qualifying statutory category."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "This is a statutory assessment framework rather than a rebate or grant. Qualifying solar or biomass generation property may receive the prescribed valuation or exemption treatment, but the current source does not support the mapped ground-source HVAC category and not every rooftop system is treated identically, so the mapped benefit is only possible.",
+      "evidenceUrls": [
+        "https://dpt.colorado.gov/renewable-energy",
+        "https://leg.colorado.gov/sites/default/files/images/olls/crs2024-title-39.pdf",
+        "https://www.denvergov.org/files/assets/public/v/1/finance/documents/assessor/2025/ds-058-renewable-energy-property-declaration-schedule-and-instructions-1.pdf"
+      ],
+      "evidenceText": "Colorado's current property-tax guidance covers assessment and limited exemption treatment for qualifying renewable-energy generation property. It is not a statewide cash incentive, and geothermal generation facilities should not be generalized to ground-source building HVAC systems.",
+      "reviewedAt": "2026-07-10T15:18:35Z",
+      "reviewStatus": "audited"
+    }
+  ]
+}

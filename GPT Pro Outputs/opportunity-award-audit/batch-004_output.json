@@ -1,0 +1,516 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-004",
+  "inputFile": "batch-004_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T13:43:48Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22633",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Submit a responsive project proposal under an open ARDOT electric-vehicle-infrastructure request for proposals by the posted deadline; the posted 2024 round is closed.",
+        "Propose an eligible NEVI-compliant charging project on an Arkansas Interstate or Alternative Fuel Corridor location targeted for gap filling.",
+        "Provide the required 20% non-federal share, including the project's allocated program-administration costs.",
+        "Demonstrate capacity to install, own, operate, maintain, and report on the charging stations.",
+        "Pass responsiveness and competitive evaluation and execute the award agreement and required bonds before reimbursement."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The currently posted Arkansas NEVI procurement round is closed, and any future award would require selection through a competitive ARDOT proposal evaluation rather than a rule-based entitlement.",
+      "evidenceUrls": [
+        "https://ardot.gov/divisions/local-programs/local-funding-opportunities/national-electric-vehicle-infrastructure-nevi-program/",
+        "https://adeq.state.ar.us/energy/opportunities/nevi/"
+      ],
+      "evidenceText": "ARDOT identifies the program as a competitive, reimbursement-based NEVI procurement with an 80% federal share and 20% non-federal share. The posted 2024 RFP is closed and its final submission deadline was April 2, 2025.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5785",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible AOG Arkansas or Oklahoma residential customer using natural gas as the qualifying fuel for the claimed measure.",
+        "Purchase and install qualifying equipment meeting the published efficiency criteria, or complete the weatherization prescreening and home-eligibility review.",
+        "Submit the correct rebate form with equipment, installation, and dated purchase documentation, generally within 120 days of installation.",
+        "For weatherization, provide account, property, household, and owner or landlord information and permit the program to determine eligible services.",
+        "Funding remains first-come, first-served and subject to the program-year budget."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "AOG uses published, rule-based rebate and weatherization criteria, so a complete eligible submission is ordinarily payable, subject to program review and first-come budget availability.",
+      "evidenceUrls": [
+        "https://www.aogc.com/ResidentialRebates",
+        "https://www.aogc.com/WeatherizationProgram"
+      ],
+      "evidenceText": "AOG currently lists residential equipment and thermostat rebates plus no-cost weatherization pathways. Claims require customer and equipment eligibility, documentation, and timely submission; rebates are first-come and budget-dependent.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5408",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Property and applicant must fit an eligible C-PACE commercial, industrial, nonprofit, or multifamily category.",
+        "Project must include eligible improvements such as battery storage and meet Ark PACE technical standards.",
+        "For the program's currently posted direct intake, the project must be in Pulaski County; other projects require an available statewide lender and local C-PACE structure.",
+        "Complete program and capital-provider applications, project eligibility review, and financial underwriting.",
+        "Obtain required property-owner, mortgage-lender, local-authority, and capital-provider approvals and execute the voluntary special-assessment documents."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "C-PACE is project financing, not an automatic incentive; closing depends on technical eligibility, lender underwriting, local program authority, lienholder consent, and execution of assessment documents.",
+      "evidenceUrls": [
+        "https://www.arkansasadvancedenergyfoundation.org/aaef-c-pace-program"
+      ],
+      "evidenceText": "Ark PACE is financing rather than an automatic rebate. It can finance up to 100% of eligible project costs, includes battery storage, and currently accepts direct projects in Pulaski County subject to project approval and financing documents.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22702",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible active Ashland Municipal Electric Utility commercial, industrial, or government account in good standing, or meet the specific published applicant rule for the measure.",
+        "Coordinate with Ashland program staff before work when the measure requires pre-approval or a pre-installation inspection.",
+        "Install eligible new equipment meeting measure-specific efficiency and technical standards.",
+        "Use licensed installers where required and obtain all permits and final code inspections.",
+        "Provide paid invoices, equipment details, permits, photos, and allow post-installation verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Ashland commercial incentives are prescriptive and generally payable after required preapproval, technical compliance, documentation, and verification, subject to program terms and funding.",
+      "evidenceUrls": [
+        "https://ashlandoregon.gov/590/Commercial-Incentives"
+      ],
+      "evidenceText": "Ashland currently lists commercial incentives and requires account eligibility, measure-specific technical compliance, supporting invoices or permits, and inspections for applicable projects. A legacy fluorescent-conversion deadline has passed, but other listed measures remain current.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:421",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must own the system and own or lease the Ashland facility where it is installed.",
+        "Submit the solar incentive and interconnection or customer-agreement documents required by the City.",
+        "Install a qualifying solar electric system with at least 2,500 watts of panels and qualifying panels at a total solar resource fraction of at least 75%.",
+        "Obtain required City permits and complete utility interconnection and net-metering requirements.",
+        "Provide the roof plan and project invoice and pass the City electric inspection."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Ashland lists a fixed solar incentive that is normally available when ownership, system design, permitting, interconnection, documentation, and final inspection requirements are satisfied.",
+      "evidenceUrls": [
+        "https://ashlandoregon.gov/589/Solar"
+      ],
+      "evidenceText": "Ashland lists a current $600 solar incentive for installations that pass electric inspection. The system must meet size and solar-access thresholds, be permitted, interconnected and net-metered, and supported by required project documents.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1128",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a City of Ashland electric utility customer and meet the specific residential measure's eligibility rules.",
+        "Complete a City home-energy review before heating, cooling, or weatherization work; specified electric-ready projects may use approved pre-installation photos.",
+        "For weatherization incentives, the home must use an eligible electric heat source.",
+        "Install qualifying equipment or envelope measures that meet published technical criteria and obtain required permits.",
+        "Submit the incentive application with receipts, photos, equipment certificates, and any other documentation needed for verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Ashland's current residential incentives are rule-based and generally payable after the required pre-installation review, qualifying installation, documentation, and verification.",
+      "evidenceUrls": [
+        "https://ashlandoregon.gov/584/Residential-Incentives"
+      ],
+      "evidenceText": "Ashland currently offers residential incentives and requires a home-energy review for heating, cooling, and weatherization measures. Customers must meet measure criteria, permitting rules, and documentation requirements.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4026",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "File Form FA-1 and supplemental Form FA-1 GS with the municipal tax assessor by August 1 of the pretax year.",
+        "Property must satisfy the general farmland-assessment acreage, prior-use, continued-use, and gross-sales requirements.",
+        "Identify renewable-energy acreage and the renewable technology on the farmland application.",
+        "Renewable-energy facilities may occupy no more than 10 acres, generate no more than 2 megawatts, and may not exceed a one-to-five ratio to agricultural or horticultural acreage.",
+        "Provide any proof of ownership, acreage, farm activity, and sales requested by the assessor; late or incomplete applications are denied."
+      ],
+      "approvalStage": "before_operation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The assessment is statutory and criteria-based, so timely complete properties meeting the farmland and renewable-energy limits are generally approvable, subject to the municipal assessor's determination.",
+      "evidenceUrls": [
+        "https://www.nj.gov/treasury/taxation/lpt/lpt-farmland.shtml",
+        "https://www.nj.gov/treasury/taxation/pdf/other_forms/lpt/FA1.pdf",
+        "https://www.nj.gov/treasury/taxation/pdf/other_forms/lpt/fa1-gs.pdf"
+      ],
+      "evidenceText": "New Jersey requires annual FA-1 and FA-1 GS filing by August 1 and municipal-assessor approval. Renewable-energy acreage is limited to 10 acres, 2 megawatts, and a one-to-five ratio to qualifying farm acreage, in addition to general farmland criteria.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:21868",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a current Atmos Energy business or industrial customer in Mississippi.",
+        "Install an eligible boiler tune-up, burner, control, or other qualifying natural-gas measure meeting published requirements.",
+        "Provide equipment information, a dated paid receipt, and the appropriate CLEAResult rebate form.",
+        "Install equipment in compliance with applicable local, state, and federal codes and complete any required tests or inspections.",
+        "Custom projects must be discussed with the program and demonstrate the required minimum energy savings."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The listed business incentives are prescriptive and ordinarily payable for eligible customers with compliant equipment and complete documentation; custom projects require additional technical review.",
+      "evidenceUrls": [
+        "https://www.atmosenergy.com/ways-to-save/mississippi-smartchoice-appliance-rebates/"
+      ],
+      "evidenceText": "Atmos Energy currently offers Mississippi business and industrial boiler incentives. Claims require customer eligibility, equipment details, receipts, code-compliant installation, and the applicable CLEAResult submission; custom projects need additional savings review.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:21867",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a current Atmos Energy residential customer in Mississippi.",
+        "Purchase and install qualifying new or replacement natural-gas equipment or an eligible thermostat meeting the published efficiency criteria.",
+        "Provide equipment information, a dated paid receipt, and the correct rebate form.",
+        "Ensure installation complies with applicable codes and complete any required tests or inspections.",
+        "Submit the completed claim to CLEAResult according to the form instructions."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Atmos uses published eligibility and equipment rules, so a timely complete residential claim is generally payable after administrative review.",
+      "evidenceUrls": [
+        "https://www.atmosenergy.com/ways-to-save/mississippi-smartchoice-appliance-rebates/"
+      ],
+      "evidenceText": "Atmos Energy currently lists Mississippi residential rebates for qualifying natural-gas equipment and thermostats. Customers must document eligible equipment and installation and submit the applicable claim for review.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2013",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Project site must receive Austin Energy commercial electric service and satisfy ECAD requirements unless exempt.",
+        "Submit the rebate application before purchasing or installing retrofit or replacement equipment; retroactive rebates are not available.",
+        "Install eligible new equipment that meets measure-specific efficiency, operating-hour, warranty, and energy-savings requirements.",
+        "Provide account information, quotes, specifications, calculations, photos, and other measure-specific documentation.",
+        "Allow pre- and post-installation site visits and obtain required permits and code approvals."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Austin Energy's commercial rebates are rule-based and normally awarded after pre-installation approval, qualifying installation, documentation, and verification rather than competitive ranking.",
+      "evidenceUrls": [
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/commercial",
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/commercial/new-construction-rebates"
+      ],
+      "evidenceText": "Austin Energy requires commercial-service eligibility, pre-installation application for retrofits, qualifying new equipment, complete documentation, and pre- and post-installation verification. Retroactive rebates are not available.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2925",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Project must receive Austin Energy commercial electric service and the applicant must be the owner or an authorized project representative.",
+        "Submit the complete application before the certificate of occupancy is issued; rebates are not retroactive.",
+        "Design and install eligible permanent equipment that exceeds applicable code or baseline efficiency requirements.",
+        "Provide plans, specifications, energy calculations, equipment quotes, account information, and measure-specific documentation.",
+        "Allow Austin Energy pre- and post-installation verification and obtain all required permits and code approvals."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The new-construction rebates are prescriptive and generally awarded to eligible projects that apply before occupancy, exceed efficiency baselines, and pass documentation and verification review.",
+      "evidenceUrls": [
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/commercial/new-construction-rebates"
+      ],
+      "evidenceText": "Austin Energy requires new-construction applications before the certificate of occupancy and does not offer retroactive rebates. Projects must use eligible permanent equipment, exceed applicable efficiency baselines, and pass documentation and verification review.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3972",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an Austin Energy commercial electric account at the solar site.",
+        "Use an Austin Energy participating solar contractor and submit one PBI application per interconnection.",
+        "Do not use a third-party power purchase agreement and meet applicable system-size and distribution-interconnection requirements.",
+        "Complete eligibility review, customer agreement, project-documentation review, and receive a Letter of Intent before installation.",
+        "Obtain permits, pass required inspections, complete PV metering and interconnection, and energize the approved system."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The commercial PBI is a structured, noncompetitive incentive for qualifying projects that complete the required pre-installation review, Letter of Intent, permitting, interconnection, and production verification.",
+      "evidenceUrls": [
+        "https://austinenergy.com/green-power/solar-solutions/for-business"
+      ],
+      "evidenceText": "Austin Energy's commercial PBI requires a commercial account, participating contractor, application and three-stage review ending in a Letter of Intent before installation. Payment begins only after permits, inspections, interconnection, and production.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22090",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an Austin Energy commercial electric account at the solar site.",
+        "Qualify as a nonprofit with required tax-exempt documentation or as a business installing a system under 100 kW-ac.",
+        "Use an Austin Energy participating solar contractor and do not use a third-party power purchase agreement.",
+        "Complete eligibility review, customer agreement, project-documentation review, and receive a Letter of Intent before installation.",
+        "Obtain permits, pass final inspection, complete PV metering and interconnection, and energize the approved system before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The commercial CBI is rule-based for qualifying nonprofits and smaller business systems, with award dependent on pre-installation approval and successful final interconnection review rather than competitive selection.",
+      "evidenceUrls": [
+        "https://austinenergy.com/green-power/solar-solutions/for-business"
+      ],
+      "evidenceText": "Austin Energy's commercial CBI is available to qualifying nonprofits and businesses with systems below the stated size threshold. It requires a participating contractor, pre-installation Letter of Intent, permits, inspection, interconnection, and final payment review.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22393",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be the Austin Energy residential account holder and have purchased or leased a plug-in electric vehicle.",
+        "Purchase a new qualifying Level 2 charging station and use a licensed electrician for required installation work.",
+        "Obtain the City electrical permit and final inspection for hard-wired stations and receptacles.",
+        "Complete installation before applying and submit account, electrician, charger, VIN, vehicle purchase or lease proof, and paid invoices.",
+        "Accept any applicable program charge-management and monitoring terms."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The home-charging rebate follows published eligibility and documentation rules, so a compliant completed installation is generally payable after claim review, subject to first-come funding.",
+      "evidenceUrls": [
+        "https://austinenergy.com/green-power/plug-in-austin/home-charging"
+      ],
+      "evidenceText": "Austin Energy requires a new listed home charger, licensed electrical work, required permit and inspection, vehicle proof, paid invoices, and account-holder submission. Funding is first-come and rebate approval follows application review.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2012",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Home must receive Austin Energy residential service, be an eligible owner-occupied or rental property type, be at least 10 years old, and not be mobile or manufactured housing.",
+        "Use a participating contractor for the no-cost assessment, application, and installation of at least three qualifying improvements.",
+        "For the published low or zero-interest option, the project must meet the 15-point savings criteria and the applicant must satisfy Velocity Credit Union's minimum 600 credit score and underwriting requirements.",
+        "Obtain loan pre-approval before relying on financing and complete Austin Energy and lender application documents.",
+        "Pass verification and final inspections; the contractor must provide the completion certificate and inspection report before loan closing and payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Financing depends on both program eligibility and third-party credit underwriting, and the posted promotional rate and reserve capacity are not an automatic entitlement.",
+      "evidenceUrls": [
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/home-energy-savings"
+      ],
+      "evidenceText": "The Home Energy Savings loan requires program-eligible housing, participating-contractor work, lender pre-approval, and final completion approval. The posted low-rate option uses 15-point savings criteria, at least three measures, and Velocity Credit Union underwriting.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2011",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Home must receive Austin Energy residential service, be an eligible property type, be at least 10 years old, and not be mobile or manufactured housing.",
+        "Use a participating contractor to perform the no-cost assessment, prepare the application, and complete at least three qualifying upgrades.",
+        "Project must qualify for at least $100 in rebates and meet measure-specific sizing, efficiency, warranty, and prior-participation rules.",
+        "Obtain owner permission for rental properties and all required permits and code approvals.",
+        "Allow verification, final, and any quality-control inspections and provide all application and completion documentation."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Home Energy Savings rebate is prescriptive and ordinarily awarded to eligible homes completing the required contractor assessment, minimum upgrade bundle, permits, documentation, and inspections.",
+      "evidenceUrls": [
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/home-energy-savings"
+      ],
+      "evidenceText": "Austin Energy requires an eligible residential property, participating-contractor assessment, at least three qualifying upgrades, and at least $100 in rebates. Payment follows application, installation, documentation, and inspection.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2015",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be the owner or authorized property manager of an eligible multifamily property served by Austin Energy.",
+        "Submit the contact request and complete the application with Austin Energy before project authorization.",
+        "Install eligible measures in tenant units or qualifying interior common areas using approved in-house staff or a participating contractor as allowed.",
+        "Provide measure-specific scope, cost, equipment, and property documentation.",
+        "Complete required Austin Energy inspections and verification before rebate payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The multifamily rebates use published measure rules and program inspections, so eligible projects are generally awardable after application and verification rather than competitive ranking.",
+      "evidenceUrls": [
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/multifamily/standard-rebates"
+      ],
+      "evidenceText": "Austin Energy's standard multifamily rebates are available to property owners for eligible tenant-unit and interior-common-area upgrades. The program begins with a contact request and includes application support, measure eligibility review, and inspections.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22394",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Multifamily property must have an Austin Energy commercial account, and the applicant must be the account holder or authorized representative.",
+        "Install new listed OCPP-compliant eligible charging stations; leases, station upgrades, and make-ready-only costs are excluded.",
+        "Complete construction, comply with electrical code, pass the final City permit inspection where applicable, and provide required EV signage and physical protection.",
+        "Apply after activation and within 180 days, with paid itemized invoices, charger details, permit information, site photos, and insurance documentation.",
+        "Observe the one-application-per-address-per-fiscal-year and six-station-per-address annual limits."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The multifamily EV rebate is a published, post-installation reimbursement; a compliant project with complete documentation is generally payable after review, subject to first-come funding and address caps.",
+      "evidenceUrls": [
+        "https://austinenergy.com/green-power/plug-in-austin/workplace-charging"
+      ],
+      "evidenceText": "Austin Energy's business EV rebate covers multifamily properties with commercial accounts. Eligible new OCPP stations must be installed and inspected before the claim, which is due within 180 days and subject to annual station and application limits.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22089",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible multifamily property with at least five residential Austin Energy electric accounts and remain in good standing with the City.",
+        "Use an Austin Energy participating solar contractor and submit the application before installation.",
+        "Receive the Austin Energy Letter of Intent and complete the required preconstruction meeting before work begins.",
+        "Property must be residentially metered; master-metered or commercial/common-area projects and third-party leases or PPAs are excluded from this offering.",
+        "Obtain permits, pass the final interconnection and program inspection, install the solar meter, and energize the system.",
+        "Rebates above $72,000 per year require Austin City Council approval."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The multifamily solar rebate is a structured, rule-based incentive for qualifying properties; award is generally expected after preconstruction approval, compliant installation, interconnection, and final inspection, with added council approval only for large awards.",
+      "evidenceUrls": [
+        "https://austinenergy.com/green-power/solar-solutions/for-your-multifamily"
+      ],
+      "evidenceText": "Austin Energy requires eligible multifamily ownership, at least five residential accounts, a participating contractor, Letter of Intent, and preconstruction meeting before installation. Payment follows final inspection, metering, and energization.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1088",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an Austin Energy residential electric account at the installation address.",
+        "Install a new solar system of at least 3 kW DC that is mostly free of shading, using an Austin Energy participating solar contractor.",
+        "Complete the Solar Rebate Quiz, obtain the reference number, and have the contractor submit the rebate application.",
+        "Sign the residential interconnection and customer agreement forms and receive the Solar Rebate Confirmation Letter before installation.",
+        "Pass the final solar inspection, receive the solar meter and permission to operate, and pass final quality-assurance review."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Austin Energy lists a fixed residential solar rebate and uses a rule-based approval process, so qualifying projects are generally awarded after pre-installation confirmation, inspection, interconnection, and quality assurance.",
+      "evidenceUrls": [
+        "https://austinenergy.com/green-power/solar-solutions/for-your-home"
+      ],
+      "evidenceText": "Austin Energy currently lists a $4,000 residential solar rebate. Eligibility requires a new qualifying system, an approved contractor, pre-installation confirmation, interconnection documents, final inspection, permission to operate, and quality-assurance approval.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2014",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Qualifying small businesses must provide a W-9 showing Texas ownership or franchise status, have five or fewer locations, spend under $60,000 annually on electricity, and use Austin Energy Rate Tier 1.",
+        "Qualifying nonprofits must provide tax-exempt documentation, stay under the published electricity-spend limit, and meet the applicable rate rule; excluded organization types do not qualify.",
+        "Select a bundle of at least three eligible energy-efficiency upgrades or services.",
+        "Use an Austin Energy participating contractor for the assessment, application, and installation.",
+        "Complete all measure-specific preapproval, documentation, and verification requirements before contractor rebate payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Small Business Bundle uses objective business or nonprofit eligibility and measure requirements, so a complete qualifying project is generally awardable after contractor-led application and verification.",
+      "evidenceUrls": [
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/commercial/sb-bundle"
+      ],
+      "evidenceText": "Austin Energy's Small Business Bundle requires qualifying small-business or nonprofit status, at least three eligible upgrades, and work through a participating contractor. Rebate payment follows application and measure verification.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22768",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must first qualify for and participate in Austin Energy Weatherization Assistance.",
+        "Home must pass the weatherization customer, income or vulnerability, property, value, size, age, and prior-participation eligibility rules.",
+        "Complete the home assessment with the Austin Energy inspector and participating contractor, who must determine that a new air-conditioning system qualifies.",
+        "Submit the financing application and receive program and financing approval before relying on the loan.",
+        "Complete the approved installation and required inspection and completion documentation."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The loan is limited to weatherization participants whose assessment identifies an eligible air-conditioning need, and financing approval remains a separate gate.",
+      "evidenceUrls": [
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/weatherization"
+      ],
+      "evidenceText": "Austin Energy states that Weatherization Assistance participants may receive an AC rebate and zero-percent financing for up to 10 years. Access depends on weatherization eligibility, the home assessment, approved equipment, and financing review.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2016",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Austin Energy customer and either participate in the Customer Assistance Program or be enrolled in the Medically Vulnerable Registry and meet the posted 80% median-family-income limit.",
+        "Residence must be an eligible house, small multifamily unit, or mobile home and meet published improvement-value, size, and age limits.",
+        "Home may not have received Weatherization Assistance or Home Energy Savings within the prior 10 years.",
+        "Submit the program form and all eligibility documentation; renters must obtain property-owner permission.",
+        "Permit a home-energy assessment, installation by the assigned participating contractor, and final inspection."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "No-cost services are available only after strict customer and property screening, and eligible applicants may still be placed on a wait list when contractor or funding capacity is reached.",
+      "evidenceUrls": [
+        "https://austinenergy.com/energy-efficiency/rebates-incentives/residential/home-improvements/weatherization"
+      ],
+      "evidenceText": "Austin Energy provides no-cost weatherization to qualifying customers after program and property screening, a home assessment, contractor installation, and final inspection. Funding is first-come and eligible applicants may be wait-listed if capacity is reached.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22395",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an Austin Energy commercial account holder or authorized representative for the workplace or business site.",
+        "Install new listed OCPP-compliant eligible charging stations; leases, station upgrades, and make-ready-only costs are excluded.",
+        "Complete construction, comply with electrical code, pass the final City permit inspection where applicable, and provide required signage and physical protection; DC fast chargers must be open to the public.",
+        "Apply after activation and within 180 days, with paid invoices, charger details, permit information, site photos, and insurance documentation.",
+        "Observe one application per address per fiscal year and a maximum of six stations per address annually."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The workplace EV rebate is a rule-based, post-installation reimbursement, so a compliant project with a timely complete claim is generally payable after review, subject to first-come funding and address caps.",
+      "evidenceUrls": [
+        "https://austinenergy.com/green-power/plug-in-austin/workplace-charging"
+      ],
+      "evidenceText": "Austin Energy's workplace rebate requires a commercial account, eligible new OCPP equipment, completed code-compliant installation and inspection, and a documented claim within 180 days. Funding is first-come and capped by address.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4333",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Obtain the required City of Austin, Minnesota permit for the renewable-energy installation.",
+        "Submit the Austin Utilities DER interconnection application for the applicable system-size track with all required technical documents.",
+        "Execute the required Austin Utilities interconnection agreement and satisfy utility technical requirements before operation.",
+        "Confirm with Austin Utilities that a current solar rebate budget and application are available before purchasing or installing equipment, because current 2026 rebate materials do not list a solar incentive."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Current official Austin Utilities materials establish permitting and interconnection approval but do not establish a current solar rebate offering, application, funding level, or award rule.",
+      "evidenceUrls": [
+        "https://www.austinutilities.com/pages/BusinessRebates",
+        "https://www.austinutilities.com/assetmanager/downloads/documents/pdf/Rebates/Business/BusinessEnergyEfficiencyPrograms2026_SinglePage%20%281%29.pdf",
+        "https://www.austinutilities.com/pages/RenewableEnergy/"
+      ],
+      "evidenceText": "Austin Utilities' current 2026 business rebate materials do not list a solar rebate. Its renewable-energy page confirms permitting, DER application, technical review, and interconnection agreements, but does not establish a current rebate award process.",
+      "reviewedAt": "2026-07-10T13:43:48Z",
+      "reviewStatus": "needs_evidence"
+    }
+  ]
+}

@@ -1,10 +1,5 @@
 import fs from "node:fs";
 import path from "node:path";
-import {
-  AWARD_LIKELIHOOD,
-  CANONICAL_AWARD_LIKELIHOODS,
-  normalizeAwardLikelihoodWithTrace
-} from "../apps/api/server/matching/awardLikelihood.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 
@@ -12,12 +7,11 @@ export const defaultOutputRoot = path.join(repoRoot, "GPT Pro Outputs", "opportu
 export const defaultPrimaryRoot = "/Users/neer_kuchlous/Code/firstmate/projects/green-business-solution/GPT Pro Outputs/opportunity-award-audit";
 export const defaultOverlayPath = path.join(repoRoot, "data", "opportunity_award_audit_overlay.v1.json");
 
-export const AWARD_LIKELIHOOD_REASSESSMENT_RULESET_VERSION = "award-likelihood-reassessment-v1";
-
-const nearGuaranteedAffirmationPattern =
-  /(statut|by law|not competit|noncompetit|no competitive|instant|at purchase|point.of.sale|each qualifying|permanent, formulaic|fixed .*administrative|fixed .*rather than a competitive|rather than competitive|rather than a competitive|no separate customer|without a competitive|no application|automatically)/i;
-const fundingConstraintPattern =
-  /(subject to (?:program )?fund(?:s|ing)|while (?:program )?funds remain|funding availability|available funds|limited funding|budget availability)/i;
+const allowedCanonicalAwardLikelihoods = new Set(["likely", "possible", "unlikely", "unknown"]);
+const rawAwardLikelihoodMap = new Map([
+  ["near_guaranteed", "likely"],
+  ["rare", "unlikely"]
+]);
 
 export const allowedApprovalStages = new Set([
   "before_purchase",
@@ -300,99 +294,44 @@ function normalizeApprovalStageInternal(value) {
   };
 }
 
-function canonicalBeforeTaxonomyRepair(value) {
+function normalizeAwardLikelihood(value) {
   const original = asString(value).toLowerCase();
-  if (["likely", "possible", "unlikely", "unknown"].includes(original)) {
-    return original;
-  }
-  if (original === "near_guaranteed") {
-    return "likely";
-  }
-  if (original === "rare") {
-    return "unlikely";
-  }
-  return "unknown";
-}
-
-export function reassessAwardLikelihood({
-  awardLikelihood,
-  awardLikelihoodReason,
-  evidenceText,
-  evidenceUrls = [],
-  officialEvidenceUrls = [],
-  programType,
-  reviewStatus
-}) {
-  const normalized = normalizeAwardLikelihoodWithTrace(awardLikelihood);
-  const before = canonicalBeforeTaxonomyRepair(awardLikelihood);
-  const base = {
-    rulesetVersion: AWARD_LIKELIHOOD_REASSESSMENT_RULESET_VERSION,
-    originalValue: normalized.original,
-    canonicalBeforeReassessment: before,
-    canonicalAfterReassessment: normalized.canonical,
-    programType: asString(programType),
-    reviewStatus: asString(reviewStatus).toLowerCase(),
-    evidenceUrlCount: Array.isArray(evidenceUrls) ? evidenceUrls.length : 0,
-    officialEvidenceUrlCount: Array.isArray(officialEvidenceUrls) ? officialEvidenceUrls.length : 0,
-    decision: "canonical_normalization",
-    flags: []
-  };
-
-  if (normalized.canonical !== AWARD_LIKELIHOOD.NEAR_GUARANTEED) {
+  if (!original) {
     return {
-      ...base,
-      decision:
-        before === AWARD_LIKELIHOOD.LIKELY
-          ? "retained_likely_conservative_original"
-          : "canonical_normalization",
-      flags:
-        before === AWARD_LIKELIHOOD.LIKELY
-          ? ["source_model_did_not_assert_near_guaranteed"]
-          : []
+      canonical: "unknown",
+      method: "missing",
+      requiresManualAttention: true,
+      notes: ["awardLikelihood was missing."],
+      original
     };
   }
 
-  if (base.reviewStatus !== "audited") {
+  if (allowedCanonicalAwardLikelihoods.has(original)) {
     return {
-      ...base,
-      canonicalAfterReassessment: AWARD_LIKELIHOOD.LIKELY,
-      decision: "retained_likely_review_unresolved",
-      flags: ["review_status_unresolved"]
+      canonical: original,
+      method: "canonical",
+      requiresManualAttention: false,
+      notes: [],
+      original
     };
   }
 
-  if (base.evidenceUrlCount === 0) {
+  if (rawAwardLikelihoodMap.has(original)) {
     return {
-      ...base,
-      canonicalAfterReassessment: AWARD_LIKELIHOOD.LIKELY,
-      decision: "retained_likely_missing_evidence_urls",
-      flags: ["missing_evidence_urls"]
-    };
-  }
-
-  const preservedEvidence = `${asString(awardLikelihoodReason)} ${asString(evidenceText)} ${base.programType}`.trim();
-  if (fundingConstraintPattern.test(preservedEvidence)) {
-    return {
-      ...base,
-      canonicalAfterReassessment: AWARD_LIKELIHOOD.LIKELY,
-      decision: "retained_likely_funding_constrained",
-      flags: ["funding_or_budget_constraint"]
-    };
-  }
-
-  if (!nearGuaranteedAffirmationPattern.test(preservedEvidence)) {
-    return {
-      ...base,
-      canonicalAfterReassessment: AWARD_LIKELIHOOD.LIKELY,
-      decision: "retained_likely_insufficient_nondiscretionary_evidence",
-      flags: ["insufficient_nondiscretionary_evidence"]
+      canonical: rawAwardLikelihoodMap.get(original),
+      method: `legacy_${original}`,
+      requiresManualAttention: false,
+      notes: [`Mapped non-standard awardLikelihood ${original} to ${rawAwardLikelihoodMap.get(original)}.`],
+      original
     };
   }
 
   return {
-    ...base,
-    canonicalAfterReassessment: AWARD_LIKELIHOOD.NEAR_GUARANTEED,
-    decision: "restored_near_guaranteed_from_preserved_evidence"
+    canonical: "unknown",
+    method: "manual_review_required",
+    requiresManualAttention: true,
+    notes: [`Unrecognized awardLikelihood: ${original}`],
+    original
   };
 }
 
@@ -491,9 +430,9 @@ export function normalizeAndValidateReview(review, context = {}) {
     };
   }
 
-  const awardLikelihoodNormalization = normalizeAwardLikelihoodWithTrace(review.awardLikelihood);
-  if (awardLikelihoodNormalization.requiresManualAttention) {
-    warnings.push(`${awardLikelihoodNormalization.notes[0]}`);
+  const awardLikelihood = normalizeAwardLikelihood(review.awardLikelihood);
+  if (awardLikelihood.requiresManualAttention) {
+    warnings.push(`${awardLikelihood.notes[0]}`);
   }
 
   let reviewStatus = asString(review.reviewStatus).toLowerCase();
@@ -542,7 +481,7 @@ export function normalizeAndValidateReview(review, context = {}) {
     requiresProgramApproval: requiresProgramApproval.canonical,
     approvalRequirements,
     approvalStage: approvalStage.canonical,
-    awardLikelihood: awardLikelihoodNormalization.canonical,
+    awardLikelihood: awardLikelihood.canonical,
     awardLikelihoodReason: awardLikelihoodReason || "Missing awardLikelihoodReason.",
     evidenceUrls: evidenceUrls.normalized,
     evidenceText: evidenceText || "No evidence text provided.",
@@ -557,21 +496,16 @@ export function normalizeAndValidateReview(review, context = {}) {
         inputFile: context.inputFile || null,
         rawApprovalStage: asString(review.approvalStage),
         rawRequiresProgramApproval: review.requiresProgramApproval,
-        awardLikelihoodSource: awardLikelihoodNormalization.original,
-        programType: asString(context.opportunityRecord?.programType),
+        awardLikelihoodSource: awardLikelihood.original,
         originalReviewStatus: asString(review.reviewStatus)
       },
       approvalStageMethod: approvalStage.method,
       approvalStageNotes: approvalStage.notes,
-      awardLikelihoodMethod: awardLikelihoodNormalization.method,
-      awardLikelihoodNotes: awardLikelihoodNormalization.notes,
-      awardLikelihoodReassessment: null,
+      awardLikelihoodMethod: awardLikelihood.method,
+      awardLikelihoodNotes: awardLikelihood.notes,
       requiresProgramApprovalMethod: requiresProgramApproval.method,
       requiresProgramApprovalNotes: requiresProgramApproval.notes,
-      requiresManualAttention:
-        approvalStage.requiresManualAttention ||
-        awardLikelihoodNormalization.requiresManualAttention ||
-        requiresProgramApproval.requiresManualAttention,
+      requiresManualAttention: approvalStage.requiresManualAttention || awardLikelihood.requiresManualAttention || requiresProgramApproval.requiresManualAttention,
       awardEvidenceNormalization: {
         originalEvidenceUrls: evidenceUrls.original,
         malformedEvidenceUrls: evidenceUrls.malformed,
@@ -601,18 +535,6 @@ export function normalizeAndValidateReview(review, context = {}) {
     reviewedRecord.reviewStatus = "needs_evidence";
   }
 
-  const finalAwardLikelihoodReassessment = reassessAwardLikelihood({
-    awardLikelihood: review.awardLikelihood,
-    awardLikelihoodReason,
-    evidenceText,
-    evidenceUrls: reviewedRecord.evidenceUrls,
-    officialEvidenceUrls,
-    programType: context.opportunityRecord?.programType,
-    reviewStatus: reviewedRecord.reviewStatus
-  });
-  reviewedRecord.awardLikelihood = finalAwardLikelihoodReassessment.canonicalAfterReassessment;
-  reviewedRecord.normalization.awardLikelihoodReassessment = finalAwardLikelihoodReassessment;
-
   return {
     ok: errors.length === 0,
     errors,
@@ -624,8 +546,6 @@ export function normalizeAndValidateReview(review, context = {}) {
 export function countRecordsByOpportunity(recordsById) {
   const counts = {
     awardLikelihood: {},
-    awardLikelihoodBeforeReassessment: {},
-    awardLikelihoodReassessmentDecision: {},
     requiresProgramApproval: { true: 0, false: 0 },
     reviewStatus: {},
     approvalStage: {},
@@ -647,12 +567,6 @@ export function countRecordsByOpportunity(recordsById) {
 
   for (const record of recordsById.values()) {
     counts.awardLikelihood[record.awardLikelihood] = (counts.awardLikelihood[record.awardLikelihood] || 0) + 1;
-    const beforeReassessment = record.normalization.awardLikelihoodReassessment?.canonicalBeforeReassessment || "unknown";
-    counts.awardLikelihoodBeforeReassessment[beforeReassessment] =
-      (counts.awardLikelihoodBeforeReassessment[beforeReassessment] || 0) + 1;
-    const reassessmentDecision = record.normalization.awardLikelihoodReassessment?.decision || "not_recorded";
-    counts.awardLikelihoodReassessmentDecision[reassessmentDecision] =
-      (counts.awardLikelihoodReassessmentDecision[reassessmentDecision] || 0) + 1;
     if (record.requiresProgramApproval === null) {
       counts.requiresProgramApproval.null = (counts.requiresProgramApproval.null || 0) + 1;
     } else {
@@ -749,8 +663,6 @@ export function countsForRecords(recordsById) {
   const rowCounts = countRecordsByOpportunity(recordsById);
   return {
     awardLikelihood: sortCounts(Object.entries(rowCounts.awardLikelihood)),
-    awardLikelihoodBeforeReassessment: sortCounts(Object.entries(rowCounts.awardLikelihoodBeforeReassessment)),
-    awardLikelihoodReassessmentDecision: sortCounts(Object.entries(rowCounts.awardLikelihoodReassessmentDecision)),
     reviewStatus: sortCounts(Object.entries(rowCounts.reviewStatus)),
     requiresProgramApproval: sortCounts(Object.entries(rowCounts.requiresProgramApproval)),
     approvalStage: sortCountsCanonical(Object.entries(rowCounts.approvalStage)),
@@ -763,7 +675,6 @@ export function countsForRecords(recordsById) {
 
 export function normalizeFromManifest(outputRoot, options = {}) {
   const root = path.resolve(outputRoot || defaultOutputRoot);
-  const inputRoot = path.resolve(options.inputRoot || root);
   const manifest = options.manifest || loadManifest(root);
 
   const batches = Array.isArray(manifest?.batches) ? manifest.batches : [];
@@ -777,7 +688,7 @@ export function normalizeFromManifest(outputRoot, options = {}) {
 
   for (const batch of batches) {
     const batchLabel = batch.batchId || batch.outputFile || batch.inputFile || "batch";
-    const batchInputPath = path.join(inputRoot, batch.inputFile);
+    const batchInputPath = path.join(root, batch.inputFile);
     const batchOutputPath = path.join(root, batch.outputFile);
 
     if (!fs.existsSync(batchInputPath)) {
@@ -889,18 +800,6 @@ export function normalizeFromManifest(outputRoot, options = {}) {
   return result;
 }
 
-function compactAwardLikelihoodReassessment(reassessment) {
-  const trace = {
-    before: reassessment.canonicalBeforeReassessment,
-    after: reassessment.canonicalAfterReassessment,
-    decision: reassessment.decision
-  };
-  if (reassessment.flags.length > 0) {
-    trace.flags = reassessment.flags;
-  }
-  return trace;
-}
-
 export function buildCanonicalOverlay(result) {
   const records = {};
 
@@ -922,10 +821,6 @@ export function buildCanonicalOverlay(result) {
       },
       auditTrace: {
         sourceTrace: row.normalization.sourceTrace,
-        awardLikelihood: {
-          normalizationMethod: row.normalization.awardLikelihoodMethod,
-          ...compactAwardLikelihoodReassessment(row.normalization.awardLikelihoodReassessment)
-        },
         approvalStage: {
           canonical: row.approvalStage,
           method: row.normalization.approvalStageMethod,
@@ -937,129 +832,25 @@ export function buildCanonicalOverlay(result) {
     };
   }
 
-  const counts = countsForRecords(result.recordsById);
-
   return {
     schemaVersion: "opportunity_award_audit_overlay.v1",
     source: {
       manifestPath: "manifest.json",
       overlayCreatedAt: new Date().toISOString(),
       expectedOpportunityCount: result.expectedOpportunityCount,
-      reviewedOpportunityCount: result.reviewedRowCount,
-      canonicalAwardLikelihoods: CANONICAL_AWARD_LIKELIHOODS,
-      awardLikelihoodReassessment: {
-        rulesetVersion: AWARD_LIKELIHOOD_REASSESSMENT_RULESET_VERSION,
-        before: counts.awardLikelihoodBeforeReassessment,
-        after: counts.awardLikelihood,
-        decisions: counts.awardLikelihoodReassessmentDecision
-      }
+      reviewedOpportunityCount: result.reviewedRowCount
     },
     reconciliation: {
       ok: result.ok,
-      expectedOpportunityCount: result.expectedOpportunityCount,
-      reviewedOpportunityCount: result.reviewedRowCount,
       errors: result.errors.length,
       warnings: result.warnings.length,
       missingOpportunityCount: result.missingOpportunityCount,
       duplicateOpportunityCount: result.duplicateOpportunityCount,
-      extraOutputCount: result.extraOutputCount,
-      rejectedOpportunityCount: result.rejectedOpportunityCount
+      extraOutputCount: result.extraOutputCount
     },
-    counts,
+    counts: countsForRecords(result.recordsById),
     records
   };
-}
-
-export function reassessCanonicalOverlay(existingOverlay, options = {}) {
-  const overlay = structuredClone(existingOverlay);
-  const programTypesByOpportunityId = options.programTypesByOpportunityId || {};
-  const beforeCounts = {};
-  const afterCounts = {};
-  const decisionCounts = {};
-  const methodCounts = {};
-
-  for (const [opportunityId, record] of Object.entries(overlay.records || {})) {
-    const rawAwardLikelihood = record.auditTrace?.sourceTrace?.awardLikelihoodSource || record.awardLikelihood;
-    const programType =
-      programTypesByOpportunityId instanceof Map
-        ? programTypesByOpportunityId.get(opportunityId)
-        : programTypesByOpportunityId[opportunityId];
-    const normalization = normalizeAwardLikelihoodWithTrace(rawAwardLikelihood);
-    const reassessment = reassessAwardLikelihood({
-      awardLikelihood: rawAwardLikelihood,
-      awardLikelihoodReason: record.awardLikelihoodReason,
-      evidenceText: record.evidenceText,
-      evidenceUrls: record.evidenceUrls?.normalized,
-      officialEvidenceUrls: record.auditTrace?.officialEvidenceUrls,
-      programType,
-      reviewStatus: record.reviewStatus
-    });
-    const before = record.awardLikelihood || reassessment.canonicalBeforeReassessment;
-    const after = reassessment.canonicalAfterReassessment;
-
-    beforeCounts[before] = (beforeCounts[before] || 0) + 1;
-    afterCounts[after] = (afterCounts[after] || 0) + 1;
-    decisionCounts[reassessment.decision] = (decisionCounts[reassessment.decision] || 0) + 1;
-    methodCounts[normalization.method] = (methodCounts[normalization.method] || 0) + 1;
-
-    record.awardLikelihood = after;
-    const normalizationMethodBeforeRepair =
-      rawAwardLikelihood === "near_guaranteed"
-        ? "legacy_near_guaranteed"
-        : rawAwardLikelihood === "rare"
-          ? "legacy_rare"
-          : "canonical";
-    const awardLikelihoodTrace = {
-      normalizationMethod: normalization.method,
-      ...compactAwardLikelihoodReassessment(reassessment)
-    };
-    if (normalizationMethodBeforeRepair !== normalization.method) {
-      awardLikelihoodTrace.normalizationMethodBeforeRepair = normalizationMethodBeforeRepair;
-    }
-
-    if (before === AWARD_LIKELIHOOD.LIKELY) {
-      record.auditTrace = {
-        ...record.auditTrace,
-        sourceTrace: {
-          ...record.auditTrace?.sourceTrace,
-          programType: asString(programType)
-        },
-        awardLikelihood: awardLikelihoodTrace
-      };
-    }
-  }
-
-  const awardLikelihoodBeforeReassessment = sortCounts(Object.entries(beforeCounts));
-  const awardLikelihood = sortCounts(Object.entries(afterCounts));
-  const awardLikelihoodReassessmentDecision = sortCounts(Object.entries(decisionCounts));
-
-  overlay.source = {
-    ...overlay.source,
-    overlayCreatedAt: options.overlayCreatedAt || new Date().toISOString(),
-    canonicalAwardLikelihoods: CANONICAL_AWARD_LIKELIHOODS,
-    awardLikelihoodReassessment: {
-      rulesetVersion: AWARD_LIKELIHOOD_REASSESSMENT_RULESET_VERSION,
-      before: awardLikelihoodBeforeReassessment,
-      after: awardLikelihood,
-      decisions: awardLikelihoodReassessmentDecision
-    }
-  };
-  overlay.reconciliation = {
-    ...overlay.reconciliation,
-    expectedOpportunityCount: overlay.source.expectedOpportunityCount,
-    reviewedOpportunityCount: overlay.source.reviewedOpportunityCount,
-    rejectedOpportunityCount: overlay.reconciliation.rejectedOpportunityCount || 0
-  };
-  overlay.counts = {
-    ...overlay.counts,
-    awardLikelihood,
-    awardLikelihoodBeforeReassessment,
-    awardLikelihoodReassessmentDecision,
-    awardLikelihoodMethodBeforeRepair: overlay.counts.awardLikelihoodMethod,
-    awardLikelihoodMethod: sortCounts(Object.entries(methodCounts))
-  };
-
-  return overlay;
 }
 
 export function buildReport(result) {
@@ -1069,16 +860,12 @@ export function buildReport(result) {
   reportRows.push(`Reconciled opportunities: ${result.reviewedRowCount}`);
   reportRows.push(`Missing opportunities: ${result.missingOpportunityCount}`);
   reportRows.push(`Duplicate output IDs: ${result.duplicateOpportunityCount}`);
-  reportRows.push(`Extra output IDs: ${result.extraOutputCount}`);
-  reportRows.push(`Rejected opportunities: ${result.rejectedOpportunityCount}`);
   reportRows.push(`Result: ${result.ok ? "PASS" : "FAIL"}`);
   reportRows.push("");
 
   const counts = countsForRecords(result.recordsById);
   reportRows.push("## Counts");
-  reportRows.push(`awardLikelihoodBeforeReassessment: ${JSON.stringify(counts.awardLikelihoodBeforeReassessment)}`);
   reportRows.push(`awardLikelihood: ${JSON.stringify(counts.awardLikelihood)}`);
-  reportRows.push(`awardLikelihoodReassessmentDecision: ${JSON.stringify(counts.awardLikelihoodReassessmentDecision)}`);
   reportRows.push(`requiresProgramApproval: ${JSON.stringify(counts.requiresProgramApproval)}`);
   reportRows.push(`reviewStatus: ${JSON.stringify(counts.reviewStatus)}`);
   reportRows.push(`approvalStage: ${JSON.stringify(counts.approvalStage)}`);

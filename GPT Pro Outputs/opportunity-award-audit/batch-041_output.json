@@ -1,0 +1,539 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-041",
+  "inputFile": "batch-041_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T15:12:12Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22101",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a current or prospective Oklahoma Natural Gas customer, or an eligible builder, for an individually metered Oklahoma residence.",
+        "Install a new qualifying natural-gas furnace or boiler that meets the current efficiency and equipment specifications.",
+        "Use an Oklahoma-licensed contractor and comply with applicable codes and permits.",
+        "Submit the current rebate application within 180 days of installation with the itemized invoice, model and efficiency documentation, and other required records.",
+        "Apply while program funds remain available and permit installation verification if requested."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Oklahoma Natural Gas currently publishes a 2026 rules-based residential heating-equipment rebate and states that funds are available. A timely, complete claim for qualifying gas equipment is likely to be paid after routine review, subject to funding and verification.",
+      "evidenceUrls": [
+        "https://www.oklahomanaturalgas.com/save-money/rebates-and-incentives/residential-rebates",
+        "https://www.oklahomanaturalgas.com/save-money/rebates-and-incentives/residential-rebates/residential-rebates-heating-system",
+        "https://www.oklahomanaturalgas.com/save-money/rebates-and-incentives/rebate-applications",
+        "https://www.oklahomanaturalgas.com/media/ONG/Rebates/ONG-Rebate-App-2026.pdf"
+      ],
+      "evidenceText": "Current Oklahoma Natural Gas materials offer 2026 residential furnace and boiler rebates, require qualifying equipment installed by a licensed contractor, and require a documented application within 180 days while funds remain available.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5015",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a current or prospective Oklahoma Natural Gas customer, or an eligible builder, for an individually metered Oklahoma residence.",
+        "Install a new qualifying natural-gas furnace or boiler that meets the current efficiency and equipment specifications.",
+        "Use an Oklahoma-licensed contractor and comply with applicable codes and permits.",
+        "Submit the current rebate application within 180 days of installation with the itemized invoice, model and efficiency documentation, and other required records.",
+        "Apply while program funds remain available and permit installation verification if requested."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current official offering is a prescriptive Oklahoma Natural Gas rebate for qualifying gas furnaces and boilers. A conforming claim is likely after administrative review, although the target's electric heat-pump mapping is not supported by the current gas-equipment rebate materials.",
+      "evidenceUrls": [
+        "https://www.oklahomanaturalgas.com/save-money/rebates-and-incentives/residential-rebates",
+        "https://www.oklahomanaturalgas.com/save-money/rebates-and-incentives/residential-rebates/residential-rebates-heating-system",
+        "https://www.oklahomanaturalgas.com/save-money/rebates-and-incentives/rebate-applications",
+        "https://www.oklahomanaturalgas.com/media/ONG/Rebates/ONG-Rebate-App-2026.pdf"
+      ],
+      "evidenceText": "Current Oklahoma Natural Gas materials substantiate 2026 residential natural-gas furnace and boiler rebates with a licensed-contractor, invoice, efficiency-documentation, 180-day filing, funding, and verification process; they do not substantiate an electric heat-pump rebate.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:f4ae5887bd3fcdc9:on-bill-financing",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible Southern California Edison nonresidential or multifamily electric account for the project site.",
+        "Use a battery-storage project that is accepted through an eligible SCE clean-energy or incentive program and provide proof of that program participation.",
+        "Submit the On-Bill Financing application, project matrix, scope, cost, savings, and supporting documents before purchasing or installing the financed project.",
+        "Pass SCE account, project, program, and credit or repayment-eligibility review and execute the financing agreement.",
+        "Complete the approved installation and submit final invoices, completion records, and any required inspection or verification."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Battery storage is identified as a potentially financeable clean-energy project, but financing is not automatic. Approval depends on an eligible SCE account, participation in a qualifying clean-energy program, project review, account or credit conditions, document execution, and final verification.",
+      "evidenceUrls": [
+        "https://www.sce.com/business/rates-financing/energy-efficiency-financing/on-bill-financing",
+        "https://www.sce.com/terms-conditions/on-bill-financing-terms-conditions",
+        "https://www.sce.com/sites/default/files/custom-files/PDF_Files/Clean_Energy_Project_Matrix_Form_11252025.pdf"
+      ],
+      "evidenceText": "SCE's current On-Bill Financing materials allow qualifying clean-energy projects, including battery storage, but require advance application, qualifying-program participation, financing review, signed documents, and post-installation verification.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3999",
+      "requiresProgramApproval": "unknown",
+      "approvalRequirements": [
+        "The standalone Kentucky On-Farm Energy Efficiency Incentives Program was sunset effective December 31, 2025, so no current application or approval route for this record was verified.",
+        "A producer seeking energy assistance in 2026 must instead determine whether the separate county-level County Agricultural Investment Program energy-investment area is offered locally and satisfy that program's application and approval rules."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "Kentucky's current 2026 program materials state that the standalone on-farm energy program was sunset at the end of 2025. A new application under this specific opportunity is therefore unlikely to receive an award; a separate county program may offer a different pathway.",
+      "evidenceUrls": [
+        "https://www.kyagr.com/agpolicy/documents/2026-Program-Guidelines-Applications/ADF_APP_summary-revisions.pdf",
+        "https://www.kyagr.com/agpolicy/documents/2026-Program-Guidelines-Applications/ADF_APP_caip-26_energy.pdf"
+      ],
+      "evidenceText": "The 2026 Kentucky Agricultural Development Fund revisions sunset the standalone On-Farm Energy Efficiency Incentives Program on December 31, 2025. A distinct 2026 county CAIP energy-investment area remains subject to local availability and approval.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22479",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Locate the project at an eligible Oncor nonresidential electric service site subject to the applicable energy-efficiency program charges.",
+        "Use an approved Oncor Solar Program Service Provider to submit the project; customers may not reserve incentives directly.",
+        "Obtain Oncor application approval and incentive-fund reservation before purchasing equipment or beginning construction.",
+        "Install a new qualifying photovoltaic system within the current size, load, equipment, permitting, and interconnection requirements.",
+        "Submit final invoices, technical and interconnection records, and pass Oncor's completion review or inspection."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Oncor's 2026 commercial solar program uses defined eligibility, service-provider, reservation, technical, and closeout rules rather than competitive scoring. A qualifying project with reserved funds is likely to receive the incentive after successful completion and verification.",
+      "evidenceUrls": [
+        "https://www.oncor.com/content/oncorwww/talot/en/home/get-started/business/commercial-solar.html",
+        "https://www.oncor.com/content/oncorwww/us/en/home/partners/eepm-home/resources.html",
+        "https://www.oncor.com/content/dam/oncorwww/eepm/documents/commercial-resources/2026/2026%20Solar%20Manual%202_0.pdf.coredownload.pdf"
+      ],
+      "evidenceText": "The current Oncor commercial solar manual requires an approved service provider, advance application and fund reservation, qualifying new PV, permitting and interconnection, final documentation, and inspection or verification before payment.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3168",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Install the project at an eligible Oncor residential service location with a permanent electric meter and qualifying account.",
+        "Use an approved Oncor Residential Solar Service Provider; self-installed projects are not eligible for the incentive pathway.",
+        "Obtain project approval and incentive-fund reservation before purchasing equipment or starting construction.",
+        "Meet the current photovoltaic sizing, equipment, permitting, and interconnection rules and, for storage, the paired-system, technology, location, and charging requirements.",
+        "Submit final invoices, equipment and interconnection records, and pass Oncor's completion review or inspection."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The 2026 residential solar and storage pathway is formulaic once an approved provider establishes eligibility and reserves funds. A compliant reserved project is likely to be paid after installation and verification, subject to program funding and technical limits.",
+      "evidenceUrls": [
+        "https://www.oncor.com/content/oncorwww/us/en/home/partners/eepm-home/residential-provider.html",
+        "https://www.oncor.com/content/oncorwww/us/en/home/partners/eepm-home/resources.html",
+        "https://www.oncor.com/content/dam/oncorwww/eepm/documents/commercial-resources/2026/2026%20Solar%20Manual%202_0.pdf.coredownload.pdf"
+      ],
+      "evidenceText": "Oncor's current residential solar program requires an approved service provider, advance approval and fund reservation, qualifying PV and optional paired storage, interconnection and permits, and final records and inspection before incentive payment.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4644",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible Orange and Rockland New York business electric or gas account at the project site.",
+        "Submit the proposed custom efficiency project, cost, operating data, and engineering energy-savings calculations before purchasing or installing equipment.",
+        "Receive program preapproval and complete the required pre-installation site inspection.",
+        "Demonstrate qualifying energy savings and satisfy the current payback, incentive-cap, technical, and cost-effectiveness rules.",
+        "Complete the approved work and submit final invoices, equipment records, savings documentation, and any required post-installation verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Orange and Rockland accepts broad custom projects, but each project must pass advance engineering, savings, payback, cost, and inspection review. Those project-specific determinations make an award possible rather than routine before review.",
+      "evidenceUrls": [
+        "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-business-customers-ny",
+        "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-business-customers-ny/custom-incentive-program"
+      ],
+      "evidenceText": "O&R's current New York business custom program requires preapproval, engineering savings analysis, a pre-installation inspection, qualifying economics, and final project documentation and verification before incentive payment.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5011",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible Orange and Rockland New York residential electric account and central air-conditioning system.",
+        "Install or possess a compatible Wi-Fi smart thermostat and connect it to the home's cooling system and internet service.",
+        "Enroll the thermostat in the current Smart Savers program and provide the requested account and device information.",
+        "Keep the thermostat connected and permit the limited summer temperature adjustments described by the program."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Smart Savers offering uses objective account, equipment, connectivity, and enrollment conditions and provides a stated enrollment incentive. A qualifying customer who completes enrollment is likely to receive it; the target's refrigeration mapping is not supported by the current residential pages reviewed.",
+      "evidenceUrls": [
+        "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-residential-customers-ny",
+        "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-residential-customers-ny/thermostat-rebate"
+      ],
+      "evidenceText": "O&R currently offers a residential smart-thermostat enrollment incentive for eligible New York electric customers with central cooling and a compatible connected thermostat. A current residential refrigeration-equipment rebate was not verified.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3905",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible Orange and Rockland New York residential natural-gas account at the installation address.",
+        "Install a new qualifying high-efficiency natural-gas furnace or boiler that meets the published efficiency requirements.",
+        "Use a participating contractor that submits the rebate through the program's contractor channel.",
+        "Provide the equipment, customer, installation, and invoice information required for utility review and permit verification if requested."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current O&R gas-appliance rebates are prescriptive and contractor-submitted. A qualifying furnace or boiler installation is likely to receive the stated rebate after routine review; the target's air-sealing mapping is not part of the current gas-appliance rebate table.",
+      "evidenceUrls": [
+        "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-residential-customers-ny/energy-efficient-equipment-rebates/gas-appliance-rebates"
+      ],
+      "evidenceText": "O&R currently lists New York residential rebates for qualifying high-efficiency natural-gas furnaces and boilers and directs participating contractors to submit the claims. Air sealing is not listed in the current gas-appliance rebate table.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2678",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Orange County REMC member and install the equipment at a residence served by the cooperative.",
+        "Purchase and place qualifying heat-pump or geothermal equipment into operation during the current 2026 program year and meet the published efficiency specifications.",
+        "Submit the current rebate form with an itemized paid invoice, AHRI certificate or other required efficiency documentation, and account information within 90 days of installation and by the annual deadline.",
+        "Permit Orange County REMC to inspect or otherwise verify the installation if requested.",
+        "Apply while rebate funds remain available; payment may not exceed the current percentage-of-equipment-cost limit."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Orange County REMC's current landing page identifies a 2026 rebate cycle with objective equipment and documentation rules. A timely qualifying claim is likely to be paid after routine review, subject to the annual deadline, cost cap, inspection, and available funds.",
+      "evidenceUrls": [
+        "https://www.myremc.coop/rebates",
+        "https://www.myremc.coop/residential-rebates",
+        "https://www.myremc.coop/_files/ugd/31e75a_3f637d2a9d924d71aa3d8a78bf5ded72.pdf",
+        "https://www.myremc.coop/_files/ugd/31e75a_a299f79f4ed949888e4c10d0dd1ba844.pdf"
+      ],
+      "evidenceText": "Orange County REMC's current 2026 rebate materials require a served residence, qualifying heat-pump or geothermal equipment, a timely application, invoice and efficiency records, and allow inspection; the current landing-page deadline supersedes stale prior-year wording elsewhere.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2130",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Orcas Power and Light Cooperative member and install the measure at a qualifying served residence.",
+        "Purchase and install a measure covered by a current residential rebate and meet its equipment, efficiency, contractor, and installation specifications.",
+        "Complete the measure-specific online application and provide invoices, model numbers, photographs, certifications, and other required documentation.",
+        "Obtain any measure-specific advance authorization and permit inspection or verification when required.",
+        "Apply while the applicable annual rebate budget remains available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "OPALCO currently publishes prescriptive residential rebates for heat pumps, heat-pump water heaters, weatherization, and Level 2 charging. Eligible members who follow the applicable application and documentation route are likely to be paid, subject to measure rules and annual budgets.",
+      "evidenceUrls": [
+        "https://www.opalco.com/save/residential-rebates/",
+        "https://www.opalco.com/save/residential-rebates/ductless-heat-pump/",
+        "https://www.opalco.com/save/residential-rebates/heat-pump-water-heater/",
+        "https://www.opalco.com/save/residential-rebates/ev-charging-station/"
+      ],
+      "evidenceText": "OPALCO's current residential pages list measure-specific rebates and online application requirements for HVAC, water heating, weatherization, and Level 2 EV charging, with documentation, verification, and budget conditions.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22659",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Wait for ODOT to issue and open the next Oregon NEVI notice of funding opportunity; the official page only states that a third grant opportunity is planned for summer 2026.",
+        "Be an applicant type permitted by the applicable notice and propose an eligible Oregon charging site and project.",
+        "Meet the current federal and state NEVI technical, accessibility, reliability, networking, permitting, environmental, labor, and domestic-content requirements.",
+        "Commit at least the required applicant cost share and submit a complete proposal with site control, utility, technical, financial, and organizational documentation by the deadline.",
+        "Receive a competitive selection and execute the ODOT grant agreement before incurring reimbursable project costs."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "ODOT has completed Round 2 selections and says a third grant opportunity is planned for summer 2026, but no open third-round solicitation was verified. When opened, funding will be competitively selected and subject to extensive federal, technical, matching, and contract requirements, so an award is only possible.",
+      "evidenceUrls": [
+        "https://www.oregon.gov/odot/climate/pages/nevi.aspx",
+        "https://www.oregon.gov/odot/climate/Documents/ODOT%20Notice%20of%20Funding%20Opportunity%20for%20Round%202.pdf"
+      ],
+      "evidenceText": "ODOT's current NEVI page reports seven Round 2 selections and plans a third grant opportunity for summer 2026. Prior notices use competitive review, a minimum applicant match, federal technical requirements, and a grant agreement before funding.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22224",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Purchase or lease the eligible vehicle while the Oregon Clean Vehicle Rebate Program is open; transactions during suspension are ineligible.",
+        "Be an eligible Oregon resident, business, nonprofit, or government applicant and use a currently eligible vehicle, dealer or original-equipment-manufacturer transaction, title, and registration pathway.",
+        "For the Charge Ahead Rebate, satisfy the current income or eligible-organization rules and complete any required prequalification.",
+        "Submit the rebate application and purchase or lease, registration, vehicle, and applicant documentation within the current filing deadline.",
+        "Receive program eligibility and funding review; no charger-installation rebate is provided through this vehicle-rebate program."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The official program is currently suspended, and vehicles purchased or leased during suspension are expressly ineligible. A new award is unlikely until DEQ reopens the program; the target's EV-charger mapping is also outside this vehicle-purchase rebate.",
+      "evidenceUrls": [
+        "https://www.oregon.gov/deq/aq/programs/Pages/ZEV-Rebate.aspx",
+        "https://www.oregon.gov/deq/aq/programs/pages/available-rebate-funding.aspx",
+        "https://www.oregon.gov/deq/aq/programs/pages/applying-for-ev-rebate.aspx"
+      ],
+      "evidenceText": "Oregon DEQ states that both Clean Vehicle rebate tracks are suspended, expects a possible summer 2026 reopening, and makes purchases or leases during suspension ineligible. The program applies to qualifying vehicles, not charger installations.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5412",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible Orlando Utilities Commission business electric account and complete the project in OUC's service territory.",
+        "For a listed prescriptive measure, meet the current measure specifications and submit the claim, invoice, proof of purchase, and contractor or product records within the required period.",
+        "For a custom commercial or industrial project, request an applicant number and submit the scope, costs, technical specifications, savings calculations, and photographs before work begins.",
+        "Receive advance funding commitment or project approval where required and complete the approved installation in compliance with applicable laws and manufacturer requirements.",
+        "Submit final invoices, savings records, and photographs and pass any required pre- or post-installation verification before the bill credit is issued."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "OUC currently maintains both prescriptive business rebates and a structured custom commercial and industrial pathway. A qualifying prescriptive claim or an approved custom project is likely to receive the bill credit after complete documentation and verification, subject to program terms and funding.",
+      "evidenceUrls": [
+        "https://www.ouc.com/solutions-programs/savings/rebates/",
+        "https://www.ouc.com/solutions-programs/savings/rebates/commercial-industrial-incentive-program/",
+        "https://www.ouc.com/solutions-programs/business/savings/request-applicant-number/"
+      ],
+      "evidenceText": "OUC currently offers business rebates with invoices and timely proof of purchase and uses advance applicant-number, savings-analysis, inspection, approval, and final-documentation steps for custom commercial and industrial projects.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22482",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an active OUC residential account in good standing and have sufficient billing history at an eligible dwelling in the service territory.",
+        "Complete OUC's no-cost home energy audit and allow the program to determine income, property, and measure eligibility.",
+        "For a rental property, provide the required lease and owner authorization.",
+        "Accept an approved package of recommended improvements and the applicable customer cost share.",
+        "Use the OUC-designated contractor and complete any required installation and final program verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Efficiency Delivered uses a defined audit, eligibility, approved-scope, cost-share, and preferred-contractor process rather than competitive ranking. An eligible household that completes those steps is likely to receive the authorized improvements, subject to program capacity.",
+      "evidenceUrls": [
+        "https://www.ouc.com/solutions-programs/savings/efficiency-delivered/",
+        "https://www.ouc.com/solutions-programs/savings/efficiency-delivered/homeowners-renter/"
+      ],
+      "evidenceText": "OUC's current Efficiency Delivered program begins with a free audit, verifies account, dwelling, income and owner authorization, approves a package and cost share, and uses preferred contractors for the authorized improvements.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22307",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an OUC electric customer and purchase or lease an eligible electric vehicle under the current rebate terms.",
+        "Submit the rebate request in the account holder's name with proof of purchase or lease and other required vehicle documentation within the current claim period.",
+        "Meet the general OUC rebate terms and provide any additional verification requested.",
+        "No current OUC incentive approval pathway for a standalone residential EV charger installation was verified."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "OUC's current official incentive is a vehicle purchase or lease rebate. The charger information directs customers to qualified installation resources but does not offer a standalone charger rebate, so the mapped charger opportunity is unlikely to receive an award under this record.",
+      "evidenceUrls": [
+        "https://www.ouc.com/solutions-programs/savings/rebates/electric-vehicle-purchase-lease/",
+        "https://www.ouc.com/solutions-programs/electric-vehicles/",
+        "https://www.ouc.com/solutions-programs/savings/rebates/"
+      ],
+      "evidenceText": "OUC currently provides a rebate for an eligible EV purchase or lease and requires customer and transaction documentation. Its charger materials provide installation guidance but do not substantiate a current standalone charger rebate.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1780",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible OUC residential account and install the measure in OUC's service territory.",
+        "Select a measure currently listed by OUC and meet its equipment, efficiency, contractor, sizing, and installation specifications.",
+        "Submit the rebate through the current customer channel with an itemized invoice or receipt, product and contractor information, and proof of purchase in the account holder's name within six months.",
+        "Comply with applicable permits, laws, codes, and manufacturer requirements and permit on-site verification when requested.",
+        "Receive OUC's claim approval before the rebate is issued as a bill credit."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "OUC currently publishes prescriptive residential rebates for many mapped HVAC, water-heating, envelope, window, and solar-thermal measures. A timely documented qualifying claim is likely after routine review; the EV purchase rebate is separate and a standalone charger rebate was not verified.",
+      "evidenceUrls": [
+        "https://www.ouc.com/solutions-programs/savings/rebates/",
+        "https://www.ouc.com/solutions-programs/savings/rebates/how-to-apply-for-your-rebate/",
+        "https://www.ouc.com/solutions-programs/savings/rebates/heat-pump-water-heater/"
+      ],
+      "evidenceText": "OUC's current residential rebate process requires a qualifying listed measure, account-holder invoice or receipt, submission within six months, compliance with technical and legal requirements, and possible inspection before a bill credit is issued.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2867",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible OUC electric account at the installation address.",
+        "Purchase and install a qualifying solar-thermal water-heating system with the required current certification; pool-heating systems are not eligible.",
+        "Use a qualified contractor and retain the itemized invoice, system model, certification sheet, and installation documentation.",
+        "Submit the rebate request within six months of purchase or installation and comply with the general OUC rebate terms.",
+        "Receive OUC document review and any requested verification before the bill credit is issued."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "OUC currently publishes a prescriptive solar-thermal water-heater rebate with objective customer, product-certification, invoice, and timing rules. A conforming claim is likely to receive the bill credit after review, subject to the stated cost and maximum limits.",
+      "evidenceUrls": [
+        "https://www.ouc.com/solutions-programs/savings/rebates/solar-thermal-water-heater/",
+        "https://www.ouc.com/solutions-programs/solar-programs/"
+      ],
+      "evidenceText": "OUC currently offers a solar-thermal water-heater rebate for eligible electric customers, requires certified equipment, contractor and invoice documentation, excludes pool heating, and requires a timely claim before bill-credit approval.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3136",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Oregon Trail Electric Cooperative member and install the equipment at an eligible agricultural service location.",
+        "Install a qualifying agricultural variable-frequency drive or pump upgrade that meets the current horsepower, use, equipment, and operating requirements.",
+        "For a variable-frequency drive, provide the required pump nameplate information and pass the applicable harmonics test.",
+        "For a pump upgrade, provide the required project worksheet, pump curve, and operating-point information.",
+        "Submit the online rebate application with the itemized invoice and all measure-specific technical documentation."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "OTEC currently publishes objective agricultural VFD and pump-upgrade requirements and an online documentation process. A member project that meets the technical rules and submits complete records is likely to receive the applicable rebate after review.",
+      "evidenceUrls": [
+        "https://www.otec.coop/agriculture-rebates"
+      ],
+      "evidenceText": "OTEC's current agricultural rebate page requires an online application and invoice and lists measure-specific horsepower, pump, nameplate, harmonics-test, curve, and operating-point documentation for VFD and pump projects.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22431",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Oregon Trail Electric Cooperative commercial member and install the measure at an eligible served facility.",
+        "Purchase and install a measure listed on the current commercial rebate page and meet its efficiency, sizing, electric-heating, product-list, and installation specifications.",
+        "Submit the online rebate application with the itemized invoice, AHRI certificate, product data, photographs, and other measure-specific documentation.",
+        "For an unlisted or custom measure, obtain a custom incentive quotation and any required approval before proceeding.",
+        "Permit OTEC or its program administrator to verify the equipment and installation if requested."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "OTEC currently lists prescriptive commercial HVAC, thermostat, insulation, and window rebates with objective qualifications and online filing. A qualifying documented project is likely to be paid, while unlisted custom work requires separate advance review.",
+      "evidenceUrls": [
+        "https://www.otec.coop/commercial-rebates"
+      ],
+      "evidenceText": "OTEC's current commercial rebate page requires an online application and invoice and provides measure-specific HVAC, thermostat, insulation, window, product, efficiency, and supporting-document requirements, with advance quotation for custom measures.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2316",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Oregon Trail Electric Cooperative residential member and install the measure at an eligible served home.",
+        "Purchase and install a measure currently listed by OTEC and meet its ENERGY STAR, qualified-product-list, electric-heating, efficiency, sizing, or installation requirements.",
+        "Submit the online rebate application with the itemized invoice and required EnergyGuide label, AHRI certificate, model information, photographs, or other measure-specific documentation.",
+        "Use qualifying new equipment and satisfy any contractor, existing-condition, or replacement requirements for the selected measure.",
+        "Permit program verification if requested and apply under the current rebate terms."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "OTEC currently publishes prescriptive residential appliance, HVAC, water-heating, thermostat, insulation, and window rebates. A member who installs qualifying equipment and submits complete measure-specific records is likely to receive the rebate after routine review.",
+      "evidenceUrls": [
+        "https://www.otec.coop/residential-rebates"
+      ],
+      "evidenceText": "OTEC's current residential page requires online filing and invoices and lists measure-specific ENERGY STAR, product-list, electric-heating, AHRI, efficiency, replacement, and supporting-document rules for the mapped measures.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22336",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Install the charger at a Minnesota location where Otter Tail Power supplies the electricity.",
+        "Purchase and install a new hardwired Level 2 charger served on an eligible controlled or off-peak rate.",
+        "Submit the current Minnesota rebate form with the account, charger, installer, signature, dated receipt, and itemized invoice information.",
+        "File the request by March 31 of the year following the purchase year and retain documentation for program review.",
+        "Permit Otter Tail Power to inspect or otherwise verify the charger and rate configuration if requested."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Otter Tail Power currently publishes a fixed Minnesota Level 2 charger rebate with objective service, hardwiring, rate, equipment, invoice, and deadline rules. A complete qualifying claim is likely to be paid after routine review and any requested verification.",
+      "evidenceUrls": [
+        "https://www.otpco.com/rebates-and-efficiency-programs/programs/electric-vehicle-rate/",
+        "https://www.otpco.com/media/0i1awkwg/mn-electric-vehicle-charging-rebate-form-2026-fillable.pdf"
+      ],
+      "evidenceText": "Otter Tail Power's current Minnesota materials offer a fixed rebate for a new hardwired Level 2 charger on a qualifying controlled or off-peak rate and require account, equipment, invoice, signature, deadline, and possible inspection compliance.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1528",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Otter Tail Power commercial or industrial electric customer with a proposed energy-saving project.",
+        "Contact an Otter Tail Power Energy Management Representative and submit the project concept, equipment, costs, operating data, and estimated electric savings before purchase or installation.",
+        "Receive a custom savings analysis, incentive proposal, and written preapproval before beginning the project.",
+        "Complete the approved project within the stated approval period and comply with the current project-cost and incentive limits.",
+        "Provide final invoices, completion documentation, and any required measurement and verification before grant payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Custom grants require project-specific engineering, savings, cost, and incentive review before work and may be redirected to a standard rebate. Because the amount and approval depend on the proposed project and available program treatment, an unreviewed project has only a possible award.",
+      "evidenceUrls": [
+        "https://www.otpco.com/rebates-and-efficiency-programs/programs/custom-grants/",
+        "https://www.otpco.com/rebates-and-efficiency-programs/programs/rebates-commercial/"
+      ],
+      "evidenceText": "Otter Tail Power's current custom-grant process requires early coordination, savings and cost analysis, written preapproval, timely completion, and final invoices and measurement or verification. Incentives are limited by calculated savings and project cost.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1531",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Install the equipment at a Minnesota commercial or industrial location where Otter Tail Power supplies the electricity.",
+        "Use a measure covered by a current 2026 commercial rebate form and meet the applicable efficiency, size, rate, equipment, and installation specifications.",
+        "Submit the current customer rebate form with account information, a dated itemized invoice or receipt, equipment data, and required AHRI certificate, product specification, or other efficiency proof.",
+        "Obtain advance approval for an Energy Control or other measure when the expected rebate reaches the current preapproval threshold.",
+        "Submit by March 31 of the year following purchase and permit Otter Tail Power to inspect or verify the installation if requested."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Otter Tail Power currently publishes 2026 commercial forms for lighting, heating and cooling, water heating, refrigeration, EV charging, and related measures. Most are prescriptive, so a complete qualifying claim is likely to be paid, with advance review for specified large claims.",
+      "evidenceUrls": [
+        "https://www.otpco.com/rebates-and-efficiency-programs/programs/rebates-commercial/",
+        "https://www.otpco.com/media/fspbkton/mn-customer-rebate-application-form-3053_2026-fillable.pdf"
+      ],
+      "evidenceText": "Otter Tail Power's current Minnesota commercial program uses 2026 measure forms and a general application requiring an OTP-served site, qualifying equipment, invoice, efficiency documentation, annual deadline, cost caps, possible inspection, and preapproval for specified large claims.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3139",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Install the equipment at a North Dakota location where Otter Tail Power supplies the electricity and, where applicable, place it on a qualifying controlled rate.",
+        "Use equipment covered by a current North Dakota rebate form and meet the applicable efficiency, capacity, rate, product, and installation requirements.",
+        "Submit the current rebate application with account information, a dated itemized invoice or receipt, equipment details, and the required AHRI certificate, product specification, or other efficiency proof.",
+        "Obtain advance approval when the expected rebate reaches a measure-specific preapproval threshold.",
+        "Submit by March 31 of the year following purchase and permit inspection or other verification if requested."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Otter Tail Power currently publishes a 2026 North Dakota rebate application with objective service, equipment, rate, invoice, documentation, deadline, and cost-cap rules. A claim for a measure confirmed on the current applicable form is likely to be paid after review; some broadly mapped measures require confirmation on their specific current forms.",
+      "evidenceUrls": [
+        "https://www.otpco.com/rebates-and-efficiency-programs/programs/rebates-commercial/",
+        "https://www.otpco.com/media/0nlb0ch4/nd-customer-rebate-application-form-3053_2026-fillable.pdf"
+      ],
+      "evidenceText": "Otter Tail Power's current 2026 North Dakota form requires an OTP-served site, qualifying equipment and controlled rate where applicable, invoice and efficiency proof, annual filing, cost limits, possible inspection, and advance approval for specified large rebates.",
+      "reviewedAt": "2026-07-10T15:12:12Z",
+      "reviewStatus": "audited"
+    }
+  ]
+}

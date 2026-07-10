@@ -1,0 +1,552 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-022",
+  "inputFile": "batch-022_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T14:30:51Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22596",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible Entergy New Orleans electric account in good standing at the project location.",
+        "Purchase qualifying Level 2 or DC fast-charging equipment and satisfy the applicable equipment, port, location, and use requirements.",
+        "Apply within 180 days of equipment delivery or invoice and provide the equipment invoice, model and serial-number information.",
+        "Provide installation invoices or photographs, comply with applicable electrical-code and permitting requirements, and allow inspection if requested."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program publishes rules-based charger incentives rather than competitively ranking applicants. A timely, documented qualifying project is likely to be approved, subject to program limits, verification, and available funds.",
+      "evidenceUrls": [
+        "https://entergyetech.com/electric-vehicles",
+        "https://entergyetech.com/terms-conditions",
+        "https://entergyetech.com/apply-online"
+      ],
+      "evidenceText": "Entergy eTech requires an eligible account, qualifying charger equipment, a timely application, invoice and equipment details, installation evidence, and any requested verification. Incentives are limited and remain subject to program review and funding.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3752",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Entergy New Orleans residential electric customer at the installation address.",
+        "Purchase or install a currently qualifying appliance, thermostat, water-heating, HVAC, or home-performance measure that meets the measure-specific specifications.",
+        "Use a participating trade ally or complete a program assessment where the selected HVAC or whole-home pathway requires it.",
+        "Submit the applicable application, receipt or invoice, product information, and required certifications by the measure-specific deadline; appliance claims generally require submission within 45 days.",
+        "Provide owner or landlord authorization and permit inspection or verification when applicable."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current Energy Smart residential offerings use published customer, equipment, contractor, and documentation rules, so a compliant claim is likely to be paid. The target's full window-replacement mapping was not verified on the current official pages.",
+      "evidenceUrls": [
+        "https://energysmartnola.info/residents/",
+        "https://energysmartnola.info/residential-appliances/",
+        "https://energysmartnola.info/a-c-solutions/"
+      ],
+      "evidenceText": "Energy Smart currently provides residential appliance, thermostat, water-heating, HVAC, and home-performance pathways for Entergy New Orleans customers. Claims require qualifying products or work, timely forms and receipts, and trade-ally or assessment steps where specified; full window replacement was not confirmed.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3754",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Entergy New Orleans business electric customer for the affected facility.",
+        "Use the current lighting or non-lighting workbook and install equipment listed for the applicable prescriptive incentive, or submit a qualifying custom project with verifiable electric savings.",
+        "Obtain program preapproval before purchasing or implementing a custom building-automation, motor, variable-frequency-drive, or other nonprescriptive project.",
+        "Submit the application or calculator, recent utility information, itemized proposal or invoices, equipment specifications and certifications, photographs, and tax documentation requested by the program.",
+        "Complete any pre-site visit, post-installation inspection, or savings verification required for the selected pathway."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Prescriptive measures and approved custom projects follow defined administrative review paths rather than competitive selection. A qualifying, properly sequenced project is likely to receive the incentive, although the target's low-flow-fixture mapping was not substantiated by current program materials.",
+      "evidenceUrls": [
+        "https://energysmartnola.info/businesses/equipment-replacement/",
+        "https://energysmartnola.info/custom-incentives/",
+        "https://energysmartnola.info/resources/"
+      ],
+      "evidenceText": "Energy Smart currently supports prescriptive lighting, HVAC, refrigeration, and commercial-kitchen equipment plus custom efficiency projects. Custom work requires advance review and project documentation; current official materials did not verify an ordinary low-flow-fixture incentive.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2653",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Entergy Texas commercial customer with a qualifying project in the utility's service territory.",
+        "Enroll by submitting the required letter of intent, recent utility bill, vendor information, and proposed project scope and schedule.",
+        "Receive the mandatory pre-installation inspection before existing equipment is removed; provide design drawings before construction for applicable new-construction projects.",
+        "Install approved lighting, HVAC, refrigeration, roofing, or custom measures within the authorized project schedule.",
+        "Submit final project documentation and pass the required post-installation inspection or savings verification before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The 2026 program uses a defined enrollment, preinspection, preliminary-incentive, and postinspection process. Eligible projects that preserve the required sequence and complete verification are likely to receive the approved incentive.",
+      "evidenceUrls": [
+        "https://entergytxsolutions.com/",
+        "https://entergytxsolutions.com/eti/media/commercial-solutions-flyer-.pdf",
+        "https://applications.entergytxsolutions.com/"
+      ],
+      "evidenceText": "Entergy Texas Commercial Solutions requires enrollment and a mandatory preinspection before equipment removal, then project completion, documentation, and postinstallation verification. Current materials list lighting, HVAC, refrigeration, roofing, new-construction, and custom opportunities.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22396",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible Entergy Texas electric account in good standing at the project location.",
+        "Purchase qualifying Level 2 or DC fast-charging equipment and satisfy the applicable equipment, port, location, and use requirements.",
+        "Apply within 180 days of equipment delivery or invoice and provide the equipment invoice, model and serial-number information.",
+        "Provide installation invoices or photographs, comply with applicable electrical-code and permitting requirements, and allow inspection if requested."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The eTech charger incentives are rules-based rather than competitive. A complete qualifying Texas customer application is likely to be approved, subject to program limits, verification, and available funds.",
+      "evidenceUrls": [
+        "https://entergyetech.com/electric-vehicles",
+        "https://entergyetech.com/terms-conditions",
+        "https://entergyetech.com/apply-online"
+      ],
+      "evidenceText": "Entergy eTech requires an eligible Texas account, qualifying charger equipment, a timely application, invoices and equipment details, installation evidence, and any requested verification. Incentives remain limited and subject to program review and funding.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22373",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible EWEB electric customer and have authority to install charging equipment at the site.",
+        "For a residential claim, install a qualifying 240-volt Level 2 charger and submit the application within 120 days after installation.",
+        "For a multifamily or business project, propose commercial-grade public Level 2 equipment that meets the networking, connector, demand-response, and inspection requirements.",
+        "Obtain EWEB site-capacity review and preapproval before purchasing or installing equipment when required for the business or multifamily pathway.",
+        "Submit invoices, equipment specifications, permit or inspection records, and other requested installation evidence."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "EWEB publishes objective residential and business Level 2 charger requirements. A timely residential claim or a preapproved and verified multifamily or business installation is likely to receive the stated rebate.",
+      "evidenceUrls": [
+        "https://www.eweb.org/rebates-and-savings/electric-mobility/ev-incentives",
+        "https://www.eweb.org/environment-and-climate/electric-mobility/ev-incentives-business"
+      ],
+      "evidenceText": "EWEB currently offers residential and qualifying business or multifamily Level 2 charging incentives. Residential claims have a postinstallation filing window, while larger sites require capacity review, preapproval, technical documentation, and inspection.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22766",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Eversource or United Illuminating customer in Connecticut for the applicable residential or commercial charging pathway.",
+        "Install qualifying networked Level 2 or DC fast-charging equipment and satisfy the applicable customer, site, contractor, and equipment-list requirements.",
+        "For a 2026 residential upfront rebate, meet the applicable income or designated-location eligibility rule and enroll the charger in managed charging.",
+        "For a commercial project, use a licensed and insured contractor and obtain the utility's application approval and incentive reservation before construction.",
+        "Submit final invoices, permits, equipment records, photographs, inspection or interconnection evidence, and complete any required managed-charging or postinstallation verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Connecticut program uses published eligibility, equipment, reservation, and verification rules rather than competitive ranking. A project that follows the applicable residential or commercial sequence is likely to receive the approved incentive.",
+      "evidenceUrls": [
+        "https://portal.ct.gov/pura/electric/office-of-technical-and-regulatory-analysis/clean-energy-programs/electric-vehicle-charging-program",
+        "https://www.eversource.com/residential/save-money-energy/clean-energy-options/electric-vehicles/charging-stations/ct",
+        "https://www.eversource.com/residential/save-money-energy/clean-energy-options/electric-vehicles/charging-stations/ev-charging-faq",
+        "https://www.eversource.com/business/save-money-energy/clean-energy-options/electric-vehicles/ev-information/ev-charger-faqs/ct"
+      ],
+      "evidenceText": "Connecticut's current utility program covers qualifying residential and commercial charging infrastructure. Residential rebates add managed-charging and 2026 income or location conditions; commercial projects require advance utility approval and reservation, qualified installation, and final documentation or inspection.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_22121",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must be an existing legacy Rule 45 project with a valid SDG&E contract and required notice to proceed; new applications are not accepted.",
+        "Complete the utility design, service-planning, easement, construction, metering, and interconnection requirements in the existing agreement.",
+        "Install customer-side charging equipment and obtain applicable permits, inspections, and utility authorization.",
+        "Satisfy all remaining schedule, cost-sharing, and closeout obligations before energization."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "SDG&E states that the EV Infrastructure Rule closed to new applications effective August 20, 2025, and projects without the required notice to proceed were terminated when the funding cap was reached. Only qualifying legacy projects can continue.",
+      "evidenceUrls": [
+        "https://www.sdge.com/business/electric-vehicles/lovelectric/ev-infrastructure-rule"
+      ],
+      "evidenceText": "The current SDG&E page says the Rule 45 EV infrastructure program is closed to new applications. Continuation is limited to qualifying legacy projects that retained the required contract and notice-to-proceed status and complete utility construction and interconnection conditions.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2933",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Evergy Missouri residential customer with an active account in good standing.",
+        "Schedule and complete the required home appointment or energy assessment.",
+        "Limit participation to the permitted kit quantity for the account and obtain property-owner consent when the participant rents.",
+        "Allow the program representative to install or deliver the qualifying small energy-saving products and complete verification.",
+        "Apply while first-come program funding and appointment capacity remain available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current offer is a direct-install energy-savings kit with small products, not a rebate for full insulation upgrades or window replacement. The target's mapped retrofits therefore substantially exceed the documented award scope.",
+      "evidenceUrls": [
+        "https://www.evergy.com/ways-to-save/programs-link/energy-savings-kit",
+        "https://www.evergy.com/-/media/documents/ways-to-save/programs/energy-savings-kit-terms-and-conditions-mo.pdf"
+      ],
+      "evidenceText": "Evergy's current Missouri program provides a home assessment and a limited kit of small energy-saving products for eligible residential accounts. It does not document funding for whole-window replacement or a general insulation retrofit under this opportunity.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1467",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Evergy Missouri residential customer with compatible central heating or cooling equipment and reliable internet service.",
+        "Obtain a qualifying smart thermostat through the current program or approved discount channel.",
+        "Install and connect the thermostat and enroll it in the Evergy Thermostat Program.",
+        "Authorize the required device and energy-use data access and remain available for energy-savings events under the program terms.",
+        "Maintain account, device, and program eligibility; event overrides remain permitted under the stated rules."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The thermostat offer uses objective customer, equipment, connectivity, and enrollment conditions. An eligible customer who completes installation and enrollment is likely to receive the discount or device benefit.",
+      "evidenceUrls": [
+        "https://www.evergy.com/ways-to-save/discounts/thermostats",
+        "https://www.evergy.com/ways-to-save/discounts-link/thermostats/thermostat-program-details",
+        "https://www.evergy.com/-/media/documents/ways-to-save/discounts/evergy-thermostat-program-terms-and-conditions-mo.pdf"
+      ],
+      "evidenceText": "Evergy currently offers discounted or no-cost smart thermostats tied to Thermostat Program enrollment. Eligibility depends on the account, compatible HVAC and internet service, connected installation, data authorization, and participation in energy-savings events.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2932",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Evergy Missouri residential electric customer for the applicable thermostat or EV-charging offer.",
+        "For the thermostat pathway, install a compatible qualifying device and complete Thermostat Program enrollment and data authorization.",
+        "For the EV pathway, own or lease an eligible EV, install qualifying Level 2 charging equipment through a certified electrician, and obtain required permits.",
+        "Enroll in the applicable time-of-use rate for the required participation period when claiming the EV charger rebate.",
+        "Submit the EV rebate application with invoice, installation, vehicle-registration, and account documentation within six months, while funds remain available."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Both current offers use published, administrative eligibility and documentation rules rather than competitive selection. Eligible customers that complete enrollment or submit a timely qualifying EV claim are likely to receive the benefit, subject to funds and program terms.",
+      "evidenceUrls": [
+        "https://www.evergy.com/ways-to-save/discounts",
+        "https://www.evergy.com/ways-to-save/discounts-link/ev-charging",
+        "https://www.evergy.com/-/media/documents/ways-to-save/discounts/residentialevchargingrebatetermsandconditionsmo.pdf",
+        "https://www.evergy.com/ways-to-save/discounts/thermostats",
+        "https://www.evergy.com/ways-to-save/discounts-link/thermostats/thermostat-program-details"
+      ],
+      "evidenceText": "Evergy currently lists Missouri smart-thermostat and residential Level 2 charging offers. The EV claim requires eligible service, an EV, qualified installation, time-of-use enrollment, supporting records, and timely filing; the thermostat benefit requires compatible equipment and program enrollment.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22325",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Eversource Massachusetts business customer and identify an eligible workplace, fleet, public, or multifamily charging site.",
+        "Prepare the installer and site plan and submit the project through the utility's application portal for feasibility review before construction.",
+        "Apply for applicable third-party funding and disclose or coordinate those awards as required by the program.",
+        "Receive the preapproval letter, site-host agreement, funding reservation, and permission to install before beginning reimbursable work.",
+        "Install qualified charging equipment, complete interconnection and inspection, and submit invoices, proof of payment, equipment records, and closeout documents before permission to operate and payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Massachusetts business program has a structured feasibility, preapproval, reservation, installation, and closeout process. A project that secures its reservation and completes the approved scope is likely to receive the committed incentive.",
+      "evidenceUrls": [
+        "https://www.eversource.com/business/save-money-energy/clean-energy-options/electric-vehicles/business-ev-charging-rebates",
+        "https://www.eversource.com/business/save-money-energy/clean-energy-options/electric-vehicles/business-ev-charging-rebates/massachusetts-ev-charging-rebates-process"
+      ],
+      "evidenceText": "Eversource Massachusetts requires business charging projects to undergo feasibility review and obtain written preapproval and a funding reservation before installation. Payment follows qualified equipment installation, interconnection, inspection, invoices, and closeout acceptance.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4645",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible New Hampshire commercial customer undertaking qualifying new construction, a major renovation, or an eligible equipment project.",
+        "Engage NHSaves or Eversource during design and obtain written approval before purchasing or installing equipment when required.",
+        "Submit plans, equipment selections, energy calculations, cost information, and other technical documentation needed to establish the approved incentive.",
+        "Construct and commission the approved high-efficiency measures within the program schedule.",
+        "Submit final invoices, as-built information, certifications, and performance records and pass postcompletion or postoccupancy verification before payment."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current New Hampshire pathway uses technical review and written approval rather than competitive ranking. A properly enrolled project that installs and verifies the approved measures is likely to receive its authorized incentive.",
+      "evidenceUrls": [
+        "https://nhsaves.com/energy-saving-services/",
+        "https://nhsaves.com/wp-content/uploads/2026/04/New-Construction-Program-Solutions-Diane-Pereira.pdf",
+        "https://www.eversource.com/business/save-money-energy/equipment-rebates-discounts"
+      ],
+      "evidenceText": "Current NHSaves and Eversource materials direct commercial new-construction and major-renovation projects to engage during design, obtain approval before installation, document qualifying equipment and performance, and complete final construction or postoccupancy verification before incentive payment.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22576",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Eversource New Hampshire residential customer at the battery installation address.",
+        "Install an approved manufacturer and model of home battery equipment that satisfies the program and interconnection requirements.",
+        "Submit the battery and interconnection applications and obtain Eversource permission to operate.",
+        "Enroll the system in the required demand-response pathway and receive program acceptance.",
+        "Provide the requested purchase, installation, equipment, and account documents and remain enrolled for the required minimum term."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current New Hampshire offer provides an upfront battery incentive through a defined equipment, interconnection, and demand-response acceptance process. A compliant approved system is likely to receive payment after acceptance.",
+      "evidenceUrls": [
+        "https://www.eversource.com/residential/save-money-energy/energy-efficiency-programs/demand-response/nhcef-home-battery"
+      ],
+      "evidenceText": "Eversource New Hampshire currently offers an upfront home-battery incentive for approved systems. Payment follows installation, permission to operate, supporting documentation, and acceptance of the battery into the required demand-response participation pathway.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22577",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Wait for the New Hampshire Clean Energy Fund loan program to reopen; the current allocation is fully subscribed and applications are not being accepted.",
+        "When open, be an eligible Eversource New Hampshire residential customer financing a qualifying heat-pump or battery project.",
+        "Submit the required project proposal, contractor, equipment, cost, property, income, and identity information to the participating lender.",
+        "Pass National Energy Improvement Fund credit and underwriting review and execute the loan documents before project funding.",
+        "Complete the approved installation and provide any final verification required for disbursement."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "Eversource states that the current fund is fully subscribed and the lender is not accepting applications. A future application would also require project eligibility and borrower underwriting after funding reopens.",
+      "evidenceUrls": [
+        "https://www.eversource.com/residential/save-money-energy/clean-energy-options/new-hampshire-clean-energy-fund"
+      ],
+      "evidenceText": "The current Eversource page says the New Hampshire Clean Energy Fund is fully subscribed and new applications are not being accepted. When reopened, financing for qualifying heat pumps or batteries will remain subject to lender credit and project review.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2373",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Eversource New Hampshire residential customer for the selected current product or home-performance offering.",
+        "Purchase qualifying appliances or HVAC equipment, or complete the required whole-home energy audit before weatherization or major home-performance work.",
+        "Use an approved or participating contractor where the measure requires one and satisfy current equipment, sizing, installation, and existing-condition rules.",
+        "Submit the application, invoices, product documentation, certifications, and any required income or property records by the applicable deadline.",
+        "Allow inspection, diagnostic testing, or installation verification before final payment when required."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current NHSaves and Eversource product and home-performance incentives are primarily rules-based, making a compliant claim likely. Battery storage is administered through a separate battery and demand-response offer rather than the general efficiency program.",
+      "evidenceUrls": [
+        "https://www.eversource.com/residential/save-money-energy/efficient-products",
+        "https://nhsaves.com/rebates-services-appliances/",
+        "https://nhsaves.com/"
+      ],
+      "evidenceText": "Current New Hampshire offerings include qualifying appliances, heat pumps, and audited home-performance work with measure-specific contractor, equipment, documentation, and verification requirements. Battery incentives are handled separately and should not be treated as a general residential efficiency rebate.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22548",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Massachusetts residential electric customer at the charger installation address.",
+        "Install qualifying Level 2 charging equipment and any eligible associated wiring in accordance with code and current program specifications.",
+        "Use appropriately licensed contractors and obtain required permits and inspections.",
+        "Submit the postinstallation rebate application with invoices, proof of payment, equipment information, photographs, vehicle or account records, and inspection evidence.",
+        "Enroll in and authorize data access for the applicable managed-charging program when required for the selected benefit."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Massachusetts residential EV charging benefits use published equipment, installation, documentation, and managed-charging rules. A complete eligible claim is likely to be approved after routine review and verification.",
+      "evidenceUrls": [
+        "https://www.masssave.com/residential/rebates-offers-services/battery-storage-and-evs/ev-charging-equipment",
+        "https://www.eversource.com/residential/save-money-energy/clean-energy-options/electric-vehicles/charging-stations",
+        "https://www.eversource.com/residential/save-money-energy/clean-energy-options/electric-vehicles/ev-charger-managed-charging/ev-charger-managed-charging-faqs",
+        "https://www.eversource.com/residential/save-money-energy/clean-energy-options/electric-vehicles/charging-stations/ev-rebate-process"
+      ],
+      "evidenceText": "Current Massachusetts materials provide residential Level 2 charging and wiring benefits through a postinstallation claim process. Qualified equipment, licensed and permitted installation, invoices and proof, inspection records, and managed-charging enrollment or data access may be required.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2593",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible EWEB business electric or water customer for the selected measure and affected facility.",
+        "Install equipment that meets the current lighting, HVAC, refrigeration, envelope, water, EV, new-construction, or custom-project specifications.",
+        "Obtain EWEB preapproval before purchasing or installing when the expected rebate exceeds the stated threshold or the project is custom, new construction, or business EV charging.",
+        "Use approved equipment and qualified contractors and obtain required permits, utility-capacity review, or water-service eligibility.",
+        "Submit the application, invoices, equipment records, calculations, photographs, and inspection or commissioning evidence required for final verification."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "EWEB publishes measure-specific prescriptive and reviewed custom pathways. A customer that obtains required preapproval, installs eligible equipment, and submits complete closeout records is likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://www.eweb.org/business-rebates",
+        "https://www.eweb.org/rebates-and-savings/business-incentives-rebates-and-conservation/lighting-upgrades",
+        "https://www.eweb.org/rebates-and-savings/business-incentives-rebates-and-conservation/hvac-systems-rebates",
+        "https://www.eweb.org/rebates-and-savings/business-incentives-rebates-and-conservation/new-construction-and-custom-projects",
+        "https://www.eweb.org/environment-and-climate/electric-mobility/ev-incentives-business"
+      ],
+      "evidenceText": "EWEB currently lists business incentives for lighting, HVAC, refrigeration, envelope, water, EV charging, new construction, and custom work. Project size and type determine whether preapproval is required, followed by invoices, technical records, and installation verification.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2158",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible residence served by EWEB and submit the residential loan application before installation.",
+        "Propose an eligible heat-pump, water-heating, insulation, air-sealing, window, or other currently financeable efficiency project using qualified equipment and contractors.",
+        "Provide the contractor bid, project details, ownership and account information, and any required permits or measure documentation.",
+        "Pass EWEB credit review, including payment history, credit-report or FICO review, and the applicable loan-limit and repayment requirements.",
+        "Receive written project and credit approval, complete the work, submit final invoices and verification, and execute the loan contract before funds are disbursed."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The loan program has defined eligible measures, but financing is not automatic. Approval depends on homeowner and project eligibility, account history, credit underwriting, available loan capacity, and final installation verification.",
+      "evidenceUrls": [
+        "https://www.eweb.org/rebates-and-savings/residential-incentives-rebates-loans-and-conservation",
+        "https://www.eweb.org/rebates-and-savings/residential-incentives-rebates-loans-and-conservation/insulation-air-sealing-and-windows",
+        "https://www.eweb.org/rebates-and-savings/residential-incentives-rebates-loans-and-conservation/ducted-heat-pumps",
+        "https://www.eweb.org/rebates-and-savings/residential-incentives-rebates-loans-and-conservation/ductless-heat-pump",
+        "https://www.eweb.org/documents/energy-efficiency/residential-loan-application.pdf"
+      ],
+      "evidenceText": "EWEB residential efficiency loans require application and approval before installation. EWEB reviews the project, loan amount, account payment history and consumer credit, then requires completed-work documentation, verification, and an executed loan contract before disbursement.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2157",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible EWEB residential customer and have authority to improve the served home.",
+        "Install a currently qualifying heat pump, duct measure, heat-pump water heater, insulation, air-sealing, or Level 2 charging project that meets the measure-specific existing-condition and equipment rules.",
+        "Obtain EWEB preapproval before installation where the selected measure or project size requires it.",
+        "Use qualified contractors, obtain required permits and inspections, and satisfy any charger networking or service-capacity conditions.",
+        "Submit the applicable application, invoices, product and contractor information, photographs, and final verification documents within the required period."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "EWEB's residential rebates are formulaic and measure-specific rather than competitively ranked. A qualifying installation with the correct sequencing and documentation is likely to be approved.",
+      "evidenceUrls": [
+        "https://www.eweb.org/rebates-and-savings/residential-incentives-rebates-loans-and-conservation",
+        "https://www.eweb.org/rebates-and-savings/residential-incentives-rebates-loans-and-conservation/insulation-air-sealing-and-windows",
+        "https://www.eweb.org/rebates-and-savings/residential-incentives-rebates-loans-and-conservation/ducted-heat-pumps",
+        "https://www.eweb.org/rebates-and-savings/residential-incentives-rebates-loans-and-conservation/ductless-heat-pump",
+        "https://www.eweb.org/rebates-and-savings/electric-mobility/ev-incentives"
+      ],
+      "evidenceText": "EWEB currently offers residential rebates for qualifying heat pumps, water heating, insulation, air sealing, windows, and Level 2 charging. Requirements vary by measure and can include preapproval, existing-condition rules, qualified installation, permits, invoices, and final verification.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2526",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible EWEB electric customer and use an approved Oregon solar contractor for the project.",
+        "Submit the solar application, power-purchase or interconnection documents, equipment information, site assessment, and other required records before installation.",
+        "Use qualifying listed solar equipment and satisfy the program's site-solar-resource requirement, including the applicable total-solar-resource-fraction threshold.",
+        "Obtain EWEB preapproval and a funding reservation before purchasing or installing the system.",
+        "Complete permitted installation, interconnection, inspection, and final documentation before rebate approval, while the first-come annual budget remains available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The solar rebate is rules-based but first-come and budget-constrained; EWEB reported that most of the 2026 allocation was already committed. A qualifying project may receive a reservation if funds remain. The target's separate submetering or energy-monitoring mapping was not verified.",
+      "evidenceUrls": [
+        "https://www.eweb.org/environment-and-climate/solar-electric/residential-solar-electric",
+        "https://www.eweb.org/environment-and-climate/solar-electric/contractor-solar-electric"
+      ],
+      "evidenceText": "EWEB's 2026 solar rebate requires an approved contractor, preinstallation application and funding reservation, qualifying equipment and site resource, interconnection, inspection, and final records. Funding is first-come and substantially allocated; no separate energy-monitoring incentive was confirmed.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:148",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a corporation subject to Massachusetts corporate excise with a qualifying solar- or wind-powered climate-control or water-heating system located in Massachusetts and used exclusively in the corporation's business.",
+        "Obtain the manufacturer's statement of the system's British thermal unit capability and retain substantiation of the system's qualifying use and cost.",
+        "Obtain the statutory certification that the system meets applicable standards before electing the deduction.",
+        "Elect and substantiate the deduction on the applicable Massachusetts corporate excise return without claiming an incompatible statutory benefit.",
+        "Resolve the current certification barrier because the official tax-expenditure materials state that the former certifying agency no longer exists and no successor standards have been established."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "Although the deduction remains in statute, current Massachusetts budget materials identify it as inactive because the required certifying agency no longer exists and no successor certification standards are in place. A practical award is therefore exceptional.",
+      "evidenceUrls": [
+        "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter63/Section38h",
+        "https://budget.digital.mass.gov/govbudget/fy26/tax-expenditure-budget/corporate-excise-tax/exclusions-from-property-component/"
+      ],
+      "evidenceText": "Massachusetts law conditions the corporate excise deduction on a qualifying business solar or wind system, manufacturer performance information, and statutory certification. Current official tax-expenditure materials state that the provision is inactive because the certifying agency and successor standards are absent.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:147",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own Massachusetts property consisting of a solar- or wind-powered climate-control or water-heating system that qualifies under the corporate excise statute.",
+        "Demonstrate Massachusetts situs, qualifying business use, system cost, and the manufacturer's British thermal unit capability statement.",
+        "Obtain the statutory system certification required for the underlying qualification.",
+        "Report and substantiate the exclusion from the corporate excise property measure on the applicable return.",
+        "Resolve the current certification barrier because the official tax-expenditure materials state that the former certifying agency no longer exists and no successor standards have been established."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "The property exclusion depends on qualifying under the same statutory certification framework as the deduction. Massachusetts currently identifies the benefit as inactive because no agency can issue the required certification under successor standards.",
+      "evidenceUrls": [
+        "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleIX/Chapter63/Section38h",
+        "https://budget.digital.mass.gov/govbudget/fy26/tax-expenditure-budget/corporate-excise-tax/exclusions-from-property-component/2-501/"
+      ],
+      "evidenceText": "The corporate excise property exclusion applies only to systems qualifying under the statutory solar or wind certification rules. Current Massachusetts tax-expenditure guidance describes the benefit as inactive because the former certifying agency has no successor and no replacement standards exist.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22616",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Install the EV charger as an accessory to an eligible one- or two-family dwelling and meet every condition in Philadelphia's EZ electrical vehicle charger standard.",
+        "Use a compliant private wall-mounted or pedestal charger within the standard's height, location, flood-area, and historic-property limits.",
+        "Obtain any required zoning, Streets Department, Art Commission, or other prerequisite approval before the electrical permit is issued.",
+        "Use a properly licensed electrical contractor, submit the signed EZ permit standard and contract information, and satisfy the current EV-infrastructure-training certification rule when applicable.",
+        "Complete the work under permit and obtain third-party electrical inspection and a Certificate of Approval."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The EZ pathway is a nondiscretionary permit process for installations that meet the published standard. A compliant charger project is likely to receive the permit and final approval, but the target's smart-thermostat mapping is unrelated to the current permit scope.",
+      "evidenceUrls": [
+        "https://www.phila.gov/documents/ez-permit-applications-permits-without-plans/",
+        "https://www.phila.gov/media/20220720130633/PB_020_F-EZ-Electrical-Vehicle-Charger-Permit-Standard-updated.pdf",
+        "https://www.phila.gov/services/permits-violations-licenses/apply-for-a-permit/building-and-repair-permits/get-an-electrical-permit/"
+      ],
+      "evidenceText": "Philadelphia's EZ standard allows qualifying residential EV chargers to be permitted without plans when all siting, licensing, prerequisite-approval, contract, and training conditions are met. Work still requires permit review, third-party inspection, and a final Certificate of Approval; thermostats are outside this permit.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5886",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Fairfax County common-interest community or qualifying nonprofit, charitable, or secular-service organization that owns the project property; private homeowners and businesses are not eligible.",
+        "Submit the application and receive written program approval before purchasing equipment or starting work.",
+        "Propose an eligible energy-conservation project such as lighting, weatherization, HVAC, heat pumps, appliances, windows, or solar at an organization-owned property.",
+        "Provide owner authorization, project scope, budget and contractor quotes, tax documentation, and an energy audit when required or used to support the project.",
+        "Complete the approved scope, document costs and installation, and submit the reimbursement request while annual and lifetime caps and available funding permit."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current Fairfax Energy Conservation Assistance Program is open but requires advance discretionary approval, organizational eligibility, supporting documentation, and reimbursement after completion. Awards are also subject to prioritization, caps, and available funding.",
+      "evidenceUrls": [
+        "https://www.fairfaxcounty.gov/environment-energy-coordination/energy-conservation-assistance-program"
+      ],
+      "evidenceText": "Fairfax County currently accepts advance applications from eligible community associations and qualifying nonprofit organizations for organization-owned energy projects. Approval is required before work, and reimbursement follows completed documentation; funding limits and prioritization apply. The legacy program title and administrator need updating.",
+      "reviewedAt": "2026-07-10T14:30:51Z",
+      "reviewStatus": "needs_followup"
+    }
+  ]
+}

@@ -1,0 +1,558 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-049",
+  "inputFile": "batch-049_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T15:12:32Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2516",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Riverland Energy Cooperative member and install eligible new commercial, industrial, or agricultural equipment on the cooperative electric system.",
+        "Meet the current measure-specific efficiency, installation, and cost requirements shown on the applicable rebate form.",
+        "Obtain cooperative review before proceeding when the project uses a custom incentive or otherwise requires advance coordination.",
+        "Submit the completed form with the purchase receipt or invoice and proof of installation within three months after purchase and installation.",
+        "Provide complete documentation, permit inspection or verification when requested, and remain within the current program period and available funding."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is a formula-based cooperative rebate pathway rather than a competitively ranked award. A member that installs an eligible measure and submits a complete, timely claim is likely to receive the approved account credit, subject to current funds and final cooperative verification.",
+      "evidenceUrls": [
+        "https://www.riverlandenergy.com/rebates",
+        "https://www.riverlandenergy.com/form/ag-commercial-industrial-rebate"
+      ],
+      "evidenceText": "The current 2026 rebate materials require cooperative membership, eligible new equipment, supporting invoices and installation proof, and filing within three months. Incomplete submissions may be rejected, and custom projects require coordination with the cooperative.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22366",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Riverland Energy Cooperative member and install a qualifying new electric-vehicle charger on the cooperative electric system.",
+        "Meet the current charger, installation, and any separate-meter requirements stated on the EV charger rebate form.",
+        "Enroll the charger in the applicable load-control or time-of-use arrangement when required for the selected incentive.",
+        "Submit the completed rebate form with the purchase receipt or invoice and proof of installation within three months after purchase and installation.",
+        "Provide complete documentation and permit cooperative inspection, metering, or load-control verification when requested."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The EV charger offering uses published incentive conditions and administrative claim review, not competitive scoring. A qualifying member with a complete, timely application and the required rate, metering, or load-control arrangement is likely to receive the rebate, subject to current program funds.",
+      "evidenceUrls": [
+        "https://www.riverlandenergy.com/rebates",
+        "https://www.riverlandenergy.com/form/ev-chargers-rebate-form"
+      ],
+      "evidenceText": "The current form requires a new charger on cooperative lines, supporting purchase and installation records, filing within three months, and the applicable load-control, time-of-use, or metering conditions.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3195",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Riverland Energy Cooperative residential member and install an eligible new measure at a residence served by the cooperative.",
+        "Meet the current measure-specific efficiency, equipment, and installation criteria shown on the applicable residential rebate form.",
+        "Submit the completed form with a purchase receipt or invoice and proof of installation within three months after purchase and installation.",
+        "Ensure the requested incentive does not exceed the qualifying equipment cost and complies with any per-member or per-measure limits.",
+        "Provide complete documentation and permit inspection or verification when requested before the account credit is issued."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The residential offering is a prescriptive rebate program with published eligibility and documentation rules rather than a competitive solicitation. A qualifying, fully documented claim is likely to be approved, subject to the current program period, available funds, and final cooperative review.",
+      "evidenceUrls": [
+        "https://www.riverlandenergy.com/rebates"
+      ],
+      "evidenceText": "Riverland Energy Cooperative states that current rebates are for members, must be supported by the applicable form and documentation, generally must be submitted within three months, and are issued as account credits while funds remain available.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1897",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Riverside Public Utilities business electric customer with the project installed at the qualifying service address.",
+        "Request and complete the required pre-installation inspection before purchasing equipment or beginning work.",
+        "Install new qualifying equipment that meets the applicable program specifications and current cost or incentive caps.",
+        "Submit the program application, itemized paid invoices or receipts, product data, and other required documentation within 90 days of project completion or purchase.",
+        "Keep the utility account in good standing and comply with any contractor, permit, and code requirements.",
+        "Permit post-installation inspection or verification before the rebate is finalized."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Riverside administers this as a first-come, formula-based business rebate program rather than a ranked grant competition. Once the mandatory pre-inspection is completed and an eligible project passes document and installation review, the published rebate is likely, subject to funding and program caps.",
+      "evidenceUrls": [
+        "https://riversideca.gov/utilities/businesses/rebates/about",
+        "https://riversideca.gov/utilities/businesses/rebates/construction/general-program-guidelines",
+        "https://riversideca.gov/utilities/businesses/rebates/energy-rebates/general-program-guidelines"
+      ],
+      "evidenceText": "Current business guidelines require a pre-inspection for rebate projects, timely submission of supporting invoices and equipment information, compliance with program caps, and final utility verification. All rebates remain subject to available funds.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1896",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Riverside Public Utilities residential electric customer and install the measure at the qualifying service address.",
+        "Purchase and install new equipment that meets the current measure-specific efficiency and product requirements.",
+        "Submit the signed rebate application with a dated receipt showing the make, model, purchase price, and other required information within 90 days.",
+        "Obtain property-owner authorization when the applicant is a tenant and the selected measure requires it.",
+        "Comply with permit, licensed-contractor, and installation requirements applicable to the selected measure.",
+        "Permit utility inspection or verification when requested and remain within current funding and program limits."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The residential program uses published measure requirements and post-purchase claim review rather than competitive ranking. A customer with an eligible installation and a complete application filed within the stated deadline is likely to receive the rebate, subject to funds, limits, and final verification.",
+      "evidenceUrls": [
+        "https://riversideca.gov/utilities/residents/rebates/energy-rebates/general-program-guidelines",
+        "https://riversideca.gov/utilities/residents/rebates/energy-rebates/air-conditioning-incentives",
+        "https://riversideca.gov/utilities/residents/rebates/energy-rebates/energy-star"
+      ],
+      "evidenceText": "Current residential materials require an eligible utility account, qualifying equipment, a signed application and detailed receipt generally submitted within 90 days, and inspection or other verification when requested.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4850",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own or occupy an eligible residential property in Pitkin County, Garfield County, or the eligible Roaring Fork Valley portion of Eagle County.",
+        "Select a currently funded residential measure and meet the applicable equipment, building, income, and project specifications.",
+        "Use a CORE-approved certified rater, contractor, or other qualified provider when the selected pathway requires one.",
+        "Submit the current application through the designated portal with estimates, invoices, proof of installation or completion, and measure-specific documentation.",
+        "Complete any required energy assessment, program consultation, or pre-project review before work begins.",
+        "Comply with the rebate cap and the funding level applicable to the property location at the time the application is processed."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The offering is an administrative rebate program, but award reliability is location-dependent. The current official page states that Garfield and Eagle County funding is almost exhausted and schedules reduced maximum rebates beginning July 17, 2026, while Pitkin County and the Town of Basalt continue at full levels; without the project location and measure, approval is only possible.",
+      "evidenceUrls": [
+        "https://www.aspencore.org/residential-rebates-updated",
+        "https://www.aspencore.org/energy-assessments"
+      ],
+      "evidenceText": "CORE identifies current 2026 residential rebates and eligible geography, requires measure-specific applications and completion records, and reports that Garfield and Eagle County funds are nearly exhausted with lower maximums scheduled from July 17, 2026.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1946",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Rochester Public Utilities commercial or industrial customer and install the project at an RPU-served site.",
+        "Use the current commercial application and meet the applicable prescriptive or custom measure requirements.",
+        "Obtain project-specific preapproval before purchase or installation whenever the current application or custom-incentive process requires it.",
+        "Install qualifying equipment and retain itemized invoices, model numbers, efficiency ratings, installation dates, and other technical documentation.",
+        "Submit the complete application and any required tax form by the stated program deadline.",
+        "Permit inspection, measurement, or other verification before incentive payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "RPU maintains active prescriptive and custom business incentive pathways rather than a competitively ranked solicitation. A project that obtains any required advance approval and passes final document and installation review is likely to receive the calculated incentive, subject to program terms and available funds.",
+      "evidenceUrls": [
+        "https://www.rpu.org/rebates-programs/conserve-save-rebates/commercial-rebates/",
+        "https://www.rpu.org/rebates-programs/conserve-save-rebates/",
+        "https://www.rpu.org/news/posts/spring-into-savings-with-rpu-rebates/"
+      ],
+      "evidenceText": "RPU currently publishes commercial rebate applications and directs customers to select the applicable measure form, document the qualifying installation, and submit the completed materials for utility review.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2865",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Rochester Public Utilities residential customer and install the measure at an RPU-served residence.",
+        "Purchase and install equipment that meets the current minimum efficiency and measure-specific requirements.",
+        "Complete the current rebate application and provide the itemized invoice, equipment model, efficiency information, and installation date.",
+        "Submit the complete claim by the deadline stated on the applicable application.",
+        "Permit inspection or verification when requested and comply with any per-customer, tax-document, or funding limitations."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program is a published residential rebate schedule administered through document review, not a competitive grant. An eligible customer with qualifying equipment and a complete, timely claim is likely to receive the rebate after RPU verification, subject to current terms and funds.",
+      "evidenceUrls": [
+        "https://www.rpu.org/rebates-programs/conserve-save-rebates/residential-rebates/",
+        "https://www.rpu.org/rebates-programs/conserve-save-rebates/",
+        "https://www.rpu.org/news/posts/spring-into-savings-with-rpu-rebates/"
+      ],
+      "evidenceText": "RPU currently lists residential rebate applications for qualifying efficient equipment and directs customers to review minimum standards, complete the applicable form, and submit supporting purchase and installation records.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4229",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible City of Rock Hill residential electric customer and install the qualifying equipment at the served residence.",
+        "Install an eligible electric water heater or qualifying electric heat pump that meets the current size or efficiency requirement.",
+        "Obtain the required mechanical building permit for heat-pump installation or replacement.",
+        "Allow installation of the required utility load-management device on new or existing electric water heaters and heat pumps.",
+        "Submit the rebate request within six months after installation or replacement and provide the requested project documentation."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The SmartChoice rebate is a fixed, administrative utility incentive rather than a competition. An eligible customer that meets the equipment, permit, load-management, and filing conditions is likely to receive the published rebate after utility verification.",
+      "evidenceUrls": [
+        "https://www.cityofrockhill.com/departments/utilities/residential-services/smartchoice-rebates-loans"
+      ],
+      "evidenceText": "The current SmartChoice page lists fixed water-heater and heat-pump rebates, requires load-management equipment, requires a mechanical permit for heat pumps, and limits requests to installations or replacements completed within six months.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2407",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Rocky Mountain Power Idaho business customer and install the project at an eligible Idaho service location.",
+        "Select equipment that meets the current Idaho wattsmart Business technical and efficiency requirements.",
+        "Obtain preapproval, a baseline inspection, or a signed incentive offer before ordering or beginning work when required for the selected measure or a custom project.",
+        "Install the approved equipment and retain invoices, product data, quantities, and installation records.",
+        "Submit the current general and supplemental application materials, including a completed tax form when required.",
+        "Permit post-installation inspection or verification before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Idaho program offers prescriptive and project-specific incentives through administrative review rather than competitive ranking. A qualifying project that follows the applicable preapproval pathway and submits a complete completion package is likely to be paid, subject to program terms and funds.",
+      "evidenceUrls": [
+        "https://www.rockymountainpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-idaho.html",
+        "https://www.rockymountainpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-idaho/id-incentive-lists/id-hvac.html"
+      ],
+      "evidenceText": "Rocky Mountain Power currently publishes Idaho business incentive lists and application pathways. Designated projects require advance review, while completed qualifying projects require invoices, technical data, tax documentation, and final verification.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2412",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Rocky Mountain Power Utah business customer and install the project at an eligible Utah service location.",
+        "Select equipment that meets the current Utah wattsmart Business technical and efficiency requirements.",
+        "Obtain preapproval, a baseline inspection, or a signed incentive offer before ordering or beginning work when required, including designated lighting and custom projects.",
+        "Install the approved equipment and retain invoices, product data, quantities, and installation records.",
+        "Submit the current general and supplemental application materials, including a completed tax form when required.",
+        "Permit post-installation inspection or verification before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Utah offering is an ongoing incentive program with prescriptive and custom pathways, not a ranked solicitation. Once any mandatory advance approval is secured and the installed project passes completion review, payment of the applicable incentive is likely, subject to current terms and funds.",
+      "evidenceUrls": [
+        "https://www.rockymountainpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-utah.html",
+        "https://www.rockymountainpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-utah/ut-incentive-lists/ut-hvac.html",
+        "https://www.rockymountainpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-utah/ut-incentive-lists/ut-lighting.html"
+      ],
+      "evidenceText": "Current Utah materials distinguish post-purchase prescriptive pathways from measures that require an application, baseline inspection, and signed offer before equipment is ordered. Final payment follows application, invoice, tax-document, and verification review.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3426",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Rocky Mountain Power Wyoming business customer and install the project at an eligible Wyoming service location.",
+        "Select equipment that meets the current Wyoming wattsmart Business technical and efficiency requirements.",
+        "Obtain preapproval, a baseline inspection, or a signed incentive offer before ordering or beginning work when required for the selected measure or a custom project.",
+        "Install the approved equipment and retain invoices, product data, quantities, and installation records.",
+        "Submit the current general and supplemental application materials, including a completed tax form when required.",
+        "Permit post-installation inspection or verification before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Wyoming program uses published incentive schedules and project-specific review rather than competitive scoring. A compliant project with any required preapproval and a complete final package is likely to receive the approved incentive, subject to current program terms and available funds.",
+      "evidenceUrls": [
+        "https://www.rockymountainpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-wyoming.html",
+        "https://www.rockymountainpower.net/savings-energy-choices/business/wattsmart-efficiency-incentives-wyoming/wy-incentive-lists/wy-hvac.html"
+      ],
+      "evidenceText": "Rocky Mountain Power currently publishes Wyoming business incentive lists and requires the applicable application, invoices, equipment data, tax documentation, and inspection or verification. Custom or designated projects require advance approval.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2364",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Rocky Mountain Power Utah residential customer on a qualifying rate and install the measure at an eligible existing home.",
+        "Meet the current equipment, existing-heating-system, building, and measure-specific qualification requirements.",
+        "Use a program-participating contractor and avoid do-it-yourself installation when the selected rebate requires a participating contractor.",
+        "Complete the installation and submit the online application with the account information, itemized invoice, model and efficiency data, and other required documents.",
+        "File the complete Utah claim within 180 days of the qualifying installation or purchase unless the measure page states a shorter period.",
+        "Permit inspection or verification when selected for review."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Utah residential program is a prescriptive rebate offering rather than a competition. A customer who uses the required contractor pathway, installs qualifying equipment, and files a complete claim by the deadline is likely to receive payment after review, subject to current terms and funds.",
+      "evidenceUrls": [
+        "https://wattsmarthomes.com/qualifications-and-application/",
+        "https://wattsmarthomes.com/rebate-categories/heating-and-cooling/",
+        "https://wattsmarthomes.com/rebates/dual-fuel-heat-pumps-ut/"
+      ],
+      "evidenceText": "The current residential site requires measure-specific qualifications, participating contractors for designated measures, complete online documentation, and Utah filing within 180 days. Approved rebates are generally issued after application review.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2410",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Rocky Mountain Power Idaho residential customer on a qualifying rate and install the measure at an eligible existing home.",
+        "Meet the current equipment, existing-heating-system, building, and measure-specific qualification requirements.",
+        "Use a program-participating contractor and avoid do-it-yourself installation when the selected rebate requires a participating contractor.",
+        "Complete the installation and submit the online application with the account information, itemized invoice, model and efficiency data, and other required documents.",
+        "File the complete Idaho claim within 90 days of the qualifying installation or purchase.",
+        "Permit inspection or verification when selected for review."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Idaho offering is a formula-based residential rebate program, not a competitive award. A qualifying customer with the required contractor, equipment, and timely documentation is likely to receive the rebate after administrative review, subject to current terms and funds.",
+      "evidenceUrls": [
+        "https://wattsmarthomes.com/qualifications-and-application/",
+        "https://wattsmarthomes.com/rebate-categories/heating-and-cooling/",
+        "https://wattsmarthomes.com/rebates/air-source-heat-pumps-id/"
+      ],
+      "evidenceText": "The current residential site requires Idaho customers to meet measure-specific criteria, use participating contractors where stated, submit complete invoices and equipment data, and apply within 90 days.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3326",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Rocky Mountain Power Wyoming residential customer on a qualifying rate and install the measure at an eligible existing home.",
+        "Meet the current equipment, existing-heating-system, building, and measure-specific qualification requirements.",
+        "Use a program-participating contractor and avoid do-it-yourself installation when the selected rebate requires a participating contractor.",
+        "Complete the installation and submit the online application with the account information, itemized invoice, model and efficiency data, and other required documents.",
+        "File the complete Wyoming claim within 90 days of the qualifying installation or purchase.",
+        "Permit inspection or verification when selected for review."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Wyoming offering is a prescriptive rebate program rather than a ranked funding competition. A customer with an eligible installation, required contractor participation, and a complete claim filed within 90 days is likely to receive the rebate after review, subject to current program terms.",
+      "evidenceUrls": [
+        "https://wattsmarthomes.com/qualifications-and-application/",
+        "https://wattsmarthomes.com/rebate-categories/heating-and-cooling/",
+        "https://wattsmarthomes.com/rebates/air-source-heat-pumps-wy/"
+      ],
+      "evidenceText": "The current residential site requires Wyoming customers to meet the selected measure rules, use participating contractors where required, provide complete invoices and equipment records, and submit the claim within 90 days.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1903",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Roseville Electric business customer and install the project at a qualifying Roseville service location.",
+        "Select the current prescriptive, assessment, or customized pathway applicable to the proposed measure.",
+        "For customized projects, submit the initial application and technical documentation and obtain a reservation or preapproval before purchasing equipment or beginning work.",
+        "Sign any required incentive offer, install the approved project, and comply with applicable contractor, permit, and code requirements.",
+        "Submit invoices, equipment data, tax documentation, and completion records by the applicable deadline.",
+        "Permit pre-installation and post-installation inspection, measurement, and verification used to establish the final eligible savings and payment."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Roseville offers active business efficiency pathways, but this broad opportunity includes customized projects for which reservations are required, budgets are limited, reservations do not guarantee payment, and final incentives depend on measured or verified savings. Without a specific measure and pathway, an award is possible rather than reliably likely.",
+      "evidenceUrls": [
+        "https://www.roseville.ca.us/cms/One.aspx?pageId=19004006&portalId=7964922",
+        "https://www.roseville.ca.us/cms/One.aspx?pageId=19015827&portalId=7964922"
+      ],
+      "evidenceText": "Roseville currently lists business efficiency programs, including customized incentives. The customized process requires advance reservation, a signed offer, supporting project records, and pre- and post-installation verification; a reservation is not a payment guarantee.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1902",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an eligible Roseville Electric residential account and install the qualifying measure at the associated residence.",
+        "Purchase and install new equipment that meets the current product, efficiency, safety-listing, and measure-specific requirements.",
+        "Obtain the required permit and inspection for measures such as electrical work or an installed Level 2 charger.",
+        "Submit the current rebate application with the itemized receipt, model information, installation evidence, and other required documents by the measure deadline.",
+        "Complete income verification when seeking an enhanced income-qualified incentive.",
+        "Comply with per-account or per-year limits and permit utility verification before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Roseville publishes fixed residential rebates with measure-specific claim requirements rather than competitive scoring. A qualifying customer that files a complete application on time and satisfies permit or income-verification conditions is likely to receive the published incentive, subject to the applicable budget and limits.",
+      "evidenceUrls": [
+        "https://www.roseville.ca.us/cms/One.aspx?portalId=7964922&pageId=20438359",
+        "https://www.roseville.ca.us/cms/One.aspx?pageId=19015746&portalId=7964922"
+      ],
+      "evidenceText": "The current residential page lists active electrification and efficiency rebates. The EV charger rules, as one current pathway, require an eligible Roseville Electric residence, qualifying new equipment, a permit, proof of purchase and installation, and a timely application; enhanced rebates require income qualification and have limited funding.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:rule-29-ev-guide",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Propose an eligible nonresidential commercial, industrial, or multifamily charging project within Southern California Edison service territory.",
+        "Submit a complete Rule 29 application package with site plans, load and charger information, applicant authority, and all required project documents.",
+        "Provide a dedicated or separately metered EV load arrangement and avoid enrolling the same site in the conflicting Charge Ready pathway.",
+        "Secure any required easement and local authority permits and satisfy SCE electrical service requirements.",
+        "Execute the Rule 29 agreement and complete the customer-funded infrastructure and compliant charging equipment beyond the meter.",
+        "Enroll on an eligible EV time-of-use rate and commit to operating and maintaining the charging equipment for at least five years.",
+        "Receive SCE engineering, capacity, design, legal, and construction approval before utility-side infrastructure is installed."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Rule 29 is not an automatic cash rebate. SCE provides qualifying utility-side infrastructure only after a complete application, engineering and capacity review, easement and permitting work, agreement execution, and customer-side construction. Because feasibility, cost, workload, and site conditions are project-specific, approval is possible.",
+      "evidenceUrls": [
+        "https://www.sce.com/business/smart-energy-solar/evs-for-business/rule-29-electric-vehicle-infrastructure",
+        "https://www.sce.com/business/smart-energy-solar/evs-for-business/rule-29-electric-vehicle-infrastructure/ready-to-apply"
+      ],
+      "evidenceText": "SCE states that Rule 29 is open to qualifying nonresidential charging sites and requires separate metering, compliant customer-side charging facilities, a five-year operating commitment, an EV time-of-use rate, and a complete engineering and legal application package. Incomplete packages are rejected and schedules vary by project complexity.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22337",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Runestone Electric Association member and install the qualifying charger at the member primary residence served by the cooperative.",
+        "Purchase and install a new eligible electric-vehicle charger and select the uncontrolled or controlled program pathway.",
+        "For the controlled incentive, install the required EV meter socket and allow the cooperative to verify the control arrangement.",
+        "Submit the current rebate application with the purchase receipt or invoice and installation information.",
+        "Comply with current per-member limits and permit inspection, metering, or installation verification before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Runestone publishes fixed 2026 charger rebate amounts for uncontrolled and controlled installations. A member with an eligible primary-residence installation and complete documentation is likely to receive the applicable rebate after any meter or control verification.",
+      "evidenceUrls": [
+        "https://www.runestoneelectric.com/energy-wise-programs/residential-rebates/"
+      ],
+      "evidenceText": "The current 2026 residential rebate page lists a fixed EV charger incentive for uncontrolled charging and a larger incentive for controlled charging, with an EV meter socket required for the controlled pathway.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2907",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Operate an eligible Maryland food, fiber, farming, or agricultural or resource-based business.",
+        "Propose an energy-efficiency improvement supported by a third-party energy audit, agricultural energy-management plan, or equivalent savings documentation.",
+        "Submit the complete MARBIDCO application, project cost records, energy-savings calculation, and a commercial-lender referral or declination as required.",
+        "Demonstrate a qualifying credit profile, including a credit score of at least 620 and no bankruptcy within the preceding seven years.",
+        "Provide required personal guarantees and satisfy all underwriting, legal, and closing conditions.",
+        "Show annual savings and payback sufficient to meet the program minimum savings-to-debt relationship and term limitations.",
+        "Keep the requested amount within the current loan range and proceed only after formal loan approval."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "This is an underwritten loan, not an automatic rebate. Eligibility also depends on the audit-supported project, credit history, repayment capacity, guarantees, lender documentation, and available capital, so approval is possible but not assured for an otherwise eligible applicant.",
+      "evidenceUrls": [
+        "https://www.marbidco.org/marbidco-loan-programs-rural-business-energy-efficiency-improvement-loan-fund"
+      ],
+      "evidenceText": "MARBIDCO currently offers energy-efficiency loans of $5,000 to $30,000 for qualifying rural and agricultural businesses. The official terms require audit-supported savings, credit and bankruptcy screening, personal guarantees, a lender referral, and underwriting before approval.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5751",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible commercial, industrial, or agricultural property in a participating Rural Minnesota Energy Board county.",
+        "Keep property taxes and any mortgage current and disclose bankruptcy, judgments, and liens as required by the application.",
+        "Obtain an approved energy audit or feasibility study recommending the project and showing a savings-to-investment ratio greater than one.",
+        "Provide contractor cost estimates, technical specifications, property records, title and mortgage information, current tax documentation, and building photographs.",
+        "Keep the financing request within the current minimum, maximum, property-value, and project-cost limits.",
+        "Execute the petition, special assessment, lien, and repayment documents required for PACE financing.",
+        "Receive program and financing approval before construction and before the special assessment is placed on the property."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "PACE is property-secured financing that requires technical feasibility, positive economics, property and lien review, mortgage and tax compliance, legal assessment documents, and committee or administrator approval. It is therefore possible rather than automatic even for an eligible property.",
+      "evidenceUrls": [
+        "https://rmeb.org/pace/index.php",
+        "https://www.swrdc.org/wp-content/uploads/2025/02/PACE-Application-updated-2-20-25.pdf"
+      ],
+      "evidenceText": "The current program and application require an eligible member-county property, current taxes and mortgage, an approved audit with a savings-to-investment ratio above one, contractor estimates, title and lien documentation, financing-limit compliance, and execution of a special-assessment lien before approval.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2664",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a RushShelby Energy residential member and install the qualifying equipment at a permanent, year-round residence served by the cooperative.",
+        "Install a qualifying heat pump, geothermal system, or heat-pump water heater that meets the current efficiency and equipment requirements.",
+        "Use a qualified installer when required and retain the equipment model, efficiency certification, installation date, and contractor information.",
+        "Submit the current rebate request with an itemized invoice and proof of installation.",
+        "Keep the requested rebate within the current percentage-of-cost and per-measure limits.",
+        "Submit the complete 2026 request by December 12, 2026, and permit cooperative verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The cooperative offers fixed, prescriptive 2026 residential rebates rather than competitive awards. A member with qualifying equipment, a complete invoice and application, and timely filing is likely to receive the published rebate after verification, subject to current limits and funds.",
+      "evidenceUrls": [
+        "https://www.rse.coop/energy-savings/rebates/residential/",
+        "https://www.rse.coop/energy-savings/rebates/residential/hvac-rebate-request-form/"
+      ],
+      "evidenceText": "RushShelby Energy currently publishes 2026 residential HVAC and water-heating rebates, requires qualifying equipment and supporting installation records, and sets December 12, 2026 as the filing deadline.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2585",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Saint Peter Municipal Utilities commercial or industrial electric customer and install the project within the utility service area.",
+        "Use the current 2026 business rebate form for the applicable measure and meet its efficiency, listing, and technical requirements.",
+        "Obtain preapproval or a pre-installation inspection for custom or other measures when required by the selected application.",
+        "Install the eligible equipment and retain dated invoices, product data, model numbers, quantities, and installation records.",
+        "Submit the signed application and all required supporting documentation by the applicable deadline.",
+        "Permit post-installation inspection or verification before the rebate is paid."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Saint Peter and its power agency publish current 2026 business rebate applications covering prescriptive and custom measures. A qualifying project that follows any required preapproval process and submits a complete final package is likely to receive the approved rebate, subject to program terms and funding.",
+      "evidenceUrls": [
+        "https://smmpa.com/members/saint-peter",
+        "https://www.saintpetermn.gov/216/Saint-Peter-Utility-Customer-Rebates"
+      ],
+      "evidenceText": "The current Saint Peter member page provides 2026 business rebate forms for lighting, HVAC, refrigeration, food service, motors, compressed air, and custom projects. City guidance requires eligible equipment installed in the electric service area and supporting purchase records.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2586",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Saint Peter Municipal Utilities residential electric customer and install the measure at a residence within the utility service area.",
+        "Use the current 2026 residential application and install equipment that meets the applicable ENERGY STAR, efficiency, or technical requirements.",
+        "Retain a dated sales receipt or itemized invoice showing the qualifying product and purchase information.",
+        "Submit the signed form with model, installation, account, and other required documentation by the applicable deadline.",
+        "Permit inspection or verification and comply with current per-customer, per-measure, and funding limits."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential offering uses published 2026 rebate forms and administrative verification rather than competitive ranking. A customer with eligible equipment and a complete, timely claim is likely to receive the rebate, subject to current limits and available funds.",
+      "evidenceUrls": [
+        "https://smmpa.com/members/saint-peter",
+        "https://www.saintpetermn.gov/216/Saint-Peter-Utility-Customer-Rebates"
+      ],
+      "evidenceText": "The current Saint Peter member page provides 2026 residential rebate forms, and city guidance requires qualifying equipment installed in the service area with a dated receipt and completed application.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3557",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Salem Electric residential or general-service member proposing a qualifying grid-connected photovoltaic system.",
+        "Submit the project design, interconnection application, equipment information, and incentive materials before installation.",
+        "Receive Salem Electric review and approval before purchasing or installing the system when required by the project process.",
+        "Use qualifying equipment and comply with current electrical, interconnection, permitting, inspection, and code requirements.",
+        "Complete installation and submit the final invoice, as-built information, inspection approval, and other completion documents.",
+        "Pass final interconnection, metering, and utility verification before the incentive is issued, subject to the published capacity and incentive caps."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The incentive has a published formula, but the utility expressly requires project review and approval before installation, and final eligibility depends on interconnection engineering, permitting, inspection, and completion verification. A proposed project therefore has a possible, not automatic, award outcome.",
+      "evidenceUrls": [
+        "https://www.salemelectric.com/energy-efficiency/solar-information/"
+      ],
+      "evidenceText": "Salem Electric currently lists a photovoltaic incentive of $300 per kilowatt up to $1,500 for eligible residential and general-service members and states that the utility must review and approve the project before installation to preserve interconnection and incentive eligibility.",
+      "reviewedAt": "2026-07-10T15:12:32Z",
+      "reviewStatus": "audited"
+    }
+  ]
+}

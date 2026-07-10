@@ -1,0 +1,549 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-040",
+  "inputFile": "batch-040_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T14:50:29Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3111",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Norwich Public Utilities commercial electric or natural-gas customer and install the measure within the applicable NPU service territory.",
+        "Use the current measure-specific pathway; CHIPP requires written preapproval before scheduling installation, and EVSE, Cool Choice, and gas-heating rebates require advance approval when the requested total exceeds the stated threshold.",
+        "For the current 2026 form-based offers, have completed the applicable purchase or initial application step by June 30, 2026; only timely purchased or preapproved projects remain in the current closeout pipeline.",
+        "Submit the complete final claim on time, including paid invoices, equipment specifications, AHRI records, compliance letters, photographs, fuel-use records, or other measure-specific documentation.",
+        "Allow NPU to verify transactions and inspect the completed installation before or after payment when requested."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "NPU currently lists commercial efficiency incentives, but major 2026 application and purchase windows for CHIPP, EVSE, Cool Choice, and gas-heating measures ended June 30. Timely purchased or preapproved projects may still receive payment after complete closeout and verification, while an ordinary new project does not have a verified current-cycle pathway.",
+      "evidenceUrls": [
+        "https://norwichpublicutilities.com/DocumentCenter/View/663/2026-NPU-Efficiency-Programs-Overview",
+        "https://norwichpublicutilities.com/DocumentCenter/View/681/V3-SPRING-2026-CHIPP-Rebate-Form---PART-A",
+        "https://norwichpublicutilities.com/DocumentCenter/View/655/2026-EVSE-Rebate",
+        "https://norwichpublicutilities.com/DocumentCenter/View/651/2026-Cool-Choice-Rebate-Form",
+        "https://norwichpublicutilities.com/DocumentCenter/View/657/2026-Natural-Gas-Heating-Equipment-Rebate-Form"
+      ],
+      "evidenceText": "NPU's 2026 overview lists commercial EV charging, heat-pump, central HVAC, lighting, VFD, customized, gas-heating, and related incentives. Current forms impose measure-specific preapproval, documentation, inspection, and timing rules; several purchase or intake windows closed June 30, 2026.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22303",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be the NPU electric account holder for qualifying new EV charging equipment installed within NPU electric service territory.",
+        "Have purchased the charging equipment between January 1 and June 30, 2026 and submit the signed claim within 60 days of installation.",
+        "Provide dated proof of purchase and a City of Norwich Building Department Letter of Compliance.",
+        "Ensure all documentation is received by July 15, 2026 and remain within the equipment-cost and program rebate caps.",
+        "Obtain NPU preapproval when the total requested rebate exceeds $10,000 and permit transaction or installation verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The fixed EVSE rebate remains payable for qualifying equipment purchased by June 30 and fully documented by July 15, but the current purchase window has closed. Existing timely projects are still possible awards; a new July purchase is not eligible under the current form.",
+      "evidenceUrls": [
+        "https://norwichpublicutilities.com/DocumentCenter/View/655/2026-EVSE-Rebate",
+        "https://norwichpublicutilities.com/DocumentCenter/View/663/2026-NPU-Efficiency-Programs-Overview"
+      ],
+      "evidenceText": "The 2026 EVSE form covers residential and commercial Level 2 charging equipment, requires an NPU electric account, proof of purchase, municipal compliance documentation, timely filing, possible inspection, and preapproval for requests over $10,000. Purchases had to occur by June 30 and documents are due July 15.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3112",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible NPU residential electric customer and install a currently supported measure at the qualifying service address.",
+        "Follow the measure-specific rules, including written preapproval before installation for CHIPP and threshold preapproval for larger Cool Choice or other rebate requests.",
+        "Meet the current equipment, efficiency, contractor, installation, and service-territory specifications.",
+        "Complete the applicable purchase or initial application step within the current program window and submit the signed claim with invoices, AHRI or product records, photographs, compliance documents, and other required proof.",
+        "Allow NPU inspection or transaction verification before payment when requested."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "NPU publishes a current residential efficiency menu, but the principal 2026 HVAC and heat-pump forms reviewed had June 30 purchase or intake cutoffs. Timely existing projects can still close out, while current official evidence does not support treating all mapped retrofit categories or a newly initiated July project as likely to be awarded.",
+      "evidenceUrls": [
+        "https://norwichpublicutilities.com/DocumentCenter/View/663/2026-NPU-Efficiency-Programs-Overview",
+        "https://norwichpublicutilities.com/DocumentCenter/View/681/V3-SPRING-2026-CHIPP-Rebate-Form---PART-A",
+        "https://norwichpublicutilities.com/DocumentCenter/View/651/2026-Cool-Choice-Rebate-Form"
+      ],
+      "evidenceText": "NPU's current residential list includes audits, EV charging, CHIPP, central HVAC and heat pumps, gas systems, geothermal, water heating, insulation, window air conditioning, dryers, and thermostats. The reviewed HVAC forms require technical eligibility, documentation, verification, and time-limited 2026 participation.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4572",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be the NPU natural-gas account holder for equipment installed within NPU service territory.",
+        "Purchase and install qualifying new gas heating or water-heating equipment meeting the current capacity and efficiency specifications.",
+        "Have made the qualifying purchase between January 1 and June 30, 2026 and submit the rebate request by July 15, 2026.",
+        "Provide the signed application, paid contractor invoice, manufacturer performance sheet or AHRI information, and the final City of Norwich compliance letter.",
+        "Obtain preapproval when the requested rebate exceeds $6,000 and permit NPU inspection or transaction verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current gas-equipment rebate uses objective specifications and would ordinarily be likely for a complete claim, but its 2026 purchase window ended June 30. Awards remain possible only for timely purchases submitted by the July 15 closeout deadline; the broader legacy retrofit mapping is not fully supported by the current gas form.",
+      "evidenceUrls": [
+        "https://norwichpublicutilities.com/DocumentCenter/View/657/2026-Natural-Gas-Heating-Equipment-Rebate-Form",
+        "https://norwichpublicutilities.com/DocumentCenter/View/663/2026-NPU-Efficiency-Programs-Overview"
+      ],
+      "evidenceText": "The current NPU gas form supports qualifying furnaces, unit heaters, boilers, and water heaters for residential and commercial gas customers. It requires complete invoices, specifications, a final compliance letter, possible inspection, threshold preapproval, purchases by June 30, and claims by July 15, 2026.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4524",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a qualifying public or charter K-12 school, higher-education facility, or other currently eligible school customer in NV Energy territory.",
+        "Submit the project through the Energy Smart Schools prescriptive or custom pathway before beginning work when advance review is required.",
+        "Provide the proposed scope, equipment, costs, savings information, and other documents needed for technical review and fund reservation.",
+        "Receive program preapproval, complete the approved project within the reservation period, and avoid material changes without authorization.",
+        "Submit final invoices and completion documents and pass any required pre- or post-installation inspection before final approval."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Energy Smart Schools is a current, funded 2026 efficiency offering with prescriptive and custom pathways. A qualifying school project that receives a reservation and completes the approved scope with full documentation is likely to be paid, subject to available funds and verification rather than competitive ranking.",
+      "evidenceUrls": [
+        "https://www.nvenergy.com/save-with-powershift/schools",
+        "https://www.nvenergy.com/publish/content/dam/nvenergy/brochures_arch/save-with-powershift/smart-school/EnergySmartSchools_ProgramSummary.pdf"
+      ],
+      "evidenceText": "NV Energy currently advertises school incentives for high-efficiency lighting, cooling, controls, and custom projects. Participation uses advance project review, possible inspections, reservation of funds, completion documentation, and final verification.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4629",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible nonresidential NV Energy customer in the northern service territory with at least one qualifying meter and an eligible project.",
+        "Submit the required pre-notification before installation and obtain written preapproval and a fund reservation when the selected measure or project pathway requires it.",
+        "Meet the current prescriptive specification or provide acceptable custom savings and cost calculations.",
+        "Complete the approved project and submit final documentation by the applicable 2026 deadline, including detailed invoices, equipment records, and required tax or authorization forms.",
+        "Pass any required pre-inspection, post-inspection, measurement, or verification review while program funds remain."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "NV Energy's 2026 Business Energy Services program is first-come and uses objective prescriptive or technically reviewed custom pathways. A compliant project with any required reservation is likely to receive the approved incentive after timely completion and verification, although funding can be exhausted.",
+      "evidenceUrls": [
+        "https://www.nvenergy.com/save-with-powershift/business-energy-services",
+        "https://www.nvenergy.com/publish/content/dam/nvenergy/brochures_arch/save-with-powershift/commercial-energy-services/Retrofit-New-Construction-Policies-Procedures.pdf"
+      ],
+      "evidenceText": "The current policies cover both northern and southern territories, require eligible nonresidential service, pre-notification and measure-dependent preapproval, final documentation, possible inspections, and first-come funding. Pre-notification is due by November 1 and projects and final documents by November 15, 2026.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3138",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible NV Energy residential customer in the northern service territory.",
+        "Select currently qualifying HVAC, heat-pump water-heating, thermostat, weatherization, or other supported equipment that meets the published specifications.",
+        "Use a participating contractor, retailer, distributor, or program enrollment channel where the selected offer requires one.",
+        "Provide the customer, equipment, purchase, installation, and account information required for the instant discount or rebate claim.",
+        "Complete any activation, quality-assurance, or installation verification requested by NV Energy or its program implementer."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "NV Energy maintains current 2026 residential incentives and participating-market channels for several supported measures. A customer using the prescribed channel with qualifying equipment is likely to receive the discount or rebate after objective eligibility and verification checks; not every retrofit mapping in the input is substantiated by the reviewed pages.",
+      "evidenceUrls": [
+        "https://www.nvenergy.com/save-with-powershift/home-energy-saver",
+        "https://www.nvenergy.com/save-with-powershift/home-energy-saver/residential-ac-and-mid-stream/residential-air-conditioning",
+        "https://www.nvenergy.com/save-with-powershift/home-energy-saver/residential-ac-and-mid-stream/water-heating",
+        "https://www.nvenergy.com/save-with-powershift/smart-thermostat",
+        "https://www.nvenergy.com/save-with-powershift/home-energy-saver/home-improvements"
+      ],
+      "evidenceText": "Current NV Energy residential pages support qualifying air-conditioning and heat-pump systems, heat-pump water heaters, smart thermostats, and home-improvement measures through participating channels and program verification. The reviewed evidence does not independently support every mapped category.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2601",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible nonresidential NV Energy customer in the southern service territory with at least one qualifying meter and an eligible project.",
+        "Submit the required pre-notification before installation and obtain written preapproval and a fund reservation when applicable.",
+        "Meet the current prescriptive specification or provide acceptable custom savings, equipment, and cost calculations.",
+        "Complete the project and submit detailed final invoices and supporting records by the applicable 2026 deadline.",
+        "Pass any required pre-inspection, post-inspection, measurement, or verification review while funds remain available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The southern-territory program is governed by the same current 2026 Business Energy Services policies as the northern offering. A qualifying project that follows pre-notification, any required reservation, timely completion, and final verification is likely to receive the approved incentive, subject to first-come funding.",
+      "evidenceUrls": [
+        "https://www.nvenergy.com/save-with-powershift/business-energy-services",
+        "https://www.nvenergy.com/publish/content/dam/nvenergy/brochures_arch/save-with-powershift/commercial-energy-services/Retrofit-New-Construction-Policies-Procedures.pdf"
+      ],
+      "evidenceText": "NV Energy's current business policies apply to southern and northern applicants, provide prescriptive and custom incentives, and require eligibility review, pre-notification, final documentation, possible inspections, and completion by November 15, 2026 while funds remain.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5539",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Propose a New York clean-energy or sustainable-infrastructure financing transaction that fits NY Green Bank's current investment mandate.",
+        "Submit a complete financing proposal through the current open-solicitation process with sponsor, borrower, project, capital-structure, economics, and impact information.",
+        "Demonstrate a credible repayment source, market need, additionality, and acceptable risk-adjusted terms.",
+        "Provide financial, technical, legal, environmental, and organizational diligence materials requested during review.",
+        "Receive internal investment approval and negotiate and execute definitive financing documents before funds are committed."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "NY Green Bank accepts proposals through an ongoing investment solicitation, but financing is discretionary and depends on transaction fit, underwriting, due diligence, risk, impact, and negotiated terms. A qualifying proposal has a real pathway but is not an entitlement.",
+      "evidenceUrls": [
+        "https://greenbank.ny.gov/Investment-Opportunities/Open-Solicitations",
+        "https://greenbank.ny.gov/Investment-Opportunities/RFP-Resources"
+      ],
+      "evidenceText": "NY Green Bank's current materials invite financing proposals and describe an investment review process rather than a formulaic rebate. Transactions must fit its mandate and pass screening, diligence, underwriting, approval, and documentation.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5546",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible nonresidential or qualifying multifamily property in a municipality that has adopted NY Open C-PACE.",
+        "Develop a qualifying energy-efficiency, renewable-energy, or other eligible improvement under the current program rules.",
+        "Secure a willing participating capital provider and obtain any required existing mortgage-holder consent.",
+        "Submit the property, project, savings, cost, ownership, and financing application materials required by the Energy Improvement Corporation.",
+        "Pass capital-provider underwriting and EIC project qualification, execute the finance and benefit-assessment documents, and complete recording before funding."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "C-PACE financing is available through a defined current process, but approval depends on municipal participation, property and project eligibility, lender consent, private-capital underwriting, EIC qualification, and closing. Eligibility alone does not assure financing.",
+      "evidenceUrls": [
+        "https://www.eicpace.org/eicopencpace",
+        "https://www.eicpace.org/howopencpaceworks",
+        "https://www.eicpace.org/financeapplication"
+      ],
+      "evidenceText": "NY Open C-PACE currently uses private capital-provider financing, EIC project qualification, mortgage-holder consent where applicable, and execution and recording of a benefit assessment. Each financing is individually reviewed and closed.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4244",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible NYSEG nonresidential electric or natural-gas customer and install a measure covered by the current prescriptive or custom program.",
+        "Meet the current equipment, efficiency, installation, cost, and customer specifications in the applicable rebate catalog.",
+        "Obtain written preapproval before proceeding when the prescriptive request reaches the current threshold and for every custom project.",
+        "Submit the signed application with itemized invoices, product specifications, utility-bill information, savings calculations where applicable, and Form W-9.",
+        "Complete any requested pre- or post-installation inspection and receive written payment approval."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "NYSEG's current C&I program publishes broad prescriptive catalogs and a custom pathway with objective participation rules. A complete qualifying claim is likely to be approved after any required preapproval and verification, subject to program limits and final review.",
+      "evidenceUrls": [
+        "https://www.nyseg.com/smartenergy/businesssolutions/commercialandindustrialrebates",
+        "https://www.nyseg.com/smartenergy/businesssolutions/commercialandindustrialrebates/commercial-and-industrial-rebate-catalogs",
+        "https://www.nyseg.com/w/program-participation-instructions",
+        "https://www.nyseg.com/w/custom-rebate-program-participation-instructions"
+      ],
+      "evidenceText": "NYSEG currently offers prescriptive rebates for lighting, controls, HVAC, refrigeration, process systems, laundry, motors, steam, filtration, and other measures, plus custom incentives. Prescriptive requests below $10,000 may proceed without preapproval; larger and custom projects require advance review, followed by documentation and possible inspection.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4306",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible NYSEG small business customer within the current electric-demand or gas-usage limits.",
+        "Enroll with the program and submit the project through the current online application portal, directly or through a contractor.",
+        "Select qualifying lighting or other eligible equipment from the current small-business catalog and meet the installation specifications.",
+        "Provide customer authorization, project, equipment, cost, invoice, and payment-recipient documentation.",
+        "Complete installation and any program review or verification before the rebate is released."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Small Business Program is an administrative rebate program with published customer limits, eligible measures, an online application route, and Energy Advisor support. A qualifying, complete project is likely to receive the approved rebate after review rather than competing for selection.",
+      "evidenceUrls": [
+        "https://www.nyseg.com/w/small-business-direct-install",
+        "https://www.nyseg.com/smartenergy/businesssolutions/smallbusiness",
+        "https://www.nyseg.com/smartenergy/businesssolutions/smallbusinessdirectinstall/small-business-direct-install-program"
+      ],
+      "evidenceText": "NYSEG currently accepts small-business rebate applications through its online portal. Eligible electric customers generally have demand at or below 110 kW, and qualifying projects may include lighting and other efficiency equipment, with final payment following application and project review.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4237",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain qualifying permanent Ocala Electric Utility residential service at the installation address.",
+        "Purchase and install a new product currently listed on the city's rebate form and meet its ENERGY STAR or other product specification.",
+        "Submit the completed claim within 90 days of purchase with the paid receipt, manufacturer and model information, and proof of installation when required.",
+        "Ensure the appliance or equipment is installed at the qualifying service address and is not a used or otherwise excluded product.",
+        "Receive city review and approval before the rebate is applied as a utility-bill credit."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Ocala currently publishes formulaic residential product rebates, so supported claims are likely after complete review. However, the active official offering is narrower than the legacy broad DSIRE record and does not substantiate all mapped lighting, HVAC, envelope, refrigeration, laundry, and food-service measures; overall award likelihood for this record is therefore only possible.",
+      "evidenceUrls": [
+        "https://www.ocalafl.gov/government/electric-utility/rebates",
+        "https://www.ocalafl.gov/government/electric-utility/files-documents"
+      ],
+      "evidenceText": "Ocala's current official rebate page provides post-purchase residential claims for specifically listed qualifying products, requiring permanent utility service, timely filing, receipts, model information, installation proof, and city approval. The current page does not support the full legacy measure list.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4290",
+      "requiresProgramApproval": "unknown",
+      "approvalRequirements": [],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Ocala's current official rebate and electric-utility document pages do not identify a current solar water-heating rebate, application, eligibility standard, approval process, or payment rule. The legacy named opportunity cannot be audited without current program-specific evidence.",
+      "evidenceUrls": [
+        "https://www.ocalafl.gov/government/electric-utility/rebates",
+        "https://www.ocalafl.gov/government/electric-utility/files-documents"
+      ],
+      "evidenceText": "Current Ocala Electric Utility materials list other residential rebates and separate solar or net-metering information, but no current solar hot-water rebate form or award process was located.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "needs_evidence"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22784",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Maine participant and select a qualifying connected Level 2 charger supported by the current offer.",
+        "Request and receive the one-time program discount code before purchasing through the designated online store.",
+        "Purchase the supported charger using the code and install it at the qualifying location.",
+        "Connect the charger to the internet and manufacturer application and complete the required off-peak setup or enrollment steps.",
+        "Allow the program or charger vendor to confirm successful activation before the setup-completion incentive is issued."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "The current offer provides fixed incentives through an objective code, purchase, installation, and activation process rather than competitive selection. A participant who receives a code, buys a supported charger, and completes verified setup should ordinarily receive both the instant discount and completion incentive.",
+      "evidenceUrls": [
+        "https://www.efficiencymaine.com/off-peak-charger-incentives/",
+        "https://www.efficiencymaine.com/em-electric-vehicle-incentives/"
+      ],
+      "evidenceText": "Efficiency Maine currently offers a $200 charger discount through a one-time code and a second $200 incentive after a supported charger is installed, connected, and confirmed for off-peak operation. The steps are administrative eligibility and activation conditions.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:918",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Apply as an eligible Indian Tribe, Alaska Native corporation, Tribal or intertribal organization, Tribal Energy Development Organization, Tribal College or University, or other entity permitted by the current NOFO.",
+        "Propose a project that fits one of the current Unleashing Tribal Energy Development topic areas and satisfies the applicable readiness, location, and energy-purpose requirements.",
+        "Complete all required federal registrations and submit the full application package by July 24, 2026 at 5 p.m. Eastern Time.",
+        "Provide the technical volume, work plan, schedule, budget, eligibility records, and required cost share for the applicable topic area.",
+        "Pass DOE eligibility and merit review, be competitively selected, and complete award negotiation and federal documentation."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The Office of Indian Energy currently has an open $50 million competitive NOFO, but awards depend on topic-area eligibility, application quality, merit review, available funds, selection, and negotiation. The open deadline creates a real opportunity, not an automatic award.",
+      "evidenceUrls": [
+        "https://www.energy.gov/indianenergy/current-funding-and-technical-assistance-opportunities",
+        "https://www.energy.gov/indianenergy/notice-funding-opportunity-informational-webinar-unleashing-tribal-energy-development",
+        "https://www.energy.gov/indianenergy/articles/50-million-available-advance-affordable-reliable-and-secure-energy-tribes"
+      ],
+      "evidenceText": "DOE currently lists Unleashing Tribal Energy Development as a $50 million competitive funding opportunity due July 24, 2026. Eligible Tribal applicants must submit a topic-specific technical and financial package, satisfy any cost-share rule, and pass merit selection and award negotiation.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3639",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible OG&E nonresidential customer in Oklahoma with a project covered by a current business-efficiency pathway.",
+        "Engage the program before work when the selected assessment, direct-install, custom, or project-specific pathway requires advance review.",
+        "Install equipment or measures that meet the current technical specifications and produce eligible electric savings.",
+        "Provide the application, project scope, savings information, invoices, equipment records, and other required completion documents.",
+        "Pass any required site assessment, quality-control inspection, or final verification while program funds remain."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "OG&E currently operates multiple business-efficiency pathways using assessments, prescribed measures, custom review, and final verification rather than competitive grant scoring. A qualifying project that follows the applicable pathway is likely to receive the stated incentive, subject to funding and measure rules.",
+      "evidenceUrls": [
+        "https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency",
+        "https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/rebates",
+        "https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/efficiency-faq"
+      ],
+      "evidenceText": "OG&E's current Oklahoma business-efficiency materials describe assessment, direct-install, prescriptive, midstream, and custom options with measure-specific applications, supporting documentation, quality control, and first-come program administration.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4565",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible OG&E residential customer at the qualifying service address.",
+        "Enroll in the applicable home-efficiency service or purchase and install a product currently covered by a rebate pathway.",
+        "Permit a program partner or energy advisor to assess the home and determine qualifying services when the pathway uses an in-home visit.",
+        "Use qualifying products, equipment, and installation methods and provide proof of purchase or completion when required.",
+        "Complete final program review or verification while the applicable first-come funding allocation remains available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "OG&E's current residential portfolio uses standard enrollment, home-assessment, direct-service, and post-purchase rebate pathways. A customer who meets the measure and documentation rules is likely to receive the service or rebate, subject to current funding and the narrower scope of each active offer.",
+      "evidenceUrls": [
+        "https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/residential-energy-efficiency",
+        "https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/rebates",
+        "https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/efficiency-faq"
+      ],
+      "evidenceText": "Current OG&E residential materials direct customers to enroll for an advisor visit or use measure-specific rebate routes, with eligibility, product, proof-of-purchase, verification, and first-come funding conditions. The reviewed sources do not substantiate every retrofit mapping in the input.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3638",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Confirm that the installation address is an eligible OG&E Arkansas nonresidential account and that the proposed measure is covered by a current Arkansas business-efficiency pathway.",
+        "Contact the business-efficiency program before work and obtain project-specific review or preapproval when required.",
+        "Provide the project scope, expected savings, equipment, costs, and customer information needed to establish eligibility.",
+        "Install the approved measure and submit invoices and completion records.",
+        "Pass any required inspection or savings verification before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "OG&E maintains current business-efficiency processes, but the accessible official evidence did not clearly confirm an Arkansas-specific prescriptive rebate for the record's mapped low-flow fixture. A project may qualify through a custom or current business pathway, but measure and territory eligibility require follow-up before an award can be treated as likely.",
+      "evidenceUrls": [
+        "https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/commercial-industrial-energy-efficiency",
+        "https://www.oge.com/web/portal/label_ord/energy-solutions/efficiency-programs/rebates"
+      ],
+      "evidenceText": "Current OG&E business materials describe project assessment, applications, custom or prescriptive review, documentation, and verification. They do not clearly identify a current Arkansas low-flow-fixture rebate matching this record.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2214",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Okanogan County PUD residential electric customer at the installation address.",
+        "Contact PUD Energy Services before beginning work and confirm that the selected measure and project remain eligible for an incentive.",
+        "Install qualifying equipment or envelope improvements that meet the current technical and contractor requirements.",
+        "Submit the applicable application with invoices, equipment specifications, AHRI or certification records, and other requested installation documentation.",
+        "Allow inspection or verification and apply while conservation funding remains available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Okanogan PUD currently directs residential customers to its incentive forms and Energy Services process. A qualifying project confirmed before work and supported by complete installation records is likely to receive the incentive after verification, subject to limited program funds.",
+      "evidenceUrls": [
+        "https://www.okanoganpud.org/energy-services-incentives/energy-incentive-programs/residential-programs/",
+        "https://www.okanoganpud.org/energy-services-incentives/energy-incentive-programs/energy-efficiency-incentive-programs/",
+        "https://www.okanoganpud.org/faqs/heat-pump-water-heaters-2/"
+      ],
+      "evidenceText": "The current PUD residential program materials direct customers to contact Energy Services, use current measure forms, provide invoices and technical records, and complete program verification. Incentives are subject to measure rules and available conservation funding.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3590",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Oklahoma Electric Cooperative member with the qualifying equipment installed at an eligible member service location.",
+        "Purchase and install a measure currently covered by OEC's rebate program and meet its equipment, efficiency, installation, and timing specifications.",
+        "Submit the current online application with itemized invoices, AHRI or product certifications, photographs, charger or rate information, and other measure-specific proof.",
+        "Cooperate with the OEC Energy Efficiency Solutions Specialist's installation review or inspection.",
+        "Apply while the rebate remains funded and satisfy any per-account, contractor, or prior-approval condition."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "OEC publishes current member rebates with objective measure requirements and specialist verification. A complete qualifying claim is likely to be paid after review, although all rebates remain subject to funding availability and measure-specific limits.",
+      "evidenceUrls": [
+        "https://okcoop.org/rebates/",
+        "https://okcoop.org/efficiency/"
+      ],
+      "evidenceText": "OEC's current official pages limit rebates to eligible electric members, require measure-specific applications and documentation, and state that installations are verified by an Energy Efficiency Solutions Specialist and remain subject to available funding.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4528",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a qualifying nonresidential electric customer of an participating OMPA Oklahoma member city.",
+        "Submit a complete DEEP application signed by the customer and municipal utility representative with detailed project plans and supporting information.",
+        "Demonstrate eligible summer peak-demand reduction, document project costs and any required customer or city matching contribution, and obtain case-by-case approval before proceeding.",
+        "Permit OMPA or member-city inspection of existing equipment before removal when required and do not materially change the approved project without authorization.",
+        "Submit final invoices, equipment records, and completion information and pass post-installation verification; obtain OMPA Board approval when the applicable award level requires it."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "DEEP is a current case-by-case matching-incentive program, not a formulaic entitlement. Approval depends on documented peak-demand savings, project economics, available funds, municipal and OMPA review, inspections, and potentially board action, so a qualifying application is possible but not assured.",
+      "evidenceUrls": [
+        "https://www.ompa.com/services/rebate-programs/",
+        "https://www.ompa.com/programs/deep/",
+        "https://www.ompa.com/wp-content/uploads/2025/12/DEEP-Policy-Guidlines-2025.pdf",
+        "https://www.ompa.com/wp-content/uploads/2025/12/DEEP-Application-Ver.-12-2025.pdf"
+      ],
+      "evidenceText": "OMPA currently describes DEEP as matching assistance for member-city customers, with projects evaluated individually from detailed plans. The current application requires customer and municipal signatures, sufficient project detail, cost documentation, inspections, and final review.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22568",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an active residential electric account holder of a participating OMPA member utility at the thermostat installation address.",
+        "Purchase and install a qualifying ENERGY STAR Wi-Fi smart thermostat that controls an operating central heating and cooling or heat-pump system.",
+        "Submit the completed rebate application and paid receipt or invoice with manufacturer and model information within 90 days of purchase.",
+        "Keep the thermostat installed, operational, and internet-connected and permit an OMPA or member-utility inspection when requested.",
+        "For the separate demand-response incentives, enroll, accept the program terms, and maintain connectivity for the applicable participation period; individual event opt-out remains voluntary."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The smart-thermostat rebate and demand-response enrollment incentives use fixed eligibility, documentation, connectivity, and verification rules. A compliant customer is likely to receive the applicable rebate or enrollment incentive; the voluntary ability to opt out of individual events is an operating condition and does not make the initial award unlikely.",
+      "evidenceUrls": [
+        "https://www.ompa.com/services/rebate-programs/",
+        "https://www.ompa.com/turn-down-the-watts/",
+        "https://www.ompa.com/wp-content/uploads/2026/01/Turn-Down-the-Watts-Rebate-Program-Trifold-Brochure-2025-WEB.pdf"
+      ],
+      "evidenceText": "OMPA's current two-part program offers a fixed qualifying smart-thermostat rebate and separate demand-response enrollment and participation incentives. It requires an eligible member-city residential account, qualifying connected equipment, timely purchase documentation, and possible inspection; event participation is voluntary.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_code_title_hash:OK30F:e57fdd96f549",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an electric customer of an OMPA member city that currently participates in the relevant WISE rebate pathway.",
+        "Complete the required in-home energy audit or pre-installation review before work when the selected WISE measure requires it.",
+        "Use qualifying equipment or insulation and meet the current technical, contractor, permit, and installation requirements.",
+        "Submit the current form, itemized paid invoice, equipment or material records, and other measure-specific documentation within the stated filing period.",
+        "Pass the required post-installation inspection and member-city or OMPA approval."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "OMPA currently operates WISE heat-pump, water-heater, and ceiling-insulation rebate pathways, but the fallback hash record has no program-specific source link and its sole air-sealing mapping was not confirmed by a current official WISE form. The general approval process is documented, but award likelihood for this exact record cannot be determined without record reconciliation.",
+      "evidenceUrls": [
+        "https://www.ompa.com/services/rebate-programs/",
+        "https://www.ompa.com/wp-content/uploads/2026/01/WISE-Ceiling-Insulation-Rebate-Program-Trifold-Brochure-2025-WEB.pdf",
+        "https://www.ompa.com/wp-content/uploads/2025/10/2025-Updated-WISE-Heat-Pump-Rebate-Program-Summary.pdf"
+      ],
+      "evidenceText": "The current OMPA page confirms active WISE heat-pump, water-heater, and ceiling-insulation programs with audits, forms, invoices, and inspections. Current official evidence did not identify a separate air-sealing rebate tied to this hash-only record.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4525",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an electric customer of an OMPA member city participating in the applicable WISE rebate program.",
+        "Complete the required home energy audit or pre-installation inspection before replacing equipment or performing the covered work.",
+        "Install qualifying heat-pump, geothermal, water-heating, or ceiling-insulation measures meeting current efficiency, sizing, AHRI, contractor, permit, and material rules.",
+        "Submit the signed measure-specific form, paid itemized invoice, certifications, and other required paperwork within the stated period, generally within 90 days for covered equipment pathways.",
+        "Pass the required post-installation inspection and receive member-city or OMPA final approval."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current WISE program publishes objective heat-pump, water-heater, and ceiling-insulation pathways with required audits, technical standards, documentation, and post-inspections. A customer in a participating member city who completes those steps is likely to receive the stated rebate after approval.",
+      "evidenceUrls": [
+        "https://www.ompa.com/services/rebate-programs/",
+        "https://www.ompa.com/wp-content/uploads/2025/10/2025-Updated-WISE-Heat-Pump-Rebate-Program-Summary.pdf",
+        "https://www.ompa.com/wp-content/uploads/2025/12/WISE-Water-Heater-Rebate-Summary-2025.pdf",
+        "https://www.ompa.com/wp-content/uploads/2026/01/WISE-Ceiling-Insulation-Rebate-Program-Trifold-Brochure-2025-WEB.pdf"
+      ],
+      "evidenceText": "OMPA currently lists WISE rebates for heat pumps, water heaters, and ceiling insulation. Current materials require participating member-city service, pre-work audits or inspections, qualifying products and contractors, complete forms and invoices, and post-installation verification.",
+      "reviewedAt": "2026-07-10T14:50:29Z",
+      "reviewStatus": "audited"
+    }
+  ]
+}
