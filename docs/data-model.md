@@ -179,7 +179,7 @@ Runtime records are split by domain so deployment and migration work can stay sc
   `sourceModifiedAtEpochMs` so the admin UI can show whether the current manifest-selected snapshot
   is fresh, empty, or unavailable.
 - `gbs-api-runtime-state`: small operational state keyed by `stateScope`/`stateKey`, such as Geocodio
-  quota usage.
+  quota usage and the new retrofit portfolio event, snapshot, read model, outbox, and idempotency rows.
 
 The former shared `gbs-runtime-state` table has been split into those domain tables.
 
