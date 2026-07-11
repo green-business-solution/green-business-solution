@@ -248,7 +248,7 @@ describe("portfolio handlers", () => {
         item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY",
     );
     expect(snapshotRow?.aggregateVersion).toBe(first.portfolioVersion);
-    expect(snapshotRow?.eventCount).toBe(3);
+    expect(snapshotRow?.eventCount).toBe(4);
     expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.itemOrder).toEqual(["item_a", "item_b"]);
     expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.eventCount).toBe(4);
     expect(db.items.find((item) => item.stateScope === "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#default" && item.stateKey === "idem-001")?.result).toEqual(first);
