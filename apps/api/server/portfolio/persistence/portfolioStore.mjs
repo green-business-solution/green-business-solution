@@ -258,6 +258,7 @@ export async function loadIdempotencyReceipt({
         stateScope: rowScopeForIdempotency(portfolioId, scenarioId),
         stateKey: String(idempotencyKey),
       },
+      ConsistentRead: true,
     }),
   );
 
@@ -273,6 +274,7 @@ export async function loadIdempotencyReceipt({
           stateScope: rowScopeForIdempotency(portfolioId),
           stateKey: String(idempotencyKey),
         },
+        ConsistentRead: true,
       }),
     );
     return legacyResult.Item || null;
@@ -344,6 +346,7 @@ function queryScopeItems(db, tableName, scope) {
           KeyConditionExpression: "#stateScope = :stateScope",
           ExpressionAttributeNames: { "#stateScope": "stateScope" },
           ExpressionAttributeValues: { ":stateScope": scope },
+          ConsistentRead: true,
           ExclusiveStartKey: exclusiveStartKey,
         }),
       );

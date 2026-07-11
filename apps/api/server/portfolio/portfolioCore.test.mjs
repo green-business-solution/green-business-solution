@@ -4,6 +4,7 @@ import { calculatePortfolioReadModel } from "./calculation/marginalValues.mjs";
 import { loadAggregateFromEvents, aggregateSnapshot } from "./domain/aggregate.mjs";
 import { PORTFOLIO_EVENT_TYPES, createEventEnvelope } from "./domain/events.mjs";
 import { completePortfolioItemHandler, isPortfolioFeatureEnabled, recalculatePortfolioHandler, readPortfolioHandler } from "./http/portfolioHandlers.mjs";
+import { loadPortfolioById, loadIdempotencyReceipt } from "./persistence/portfolioStore.mjs";
 
 const portfolioId = "portfolio_client_001";
 const user = {
@@ -766,6 +767,56 @@ describe("portfolio handlers", () => {
       code: "PORTFOLIO_FEATURE_DISABLED"
     });
     expect(dbCalls).toBe(0);
+  });
+
+  it("uses consistent reads for portfolio and idempotency persistence lookups", async () => {
+    const seed = buildSeededPortfolioSnapshot({
+      portfolioId,
+      userId: user.userId,
+      seedItems: [
+        {
+          portfolioItemId: "item_read_consistency",
+          title: "Boiler",
+          independentFinancialValueMinorUnits: 15000,
+          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId,
+        },
+      ],
+      now: "2026-07-10T10:30:00.000Z",
+    });
+    const baseDb = createMockDb(seed.seedRows);
+    const queryCalls = [];
+    const getCalls = [];
+    const trackingDb = {
+      ...baseDb,
+      send: async (command) => {
+        if (command.constructor.name === "QueryCommand") {
+          queryCalls.push(command.input);
+        }
+        if (command.constructor.name === "GetCommand") {
+          getCalls.push(command.input);
+        }
+        return baseDb.send(command);
+      },
+    };
+
+    await loadPortfolioById({
+      db: trackingDb,
+      tableName: "gbs-api-runtime-state",
+      portfolioId,
+      userId: user.userId,
+    });
+    await loadIdempotencyReceipt({
+      db: trackingDb,
+      tableName: "gbs-api-runtime-state",
+      portfolioId,
+      scenarioId: "default",
+      idempotencyKey: "consistency-idem",
+    });
+
+    expect(queryCalls).toHaveLength(1);
+    expect(queryCalls[0].ConsistentRead).toBe(true);
+    expect(getCalls).toHaveLength(2);
+    expect(getCalls.every((command) => command.ConsistentRead)).toBe(true);
   });
 });
 
