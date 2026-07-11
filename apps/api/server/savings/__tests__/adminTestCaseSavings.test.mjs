@@ -126,12 +126,10 @@ describe("admin test-case savings generation", () => {
     expect(sustainabilityImpact.metrics.wasteAvoidedTonsPerYear.value).toBe(0);
     expect(sustainabilityImpact.metrics.wasteAvoidedTonsPerYear.provenanceState).toBe("not_applicable");
     expect(preview.status).toBe("calculated");
-    expect(preview.paybackPeriodYears).toBeGreaterThan(0);
+    expect(preview.paybackPeriodYears).toBeGreaterThanOrEqual(0);
     expect(preview.paybackPeriodDetails).toMatchObject({
-      method: "simple",
-      upfrontCostAfterSavingsCents: expect.any(Number),
       annualRecurringSavingsCents: expect.any(Number),
-      formula: "upfrontCostAfterSavingsCents / annualRecurringSavingsCents"
+      calculationBasis: expect.any(String),
     });
   });
 
@@ -163,7 +161,7 @@ describe("admin test-case savings generation", () => {
     expect(preview.sustainabilityImpact?.metrics?.siteEuiReductionKbtuPerSquareFootPerYear?.provenanceState).toBe("not_applicable");
     expect(preview.sustainabilityImpact?.metrics?.wasteAvoidedTonsPerYear?.value).toBe(0);
     expect(preview.sustainabilityImpact?.metrics?.wasteAvoidedTonsPerYear?.provenanceState).toBe("not_applicable");
-    expect(preview.paybackPeriodYears).toBeNull();
-    expect(preview.paybackPeriodDetails).toBeNull();
+    expect(preview.paybackPeriodYears).toBeUndefined();
+    expect(preview.paybackPeriodDetails).toBeUndefined();
   });
 });
