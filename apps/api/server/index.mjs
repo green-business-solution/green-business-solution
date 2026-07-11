@@ -70,6 +70,7 @@ import { validateDashboardPostImplementationDataset } from "./dashboardPerforman
 import {
   filterRetrofitRecommendationsPayload,
   normalizeRetrofitTypeIdList,
+  hasCurrentRetrofitRecommendationsPayloadShape,
   persistentRetrofitRecommendationsCacheVersion,
   readPersistentRetrofitRecommendations as readPersistentRetrofitRecommendationsFromStore,
   writePersistentRetrofitRecommendations as writePersistentRetrofitRecommendationsToStore
@@ -1302,6 +1303,11 @@ function readCachedRetrofitRecommendations(user, intake, retrofitTypeIds = [], c
   }
 
   if (Date.now() - cached.createdAt > retrofitRecommendationsCacheTtlMs) {
+    retrofitRecommendationsCache.delete(key);
+    return null;
+  }
+
+  if (!hasCurrentRetrofitRecommendationsPayloadShape(cached.payload)) {
     retrofitRecommendationsCache.delete(key);
     return null;
   }

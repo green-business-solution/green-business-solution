@@ -1,9 +1,38 @@
 import crypto from "node:crypto";
 import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
-import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { DeleteCommand, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 
 export const persistentRetrofitRecommendationsStateScope = "retrofitRecommendations";
 export const persistentRetrofitRecommendationsCacheVersion = "2026-07-09-sustainability-impact-v2";
+export const persistentRetrofitRecommendationsPayloadSchemaVersion = "recommendation-payload-v1";
+
+function hasPaybackFields(value) {
+  return value && Object.prototype.hasOwnProperty.call(value, "paybackPeriodYears") &&
+    Object.prototype.hasOwnProperty.call(value, "paybackPeriodDetails");
+}
+
+export function hasCurrentRetrofitRecommendationsPayloadShape(payload) {
+  if (!payload || typeof payload !== "object") {
+    return false;
+  }
+  if (!Array.isArray(payload.retrofits)) {
+    return false;
+  }
+
+  return payload.retrofits.every((retrofit) => {
+    const savingsPreview = retrofit?.savingsPreview || null;
+    if (!savingsPreview || savingsPreview.status !== "calculated") return true;
+    return hasPaybackFields(savingsPreview);
+  });
+}
+
+function hasCurrentRetrofitRecommendationsPayloadEnvelope(payload) {
+  if (!payload || typeof payload !== "object") return false;
+  if (payload.schemaVersion !== persistentRetrofitRecommendationsPayloadSchemaVersion) {
+    return false;
+  }
+  return hasCurrentRetrofitRecommendationsPayloadShape(payload.payload);
+}
 
 function cleanText(value) {
   return typeof value === "string" ? value.trim() : "";
@@ -76,6 +105,19 @@ export function filterRetrofitRecommendationsPayload(payload, retrofitTypeIds = 
   };
 }
 
+async function clearPersistentRetrofitRecommendationsState(db, table, user, logger = console) {
+  try {
+    await db.send(
+      new DeleteCommand({
+        TableName: table,
+        Key: persistentRetrofitRecommendationsStateKey(user)
+      })
+    );
+  } catch (error) {
+    logger?.warn?.(`[retrofit-recommendations-cache] persistent state clear failed for ${user?.userId || "unknown"}:`, error);
+  }
+}
+
 export async function readPersistentRetrofitRecommendations({
   bucket,
   cacheVersion = persistentRetrofitRecommendationsCacheVersion,
@@ -108,7 +150,13 @@ export async function readPersistentRetrofitRecommendations({
       })
     );
     const text = await response.Body?.transformToString("utf-8");
-    return text ? JSON.parse(text) : null;
+    if (!text) return null;
+    const envelope = JSON.parse(text);
+    if (!hasCurrentRetrofitRecommendationsPayloadEnvelope(envelope)) {
+      await clearPersistentRetrofitRecommendationsState(db, table, user, logger);
+      return null;
+    }
+    return envelope.payload;
   } catch (error) {
     logger?.warn?.(`[retrofit-recommendations-cache] persistent read failed for ${user?.userId || "unknown"}:`, error);
     return null;
@@ -126,7 +174,7 @@ export async function writePersistentRetrofitRecommendations({
   table,
   user
 }) {
-  if (!bucket || !table || !payload || payload.isPartialRecommendations) {
+  if (!bucket || !table || !payload || payload.isPartialRecommendations || !hasCurrentRetrofitRecommendationsPayloadShape(payload)) {
     return null;
   }
   const now = new Date().toISOString();
@@ -138,7 +186,11 @@ export async function writePersistentRetrofitRecommendations({
       new PutObjectCommand({
         Bucket: bucket,
         Key: s3Key,
-        Body: JSON.stringify(payload),
+        Body: JSON.stringify({
+          schemaVersion: persistentRetrofitRecommendationsPayloadSchemaVersion,
+          generatedAt: new Date().toISOString(),
+          payload
+        }),
         ContentType: "application/json",
         ...(isLocalStack ? {} : { ServerSideEncryption: "AES256" })
       })

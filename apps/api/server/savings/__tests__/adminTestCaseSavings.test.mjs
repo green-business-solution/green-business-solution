@@ -59,8 +59,8 @@ describe("admin test-case savings generation", () => {
   it("builds v2 sustainability impact for supported retrofits", () => {
     const preview = buildAdminTestCaseSavingsPreview({
       retrofitGroup: {
-        retrofitTypeId: "ev_charger_installation",
-        displayName: "EV charger installation",
+        retrofitTypeId: "led_lighting_retrofit",
+        displayName: "LED lighting retrofit",
         opportunities: [{ opportunityId: "opp-1" }],
         opportunityCount: 1
       },
@@ -125,6 +125,14 @@ describe("admin test-case savings generation", () => {
     expect(sustainabilityImpact.metrics.waterConservationGallonsPerYear.provenanceState).toBe("not_applicable");
     expect(sustainabilityImpact.metrics.wasteAvoidedTonsPerYear.value).toBe(0);
     expect(sustainabilityImpact.metrics.wasteAvoidedTonsPerYear.provenanceState).toBe("not_applicable");
+    expect(preview.status).toBe("calculated");
+    expect(preview.paybackPeriodYears).toBeGreaterThan(0);
+    expect(preview.paybackPeriodDetails).toMatchObject({
+      method: "simple",
+      upfrontCostAfterSavingsCents: expect.any(Number),
+      annualRecurringSavingsCents: expect.any(Number),
+      formula: "upfrontCostAfterSavingsCents / annualRecurringSavingsCents"
+    });
   });
 
   it("builds unsupported service-only previews with contract-shaped sustainability impact", () => {
@@ -155,5 +163,7 @@ describe("admin test-case savings generation", () => {
     expect(preview.sustainabilityImpact?.metrics?.siteEuiReductionKbtuPerSquareFootPerYear?.provenanceState).toBe("not_applicable");
     expect(preview.sustainabilityImpact?.metrics?.wasteAvoidedTonsPerYear?.value).toBe(0);
     expect(preview.sustainabilityImpact?.metrics?.wasteAvoidedTonsPerYear?.provenanceState).toBe("not_applicable");
+    expect(preview.paybackPeriodYears).toBeNull();
+    expect(preview.paybackPeriodDetails).toBeNull();
   });
 });
