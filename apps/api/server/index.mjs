@@ -1822,53 +1822,13 @@ async function createPasswordAccount(input) {
     requireEmail: true,
   });
   const existing = await findUserByPasswordUsername(username);
-  const passwordSignupBlocked = isPasswordSignupLinkBlocked(existing, {
-    passwordHashAlgorithm,
-    passwordHashKeyLength,
-  });
 
-  if (existing && passwordSignupBlocked) {
+  if (existing) {
     throw createPasswordError(passwordSignupDuplicateErrorMessage, 409);
   }
 
   const passwordFields = await createPasswordFields(password);
   const now = new Date().toISOString();
-
-  if (existing) {
-    const role =
-      isAdminEmail(existing.email) || isAdminEmail(username)
-        ? "admin"
-        : existing.role || "client";
-    const isFakeUser = role === "admin" ? false : isFakeUserRecord(existing);
-    const result = await db.send(
-      new UpdateCommand({
-        TableName: usersTable,
-        Key: { userId: existing.userId },
-        UpdateExpression:
-          "SET #role = :role, authProvider = :authProvider, isFakeUser = :isFakeUser, passwordLinked = :passwordLinked, passwordUsername = :passwordUsername, passwordHash = :passwordHash, passwordSalt = :passwordSalt, passwordAlgorithm = :passwordAlgorithm, passwordHashKeyLength = :passwordHashKeyLength, passwordLinkedAt = :now, updatedAt = :now",
-        ExpressionAttributeNames: {
-          "#role": "role",
-        },
-        ExpressionAttributeValues: {
-          ":role": role,
-          ":authProvider": authProviderForPasswordUser(existing),
-          ":isFakeUser": isFakeUser,
-          ":passwordLinked": true,
-          ":passwordUsername": username,
-          ":passwordHash": passwordFields.passwordHash,
-          ":passwordSalt": passwordFields.passwordSalt,
-          ":passwordAlgorithm": passwordFields.passwordAlgorithm,
-          ":passwordHashKeyLength": passwordFields.passwordHashKeyLength,
-          ":now": now,
-        },
-        ReturnValues: "ALL_NEW",
-      }),
-    );
-
-    return issuePasswordSession(
-      result.Attributes || { ...existing, ...passwordFields, role, isFakeUser },
-    );
-  }
 
   const role = isAdminEmail(username) ? "admin" : "client";
   const user = {

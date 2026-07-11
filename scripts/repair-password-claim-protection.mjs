@@ -26,7 +26,7 @@ export function parseArgs(argv) {
     maxUpdates: 250,
     region: defaultRegion,
     profile: defaultProfile,
-    runId: crypto.randomUUID(),
+    runId: undefined,
     usersTable: defaultUsersTable,
     rollback: false,
   };
@@ -110,7 +110,8 @@ export async function runPasswordClaimProtectionRepair(options = {}, dependencie
     maxUpdates: options.maxUpdates || 250,
     region: options.region || defaultRegion,
     profile: options.profile || defaultProfile,
-    runId: options.runId || crypto.randomUUID(),
+    runId:
+      options.runId || (options.rollback ? undefined : crypto.randomUUID()),
     usersTable: options.usersTable || defaultUsersTable,
     rollback: Boolean(options.rollback),
   };
@@ -158,7 +159,11 @@ export async function runPasswordClaimProtectionRepair(options = {}, dependencie
 
     const records = scanResult.Items || [];
     if (!records.length) {
-      break;
+      startKey = scanResult.LastEvaluatedKey;
+      if (!startKey) {
+        break;
+      }
+      continue;
     }
 
     outcome.scanned += records.length;
