@@ -107,6 +107,7 @@ export async function seedPortfolioRecord({
     calculationRunId: "run-0",
     calculationRunSequence: 0,
     eventCount: aggregate.aggregateVersion,
+    itemOrder: aggregate.itemOrder,
     updatedAt: now.toISOString(),
   };
 

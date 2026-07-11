@@ -243,6 +243,7 @@ describe("portfolio handlers", () => {
     expect(first.portfolioVersion).toBeGreaterThan(1);
     expect(db.items.filter((item) => item.recordType === "EVENT")).toHaveLength(4);
     expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.aggregateVersion).toBe(first.portfolioVersion);
+    expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.itemOrder).toEqual(["item_b", "item_a"]);
     expect(db.items.find((item) => item.stateScope === "PORTFOLIO_IDEMPOTENCY#portfolio_client_001" && item.stateKey === "idem-001")?.result).toEqual(first);
 
     const duplicate = await completePortfolioItemHandler({
@@ -357,6 +358,12 @@ describe("portfolio handlers", () => {
       userId: user.userId,
       seedItems: [
         {
+          portfolioItemId: "item_read_b",
+          title: "HVAC",
+          independentFinancialValueMinorUnits: 20000,
+          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+        },
+        {
           portfolioItemId: "item_read_a",
           title: "Lighting",
           independentFinancialValueMinorUnits: 10000,
@@ -377,7 +384,8 @@ describe("portfolio handlers", () => {
     });
 
     expect(result.portfolioVersion).toBe(1);
-    expect(result.items.map((item) => item.portfolioItemId)).toEqual(["item_read_a"]);
+    expect(result.scenario.order).toEqual(["item_read_b", "item_read_a"]);
+    expect(result.items.map((item) => item.portfolioItemId)).toEqual(["item_read_b", "item_read_a"]);
   });
 
   it("keeps write APIs disabled with zero DB calls", async () => {
@@ -476,6 +484,7 @@ function buildSeededPortfolioSnapshot({ portfolioId: portfolioIdInput, userId, s
       calculationRunId: "run-0",
       calculationRunSequence: 0,
       eventCount: aggregate.events.length,
+      itemOrder: aggregate.itemOrder,
       updatedAt: seedTime
     }
   ];
