@@ -8,7 +8,7 @@ import { normalizeUserProfile } from "./matching/normalizeUserProfile.mjs";
 import { applyOpportunityAvailabilityOverlay } from "./matching/opportunityAvailabilityOverlay.mjs";
 import { applyOpportunityAwardAuditOverlay } from "./matching/opportunityAwardAuditOverlay.mjs";
 import {
-  isMatchableOpportunity,
+  isVisibleOpportunity,
   isVisibleAvailability,
 } from "./matching/opportunityLifecycle.mjs";
 import {
@@ -124,7 +124,7 @@ export function buildPortalRetrofitRecommendations({
     applyOpportunityAwardAuditOverlay(opportunities || []),
   );
   const eligibleResults = auditedOpportunities
-    .filter(isMatchableOpportunity)
+    .filter(isVisibleOpportunity)
     .map((opportunity) =>
       buildEvaluatedOpportunity({
         normalizedProfile,

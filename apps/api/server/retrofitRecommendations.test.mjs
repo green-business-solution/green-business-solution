@@ -471,6 +471,33 @@ describe("portal retrofit recommendations", () => {
     ]);
   });
 
+  it("keeps visible non-archived opportunities in the match pipeline", () => {
+    const intake = baseIntake();
+    const payload = buildPortalRetrofitRecommendations({
+      formQuestionCatalog: testFormQuestionCatalog,
+      user: { userId: intake.userId },
+      intake,
+      opportunities: [
+        makeOpportunity({
+          opportunityId: "visible-conditional",
+          canonicalTitle: "Conditional LED Rebate",
+          availabilityStatus: "conditional",
+        }),
+        makeOpportunity({
+          opportunityId: "visible-disabled",
+          canonicalTitle: "Disabled HVAC Rebate",
+          availabilityStatus: "disabled",
+        }),
+      ],
+      now,
+    });
+
+    expect(payload.summary.matchedOpportunityCount).toBeGreaterThan(0);
+    expect(
+      payload.retrofits.flatMap((retrofit) => retrofit.opportunities).map((opportunity) => opportunity.opportunityId),
+    ).toEqual(expect.arrayContaining(["visible-conditional", "visible-disabled"]));
+  });
+
   it("propagates award-audit fields into recommendation payload opportunities", () => {
     const intake = baseIntake();
     const payload = buildPortalRetrofitRecommendations({
