@@ -58,7 +58,8 @@ curl http://127.0.0.1:8787/api/diagnostics
 
 The `sts` command should show account `059310317821`.
 The old `gbs` profile and account `448016109714` are legacy rollback context only.
-The diagnostics endpoint should return `"ok": true`.
+The diagnostics endpoint should return `"ok": true` and report password-signup safety state,
+including the account-claim protection fields used to keep public password signup fail-closed.
 
 ## Checks
 

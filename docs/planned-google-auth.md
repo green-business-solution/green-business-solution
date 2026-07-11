@@ -42,9 +42,10 @@ If the OAuth consent screen is in testing mode, add Neer, Rajvansh, and any othe
 
 - If the Google button redirects to an app error before account selection, confirm `GOOGLE_CLIENT_SECRET` is set on the API server.
 - If Google account selection succeeds but the app shows a redirect mismatch, compare the current callback URL with the Authorized redirect URIs above.
-- If Google account selection succeeds but the app shows an account error, check `/api/health` and `/api/diagnostics` for the configured client ID hint, redirect URI, and admin allowlist.
+- If Google account selection succeeds but the app shows an account error, check `/api/health` and `/api/diagnostics` for the configured client ID hint and redirect URI.
 - If an admin can authenticate with Google but lands on an error page, check Lambda logs for response-size errors. The admin payload intentionally returns a bounded DSIRE preview so sign-in stays below AWS Lambda synchronous response limits.
 - If a non-admin Google user sees "No profile was found," that user needs to complete the intake form first with the same email address.
+- If public password signup reports an existing account for an admin email, that is expected fail-closed behavior while the account-claim repair protection keeps the record from being attached to a caller-chosen password.
 
 Linked user records include:
 

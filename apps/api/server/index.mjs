@@ -54,6 +54,15 @@ import {
   isApplicationProfileCustomerReady,
   validateApplicationProfileApproval,
 } from "./applicationSources/ApplicationProfileApprovalValidator.mjs";
+import {
+  isPasswordSignupDuplicateBlocked,
+  passwordSignupDuplicateErrorMessage,
+  PASSWORD_CLAIM_GUARD_FIELD,
+  PASSWORD_CLAIM_GUARD_AT_FIELD,
+  PASSWORD_CLAIM_GUARD_REASON,
+  PASSWORD_CLAIM_GUARD_REASON_FIELD,
+  PASSWORD_CLAIM_GUARD_RUN_ID_FIELD,
+} from "./passwordSignupPolicy.mjs";
 import { buildCustomerApplicationProfileResponse } from "./applicationSources/ApplicationProfileCustomerView.mjs";
 import { resolveAddressGeography } from "./geography/addressGeographyResolver.mjs";
 import {
@@ -1813,52 +1822,12 @@ async function createPasswordAccount(input) {
     requireEmail: true,
   });
   const existing = await findUserByPasswordUsername(username);
-
-  if (existing?.passwordLinked) {
-    throw createPasswordError(
-      "An account already exists for that email. Log in instead.",
-      409,
-    );
+  if (isPasswordSignupDuplicateBlocked(existing)) {
+    throw createPasswordError(passwordSignupDuplicateErrorMessage, 409);
   }
 
   const passwordFields = await createPasswordFields(password);
   const now = new Date().toISOString();
-
-  if (existing) {
-    const role =
-      isAdminEmail(existing.email) || isAdminEmail(username)
-        ? "admin"
-        : existing.role || "client";
-    const isFakeUser = role === "admin" ? false : isFakeUserRecord(existing);
-    const result = await db.send(
-      new UpdateCommand({
-        TableName: usersTable,
-        Key: { userId: existing.userId },
-        UpdateExpression:
-          "SET #role = :role, authProvider = :authProvider, isFakeUser = :isFakeUser, passwordLinked = :passwordLinked, passwordUsername = :passwordUsername, passwordHash = :passwordHash, passwordSalt = :passwordSalt, passwordAlgorithm = :passwordAlgorithm, passwordHashKeyLength = :passwordHashKeyLength, passwordLinkedAt = :now, updatedAt = :now",
-        ExpressionAttributeNames: {
-          "#role": "role",
-        },
-        ExpressionAttributeValues: {
-          ":role": role,
-          ":authProvider": authProviderForPasswordUser(existing),
-          ":isFakeUser": isFakeUser,
-          ":passwordLinked": true,
-          ":passwordUsername": username,
-          ":passwordHash": passwordFields.passwordHash,
-          ":passwordSalt": passwordFields.passwordSalt,
-          ":passwordAlgorithm": passwordFields.passwordAlgorithm,
-          ":passwordHashKeyLength": passwordFields.passwordHashKeyLength,
-          ":now": now,
-        },
-        ReturnValues: "ALL_NEW",
-      }),
-    );
-
-    return issuePasswordSession(
-      result.Attributes || { ...existing, ...passwordFields, role, isFakeUser },
-    );
-  }
 
   const role = isAdminEmail(username) ? "admin" : "client";
   const user = {
@@ -3945,19 +3914,6 @@ app.put(
 
 app.get("/api/diagnostics", async (_req, res) => {
   try {
-    const users = await scanAll(usersTable);
-    const adminsPresent = Object.fromEntries(
-      [...adminEmails].map((email) => [
-        email,
-        users.some(
-          (user) =>
-            user.status === "active" &&
-            cleanEmail(user.email) === email &&
-            user.role === "admin",
-        ),
-      ]),
-    );
-
     res.json({
       ok: true,
       region: dataRegion,
@@ -3995,8 +3951,14 @@ app.get("/api/diagnostics", async (_req, res) => {
       googleClientIdHint: publicGoogleClientIdHint(),
       recommendedGoogleRedirectUris,
       adminDataRecordLimit,
-      adminEmails: [...adminEmails],
-      adminsPresent,
+      passwordSignupProtectedByDefault: true,
+      authStateSafety: {
+        passwordClaimGuardField: PASSWORD_CLAIM_GUARD_FIELD,
+        guardRunIdField: PASSWORD_CLAIM_GUARD_RUN_ID_FIELD,
+        guardAtField: PASSWORD_CLAIM_GUARD_AT_FIELD,
+        guardReasonField: PASSWORD_CLAIM_GUARD_REASON_FIELD,
+        guardReason: PASSWORD_CLAIM_GUARD_REASON,
+      },
     });
   } catch (error) {
     handleError(res, error);
