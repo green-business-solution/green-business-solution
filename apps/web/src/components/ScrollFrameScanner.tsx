@@ -1,11 +1,30 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 
 type ScrollFrameScannerProps = {
+  afterStickyChildren?: ReactNode;
+  ariaLabel?: string;
   ariaLabelledBy?: string;
   children?: ReactNode;
   className?: string;
   frames: string[];
+  gradientOpacity?: number;
+  id?: string;
+  onProgress?: (progress: number) => void;
+  pauseFrameAt?: number;
+  pauseFrameWhileSelector?: string;
+  reducedMotionFrameIndex?: number;
+  resumeFrameSelector?: string;
+  scrollDistanceViewportHeights?: number;
 };
+
+type FrameLoadState = "error" | "idle" | "loaded" | "loading";
+
+const BACKGROUND_PRELOAD_BATCH_SIZE = 3;
+const BACKGROUND_PRELOAD_DELAY_MS = 90;
+const FRAME_PRELOAD_RADIUS = 8;
+const LARGE_SEQUENCE_CACHE_LIMIT = 24;
+const LARGE_SEQUENCE_THRESHOLD = 80;
+const MAX_CONCURRENT_FRAME_LOADS = 3;
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
@@ -21,10 +40,14 @@ function smoothstep(start: number, end: number, value: number) {
 }
 
 function drawCoverImage(canvas: HTMLCanvasElement, image: HTMLImageElement) {
+  if (typeof canvas.getContext !== "function") {
+    return false;
+  }
+
   const context = canvas.getContext("2d");
 
   if (!context) {
-    return;
+    return false;
   }
 
   const rect = canvas.getBoundingClientRect();
@@ -56,16 +79,36 @@ function drawCoverImage(canvas: HTMLCanvasElement, image: HTMLImageElement) {
   context.imageSmoothingEnabled = true;
   context.imageSmoothingQuality = "high";
   context.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
+  return true;
 }
 
-export function ScrollFrameScanner({ ariaLabelledBy, children, className, frames }: ScrollFrameScannerProps) {
+export function ScrollFrameScanner({
+  afterStickyChildren,
+  ariaLabel,
+  ariaLabelledBy,
+  children,
+  className,
+  frames,
+  gradientOpacity,
+  id,
+  onProgress,
+  pauseFrameAt,
+  pauseFrameWhileSelector,
+  reducedMotionFrameIndex = 0,
+  resumeFrameSelector,
+  scrollDistanceViewportHeights
+}: ScrollFrameScannerProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imagesRef = useRef<Array<HTMLImageElement | null>>([]);
-  const loadedRef = useRef<boolean[]>([]);
+  const loadStatesRef = useRef<FrameLoadState[]>([]);
   const currentFrameRef = useRef(-1);
-  const frameRequestRef = useRef<number | null>(null);
-  const [isFirstFrameLoaded, setIsFirstFrameLoaded] = useState(false);
+  const onProgressRef = useRef(onProgress);
+  const [isInitialFrameLoaded, setIsInitialFrameLoaded] = useState(false);
+
+  useEffect(() => {
+    onProgressRef.current = onProgress;
+  }, [onProgress]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -75,28 +118,56 @@ export function ScrollFrameScanner({ ariaLabelledBy, children, className, frames
       return undefined;
     }
 
+    let activeLoads = 0;
+    let backgroundCursor = 0;
+    let backgroundPreloadObserver: IntersectionObserver | null = null;
+    let backgroundPreloadTimer: number | null = null;
     let isDisposed = false;
-    let forceNextDraw = false;
+    let lastReportedProgress = -1;
+    let targetFrameIndex = 0;
+    const everLoaded = Array.from({ length: frames.length }, () => false);
+    const loadQueue: number[] = [];
+    const queuedFrames = new Set<number>();
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const safeReducedMotionFrameIndex = Math.min(frames.length - 1, Math.max(0, reducedMotionFrameIndex));
+    const initialFrameIndex = reducedMotionQuery.matches ? safeReducedMotionFrameIndex : 0;
+    const canDrawToCanvas = (() => {
+      try {
+        return typeof canvas.getContext === "function" && Boolean(canvas.getContext("2d"));
+      } catch {
+        return false;
+      }
+    })();
     const primaryMessage = section.querySelector<HTMLElement>(".planet-scan-message-primary");
     const nextMessage = section.querySelector<HTMLElement>(".planet-scan-message-next");
     imagesRef.current = Array.from({ length: frames.length }, () => null);
-    loadedRef.current = Array.from({ length: frames.length }, () => false);
+    loadStatesRef.current = Array.from({ length: frames.length }, () => "idle");
+    currentFrameRef.current = -1;
+    setIsInitialFrameLoaded(false);
 
     const getBestLoadedFrameIndex = (targetIndex: number) => {
-      if (loadedRef.current[targetIndex]) {
+      if (loadStatesRef.current[targetIndex] === "loaded" && imagesRef.current[targetIndex]) {
         return targetIndex;
       }
 
-      for (let index = targetIndex; index >= 0; index -= 1) {
-        if (loadedRef.current[index]) {
-          return index;
-        }
-      }
+      for (let distance = 1; distance < frames.length; distance += 1) {
+        const previousIndex = targetIndex - distance;
+        const nextIndex = targetIndex + distance;
 
-      for (let index = targetIndex + 1; index < loadedRef.current.length; index += 1) {
-        if (loadedRef.current[index]) {
-          return index;
+        if (
+          previousIndex >= 0 &&
+          loadStatesRef.current[previousIndex] === "loaded" &&
+          imagesRef.current[previousIndex]
+        ) {
+          return previousIndex;
+        }
+
+        if (
+          nextIndex < frames.length &&
+          loadStatesRef.current[nextIndex] === "loaded" &&
+          imagesRef.current[nextIndex]
+        ) {
+          return nextIndex;
         }
       }
 
@@ -104,7 +175,38 @@ export function ScrollFrameScanner({ ariaLabelledBy, children, className, frames
     };
 
     const getScrollProgress = () => {
-      const scrollDistance = Math.max(1, section.offsetHeight - window.innerHeight);
+      const scrollDistance = Math.max(
+        1,
+        scrollDistanceViewportHeights === undefined
+          ? section.offsetHeight - window.innerHeight
+          : window.innerHeight * Math.max(0, scrollDistanceViewportHeights - 1)
+      );
+
+      if (pauseFrameAt !== undefined && pauseFrameWhileSelector) {
+        const pauseTarget = section.querySelector<HTMLElement>(pauseFrameWhileSelector);
+
+        if (pauseTarget) {
+          const pauseTargetBounds = pauseTarget.getBoundingClientRect();
+
+          if (pauseTargetBounds.top <= 0 && pauseTargetBounds.bottom >= 0) {
+            return clamp(pauseFrameAt);
+          }
+        }
+      }
+
+      if (pauseFrameAt !== undefined && resumeFrameSelector) {
+        const resumeTarget = section.querySelector<HTMLElement>(resumeFrameSelector);
+
+        if (resumeTarget) {
+          const resumeTargetBounds = resumeTarget.getBoundingClientRect();
+
+          if (resumeTargetBounds.top <= 0) {
+            const resumeDistance = Math.max(1, resumeTargetBounds.height);
+            return clamp(pauseFrameAt + (1 - pauseFrameAt) * (-resumeTargetBounds.top / resumeDistance));
+          }
+        }
+      }
+
       return clamp(-section.getBoundingClientRect().top / scrollDistance);
     };
 
@@ -117,7 +219,41 @@ export function ScrollFrameScanner({ ariaLabelledBy, children, className, frames
       }
 
       currentFrameRef.current = bestFrameIndex;
-      drawCoverImage(canvas, image);
+      if (drawCoverImage(canvas, image)) {
+        canvas.style.removeProperty("background-image");
+      } else {
+        canvas.style.backgroundImage = `url("${image.currentSrc || image.src}")`;
+      }
+    };
+
+    const trimDecodedFrameCache = () => {
+      if (frames.length <= LARGE_SEQUENCE_THRESHOLD) {
+        return;
+      }
+
+      const protectedFrames = new Set([0, frames.length - 1, safeReducedMotionFrameIndex, targetFrameIndex, currentFrameRef.current]);
+
+      for (let distance = 1; distance <= FRAME_PRELOAD_RADIUS; distance += 1) {
+        protectedFrames.add(targetFrameIndex - distance);
+        protectedFrames.add(targetFrameIndex + distance);
+      }
+
+      const loadedIndices = imagesRef.current
+        .map((image, index) => (image && loadStatesRef.current[index] === "loaded" ? index : -1))
+        .filter((index) => index >= 0);
+
+      if (loadedIndices.length <= LARGE_SEQUENCE_CACHE_LIMIT) {
+        return;
+      }
+
+      loadedIndices
+        .filter((index) => !protectedFrames.has(index))
+        .sort((first, second) => Math.abs(second - targetFrameIndex) - Math.abs(first - targetFrameIndex))
+        .slice(0, loadedIndices.length - LARGE_SEQUENCE_CACHE_LIMIT)
+        .forEach((index) => {
+          imagesRef.current[index] = null;
+          loadStatesRef.current[index] = "idle";
+        });
     };
 
     const applyCopyMotion = (progress: number) => {
@@ -149,67 +285,177 @@ export function ScrollFrameScanner({ ariaLabelledBy, children, className, frames
       nextMessage.style.pointerEvents = copyIn > 0.8 ? "auto" : "none";
     };
 
-    const requestDraw = (force = false) => {
-      forceNextDraw = forceNextDraw || force;
+    const syncProgress = () => {
+      const progress = reducedMotionQuery.matches
+        ? safeReducedMotionFrameIndex / Math.max(1, frames.length - 1)
+        : getScrollProgress();
+      const frameIndex = Math.min(frames.length - 1, Math.max(0, Math.round(progress * (frames.length - 1))));
+      targetFrameIndex = frameIndex;
+      prioritizeNearbyFrames(frameIndex);
+      applyCopyMotion(progress);
 
-      if (frameRequestRef.current !== null) {
+      if (!canDrawToCanvas) {
+        canvas.style.backgroundImage = `url("${frames[frameIndex]}")`;
+      }
+
+      if (Math.abs(progress - lastReportedProgress) > 0.0001) {
+        lastReportedProgress = progress;
+        onProgressRef.current?.(progress);
+      }
+
+      return frameIndex;
+    };
+
+    const syncAndDraw = (force = false) => {
+      const frameIndex = syncProgress();
+      drawFrame(frameIndex, force);
+    };
+
+    const enqueueFrame = (index: number, priority = false) => {
+      if (index < 0 || index >= frames.length || loadStatesRef.current[index] !== "idle") {
         return;
       }
 
-      frameRequestRef.current = window.requestAnimationFrame(() => {
-        frameRequestRef.current = null;
-        const shouldForceDraw = forceNextDraw;
-        forceNextDraw = false;
-        const progress = reducedMotionQuery.matches ? 0 : getScrollProgress();
-        const frameIndex = Math.min(frames.length - 1, Math.max(0, Math.round(progress * (frames.length - 1))));
-        applyCopyMotion(progress);
-        drawFrame(frameIndex, shouldForceDraw);
-      });
+      if (queuedFrames.has(index)) {
+        if (priority) {
+          const queueIndex = loadQueue.indexOf(index);
+          if (queueIndex >= 0) {
+            loadQueue.splice(queueIndex, 1);
+            loadQueue.unshift(index);
+          }
+        }
+        return;
+      }
+
+      queuedFrames.add(index);
+      if (priority) {
+        loadQueue.unshift(index);
+      } else {
+        loadQueue.push(index);
+      }
     };
 
-    const loadFrame = (src: string, index: number) => {
-      const image = new Image();
-      image.decoding = "async";
-      image.onload = () => {
-        if (isDisposed) {
+    const pumpLoadQueue = () => {
+      while (!isDisposed && activeLoads < MAX_CONCURRENT_FRAME_LOADS && loadQueue.length > 0) {
+        const index = loadQueue.shift();
+
+        if (index === undefined) {
           return;
         }
 
-        imagesRef.current[index] = image;
-        loadedRef.current[index] = true;
-
-        if (index === 0) {
-          setIsFirstFrameLoaded(true);
-          requestDraw(true);
-        } else if (index === currentFrameRef.current) {
-          requestDraw(true);
-        } else {
-          requestDraw();
+        queuedFrames.delete(index);
+        if (loadStatesRef.current[index] !== "idle") {
+          continue;
         }
-      };
-      image.src = src;
+
+        const image = new Image();
+        activeLoads += 1;
+        loadStatesRef.current[index] = "loading";
+        image.decoding = "async";
+        image.fetchPriority = index === 0 || index === frames.length - 1 || index === initialFrameIndex ? "high" : "auto";
+        image.onload = () => {
+          activeLoads -= 1;
+          if (isDisposed) {
+            return;
+          }
+
+          everLoaded[index] = true;
+          imagesRef.current[index] = image;
+          loadStatesRef.current[index] = "loaded";
+
+          if (index === initialFrameIndex) {
+            setIsInitialFrameLoaded(true);
+          }
+
+          trimDecodedFrameCache();
+          syncAndDraw(index === targetFrameIndex || currentFrameRef.current < 0);
+          pumpLoadQueue();
+        };
+        image.onerror = () => {
+          activeLoads -= 1;
+          if (isDisposed) {
+            return;
+          }
+
+          everLoaded[index] = true;
+          loadStatesRef.current[index] = "error";
+          pumpLoadQueue();
+        };
+        image.src = frames[index];
+      }
     };
 
-    const preloadRemainingFrames = () => {
-      frames.forEach((src, index) => {
-        if (index > 0) {
-          loadFrame(src, index);
+    const enqueuePriorityFrames = (indices: number[]) => {
+      indices
+        .slice()
+        .reverse()
+        .forEach((index) => enqueueFrame(index, true));
+      pumpLoadQueue();
+    };
+
+    function prioritizeNearbyFrames(centerIndex: number) {
+      const nearbyFrames = [centerIndex];
+
+      for (let distance = 1; distance <= FRAME_PRELOAD_RADIUS; distance += 1) {
+        nearbyFrames.push(centerIndex - distance, centerIndex + distance);
+      }
+
+      enqueuePriorityFrames(nearbyFrames);
+    }
+
+    const scheduleBackgroundPreload = () => {
+      if (isDisposed || backgroundPreloadTimer !== null || backgroundCursor >= frames.length) {
+        return;
+      }
+
+      backgroundPreloadTimer = window.setTimeout(() => {
+        backgroundPreloadTimer = null;
+        let queuedCount = 0;
+
+        while (backgroundCursor < frames.length && queuedCount < BACKGROUND_PRELOAD_BATCH_SIZE) {
+          const index = backgroundCursor;
+          backgroundCursor += 1;
+
+          if (!everLoaded[index] && loadStatesRef.current[index] === "idle" && !queuedFrames.has(index)) {
+            enqueueFrame(index);
+            queuedCount += 1;
+          }
         }
-      });
+
+        pumpLoadQueue();
+        scheduleBackgroundPreload();
+      }, BACKGROUND_PRELOAD_DELAY_MS);
     };
 
-    const handleResize = () => {
-      requestDraw(true);
-    };
-    const handleScroll = () => {
-      requestDraw();
-    };
-    const handleReducedMotionChange = () => {
-      requestDraw(true);
-    };
+    const handleResize = () => syncAndDraw(true);
+    const handleScroll = () => syncAndDraw();
+    const handleReducedMotionChange = () => syncAndDraw(true);
 
-    loadFrame(frames[0], 0);
-    preloadRemainingFrames();
+    enqueuePriorityFrames([
+      initialFrameIndex,
+      0,
+      frames.length - 1,
+      initialFrameIndex + 1,
+      initialFrameIndex - 1,
+      initialFrameIndex + 2,
+      initialFrameIndex - 2
+    ]);
+    if (frames.length > LARGE_SEQUENCE_THRESHOLD && typeof window.IntersectionObserver === "function") {
+      backgroundPreloadObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            backgroundPreloadObserver?.disconnect();
+            backgroundPreloadObserver = null;
+            scheduleBackgroundPreload();
+          }
+        },
+        { rootMargin: "200% 0px" }
+      );
+      backgroundPreloadObserver.observe(section);
+    } else {
+      scheduleBackgroundPreload();
+    }
+    syncAndDraw(true);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
@@ -217,27 +463,35 @@ export function ScrollFrameScanner({ ariaLabelledBy, children, className, frames
 
     return () => {
       isDisposed = true;
-      if (frameRequestRef.current !== null) {
-        window.cancelAnimationFrame(frameRequestRef.current);
+      if (backgroundPreloadTimer !== null) {
+        window.clearTimeout(backgroundPreloadTimer);
       }
+      backgroundPreloadObserver?.disconnect();
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
       reducedMotionQuery.removeEventListener("change", handleReducedMotionChange);
     };
-  }, [frames]);
+  }, [frames, pauseFrameAt, pauseFrameWhileSelector, reducedMotionFrameIndex, resumeFrameSelector, scrollDistanceViewportHeights]);
 
   return (
     <section
+      aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       className={["scroll-frame-scanner", className].filter(Boolean).join(" ")}
-      data-loaded={isFirstFrameLoaded ? "true" : "false"}
+      data-loaded={isInitialFrameLoaded ? "true" : "false"}
+      id={id}
       ref={sectionRef}
     >
       <div className="scroll-frame-scanner-sticky">
         <canvas aria-hidden="true" className="scroll-frame-scanner-canvas" ref={canvasRef} />
-        <div aria-hidden="true" className="scroll-frame-scanner-gradient" />
+        <div
+          aria-hidden="true"
+          className="scroll-frame-scanner-gradient"
+          style={gradientOpacity === undefined ? undefined : { opacity: gradientOpacity }}
+        />
         {children}
       </div>
+      {afterStickyChildren ? <div className="scroll-frame-scanner-after">{afterStickyChildren}</div> : null}
     </section>
   );
 }

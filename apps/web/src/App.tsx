@@ -58,6 +58,12 @@ import {
   shouldCanonicalizeUnknownHomeFallback,
   type Route,
 } from "./routes";
+import {
+  homeJourneyFinalFrame,
+  homeJourneyFirstFrame,
+  homeJourneyFrameCount,
+  homeJourneyFrames
+} from "./lib/homeJourneyFrames";
 import { scannerFrames } from "./lib/scannerFrames";
 import {
   UserPreviewTriageBadges,
@@ -3455,6 +3461,10 @@ const HOME_HOW_IT_WORKS_SECTION_ID = "home-how-it-works";
 const HOME_INSIGHTS_SECTION_ID = "home-insights";
 const HOME_DASHBOARD_SECTION_ID = "home-dashboard";
 const HOME_PRICING_SECTION_ID = "home-pricing";
+function smoothHomeJourneyFrameProgress(start: number, end: number, value: number) {
+  const normalized = Math.min(1, Math.max(0, (value - start) / Math.max(0.0001, end - start)));
+  return normalized * normalized * (3 - 2 * normalized);
+}
 
 function scrollToHomeSectionFallback(sectionId: string) {
   if (typeof window === "undefined") {
@@ -4799,12 +4809,19 @@ function HomeDashboardStatusStrip() {
   );
 }
 
-function HomeDashboardPreviewSection() {
+function HomeDashboardPreviewSection({
+  embeddedInJourney = false,
+  includePricing = true
+}: {
+  embeddedInJourney?: boolean;
+  includePricing?: boolean;
+}) {
   return (
     <section
       aria-labelledby="home-dashboard-preview-heading"
-      className="home-dashboard-preview-section"
+      className={`home-dashboard-preview-section home-dashboard-preview-stage${embeddedInJourney ? " home-dashboard-preview-stage--journey-embedded" : ""}`}
       id={HOME_DASHBOARD_SECTION_ID}
+      style={{ "--home-journey-final-frame": `url("${homeJourneyFinalFrame}")` } as CSSProperties}
     >
       <div className="home-dashboard-preview-inner">
         <header className="home-dashboard-preview-intro">
@@ -5053,7 +5070,7 @@ function HomeDashboardPreviewSection() {
             </article>
           </div>
         </div>
-        <CustomerPricingSection />
+        {includePricing ? <CustomerPricingSection /> : null}
       </div>
     </section>
   );
@@ -5302,6 +5319,7 @@ function HomeInfographicSection({
           </button>
         </div>
       </div>
+      <div aria-hidden="true" className="home-cloud-transition-bank" />
     </section>
   );
 }
@@ -5326,10 +5344,16 @@ function HowItWorksJourneySection({
   sectionId,
   withDashboardHandoff = false,
   embedded = false,
+  controlledProgress,
+  onControlledProgressChange,
+  interactive = true
 }: {
   sectionId?: string;
   withDashboardHandoff?: boolean;
   embedded?: boolean;
+  controlledProgress?: number;
+  onControlledProgressChange?: (progress: number) => void;
+  interactive?: boolean;
 }) {
   const transitionStart = 0.38;
   const transitionEnd = 0.62;
@@ -5341,6 +5365,8 @@ function HowItWorksJourneySection({
       ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
       : false,
   );
+  const controlledProgressRef = useRef(controlledProgress);
+  const onControlledProgressChangeRef = useRef(onControlledProgressChange);
   const stages = [
     {
       title: "Create your account",
@@ -5528,6 +5554,8 @@ function HowItWorksJourneySection({
   const revealShare =
     revealScrollUnits / (revealScrollUnits + journeyScrollUnits);
   const clampProgress = (value: number) => Math.min(1, Math.max(0, value));
+  const isProgressControlled = controlledProgress !== undefined;
+  const effectiveSectionProgress = isProgressControlled ? clampProgress(controlledProgress) : sectionProgress;
   const smootherstep = (value: number) => {
     const clamped = clampProgress(value);
     return clamped * clamped * clamped * (clamped * (clamped * 6 - 15) + 10);
@@ -5542,14 +5570,9 @@ function HowItWorksJourneySection({
     ? revealShare * 0.82
     : 0;
   const journeySectionProgress = dashboardHandoffEnabled
-    ? clampProgress(
-        (sectionProgress - dashboardHandoffShare) / (1 - dashboardHandoffShare),
-      )
-    : sectionProgress;
-  const revealProgress = Math.min(
-    1,
-    Math.max(0, journeySectionProgress / revealShare),
-  );
+    ? clampProgress((effectiveSectionProgress - dashboardHandoffShare) / (1 - dashboardHandoffShare))
+    : effectiveSectionProgress;
+  const revealProgress = Math.min(1, Math.max(0, journeySectionProgress / revealShare));
   const continuousJourneyProgress =
     Math.min(
       1,
@@ -5563,8 +5586,11 @@ function HowItWorksJourneySection({
     Math.max(0, Math.round(journeyProgress)),
   );
   const activeStage = stages[activeStageIndex];
-  const easedRevealProgress =
-    revealProgress * revealProgress * (3 - 2 * revealProgress);
+  const activeStageCopyOpacity =
+    isProgressControlled && !prefersReducedMotion
+      ? 1 - smoothstep(0.38, 0.5, Math.abs(journeyProgress - activeStageIndex))
+      : 1;
+  const easedRevealProgress = revealProgress * revealProgress * (3 - 2 * revealProgress);
   const cloudTravelProgress = prefersReducedMotion ? 0 : easedRevealProgress;
   const cloudHazeOpacity = prefersReducedMotion
     ? revealProgress < 1
@@ -5576,15 +5602,9 @@ function HowItWorksJourneySection({
       ? 0.78
       : 0
     : Math.max(0, 0.78 * (1 - easedRevealProgress));
-  const dashboardHandoffProgress = dashboardHandoffEnabled
-    ? clampProgress(sectionProgress / dashboardHandoffShare)
-    : 1;
-  const dashboardHandoffCloudReveal = dashboardHandoffEnabled
-    ? smoothstep(0.12, 0.8, dashboardHandoffProgress)
-    : 1;
-  const dashboardHandoffSceneReveal = dashboardHandoffEnabled
-    ? smoothstep(0.72, 1, dashboardHandoffProgress)
-    : 1;
+  const dashboardHandoffProgress = dashboardHandoffEnabled ? clampProgress(effectiveSectionProgress / dashboardHandoffShare) : 1;
+  const dashboardHandoffCloudReveal = dashboardHandoffEnabled ? smoothstep(0.12, 0.8, dashboardHandoffProgress) : 1;
+  const dashboardHandoffSceneReveal = dashboardHandoffEnabled ? smoothstep(0.72, 1, dashboardHandoffProgress) : 1;
   const dashboardHandoffOverlayOpacity = dashboardHandoffEnabled
     ? smoothstep(0.22, 0.72, dashboardHandoffProgress) *
       (1 - smoothstep(0.84, 1, dashboardHandoffProgress))
@@ -5635,10 +5655,85 @@ function HowItWorksJourneySection({
   })();
 
   useEffect(() => {
+    controlledProgressRef.current = controlledProgress;
+    onControlledProgressChangeRef.current = onControlledProgressChange;
+  }, [controlledProgress, onControlledProgressChange]);
+
+  useEffect(() => {
     const journey = journeyRef.current;
 
     if (!journey) {
       return undefined;
+    }
+
+    if (isProgressControlled) {
+      const scrollSurface = journeyScrollRef.current;
+
+      if (!scrollSurface) {
+        return undefined;
+      }
+
+      const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let pointerId: number | null = null;
+      let pointerStartProgress = 0;
+      let pointerStartX = 0;
+      const totalScrollUnits = revealScrollUnits + journeyScrollUnits;
+      const requestControlledProgress = (progress: number) => {
+        onControlledProgressChangeRef.current?.(clampProgress(progress));
+      };
+      const handlePointerDown = (event: PointerEvent) => {
+        if (event.button !== 0) return;
+
+        pointerId = event.pointerId;
+        pointerStartProgress = controlledProgressRef.current ?? 0;
+        pointerStartX = event.clientX;
+        scrollSurface.setPointerCapture(event.pointerId);
+      };
+      const handlePointerMove = (event: PointerEvent) => {
+        if (pointerId !== event.pointerId) return;
+
+        const progressDelta = (pointerStartX - event.clientX) / Math.max(1, scrollSurface.clientWidth * totalScrollUnits);
+        requestControlledProgress(pointerStartProgress + progressDelta);
+      };
+      const releasePointer = (event: PointerEvent) => {
+        if (pointerId !== event.pointerId) return;
+
+        pointerId = null;
+        scrollSurface.releasePointerCapture(event.pointerId);
+      };
+      const handleKeyDown = (event: KeyboardEvent) => {
+        const currentProgress = controlledProgressRef.current ?? 0;
+        const progressStep = 0.6 / totalScrollUnits;
+        let nextProgress: number | null = null;
+
+        if (event.key === "ArrowLeft") nextProgress = currentProgress - progressStep;
+        if (event.key === "ArrowRight") nextProgress = currentProgress + progressStep;
+        if (event.key === "Home") nextProgress = 0;
+        if (event.key === "End") nextProgress = 1;
+        if (nextProgress === null) return;
+
+        event.preventDefault();
+        requestControlledProgress(nextProgress);
+      };
+      const updateMotionPreference = () => {
+        setPrefersReducedMotion(mediaQuery.matches);
+      };
+
+      scrollSurface.addEventListener("pointerdown", handlePointerDown);
+      scrollSurface.addEventListener("pointermove", handlePointerMove);
+      scrollSurface.addEventListener("pointerup", releasePointer);
+      scrollSurface.addEventListener("pointercancel", releasePointer);
+      scrollSurface.addEventListener("keydown", handleKeyDown);
+      mediaQuery.addEventListener("change", updateMotionPreference);
+
+      return () => {
+        scrollSurface.removeEventListener("pointerdown", handlePointerDown);
+        scrollSurface.removeEventListener("pointermove", handlePointerMove);
+        scrollSurface.removeEventListener("pointerup", releasePointer);
+        scrollSurface.removeEventListener("pointercancel", releasePointer);
+        scrollSurface.removeEventListener("keydown", handleKeyDown);
+        mediaQuery.removeEventListener("change", updateMotionPreference);
+      };
     }
 
     if (embedded) {
@@ -6148,22 +6243,24 @@ function HowItWorksJourneySection({
       window.cancelAnimationFrame(animationFrame);
       resetDashboardHandoff();
     };
-  }, [embedded, stages.length, withDashboardHandoff, revealShare]);
+  }, [embedded, isProgressControlled, journeyScrollUnits, revealScrollUnits, stages.length, withDashboardHandoff, revealShare]);
 
   return (
     <section
       aria-label={
-        embedded
-          ? "How RetroFi works. Scroll horizontally to explore the journey."
-          : undefined
+        isProgressControlled
+          ? "How RetroFi works. Scroll vertically or use the left and right arrow keys to explore the journey."
+          : embedded
+            ? "How RetroFi works. Scroll horizontally to explore the journey."
+            : undefined
       }
-      className={`how-it-works-journey-section${withDashboardHandoff ? " how-it-works-journey-section--home-handoff" : ""}${embedded ? " how-it-works-journey-section--home-embedded" : ""}`}
+      className={`how-it-works-journey-section${withDashboardHandoff ? " how-it-works-journey-section--home-handoff" : ""}${embedded ? " how-it-works-journey-section--home-embedded" : ""}${isProgressControlled ? " how-it-works-journey-section--frame-controlled" : ""}`}
       id={sectionId}
       ref={(element) => {
         journeyRef.current = element;
         journeyScrollRef.current = element;
       }}
-      tabIndex={embedded ? 0 : undefined}
+      tabIndex={(embedded || isProgressControlled) && interactive ? 0 : undefined}
     >
       <div
         className="journey-canvas"
@@ -6176,92 +6273,69 @@ function HowItWorksJourneySection({
             : undefined
         }
       >
-        <div
-          className="journey-image-stack"
-          aria-hidden="true"
-          style={{ opacity: dashboardHandoffSceneReveal }}
-        >
-          {stages.map((stage, index) => (
-            <img
-              alt=""
-              className="journey-scene-image"
-              decoding="async"
-              fetchPriority={index === 0 ? "high" : "auto"}
-              key={stage.image}
-              loading={index < 2 ? "eager" : "lazy"}
-              src={stage.image}
-              style={{
-                opacity:
-                  visualProgress >= index
-                    ? 1
-                    : visualProgress > index - 1
-                      ? visualProgress - (index - 1)
-                      : 0,
-              }}
-            />
-          ))}
-        </div>
-        <div
-          className="journey-vignette"
-          aria-hidden="true"
-          style={{ opacity: dashboardHandoffSceneReveal }}
-        />
-        <div
-          className="journey-cloud-reveal"
-          aria-hidden="true"
-          style={{ opacity: dashboardHandoffCloudReveal }}
-        >
-          <div
-            className="journey-cloud-sky"
-            style={{
-              opacity: cloudSkyOpacity,
-              transform: `translate3d(${4 * cloudTravelProgress}vw, ${-5 * cloudTravelProgress}vh, 0) scale(${1 + 0.03 * cloudTravelProgress})`,
-            }}
-          />
-          <div
-            className="journey-cloud-haze"
-            style={{ opacity: cloudHazeOpacity }}
-          />
-          {cloudLayers.map((cloud, index) => {
-            const cloudProgress = prefersReducedMotion
-              ? 0
-              : Math.min(1, cloudTravelProgress * cloud.speed);
-            const opacityProgress = Math.min(
-              1,
-              Math.max(0, (cloudProgress - 0.08) / 0.92),
-            );
-            const layerOpacity = prefersReducedMotion
-              ? revealProgress < 1
-                ? cloud.opacity * 0.38
-                : 0
-              : Math.max(
-                  0,
-                  cloud.opacity *
-                    0.38 *
-                    (1 - opacityProgress * opacityProgress),
-                );
-            const scale =
-              cloud.baseScale +
-              (cloud.exitScale - cloud.baseScale) * cloudProgress;
-            const blur = cloud.blur + 8 + cloud.exitBlur * cloudProgress;
-
-            return (
-              <div
-                className={cloud.className}
-                key={`journey-cloud-${index}`}
+        {!isProgressControlled ? (
+          <div className="journey-image-stack" aria-hidden="true" style={{ opacity: dashboardHandoffSceneReveal }}>
+            {stages.map((stage, index) => (
+              <img
+                alt=""
+                className="journey-scene-image"
+                decoding="async"
+                fetchPriority={index === 0 ? "high" : "auto"}
+                key={stage.image}
+                loading={index < 2 ? "eager" : "lazy"}
+                src={stage.image}
                 style={{
-                  filter: `blur(${blur}px)`,
-                  height: cloud.height,
-                  left: cloud.left,
-                  opacity: layerOpacity,
-                  top: cloud.top,
-                  transform: `translate3d(${cloud.exitX * cloudProgress}vw, ${cloud.exitY * cloudProgress}vh, 0) scale(${scale})`,
-                  width: cloud.width,
+                  opacity:
+                    visualProgress >= index
+                      ? 1
+                      : visualProgress > index - 1
+                        ? visualProgress - (index - 1)
+                        : 0
                 }}
               />
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        ) : null}
+        <div className="journey-vignette" aria-hidden="true" style={{ opacity: dashboardHandoffSceneReveal }} />
+        {!isProgressControlled ? (
+          <div className="journey-cloud-reveal" aria-hidden="true" style={{ opacity: dashboardHandoffCloudReveal }}>
+            <div
+              className="journey-cloud-sky"
+              style={{
+                opacity: cloudSkyOpacity,
+                transform: `translate3d(${4 * cloudTravelProgress}vw, ${-5 * cloudTravelProgress}vh, 0) scale(${1 + 0.03 * cloudTravelProgress})`
+              }}
+            />
+            <div className="journey-cloud-haze" style={{ opacity: cloudHazeOpacity }} />
+            {cloudLayers.map((cloud, index) => {
+              const cloudProgress = prefersReducedMotion ? 0 : Math.min(1, cloudTravelProgress * cloud.speed);
+              const opacityProgress = Math.min(1, Math.max(0, (cloudProgress - 0.08) / 0.92));
+              const layerOpacity = prefersReducedMotion
+                ? revealProgress < 1
+                  ? cloud.opacity * 0.38
+                  : 0
+                : Math.max(0, cloud.opacity * 0.38 * (1 - opacityProgress * opacityProgress));
+              const scale = cloud.baseScale + (cloud.exitScale - cloud.baseScale) * cloudProgress;
+              const blur = cloud.blur + 8 + cloud.exitBlur * cloudProgress;
+
+              return (
+                <div
+                  className={cloud.className}
+                  key={`journey-cloud-${index}`}
+                  style={{
+                    filter: `blur(${blur}px)`,
+                    height: cloud.height,
+                    left: cloud.left,
+                    opacity: layerOpacity,
+                    top: cloud.top,
+                    transform: `translate3d(${cloud.exitX * cloudProgress}vw, ${cloud.exitY * cloudProgress}vh, 0) scale(${scale})`,
+                    width: cloud.width
+                  }}
+                />
+              );
+            })}
+          </div>
+        ) : null}
         {withDashboardHandoff ? (
           <div
             aria-hidden="true"
@@ -6295,6 +6369,7 @@ function HowItWorksJourneySection({
               aria-live="polite"
               className="journey-story-copy"
               key={activeStage.title}
+              style={isProgressControlled ? { opacity: activeStageCopyOpacity } : undefined}
             >
               <p className="journey-step-label">
                 Step {String(activeStageIndex + 1).padStart(2, "0")} /{" "}
@@ -6326,6 +6401,41 @@ function HowItWorksJourneySection({
         )}
       </div>
     </section>
+  );
+}
+
+function HomeJourneyFrameSection() {
+  const [frameProgress, setFrameProgress] = useState(0);
+  const dashboardHandoffOpacity = 1 - smoothHomeJourneyFrameProgress(0.94, 0.995, frameProgress);
+  const handleFrameProgress = useCallback((progress: number) => {
+    setFrameProgress((currentProgress) => (Math.abs(currentProgress - progress) > 0.0001 ? progress : currentProgress));
+  }, []);
+
+  return (
+    <div
+      className="home-journey-frame-bridge"
+      style={{ "--home-journey-first-frame": `url("${homeJourneyFirstFrame}")` } as CSSProperties}
+    >
+      <ScrollFrameScanner
+        ariaLabel="How RetroFi works and transitions into the performance dashboard"
+        className="home-journey-frame-scanner"
+        frames={homeJourneyFrames}
+        gradientOpacity={dashboardHandoffOpacity}
+        onProgress={handleFrameProgress}
+        pauseFrameAt={0.5}
+        pauseFrameWhileSelector=".home-dashboard-preview-stage--journey-embedded"
+        reducedMotionFrameIndex={homeJourneyFrameCount - 1}
+        resumeFrameSelector=".home-dashboard-exit-spacer"
+        scrollDistanceViewportHeights={3.75}
+        afterStickyChildren={
+          <>
+            <HomeDashboardPreviewSection embeddedInJourney includePricing={false} />
+            <div aria-hidden="true" className="home-dashboard-exit-spacer" />
+            <CustomerPricingSection />
+          </>
+        }
+      />
+    </div>
   );
 }
 
@@ -6636,7 +6746,7 @@ function HomePage({
           />
         </div>
       </div>
-      <HomeDashboardPreviewSection />
+      <HomeJourneyFrameSection />
     </PublicShell>
   );
 }

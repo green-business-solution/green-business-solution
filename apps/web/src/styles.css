@@ -15176,9 +15176,8 @@ body {
   color: #071e16;
   isolation: isolate;
   margin-top: -18svh;
-  overflow: hidden;
-  padding: clamp(24px, 4svh, 56px) clamp(20px, 5vw, 72px)
-    clamp(88px, 11vw, 150px);
+  overflow: visible;
+  padding: clamp(24px, 4svh, 56px) clamp(20px, 5vw, 72px) clamp(88px, 11vw, 150px);
   position: relative;
   z-index: 6;
 }
@@ -15225,6 +15224,24 @@ body {
   max-width: 1480px;
   position: relative;
   z-index: 2;
+}
+
+.home-cloud-transition-bank {
+  background:
+    radial-gradient(ellipse 27% 68% at 4% 76%, rgba(246, 249, 247, 0.98) 0 27%, rgba(222, 229, 229, 0.72) 52%, transparent 76%),
+    radial-gradient(ellipse 30% 78% at 22% 58%, rgba(250, 252, 250, 0.96) 0 26%, rgba(222, 229, 230, 0.72) 54%, transparent 78%),
+    radial-gradient(ellipse 34% 88% at 48% 72%, rgba(246, 249, 248, 0.98) 0 30%, rgba(211, 222, 224, 0.72) 58%, transparent 82%),
+    radial-gradient(ellipse 29% 82% at 72% 55%, rgba(251, 252, 251, 0.96) 0 25%, rgba(218, 227, 228, 0.68) 54%, transparent 79%),
+    radial-gradient(ellipse 28% 70% at 98% 74%, rgba(244, 248, 247, 0.98) 0 28%, rgba(210, 221, 223, 0.7) 56%, transparent 80%);
+  bottom: clamp(-132px, -9vw, -92px);
+  filter: blur(2px);
+  height: clamp(210px, 21vw, 330px);
+  left: -7vw;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 72%, transparent 100%);
+  pointer-events: none;
+  position: absolute;
+  right: -7vw;
+  z-index: 4;
 }
 
 .home-infographics-header {
@@ -16081,24 +16098,36 @@ body {
 }
 
 .home-dashboard-preview-section {
-  background:
-    radial-gradient(
-      circle at 8% 12%,
-      rgba(158, 202, 137, 0.2),
-      transparent 27%
-    ),
-    radial-gradient(
-      circle at 88% 12%,
-      rgba(191, 224, 164, 0.18),
-      transparent 25%
-    ),
-    linear-gradient(180deg, #edf6ea 0%, #f6fbf3 34%, #ffffff 100%);
   color: #071e16;
   isolation: isolate;
   overflow: hidden;
   padding: clamp(82px, 10vw, 138px) clamp(20px, 5vw, 72px)
     clamp(88px, 10vw, 140px);
   position: relative;
+}
+
+.home-dashboard-preview-stage {
+  background-color: #edf6ea;
+  background-image: var(--home-journey-final-frame);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  isolation: isolate;
+  position: relative;
+  z-index: 1;
+}
+
+.home-dashboard-preview-stage--journey-embedded {
+  background: transparent;
+  margin: 0;
+  overflow: visible;
+}
+
+.home-dashboard-preview-stage--journey-embedded .home-dashboard-preview-intro {
+  position: relative;
+  transform: translateY(-34svh);
+  z-index: 2;
 }
 
 .home-dashboard-preview-section::before {
@@ -16118,7 +16147,7 @@ body {
   opacity: 0.22;
   pointer-events: none;
   position: absolute;
-  z-index: -1;
+  z-index: 0;
 }
 
 .home-dashboard-preview-inner {
@@ -16126,6 +16155,8 @@ body {
   gap: clamp(30px, 4vw, 56px);
   margin: 0 auto;
   max-width: 1480px;
+  position: relative;
+  z-index: 1;
 }
 
 .home-dashboard-preview-intro {
@@ -17490,6 +17521,229 @@ body {
   overflow: hidden;
 }
 
+.home-journey-frame-bridge {
+  background-color: #aebcc5;
+  background-image: var(--home-journey-first-frame);
+  background-position: center;
+  background-size: cover;
+  isolation: isolate;
+  position: relative;
+}
+
+.home-journey-frame-scanner.scroll-frame-scanner {
+  background: #aebcc5;
+  height: auto;
+  min-height: 100svh;
+  position: relative;
+  width: 100%;
+}
+
+.home-journey-frame-scanner .scroll-frame-scanner-sticky {
+  background: #aebcc5;
+  min-height: 0;
+}
+
+.home-journey-frame-scanner .scroll-frame-scanner-after {
+  margin-top: 37.5svh;
+  position: relative;
+  z-index: 4;
+}
+
+.home-dashboard-exit-spacer {
+  height: 175svh;
+  pointer-events: none;
+}
+
+.home-journey-frame-scanner .customer-pricing-section {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.home-journey-frame-scanner .pricing-journey-card,
+.home-journey-frame-scanner .pricing-estimator-card,
+.home-journey-frame-scanner .funding-activation-fee-card,
+.home-journey-frame-scanner .pricing-estimate-result,
+.home-journey-frame-scanner .funding-activation-rate-table {
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(12px) saturate(120%);
+  background: rgba(5, 29, 20, 0.56);
+  border-color: rgba(235, 248, 239, 0.38);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.home-journey-frame-scanner .pricing-address-field input,
+.home-journey-frame-scanner .pricing-choice span {
+  background: rgba(5, 29, 20, 0.48);
+  border-color: rgba(235, 248, 239, 0.34);
+  color: #f5fbf6;
+}
+
+.home-journey-frame-scanner .pricing-choice input:checked + span,
+.home-journey-frame-scanner .funding-activation-rate-table div:first-child {
+  background: rgba(89, 171, 115, 0.52);
+  color: #ffffff;
+}
+
+.home-journey-frame-scanner .pricing-estimate-result.is-ready {
+  background: rgba(3, 23, 16, 0.72);
+  border-color: rgba(255, 255, 255, 0.36);
+}
+
+.home-journey-frame-scanner .customer-pricing-heading h2,
+.home-journey-frame-scanner .pricing-journey-step h2,
+.home-journey-frame-scanner .pricing-estimator-card h2,
+.home-journey-frame-scanner .funding-activation-fee-card h2 {
+  color: #f7fcf8;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.34);
+}
+
+.home-journey-frame-scanner .customer-pricing-heading .eyebrow,
+.home-journey-frame-scanner .pricing-estimator-card .eyebrow,
+.home-journey-frame-scanner .funding-activation-fee-card .eyebrow,
+.home-journey-frame-scanner .pricing-choice-group legend,
+.home-journey-frame-scanner .pricing-address-field > span {
+  color: #b9efc8;
+}
+
+.home-journey-frame-scanner .customer-pricing-heading > p:last-child,
+.home-journey-frame-scanner .pricing-estimator-card > div > p,
+.home-journey-frame-scanner .funding-activation-fee-card p,
+.home-journey-frame-scanner .pricing-journey-step p,
+.home-journey-frame-scanner .pricing-address-field small,
+.home-journey-frame-scanner .pricing-estimate-result p,
+.home-journey-frame-scanner .pricing-estimate-result small,
+.home-journey-frame-scanner .pricing-estimate-result span,
+.home-journey-frame-scanner .funding-activation-fee-card small,
+.home-journey-frame-scanner .funding-activation-rate-table span {
+  color: rgba(239, 250, 242, 0.86);
+}
+
+.home-journey-frame-scanner .pricing-choice span,
+.home-journey-frame-scanner .funding-activation-rate-table strong {
+  color: #f5fbf6;
+}
+
+.home-journey-frame-scanner .home-dashboard-preview-section,
+.home-journey-frame-scanner .home-dashboard-preview-intro h2,
+.home-journey-frame-scanner .home-dashboard-preview-topbar p,
+.home-journey-frame-scanner .home-dashboard-preview-card h3,
+.home-journey-frame-scanner .home-dashboard-preview-status h4,
+.home-journey-frame-scanner .home-dashboard-preview-card-heading h3,
+.home-journey-frame-scanner .home-dashboard-preview-status dt,
+.home-journey-frame-scanner .home-dashboard-preview-progress strong,
+.home-journey-frame-scanner .home-dashboard-preview-progress b,
+.home-journey-frame-scanner .home-dashboard-preview-table strong {
+  color: #f7fcf8;
+}
+
+.home-journey-frame-scanner .home-dashboard-preview-intro p,
+.home-journey-frame-scanner .home-dashboard-preview-intro span,
+.home-journey-frame-scanner .home-dashboard-preview-topbar > div:first-child > span,
+.home-journey-frame-scanner .home-dashboard-preview-metric p,
+.home-journey-frame-scanner .home-dashboard-preview-metric span,
+.home-journey-frame-scanner .home-dashboard-preview-card p,
+.home-journey-frame-scanner .home-dashboard-preview-legend dt,
+.home-journey-frame-scanner .home-dashboard-preview-legend dd,
+.home-journey-frame-scanner .home-dashboard-preview-status-heading p,
+.home-journey-frame-scanner .home-dashboard-preview-status dd,
+.home-journey-frame-scanner .home-dashboard-preview-table span,
+.home-journey-frame-scanner .home-dashboard-preview-card--actions small,
+.home-journey-frame-scanner .home-dashboard-preview-impact-row > span,
+.home-journey-frame-scanner .home-dashboard-preview-donut small {
+  color: rgba(239, 250, 242, 0.86);
+}
+
+.home-journey-frame-scanner .home-dashboard-preview-intro h2,
+.home-journey-frame-scanner .home-dashboard-preview-topbar p {
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.36);
+}
+
+.home-journey-frame-scanner .home-dashboard-preview-shell,
+.home-journey-frame-scanner .home-dashboard-preview-metric,
+.home-journey-frame-scanner .home-dashboard-preview-card,
+.home-journey-frame-scanner .home-dashboard-preview-status {
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(12px) saturate(120%);
+  background: rgba(5, 29, 20, 0.56);
+  border-color: rgba(235, 248, 239, 0.38);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.home-journey-frame-scanner .home-dashboard-preview-filters button,
+.home-journey-frame-scanner .home-dashboard-preview-impact-row > span,
+.home-journey-frame-scanner .home-dashboard-preview-card--actions > button {
+  background: rgba(5, 29, 20, 0.48);
+  border-color: rgba(235, 248, 239, 0.34);
+  color: #f5fbf6;
+}
+
+.home-journey-frame-scanner .home-dashboard-preview-filters button:hover,
+.home-journey-frame-scanner .home-dashboard-preview-card--actions > button:hover {
+  background: rgba(12, 63, 42, 0.7);
+}
+
+.home-journey-frame-scanner .home-dashboard-preview-tabs,
+.home-journey-frame-scanner .home-dashboard-preview-legend div,
+.home-journey-frame-scanner .home-dashboard-preview-table > div {
+  border-color: rgba(235, 248, 239, 0.28);
+}
+
+.home-journey-frame-scanner .home-dashboard-preview-tab-label {
+  color: rgba(239, 250, 242, 0.8);
+}
+
+.home-journey-frame-scanner .home-dashboard-preview-tab-label.is-current,
+.home-journey-frame-scanner .home-dashboard-preview-link,
+.home-journey-frame-scanner .home-dashboard-preview-impact-row strong,
+.home-journey-frame-scanner .home-dashboard-preview-metric strong,
+.home-journey-frame-scanner .home-dashboard-preview-card--savings-total strong {
+  color: #b9efc8;
+}
+
+.home-journey-frame-scanner .home-dashboard-preview-icon,
+.home-journey-frame-scanner .home-dashboard-preview-status-icon,
+.home-journey-frame-scanner .home-dashboard-preview-card-heading span {
+  background: rgba(185, 239, 200, 0.16);
+  border-color: rgba(185, 239, 200, 0.38);
+  color: #b9efc8;
+}
+
+.home-journey-frame-scanner .home-dashboard-preview-donut {
+  background:
+    radial-gradient(circle, rgba(5, 29, 20, 0.84) 0 42%, transparent 43%),
+    conic-gradient(#b9efc8 0 43deg, #68c88c 43deg 217deg, rgba(235, 248, 239, 0.28) 217deg 360deg);
+}
+
+.home-journey-frame-scanner .home-dashboard-preview-donut span {
+  color: #b9efc8;
+}
+
+.home-journey-frame-scanner .home-dashboard-preview-progress i {
+  background: rgba(235, 248, 239, 0.24);
+}
+
+.home-journey-frame-scanner .scroll-frame-scanner-canvas,
+.home-journey-frame-scanner[data-loaded="false"] .scroll-frame-scanner-canvas {
+  background-color: #aebcc5;
+  background-image: var(--home-journey-first-frame);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.home-journey-frame-scanner .scroll-frame-scanner-gradient {
+  background:
+    linear-gradient(90deg, rgba(5, 29, 20, 0.5) 0%, rgba(5, 29, 20, 0.24) 32%, transparent 62%, rgba(7, 14, 10, 0.12) 100%),
+    linear-gradient(180deg, rgba(7, 14, 10, 0.04) 0%, transparent 42%, rgba(7, 14, 10, 0.18) 100%);
+}
+
+.public-page.home-page .home-journey-frame-scanner .scroll-frame-scanner-gradient {
+  background:
+    linear-gradient(90deg, rgba(5, 29, 20, 0.5) 0%, rgba(5, 29, 20, 0.24) 32%, transparent 62%, rgba(7, 14, 10, 0.12) 100%),
+    linear-gradient(180deg, rgba(7, 14, 10, 0.04) 0%, transparent 42%, rgba(7, 14, 10, 0.18) 100%);
+}
+
 .home-journey-transition {
   align-items: center;
   background: linear-gradient(
@@ -17546,6 +17800,58 @@ body {
   letter-spacing: -0.048em;
   line-height: 1;
   margin: 0;
+}
+
+@media (max-width: 768px) {
+  .home-journey-frame-scanner.scroll-frame-scanner {
+    min-height: 330svh;
+  }
+
+  .home-journey-frame-scanner .scroll-frame-scanner-after {
+    margin-top: 30svh;
+  }
+
+  .home-dashboard-exit-spacer {
+    height: 130svh;
+  }
+
+  .home-dashboard-preview-stage--journey-embedded .home-dashboard-preview-intro {
+    transform: translateY(-24svh);
+  }
+
+  .home-journey-frame-scanner .scroll-frame-scanner-gradient {
+    background:
+      linear-gradient(180deg, rgba(7, 14, 10, 0.04) 0%, transparent 40%, rgba(7, 14, 10, 0.24) 100%),
+      linear-gradient(90deg, rgba(5, 29, 20, 0.46) 0%, rgba(5, 29, 20, 0.18) 42%, transparent 82%);
+  }
+
+  .public-page.home-page .home-journey-frame-scanner .scroll-frame-scanner-gradient {
+    background:
+      linear-gradient(180deg, rgba(7, 14, 10, 0.04) 0%, transparent 40%, rgba(7, 14, 10, 0.24) 100%),
+      linear-gradient(90deg, rgba(5, 29, 20, 0.46) 0%, rgba(5, 29, 20, 0.18) 42%, transparent 82%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-dashboard-preview-stage {
+    background-attachment: scroll;
+    background-position: center top;
+    background-size: max(100vw, 177.778svh) max(56.25vw, 100svh);
+    margin-top: 0;
+  }
+
+  .home-journey-frame-scanner.scroll-frame-scanner {
+    min-height: 100svh;
+  }
+
+  .home-journey-frame-scanner .scroll-frame-scanner-after {
+    margin-top: 0;
+  }
+
+  .home-dashboard-exit-spacer {
+    height: 0;
+  }
+
 }
 
 .home-how-it-works-atmosphere {
