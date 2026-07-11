@@ -152,12 +152,14 @@ export async function completePortfolioItemHandler({
     expectedPortfolioVersion,
     calculationBinding,
     financialSelection: payload.financialSelection,
+    scenarioId,
   });
 
   const existingReceipt = await loadIdempotencyReceipt({
     db,
     tableName,
     portfolioId,
+    scenarioId,
     idempotencyKey,
   });
   if (existingReceipt) {
@@ -313,6 +315,7 @@ export async function completePortfolioItemHandler({
       db,
       tableName,
       portfolioId,
+      scenarioId,
       expectedVersion: expectedPortfolioVersion,
       events: [completeEvent, recalculationEvent, ledgerEvent],
       snapshot: snapshotRecord,
@@ -332,12 +335,13 @@ export async function completePortfolioItemHandler({
       eventCount: aggregate.events.length,
     });
   } catch (error) {
-    const retryReceipt = await loadIdempotencyReceipt({
-      db,
-      tableName,
-      portfolioId,
-      idempotencyKey,
-    });
+      const retryReceipt = await loadIdempotencyReceipt({
+        db,
+        tableName,
+        portfolioId,
+        scenarioId,
+        idempotencyKey,
+      });
     if (retryReceipt?.payloadHash === payloadHash) {
       return retryReceipt.result;
     }
@@ -377,11 +381,15 @@ export async function recalculatePortfolioHandler({
     throw error;
   }
 
-  const payloadHash = hashPayload(payload);
+  const payloadHash = hashPayload({
+    ...payload,
+    scenarioId,
+  });
   const existingReceipt = await loadIdempotencyReceipt({
     db,
     tableName,
     portfolioId,
+    scenarioId,
     idempotencyKey,
   });
   if (existingReceipt) {
@@ -486,6 +494,7 @@ export async function recalculatePortfolioHandler({
       db,
       tableName,
       portfolioId,
+      scenarioId,
       expectedVersion: aggregate.aggregateVersion,
       events: [recalcEvent],
       snapshot: snapshotRecord,
@@ -505,12 +514,13 @@ export async function recalculatePortfolioHandler({
       eventCount: aggregate.events.length,
     });
   } catch (error) {
-    const retryReceipt = await loadIdempotencyReceipt({
-      db,
-      tableName,
-      portfolioId,
-      idempotencyKey,
-    });
+      const retryReceipt = await loadIdempotencyReceipt({
+        db,
+        tableName,
+        portfolioId,
+        scenarioId,
+        idempotencyKey,
+      });
     if (retryReceipt?.payloadHash === payloadHash) {
       return retryReceipt.result;
     }

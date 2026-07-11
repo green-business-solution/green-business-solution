@@ -244,7 +244,7 @@ describe("portfolio handlers", () => {
     expect(db.items.filter((item) => item.recordType === "EVENT")).toHaveLength(4);
     expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.aggregateVersion).toBe(first.portfolioVersion);
     expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.itemOrder).toEqual(["item_a", "item_b"]);
-    expect(db.items.find((item) => item.stateScope === "PORTFOLIO_IDEMPOTENCY#portfolio_client_001" && item.stateKey === "idem-001")?.result).toEqual(first);
+    expect(db.items.find((item) => item.stateScope === "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#default" && item.stateKey === "idem-001")?.result).toEqual(first);
 
     const duplicate = await completePortfolioItemHandler({
       db,
@@ -473,6 +473,69 @@ describe("portfolio handlers", () => {
     });
 
     expect(recalculated.scenarioId).toBe(nonDefaultScenario);
+  });
+
+  it("scopes idempotency read and write by scenario", async () => {
+    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
+    const seed = buildSeededPortfolioSnapshot({
+      portfolioId,
+      userId: user.userId,
+      seedItems: [
+        {
+          portfolioItemId: "item_idem_scope",
+          title: "Roof",
+          independentFinancialValueMinorUnits: 40000,
+          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+        }
+      ],
+      scenarioId: "scenario-x",
+      now: "2026-07-10T10:20:00.000Z"
+    });
+    const db = createMockDb(seed.seedRows);
+
+    const first = await recalculatePortfolioHandler({
+      db,
+      tableName: "gbs-api-runtime-state",
+      user,
+      portfolioId,
+      payload: {
+        commandId: "recalc-scope",
+        idempotencyKey: "recalc-scope-idem"
+      },
+      scenarioId: "scenario-x",
+      now: new Date("2026-07-10T10:21:00.000Z")
+    });
+
+    const second = await recalculatePortfolioHandler({
+      db,
+      tableName: "gbs-api-runtime-state",
+      user,
+      portfolioId,
+      payload: {
+        commandId: "recalc-scope",
+        idempotencyKey: "recalc-scope-idem"
+      },
+      scenarioId: "scenario-y",
+      now: new Date("2026-07-10T10:22:00.000Z")
+    });
+
+    expect(second.portfolioVersion).toBeGreaterThan(first.portfolioVersion);
+    expect(
+      db.items.find(
+        (item) =>
+          item.stateScope ===
+            "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#scenario-x"
+          && item.stateKey === "recalc-scope-idem",
+      ),
+    ).toBeDefined();
+    expect(
+      db.items.find(
+        (item) =>
+          item.stateScope ===
+            "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#scenario-y"
+          && item.stateKey === "recalc-scope-idem",
+      ),
+    ).toBeDefined();
   });
 
   it("keeps write APIs disabled with zero DB calls", async () => {

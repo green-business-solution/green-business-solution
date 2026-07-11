@@ -24,8 +24,8 @@ export function rowScopeForOutbox(portfolioId) {
   return `PORTFOLIO_OUTBOX#${portfolioId}`;
 }
 
-export function rowScopeForIdempotency(portfolioId) {
-  return `${portfolioStateKeys.idempotencyPrefix}#${portfolioId}`;
+export function rowScopeForIdempotency(portfolioId, scenarioId = "default") {
+  return `${portfolioStateKeys.idempotencyPrefix}#${portfolioId}#${scenarioId}`;
 }
 
 export async function loadPortfolioById({
@@ -136,6 +136,7 @@ export async function appendPortfolioUpdate({
   db,
   tableName,
   portfolioId,
+  scenarioId = "default",
   expectedVersion,
   events,
   snapshot,
@@ -166,11 +167,11 @@ export async function appendPortfolioUpdate({
     });
   }
 
-  transactItems.push({
-    Put: {
-      TableName: tableName,
-      Item: {
-        ...snapshot,
+    transactItems.push({
+      Put: {
+        TableName: tableName,
+        Item: {
+          ...snapshot,
         stateScope: scope,
         stateKey: portfolioStateKeys.snapshotKey,
         recordType: "SNAPSHOT",
@@ -226,7 +227,7 @@ export async function appendPortfolioUpdate({
       Put: {
         TableName: tableName,
         Item: {
-          stateScope: rowScopeForIdempotency(portfolioId),
+          stateScope: rowScopeForIdempotency(portfolioId, scenarioId),
           stateKey: String(idempotencyReceipt.idempotencyKey),
           payloadHash: idempotencyReceipt.payloadHash,
           commandId: idempotencyReceipt.commandId,
@@ -246,17 +247,36 @@ export async function loadIdempotencyReceipt({
   db,
   tableName,
   portfolioId,
+  scenarioId = "default",
   idempotencyKey,
 }) {
   const result = await db.send(
     new GetCommand({
       TableName: tableName,
       Key: {
-        stateScope: rowScopeForIdempotency(portfolioId),
+        stateScope: rowScopeForIdempotency(portfolioId, scenarioId),
         stateKey: String(idempotencyKey),
       },
     }),
   );
+
+  if (result.Item) {
+    return result.Item;
+  }
+
+  if (scenarioId === "default") {
+    const legacyResult = await db.send(
+      new GetCommand({
+        TableName: tableName,
+        Key: {
+          stateScope: rowScopeForIdempotency(portfolioId),
+          stateKey: String(idempotencyKey),
+        },
+      }),
+    );
+    return legacyResult.Item || null;
+  }
+
   return result.Item || null;
 }
 
@@ -264,16 +284,17 @@ export async function storeIdempotencyReceipt({
   db,
   tableName,
   portfolioId,
+  scenarioId = "default",
   idempotencyKey,
   payloadHash,
   commandId,
   result,
 }) {
   await db.send(
-    new PutCommand({
-      TableName: tableName,
-      Item: {
-        stateScope: rowScopeForIdempotency(portfolioId),
+      new PutCommand({
+        TableName: tableName,
+        Item: {
+        stateScope: rowScopeForIdempotency(portfolioId, scenarioId),
         stateKey: String(idempotencyKey),
         payloadHash,
         commandId,
