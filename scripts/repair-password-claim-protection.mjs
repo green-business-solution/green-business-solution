@@ -143,9 +143,10 @@ export async function runPasswordClaimProtectionRepair(options = {}, dependencie
         Limit: requestLimit,
         ExclusiveStartKey: startKey,
         ProjectionExpression:
-          "userId, #status, role, passwordLinked, passwordHash, passwordHashKeyLength, passwordAlgorithm, passwordSalt, passwordClaimProtected, passwordClaimProtectionRunId",
+          "userId, #status, #role, passwordLinked, passwordHash, passwordHashKeyLength, passwordAlgorithm, passwordSalt, passwordClaimProtected, passwordClaimProtectionRunId",
         ExpressionAttributeNames: {
           "#status": "status",
+          "#role": "role",
         },
         ExpressionAttributeValues: {
           ":active": "active",

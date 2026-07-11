@@ -78,6 +78,46 @@ describe("runPasswordClaimProtectionRepair", () => {
     expect(calls.filter((command) => command.constructor.name === "ScanCommand")).toHaveLength(2);
   });
 
+  it("aliases reserved word role in scan projection and never emits bare role", async () => {
+    const { calls, db } = createDbRecorder([
+      {
+        Items: [
+          {
+            userId: "u-admin-protected",
+            status: "active",
+            role: "admin",
+            passwordLinked: false,
+            passwordClaimProtected: true,
+          },
+        ],
+        LastEvaluatedKey: null,
+      },
+    ]);
+
+    const report = await runPasswordClaimProtectionRepair(
+      {
+        dryRun: true,
+        usersTable: "gbs-users",
+        maxUpdates: 1,
+      },
+      { db },
+    );
+
+    expect(report.scanned).toBe(1);
+
+    const scanCommand = calls.find((command) => command.constructor.name === "ScanCommand");
+    expect(scanCommand).toBeDefined();
+    expect(scanCommand.input.ProjectionExpression).toContain("#role");
+    expect(scanCommand.input.ProjectionExpression).not.toMatch(/(^|[ ,])role($|[ ,])/);
+    expect(scanCommand.input.ExpressionAttributeNames).toMatchObject({
+      "#role": "role",
+      "#status": "status",
+    });
+    expect(scanCommand.input.ExpressionAttributeValues).toMatchObject({
+      ":active": "active",
+    });
+  });
+
   it("rolls back only the selected run and respects conditional updates", async () => {
     const { calls, db } = createDbRecorder([
       {
