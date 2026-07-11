@@ -53,6 +53,18 @@ The production API uses separate AWS regions for:
 
 Retrofit portfolio routes are fail-closed in production unless `RETROFI_PORTFOLIO_WRITE_ENABLED=1` is explicitly set in the API runtime environment.
 
+## Account-Claim Repair
+
+The password-signup claim guard is fail-closed by default and is repaired with
+`node scripts/repair-password-claim-protection.mjs`.
+
+Run the script in dry-run mode first, then use `--write` only when the candidate set looks correct.
+
+Rollback requires the original `--run-id` value, which the script emits in its JSON report.
+
+The script only touches active admin records and records its protection markers on the repaired rows so
+future rollbacks can target the exact repair batch.
+
 ## Deploy Command
 
 ```sh
