@@ -8,8 +8,9 @@ import { normalizeUserProfile } from "./matching/normalizeUserProfile.mjs";
 import { applyOpportunityAvailabilityOverlay } from "./matching/opportunityAvailabilityOverlay.mjs";
 import { applyOpportunityAwardAuditOverlay } from "./matching/opportunityAwardAuditOverlay.mjs";
 import {
-  isVisibleOpportunity,
   isVisibleAvailability,
+  normalizeOpportunityAvailabilityStatus,
+  OPPORTUNITY_AVAILABILITY_STATUS,
 } from "./matching/opportunityLifecycle.mjs";
 import {
   classifyRetrofitsForOpportunity,
@@ -41,6 +42,10 @@ const opportunityIncentiveCalculationPackages =
 const taxGeographyRules = readTaxGeographyRules(taxGeographyRulesPath);
 const localTaxWorkflows = readLocalTaxWorkflows(localTaxWorkflowRulesPath);
 const taxGapRuntimeRules = readTaxGapRuntimeRules(taxGapRuntimeRulesPath);
+const MATCHABLE_OPPORTUNITY_STATUSES = new Set([
+  OPPORTUNITY_AVAILABILITY_STATUS.ACTIVE,
+  OPPORTUNITY_AVAILABILITY_STATUS.CONDITIONAL,
+]);
 
 function resolveRepoOrLambdaDataFile(fileName) {
   const candidates = [
@@ -124,7 +129,13 @@ export function buildPortalRetrofitRecommendations({
     applyOpportunityAwardAuditOverlay(opportunities || []),
   );
   const eligibleResults = auditedOpportunities
-    .filter(isVisibleOpportunity)
+    .filter((opportunity) =>
+      MATCHABLE_OPPORTUNITY_STATUSES.has(
+        normalizeOpportunityAvailabilityStatus(
+          opportunity?.availabilityStatus ?? opportunity?.lifecycleStatus,
+        ),
+      ),
+    )
     .map((opportunity) =>
       buildEvaluatedOpportunity({
         normalizedProfile,

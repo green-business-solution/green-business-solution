@@ -243,7 +243,12 @@ describe("portfolio handlers", () => {
     expect(first.status).toBe("ACCEPTED");
     expect(first.portfolioVersion).toBeGreaterThan(1);
     expect(db.items.filter((item) => item.recordType === "EVENT")).toHaveLength(4);
-    expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.aggregateVersion).toBe(first.portfolioVersion);
+    const snapshotRow = db.items.find(
+      (item) =>
+        item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY",
+    );
+    expect(snapshotRow?.aggregateVersion).toBe(first.portfolioVersion);
+    expect(snapshotRow?.eventCount).toBe(3);
     expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.itemOrder).toEqual(["item_a", "item_b"]);
     expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.eventCount).toBe(4);
     expect(db.items.find((item) => item.stateScope === "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#default" && item.stateKey === "idem-001")?.result).toEqual(first);
