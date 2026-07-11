@@ -70,7 +70,7 @@ describe("runPasswordClaimProtectionRepair", () => {
     );
 
     expect(report.mode).toBe("repair");
-    expect(report.candidates).toBe(2);
+    expect(report.candidates).toBe(1);
     expect(report.protected).toBe(1);
     expect(report.alreadyProtected).toBe(1);
     expect(report.scanned).toBe(2);

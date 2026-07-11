@@ -26,9 +26,10 @@ Representative fields:
 - `googleLinked`: boolean
 - `passwordLinked`: boolean. It should only be `true` when the record also has `passwordHash`,
   `passwordSalt`, `passwordAlgorithm`, and `passwordHashKeyLength` populated.
-- Password-claim repair runs may temporarily add `passwordClaimProtected`,
-  `passwordClaimProtectionRunId`, `passwordClaimProtectionAt`, and
-  `passwordClaimProtectionReason` to records that were scanned for protection.
+- Password-claim repair runs scan active admin records and may temporarily add
+  `passwordClaimProtected`, `passwordClaimProtectionRunId`,
+  `passwordClaimProtectionAt`, and `passwordClaimProtectionReason` to records
+  that were repaired or rolled back.
 - `googleSubject`
 - `googleEmail`
 - `createdAt`
