@@ -36,26 +36,27 @@ describe("runPasswordClaimProtectionRepair", () => {
   it("protects vulnerable records with bounded, idempotent dry-run counts", async () => {
     const { calls, db } = createDbRecorder([
       {
-        userId: "u-admin",
-        status: "active",
-        role: "admin",
-        email: "admin@example.com",
+        Items: [
+          {
+            userId: "u-admin-protected",
+            status: "active",
+            role: "admin",
+            passwordLinked: false,
+            passwordClaimProtected: true,
+          },
+        ],
+        LastEvaluatedKey: { userId: "u-admin-protected" },
       },
       {
-        userId: "u-client-safe",
-        status: "active",
-        passwordLinked: true,
-        passwordHash: "hash",
-        passwordSalt: "salt",
-        passwordAlgorithm: "scrypt",
-        passwordHashKeyLength: 64,
-      },
-      {
-        userId: "u-client-protected",
-        status: "active",
-        role: "admin",
-        passwordLinked: false,
-        passwordClaimProtected: true,
+        Items: [
+          {
+            userId: "u-admin-vulnerable",
+            status: "active",
+            role: "admin",
+            passwordLinked: false,
+          },
+        ],
+        LastEvaluatedKey: null,
       },
     ]);
 
@@ -72,9 +73,9 @@ describe("runPasswordClaimProtectionRepair", () => {
     expect(report.candidates).toBe(2);
     expect(report.protected).toBe(1);
     expect(report.alreadyProtected).toBe(1);
-    expect(report.scanned).toBe(3);
-    expect(report.skipped).toBe(1);
-    expect(calls).toHaveLength(1);
+    expect(report.scanned).toBe(2);
+    expect(report.skipped).toBe(0);
+    expect(calls.filter((command) => command.constructor.name === "ScanCommand")).toHaveLength(2);
   });
 
   it("rolls back only the selected run and respects conditional updates", async () => {

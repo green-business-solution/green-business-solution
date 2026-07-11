@@ -188,12 +188,13 @@ export async function runPasswordClaimProtectionRepair(options = {}, dependencie
         }
 
         outcome.candidates += 1;
-        processed += 1;
 
         if (user[PASSWORD_CLAIM_GUARD_FIELD] === true) {
           outcome.alreadyProtected += 1;
           continue;
         }
+
+        processed += 1;
 
         if (config.dryRun) {
           outcome.protected += 1;
