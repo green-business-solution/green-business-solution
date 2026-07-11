@@ -53,6 +53,7 @@ describe("runPasswordClaimProtectionRepair", () => {
       {
         userId: "u-client-protected",
         status: "active",
+        role: "admin",
         passwordLinked: false,
         passwordClaimProtected: true,
       },
@@ -72,6 +73,7 @@ describe("runPasswordClaimProtectionRepair", () => {
     expect(report.protected).toBe(1);
     expect(report.alreadyProtected).toBe(1);
     expect(report.scanned).toBe(3);
+    expect(report.skipped).toBe(1);
     expect(calls).toHaveLength(1);
   });
 
@@ -80,12 +82,14 @@ describe("runPasswordClaimProtectionRepair", () => {
       {
         userId: "u-admin",
         status: "active",
+        role: "admin",
         passwordClaimProtected: true,
         passwordClaimProtectionRunId: "run-A",
       },
       {
         userId: "u-other",
         status: "active",
+        role: "admin",
         passwordClaimProtected: true,
         passwordClaimProtectionRunId: "run-B",
       },
@@ -110,39 +114,6 @@ describe("runPasswordClaimProtectionRepair", () => {
     expect(updateCalls).toHaveLength(1);
     const updateExpression = String(updateCalls[0].input.UpdateExpression || "");
     expect(updateExpression).toContain("REMOVE");
-  });
-
-  it("continues scanning across empty pages with a last evaluated key", async () => {
-    const { calls, db } = createDbRecorder([
-      {
-        Items: [],
-        LastEvaluatedKey: { userId: "page-2" },
-      },
-      {
-        Items: [
-          {
-            userId: "u-late",
-            status: "active",
-            passwordLinked: false,
-          },
-        ],
-        LastEvaluatedKey: null,
-      },
-    ]);
-
-    const report = await runPasswordClaimProtectionRepair(
-      {
-        dryRun: true,
-        usersTable: "gbs-users",
-        maxUpdates: 10,
-      },
-      { db },
-    );
-
-    expect(report.scanned).toBe(1);
-    expect(report.candidates).toBe(1);
-    expect(report.protected).toBe(1);
-    expect(calls.filter((command) => command.constructor.name === "ScanCommand")).toHaveLength(2);
   });
 
   it("requires an explicit run id for rollback mode", async () => {

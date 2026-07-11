@@ -55,7 +55,7 @@ import {
   validateApplicationProfileApproval,
 } from "./applicationSources/ApplicationProfileApprovalValidator.mjs";
 import {
-  isPasswordSignupLinkBlocked,
+  isPasswordSignupDuplicateBlocked,
   passwordSignupDuplicateErrorMessage,
   PASSWORD_CLAIM_GUARD_FIELD,
   PASSWORD_CLAIM_GUARD_AT_FIELD,
@@ -1822,8 +1822,7 @@ async function createPasswordAccount(input) {
     requireEmail: true,
   });
   const existing = await findUserByPasswordUsername(username);
-
-  if (existing) {
+  if (isPasswordSignupDuplicateBlocked(existing)) {
     throw createPasswordError(passwordSignupDuplicateErrorMessage, 409);
   }
 

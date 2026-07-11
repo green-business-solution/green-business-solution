@@ -6,6 +6,10 @@ export const PASSWORD_CLAIM_GUARD_REASON = "password_link_state_missing_or_incom
 export const passwordSignupDuplicateErrorMessage =
   "An account already exists for that email. Log in instead.";
 
+export function isPasswordSignupDuplicateBlocked(existing) {
+  return Boolean(existing && existing.userId);
+}
+
 function hasPasswordCredentialState(user) {
   return (
     user?.passwordLinked === true &&

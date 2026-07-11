@@ -143,15 +143,12 @@ export async function runPasswordClaimProtectionRepair(options = {}, dependencie
         Limit: requestLimit,
         ExclusiveStartKey: startKey,
         ProjectionExpression:
-          "userId, #status, passwordLinked, passwordHash, passwordHashKeyLength, passwordAlgorithm, passwordSalt, passwordClaimProtected, passwordClaimProtectionRunId",
+          "userId, #status, role, passwordLinked, passwordHash, passwordHashKeyLength, passwordAlgorithm, passwordSalt, passwordClaimProtected, passwordClaimProtectionRunId",
         ExpressionAttributeNames: {
           "#status": "status",
         },
         ExpressionAttributeValues: {
           ":active": "active",
-          ":false": false,
-          ":hashLength": 64,
-          ":algorithm": "scrypt",
         },
         FilterExpression: "#status = :active",
       }),
@@ -177,9 +174,16 @@ export async function runPasswordClaimProtectionRepair(options = {}, dependencie
         passwordHashAlgorithm: "scrypt",
         passwordHashKeyLength: 64,
       });
+      const isPrivileged = user.role === "admin";
+
+      if (!isPrivileged) {
+        outcome.skipped += 1;
+        continue;
+      }
 
       if (!config.rollback) {
         if (!needsProtection) {
+          outcome.skipped += 1;
           continue;
         }
 
