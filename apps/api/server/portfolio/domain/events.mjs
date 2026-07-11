@@ -6,7 +6,7 @@ export const PORTFOLIO_EVENT_TYPES = {
   ITEM_CORRECTED: "PORTFOLIO_ITEM_CORRECTED",
   SNAPSHOT_SEEDED: "PORTFOLIO_SNAPSHOT_SEEDED",
   RECALCULATION_REQUESTED: "PORTFOLIO_RECALCULATION_REQUESTED",
-  BENEFIT_LEDGER_ENTRY_RECORDED: "PORTFOLIO_BENEFIT_LEDGER_ENTRY_RECORDED"
+  BENEFIT_LEDGER_ENTRY_RECORDED: "PORTFOLIO_BENEFIT_LEDGER_ENTRY_RECORDED",
 };
 
 function canonicalizeRecord(value) {
@@ -32,13 +32,16 @@ export function canonicalJson(value) {
 }
 
 export function hashEventEnvelope(envelope) {
-  return crypto.createHash("sha256").update(canonicalJson(envelope)).digest("hex");
+  return crypto
+    .createHash("sha256")
+    .update(canonicalJson(envelope))
+    .digest("hex");
 }
 
 export function canonicalEventKey(type, payload) {
   const hash = hashEventEnvelope({
     type,
-    payload
+    payload,
   });
   return `${type}:${hash.slice(0, 10)}`;
 }
@@ -51,11 +54,14 @@ export function normalizeEnvelope(input) {
     portfolioItemId: cleanOptionalId(input.portfolioItemId),
     type: String(input.type || ""),
     commandId: cleanOptionalId(input.commandId),
-    expectedPortfolioVersion: typeof input.expectedPortfolioVersion === "number" ? input.expectedPortfolioVersion : 0,
+    expectedPortfolioVersion:
+      typeof input.expectedPortfolioVersion === "number"
+        ? input.expectedPortfolioVersion
+        : 0,
     payload: canonicalizeRecord(input.payload || {}),
     occurredAt: cleanIso(input.occurredAt),
     userId: cleanOptionalId(input.userId),
-    runId: cleanOptionalId(input.runId)
+    runId: cleanOptionalId(input.runId),
   };
 }
 
@@ -68,7 +74,7 @@ export function createEventEnvelope({
   payload = {},
   userId,
   runId = null,
-  now = new Date()
+  now = new Date(),
 }) {
   const envelope = {
     schemaVersion: "portfolio-event-v1",
@@ -77,11 +83,13 @@ export function createEventEnvelope({
     portfolioItemId: cleanOptionalId(portfolioItemId),
     type,
     commandId: cleanOptionalId(commandId),
-    expectedPortfolioVersion: Number.isInteger(expectedPortfolioVersion) ? expectedPortfolioVersion : 0,
+    expectedPortfolioVersion: Number.isInteger(expectedPortfolioVersion)
+      ? expectedPortfolioVersion
+      : 0,
     payload,
     occurredAt: cleanIso(now),
     userId: cleanOptionalId(userId),
-    runId: cleanOptionalId(runId)
+    runId: cleanOptionalId(runId),
   };
   return normalizeEnvelope(envelope);
 }
@@ -89,7 +97,7 @@ export function createEventEnvelope({
 export function eventFingerprint(events = []) {
   return hashEventEnvelope({
     schemaVersion: "portfolio-event-batch-v1",
-    events: events.map((event) => normalizeEnvelope(event))
+    events: events.map((event) => normalizeEnvelope(event)),
   });
 }
 
@@ -107,7 +115,9 @@ function cleanIso(value) {
     return new Date().toISOString();
   }
   const parsed = new Date(candidate);
-  return Number.isNaN(parsed.getTime()) ? new Date().toISOString() : parsed.toISOString();
+  return Number.isNaN(parsed.getTime())
+    ? new Date().toISOString()
+    : parsed.toISOString();
 }
 
 export function sortEventsForReplay(events = []) {
@@ -115,8 +125,12 @@ export function sortEventsForReplay(events = []) {
     if (a.occurredAt !== b.occurredAt) {
       return String(a.occurredAt).localeCompare(String(b.occurredAt));
     }
-    if ((a.expectedPortfolioVersion || 0) !== (b.expectedPortfolioVersion || 0)) {
-      return (a.expectedPortfolioVersion || 0) - (b.expectedPortfolioVersion || 0);
+    if (
+      (a.expectedPortfolioVersion || 0) !== (b.expectedPortfolioVersion || 0)
+    ) {
+      return (
+        (a.expectedPortfolioVersion || 0) - (b.expectedPortfolioVersion || 0)
+      );
     }
     if ((a.runId || "").localeCompare(b.runId || "") !== 0) {
       return (a.runId || "").localeCompare(b.runId || "");

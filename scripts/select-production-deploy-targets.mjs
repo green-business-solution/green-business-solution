@@ -12,7 +12,7 @@ const frontendBuildDependencyRoots = new Set([
   "react-dom",
   "vite",
   "@vitejs/plugin-react",
-  "typescript"
+  "typescript",
 ]);
 
 function usage() {
@@ -52,10 +52,13 @@ function gitChangedFiles(refs) {
   if (refs.length >= 2 && refs[0] && refs[1]) {
     const result = spawnSync("git", ["diff", "--name-only", refs[0], refs[1]], {
       encoding: "utf8",
-      stdio: ["ignore", "pipe", "pipe"]
+      stdio: ["ignore", "pipe", "pipe"],
     });
-    if (result.status === 0) return { files: splitLines(result.stdout), refs: refs.slice(0, 2) };
-    throw new Error(result.stderr || `git diff failed for ${refs[0]}..${refs[1]}`);
+    if (result.status === 0)
+      return { files: splitLines(result.stdout), refs: refs.slice(0, 2) };
+    throw new Error(
+      result.stderr || `git diff failed for ${refs[0]}..${refs[1]}`,
+    );
   }
 
   const stdin = readStdin();
@@ -63,9 +66,10 @@ function gitChangedFiles(refs) {
 
   const fallback = spawnSync("git", ["diff", "--name-only", "HEAD^", "HEAD"], {
     encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
+    stdio: ["ignore", "pipe", "pipe"],
   });
-  if (fallback.status === 0) return { files: splitLines(fallback.stdout), refs: ["HEAD^", "HEAD"] };
+  if (fallback.status === 0)
+    return { files: splitLines(fallback.stdout), refs: ["HEAD^", "HEAD"] };
   return { files: [], refs: [] };
 }
 
@@ -93,7 +97,11 @@ export function classifyFiles(files, context = {}) {
     const decision = targetsForFile(file, context);
     for (const target of decision.targets) targets.add(target);
     if (decision.reason || decision.targets.length) {
-      reasons.push({ file, targets: decision.targets, reason: decision.reason });
+      reasons.push({
+        file,
+        targets: decision.targets,
+        reason: decision.reason,
+      });
     }
   }
 
@@ -102,7 +110,8 @@ export function classifyFiles(files, context = {}) {
 }
 
 function targetsForFile(file, context = {}) {
-  if (!file || isDocsOnly(file)) return decision([], "Documentation or metadata only.");
+  if (!file || isDocsOnly(file))
+    return decision([], "Documentation or metadata only.");
   if (isTestOnly(file)) return decision([], "Test or fixture only.");
 
   if (file === lockfilePath) {
@@ -115,7 +124,10 @@ function targetsForFile(file, context = {}) {
     file === "package.json" ||
     file === "apps/api/package-lock.json"
   ) {
-    return decision(["ci", "data", "api", "infra", "frontend"], "Shared deploy/runtime configuration.");
+    return decision(
+      ["ci", "data", "api", "infra", "frontend"],
+      "Shared deploy/runtime configuration.",
+    );
   }
 
   if (file === "infra/github-actions-deploy-role.yaml") {
@@ -156,7 +168,10 @@ function targetsForFile(file, context = {}) {
     file === "apps/web/package.json" ||
     file === "apps/web/src"
   ) {
-    return decision(["frontend"], "Frontend source, static asset, or build configuration.");
+    return decision(
+      ["frontend"],
+      "Frontend source, static asset, or build configuration.",
+    );
   }
 
   if (
@@ -190,11 +205,14 @@ function targetsForPackageLock(context = {}) {
   if (!lockContext) {
     return decision(
       ["ci", "data", "api", "infra", "frontend"],
-      "Lockfile changed, but package-level diff was unavailable; using conservative full deploy."
+      "Lockfile changed, but package-level diff was unavailable; using conservative full deploy.",
     );
   }
 
-  const summary = classifyPackageLockChange(lockContext.baseLock, lockContext.headLock);
+  const summary = classifyPackageLockChange(
+    lockContext.baseLock,
+    lockContext.headLock,
+  );
   return decision(summary.targets, summary.reason);
 }
 
@@ -217,7 +235,7 @@ export function classifyPackageLockChange(baseLock, headLock) {
   if (!changedEntries.length) {
     return {
       targets: [],
-      reason: "Lockfile changed without package entry changes."
+      reason: "Lockfile changed without package entry changes.",
     };
   }
 
@@ -227,13 +245,18 @@ export function classifyPackageLockChange(baseLock, headLock) {
   const changedPackages = new Set(packageNames);
   const apiRuntimeClosure = dependencyClosure(
     headLock,
-    directDependenciesForWorkspace(headLock, apiWorkspacePath, { includeDevDependencies: false })
+    directDependenciesForWorkspace(headLock, apiWorkspacePath, {
+      includeDevDependencies: false,
+    }),
   );
   const frontendBuildClosure = dependencyClosure(
     headLock,
-    frontendBuildRoots(headLock)
+    frontendBuildRoots(headLock),
   );
-  const scriptAwsClosure = dependencyClosure(headLock, scriptAwsRoots(headLock));
+  const scriptAwsClosure = dependencyClosure(
+    headLock,
+    scriptAwsRoots(headLock),
+  );
 
   const targets = new Set();
   const apiMatches = [];
@@ -267,8 +290,8 @@ export function classifyPackageLockChange(baseLock, headLock) {
       apiMatches,
       frontendMatches,
       scriptAwsMatches,
-      targets: orderedTargets
-    })
+      targets: orderedTargets,
+    }),
   };
 }
 
@@ -278,10 +301,14 @@ function packageLockReason(summary) {
     parts.push(`API runtime packages: ${compactList(summary.apiMatches)}`);
   }
   if (summary.frontendMatches.length) {
-    parts.push(`frontend runtime/build packages: ${compactList(summary.frontendMatches)}`);
+    parts.push(
+      `frontend runtime/build packages: ${compactList(summary.frontendMatches)}`,
+    );
   }
   if (summary.scriptAwsMatches.length) {
-    parts.push(`script-only AWS packages: ${compactList(summary.scriptAwsMatches)}`);
+    parts.push(
+      `script-only AWS packages: ${compactList(summary.scriptAwsMatches)}`,
+    );
   }
   if (parts.length) {
     return `Lockfile package diff mapped to ${summary.targets.join(", ")}. ${parts.join("; ")}.`;
@@ -293,15 +320,26 @@ function packageLockReason(summary) {
 function changedLockPackageEntries(baseLock, headLock) {
   const basePackages = baseLock?.packages || {};
   const headPackages = headLock?.packages || {};
-  const allPaths = new Set([...Object.keys(basePackages), ...Object.keys(headPackages)]);
+  const allPaths = new Set([
+    ...Object.keys(basePackages),
+    ...Object.keys(headPackages),
+  ]);
   return [...allPaths]
     .filter((entryPath) => !isWorkspaceLockEntry(entryPath))
-    .filter((entryPath) => stableJson(basePackages[entryPath]) !== stableJson(headPackages[entryPath]))
+    .filter(
+      (entryPath) =>
+        stableJson(basePackages[entryPath]) !==
+        stableJson(headPackages[entryPath]),
+    )
     .sort();
 }
 
 function isWorkspaceLockEntry(entryPath) {
-  return entryPath === "" || entryPath === apiWorkspacePath || entryPath === webWorkspacePath;
+  return (
+    entryPath === "" ||
+    entryPath === apiWorkspacePath ||
+    entryPath === webWorkspacePath
+  );
 }
 
 function stableJson(value) {
@@ -318,7 +356,9 @@ function dependencyNamesFromManifest(manifest, options = {}) {
   return new Set([
     ...Object.keys(manifest.dependencies || {}),
     ...Object.keys(manifest.optionalDependencies || {}),
-    ...(includeDevDependencies ? Object.keys(manifest.devDependencies || {}) : [])
+    ...(includeDevDependencies
+      ? Object.keys(manifest.devDependencies || {})
+      : []),
   ]);
 }
 
@@ -334,10 +374,14 @@ function frontendBuildRoots(lock) {
 function scriptAwsRoots(lock) {
   const manifest = lock?.packages?.[""] || {};
   const roots = new Set();
-  for (const dep of dependencyNamesFromManifest(manifest, { includeDevDependencies: true })) {
+  for (const dep of dependencyNamesFromManifest(manifest, {
+    includeDevDependencies: true,
+  })) {
     if (dep.startsWith("@aws-sdk/")) roots.add(dep);
   }
-  for (const dep of directDependenciesForWorkspace(lock, apiWorkspacePath, { includeDevDependencies: false })) {
+  for (const dep of directDependenciesForWorkspace(lock, apiWorkspacePath, {
+    includeDevDependencies: false,
+  })) {
     roots.delete(dep);
   }
   return roots;
@@ -353,8 +397,10 @@ function dependencyClosure(lock, roots) {
 
     const packageEntry = packageEntryForName(lock, packageName);
     if (!packageEntry) continue;
-    for (const dep of Object.keys(packageEntry.dependencies || {})) queue.push(dep);
-    for (const dep of Object.keys(packageEntry.optionalDependencies || {})) queue.push(dep);
+    for (const dep of Object.keys(packageEntry.dependencies || {}))
+      queue.push(dep);
+    for (const dep of Object.keys(packageEntry.optionalDependencies || {}))
+      queue.push(dep);
   }
   return result;
 }
@@ -375,7 +421,7 @@ function packageNameForLockPath(entryPath) {
 function readJsonFromGit(ref, filePath) {
   const result = spawnSync("git", ["show", `${ref}:${filePath}`], {
     encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
+    stdio: ["ignore", "pipe", "pipe"],
   });
   if (result.status !== 0) return null;
   try {
@@ -399,15 +445,18 @@ function comparePackageNamesForDisplay(left, right) {
 }
 
 function packageDisplayPriority(packageName) {
-  if (packageName.startsWith("@esbuild/") || packageName.startsWith("@rollup/rollup-")) return 2;
+  if (
+    packageName.startsWith("@esbuild/") ||
+    packageName.startsWith("@rollup/rollup-")
+  )
+    return 2;
   if (packageName.startsWith("@")) return 1;
   return 0;
 }
 
 function isTestOnly(file) {
   return (
-    file.includes("/__fixtures__/") ||
-    /\.(test|spec)\.[cm]?[jt]sx?$/.test(file)
+    file.includes("/__fixtures__/") || /\.(test|spec)\.[cm]?[jt]sx?$/.test(file)
   );
 }
 
@@ -456,18 +505,24 @@ function markdownSummary(result) {
     "",
     `- Targets: ${targets.map((target) => `\`${target}\``).join(", ")}`,
     `- Changed files considered: ${result.files.length}`,
-    ""
+    "",
   ];
 
   if (result.reasons.length) {
     lines.push("| File | Targets | Reason |");
     lines.push("| --- | --- | --- |");
     for (const item of result.reasons.slice(0, 25)) {
-      const itemTargets = item.targets.length ? item.targets.map((target) => `\`${target}\``).join(", ") : "`none`";
-      lines.push(`| ${escapeMarkdownTable(item.file)} | ${itemTargets} | ${escapeMarkdownTable(item.reason || "")} |`);
+      const itemTargets = item.targets.length
+        ? item.targets.map((target) => `\`${target}\``).join(", ")
+        : "`none`";
+      lines.push(
+        `| ${escapeMarkdownTable(item.file)} | ${itemTargets} | ${escapeMarkdownTable(item.reason || "")} |`,
+      );
     }
     if (result.reasons.length > 25) {
-      lines.push(`| ... | ... | ${result.reasons.length - 25} more changed-file decisions omitted. |`);
+      lines.push(
+        `| ... | ... | ${result.reasons.length - 25} more changed-file decisions omitted. |`,
+      );
     }
   } else {
     lines.push("No production deploy-affecting files were found.");
@@ -477,7 +532,9 @@ function markdownSummary(result) {
 }
 
 function escapeMarkdownTable(value) {
-  return String(value || "").replaceAll("|", "\\|").replaceAll("\n", " ");
+  return String(value || "")
+    .replaceAll("|", "\\|")
+    .replaceAll("\n", " ");
 }
 
 function main() {
@@ -487,7 +544,10 @@ function main() {
     process.exit(0);
   }
   const changedFiles = gitChangedFiles(options.refs);
-  writeOutput(classifyFiles(changedFiles.files, { refs: changedFiles.refs }), options.format);
+  writeOutput(
+    classifyFiles(changedFiles.files, { refs: changedFiles.refs }),
+    options.format,
+  );
 }
 
 const isCliEntryPoint = process.argv[1]

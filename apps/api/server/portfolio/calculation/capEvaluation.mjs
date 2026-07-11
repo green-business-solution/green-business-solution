@@ -5,10 +5,14 @@ export const DEFAULT_CAP_RULE = {
   ruleVersion: "cap-v1",
   resetWindow: "calendar_year_2026",
   unit: "usd_minor_unit",
-  capMinorUnits: 100000
+  capMinorUnits: 100000,
 };
 
-export function evaluateFixedUnitCap({ orderedItems = [], capRule = DEFAULT_CAP_RULE, priorLedger = [] }) {
+export function evaluateFixedUnitCap({
+  orderedItems = [],
+  capRule = DEFAULT_CAP_RULE,
+  priorLedger = [],
+}) {
   const capMinorUnits = Math.max(0, Number(capRule.capMinorUnits || 0));
   const baselineConsumed = canonicalizeLedgerEntries(priorLedger)
     .filter((entry) => entry.action === "CONSUME")
@@ -20,11 +24,13 @@ export function evaluateFixedUnitCap({ orderedItems = [], capRule = DEFAULT_CAP_
 
   const grossPotentialMinorUnits = orderedItems.reduce(
     (sum, item) => sum + toMinor(item.independentFinancialValueMinorUnits),
-    0
+    0,
   );
 
   for (const item of orderedItems) {
-    const requestedMinorUnits = toMinor(item.financialSelection?.requestedBenefitMinorUnits);
+    const requestedMinorUnits = toMinor(
+      item.financialSelection?.requestedBenefitMinorUnits,
+    );
     const portfolioItemId = item.portfolioItemId;
 
     ledgerEntries.push({
@@ -33,24 +39,28 @@ export function evaluateFixedUnitCap({ orderedItems = [], capRule = DEFAULT_CAP_
       portfolioItemId,
       ruleFamilyId: capRule.ruleFamilyId,
       ruleVersion: capRule.ruleVersion,
-      sequence: ledgerEntries.length + 1
+      sequence: ledgerEntries.length + 1,
     });
 
-    const consumedMinorUnits = item.status === "COMPLETED" && remainingBudgetMinorUnits > 0
-      ? Math.min(requestedMinorUnits, remainingBudgetMinorUnits)
-      : 0;
+    const consumedMinorUnits =
+      item.status === "COMPLETED" && remainingBudgetMinorUnits > 0
+        ? Math.min(requestedMinorUnits, remainingBudgetMinorUnits)
+        : 0;
     ledgerEntries.push({
       action: "CONSUME",
       amountMinorUnits: consumedMinorUnits,
       portfolioItemId,
       ruleFamilyId: capRule.ruleFamilyId,
       ruleVersion: capRule.ruleVersion,
-      sequence: ledgerEntries.length + 1
+      sequence: ledgerEntries.length + 1,
     });
 
     remainingBudgetMinorUnits -= consumedMinorUnits;
 
-    if (item.status === "COMPLETED" && requestedMinorUnits > consumedMinorUnits) {
+    if (
+      item.status === "COMPLETED" &&
+      requestedMinorUnits > consumedMinorUnits
+    ) {
       const released = requestedMinorUnits - consumedMinorUnits;
       ledgerEntries.push({
         action: "RELEASE",
@@ -58,24 +68,30 @@ export function evaluateFixedUnitCap({ orderedItems = [], capRule = DEFAULT_CAP_
         portfolioItemId,
         ruleFamilyId: capRule.ruleFamilyId,
         ruleVersion: capRule.ruleVersion,
-        sequence: ledgerEntries.length + 1
+        sequence: ledgerEntries.length + 1,
       });
     }
 
     readModelItems.push({
       portfolioItemId,
-      independentFinancialValueMinorUnits: toMinor(item.independentFinancialValueMinorUnits),
+      independentFinancialValueMinorUnits: toMinor(
+        item.independentFinancialValueMinorUnits,
+      ),
       financialAwardedMinorUnits: consumedMinorUnits,
       scenarioMarginalValueMinorUnits: consumedMinorUnits,
       remainingBudgetAfterItemMinorUnits: remainingBudgetMinorUnits,
       ruleFamilyId: capRule.ruleFamilyId,
       unit: capRule.unit,
       isConsumedBySharedCap: consumedMinorUnits > 0,
-      isCapBlocked: item.status === "COMPLETED" && consumedMinorUnits < requestedMinorUnits
+      isCapBlocked:
+        item.status === "COMPLETED" && consumedMinorUnits < requestedMinorUnits,
     });
   }
 
-  const consumedTotal = readModelItems.reduce((sum, item) => sum + toMinor(item.scenarioMarginalValueMinorUnits), 0);
+  const consumedTotal = readModelItems.reduce(
+    (sum, item) => sum + toMinor(item.scenarioMarginalValueMinorUnits),
+    0,
+  );
   const remainingMarginalMinorUnits = Math.max(0, remainingBudgetMinorUnits);
   const reasonCodes = remainingBudgetMinorUnits <= 0 ? ["CAP_EXHAUSTED"] : [];
 
@@ -92,11 +108,14 @@ export function evaluateFixedUnitCap({ orderedItems = [], capRule = DEFAULT_CAP_
     readModelItems,
     sharedEffects: {
       capRule,
-      capUtilizationMinorUnits: Math.max(0, capMinorUnits - remainingBudgetMinorUnits)
+      capUtilizationMinorUnits: Math.max(
+        0,
+        capMinorUnits - remainingBudgetMinorUnits,
+      ),
     },
     ledgerEntries: canonicalLedger,
     ledgerSignature: ledgerSignature(canonicalLedger),
-    orderedPrefixReconciledMinorUnits: consumedTotal
+    orderedPrefixReconciledMinorUnits: consumedTotal,
   };
 }
 

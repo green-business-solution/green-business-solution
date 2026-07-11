@@ -3,10 +3,23 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
-const defaultSourcePath = path.join(repoRoot, "public/retrofit_opportunity_index.json");
-const defaultWorkRoot = path.join(repoRoot, "GPT Pro Outputs", "opportunity-award-audit");
-const defaultSchemaPath = path.join(defaultWorkRoot, "opportunity-award-audit-schema.json");
-const defaultPromptTemplatePath = path.join(defaultWorkRoot, "prompt-template.md");
+const defaultSourcePath = path.join(
+  repoRoot,
+  "public/retrofit_opportunity_index.json",
+);
+const defaultWorkRoot = path.join(
+  repoRoot,
+  "GPT Pro Outputs",
+  "opportunity-award-audit",
+);
+const defaultSchemaPath = path.join(
+  defaultWorkRoot,
+  "opportunity-award-audit-schema.json",
+);
+const defaultPromptTemplatePath = path.join(
+  defaultWorkRoot,
+  "prompt-template.md",
+);
 const defaultBatchSize = 25;
 const schemaVersion = "opportunity-award-audit-output.v1";
 
@@ -16,7 +29,10 @@ function main() {
   const template = fs.readFileSync(options.promptTemplatePath, "utf8");
   const opportunities = buildUniqueOpportunityRows(index);
 
-  const batchCount = Math.max(1, Math.ceil(opportunities.length / options.batchSize));
+  const batchCount = Math.max(
+    1,
+    Math.ceil(opportunities.length / options.batchSize),
+  );
   fs.mkdirSync(options.workRoot, { recursive: true });
 
   const manifest = {
@@ -24,13 +40,14 @@ function main() {
     generatedAt: new Date().toISOString(),
     sourcePath: path.relative(repoRoot, options.sourcePath),
     outputDir: path.relative(repoRoot, options.workRoot),
-    sourceRecordCount: index.totalOpportunityRecordCount || opportunities.length,
+    sourceRecordCount:
+      index.totalOpportunityRecordCount || opportunities.length,
     uniqueOpportunityCount: opportunities.length,
     batchSize: options.batchSize,
     batchCount,
     schemaFile: path.relative(repoRoot, options.schemaPath),
     promptTemplateFile: path.relative(repoRoot, options.promptTemplatePath),
-    batches: []
+    batches: [],
   };
 
   for (let i = 0; i < batchCount; i += 1) {
@@ -55,7 +72,7 @@ function main() {
       sourcePath: path.relative(repoRoot, options.sourcePath),
       generatedAt: new Date().toISOString(),
       opportunityCount: batchTargets.length,
-      opportunities: batchTargets
+      opportunities: batchTargets,
     };
 
     const prompt = buildPrompt({
@@ -68,7 +85,7 @@ function main() {
       outputSchemaPath: path.relative(repoRoot, options.schemaPath),
       records: batchTargets,
       inputStart: start + 1,
-      inputEnd: end
+      inputEnd: end,
     });
 
     const outputArtifact = {
@@ -78,7 +95,8 @@ function main() {
       inputRecordCount: batchTargets.length,
       generatedAt: new Date().toISOString(),
       reviews: [],
-      notes: "Awaiting GPT Pro review. Replace reviews array with audited records."
+      notes:
+        "Awaiting GPT Pro review. Replace reviews array with audited records.",
     };
 
     writeJson(inputPath, inputArtifact);
@@ -92,7 +110,7 @@ function main() {
       outputFile,
       opportunityCount: batchTargets.length,
       startOpportunity: start + 1,
-      endOpportunity: end
+      endOpportunity: end,
     });
   }
 
@@ -110,17 +128,24 @@ function buildUniqueOpportunityRows(index) {
       retrofitTypeId: retrofit.retrofitTypeId,
       displayName: retrofit.displayName,
       parentCategory: retrofit.parentCategory,
-      isPhysicalRetrofit: Boolean(retrofit.isPhysicalRetrofit)
+      isPhysicalRetrofit: Boolean(retrofit.isPhysicalRetrofit),
     };
 
     for (const opportunity of retrofit.opportunities || []) {
-      if (!opportunity?.opportunityId || typeof opportunity.opportunityId !== "string") {
+      if (
+        !opportunity?.opportunityId ||
+        typeof opportunity.opportunityId !== "string"
+      ) {
         continue;
       }
 
       const existing = byOpportunityId.get(opportunity.opportunityId);
       if (existing) {
-        if (!existing.relatedRetrofits.some((entry) => entry.retrofitTypeId === retrofitSummary.retrofitTypeId)) {
+        if (
+          !existing.relatedRetrofits.some(
+            (entry) => entry.retrofitTypeId === retrofitSummary.retrofitTypeId,
+          )
+        ) {
           existing.relatedRetrofits.push(retrofitSummary);
           existing.relatedRetrofitCount += 1;
         }
@@ -139,7 +164,7 @@ function buildUniqueOpportunityRows(index) {
         administrator: opportunity.administrator || null,
         availabilityStatus: opportunity.availabilityStatus || "unknown",
         relatedRetrofits: [retrofitSummary],
-        relatedRetrofitCount: 1
+        relatedRetrofitCount: 1,
       });
     }
   }
@@ -161,7 +186,7 @@ function buildPrompt({
   outputSchemaPath,
   records,
   inputStart,
-  inputEnd
+  inputEnd,
 }) {
   const jsonSection = JSON.stringify(records, null, 2);
   return template
@@ -183,7 +208,7 @@ function parseArgs(args) {
     workRoot: defaultWorkRoot,
     batchSize: defaultBatchSize,
     schemaPath: defaultSchemaPath,
-    promptTemplatePath: defaultPromptTemplatePath
+    promptTemplatePath: defaultPromptTemplatePath,
   };
 
   for (let i = 0; i < args.length; i += 1) {
@@ -208,7 +233,8 @@ function parseArgs(args) {
 
 function positiveInteger(value, label) {
   const parsed = Number.parseInt(value, 10);
-  if (!Number.isInteger(parsed) || parsed <= 0) throw new Error(`${label} must be a positive integer`);
+  if (!Number.isInteger(parsed) || parsed <= 0)
+    throw new Error(`${label} must be a positive integer`);
   return parsed;
 }
 
@@ -220,6 +246,9 @@ function writeJson(filePath, value) {
   fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`, "utf8");
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
   main();
 }

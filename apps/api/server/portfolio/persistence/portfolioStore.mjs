@@ -3,12 +3,12 @@ import {
   GetCommand,
   PutCommand,
   QueryCommand,
-  TransactWriteCommand
+  TransactWriteCommand,
 } from "@aws-sdk/lib-dynamodb";
 import {
   aggregateSnapshot as buildAggregateSnapshot,
   buildEmptyAggregate,
-  loadAggregateFromEvents
+  loadAggregateFromEvents,
 } from "../domain/aggregate.mjs";
 
 const portfolioStateKeys = {
@@ -17,7 +17,7 @@ const portfolioStateKeys = {
   snapshotKey: "SNAPSHOT#PRIMARY",
   readModelKey: "READ_MODEL#PRIMARY",
   outboxPrefix: "OUTBOX#",
-  idempotencyPrefix: "PORTFOLIO_IDEMPOTENCY"
+  idempotencyPrefix: "PORTFOLIO_IDEMPOTENCY",
 };
 
 export function rowScopeForOutbox(portfolioId) {
@@ -28,7 +28,12 @@ export function rowScopeForIdempotency(portfolioId) {
   return `${portfolioStateKeys.idempotencyPrefix}#${portfolioId}`;
 }
 
-export async function loadPortfolioById({ db, tableName, portfolioId, userId }) {
+export async function loadPortfolioById({
+  db,
+  tableName,
+  portfolioId,
+  userId,
+}) {
   const scope = portfolioStateKeys.scopeFor(portfolioId);
   const rows = await queryScopeItems(db, tableName, scope);
 
@@ -43,7 +48,7 @@ export async function loadPortfolioById({ db, tableName, portfolioId, userId }) 
         events,
         portfolioId,
         userId,
-        scenarioId: snapshot.scenarioId || "default"
+        scenarioId: snapshot.scenarioId || "default",
       })
     : buildEmptyAggregate({ portfolioId, userId, scenarioId: "default" });
 
@@ -51,7 +56,7 @@ export async function loadPortfolioById({ db, tableName, portfolioId, userId }) 
     aggregate,
     snapshot,
     readModel,
-    events
+    events,
   };
 }
 
@@ -63,7 +68,7 @@ export async function seedPortfolioRecord({
   seedItems,
   scenarioId,
   now,
-  calculationBinding = "calc-v1"
+  calculationBinding = "calc-v1",
 }) {
   const seedEvent = {
     schemaVersion: "portfolio-event-v1",
@@ -76,14 +81,19 @@ export async function seedPortfolioRecord({
     payload: {
       scenarioId,
       items: seedItems || [],
-      calculationBinding
+      calculationBinding,
     },
     occurredAt: now.toISOString(),
     userId,
-    runId: "run-0"
+    runId: "run-0",
   };
 
-  const aggregate = loadAggregateFromEvents({ events: [seedEvent], portfolioId, userId, scenarioId });
+  const aggregate = loadAggregateFromEvents({
+    events: [seedEvent],
+    portfolioId,
+    userId,
+    scenarioId,
+  });
 
   const snapshot = {
     stateScope: portfolioStateKeys.scopeFor(portfolioId),
@@ -97,10 +107,14 @@ export async function seedPortfolioRecord({
     calculationRunId: "run-0",
     calculationRunSequence: 0,
     eventCount: aggregate.aggregateVersion,
-    updatedAt: now.toISOString()
+    updatedAt: now.toISOString(),
   };
 
-  const readModel = buildAggregateSnapshot({ aggregate, scenarioId: aggregate.scenarioId, calculationRunId: snapshot.calculationRunId });
+  const readModel = buildAggregateSnapshot({
+    aggregate,
+    scenarioId: aggregate.scenarioId,
+    calculationRunId: snapshot.calculationRunId,
+  });
 
   await appendPortfolioUpdate({
     db,
@@ -111,7 +125,7 @@ export async function seedPortfolioRecord({
     snapshot,
     readModel,
     now,
-    eventCount: 0
+    eventCount: 0,
   });
 
   return { aggregate, snapshot, readModel };
@@ -128,7 +142,7 @@ export async function appendPortfolioUpdate({
   outboxRow,
   idempotencyReceipt,
   now = new Date(),
-  eventCount = 0
+  eventCount = 0,
 }) {
   const scope = portfolioStateKeys.scopeFor(portfolioId);
 
@@ -143,10 +157,11 @@ export async function appendPortfolioUpdate({
           ...event,
           stateScope: scope,
           stateKey: portfolioStateKeys.eventKey(eventCount + index + 1),
-          recordType: "EVENT"
+          recordType: "EVENT",
         },
-        ConditionExpression: "attribute_not_exists(stateScope) AND attribute_not_exists(stateKey)"
-      }
+        ConditionExpression:
+          "attribute_not_exists(stateScope) AND attribute_not_exists(stateKey)",
+      },
     });
   }
 
@@ -159,15 +174,16 @@ export async function appendPortfolioUpdate({
         stateKey: portfolioStateKeys.snapshotKey,
         recordType: "SNAPSHOT",
         aggregateVersion: snapshot.aggregateVersion,
-        updatedAt: now.toISOString()
+        updatedAt: now.toISOString(),
       },
-      ConditionExpression: expectedVersion === null
-        ? "attribute_not_exists(aggregateVersion)"
-        : "attribute_not_exists(aggregateVersion) OR aggregateVersion = :expectedVersion",
+      ConditionExpression:
+        expectedVersion === null
+          ? "attribute_not_exists(aggregateVersion)"
+          : "attribute_not_exists(aggregateVersion) OR aggregateVersion = :expectedVersion",
       ExpressionAttributeValues: {
-        ":expectedVersion": expectedVersion
-      }
-    }
+        ":expectedVersion": expectedVersion,
+      },
+    },
   });
 
   if (readModel) {
@@ -181,9 +197,9 @@ export async function appendPortfolioUpdate({
           data: readModel,
           calculationRunId: snapshot.calculationRunId,
           portfolioVersion: snapshot.aggregateVersion,
-          updatedAt: now.toISOString()
-        }
-      }
+          updatedAt: now.toISOString(),
+        },
+      },
     });
   }
 
@@ -196,10 +212,11 @@ export async function appendPortfolioUpdate({
           stateScope: rowScopeForOutbox(portfolioId),
           stateKey: `${portfolioStateKeys.outboxPrefix}${outboxRow.requestId}`,
           recordType: "OUTBOX",
-          updatedAt: now.toISOString()
+          updatedAt: now.toISOString(),
         },
-        ConditionExpression: "attribute_not_exists(stateScope) AND attribute_not_exists(stateKey)"
-      }
+        ConditionExpression:
+          "attribute_not_exists(stateScope) AND attribute_not_exists(stateKey)",
+      },
     });
   }
 
@@ -213,25 +230,31 @@ export async function appendPortfolioUpdate({
           payloadHash: idempotencyReceipt.payloadHash,
           commandId: idempotencyReceipt.commandId,
           result: idempotencyReceipt.result,
-          createdAt: now.toISOString()
+          createdAt: now.toISOString(),
         },
-        ConditionExpression: "attribute_not_exists(stateScope) AND attribute_not_exists(stateKey)"
-      }
+        ConditionExpression:
+          "attribute_not_exists(stateScope) AND attribute_not_exists(stateKey)",
+      },
     });
   }
 
   await db.send(new TransactWriteCommand({ TransactItems: transactItems }));
 }
 
-export async function loadIdempotencyReceipt({ db, tableName, portfolioId, idempotencyKey }) {
+export async function loadIdempotencyReceipt({
+  db,
+  tableName,
+  portfolioId,
+  idempotencyKey,
+}) {
   const result = await db.send(
     new GetCommand({
       TableName: tableName,
       Key: {
         stateScope: rowScopeForIdempotency(portfolioId),
-        stateKey: String(idempotencyKey)
-      }
-    })
+        stateKey: String(idempotencyKey),
+      },
+    }),
   );
   return result.Item || null;
 }
@@ -243,7 +266,7 @@ export async function storeIdempotencyReceipt({
   idempotencyKey,
   payloadHash,
   commandId,
-  result
+  result,
 }) {
   await db.send(
     new PutCommand({
@@ -254,22 +277,28 @@ export async function storeIdempotencyReceipt({
         payloadHash,
         commandId,
         result,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
       },
-      ConditionExpression: "attribute_not_exists(stateScope) AND attribute_not_exists(stateKey)"
-    })
+      ConditionExpression:
+        "attribute_not_exists(stateScope) AND attribute_not_exists(stateKey)",
+    }),
   );
 }
 
-export async function deleteOutboxRow({ db, tableName, portfolioId, requestId }) {
+export async function deleteOutboxRow({
+  db,
+  tableName,
+  portfolioId,
+  requestId,
+}) {
   await db.send(
     new DeleteCommand({
       TableName: tableName,
       Key: {
         stateScope: rowScopeForOutbox(portfolioId),
-        stateKey: `${portfolioStateKeys.outboxPrefix}${requestId}`
-      }
-    })
+        stateKey: `${portfolioStateKeys.outboxPrefix}${requestId}`,
+      },
+    }),
   );
 }
 
@@ -277,7 +306,7 @@ export function makeOutboxRow({ requestId, calculationRunId, scenarioId }) {
   return {
     requestId,
     calculationRunId,
-    scenarioId
+    scenarioId,
   };
 }
 
@@ -292,8 +321,8 @@ function queryScopeItems(db, tableName, scope) {
           KeyConditionExpression: "#stateScope = :stateScope",
           ExpressionAttributeNames: { "#stateScope": "stateScope" },
           ExpressionAttributeValues: { ":stateScope": scope },
-          ExclusiveStartKey: exclusiveStartKey
-        })
+          ExclusiveStartKey: exclusiveStartKey,
+        }),
       );
       items.push(...(response.Items || []));
       exclusiveStartKey = response.LastEvaluatedKey;

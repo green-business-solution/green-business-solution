@@ -21,17 +21,18 @@ const env = {
   GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE: "gbs-retrofit-recommendation-cache",
   GBS_APPLICATION_PROFILES_TABLE: "gbs-application-profiles",
   GBS_API_RUNTIME_STATE_TABLE: "gbs-api-runtime-state",
-  GBS_ADMIN_EMAILS: "neerkuchlous@gmail.com,pmrajvansh@gmail.com,rshen0210@gmail.com",
+  GBS_ADMIN_EMAILS:
+    "neerkuchlous@gmail.com,pmrajvansh@gmail.com,rshen0210@gmail.com",
   RETROFI_PORTFOLIO_WRITE_ENABLED: "1",
   RETROFI_ENABLE_FIRSTMATE_TASKS: "0",
-  RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "0"
+  RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "0",
 };
 
 function run(command, args, options = {}) {
   const child = spawn(command, args, {
     cwd: process.cwd(),
     env: options.env || env,
-    stdio: "inherit"
+    stdio: "inherit",
   });
   return child;
 }
@@ -52,7 +53,7 @@ seed.on("exit", (code) => {
     "-c",
     "blue,green",
     "npm run dev -w @gbs/api",
-    "npm run dev -w @gbs/web"
+    "npm run dev -w @gbs/web",
   ]);
   const terminate = () => {
     dev.kill("SIGTERM");

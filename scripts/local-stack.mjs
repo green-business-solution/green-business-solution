@@ -7,15 +7,23 @@ import {
   CreateTableCommand,
   DescribeTableCommand,
   ListTablesCommand,
-  waitUntilTableExists
+  waitUntilTableExists,
 } from "@aws-sdk/client-dynamodb";
-import { PutObjectCommand, S3Client, HeadBucketCommand, CreateBucketCommand } from "@aws-sdk/client-s3";
+import {
+  PutObjectCommand,
+  S3Client,
+  HeadBucketCommand,
+  CreateBucketCommand,
+} from "@aws-sdk/client-s3";
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 import crypto from "node:crypto";
 import { buildFixtureRetrofitRecommendationsPayload } from "../apps/api/server/fixtureRetrofitRecommendations.mjs";
 import { writePersistentRetrofitRecommendations } from "../apps/api/server/retrofitRecommendationsCache.mjs";
 
-const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const repoRoot = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+);
 const composeFile = path.join(repoRoot, "docker-compose.local.yml");
 const localDataRoot = path.join(repoRoot, ".local");
 const operationTimeoutMs = 15000;
@@ -40,32 +48,99 @@ const localModeEnv = {
   GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE: "gbs-retrofit-recommendation-cache",
   GBS_APPLICATION_PROFILES_TABLE: "gbs-application-profiles",
   GBS_API_RUNTIME_STATE_TABLE: "gbs-api-runtime-state",
-  GBS_ADMIN_EMAILS: "neerkuchlous@gmail.com,pmrajvansh@gmail.com,rshen0210@gmail.com",
+  GBS_ADMIN_EMAILS:
+    "neerkuchlous@gmail.com,pmrajvansh@gmail.com,rshen0210@gmail.com",
   RETROFI_PORTFOLIO_WRITE_ENABLED: "1",
   GOOGLE_CLIENT_ID: "local-google-client",
   RETROFI_ENABLE_FIRSTMATE_TASKS: "0",
-  RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "0"
+  RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "0",
 };
 
 const tables = [
-  { TableName: localModeEnv.GBS_USERS_TABLE, KeySchema: [{ AttributeName: "userId", KeyType: "HASH" }], AttributeDefinitions: [{ AttributeName: "userId", AttributeType: "S" }], BillingMode: "PAY_PER_REQUEST" },
-  { TableName: localModeEnv.GBS_INTAKE_TABLE, KeySchema: [{ AttributeName: "userId", KeyType: "HASH" }], AttributeDefinitions: [{ AttributeName: "userId", AttributeType: "S" }], BillingMode: "PAY_PER_REQUEST" },
-  { TableName: localModeEnv.GBS_OPPORTUNITIES_TABLE, KeySchema: [{ AttributeName: "opportunityId", KeyType: "HASH" }], AttributeDefinitions: [{ AttributeName: "opportunityId", AttributeType: "S" }], BillingMode: "PAY_PER_REQUEST" },
-  { TableName: localModeEnv.GBS_DASHBOARD_PERFORMANCE_TABLE, KeySchema: [{ AttributeName: "stateScope", KeyType: "HASH" }, { AttributeName: "stateKey", KeyType: "RANGE" }], AttributeDefinitions: [{ AttributeName: "stateScope", AttributeType: "S" }, { AttributeName: "stateKey", AttributeType: "S" }], BillingMode: "PAY_PER_REQUEST" },
-  { TableName: localModeEnv.GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE, KeySchema: [{ AttributeName: "stateScope", KeyType: "HASH" }, { AttributeName: "stateKey", KeyType: "RANGE" }], AttributeDefinitions: [{ AttributeName: "stateScope", AttributeType: "S" }, { AttributeName: "stateKey", AttributeType: "S" }], BillingMode: "PAY_PER_REQUEST" },
-  { TableName: localModeEnv.GBS_APPLICATION_PROFILES_TABLE, KeySchema: [{ AttributeName: "stateScope", KeyType: "HASH" }, { AttributeName: "stateKey", KeyType: "RANGE" }], AttributeDefinitions: [{ AttributeName: "stateScope", AttributeType: "S" }, { AttributeName: "stateKey", AttributeType: "S" }], BillingMode: "PAY_PER_REQUEST" },
-  { TableName: localModeEnv.GBS_API_RUNTIME_STATE_TABLE, KeySchema: [{ AttributeName: "stateScope", KeyType: "HASH" }, { AttributeName: "stateKey", KeyType: "RANGE" }], AttributeDefinitions: [{ AttributeName: "stateScope", AttributeType: "S" }, { AttributeName: "stateKey", AttributeType: "S" }], BillingMode: "PAY_PER_REQUEST" }
+  {
+    TableName: localModeEnv.GBS_USERS_TABLE,
+    KeySchema: [{ AttributeName: "userId", KeyType: "HASH" }],
+    AttributeDefinitions: [{ AttributeName: "userId", AttributeType: "S" }],
+    BillingMode: "PAY_PER_REQUEST",
+  },
+  {
+    TableName: localModeEnv.GBS_INTAKE_TABLE,
+    KeySchema: [{ AttributeName: "userId", KeyType: "HASH" }],
+    AttributeDefinitions: [{ AttributeName: "userId", AttributeType: "S" }],
+    BillingMode: "PAY_PER_REQUEST",
+  },
+  {
+    TableName: localModeEnv.GBS_OPPORTUNITIES_TABLE,
+    KeySchema: [{ AttributeName: "opportunityId", KeyType: "HASH" }],
+    AttributeDefinitions: [
+      { AttributeName: "opportunityId", AttributeType: "S" },
+    ],
+    BillingMode: "PAY_PER_REQUEST",
+  },
+  {
+    TableName: localModeEnv.GBS_DASHBOARD_PERFORMANCE_TABLE,
+    KeySchema: [
+      { AttributeName: "stateScope", KeyType: "HASH" },
+      { AttributeName: "stateKey", KeyType: "RANGE" },
+    ],
+    AttributeDefinitions: [
+      { AttributeName: "stateScope", AttributeType: "S" },
+      { AttributeName: "stateKey", AttributeType: "S" },
+    ],
+    BillingMode: "PAY_PER_REQUEST",
+  },
+  {
+    TableName: localModeEnv.GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE,
+    KeySchema: [
+      { AttributeName: "stateScope", KeyType: "HASH" },
+      { AttributeName: "stateKey", KeyType: "RANGE" },
+    ],
+    AttributeDefinitions: [
+      { AttributeName: "stateScope", AttributeType: "S" },
+      { AttributeName: "stateKey", AttributeType: "S" },
+    ],
+    BillingMode: "PAY_PER_REQUEST",
+  },
+  {
+    TableName: localModeEnv.GBS_APPLICATION_PROFILES_TABLE,
+    KeySchema: [
+      { AttributeName: "stateScope", KeyType: "HASH" },
+      { AttributeName: "stateKey", KeyType: "RANGE" },
+    ],
+    AttributeDefinitions: [
+      { AttributeName: "stateScope", AttributeType: "S" },
+      { AttributeName: "stateKey", AttributeType: "S" },
+    ],
+    BillingMode: "PAY_PER_REQUEST",
+  },
+  {
+    TableName: localModeEnv.GBS_API_RUNTIME_STATE_TABLE,
+    KeySchema: [
+      { AttributeName: "stateScope", KeyType: "HASH" },
+      { AttributeName: "stateKey", KeyType: "RANGE" },
+    ],
+    AttributeDefinitions: [
+      { AttributeName: "stateScope", AttributeType: "S" },
+      { AttributeName: "stateKey", AttributeType: "S" },
+    ],
+    BillingMode: "PAY_PER_REQUEST",
+  },
 ];
 
 function exec(command, args, options = {}) {
   return new Promise((resolve, reject) => {
-    const child = execFile(command, args, { cwd: repoRoot, env: { ...process.env, ...options.env } }, (error, stdout, stderr) => {
-      if (error) {
-        reject(Object.assign(error, { stdout, stderr }));
-        return;
-      }
-      resolve({ stdout, stderr });
-    });
+    const child = execFile(
+      command,
+      args,
+      { cwd: repoRoot, env: { ...process.env, ...options.env } },
+      (error, stdout, stderr) => {
+        if (error) {
+          reject(Object.assign(error, { stdout, stderr }));
+          return;
+        }
+        resolve({ stdout, stderr });
+      },
+    );
     child.stdin?.end();
   });
 }
@@ -92,14 +167,18 @@ async function waitFor(fn, description, timeoutMs = 120000) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
-  throw new Error(`${description} did not become ready within ${timeoutMs}ms${lastError ? `: ${lastError.message}` : ""}`);
+  throw new Error(
+    `${description} did not become ready within ${timeoutMs}ms${lastError ? `: ${lastError.message}` : ""}`,
+  );
 }
 
 async function ensureDocker() {
   try {
     await exec("docker", ["version"]);
   } catch {
-    throw new Error("Docker is required for the local stack. Install and start Docker, then rerun `npm run dev:local`.");
+    throw new Error(
+      "Docker is required for the local stack. Install and start Docker, then rerun `npm run dev:local`.",
+    );
   }
 }
 
@@ -113,8 +192,8 @@ async function localClients() {
     endpoint: localModeEnv.GBS_DYNAMODB_ENDPOINT,
     credentials: {
       accessKeyId: localModeEnv.AWS_ACCESS_KEY_ID,
-      secretAccessKey: localModeEnv.AWS_SECRET_ACCESS_KEY
-    }
+      secretAccessKey: localModeEnv.AWS_SECRET_ACCESS_KEY,
+    },
   });
   const s3 = new S3Client({
     region: localModeEnv.GBS_AWS_REGION,
@@ -122,8 +201,8 @@ async function localClients() {
     forcePathStyle: true,
     credentials: {
       accessKeyId: localModeEnv.AWS_ACCESS_KEY_ID,
-      secretAccessKey: localModeEnv.AWS_SECRET_ACCESS_KEY
-    }
+      secretAccessKey: localModeEnv.AWS_SECRET_ACCESS_KEY,
+    },
   });
   return { ddb, db: DynamoDBDocumentClient.from(ddb), s3 };
 }
@@ -137,21 +216,40 @@ async function closeClients(clients) {
 async function ensureBucket(s3, bucket) {
   console.log(`[local-stack] ensuring bucket ${bucket}`);
   try {
-    await sendWithTimeout(s3, new HeadBucketCommand({ Bucket: bucket }), `HeadBucket ${bucket}`);
+    await sendWithTimeout(
+      s3,
+      new HeadBucketCommand({ Bucket: bucket }),
+      `HeadBucket ${bucket}`,
+    );
   } catch {
-    await sendWithTimeout(s3, new CreateBucketCommand({ Bucket: bucket }), `CreateBucket ${bucket}`);
+    await sendWithTimeout(
+      s3,
+      new CreateBucketCommand({ Bucket: bucket }),
+      `CreateBucket ${bucket}`,
+    );
   }
 }
 
 async function ensureTable(ddb, table) {
   console.log(`[local-stack] checking table ${table.TableName}`);
   try {
-    await sendWithTimeout(ddb, new DescribeTableCommand({ TableName: table.TableName }), `DescribeTable ${table.TableName}`);
+    await sendWithTimeout(
+      ddb,
+      new DescribeTableCommand({ TableName: table.TableName }),
+      `DescribeTable ${table.TableName}`,
+    );
   } catch {
     console.log(`[local-stack] creating table ${table.TableName}`);
-    await sendWithTimeout(ddb, new CreateTableCommand(table), `CreateTable ${table.TableName}`);
+    await sendWithTimeout(
+      ddb,
+      new CreateTableCommand(table),
+      `CreateTable ${table.TableName}`,
+    );
     console.log(`[local-stack] waiting for table ${table.TableName}`);
-    await waitUntilTableExists({ client: ddb, maxWaitTime: 60 }, { TableName: table.TableName });
+    await waitUntilTableExists(
+      { client: ddb, maxWaitTime: 60 },
+      { TableName: table.TableName },
+    );
   }
 }
 
@@ -159,13 +257,19 @@ async function waitForInfra() {
   const clients = await localClients();
   try {
     await waitFor(async () => {
-      await sendWithTimeout(clients.ddb, new ListTablesCommand({ Limit: 1 }), "DynamoDB Local readiness");
+      await sendWithTimeout(
+        clients.ddb,
+        new ListTablesCommand({ Limit: 1 }),
+        "DynamoDB Local readiness",
+      );
       return true;
     }, "DynamoDB Local");
     await waitFor(async () => {
-      await sendWithTimeout(clients.s3, new HeadBucketCommand({ Bucket: "gbs-local-runtime-cache" }), "MinIO readiness").catch(
-        () => {}
-      );
+      await sendWithTimeout(
+        clients.s3,
+        new HeadBucketCommand({ Bucket: "gbs-local-runtime-cache" }),
+        "MinIO readiness",
+      ).catch(() => {});
       return true;
     }, "MinIO");
   } finally {
@@ -174,7 +278,10 @@ async function waitForInfra() {
 }
 
 function hashPublicUploadToken(value) {
-  return crypto.createHash("sha256").update(String(value || "").trim()).digest("hex");
+  return crypto
+    .createHash("sha256")
+    .update(String(value || "").trim())
+    .digest("hex");
 }
 
 async function seedUsersAndIntakes(db, s3) {
@@ -184,9 +291,11 @@ async function seedUsersAndIntakes(db, s3) {
   const passwordFields = {
     passwordAlgorithm: "scrypt",
     passwordHashKeyLength: 64,
-    passwordHash: crypto.scryptSync(password, passwordSalt, 64).toString("base64url"),
+    passwordHash: crypto
+      .scryptSync(password, passwordSalt, 64)
+      .toString("base64url"),
     passwordSalt,
-    passwordLinked: true
+    passwordLinked: true,
   };
 
   const users = [
@@ -201,12 +310,15 @@ async function seedUsersAndIntakes(db, s3) {
       googleLinked: false,
       isFakeUser: false,
       passwordUsername: "neerkuchlous@gmail.com",
-      passwordSessionHash: crypto.createHash("sha256").update("local-admin-session").digest("base64url"),
+      passwordSessionHash: crypto
+        .createHash("sha256")
+        .update("local-admin-session")
+        .digest("base64url"),
       passwordSessionCreatedAt: now,
       passwordSessionExpiresAt: "2027-01-01T00:00:00.000Z",
       createdAt: now,
       updatedAt: now,
-      ...passwordFields
+      ...passwordFields,
     },
     {
       userId: "account_client_local",
@@ -219,12 +331,15 @@ async function seedUsersAndIntakes(db, s3) {
       googleLinked: false,
       isFakeUser: false,
       passwordUsername: "client@example.com",
-      passwordSessionHash: crypto.createHash("sha256").update("local-client-session").digest("base64url"),
+      passwordSessionHash: crypto
+        .createHash("sha256")
+        .update("local-client-session")
+        .digest("base64url"),
       passwordSessionCreatedAt: now,
       passwordSessionExpiresAt: "2027-01-01T00:00:00.000Z",
       createdAt: now,
       updatedAt: now,
-      ...passwordFields
+      ...passwordFields,
     },
     {
       userId: "sample_california-endowment-hq",
@@ -238,17 +353,27 @@ async function seedUsersAndIntakes(db, s3) {
       isFakeUser: true,
       sampleUserId: "california-endowment-hq",
       passwordUsername: "california-endowment-hq@example.com",
-      passwordSessionHash: crypto.createHash("sha256").update("local-sample-session").digest("base64url"),
+      passwordSessionHash: crypto
+        .createHash("sha256")
+        .update("local-sample-session")
+        .digest("base64url"),
       passwordSessionCreatedAt: now,
       passwordSessionExpiresAt: "2027-01-01T00:00:00.000Z",
       createdAt: now,
       updatedAt: now,
-      ...passwordFields
-    }
+      ...passwordFields,
+    },
   ];
 
-  const sample = JSON.parse(await fs.readFile(path.join(repoRoot, "data", "sample_user_profiles.json"), "utf8"));
-  const california = sample.find((item) => item.sampleUserId === "california-endowment-hq");
+  const sample = JSON.parse(
+    await fs.readFile(
+      path.join(repoRoot, "data", "sample_user_profiles.json"),
+      "utf8",
+    ),
+  );
+  const california = sample.find(
+    (item) => item.sampleUserId === "california-endowment-hq",
+  );
   const clientIntake = {
     userId: "account_client_local",
     submissionId: "intake_account_client_local",
@@ -258,7 +383,7 @@ async function seedUsersAndIntakes(db, s3) {
       organizationType: "business_commercial",
       organizationSize: "1-10 employees",
       industry: "Office",
-      headquarters: "Los Angeles, CA"
+      headquarters: "Los Angeles, CA",
     },
     site: {
       address: "100 Main Street, Los Angeles, CA 90012",
@@ -266,14 +391,20 @@ async function seedUsersAndIntakes(db, s3) {
       ownershipStatus: "Own",
       buildingType: "Office / Administrative",
       squareFootage: "25000",
-      derivedFieldsPlanned: ["State", "County", "City", "ZIP", "Utility territory"],
-      derivedFieldsStatus: "partially_resolved"
+      derivedFieldsPlanned: [
+        "State",
+        "County",
+        "City",
+        "ZIP",
+        "Utility territory",
+      ],
+      derivedFieldsStatus: "partially_resolved",
     },
     sustainability: {
       goals: "Lower energy costs",
       currentChallenges: "Unknown",
       interestedImprovements: ["lighting"],
-      timeline: "0-6 months"
+      timeline: "0-6 months",
     },
     uploadedUtilityFiles: [],
     utilityExtractedValues: [],
@@ -284,22 +415,30 @@ async function seedUsersAndIntakes(db, s3) {
       availableFieldIds: [],
       monthlySummaries: [],
       utilitySummaries: [],
-      lastUpdatedAt: now
+      lastUpdatedAt: now,
     },
-    energyDataUploadSession: { tokenHash: hashPublicUploadToken("local-upload-token"), issuedAt: now, expiresAt: "2027-01-01T00:00:00.000Z" },
+    energyDataUploadSession: {
+      tokenHash: hashPublicUploadToken("local-upload-token"),
+      issuedAt: now,
+      expiresAt: "2027-01-01T00:00:00.000Z",
+    },
     createdAt: now,
-    updatedAt: now
+    updatedAt: now,
   };
   const sampleIntake = {
     userId: "sample_california-endowment-hq",
     submissionId: "intake_sample_california-endowment-hq",
-    contact: { fullName: california.fullName, email: california.email, phone: california.phone },
+    contact: {
+      fullName: california.fullName,
+      email: california.email,
+      phone: california.phone,
+    },
     business: {
       companyName: california.companyName,
       organizationType: "nonprofit",
       organizationSize: california.organizationSize,
       industry: california.primaryActivityText,
-      headquarters: california.siteAddress
+      headquarters: california.siteAddress,
     },
     site: {
       address: california.siteAddress,
@@ -308,44 +447,82 @@ async function seedUsersAndIntakes(db, s3) {
       ownershipStatus: "Own",
       buildingType: california.buildingType,
       squareFootage: california.squareFootage,
-      derivedFieldsPlanned: ["State", "County", "City", "ZIP", "Utility territory"],
-      derivedFieldsStatus: "partially_resolved"
+      derivedFieldsPlanned: [
+        "State",
+        "County",
+        "City",
+        "ZIP",
+        "Utility territory",
+      ],
+      derivedFieldsStatus: "partially_resolved",
     },
     sustainability: {
       goals: "Test preview parity",
       currentChallenges: "Synthetic",
       interestedImprovements: ["lighting", "hvac", "controls"],
-      timeline: "0-6 months"
+      timeline: "0-6 months",
     },
     uploadedUtilityFiles: california.uploadedUtilityFiles || [],
     utilityExtractedValues: california.utilityExtractedValues || [],
     siteEnergyProfile: california.siteEnergyProfile,
-    energyDataUploadSession: { tokenHash: hashPublicUploadToken("local-upload-token"), issuedAt: now, expiresAt: "2027-01-01T00:00:00.000Z" },
+    energyDataUploadSession: {
+      tokenHash: hashPublicUploadToken("local-upload-token"),
+      issuedAt: now,
+      expiresAt: "2027-01-01T00:00:00.000Z",
+    },
     createdAt: now,
-    updatedAt: now
+    updatedAt: now,
   };
 
   for (const user of users) {
-    await db.send(new PutCommand({ TableName: localModeEnv.GBS_USERS_TABLE, Item: user }));
+    await db.send(
+      new PutCommand({ TableName: localModeEnv.GBS_USERS_TABLE, Item: user }),
+    );
   }
-  await db.send(new PutCommand({ TableName: localModeEnv.GBS_INTAKE_TABLE, Item: clientIntake }));
-  await db.send(new PutCommand({ TableName: localModeEnv.GBS_INTAKE_TABLE, Item: sampleIntake }));
+  await db.send(
+    new PutCommand({
+      TableName: localModeEnv.GBS_INTAKE_TABLE,
+      Item: clientIntake,
+    }),
+  );
+  await db.send(
+    new PutCommand({
+      TableName: localModeEnv.GBS_INTAKE_TABLE,
+      Item: sampleIntake,
+    }),
+  );
   await ensureBucket(s3, localModeEnv.GBS_ENERGY_DATA_BUCKET);
   await ensureBucket(s3, localModeEnv.GBS_RUNTIME_CACHE_BUCKET);
   await ensureBucket(s3, localModeEnv.GBS_DEV_WORK_BUCKET);
-  await s3.send(new PutObjectCommand({
-    Bucket: localModeEnv.GBS_ENERGY_DATA_BUCKET,
-    Key: "seed/example-utility.xml",
-    Body: "<utility>local-seed</utility>",
-    ContentType: "application/xml"
-  }));
+  await s3.send(
+    new PutObjectCommand({
+      Bucket: localModeEnv.GBS_ENERGY_DATA_BUCKET,
+      Key: "seed/example-utility.xml",
+      Body: "<utility>local-seed</utility>",
+      ContentType: "application/xml",
+    }),
+  );
 }
 
 async function seedRetrofitRecommendationCache(db, s3) {
-  const sampleUsers = JSON.parse(await fs.readFile(path.join(repoRoot, "data", "sample_user_profiles.json"), "utf8"));
-  const testCases = JSON.parse(await fs.readFile(path.join(repoRoot, "public", "sample_matching_test_cases.json"), "utf8"));
-  const sampleUser = sampleUsers.find((item) => item.sampleUserId === "california-endowment-hq");
-  const testCase = (testCases.testCases || []).find((item) => item.sampleUserId === "california-endowment-hq");
+  const sampleUsers = JSON.parse(
+    await fs.readFile(
+      path.join(repoRoot, "data", "sample_user_profiles.json"),
+      "utf8",
+    ),
+  );
+  const testCases = JSON.parse(
+    await fs.readFile(
+      path.join(repoRoot, "public", "sample_matching_test_cases.json"),
+      "utf8",
+    ),
+  );
+  const sampleUser = sampleUsers.find(
+    (item) => item.sampleUserId === "california-endowment-hq",
+  );
+  const testCase = (testCases.testCases || []).find(
+    (item) => item.sampleUserId === "california-endowment-hq",
+  );
   if (!sampleUser || !testCase) {
     return;
   }
@@ -357,14 +534,14 @@ async function seedRetrofitRecommendationCache(db, s3) {
     contact: {
       fullName: sampleUser.fullName,
       email: sampleUser.email,
-      phone: sampleUser.phone
+      phone: sampleUser.phone,
     },
     business: {
       companyName: sampleUser.companyName,
       organizationType: "nonprofit",
       organizationSize: sampleUser.organizationSize,
       industry: sampleUser.primaryActivityText,
-      headquarters: sampleUser.siteAddress
+      headquarters: sampleUser.siteAddress,
     },
     site: {
       address: sampleUser.siteAddress,
@@ -373,21 +550,31 @@ async function seedRetrofitRecommendationCache(db, s3) {
       ownershipStatus: "Own",
       buildingType: sampleUser.buildingType,
       squareFootage: sampleUser.squareFootage,
-      derivedFieldsPlanned: ["State", "County", "City", "ZIP", "Utility territory"],
-      derivedFieldsStatus: "partially_resolved"
+      derivedFieldsPlanned: [
+        "State",
+        "County",
+        "City",
+        "ZIP",
+        "Utility territory",
+      ],
+      derivedFieldsStatus: "partially_resolved",
     },
     sustainability: {
       goals: "Test preview parity",
       currentChallenges: "Synthetic",
       interestedImprovements: ["lighting", "hvac", "controls"],
-      timeline: "0-6 months"
+      timeline: "0-6 months",
     },
     uploadedUtilityFiles: sampleUser.uploadedUtilityFiles || [],
     utilityExtractedValues: sampleUser.utilityExtractedValues || [],
     siteEnergyProfile: sampleUser.siteEnergyProfile,
-    energyDataUploadSession: { tokenHash: hashPublicUploadToken("local-upload-token"), issuedAt: now.toISOString(), expiresAt: "2027-01-01T00:00:00.000Z" },
+    energyDataUploadSession: {
+      tokenHash: hashPublicUploadToken("local-upload-token"),
+      issuedAt: now.toISOString(),
+      expiresAt: "2027-01-01T00:00:00.000Z",
+    },
     createdAt: now.toISOString(),
-    updatedAt: now.toISOString()
+    updatedAt: now.toISOString(),
   };
   const user = {
     userId: "sample_california-endowment-hq",
@@ -402,9 +589,15 @@ async function seedRetrofitRecommendationCache(db, s3) {
     sampleUserId: "california-endowment-hq",
     passwordUsername: sampleUser.email,
     createdAt: now.toISOString(),
-    updatedAt: now.toISOString()
+    updatedAt: now.toISOString(),
   };
-  const payload = buildFixtureRetrofitRecommendationsPayload({ formQuestionCatalog: null, intake, now, testCase, user });
+  const payload = buildFixtureRetrofitRecommendationsPayload({
+    formQuestionCatalog: null,
+    intake,
+    now,
+    testCase,
+    user,
+  });
   const previousLocalStackFlag = process.env.GBS_LOCAL_STACK;
   process.env.GBS_LOCAL_STACK = "1";
   try {
@@ -415,7 +608,7 @@ async function seedRetrofitRecommendationCache(db, s3) {
       payload,
       s3,
       table: localModeEnv.GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE,
-      user
+      user,
     });
   } finally {
     if (previousLocalStackFlag === undefined) {
@@ -424,37 +617,47 @@ async function seedRetrofitRecommendationCache(db, s3) {
       process.env.GBS_LOCAL_STACK = previousLocalStackFlag;
     }
   }
-  console.log("[local-stack] seeded fixture retrofit cache for california-endowment-hq");
+  console.log(
+    "[local-stack] seeded fixture retrofit cache for california-endowment-hq",
+  );
 }
 
 function normalizeOpportunitySeed(opportunity) {
   const now = "2026-07-10T00:00:00.000Z";
   return {
     ...opportunity,
-    sourceKey: opportunity.sourceKey || opportunity.sourceName || "SOURCE_DSIRE",
+    sourceKey:
+      opportunity.sourceKey || opportunity.sourceName || "SOURCE_DSIRE",
     sourceName: opportunity.sourceName || "DSIRE",
     status: opportunity.status || "active",
     reviewStatus: opportunity.reviewStatus || "approved",
     lifecycleStatus: opportunity.lifecycleStatus || "active",
     canonicalTitle: opportunity.canonicalTitle || opportunity.opportunityName,
-    normalizedTitle: opportunity.normalizedTitle || String(opportunity.opportunityName || "").toLowerCase(),
+    normalizedTitle:
+      opportunity.normalizedTitle ||
+      String(opportunity.opportunityName || "").toLowerCase(),
     summary: opportunity.summary || opportunity.opportunityName,
     category: opportunity.category || "Commercial",
     stateName: opportunity.stateName || "California",
     sourceCreatedAt: opportunity.sourceCreatedAt || now,
-    lastUpdated: opportunity.lastUpdated || now
+    lastUpdated: opportunity.lastUpdated || now,
   };
 }
 
 async function seedOpportunities(db) {
-  const opportunities = JSON.parse(await fs.readFile(path.join(repoRoot, "public", "retrofit_opportunity_index.json"), "utf8"));
+  const opportunities = JSON.parse(
+    await fs.readFile(
+      path.join(repoRoot, "public", "retrofit_opportunity_index.json"),
+      "utf8",
+    ),
+  );
   const selectedOpportunityIds = [
     "SOURCE_DSIRE:dsire_program_id:5738",
     "SOURCE_DSIRE:dsire_program_id:3831",
     "SOURCE_DSIRE:dsire_program_id:5170",
     "SOURCE_DSIRE:dsire_program_id:4342",
     "SOURCE_DSIRE:dsire_program_id:3659",
-    "SOURCE_DSIRE:dsire_program_id:4835"
+    "SOURCE_DSIRE:dsire_program_id:4835",
   ];
   const parentRetrofitsByOpportunityId = new Map();
   for (const retrofit of opportunities.retrofits) {
@@ -463,12 +666,13 @@ async function seedOpportunities(db) {
         continue;
       }
 
-      const existing = parentRetrofitsByOpportunityId.get(opportunity.opportunityId) || [];
+      const existing =
+        parentRetrofitsByOpportunityId.get(opportunity.opportunityId) || [];
       existing.push({
         retrofitTypeId: retrofit.retrofitTypeId,
         displayName: retrofit.displayName,
         parentCategory: retrofit.parentCategory,
-        isPhysicalRetrofit: retrofit.isPhysicalRetrofit
+        isPhysicalRetrofit: retrofit.isPhysicalRetrofit,
       });
       parentRetrofitsByOpportunityId.set(opportunity.opportunityId, existing);
     }
@@ -476,8 +680,11 @@ async function seedOpportunities(db) {
 
   const selectedRecords = [];
   for (const opportunityId of selectedOpportunityIds) {
-    const parentRetrofits = parentRetrofitsByOpportunityId.get(opportunityId) || [];
-    const baseOpportunity = opportunities.retrofits.flatMap((retrofit) => retrofit.opportunities || []).find((item) => item.opportunityId === opportunityId);
+    const parentRetrofits =
+      parentRetrofitsByOpportunityId.get(opportunityId) || [];
+    const baseOpportunity = opportunities.retrofits
+      .flatMap((retrofit) => retrofit.opportunities || [])
+      .find((item) => item.opportunityId === opportunityId);
     if (!baseOpportunity) {
       continue;
     }
@@ -486,12 +693,22 @@ async function seedOpportunities(db) {
     selectedRecords.push(
       normalizeOpportunitySeed({
         ...baseOpportunity,
-        retrofitTypeId: primaryRetrofit.retrofitTypeId || baseOpportunity.retrofitTypeId || null,
-        displayName: primaryRetrofit.displayName || baseOpportunity.displayName || null,
-        parentCategory: primaryRetrofit.parentCategory || baseOpportunity.parentCategory || null,
-        isPhysicalRetrofit: primaryRetrofit.isPhysicalRetrofit ?? baseOpportunity.isPhysicalRetrofit ?? null,
-        retrofitTypes: parentRetrofits
-      })
+        retrofitTypeId:
+          primaryRetrofit.retrofitTypeId ||
+          baseOpportunity.retrofitTypeId ||
+          null,
+        displayName:
+          primaryRetrofit.displayName || baseOpportunity.displayName || null,
+        parentCategory:
+          primaryRetrofit.parentCategory ||
+          baseOpportunity.parentCategory ||
+          null,
+        isPhysicalRetrofit:
+          primaryRetrofit.isPhysicalRetrofit ??
+          baseOpportunity.isPhysicalRetrofit ??
+          null,
+        retrofitTypes: parentRetrofits,
+      }),
     );
   }
 
@@ -500,8 +717,8 @@ async function seedOpportunities(db) {
     await db.send(
       new PutCommand({
         TableName: localModeEnv.GBS_OPPORTUNITIES_TABLE,
-        Item: record
-      })
+        Item: record,
+      }),
     );
   }
 }

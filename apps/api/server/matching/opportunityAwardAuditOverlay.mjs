@@ -2,19 +2,38 @@ import fs from "node:fs";
 import path from "node:path";
 import { normalizeAwardLikelihood } from "./awardLikelihood.mjs";
 
-export const OPPORTUNITY_AWARD_AUDIT_OVERLAY_SCHEMA_VERSION = "opportunity_award_audit_overlay.v1";
+export const OPPORTUNITY_AWARD_AUDIT_OVERLAY_SCHEMA_VERSION =
+  "opportunity_award_audit_overlay.v1";
 
 let cachedDefaultOverlay = null;
 
 function resolveDefaultOverlayPath() {
   const candidates = [
-    path.resolve(import.meta.dirname, "..", "..", "data", "opportunity_award_audit_overlay.v1.json"),
-    path.resolve(import.meta.dirname, "..", "..", "..", "..", "data", "opportunity_award_audit_overlay.v1.json")
+    path.resolve(
+      import.meta.dirname,
+      "..",
+      "..",
+      "data",
+      "opportunity_award_audit_overlay.v1.json",
+    ),
+    path.resolve(
+      import.meta.dirname,
+      "..",
+      "..",
+      "..",
+      "..",
+      "data",
+      "opportunity_award_audit_overlay.v1.json",
+    ),
   ];
-  return candidates.find((candidate) => fs.existsSync(candidate)) || candidates[0];
+  return (
+    candidates.find((candidate) => fs.existsSync(candidate)) || candidates[0]
+  );
 }
 
-export function loadOpportunityAwardAuditOverlay(filePath = resolveDefaultOverlayPath()) {
+export function loadOpportunityAwardAuditOverlay(
+  filePath = resolveDefaultOverlayPath(),
+) {
   if (!filePath) {
     return null;
   }
@@ -26,7 +45,10 @@ export function loadOpportunityAwardAuditOverlay(filePath = resolveDefaultOverla
   }
 
   const overlay = JSON.parse(fs.readFileSync(filePath, "utf8"));
-  if (overlay?.schemaVersion !== OPPORTUNITY_AWARD_AUDIT_OVERLAY_SCHEMA_VERSION || !overlay?.records) {
+  if (
+    overlay?.schemaVersion !== OPPORTUNITY_AWARD_AUDIT_OVERLAY_SCHEMA_VERSION ||
+    !overlay?.records
+  ) {
     throw new Error(`Invalid opportunity award-audit overlay at ${filePath}`);
   }
   if (filePath === resolveDefaultOverlayPath()) {
@@ -43,25 +65,38 @@ export function applyOpportunityAwardAuditRecord(opportunity, overlayRecord) {
   return {
     ...opportunity,
     requiresProgramApproval:
-      typeof overlayRecord.requiresProgramApproval === "boolean" ? overlayRecord.requiresProgramApproval : null,
-    approvalRequirements: Array.isArray(overlayRecord.approvalRequirements) ? overlayRecord.approvalRequirements : [],
+      typeof overlayRecord.requiresProgramApproval === "boolean"
+        ? overlayRecord.requiresProgramApproval
+        : null,
+    approvalRequirements: Array.isArray(overlayRecord.approvalRequirements)
+      ? overlayRecord.approvalRequirements
+      : [],
     approvalStage: overlayRecord.approvalStage || "unknown",
     awardLikelihood: normalizeAwardLikelihood(overlayRecord.awardLikelihood),
     awardLikelihoodReason: overlayRecord.awardLikelihoodReason || "",
     awardLikelihoodEvidence: overlayRecord.awardLikelihoodEvidence || "",
     awardLikelihoodEvidenceText: overlayRecord.evidenceText || "",
-    awardLikelihoodEvidenceUrls: Array.isArray(overlayRecord.evidenceUrls?.normalized)
+    awardLikelihoodEvidenceUrls: Array.isArray(
+      overlayRecord.evidenceUrls?.normalized,
+    )
       ? overlayRecord.evidenceUrls.normalized
       : [],
     awardLikelihoodAuditTrace: overlayRecord.auditTrace || null,
     reviewStatus: overlayRecord.reviewStatus || "not_audited",
-    reviewedAt: overlayRecord.reviewedAt || null
+    reviewedAt: overlayRecord.reviewedAt || null,
   };
 }
 
-export function applyOpportunityAwardAuditOverlay(opportunities, overlay = loadOpportunityAwardAuditOverlay()) {
+export function applyOpportunityAwardAuditOverlay(
+  opportunities,
+  overlay = loadOpportunityAwardAuditOverlay(),
+) {
   const records = overlay?.records || {};
-  return (Array.isArray(opportunities) ? opportunities : []).map((opportunity) =>
-    applyOpportunityAwardAuditRecord(opportunity, records[opportunity?.opportunityId])
+  return (Array.isArray(opportunities) ? opportunities : []).map(
+    (opportunity) =>
+      applyOpportunityAwardAuditRecord(
+        opportunity,
+        records[opportunity?.opportunityId],
+      ),
   );
 }

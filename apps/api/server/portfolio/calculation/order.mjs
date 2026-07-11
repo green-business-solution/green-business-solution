@@ -1,4 +1,7 @@
-export function resolveScenarioOrder({ requestedItemIds = [], fallbackItemIds = [] }) {
+export function resolveScenarioOrder({
+  requestedItemIds = [],
+  fallbackItemIds = [],
+}) {
   const requested = cleanIdList(requestedItemIds);
   if (requested.length > 0) {
     return requested;
@@ -16,8 +19,6 @@ export function isSameOrder(a = [], b = []) {
 
 function cleanIdList(items = []) {
   return Array.isArray(items)
-    ? items
-      .map((itemId) => String(itemId || "").trim())
-      .filter(Boolean)
+    ? items.map((itemId) => String(itemId || "").trim()).filter(Boolean)
     : [];
 }

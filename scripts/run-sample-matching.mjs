@@ -13,67 +13,101 @@ import { applyOpportunityAwardAuditOverlay } from "../apps/api/server/matching/o
 import {
   isMatchableOpportunity,
   isVisibleAvailability,
-  isVisibleOpportunity
+  isVisibleOpportunity,
 } from "../apps/api/server/matching/opportunityLifecycle.mjs";
 import { buildRetrofitGroupsFromEligibleResults } from "../apps/api/server/retrofitRecommendations.mjs";
 import {
   RETROFIT_TAXONOMY_VERSION,
   buildRetrofitOpportunityIndex,
-  classifyRetrofitsForOpportunity
+  classifyRetrofitsForOpportunity,
 } from "../apps/api/server/matching/retrofitTaxonomy.mjs";
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
 const dataDir = path.join(repoRoot, "data");
 const publicDir = path.join(repoRoot, "public");
-const sampleUsersPath = process.env.SAMPLE_USERS_PATH || path.join(dataDir, "sample_user_profiles.json");
+const sampleUsersPath =
+  process.env.SAMPLE_USERS_PATH ||
+  path.join(dataDir, "sample_user_profiles.json");
 const sourcePath = process.env.OPPORTUNITY_SOURCE_PATH || "";
-const outputPath = process.env.MATCHING_OUTPUT_PATH || "/tmp/retrofi-sample-matching-results.json";
-const reportPath = process.env.MATCHING_REPORT_PATH || path.join(dataDir, "sample_matching_report.md");
-const testCasesPath = process.env.MATCHING_TEST_CASES_PATH || path.join(publicDir, "sample_matching_test_cases.json");
-const retrofitIndexPath = process.env.RETROFIT_INDEX_PATH || path.join(publicDir, "retrofit_opportunity_index.json");
-const facilityReviewsPath = process.env.FACILITY_REVIEWS_PATH || path.join(dataDir, "facility_eligibility_reviews.json");
-const utilityReviewsPath = process.env.UTILITY_REVIEWS_PATH || path.join(dataDir, "utility_restriction_reviews.json");
-const incentiveRulesPath = process.env.OPPORTUNITY_INCENTIVE_RULES_PATH || path.join(dataDir, "opportunity_incentive_rules.json");
+const outputPath =
+  process.env.MATCHING_OUTPUT_PATH ||
+  "/tmp/retrofi-sample-matching-results.json";
+const reportPath =
+  process.env.MATCHING_REPORT_PATH ||
+  path.join(dataDir, "sample_matching_report.md");
+const testCasesPath =
+  process.env.MATCHING_TEST_CASES_PATH ||
+  path.join(publicDir, "sample_matching_test_cases.json");
+const retrofitIndexPath =
+  process.env.RETROFIT_INDEX_PATH ||
+  path.join(publicDir, "retrofit_opportunity_index.json");
+const facilityReviewsPath =
+  process.env.FACILITY_REVIEWS_PATH ||
+  path.join(dataDir, "facility_eligibility_reviews.json");
+const utilityReviewsPath =
+  process.env.UTILITY_REVIEWS_PATH ||
+  path.join(dataDir, "utility_restriction_reviews.json");
+const incentiveRulesPath =
+  process.env.OPPORTUNITY_INCENTIVE_RULES_PATH ||
+  path.join(dataDir, "opportunity_incentive_rules.json");
 const incentiveCalculationPackagesPath =
   process.env.OPPORTUNITY_INCENTIVE_CALCULATION_PACKAGES_PATH ||
   path.join(dataDir, "opportunity_incentive_calculation_packages_v2.json");
 const defaultOpportunityDataRepairsPath = path.join(
   dataDir,
-  "opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json"
+  "opportunity_data_research_repairs_gpt_pro_2026-06-29_batch1.json",
 );
 const opportunityDataRepairsPaths = resolveRepairPaths();
-const existingOpportunityDataRepairsPaths = opportunityDataRepairsPaths.filter((filePath) => fs.existsSync(filePath));
-const tableName = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
-const region = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
+const existingOpportunityDataRepairsPaths = opportunityDataRepairsPaths.filter(
+  (filePath) => fs.existsSync(filePath),
+);
+const tableName =
+  process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
+const region =
+  process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
 const profile = process.env.AWS_PROFILE || "gbs";
 const now = new Date(process.env.MATCHING_NOW || Date.now());
 const writeFullOutput = process.env.MATCHING_WRITE_FULL_OUTPUT !== "0";
 const writeRetrofitIndex = process.env.MATCHING_WRITE_RETROFIT_INDEX !== "0";
-const patchExistingTestCases = process.env.MATCHING_PATCH_EXISTING_TEST_CASES === "1";
+const patchExistingTestCases =
+  process.env.MATCHING_PATCH_EXISTING_TEST_CASES === "1";
 const ADMIN_MATCH_STATUS_ORDER = ["eligible", "ineligible"];
 const ADMIN_MATCH_ALLOWED_STATUSES = new Set(ADMIN_MATCH_STATUS_ORDER);
 const requestedSampleUserIds = new Set(
   (process.env.SAMPLE_USER_IDS || "")
     .split(",")
     .map((value) => value.trim())
-    .filter(Boolean)
+    .filter(Boolean),
 );
 
 const allSampleUsers = readJson(sampleUsersPath);
 const sampleUsers =
   requestedSampleUserIds.size > 0
-    ? allSampleUsers.filter((sample) => requestedSampleUserIds.has(sample.sampleUserId))
+    ? allSampleUsers.filter((sample) =>
+        requestedSampleUserIds.has(sample.sampleUserId),
+      )
     : allSampleUsers;
-const facilityReviewsByOpportunityId = readReviewMap(facilityReviewsPath, "facilityEligibilityReview");
-const utilityReviewsByOpportunityId = readUtilityReviews(utilityReviewsPath);
-const opportunityIncentiveRules = readOpportunityIncentiveRules(incentiveRulesPath);
-const opportunityIncentiveCalculationPackages = readOpportunityIncentiveCalculationPackages(incentiveCalculationPackagesPath);
-const opportunityDataRepairsByOpportunityId = readOpportunityDataRepairs(existingOpportunityDataRepairsPaths);
-const opportunityRecords = sourcePath ? readOpportunitySource(sourcePath) : await scanOpportunitiesFromAws();
-const auditedOpportunityRecords = applyOpportunityAvailabilityOverlay(
-  applyOpportunityAwardAuditOverlay(opportunityRecords)
+const facilityReviewsByOpportunityId = readReviewMap(
+  facilityReviewsPath,
+  "facilityEligibilityReview",
 );
-const archivedOpportunityCount = auditedOpportunityRecords.filter((opportunity) => !isVisibleOpportunity(opportunity)).length;
+const utilityReviewsByOpportunityId = readUtilityReviews(utilityReviewsPath);
+const opportunityIncentiveRules =
+  readOpportunityIncentiveRules(incentiveRulesPath);
+const opportunityIncentiveCalculationPackages =
+  readOpportunityIncentiveCalculationPackages(incentiveCalculationPackagesPath);
+const opportunityDataRepairsByOpportunityId = readOpportunityDataRepairs(
+  existingOpportunityDataRepairsPaths,
+);
+const opportunityRecords = sourcePath
+  ? readOpportunitySource(sourcePath)
+  : await scanOpportunitiesFromAws();
+const auditedOpportunityRecords = applyOpportunityAvailabilityOverlay(
+  applyOpportunityAwardAuditOverlay(opportunityRecords),
+);
+const archivedOpportunityCount = auditedOpportunityRecords.filter(
+  (opportunity) => !isVisibleOpportunity(opportunity),
+).length;
 const candidateOpportunities = auditedOpportunityRecords
   .filter(isMatchableOpportunity)
   .map(applyOpportunityDataRepair)
@@ -83,40 +117,53 @@ const userProfiles = sampleUsers.map((sample) => ({
   sampleUserId: sample.sampleUserId,
   description: sample.description,
   sourceForm: sample,
-  userMatchProfile: normalizeUserProfile(sample)
+  userMatchProfile: normalizeUserProfile(sample),
 }));
-const allVisibleOpportunityProfiles = candidateOpportunities.map((opportunity) => {
-  const matchProfile = buildOpportunityMatchProfile(opportunity, { now });
-  return {
-    opportunity,
-    matchProfile: {
-      ...matchProfile,
-      retrofitTypes: classifyRetrofitsForOpportunity(opportunity, matchProfile)
-    }
-  };
-});
+const allVisibleOpportunityProfiles = candidateOpportunities.map(
+  (opportunity) => {
+    const matchProfile = buildOpportunityMatchProfile(opportunity, { now });
+    return {
+      opportunity,
+      matchProfile: {
+        ...matchProfile,
+        retrofitTypes: classifyRetrofitsForOpportunity(
+          opportunity,
+          matchProfile,
+        ),
+      },
+    };
+  },
+);
 const hiddenUpcomingOpportunityCount = allVisibleOpportunityProfiles.filter(
-  ({ matchProfile }) => matchProfile.availability.normalizedStatus === "upcoming"
+  ({ matchProfile }) =>
+    matchProfile.availability.normalizedStatus === "upcoming",
 ).length;
-const opportunityProfiles = allVisibleOpportunityProfiles.filter(({ matchProfile }) =>
-  isVisibleAvailability(matchProfile.availability)
+const opportunityProfiles = allVisibleOpportunityProfiles.filter(
+  ({ matchProfile }) => isVisibleAvailability(matchProfile.availability),
 );
 const opportunities = opportunityProfiles.map(({ opportunity }) => opportunity);
 const allResults = [];
 const userReports = [];
 const generatedAt = new Date().toISOString();
-const retrofitRows = writeRetrofitIndex ? buildRetrofitOpportunityIndex(opportunityProfiles) : [];
+const retrofitRows = writeRetrofitIndex
+  ? buildRetrofitOpportunityIndex(opportunityProfiles)
+  : [];
 
 for (const userProfile of userProfiles) {
   const results = opportunityProfiles
     .map(({ opportunity, matchProfile }) =>
-      evaluateOpportunityForUser(userProfile.userMatchProfile, opportunity, matchProfile, { now })
+      evaluateOpportunityForUser(
+        userProfile.userMatchProfile,
+        opportunity,
+        matchProfile,
+        { now },
+      ),
     )
     .sort(compareResults);
   if (writeFullOutput) {
     allResults.push({
       sampleUserId: userProfile.sampleUserId,
-      results: results.map(summarizeMatchResult)
+      results: results.map(summarizeMatchResult),
     });
   }
   userReports.push(buildUserReport(userProfile, results));
@@ -132,30 +179,42 @@ const output = {
   sampleUserCount: sampleUsers.length,
   retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
   retrofitIndexPath,
-  facilityReviewsPath: facilityReviewsByOpportunityId.size > 0 ? facilityReviewsPath : null,
+  facilityReviewsPath:
+    facilityReviewsByOpportunityId.size > 0 ? facilityReviewsPath : null,
   facilityReviewCount: facilityReviewsByOpportunityId.size,
-  utilityReviewsPath: utilityReviewsByOpportunityId.size > 0 ? utilityReviewsPath : null,
+  utilityReviewsPath:
+    utilityReviewsByOpportunityId.size > 0 ? utilityReviewsPath : null,
   utilityReviewCount: utilityReviewsByOpportunityId.size,
   opportunityDataRepairsPath:
     opportunityDataRepairsByOpportunityId.size > 0
-      ? existingOpportunityDataRepairsPaths.map((filePath) => path.relative(repoRoot, filePath)).join(",")
+      ? existingOpportunityDataRepairsPaths
+          .map((filePath) => path.relative(repoRoot, filePath))
+          .join(",")
       : null,
   opportunityDataRepairsPaths:
     opportunityDataRepairsByOpportunityId.size > 0
-      ? existingOpportunityDataRepairsPaths.map((filePath) => path.relative(repoRoot, filePath))
+      ? existingOpportunityDataRepairsPaths.map((filePath) =>
+          path.relative(repoRoot, filePath),
+        )
       : [],
   opportunityDataRepairCount: opportunityDataRepairsByOpportunityId.size,
-  opportunityIncentiveRulesPath: opportunityIncentiveRules.length > 0 ? incentiveRulesPath : null,
+  opportunityIncentiveRulesPath:
+    opportunityIncentiveRules.length > 0 ? incentiveRulesPath : null,
   opportunityIncentiveRuleCount: opportunityIncentiveRules.length,
   opportunityIncentiveCalculationPackagesPath:
-    opportunityIncentiveCalculationPackages.length > 0 ? incentiveCalculationPackagesPath : null,
-  opportunityIncentiveCalculationPackageCount: opportunityIncentiveCalculationPackages.length,
+    opportunityIncentiveCalculationPackages.length > 0
+      ? incentiveCalculationPackagesPath
+      : null,
+  opportunityIncentiveCalculationPackageCount:
+    opportunityIncentiveCalculationPackages.length,
   sampleUsers: userProfiles,
   fullResultsOmitted: !writeFullOutput,
-  results: writeFullOutput ? allResults : []
+  results: writeFullOutput ? allResults : [],
 };
 const existingAdminTestCases =
-  patchExistingTestCases && fs.existsSync(testCasesPath) ? readJson(testCasesPath) : null;
+  patchExistingTestCases && fs.existsSync(testCasesPath)
+    ? readJson(testCasesPath)
+    : null;
 const adminTestCaseRows = existingAdminTestCases
   ? patchTestCases(existingAdminTestCases.testCases || [], userReports)
   : userReports;
@@ -169,12 +228,17 @@ const adminTestCases = {
   sampleUserCount: adminTestCaseRows.length,
   retrofitTaxonomyVersion: RETROFIT_TAXONOMY_VERSION,
   opportunityIncentiveRuleCount: opportunityIncentiveRules.length,
-  incentiveFormulaRateTableCalculationPackageCount: opportunityIncentiveCalculationPackages.length,
-  testCases: adminTestCaseRows
+  incentiveFormulaRateTableCalculationPackageCount:
+    opportunityIncentiveCalculationPackages.length,
+  testCases: adminTestCaseRows,
 };
 
 fs.writeFileSync(outputPath, `${JSON.stringify(output, null, 2)}\n`);
-fs.writeFileSync(reportPath, buildReport({ userReports, opportunities, outputPath }), "utf8");
+fs.writeFileSync(
+  reportPath,
+  buildReport({ userReports, opportunities, outputPath }),
+  "utf8",
+);
 fs.mkdirSync(path.dirname(testCasesPath), { recursive: true });
 fs.writeFileSync(testCasesPath, `${JSON.stringify(adminTestCases, null, 2)}\n`);
 if (writeRetrofitIndex) {
@@ -187,10 +251,13 @@ if (writeRetrofitIndex) {
     totalOpportunityRecordCount: opportunityRecords.length,
     archivedOpportunityCount,
     retrofitCount: retrofitRows.length,
-    retrofits: retrofitRows
+    retrofits: retrofitRows,
   };
   fs.mkdirSync(path.dirname(retrofitIndexPath), { recursive: true });
-  fs.writeFileSync(retrofitIndexPath, `${JSON.stringify(retrofitIndex, null, 2)}\n`);
+  fs.writeFileSync(
+    retrofitIndexPath,
+    `${JSON.stringify(retrofitIndex, null, 2)}\n`,
+  );
 }
 
 console.log(`Sample matching complete.`);
@@ -198,19 +265,35 @@ console.log(`Opportunities evaluated: ${opportunities.length}`);
 console.log(`Archived opportunities skipped: ${archivedOpportunityCount}`);
 console.log(`Upcoming opportunities hidden: ${hiddenUpcomingOpportunityCount}`);
 console.log(`Sample users: ${sampleUsers.length}`);
-console.log(`Requested sample user filter: ${requestedSampleUserIds.size > 0 ? [...requestedSampleUserIds].join(", ") : "none"}`);
+console.log(
+  `Requested sample user filter: ${requestedSampleUserIds.size > 0 ? [...requestedSampleUserIds].join(", ") : "none"}`,
+);
 console.log(`Pairings evaluated: ${opportunities.length * sampleUsers.length}`);
 console.log(`Results: ${outputPath}`);
 console.log(`Full pair result output: ${writeFullOutput ? "yes" : "no"}`);
 console.log(`Report: ${reportPath}`);
 console.log(`Admin test cases: ${testCasesPath}`);
-console.log(`Patch existing admin test cases: ${patchExistingTestCases ? "yes" : "no"}`);
-console.log(`Retrofit opportunity index: ${writeRetrofitIndex ? retrofitIndexPath : "not written"}`);
-console.log(`Facility eligibility reviews loaded: ${facilityReviewsByOpportunityId.size}`);
-console.log(`Utility restriction reviews loaded: ${utilityReviewsByOpportunityId.size}`);
-console.log(`Opportunity data repairs loaded: ${opportunityDataRepairsByOpportunityId.size}`);
-console.log(`Opportunity incentive rules loaded: ${opportunityIncentiveRules.length}`);
-console.log(`Opportunity incentive calculation packages loaded: ${opportunityIncentiveCalculationPackages.length}`);
+console.log(
+  `Patch existing admin test cases: ${patchExistingTestCases ? "yes" : "no"}`,
+);
+console.log(
+  `Retrofit opportunity index: ${writeRetrofitIndex ? retrofitIndexPath : "not written"}`,
+);
+console.log(
+  `Facility eligibility reviews loaded: ${facilityReviewsByOpportunityId.size}`,
+);
+console.log(
+  `Utility restriction reviews loaded: ${utilityReviewsByOpportunityId.size}`,
+);
+console.log(
+  `Opportunity data repairs loaded: ${opportunityDataRepairsByOpportunityId.size}`,
+);
+console.log(
+  `Opportunity incentive rules loaded: ${opportunityIncentiveRules.length}`,
+);
+console.log(
+  `Opportunity incentive calculation packages loaded: ${opportunityIncentiveCalculationPackages.length}`,
+);
 
 function readReviewMap(filePath, reviewFieldName) {
   if (!fs.existsSync(filePath)) return new Map();
@@ -219,7 +302,7 @@ function readReviewMap(filePath, reviewFieldName) {
   return new Map(
     rows
       .filter((row) => row?.opportunityId && row?.[reviewFieldName])
-      .map((row) => [row.opportunityId, row[reviewFieldName]])
+      .map((row) => [row.opportunityId, row[reviewFieldName]]),
   );
 }
 
@@ -249,7 +332,10 @@ function readOpportunityDataRepairs(filePaths) {
     const source = readJson(filePath);
     for (const repair of source.repairs || []) {
       if (!repair?.opportunityId) continue;
-      repairsById.set(repair.opportunityId, normalizeOpportunityDataRepair(repair, source, filePath));
+      repairsById.set(
+        repair.opportunityId,
+        normalizeOpportunityDataRepair(repair, source, filePath),
+      );
     }
   }
   return repairsById;
@@ -257,14 +343,15 @@ function readOpportunityDataRepairs(filePaths) {
 
 function normalizeOpportunityDataRepair(repair, source, filePath) {
   return {
-    schemaVersion: source.schemaVersion || "opportunity_data_research_repairs.v1",
+    schemaVersion:
+      source.schemaVersion || "opportunity_data_research_repairs.v1",
     batchId: source.batchId || path.basename(filePath, ".json"),
     researchedAt: source.researchedAt || null,
     source: source.source || "gpt_pro",
     ...repair,
     sourceUrlsChecked: normalizeRepairUrls(repair.sourceUrlsChecked),
     websiteUrl: normalizeRepairUrl(repair.websiteUrl),
-    applicationUrl: normalizeRepairUrl(repair.applicationUrl)
+    applicationUrl: normalizeRepairUrl(repair.applicationUrl),
   };
 }
 
@@ -280,39 +367,49 @@ function normalizeRepairUrl(value) {
 }
 
 function applyOpportunityDataRepair(opportunity) {
-  const opportunityDataRepair = opportunityDataRepairsByOpportunityId.get(opportunity.opportunityId);
+  const opportunityDataRepair = opportunityDataRepairsByOpportunityId.get(
+    opportunity.opportunityId,
+  );
   if (!opportunityDataRepair) return opportunity;
   return {
     ...opportunity,
     state: opportunityDataRepair.geography?.states?.[0] || opportunity.state,
     programType: opportunityDataRepair.programType || opportunity.programType,
-    administrator: opportunityDataRepair.administrator || opportunity.administrator,
+    administrator:
+      opportunityDataRepair.administrator || opportunity.administrator,
     websiteUrl: opportunityDataRepair.websiteUrl || opportunity.websiteUrl,
-    applicationUrl: opportunityDataRepair.applicationUrl || opportunity.applicationUrl,
-    opportunityDataRepair
+    applicationUrl:
+      opportunityDataRepair.applicationUrl || opportunity.applicationUrl,
+    opportunityDataRepair,
   };
 }
 
 function applyFacilityReview(opportunity) {
-  const facilityEligibilityReview = facilityReviewsByOpportunityId.get(opportunity.opportunityId);
+  const facilityEligibilityReview = facilityReviewsByOpportunityId.get(
+    opportunity.opportunityId,
+  );
   if (!facilityEligibilityReview) return opportunity;
   return {
     ...opportunity,
-    facilityEligibilityReview
+    facilityEligibilityReview,
   };
 }
 
 function applyUtilityReview(opportunity) {
-  const utilityRestrictionReview = utilityReviewsByOpportunityId.get(opportunity.opportunityId);
+  const utilityRestrictionReview = utilityReviewsByOpportunityId.get(
+    opportunity.opportunityId,
+  );
   if (!utilityRestrictionReview) return opportunity;
   return {
     ...opportunity,
-    utilityRestrictionReview
+    utilityRestrictionReview,
   };
 }
 
 function patchTestCases(existingRows, replacements) {
-  const replacementsById = new Map(replacements.map((row) => [row.sampleUserId, row]));
+  const replacementsById = new Map(
+    replacements.map((row) => [row.sampleUserId, row]),
+  );
   const seen = new Set();
   const patched = existingRows.map((row) => {
     const replacement = replacementsById.get(row.sampleUserId);
@@ -328,22 +425,27 @@ function patchTestCases(existingRows, replacements) {
 
 function readOpportunitySource(filePath) {
   const source = readJson(filePath);
-  if (Array.isArray(source)) return source.filter((item) => item?.opportunityId);
-  return (source.Items || []).map((item) => (item.opportunityId ? item : unmarshall(item))).filter((item) => item?.opportunityId);
+  if (Array.isArray(source))
+    return source.filter((item) => item?.opportunityId);
+  return (source.Items || [])
+    .map((item) => (item.opportunityId ? item : unmarshall(item)))
+    .filter((item) => item?.opportunityId);
 }
 
 async function scanOpportunitiesFromAws() {
   const db = DynamoDBDocumentClient.from(
     new DynamoDBClient({
       region,
-      credentials: profile ? fromIni({ profile }) : undefined
-    })
+      credentials: profile ? fromIni({ profile }) : undefined,
+    }),
   );
   const items = [];
   let ExclusiveStartKey;
 
   do {
-    const result = await db.send(new ScanCommand({ TableName: tableName, ExclusiveStartKey }));
+    const result = await db.send(
+      new ScanCommand({ TableName: tableName, ExclusiveStartKey }),
+    );
     items.push(...(result.Items || []));
     ExclusiveStartKey = result.LastEvaluatedKey;
   } while (ExclusiveStartKey);
@@ -357,25 +459,27 @@ function buildUserReport(userProfile, results) {
   const statusCounts = Object.fromEntries(
     ADMIN_MATCH_STATUS_ORDER.map((status) => [
       status,
-      grouped.get(status)?.length || 0
-    ])
+      grouped.get(status)?.length || 0,
+    ]),
   );
-  const promising = results.filter((result) => result.eligibilityStatus === "eligible");
+  const promising = results.filter(
+    (result) => result.eligibilityStatus === "eligible",
+  );
   const topResults = promising.slice(0, 12).map(summarizeMatchResult);
   const commonQuestions = topCounts(
-    promising
-      .map((result) => result.nextQuestion?.criterionId)
-      .filter(Boolean)
+    promising.map((result) => result.nextQuestion?.criterionId).filter(Boolean),
   );
   const blockers = topCounts(results.flatMap((result) => result.blockers));
-  const unresolved = topCounts(promising.flatMap((result) => result.unresolvedRequirements));
+  const unresolved = topCounts(
+    promising.flatMap((result) => result.unresolvedRequirements),
+  );
   const retrofits = buildRetrofitGroupsFromEligibleResults({
     results: promising,
     normalizedProfile: userProfile.userMatchProfile,
     calculationDate: generatedAt.slice(0, 10),
     subjectId: userProfile.sampleUserId,
     opportunityRules: opportunityIncentiveRules,
-    opportunityPackages: opportunityIncentiveCalculationPackages
+    opportunityPackages: opportunityIncentiveCalculationPackages,
   });
 
   return {
@@ -388,7 +492,7 @@ function buildUserReport(userProfile, results) {
     topResults,
     commonQuestions,
     blockers,
-    unresolved
+    unresolved,
   };
 }
 
@@ -399,9 +503,11 @@ function assertNoDisallowedAdminStatuses(userProfile, grouped) {
       status,
       count: rows.length,
       examples: rows.slice(0, 5).map((row) => {
-        const unresolved = (row.unresolvedRequirements || []).slice(0, 2).join("; ");
+        const unresolved = (row.unresolvedRequirements || [])
+          .slice(0, 2)
+          .join("; ");
         return `${row.opportunityName || row.opportunityId} (${row.opportunityId})${unresolved ? ` unresolved: ${unresolved}` : ""}`;
-      })
+      }),
     }))
     .filter((row) => row.count > 0);
   if (disallowed.length === 0) return;
@@ -411,7 +517,9 @@ function assertNoDisallowedAdminStatuses(userProfile, grouped) {
       .map((row) => `${row.status}=${row.count}`)
       .join(", ")}. Examples: ${disallowed
       .map((row) => `${row.status}: ${row.examples.join("; ")}`)
-      .join(" | ")}. Run the data repair pipeline before publishing test cases.`
+      .join(
+        " | ",
+      )}. Run the data repair pipeline before publishing test cases.`,
   );
 }
 
@@ -430,7 +538,9 @@ function buildReport({ userReports, opportunities, outputPath }) {
     "",
     "This is a deterministic first-pass matcher audit. It is not a human-reviewed ground-truth label set yet.",
     "The script evaluates every current visible opportunity against each sample profile, then reports eligible matches and common blockers.",
-    writeFullOutput ? `Full JSON output: \`${outputPath}\`` : "Full pair-level JSON output was skipped for this run.",
+    writeFullOutput
+      ? `Full JSON output: \`${outputPath}\``
+      : "Full pair-level JSON output was skipped for this run.",
     "",
     "## Global Notes",
     "",
@@ -443,7 +553,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     "- Current form limitations are visible for municipal-utility sample users because the utility picker does not include every California municipal utility.",
     "- This report is designed to be iterated: manually inspect top false positives/false negatives, update extraction/ontology rules, rerun.",
     "",
-    "## Sample User Results"
+    "## Sample User Results",
   ];
 
   for (const report of userReports) {
@@ -453,17 +563,19 @@ function buildReport({ userReports, opportunities, outputPath }) {
     lines.push(
       JSON.stringify(
         {
-          organizationTypes: report.normalizedProfile.business.organizationTypes,
+          organizationTypes:
+            report.normalizedProfile.business.organizationTypes,
           stateCode: report.normalizedProfile.site.geo.stateCode,
           zip5: report.normalizedProfile.site.geo.zip5,
           utility: report.normalizedProfile.site.utility.electric,
-          ownershipRelationship: report.normalizedProfile.site.ownershipRelationship,
+          ownershipRelationship:
+            report.normalizedProfile.site.ownershipRelationship,
           buildingTypes: report.normalizedProfile.site.buildingTypes,
-          squareFootage: report.normalizedProfile.site.squareFootage
+          squareFootage: report.normalizedProfile.site.squareFootage,
         },
         null,
-        2
-      )
+        2,
+      ),
     );
     lines.push("```", "");
     lines.push("Status counts:");
@@ -473,21 +585,33 @@ function buildReport({ userReports, opportunities, outputPath }) {
     lines.push("Eligible matches:");
     for (const result of report.topResults) {
       lines.push(
-        `- ${result.eligibilityStatus} / ${result.rankScore}: ${result.opportunityName} (${result.opportunityId})`
+        `- ${result.eligibilityStatus} / ${result.rankScore}: ${result.opportunityName} (${result.opportunityId})`,
       );
-      if (result.matchedReasons.length > 0) lines.push(`  - matched: ${result.matchedReasons.slice(0, 3).join("; ")}`);
+      if (result.matchedReasons.length > 0)
+        lines.push(
+          `  - matched: ${result.matchedReasons.slice(0, 3).join("; ")}`,
+        );
       if (result.unresolvedRequirements.length > 0) {
-        lines.push(`  - unresolved: ${result.unresolvedRequirements.slice(0, 3).join("; ")}`);
+        lines.push(
+          `  - unresolved: ${result.unresolvedRequirements.slice(0, 3).join("; ")}`,
+        );
       }
     }
     lines.push("", "Common next questions:");
-    for (const item of report.commonQuestions.slice(0, 5)) lines.push(`- ${item.value}: ${item.count}`);
+    for (const item of report.commonQuestions.slice(0, 5))
+      lines.push(`- ${item.value}: ${item.count}`);
     lines.push("", "Common unresolved requirements among promising matches:");
-    for (const item of report.unresolved.slice(0, 5)) lines.push(`- ${item.value}: ${item.count}`);
+    for (const item of report.unresolved.slice(0, 5))
+      lines.push(`- ${item.value}: ${item.count}`);
     lines.push("", "Retrofit types inferred from promising matches:");
-    for (const retrofit of report.retrofits.slice(0, 8)) lines.push(`- ${retrofit.displayName}: ${retrofit.opportunityCount}`);
-    lines.push("", "Common blockers across rejected/unavailable opportunities:");
-    for (const item of report.blockers.slice(0, 5)) lines.push(`- ${item.value}: ${item.count}`);
+    for (const retrofit of report.retrofits.slice(0, 8))
+      lines.push(`- ${retrofit.displayName}: ${retrofit.opportunityCount}`);
+    lines.push(
+      "",
+      "Common blockers across rejected/unavailable opportunities:",
+    );
+    for (const item of report.blockers.slice(0, 5))
+      lines.push(`- ${item.value}: ${item.count}`);
   }
 
   lines.push(
@@ -497,7 +621,7 @@ function buildReport({ userReports, opportunities, outputPath }) {
     "1. Improve utility resolution for `Other / Not sure` users by geocoding and service-territory lookup instead of relying on the current form option.",
     "2. Split offer-level sectors/technologies more carefully for DSIRE parameter sets to reduce residential/commercial leakage.",
     "3. Re-run availability review daily so hidden upcoming opportunities automatically re-enter matching once source evidence classifies them as active or rolling.",
-    "4. Add a small hand-reviewed truth fixture for the top 20 matches per sample user; this is the realistic way to approach exhaustive validation without pretending all pairings were manually adjudicated."
+    "4. Add a small hand-reviewed truth fixture for the top 20 matches per sample user; this is the realistic way to approach exhaustive validation without pretending all pairings were manually adjudicated.",
   );
 
   return `${lines.join("\n")}\n`;
@@ -508,7 +632,10 @@ function topCounts(values) {
   for (const value of values) counts.set(value, (counts.get(value) || 0) + 1);
   return [...counts.entries()]
     .map(([value, count]) => ({ value, count }))
-    .sort((a, b) => b.count - a.count || String(a.value).localeCompare(String(b.value)));
+    .sort(
+      (a, b) =>
+        b.count - a.count || String(a.value).localeCompare(String(b.value)),
+    );
 }
 
 function groupBy(values, keyFn) {
@@ -523,18 +650,23 @@ function groupBy(values, keyFn) {
 }
 
 function compareResults(a, b) {
-  return statusRank(a.eligibilityStatus) - statusRank(b.eligibilityStatus) || b.rankScore - a.rankScore;
+  return (
+    statusRank(a.eligibilityStatus) - statusRank(b.eligibilityStatus) ||
+    b.rankScore - a.rankScore
+  );
 }
 
 function statusRank(status) {
-  return {
-    eligible: 0,
-    likely_eligible: 1,
-    needs_information: 2,
-    manual_review: 3,
-    ineligible: 4,
-    unavailable: 5
-  }[status] ?? 9;
+  return (
+    {
+      eligible: 0,
+      likely_eligible: 1,
+      needs_information: 2,
+      manual_review: 3,
+      ineligible: 4,
+      unavailable: 5,
+    }[status] ?? 9
+  );
 }
 
 function readJson(filePath) {
@@ -543,7 +675,9 @@ function readJson(filePath) {
 
 function resolveRepairPaths() {
   const envPaths =
-    process.env.OPPORTUNITY_DATA_RESEARCH_REPAIRS_PATHS || process.env.OPPORTUNITY_DATA_RESEARCH_REPAIRS_PATH || "";
+    process.env.OPPORTUNITY_DATA_RESEARCH_REPAIRS_PATHS ||
+    process.env.OPPORTUNITY_DATA_RESEARCH_REPAIRS_PATH ||
+    "";
   if (envPaths.trim()) return uniqueResolvedPaths(splitPathList(envPaths));
   return [defaultOpportunityDataRepairsPath];
 }

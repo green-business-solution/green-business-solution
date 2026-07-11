@@ -4,18 +4,18 @@ import {
   loadIdempotencyReceipt,
   loadPortfolioById,
   makeOutboxRow,
-  seedPortfolioRecord
+  seedPortfolioRecord,
 } from "../persistence/portfolioStore.mjs";
 import {
   PORTFOLIO_EVENT_TYPES,
   createEventEnvelope,
   eventFingerprint,
   canonicalJson,
-  canonicalEventKey
+  canonicalEventKey,
 } from "../domain/events.mjs";
 import {
   loadAggregateFromEvents,
-  validateExpectedVersion
+  validateExpectedVersion,
 } from "../domain/aggregate.mjs";
 import { calculatePortfolioReadModel } from "../calculation/marginalValues.mjs";
 import { resolveScenarioOrder } from "../calculation/order.mjs";
@@ -24,19 +24,31 @@ import {
   validateItemExists,
   validateNotCompleted,
   validateRuleVersion,
-  validateFinances
+  validateFinances,
 } from "../domain/invariants.mjs";
 
 const PORTFOLIO_FEATURE_FLAG = "RETROFI_PORTFOLIO_WRITE_ENABLED";
 
 export function isPortfolioFeatureEnabled(env = process.env) {
-  const value = String(env[PORTFOLIO_FEATURE_FLAG] || "").trim().toLowerCase();
+  const value = String(env[PORTFOLIO_FEATURE_FLAG] || "")
+    .trim()
+    .toLowerCase();
   return value === "1" || value === "true" || value === "yes" || value === "on";
 }
 
-export function readPortfolioHandler({ db, tableName, user, portfolioId, intake = {}, scenarioId = "default", now = new Date() }) {
+export function readPortfolioHandler({
+  db,
+  tableName,
+  user,
+  portfolioId,
+  intake = {},
+  scenarioId = "default",
+  now = new Date(),
+}) {
   if (!isPortfolioFeatureEnabled(process.env)) {
-    const error = new Error("Portfolio APIs are disabled. Set RETROFI_PORTFOLIO_WRITE_ENABLED=1 to enable.");
+    const error = new Error(
+      "Portfolio APIs are disabled. Set RETROFI_PORTFOLIO_WRITE_ENABLED=1 to enable.",
+    );
     error.status = 404;
     error.code = "PORTFOLIO_FEATURE_DISABLED";
     throw error;
@@ -49,7 +61,7 @@ export function readPortfolioHandler({ db, tableName, user, portfolioId, intake 
     db,
     tableName,
     portfolioId,
-    userId: user.userId
+    userId: user.userId,
   }).then(async (found) => {
     let { aggregate, snapshot } = found;
 
@@ -61,7 +73,7 @@ export function readPortfolioHandler({ db, tableName, user, portfolioId, intake 
         userId: user.userId,
         seedItems: deriveSeedItemsFromIntake(intake),
         scenarioId,
-        now
+        now,
       });
       aggregate = seeded.aggregate;
       snapshot = seeded.snapshot;
@@ -69,7 +81,7 @@ export function readPortfolioHandler({ db, tableName, user, portfolioId, intake 
 
     const scenarioOrder = resolveScenarioOrder({
       requestedItemIds: snapshot.itemOrder || [],
-      fallbackItemIds: Object.keys(aggregate.items || {})
+      fallbackItemIds: Object.keys(aggregate.items || {}),
     });
 
     const calculationBinding = snapshot.latestCalculationBinding || "calc-v1";
@@ -78,18 +90,18 @@ export function readPortfolioHandler({ db, tableName, user, portfolioId, intake 
       scenarioId: snapshot.scenarioId || scenarioId,
       scenarioOrder,
       calculationBinding,
-      calculationRunId: snapshot.calculationRunId || "run-0"
+      calculationRunId: snapshot.calculationRunId || "run-0",
     });
 
     return {
       ...calculated,
       scenario: {
         scenarioId: snapshot.scenarioId || scenarioId,
-        order: scenarioOrder
+        order: scenarioOrder,
       },
       generatedAt: now.toISOString(),
       portfolioVersion: aggregate.aggregateVersion,
-      portfolioVersionFingerprint: aggregate.snapshotHash
+      portfolioVersionFingerprint: aggregate.snapshotHash,
     };
   });
 }
@@ -103,10 +115,12 @@ export async function completePortfolioItemHandler({
   itemId,
   payload = {},
   now = new Date(),
-  scenarioId = "default"
+  scenarioId = "default",
 }) {
   if (!isPortfolioFeatureEnabled(process.env)) {
-    const error = new Error("Portfolio APIs are disabled. Set RETROFI_PORTFOLIO_WRITE_ENABLED=1 to enable.");
+    const error = new Error(
+      "Portfolio APIs are disabled. Set RETROFI_PORTFOLIO_WRITE_ENABLED=1 to enable.",
+    );
     error.status = 404;
     error.code = "PORTFOLIO_FEATURE_DISABLED";
     throw error;
@@ -120,8 +134,15 @@ export async function completePortfolioItemHandler({
   const idempotencyKey = cleanText(payload.idempotencyKey);
   const calculationBinding = cleanText(payload.calculationBinding);
 
-  if (!commandId || !idempotencyKey || !calculationBinding || Number.isNaN(expectedPortfolioVersion)) {
-    const error = new Error("commandId, idempotencyKey, expectedPortfolioVersion, and calculationBinding are required.");
+  if (
+    !commandId ||
+    !idempotencyKey ||
+    !calculationBinding ||
+    Number.isNaN(expectedPortfolioVersion)
+  ) {
+    const error = new Error(
+      "commandId, idempotencyKey, expectedPortfolioVersion, and calculationBinding are required.",
+    );
     error.status = 400;
     error.code = "PORTFOLIO_MISSING_INPUT";
     throw error;
@@ -140,10 +161,15 @@ export async function completePortfolioItemHandler({
     itemId,
     expectedPortfolioVersion,
     calculationBinding,
-    financialSelection: payload.financialSelection
+    financialSelection: payload.financialSelection,
   });
 
-  const existingReceipt = await loadIdempotencyReceipt({ db, tableName, portfolioId, idempotencyKey });
+  const existingReceipt = await loadIdempotencyReceipt({
+    db,
+    tableName,
+    portfolioId,
+    idempotencyKey,
+  });
   if (existingReceipt) {
     if (existingReceipt.payloadHash === payloadHash) {
       return existingReceipt.result;
@@ -158,7 +184,7 @@ export async function completePortfolioItemHandler({
     db,
     tableName,
     portfolioId,
-    userId: user.userId
+    userId: user.userId,
   });
 
   let { aggregate, snapshot, events } = loaded;
@@ -170,7 +196,7 @@ export async function completePortfolioItemHandler({
       userId: user.userId,
       seedItems: deriveSeedItemsFromIntake(intake),
       scenarioId,
-      now
+      now,
     });
     aggregate = seeded.aggregate;
     snapshot = seeded.snapshot;
@@ -178,7 +204,9 @@ export async function completePortfolioItemHandler({
   }
 
   if (!validateExpectedVersion(aggregate, expectedPortfolioVersion)) {
-    const error = new Error("Expected portfolio version does not match current version.");
+    const error = new Error(
+      "Expected portfolio version does not match current version.",
+    );
     error.status = 409;
     error.code = "PORTFOLIO_VERSION_CONFLICT";
     throw error;
@@ -189,10 +217,16 @@ export async function completePortfolioItemHandler({
     validateItemExists(aggregate.items, itemId) ||
     validateNotCompleted(item) ||
     validateFinances(payload) ||
-    validateRuleVersion(payload, snapshot?.latestCalculationBinding || "calc-v1");
+    validateRuleVersion(
+      payload,
+      snapshot?.latestCalculationBinding || "calc-v1",
+    );
   if (validationError) throw validationError;
 
-  const currentRunId = nextRunIdFrom(snapshot?.calculationRunId, aggregate.aggregateVersion + 1);
+  const currentRunId = nextRunIdFrom(
+    snapshot?.calculationRunId,
+    aggregate.aggregateVersion + 1,
+  );
 
   const completeEvent = createEventEnvelope({
     portfolioId,
@@ -204,14 +238,16 @@ export async function completePortfolioItemHandler({
       calculationBinding,
       scenarioId,
       financialSelection: {
-        requestedBenefitMinorUnits: toMinorUnits(payload?.financialSelection?.requestedBenefitMinorUnits)
+        requestedBenefitMinorUnits: toMinorUnits(
+          payload?.financialSelection?.requestedBenefitMinorUnits,
+        ),
       },
       financialModelId: cleanOptional(item.financialModelId),
-      ruleFamilyId: cleanOptional(item.ruleFamilyId)
+      ruleFamilyId: cleanOptional(item.ruleFamilyId),
     },
     userId: user.userId,
     runId: currentRunId,
-    now
+    now,
   });
 
   const recalculationEvent = createEventEnvelope({
@@ -222,23 +258,23 @@ export async function completePortfolioItemHandler({
     payload: {
       calculationBinding,
       scenarioId,
-      reason: "item_completed"
+      reason: "item_completed",
     },
     userId: user.userId,
     runId: currentRunId,
-    now
+    now,
   });
 
   const nextAggregate = loadAggregateFromEvents({
     events: [...events, completeEvent, recalculationEvent],
     portfolioId,
     userId: user.userId,
-    scenarioId
+    scenarioId,
   });
 
   const scenarioOrder = resolveScenarioOrder({
     requestedItemIds: snapshot?.itemOrder || [],
-    fallbackItemIds: Object.keys(nextAggregate.items || {})
+    fallbackItemIds: Object.keys(nextAggregate.items || {}),
   });
 
   const calculated = calculatePortfolioReadModel({
@@ -246,7 +282,7 @@ export async function completePortfolioItemHandler({
     scenarioId,
     scenarioOrder,
     calculationBinding,
-    calculationRunId: currentRunId
+    calculationRunId: currentRunId,
   });
 
   const ledgerEvent = createEventEnvelope({
@@ -257,11 +293,11 @@ export async function completePortfolioItemHandler({
     payload: {
       ledgerEntries: calculated.ledger?.entries || [],
       ledgerSignature: calculated.ledger?.signature || null,
-      reason: "item_completion"
+      reason: "item_completion",
     },
     userId: user.userId,
     runId: currentRunId,
-    now
+    now,
   });
 
   const snapshotRecord = {
@@ -272,7 +308,7 @@ export async function completePortfolioItemHandler({
     latestCalculationBinding: calculationBinding,
     calculationRunId: currentRunId,
     calculationRunSequence: extractRunValue(currentRunId),
-    eventCount: nextAggregate.events.length
+    eventCount: nextAggregate.events.length,
   };
 
   const response = {
@@ -281,8 +317,12 @@ export async function completePortfolioItemHandler({
     itemId,
     portfolioVersion: nextAggregate.aggregateVersion,
     calculationRunId: currentRunId,
-    eventFingerprint: eventFingerprint([completeEvent, recalculationEvent, ledgerEvent]),
-    readModel: calculated
+    eventFingerprint: eventFingerprint([
+      completeEvent,
+      recalculationEvent,
+      ledgerEvent,
+    ]),
+    readModel: calculated,
   };
 
   try {
@@ -297,19 +337,24 @@ export async function completePortfolioItemHandler({
       outboxRow: makeOutboxRow({
         requestId: canonicalEventKey(completeEvent.type, completeEvent),
         calculationRunId: currentRunId,
-        scenarioId
+        scenarioId,
       }),
       idempotencyReceipt: {
         idempotencyKey,
         payloadHash,
         commandId,
-        result: response
+        result: response,
       },
       now,
-      eventCount: aggregate.events.length
+      eventCount: aggregate.events.length,
     });
   } catch (error) {
-    const retryReceipt = await loadIdempotencyReceipt({ db, tableName, portfolioId, idempotencyKey });
+    const retryReceipt = await loadIdempotencyReceipt({
+      db,
+      tableName,
+      portfolioId,
+      idempotencyKey,
+    });
     if (retryReceipt?.payloadHash === payloadHash) {
       return retryReceipt.result;
     }
@@ -326,10 +371,12 @@ export async function recalculatePortfolioHandler({
   portfolioId,
   payload = {},
   now = new Date(),
-  scenarioId = "default"
+  scenarioId = "default",
 }) {
   if (!isPortfolioFeatureEnabled(process.env)) {
-    const error = new Error("Portfolio APIs are disabled. Set RETROFI_PORTFOLIO_WRITE_ENABLED=1 to enable.");
+    const error = new Error(
+      "Portfolio APIs are disabled. Set RETROFI_PORTFOLIO_WRITE_ENABLED=1 to enable.",
+    );
     error.status = 404;
     error.code = "PORTFOLIO_FEATURE_DISABLED";
     throw error;
@@ -348,9 +395,15 @@ export async function recalculatePortfolioHandler({
   }
 
   const payloadHash = hashPayload(payload);
-  const existingReceipt = await loadIdempotencyReceipt({ db, tableName, portfolioId, idempotencyKey });
+  const existingReceipt = await loadIdempotencyReceipt({
+    db,
+    tableName,
+    portfolioId,
+    idempotencyKey,
+  });
   if (existingReceipt) {
-    if (existingReceipt.payloadHash === payloadHash) return existingReceipt.result;
+    if (existingReceipt.payloadHash === payloadHash)
+      return existingReceipt.result;
     const error = new Error("Reused idempotency key with different payload.");
     error.status = 409;
     error.code = "PORTFOLIO_IDEMPOTENCY_CONFLICT";
@@ -361,7 +414,7 @@ export async function recalculatePortfolioHandler({
     db,
     tableName,
     portfolioId,
-    userId: user.userId
+    userId: user.userId,
   });
 
   if (!snapshot) {
@@ -372,7 +425,11 @@ export async function recalculatePortfolioHandler({
   }
 
   const expectedCalculationRun = cleanText(payload.expectedCalculationRun);
-  if (expectedCalculationRun && extractRunValue(snapshot.calculationRunId) > extractRunValue(expectedCalculationRun)) {
+  if (
+    expectedCalculationRun &&
+    extractRunValue(snapshot.calculationRunId) >
+      extractRunValue(expectedCalculationRun)
+  ) {
     const error = new Error("Stale recalculation request.");
     error.status = 409;
     error.code = "PORTFOLIO_CALCULATION_STALE";
@@ -380,7 +437,10 @@ export async function recalculatePortfolioHandler({
   }
 
   const calculationBinding = snapshot.latestCalculationBinding || "calc-v1";
-  const runId = nextRunIdFrom(snapshot.calculationRunId, aggregate.aggregateVersion + 1);
+  const runId = nextRunIdFrom(
+    snapshot.calculationRunId,
+    aggregate.aggregateVersion + 1,
+  );
 
   const recalcEvent = createEventEnvelope({
     portfolioId,
@@ -390,23 +450,23 @@ export async function recalculatePortfolioHandler({
     payload: {
       calculationBinding,
       scenarioId,
-      reason: "manual"
+      reason: "manual",
     },
     userId: user.userId,
     runId,
-    now
+    now,
   });
 
   const nextAggregate = loadAggregateFromEvents({
     events: [...events, recalcEvent],
     portfolioId,
     userId: user.userId,
-    scenarioId
+    scenarioId,
   });
 
   const scenarioOrder = resolveScenarioOrder({
     requestedItemIds: snapshot.itemOrder || [],
-    fallbackItemIds: Object.keys(nextAggregate.items || {})
+    fallbackItemIds: Object.keys(nextAggregate.items || {}),
   });
 
   const recalculated = calculatePortfolioReadModel({
@@ -414,7 +474,7 @@ export async function recalculatePortfolioHandler({
     scenarioId,
     scenarioOrder,
     calculationBinding,
-    calculationRunId: runId
+    calculationRunId: runId,
   });
 
   const snapshotRecord = {
@@ -425,7 +485,7 @@ export async function recalculatePortfolioHandler({
     latestCalculationBinding: calculationBinding,
     calculationRunId: runId,
     calculationRunSequence: extractRunValue(runId),
-    eventCount: nextAggregate.events.length
+    eventCount: nextAggregate.events.length,
   };
 
   const response = {
@@ -434,7 +494,7 @@ export async function recalculatePortfolioHandler({
     scenarioId,
     portfolioVersion: nextAggregate.aggregateVersion,
     calculationRunId: runId,
-    readModel: recalculated
+    readModel: recalculated,
   };
 
   try {
@@ -449,19 +509,24 @@ export async function recalculatePortfolioHandler({
       outboxRow: makeOutboxRow({
         requestId: canonicalEventKey(recalcEvent.type, recalcEvent),
         calculationRunId: runId,
-        scenarioId
+        scenarioId,
       }),
       idempotencyReceipt: {
         idempotencyKey,
         payloadHash,
         commandId,
-        result: response
+        result: response,
       },
       now,
-      eventCount: aggregate.events.length
+      eventCount: aggregate.events.length,
     });
   } catch (error) {
-    const retryReceipt = await loadIdempotencyReceipt({ db, tableName, portfolioId, idempotencyKey });
+    const retryReceipt = await loadIdempotencyReceipt({
+      db,
+      tableName,
+      portfolioId,
+      idempotencyKey,
+    });
     if (retryReceipt?.payloadHash === payloadHash) {
       return retryReceipt.result;
     }
@@ -486,26 +551,32 @@ function deriveSeedItemsFromIntake(intake = {}) {
         independentFinancialValueMinorUnits: 0,
         financialModelId: "",
         ruleFamilyId: "fixed-unit-cap-family-v1",
-        sequenceHint: "1"
-      }
+        sequenceHint: "1",
+      },
     ];
   }
 
-  return input
-    .map((item, index) => ({
-      portfolioItemId: cleanText(item.portfolioItemId || `seed_${String(index + 1).padStart(3, "0")}`),
-      title: cleanText(item.title || `Portfolio item ${index + 1}`),
-      status: "HYPOTHETICAL",
-      lifecycle: "HYPOTHETICAL",
-      independentFinancialValueMinorUnits: toMinorUnits(item.independentFinancialValueMinorUnits),
-      financialModelId: cleanText(item.financialModelId),
-      ruleFamilyId: cleanText(item.ruleFamilyId) || "fixed-unit-cap-family-v1",
-      sequenceHint: cleanText(item.sequenceHint) || String(index + 1)
-    }));
+  return input.map((item, index) => ({
+    portfolioItemId: cleanText(
+      item.portfolioItemId || `seed_${String(index + 1).padStart(3, "0")}`,
+    ),
+    title: cleanText(item.title || `Portfolio item ${index + 1}`),
+    status: "HYPOTHETICAL",
+    lifecycle: "HYPOTHETICAL",
+    independentFinancialValueMinorUnits: toMinorUnits(
+      item.independentFinancialValueMinorUnits,
+    ),
+    financialModelId: cleanText(item.financialModelId),
+    ruleFamilyId: cleanText(item.ruleFamilyId) || "fixed-unit-cap-family-v1",
+    sequenceHint: cleanText(item.sequenceHint) || String(index + 1),
+  }));
 }
 
 function nextRunIdFrom(currentRun, fallback) {
-  const index = Math.max(extractRunValue(currentRun), Number.isInteger(fallback) ? fallback : 0);
+  const index = Math.max(
+    extractRunValue(currentRun),
+    Number.isInteger(fallback) ? fallback : 0,
+  );
   return `run-${index + 1}`;
 }
 
@@ -515,7 +586,10 @@ function extractRunValue(runId = "run-0") {
 }
 
 function hashPayload(payload) {
-  return crypto.createHash("sha256").update(canonicalJson(payload)).digest("hex");
+  return crypto
+    .createHash("sha256")
+    .update(canonicalJson(payload))
+    .digest("hex");
 }
 
 function toMinorUnits(value) {
