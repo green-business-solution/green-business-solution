@@ -101,3 +101,13 @@ describe("deploy-production fixture patching flow", () => {
     expect(ensureCall).toBeLessThan(packageApiCall);
   });
 });
+
+describe("deploy-production frontend caching", () => {
+  const scriptSource = fs.readFileSync(scriptPath, "utf8");
+
+  it("serves versioned homepage journey frames with immutable caching", () => {
+    expect(scriptSource).toMatch(
+      /dist\/how-it-works\/scroll-frames\/[\s\S]*?--cache-control "public,max-age=31536000,immutable"/
+    );
+  });
+});

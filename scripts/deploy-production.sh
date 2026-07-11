@@ -589,6 +589,11 @@ sync_frontend() {
       --cache-control "public,max-age=31536000,immutable"
   fi
 
+  if [ -d dist/how-it-works/scroll-frames ]; then
+    aws_region s3 sync dist/how-it-works/scroll-frames/ "s3://${frontend_bucket}/how-it-works/scroll-frames/" \
+      --cache-control "public,max-age=31536000,immutable"
+  fi
+
   echo "Invalidating CloudFront distribution ${distribution_id}..."
   aws_region cloudfront create-invalidation \
     --distribution-id "${distribution_id}" \

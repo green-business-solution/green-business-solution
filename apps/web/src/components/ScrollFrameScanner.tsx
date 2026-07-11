@@ -19,12 +19,12 @@ type ScrollFrameScannerProps = {
 
 type FrameLoadState = "error" | "idle" | "loaded" | "loading";
 
-const BACKGROUND_PRELOAD_BATCH_SIZE = 3;
-const BACKGROUND_PRELOAD_DELAY_MS = 90;
+const BACKGROUND_PRELOAD_BATCH_SIZE = 6;
+const BACKGROUND_PRELOAD_DELAY_MS = 40;
 const FRAME_PRELOAD_RADIUS = 8;
 const LARGE_SEQUENCE_CACHE_LIMIT = 24;
 const LARGE_SEQUENCE_THRESHOLD = 80;
-const MAX_CONCURRENT_FRAME_LOADS = 3;
+const MAX_CONCURRENT_FRAME_LOADS = 6;
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
