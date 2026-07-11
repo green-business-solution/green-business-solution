@@ -107,7 +107,7 @@ describe("deploy-production frontend caching", () => {
 
   it("serves versioned homepage journey frames with immutable caching", () => {
     expect(scriptSource).toMatch(
-      /dist\/how-it-works\/scroll-frames\/[\s\S]*?--cache-control "public,max-age=31536000,immutable"/
+      /s3 cp dist\/how-it-works\/scroll-frames\/[\s\S]*?--recursive[\s\S]*?--cache-control "public,max-age=31536000,immutable"/
     );
   });
 });

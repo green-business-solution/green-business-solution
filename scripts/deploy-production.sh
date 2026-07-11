@@ -590,7 +590,8 @@ sync_frontend() {
   fi
 
   if [ -d dist/how-it-works/scroll-frames ]; then
-    aws_region s3 sync dist/how-it-works/scroll-frames/ "s3://${frontend_bucket}/how-it-works/scroll-frames/" \
+    aws_region s3 cp dist/how-it-works/scroll-frames/ "s3://${frontend_bucket}/how-it-works/scroll-frames/" \
+      --recursive \
       --cache-control "public,max-age=31536000,immutable"
   fi
 
