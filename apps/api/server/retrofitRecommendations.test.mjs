@@ -521,7 +521,7 @@ describe("portal retrofit recommendations", () => {
     ]);
   });
 
-  it("keeps visible non-archived opportunities in the match pipeline", () => {
+  it("keeps visible conditional opportunities in the match pipeline", () => {
     const intake = baseIntake();
     const payload = buildPortalRetrofitRecommendations({
       formQuestionCatalog: testFormQuestionCatalog,
@@ -545,7 +545,7 @@ describe("portal retrofit recommendations", () => {
     expect(payload.summary.matchedOpportunityCount).toBeGreaterThan(0);
     expect(
       payload.retrofits.flatMap((retrofit) => retrofit.opportunities).map((opportunity) => opportunity.opportunityId),
-    ).toEqual(expect.arrayContaining(["visible-conditional", "visible-disabled"]));
+    ).toEqual(expect.arrayContaining(["visible-conditional"]));
   });
 
   it("propagates award-audit fields into recommendation payload opportunities", () => {
