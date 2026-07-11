@@ -303,15 +303,22 @@ export async function completePortfolioItemHandler({
     now,
   });
 
+  const completedAggregate = loadAggregateFromEvents({
+    events: [...events, completeEvent, recalculationEvent, ledgerEvent],
+    portfolioId,
+    userId: user.userId,
+    scenarioId,
+  });
+
   const snapshotRecord = {
     scenarioId,
-    aggregateVersion: nextAggregate.aggregateVersion + 1,
+    aggregateVersion: completedAggregate.aggregateVersion,
     portfolioId,
     userId: user.userId,
     latestCalculationBinding: calculationBinding,
     calculationRunId: currentRunId,
     calculationRunSequence: extractRunValue(currentRunId),
-    eventCount: nextAggregate.events.length + 1,
+    eventCount: completedAggregate.events.length,
     itemOrder: nextAggregate.itemOrder || [],
   };
 
@@ -320,7 +327,7 @@ export async function completePortfolioItemHandler({
     portfolioId,
     itemId,
     scenarioId,
-    portfolioVersion: nextAggregate.aggregateVersion + 1,
+    portfolioVersion: completedAggregate.aggregateVersion,
     calculationRunId: currentRunId,
     eventFingerprint: eventFingerprint([
       completeEvent,
@@ -504,7 +511,7 @@ export async function recalculatePortfolioHandler({
     latestCalculationBinding: calculationBinding,
     calculationRunId: runId,
     calculationRunSequence: extractRunValue(runId),
-    eventCount: nextAggregate.events.length + 1,
+    eventCount: nextAggregate.events.length,
     itemOrder: nextAggregate.itemOrder || [],
   };
 
