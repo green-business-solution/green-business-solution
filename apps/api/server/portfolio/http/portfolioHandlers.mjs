@@ -305,7 +305,7 @@ export async function completePortfolioItemHandler({
 
   const snapshotRecord = {
     scenarioId,
-    aggregateVersion: nextAggregate.aggregateVersion,
+    aggregateVersion: nextAggregate.aggregateVersion + 1,
     portfolioId,
     userId: user.userId,
     latestCalculationBinding: calculationBinding,
@@ -320,7 +320,7 @@ export async function completePortfolioItemHandler({
     portfolioId,
     itemId,
     scenarioId,
-    portfolioVersion: nextAggregate.aggregateVersion,
+    portfolioVersion: nextAggregate.aggregateVersion + 1,
     calculationRunId: currentRunId,
     eventFingerprint: eventFingerprint([
       completeEvent,

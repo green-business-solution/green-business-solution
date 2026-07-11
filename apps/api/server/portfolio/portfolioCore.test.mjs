@@ -253,6 +253,36 @@ describe("portfolio handlers", () => {
     expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.eventCount).toBe(4);
     expect(db.items.find((item) => item.stateScope === "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#default" && item.stateKey === "idem-001")?.result).toEqual(first);
 
+    const reread = await loadPortfolioById({
+      db,
+      tableName: "gbs-api-runtime-state",
+      portfolioId,
+      userId: user.userId,
+    });
+    expect(reread.snapshot?.aggregateVersion).toBe(first.portfolioVersion);
+
+    const second = await completePortfolioItemHandler({
+      db,
+      tableName: "gbs-api-runtime-state",
+      user,
+      portfolioId,
+      itemId: "item_b",
+      payload: {
+        commandId: "complete-item-b-001",
+        idempotencyKey: "idem-004",
+        expectedPortfolioVersion: first.portfolioVersion,
+        calculationBinding: "calc-v1",
+        financialSelection: {
+          requestedBenefitMinorUnits: 70000
+        }
+      },
+      scenarioId: "default",
+      now: new Date("2026-07-10T10:06:15.000Z")
+    });
+
+    expect(second.status).toBe("ACCEPTED");
+    expect(second.portfolioVersion).toBeGreaterThan(first.portfolioVersion);
+
     const duplicate = await completePortfolioItemHandler({
       db,
       tableName: "gbs-api-runtime-state",
@@ -265,7 +295,7 @@ describe("portfolio handlers", () => {
     });
 
     expect(duplicate).toEqual(first);
-    expect(db.items.filter((item) => item.recordType === "EVENT")).toHaveLength(4);
+    expect(db.items.filter((item) => item.recordType === "EVENT")).toHaveLength(7);
 
     await expect(
       completePortfolioItemHandler({
@@ -540,7 +570,7 @@ describe("portfolio handlers", () => {
       now: new Date("2026-07-10T10:16:00.000Z")
     });
 
-    expect(completeResult.portfolioVersion).toBe(seed.aggregate.aggregateVersion + 2);
+    expect(completeResult.portfolioVersion).toBe(seed.aggregate.aggregateVersion + 3);
   });
 
   it("recalculates and persists non-default scenario state", async () => {
