@@ -197,6 +197,15 @@ export async function completePortfolioItemHandler({
     throw error;
   }
 
+  if (snapshot.scenarioId && snapshot.scenarioId !== scenarioId) {
+    const error = new Error(
+      `Requested scenarioId ${scenarioId} does not match active snapshot scenarioId ${snapshot.scenarioId}.`,
+    );
+    error.status = 409;
+    error.code = "PORTFOLIO_SCENARIO_MISMATCH";
+    throw error;
+  }
+
   if (!validateExpectedVersion(aggregate, expectedPortfolioVersion)) {
     const error = new Error(
       "Expected portfolio version does not match current version.",
@@ -418,11 +427,19 @@ export async function recalculatePortfolioHandler({
     portfolioId,
     userId: user.userId,
   });
-
   if (!snapshot) {
     const error = new Error("Portfolio has not been initialized.");
     error.status = 409;
     error.code = "PORTFOLIO_NOT_INITIALIZED";
+    throw error;
+  }
+
+  if (snapshot.scenarioId && snapshot.scenarioId !== scenarioId) {
+    const error = new Error(
+      `Requested scenarioId ${scenarioId} does not match active snapshot scenarioId ${snapshot.scenarioId}.`,
+    );
+    error.status = 409;
+    error.code = "PORTFOLIO_SCENARIO_MISMATCH";
     throw error;
   }
 

@@ -571,9 +571,9 @@ describe("portfolio handlers", () => {
     expect(recalculated.scenarioId).toBe(nonDefaultScenario);
   });
 
-  it("scopes idempotency read and write by scenario", async () => {
+  it("scopes idempotency rows by scenario and portfolio in recalc path", async () => {
     process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
-    const seed = buildSeededPortfolioSnapshot({
+    const firstSeed = buildSeededPortfolioSnapshot({
       portfolioId,
       userId: user.userId,
       seedItems: [
@@ -587,7 +587,26 @@ describe("portfolio handlers", () => {
       scenarioId: "scenario-x",
       now: "2026-07-10T10:20:00.000Z"
     });
-    const db = createMockDb(seed.seedRows);
+    const secondPortfolioId = "portfolio_client_002";
+    const secondSeed = buildSeededPortfolioSnapshot({
+      portfolioId: secondPortfolioId,
+      userId: user.userId,
+      seedItems: [
+        {
+          portfolioItemId: "item_idem_scope_2",
+          title: "Roof 2",
+          independentFinancialValueMinorUnits: 45000,
+          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+        }
+      ],
+      scenarioId: "scenario-y",
+      now: "2026-07-10T10:20:10.000Z"
+    });
+    const db = createMockDb([...firstSeed.seedRows, ...secondSeed.seedRows]);
+    const secondUser = {
+      role: "client",
+      userId: secondPortfolioId
+    };
 
     const first = await recalculatePortfolioHandler({
       db,
@@ -605,8 +624,8 @@ describe("portfolio handlers", () => {
     const second = await recalculatePortfolioHandler({
       db,
       tableName: "gbs-api-runtime-state",
-      user,
-      portfolioId,
+      user: secondUser,
+      portfolioId: secondPortfolioId,
       payload: {
         commandId: "recalc-scope",
         idempotencyKey: "recalc-scope-idem"
@@ -615,7 +634,7 @@ describe("portfolio handlers", () => {
       now: new Date("2026-07-10T10:22:00.000Z")
     });
 
-    expect(second.portfolioVersion).toBeGreaterThan(first.portfolioVersion);
+    expect(second.portfolioVersion).toBe(first.portfolioVersion);
     expect(
       db.items.find(
         (item) =>
@@ -628,10 +647,73 @@ describe("portfolio handlers", () => {
       db.items.find(
         (item) =>
           item.stateScope ===
-            "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#scenario-y"
+            "PORTFOLIO_IDEMPOTENCY#portfolio_client_002#scenario-y"
           && item.stateKey === "recalc-scope-idem",
       ),
     ).toBeDefined();
+  });
+
+  it("rejects scenario-scoped writes when requested scenario differs from persisted snapshot", async () => {
+    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
+    const storedScenario = "scenario-stored";
+    const requestScenario = "scenario-requested";
+    const seed = buildSeededPortfolioSnapshot({
+      portfolioId,
+      userId: user.userId,
+      seedItems: [
+        {
+          portfolioItemId: "item_mismatch",
+          title: "Boiler",
+          independentFinancialValueMinorUnits: 30000,
+          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+        }
+      ],
+      scenarioId: storedScenario,
+      now: "2026-07-10T10:25:00.000Z"
+    });
+    const db = createMockDb(seed.seedRows);
+
+    await expect(
+      completePortfolioItemHandler({
+        db,
+        tableName: "gbs-api-runtime-state",
+        user,
+        portfolioId,
+        itemId: "item_mismatch",
+        scenarioId: requestScenario,
+        payload: {
+          commandId: "complete-mismatch",
+          idempotencyKey: "complete-mismatch-idem",
+          expectedPortfolioVersion: seed.aggregate.aggregateVersion,
+          calculationBinding: "calc-v1",
+          financialSelection: {
+            requestedBenefitMinorUnits: 10000
+          }
+        },
+        now: new Date("2026-07-10T10:25:30.000Z")
+      })
+    ).rejects.toMatchObject({
+      status: 409,
+      code: "PORTFOLIO_SCENARIO_MISMATCH"
+    });
+
+    await expect(
+      recalculatePortfolioHandler({
+        db,
+        tableName: "gbs-api-runtime-state",
+        user,
+        portfolioId,
+        scenarioId: requestScenario,
+        payload: {
+          commandId: "recalc-mismatch",
+          idempotencyKey: "recalc-mismatch-idem"
+        },
+        now: new Date("2026-07-10T10:26:00.000Z")
+      })
+    ).rejects.toMatchObject({
+      status: 409,
+      code: "PORTFOLIO_SCENARIO_MISMATCH"
+    });
   });
 
   it("keeps write APIs disabled with zero DB calls", async () => {
