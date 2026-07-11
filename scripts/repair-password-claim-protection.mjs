@@ -155,6 +155,13 @@ export async function runPasswordClaimProtectionRepair(options = {}, dependencie
     );
 
     const records = scanResult.Items || [];
+    const scannedFromPage =
+      Number.isInteger(scanResult.ScannedCount) && scanResult.ScannedCount >= 0
+        ? scanResult.ScannedCount
+        : records.length;
+    scanned += scannedFromPage;
+    outcome.scanned += scannedFromPage;
+
     if (!records.length) {
       startKey = scanResult.LastEvaluatedKey;
       if (!startKey) {
@@ -164,13 +171,6 @@ export async function runPasswordClaimProtectionRepair(options = {}, dependencie
     }
 
     for (const user of records) {
-      if (scanned >= config.maxUpdates) {
-        break;
-      }
-
-      scanned += 1;
-      outcome.scanned += 1;
-
       const needsProtection = requiresPasswordClaimProtection(user, {
         passwordHashAlgorithm: "scrypt",
         passwordHashKeyLength: 64,
@@ -194,7 +194,6 @@ export async function runPasswordClaimProtectionRepair(options = {}, dependencie
         }
 
         outcome.candidates += 1;
-
         if (config.dryRun) {
           outcome.protected += 1;
           continue;

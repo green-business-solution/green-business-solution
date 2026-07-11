@@ -122,6 +122,7 @@ describe("runPasswordClaimProtectionRepair", () => {
       {
         Items: [],
         LastEvaluatedKey: { userId: "page-2" },
+        ScannedCount: 1,
       },
       {
         Items: [
@@ -189,6 +190,33 @@ describe("runPasswordClaimProtectionRepair", () => {
     expect(report.scanned).toBe(1);
     expect(report.skipped).toBe(1);
     expect(report.protected).toBe(0);
+    expect(calls.filter((command) => command.constructor.name === "ScanCommand")).toHaveLength(1);
+  });
+
+  it("caps repeated empty scanned pages to maxUpdates", async () => {
+    const { calls, db } = createDbRecorder([
+      {
+        Items: [],
+        LastEvaluatedKey: { userId: "page-2" },
+        ScannedCount: 1,
+      },
+      {
+        Items: [],
+        LastEvaluatedKey: { userId: "page-3" },
+        ScannedCount: 1,
+      },
+    ]);
+
+    const report = await runPasswordClaimProtectionRepair(
+      {
+        dryRun: true,
+        usersTable: "gbs-users",
+        maxUpdates: 1,
+      },
+      { db },
+    );
+
+    expect(report.scanned).toBe(1);
     expect(calls.filter((command) => command.constructor.name === "ScanCommand")).toHaveLength(1);
   });
 
