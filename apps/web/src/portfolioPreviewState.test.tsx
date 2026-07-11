@@ -11,7 +11,8 @@ import {
   commitCoordinatedSnapshotPayload,
   createCoordinatedSnapshotState,
   rejectStaleCoordinatedSnapshotPayload,
-  stageCoordinatedSnapshotPayload
+  stageCoordinatedSnapshotPayload,
+  portfolioSnapshotKey
 } from "./portfolioPreviewState";
 
 function buildRetrofitPayload(overrides: Record<string, unknown> = {}) {
@@ -198,6 +199,17 @@ describe("coordinated portfolio preview state", () => {
 
     expect(rejected.status).toBe("recalculating");
     expect(rejected.activePayload).toEqual(current);
+  });
+
+  it("retains zero portfolio versions in the snapshot key", () => {
+    expect(
+      portfolioSnapshotKey({
+        calculationRunId: null,
+        portfolioId: "portfolio-a",
+        portfolioVersion: 0,
+        scenarioId: "default"
+      })
+    ).toBe("portfolio-a|0|default");
   });
 
   it("shows exhausted opportunities with zero remaining value and a reason", () => {

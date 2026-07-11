@@ -61,7 +61,7 @@ export function routePathMatchFromPath(
     return { isKnownPath: true, route: "portal-preview" };
   if (pathname === "/user-preview")
     return { isKnownPath: true, route: "user-preview" };
-  if (pathname.startsWith("/tasks/reports/")) {
+  if (pathname === "/tasks/reports" || pathname.startsWith("/tasks/reports/")) {
     return { isKnownPath: true, route: "tasks-report" };
   }
   if (pathname === "/chats") return { isKnownPath: true, route: "chats" };
