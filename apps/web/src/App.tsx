@@ -9205,6 +9205,7 @@ function isAppChromeRoute(route: Route) {
     route === "portal" ||
     route === "portal-preview" ||
     route === "user-preview" ||
+    route === "tasks-report" ||
     route === "chats" ||
     route === "admin" ||
     route === "admin-dashboard-performance-data" ||
@@ -33211,6 +33212,27 @@ export function App() {
           initialRows={authPayload.adminDashboard.users}
           onSignOut={signOut}
           viewer={authPayload.user}
+        />
+      );
+    }
+
+    return (
+      <SignInPage
+        navigate={navigate}
+        message={signInMessage}
+        onAuthSuccess={handleAuthSuccess}
+        publicAuth={publicAuth}
+      />
+    );
+  }
+
+  if (effectiveRoute === "tasks-report") {
+    if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
+      return (
+        <HomePage
+          navigate={navigate}
+          onHowItWorksClick={openHomeHowItWorks}
+          publicAuth={publicAuth}
         />
       );
     }
