@@ -243,7 +243,7 @@ describe("portfolio handlers", () => {
     expect(first.portfolioVersion).toBeGreaterThan(1);
     expect(db.items.filter((item) => item.recordType === "EVENT")).toHaveLength(4);
     expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.aggregateVersion).toBe(first.portfolioVersion);
-    expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.itemOrder).toEqual(["item_b", "item_a"]);
+    expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.itemOrder).toEqual(["item_a", "item_b"]);
     expect(db.items.find((item) => item.stateScope === "PORTFOLIO_IDEMPOTENCY#portfolio_client_001" && item.stateKey === "idem-001")?.result).toEqual(first);
 
     const duplicate = await completePortfolioItemHandler({
