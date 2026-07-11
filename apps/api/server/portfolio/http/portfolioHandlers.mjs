@@ -70,6 +70,16 @@ export function readPortfolioHandler({
       throw error;
     }
 
+    const storedScenarioId = snapshot.scenarioId || "default";
+    if (storedScenarioId !== scenarioId) {
+      const error = new Error(
+        `Portfolio snapshot scenario ${storedScenarioId} does not match requested scenario ${scenarioId}.`,
+      );
+      error.status = 409;
+      error.code = "PORTFOLIO_SCENARIO_MISMATCH";
+      throw error;
+    }
+
     const scenarioOrder = resolveScenarioOrder({
       requestedItemIds: snapshot.itemOrder || aggregate.itemOrder || [],
       fallbackItemIds: Object.keys(aggregate.items || {}),
@@ -78,7 +88,7 @@ export function readPortfolioHandler({
     const calculationBinding = snapshot.latestCalculationBinding || "calc-v1";
     const calculated = calculatePortfolioReadModel({
       aggregate,
-      scenarioId: snapshot.scenarioId || scenarioId,
+      scenarioId: storedScenarioId,
       scenarioOrder,
       calculationBinding,
       calculationRunId: snapshot.calculationRunId || "run-0",
@@ -87,7 +97,7 @@ export function readPortfolioHandler({
     return {
       ...calculated,
       scenario: {
-        scenarioId: snapshot.scenarioId || scenarioId,
+        scenarioId: storedScenarioId,
         order: scenarioOrder,
       },
       generatedAt: now.toISOString(),

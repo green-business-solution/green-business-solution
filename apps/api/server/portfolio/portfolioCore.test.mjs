@@ -451,6 +451,39 @@ describe("portfolio handlers", () => {
     expect(result.items.map((item) => item.portfolioItemId)).toEqual(["item_read_b", "item_read_a"]);
   });
 
+  it("rejects reads when the requested scenario does not match the snapshot", async () => {
+    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
+    const seed = buildSeededPortfolioSnapshot({
+      portfolioId,
+      userId: user.userId,
+      seedItems: [
+        {
+          portfolioItemId: "item_read_mismatch",
+          title: "Battery",
+          independentFinancialValueMinorUnits: 20000,
+          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+        }
+      ],
+      scenarioId: "scenario-read-a",
+      now: "2026-07-10T10:12:00.000Z"
+    });
+    const db = createMockDb(seed.seedRows);
+
+    await expect(
+      readPortfolioHandler({
+        db,
+        tableName: "gbs-api-runtime-state",
+        user,
+        portfolioId,
+        scenarioId: "scenario-read-b",
+        now: new Date("2026-07-10T10:12:00.000Z")
+      })
+    ).rejects.toMatchObject({
+      status: 409,
+      code: "PORTFOLIO_SCENARIO_MISMATCH"
+    });
+  });
+
   it("persists and serves non-default scenario portfolio state", async () => {
     process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
     const nonDefaultScenario = "scenario-b";
