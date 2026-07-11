@@ -380,6 +380,93 @@ describe("portfolio handlers", () => {
     expect(result.items.map((item) => item.portfolioItemId)).toEqual(["item_read_a"]);
   });
 
+  it("persists and serves non-default scenario portfolio state", async () => {
+    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
+    const nonDefaultScenario = "scenario-b";
+    const seed = buildSeededPortfolioSnapshot({
+      portfolioId,
+      userId: user.userId,
+      seedItems: [
+        {
+          portfolioItemId: "item_read_b",
+          title: "Roof",
+          independentFinancialValueMinorUnits: 20000,
+          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+        }
+      ],
+      scenarioId: nonDefaultScenario,
+      now: "2026-07-10T10:15:00.000Z"
+    });
+    const db = createMockDb(seed.seedRows);
+
+    const readResult = await readPortfolioHandler({
+      db,
+      tableName: "gbs-api-runtime-state",
+      user,
+      portfolioId,
+      scenarioId: nonDefaultScenario,
+      now: new Date("2026-07-10T10:15:00.000Z")
+    });
+
+    expect(readResult.scenario).toMatchObject({ scenarioId: nonDefaultScenario });
+
+    const completeResult = await completePortfolioItemHandler({
+      db,
+      tableName: "gbs-api-runtime-state",
+      user,
+      portfolioId,
+      itemId: "item_read_b",
+      scenarioId: nonDefaultScenario,
+      payload: {
+        commandId: "complete-non-default",
+        idempotencyKey: "complete-non-default-idem",
+        expectedPortfolioVersion: seed.aggregate.aggregateVersion,
+        calculationBinding: "calc-v1",
+        financialSelection: {
+          requestedBenefitMinorUnits: 10000
+        }
+      },
+      now: new Date("2026-07-10T10:16:00.000Z")
+    });
+
+    expect(completeResult.portfolioVersion).toBe(3);
+  });
+
+  it("recalculates and persists non-default scenario state", async () => {
+    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
+    const nonDefaultScenario = "scenario-c";
+    const seed = buildSeededPortfolioSnapshot({
+      portfolioId,
+      userId: user.userId,
+      seedItems: [
+        {
+          portfolioItemId: "item_recalc_c",
+          title: "Roof",
+          independentFinancialValueMinorUnits: 25000,
+          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+        }
+      ],
+      scenarioId: nonDefaultScenario,
+      now: "2026-07-10T10:18:00.000Z"
+    });
+    const db = createMockDb(seed.seedRows);
+
+    const recalculated = await recalculatePortfolioHandler({
+      db,
+      tableName: "gbs-api-runtime-state",
+      user,
+      portfolioId,
+      payload: {
+        commandId: "recalc-non-default",
+        idempotencyKey: "recalc-non-default-idem"
+      },
+      scenarioId: nonDefaultScenario,
+      now: new Date("2026-07-10T10:19:00.000Z")
+    });
+
+    expect(recalculated.scenarioId).toBe(nonDefaultScenario);
+  });
+
   it("keeps write APIs disabled with zero DB calls", async () => {
     const db = createMockDb();
     let dbCalls = 0;
@@ -433,7 +520,13 @@ describe("portfolio handlers", () => {
   });
 });
 
-function buildSeededPortfolioSnapshot({ portfolioId: portfolioIdInput, userId, seedItems, now }) {
+function buildSeededPortfolioSnapshot({
+  portfolioId: portfolioIdInput,
+  userId,
+  seedItems,
+  scenarioId = "default",
+  now
+}) {
   const seedTime = now || new Date().toISOString();
   const seedEvent = createEventEnvelope({
     portfolioId: portfolioIdInput,
@@ -442,7 +535,7 @@ function buildSeededPortfolioSnapshot({ portfolioId: portfolioIdInput, userId, s
     commandId: `seed-${String(portfolioIdInput)}-${Date.now()}`,
     expectedPortfolioVersion: 0,
     payload: {
-      scenarioId: "default",
+      scenarioId,
       items: seedItems,
       calculationBinding: "calc-v1"
     },
@@ -454,7 +547,7 @@ function buildSeededPortfolioSnapshot({ portfolioId: portfolioIdInput, userId, s
     events: [seedEvent],
     portfolioId: portfolioIdInput,
     userId,
-    scenarioId: "default"
+    scenarioId
   });
   const scope = `PORTFOLIO#${portfolioIdInput}`;
   const seedRows = [
@@ -468,7 +561,7 @@ function buildSeededPortfolioSnapshot({ portfolioId: portfolioIdInput, userId, s
       stateScope: scope,
       stateKey: "SNAPSHOT#PRIMARY",
       recordType: "SNAPSHOT",
-      scenarioId: "default",
+      scenarioId,
       aggregateVersion: aggregate.aggregateVersion,
       portfolioId: portfolioIdInput,
       userId,

@@ -4631,15 +4631,15 @@ app.post(
   async (req, res) => {
     try {
       const user = await requireAuthenticatedUserFromRequest(req);
-      const intake = await getIntake(user.userId);
+      const scenarioId = cleanText(req.query.scenarioId || "default");
       const result = await completePortfolioItemHandler({
         db,
         tableName: apiRuntimeStateTable,
         user,
-        intake,
         portfolioId: req.params.portfolioId,
         itemId: req.params.itemId,
         payload: req.body || {},
+        scenarioId,
         now: new Date(),
       });
       res.json(result);
@@ -4654,12 +4654,14 @@ app.post(
   async (req, res) => {
     try {
       const user = await requireAuthenticatedUserFromRequest(req);
+      const scenarioId = cleanText(req.query.scenarioId || "default");
       const result = await recalculatePortfolioHandler({
         db,
         tableName: apiRuntimeStateTable,
         user,
         portfolioId: req.params.portfolioId,
         payload: req.body || {},
+        scenarioId,
         now: new Date(),
       });
       res.json(result);
