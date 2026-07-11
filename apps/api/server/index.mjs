@@ -54,6 +54,15 @@ import {
   isApplicationProfileCustomerReady,
   validateApplicationProfileApproval,
 } from "./applicationSources/ApplicationProfileApprovalValidator.mjs";
+import {
+  isPasswordSignupLinkBlocked,
+  passwordSignupDuplicateErrorMessage,
+  PASSWORD_CLAIM_GUARD_FIELD,
+  PASSWORD_CLAIM_GUARD_AT_FIELD,
+  PASSWORD_CLAIM_GUARD_REASON,
+  PASSWORD_CLAIM_GUARD_REASON_FIELD,
+  PASSWORD_CLAIM_GUARD_RUN_ID_FIELD,
+} from "./passwordSignupPolicy.mjs";
 import { buildCustomerApplicationProfileResponse } from "./applicationSources/ApplicationProfileCustomerView.mjs";
 import { resolveAddressGeography } from "./geography/addressGeographyResolver.mjs";
 import {
@@ -1813,12 +1822,13 @@ async function createPasswordAccount(input) {
     requireEmail: true,
   });
   const existing = await findUserByPasswordUsername(username);
+  const passwordSignupBlocked = isPasswordSignupLinkBlocked(existing, {
+    passwordHashAlgorithm,
+    passwordHashKeyLength,
+  });
 
-  if (existing?.passwordLinked) {
-    throw createPasswordError(
-      "An account already exists for that email. Log in instead.",
-      409,
-    );
+  if (existing && passwordSignupBlocked) {
+    throw createPasswordError(passwordSignupDuplicateErrorMessage, 409);
   }
 
   const passwordFields = await createPasswordFields(password);
@@ -3945,19 +3955,6 @@ app.put(
 
 app.get("/api/diagnostics", async (_req, res) => {
   try {
-    const users = await scanAll(usersTable);
-    const adminsPresent = Object.fromEntries(
-      [...adminEmails].map((email) => [
-        email,
-        users.some(
-          (user) =>
-            user.status === "active" &&
-            cleanEmail(user.email) === email &&
-            user.role === "admin",
-        ),
-      ]),
-    );
-
     res.json({
       ok: true,
       region: dataRegion,
@@ -3995,8 +3992,14 @@ app.get("/api/diagnostics", async (_req, res) => {
       googleClientIdHint: publicGoogleClientIdHint(),
       recommendedGoogleRedirectUris,
       adminDataRecordLimit,
-      adminEmails: [...adminEmails],
-      adminsPresent,
+      passwordSignupProtectedByDefault: true,
+      authStateSafety: {
+        passwordClaimGuardField: PASSWORD_CLAIM_GUARD_FIELD,
+        guardRunIdField: PASSWORD_CLAIM_GUARD_RUN_ID_FIELD,
+        guardAtField: PASSWORD_CLAIM_GUARD_AT_FIELD,
+        guardReasonField: PASSWORD_CLAIM_GUARD_REASON_FIELD,
+        guardReason: PASSWORD_CLAIM_GUARD_REASON,
+      },
     });
   } catch (error) {
     handleError(res, error);
