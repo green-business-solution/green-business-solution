@@ -71,7 +71,7 @@ export function readPortfolioHandler({
     }
 
     const scenarioOrder = resolveScenarioOrder({
-      requestedItemIds: snapshot.itemOrder || [],
+      requestedItemIds: snapshot.itemOrder || aggregate.itemOrder || [],
       fallbackItemIds: Object.keys(aggregate.items || {}),
     });
 
@@ -284,20 +284,21 @@ export async function completePortfolioItemHandler({
 
   const snapshotRecord = {
     scenarioId,
-    aggregateVersion: nextAggregate.aggregateVersion,
+    aggregateVersion: nextAggregate.aggregateVersion + 1,
     portfolioId,
     userId: user.userId,
     latestCalculationBinding: calculationBinding,
     calculationRunId: currentRunId,
     calculationRunSequence: extractRunValue(currentRunId),
-    eventCount: nextAggregate.events.length,
+    eventCount: nextAggregate.events.length + 1,
+    itemOrder: nextAggregate.itemOrder || [],
   };
 
   const response = {
     status: "ACCEPTED",
     portfolioId,
     itemId,
-    portfolioVersion: nextAggregate.aggregateVersion,
+    portfolioVersion: nextAggregate.aggregateVersion + 1,
     calculationRunId: currentRunId,
     eventFingerprint: eventFingerprint([
       completeEvent,
@@ -447,7 +448,7 @@ export async function recalculatePortfolioHandler({
   });
 
   const scenarioOrder = resolveScenarioOrder({
-    requestedItemIds: snapshot.itemOrder || [],
+    requestedItemIds: snapshot.itemOrder || aggregate.itemOrder || [],
     fallbackItemIds: Object.keys(nextAggregate.items || {}),
   });
 
@@ -468,6 +469,7 @@ export async function recalculatePortfolioHandler({
     calculationRunId: runId,
     calculationRunSequence: extractRunValue(runId),
     eventCount: nextAggregate.events.length,
+    itemOrder: nextAggregate.itemOrder || [],
   };
 
   const response = {

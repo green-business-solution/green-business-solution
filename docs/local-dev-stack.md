@@ -2,6 +2,8 @@
 
 Use `npm run dev:local` to start the local-only stack.
 
+You need Docker and Docker Compose available locally because the stack is launched from `docker-compose.local.yml`.
+
 It brings up:
 
 - DynamoDB Local on `http://127.0.0.1:8000`.
@@ -28,6 +30,7 @@ Reset behavior:
 
 - `npm run local:down` stops the containers and removes the local volumes.
 - `npm run local:reset` tears everything down and seeds the stack again.
+- `npm run dev:local` seeds the stack first, then starts the API and web dev servers.
 
 Known AWS-only gaps:
 
