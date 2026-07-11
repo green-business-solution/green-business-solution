@@ -151,6 +151,7 @@ export async function completePortfolioItemHandler({
     itemId,
     expectedPortfolioVersion,
     calculationBinding,
+    scenarioId,
     financialSelection: payload.financialSelection,
   });
 
@@ -158,6 +159,7 @@ export async function completePortfolioItemHandler({
     db,
     tableName,
     portfolioId,
+    scenarioId,
     idempotencyKey,
   });
   if (existingReceipt) {
@@ -336,6 +338,7 @@ export async function completePortfolioItemHandler({
       db,
       tableName,
       portfolioId,
+      scenarioId,
       idempotencyKey,
     });
     if (retryReceipt?.payloadHash === payloadHash) {
@@ -377,11 +380,15 @@ export async function recalculatePortfolioHandler({
     throw error;
   }
 
-  const payloadHash = hashPayload(payload);
+  const payloadHash = hashPayload({
+    ...payload,
+    scenarioId,
+  });
   const existingReceipt = await loadIdempotencyReceipt({
     db,
     tableName,
     portfolioId,
+    scenarioId,
     idempotencyKey,
   });
   if (existingReceipt) {
@@ -509,6 +516,7 @@ export async function recalculatePortfolioHandler({
       db,
       tableName,
       portfolioId,
+      scenarioId,
       idempotencyKey,
     });
     if (retryReceipt?.payloadHash === payloadHash) {

@@ -322,6 +322,69 @@ describe("portfolio handlers", () => {
     });
   });
 
+  it("isolates idempotency receipts by scenario", async () => {
+    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
+    const seed = buildSeededPortfolioSnapshot({
+      portfolioId,
+      userId: user.userId,
+      seedItems: [
+        {
+          portfolioItemId: "item_a",
+          title: "Lighting",
+          independentFinancialValueMinorUnits: 60000,
+          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+        }
+      ],
+      scenarioId: "scenario-b",
+      now: "2026-07-10T10:06:00.000Z"
+    });
+    const db = createMockDb([
+      ...seed.seedRows,
+      {
+        stateScope: "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#scenario-a",
+        stateKey: "idem-001",
+        payloadHash: "scenario-a-hash",
+        commandId: "complete-item-a-001",
+        result: {
+          status: "ACCEPTED",
+          scenarioId: "scenario-a"
+        },
+        createdAt: "2026-07-10T10:06:01.000Z"
+      }
+    ]);
+
+    const response = await completePortfolioItemHandler({
+      db,
+      tableName: "gbs-api-runtime-state",
+      user,
+      portfolioId,
+      itemId: "item_a",
+      payload: {
+        commandId: "complete-item-a-001",
+        idempotencyKey: "idem-001",
+        expectedPortfolioVersion: seed.aggregate.aggregateVersion,
+        calculationBinding: "calc-v1",
+        financialSelection: {
+          requestedBenefitMinorUnits: 60000
+        }
+      },
+      scenarioId: "scenario-b",
+      now: new Date("2026-07-10T10:06:30.000Z")
+    });
+
+    expect(response.status).toBe("ACCEPTED");
+    expect(
+      db.items.find(
+        (item) =>
+          item.stateScope === "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#scenario-b" &&
+          item.stateKey === "idem-001",
+      )?.result,
+    ).toMatchObject({
+      status: "ACCEPTED",
+      scenarioId: "scenario-b"
+    });
+  });
+
   it("does not create an empty snapshot when reading an uninitialized portfolio", async () => {
     process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
     const db = createMockDb();

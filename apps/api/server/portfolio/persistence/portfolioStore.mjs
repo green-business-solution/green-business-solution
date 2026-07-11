@@ -24,8 +24,10 @@ export function rowScopeForOutbox(portfolioId) {
   return `PORTFOLIO_OUTBOX#${portfolioId}`;
 }
 
-export function rowScopeForIdempotency(portfolioId) {
-  return `${portfolioStateKeys.idempotencyPrefix}#${portfolioId}`;
+export function rowScopeForIdempotency(portfolioId, scenarioId = "default") {
+  return `${portfolioStateKeys.idempotencyPrefix}#${portfolioId}#${String(
+    scenarioId || "default",
+  )}`;
 }
 
 export async function loadPortfolioById({
@@ -246,13 +248,14 @@ export async function loadIdempotencyReceipt({
   db,
   tableName,
   portfolioId,
+  scenarioId = "default",
   idempotencyKey,
 }) {
   const result = await db.send(
     new GetCommand({
       TableName: tableName,
       Key: {
-        stateScope: rowScopeForIdempotency(portfolioId),
+        stateScope: rowScopeForIdempotency(portfolioId, scenarioId),
         stateKey: String(idempotencyKey),
       },
     }),
@@ -264,6 +267,7 @@ export async function storeIdempotencyReceipt({
   db,
   tableName,
   portfolioId,
+  scenarioId = "default",
   idempotencyKey,
   payloadHash,
   commandId,
@@ -273,7 +277,7 @@ export async function storeIdempotencyReceipt({
     new PutCommand({
       TableName: tableName,
       Item: {
-        stateScope: rowScopeForIdempotency(portfolioId),
+        stateScope: rowScopeForIdempotency(portfolioId, scenarioId),
         stateKey: String(idempotencyKey),
         payloadHash,
         commandId,
