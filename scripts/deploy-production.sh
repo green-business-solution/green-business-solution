@@ -414,6 +414,13 @@ hash_directory() {
   )
 }
 
+frontend_deploy_hash() {
+  {
+    hash_directory dist
+    shasum -a 256 "${ROOT_DIR}/scripts/deploy-production.sh"
+  } | shasum -a 256 | awk '{print $1}'
+}
+
 s3_object_text() {
   local bucket="$1"
   local key="$2"
@@ -567,7 +574,7 @@ sync_frontend() {
   site_url="$(stack_output SiteUrl)"
 
   if [ -z "${FRONTEND_DIST_HASH}" ]; then
-    FRONTEND_DIST_HASH="$(hash_directory dist)"
+    FRONTEND_DIST_HASH="$(frontend_deploy_hash)"
   fi
 
   deployed_hash="$(s3_object_text "${frontend_bucket}" "${FRONTEND_DIST_STATE_KEY}")"
@@ -638,7 +645,7 @@ main() {
 
   if [ "${RUN_FRONTEND}" -eq 1 ]; then
     build_frontend
-    FRONTEND_DIST_HASH="$(hash_directory dist)"
+    FRONTEND_DIST_HASH="$(frontend_deploy_hash)"
   fi
 
   if [ "${RUN_API}" -eq 1 ]; then

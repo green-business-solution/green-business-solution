@@ -110,4 +110,11 @@ describe("deploy-production frontend caching", () => {
       /s3 cp dist\/how-it-works\/scroll-frames\/[\s\S]*?--recursive[\s\S]*?--cache-control "public,max-age=31536000,immutable"/
     );
   });
+
+  it("includes deployment behavior in the frontend sync fingerprint", () => {
+    expect(scriptSource).toMatch(
+      /frontend_deploy_hash\(\)\s*\{[\s\S]*hash_directory dist[\s\S]*deploy-production\.sh/
+    );
+    expect(scriptSource).toContain('FRONTEND_DIST_HASH="$(frontend_deploy_hash)"');
+  });
 });
