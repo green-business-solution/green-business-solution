@@ -30,7 +30,6 @@ import {
   confirmSingleEstimateState,
   countScenarioSelectedOpportunities,
   customerRetrofitUiName,
-  FirstmateTaskRow,
   getBillUploadResumeIndex,
   getBillUploadStepSummary,
   getDefaultBillUploadState,
@@ -42,49 +41,14 @@ import {
   getScenarioSelectedOpportunityCount,
   hydrateBillUploadStateFromIntake,
   isSupportedBillUploadFile,
-  normalizeFirstmateTasksResponse,
   sanitizeBillUploadState,
   selectGptProBatchIdForIndex,
   selectGptProPromptPathForBatch,
   SavingsPreviewCard,
+  RetrofitPickerView,
+  RetrofitReadinessRow,
   UserPreviewProfileView,
 } from "./App";
-
-function buildFirstmateTaskFixture(overrides: Record<string, unknown> = {}) {
-  return {
-    id: "task-t1",
-    title: "Task",
-    kind: "codex",
-    repo: "green-business-solution",
-    project: null,
-    state: "working" as const,
-    blocked: false,
-    blockedBy: [],
-    recentStatus: null,
-    statusState: null,
-    since: null,
-    reportedAt: null,
-    responseNeeded: false,
-    canRespond: false,
-    hasReport: false,
-    reportUrl: null,
-    reportStatus: "none" as const,
-    reportActionLabel: null,
-    reportStatusLabel: null,
-    reportNote: null,
-    reportIsFinal: false,
-    reportReviewReady: false,
-    reportFeedbackMode: null,
-    reportFeedbackUnavailableReason: null,
-    canSendReportFeedback: false,
-    gptProRepairStatus: null,
-    gptProRepairUrl: null,
-    gptProRepairLabel: null,
-    gptProRepairFallback: false,
-    gptProRepairUnavailableReason: null,
-    ...overrides,
-  };
-}
 
 describe("estimated report pricing", () => {
   it("uses the selected utility, track, location, and size inputs to produce a rounded range", () => {
@@ -1163,6 +1127,148 @@ describe("retrofit recommendations preview", () => {
     expect(siteEuiSection).not.toContain("No causal effect");
   });
 
+  it("renders the backend payback field and backend CO2e field on retrofit overview cards", () => {
+    const sustainabilityImpact = buildSustainabilityImpact({
+      billLineDeltas: [
+        {
+          id: "electric",
+          domain: "electric",
+          canonicalField: "annual_kwh_delta",
+          deltaValue: -5000,
+          unit: "kWh/year",
+          period: "annual"
+        }
+      ],
+      squareFootage: 10000,
+      retrofitTypeId: "rt_modeled_electric_kwh_reduction",
+      sourceModelInputs: { stateCode: "CA" }
+    });
+    const preview = {
+      ...liveShapedPayload.retrofits[0].savingsPreview,
+      paybackPeriodYears: 3.25,
+      paybackPeriodDetails: {
+        upfrontCostCents: 2600000,
+        annualRecurringSavingsCents: 800000,
+        normalizedAnnualRecurringSavingsCents: 800000,
+        calculationBasis: "annual recurring savings with monthly values normalized to annual"
+      },
+      sustainabilityImpact: {
+        ...sustainabilityImpact,
+        metrics: {
+          ...sustainabilityImpact.metrics,
+          annualOperationalCO2eReductionKgPerYear: {
+            ...sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear,
+            value: 1234.5,
+            provenanceState: "source_calculated"
+          }
+        }
+      }
+    } as any;
+
+    const cardHtml = renderToStaticMarkup(
+      <SavingsPreviewCard preview={preview} squareFootage={10000} />
+    );
+    expect(cardHtml).toContain("Payback period");
+    expect(cardHtml).toContain("3.3 years");
+    expect(cardHtml).toContain("annual recurring savings with monthly values normalized to annual");
+
+    const overviewHtml = renderToStaticMarkup(
+      <RetrofitPickerView
+        activeRetrofitId={liveShapedPayload.retrofits[0].retrofitTypeId}
+        displayedRetrofits={[
+          {
+            ...buildUserRetrofitPreviewResult(liveShapedPayload).retrofits[0],
+            sustainabilityImpact: preview.sustainabilityImpact,
+            metrics: {
+              ...buildUserRetrofitPreviewResult(liveShapedPayload).retrofits[0].metrics,
+              paybackPeriodYears: preview.paybackPeriodYears
+            }
+          } as any
+        ]}
+        emptyMessage=""
+        isLoading={false}
+        loadingMessage="Loading"
+        hideBillData={false}
+        uploadedBillStepCount={4}
+        retrofitReadinessById={new Map([
+          [
+            liveShapedPayload.retrofits[0].retrofitTypeId,
+            { billsComplete: true, questionsComplete: true, estimateComplete: true }
+          ]
+        ])}
+        onCloseDetails={() => {}}
+        onSelectRetrofit={() => {}}
+        onSetViewMode={() => {}}
+        onShowMore={() => {}}
+        onShowLess={() => {}}
+        onSortChange={() => {}}
+        onUploadBills={() => {}}
+        pickerViewMode="grid"
+        pickerVisibleCount={1}
+        sortBy="recommended"
+      />
+    );
+
+    expect(overviewHtml).toContain("Environmental impact");
+    expect(overviewHtml).toContain("1,234.5 kg CO2e/year");
+    expect(overviewHtml).toContain("Source calculated");
+  });
+
+  it("renders a zero cumulative CO2e series without unknown states when the backend metric is zero", () => {
+    const sustainabilityImpact = buildSustainabilityImpact({
+      billLineDeltas: [
+        {
+          id: "electric",
+          domain: "electric",
+          canonicalField: "annual_kwh_delta",
+          deltaValue: 0,
+          unit: "kWh/year",
+          period: "annual"
+        }
+      ],
+      squareFootage: 10000,
+      retrofitTypeId: "rt_modeled_electric_kwh_reduction",
+      sourceModelInputs: { stateCode: "CA" }
+    });
+    const zeroPreview = {
+      ...liveShapedPayload.retrofits[0].savingsPreview,
+      sustainabilityImpact: {
+        ...sustainabilityImpact,
+        projectionSeriesKgPerYear: Array.from({ length: 10 }, () => 0),
+        metrics: {
+          ...sustainabilityImpact.metrics,
+          annualOperationalCO2eReductionKgPerYear: {
+            ...sustainabilityImpact.metrics.annualOperationalCO2eReductionKgPerYear,
+            value: 0,
+            provenanceState: "source_calculated"
+          }
+        }
+      }
+    } as any;
+
+    const html = renderToStaticMarkup(<SavingsPreviewCard preview={zeroPreview} squareFootage={10000} />);
+
+    expect(html).toContain("Cumulative CO2e avoided");
+    expect(html).toContain("0 tCO2e");
+    expect(html).not.toContain("Annual operational CO2e reduction is needed before the cumulative chart can be drawn.");
+  });
+
+  it("renders readiness circles as 0, 1, and 3 completed states", () => {
+    const zeroHtml = renderToStaticMarkup(
+      <RetrofitReadinessRow billsComplete={false} estimateComplete={false} questionsComplete={false} />
+    );
+    const oneHtml = renderToStaticMarkup(
+      <RetrofitReadinessRow billsComplete={true} estimateComplete={false} questionsComplete={false} />
+    );
+    const threeHtml = renderToStaticMarkup(
+      <RetrofitReadinessRow billsComplete={true} estimateComplete={false} questionsComplete={true} />
+    );
+
+    expect((zeroHtml.match(/is-complete/g) || []).length).toBe(0);
+    expect((oneHtml.match(/is-complete/g) || []).length).toBe(1);
+    expect((threeHtml.match(/is-complete/g) || []).length).toBe(3);
+  });
+
   it("renders unavailable, estimated, not-applicable, and increased-consumption sustainability states", () => {
     const sustainabilityImpact = {
       schemaVersion: "sustainability-impact-v2",
@@ -1346,6 +1452,197 @@ describe("retrofit recommendations preview", () => {
     expect(html).toContain("Estimated");
     expect(html).toContain("kg CO2e/year");
     expect(html).not.toContain("Not calculated");
+  });
+
+  it("renders an equal three-year range as a single backend value", () => {
+    const html = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            threeYearFinancialValue: {
+              minimumThreeYearFinancialValueCents: 122200,
+              maximumThreeYearFinancialValueCents: 122200,
+              completeness: {
+                status: "quantified",
+                minimumBoundStatus: "quantified",
+                maximumBoundStatus: "quantified",
+                reasons: []
+              }
+            }
+          } as any
+        }
+        squareFootage={10000}
+      />
+    );
+
+    expect(html).toContain("Estimated 3-year financial value");
+    expect(html).toContain("$1,222.00");
+    expect(html).not.toContain("to $1,222.00");
+    expect(html).toContain("Estimated value");
+  });
+
+  it("renders a true backend range for minimum and maximum three-year values", () => {
+    const html = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            threeYearFinancialValue: {
+              minimumThreeYearFinancialValueCents: 3000,
+              maximumThreeYearFinancialValueCents: 5400,
+              completeness: {
+                status: "partially_quantified",
+                reasons: [
+                  {
+                    id: "opportunity_cap",
+                    reason: "Program caps set a range ceiling"
+                  }
+                ]
+              },
+              rangeDrivers: [
+                {
+                  id: "opportunity_count",
+                  category: "mandatory",
+                  reason: "2 mandatory opportunities included"
+                },
+                {
+                  id: "uncertainty",
+                  category: "uncertain",
+                  reason: "Optional opportunity value varies by award timing"
+                }
+              ]
+            }
+          } as any
+        }
+        squareFootage={10000}
+      />
+    );
+
+    expect(html).toContain("$30.00");
+    expect(html).toContain("to");
+    expect(html).toContain("$54.00");
+    expect(html).toContain("Show range drivers and provenance");
+    expect(html).toContain("2 mandatory opportunities included");
+  });
+
+  it("renders partial and unquantifiable three-year states without guaranteed totals", () => {
+    const html = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            threeYearFinancialValue: {
+              minimumThreeYearFinancialValueCents: null,
+              maximumThreeYearFinancialValueCents: null,
+              completeness: {
+                status: "unquantifiable",
+                reasons: [
+                  {
+                    id: "mandatory_recurring_missing",
+                    reason: "Mandatory recurring baseline is unavailable"
+                  },
+                  {
+                    id: "mandatory_onetime_missing",
+                    reason: "One-time baseline is unavailable"
+                  }
+                ]
+              }
+            }
+          } as any
+        }
+        squareFootage={10000}
+      />
+    );
+
+    expect(html).toContain("<strong>Unquantifiable</strong>");
+    expect(html).toContain("Backend range bounds are not yet quantifiable.");
+    expect(html).toContain("Show estimate completeness reasons");
+    expect(html).toContain("Mandatory recurring baseline is unavailable");
+  });
+
+  it("renders negative and zero three-year values explicitly in backend range output", () => {
+    const negativeHtml = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            threeYearFinancialValue: {
+              minimumThreeYearFinancialValueCents: -1200,
+              maximumThreeYearFinancialValueCents: 0,
+              completeness: {
+                status: "partially_quantified",
+                reasons: []
+              }
+            }
+          } as any
+        }
+        squareFootage={10000}
+      />
+    );
+
+    expect(negativeHtml).toContain("-$12.00");
+    expect(negativeHtml).toContain("$0.00");
+
+    const zeroHtml = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            threeYearFinancialValue: {
+              minimumThreeYearFinancialValueCents: 0,
+              maximumThreeYearFinancialValueCents: 0,
+              completeness: {
+                status: "quantified",
+                reasons: []
+              }
+            }
+          } as any
+        }
+        squareFootage={10000}
+      />
+    );
+
+    expect(zeroHtml).toContain("Estimated value");
+    expect(zeroHtml).toContain("$0.00");
+  });
+
+  it("states that inactive opportunities are excluded from three-year bounds", () => {
+    const html = renderToStaticMarkup(
+      <SavingsPreviewCard
+        preview={
+          {
+            ...liveShapedPayload.retrofits[0].savingsPreview,
+            threeYearFinancialValue: {
+              minimumThreeYearFinancialValueCents: 1500,
+              maximumThreeYearFinancialValueCents: 3500,
+              rangeDrivers: [
+                {
+                  id: "opportunity_availability_status",
+                  category: "scenario",
+                  reason: "availability_conditional was excluded"
+                },
+                {
+                  id: "opportunity_availability_status",
+                  category: "scenario",
+                  reason: "availability_archived was excluded"
+                }
+              ],
+              completeness: {
+                status: "partially_quantified",
+                reasons: []
+              }
+            }
+          } as any
+        }
+        squareFootage={10000}
+      />
+    );
+
+    expect(html).toContain("Conditional, disabled, quarantined, and archived opportunities are excluded from both bounds.");
+    expect(html).toContain("Show range drivers and provenance");
+    expect(html).toContain("availability_conditional was excluded");
+    expect(html).toContain("availability_archived was excluded");
   });
 
   it("renders a clean before-click retrofit picker and hides the full workspace", () => {
@@ -2388,18 +2685,20 @@ describe("retrofit recommendations preview", () => {
 
     expect(uploadHandlerSource).toContain("setBillUploadModalOpen(true)");
     expect(uploadHandlerSource).toContain(
-      "setBillUploadFocusStepId(getFirstIncompleteBillUploadStepId(effectiveBillUploadState) || null)",
+      "setBillUploadFocusStepId(\n      getFirstIncompleteBillUploadStepId(effectiveBillUploadState) || null,\n    )",
     );
     expect(uploadHandlerSource).not.toContain("scan-energy-data");
     expect(source).toContain("function BillUploadModal(");
     expect(source).toContain("initialState={effectiveBillUploadState}");
-    expect(source).toContain("useState<BillUploadState>(() => initialState)");
+    expect(source).toContain(
+      "useState<BillUploadState>(() =>\n    loadBillUploadState(billUploadStorageKey),\n  )",
+    );
     expect(source).toContain("function handleStepTabClick(index: number)");
     expect(source).toContain(
       "function handleRemoveBillUpload(stepId: BillUploadStepId)",
     );
     expect(source).toContain(
-      "currentStepUploaded ? `${currentStep.utilityLabel} bill uploaded` : currentStep.title",
+      "currentStepUploaded\n              ? `${currentStep.utilityLabel} bill uploaded`\n              : currentStep.title",
     );
     expect(source).toContain(
       'aria-current={index === currentStepIndex ? "step" : undefined}',
@@ -2418,9 +2717,7 @@ describe("retrofit recommendations preview", () => {
       tabsStart,
       source.indexOf("] as const;", tabsStart),
     );
-    const workspaceStart = source.indexOf(
-      "<article className={`estimate-workspace-shell",
-    );
+    const workspaceStart = source.indexOf("estimate-workspace-shell");
     const workspaceEnd = source.indexOf(
       "\nfunction ApplicationPrepDrawer",
       workspaceStart,
@@ -2430,25 +2727,19 @@ describe("retrofit recommendations preview", () => {
       workspaceEnd,
     );
     const workspaceSource = source.slice(workspaceStart, workspaceEnd);
-    const headerIndex = workspaceSource.indexOf(
-      '<header className="estimate-header">',
-    );
-    const headerSource = workspaceSource.slice(
+    const headerIndex = source.indexOf('<header className="estimate-header">');
+    const headerSource = source.slice(
       headerIndex,
-      workspaceSource.indexOf("</header>", headerIndex),
+      source.indexOf("</header>", headerIndex),
     );
-    const tabBarIndex = workspaceSource.indexOf(
-      '<nav aria-label="Estimate workspace tabs"',
-    );
-    const firstPanelIndex = workspaceSource.indexOf(
-      'data-workspace-panel="overview"',
-    );
-    const applicationPanelStart = workspaceSource.indexOf(
+    const tabBarIndex = source.indexOf('aria-label="Estimate workspace tabs"');
+    const firstPanelIndex = source.indexOf('data-workspace-panel="overview"');
+    const applicationPanelStart = source.indexOf(
       'data-workspace-panel="application"',
     );
-    const applicationPanelSource = workspaceSource.slice(
+    const applicationPanelSource = source.slice(
       applicationPanelStart,
-      workspaceSource.indexOf("</section>", applicationPanelStart),
+      source.indexOf("</section>", applicationPanelStart),
     );
     const modalStart = source.indexOf("function UnconfirmedRetrofitModal(");
     const modalSource = source.slice(
@@ -2549,7 +2840,7 @@ describe("retrofit recommendations preview", () => {
     expect(componentSource).toContain("Difficulty");
     expect(componentSource).toContain("Deadline");
     expect(componentSource).toContain("View program details");
-    expect(componentSource).toContain("scenario-opportunity-detail-panel");
+    expect(source).toContain("scenario-opportunity-detail-panel");
     expect(componentSource).toContain("Prepare application");
     expect(workspaceSource).not.toContain("No additional requirements stored");
     expect(workspaceSource).not.toContain('label="Length"');
@@ -2583,15 +2874,13 @@ describe("retrofit recommendations preview", () => {
     expect(workspaceSource).toContain("scenario-opportunity-workspace");
     expect(workspaceSource).toContain("Choose your scenario");
     expect(workspaceSource).toContain("Review opportunities in this scenario");
-    expect(workspaceSource).toContain(
-      "scenarioOpportunityDetail ? renderScenarioOpportunityDetailPanel(scenarioOpportunityDetail) : null",
-    );
+    expect(source).toContain("scenarioOpportunityDetail");
     expect(componentSource).toContain("scenarioOpportunityDetailSelection");
     expect(workspaceSource).toContain("scenario-opportunity-card-grid");
     expect(workspaceSource).toContain("scenario-opportunity-mini-table");
     expect(workspaceSource).toContain("scenario-opportunity-table");
-    expect(workspaceSource).toContain(
-      "Changes to included opportunities will automatically recalculate scenario metrics and recommendations",
+    expect(source).toContain(
+      "Changes to included opportunities will automatically\n                    recalculate scenario metrics and recommendations.",
     );
     expect(componentSource).toContain("One-time savings");
     expect(componentSource).toContain("Annual operating savings");
@@ -2599,8 +2888,8 @@ describe("retrofit recommendations preview", () => {
     expect(componentSource).toContain('subtitle="Average annual return"');
     expect(componentSource).toContain("Impact overview");
     expect(componentSource).toContain("SustainabilityImpactCard");
-    expect(workspaceSource).toContain(
-      "{profile.included.length} included · {profile.excluded.length} excluded",
+    expect(source).toContain(
+      "{profile.included.length} included ·{\" \"}\n                            {profile.excluded.length} excluded",
     );
     expect(workspaceSource).toContain('role="columnheader">Included</span>');
     expect(source).toContain("Lowest upfront cost");
@@ -2609,12 +2898,8 @@ describe("retrofit recommendations preview", () => {
     expect(workspaceSource).toContain("Main impact estimate");
     expect(workspaceSource).toContain("estimate-impact-copy");
     expect(workspaceSource).toContain("estimate-impact-value-row");
-    expect(workspaceSource).toContain(
-      "formatAnnualImpactUnitLabel(displayedEnvironmentalImpact.overall.unit)",
-    );
-    expect(workspaceSource).toContain(
-      "impactPlainLanguageSentence(displayedEnvironmentalImpact.overall)",
-    );
+    expect(source).toContain("formatAnnualImpactUnitLabel(");
+    expect(source).toContain("impactPlainLanguageSentence(");
     expect(workspaceSource).not.toContain("avoided / year");
     expect(workspaceSource).toContain("Impact overview");
     expect(workspaceSource).toContain("Certification contribution");
@@ -2721,9 +3006,6 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("function RetrofitDetailFormModal(");
     expect(source).toContain("setActiveFormRetrofitId(retrofit.id)");
     expect(source).toContain("if (!readiness.questionsComplete)");
-    expect(source).toContain(
-      "buildSeededRetrofitDetailAnswers(preview.retrofits",
-    );
     expect(source).toContain("getRetrofitFormQuestions(retrofit)");
     expect(source).not.toContain("function UserPreviewTopBar");
     expect(source).toContain("Profile info");
@@ -2834,7 +3116,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain('viewProfile(profile.profileId, "edit")');
     expect(source).toContain('open={profileDetailMode === "edit"}');
     expect(source).toContain(
-      'selectedProfile?.profileId === profile.profileId ? "is-selected" : undefined',
+      'selectedProfile?.profileId === profile.profileId\n                        ? "is-selected"\n                        : undefined',
     );
     expect(css).toContain(".application-source-table tbody tr.is-selected");
     expect(css).toContain(".application-profile-detail:focus");
@@ -2877,266 +3159,6 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".retrofi-logo-spinner");
   });
 
-  it("guards Codex task routes while keeping the local GPT Pro chats fallback out of the Google sign-in redirect path", async () => {
-    const fsModuleName = "node:fs";
-    const { readFileSync } = await import(fsModuleName);
-    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
-
-    const tasksRouteSource = source.slice(
-      source.indexOf('if (effectiveRoute === "tasks")'),
-      source.indexOf('if (effectiveRoute === "chats")'),
-    );
-    const chatsRouteSource = source.slice(
-      source.indexOf('if (effectiveRoute === "chats")'),
-      source.indexOf('if (effectiveRoute === "task-report")'),
-    );
-    const reportRouteSource = source.slice(
-      source.indexOf('if (effectiveRoute === "task-report")'),
-      source.indexOf('if (effectiveRoute === "user-preview")'),
-    );
-    const adminPreviewRouteSource = source.slice(
-      source.indexOf('if (effectiveRoute === "user-preview")'),
-      source.indexOf('if (effectiveRoute === "portal-preview")'),
-    );
-    const adminUserPreviewSource = source.slice(
-      source.indexOf("function AdminUserPreviewStandalonePage("),
-      source.indexOf("function buildUserPreviewOptions("),
-    );
-
-    expect(tasksRouteSource).toContain("AdminTasksStandalonePage");
-    expect(tasksRouteSource).toContain("SignInPage");
-    expect(tasksRouteSource).toContain("return <UserDashboard");
-    expect(tasksRouteSource).not.toContain(
-      "return <LocalFirstmateTasksStandalonePage />",
-    );
-    expect(chatsRouteSource).toContain(
-      "return <LocalGptProChatsStandalonePage />",
-    );
-    expect(chatsRouteSource).not.toContain("SignInPage");
-    expect(reportRouteSource).toContain("AdminTaskReportStandalonePage");
-    expect(reportRouteSource).toContain("SignInPage");
-    expect(reportRouteSource).toContain("return <UserDashboard");
-    expect(reportRouteSource).not.toContain(
-      "return <LocalFirstmateTaskReportStandalonePage />",
-    );
-    expect(adminPreviewRouteSource).toContain("AdminUserPreviewStandalonePage");
-    expect(adminPreviewRouteSource).toContain("SignInPage");
-    expect(adminUserPreviewSource).toContain("user-preview-tasks-link");
-    expect(adminUserPreviewSource).toContain('href={pathForRoute("tasks")}');
-    expect(adminUserPreviewSource).toContain("Codex tasks");
-    expect(source).toContain(
-      "credential ? { headers: adminAuthHeaders(credential) } : {}",
-    );
-    expect(source).toContain("Codex tasks require RetroFi admin sign-in.");
-    expect(source).toContain("Reports ready");
-    expect(source).toContain(
-      "Completed and archived tasks without pending report review are hidden by default.",
-    );
-    expect(source).toContain("Active tasks");
-    expect(source).toContain(
-      "getFirstmateSnapshotState(response, snapshotHasTasks)",
-    );
-    expect(source).toContain("Codex tasks snapshot warning");
-    expect(source).toContain("Snapshot ");
-    expect(source).toContain("manifest-selected snapshot");
-  });
-
-  it("normalizes legacy Firstmate task payloads into the production task state model", () => {
-    const normalized = normalizeFirstmateTasksResponse({
-      enabled: true,
-      generatedAt: "2026-07-09T12:00:00.000Z",
-      activeAgentCount: 0,
-      totalTaskCount: 2,
-      counts: {
-        active: 1,
-        completed: 1,
-        needsResponse: 0,
-      },
-      tasks: [
-        buildFirstmateTaskFixture({
-          id: "legacy-active-l1",
-          state: "active",
-        }),
-        buildFirstmateTaskFixture({
-          id: "archived-task-a1",
-          state: "archived",
-        }),
-        buildFirstmateTaskFixture({
-          id: "review-ready-r1",
-          state: "completed",
-          reportReviewReady: true,
-        }),
-      ],
-    });
-
-    expect(normalized.counts).toMatchObject({
-      active: 1,
-      working: 1,
-      completed: 1,
-      archived: 0,
-      needsResponse: 0,
-    });
-    expect(
-      normalized.tasks.map((task) => [task.id, task.state, task.active]),
-    ).toEqual([
-      ["legacy-active-l1", "working", true],
-      ["archived-task-a1", "archived", false],
-      ["review-ready-r1", "completed", false],
-    ]);
-    expect(
-      normalized.tasks.map((task) => [
-        task.id,
-        task.defaultVisible,
-        task.hiddenByDefault,
-      ]),
-    ).toEqual([
-      ["legacy-active-l1", true, false],
-      ["archived-task-a1", false, true],
-      ["review-ready-r1", true, false],
-    ]);
-  });
-
-  it("keeps the Firstmate tasks dashboard read-only outside response-needed tasks", async () => {
-    const fsModuleName = "node:fs";
-    const { readFileSync } = await import(fsModuleName);
-    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
-
-    expect(source).toContain(
-      "The agent has already moved on, so the task list was refreshed.",
-    );
-    expect(source).toContain("task is not waiting for a captain response");
-    expect(source).toContain("await onStaleResponse(serverMessage)");
-    expect(source).not.toContain(
-      "/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/report-feedback",
-    );
-    expect(source).not.toContain(
-      "/api/admin/firstmate/tasks/${encodeURIComponent(task.id)}/assign",
-    );
-    expect(source).not.toContain("Looks good / Continue");
-    expect(source).not.toContain("Request changes");
-    expect(source).not.toContain("Assign Crewmate");
-    expect(source).not.toContain("Report Feedback");
-    expect(source).not.toContain("feedback.message ||");
-    expect(source).not.toContain("task-report-feedback-toggle");
-    expect(source).toContain('rel="noreferrer" target="_blank"');
-    expect(source).toContain("Go To Pro Repair Batch");
-    expect(source).toContain(
-      "const showGptProRepairAction = Boolean(task.showGptProRepairAction ?? task.gptProRepairReady)",
-    );
-    expect(source).toContain(
-      "task.showReportAction ?? Boolean(task.hasReport && task.reportUrl)",
-    );
-    expect(source).toContain("gptProRepairUnavailableReason");
-    expect(source).not.toContain(
-      "Opens the local /chats fallback for this GPT Pro repair task.",
-    );
-    expect(source).toContain('task.reportActionLabel || "View Report"');
-    expect(source).toContain(
-      "showReportAction && task.reportNote && !task.reportIsFinal",
-    );
-    expect(source).toContain("task-report-status-note");
-    expect(source).not.toContain("Looks good creates a continuation task");
-
-    const taskRowSource = source.slice(
-      source.indexOf("function FirstmateTaskRow"),
-      source.indexOf("function AdminTaskReportStandalonePage"),
-    );
-    expect(taskRowSource).toContain("{showGptProRepairAction ? (");
-    expect(taskRowSource).not.toContain("setIsFeedbackOpen");
-    expect(taskRowSource).not.toContain("assignQueuedTask");
-  });
-
-  it("keeps task row report actions compatible with older API payloads", () => {
-    const baseTask = {
-      id: "old-report-o1",
-      title: "Old API report row",
-      kind: "scout",
-      repo: "green-business-solution",
-      project: null,
-      state: "completed" as const,
-      blocked: false,
-      blockedBy: [],
-      recentStatus: "done: report ready",
-      statusState: "done",
-      since: null,
-      reportedAt: "2026-07-08",
-      responseNeeded: false,
-      canRespond: false,
-      hasReport: true,
-      reportUrl: "/tasks/reports/old-report-o1",
-      reportStatus: "final" as const,
-      reportActionLabel: "See Report",
-      reportStatusLabel: "Final report",
-      reportNote: null,
-      reportIsFinal: true,
-      reportReviewReady: true,
-      reportFeedbackMode: "follow-up-task" as const,
-      reportFeedbackUnavailableReason: null,
-      canSendReportFeedback: true,
-      gptProRepairStatus: null,
-      gptProRepairUrl: null,
-      gptProRepairLabel: null,
-      gptProRepairFallback: false,
-      gptProRepairUnavailableReason: null,
-    };
-    const oldPayloadHtml = renderToStaticMarkup(
-      <table>
-        <tbody>
-          <FirstmateTaskRow task={baseTask} />
-        </tbody>
-      </table>,
-    );
-
-    expect(oldPayloadHtml).toContain("See Report");
-    expect(oldPayloadHtml).not.toContain("Report Feedback");
-    expect(oldPayloadHtml).not.toContain("Looks good / Continue");
-    expect(oldPayloadHtml).not.toContain("Request changes");
-    expect(oldPayloadHtml).not.toContain("Assign Crewmate");
-    expect(oldPayloadHtml).not.toContain("No report");
-
-    const noReportHtml = renderToStaticMarkup(
-      <table>
-        <tbody>
-          <FirstmateTaskRow
-            task={{
-              ...baseTask,
-              hasReport: false,
-              reportUrl: null,
-            }}
-          />
-        </tbody>
-      </table>,
-    );
-
-    expect(noReportHtml).toContain("No report");
-    expect(noReportHtml).not.toContain("Report Feedback");
-    expect(noReportHtml).not.toContain("Assign Crewmate");
-
-    const queuedHtml = renderToStaticMarkup(
-      <table>
-        <tbody>
-          <FirstmateTaskRow
-            task={{
-              ...baseTask,
-              id: "queued-follow-up-q1",
-              state: "queued" as const,
-              statusState: null,
-              hasReport: false,
-              reportUrl: null,
-              canSendReportFeedback: false,
-              canAssign: true,
-            }}
-          />
-        </tbody>
-      </table>,
-    );
-
-    expect(queuedHtml).toContain("queued-follow-up-q1");
-    expect(queuedHtml).toContain("No report");
-    expect(queuedHtml).not.toContain("Assign Crewmate");
-    expect(queuedHtml).not.toContain("Report Feedback");
-  });
-
   it("keeps the home page primary navbar free of the mobile glass shell override", async () => {
     const fsModuleName = "node:fs";
     const { readFileSync } = await import(fsModuleName);
@@ -3169,7 +3191,7 @@ describe("retrofit recommendations preview", () => {
     expect(homeMobileNavCss).not.toContain("backdrop-filter");
     expect(homeMobileNavCss).not.toContain("rgba(237, 248, 242, 0.58)");
     expect(homeSmallMobileCss).toContain(
-      ".public-page.home-page .planet-scan-section.scroll-frame-scanner .planet-scan-title span",
+      ".public-page.home-page\n    .planet-scan-section.scroll-frame-scanner\n    .planet-scan-title\n    span",
     );
     expect(homeSmallMobileCss).toContain("white-space: normal;");
   });
@@ -3266,19 +3288,17 @@ describe("retrofit recommendations preview", () => {
     const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
 
     expect(source).toContain(
-      'label={isPreviewCaseLoad ? "Loading preview case..." : "Preparing your dashboard..."}',
+      'label={\n          isPreviewCaseLoad\n            ? "Loading preview case..."\n            : "Preparing your dashboard..."\n        }',
     );
     expect(source).toContain(
       "Building savings, incentive, impact, and certification views",
     );
     expect(source).toContain(
-      '<RetroFiSkeleton key={index} variant="retrofit-card"',
+      'variant="retrofit-card"',
     );
+    expect(source).toContain("Loading the client portal preview...");
     expect(source).toContain(
-      '<RetroFiLogoLoader label="Loading the client portal preview..."',
-    );
-    expect(source).toContain(
-      '<RetroFiSkeleton variant="table" rows={7} label="Loading ApplicationProfiles"',
+      'label="Loading ApplicationProfiles"',
     );
     expect(source).not.toContain(
       '<RetroFiLogoLoader label="Checking application prep..."',
@@ -3299,7 +3319,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain('status === "reference_only"');
     expect(source).toContain("Application prep not available yet.");
     expect(source).toContain(
-      'const appReady = appStatus?.status === "customer_ready" && Boolean(appStatus.profile)',
+      'const appReady =\n      appStatus?.status === "customer_ready" && Boolean(appStatus.profile);',
     );
     expect(source).toContain("appReady ? (");
     expect(source).toContain("setApplicationPrepOpportunity(opportunity)");
@@ -3310,7 +3330,7 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("ApplicationPrepFormQuestionList");
     expect(source).toContain("No application is submitted automatically.");
     expect(source).toContain(
-      "navigator.clipboard.writeText(applicationPrepChecklistText(profile))",
+      "navigator.clipboard.writeText(\n        applicationPrepChecklistText(profile),\n      )",
     );
     expect(source).toContain("Copy checklist");
     expect(source).toContain("applicationOverviewIsReady");

@@ -29,7 +29,7 @@ The runtime stacks create:
 - `gbs-dashboard-performance` for synthetic/test-case dashboard performance records.
 - `gbs-retrofit-recommendation-cache` for recommendation cache metadata.
 - `gbs-application-profiles` for application source/profile registry records.
-- `gbs-api-runtime-state` for operational state such as Geocodio quota usage.
+- `gbs-api-runtime-state` for operational state such as Geocodio quota usage and retrofit portfolio event, snapshot, read model, outbox, and idempotency rows.
 - `gbs-firstmate-tasks` for production-safe Codex task snapshots and bounded admin report records.
 - `gbs-retrofi-org-runtime-cache-...` for generated recommendation cache payloads.
 - `gbs-retrofi-test-fixtures-...` for generated fixtures and synthetic test data.
@@ -50,6 +50,8 @@ The production API uses separate AWS regions for:
 - DynamoDB data access via `GBS_AWS_REGION` (`us-east-2`)
 - The energy-data and runtime-cache S3 buckets via `GBS_ENERGY_DATA_BUCKET_REGION` (`us-east-1`)
 - The GPT Pro development-work bucket via `GBS_DEV_WORK_BUCKET` and `GBS_GPT_PRO_WORK_PREFIX` (`us-east-1`)
+
+Retrofit portfolio routes are fail-closed in production unless `RETROFI_PORTFOLIO_WRITE_ENABLED=1` is explicitly set in the API runtime environment.
 
 ## Deploy Command
 

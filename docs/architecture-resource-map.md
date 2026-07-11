@@ -18,7 +18,7 @@ Browser traffic enters CloudFront on `retrofi.org`.
 | --- | --- | --- |
 | `apps/web/src/`, `index.html`, `public/`, `vite.config.ts`, `tsconfig.json` | React/Vite frontend | `frontend` |
 | `apps/api/server/`, `apps/api/package.json`, `apps/api/package-lock.json` | Express API/Lambda runtime | `api` |
-| `data/bill_field_dictionary.json`, savings/tax/incentive runtime JSON, `public/sample_matching_test_cases.json` | API runtime data bundled into Lambda | `api` |
+| `data/bill_field_dictionary.json`, `data/opportunity_availability_dispositions.v1.json`, `data/opportunity_award_audit_overlay.v1.json`, savings/tax/incentive runtime JSON, `public/sample_matching_test_cases.json` | API runtime data bundled into Lambda | `api` |
 | `infra/api-hosting.yaml`, `infra/production-hosting.yaml` | API and edge/frontend CloudFormation | `infra` |
 | `infra/runtime-data.yaml`, `infra/runtime-buckets.yaml` | Runtime DynamoDB/S3 support resources | `data` |
 | `infra/github-actions-deploy-role.yaml` | GitHub OIDC deploy role | `ci` |
@@ -50,7 +50,7 @@ deploy shell now owns fixture refresh, savings regeneration, and package/build o
 | `gbs-dashboard-performance` | `us-east-2` | Synthetic/test-case dashboard performance datasets |
 | `gbs-retrofit-recommendation-cache` | `us-east-2` | Recommendation cache metadata; large payloads live in S3 |
 | `gbs-application-profiles` | `us-east-2` | Application source/profile registry records |
-| `gbs-api-runtime-state` | `us-east-2` | Small API operational state such as Geocodio quota counters |
+| `gbs-api-runtime-state` | `us-east-2` | Small API operational state such as Geocodio quota counters and retrofit portfolio event, snapshot, read model, outbox, and idempotency rows |
 | `gbs-firstmate-tasks` | `us-east-2` | Sanitized versioned Codex task snapshots and bounded admin-readable report payloads. RetroFi Lambda reads only; the optional ingestion role writes from an explicit publisher principal. |
 
 The deleted `gbs-runtime-state` table was split into the four domain runtime tables above. The deleted

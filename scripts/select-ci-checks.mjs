@@ -44,10 +44,13 @@ function gitChangedFiles(refs) {
   if (refs.length >= 2 && refs[0] && refs[1]) {
     const result = spawnSync("git", ["diff", "--name-only", refs[0], refs[1]], {
       encoding: "utf8",
-      stdio: ["ignore", "pipe", "pipe"]
+      stdio: ["ignore", "pipe", "pipe"],
     });
-    if (result.status === 0) return { files: splitLines(result.stdout), refs: refs.slice(0, 2) };
-    throw new Error(result.stderr || `git diff failed for ${refs[0]}..${refs[1]}`);
+    if (result.status === 0)
+      return { files: splitLines(result.stdout), refs: refs.slice(0, 2) };
+    throw new Error(
+      result.stderr || `git diff failed for ${refs[0]}..${refs[1]}`,
+    );
   }
 
   const stdin = readStdin();
@@ -55,9 +58,10 @@ function gitChangedFiles(refs) {
 
   const fallback = spawnSync("git", ["diff", "--name-only", "HEAD^", "HEAD"], {
     encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
+    stdio: ["ignore", "pipe", "pipe"],
   });
-  if (fallback.status === 0) return { files: splitLines(fallback.stdout), refs: ["HEAD^", "HEAD"] };
+  if (fallback.status === 0)
+    return { files: splitLines(fallback.stdout), refs: ["HEAD^", "HEAD"] };
   return { files: [], refs: [] };
 }
 
@@ -92,12 +96,13 @@ export function classifyCiChecks(files, context = {}) {
   return {
     checks: checkOrder.filter((check) => checks.has(check)),
     files,
-    reasons
+    reasons,
   };
 }
 
 function checksForFile(file, context = {}) {
-  if (!file || isDocsOnly(file)) return decision([], "Documentation or metadata only.");
+  if (!file || isDocsOnly(file))
+    return decision([], "Documentation or metadata only.");
 
   if (file === lockfilePath) {
     return checksForPackageLock(context);
@@ -132,7 +137,10 @@ function checksForFile(file, context = {}) {
     file === "tsconfig.json" ||
     file === "tsconfig.node.json"
   ) {
-    return decision(["web"], "Frontend source, test, or build configuration changed.");
+    return decision(
+      ["web"],
+      "Frontend source, test, or build configuration changed.",
+    );
   }
 
   if (file.startsWith("scripts/")) {
@@ -147,21 +155,35 @@ function checksForFile(file, context = {}) {
     return decision(["web"], "Public frontend asset changed.");
   }
 
-  return decision(allChecks(), "Unknown non-documentation path changed; using conservative checks.");
+  return decision(
+    allChecks(),
+    "Unknown non-documentation path changed; using conservative checks.",
+  );
 }
 
 function checksForPackageLock(context = {}) {
   const lockContext = packageLockContext(context);
   if (!lockContext) {
-    return decision(allChecks(), "Lockfile changed, but package-level diff was unavailable.");
+    return decision(
+      allChecks(),
+      "Lockfile changed, but package-level diff was unavailable.",
+    );
   }
 
-  const deploySummary = classifyPackageLockChange(lockContext.baseLock, lockContext.headLock);
+  const deploySummary = classifyPackageLockChange(
+    lockContext.baseLock,
+    lockContext.headLock,
+  );
   const checks = new Set(["audit"]);
   const deployTargets = new Set(deploySummary.targets);
   if (deployTargets.has("api")) checks.add("api");
   if (deployTargets.has("frontend")) checks.add("web");
-  if (deployTargets.has("ci") || deployTargets.has("data") || deployTargets.has("infra")) checks.add("scripts");
+  if (
+    deployTargets.has("ci") ||
+    deployTargets.has("data") ||
+    deployTargets.has("infra")
+  )
+    checks.add("scripts");
 
   if (checks.size === 1) {
     checks.add("scripts");
@@ -169,7 +191,7 @@ function checksForPackageLock(context = {}) {
 
   return decision(
     checkOrder.filter((check) => checks.has(check)),
-    `Lockfile diff mapped to CI checks from deploy routing. ${deploySummary.reason}`
+    `Lockfile diff mapped to CI checks from deploy routing. ${deploySummary.reason}`,
   );
 }
 
@@ -190,7 +212,7 @@ function packageLockContext(context) {
 function readJsonFromGit(ref, filePath) {
   const result = spawnSync("git", ["show", `${ref}:${filePath}`], {
     encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
+    stdio: ["ignore", "pipe", "pipe"],
   });
   if (result.status !== 0) return null;
   try {
@@ -269,18 +291,24 @@ function markdownSummary(result) {
     "",
     `- Checks: ${checks.map((check) => `\`${check}\``).join(", ")}`,
     `- Changed files considered: ${result.files.length}`,
-    ""
+    "",
   ];
 
   if (result.reasons.length) {
     lines.push("| File | Checks | Reason |");
     lines.push("| --- | --- | --- |");
     for (const item of result.reasons.slice(0, 25)) {
-      const itemChecks = item.checks.length ? item.checks.map((check) => `\`${check}\``).join(", ") : "`none`";
-      lines.push(`| ${escapeMarkdownTable(item.file)} | ${itemChecks} | ${escapeMarkdownTable(item.reason || "")} |`);
+      const itemChecks = item.checks.length
+        ? item.checks.map((check) => `\`${check}\``).join(", ")
+        : "`none`";
+      lines.push(
+        `| ${escapeMarkdownTable(item.file)} | ${itemChecks} | ${escapeMarkdownTable(item.reason || "")} |`,
+      );
     }
     if (result.reasons.length > 25) {
-      lines.push(`| ... | ... | ${result.reasons.length - 25} more changed-file decisions omitted. |`);
+      lines.push(
+        `| ... | ... | ${result.reasons.length - 25} more changed-file decisions omitted. |`,
+      );
     }
   } else {
     lines.push("No code-check-affecting files were found.");
@@ -290,7 +318,9 @@ function markdownSummary(result) {
 }
 
 function escapeMarkdownTable(value) {
-  return String(value || "").replaceAll("|", "\\|").replaceAll("\n", " ");
+  return String(value || "")
+    .replaceAll("|", "\\|")
+    .replaceAll("\n", " ");
 }
 
 function main() {
@@ -300,7 +330,10 @@ function main() {
     process.exit(0);
   }
   const changedFiles = gitChangedFiles(options.refs);
-  writeOutput(classifyCiChecks(changedFiles.files, { refs: changedFiles.refs }), options.format);
+  writeOutput(
+    classifyCiChecks(changedFiles.files, { refs: changedFiles.refs }),
+    options.format,
+  );
 }
 
 const isCliEntryPoint = process.argv[1]

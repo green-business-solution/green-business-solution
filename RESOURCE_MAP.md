@@ -16,7 +16,7 @@ AWS is the source of truth for runtime data, customer uploads, runtime cache pay
 | `apps/web/`, `index.html`, `public/`, `vite.config.ts`, `tsconfig*.json` | Frontend | `npm run typecheck`, `npm run build`, `npx vitest run apps/web` | `frontend` | Browser code and public assets |
 | `apps/api/` | API | `npm run check -w @gbs/api`, `npx vitest run apps/api` | `api` | Lambda runtime and privileged backend logic |
 | `apps/api/server/matching/`, `apps/api/server/savings/`, `apps/api/server/applicationSources/` | API logic | API tests, targeted fixture checks, affected script tests | `api` | Matching, savings, tax, grant, and application-profile behavior |
-| `data/` runtime JSON used by API, `public/sample_matching_test_cases.json`, `test-fixtures/` | Runtime data | targeted validation scripts, `npx vitest run apps/api scripts` | `api` or `data` | Bundled data and generated artifacts used by runtime code |
+| `data/` runtime JSON used by API, including `data/opportunity_availability_dispositions.v1.json` and `data/opportunity_award_audit_overlay.v1.json`, `public/sample_matching_test_cases.json`, `test-fixtures/` | Runtime data | targeted validation scripts, `npx vitest run apps/api scripts` | `api` or `data` | Bundled data and generated artifacts used by runtime code |
 | `infra/github-actions-deploy-role.yaml` | CI identity | script checks and CloudFormation review | `ci` | GitHub OIDC provider and deploy role |
 | `infra/runtime-data.yaml`, `infra/runtime-buckets.yaml` | Data infrastructure | script checks and CloudFormation review | `data` | DynamoDB tables and runtime/test fixture buckets |
 | `infra/api-hosting.yaml` | API infrastructure | API checks and CloudFormation review | `api` or `infra` | Lambda, HTTP API Gateway, execution role, logs |

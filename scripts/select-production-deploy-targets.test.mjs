@@ -59,6 +59,12 @@ describe("select-production-deploy-targets", () => {
       "frontend"
     ]);
   });
+
+  it("routes opportunity overlay and tax-gap runtime data files to api", () => {
+    expect(classifyFiles(["data/opportunity_award_audit_overlay.v1.json"]).targets).toEqual(["api"]);
+    expect(classifyFiles(["data/opportunity_availability_dispositions.v1.json"]).targets).toEqual(["api"]);
+    expect(classifyFiles(["data/tax_gap_runtime_rules_2026-07-05.json"]).targets).toEqual(["api"]);
+  });
 });
 
 function lockfile(options = {}) {

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  hasCurrentRetrofitRecommendationsPayloadShape,
   filterRetrofitRecommendationsPayload,
   persistentRetrofitRecommendationsS3Key,
   persistentRetrofitRecommendationsStateKey,
@@ -48,5 +49,47 @@ describe("retrofit recommendations persistent cache helpers", () => {
     expect(partial.isPartialRecommendations).toBe(true);
     expect(partial.retrofits).toEqual([{ retrofitTypeId: "led_lighting_retrofit", opportunities: [{ id: "c" }] }]);
     expect(partial.summary).toEqual({ matchedRetrofitCount: 1, matchedOpportunityCount: 1 });
+  });
+
+  it("requires payback fields on calculated savings preview payloads", () => {
+    const validPayload = {
+      retrofits: [
+        {
+          retrofitTypeId: "led_lighting_retrofit",
+          savingsPreview: {
+            status: "calculated",
+            paybackPeriodYears: 1.8,
+            paybackPeriodDetails: {
+              method: "simple"
+            }
+          }
+        }
+      ]
+    };
+    const stalePayload = {
+      retrofits: [
+        {
+          retrofitTypeId: "led_lighting_retrofit",
+          savingsPreview: {
+            status: "calculated",
+            paybackPeriodYears: 1.8
+          }
+        }
+      ]
+    };
+    const unsupportedPayload = {
+      retrofits: [
+        {
+          retrofitTypeId: "energy_audit",
+          savingsPreview: {
+            status: "unsupported"
+          }
+        }
+      ]
+    };
+
+    expect(hasCurrentRetrofitRecommendationsPayloadShape(validPayload)).toBe(true);
+    expect(hasCurrentRetrofitRecommendationsPayloadShape(stalePayload)).toBe(false);
+    expect(hasCurrentRetrofitRecommendationsPayloadShape(unsupportedPayload)).toBe(true);
   });
 });

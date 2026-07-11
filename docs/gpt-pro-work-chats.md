@@ -2,10 +2,7 @@
 
 `/chats` is an admin-only workspace for GPT Pro repair batches.
 
-For local Firstmate dashboard use, `/tasks` can link repair-ready rows to `/chats` with `RETROFI_FIRSTMATE_GPT_PRO_REPAIR_URL=/chats`.
-
 When local Google OAuth is unavailable, set `RETROFI_GPT_PRO_CHATS_LOCAL_AUTH_BYPASS=1` so only the GPT Pro work endpoints skip admin sign-in in non-Lambda local runs.
-The Firstmate tasks local auth bypass only unlocks Firstmate task endpoints and does not grant access to `/chats`.
 
 The production API reads and writes GPT Pro artifacts from the private dev work S3 bucket under the `gpt-pro-work/` prefix.
 

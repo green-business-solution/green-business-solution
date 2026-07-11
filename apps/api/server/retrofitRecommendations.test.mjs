@@ -245,6 +245,52 @@ describe("portal retrofit recommendations", () => {
     expect(payload.retrofits[0].savingsPreview?.sustainabilityImpact?.metrics?.annualOperationalCO2eReductionKgPerYear?.value).toBeGreaterThan(0);
   });
 
+  it("keeps conditional opportunities matchable and only excludes archived entries", () => {
+    const intake = baseIntake();
+    const user = {
+      userId: intake.userId,
+      role: "client",
+      status: "active",
+      fullName: "Test Client",
+      email: "client@example.com",
+      companyName: "Retrofit Test Co",
+      authProvider: "google",
+      googleLinked: true,
+      isFakeUser: false,
+      createdAt: now.toISOString(),
+      lastLoginAt: now.toISOString(),
+    };
+    const conditionalOpportunity = makeOpportunity({
+      opportunityId: "conditional-opportunity",
+      canonicalTitle: "Conditional Lighting Incentive",
+      normalizedTitle: "Conditional Lighting Incentive",
+      availabilityStatus: "conditional",
+      lifecycleStatus: "conditional",
+    });
+    const archivedOpportunity = makeOpportunity({
+      opportunityId: "archived-opportunity",
+      canonicalTitle: "Archived Lighting Incentive",
+      normalizedTitle: "Archived Lighting Incentive",
+      availabilityStatus: "archived",
+      lifecycleStatus: "archived",
+    });
+
+    const payload = buildPortalRetrofitRecommendations({
+      formQuestionCatalog: testFormQuestionCatalog,
+      intake,
+      opportunities: [conditionalOpportunity, archivedOpportunity],
+      now,
+      user,
+    });
+
+    expect(payload.summary.canShowOpportunities).toBe(true);
+    expect(payload.summary.matchedOpportunityCount).toBe(1);
+    expect(payload.retrofits).toHaveLength(1);
+    expect(payload.retrofits[0].opportunities.map((opportunity) => opportunity.opportunityId)).toEqual([
+      "conditional-opportunity",
+    ]);
+  });
+
   it("exposes mandatory pre-opportunity tax inputs when local tax workflow inputs are missing", () => {
     const intake = baseIntake({
       site: {
@@ -444,5 +490,155 @@ describe("portal retrofit recommendations", () => {
     expect(payload.retrofits).toHaveLength(1);
     expect(payload.retrofits[0].retrofitTypeId).toBe("led_lighting_retrofit");
     expect(payload.retrofits[0].savingsPreview?.retrofitTypeId).toBe("led_lighting_retrofit");
+  });
+
+  it("prevents archived opportunities from appearing as current matches", () => {
+    const intake = baseIntake();
+    const lifecycleStatuses = ["active", "conditional", "disabled", "quarantined", "archived"];
+    const payload = buildPortalRetrofitRecommendations({
+      formQuestionCatalog: testFormQuestionCatalog,
+      user: { userId: intake.userId },
+      intake,
+      opportunities: lifecycleStatuses.map((availabilityStatus) =>
+        makeOpportunity({
+          opportunityId: `lifecycle-${availabilityStatus}`,
+          availabilityStatus
+        })
+      ),
+      now
+    });
+
+    expect(payload.summary.matchedOpportunityCount).toBe(2);
+    expect(payload.retrofits.flatMap((retrofit) => retrofit.opportunities)).toEqual([
+      expect.objectContaining({
+        opportunityId: "lifecycle-active",
+        availabilityStatus: "active"
+      }),
+      expect.objectContaining({
+        opportunityId: "lifecycle-conditional",
+        availabilityStatus: "conditional"
+      })
+    ]);
+  });
+
+  it("keeps visible conditional opportunities in the match pipeline", () => {
+    const intake = baseIntake();
+    const payload = buildPortalRetrofitRecommendations({
+      formQuestionCatalog: testFormQuestionCatalog,
+      user: { userId: intake.userId },
+      intake,
+      opportunities: [
+        makeOpportunity({
+          opportunityId: "visible-conditional",
+          canonicalTitle: "Conditional LED Rebate",
+          availabilityStatus: "conditional",
+        }),
+        makeOpportunity({
+          opportunityId: "visible-disabled",
+          canonicalTitle: "Disabled HVAC Rebate",
+          availabilityStatus: "disabled",
+        }),
+      ],
+      now,
+    });
+
+    expect(payload.summary.matchedOpportunityCount).toBeGreaterThan(0);
+    expect(
+      payload.retrofits.flatMap((retrofit) => retrofit.opportunities).map((opportunity) => opportunity.opportunityId),
+    ).toEqual(expect.arrayContaining(["visible-conditional"]));
+  });
+
+  it("propagates award-audit fields into recommendation payload opportunities", () => {
+    const intake = baseIntake();
+    const payload = buildPortalRetrofitRecommendations({
+      formQuestionCatalog: testFormQuestionCatalog,
+      user: {
+        userId: intake.userId,
+        role: "client",
+        status: "active",
+        fullName: "Test Client",
+        email: "client@example.com",
+        companyName: "Retrofit Test Co",
+        authProvider: "google",
+        googleLinked: true,
+        isFakeUser: false,
+        createdAt: now.toISOString(),
+        lastLoginAt: now.toISOString()
+      },
+      intake,
+      opportunities: [
+        makeOpportunity({
+          opportunityId: "audit-payload-opportunity",
+          canonicalTitle: "PG&E Business LED Rebate",
+          technologies: ["LED Lighting"],
+          requiresProgramApproval: false,
+          approvalRequirements: [],
+          approvalStage: "none",
+          awardLikelihood: "possible",
+          awardLikelihoodReason: "The evidence remains inconclusive.",
+          awardLikelihoodEvidence: "Potential outcomes based on reviewed criteria.",
+          reviewStatus: "needs_followup"
+        })
+      ],
+      now
+    });
+
+    const opportunity = payload.retrofits[0].opportunities[0];
+    expect(opportunity).toMatchObject({
+      requiresProgramApproval: false,
+      approvalRequirements: [],
+      approvalStage: "none",
+      awardLikelihood: "possible",
+      awardLikelihoodReason: "The evidence remains inconclusive.",
+      awardLikelihoodEvidence: "Potential outcomes based on reviewed criteria.",
+      reviewStatus: "needs_followup"
+    });
+  });
+
+  it("passes award-audit fields through explain-match summary payloads", () => {
+    const summary = summarizeMatchResult({
+      opportunityId: "opp-audit-1",
+      opportunityName: "Municipal Rebates",
+      offerId: null,
+      retrofitTypeIds: ["led_lighting_retrofit"],
+      retrofitTypes: [],
+      sourceUrl: "https://example.com/program",
+      websiteUrl: "https://example.com/program",
+      applicationUrl: "https://example.com/program/apply",
+      eligibilityStatus: "eligible",
+      rankScore: 0.81,
+      opportunityDataConfidence: 0.92,
+      userProfileCompleteness: 0.8,
+      matchedReasons: ["reason-a"],
+      unresolvedRequirements: [],
+      blockers: [],
+      availabilityStatus: "conditional",
+      availabilityLifecycle: {
+        status: "conditional",
+        conditionalRequirements: [{ type: "locality", description: "Resolve the jurisdiction." }]
+      },
+      requiresProgramApproval: true,
+      approvalRequirements: ["official permit", "energy audit"],
+      approvalStage: "before_installation",
+      awardLikelihood: "near-guaranteed",
+      awardLikelihoodReason: "The benefit is statutory.",
+      awardLikelihoodEvidence: "Evidence shows clear award cadence.",
+      reviewStatus: "audited"
+    });
+
+    expect(summary).toMatchObject({
+      availabilityStatus: "conditional",
+      availabilityLifecycle: {
+        status: "conditional",
+        conditionalRequirements: [{ type: "locality", description: "Resolve the jurisdiction." }]
+      },
+      requiresProgramApproval: true,
+      approvalRequirements: ["official permit", "energy audit"],
+      approvalStage: "before_installation",
+      awardLikelihood: "near_guaranteed",
+      awardLikelihoodReason: "The benefit is statutory.",
+      awardLikelihoodEvidence: "Evidence shows clear award cadence.",
+      reviewStatus: "audited"
+    });
   });
 });

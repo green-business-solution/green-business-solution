@@ -19,4 +19,9 @@ describe("routes", () => {
     expect(shouldCanonicalizeUnknownHomeFallback("/api")).toBe(false);
     expect(shouldCanonicalizeUnknownHomeFallback("/api/auth/google/callback")).toBe(false);
   });
+
+  it("recognizes the canonical tasks report path", () => {
+    expect(routeFromPath("/tasks/reports")).toBe("tasks-report");
+    expect(routeFromPath("/tasks/reports/example-task")).toBe("tasks-report");
+  });
 });
