@@ -121,6 +121,7 @@ export async function seedPortfolioRecord({
     db,
     tableName,
     portfolioId,
+    scenarioId,
     expectedVersion: null,
     events: [seedEvent],
     snapshot,
@@ -291,9 +292,9 @@ export async function storeIdempotencyReceipt({
   result,
 }) {
   await db.send(
-      new PutCommand({
-        TableName: tableName,
-        Item: {
+    new PutCommand({
+      TableName: tableName,
+      Item: {
         stateScope: rowScopeForIdempotency(portfolioId, scenarioId),
         stateKey: String(idempotencyKey),
         payloadHash,

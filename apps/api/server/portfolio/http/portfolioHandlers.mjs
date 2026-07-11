@@ -300,6 +300,7 @@ export async function completePortfolioItemHandler({
     status: "ACCEPTED",
     portfolioId,
     itemId,
+    scenarioId,
     portfolioVersion: nextAggregate.aggregateVersion + 1,
     calculationRunId: currentRunId,
     eventFingerprint: eventFingerprint([
@@ -335,13 +336,13 @@ export async function completePortfolioItemHandler({
       eventCount: aggregate.events.length,
     });
   } catch (error) {
-      const retryReceipt = await loadIdempotencyReceipt({
-        db,
-        tableName,
-        portfolioId,
-        scenarioId,
-        idempotencyKey,
-      });
+    const retryReceipt = await loadIdempotencyReceipt({
+      db,
+      tableName,
+      portfolioId,
+      scenarioId,
+      idempotencyKey,
+    });
     if (retryReceipt?.payloadHash === payloadHash) {
       return retryReceipt.result;
     }
@@ -514,13 +515,13 @@ export async function recalculatePortfolioHandler({
       eventCount: aggregate.events.length,
     });
   } catch (error) {
-      const retryReceipt = await loadIdempotencyReceipt({
-        db,
-        tableName,
-        portfolioId,
-        scenarioId,
-        idempotencyKey,
-      });
+    const retryReceipt = await loadIdempotencyReceipt({
+      db,
+      tableName,
+      portfolioId,
+      scenarioId,
+      idempotencyKey,
+    });
     if (retryReceipt?.payloadHash === payloadHash) {
       return retryReceipt.result;
     }

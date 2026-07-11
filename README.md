@@ -43,6 +43,8 @@ The companion commands are `npm run local:up`, `npm run local:down`, and `npm ru
 
 The local stack details, seeded accounts, and AWS-only limitations are documented in [docs/local-dev-stack.md](./docs/local-dev-stack.md).
 
+Retrofit portfolio APIs are fail-closed by default and only turn on when `RETROFI_PORTFOLIO_WRITE_ENABLED=1` is set intentionally.
+
 ## Local Troubleshooting
 
 If the website shows an API or request error after Google sign-in, intake submission, or admin loading:

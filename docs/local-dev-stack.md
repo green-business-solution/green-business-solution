@@ -39,3 +39,5 @@ Known AWS-only gaps:
 - production DynamoDB regional behavior,
 - production S3 ownership and encryption semantics,
 - SES delivery and quota notifications.
+
+Retrofit portfolio routes stay disabled unless `RETROFI_PORTFOLIO_WRITE_ENABLED=1` is set on purpose.
