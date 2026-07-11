@@ -146,7 +146,7 @@ describe("runPasswordClaimProtectionRepair", () => {
       { db },
     );
 
-    expect(report.scanned).toBe(1);
+    expect(report.scanned).toBe(2);
     expect(report.candidates).toBe(1);
     expect(report.protected).toBe(1);
     expect(calls.filter((command) => command.constructor.name === "ScanCommand")).toHaveLength(2);
