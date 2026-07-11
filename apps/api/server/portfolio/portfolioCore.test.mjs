@@ -437,7 +437,7 @@ describe("portfolio handlers", () => {
       now: new Date("2026-07-10T10:16:00.000Z")
     });
 
-    expect(completeResult.portfolioVersion).toBe(3);
+    expect(completeResult.portfolioVersion).toBe(4);
   });
 
   it("recalculates and persists non-default scenario state", async () => {
