@@ -182,6 +182,7 @@ Runtime records are split by domain so deployment and migration work can stay sc
   quota usage and the new retrofit portfolio event, snapshot, read model, outbox, and idempotency rows.
 
 The former shared `gbs-runtime-state` table has been split into those domain tables.
+The retrofit portfolio aggregate is scenario-aware and uses the runtime-state rows above to persist the write path, then exposes the current portfolio snapshot back through the portal preview flow.
 
 Admin test-case savings previews also include a derived `sustainabilityImpact` contract.
 It is calculated from bill-line deltas and square footage at read time and is not stored as a separate table record.
