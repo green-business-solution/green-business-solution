@@ -300,6 +300,7 @@ export async function completePortfolioItemHandler({
     status: "ACCEPTED",
     portfolioId,
     itemId,
+    scenarioId,
     portfolioVersion: nextAggregate.aggregateVersion + 1,
     calculationRunId: currentRunId,
     eventFingerprint: eventFingerprint([
@@ -315,6 +316,7 @@ export async function completePortfolioItemHandler({
       db,
       tableName,
       portfolioId,
+      scenarioId,
       expectedVersion: expectedPortfolioVersion,
       events: [completeEvent, recalculationEvent, ledgerEvent],
       snapshot: snapshotRecord,
@@ -493,6 +495,7 @@ export async function recalculatePortfolioHandler({
       db,
       tableName,
       portfolioId,
+      scenarioId,
       expectedVersion: aggregate.aggregateVersion,
       events: [recalcEvent],
       snapshot: snapshotRecord,

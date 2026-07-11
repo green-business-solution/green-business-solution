@@ -51,6 +51,8 @@ The production API uses separate AWS regions for:
 - The energy-data and runtime-cache S3 buckets via `GBS_ENERGY_DATA_BUCKET_REGION` (`us-east-1`)
 - The GPT Pro development-work bucket via `GBS_DEV_WORK_BUCKET` and `GBS_GPT_PRO_WORK_PREFIX` (`us-east-1`)
 
+Retrofit portfolio routes are fail-closed in production unless `RETROFI_PORTFOLIO_WRITE_ENABLED=1` is explicitly set in the API runtime environment.
+
 ## Deploy Command
 
 ```sh

@@ -123,6 +123,7 @@ export async function seedPortfolioRecord({
     db,
     tableName,
     portfolioId,
+    scenarioId,
     expectedVersion: null,
     events: [seedEvent],
     snapshot,
@@ -138,6 +139,7 @@ export async function appendPortfolioUpdate({
   db,
   tableName,
   portfolioId,
+  scenarioId = "default",
   expectedVersion,
   events,
   snapshot,
@@ -228,7 +230,7 @@ export async function appendPortfolioUpdate({
       Put: {
         TableName: tableName,
         Item: {
-          stateScope: rowScopeForIdempotency(portfolioId),
+          stateScope: rowScopeForIdempotency(portfolioId, scenarioId),
           stateKey: String(idempotencyReceipt.idempotencyKey),
           payloadHash: idempotencyReceipt.payloadHash,
           commandId: idempotencyReceipt.commandId,
