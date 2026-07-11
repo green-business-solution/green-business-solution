@@ -321,6 +321,27 @@ describe("portfolio handlers", () => {
       code: "PORTFOLIO_CALCULATION_STALE"
     });
   });
+
+  it("seeds a default portfolio item when intake has no explicit seed items", async () => {
+    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
+
+    const db = createMockDb();
+    const result = await readPortfolioHandler({
+      db,
+      tableName: "gbs-api-runtime-state",
+      user,
+      intake: {},
+      portfolioId,
+      scenarioId: "default",
+      now: new Date("2026-07-10T10:09:00.000Z")
+    });
+
+    expect(result.items.map((item) => item.portfolioItemId)).toEqual(["seed_001"]);
+    expect(result.items[0]).toMatchObject({
+      title: "Initial portfolio opportunity",
+      status: "HYPOTHETICAL"
+    });
+  });
 });
 
 function buildManualAggregate(items, events = []) {

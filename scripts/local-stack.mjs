@@ -320,7 +320,7 @@ async function seedUsersAndIntakes(db, s3) {
     uploadedUtilityFiles: california.uploadedUtilityFiles || [],
     utilityExtractedValues: california.utilityExtractedValues || [],
     siteEnergyProfile: california.siteEnergyProfile,
-    energyDataUploadSession: { tokenHash: "local-upload-token", issuedAt: now, expiresAt: "2027-01-01T00:00:00.000Z" },
+    energyDataUploadSession: { tokenHash: hashPublicUploadToken("local-upload-token"), issuedAt: now, expiresAt: "2027-01-01T00:00:00.000Z" },
     createdAt: now,
     updatedAt: now
   };

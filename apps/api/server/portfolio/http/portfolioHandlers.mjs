@@ -476,6 +476,21 @@ function deriveSeedItemsFromIntake(intake = {}) {
     ? intake.portfolioSeedItems
     : [];
 
+  if (input.length === 0) {
+    return [
+      {
+        portfolioItemId: "seed_001",
+        title: "Initial portfolio opportunity",
+        status: "HYPOTHETICAL",
+        lifecycle: "HYPOTHETICAL",
+        independentFinancialValueMinorUnits: 0,
+        financialModelId: "",
+        ruleFamilyId: "fixed-unit-cap-family-v1",
+        sequenceHint: "1"
+      }
+    ];
+  }
+
   return input
     .map((item, index) => ({
       portfolioItemId: cleanText(item.portfolioItemId || `seed_${String(index + 1).padStart(3, "0")}`),
