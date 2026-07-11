@@ -311,7 +311,7 @@ export async function completePortfolioItemHandler({
     latestCalculationBinding: calculationBinding,
     calculationRunId: currentRunId,
     calculationRunSequence: extractRunValue(currentRunId),
-    eventCount: nextAggregate.events.length,
+    eventCount: nextAggregate.events.length + 1,
     itemOrder: nextAggregate.itemOrder || [],
   };
 
