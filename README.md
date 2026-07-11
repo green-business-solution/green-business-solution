@@ -33,6 +33,16 @@ VITE_GOOGLE_CLIENT_ID=google-web-client-id GOOGLE_CLIENT_ID=google-web-client-id
 
 The Google client secret is not used by the local browser sign-in flow.
 
+## Local-Only Stack
+
+Use `npm run dev:local` when you want the API and web app backed by local DynamoDB and MinIO instead of AWS.
+
+It starts the local containers, seeds the local tables and buckets, and then launches the API and Vite app.
+
+The companion commands are `npm run local:up`, `npm run local:down`, and `npm run local:reset`.
+
+The local stack details, seeded accounts, and AWS-only limitations are documented in [docs/local-dev-stack.md](./docs/local-dev-stack.md).
+
 ## Local Troubleshooting
 
 If the website shows an API or request error after Google sign-in, intake submission, or admin loading:
