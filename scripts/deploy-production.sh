@@ -372,6 +372,7 @@ package_api_lambda() {
   copy_data_file data/opportunity_incentive_calculation_packages_v2.json
   copy_data_file data/tax_geography_rules.json
   copy_data_file data/tax_local_workflow_rules.json
+  copy_data_file data/tax_gap_runtime_rules_2026-07-05.json
   copy_data_file data/calculation_requirements.json optional
   copy_data_file data/project_cost_benchmarks.json optional
   copy_data_file data/savings_calculation_methods.json optional

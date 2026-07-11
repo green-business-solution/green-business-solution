@@ -20279,14 +20279,6 @@ body {
     justify-self: start;
   }
 
-  .tasks-response-card {
-    grid-template-columns: 1fr;
-  }
-
-  .tasks-response-form button {
-    justify-self: stretch;
-  }
-
   .database-list-item {
     align-items: start;
     grid-template-columns: 1fr;

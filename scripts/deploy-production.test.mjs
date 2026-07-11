@@ -77,6 +77,12 @@ describe("deploy-production fixture patching flow", () => {
     expect(scriptSource).toContain("copy_data_file data/opportunity_availability_dispositions.v1.json");
   });
 
+  it("packages the opportunity award and availability overlays and tax runtime rules with the API", () => {
+    expect(scriptSource).toContain("copy_data_file data/opportunity_award_audit_overlay.v1.json");
+    expect(scriptSource).toContain("copy_data_file data/opportunity_availability_dispositions.v1.json");
+    expect(scriptSource).toContain("copy_data_file data/tax_gap_runtime_rules_2026-07-05.json");
+  });
+
   it("runs generated fixture download before matching savings patching", () => {
     expect(scriptSource).toMatch(
       /ensure_generated_fixtures\(\)\s*\{[\s\S]*npm run fixtures:generated:download -- --force[\s\S]*npm run matching:test-case-savings[\s\S]*\}/

@@ -41,6 +41,7 @@ const localModeEnv = {
   GBS_APPLICATION_PROFILES_TABLE: "gbs-application-profiles",
   GBS_API_RUNTIME_STATE_TABLE: "gbs-api-runtime-state",
   GBS_ADMIN_EMAILS: "neerkuchlous@gmail.com,pmrajvansh@gmail.com,rshen0210@gmail.com",
+  RETROFI_PORTFOLIO_WRITE_ENABLED: "1",
   GOOGLE_CLIENT_ID: "local-google-client",
   RETROFI_ENABLE_FIRSTMATE_TASKS: "0",
   RETROFI_FIRSTMATE_TASKS_LOCAL_AUTH_BYPASS: "0"

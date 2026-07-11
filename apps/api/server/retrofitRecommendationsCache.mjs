@@ -3,7 +3,7 @@ import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { DeleteCommand, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 
 export const persistentRetrofitRecommendationsStateScope = "retrofitRecommendations";
-export const persistentRetrofitRecommendationsCacheVersion = "2026-07-09-sustainability-impact-v2";
+export const persistentRetrofitRecommendationsCacheVersion = "2026-07-10-integrated-recommendations-v3";
 export const persistentRetrofitRecommendationsPayloadSchemaVersion = "recommendation-payload-v1";
 
 function hasPaybackFields(value) {

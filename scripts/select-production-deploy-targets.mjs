@@ -167,6 +167,9 @@ function targetsForFile(file, context = {}) {
     file === "data/opportunity_incentive_calculation_packages_v2.json" ||
     file === "data/tax_geography_rules.json" ||
     file === "data/tax_local_workflow_rules.json" ||
+    file === "data/opportunity_award_audit_overlay.v1.json" ||
+    file === "data/opportunity_availability_dispositions.v1.json" ||
+    file === "data/tax_gap_runtime_rules_2026-07-05.json" ||
     file === "data/calculation_requirements.json" ||
     file === "data/project_cost_benchmarks.json" ||
     file === "data/savings_calculation_methods.json" ||
