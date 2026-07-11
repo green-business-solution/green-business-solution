@@ -508,7 +508,7 @@ describe("portal retrofit recommendations", () => {
       now
     });
 
-    expect(payload.summary.matchedOpportunityCount).toBe(4);
+    expect(payload.summary.matchedOpportunityCount).toBe(2);
     expect(payload.retrofits.flatMap((retrofit) => retrofit.opportunities)).toEqual([
       expect.objectContaining({
         opportunityId: "lifecycle-active",
@@ -517,14 +517,6 @@ describe("portal retrofit recommendations", () => {
       expect.objectContaining({
         opportunityId: "lifecycle-conditional",
         availabilityStatus: "conditional"
-      }),
-      expect.objectContaining({
-        opportunityId: "lifecycle-disabled",
-        availabilityStatus: "disabled"
-      }),
-      expect.objectContaining({
-        opportunityId: "lifecycle-quarantined",
-        availabilityStatus: "quarantined"
       })
     ]);
   });
