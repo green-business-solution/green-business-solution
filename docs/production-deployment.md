@@ -29,7 +29,7 @@ The runtime stacks create:
 - `gbs-dashboard-performance` for synthetic/test-case dashboard performance records.
 - `gbs-retrofit-recommendation-cache` for recommendation cache metadata.
 - `gbs-application-profiles` for application source/profile registry records.
-- `gbs-api-runtime-state` for operational state such as Geocodio quota usage.
+- `gbs-api-runtime-state` for operational state such as Geocodio quota usage and retrofit portfolio event, snapshot, read model, outbox, and idempotency rows.
 - `gbs-firstmate-tasks` for production-safe Codex task snapshots and bounded admin report records.
 - `gbs-retrofi-org-runtime-cache-...` for generated recommendation cache payloads.
 - `gbs-retrofi-test-fixtures-...` for generated fixtures and synthetic test data.
