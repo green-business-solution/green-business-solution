@@ -24,7 +24,11 @@ Representative fields:
 - `companyName`
 - `authProvider`: `google`, `password`, or `google,password`
 - `googleLinked`: boolean
-- `passwordLinked`: boolean
+- `passwordLinked`: boolean. It should only be `true` when the record also has `passwordHash`,
+  `passwordSalt`, `passwordAlgorithm`, and `passwordHashKeyLength` populated.
+- Password-claim repair runs may temporarily add `passwordClaimProtected`,
+  `passwordClaimProtectionRunId`, `passwordClaimProtectionAt`, and
+  `passwordClaimProtectionReason` to records that were scanned for protection.
 - `googleSubject`
 - `googleEmail`
 - `createdAt`
@@ -259,6 +263,9 @@ Expected:
 
 The admin dashboard displays one tab per table returned by the local API, including
 `gbs-opportunity-candidates` after that table has been created in AWS.
+
+`/api/diagnostics` returns `"ok": true` and includes the current password-signup protection
+flags used by the account-claim repair flow.
 
 If only Vite is running, the browser can render the pages but intake submission and authenticated
 dashboard loading will fail because `/api` has nothing to talk to.
