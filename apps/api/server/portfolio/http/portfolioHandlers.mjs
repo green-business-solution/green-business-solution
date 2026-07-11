@@ -4,7 +4,6 @@ import {
   loadIdempotencyReceipt,
   loadPortfolioById,
   makeOutboxRow,
-  seedPortfolioRecord,
 } from "../persistence/portfolioStore.mjs";
 import {
   PORTFOLIO_EVENT_TYPES,
@@ -41,7 +40,6 @@ export function readPortfolioHandler({
   tableName,
   user,
   portfolioId,
-  intake = {},
   scenarioId = "default",
   now = new Date(),
 }) {
@@ -63,20 +61,13 @@ export function readPortfolioHandler({
     portfolioId,
     userId: user.userId,
   }).then(async (found) => {
-    let { aggregate, snapshot } = found;
+    const { aggregate, snapshot } = found;
 
     if (!snapshot) {
-      const seeded = await seedPortfolioRecord({
-        db,
-        tableName,
-        portfolioId,
-        userId: user.userId,
-        seedItems: deriveSeedItemsFromIntake(intake),
-        scenarioId,
-        now,
-      });
-      aggregate = seeded.aggregate;
-      snapshot = seeded.snapshot;
+      const error = new Error("Portfolio has not been initialized.");
+      error.status = 409;
+      error.code = "PORTFOLIO_NOT_INITIALIZED";
+      throw error;
     }
 
     const scenarioOrder = resolveScenarioOrder({
@@ -110,7 +101,6 @@ export async function completePortfolioItemHandler({
   db,
   tableName,
   user,
-  intake = {},
   portfolioId,
   itemId,
   payload = {},
@@ -187,20 +177,12 @@ export async function completePortfolioItemHandler({
     userId: user.userId,
   });
 
-  let { aggregate, snapshot, events } = loaded;
+  const { aggregate, snapshot, events } = loaded;
   if (!snapshot) {
-    const seeded = await seedPortfolioRecord({
-      db,
-      tableName,
-      portfolioId,
-      userId: user.userId,
-      seedItems: deriveSeedItemsFromIntake(intake),
-      scenarioId,
-      now,
-    });
-    aggregate = seeded.aggregate;
-    snapshot = seeded.snapshot;
-    events = seeded.aggregate.events || [];
+    const error = new Error("Portfolio has not been initialized.");
+    error.status = 409;
+    error.code = "PORTFOLIO_NOT_INITIALIZED";
+    throw error;
   }
 
   if (!validateExpectedVersion(aggregate, expectedPortfolioVersion)) {
@@ -534,42 +516,6 @@ export async function recalculatePortfolioHandler({
   }
 
   return response;
-}
-
-function deriveSeedItemsFromIntake(intake = {}) {
-  const input = Array.isArray(intake.portfolioSeedItems)
-    ? intake.portfolioSeedItems
-    : [];
-
-  if (input.length === 0) {
-    return [
-      {
-        portfolioItemId: "seed_001",
-        title: "Initial portfolio opportunity",
-        status: "HYPOTHETICAL",
-        lifecycle: "HYPOTHETICAL",
-        independentFinancialValueMinorUnits: 0,
-        financialModelId: "",
-        ruleFamilyId: "fixed-unit-cap-family-v1",
-        sequenceHint: "1",
-      },
-    ];
-  }
-
-  return input.map((item, index) => ({
-    portfolioItemId: cleanText(
-      item.portfolioItemId || `seed_${String(index + 1).padStart(3, "0")}`,
-    ),
-    title: cleanText(item.title || `Portfolio item ${index + 1}`),
-    status: "HYPOTHETICAL",
-    lifecycle: "HYPOTHETICAL",
-    independentFinancialValueMinorUnits: toMinorUnits(
-      item.independentFinancialValueMinorUnits,
-    ),
-    financialModelId: cleanText(item.financialModelId),
-    ruleFamilyId: cleanText(item.ruleFamilyId) || "fixed-unit-cap-family-v1",
-    sequenceHint: cleanText(item.sequenceHint) || String(index + 1),
-  }));
 }
 
 function nextRunIdFrom(currentRun, fallback) {

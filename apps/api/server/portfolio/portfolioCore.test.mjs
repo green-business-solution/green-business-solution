@@ -194,31 +194,34 @@ describe("portfolio handlers", () => {
     }
   });
 
-  it("supports idempotent completion, rejects payload drift, and blocks stale versions", async () => {
+  it("supports idempotent completion, rejects payload drift, and blocks stale versions when pre-seeded", async () => {
     process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
-
-    const db = createMockDb();
-    const intake = {
-      portfolioSeedItems: [
-        {
-          portfolioItemId: "item_a",
-          title: "Lighting",
-          independentFinancialValueMinorUnits: 60000,
-          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
-        },
-        {
-          portfolioItemId: "item_b",
-          title: "HVAC",
-          independentFinancialValueMinorUnits: 70000,
-          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
-        }
-      ]
-    };
+    const seedItems = [
+      {
+        portfolioItemId: "item_a",
+        title: "Lighting",
+        independentFinancialValueMinorUnits: 60000,
+        ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+      },
+      {
+        portfolioItemId: "item_b",
+        title: "HVAC",
+        independentFinancialValueMinorUnits: 70000,
+        ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+      }
+    ];
+    const seed = buildSeededPortfolioSnapshot({
+      portfolioId,
+      userId: user.userId,
+      seedItems,
+      now: "2026-07-10T10:05:00.000Z"
+    });
+    const db = createMockDb(seed.seedRows);
 
     const command = {
       commandId: "complete-item-a-001",
       idempotencyKey: "idem-001",
-      expectedPortfolioVersion: 1,
+      expectedPortfolioVersion: seed.aggregate.aggregateVersion,
       calculationBinding: "calc-v1",
       financialSelection: {
         requestedBenefitMinorUnits: 60000
@@ -229,7 +232,6 @@ describe("portfolio handlers", () => {
       db,
       tableName: "gbs-api-runtime-state",
       user,
-      intake,
       portfolioId,
       itemId: "item_a",
       payload: command,
@@ -247,7 +249,6 @@ describe("portfolio handlers", () => {
       db,
       tableName: "gbs-api-runtime-state",
       user,
-      intake,
       portfolioId,
       itemId: "item_a",
       payload: command,
@@ -263,7 +264,6 @@ describe("portfolio handlers", () => {
         db,
         tableName: "gbs-api-runtime-state",
         user,
-        intake,
         portfolioId,
         itemId: "item_a",
         payload: {
@@ -286,7 +286,6 @@ describe("portfolio handlers", () => {
         db,
         tableName: "gbs-api-runtime-state",
         user,
-        intake,
         portfolioId,
         itemId: "item_b",
         payload: {
@@ -322,27 +321,166 @@ describe("portfolio handlers", () => {
     });
   });
 
-  it("seeds a default portfolio item when intake has no explicit seed items", async () => {
+  it("does not create an empty snapshot when reading an uninitialized portfolio", async () => {
     process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
-
     const db = createMockDb();
+    const calls = [];
+    const trackingDb = {
+      ...db,
+      send: async (command) => {
+        calls.push(command.constructor.name);
+        return db.send(command);
+      },
+    };
+
+    await expect(
+      readPortfolioHandler({
+        db: trackingDb,
+        tableName: "gbs-api-runtime-state",
+        user,
+        portfolioId,
+        scenarioId: "default",
+        now: new Date("2026-07-10T10:09:00.000Z")
+      })
+    ).rejects.toMatchObject({
+      status: 409,
+      code: "PORTFOLIO_NOT_INITIALIZED"
+    });
+    expect(calls).toContain("QueryCommand");
+    expect(calls).not.toContain("TransactWriteCommand");
+  });
+
+  it("supports explicit snapshot read after seeded initialization", async () => {
+    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
+    const seed = buildSeededPortfolioSnapshot({
+      portfolioId,
+      userId: user.userId,
+      seedItems: [
+        {
+          portfolioItemId: "item_read_a",
+          title: "Lighting",
+          independentFinancialValueMinorUnits: 10000,
+          ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+        }
+      ],
+      now: "2026-07-10T10:10:00.000Z"
+    });
+    const seededDb = createMockDb(seed.seedRows);
+
     const result = await readPortfolioHandler({
-      db,
+      db: seededDb,
       tableName: "gbs-api-runtime-state",
       user,
-      intake: {},
       portfolioId,
       scenarioId: "default",
-      now: new Date("2026-07-10T10:09:00.000Z")
+      now: new Date("2026-07-10T10:10:00.000Z")
     });
 
-    expect(result.items.map((item) => item.portfolioItemId)).toEqual(["seed_001"]);
-    expect(result.items[0]).toMatchObject({
-      title: "Initial portfolio opportunity",
-      status: "HYPOTHETICAL"
+    expect(result.portfolioVersion).toBe(1);
+    expect(result.items.map((item) => item.portfolioItemId)).toEqual(["item_read_a"]);
+  });
+
+  it("keeps write APIs disabled with zero DB calls", async () => {
+    const db = createMockDb();
+    let dbCalls = 0;
+    const trackingDb = {
+      ...db,
+      send: async (command) => {
+        dbCalls += 1;
+        return db.send(command);
+      },
+    };
+
+    await expect(
+      completePortfolioItemHandler({
+        db: trackingDb,
+        tableName: "gbs-api-runtime-state",
+        user,
+        portfolioId,
+        itemId: "item_a",
+        payload: {
+          commandId: "complete-disabled",
+          idempotencyKey: "complete-disabled-idem",
+          expectedPortfolioVersion: 1,
+          calculationBinding: "calc-v1"
+        },
+        scenarioId: "default",
+        now: new Date("2026-07-10T10:11:00.000Z")
+      })
+    ).rejects.toMatchObject({
+      status: 404,
+      code: "PORTFOLIO_FEATURE_DISABLED"
     });
+
+    await expect(
+      recalculatePortfolioHandler({
+        db: trackingDb,
+        tableName: "gbs-api-runtime-state",
+        user,
+        portfolioId,
+        payload: {
+          commandId: "recalc-disabled",
+          idempotencyKey: "recalc-disabled-idem"
+        },
+        scenarioId: "default",
+        now: new Date("2026-07-10T10:12:00.000Z")
+      })
+    ).rejects.toMatchObject({
+      status: 404,
+      code: "PORTFOLIO_FEATURE_DISABLED"
+    });
+    expect(dbCalls).toBe(0);
   });
 });
+
+function buildSeededPortfolioSnapshot({ portfolioId: portfolioIdInput, userId, seedItems, now }) {
+  const seedTime = now || new Date().toISOString();
+  const seedEvent = createEventEnvelope({
+    portfolioId: portfolioIdInput,
+    portfolioItemId: null,
+    type: "PORTFOLIO_SNAPSHOT_SEEDED",
+    commandId: `seed-${String(portfolioIdInput)}-${Date.now()}`,
+    expectedPortfolioVersion: 0,
+    payload: {
+      scenarioId: "default",
+      items: seedItems,
+      calculationBinding: "calc-v1"
+    },
+    userId,
+    runId: "run-0",
+    now: seedTime
+  });
+  const aggregate = loadAggregateFromEvents({
+    events: [seedEvent],
+    portfolioId: portfolioIdInput,
+    userId,
+    scenarioId: "default"
+  });
+  const scope = `PORTFOLIO#${portfolioIdInput}`;
+  const seedRows = [
+    {
+      ...seedEvent,
+      stateScope: scope,
+      stateKey: "EVENT#000000001",
+      recordType: "EVENT"
+    },
+    {
+      stateScope: scope,
+      stateKey: "SNAPSHOT#PRIMARY",
+      recordType: "SNAPSHOT",
+      scenarioId: "default",
+      aggregateVersion: aggregate.aggregateVersion,
+      portfolioId: portfolioIdInput,
+      userId,
+      latestCalculationBinding: "calc-v1",
+      calculationRunId: "run-0",
+      calculationRunSequence: 0,
+      eventCount: aggregate.events.length,
+      updatedAt: seedTime
+    }
+  ];
+  return { aggregate, seedRows };
+}
 
 function buildManualAggregate(items, events = []) {
   return {
