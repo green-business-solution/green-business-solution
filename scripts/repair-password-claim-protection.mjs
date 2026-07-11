@@ -133,10 +133,10 @@ export async function runPasswordClaimProtectionRepair(options = {}, dependencie
   };
 
   let startKey;
-  let processed = 0;
+  let scanned = 0;
 
-  while (processed < config.maxUpdates) {
-    const requestLimit = Math.min(config.maxUpdates - processed, 25);
+  while (scanned < config.maxUpdates) {
+    const requestLimit = Math.min(config.maxUpdates - scanned, 25);
     const scanResult = await db.send(
       new ScanCommand({
         TableName: config.usersTable,
@@ -163,12 +163,13 @@ export async function runPasswordClaimProtectionRepair(options = {}, dependencie
       continue;
     }
 
-    outcome.scanned += records.length;
-
     for (const user of records) {
-      if (processed >= config.maxUpdates) {
+      if (scanned >= config.maxUpdates) {
         break;
       }
+
+      scanned += 1;
+      outcome.scanned += 1;
 
       const needsProtection = requiresPasswordClaimProtection(user, {
         passwordHashAlgorithm: "scrypt",
@@ -187,14 +188,12 @@ export async function runPasswordClaimProtectionRepair(options = {}, dependencie
           continue;
         }
 
-        outcome.candidates += 1;
-
         if (user[PASSWORD_CLAIM_GUARD_FIELD] === true) {
           outcome.alreadyProtected += 1;
           continue;
         }
 
-        processed += 1;
+        outcome.candidates += 1;
 
         if (config.dryRun) {
           outcome.protected += 1;
@@ -237,7 +236,6 @@ export async function runPasswordClaimProtectionRepair(options = {}, dependencie
         }
 
         outcome.candidates += 1;
-        processed += 1;
         if (config.dryRun) {
           outcome.restored += 1;
           continue;

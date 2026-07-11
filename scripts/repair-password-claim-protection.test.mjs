@@ -151,6 +151,47 @@ describe("runPasswordClaimProtectionRepair", () => {
     expect(calls.filter((command) => command.constructor.name === "ScanCommand")).toHaveLength(2);
   });
 
+  it("stops after the configured scan budget even when rows are skipped", async () => {
+    const { calls, db } = createDbRecorder([
+      {
+        Items: [
+          {
+            userId: "u-skip",
+            status: "active",
+            role: "member",
+            passwordLinked: false,
+          },
+        ],
+        LastEvaluatedKey: { userId: "u-skip" },
+      },
+      {
+        Items: [
+          {
+            userId: "u-admin-vulnerable",
+            status: "active",
+            role: "admin",
+            passwordLinked: false,
+          },
+        ],
+        LastEvaluatedKey: null,
+      },
+    ]);
+
+    const report = await runPasswordClaimProtectionRepair(
+      {
+        dryRun: true,
+        usersTable: "gbs-users",
+        maxUpdates: 1,
+      },
+      { db },
+    );
+
+    expect(report.scanned).toBe(1);
+    expect(report.skipped).toBe(1);
+    expect(report.protected).toBe(0);
+    expect(calls.filter((command) => command.constructor.name === "ScanCommand")).toHaveLength(1);
+  });
+
   it("requires an explicit run id for rollback mode", async () => {
     await expect(
       runPasswordClaimProtectionRepair(
