@@ -117,6 +117,40 @@ describe("runPasswordClaimProtectionRepair", () => {
     expect(updateExpression).toContain("REMOVE");
   });
 
+  it("continues scanning across empty pages with a last evaluated key", async () => {
+    const { calls, db } = createDbRecorder([
+      {
+        Items: [],
+        LastEvaluatedKey: { userId: "page-2" },
+      },
+      {
+        Items: [
+          {
+            userId: "u-late",
+            status: "active",
+            role: "admin",
+            passwordLinked: false,
+          },
+        ],
+        LastEvaluatedKey: null,
+      },
+    ]);
+
+    const report = await runPasswordClaimProtectionRepair(
+      {
+        dryRun: true,
+        usersTable: "gbs-users",
+        maxUpdates: 10,
+      },
+      { db },
+    );
+
+    expect(report.scanned).toBe(1);
+    expect(report.candidates).toBe(1);
+    expect(report.protected).toBe(1);
+    expect(calls.filter((command) => command.constructor.name === "ScanCommand")).toHaveLength(2);
+  });
+
   it("requires an explicit run id for rollback mode", async () => {
     await expect(
       runPasswordClaimProtectionRepair(
