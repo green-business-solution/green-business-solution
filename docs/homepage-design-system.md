@@ -3,6 +3,7 @@
 The current RetroFi homepage is the design system source of truth.
 
 This document reverse engineers the homepage visual language from the public homepage modules and `apps/web/src/styles.css`.
+`apps/web/src/App.tsx` now orchestrates routing and auth, while `apps/web/src/pages/home/HomePage.tsx` composes the public homepage shell and sections.
 Treat these values and behaviors as constraints, not suggestions.
 Do not restyle, normalize, or "improve" them when building adjacent public surfaces unless the user explicitly asks to change the homepage system itself.
 
