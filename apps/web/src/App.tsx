@@ -3007,6 +3007,7 @@ const PUBLIC_SCROLL_RESET_ROUTES = new Set<Route>([
   "about-team",
   "about-trust",
   "about-contact",
+  "pricing",
   "scan",
   "scan-results",
   "scan-energy-data",
@@ -23704,9 +23705,6 @@ export function App() {
     function syncRoute() {
       if (window.location.pathname === "/how-it-works") {
         window.history.replaceState({}, "", `${pathForRoute("home")}#${HOME_HOW_IT_WORKS_SECTION_ID}`);
-      }
-      if (window.location.pathname === "/pricing") {
-        window.history.replaceState({}, "", `${pathForRoute("home")}#${HOME_PRICING_SECTION_ID}`);
       }
       const nextRoute = routeFromPath();
       if (window.location.pathname === "/database") {
