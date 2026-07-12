@@ -36,6 +36,12 @@ import {
 } from "./routes";
 import { scannerFrames } from "./lib/scannerFrames";
 import {
+  homeJourneyFinalFrame,
+  homeJourneyFirstFrame,
+  homeJourneyFrameCount,
+  homeJourneyFrames,
+} from "./lib/homeJourneyFrames";
+import {
   UserPreviewTriageBadges,
   UserPreviewTriagePanel,
   UserPreviewTriageProvider,
@@ -4101,9 +4107,20 @@ function HomeDashboardStatusStrip() {
   );
 }
 
-function HomeDashboardPreviewSection() {
+function HomeDashboardPreviewSection({
+  embeddedInJourney = false,
+  includePricing = true,
+}: {
+  embeddedInJourney?: boolean;
+  includePricing?: boolean;
+}) {
   return (
-    <section aria-labelledby="home-dashboard-preview-heading" className="home-dashboard-preview-section" id={HOME_DASHBOARD_SECTION_ID}>
+    <section
+      aria-labelledby="home-dashboard-preview-heading"
+      className={`home-dashboard-preview-section home-dashboard-preview-stage${embeddedInJourney ? " home-dashboard-preview-stage--journey-embedded" : ""}`}
+      id={HOME_DASHBOARD_SECTION_ID}
+      style={{ "--home-journey-final-frame": `url("${homeJourneyFinalFrame}")` } as CSSProperties}
+    >
       <div className="home-dashboard-preview-inner">
         <header className="home-dashboard-preview-intro">
           <p>Performance dashboard</p>
@@ -4214,7 +4231,7 @@ function HomeDashboardPreviewSection() {
             </article>
           </div>
         </div>
-        <CustomerPricingSection />
+        {includePricing ? <CustomerPricingSection /> : null}
       </div>
     </section>
   );
@@ -5443,6 +5460,46 @@ function HomeHowItWorksSection({
   );
 }
 
+function HomeJourneyFrameSection() {
+  const [frameProgress, setFrameProgress] = useState(0);
+  const dashboardHandoffOpacity =
+    1 - smoothHomeJourneyFrameProgress(0.94, 0.995, frameProgress);
+  const handleFrameProgress = useCallback((progress: number) => {
+    setFrameProgress((currentProgress) =>
+      Math.abs(currentProgress - progress) > 0.0001
+        ? progress
+        : currentProgress,
+    );
+  }, []);
+
+  return (
+    <div
+      className="home-journey-frame-bridge"
+      style={{ "--home-journey-first-frame": `url("${homeJourneyFirstFrame}")` } as CSSProperties}
+    >
+      <ScrollFrameScanner
+        afterStickyChildren={
+          <>
+            <HomeDashboardPreviewSection embeddedInJourney includePricing={false} />
+            <div aria-hidden="true" className="home-dashboard-exit-spacer" />
+            <CustomerPricingSection />
+          </>
+        }
+        ariaLabel="How RetroFi works and transitions into the performance dashboard"
+        className="home-journey-frame-scanner"
+        frames={homeJourneyFrames}
+        gradientOpacity={dashboardHandoffOpacity}
+        onProgress={handleFrameProgress}
+        pauseFrameAt={0.5}
+        pauseFrameWhileSelector=".home-dashboard-preview-stage--journey-embedded"
+        reducedMotionFrameIndex={homeJourneyFrameCount - 1}
+        resumeFrameSelector=".home-dashboard-exit-spacer"
+        scrollDistanceViewportHeights={3.75}
+      />
+    </div>
+  );
+}
+
 function HomePage({
   navigate,
   onHowItWorksClick,
@@ -5464,7 +5521,7 @@ function HomePage({
           <HowItWorksJourneySection embedded sectionId={HOME_HOW_IT_WORKS_SECTION_ID} />
         </div>
       </div>
-      <HomeDashboardPreviewSection />
+      <HomeJourneyFrameSection />
     </PublicShell>
   );
 }
