@@ -1,0 +1,570 @@
+.customer-pricing-section {
+  background:
+    radial-gradient(
+      circle at 8% 16%,
+      rgba(158, 202, 137, 0.22),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 88% 8%,
+      rgba(191, 224, 164, 0.2),
+      transparent 25%
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), #f6fbf3 72%, #edf6ea);
+  border: 1px solid rgba(8, 38, 25, 0.1);
+  border-radius: 22px;
+  box-shadow:
+    0 18px 50px rgba(8, 38, 25, 0.075),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  display: grid;
+  gap: clamp(24px, 3vw, 34px);
+  isolation: isolate;
+  margin: 48px 0 0;
+  overflow: hidden;
+  padding: clamp(28px, 4vw, 56px);
+  position: relative;
+}
+
+.customer-pricing-heading,
+.customer-pricing-layout {
+  position: relative;
+  z-index: 1;
+}
+
+.customer-pricing-vines {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.customer-pricing-vine {
+  color: rgba(11, 108, 60, 0.36);
+  fill: none;
+  height: 112%;
+  position: absolute;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2.3;
+  top: -6%;
+  width: min(22vw, 280px);
+}
+
+.customer-pricing-vine--left {
+  left: clamp(-110px, -6vw, -48px);
+}
+
+.customer-pricing-vine--right {
+  right: clamp(-110px, -6vw, -48px);
+  transform: scaleX(-1);
+}
+
+.customer-pricing-tendril {
+  opacity: 0.58;
+  stroke-width: 1.35;
+}
+
+.customer-pricing-leaves {
+  fill: rgba(104, 200, 140, 0.18);
+  stroke: rgba(11, 108, 60, 0.22);
+  stroke-width: 1.1;
+}
+
+.customer-pricing-heading {
+  display: grid;
+  gap: 10px;
+  max-width: 680px;
+}
+
+.customer-pricing-heading .eyebrow,
+.pricing-estimator-card .eyebrow,
+.funding-activation-fee-card .eyebrow {
+  color: #0b6c3c;
+  font-weight: 680;
+  margin: 0;
+}
+
+.customer-pricing-heading h2,
+.pricing-journey-step h2,
+.funding-activation-fee-card h2 {
+  color: #062419;
+  font-family:
+    "Cormorant Garamond", "EB Garamond", "Iowan Old Style", Georgia, serif;
+  font-weight: 560;
+  letter-spacing: -0.052em;
+}
+
+.customer-pricing-heading h2 {
+  font-size: clamp(42px, 4.4vw, 74px);
+  line-height: 1;
+  margin: 0;
+}
+
+.customer-pricing-heading > p:last-child,
+.pricing-estimator-card > div > p,
+.funding-activation-fee-card p {
+  color: #5e6b63;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.customer-pricing-layout {
+  display: grid;
+  gap: clamp(20px, 2.4vw, 34px);
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.95fr);
+}
+
+.pricing-estimate-column {
+  display: grid;
+  gap: 24px;
+}
+
+.pricing-estimate-result-slot {
+  min-height: 128px;
+}
+
+.pricing-estimate-result-slot .pricing-estimate-result {
+  min-height: 128px;
+}
+
+.pricing-journey-card,
+.pricing-estimator-card,
+.funding-activation-fee-card {
+  background:
+    linear-gradient(145deg, #ffffff, #fbfefb),
+    radial-gradient(circle at 92% 4%, rgba(35, 142, 82, 0.06), transparent 34%);
+  border: 1px solid rgba(8, 38, 25, 0.1);
+  border-radius: 22px;
+  box-shadow:
+    0 18px 50px rgba(8, 38, 25, 0.075),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.pricing-journey-card {
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+}
+
+.pricing-journey-step {
+  align-items: start;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 52px minmax(0, 1fr);
+  padding: clamp(24px, 2.4vw, 34px);
+  position: relative;
+}
+
+.pricing-journey-step + .pricing-journey-step {
+  border-top: 1px solid rgba(8, 38, 25, 0.1);
+}
+
+.pricing-journey-icon {
+  align-items: center;
+  background: #eff8ef;
+  border: 1px solid rgba(8, 118, 63, 0.18);
+  border-radius: 999px;
+  color: #08763f;
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 850;
+  height: 52px;
+  justify-content: center;
+  width: 52px;
+}
+
+.pricing-journey-step h2,
+.pricing-estimator-card h2,
+.funding-activation-fee-card h2 {
+  margin: 0;
+}
+
+.pricing-journey-step h2 {
+  font-size: clamp(28px, 2.5vw, 38px);
+  line-height: 1;
+}
+
+.pricing-journey-step p {
+  color: #5e6b63;
+  line-height: 1.5;
+  margin: 10px 0 0;
+  max-width: 490px;
+}
+
+.pricing-estimator-card {
+  align-content: start;
+  display: grid;
+  gap: 20px;
+  padding: clamp(24px, 2.4vw, 34px);
+}
+
+.pricing-estimator-card h2 {
+  color: #062419;
+  font-size: clamp(26px, 2.2vw, 34px);
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  margin: 4px 0 8px;
+}
+
+.pricing-choice-group {
+  border: 0;
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.pricing-choice-group legend {
+  color: #17452f;
+  font-size: 14px;
+  font-weight: 760;
+  padding: 0;
+}
+
+.pricing-address-field {
+  display: grid;
+  gap: 8px;
+}
+
+.pricing-address-field > span {
+  color: #17452f;
+  font-size: 14px;
+  font-weight: 760;
+}
+
+.pricing-address-field input {
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(8, 38, 25, 0.12);
+  border-radius: 11px;
+  color: #062419;
+  font: inherit;
+  min-height: 46px;
+  padding: 0 13px;
+}
+
+.pricing-address-field input:focus-visible {
+  border-color: #08763f;
+  outline: 3px solid rgba(8, 118, 63, 0.34);
+  outline-offset: 3px;
+}
+
+.pricing-address-field small {
+  color: #5e6b63;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.pricing-choice-group > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pricing-choice-group--utility > div {
+  gap: 12px;
+}
+
+.pricing-choice-group--business,
+.pricing-choice-group--utility {
+  gap: 30px;
+}
+
+.pricing-choice-group--business legend,
+.pricing-choice-group--utility legend {
+  margin-bottom: 22px;
+}
+
+.pricing-choice-group--business > div,
+.pricing-choice-group--utility > div {
+  row-gap: 12px;
+}
+
+.pricing-choice-group--utility .pricing-choice span {
+  min-width: 128px;
+  padding: 11px 14px;
+  text-align: center;
+}
+
+.pricing-choice {
+  cursor: pointer;
+  position: relative;
+}
+
+.pricing-choice input {
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.pricing-choice span {
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(8, 38, 25, 0.12);
+  border-radius: 11px;
+  color: #17452f;
+  display: block;
+  font-size: 13px;
+  font-weight: 680;
+  padding: 9px 11px;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.pricing-choice:hover span {
+  border-color: rgba(8, 118, 63, 0.2);
+  box-shadow: 0 8px 18px rgba(8, 38, 25, 0.06);
+}
+
+.pricing-choice input:checked + span {
+  background: #e7f2ec;
+  border-color: #08763f;
+  color: #062419;
+}
+
+.pricing-choice input:focus-visible + span {
+  outline: 3px solid rgba(8, 118, 63, 0.34);
+  outline-offset: 3px;
+}
+
+.pricing-estimate-result {
+  background: #f3f8f1;
+  border: 1px solid rgba(8, 38, 25, 0.12);
+  border-radius: 18px;
+  display: grid;
+  gap: 6px;
+  min-height: 110px;
+  padding: 18px;
+}
+
+.pricing-estimate-result p,
+.pricing-estimate-result small,
+.pricing-estimate-result span {
+  color: #5e6b63;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.pricing-estimate-result.is-ready {
+  background: #062619;
+  border-color: #062619;
+  box-shadow: 0 24px 60px rgba(6, 38, 25, 0.18);
+}
+
+.pricing-estimate-result.is-ready span,
+.pricing-estimate-result.is-ready small {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.pricing-estimate-result strong {
+  color: #08763f;
+  font-size: clamp(34px, 3.6vw, 52px);
+  letter-spacing: -0.065em;
+  line-height: 0.95;
+}
+
+.pricing-estimate-result.is-ready strong {
+  color: #ffffff;
+}
+
+.pricing-estimate-formula {
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  display: grid;
+  gap: 4px;
+  margin-top: 6px;
+  padding-top: 12px;
+}
+
+.pricing-estimate-formula span,
+.pricing-estimate-formula small {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+}
+
+.pricing-estimate-formula b {
+  color: #ffffff;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+
+.funding-activation-fee-card {
+  align-items: center;
+  display: grid;
+  gap: clamp(24px, 3vw, 52px);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.8fr);
+  padding: clamp(24px, 3vw, 40px);
+}
+
+.funding-activation-fee-card h2 {
+  font-size: clamp(30px, 3vw, 42px);
+  line-height: 1;
+  margin: 4px 0 10px;
+}
+
+.funding-activation-fee-card small {
+  color: #5e6b63;
+  display: block;
+  font-size: 13px;
+  line-height: 1.45;
+  margin-top: 12px;
+}
+
+.funding-activation-rate-table {
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(8, 38, 25, 0.12);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.funding-activation-rate-table div {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 12px 16px;
+}
+
+.funding-activation-rate-table div + div {
+  border-top: 1px solid rgba(8, 38, 25, 0.1);
+}
+
+.funding-activation-rate-table div:first-child {
+  background: #eff8ef;
+  color: #17452f;
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.funding-activation-rate-table span,
+.funding-activation-rate-table strong {
+  color: #062419;
+}
+
+.funding-activation-rate-table strong {
+  color: #08763f;
+}
+
+@media (max-width: 980px) {
+
+  .customer-pricing-layout,
+  .funding-activation-fee-card {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-estimate-result-slot {
+    min-height: 0;
+  }
+}
+
+.home-journey-frame-scanner .customer-pricing-section {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.home-journey-frame-scanner .pricing-journey-card,
+.home-journey-frame-scanner .pricing-estimator-card,
+.home-journey-frame-scanner .funding-activation-fee-card,
+.home-journey-frame-scanner .pricing-estimate-result,
+.home-journey-frame-scanner .funding-activation-rate-table {
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(12px) saturate(120%);
+  background: rgba(5, 29, 20, 0.56);
+  border-color: rgba(235, 248, 239, 0.38);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.home-journey-frame-scanner .pricing-address-field input,
+.home-journey-frame-scanner .pricing-choice span {
+  background: rgba(5, 29, 20, 0.48);
+  border-color: rgba(235, 248, 239, 0.34);
+  color: #f5fbf6;
+}
+
+.home-journey-frame-scanner .pricing-choice input:checked + span,
+.home-journey-frame-scanner .funding-activation-rate-table div:first-child {
+  background: rgba(89, 171, 115, 0.52);
+  color: #ffffff;
+}
+
+.home-journey-frame-scanner .pricing-estimate-result.is-ready {
+  background: rgba(3, 23, 16, 0.72);
+  border-color: rgba(255, 255, 255, 0.36);
+}
+
+.home-journey-frame-scanner .customer-pricing-heading h2,
+.home-journey-frame-scanner .pricing-journey-step h2,
+.home-journey-frame-scanner .pricing-estimator-card h2,
+.home-journey-frame-scanner .funding-activation-fee-card h2 {
+  color: #f7fcf8;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.34);
+}
+
+.home-journey-frame-scanner .customer-pricing-heading .eyebrow,
+.home-journey-frame-scanner .pricing-estimator-card .eyebrow,
+.home-journey-frame-scanner .funding-activation-fee-card .eyebrow,
+.home-journey-frame-scanner .pricing-choice-group legend,
+.home-journey-frame-scanner .pricing-address-field > span {
+  color: #b9efc8;
+}
+
+.home-journey-frame-scanner .customer-pricing-heading > p:last-child,
+.home-journey-frame-scanner .pricing-estimator-card > div > p,
+.home-journey-frame-scanner .funding-activation-fee-card p,
+.home-journey-frame-scanner .pricing-journey-step p,
+.home-journey-frame-scanner .pricing-address-field small,
+.home-journey-frame-scanner .pricing-estimate-result p,
+.home-journey-frame-scanner .pricing-estimate-result small,
+.home-journey-frame-scanner .pricing-estimate-result span,
+.home-journey-frame-scanner .funding-activation-fee-card small,
+.home-journey-frame-scanner .funding-activation-rate-table span {
+  color: rgba(239, 250, 242, 0.86);
+}
+
+.home-journey-frame-scanner .pricing-choice span,
+.home-journey-frame-scanner .funding-activation-rate-table strong {
+  color: #f5fbf6;
+}
+
+@media (max-width: 740px) {
+
+  .customer-pricing-vines {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+
+  .customer-pricing-section .pricing-choice span {
+    align-items: center;
+    display: inline-flex;
+    min-height: 44px;
+  }
+
+  .pricing-address-field input,
+  .contact-form-card input,
+  .contact-form-card select,
+  .energy-upload-form-card input:not([type="file"]),
+  .energy-upload-form-card select {
+    min-height: 48px;
+  }
+
+  .home-journey-frame-scanner .home-dashboard-preview-shell,
+  .home-journey-frame-scanner .home-dashboard-preview-metric,
+  .home-journey-frame-scanner .home-dashboard-preview-card,
+  .home-journey-frame-scanner .home-dashboard-preview-status,
+  .home-journey-frame-scanner .pricing-journey-card,
+  .home-journey-frame-scanner .pricing-estimator-card,
+  .home-journey-frame-scanner .funding-activation-fee-card,
+  .home-journey-frame-scanner .pricing-estimate-result,
+  .home-journey-frame-scanner .funding-activation-rate-table {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgba(5, 29, 20, 0.78);
+  }
+}

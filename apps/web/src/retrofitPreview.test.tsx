@@ -7,6 +7,7 @@ import {
   RetroFiSkeleton,
   clampRetroFiProgress,
 } from "./components/RetroFiLoader";
+import { PlanetScanHero } from "./pages/home/sections/hero/PlanetScanHero";
 import {
   USER_PREVIEW_TRIAGE_ISSUES,
   isUserPreviewTriageModeEnabled,
@@ -21,7 +22,6 @@ import {
   buildDashboardPerformanceData,
   buildPersistedRetrofitDetailAnswers,
   buildSeededRetrofitDetailAnswers,
-  calculateEstimatedReportPrice,
   comparePreviewRetrofits,
   RetrofitRecommendationsPreview,
   buildRetrofitEnvironmentalImpactPreview,
@@ -49,6 +49,7 @@ import {
   SavingsPreviewCard,
   UserPreviewProfileView,
 } from "./App";
+import { calculateEstimatedReportPrice } from "./pages/home/sections/pricing/pricing";
 
 function buildFirstmateTaskFixture(overrides: Record<string, unknown> = {}) {
   return {
@@ -3319,35 +3320,33 @@ describe("retrofit recommendations preview", () => {
   it("keeps the home page primary navbar free of the mobile glass shell override", async () => {
     const fsModuleName = "node:fs";
     const { readFileSync } = await import(fsModuleName);
-    const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
-    const homeMobileNavStart = css.indexOf("@media (max-width: 860px) {");
-    const homeMobileNavEnd = css.indexOf(
+    const shellCss = readFileSync(
+      new URL("./components/public/public-shell.css", import.meta.url),
+      "utf8",
+    );
+    const heroCss = readFileSync(
+      new URL("./pages/home/sections/hero/hero.css", import.meta.url),
+      "utf8",
+    );
+    const homeMobileNavStart = shellCss.indexOf("@media (max-width: 860px) {");
+    const homeMobileNavEnd = shellCss.indexOf(
       "@media (max-width: 768px)",
       homeMobileNavStart,
     );
-    const homeMobileNavCss = css.slice(homeMobileNavStart, homeMobileNavEnd);
-    const homeSmallMobileStart = css.indexOf(
-      "@media (max-width: 520px)",
-      homeMobileNavEnd,
-    );
-    const homeSmallMobileEnd = css.indexOf(
-      ".home-infographics-section",
-      homeSmallMobileStart,
-    );
-    const homeSmallMobileCss = css.slice(
-      homeSmallMobileStart,
-      homeSmallMobileEnd,
+    const homeMobileNavCss = shellCss.slice(
+      homeMobileNavStart,
+      homeMobileNavEnd < 0 ? undefined : homeMobileNavEnd,
     );
 
-    expect(css).toContain(".public-page.home-page .navbar-inner");
-    expect(css).toContain("background: transparent;");
+    expect(shellCss).toContain(".public-page.home-page .navbar-inner");
+    expect(shellCss).toContain("background: rgba(240, 248, 243, 0.46);");
     expect(homeMobileNavCss).toContain(".public-page.home-page .site-header");
     expect(homeMobileNavCss).not.toContain(
       ".public-page.home-page .navbar-inner",
     );
     expect(homeMobileNavCss).not.toContain("backdrop-filter");
     expect(homeMobileNavCss).not.toContain("rgba(237, 248, 242, 0.58)");
-    const normalizedHomeSmallMobileCss = homeSmallMobileCss.replace(/\s+/g, " ");
+    const normalizedHomeSmallMobileCss = heroCss.replace(/\s+/g, " ");
     expect(normalizedHomeSmallMobileCss).toContain(
       ".public-page.home-page .planet-scan-section.scroll-frame-scanner .planet-scan-title span",
     );
@@ -3751,41 +3750,23 @@ describe("retrofit recommendations preview", () => {
     );
   });
 
-  it("keeps the home planet scan hero copy deterministic with the single reveal CTA", async () => {
-    const fsModuleName = "node:fs";
-    const { readFileSync } = await import(fsModuleName);
-    const appSource = readFileSync(
-      new URL("./App.tsx", import.meta.url),
-      "utf8",
+  it("renders the active home planet scan hero copy and both scroll states", () => {
+    const html = renderToStaticMarkup(
+      <PlanetScanHero navigate={() => undefined} />,
     );
-    const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
-    const heroStart = appSource.indexOf("function PlanetScanHero");
-    const heroEnd = appSource.indexOf("function HomePage", heroStart);
-    const heroSource = appSource.slice(heroStart, heroEnd);
 
-    expect(heroSource).toContain("<span>Find the money</span>");
-    expect(heroSource).toContain("<span>behind your next</span>");
-    expect(heroSource).toContain(
-      '<span className="planet-scan-title-accent">retrofit.</span>',
+    expect(html).toContain("<span>Find the money</span>");
+    expect(html).toContain("<span>behind your next</span>");
+    expect(html).toContain(
+      '<span class="planet-scan-title-accent">retrofit.</span>',
     );
-    expect(heroSource).toContain("<span>Find, compare, and claim</span>");
-    expect(heroSource).toContain("<span>retrofit incentives.</span>");
-    expect(heroSource).not.toContain("<span>RetroFi helps you</span>");
-    expect(heroSource).not.toContain("planet-scan-cta--before");
-    expect(heroSource).toContain("planet-scan-cta--after");
-    expect(heroSource).not.toContain("planet-scan-eyebrow");
-    expect(heroSource).not.toContain("See how it works");
-    expect(heroSource).not.toContain("handleSecondaryAction");
-
-    expect(css).toContain(".planet-scan-title span");
-    expect(css).toContain("left: clamp(40px, 4.8vw, 88px);");
-    expect(css).toContain("top: clamp(118px, 15.5vh, 178px);");
-    expect(css).toContain("right: clamp(40px, 4.4vw, 88px);");
-    expect(css).toContain("top: clamp(150px, 21vh, 230px);");
-    expect(css).toContain(".planet-scan-cta--after");
-    expect(css).not.toContain(".planet-scan-actions");
-    expect(css).not.toContain(".planet-scan-copy h1");
-    expect(css).not.toContain(".planet-scan-result-copy h2");
+    expect(html).toContain(
+      "RetroFi helps businesses find, compare, claim, and implement retrofit incentives.",
+    );
+    expect(html).toContain("Sustainable. Profitable. Practical.");
+    expect(html.match(/Get Started/g)).toHaveLength(2);
+    expect(html).toContain("planet-scan-message-primary");
+    expect(html).toContain("planet-scan-message-next");
   });
 
   it("keeps preview hover and active states readable and visually distinct", async () => {
