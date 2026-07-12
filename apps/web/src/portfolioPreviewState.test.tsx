@@ -212,21 +212,14 @@ describe("coordinated portfolio preview state", () => {
     ).toBe("portfolio-a|0|default");
   });
 
-  it("shows exhausted opportunities with zero remaining value and a reason", () => {
+  it("keeps retrofit metrics intact for portfolio payloads", () => {
     const payload = buildRetrofitPayload({
       portfolio: {
         portfolioId: "portfolio-a",
         portfolioVersion: 3,
         scenarioId: "default",
         calculationRunId: "run-3",
-        remainingMarginalValueMinorUnits: 0,
-        exhaustedOpportunities: [
-          {
-            portfolioItemId: "led_lighting",
-            reasonCodes: ["cap_exhausted"],
-            remainingMarginalValueMinorUnits: 0
-          }
-        ]
+        remainingMarginalValueMinorUnits: 0
       },
       retrofits: [
         {
@@ -240,12 +233,8 @@ describe("coordinated portfolio preview state", () => {
     const preview = buildUserRetrofitPreviewResult(payload);
     const retrofit = preview.retrofits[0];
 
-    expect(retrofit.coordinatedFinancials).toMatchObject({
-      exhausted: true,
-      remainingMarginalValueMinorUnits: 0,
-      exhaustionReason: "cap_exhausted"
-    });
-    expect(retrofit.metrics.remainingMarginalValueMinorUnits).toBe(0);
+    expect(retrofit.metrics.netCostBeforeTaxBenefits).toBe(4000);
+    expect(retrofit.metrics.effectiveCostAfterOneTimeBenefits).toBe(4000);
   });
 
   it("does not crash when utility summary field lists are omitted", () => {

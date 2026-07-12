@@ -7318,7 +7318,7 @@ function isAppChromeRoute(route: Route) {
     route === "admin-application-sources" ||
     route === "admin-application-profiles" ||
     route === "tasks" ||
-    route === "task-report" ||
+    route === "tasks-report" ||
     route === "testcases"
   );
 }
@@ -7598,7 +7598,7 @@ function PricingChoiceGroup<T extends string>({
   );
 }
 
-function mergePortalRetrofitRecommendationsPayload(
+export function mergePortalRetrofitRecommendationsPayload(
   currentPayload: PortalRetrofitRecommendationsResponse | null,
   detailPayload: PortalRetrofitRecommendationsResponse
 ): PortalRetrofitRecommendationsResponse {
@@ -23416,7 +23416,7 @@ export function App() {
           route === "admin-application-sources" ||
           route === "admin-application-profiles" ||
           route === "tasks" ||
-          route === "task-report"
+          route === "tasks-report"
           ? route
           : "admin"
         : "portal"
@@ -23556,7 +23556,7 @@ export function App() {
     return <LocalGptProChatsStandalonePage />;
   }
 
-  if (effectiveRoute === "task-report") {
+  if (effectiveRoute === "tasks-report") {
     if (authPayload?.dashboard === "admin" && authPayload.adminDashboard) {
       return (
         <AdminTaskReportStandalonePage

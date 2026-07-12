@@ -12,6 +12,7 @@ export type Route =
   | "portal"
   | "portal-preview"
   | "user-preview"
+  | "tasks"
   | "tasks-report"
   | "chats"
   | "admin"
@@ -61,6 +62,7 @@ export function routePathMatchFromPath(
     return { isKnownPath: true, route: "portal-preview" };
   if (pathname === "/user-preview")
     return { isKnownPath: true, route: "user-preview" };
+  if (pathname === "/tasks") return { isKnownPath: true, route: "tasks" };
   if (pathname === "/tasks/reports" || pathname.startsWith("/tasks/reports/")) {
     return { isKnownPath: true, route: "tasks-report" };
   }
@@ -113,6 +115,7 @@ export function pathForRoute(route: Route) {
     return "/admin/application-profiles";
   if (route === "scan-results") return "/scan/results";
   if (route === "scan-energy-data") return "/scan/energy-data";
+  if (route === "tasks") return "/tasks";
   if (route === "tasks-report") return "/tasks/reports";
   return `/${route}`;
 }
