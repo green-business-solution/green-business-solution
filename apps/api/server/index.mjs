@@ -3,40 +3,27 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import express from "express";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import {
-  GetObjectCommand,
-  PutObjectCommand,
-  S3Client,
-} from "@aws-sdk/client-s3";
+import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import {
   DynamoDBDocumentClient,
   GetCommand,
   PutCommand,
   ScanCommand,
   TransactWriteCommand,
-  UpdateCommand,
+  UpdateCommand
 } from "@aws-sdk/lib-dynamodb";
 import { fromIni } from "@aws-sdk/credential-providers";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { buildOpportunityMatchProfile } from "./matching/buildOpportunityMatchProfile.mjs";
-import {
-  isVisibleAvailability,
-  isVisibleOpportunity,
-} from "./matching/opportunityLifecycle.mjs";
+import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportunityLifecycle.mjs";
 import { applyOpportunityAvailabilityOverlay } from "./matching/opportunityAvailabilityOverlay.mjs";
 import { applyOpportunityAwardAuditOverlay } from "./matching/opportunityAwardAuditOverlay.mjs";
-import {
-  buildPortalRetrofitPreviewShell,
-  buildPortalRetrofitRecommendations,
-} from "./retrofitRecommendations.mjs";
+import { buildPortalRetrofitPreviewShell, buildPortalRetrofitRecommendations } from "./retrofitRecommendations.mjs";
 import { resolveOpportunityApplicationSource } from "./applicationSources/ApplicationSourceResolver.mjs";
 import { resolveOfficialProgramWebsite } from "./applicationSources/OfficialProgramWebsiteResolver.mjs";
 import { discoverOpportunityApplicationLinks } from "./applicationSources/ApplicationPathFinder.mjs";
 import { extractOpportunityApplicationRequirements } from "./applicationSources/ApplicationRequirementExtractor.mjs";
-import {
-  composeDraftApplicationProfile,
-  validateApplicationProfile,
-} from "./applicationSources/ApplicationProfile.mjs";
+import { composeDraftApplicationProfile, validateApplicationProfile } from "./applicationSources/ApplicationProfile.mjs";
 import {
   appendAdminNote,
   applicationProfileIdForOpportunity,
@@ -48,38 +35,26 @@ import {
   normalizeApplicationProfileForRegistry,
   profileCanBeRegenerated,
   publicApplicationProfileRecord,
-  stripUndefinedApplicationProfileValues,
+  stripUndefinedApplicationProfileValues
 } from "./applicationSources/ApplicationProfileRegistry.mjs";
 import {
   isApplicationProfileCustomerReady,
-  validateApplicationProfileApproval,
+  validateApplicationProfileApproval
 } from "./applicationSources/ApplicationProfileApprovalValidator.mjs";
-import {
-  isPasswordSignupDuplicateBlocked,
-  passwordSignupDuplicateErrorMessage,
-  PASSWORD_CLAIM_GUARD_FIELD,
-  PASSWORD_CLAIM_GUARD_AT_FIELD,
-  PASSWORD_CLAIM_GUARD_REASON,
-  PASSWORD_CLAIM_GUARD_REASON_FIELD,
-  PASSWORD_CLAIM_GUARD_RUN_ID_FIELD,
-} from "./passwordSignupPolicy.mjs";
 import { buildCustomerApplicationProfileResponse } from "./applicationSources/ApplicationProfileCustomerView.mjs";
 import { resolveAddressGeography } from "./geography/addressGeographyResolver.mjs";
-import {
-  GEOCODIO_DAILY_USAGE_LIMIT_DEFAULT,
-  reserveGeocodioLookup,
-} from "./geography/geocodioUsageGuard.mjs";
+import { GEOCODIO_DAILY_USAGE_LIMIT_DEFAULT, reserveGeocodioLookup } from "./geography/geocodioUsageGuard.mjs";
 import {
   buildSiteEnergyProfile,
   processUtilityDataUpload,
   supportedUtilityCategories,
   supportedUtilityFileTypes,
-  utilityUploadCategoryOptions,
+  utilityUploadCategoryOptions
 } from "./energyData/parseEnergyData.mjs";
 import {
   buildEnergyDataS3Key,
   cleanEnergyDataFileName,
-  validateEnergyDataRegistrationKey,
+  validateEnergyDataRegistrationKey
 } from "./energyData/energyDataObjectKeys.mjs";
 import { buildSyntheticDashboardPostImplementationDataset } from "./dashboardPerformance/syntheticDashboardPerformance.mjs";
 import {
@@ -89,21 +64,20 @@ import {
   getDashboardPostImplementationDatasetByTestCase,
   listDashboardPostImplementationDatasetSummaries,
   putDashboardPostImplementationDataset,
-  summarizeDashboardPostImplementationDataset,
+  summarizeDashboardPostImplementationDataset
 } from "./dashboardPerformance/dashboardPerformanceStore.mjs";
 import { validateDashboardPostImplementationDataset } from "./dashboardPerformance/schemas.mjs";
 import {
   filterRetrofitRecommendationsPayload,
   normalizeRetrofitTypeIdList,
-  hasCurrentRetrofitRecommendationsPayloadShape,
   persistentRetrofitRecommendationsCacheVersion,
   readPersistentRetrofitRecommendations as readPersistentRetrofitRecommendationsFromStore,
-  writePersistentRetrofitRecommendations as writePersistentRetrofitRecommendationsToStore,
+  writePersistentRetrofitRecommendations as writePersistentRetrofitRecommendationsToStore
 } from "./retrofitRecommendationsCache.mjs";
 import {
   completePortfolioItemHandler,
   recalculatePortfolioHandler,
-  readPortfolioHandler,
+  readPortfolioHandler
 } from "./portfolio/http/portfolioHandlers.mjs";
 import {
   cleanGptProWorkPrefix,
@@ -117,90 +91,71 @@ import {
   readGptProOutput,
   readGptProPrompt,
   resolveGptProWorkBucket,
-  writeGptProOutput,
+  writeGptProOutput
 } from "./gptProWorkStore.mjs";
 import { buildFixtureRetrofitRecommendationsPayload } from "./fixtureRetrofitRecommendations.mjs";
 import {
   formQuestionCatalogCacheVersion,
-  loadFormQuestionCatalog,
+  loadFormQuestionCatalog
 } from "./forms/formQuestionCatalog.mjs";
+import {
+  assignFirstmateQueuedTask,
+  isFirstmateTasksLocalAuthBypassEnabled,
+  readFirstmateTaskReport,
+  readFirstmateTasksDashboard,
+  sendFirstmateTaskReportFeedback,
+  sendFirstmateTaskResponse
+} from "./firstmateTasks.mjs";
+import {
+  readPublishedFirstmateTaskReport,
+  readPublishedFirstmateTaskSnapshot
+} from "./firstmateTaskSnapshots.mjs";
 import {
   buildPreRetrofitFormAnswerRecord,
   mergePreRetrofitFormAnswers,
-  normalizePreRetrofitFormAnswers,
+  normalizePreRetrofitFormAnswers
 } from "./profilePreRetrofitFormAnswers.mjs";
 
-const defaultGoogleClientId =
-  "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
-const isLambdaRuntime = Boolean(
-  process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV,
-);
-const isLocalStack = process.env.GBS_LOCAL_STACK === "1";
-const dataRegion =
-  process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
-const s3Region =
-  process.env.GBS_ENERGY_DATA_BUCKET_REGION ||
-  process.env.AWS_REGION ||
-  dataRegion;
-const profile =
-  process.env.AWS_PROFILE ?? (isLambdaRuntime ? "" : defaultGptProWorkProfile);
-const localDynamoEndpoint =
-  process.env.GBS_DYNAMODB_ENDPOINT || "http://127.0.0.1:8000";
-const localS3Endpoint = process.env.GBS_S3_ENDPOINT || "http://127.0.0.1:9000";
-const localCredentials = {
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID || "localaccesskey",
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "localsecretkey",
-};
+const defaultGoogleClientId = "754037986401-dgklhhhtjr2k8u9jcj47fdf1jrf9baep.apps.googleusercontent.com";
+const isLambdaRuntime = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.AWS_EXECUTION_ENV);
+const dataRegion = process.env.GBS_AWS_REGION || process.env.AWS_REGION || "us-east-2";
+const s3Region = process.env.GBS_ENERGY_DATA_BUCKET_REGION || process.env.AWS_REGION || dataRegion;
+const profile = process.env.AWS_PROFILE ?? (isLambdaRuntime ? "" : defaultGptProWorkProfile);
 const usersTable = process.env.GBS_USERS_TABLE || "gbs-users";
 const intakeTable = process.env.GBS_INTAKE_TABLE || "gbs-client-intake";
-const opportunitiesTable =
-  process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
-const dashboardPerformanceTable =
-  process.env.GBS_DASHBOARD_PERFORMANCE_TABLE || "gbs-dashboard-performance";
+const opportunitiesTable = process.env.GBS_OPPORTUNITIES_TABLE || "gbs-opportunity-candidates";
+const dashboardPerformanceTable = process.env.GBS_DASHBOARD_PERFORMANCE_TABLE || "gbs-dashboard-performance";
 const retrofitRecommendationCacheTable =
-  process.env.GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE ||
-  "gbs-retrofit-recommendation-cache";
-const applicationProfilesTable =
-  process.env.GBS_APPLICATION_PROFILES_TABLE || "gbs-application-profiles";
-const apiRuntimeStateTable =
-  process.env.GBS_API_RUNTIME_STATE_TABLE || "gbs-api-runtime-state";
+  process.env.GBS_RETROFIT_RECOMMENDATION_CACHE_TABLE || "gbs-retrofit-recommendation-cache";
+const applicationProfilesTable = process.env.GBS_APPLICATION_PROFILES_TABLE || "gbs-application-profiles";
+const apiRuntimeStateTable = process.env.GBS_API_RUNTIME_STATE_TABLE || "gbs-api-runtime-state";
+const firstmateTasksTable = process.env.GBS_FIRSTMATE_TASKS_TABLE || "gbs-firstmate-tasks";
+const firstmateTaskWorkspaceId = process.env.GBS_FIRSTMATE_TASK_WORKSPACE_ID || "retrofi";
 const sampleMatchingTestCasesPath =
-  process.env.GBS_SAMPLE_MATCHING_TEST_CASES_PATH ||
-  path.join(process.cwd(), "public", "sample_matching_test_cases.json");
+  process.env.GBS_SAMPLE_MATCHING_TEST_CASES_PATH || path.join(process.cwd(), "public", "sample_matching_test_cases.json");
 const energyDataBucket = process.env.GBS_ENERGY_DATA_BUCKET || "";
 const runtimeCacheBucket = process.env.GBS_RUNTIME_CACHE_BUCKET || "";
 const gptProWorkBucket = resolveGptProWorkBucket(process.env);
-const gptProWorkPrefix = cleanGptProWorkPrefix(
-  process.env.GBS_GPT_PRO_WORK_PREFIX || defaultGptProWorkPrefix,
-);
-const gptProWorkRegion =
-  process.env.GBS_GPT_PRO_WORK_REGION ||
-  process.env.AWS_REGION ||
-  defaultGptProWorkRegion;
+const gptProWorkPrefix = cleanGptProWorkPrefix(process.env.GBS_GPT_PRO_WORK_PREFIX || defaultGptProWorkPrefix);
+const gptProWorkRegion = process.env.GBS_GPT_PRO_WORK_REGION || process.env.AWS_REGION || defaultGptProWorkRegion;
 const gptProWorkProfile =
-  process.env.GBS_GPT_PRO_WORK_AWS_PROFILE ??
-  (isLambdaRuntime ? "" : defaultGptProWorkProfile);
-const configuredGptProWorkLocalFallbackRoot =
-  process.env.GBS_GPT_PRO_WORK_LOCAL_FALLBACK_ROOT;
+  process.env.GBS_GPT_PRO_WORK_AWS_PROFILE ?? (isLambdaRuntime ? "" : defaultGptProWorkProfile);
+const configuredGptProWorkLocalFallbackRoot = process.env.GBS_GPT_PRO_WORK_LOCAL_FALLBACK_ROOT;
 const gptProWorkLocalFallbackRoot =
   !isLambdaRuntime && !gptProWorkBucket
     ? configuredGptProWorkLocalFallbackRoot === undefined
       ? defaultGptProWorkLocalFallbackRoot
       : configuredGptProWorkLocalFallbackRoot
     : "";
-const geocodioApiKey =
-  process.env.GBS_GEOCODIO_API_KEY || process.env.GEOCODIO_API_KEY || "";
+const geocodioApiKey = process.env.GBS_GEOCODIO_API_KEY || process.env.GEOCODIO_API_KEY || "";
 const geocodioDailyLimit = parseNonNegativeInteger(
   process.env.GBS_GEOCODIO_DAILY_LIMIT,
   GEOCODIO_DAILY_USAGE_LIMIT_DEFAULT,
-  2500,
+  2500
 );
-const geocodioQuotaAlertEmailTo =
-  process.env.GBS_GEOCODIO_QUOTA_ALERT_EMAIL_TO || "neerkuchlous@gmail.com";
+const geocodioQuotaAlertEmailTo = process.env.GBS_GEOCODIO_QUOTA_ALERT_EMAIL_TO || "neerkuchlous@gmail.com";
 const geocodioQuotaAlertEmailFrom =
-  process.env.GBS_ALERT_EMAIL_FROM ||
-  process.env.GBS_GEOCODIO_QUOTA_ALERT_EMAIL_FROM ||
-  "neerkuchlous@gmail.com";
+  process.env.GBS_ALERT_EMAIL_FROM || process.env.GBS_GEOCODIO_QUOTA_ALERT_EMAIL_FROM || "neerkuchlous@gmail.com";
 const dsireSourceKey = "SOURCE_DSIRE";
 const port = Number(process.env.API_PORT || 8787);
 const googleClientId = process.env.GOOGLE_CLIENT_ID || defaultGoogleClientId;
@@ -208,9 +163,7 @@ const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || "";
 const googleRedirectUri = process.env.GOOGLE_REDIRECT_URI || "";
 const googleAllowedClientIds = [
   googleClientId,
-  ...(process.env.GOOGLE_ALLOWED_CLIENT_IDS || "")
-    .split(",")
-    .map((value) => value.trim()),
+  ...(process.env.GOOGLE_ALLOWED_CLIENT_IDS || "").split(",").map((value) => value.trim())
 ].filter(Boolean);
 const googleAuthorizeUrl = "https://accounts.google.com/o/oauth2/v2/auth";
 const googleCertsUrl = "https://www.googleapis.com/oauth2/v3/certs";
@@ -219,61 +172,29 @@ const recommendedGoogleRedirectUris = [
   "http://localhost:5173/api/auth/google/callback",
   "http://127.0.0.1:5173/api/auth/google/callback",
   "https://retrofi.org/api/auth/google/callback",
-  "https://www.retrofi.org/api/auth/google/callback",
+  "https://www.retrofi.org/api/auth/google/callback"
 ];
-const defaultAdminEmails = [
-  "neerkuchlous@gmail.com",
-  "pmrajvansh@gmail.com",
-  "rshen0210@gmail.com",
-];
+const defaultAdminEmails = ["neerkuchlous@gmail.com", "pmrajvansh@gmail.com", "rshen0210@gmail.com"];
 const adminEmails = new Set(
   (process.env.GBS_ADMIN_EMAILS || defaultAdminEmails.join(","))
     .split(",")
     .map((value) => value.trim().toLowerCase())
-    .filter(Boolean),
+    .filter(Boolean)
 );
 
-const client = new DynamoDBClient(
-  isLocalStack
-    ? {
-        region: dataRegion,
-        endpoint: localDynamoEndpoint,
-        credentials: localCredentials,
-      }
-    : {
-        region: dataRegion,
-        credentials: profile ? fromIni({ profile }) : undefined,
-      },
-);
+const client = new DynamoDBClient({
+  region: dataRegion,
+  credentials: profile ? fromIni({ profile }) : undefined
+});
 const db = DynamoDBDocumentClient.from(client);
-const s3 = new S3Client(
-  isLocalStack
-    ? {
-        region: s3Region,
-        endpoint: localS3Endpoint,
-        forcePathStyle: true,
-        credentials: localCredentials,
-      }
-    : {
-        region: s3Region,
-        credentials: profile ? fromIni({ profile }) : undefined,
-      },
-);
-const gptProWorkS3 = new S3Client(
-  isLocalStack
-    ? {
-        region: gptProWorkRegion,
-        endpoint: localS3Endpoint,
-        forcePathStyle: true,
-        credentials: localCredentials,
-      }
-    : {
-        region: gptProWorkRegion,
-        credentials: gptProWorkProfile
-          ? fromIni({ profile: gptProWorkProfile })
-          : undefined,
-      },
-);
+const s3 = new S3Client({
+  region: s3Region,
+  credentials: profile ? fromIni({ profile }) : undefined
+});
+const gptProWorkS3 = new S3Client({
+  region: gptProWorkRegion,
+  credentials: gptProWorkProfile ? fromIni({ profile: gptProWorkProfile }) : undefined
+});
 export const app = express();
 let activeServer = null;
 
@@ -293,43 +214,24 @@ const baseRequiredFields = [
   ["siteAddress", "Site address"],
   ["electricUtilityProvider", "Electric utility provider"],
   ["organizationType", "Organization type"],
-  ["squareFootage", "Square footage"],
+  ["squareFootage", "Square footage"]
 ];
-const opportunityReviewStatuses = new Set([
-  "approved",
-  "rejected",
-  "needs_review",
-  "duplicate",
-]);
+const opportunityReviewStatuses = new Set(["approved", "rejected", "needs_review", "duplicate"]);
 const passwordHashAlgorithm = "scrypt";
 const passwordHashKeyLength = 64;
 const passwordSessionDurationMs = 7 * 24 * 60 * 60 * 1000;
 const maxEvidenceTextLength = 1200;
 const adminDataRecordLimit = Math.min(
   250,
-  Math.max(
-    25,
-    Number.parseInt(process.env.GBS_ADMIN_DATA_RECORD_LIMIT || "150", 10) ||
-      150,
-  ),
+  Math.max(25, Number.parseInt(process.env.GBS_ADMIN_DATA_RECORD_LIMIT || "150", 10) || 150)
 );
 const databaseBatchScanLimit = Math.min(
   250,
-  Math.max(
-    25,
-    Number.parseInt(process.env.GBS_DATABASE_BATCH_SCAN_LIMIT || "100", 10) ||
-      100,
-  ),
+  Math.max(25, Number.parseInt(process.env.GBS_DATABASE_BATCH_SCAN_LIMIT || "100", 10) || 100)
 );
 const applicationSourceBatchLimit = Math.min(
   200,
-  Math.max(
-    25,
-    Number.parseInt(
-      process.env.GBS_APPLICATION_SOURCE_BATCH_LIMIT || "100",
-      10,
-    ) || 100,
-  ),
+  Math.max(25, Number.parseInt(process.env.GBS_APPLICATION_SOURCE_BATCH_LIMIT || "100", 10) || 100)
 );
 const googleOAuthStateCookie = "gbs_google_oauth_state";
 const oauthRedirectResultStorageKey = "gbs-oauth-redirect-result";
@@ -338,45 +240,31 @@ const googleOAuthCookieMaxAgeMs = 10 * 60 * 1000;
 const publicEnergyUploadSessionDurationMs = 30 * 24 * 60 * 60 * 1000;
 const uploadUrlDurationSeconds = 15 * 60;
 const supportedEnergyDataSourceTypes = new Set(
-  [...supportedUtilityFileTypes].filter(
-    (sourceType) => sourceType !== "unknown",
-  ),
+  [...supportedUtilityFileTypes].filter((sourceType) => sourceType !== "unknown")
 );
 const energyDataSourceMimeTypes = {
   utility_pdf: new Set(["application/pdf"]),
-  green_button_xml: new Set([
-    "application/xml",
-    "text/xml",
-    "application/atom+xml",
-  ]),
-  green_button_csv: new Set([
-    "text/csv",
-    "application/csv",
-    "application/vnd.ms-excel",
-  ]),
-  unknown: new Set(),
+  green_button_xml: new Set(["application/xml", "text/xml", "application/atom+xml"]),
+  green_button_csv: new Set(["text/csv", "application/csv", "application/vnd.ms-excel"]),
+  unknown: new Set()
 };
 
 let googleKeysCache = {
   expiresAt: 0,
-  keys: [],
+  keys: []
 };
 const opportunityCacheTtlMs = Math.max(
   60_000,
-  Number.parseInt(process.env.GBS_OPPORTUNITY_CACHE_TTL_MS || "300000", 10) ||
-    300_000,
+  Number.parseInt(process.env.GBS_OPPORTUNITY_CACHE_TTL_MS || "300000", 10) || 300_000
 );
 let opportunitiesCache = {
   loadedAt: 0,
   items: [],
-  promise: null,
+  promise: null
 };
 const retrofitRecommendationsCacheTtlMs = Math.max(
   60_000,
-  Number.parseInt(
-    process.env.GBS_RETROFIT_RECOMMENDATIONS_CACHE_TTL_MS || "300000",
-    10,
-  ) || 300_000,
+  Number.parseInt(process.env.GBS_RETROFIT_RECOMMENDATIONS_CACHE_TTL_MS || "300000", 10) || 300_000
 );
 const retrofitRecommendationsCache = new Map();
 const retrofitRecommendationsPromiseCache = new Map();
@@ -385,11 +273,7 @@ function cleanText(value) {
   return typeof value === "string" ? value.trim() : "";
 }
 
-function parseNonNegativeInteger(
-  value,
-  fallback,
-  max = Number.MAX_SAFE_INTEGER,
-) {
+function parseNonNegativeInteger(value, fallback, max = Number.MAX_SAFE_INTEGER) {
   const number = Number(value);
   if (!Number.isInteger(number) || number < 0) {
     return fallback;
@@ -435,9 +319,7 @@ function hashPublicUploadToken(value) {
 
 function createEnergyDataUploadSession(now) {
   const issuedAt = now;
-  const expiresAt = new Date(
-    new Date(now).getTime() + publicEnergyUploadSessionDurationMs,
-  ).toISOString();
+  const expiresAt = new Date(new Date(now).getTime() + publicEnergyUploadSessionDurationMs).toISOString();
   const token = crypto.randomBytes(24).toString("base64url");
 
   return {
@@ -445,8 +327,8 @@ function createEnergyDataUploadSession(now) {
     record: {
       tokenHash: hashPublicUploadToken(token),
       issuedAt,
-      expiresAt,
-    },
+      expiresAt
+    }
   };
 }
 
@@ -468,8 +350,7 @@ function validateEnergyDataFile({ sourceType, contentType, fileName }) {
   }
 
   const normalizedContentType = normalizeUploadedContentType(contentType);
-  const allowedMimeTypes =
-    energyDataSourceMimeTypes[normalizedSourceType] || new Set();
+  const allowedMimeTypes = energyDataSourceMimeTypes[normalizedSourceType] || new Set();
   const normalizedFileName = cleanEnergyDataFileName(fileName);
 
   if (!normalizedFileName) {
@@ -479,9 +360,7 @@ function validateEnergyDataFile({ sourceType, contentType, fileName }) {
   }
 
   if (normalizedContentType && !allowedMimeTypes.has(normalizedContentType)) {
-    const error = new Error(
-      `Files for ${normalizedSourceType} must use a supported content type.`,
-    );
+    const error = new Error(`Files for ${normalizedSourceType} must use a supported content type.`);
     error.status = 400;
     throw error;
   }
@@ -489,7 +368,7 @@ function validateEnergyDataFile({ sourceType, contentType, fileName }) {
   return {
     sourceType: normalizedSourceType,
     contentType: normalizedContentType,
-    fileName: normalizedFileName,
+    fileName: normalizedFileName
   };
 }
 
@@ -530,11 +409,7 @@ function adminNameForEmail(email) {
 }
 
 function createAccountUserId(email) {
-  const digest = crypto
-    .createHash("sha256")
-    .update(cleanEmail(email))
-    .digest("hex")
-    .slice(0, 32);
+  const digest = crypto.createHash("sha256").update(cleanEmail(email)).digest("hex").slice(0, 32);
   return `account_${digest}`;
 }
 
@@ -551,10 +426,8 @@ function firstHeaderValue(value) {
 }
 
 function requestOrigin(req) {
-  const proto =
-    firstHeaderValue(req.get("x-forwarded-proto")) || req.protocol || "http";
-  const host =
-    firstHeaderValue(req.get("x-forwarded-host")) || cleanText(req.get("host"));
+  const proto = firstHeaderValue(req.get("x-forwarded-proto")) || req.protocol || "http";
+  const host = firstHeaderValue(req.get("x-forwarded-host")) || cleanText(req.get("host"));
   return host ? `${proto}://${host}` : "";
 }
 
@@ -568,15 +441,12 @@ function oauthCookieOptions(req) {
     maxAge: googleOAuthCookieMaxAgeMs,
     path: "/api/auth/google",
     sameSite: "lax",
-    secure: googleRedirectUriForRequest(req).startsWith("https://"),
+    secure: googleRedirectUriForRequest(req).startsWith("https://")
   };
 
   try {
     const redirectHostname = new URL(googleRedirectUriForRequest(req)).hostname;
-    if (
-      redirectHostname === "retrofi.org" ||
-      redirectHostname.endsWith(".retrofi.org")
-    ) {
+    if (redirectHostname === "retrofi.org" || redirectHostname.endsWith(".retrofi.org")) {
       options.domain = ".retrofi.org";
     }
   } catch {
@@ -641,17 +511,13 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
-function renderOAuthCallbackPage({
-  authResult = null,
-  error = null,
-  redirectPath = "/sign-in",
-}) {
+function renderOAuthCallbackPage({ authResult = null, error = null, redirectPath = "/sign-in" }) {
   const result = {
     authResult,
     error,
     redirectPath,
     resultStorageKey: oauthRedirectResultStorageKey,
-    errorStorageKey: oauthRedirectErrorStorageKey,
+    errorStorageKey: oauthRedirectErrorStorageKey
   };
 
   return `<!doctype html>
@@ -689,19 +555,11 @@ function validatePasswordAuthInput(input, { requireEmail = false } = {}) {
   const password = typeof input?.password === "string" ? input.password : "";
 
   if (!username) {
-    throw createPasswordError(
-      requireEmail ? "Email is required." : "Username is required.",
-    );
+    throw createPasswordError(requireEmail ? "Email is required." : "Username is required.");
   }
 
-  if (
-    username.length < 3 ||
-    username.length > 96 ||
-    !/^[a-z0-9._@+-]+$/.test(username)
-  ) {
-    throw createPasswordError(
-      "Username must be 3-96 characters and can use letters, numbers, dots, dashes, underscores, plus signs, and @.",
-    );
+  if (username.length < 3 || username.length > 96 || !/^[a-z0-9._@+-]+$/.test(username)) {
+    throw createPasswordError("Username must be 3-96 characters and can use letters, numbers, dots, dashes, underscores, plus signs, and @.");
   }
 
   if (requireEmail && !isValidEmail(username)) {
@@ -736,7 +594,7 @@ async function createPasswordFields(password) {
     passwordHashKeyLength,
     passwordHash: derivedKey.toString("base64url"),
     passwordSalt,
-    passwordLinked: true,
+    passwordLinked: true
   };
 }
 
@@ -751,15 +609,9 @@ async function verifyPassword(password, user) {
   }
 
   const expected = Buffer.from(String(user.passwordHash), "base64url");
-  const candidate = await derivePasswordKey(
-    password,
-    String(user.passwordSalt),
-  );
+  const candidate = await derivePasswordKey(password, String(user.passwordSalt));
 
-  return (
-    expected.length === candidate.length &&
-    crypto.timingSafeEqual(expected, candidate)
-  );
+  return expected.length === candidate.length && crypto.timingSafeEqual(expected, candidate);
 }
 
 function createPasswordSessionToken() {
@@ -803,11 +655,7 @@ function parseCacheMaxAge(cacheControl) {
 
 async function getGoogleKeys(forceRefresh = false) {
   const now = Date.now();
-  if (
-    !forceRefresh &&
-    googleKeysCache.keys.length > 0 &&
-    googleKeysCache.expiresAt > now
-  ) {
+  if (!forceRefresh && googleKeysCache.keys.length > 0 && googleKeysCache.expiresAt > now) {
     return googleKeysCache.keys;
   }
 
@@ -821,7 +669,7 @@ async function getGoogleKeys(forceRefresh = false) {
   const body = await response.json();
   googleKeysCache = {
     expiresAt: now + parseCacheMaxAge(response.headers.get("cache-control")),
-    keys: Array.isArray(body.keys) ? body.keys : [],
+    keys: Array.isArray(body.keys) ? body.keys : []
   };
 
   return googleKeysCache.keys;
@@ -831,9 +679,7 @@ async function verifyGoogleCredential(credential) {
   const token = cleanText(credential);
   const parts = token.split(".");
   if (parts.length !== 3) {
-    const error = new Error(
-      "Google sign-in did not return a valid identity token.",
-    );
+    const error = new Error("Google sign-in did not return a valid identity token.");
     error.status = 401;
     throw error;
   }
@@ -859,9 +705,7 @@ async function verifyGoogleCredential(credential) {
   }
 
   if (!jwk) {
-    const error = new Error(
-      "Could not match the Google identity token signing key.",
-    );
+    const error = new Error("Could not match the Google identity token signing key.");
     error.status = 401;
     throw error;
   }
@@ -872,7 +716,7 @@ async function verifyGoogleCredential(credential) {
 
   const isValidSignature = verifier.verify(
     crypto.createPublicKey({ key: jwk, format: "jwk" }),
-    Buffer.from(encodedSignature, "base64url"),
+    Buffer.from(encodedSignature, "base64url")
   );
 
   if (!isValidSignature) {
@@ -883,23 +727,15 @@ async function verifyGoogleCredential(credential) {
 
   const nowSeconds = Math.floor(Date.now() / 1000);
   const audience = Array.isArray(payload.aud) ? payload.aud : [payload.aud];
-  const hasAllowedAudience = audience.some((aud) =>
-    googleAllowedClientIds.includes(aud),
-  );
+  const hasAllowedAudience = audience.some((aud) => googleAllowedClientIds.includes(aud));
 
   if (!hasAllowedAudience) {
-    const error = new Error(
-      "Google sign-in is not configured for this OAuth client.",
-    );
+    const error = new Error("Google sign-in is not configured for this OAuth client.");
     error.status = 401;
     throw error;
   }
 
-  if (
-    !["accounts.google.com", "https://accounts.google.com"].includes(
-      payload.iss,
-    )
-  ) {
+  if (!["accounts.google.com", "https://accounts.google.com"].includes(payload.iss)) {
     const error = new Error("Google identity token issuer was invalid.");
     error.status = 401;
     throw error;
@@ -911,8 +747,7 @@ async function verifyGoogleCredential(credential) {
     throw error;
   }
 
-  const hasVerifiedEmail =
-    payload.email_verified === true || payload.email_verified === "true";
+  const hasVerifiedEmail = payload.email_verified === true || payload.email_verified === "true";
   if (!payload.sub || !payload.email || !hasVerifiedEmail) {
     const error = new Error("Google did not return a verified email address.");
     error.status = 401;
@@ -923,46 +758,37 @@ async function verifyGoogleCredential(credential) {
     sub: String(payload.sub),
     email: cleanEmail(payload.email),
     name: cleanText(payload.name),
-    picture: cleanText(payload.picture),
+    picture: cleanText(payload.picture)
   };
 }
 
 async function exchangeGoogleAuthorizationCode({ code, redirectUri }) {
   if (!googleClientId || !googleClientSecret) {
-    throw createGoogleOAuthError(
-      "Google redirect sign-in is not configured on the server.",
-      503,
-    );
+    throw createGoogleOAuthError("Google redirect sign-in is not configured on the server.", 503);
   }
 
   const response = await fetch(googleTokenUrl, {
     method: "POST",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/x-www-form-urlencoded"
     },
     body: new URLSearchParams({
       client_id: googleClientId,
       client_secret: googleClientSecret,
       code,
       grant_type: "authorization_code",
-      redirect_uri: redirectUri,
-    }),
+      redirect_uri: redirectUri
+    })
   });
 
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) {
-    const message =
-      cleanText(payload.error_description) ||
-      cleanText(payload.error) ||
-      "Google could not exchange the authorization code.";
+    const message = cleanText(payload.error_description) || cleanText(payload.error) || "Google could not exchange the authorization code.";
     throw createGoogleOAuthError(message, 401);
   }
 
   if (!payload.id_token) {
-    throw createGoogleOAuthError(
-      "Google did not return an identity token.",
-      401,
-    );
+    throw createGoogleOAuthError("Google did not return an identity token.", 401);
   }
 
   return payload;
@@ -983,17 +809,11 @@ function validateIntake(input) {
     }
   }
 
-  if (
-    (flow === "business" || flow === "organization") &&
-    !cleanText(input.companyName)
-  ) {
+  if ((flow === "business" || flow === "organization") && !cleanText(input.companyName)) {
     errors.push("Company name is required.");
   }
 
-  if (
-    (flow === "homeowner" || flow === "business" || flow === "organization") &&
-    !cleanText(input.buildingType)
-  ) {
+  if ((flow === "homeowner" || flow === "business" || flow === "organization") && !cleanText(input.buildingType)) {
     errors.push("Building type is required.");
   }
 
@@ -1043,7 +863,7 @@ function publicUser(user) {
     passwordLinked: Boolean(user.passwordLinked),
     isFakeUser: isFakeUserRecord(user),
     createdAt: user.createdAt,
-    lastLoginAt: user.lastLoginAt || null,
+    lastLoginAt: user.lastLoginAt || null
   };
 }
 
@@ -1064,20 +884,14 @@ function normalizeUploadedUtilityFiles(value) {
       clientIntakeId: cleanText(item.clientIntakeId),
       siteId: cleanOptional(item.siteId),
       originalFilename: cleanText(item.originalFilename),
-      fileType: supportedUtilityFileTypes.has(cleanText(item.fileType))
-        ? cleanText(item.fileType)
-        : "unknown",
-      utilityCategory: supportedUtilityCategories.has(
-        cleanText(item.utilityCategory),
-      )
-        ? cleanText(item.utilityCategory)
-        : "unknown",
+      fileType: supportedUtilityFileTypes.has(cleanText(item.fileType)) ? cleanText(item.fileType) : "unknown",
+      utilityCategory: supportedUtilityCategories.has(cleanText(item.utilityCategory)) ? cleanText(item.utilityCategory) : "unknown",
       utilityProvider: cleanOptional(item.utilityProvider),
       s3Key: cleanText(item.s3Key),
       processingStatus: cleanText(item.processingStatus) || "uploaded",
       uploadedAt: cleanText(item.uploadedAt),
       processedAt: cleanOptional(item.processedAt),
-      errorMessage: cleanOptional(item.errorMessage),
+      errorMessage: cleanOptional(item.errorMessage)
     }))
     .filter((item) => item.fileId && item.originalFilename && item.s3Key);
 }
@@ -1100,11 +914,9 @@ function normalizeUtilityExtractedValues(value) {
       periodStart: cleanOptional(item.periodStart),
       periodEnd: cleanOptional(item.periodEnd),
       confidence: cleanOptional(item.confidence),
-      sourceType: supportedUtilityFileTypes.has(cleanText(item.sourceType))
-        ? cleanText(item.sourceType)
-        : "unknown",
+      sourceType: supportedUtilityFileTypes.has(cleanText(item.sourceType)) ? cleanText(item.sourceType) : "unknown",
       sourceText: cleanOptional(item.sourceText),
-      sourcePath: cleanOptional(item.sourcePath),
+      sourcePath: cleanOptional(item.sourcePath)
     }))
     .filter((item) => item.extractedValueId && item.fileId && item.fieldId);
 }
@@ -1114,16 +926,10 @@ function normalizeIntakeRecord(item) {
     return null;
   }
 
-  const uploadedUtilityFiles = normalizeUploadedUtilityFiles(
-    item.uploadedUtilityFiles,
-  );
-  const utilityExtractedValues = normalizeUtilityExtractedValues(
-    item.utilityExtractedValues,
-  );
+  const uploadedUtilityFiles = normalizeUploadedUtilityFiles(item.uploadedUtilityFiles);
+  const utilityExtractedValues = normalizeUtilityExtractedValues(item.utilityExtractedValues);
   const siteId = deriveSiteId(item.userId, item);
-  const preRetrofitFormAnswers = normalizePreRetrofitFormAnswers(
-    item.preRetrofitFormAnswers,
-  );
+  const preRetrofitFormAnswers = normalizePreRetrofitFormAnswers(item.preRetrofitFormAnswers);
 
   return {
     ...item,
@@ -1131,24 +937,17 @@ function normalizeIntakeRecord(item) {
     utilityExtractedValues,
     ...(preRetrofitFormAnswers ? { preRetrofitFormAnswers } : {}),
     siteEnergyProfile:
-      item.siteEnergyProfile &&
-      Array.isArray(item.siteEnergyProfile.utilitySummaries)
+      item.siteEnergyProfile && Array.isArray(item.siteEnergyProfile.utilitySummaries)
         ? item.siteEnergyProfile
         : buildSiteEnergyProfile({
             siteId,
             uploadedUtilityFiles,
-            utilityExtractedValues,
-          }),
+            utilityExtractedValues
+          })
   };
 }
 
-function createIntakeRecord(
-  userId,
-  input,
-  now,
-  energyDataUploadSession,
-  siteGeography = null,
-) {
+function createIntakeRecord(userId, input, now, energyDataUploadSession, siteGeography = null) {
   const contactName = cleanText(input.contactName || input.fullName);
   const submissionId = `intake_${userId}`;
 
@@ -1160,7 +959,7 @@ function createIntakeRecord(
       email: cleanText(input.email).toLowerCase(),
       phone: cleanOptional(input.phone),
       roleTitle: cleanOptional(input.roleTitle),
-      contactPreference: cleanOptional(input.contactPreference),
+      contactPreference: cleanOptional(input.contactPreference)
     },
     business: {
       companyName: cleanText(input.companyName),
@@ -1168,7 +967,7 @@ function createIntakeRecord(
       industry: cleanText(input.industry),
       organizationType: cleanText(input.organizationType),
       organizationSize: cleanText(input.organizationSize),
-      headquarters: cleanText(input.headquarters),
+      headquarters: cleanText(input.headquarters)
     },
     site: {
       address: cleanText(input.siteAddress),
@@ -1179,17 +978,8 @@ function createIntakeRecord(
       buildingType: cleanText(input.buildingType),
       squareFootage: cleanText(input.squareFootage),
       numberOfUnits: cleanOptional(input.numberOfUnits),
-      derivedFieldsPlanned: [
-        "State",
-        "County",
-        "City",
-        "ZIP",
-        "Utility territory",
-      ],
-      derivedFieldsStatus:
-        siteGeography?.status === "matched"
-          ? "partially_resolved"
-          : "needs_resolution",
+      derivedFieldsPlanned: ["State", "County", "City", "ZIP", "Utility territory"],
+      derivedFieldsStatus: siteGeography?.status === "matched" ? "partially_resolved" : "needs_resolution"
     },
     sustainability: {
       goals: cleanText(input.sustainabilityGoals),
@@ -1197,7 +987,7 @@ function createIntakeRecord(
       interestedImprovements: cleanStringArray(input.interestedImprovements),
       monthlyUtilitySpend: cleanOptional(input.monthlyUtilitySpend),
       timeline: cleanText(input.timeline),
-      notes: cleanOptional(input.notes),
+      notes: cleanOptional(input.notes)
     },
     energyDataUploadSession,
     uploadedUtilityFiles: [],
@@ -1205,10 +995,10 @@ function createIntakeRecord(
     siteEnergyProfile: buildSiteEnergyProfile({
       siteId: `${submissionId}:primary_site`,
       uploadedUtilityFiles: [],
-      utilityExtractedValues: [],
+      utilityExtractedValues: []
     }),
     createdAt: now,
-    updatedAt: now,
+    updatedAt: now
   };
 }
 
@@ -1216,25 +1006,21 @@ async function getIntake(userId) {
   const result = await db.send(
     new GetCommand({
       TableName: intakeTable,
-      Key: { userId },
-    }),
+      Key: { userId }
+    })
   );
   return normalizeIntakeRecord(result.Item || null);
 }
 
 async function savePreRetrofitFormAnswersForUser(user, input) {
   if (!user || user.role !== "client") {
-    const error = new Error(
-      "Pre-retrofit form answers are only available for client accounts.",
-    );
+    const error = new Error("Pre-retrofit form answers are only available for client accounts.");
     error.status = 403;
     throw error;
   }
 
   if (isFakeUserRecord(user)) {
-    const error = new Error(
-      "Pre-retrofit form answers cannot be saved for test-case preview users.",
-    );
+    const error = new Error("Pre-retrofit form answers cannot be saved for test-case preview users.");
     error.status = 403;
     throw error;
   }
@@ -1248,45 +1034,35 @@ async function savePreRetrofitFormAnswersForUser(user, input) {
 
   const now = new Date().toISOString();
   const retrofitAnswerRecord = buildPreRetrofitFormAnswerRecord(input, { now });
-  const preRetrofitFormAnswers = mergePreRetrofitFormAnswers(
-    intake.preRetrofitFormAnswers,
-    retrofitAnswerRecord,
-    { now },
-  );
+  const preRetrofitFormAnswers = mergePreRetrofitFormAnswers(intake.preRetrofitFormAnswers, retrofitAnswerRecord, { now });
   const result = await db.send(
     new UpdateCommand({
       TableName: intakeTable,
       Key: { userId: user.userId },
-      UpdateExpression:
-        "SET #preRetrofitFormAnswers = :preRetrofitFormAnswers, #updatedAt = :updatedAt",
+      UpdateExpression: "SET #preRetrofitFormAnswers = :preRetrofitFormAnswers, #updatedAt = :updatedAt",
       ExpressionAttributeNames: {
         "#preRetrofitFormAnswers": "preRetrofitFormAnswers",
-        "#updatedAt": "updatedAt",
+        "#updatedAt": "updatedAt"
       },
       ExpressionAttributeValues: {
         ":preRetrofitFormAnswers": preRetrofitFormAnswers,
-        ":updatedAt": now,
+        ":updatedAt": now
       },
       ConditionExpression: "attribute_exists(userId)",
-      ReturnValues: "ALL_NEW",
-    }),
+      ReturnValues: "ALL_NEW"
+    })
   );
 
-  const nextIntake = normalizeIntakeRecord(
-    result.Attributes || {
-      ...intake,
-      preRetrofitFormAnswers,
-      updatedAt: now,
-    },
-  );
+  const nextIntake = normalizeIntakeRecord(result.Attributes || {
+    ...intake,
+    preRetrofitFormAnswers,
+    updatedAt: now
+  });
 
   return {
     intake: nextIntake,
     preRetrofitFormAnswers: nextIntake.preRetrofitFormAnswers,
-    savedRetrofit:
-      nextIntake.preRetrofitFormAnswers?.retrofits?.[
-        retrofitAnswerRecord.retrofitTypeId
-      ] || null,
+    savedRetrofit: nextIntake.preRetrofitFormAnswers?.retrofits?.[retrofitAnswerRecord.retrofitTypeId] || null
   };
 }
 
@@ -1299,7 +1075,7 @@ function publicEnergyUploadSession(userId, intake) {
   return {
     userId,
     submissionId: cleanText(intake?.submissionId),
-    expiresAt: session.expiresAt,
+    expiresAt: session.expiresAt
   };
 }
 
@@ -1310,17 +1086,13 @@ function publicUploadedUtilityFile(record) {
     siteId: record.siteId || null,
     originalFilename: record.originalFilename,
     fileType: record.fileType,
-    utilityCategory: supportedUtilityCategories.has(
-      cleanText(record.utilityCategory),
-    )
-      ? cleanText(record.utilityCategory)
-      : "unknown",
+    utilityCategory: supportedUtilityCategories.has(cleanText(record.utilityCategory)) ? cleanText(record.utilityCategory) : "unknown",
     utilityProvider: record.utilityProvider || null,
     s3Key: record.s3Key,
     processingStatus: record.processingStatus,
     uploadedAt: record.uploadedAt,
     processedAt: record.processedAt || null,
-    errorMessage: record.errorMessage || null,
+    errorMessage: record.errorMessage || null
   };
 }
 
@@ -1338,33 +1110,27 @@ function publicUtilityExtractedValue(record) {
     confidence: record.confidence || null,
     sourceType: record.sourceType,
     sourceText: record.sourceText || null,
-    sourcePath: record.sourcePath || null,
+    sourcePath: record.sourcePath || null
   };
 }
 
 async function verifyEnergyUploadSession(userId, uploadToken) {
   const intake = await getIntake(userId);
   if (!intake) {
-    const error = new Error(
-      "No intake record was found for this upload session.",
-    );
+    const error = new Error("No intake record was found for this upload session.");
     error.status = 404;
     throw error;
   }
 
   const session = intake.energyDataUploadSession;
   if (!session?.tokenHash || !session?.expiresAt) {
-    const error = new Error(
-      "This intake record does not have an active upload session.",
-    );
+    const error = new Error("This intake record does not have an active upload session.");
     error.status = 403;
     throw error;
   }
 
   if (new Date(session.expiresAt).getTime() < Date.now()) {
-    const error = new Error(
-      "This upload session has expired. Start a new free scan to upload energy data.",
-    );
+    const error = new Error("This upload session has expired. Start a new free scan to upload energy data.");
     error.status = 403;
     throw error;
   }
@@ -1382,8 +1148,8 @@ async function readEnergyDataObjectAsText(s3Key) {
   const response = await s3.send(
     new GetObjectCommand({
       Bucket: energyDataBucket,
-      Key: s3Key,
-    }),
+      Key: s3Key
+    })
   );
 
   return response.Body?.transformToString("utf-8") || "";
@@ -1392,34 +1158,24 @@ async function readEnergyDataObjectAsText(s3Key) {
 function mergeUtilityDataIntoIntake(intake, uploadResult) {
   const nextFiles = [
     uploadResult.uploadedUtilityFile,
-    ...(intake.uploadedUtilityFiles || []).filter(
-      (item) => item.fileId !== uploadResult.uploadedUtilityFile.fileId,
-    ),
-  ].sort((left, right) =>
-    String(right.uploadedAt || "").localeCompare(String(left.uploadedAt || "")),
-  );
+    ...(intake.uploadedUtilityFiles || []).filter((item) => item.fileId !== uploadResult.uploadedUtilityFile.fileId)
+  ].sort((left, right) => String(right.uploadedAt || "").localeCompare(String(left.uploadedAt || "")));
 
   const nextExtractedValues = [
     ...uploadResult.utilityExtractedValues,
-    ...(intake.utilityExtractedValues || []).filter(
-      (item) => item.fileId !== uploadResult.uploadedUtilityFile.fileId,
-    ),
+    ...(intake.utilityExtractedValues || []).filter((item) => item.fileId !== uploadResult.uploadedUtilityFile.fileId)
   ].sort((left, right) =>
-    String(right.periodEnd || right.periodStart || "").localeCompare(
-      String(left.periodEnd || left.periodStart || ""),
-    ),
+    String(right.periodEnd || right.periodStart || "").localeCompare(String(left.periodEnd || left.periodStart || ""))
   );
 
   return {
     uploadedUtilityFiles: nextFiles,
     utilityExtractedValues: nextExtractedValues,
     siteEnergyProfile: buildSiteEnergyProfile({
-      siteId:
-        uploadResult.uploadedUtilityFile.siteId ||
-        deriveSiteId(intake.userId, intake),
+      siteId: uploadResult.uploadedUtilityFile.siteId || deriveSiteId(intake.userId, intake),
       uploadedUtilityFiles: nextFiles,
-      utilityExtractedValues: nextExtractedValues,
-    }),
+      utilityExtractedValues: nextExtractedValues
+    })
   };
 }
 
@@ -1433,7 +1189,7 @@ function buildFailedUtilityUploadResult({
   utilityCategory,
   uploadedAt,
   utilityProvider,
-  errorMessage,
+  errorMessage
 }) {
   return {
     uploadedUtilityFile: {
@@ -1441,23 +1197,17 @@ function buildFailedUtilityUploadResult({
       clientIntakeId,
       siteId,
       originalFilename,
-      fileType: supportedUtilityFileTypes.has(sourceType)
-        ? sourceType
-        : "unknown",
-      utilityCategory: utilityUploadCategoryOptions.has(
-        cleanText(utilityCategory),
-      )
-        ? cleanText(utilityCategory)
-        : "unknown",
+      fileType: supportedUtilityFileTypes.has(sourceType) ? sourceType : "unknown",
+      utilityCategory: utilityUploadCategoryOptions.has(cleanText(utilityCategory)) ? cleanText(utilityCategory) : "unknown",
       utilityProvider: cleanOptional(utilityProvider),
       s3Key,
       processingStatus: "failed",
       uploadedAt,
       processedAt: uploadedAt,
-      errorMessage,
+      errorMessage
     },
     utilityExtractedValues: [],
-    siteEnergyProfilePatch: null,
+    siteEnergyProfilePatch: null
   };
 }
 
@@ -1480,23 +1230,18 @@ async function scanAll(TableName) {
 
 async function getCachedOpportunities() {
   const now = Date.now();
-  if (
-    opportunitiesCache.items.length > 0 &&
-    now - opportunitiesCache.loadedAt < opportunityCacheTtlMs
-  ) {
+  if (opportunitiesCache.items.length > 0 && now - opportunitiesCache.loadedAt < opportunityCacheTtlMs) {
     return opportunitiesCache.items;
   }
 
   if (!opportunitiesCache.promise) {
     opportunitiesCache.promise = scanAll(opportunitiesTable)
       .then((items) => {
-        const overlaidItems = applyOpportunityAvailabilityOverlay(
-          applyOpportunityAwardAuditOverlay(items),
-        );
+        const overlaidItems = applyOpportunityAvailabilityOverlay(applyOpportunityAwardAuditOverlay(items));
         opportunitiesCache = {
           loadedAt: Date.now(),
           items: overlaidItems,
-          promise: null,
+          promise: null
         };
         retrofitRecommendationsCache.clear();
         retrofitRecommendationsPromiseCache.clear();
@@ -1517,38 +1262,21 @@ function retrofitRecommendationsBaseCacheKey(user, intake) {
     intake?.submissionId || "",
     intake?.updatedAt || "",
     intake?.utilityExtractedValues?.length || 0,
-    intake?.uploadedUtilityFiles?.length || 0,
+    intake?.uploadedUtilityFiles?.length || 0
   ].join(":");
 }
 
-function retrofitRecommendationsCacheKey(
-  user,
-  intake,
-  retrofitTypeIds = [],
-  catalogCacheVersion = "catalog:unknown",
-) {
+function retrofitRecommendationsCacheKey(user, intake, retrofitTypeIds = [], catalogCacheVersion = "catalog:unknown") {
   const requestedRetrofitTypeIds = normalizeRetrofitTypeIdList(retrofitTypeIds);
   return [
     retrofitRecommendationsBaseCacheKey(user, intake),
     catalogCacheVersion,
-    requestedRetrofitTypeIds.length
-      ? `retrofits:${requestedRetrofitTypeIds.join(",")}`
-      : "all",
+    requestedRetrofitTypeIds.length ? `retrofits:${requestedRetrofitTypeIds.join(",")}` : "all"
   ].join(":");
 }
 
-function readCachedRetrofitRecommendations(
-  user,
-  intake,
-  retrofitTypeIds = [],
-  catalogCacheVersion = "catalog:unknown",
-) {
-  const key = retrofitRecommendationsCacheKey(
-    user,
-    intake,
-    retrofitTypeIds,
-    catalogCacheVersion,
-  );
+function readCachedRetrofitRecommendations(user, intake, retrofitTypeIds = [], catalogCacheVersion = "catalog:unknown") {
+  const key = retrofitRecommendationsCacheKey(user, intake, retrofitTypeIds, catalogCacheVersion);
   const cached = retrofitRecommendationsCache.get(key);
   if (!cached) {
     return null;
@@ -1559,40 +1287,17 @@ function readCachedRetrofitRecommendations(
     return null;
   }
 
-  if (!hasCurrentRetrofitRecommendationsPayloadShape(cached.payload)) {
-    retrofitRecommendationsCache.delete(key);
-    return null;
-  }
-
   return cached.payload;
 }
 
-function writeCachedRetrofitRecommendations(
-  user,
-  intake,
-  payload,
-  retrofitTypeIds = [],
-  catalogCacheVersion = "catalog:unknown",
-) {
-  retrofitRecommendationsCache.set(
-    retrofitRecommendationsCacheKey(
-      user,
-      intake,
-      retrofitTypeIds,
-      catalogCacheVersion,
-    ),
-    {
-      createdAt: Date.now(),
-      payload,
-    },
-  );
+function writeCachedRetrofitRecommendations(user, intake, payload, retrofitTypeIds = [], catalogCacheVersion = "catalog:unknown") {
+  retrofitRecommendationsCache.set(retrofitRecommendationsCacheKey(user, intake, retrofitTypeIds, catalogCacheVersion), {
+    createdAt: Date.now(),
+    payload
+  });
 }
 
-async function readPersistentRetrofitRecommendations(
-  user,
-  intake,
-  catalogCacheVersion = "catalog:unknown",
-) {
+async function readPersistentRetrofitRecommendations(user, intake, catalogCacheVersion = "catalog:unknown") {
   return readPersistentRetrofitRecommendationsFromStore({
     bucket: runtimeCacheBucket,
     cacheVersion: catalogCacheVersion,
@@ -1600,16 +1305,11 @@ async function readPersistentRetrofitRecommendations(
     intake,
     s3,
     table: retrofitRecommendationCacheTable,
-    user,
+    user
   });
 }
 
-async function writePersistentRetrofitRecommendations(
-  user,
-  intake,
-  payload,
-  catalogCacheVersion = "catalog:unknown",
-) {
+async function writePersistentRetrofitRecommendations(user, intake, payload, catalogCacheVersion = "catalog:unknown") {
   await writePersistentRetrofitRecommendationsToStore({
     bucket: runtimeCacheBucket,
     cacheVersion: catalogCacheVersion,
@@ -1618,7 +1318,7 @@ async function writePersistentRetrofitRecommendations(
     payload,
     s3,
     table: retrofitRecommendationCacheTable,
-    user,
+    user
   });
 }
 
@@ -1627,7 +1327,7 @@ async function loadRuntimeFormQuestionCatalog() {
     bucketName: runtimeCacheBucket,
     db,
     s3,
-    tableName: apiRuntimeStateTable,
+    tableName: apiRuntimeStateTable
   });
 }
 
@@ -1670,33 +1370,25 @@ function activeUsersByEmail(users, email) {
     return [];
   }
 
-  return users.filter(
-    (user) =>
-      isActiveUserRecord(user) &&
-      emailIdentitiesForUser(user).includes(normalized),
-  );
+  return users.filter((user) => isActiveUserRecord(user) && emailIdentitiesForUser(user).includes(normalized));
 }
 
 function createDuplicateEmailError(email) {
-  const error = new Error(
-    `An account already exists for ${cleanEmail(email)}. Log in with that email instead.`,
-  );
+  const error = new Error(`An account already exists for ${cleanEmail(email)}. Log in with that email instead.`);
   error.status = 409;
   return error;
 }
 
 function createMultipleAccountsError(email) {
   const error = new Error(
-    `More than one active account uses ${cleanEmail(email)}. Ask an admin to merge the duplicate records before signing in.`,
+    `More than one active account uses ${cleanEmail(email)}. Ask an admin to merge the duplicate records before signing in.`
   );
   error.status = 409;
   return error;
 }
 
 function requireSingleEmailAccount(users, email, { allowUserId = null } = {}) {
-  const matches = activeUsersByEmail(users, email).filter(
-    (user) => user.userId !== allowUserId,
-  );
+  const matches = activeUsersByEmail(users, email).filter((user) => user.userId !== allowUserId);
 
   if (allowUserId && matches.length > 0) {
     throw createMultipleAccountsError(email);
@@ -1714,9 +1406,7 @@ function requireSingleEmailAccount(users, email, { allowUserId = null } = {}) {
 async function findUserByGoogleIdentity(googleUser) {
   const users = await scanAll(usersTable);
   const activeUsers = users.filter(isActiveUserRecord);
-  const subjectMatches = activeUsers.filter(
-    (user) => cleanText(user.googleSubject) === googleUser.sub,
-  );
+  const subjectMatches = activeUsers.filter((user) => cleanText(user.googleSubject) === googleUser.sub);
 
   if (subjectMatches.length > 1) {
     throw createMultipleAccountsError(googleUser.email);
@@ -1725,9 +1415,7 @@ async function findUserByGoogleIdentity(googleUser) {
   const subjectMatch = subjectMatches[0] || null;
 
   if (subjectMatch) {
-    requireSingleEmailAccount(activeUsers, googleUser.email, {
-      allowUserId: subjectMatch.userId,
-    });
+    requireSingleEmailAccount(activeUsers, googleUser.email, { allowUserId: subjectMatch.userId });
     return subjectMatch;
   }
 
@@ -1743,13 +1431,9 @@ async function findUserByPasswordUsername(username) {
     return requireSingleEmailAccount(activeUsers, normalized);
   }
 
-  const matches = activeUsers.filter(
-    (user) => cleanUsername(user.passwordUsername) === normalized,
-  );
+  const matches = activeUsers.filter((user) => cleanUsername(user.passwordUsername) === normalized);
   if (matches.length > 1) {
-    const error = new Error(
-      `More than one active account uses ${normalized}. Ask an admin to merge the duplicate records before signing in.`,
-    );
+    const error = new Error(`More than one active account uses ${normalized}. Ask an admin to merge the duplicate records before signing in.`);
     error.status = 409;
     throw error;
   }
@@ -1766,9 +1450,7 @@ async function findUserByPasswordSession(sessionToken) {
   const sessionHash = hashPasswordSessionToken(cleanToken);
   const users = await scanAll(usersTable);
   const user = users.find(
-    (record) =>
-      record.status === "active" &&
-      cleanText(record.passwordSessionHash) === sessionHash,
+    (record) => record.status === "active" && cleanText(record.passwordSessionHash) === sessionHash
   );
 
   if (!user) {
@@ -1786,9 +1468,7 @@ async function findUserByPasswordSession(sessionToken) {
 async function issuePasswordSession(user) {
   const sessionToken = createPasswordSessionToken();
   const now = new Date().toISOString();
-  const expiresAt = new Date(
-    Date.now() + passwordSessionDurationMs,
-  ).toISOString();
+  const expiresAt = new Date(Date.now() + passwordSessionDurationMs).toISOString();
   const result = await db.send(
     new UpdateCommand({
       TableName: usersTable,
@@ -1798,10 +1478,10 @@ async function issuePasswordSession(user) {
       ExpressionAttributeValues: {
         ":sessionHash": hashPasswordSessionToken(sessionToken),
         ":now": now,
-        ":expiresAt": expiresAt,
+        ":expiresAt": expiresAt
       },
-      ReturnValues: "ALL_NEW",
-    }),
+      ReturnValues: "ALL_NEW"
+    })
   );
 
   return {
@@ -1812,22 +1492,52 @@ async function issuePasswordSession(user) {
       passwordSessionCreatedAt: now,
       passwordSessionExpiresAt: expiresAt,
       lastLoginAt: now,
-      updatedAt: now,
-    },
+      updatedAt: now
+    }
   };
 }
 
 async function createPasswordAccount(input) {
-  const { username, password } = validatePasswordAuthInput(input, {
-    requireEmail: true,
-  });
+  const { username, password } = validatePasswordAuthInput(input, { requireEmail: true });
   const existing = await findUserByPasswordUsername(username);
-  if (isPasswordSignupDuplicateBlocked(existing)) {
-    throw createPasswordError(passwordSignupDuplicateErrorMessage, 409);
+
+  if (existing?.passwordLinked) {
+    throw createPasswordError("An account already exists for that email. Log in instead.", 409);
   }
 
   const passwordFields = await createPasswordFields(password);
   const now = new Date().toISOString();
+
+  if (existing) {
+    const role = isAdminEmail(existing.email) || isAdminEmail(username) ? "admin" : existing.role || "client";
+    const isFakeUser = role === "admin" ? false : isFakeUserRecord(existing);
+    const result = await db.send(
+      new UpdateCommand({
+        TableName: usersTable,
+        Key: { userId: existing.userId },
+        UpdateExpression:
+          "SET #role = :role, authProvider = :authProvider, isFakeUser = :isFakeUser, passwordLinked = :passwordLinked, passwordUsername = :passwordUsername, passwordHash = :passwordHash, passwordSalt = :passwordSalt, passwordAlgorithm = :passwordAlgorithm, passwordHashKeyLength = :passwordHashKeyLength, passwordLinkedAt = :now, updatedAt = :now",
+        ExpressionAttributeNames: {
+          "#role": "role"
+        },
+        ExpressionAttributeValues: {
+          ":role": role,
+          ":authProvider": authProviderForPasswordUser(existing),
+          ":isFakeUser": isFakeUser,
+          ":passwordLinked": true,
+          ":passwordUsername": username,
+          ":passwordHash": passwordFields.passwordHash,
+          ":passwordSalt": passwordFields.passwordSalt,
+          ":passwordAlgorithm": passwordFields.passwordAlgorithm,
+          ":passwordHashKeyLength": passwordFields.passwordHashKeyLength,
+          ":now": now
+        },
+        ReturnValues: "ALL_NEW"
+      })
+    );
+
+    return issuePasswordSession(result.Attributes || { ...existing, ...passwordFields, role, isFakeUser });
+  }
 
   const role = isAdminEmail(username) ? "admin" : "client";
   const user = {
@@ -1844,7 +1554,7 @@ async function createPasswordAccount(input) {
     passwordLinkedAt: now,
     ...passwordFields,
     createdAt: now,
-    updatedAt: now,
+    updatedAt: now
   };
 
   try {
@@ -1852,8 +1562,8 @@ async function createPasswordAccount(input) {
       new PutCommand({
         TableName: usersTable,
         Item: user,
-        ConditionExpression: "attribute_not_exists(userId)",
-      }),
+        ConditionExpression: "attribute_not_exists(userId)"
+      })
     );
 
     return issuePasswordSession(user);
@@ -1883,10 +1593,7 @@ async function createAdminUserFromGoogle(googleUser) {
     userId: createAccountUserId(googleUser.email),
     role: "admin",
     status: "active",
-    fullName:
-      googleUser.name ||
-      adminNameForEmail(googleUser.email) ||
-      googleUser.email,
+    fullName: googleUser.name || adminNameForEmail(googleUser.email) || googleUser.email,
     email: googleUser.email,
     companyName: null,
     authProvider: "google",
@@ -1899,15 +1606,15 @@ async function createAdminUserFromGoogle(googleUser) {
     linkedAt: now,
     createdAt: now,
     updatedAt: now,
-    lastLoginAt: now,
+    lastLoginAt: now
   };
 
   await db.send(
     new PutCommand({
       TableName: usersTable,
       Item: user,
-      ConditionExpression: "attribute_not_exists(userId)",
-    }),
+      ConditionExpression: "attribute_not_exists(userId)"
+    })
   );
 
   return user;
@@ -1915,9 +1622,7 @@ async function createAdminUserFromGoogle(googleUser) {
 
 async function linkGoogleUser(user, googleUser) {
   if (user.googleSubject && user.googleSubject !== googleUser.sub) {
-    const error = new Error(
-      "This app account is already linked to another Google account.",
-    );
+    const error = new Error("This app account is already linked to another Google account.");
     error.status = 409;
     throw error;
   }
@@ -1933,7 +1638,7 @@ async function linkGoogleUser(user, googleUser) {
       UpdateExpression:
         "SET #role = :role, authProvider = :authProvider, isFakeUser = :isFakeUser, googleLinked = :googleLinked, googleSubject = :googleSubject, googleEmail = :googleEmail, googleName = :googleName, googlePicture = :googlePicture, linkedAt = if_not_exists(linkedAt, :now), lastLoginAt = :now, updatedAt = :now",
       ExpressionAttributeNames: {
-        "#role": "role",
+        "#role": "role"
       },
       ExpressionAttributeValues: {
         ":role": role,
@@ -1944,28 +1649,26 @@ async function linkGoogleUser(user, googleUser) {
         ":googleEmail": googleUser.email,
         ":googleName": googleUser.name,
         ":googlePicture": googleUser.picture,
-        ":now": now,
+        ":now": now
       },
-      ReturnValues: "ALL_NEW",
-    }),
+      ReturnValues: "ALL_NEW"
+    })
   );
 
-  return (
-    result.Attributes || {
-      ...user,
-      role,
-      authProvider,
-      isFakeUser,
-      googleLinked: true,
-      googleSubject: googleUser.sub,
-      googleEmail: googleUser.email,
-      googleName: googleUser.name,
-      googlePicture: googleUser.picture,
-      linkedAt: user.linkedAt || now,
-      lastLoginAt: now,
-      updatedAt: now,
-    }
-  );
+  return result.Attributes || {
+    ...user,
+    role,
+    authProvider,
+    isFakeUser,
+    googleLinked: true,
+    googleSubject: googleUser.sub,
+    googleEmail: googleUser.email,
+    googleName: googleUser.name,
+    googlePicture: googleUser.picture,
+    linkedAt: user.linkedAt || now,
+    lastLoginAt: now,
+    updatedAt: now
+  };
 }
 
 async function requireGoogleUserFromIdentity(googleUser) {
@@ -1979,7 +1682,7 @@ async function requireGoogleUserFromIdentity(googleUser) {
     }
 
     const error = new Error(
-      "No Green Business Solution profile was found for that Google account. Complete the intake form first, then sign in with the same Google email.",
+      "No Green Business Solution profile was found for that Google account. Complete the intake form first, then sign in with the same Google email."
     );
     error.status = 404;
     throw error;
@@ -1989,9 +1692,7 @@ async function requireGoogleUserFromIdentity(googleUser) {
 }
 
 async function requireGoogleUser(credential) {
-  return requireGoogleUserFromIdentity(
-    await verifyGoogleCredential(credential),
-  );
+  return requireGoogleUserFromIdentity(await verifyGoogleCredential(credential));
 }
 
 async function requireAdminUser(credential) {
@@ -2008,10 +1709,7 @@ async function requirePasswordSessionUser(sessionToken) {
   return findUserByPasswordSession(sessionToken);
 }
 
-async function requireAuthenticatedUserFromAuth({
-  credential,
-  passwordSessionToken,
-}) {
+async function requireAuthenticatedUserFromAuth({ credential, passwordSessionToken }) {
   if (!cleanText(credential) && !cleanText(passwordSessionToken)) {
     const error = new Error("Sign-in is required.");
     error.status = 401;
@@ -2051,13 +1749,8 @@ function bearerCredentialFromRequest(req) {
 
 function adminAuthFromRequest(req) {
   return {
-    credential:
-      cleanText(req.get("x-gbs-google-credential")) ||
-      bearerCredentialFromRequest(req) ||
-      req.body?.credential,
-    passwordSessionToken:
-      cleanText(req.get("x-gbs-password-session")) ||
-      req.body?.passwordSessionToken,
+    credential: cleanText(req.get("x-gbs-google-credential")) || bearerCredentialFromRequest(req) || req.body?.credential,
+    passwordSessionToken: cleanText(req.get("x-gbs-password-session")) || req.body?.passwordSessionToken
   };
 }
 
@@ -2073,108 +1766,45 @@ async function getUserRecord(userId) {
   const result = await db.send(
     new GetCommand({
       TableName: usersTable,
-      Key: { userId },
-    }),
+      Key: { userId }
+    })
   );
 
   return result.Item || null;
 }
 
-async function buildCachedPortalRetrofitRecommendations({
-  user,
-  intake,
-  now = new Date(),
-  persist = true,
-  retrofitTypeIds = [],
-}) {
+async function buildCachedPortalRetrofitRecommendations({ user, intake, now = new Date(), persist = true, retrofitTypeIds = [] }) {
   const requestedRetrofitTypeIds = normalizeRetrofitTypeIdList(retrofitTypeIds);
   const formQuestionCatalog = await loadRuntimeFormQuestionCatalog();
-  const sampleTestCaseById = isLocalStack
-    ? await loadSampleMatchingTestCaseByIdMap()
-    : null;
-  const catalogCacheVersion =
-    retrofitRecommendationCacheVersionForCatalog(formQuestionCatalog);
-  const cached = readCachedRetrofitRecommendations(
-    user,
-    intake,
-    requestedRetrofitTypeIds,
-    catalogCacheVersion,
-  );
+  const catalogCacheVersion = retrofitRecommendationCacheVersionForCatalog(formQuestionCatalog);
+  const cached = readCachedRetrofitRecommendations(user, intake, requestedRetrofitTypeIds, catalogCacheVersion);
   if (cached) {
     return cached;
   }
 
   if (requestedRetrofitTypeIds.length > 0) {
-    const fullMemoryPayload = readCachedRetrofitRecommendations(
-      user,
-      intake,
-      [],
-      catalogCacheVersion,
-    );
+    const fullMemoryPayload = readCachedRetrofitRecommendations(user, intake, [], catalogCacheVersion);
     if (fullMemoryPayload) {
-      const filteredPayload = filterRetrofitRecommendationsPayload(
-        fullMemoryPayload,
-        requestedRetrofitTypeIds,
-      );
-      writeCachedRetrofitRecommendations(
-        user,
-        intake,
-        filteredPayload,
-        requestedRetrofitTypeIds,
-        catalogCacheVersion,
-      );
+      const filteredPayload = filterRetrofitRecommendationsPayload(fullMemoryPayload, requestedRetrofitTypeIds);
+      writeCachedRetrofitRecommendations(user, intake, filteredPayload, requestedRetrofitTypeIds, catalogCacheVersion);
       return filteredPayload;
     }
-    const persistentPayload = await readPersistentRetrofitRecommendations(
-      user,
-      intake,
-      catalogCacheVersion,
-    );
+    const persistentPayload = await readPersistentRetrofitRecommendations(user, intake, catalogCacheVersion);
     if (persistentPayload) {
-      writeCachedRetrofitRecommendations(
-        user,
-        intake,
-        persistentPayload,
-        [],
-        catalogCacheVersion,
-      );
-      const filteredPayload = filterRetrofitRecommendationsPayload(
-        persistentPayload,
-        requestedRetrofitTypeIds,
-      );
-      writeCachedRetrofitRecommendations(
-        user,
-        intake,
-        filteredPayload,
-        requestedRetrofitTypeIds,
-        catalogCacheVersion,
-      );
+      writeCachedRetrofitRecommendations(user, intake, persistentPayload, [], catalogCacheVersion);
+      const filteredPayload = filterRetrofitRecommendationsPayload(persistentPayload, requestedRetrofitTypeIds);
+      writeCachedRetrofitRecommendations(user, intake, filteredPayload, requestedRetrofitTypeIds, catalogCacheVersion);
       return filteredPayload;
     }
   } else if (persist) {
-    const persistentPayload = await readPersistentRetrofitRecommendations(
-      user,
-      intake,
-      catalogCacheVersion,
-    );
+    const persistentPayload = await readPersistentRetrofitRecommendations(user, intake, catalogCacheVersion);
     if (persistentPayload) {
-      writeCachedRetrofitRecommendations(
-        user,
-        intake,
-        persistentPayload,
-        [],
-        catalogCacheVersion,
-      );
+      writeCachedRetrofitRecommendations(user, intake, persistentPayload, [], catalogCacheVersion);
       return persistentPayload;
     }
   }
 
-  const cacheKey = retrofitRecommendationsCacheKey(
-    user,
-    intake,
-    requestedRetrofitTypeIds,
-    catalogCacheVersion,
-  );
+  const cacheKey = retrofitRecommendationsCacheKey(user, intake, requestedRetrofitTypeIds, catalogCacheVersion);
   if (!retrofitRecommendationsPromiseCache.has(cacheKey)) {
     retrofitRecommendationsPromiseCache.set(
       cacheKey,
@@ -2186,57 +1816,16 @@ async function buildCachedPortalRetrofitRecommendations({
           intake,
           opportunities,
           now,
-          retrofitTypeIds: requestedRetrofitTypeIds,
+          retrofitTypeIds: requestedRetrofitTypeIds
         });
-        if (
-          isLocalStack &&
-          !requestedRetrofitTypeIds.length &&
-          !payload.retrofits.length &&
-          isPreviewableFakeClientUser(user, sampleTestCaseById)
-        ) {
-          const fixturePayload = buildFixtureRetrofitRecommendationsPayload({
-            formQuestionCatalog,
-            user,
-            intake,
-            testCase: sampleTestCaseById.get(cleanText(user.sampleUserId)),
-            now,
-          });
-          if (fixturePayload) {
-            writeCachedRetrofitRecommendations(
-              user,
-              intake,
-              fixturePayload,
-              requestedRetrofitTypeIds,
-              catalogCacheVersion,
-            );
-            await writePersistentRetrofitRecommendations(
-              user,
-              intake,
-              fixturePayload,
-              catalogCacheVersion,
-            );
-            return fixturePayload;
-          }
-        }
-        writeCachedRetrofitRecommendations(
-          user,
-          intake,
-          payload,
-          requestedRetrofitTypeIds,
-          catalogCacheVersion,
-        );
+        writeCachedRetrofitRecommendations(user, intake, payload, requestedRetrofitTypeIds, catalogCacheVersion);
         if (persist && requestedRetrofitTypeIds.length === 0) {
-          await writePersistentRetrofitRecommendations(
-            user,
-            intake,
-            payload,
-            catalogCacheVersion,
-          );
+          await writePersistentRetrofitRecommendations(user, intake, payload, catalogCacheVersion);
         }
         return payload;
       })().finally(() => {
         retrofitRecommendationsPromiseCache.delete(cacheKey);
-      }),
+      })
     );
   }
 
@@ -2247,8 +1836,7 @@ async function precomputeAdminClientRetrofitRecommendations(userIds) {
   const uniqueUserIds = [...new Set(cleanStringArray(userIds))].slice(0, 75);
   const sampleTestCaseById = await loadSampleMatchingTestCaseByIdMap();
   const formQuestionCatalog = await loadRuntimeFormQuestionCatalog();
-  const catalogCacheVersion =
-    retrofitRecommendationCacheVersionForCatalog(formQuestionCatalog);
+  const catalogCacheVersion = retrofitRecommendationCacheVersionForCatalog(formQuestionCatalog);
   const results = [];
   for (const userId of uniqueUserIds) {
     try {
@@ -2267,37 +1855,18 @@ async function precomputeAdminClientRetrofitRecommendations(userIds) {
         user,
         intake,
         testCase: sampleTestCaseById.get(cleanText(user.sampleUserId)),
-        now: new Date(),
+        now: new Date()
       });
       if (fixturePayload) {
-        writeCachedRetrofitRecommendations(
-          user,
-          intake,
-          fixturePayload,
-          [],
-          catalogCacheVersion,
-        );
-        await writePersistentRetrofitRecommendations(
-          user,
-          intake,
-          fixturePayload,
-          catalogCacheVersion,
-        );
+        writeCachedRetrofitRecommendations(user, intake, fixturePayload, [], catalogCacheVersion);
+        await writePersistentRetrofitRecommendations(user, intake, fixturePayload, catalogCacheVersion);
         results.push({ userId, source: "fixture", status: "ready" });
         continue;
       }
-      await buildCachedPortalRetrofitRecommendations({
-        user,
-        intake,
-        now: new Date(),
-        persist: true,
-      });
+      await buildCachedPortalRetrofitRecommendations({ user, intake, now: new Date(), persist: true });
       results.push({ userId, source: "live", status: "ready" });
     } catch (error) {
-      console.warn(
-        `[retrofit-recommendations-cache] precompute failed for ${userId}:`,
-        error,
-      );
+      console.warn(`[retrofit-recommendations-cache] precompute failed for ${userId}:`, error);
       results.push({ userId, status: "error" });
     }
   }
@@ -2308,23 +1877,12 @@ function retrofitRecommendationCacheVersionForCatalog(formQuestionCatalog) {
   return `${persistentRetrofitRecommendationsCacheVersion}:forms:${formQuestionCatalogCacheVersion(formQuestionCatalog)}`;
 }
 
-async function updateOpportunityReview({
-  opportunityId,
-  status,
-  notes,
-  duplicateOf,
-  credential,
-  passwordSessionToken,
-}) {
-  const admin = await requireAdminFromAuth({
-    credential,
-    passwordSessionToken,
-  });
+async function updateOpportunityReview({ opportunityId, status, notes, duplicateOf, credential, passwordSessionToken }) {
+  const admin = await requireAdminFromAuth({ credential, passwordSessionToken });
   const cleanOpportunityId = cleanText(opportunityId);
   const cleanStatus = cleanText(status);
   const cleanNotes = cleanOptional(notes);
-  const cleanDuplicateOf =
-    cleanStatus === "duplicate" ? cleanOptional(duplicateOf) : null;
+  const cleanDuplicateOf = cleanStatus === "duplicate" ? cleanOptional(duplicateOf) : null;
 
   if (!cleanOpportunityId) {
     const error = new Error("Opportunity ID is required.");
@@ -2333,9 +1891,7 @@ async function updateOpportunityReview({
   }
 
   if (!opportunityReviewStatuses.has(cleanStatus)) {
-    const error = new Error(
-      "Review status must be approved, rejected, needs_review, or duplicate.",
-    );
+    const error = new Error("Review status must be approved, rejected, needs_review, or duplicate.");
     error.status = 400;
     throw error;
   }
@@ -2347,9 +1903,7 @@ async function updateOpportunityReview({
   }
 
   if (cleanStatus === "duplicate" && !cleanDuplicateOf) {
-    const error = new Error(
-      "Duplicate records must include the opportunity ID they duplicate.",
-    );
+    const error = new Error("Duplicate records must include the opportunity ID they duplicate.");
     error.status = 400;
     throw error;
   }
@@ -2357,8 +1911,8 @@ async function updateOpportunityReview({
   const existing = await db.send(
     new GetCommand({
       TableName: opportunitiesTable,
-      Key: { opportunityId: cleanOpportunityId },
-    }),
+      Key: { opportunityId: cleanOpportunityId }
+    })
   );
 
   if (!existing.Item) {
@@ -2368,9 +1922,7 @@ async function updateOpportunityReview({
   }
 
   if (!isDsireOpportunityRecord(existing.Item)) {
-    const error = new Error(
-      "Only DSIRE opportunity records are active for review.",
-    );
+    const error = new Error("Only DSIRE opportunity records are active for review.");
     error.status = 400;
     throw error;
   }
@@ -2391,12 +1943,12 @@ async function updateOpportunityReview({
         ":reviewedBy": {
           userId: admin.userId,
           email: admin.email,
-          fullName: admin.fullName,
+          fullName: admin.fullName
         },
-        ":updatedAt": now,
+        ":updatedAt": now
       },
-      ReturnValues: "ALL_NEW",
-    }),
+      ReturnValues: "ALL_NEW"
+    })
   );
 
   return result.Attributes;
@@ -2420,7 +1972,7 @@ function compactEvidence(evidence) {
     retrievedAt: item?.retrievedAt,
     rawContentHash: item?.rawContentHash,
     parentDocumentHash: item?.parentDocumentHash,
-    extractedText: compactText(item?.extractedText, maxEvidenceTextLength),
+    extractedText: compactText(item?.extractedText, maxEvidenceTextLength)
   }));
 }
 
@@ -2429,10 +1981,7 @@ function compactDetailLabels(details) {
     return [];
   }
 
-  return details
-    .map((detail) => detail?.label)
-    .filter(Boolean)
-    .slice(0, 20);
+  return details.map((detail) => detail?.label).filter(Boolean).slice(0, 20);
 }
 
 function buildDsireSourceRecords(record, evidence) {
@@ -2445,8 +1994,8 @@ function buildDsireSourceRecords(record, evidence) {
       externalIdType: record.externalIdType,
       ingestionMode: record.ingestionMode,
       ingestRunId: record.ingestRunId,
-      evidence,
-    },
+      evidence
+    }
   ];
 }
 
@@ -2503,36 +2052,26 @@ function compactOpportunityRecord(record) {
     firstSeenAt: record.firstSeenAt,
     createdAt: record.createdAt,
     updatedAt: record.updatedAt,
-    lastSeenAt: record.lastSeenAt,
+    lastSeenAt: record.lastSeenAt
   };
 }
 
-function tableSnapshot(
-  name,
-  records,
-  { recordCount = records.length, note = null } = {},
-) {
+function tableSnapshot(name, records, { recordCount = records.length, note = null } = {}) {
   return {
     name,
     recordCount,
     loadedCount: records.length,
     isTruncated: records.length < recordCount,
     note,
-    records,
+    records
   };
 }
 
 function isDatabaseCloneRecord(record) {
-  if (
-    !isDsireOpportunityRecord(record) ||
-    record?.ingestionMode === "rss_delta_feed" ||
-    !isVisibleOpportunity(record)
-  ) {
+  if (!isDsireOpportunityRecord(record) || record?.ingestionMode === "rss_delta_feed" || !isVisibleOpportunity(record)) {
     return false;
   }
-  return isVisibleAvailability(
-    buildOpportunityMatchProfile(record).availability,
-  );
+  return isVisibleAvailability(buildOpportunityMatchProfile(record).availability);
 }
 
 function slugify(value) {
@@ -2544,9 +2083,7 @@ function slugify(value) {
 }
 
 function normalizeFilterValue(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase();
+  return String(value || "").trim().toLowerCase();
 }
 
 function parseQueryList(value) {
@@ -2577,7 +2114,7 @@ function toLookupArray(value) {
       if (typeof item === "string") {
         return {
           name: item,
-          slug: slugify(item),
+          slug: slugify(item)
         };
       }
 
@@ -2585,9 +2122,7 @@ function toLookupArray(value) {
         return null;
       }
 
-      const name = cleanText(
-        item.name || item.title || item.abbreviation || item.code || item.id,
-      );
+      const name = cleanText(item.name || item.title || item.abbreviation || item.code || item.id);
       if (!name) {
         return null;
       }
@@ -2596,7 +2131,7 @@ function toLookupArray(value) {
         ...item,
         id: item.id == null ? undefined : String(item.id),
         name,
-        slug: item.slug || slugify(name),
+        slug: item.slug || slugify(name)
       };
     })
     .filter(Boolean);
@@ -2623,7 +2158,7 @@ function uniqueLookups(values) {
         ...result[existingIndex],
         id: result[existingIndex].id || value.id,
         slug: result[existingIndex].slug || value.slug,
-        name: result[existingIndex].name || value.name,
+        name: result[existingIndex].name || value.name
       };
       continue;
     }
@@ -2640,12 +2175,7 @@ function lookupMatches(lookup, filters) {
     return true;
   }
 
-  const values = [
-    lookup?.id,
-    lookup?.name,
-    lookup?.slug,
-    lookup?.abbreviation,
-  ].map(normalizeFilterValue);
+  const values = [lookup?.id, lookup?.name, lookup?.slug, lookup?.abbreviation].map(normalizeFilterValue);
   return filters.some((filter) => values.includes(filter));
 }
 
@@ -2668,7 +2198,7 @@ function compactDatabaseDetails(details) {
       label: detail?.label || null,
       value: compactText(detail?.value, 1800),
       displayOrder: detail?.displayOrder ?? index,
-      templateId: detail?.templateId == null ? null : String(detail.templateId),
+      templateId: detail?.templateId == null ? null : String(detail.templateId)
     }))
     .filter((detail) => detail.label || detail.value)
     .sort((a, b) => Number(a.displayOrder || 0) - Number(b.displayOrder || 0));
@@ -2693,95 +2223,55 @@ function compactDatabaseParameterSets(parameterSets) {
           amount: parameter?.amount ?? null,
           amountText: parameter?.amountText || null,
           units: parameter?.units || null,
-          displayValue: parameter?.displayValue || null,
+          displayValue: parameter?.displayValue || null
         }))
-      : [],
+      : []
   }));
 }
 
 function buildDatabaseProgram(record, { includeDetail = false } = {}) {
   const clone = record.dsireClone || {};
   const cloneProgram = clone.program || {};
-  const sourceProgramId = String(
-    cloneProgram.sourceProgramId ||
-      clone.sourceProgramId ||
-      record.dsire?.programId ||
-      record.externalId,
-  );
-  const dsireProgramId =
-    record.dsire?.programId ||
-    cloneProgram.sourceProgramId ||
-    clone.sourceProgramId ||
-    record.raw?.id ||
-    record.externalId ||
-    null;
-  const name =
-    cloneProgram.name || record.canonicalTitle || "Untitled DSIRE program";
+  const sourceProgramId = String(cloneProgram.sourceProgramId || clone.sourceProgramId || record.dsire?.programId || record.externalId);
+  const dsireProgramId = record.dsire?.programId || cloneProgram.sourceProgramId || clone.sourceProgramId || record.raw?.id || record.externalId || null;
+  const name = cloneProgram.name || record.canonicalTitle || "Untitled DSIRE program";
   const state = {
-    id:
-      cloneProgram.state?.id ||
-      (record.dsire?.stateId == null ? null : String(record.dsire.stateId)),
+    id: cloneProgram.state?.id || (record.dsire?.stateId == null ? null : String(record.dsire.stateId)),
     abbreviation: cloneProgram.state?.abbreviation || record.state || null,
     name: cloneProgram.state?.name || record.stateName || null,
-    isTerritory:
-      cloneProgram.state?.isTerritory ??
-      record.raw?.stateObj?.is_territory ??
-      null,
+    isTerritory: cloneProgram.state?.isTerritory ?? record.raw?.stateObj?.is_territory ?? null
   };
   const category = {
-    id:
-      cloneProgram.category?.id ||
-      (record.categoryId == null ? null : String(record.categoryId)),
+    id: cloneProgram.category?.id || (record.categoryId == null ? null : String(record.categoryId)),
     name: cloneProgram.category?.name || record.category || null,
-    slug: cloneProgram.category?.slug || slugify(record.category),
+    slug: cloneProgram.category?.slug || slugify(record.category)
   };
   const programType = {
-    id:
-      cloneProgram.programType?.id ||
-      (record.programTypeId == null ? null : String(record.programTypeId)),
-    categoryId:
-      cloneProgram.programType?.categoryId ||
-      (record.categoryId == null ? null : String(record.categoryId)),
+    id: cloneProgram.programType?.id || (record.programTypeId == null ? null : String(record.programTypeId)),
+    categoryId: cloneProgram.programType?.categoryId || (record.categoryId == null ? null : String(record.categoryId)),
     name: cloneProgram.programType?.name || record.programType || null,
-    slug: cloneProgram.programType?.slug || slugify(record.programType),
+    slug: cloneProgram.programType?.slug || slugify(record.programType)
   };
   const implementingSector = {
-    id:
-      cloneProgram.implementingSector?.id ||
-      record.implementingSector?.id ||
-      (record.dsire?.sectorId == null ? null : String(record.dsire.sectorId)),
-    name:
-      cloneProgram.implementingSector?.name ||
-      record.implementingSector?.name ||
-      record.dsire?.sectorName ||
-      null,
-    slug:
-      cloneProgram.implementingSector?.slug ||
-      record.implementingSector?.slug ||
-      slugify(record.dsire?.sectorName),
+    id: cloneProgram.implementingSector?.id || record.implementingSector?.id || (record.dsire?.sectorId == null ? null : String(record.dsire.sectorId)),
+    name: cloneProgram.implementingSector?.name || record.implementingSector?.name || record.dsire?.sectorName || null,
+    slug: cloneProgram.implementingSector?.slug || record.implementingSector?.slug || slugify(record.dsire?.sectorName)
   };
-  const overviewDetails = compactDatabaseDetails(
-    clone.overviewDetails || record.details,
-  );
-  const parameterSets = compactDatabaseParameterSets(
-    clone.parameterSets || record.parameterSets || record.raw?.parameterSets,
-  );
+  const overviewDetails = compactDatabaseDetails(clone.overviewDetails || record.details);
+  const parameterSets = compactDatabaseParameterSets(clone.parameterSets || record.parameterSets || record.raw?.parameterSets);
   const eligibleSectors = uniqueLookups([
     ...toLookupArray(clone.eligibleSectors),
     ...toLookupArray(record.eligibleSectors),
     ...toLookupArray(record.sectors),
-    ...parameterSets.flatMap((parameterSet) => parameterSet.sectors),
+    ...parameterSets.flatMap((parameterSet) => parameterSet.sectors)
   ]);
   const technologies = uniqueLookups([
     ...toLookupArray(clone.technologies),
     ...toLookupArray(record.technologyRecords),
     ...toLookupArray(record.technologies),
-    ...parameterSets.flatMap((parameterSet) => parameterSet.technologies),
+    ...parameterSets.flatMap((parameterSet) => parameterSet.technologies)
   ]);
-  const summaryText = compactText(
-    cloneProgram.summaryText || record.summary,
-    includeDetail ? 8000 : 700,
-  );
+  const summaryText = compactText(cloneProgram.summaryText || record.summary, includeDetail ? 8000 : 700);
 
   return {
     id: sourceProgramId,
@@ -2793,11 +2283,7 @@ function buildDatabaseProgram(record, { includeDetail = false } = {}) {
     externalId: record.externalId || null,
     externalIdType: record.externalIdType || null,
     dsireProgramId,
-    code:
-      cloneProgram.code ||
-      record.dsire?.programCode ||
-      record.raw?.code ||
-      null,
+    code: cloneProgram.code || record.dsire?.programCode || record.raw?.code || null,
     name,
     slug: cloneProgram.slug || slugify(name),
     state,
@@ -2812,25 +2298,19 @@ function buildDatabaseProgram(record, { includeDetail = false } = {}) {
     fundingSource: cloneProgram.fundingSource || record.fundingSource || null,
     budget: cloneProgram.budget || record.budget || null,
     startDate: cloneProgram.startDate || record.startDate || null,
-    startDateText:
-      cloneProgram.startDateText || record.raw?.startDateText || null,
+    startDateText: cloneProgram.startDateText || record.raw?.startDateText || null,
     endDate: cloneProgram.endDate || record.endDate || null,
     endDateText: cloneProgram.endDateText || record.raw?.endDateText || null,
     summaryText,
     lastReviewedAt: cloneProgram.lastReviewedAt || record.lastUpdated || null,
-    updatedAt:
-      cloneProgram.updatedAt || record.lastUpdated || record.updatedAt || null,
+    updatedAt: cloneProgram.updatedAt || record.lastUpdated || record.updatedAt || null,
     createdAt: cloneProgram.createdAt || record.sourceCreatedAt || null,
     geography: clone.geography || record.geography || {},
     overviewDetails: includeDetail ? overviewDetails : [],
     parameterSets: includeDetail ? parameterSets : [],
-    authorities:
-      includeDetail && Array.isArray(clone.authorities)
-        ? clone.authorities
-        : [],
-    contacts:
-      includeDetail && Array.isArray(clone.contacts) ? clone.contacts : [],
-    memos: includeDetail && Array.isArray(clone.memos) ? clone.memos : [],
+    authorities: includeDetail && Array.isArray(clone.authorities) ? clone.authorities : [],
+    contacts: includeDetail && Array.isArray(clone.contacts) ? clone.contacts : [],
+    memos: includeDetail && Array.isArray(clone.memos) ? clone.memos : []
   };
 }
 
@@ -2879,19 +2359,14 @@ function buildDatabaseProgramSearchText(program) {
       program.programType?.name,
       program.implementingSector?.id,
       program.implementingSector?.name,
-      ...program.eligibleSectors.flatMap((sector) => [
-        sector.id,
-        sector.name,
-        sector.slug,
-        sector.abbreviation,
-      ]),
+      ...program.eligibleSectors.flatMap((sector) => [sector.id, sector.name, sector.slug, sector.abbreviation]),
       ...program.technologies.flatMap((technology) => [
         technology.id,
         technology.name,
         technology.slug,
-        technology.abbreviation,
-      ]),
-    ].join(" "),
+        technology.abbreviation
+      ])
+    ].join(" ")
   );
 }
 
@@ -2909,9 +2384,7 @@ function buildFacet(values, labelKey = "name") {
       continue;
     }
 
-    const key = normalizeFilterValue(
-      value.slug || value.abbreviation || label || id,
-    );
+    const key = normalizeFilterValue(value.slug || value.abbreviation || label || id);
     const existing = map.get(key);
     if (existing) {
       existing.count += 1;
@@ -2920,7 +2393,7 @@ function buildFacet(values, labelKey = "name") {
         id: key,
         label: String(label),
         value: value.slug || value.abbreviation || String(label),
-        count: 1,
+        count: 1
       });
     }
   }
@@ -2930,30 +2403,12 @@ function buildFacet(values, labelKey = "name") {
 
 function buildDatabaseFacets(programs) {
   return {
-    states: buildFacet(
-      programs.map((program) => program.state),
-      "name",
-    ),
-    categories: buildFacet(
-      programs.map((program) => program.category),
-      "name",
-    ),
-    programTypes: buildFacet(
-      programs.map((program) => program.programType),
-      "name",
-    ),
-    implementingSectors: buildFacet(
-      programs.map((program) => program.implementingSector),
-      "name",
-    ),
-    eligibleSectors: buildFacet(
-      programs.flatMap((program) => program.eligibleSectors),
-      "name",
-    ),
-    technologies: buildFacet(
-      programs.flatMap((program) => program.technologies),
-      "name",
-    ),
+    states: buildFacet(programs.map((program) => program.state), "name"),
+    categories: buildFacet(programs.map((program) => program.category), "name"),
+    programTypes: buildFacet(programs.map((program) => program.programType), "name"),
+    implementingSectors: buildFacet(programs.map((program) => program.implementingSector), "name"),
+    eligibleSectors: buildFacet(programs.flatMap((program) => program.eligibleSectors), "name"),
+    technologies: buildFacet(programs.flatMap((program) => program.technologies), "name")
   };
 }
 
@@ -2962,44 +2417,38 @@ async function loadDatabasePrograms({ includeDetail = false } = {}) {
   return records
     .filter(isDatabaseCloneRecord)
     .map((record) => buildDatabaseProgram(record, { includeDetail }))
-    .sort(
-      (a, b) =>
-        String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")) ||
-        a.name.localeCompare(b.name),
-    );
+    .sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")) || a.name.localeCompare(b.name));
 }
 
 async function loadDatabaseProgramBatch({ cursor, limit }) {
   const scanInput = {
     TableName: opportunitiesTable,
-    Limit: limit,
+    Limit: limit
   };
   if (cursor) {
     scanInput.ExclusiveStartKey = cursor;
   }
-  const result = await db.send(new ScanCommand(scanInput));
+  const result = await db.send(
+    new ScanCommand(scanInput)
+  );
   const records = result.Items || [];
   const programs = records
     .filter(isDatabaseCloneRecord)
     .map((record) => buildDatabaseProgram(record))
-    .sort(
-      (a, b) =>
-        String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")) ||
-        a.name.localeCompare(b.name),
-    );
+    .sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")) || a.name.localeCompare(b.name));
 
   return {
     programs,
     scannedCount: result.ScannedCount ?? records.length,
     rawCount: records.length,
-    nextCursor: encodeScanCursor(result.LastEvaluatedKey),
+    nextCursor: encodeScanCursor(result.LastEvaluatedKey)
   };
 }
 
 async function buildPasswordAuthPayload(sessionResult) {
   return {
     ...(await buildAuthPayload(sessionResult.user)),
-    sessionToken: sessionResult.sessionToken,
+    sessionToken: sessionResult.sessionToken
   };
 }
 
@@ -3009,7 +2458,7 @@ async function buildAuthPayload(user) {
       dashboard: "admin",
       user: publicUser(user),
       intake: null,
-      adminDashboard: buildAdminShellPayload(user),
+      adminDashboard: buildAdminShellPayload(user)
     };
   }
 
@@ -3017,7 +2466,7 @@ async function buildAuthPayload(user) {
     dashboard: "client",
     user: publicUser(user),
     intake: await getIntake(user.userId),
-    adminDashboard: null,
+    adminDashboard: null
   };
 }
 
@@ -3025,42 +2474,30 @@ function buildAdminShellPayload(admin) {
   return {
     admin: publicUser(admin),
     users: [],
-    dataTables: [usersTable, intakeTable, opportunitiesTable].map((tableName) =>
-      tableSnapshot(tableName, []),
-    ),
+    dataTables: [usersTable, intakeTable, opportunitiesTable].map((tableName) => tableSnapshot(tableName, []))
   };
 }
 
 async function buildAdminUserRows() {
-  const [users, intakes] = await Promise.all([
-    scanAll(usersTable),
-    scanAll(intakeTable),
-  ]);
-  const intakeByUser = new Map(
-    intakes.map((intake) => [intake.userId, normalizeIntakeRecord(intake)]),
-  );
+  const [users, intakes] = await Promise.all([scanAll(usersTable), scanAll(intakeTable)]);
+  const intakeByUser = new Map(intakes.map((intake) => [intake.userId, normalizeIntakeRecord(intake)]));
   const sortedUsers = users
     .filter(isActiveUserRecord)
     .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
 
   return sortedUsers.map((user) => ({
     user: publicUser(user),
-    intake: intakeByUser.get(user.userId) || null,
+    intake: intakeByUser.get(user.userId) || null
   }));
 }
 
 async function buildAdminFakeClientOptions() {
   const [users, sampleTestCaseById] = await Promise.all([
     scanAll(usersTable),
-    loadSampleMatchingTestCaseByIdMap(),
+    loadSampleMatchingTestCaseByIdMap()
   ]);
   return users
-    .filter(
-      (user) =>
-        isActiveUserRecord(user) &&
-        user.role === "client" &&
-        isFakeUserRecord(user),
-    )
+    .filter((user) => isActiveUserRecord(user) && user.role === "client" && isFakeUserRecord(user))
     .filter((user) => isPreviewableFakeClientUser(user, sampleTestCaseById))
     .map((user) => {
       const publicRecord = publicUser(user);
@@ -3070,7 +2507,7 @@ async function buildAdminFakeClientOptions() {
         clientName: publicRecord.fullName || publicRecord.email,
         companyName: publicRecord.companyName || null,
         email: publicRecord.email,
-        hasIntake: true,
+        hasIntake: true
       };
     })
     .sort((left, right) => left.clientName.localeCompare(right.clientName));
@@ -3090,16 +2527,9 @@ async function loadSampleMatchingTestCases() {
 async function loadSampleMatchingTestCaseByIdMap() {
   try {
     const testCases = await loadSampleMatchingTestCases();
-    return new Map(
-      testCases
-        .map((testCase) => [cleanText(testCase?.sampleUserId), testCase])
-        .filter(([sampleUserId]) => sampleUserId),
-    );
+    return new Map(testCases.map((testCase) => [cleanText(testCase?.sampleUserId), testCase]).filter(([sampleUserId]) => sampleUserId));
   } catch (error) {
-    console.warn(
-      "[admin-preview] Could not load sample matching test cases for fake-user filtering:",
-      error,
-    );
+    console.warn("[admin-preview] Could not load sample matching test cases for fake-user filtering:", error);
     return new Map();
   }
 }
@@ -3117,9 +2547,7 @@ function sampleTestCaseHasRetrofitResults(testCase) {
 async function getSampleMatchingTestCase(testCaseId) {
   const cleanId = cleanText(testCaseId);
   const testCases = await loadSampleMatchingTestCases();
-  return (
-    testCases.find((testCase) => testCase.sampleUserId === cleanId) || null
-  );
+  return testCases.find((testCase) => testCase.sampleUserId === cleanId) || null;
 }
 
 function dashboardPerformanceStoreOptions() {
@@ -3136,16 +2564,14 @@ async function seedDashboardPostImplementationDataset(testCaseId) {
   const dataset = buildSyntheticDashboardPostImplementationDataset(testCase);
   const result = await putDashboardPostImplementationDataset({
     ...dashboardPerformanceStoreOptions(),
-    dataset,
+    dataset
   });
   return {
     dataset: result.dataset,
-    summary: summarizeDashboardPostImplementationDataset(result.dataset, {
-      storageStatus: result.storageStatus,
-    }),
+    summary: summarizeDashboardPostImplementationDataset(result.dataset, { storageStatus: result.storageStatus }),
     storageStatus: result.storageStatus,
     warning: result.warning || null,
-    validation: validateDashboardPostImplementationDataset(result.dataset),
+    validation: validateDashboardPostImplementationDataset(result.dataset)
   };
 }
 
@@ -3154,44 +2580,33 @@ async function seedAllDashboardPostImplementationDatasets() {
   const datasets = [];
   const warnings = [];
   for (const testCase of testCases) {
-    const result = await seedDashboardPostImplementationDataset(
-      testCase.sampleUserId,
-    );
+    const result = await seedDashboardPostImplementationDataset(testCase.sampleUserId);
     datasets.push(result.dataset);
-    if (result.warning)
-      warnings.push(`${testCase.sampleUserId}: ${result.warning}`);
+    if (result.warning) warnings.push(`${testCase.sampleUserId}: ${result.warning}`);
   }
-  const summaryResponse = buildDashboardPerformanceSummaryResponse(
-    testCases,
-    datasets,
-    {
-      storageStatus: warnings.length ? "local_fallback" : "dynamodb",
-    },
-  );
+  const summaryResponse = buildDashboardPerformanceSummaryResponse(testCases, datasets, {
+    storageStatus: warnings.length ? "local_fallback" : "dynamodb"
+  });
   return {
     ...summaryResponse,
-    warnings,
+    warnings
   };
 }
 
-async function attachAdminDashboardPostImplementationDataset(
-  payload,
-  user,
-  intake,
-) {
+async function attachAdminDashboardPostImplementationDataset(payload, user, intake) {
   const sampleUserId = cleanText(user?.sampleUserId || intake?.sampleUserId);
   if (!sampleUserId || !isFakeUserRecord(user)) return payload;
   const result = await getDashboardPostImplementationDatasetByTestCase({
     ...dashboardPerformanceStoreOptions(),
-    testCaseId: sampleUserId,
+    testCaseId: sampleUserId
   });
   if (!result?.dataset) return payload;
   return {
     ...payload,
     dashboardPostImplementationDataset: {
       ...result.dataset,
-      storageStatus: result.storageStatus,
-    },
+      storageStatus: result.storageStatus
+    }
   };
 }
 
@@ -3206,21 +2621,20 @@ async function loadAdminApplicationSourceOpportunityBatch({ cursor, limit }) {
   do {
     const scanInput = {
       TableName: opportunitiesTable,
-      Limit: pageLimit,
+      Limit: pageLimit
     };
     if (ExclusiveStartKey) {
       scanInput.ExclusiveStartKey = ExclusiveStartKey;
     }
-    const result = await db.send(new ScanCommand(scanInput));
+    const result = await db.send(
+      new ScanCommand(scanInput)
+    );
     const items = result.Items || [];
     scannedCount += items.length;
     scanCalls += 1;
 
     for (const opportunity of items) {
-      if (
-        isDsireOpportunityRecord(opportunity) &&
-        isVisibleOpportunity(opportunity)
-      ) {
+      if (isDsireOpportunityRecord(opportunity) && isVisibleOpportunity(opportunity)) {
         opportunities.push(opportunity);
         if (opportunities.length >= limit) {
           break;
@@ -3236,28 +2650,25 @@ async function loadAdminApplicationSourceOpportunityBatch({ cursor, limit }) {
     scannedCount,
     scanCalls,
     nextCursor: encodeScanCursor(ExclusiveStartKey),
-    loadDurationMs: Date.now() - startedAt,
+    loadDurationMs: Date.now() - startedAt
   };
 }
 
 async function buildAdminApplicationSourcesBatch({ cursor, limit }) {
-  const loaded = await loadAdminApplicationSourceOpportunityBatch({
-    cursor,
-    limit,
-  });
+  const loaded = await loadAdminApplicationSourceOpportunityBatch({ cursor, limit });
   const resolveStartedAt = Date.now();
   const sources = loaded.opportunities
     .sort((a, b) =>
       String(b.lastSeenAt || b.updatedAt || b.publishedAt || "").localeCompare(
-        String(a.lastSeenAt || a.updatedAt || a.publishedAt || ""),
-      ),
+        String(a.lastSeenAt || a.updatedAt || a.publishedAt || "")
+      )
     )
     .map((opportunity) => resolveOpportunityApplicationSource(opportunity));
 
   return {
     ...loaded,
     sources,
-    resolveDurationMs: Date.now() - resolveStartedAt,
+    resolveDurationMs: Date.now() - resolveStartedAt
   };
 }
 
@@ -3270,9 +2681,7 @@ async function findOpportunityForApplicationProfile(opportunityId) {
   }
 
   const opportunities = await getCachedOpportunities();
-  const opportunity = opportunities.find(
-    (record) => String(record?.opportunityId || "") === cleanOpportunityId,
-  );
+  const opportunity = opportunities.find((record) => String(record?.opportunityId || "") === cleanOpportunityId);
   if (!opportunity || !isVisibleOpportunity(opportunity)) {
     const error = new Error("Opportunity was not found.");
     error.status = 404;
@@ -3281,13 +2690,7 @@ async function findOpportunityForApplicationProfile(opportunityId) {
   return opportunity;
 }
 
-async function listApplicationProfileRecords({
-  cursor,
-  limit,
-  reviewStatus,
-  profileQuality,
-  opportunityId,
-}) {
+async function listApplicationProfileRecords({ cursor, limit, reviewStatus, profileQuality, opportunityId }) {
   const startedAt = Date.now();
   const profiles = [];
   let ExclusiveStartKey = cursor;
@@ -3296,12 +2699,14 @@ async function listApplicationProfileRecords({
   do {
     const scanInput = {
       TableName: applicationProfilesTable,
-      Limit: Math.min(Math.max(limit, 25), 250),
+      Limit: Math.min(Math.max(limit, 25), 250)
     };
     if (ExclusiveStartKey) {
       scanInput.ExclusiveStartKey = ExclusiveStartKey;
     }
-    const result = await db.send(new ScanCommand(scanInput));
+    const result = await db.send(
+      new ScanCommand(scanInput)
+    );
     scanCalls += 1;
     for (const item of result.Items || []) {
       if (!isApplicationProfileRegistryItem(item)) continue;
@@ -3315,17 +2720,13 @@ async function listApplicationProfileRecords({
     ExclusiveStartKey = result.LastEvaluatedKey;
   } while (ExclusiveStartKey && profiles.length < limit);
 
-  profiles.sort((a, b) =>
-    String(b.updatedAt || b.createdAt || "").localeCompare(
-      String(a.updatedAt || a.createdAt || ""),
-    ),
-  );
+  profiles.sort((a, b) => String(b.updatedAt || b.createdAt || "").localeCompare(String(a.updatedAt || a.createdAt || "")));
 
   return {
     profiles,
     scanCalls,
     nextCursor: encodeScanCursor(ExclusiveStartKey),
-    durationMs: Date.now() - startedAt,
+    durationMs: Date.now() - startedAt
   };
 }
 
@@ -3340,8 +2741,8 @@ async function getApplicationProfileRecord(profileId) {
   const result = await db.send(
     new GetCommand({
       TableName: applicationProfilesTable,
-      Key: applicationProfileStateKey(cleanProfileId),
-    }),
+      Key: applicationProfileStateKey(cleanProfileId)
+    })
   );
 
   if (!result.Item || !isApplicationProfileRegistryItem(result.Item)) {
@@ -3358,8 +2759,8 @@ async function putApplicationProfileRecord(profile) {
   await db.send(
     new PutCommand({
       TableName: applicationProfilesTable,
-      Item: item,
-    }),
+      Item: item
+    })
   );
   return publicApplicationProfileRecord(item);
 }
@@ -3375,47 +2776,40 @@ async function saveGeneratedApplicationProfileDraft(profile) {
   const existing = await db.send(
     new GetCommand({
       TableName: applicationProfilesTable,
-      Key: applicationProfileStateKey(profileId),
-    }),
+      Key: applicationProfileStateKey(profileId)
+    })
   );
   if (existing.Item && !profileCanBeRegenerated(existing.Item)) {
-    const error = new Error(
-      "An admin-reviewed, rejected, or archived profile already exists for this opportunity.",
-    );
+    const error = new Error("An admin-reviewed, rejected, or archived profile already exists for this opportunity.");
     error.status = 409;
     throw error;
   }
 
-  const normalized = normalizeApplicationProfileForRegistry(profile, {
-    statusMode: "draft",
-  });
+  const normalized = normalizeApplicationProfileForRegistry(profile, { statusMode: "draft" });
   return putApplicationProfileRecord(normalized);
 }
 
 async function buildApplicationProfileDraftForOpportunity(opportunity) {
-  const applicationSourceProfile =
-    resolveOpportunityApplicationSource(opportunity);
-  const officialProgramWebsiteProfile =
-    resolveOfficialProgramWebsite(opportunity);
+  const applicationSourceProfile = resolveOpportunityApplicationSource(opportunity);
+  const officialProgramWebsiteProfile = resolveOfficialProgramWebsite(opportunity);
   const applicationPathProfile = await discoverOpportunityApplicationLinks({
     opportunity,
-    sourceProfile: applicationSourceProfile,
+    sourceProfile: applicationSourceProfile
   });
-  const applicationRequirementProfile =
-    await extractOpportunityApplicationRequirements({
-      opportunity,
-      sourceProfile: applicationSourceProfile,
-      pathProfile: applicationPathProfile,
-    });
+  const applicationRequirementProfile = await extractOpportunityApplicationRequirements({
+    opportunity,
+    sourceProfile: applicationSourceProfile,
+    pathProfile: applicationPathProfile
+  });
   const draftApplicationProfile = composeDraftApplicationProfile({
     opportunity,
     officialProgramWebsiteProfile,
     applicationPathProfile,
-    applicationRequirementProfile,
+    applicationRequirementProfile
   });
   const validation = validateApplicationProfile(draftApplicationProfile, {
     extractionStatus: applicationRequirementProfile.extractionStatus,
-    createdAutomatically: true,
+    createdAutomatically: true
   });
 
   return {
@@ -3424,25 +2818,23 @@ async function buildApplicationProfileDraftForOpportunity(opportunity) {
     applicationSourceProfile,
     officialProgramWebsiteProfile,
     applicationPathProfile,
-    applicationRequirementProfile,
+    applicationRequirementProfile
   };
 }
 
 async function generateApplicationProfileDraftForOpportunity(opportunityId) {
   const opportunity = await findOpportunityForApplicationProfile(opportunityId);
   const built = await buildApplicationProfileDraftForOpportunity(opportunity);
-  const profile = await saveGeneratedApplicationProfileDraft(
-    built.draftApplicationProfile,
-  );
+  const profile = await saveGeneratedApplicationProfileDraft(built.draftApplicationProfile);
   return {
     ...built,
-    profile,
+    profile
   };
 }
 
 async function importFirstTenApplicationProfiles() {
   const loaded = await loadAdminApplicationSourceOpportunityBatch({
-    limit: applicationSourceBatchLimit,
+    limit: applicationSourceBatchLimit
   });
 
   const importResult = await importApplicationProfilesFromOpportunities({
@@ -3450,20 +2842,19 @@ async function importFirstTenApplicationProfiles() {
     limit: 10,
     concurrency: 10,
     buildDraftForOpportunity: async (opportunity) => {
-      const built =
-        await buildApplicationProfileDraftForOpportunity(opportunity);
+      const built = await buildApplicationProfileDraftForOpportunity(opportunity);
       return built.draftApplicationProfile;
     },
     getExistingProfile: async (profile) => {
       const result = await db.send(
         new GetCommand({
           TableName: applicationProfilesTable,
-          Key: applicationProfileStateKey(profile.profileId),
-        }),
+          Key: applicationProfileStateKey(profile.profileId)
+        })
       );
       return result.Item || null;
     },
-    saveProfile: putApplicationProfileRecord,
+    saveProfile: putApplicationProfileRecord
   });
 
   return {
@@ -3472,11 +2863,9 @@ async function importFirstTenApplicationProfiles() {
     scanCalls: loaded.scanCalls,
     sourceOpportunityCount: loaded.opportunities.length,
     note:
-      importResult.importedCount === 0 &&
-      importResult.skippedCount === 0 &&
-      importResult.errors.length === 0
+      importResult.importedCount === 0 && importResult.skippedCount === 0 && importResult.errors.length === 0
         ? "No visible SOURCE_DSIRE opportunities were found for first-10 import."
-        : null,
+        : null
   };
 }
 
@@ -3497,35 +2886,25 @@ async function buildAdminTableSnapshot(tableName) {
       intakeTable,
       [...intakes]
         .map(normalizeIntakeRecord)
-        .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt))),
+        .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
     );
   }
 
   if (cleanTableName === opportunitiesTable) {
     const opportunities = await scanAll(opportunitiesTable);
-    const sortedOpportunities = opportunities
-      .filter(
-        (opportunity) =>
-          isDsireOpportunityRecord(opportunity) &&
-          isVisibleOpportunity(opportunity),
+    const sortedOpportunities = opportunities.filter((opportunity) => isDsireOpportunityRecord(opportunity) && isVisibleOpportunity(opportunity)).sort((a, b) =>
+      String(b.lastSeenAt || b.updatedAt || b.publishedAt || "").localeCompare(
+        String(a.lastSeenAt || a.updatedAt || a.publishedAt || "")
       )
-      .sort((a, b) =>
-        String(
-          b.lastSeenAt || b.updatedAt || b.publishedAt || "",
-        ).localeCompare(
-          String(a.lastSeenAt || a.updatedAt || a.publishedAt || ""),
-        ),
-      );
-    const visibleOpportunities = sortedOpportunities
-      .slice(0, adminDataRecordLimit)
-      .map(compactOpportunityRecord);
+    );
+    const visibleOpportunities = sortedOpportunities.slice(0, adminDataRecordLimit).map(compactOpportunityRecord);
 
     return tableSnapshot(opportunitiesTable, visibleOpportunities, {
       recordCount: sortedOpportunities.length,
       note:
         sortedOpportunities.length > adminDataRecordLimit
           ? `Showing the ${adminDataRecordLimit} most recent DSIRE candidates so the admin dashboard stays below AWS Lambda payload limits.`
-          : null,
+          : null
     });
   }
 
@@ -3560,20 +2939,14 @@ async function createClientUser(input) {
       throw createDuplicateEmailError(email);
     }
 
-    const intake = createIntakeRecord(
-      existing.userId,
-      input,
-      now,
-      uploadSession.record,
-      siteGeography,
-    );
+    const intake = createIntakeRecord(existing.userId, input, now, uploadSession.record, siteGeography);
     const user = {
       ...existing,
       fullName: intake.contact.fullName || intake.business.companyName,
       email,
       companyName: intake.business.companyName,
       isFakeUser,
-      updatedAt: now,
+      updatedAt: now
     };
 
     try {
@@ -3584,13 +2957,12 @@ async function createClientUser(input) {
               Update: {
                 TableName: usersTable,
                 Key: { userId: existing.userId },
-                ConditionExpression:
-                  "attribute_exists(userId) AND #status = :active AND #role = :client",
+                ConditionExpression: "attribute_exists(userId) AND #status = :active AND #role = :client",
                 UpdateExpression:
                   "SET fullName = :fullName, email = :email, companyName = :companyName, isFakeUser = :isFakeUser, updatedAt = :now",
                 ExpressionAttributeNames: {
                   "#role": "role",
-                  "#status": "status",
+                  "#status": "status"
                 },
                 ExpressionAttributeValues: {
                   ":active": "active",
@@ -3599,19 +2971,19 @@ async function createClientUser(input) {
                   ":email": email,
                   ":companyName": user.companyName,
                   ":isFakeUser": isFakeUser,
-                  ":now": now,
-                },
-              },
+                  ":now": now
+                }
+              }
             },
             {
               Put: {
                 TableName: intakeTable,
                 Item: intake,
-                ConditionExpression: "attribute_not_exists(userId)",
-              },
-            },
-          ],
-        }),
+                ConditionExpression: "attribute_not_exists(userId)"
+              }
+            }
+          ]
+        })
       );
 
       const publicSession = publicEnergyUploadSession(existing.userId, intake);
@@ -3621,9 +2993,9 @@ async function createClientUser(input) {
         uploadSession: publicSession
           ? {
               ...publicSession,
-              token: uploadSession.token,
+              token: uploadSession.token
             }
-          : null,
+          : null
       };
     } catch (error) {
       if (error.name === "TransactionCanceledException") {
@@ -3634,13 +3006,7 @@ async function createClientUser(input) {
   }
 
   const userId = createAccountUserId(email);
-  const intake = createIntakeRecord(
-    userId,
-    input,
-    now,
-    uploadSession.record,
-    siteGeography,
-  );
+  const intake = createIntakeRecord(userId, input, now, uploadSession.record, siteGeography);
   const user = {
     userId,
     role: "client",
@@ -3652,7 +3018,7 @@ async function createClientUser(input) {
     googleLinked: false,
     isFakeUser,
     createdAt: now,
-    updatedAt: now,
+    updatedAt: now
   };
 
   try {
@@ -3663,18 +3029,18 @@ async function createClientUser(input) {
             Put: {
               TableName: usersTable,
               Item: user,
-              ConditionExpression: "attribute_not_exists(userId)",
-            },
+              ConditionExpression: "attribute_not_exists(userId)"
+            }
           },
           {
             Put: {
               TableName: intakeTable,
               Item: intake,
-              ConditionExpression: "attribute_not_exists(userId)",
-            },
-          },
-        ],
-      }),
+              ConditionExpression: "attribute_not_exists(userId)"
+            }
+          }
+        ]
+      })
     );
 
     const publicSession = publicEnergyUploadSession(userId, intake);
@@ -3684,9 +3050,9 @@ async function createClientUser(input) {
       uploadSession: publicSession
         ? {
             ...publicSession,
-            token: uploadSession.token,
+            token: uploadSession.token
           }
-        : null,
+        : null
     };
   } catch (error) {
     if (error.name === "TransactionCanceledException") {
@@ -3709,8 +3075,8 @@ async function resolveSiteGeographyForIntake(input, now) {
           limit: geocodioDailyLimit,
           alertEmailTo: geocodioQuotaAlertEmailTo,
           alertEmailFrom: geocodioQuotaAlertEmailFrom,
-          appUrl: "https://retrofi.org",
-        }),
+          appUrl: "https://retrofi.org"
+        })
     });
   } catch (error) {
     return {
@@ -3731,9 +3097,7 @@ async function resolveSiteGeographyForIntake(input, now) {
       censusBlockGeoid: null,
       zip5: null,
       rawProvider: {},
-      notes: [
-        `Address geography resolution failed before provider response: ${String(error?.message || error).slice(0, 180)}`,
-      ],
+      notes: [`Address geography resolution failed before provider response: ${String(error?.message || error).slice(0, 180)}`]
     };
   }
 }
@@ -3744,15 +3108,14 @@ function classifyError(error) {
   const searchable = `${name} ${rawMessage}`;
 
   if (
-    /CredentialsProviderError|TokenProviderError|UnauthorizedException|ExpiredToken|SSO|credential/i.test(
-      searchable,
-    )
+    /CredentialsProviderError|TokenProviderError|UnauthorizedException|ExpiredToken|SSO|credential/i.test(searchable)
   ) {
     return {
       status: 503,
-      message: isLambdaRuntime
-        ? "The production API could not access AWS. Check the Lambda execution role and deployment configuration."
-        : "AWS credentials are not ready for the local API. Run `aws sso login --profile retrofi-prod`, then restart `npm run dev`.",
+      message:
+        isLambdaRuntime
+          ? "The production API could not access AWS. Check the Lambda execution role and deployment configuration."
+          : "AWS credentials are not ready for the local API. Run `aws sso login --profile retrofi-prod`, then restart `npm run dev`."
     };
   }
 
@@ -3760,26 +3123,23 @@ function classifyError(error) {
     return {
       status: 403,
       message:
-        "The active AWS profile does not have access to the RetroFi AWS resources. Confirm the `retrofi-prod` profile uses account 059310317821 with AdministratorAccess.",
+        "The active AWS profile does not have access to the RetroFi AWS resources. Confirm the `retrofi-prod` profile uses account 059310317821 with AdministratorAccess."
     };
   }
 
-  if (
-    /Could not connect|ENOTFOUND|EAI_AGAIN|ECONNREFUSED|fetch failed|network/i.test(
-      searchable,
-    )
-  ) {
+  if (/Could not connect|ENOTFOUND|EAI_AGAIN|ECONNREFUSED|fetch failed|network/i.test(searchable)) {
     return {
       status: 503,
-      message: isLambdaRuntime
-        ? "The production API could not reach its AWS data store. Try again in a minute."
-        : "The local API could not reach AWS. Check internet access, then run `aws sts get-caller-identity --profile retrofi-prod`.",
+      message:
+        isLambdaRuntime
+          ? "The production API could not reach its AWS data store. Try again in a minute."
+          : "The local API could not reach AWS. Check internet access, then run `aws sts get-caller-identity --profile retrofi-prod`."
     };
   }
 
   return {
     status: error.status || 500,
-    message: rawMessage,
+    message: rawMessage
   };
 }
 
@@ -3797,7 +3157,7 @@ function gptProWorkStoreOptions() {
     bucket: gptProWorkBucket,
     localFallbackRoot: gptProWorkLocalFallbackRoot,
     prefix: gptProWorkPrefix,
-    s3: gptProWorkS3,
+    s3: gptProWorkS3
   };
 }
 
@@ -3825,7 +3185,7 @@ app.get("/api/health", (_req, res) => {
       prefix: gptProWorkPrefix,
       profile: gptProWorkProfile || null,
       region: gptProWorkRegion,
-      storageConfigured: Boolean(gptProWorkBucket),
+      storageConfigured: Boolean(gptProWorkBucket)
     },
     addressGeographyResolver: {
       primaryProvider: "census_geocoder",
@@ -3833,14 +3193,14 @@ app.get("/api/health", (_req, res) => {
       geocodioFallbackConfigured: Boolean(geocodioApiKey),
       geocodioDailyLimit,
       geocodioQuotaGuardConfigured: Boolean(apiRuntimeStateTable),
-      geocodioQuotaAlertEmailTo,
+      geocodioQuotaAlertEmailTo
     },
     googleClientConfigured: Boolean(googleClientId),
     googleRedirectConfigured: Boolean(googleClientId && googleClientSecret),
     googleRedirectUri: googleRedirectUri || null,
     googleAllowedClientIdsCount: googleAllowedClientIds.length,
     googleClientIdHint: publicGoogleClientIdHint(),
-    recommendedGoogleRedirectUris,
+    recommendedGoogleRedirectUris
   });
 });
 
@@ -3869,8 +3229,8 @@ app.get("/api/admin/gpt-pro-work/prompt", async (req, res) => {
       await readGptProPrompt({
         ...gptProWorkStoreOptions(),
         batchId: req.query.batch,
-        promptPath: req.query.path,
-      }),
+        promptPath: req.query.path
+      })
     );
   } catch (error) {
     handleError(res, error);
@@ -3884,36 +3244,40 @@ app.get("/api/admin/gpt-pro-work/output", async (req, res) => {
       await readGptProOutput({
         ...gptProWorkStoreOptions(),
         batchId: req.query.batch,
-        promptPath: req.query.path,
-      }),
+        promptPath: req.query.path
+      })
     );
   } catch (error) {
     handleError(res, error);
   }
 });
 
-app.put(
-  "/api/admin/gpt-pro-work/output",
-  gptProWorkOutputJsonParser,
-  async (req, res) => {
-    try {
-      await requireGptProWorkRouteAccess(req);
-      res.json(
-        await writeGptProOutput({
-          ...gptProWorkStoreOptions(),
-          batchId: req.body?.batchId,
-          content: req.body?.content,
-          promptPath: req.body?.promptPath,
-        }),
-      );
-    } catch (error) {
-      handleError(res, error);
-    }
-  },
-);
+app.put("/api/admin/gpt-pro-work/output", gptProWorkOutputJsonParser, async (req, res) => {
+  try {
+    await requireGptProWorkRouteAccess(req);
+    res.json(
+      await writeGptProOutput({
+        ...gptProWorkStoreOptions(),
+        batchId: req.body?.batchId,
+        content: req.body?.content,
+        promptPath: req.body?.promptPath
+      })
+    );
+  } catch (error) {
+    handleError(res, error);
+  }
+});
 
 app.get("/api/diagnostics", async (_req, res) => {
   try {
+    const users = await scanAll(usersTable);
+    const adminsPresent = Object.fromEntries(
+      [...adminEmails].map((email) => [
+        email,
+        users.some((user) => user.status === "active" && cleanEmail(user.email) === email && user.role === "admin")
+      ])
+    );
+
     res.json({
       ok: true,
       region: dataRegion,
@@ -3934,7 +3298,7 @@ app.get("/api/diagnostics", async (_req, res) => {
         prefix: gptProWorkPrefix,
         profile: gptProWorkProfile || null,
         region: gptProWorkRegion,
-        storageConfigured: Boolean(gptProWorkBucket),
+        storageConfigured: Boolean(gptProWorkBucket)
       },
       addressGeographyResolver: {
         primaryProvider: "census_geocoder",
@@ -3942,7 +3306,7 @@ app.get("/api/diagnostics", async (_req, res) => {
         geocodioFallbackConfigured: Boolean(geocodioApiKey),
         geocodioDailyLimit,
         geocodioQuotaGuardConfigured: Boolean(apiRuntimeStateTable),
-        geocodioQuotaAlertEmailTo,
+        geocodioQuotaAlertEmailTo
       },
       googleClientConfigured: Boolean(googleClientId),
       googleRedirectConfigured: Boolean(googleClientId && googleClientSecret),
@@ -3951,14 +3315,8 @@ app.get("/api/diagnostics", async (_req, res) => {
       googleClientIdHint: publicGoogleClientIdHint(),
       recommendedGoogleRedirectUris,
       adminDataRecordLimit,
-      passwordSignupProtectedByDefault: true,
-      authStateSafety: {
-        passwordClaimGuardField: PASSWORD_CLAIM_GUARD_FIELD,
-        guardRunIdField: PASSWORD_CLAIM_GUARD_RUN_ID_FIELD,
-        guardAtField: PASSWORD_CLAIM_GUARD_AT_FIELD,
-        guardReasonField: PASSWORD_CLAIM_GUARD_REASON_FIELD,
-        guardReason: PASSWORD_CLAIM_GUARD_REASON,
-      },
+      adminEmails: [...adminEmails],
+      adminsPresent
     });
   } catch (error) {
     handleError(res, error);
@@ -3977,11 +3335,7 @@ app.use("/api/database", async (req, res, next) => {
 app.get("/api/database/programs", async (req, res) => {
   try {
     const page = parsePositiveInteger(req.query.page, 1, 10000);
-    const perPage = parsePositiveInteger(
-      req.query.per_page || req.query.perPage,
-      24,
-      100,
-    );
+    const perPage = parsePositiveInteger(req.query.per_page || req.query.perPage, 24, 100);
     const programs = await loadDatabasePrograms();
     const filteredPrograms = filterDatabasePrograms(programs, req.query);
     const start = (page - 1) * perPage;
@@ -3993,7 +3347,7 @@ app.get("/api/database/programs", async (req, res) => {
       total: filteredPrograms.length,
       programs: filteredPrograms.slice(start, start + perPage),
       facets: buildDatabaseFacets(programs),
-      resultFacets: buildDatabaseFacets(filteredPrograms),
+      resultFacets: buildDatabaseFacets(filteredPrograms)
     });
   } catch (error) {
     handleError(res, error);
@@ -4002,12 +3356,8 @@ app.get("/api/database/programs", async (req, res) => {
 
 app.get("/api/database/programs/updates", async (req, res) => {
   try {
-    const updatedAfter = req.query.updated_after
-      ? new Date(String(req.query.updated_after))
-      : null;
-    const updatedBefore = req.query.updated_before
-      ? new Date(String(req.query.updated_before))
-      : null;
+    const updatedAfter = req.query.updated_after ? new Date(String(req.query.updated_after)) : null;
+    const updatedBefore = req.query.updated_before ? new Date(String(req.query.updated_before)) : null;
     const programs = await loadDatabasePrograms();
     const updates = programs.filter((program) => {
       const updatedAt = program.updatedAt ? new Date(program.updatedAt) : null;
@@ -4015,10 +3365,7 @@ app.get("/api/database/programs/updates", async (req, res) => {
         return false;
       }
 
-      return (
-        (!updatedAfter || updatedAt >= updatedAfter) &&
-        (!updatedBefore || updatedAt <= updatedBefore)
-      );
+      return (!updatedAfter || updatedAt >= updatedAfter) && (!updatedBefore || updatedAt <= updatedBefore);
     });
 
     res.json({
@@ -4029,8 +3376,8 @@ app.get("/api/database/programs/updates", async (req, res) => {
         opportunityId: program.opportunityId,
         name: program.name,
         updatedAt: program.updatedAt,
-        sourceUrl: program.sourceUrl,
-      })),
+        sourceUrl: program.sourceUrl
+      }))
     });
   } catch (error) {
     handleError(res, error);
@@ -4039,11 +3386,7 @@ app.get("/api/database/programs/updates", async (req, res) => {
 
 app.get("/api/database/programs/batch", async (req, res) => {
   try {
-    const limit = parsePositiveInteger(
-      req.query.limit,
-      databaseBatchScanLimit,
-      250,
-    );
+    const limit = parsePositiveInteger(req.query.limit, databaseBatchScanLimit, 250);
     const cursor = decodeScanCursor(req.query.cursor);
     const batch = await loadDatabaseProgramBatch({ cursor, limit });
 
@@ -4055,7 +3398,7 @@ app.get("/api/database/programs/batch", async (req, res) => {
       matchedCount: batch.programs.length,
       estimatedTotal: null,
       nextCursor: batch.nextCursor,
-      isComplete: !batch.nextCursor,
+      isComplete: !batch.nextCursor
     });
   } catch (error) {
     handleError(res, error);
@@ -4068,16 +3411,12 @@ app.get("/api/database/programs/:programId", async (req, res) => {
     const directResult = await db.send(
       new GetCommand({
         TableName: opportunitiesTable,
-        Key: { opportunityId: String(req.params.programId) },
-      }),
+        Key: { opportunityId: String(req.params.programId) }
+      })
     );
 
     if (directResult.Item && isDatabaseCloneRecord(directResult.Item)) {
-      res.json({
-        program: buildDatabaseProgram(directResult.Item, {
-          includeDetail: true,
-        }),
-      });
+      res.json({ program: buildDatabaseProgram(directResult.Item, { includeDetail: true }) });
       return;
     }
 
@@ -4086,7 +3425,7 @@ app.get("/api/database/programs/:programId", async (req, res) => {
       (item) =>
         normalizeFilterValue(item.id) === requestedId ||
         normalizeFilterValue(item.opportunityId) === requestedId ||
-        normalizeFilterValue(item.slug) === requestedId,
+        normalizeFilterValue(item.slug) === requestedId
     );
 
     if (!program) {
@@ -4106,7 +3445,7 @@ app.get("/api/database/facets", async (_req, res) => {
     const programs = await loadDatabasePrograms();
     res.json({
       generatedAt: new Date().toISOString(),
-      facets: buildDatabaseFacets(programs),
+      facets: buildDatabaseFacets(programs)
     });
   } catch (error) {
     handleError(res, error);
@@ -4128,7 +3467,7 @@ app.get("/api/database/program-types", async (_req, res) => {
     const facets = buildDatabaseFacets(programs);
     res.json({
       categories: facets.categories,
-      programTypes: facets.programTypes,
+      programTypes: facets.programTypes
     });
   } catch (error) {
     handleError(res, error);
@@ -4150,7 +3489,7 @@ app.get("/api/database/sectors", async (_req, res) => {
     const facets = buildDatabaseFacets(programs);
     res.json({
       eligibleSectors: facets.eligibleSectors,
-      implementingSectors: facets.implementingSectors,
+      implementingSectors: facets.implementingSectors
     });
   } catch (error) {
     handleError(res, error);
@@ -4159,16 +3498,10 @@ app.get("/api/database/sectors", async (_req, res) => {
 
 app.get("/api/database/summary/maps", async (req, res) => {
   try {
-    const programs = filterDatabasePrograms(
-      await loadDatabasePrograms(),
-      req.query,
-    );
+    const programs = filterDatabasePrograms(await loadDatabasePrograms(), req.query);
     res.json({
       generatedAt: new Date().toISOString(),
-      states: buildFacet(
-        programs.map((program) => program.state),
-        "name",
-      ),
+      states: buildFacet(programs.map((program) => program.state), "name")
     });
   } catch (error) {
     handleError(res, error);
@@ -4177,10 +3510,7 @@ app.get("/api/database/summary/maps", async (req, res) => {
 
 app.get("/api/database/summary/tables", async (req, res) => {
   try {
-    const programs = filterDatabasePrograms(
-      await loadDatabasePrograms(),
-      req.query,
-    );
+    const programs = filterDatabasePrograms(await loadDatabasePrograms(), req.query);
     const rows = new Map();
 
     for (const program of programs) {
@@ -4195,18 +3525,14 @@ app.get("/api/database/summary/tables", async (req, res) => {
           state,
           stateName: program.state?.name || state,
           programType: type,
-          count: 1,
+          count: 1
         });
       }
     }
 
     res.json({
       generatedAt: new Date().toISOString(),
-      rows: [...rows.values()].sort(
-        (a, b) =>
-          a.state.localeCompare(b.state) ||
-          a.programType.localeCompare(b.programType),
-      ),
+      rows: [...rows.values()].sort((a, b) => a.state.localeCompare(b.state) || a.programType.localeCompare(b.programType))
     });
   } catch (error) {
     handleError(res, error);
@@ -4219,7 +3545,7 @@ app.post("/api/intake", async (req, res) => {
     res.status(201).json({
       user: publicUser(result.user),
       intake: result.intake,
-      uploadSession: result.uploadSession,
+      uploadSession: result.uploadSession
     });
   } catch (error) {
     handleError(res, error);
@@ -4235,13 +3561,9 @@ app.post("/api/energy-data/session", async (req, res) => {
     res.json({
       intake,
       uploadSession: publicEnergyUploadSession(userId, intake),
-      uploadedUtilityFiles: (intake.uploadedUtilityFiles || []).map(
-        publicUploadedUtilityFile,
-      ),
-      utilityExtractedValues: (intake.utilityExtractedValues || []).map(
-        publicUtilityExtractedValue,
-      ),
-      siteEnergyProfile: intake.siteEnergyProfile || null,
+      uploadedUtilityFiles: (intake.uploadedUtilityFiles || []).map(publicUploadedUtilityFile),
+      utilityExtractedValues: (intake.utilityExtractedValues || []).map(publicUtilityExtractedValue),
+      siteEnergyProfile: intake.siteEnergyProfile || null
     });
   } catch (error) {
     handleError(res, error);
@@ -4251,9 +3573,7 @@ app.post("/api/energy-data/session", async (req, res) => {
 app.post("/api/energy-data/upload-url", async (req, res) => {
   try {
     if (!energyDataBucket) {
-      const error = new Error(
-        "Energy data uploads are not configured on the server.",
-      );
+      const error = new Error("Energy data uploads are not configured on the server.");
       error.status = 503;
       throw error;
     }
@@ -4265,18 +3585,16 @@ app.post("/api/energy-data/upload-url", async (req, res) => {
     const { sourceType, contentType, fileName } = validateEnergyDataFile({
       sourceType: req.body?.sourceType,
       contentType: req.body?.contentType,
-      fileName: req.body?.fileName,
+      fileName: req.body?.fileName
     });
     const energyDataId = `energy_${crypto.randomUUID()}`;
     const s3Key = buildEnergyDataS3Key({ userId, energyDataId, fileName });
     const command = new PutObjectCommand({
       Bucket: energyDataBucket,
       Key: s3Key,
-      ContentType: contentType || undefined,
+      ContentType: contentType || undefined
     });
-    const uploadUrl = await getSignedUrl(s3, command, {
-      expiresIn: uploadUrlDurationSeconds,
-    });
+    const uploadUrl = await getSignedUrl(s3, command, { expiresIn: uploadUrlDurationSeconds });
 
     res.status(201).json({
       energyDataId,
@@ -4284,9 +3602,7 @@ app.post("/api/energy-data/upload-url", async (req, res) => {
       uploadUrl,
       sourceType,
       contentType,
-      expiresAt: new Date(
-        Date.now() + uploadUrlDurationSeconds * 1000,
-      ).toISOString(),
+      expiresAt: new Date(Date.now() + uploadUrlDurationSeconds * 1000).toISOString()
     });
   } catch (error) {
     handleError(res, error);
@@ -4301,37 +3617,26 @@ app.post("/api/energy-data/register", async (req, res) => {
     const { sourceType, contentType, fileName } = validateEnergyDataFile({
       sourceType: req.body?.sourceType,
       contentType: req.body?.contentType,
-      fileName: req.body?.fileName,
+      fileName: req.body?.fileName
     });
     const energyDataId = cleanText(req.body?.energyDataId);
     const s3Key = cleanText(req.body?.s3Key);
 
     if (!energyDataId || !s3Key) {
-      const error = new Error(
-        "Energy data registration requires an upload identifier and storage key.",
-      );
+      const error = new Error("Energy data registration requires an upload identifier and storage key.");
       error.status = 400;
       throw error;
     }
 
-    const registrationKey = validateEnergyDataRegistrationKey({
-      userId,
-      energyDataId,
-      fileName,
-      s3Key,
-    });
+    const registrationKey = validateEnergyDataRegistrationKey({ userId, energyDataId, fileName, s3Key });
     if (!registrationKey.ok) {
-      const error = new Error(
-        "Energy data registration must use the upload identifier and storage key returned by the upload-url endpoint.",
-      );
+      const error = new Error("Energy data registration must use the upload identifier and storage key returned by the upload-url endpoint.");
       error.status = 400;
       throw error;
     }
 
     const uploadedAt = new Date().toISOString();
-    const utilityCategory = utilityUploadCategoryOptions.has(
-      cleanText(req.body?.utilityCategory),
-    )
+    const utilityCategory = utilityUploadCategoryOptions.has(cleanText(req.body?.utilityCategory))
       ? cleanText(req.body?.utilityCategory)
       : "auto_detect";
     const text =
@@ -4350,8 +3655,7 @@ app.post("/api/energy-data/register", async (req, res) => {
         text,
         uploadedAt,
         utilityCategory,
-        utilityProvider:
-          req.body?.utilityName || intake.site?.electricUtilityProvider,
+        utilityProvider: req.body?.utilityName || intake.site?.electricUtilityProvider
       });
     } catch (error) {
       uploadResult = buildFailedUtilityUploadResult({
@@ -4363,12 +3667,9 @@ app.post("/api/energy-data/register", async (req, res) => {
         sourceType,
         utilityCategory,
         uploadedAt,
-        utilityProvider:
-          req.body?.utilityName || intake.site?.electricUtilityProvider,
+        utilityProvider: req.body?.utilityName || intake.site?.electricUtilityProvider,
         errorMessage:
-          error instanceof Error
-            ? error.message
-            : "Could not parse the uploaded utility data file.",
+          error instanceof Error ? error.message : "Could not parse the uploaded utility data file."
       });
     }
     const mergedUtilityData = mergeUtilityDataIntoIntake(intake, uploadResult);
@@ -4383,33 +3684,29 @@ app.post("/api/energy-data/register", async (req, res) => {
           "#uploadedUtilityFiles": "uploadedUtilityFiles",
           "#utilityExtractedValues": "utilityExtractedValues",
           "#siteEnergyProfile": "siteEnergyProfile",
-          "#updatedAt": "updatedAt",
+          "#updatedAt": "updatedAt"
         },
         ExpressionAttributeValues: {
           ":uploadedUtilityFiles": mergedUtilityData.uploadedUtilityFiles,
           ":utilityExtractedValues": mergedUtilityData.utilityExtractedValues,
           ":siteEnergyProfile": mergedUtilityData.siteEnergyProfile,
-          ":updatedAt": uploadedAt,
+          ":updatedAt": uploadedAt
         },
-        ConditionExpression: "attribute_exists(userId)",
-      }),
+        ConditionExpression: "attribute_exists(userId)"
+      })
     );
 
     const nextIntake = normalizeIntakeRecord({
       ...intake,
       ...mergedUtilityData,
-      updatedAt: uploadedAt,
+      updatedAt: uploadedAt
     });
 
     res.status(201).json({
       intake: nextIntake,
-      uploadedUtilityFile: publicUploadedUtilityFile(
-        uploadResult.uploadedUtilityFile,
-      ),
-      utilityExtractedValues: uploadResult.utilityExtractedValues.map(
-        publicUtilityExtractedValue,
-      ),
-      siteEnergyProfile: nextIntake.siteEnergyProfile,
+      uploadedUtilityFile: publicUploadedUtilityFile(uploadResult.uploadedUtilityFile),
+      utilityExtractedValues: uploadResult.utilityExtractedValues.map(publicUtilityExtractedValue),
+      siteEnergyProfile: nextIntake.siteEnergyProfile
     });
   } catch (error) {
     handleError(res, error);
@@ -4419,10 +3716,7 @@ app.post("/api/energy-data/register", async (req, res) => {
 app.get("/api/auth/google/start", (req, res) => {
   try {
     if (!googleClientId || !googleClientSecret) {
-      throw createGoogleOAuthError(
-        "Google redirect sign-in is not configured on the server.",
-        503,
-      );
+      throw createGoogleOAuthError("Google redirect sign-in is not configured on the server.", 503);
     }
 
     const state = crypto.randomBytes(24).toString("base64url");
@@ -4437,7 +3731,7 @@ app.get("/api/auth/google/start", (req, res) => {
       redirect_uri: redirectUri,
       response_type: "code",
       scope: "openid email profile",
-      state,
+      state
     }).toString();
 
     res.redirect(authorizationUrl.toString());
@@ -4454,48 +3748,38 @@ app.get("/api/auth/google/callback", async (req, res) => {
   try {
     const returnedError = cleanText(req.query?.error);
     if (returnedError) {
-      throw createGoogleOAuthError(
-        cleanText(req.query?.error_description) || returnedError,
-        401,
-      );
+      throw createGoogleOAuthError(cleanText(req.query?.error_description) || returnedError, 401);
     }
 
     const code = cleanText(req.query?.code);
     const state = cleanText(req.query?.state);
     const expectedState = parseCookies(req)[googleOAuthStateCookie];
     if (!code || !state || !expectedState || state !== expectedState) {
-      throw createGoogleOAuthError(
-        "Google sign-in state did not match. Try signing in again.",
-        401,
-      );
+      throw createGoogleOAuthError("Google sign-in state did not match. Try signing in again.", 401);
     }
 
     clearGoogleOAuthCookies(req, res);
 
     const redirectUri = googleRedirectUriForRequest(req);
-    const tokenPayload = await exchangeGoogleAuthorizationCode({
-      code,
-      redirectUri,
-    });
-    const user = await requireGoogleUserFromIdentity(
-      await verifyGoogleCredential(tokenPayload.id_token),
-    );
+    const tokenPayload = await exchangeGoogleAuthorizationCode({ code, redirectUri });
+    const user = await requireGoogleUserFromIdentity(await verifyGoogleCredential(tokenPayload.id_token));
     const sessionResult = await issuePasswordSession(user);
-    const { sessionToken, ...payload } =
-      await buildPasswordAuthPayload(sessionResult);
+    const { sessionToken, ...payload } = await buildPasswordAuthPayload(sessionResult);
 
-    res.type("html").send(
-      renderOAuthCallbackPage({
-        authResult: {
-          credential: {
-            provider: "password",
-            value: sessionToken,
+    res
+      .type("html")
+      .send(
+        renderOAuthCallbackPage({
+          authResult: {
+            credential: {
+              provider: "password",
+              value: sessionToken
+            },
+            payload
           },
-          payload,
-        },
-        redirectPath: payload.dashboard === "admin" ? "/admin" : "/portal",
-      }),
-    );
+          redirectPath: payload.dashboard === "admin" ? "/admin" : "/portal"
+        })
+      );
   } catch (error) {
     clearGoogleOAuthCookies(req, res);
     const classified = classifyError(error);
@@ -4546,9 +3830,7 @@ app.get("/api/portal/retrofit-recommendations", async (req, res) => {
   try {
     const user = await requireAuthenticatedUserFromRequest(req);
     if (user.role !== "client") {
-      const error = new Error(
-        "Retrofit estimates are only available for client accounts.",
-      );
+      const error = new Error("Retrofit estimates are only available for client accounts.");
       error.status = 403;
       throw error;
     }
@@ -4560,8 +3842,8 @@ app.get("/api/portal/retrofit-recommendations", async (req, res) => {
         user,
         intake,
         now: new Date(),
-        retrofitTypeIds: retrofitTypeId ? [retrofitTypeId] : [],
-      }),
+        retrofitTypeIds: retrofitTypeId ? [retrofitTypeId] : []
+      })
     );
   } catch (error) {
     handleError(res, error);
@@ -4580,7 +3862,7 @@ app.get("/api/portal/retrofit-portfolios/:portfolioId", async (req, res) => {
       portfolioId: req.params.portfolioId,
       intake,
       scenarioId,
-      now: new Date(),
+      now: new Date()
     });
     res.json(result);
   } catch (error) {
@@ -4588,58 +3870,47 @@ app.get("/api/portal/retrofit-portfolios/:portfolioId", async (req, res) => {
   }
 });
 
-app.post(
-  "/api/portal/retrofit-portfolios/:portfolioId/items/:itemId/commands/complete",
-  async (req, res) => {
-    try {
-      const user = await requireAuthenticatedUserFromRequest(req);
-      const scenarioId = cleanText(req.query.scenarioId || "default");
-      const result = await completePortfolioItemHandler({
-        db,
-        tableName: apiRuntimeStateTable,
-        user,
-        portfolioId: req.params.portfolioId,
-        itemId: req.params.itemId,
-        payload: req.body || {},
-        scenarioId,
-        now: new Date(),
-      });
-      res.json(result);
-    } catch (error) {
-      handleError(res, error);
-    }
-  },
-);
+app.post("/api/portal/retrofit-portfolios/:portfolioId/items/:itemId/commands/complete", async (req, res) => {
+  try {
+    const user = await requireAuthenticatedUserFromRequest(req);
+    const intake = await getIntake(user.userId);
+    const result = await completePortfolioItemHandler({
+      db,
+      tableName: apiRuntimeStateTable,
+      user,
+      intake,
+      portfolioId: req.params.portfolioId,
+      itemId: req.params.itemId,
+      payload: req.body || {},
+      now: new Date()
+    });
+    res.json(result);
+  } catch (error) {
+    handleError(res, error);
+  }
+});
 
-app.post(
-  "/api/portal/retrofit-portfolios/:portfolioId/commands/recalculate",
-  async (req, res) => {
-    try {
-      const user = await requireAuthenticatedUserFromRequest(req);
-      const scenarioId = cleanText(req.query.scenarioId || "default");
-      const result = await recalculatePortfolioHandler({
-        db,
-        tableName: apiRuntimeStateTable,
-        user,
-        portfolioId: req.params.portfolioId,
-        payload: req.body || {},
-        scenarioId,
-        now: new Date(),
-      });
-      res.json(result);
-    } catch (error) {
-      handleError(res, error);
-    }
-  },
-);
+app.post("/api/portal/retrofit-portfolios/:portfolioId/commands/recalculate", async (req, res) => {
+  try {
+    const user = await requireAuthenticatedUserFromRequest(req);
+    const result = await recalculatePortfolioHandler({
+      db,
+      tableName: apiRuntimeStateTable,
+      user,
+      portfolioId: req.params.portfolioId,
+      payload: req.body || {},
+      now: new Date()
+    });
+    res.json(result);
+  } catch (error) {
+    handleError(res, error);
+  }
+});
 
 app.post("/api/portal/pre-retrofit-form-answers", async (req, res) => {
   try {
     const user = await requireAuthenticatedUserFromRequest(req);
-    const result = await savePreRetrofitFormAnswersForUser(
-      user,
-      req.body || {},
-    );
+    const result = await savePreRetrofitFormAnswersForUser(user, req.body || {});
     res.status(201).json(result);
   } catch (error) {
     handleError(res, error);
@@ -4660,21 +3931,18 @@ app.get("/api/application-profiles/approved", async (req, res) => {
     const result = await db.send(
       new GetCommand({
         TableName: applicationProfilesTable,
-        Key: applicationProfileStateKey(profileId),
-      }),
+        Key: applicationProfileStateKey(profileId)
+      })
     );
-    const profile =
-      result.Item && isApplicationProfileRegistryItem(result.Item)
-        ? publicApplicationProfileRecord(result.Item)
-        : null;
+    const profile = result.Item && isApplicationProfileRegistryItem(result.Item)
+      ? publicApplicationProfileRecord(result.Item)
+      : null;
     const formQuestionCatalog = await loadRuntimeFormQuestionCatalog();
 
     res.json({
       generatedAt: new Date().toISOString(),
       opportunityId,
-      ...buildCustomerApplicationProfileResponse(profile, {
-        catalog: formQuestionCatalog,
-      }),
+      ...buildCustomerApplicationProfileResponse(profile, { catalog: formQuestionCatalog })
     });
   } catch (error) {
     handleError(res, error);
@@ -4699,25 +3967,127 @@ app.get("/api/admin/fake-client-options", async (req, res) => {
   }
 });
 
+async function requireFirstmateTasksRouteAccess(req) {
+  if (isFirstmateTasksLocalAuthBypassEnabled(process.env) && isLocalRequest(req)) {
+    return { localAuthBypass: true, source: "local" };
+  }
+
+  const admin = await requireAdminFromRequest(req);
+  return { admin, localAuthBypass: false, source: "dynamodb" };
+}
+
+function canDispatchLocalFirstmateAgents(req, access) {
+  return Boolean(access?.localAuthBypass && isLocalRequest(req));
+}
+
 function isLocalRequest(req) {
   return [
     req.ip,
     req.socket?.remoteAddress,
-    req.connection?.remoteAddress,
+    req.connection?.remoteAddress
   ].some(isLoopbackAddress);
 }
 
 function isLoopbackAddress(value) {
-  const address = String(value || "")
-    .trim()
-    .toLowerCase();
-  return (
-    address === "::1" ||
-    address === "localhost" ||
-    address.startsWith("127.") ||
-    address.startsWith("::ffff:127.")
-  );
+  const address = String(value || "").trim().toLowerCase();
+  return address === "::1"
+    || address === "localhost"
+    || address.startsWith("127.")
+    || address.startsWith("::ffff:127.");
 }
+
+app.get("/api/admin/firstmate/tasks", async (req, res) => {
+  try {
+    const access = await requireFirstmateTasksRouteAccess(req);
+    if (access.localAuthBypass) {
+      res.json(await readFirstmateTasksDashboard({ env: process.env, now: new Date() }));
+      return;
+    }
+
+    res.json(await readPublishedFirstmateTaskSnapshot({
+      db,
+      includeInactive: parseBooleanQuery(req.query.includeInactive),
+      now: new Date(),
+      tableName: firstmateTasksTable,
+      workspaceId: firstmateTaskWorkspaceId
+    }));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/firstmate/tasks/:taskId/report", async (req, res) => {
+  try {
+    const access = await requireFirstmateTasksRouteAccess(req);
+    if (access.localAuthBypass) {
+      res.json(await readFirstmateTaskReport({ env: process.env, taskId: req.params.taskId, now: new Date() }));
+      return;
+    }
+
+    res.json(await readPublishedFirstmateTaskReport({
+      db,
+      now: new Date(),
+      tableName: firstmateTasksTable,
+      taskId: req.params.taskId,
+      workspaceId: firstmateTaskWorkspaceId
+    }));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/firstmate/tasks/:taskId/respond", async (req, res) => {
+  try {
+    const access = await requireFirstmateTasksRouteAccess(req);
+    if (!access.localAuthBypass) {
+      throw httpError("Firstmate task responses are only available from the local Firstmate workflow.", 403);
+    }
+    res.json(await sendFirstmateTaskResponse({
+      env: process.env,
+      taskId: req.params.taskId,
+      message: req.body?.message,
+      now: new Date()
+    }));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/firstmate/tasks/:taskId/report-feedback", async (req, res) => {
+  try {
+    const access = await requireFirstmateTasksRouteAccess(req);
+    if (!access.localAuthBypass) {
+      throw httpError("Firstmate report feedback is only available from the local Firstmate workflow.", 403);
+    }
+    res.json(await sendFirstmateTaskReportFeedback({
+      env: process.env,
+      taskId: req.params.taskId,
+      action: req.body?.action,
+      comment: req.body?.comment,
+      now: new Date(),
+      allowLocalAgentDispatch: canDispatchLocalFirstmateAgents(req, access)
+    }));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/firstmate/tasks/:taskId/assign", async (req, res) => {
+  try {
+    const access = await requireFirstmateTasksRouteAccess(req);
+    if (!access.localAuthBypass) {
+      throw httpError("Firstmate task assignment is only available from the local Firstmate workflow.", 403);
+    }
+    res.json(await assignFirstmateQueuedTask({
+      env: process.env,
+      taskId: req.params.taskId,
+      now: new Date(),
+      allowLocalAgentDispatch: canDispatchLocalFirstmateAgents(req, access)
+    }));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
 
 app.get("/api/admin/tables/:tableName", async (req, res) => {
   try {
@@ -4741,7 +4111,7 @@ app.get("/api/admin/client-portal-profile/:userId", async (req, res) => {
     const intake = await getIntake(user.userId);
     res.json({
       user: publicUser(user),
-      intake,
+      intake
     });
   } catch (error) {
     handleError(res, error);
@@ -4760,130 +4130,94 @@ app.get("/api/admin/client-retrofit-preview/:userId", async (req, res) => {
 
     const intake = await getIntake(user.userId);
     const formQuestionCatalog = await loadRuntimeFormQuestionCatalog();
-    const payload = buildPortalRetrofitPreviewShell({
-      formQuestionCatalog,
-      user: publicUser(user),
-      intake,
-      now: new Date(),
-    });
-    res.json(
-      await attachAdminDashboardPostImplementationDataset(
-        payload,
-        user,
-        intake,
-      ),
-    );
+    const payload = buildPortalRetrofitPreviewShell({ formQuestionCatalog, user: publicUser(user), intake, now: new Date() });
+    res.json(await attachAdminDashboardPostImplementationDataset(payload, user, intake));
   } catch (error) {
     handleError(res, error);
   }
 });
 
-app.post(
-  "/api/admin/client-retrofit-recommendations/precompute",
-  async (req, res) => {
-    try {
-      await requireAdminFromRequest(req);
-      const userIds = cleanStringArray(req.body?.userIds).slice(0, 75);
-      res.status(202).json({ queuedUserCount: userIds.length });
-      void precomputeAdminClientRetrofitRecommendations(userIds);
-    } catch (error) {
-      handleError(res, error);
+app.post("/api/admin/client-retrofit-recommendations/precompute", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const userIds = cleanStringArray(req.body?.userIds).slice(0, 75);
+    res.status(202).json({ queuedUserCount: userIds.length });
+    void precomputeAdminClientRetrofitRecommendations(userIds);
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.get("/api/admin/client-retrofit-recommendations/:userId", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const user = await getUserRecord(cleanText(req.params.userId));
+    if (!user || user.role !== "client") {
+      const error = new Error("Client account was not found.");
+      error.status = 404;
+      throw error;
     }
-  },
-);
 
-app.get(
-  "/api/admin/client-retrofit-recommendations/:userId",
-  async (req, res) => {
-    try {
-      await requireAdminFromRequest(req);
-      const user = await getUserRecord(cleanText(req.params.userId));
-      if (!user || user.role !== "client") {
-        const error = new Error("Client account was not found.");
-        error.status = 404;
-        throw error;
-      }
-
-      const intake = await getIntake(user.userId);
-      const retrofitTypeId = cleanText(req.query.retrofitTypeId);
-      const payload = await buildCachedPortalRetrofitRecommendations({
+    const intake = await getIntake(user.userId);
+    const retrofitTypeId = cleanText(req.query.retrofitTypeId);
+    const payload =
+      await buildCachedPortalRetrofitRecommendations({
         user,
         intake,
         now: new Date(),
-        retrofitTypeIds: retrofitTypeId ? [retrofitTypeId] : [],
+        retrofitTypeIds: retrofitTypeId ? [retrofitTypeId] : []
       });
-      res.json(
-        await attachAdminDashboardPostImplementationDataset(
-          payload,
-          user,
-          intake,
-        ),
-      );
-    } catch (error) {
-      handleError(res, error);
-    }
-  },
-);
+    res.json(await attachAdminDashboardPostImplementationDataset(payload, user, intake));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
 
 app.get("/api/admin/dashboard-performance/test-cases", async (req, res) => {
   try {
     await requireAdminFromRequest(req);
     const testCases = await loadSampleMatchingTestCases();
-    res.json(
-      await listDashboardPostImplementationDatasetSummaries({
-        ...dashboardPerformanceStoreOptions(),
-        testCases,
-      }),
-    );
+    res.json(await listDashboardPostImplementationDatasetSummaries({
+      ...dashboardPerformanceStoreOptions(),
+      testCases
+    }));
   } catch (error) {
     handleError(res, error);
   }
 });
 
-app.get(
-  "/api/admin/dashboard-performance/test-cases/:testCaseId",
-  async (req, res) => {
-    try {
-      await requireAdminFromRequest(req);
-      const testCaseId = cleanText(req.params.testCaseId);
-      const existing = await getDashboardPostImplementationDatasetByTestCase({
-        ...dashboardPerformanceStoreOptions(),
-        testCaseId,
-      });
-      if (!existing?.dataset) {
-        const error = new Error("Dashboard performance dataset was not found.");
-        error.status = 404;
-        throw error;
-      }
-      res.json({
-        dataset: existing.dataset,
-        summary: summarizeDashboardPostImplementationDataset(existing.dataset, {
-          storageStatus: existing.storageStatus,
-        }),
-        storageStatus: existing.storageStatus,
-        validation: validateDashboardPostImplementationDataset(
-          existing.dataset,
-        ),
-      });
-    } catch (error) {
-      handleError(res, error);
+app.get("/api/admin/dashboard-performance/test-cases/:testCaseId", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    const testCaseId = cleanText(req.params.testCaseId);
+    const existing = await getDashboardPostImplementationDatasetByTestCase({
+      ...dashboardPerformanceStoreOptions(),
+      testCaseId
+    });
+    if (!existing?.dataset) {
+      const error = new Error("Dashboard performance dataset was not found.");
+      error.status = 404;
+      throw error;
     }
-  },
-);
+    res.json({
+      dataset: existing.dataset,
+      summary: summarizeDashboardPostImplementationDataset(existing.dataset, { storageStatus: existing.storageStatus }),
+      storageStatus: existing.storageStatus,
+      validation: validateDashboardPostImplementationDataset(existing.dataset)
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
 
-app.post(
-  "/api/admin/dashboard-performance/test-cases/:testCaseId/seed",
-  async (req, res) => {
-    try {
-      await requireAdminFromRequest(req);
-      res.json(
-        await seedDashboardPostImplementationDataset(req.params.testCaseId),
-      );
-    } catch (error) {
-      handleError(res, error);
-    }
-  },
-);
+app.post("/api/admin/dashboard-performance/test-cases/:testCaseId/seed", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    res.json(await seedDashboardPostImplementationDataset(req.params.testCaseId));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
 
 app.post("/api/admin/dashboard-performance/seed-all", async (req, res) => {
   try {
@@ -4894,33 +4228,26 @@ app.post("/api/admin/dashboard-performance/seed-all", async (req, res) => {
   }
 });
 
-app.delete(
-  "/api/admin/dashboard-performance/test-cases/:testCaseId",
-  async (req, res) => {
-    try {
-      await requireAdminFromRequest(req);
-      res.json(
-        await deleteSyntheticDashboardPostImplementationDataset({
-          ...dashboardPerformanceStoreOptions(),
-          testCaseId: req.params.testCaseId,
-        }),
-      );
-    } catch (error) {
-      handleError(res, error);
-    }
-  },
-);
+app.delete("/api/admin/dashboard-performance/test-cases/:testCaseId", async (req, res) => {
+  try {
+    await requireAdminFromRequest(req);
+    res.json(await deleteSyntheticDashboardPostImplementationDataset({
+      ...dashboardPerformanceStoreOptions(),
+      testCaseId: req.params.testCaseId
+    }));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
 
 app.delete("/api/admin/dashboard-performance", async (req, res) => {
   try {
     await requireAdminFromRequest(req);
     const testCases = await loadSampleMatchingTestCases();
-    res.json(
-      await deleteAllSyntheticDashboardPostImplementationDatasets({
-        ...dashboardPerformanceStoreOptions(),
-        testCaseIds: testCases.map((testCase) => testCase.sampleUserId),
-      }),
-    );
+    res.json(await deleteAllSyntheticDashboardPostImplementationDatasets({
+      ...dashboardPerformanceStoreOptions(),
+      testCaseIds: testCases.map((testCase) => testCase.sampleUserId)
+    }));
   } catch (error) {
     handleError(res, error);
   }
@@ -4932,26 +4259,21 @@ app.get("/api/dashboard-performance", async (req, res) => {
     const requestedTestCaseId = cleanText(req.query.testCaseId);
     if (requestedTestCaseId) {
       if (user.role !== "admin") {
-        const error = new Error(
-          "Admin access is required for test-case dashboard performance data.",
-        );
+        const error = new Error("Admin access is required for test-case dashboard performance data.");
         error.status = 403;
         throw error;
       }
       const result = await getDashboardPostImplementationDatasetByTestCase({
         ...dashboardPerformanceStoreOptions(),
-        testCaseId: requestedTestCaseId,
+        testCaseId: requestedTestCaseId
       });
-      res.json({
-        dataset: result?.dataset || null,
-        storageStatus: result?.storageStatus || "not_found",
-      });
+      res.json({ dataset: result?.dataset || null, storageStatus: result?.storageStatus || "not_found" });
       return;
     }
     res.json({
       dataset: null,
       storageStatus: "not_configured",
-      note: "Real customer post-implementation dashboard performance records are not connected yet.",
+      note: "Real customer post-implementation dashboard performance records are not connected yet."
     });
   } catch (error) {
     handleError(res, error);
@@ -4961,26 +4283,19 @@ app.get("/api/dashboard-performance", async (req, res) => {
 app.get("/api/admin/application-sources", async (req, res) => {
   try {
     await requireAdminFromRequest(req);
-    const limit = parsePositiveInteger(
-      req.query.limit,
-      applicationSourceBatchLimit,
-      200,
-    );
+    const limit = parsePositiveInteger(req.query.limit, applicationSourceBatchLimit, 200);
     const cursor = decodeScanCursor(req.query.cursor);
     const requestStartedAt = Date.now();
 
     console.log(
-      `[admin/application-sources] start limit=${limit} cursor=${cursor ? "provided" : "none"}`,
+      `[admin/application-sources] start limit=${limit} cursor=${cursor ? "provided" : "none"}`
     );
 
     let batch;
     try {
       batch = await buildAdminApplicationSourcesBatch({ cursor, limit });
     } catch (error) {
-      console.error(
-        "[admin/application-sources] failed to load application sources",
-        error,
-      );
+      console.error("[admin/application-sources] failed to load application sources", error);
       res.status(500).json({
         error: "Could not load application sources.",
         generatedAt: new Date().toISOString(),
@@ -4988,13 +4303,13 @@ app.get("/api/admin/application-sources", async (req, res) => {
         limit,
         nextCursor: null,
         note: "Opportunity loading failed while building the application source audit.",
-        sources: [],
+        sources: []
       });
       return;
     }
 
     console.log(
-      `[admin/application-sources] loaded opportunities=${batch.opportunities.length} scanned=${batch.scannedCount} scanCalls=${batch.scanCalls} loadMs=${batch.loadDurationMs} resolveMs=${batch.resolveDurationMs} totalMs=${Date.now() - requestStartedAt}`,
+      `[admin/application-sources] loaded opportunities=${batch.opportunities.length} scanned=${batch.scannedCount} scanCalls=${batch.scanCalls} loadMs=${batch.loadDurationMs} resolveMs=${batch.resolveDurationMs} totalMs=${Date.now() - requestStartedAt}`
     );
 
     const note =
@@ -5010,7 +4325,7 @@ app.get("/api/admin/application-sources", async (req, res) => {
       limit,
       nextCursor: batch.nextCursor,
       note,
-      sources: batch.sources,
+      sources: batch.sources
     });
   } catch (error) {
     handleError(res, error);
@@ -5020,8 +4335,7 @@ app.get("/api/admin/application-sources", async (req, res) => {
 app.post("/api/admin/application-paths/discover", async (req, res) => {
   try {
     await requireAdminFromRequest(req);
-    const sourceProfile =
-      req.body?.sourceProfile || req.body?.applicationSource || null;
+    const sourceProfile = req.body?.sourceProfile || req.body?.applicationSource || null;
     if (!sourceProfile || typeof sourceProfile !== "object") {
       const error = new Error("Application source profile is required.");
       error.status = 400;
@@ -5029,16 +4343,14 @@ app.post("/api/admin/application-paths/discover", async (req, res) => {
     }
 
     const startedAt = Date.now();
-    const profile = await discoverOpportunityApplicationLinks({
-      sourceProfile,
-    });
+    const profile = await discoverOpportunityApplicationLinks({ sourceProfile });
     console.log(
-      `[admin/application-paths/discover] opportunityId=${profile.opportunityId || "unknown"} linkDiscoveryStatus=${profile.linkDiscoveryStatus || profile.discoveryStatus || profile.pathStatus} applicationMethod=${profile.applicationMethod || profile.confirmedApplicationMethod} methodStatus=${profile.methodStatus} candidates=${profile.candidates?.length || 0} durationMs=${Date.now() - startedAt}`,
+      `[admin/application-paths/discover] opportunityId=${profile.opportunityId || "unknown"} linkDiscoveryStatus=${profile.linkDiscoveryStatus || profile.discoveryStatus || profile.pathStatus} applicationMethod=${profile.applicationMethod || profile.confirmedApplicationMethod} methodStatus=${profile.methodStatus} candidates=${profile.candidates?.length || 0} durationMs=${Date.now() - startedAt}`
     );
 
     res.json({
       generatedAt: new Date().toISOString(),
-      profile,
+      profile
     });
   } catch (error) {
     if (classifyError(error).status >= 500) {
@@ -5051,10 +4363,8 @@ app.post("/api/admin/application-paths/discover", async (req, res) => {
 app.post("/api/admin/application-requirements/extract", async (req, res) => {
   try {
     await requireAdminFromRequest(req);
-    const sourceProfile =
-      req.body?.sourceProfile || req.body?.applicationSource || null;
-    const pathProfile =
-      req.body?.pathProfile || req.body?.applicationPath || null;
+    const sourceProfile = req.body?.sourceProfile || req.body?.applicationSource || null;
+    const pathProfile = req.body?.pathProfile || req.body?.applicationPath || null;
     if (!sourceProfile || typeof sourceProfile !== "object") {
       const error = new Error("Application source profile is required.");
       error.status = 400;
@@ -5062,17 +4372,14 @@ app.post("/api/admin/application-requirements/extract", async (req, res) => {
     }
 
     const startedAt = Date.now();
-    const profile = await extractOpportunityApplicationRequirements({
-      sourceProfile,
-      pathProfile,
-    });
+    const profile = await extractOpportunityApplicationRequirements({ sourceProfile, pathProfile });
     console.log(
-      `[admin/application-requirements/extract] opportunityId=${profile.opportunityId || "unknown"} extractionStatus=${profile.extractionStatus} fields=${profile.requiredFields.length} documents=${profile.requiredDocuments.length} durationMs=${Date.now() - startedAt}`,
+      `[admin/application-requirements/extract] opportunityId=${profile.opportunityId || "unknown"} extractionStatus=${profile.extractionStatus} fields=${profile.requiredFields.length} documents=${profile.requiredDocuments.length} durationMs=${Date.now() - startedAt}`
     );
 
     res.json({
       generatedAt: new Date().toISOString(),
-      profile,
+      profile
     });
   } catch (error) {
     if (classifyError(error).status >= 500) {
@@ -5097,11 +4404,11 @@ app.get("/api/admin/application-profiles", async (req, res) => {
       limit,
       reviewStatus,
       profileQuality,
-      opportunityId,
+      opportunityId
     });
 
     console.log(
-      `[admin/application-profiles] profiles=${result.profiles.length} scanCalls=${result.scanCalls} durationMs=${Date.now() - startedAt}`,
+      `[admin/application-profiles] profiles=${result.profiles.length} scanCalls=${result.scanCalls} durationMs=${Date.now() - startedAt}`
     );
 
     res.json({
@@ -5113,7 +4420,7 @@ app.get("/api/admin/application-profiles", async (req, res) => {
         result.profiles.length === 0
           ? "No draft ApplicationProfiles are saved yet. Generate a draft or import the first-10 audit profiles."
           : null,
-      profiles: result.profiles.map(compactApplicationProfileRecord),
+      profiles: result.profiles.map(compactApplicationProfileRecord)
     });
   } catch (error) {
     if (classifyError(error).status >= 500) {
@@ -5130,7 +4437,7 @@ app.get("/api/admin/application-profiles/:profileId", async (req, res) => {
     res.json({
       generatedAt: new Date().toISOString(),
       profile,
-      customerReady: isApplicationProfileCustomerReady(profile),
+      customerReady: isApplicationProfileCustomerReady(profile)
     });
   } catch (error) {
     handleError(res, error);
@@ -5148,22 +4455,18 @@ app.post("/api/admin/application-profiles/generate-draft", async (req, res) => {
     }
 
     const startedAt = Date.now();
-    const result =
-      await generateApplicationProfileDraftForOpportunity(opportunityId);
+    const result = await generateApplicationProfileDraftForOpportunity(opportunityId);
     console.log(
-      `[admin/application-profiles/generate-draft] opportunityId=${opportunityId} profileId=${result.profile.profileId} reviewStatus=${result.profile.reviewStatus} quality=${result.profile.profileQuality} durationMs=${Date.now() - startedAt}`,
+      `[admin/application-profiles/generate-draft] opportunityId=${opportunityId} profileId=${result.profile.profileId} reviewStatus=${result.profile.reviewStatus} quality=${result.profile.profileQuality} durationMs=${Date.now() - startedAt}`
     );
 
     res.json({
       generatedAt: new Date().toISOString(),
-      ...result,
+      ...result
     });
   } catch (error) {
     if (classifyError(error).status >= 500) {
-      console.error(
-        "[admin/application-profiles/generate-draft] failed",
-        error,
-      );
+      console.error("[admin/application-profiles/generate-draft] failed", error);
     }
     handleError(res, error);
   }
@@ -5175,7 +4478,7 @@ app.post("/api/admin/application-profiles/import-first10", async (req, res) => {
     const startedAt = Date.now();
     const result = await importFirstTenApplicationProfiles();
     console.log(
-      `[admin/application-profiles/import-first10] imported=${result.importedCount} skipped=${result.skippedCount} errors=${result.errorCount} scanned=${result.scannedCount} sourceOpportunities=${result.sourceOpportunityCount} durationMs=${Date.now() - startedAt}`,
+      `[admin/application-profiles/import-first10] imported=${result.importedCount} skipped=${result.skippedCount} errors=${result.errorCount} scanned=${result.scannedCount} sourceOpportunities=${result.sourceOpportunityCount} durationMs=${Date.now() - startedAt}`
     );
     res.json({
       generatedAt: new Date().toISOString(),
@@ -5189,14 +4492,11 @@ app.post("/api/admin/application-profiles/import-first10", async (req, res) => {
       scannedCount: result.scannedCount,
       scanCalls: result.scanCalls,
       sourceOpportunityCount: result.sourceOpportunityCount,
-      note: result.note,
+      note: result.note
     });
   } catch (error) {
     if (classifyError(error).status >= 500) {
-      console.error(
-        "[admin/application-profiles/import-first10] failed",
-        error,
-      );
+      console.error("[admin/application-profiles/import-first10] failed", error);
     }
     handleError(res, error);
   }
@@ -5207,148 +4507,124 @@ app.patch("/api/admin/application-profiles/:profileId", async (req, res) => {
     await requireAdminFromRequest(req);
     const existing = await getApplicationProfileRecord(req.params.profileId);
     if (!profileCanBeRegenerated(existing)) {
-      const error = new Error(
-        "Reviewed, rejected, or archived profiles cannot be edited as drafts.",
-      );
+      const error = new Error("Reviewed, rejected, or archived profiles cannot be edited as drafts.");
       error.status = 409;
       throw error;
     }
-    const patched = applyApplicationProfileAdminPatch(
-      existing,
-      req.body?.profilePatch || req.body || {},
-    );
+    const patched = applyApplicationProfileAdminPatch(existing, req.body?.profilePatch || req.body || {});
     const profile = await putApplicationProfileRecord(patched);
     res.json({
       generatedAt: new Date().toISOString(),
-      profile,
+      profile
     });
   } catch (error) {
     handleError(res, error);
   }
 });
 
-app.post(
-  "/api/admin/application-profiles/:profileId/approve",
-  async (req, res) => {
-    try {
-      const admin = await requireAdminFromRequest(req);
-      const existing = await getApplicationProfileRecord(req.params.profileId);
-      const validation = validateApplicationProfileApproval(existing, {
-        adminNote: req.body?.adminNote,
-        confirmation: req.body?.confirmation,
-        approveAsReferenceOnly: req.body?.approveAsReferenceOnly,
+app.post("/api/admin/application-profiles/:profileId/approve", async (req, res) => {
+  try {
+    const admin = await requireAdminFromRequest(req);
+    const existing = await getApplicationProfileRecord(req.params.profileId);
+    const validation = validateApplicationProfileApproval(existing, {
+      adminNote: req.body?.adminNote,
+      confirmation: req.body?.confirmation,
+      approveAsReferenceOnly: req.body?.approveAsReferenceOnly
+    });
+    if (!validation.allowed) {
+      res.status(400).json({
+        error: "ApplicationProfile approval is blocked.",
+        approvalValidation: validation
       });
-      if (!validation.allowed) {
-        res.status(400).json({
-          error: "ApplicationProfile approval is blocked.",
-          approvalValidation: validation,
-        });
-        return;
-      }
-
-      const now = new Date().toISOString();
-      const profile = await putApplicationProfileRecord(
-        normalizeApplicationProfileForRegistry(
-          {
-            ...existing,
-            reviewStatus: "admin_reviewed",
-            adminNotes: appendAdminNote(
-              existing.adminNotes,
-              req.body?.adminNote ||
-                "Admin explicitly approved this ApplicationProfile.",
-            ),
-            reviewedBy: admin.email || admin.userId || "admin",
-            reviewedAt: now,
-            approvedAsReferenceOnly: req.body?.approveAsReferenceOnly === true,
-          },
-          { now, reviewStatus: "admin_reviewed" },
-        ),
-      );
-
-      res.json({
-        generatedAt: now,
-        profile,
-        customerReady: isApplicationProfileCustomerReady(profile),
-        approvalValidation: validation,
-      });
-    } catch (error) {
-      handleError(res, error);
+      return;
     }
-  },
-);
 
-app.post(
-  "/api/admin/application-profiles/:profileId/reject",
-  async (req, res) => {
-    try {
-      const admin = await requireAdminFromRequest(req);
-      const reason = cleanText(req.body?.reason || req.body?.adminNote);
-      if (!reason) {
-        const error = new Error("Rejection reason is required.");
-        error.status = 400;
-        throw error;
-      }
-      const existing = await getApplicationProfileRecord(req.params.profileId);
-      const now = new Date().toISOString();
-      const profile = await putApplicationProfileRecord(
-        normalizeApplicationProfileForRegistry(
-          {
-            ...existing,
-            reviewStatus: "rejected",
-            rejectionReason: reason,
-            rejectedBy: admin.email || admin.userId || "admin",
-            rejectedAt: now,
-            adminNotes: appendAdminNote(
-              existing.adminNotes,
-              `Rejected: ${reason}`,
-            ),
-          },
-          { now, reviewStatus: "rejected" },
-        ),
-      );
-      res.json({
-        generatedAt: now,
-        profile,
-        customerReady: false,
-      });
-    } catch (error) {
-      handleError(res, error);
-    }
-  },
-);
+    const now = new Date().toISOString();
+    const profile = await putApplicationProfileRecord(
+      normalizeApplicationProfileForRegistry(
+        {
+          ...existing,
+          reviewStatus: "admin_reviewed",
+          adminNotes: appendAdminNote(existing.adminNotes, req.body?.adminNote || "Admin explicitly approved this ApplicationProfile."),
+          reviewedBy: admin.email || admin.userId || "admin",
+          reviewedAt: now,
+          approvedAsReferenceOnly: req.body?.approveAsReferenceOnly === true
+        },
+        { now, reviewStatus: "admin_reviewed" }
+      )
+    );
 
-app.post(
-  "/api/admin/application-profiles/:profileId/archive",
-  async (req, res) => {
-    try {
-      const admin = await requireAdminFromRequest(req);
-      const existing = await getApplicationProfileRecord(req.params.profileId);
-      const now = new Date().toISOString();
-      const profile = await putApplicationProfileRecord(
-        normalizeApplicationProfileForRegistry(
-          {
-            ...existing,
-            reviewStatus: "archived",
-            archivedBy: admin.email || admin.userId || "admin",
-            archivedAt: now,
-            adminNotes: appendAdminNote(
-              existing.adminNotes,
-              req.body?.adminNote || "Archived by admin.",
-            ),
-          },
-          { now, reviewStatus: "archived" },
-        ),
-      );
-      res.json({
-        generatedAt: now,
-        profile,
-        customerReady: false,
-      });
-    } catch (error) {
-      handleError(res, error);
+    res.json({
+      generatedAt: now,
+      profile,
+      customerReady: isApplicationProfileCustomerReady(profile),
+      approvalValidation: validation
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/application-profiles/:profileId/reject", async (req, res) => {
+  try {
+    const admin = await requireAdminFromRequest(req);
+    const reason = cleanText(req.body?.reason || req.body?.adminNote);
+    if (!reason) {
+      const error = new Error("Rejection reason is required.");
+      error.status = 400;
+      throw error;
     }
-  },
-);
+    const existing = await getApplicationProfileRecord(req.params.profileId);
+    const now = new Date().toISOString();
+    const profile = await putApplicationProfileRecord(
+      normalizeApplicationProfileForRegistry(
+        {
+          ...existing,
+          reviewStatus: "rejected",
+          rejectionReason: reason,
+          rejectedBy: admin.email || admin.userId || "admin",
+          rejectedAt: now,
+          adminNotes: appendAdminNote(existing.adminNotes, `Rejected: ${reason}`)
+        },
+        { now, reviewStatus: "rejected" }
+      )
+    );
+    res.json({
+      generatedAt: now,
+      profile,
+      customerReady: false
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/admin/application-profiles/:profileId/archive", async (req, res) => {
+  try {
+    const admin = await requireAdminFromRequest(req);
+    const existing = await getApplicationProfileRecord(req.params.profileId);
+    const now = new Date().toISOString();
+    const profile = await putApplicationProfileRecord(
+      normalizeApplicationProfileForRegistry(
+        {
+          ...existing,
+          reviewStatus: "archived",
+          archivedBy: admin.email || admin.userId || "admin",
+          archivedAt: now,
+          adminNotes: appendAdminNote(existing.adminNotes, req.body?.adminNote || "Archived by admin.")
+        },
+        { now, reviewStatus: "archived" }
+      )
+    );
+    res.json({
+      generatedAt: now,
+      profile,
+      customerReady: false
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
 
 app.post("/api/admin/opportunities/:opportunityId/review", async (req, res) => {
   try {
@@ -5358,7 +4634,7 @@ app.post("/api/admin/opportunities/:opportunityId/review", async (req, res) => {
       notes: req.body?.notes,
       duplicateOf: req.body?.duplicateOf,
       credential: req.body?.credential,
-      passwordSessionToken: req.body?.passwordSessionToken,
+      passwordSessionToken: req.body?.passwordSessionToken
     });
     res.json({ opportunity: compactOpportunityRecord(opportunity) });
   } catch (error) {
@@ -5368,17 +4644,11 @@ app.post("/api/admin/opportunities/:opportunityId/review", async (req, res) => {
 
 if (!isLambdaRuntime) {
   activeServer = app.listen(port, "127.0.0.1", () => {
-    console.log(
-      `Green Business Solution API running at http://127.0.0.1:${port}`,
-    );
-    console.log(
-      `Using AWS profile ${profile || "default credential chain"}, region ${dataRegion}`,
-    );
+    console.log(`Green Business Solution API running at http://127.0.0.1:${port}`);
+    console.log(`Using AWS profile ${profile || "default credential chain"}, region ${dataRegion}`);
   });
   activeServer.on("error", (error) => {
-    console.error(
-      `Could not start Green Business Solution API on http://127.0.0.1:${port}`,
-    );
+    console.error(`Could not start Green Business Solution API on http://127.0.0.1:${port}`);
     console.error(error);
     process.exitCode = 1;
   });

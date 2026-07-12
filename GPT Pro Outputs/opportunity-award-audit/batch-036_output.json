@@ -1,0 +1,542 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-036",
+  "inputFile": "batch-036_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T14:46:50Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22606",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "No new incentive application can currently proceed because Mississippi Power's current rate index lists the RENM-I incentive schedule as suspended.",
+        "If the program reopens, be a Mississippi Power residential retail customer taking or applying for the RENM-2 net-metering rate and not have received the separate low-to-moderate-income incentive.",
+        "Complete the Mississippi Power-approved energy audit and qualification process and submit any required interconnection or amended interconnection application.",
+        "Install a qualifying, certified battery system capable of approved parallel operation, enroll in a battery demand-response program if one is available, and provide purchase and installation documentation.",
+        "Pass Mississippi Power inspection and final program approval while the applicable program-year budget remains available."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "Mississippi Power's current official rate index expressly identifies the renewable-energy net-metering incentive schedule that contained the battery incentive as suspended. A new applicant therefore is unlikely to receive an award unless the utility formally reopens the schedule.",
+      "evidenceUrls": [
+        "https://www.mississippipower.com/content/dam/mississippi-power/pdfs/business/pricing-and-rates/current/index/Index_Interim_2025.pdf",
+        "https://www.mississippipower.com/business/pricing-and-rates.html",
+        "https://www.mississippipower.com/content/dam/mississippi-power/pdfs/pricing-and-rates/special-application-rates/Renewable-Energy-Net-Metering-%28RENM-I%29-under-suspension.pdf"
+      ],
+      "evidenceText": "The current rate index labels Schedule RENM-I, Renewable Energy Net Metering Incentive Programs, as suspended. The suspended tariff preserves the former battery qualification, audit, interconnection, documentation, inspection, and budget conditions but does not provide a current intake path.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22541",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "No new incentive application can currently proceed because Mississippi Power's current rate index lists the RENM-I incentive schedule as suspended.",
+        "If the program reopens, be an eligible Mississippi Power residential retail customer taking or applying for RENM-2 and satisfy the current low-to-moderate-income qualification standard.",
+        "Complete a Mississippi Power-approved energy audit and submit the required income and program qualification form.",
+        "Install a qualifying renewable distributed-generation facility meeting the program's size, interconnection, safety, and installation requirements and provide proof of completion.",
+        "Pass inspection and final utility approval while the applicable first-come program budget remains available."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current official Mississippi Power rate index identifies the RENM-I incentive schedule, including the former low-to-moderate-income pathway, as suspended. A new award is therefore unlikely unless the utility reopens the program and confirms that the proposed technology qualifies.",
+      "evidenceUrls": [
+        "https://www.mississippipower.com/content/dam/mississippi-power/pdfs/business/pricing-and-rates/current/index/Index_Interim_2025.pdf",
+        "https://www.mississippipower.com/business/pricing-and-rates.html",
+        "https://www.mississippipower.com/content/dam/mississippi-power/pdfs/pricing-and-rates/special-application-rates/Renewable-Energy-Net-Metering-%28RENM-I%29-under-suspension.pdf"
+      ],
+      "evidenceText": "Mississippi Power's current rate index marks RENM-I as suspended. The suspended tariff describes income qualification, an approved audit, a qualification form, qualifying renewable distributed generation, proof of installation, inspection, approval, and limited annual budgets.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4261",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Mississippi Power residential or nonresidential customer at the installation address.",
+        "Select a measure that appears in the current residential marketplace, residential rebate materials, or commercial and industrial incentive offering and meet its published efficiency and installation criteria.",
+        "For commercial and industrial projects, apply and obtain program approval before installation when the program directs the customer to do so.",
+        "Purchase and install the qualifying equipment, then submit the applicable application, itemized invoice, product data, and other requested documentation by the stated deadline.",
+        "Permit inspection or verification and remain within customer, premise, incentive, and annual budget limits."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Mississippi Power currently publishes rule-based residential and business rebates rather than a competitively scored award process. A qualifying, timely, and documented measure is likely to be paid after any required advance approval and verification, subject to program funds and measure-specific limits.",
+      "evidenceUrls": [
+        "https://www.mississippipower.com/residential/ways-to-save/rebates---incentives.html",
+        "https://www.mississippipower.com/business/ways-to-save/large-commercial-and-industrial-program.html"
+      ],
+      "evidenceText": "Current official materials list residential rebates and marketplace discounts for qualifying HVAC, thermostats, heat-pump water heating, weatherization, laundry equipment, and EV charging, plus a business incentive process requiring application, approval before installation, final invoices, and verification. Every retrofit mapped to the DSIRE record is not independently confirmed by the current pages.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22648",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Respond to a current Missouri Department of Transportation competitive NEVI solicitation or procurement if and when an application round is opened.",
+        "Propose a publicly accessible charging site that serves an eligible Alternative Fuel Corridor or other location authorized by the current Missouri deployment plan.",
+        "Document site control, utility coordination, permitting, project readiness, eligible costs, operations, maintenance, and the required non-federal cost share.",
+        "Meet current federal and state charger-power, port-count, uptime, payment, interoperability, cybersecurity, data-reporting, public-access, and Buy America requirements.",
+        "Pass administrative and competitive evaluation and execute the required MoDOT and federal funding agreements before reimbursable construction."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Missouri's current official materials describe a competitively awarded NEVI contracting process and an 80 percent federal share, but no current open application window or completed selection status for a new applicant was verified. Award likelihood cannot be determined until MoDOT posts the operative procurement.",
+      "evidenceUrls": [
+        "https://www.modot.org/nevi",
+        "https://www.modot.org/how-it-works",
+        "https://www.modot.org/media/39537"
+      ],
+      "evidenceText": "MoDOT describes NEVI deployment through competitively advertised and selected contracts, with federal funds covering up to 80 percent of eligible project cost. The current plan anticipates procurement and award activity, but the public program page does not establish an open general intake for a new proposal.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5536",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Use an eligible commercial, industrial, agricultural, multifamily, nonprofit, or public property in a Missouri jurisdiction participating in the district.",
+        "Propose a permanently affixed project that the district accepts as an eligible energy-efficiency or renewable-energy improvement with a reasonable economic basis; a battery-storage proposal must be affirmatively accepted through project review.",
+        "Submit the preliminary eligibility and project application through the program's financing administrator with property, ownership, project, contractor, engineering, and cost information.",
+        "Obtain any required mortgage-holder consent and satisfy the participating capital provider's financial underwriting and documentation requirements.",
+        "Receive district approval and complete the financing, assessment, recording, construction, and verification documents before funding."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The Missouri Clean Energy District offers active PACE financing, but financing is not automatic. A battery project depends on district eligibility review, local participation, lender underwriting, any mortgage consent, and successful assessment closing.",
+      "evidenceUrls": [
+        "https://www.mced.mo.gov/apply/",
+        "https://www.mced.mo.gov/about-pace/",
+        "https://www.mced.mo.gov/about/"
+      ],
+      "evidenceText": "The district accepts applications for private PACE financing on qualifying nonresidential and multifamily properties, performs eligibility and project review, oversees approvals, and relies on private capital. The current public pages do not list battery storage as an automatically eligible measure, so project acceptance must be confirmed.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5142",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible nonresidential customer of a participating Missouri River Energy Services or Bright Energy Solutions member utility.",
+        "Select equipment that meets the current Bright Energy Solutions measure specifications and install it at the eligible service address.",
+        "Obtain advance approval before ordering equipment or starting work for custom, new-construction, or any other project category designated for preapproval.",
+        "Submit the correct current rebate form with itemized invoices, product specifications, efficiency certifications, calculations, and other measure-specific documentation.",
+        "Allow utility or program verification and remain within current incentive caps, project limits, deadlines, and available funds."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Bright Energy Solutions publishes prescriptive and custom business rebates with objective customer, equipment, documentation, and preapproval rules. A compliant claim is likely to be approved because the program is administrative rather than competitively ranked, subject to funds and final verification.",
+      "evidenceUrls": [
+        "https://www.brightenergysolutions.com/resources/business",
+        "https://www.brightenergysolutions.com/members/hutchinson-utilities-commission"
+      ],
+      "evidenceText": "Current Bright Energy Solutions materials provide business rebate applications for lighting, HVAC and heat pumps, controls, water heating, laundry, food-service equipment, forklifts and batteries, refrigeration, drives, and custom efficiency projects. Custom and designated projects require preapproval and all claims require current forms and supporting records.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4482",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a current Missouri Rural Electric Cooperative member and install the measure at an eligible permanent residence served by the cooperative.",
+        "For a manufactured home, satisfy the cooperative's foundation and member property-ownership conditions.",
+        "Install a currently listed qualifying air-source, ductless, or ground-source heat pump, smart thermostat, heat-pump water heater, or other measure meeting the published product and efficiency standards.",
+        "Submit the online rebate request with the dated receipt or invoice, model and serial information, AHRI certificate, Manual J or other documentation required for the selected measure.",
+        "Remain within per-meter, percentage-of-cost, equipment, and annual program limits and permit verification."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The cooperative currently lists objective residential rebates for qualifying heat pumps, geothermal systems, smart thermostats, and heat-pump water heaters. A complete eligible claim is likely to be paid, subject to measure limits and funds; a current Level 2 EV charger rebate was not verified.",
+      "evidenceUrls": [
+        "https://www.morec.org/rebates-products/"
+      ],
+      "evidenceText": "The current rebate page specifies member and residence eligibility, product-efficiency criteria, receipts, model data, AHRI or design documentation, and per-measure caps. The active page does not currently identify an EV charger rebate despite the older DSIRE mapping.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4739",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible nonresidential customer of a participating Minnesota Municipal Power Agency member utility.",
+        "Select a current qualifying commercial or industrial lighting, controls, HVAC, motor, drive, or custom efficiency measure and meet its technical specifications.",
+        "Submit the pre-rebate worksheet or application and obtain utility preapproval before purchase or installation when required by the form or project type.",
+        "Install new qualifying equipment and submit the signed application, calculation tables, itemized invoices, product data, and other required completion records by the program deadline.",
+        "Permit pre- or post-installation inspection and remain within the current percentage-of-cost cap, customer limits, and first-come annual budget."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "MMPA member utilities use current prescriptive rebate forms and administrative technical review rather than competitive scoring. A qualifying project that receives required preapproval and passes documentation and inspection is likely to receive the rebate, subject to annual funds.",
+      "evidenceUrls": [
+        "https://mmpa.org/conservation/we-save-business/",
+        "https://www.mmpa.org/wp-content/uploads/2026/01/NST_2026LightingRetrofit_RebateForm.pdf"
+      ],
+      "evidenceText": "A current 2026 MMPA member-utility form requires nonresidential customer eligibility, approval before purchase and installation, calculation worksheets, itemized invoices, possible site inspections, a project-cost cap, timely filing, and first-come limited funds. Measure-specific current forms govern non-lighting projects.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4740",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible residential electric customer of a participating MMPA member utility.",
+        "Purchase and install a measure listed on the current member-utility rebate form and meet ENERGY STAR, AHRI, quality-installation, or other measure-specific standards.",
+        "Submit the signed current application with the dated receipt or contractor invoice, model information, AHRI certificate, and any additional documentation required for the measure.",
+        "File within the current one-year or program-year deadline and remain within per-item, per-account, and percentage-of-cost limits.",
+        "Allow utility review or verification and apply while first-come annual funds remain."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current MMPA member-utility residential forms offer fixed, rules-based rebates. An eligible customer who installs a listed measure and submits complete documentation is likely to receive the rebate, subject to current limits and funds.",
+      "evidenceUrls": [
+        "https://mmpa.org/conservation/we-save-home/",
+        "https://www.mmpa.org/wp-content/uploads/2026/01/BUF_2026Thermostat_RebateForm.pdf",
+        "https://www.mmpa.org/wp-content/uploads/2026/01/BUF_2026QIASHP_RebateForm.pdf",
+        "https://www.mmpa.org/wp-content/uploads/2026/01/BUF_2026ESApplianceandRecycling_RebateForm.pdf"
+      ],
+      "evidenceText": "Current 2026 residential forms require member-utility customer eligibility, qualifying equipment, receipts or invoices, applicable AHRI or quality-installation records, filing by the stated deadline, and compliance with per-item limits and first-come funding. Not every retrofit mapped to the older DSIRE record is shown on the reviewed forms.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4378",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible nonresidential customer of a participating MMWEC municipal electric utility.",
+        "Use new equipment that meets the current NextZero commercial lighting and controls eligibility and product-efficiency requirements.",
+        "Submit a complete application and receive written preapproval before purchasing equipment or starting installation.",
+        "Provide required product cut sheets, a recent electric bill, tax documentation, project calculations, and the signed application.",
+        "Complete the project and submit itemized invoices within the required period, subject to inspection, the percentage-of-cost limit, the customer cap, and available funds."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current NextZero prescriptive lighting application provides a noncompetitive, rule-based rebate pathway. An eligible municipal-utility customer that receives preapproval and completes the documented project is likely to be paid, subject to incentive caps and funds.",
+      "evidenceUrls": [
+        "https://nextzero.org/",
+        "https://nextzero.org/wp-content/uploads/2026-CEL-NZB-Prescriptive_Lighting_App-v2-rev-Fillable-1.pdf"
+      ],
+      "evidenceText": "The current 2026 commercial lighting application requires participating municipal-utility service, new qualifying equipment, preapproval before purchase or installation, supporting cut sheets and account records, final invoices, and compliance with cost and annual incentive caps.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3219",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Develop the project for an eligible Modesto Irrigation District nonresidential electric service location.",
+        "Use the current commercial new-construction specifications and submit the applicable 2026 application and design information before equipment commitment or construction when required.",
+        "Meet the current above-code, equipment-efficiency, design, controls, refrigeration, HVAC, or whole-building criteria applicable to the project.",
+        "Complete the approved project and submit invoices, equipment schedules, calculations, commissioning or acceptance records, and other required completion documents.",
+        "Receive MID review and any required inspection or verification while program funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "MID currently publishes a 2026 commercial new-construction application and uses an administrative design and completion review. A qualifying approved project is likely to receive the calculated rebate after completion documentation and verification, subject to funds.",
+      "evidenceUrls": [
+        "https://www.mid.org/saving-energy-money/rebates/business-rebates/",
+        "https://www.mid.org/saving-energy-money/rebates/rebate-terms-conditions/"
+      ],
+      "evidenceText": "MID's current business rebate page lists 2026 commercial new-construction specifications and an application. General rebate terms require eligible MID service, qualifying installed equipment, complete supporting materials, program approval, and available funding.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22525",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Verify with MID that a current nonresidential EV charger rebate is open and obtain the current application before purchase or installation.",
+        "Use an eligible MID nonresidential electric account and install the charger at the qualifying service address.",
+        "Install a charger and electrical work that satisfy the current program, permitting, code, interconnection, networking, ownership, and accessibility conditions.",
+        "Submit the current application with account information, charger specifications, permits if required, itemized invoices, proof of installation, and any vehicle or usage documentation requested.",
+        "Receive MID eligibility review and final approval while funds remain available."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Current official MID pages provide EV information and general rebate conditions, but an accessible current nonresidential EV charger rebate application and its operative eligibility terms were not verified. Award likelihood cannot be determined without that evidence.",
+      "evidenceUrls": [
+        "https://www.mid.org/saving-energy-money/electric-vehicles/",
+        "https://www.mid.org/saving-energy-money/rebates/",
+        "https://www.mid.org/saving-energy-money/rebates/rebate-terms-conditions/"
+      ],
+      "evidenceText": "MID currently publishes EV rates and general rebate administration rules, including customer eligibility, supporting documentation, review, and funding conditions. The reviewed official materials did not expose a current nonresidential charger-rebate form or current award amount and equipment criteria.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "needs_evidence"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22428",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Verify with MID that a current residential EV charger rebate is open and obtain the current application before relying on an incentive.",
+        "Be an eligible MID residential electric customer and install the charger at the qualifying residence and service account.",
+        "Install qualifying Level 2 charging equipment and electrical work that meet the current product, permit, code, ownership, and installation conditions.",
+        "Submit the current application with account information, charger and vehicle documentation, itemized invoices, proof of installation, and any permit or inspection records requested.",
+        "Receive MID claim review and final approval while the applicable budget remains available."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "MID's current official residential and EV pages do not provide an accessible, current residential charger-rebate form or sufficient operative criteria to determine whether this older DSIRE opportunity remains open. Award likelihood is therefore unknown.",
+      "evidenceUrls": [
+        "https://www.mid.org/saving-energy-money/electric-vehicles/",
+        "https://www.mid.org/saving-energy-money/rebates/residential-rebates/",
+        "https://www.mid.org/saving-energy-money/rebates/rebate-terms-conditions/"
+      ],
+      "evidenceText": "MID publishes current EV information, a 2026 residential rebate catalog, and general rebate terms, but the reviewed official pages did not expose a current residential EV charger rebate application, amount, or complete equipment and filing requirements.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "needs_evidence"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1882",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible MID residential electric customer in good financial standing at the installation address.",
+        "Select a measure listed in the current 2026 residential rebate catalog and meet its product, efficiency, installation, contractor, permit, and replacement requirements.",
+        "Purchase and install the qualifying measure at the MID-served residence.",
+        "Submit the current application with dated receipts or itemized contractor invoices, model numbers, efficiency certifications, permits, and other measure-specific records generally within 90 days.",
+        "Permit inspection or verification and receive MID approval while program funds and per-customer limits remain available."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "MID currently publishes a 2026 residential rebate catalog and rule-based claim process. An eligible customer with a listed, correctly installed, and fully documented measure is likely to receive the rebate, subject to review and funds.",
+      "evidenceUrls": [
+        "https://www.mid.org/saving-energy-money/rebates/residential-rebates/",
+        "https://www.mid.org/saving-energy-money/rebates/rebate-terms-conditions/"
+      ],
+      "evidenceText": "MID's current residential page provides a 2026 rebate catalog and application. General terms require an eligible MID account, qualifying products installed at the served property, supporting materials within the filing period, program approval, and available funds. Specific eligibility must be checked for each retrofit because the older DSIRE mapping is broader than the currently verified catalog content.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:676",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Own qualifying depreciable property used in a trade or business or held for the production of income.",
+        "Place the property in service and determine its correct tax basis, asset class, recovery period, convention, depreciation method, and business-use percentage under current federal tax rules.",
+        "Apply any special clean-energy, bonus-depreciation, listed-property, election, recapture, or basis-adjustment provisions that affect the asset.",
+        "Claim the allowable depreciation deduction on Form 4562 and the applicable federal income-tax return for the correct tax year.",
+        "Retain purchase, installation, placed-in-service, allocation, business-use, and disposition records sufficient to substantiate the deduction."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "MACRS is a statutory tax-depreciation system rather than a discretionary grant or rebate. A taxpayer that owns qualifying depreciable property, classifies it correctly, and files a substantiated Form 4562 is likely to receive the deduction, subject to return examination and measure-specific tax treatment.",
+      "evidenceUrls": [
+        "https://www.irs.gov/publications/p946",
+        "https://www.irs.gov/forms-pubs/about-form-4562",
+        "https://www.irs.gov/credits-deductions/cost-recovery-for-qualified-clean-energy-facilities-property-and-technology"
+      ],
+      "evidenceText": "IRS guidance explains MACRS eligibility, basis, placed-in-service rules, recovery periods, conventions, business use, recapture, and Form 4562 filing. Current clean-energy cost-recovery guidance identifies qualifying clean-energy property that may use accelerated depreciation when the statutory conditions are met.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4238",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a current Mohave Electric Cooperative member and satisfy the household, residence, and any income or ownership conditions applicable to the current rebate offering.",
+        "Install a currently listed qualifying air-conditioning, heat-pump, or mini-split system that meets the published efficiency and replacement criteria.",
+        "Submit the applicable rebate form within the stated period with the contractor invoice or receipt, equipment model information, installation photographs, and a W-9 when required.",
+        "Permit cooperative review or verification and remain within the current per-system, member, and funding limits.",
+        "Confirm separately whether any EV charger or LED lighting measure is currently eligible because those mapped measures were not verified on the current rebate page."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Mohave Electric currently publishes fixed HVAC and mini-split rebates with objective equipment and documentation rules, making a compliant HVAC claim likely to be approved. Current EV charger and general LED rebate pathways were not verified, so the likelihood does not extend to every mapped retrofit.",
+      "evidenceUrls": [
+        "https://www.mohaveelectric.com/energy-solutions/rebates/",
+        "https://www.mohaveelectric.com/energy-solutions/rebates/air-conditioning-rebate/",
+        "https://www.mohaveelectric.com/energy-solutions/rebates/mini-split-rebate/"
+      ],
+      "evidenceText": "Current cooperative pages list air-conditioning and mini-split rebate amounts and require member eligibility, qualifying efficiency, invoices or receipts, installation photographs, timely filing, and tax documentation in specified cases. The current pages do not confirm all older DSIRE-mapped measures.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4345",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Mohave Electric Cooperative residential or small commercial member and propose a qualifying solar photovoltaic, solar water-heating, or other currently accepted SunWatts renewable system.",
+        "Submit the pre-application and reservation materials before installation and obtain the required rebate reservation and distributed-generation or interconnection approval.",
+        "Use qualifying equipment and a licensed contractor, obtain required permits, and comply with system design, safety, insurance, metering, and interconnection requirements.",
+        "After installation, submit the final application, itemized invoice, contractor certification, permit and inspection records, equipment documentation, and W-9 when applicable.",
+        "Pass MEC final inspection and receive permission to operate and final incentive approval while reserved funds remain valid."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "SunWatts provides a defined reservation, interconnection, installation, and final-verification process rather than competitive scoring. An eligible project that secures advance approval and satisfies the technical and completion requirements is likely to receive the reserved incentive, subject to funds and program limits.",
+      "evidenceUrls": [
+        "https://www.mohaveelectric.com/energy-solutions/renewable-energy/sunwatts-renewable-energy-program/",
+        "https://www.mohaveelectric.com/energy-solutions/renewable-energy/sunwatts-renewable-energy-program/pre-application-reservation-form/",
+        "https://www.mohaveelectric.com/energy-solutions/renewable-energy/sunwatts-renewable-energy-program/step-3-4-system-qualifications-final-forms/"
+      ],
+      "evidenceText": "The current SunWatts process requires a pre-application and reservation, distributed-generation and interconnection review, qualifying equipment and permits, final invoices and certifications, inspection, and cooperative approval before operation and payment.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3337",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Monmouth Power & Light customer and satisfy the measure-specific service and primary electric-heating requirements.",
+        "Submit the applicable program application before installation and obtain any required utility authorization.",
+        "Install a currently listed qualifying HVAC, heat-pump water-heater, insulation, weatherization, appliance, smart-thermostat, window or door, or EV charging measure and meet its product and contractor standards.",
+        "After completion, provide itemized receipts or contractor invoices, product documentation, permits, and any other records required for the selected measure.",
+        "Permit pre- and post-installation inspection or verification before the utility issues the rebate."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Monmouth publishes a current list of prescriptive residential incentives and requires advance application rather than competitive selection. An eligible customer that obtains advance authorization and completes the documented installation is likely to receive the rebate after verification.",
+      "evidenceUrls": [
+        "https://www.ci.monmouth.or.us/pview.aspx?id=4776",
+        "https://www.ci.monmouth.or.us/pview.aspx?catid=552&id=55053"
+      ],
+      "evidenceText": "The current city pages require Monmouth Power & Light customer eligibility, an application before installation, receipts or invoices after completion, and inspections for many measures. The listed offerings include heat pumps, heat-pump water heaters, thermostats, weatherization, windows and doors, appliances, and EV charging.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22656",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "For the current Interstate System procurement, be one of the firms shortlisted by MDT after the closed statement-of-qualifications phase; a new general applicant cannot enter the current RFP phase.",
+        "Propose at least the required number of eligible charging stations near an Alternative Fuel Corridor and document site agreements, utility coordination, design, construction, operations, maintenance, and project readiness.",
+        "Provide at least four network-connected 150-kilowatt DC charging ports per station, continuous public access, secure payment, required data sharing, and at least five years of operation and maintenance.",
+        "Provide a non-federal contribution of at least 20 percent, observe the per-site federal-share limit, and submit the required proposal guaranty and price proposal.",
+        "Rank high enough in the competitive RFP for Montana Transportation Commission selection and execute the site-specific contracts and federal compliance documents."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current Montana NEVI procurement has completed its qualifications stage and permits only three named shortlisted firms to submit RFP proposals, after which one contractor will be competitively selected. A new or general applicant is therefore unlikely to receive an award in this round.",
+      "evidenceUrls": [
+        "https://www.mdt.mt.gov/business/contracting/qacurrent.aspx",
+        "https://www.mdt.mt.gov/publications/plans/ev/",
+        "https://deq.mt.gov/energy/Programs/fuels"
+      ],
+      "evidenceText": "MDT's current procurement forum lists EV Gateway, FTI and SWTCH, and Love's Travel Stops as the shortlisted firms. The RFP requires corridor sites, four networked 150-kilowatt ports, public access, five-year operation and maintenance, secure payment and data, at least a 20 percent contribution, a proposal guaranty, and competitive selection of one contractor.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22653",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Use a privately owned eligible commercial, industrial, agricultural, or qualifying multifamily property located in a participating Montana C-PACE district.",
+        "Use the financing for a permanently affixed eligible improvement; current guidelines expressly include battery storage under public-safety and resiliency improvements.",
+        "Keep property taxes and mortgage obligations current, have no disqualifying bankruptcy or property-status issue, and satisfy all property and owner eligibility rules.",
+        "Develop the project with registered or qualified professionals, complete any required energy assessment or independent review, and submit the application and supporting property, engineering, cost, and title documents.",
+        "Obtain senior mortgage-holder consent, negotiate and pass underwriting with an eligible private lender, receive program approval, execute and record the assessment and financing agreements, and complete final verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Last Best PACE expressly permits battery storage, but financing depends on property and district eligibility, private-lender underwriting, senior-lender consent, program discretion, negotiated documents, and successful closing. Approval is possible rather than automatic.",
+      "evidenceUrls": [
+        "https://commerce.mt.gov/Business/Programs-and-Services/CPACE/For-Property-Owners",
+        "https://commerce.mt.gov/_shared/cpace/docs/C-PACE-MT-Program-Guidelines1.pdf"
+      ],
+      "evidenceText": "The current program guidelines identify battery storage as an eligible resiliency improvement, rely on private capital, require property and project review, mortgage-holder consent, financing documents and an assessment, and reserve ultimate project-approval discretion to the program.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3916",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Montana-Dakota Utilities commercial customer in Montana with the required active electric or natural-gas service for the selected measure.",
+        "Install a currently eligible prescriptive lighting or qualifying high-efficiency gas furnace, or develop an energy-saving custom or partnership project accepted by MDU.",
+        "Obtain written preapproval before work for lighting incentives above the current threshold and for custom or partnership projects.",
+        "Submit the current application with itemized invoices, equipment specifications, efficiency certifications, savings calculations, and any required tax or account documentation.",
+        "Complete any required measurement, verification, or inspection and apply while first-come plan-year funds remain."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "MDU currently offers fixed prescriptive rebates and administratively reviewed custom incentives. A qualifying prescriptive project or a custom project that receives advance approval and passes verification is likely to be paid, subject to the applicable plan-year budget.",
+      "evidenceUrls": [
+        "https://www.montana-dakota.com/energy-efficiency/savings-for-your-business/"
+      ],
+      "evidenceText": "Current MDU business materials describe Montana commercial lighting, high-efficiency furnace, and custom gas and electric incentive pathways. They require eligible service, applications and invoices, advance approval for larger lighting and custom projects, savings documentation or measurement and verification, and limited first-come funds.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3909",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Montana-Dakota Utilities residential customer in Montana with the electric or natural-gas service required for the selected measure.",
+        "Purchase and install a measure currently listed for Montana residential customers, such as qualifying LED products, a replacement natural-gas furnace meeting the current AFUE threshold, or an eligible thermostat.",
+        "Meet all replacement, product, AHRI, installation, account, and equipment-control requirements in the current application.",
+        "Submit the completed application with the itemized invoice and required product or installation documentation within the stated filing period, including the current 90-day requirement where applicable.",
+        "Apply while first-come plan-year funds remain and permit MDU verification."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current Montana residential LED, high-efficiency furnace, and thermostat rebates use published eligibility and claim rules rather than competitive selection. A complete qualifying claim is likely to be approved, subject to funds; a general electric HVAC replacement rebate was not verified.",
+      "evidenceUrls": [
+        "https://www.montana-dakota.com/energy-efficiency/savings-for-your-home/",
+        "https://www.montana-dakota.com/wp-content/uploads/PDFs/Conservation/residential/2026/2026-03_MDU_MT_ResHeating.pdf"
+      ],
+      "evidenceText": "Current Montana residential materials list LED, qualifying replacement gas-furnace, and thermostat incentives and require service eligibility, technical criteria, a completed application and invoice, timely filing, and first-come plan-year funding. The current materials do not establish a broad rebate for every high-efficiency HVAC replacement.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3912",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Montana-Dakota Utilities commercial natural-gas customer in South Dakota.",
+        "Install a currently qualifying high-efficiency gas furnace within the published input-capacity and AFUE requirements, or propose a qualifying custom natural-gas efficiency project.",
+        "Obtain MDU preapproval before committing to a custom project and provide the required savings, cost-effectiveness, engineering, and project information.",
+        "Submit the current application with itemized invoices, model and efficiency documentation, and all other requested records.",
+        "Complete any required measurement, verification, or inspection and apply while first-come calendar-year funds remain."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The South Dakota commercial gas program currently offers a published furnace rebate and an administratively preapproved custom pathway. A qualifying, documented prescriptive claim or approved custom project is likely to receive payment, subject to annual funds.",
+      "evidenceUrls": [
+        "https://www.montana-dakota.com/energy-efficiency/savings-for-your-business/"
+      ],
+      "evidenceText": "Current MDU business materials list South Dakota commercial gas furnace incentives and a custom natural-gas efficiency pathway. Prescriptive claims require customer and equipment eligibility plus invoices; custom projects require advance approval, savings analysis, and possible measurement and verification.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3918",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Montana-Dakota Utilities residential natural-gas customer in South Dakota.",
+        "Purchase and install a qualifying high-efficiency natural-gas furnace and/or eligible programmable or Wi-Fi thermostat meeting the current program criteria.",
+        "Satisfy the current product, AFUE, installation, replacement or fuel-conversion, thermostat-control, and account requirements.",
+        "Submit the completed current rebate application with the itemized contractor invoice, model information, and other required product documentation.",
+        "Apply within the current calendar-year program period while first-come funds remain and permit verification."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "MDU currently publishes fixed South Dakota residential furnace and thermostat rebates with objective eligibility and documentation requirements. A complete qualifying claim is likely to be approved, subject to first-come annual funding.",
+      "evidenceUrls": [
+        "https://www.montana-dakota.com/energy-efficiency/savings-for-your-home/"
+      ],
+      "evidenceText": "Current South Dakota residential materials identify qualifying gas-furnace and thermostat incentives, require eligible gas service, product and installation criteria, a completed application and itemized invoice, and state that funds are limited and available first-come during the calendar year.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3107",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "A new geothermal tax-credit application cannot qualify because Montgomery County's current application states that the solar and geothermal device credit is suspended and no credit is granted for applications received after November 8, 2012.",
+        "Only a documented legacy application satisfying the old statutory contract and filing exceptions could be considered under the renewable-energy section.",
+        "For the separate active energy-conservation-device credit, the applicant must own and occupy the Montgomery County residential property and install a qualifying non-appliance conservation device within the prior 12 months.",
+        "Submit the county application with a detailed receipt for each qualifying conservation device and sign the required certification.",
+        "County approval remains limited by county property-tax liability, the $250 per-property annual conservation-device cap, the countywide annual funding cap, and order of complete receipt."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The target retrofit is a ground-source or geothermal heat pump, and Montgomery County's current official form expressly says the solar and geothermal tax credit is suspended for applications received after November 8, 2012. A new geothermal installation is therefore unlikely to receive this credit.",
+      "evidenceUrls": [
+        "https://assets.montgomerycountymd.gov/files/2026-04/Renewable_Energy_Tax_Credit_Application.pdf",
+        "https://www.montgomerycountymd.gov/finance/taxes/tax_credit_exempt.html#p19"
+      ],
+      "evidenceText": "The current county application states that the solar and geothermal device credit is suspended. It separately retains a limited energy-conservation-device credit for owner-occupied residential property, requiring installation within 12 months, receipts, certification, and county review under per-property and countywide caps.",
+      "reviewedAt": "2026-07-10T14:46:50Z",
+      "reviewStatus": "audited"
+    }
+  ]
+}

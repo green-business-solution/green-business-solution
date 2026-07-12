@@ -372,7 +372,6 @@ package_api_lambda() {
   copy_data_file data/opportunity_incentive_calculation_packages_v2.json
   copy_data_file data/tax_geography_rules.json
   copy_data_file data/tax_local_workflow_rules.json
-  copy_data_file data/tax_gap_runtime_rules_2026-07-05.json
   copy_data_file data/calculation_requirements.json optional
   copy_data_file data/project_cost_benchmarks.json optional
   copy_data_file data/savings_calculation_methods.json optional
@@ -412,13 +411,6 @@ hash_directory() {
       shasum -a 256 "${file_path}"
     done | shasum -a 256 | awk '{print $1}'
   )
-}
-
-frontend_deploy_hash() {
-  {
-    hash_directory dist
-    shasum -a 256 "${ROOT_DIR}/scripts/deploy-production.sh"
-  } | shasum -a 256 | awk '{print $1}'
 }
 
 s3_object_text() {
@@ -574,7 +566,7 @@ sync_frontend() {
   site_url="$(stack_output SiteUrl)"
 
   if [ -z "${FRONTEND_DIST_HASH}" ]; then
-    FRONTEND_DIST_HASH="$(frontend_deploy_hash)"
+    FRONTEND_DIST_HASH="$(hash_directory dist)"
   fi
 
   deployed_hash="$(s3_object_text "${frontend_bucket}" "${FRONTEND_DIST_STATE_KEY}")"
@@ -593,12 +585,6 @@ sync_frontend() {
   if [ -d dist/assets ]; then
     aws_region s3 sync dist/assets/ "s3://${frontend_bucket}/assets/" \
       --delete \
-      --cache-control "public,max-age=31536000,immutable"
-  fi
-
-  if [ -d dist/how-it-works/scroll-frames ]; then
-    aws_region s3 cp dist/how-it-works/scroll-frames/ "s3://${frontend_bucket}/how-it-works/scroll-frames/" \
-      --recursive \
       --cache-control "public,max-age=31536000,immutable"
   fi
 
@@ -645,7 +631,7 @@ main() {
 
   if [ "${RUN_FRONTEND}" -eq 1 ]; then
     build_frontend
-    FRONTEND_DIST_HASH="$(frontend_deploy_hash)"
+    FRONTEND_DIST_HASH="$(hash_directory dist)"
   fi
 
   if [ "${RUN_API}" -eq 1 ]; then

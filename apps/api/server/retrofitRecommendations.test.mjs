@@ -245,52 +245,6 @@ describe("portal retrofit recommendations", () => {
     expect(payload.retrofits[0].savingsPreview?.sustainabilityImpact?.metrics?.annualOperationalCO2eReductionKgPerYear?.value).toBeGreaterThan(0);
   });
 
-  it("keeps conditional opportunities matchable and only excludes archived entries", () => {
-    const intake = baseIntake();
-    const user = {
-      userId: intake.userId,
-      role: "client",
-      status: "active",
-      fullName: "Test Client",
-      email: "client@example.com",
-      companyName: "Retrofit Test Co",
-      authProvider: "google",
-      googleLinked: true,
-      isFakeUser: false,
-      createdAt: now.toISOString(),
-      lastLoginAt: now.toISOString(),
-    };
-    const conditionalOpportunity = makeOpportunity({
-      opportunityId: "conditional-opportunity",
-      canonicalTitle: "Conditional Lighting Incentive",
-      normalizedTitle: "Conditional Lighting Incentive",
-      availabilityStatus: "conditional",
-      lifecycleStatus: "conditional",
-    });
-    const archivedOpportunity = makeOpportunity({
-      opportunityId: "archived-opportunity",
-      canonicalTitle: "Archived Lighting Incentive",
-      normalizedTitle: "Archived Lighting Incentive",
-      availabilityStatus: "archived",
-      lifecycleStatus: "archived",
-    });
-
-    const payload = buildPortalRetrofitRecommendations({
-      formQuestionCatalog: testFormQuestionCatalog,
-      intake,
-      opportunities: [conditionalOpportunity, archivedOpportunity],
-      now,
-      user,
-    });
-
-    expect(payload.summary.canShowOpportunities).toBe(true);
-    expect(payload.summary.matchedOpportunityCount).toBe(1);
-    expect(payload.retrofits).toHaveLength(1);
-    expect(payload.retrofits[0].opportunities.map((opportunity) => opportunity.opportunityId)).toEqual([
-      "conditional-opportunity",
-    ]);
-  });
-
   it("exposes mandatory pre-opportunity tax inputs when local tax workflow inputs are missing", () => {
     const intake = baseIntake({
       site: {
@@ -492,7 +446,7 @@ describe("portal retrofit recommendations", () => {
     expect(payload.retrofits[0].savingsPreview?.retrofitTypeId).toBe("led_lighting_retrofit");
   });
 
-  it("prevents archived opportunities from appearing as current matches", () => {
+  it("prevents non-active lifecycle records from appearing as current matches", () => {
     const intake = baseIntake();
     const lifecycleStatuses = ["active", "conditional", "disabled", "quarantined", "archived"];
     const payload = buildPortalRetrofitRecommendations({
@@ -508,44 +462,13 @@ describe("portal retrofit recommendations", () => {
       now
     });
 
-    expect(payload.summary.matchedOpportunityCount).toBe(2);
+    expect(payload.summary.matchedOpportunityCount).toBe(1);
     expect(payload.retrofits.flatMap((retrofit) => retrofit.opportunities)).toEqual([
       expect.objectContaining({
         opportunityId: "lifecycle-active",
         availabilityStatus: "active"
-      }),
-      expect.objectContaining({
-        opportunityId: "lifecycle-conditional",
-        availabilityStatus: "conditional"
       })
     ]);
-  });
-
-  it("keeps visible conditional opportunities in the match pipeline", () => {
-    const intake = baseIntake();
-    const payload = buildPortalRetrofitRecommendations({
-      formQuestionCatalog: testFormQuestionCatalog,
-      user: { userId: intake.userId },
-      intake,
-      opportunities: [
-        makeOpportunity({
-          opportunityId: "visible-conditional",
-          canonicalTitle: "Conditional LED Rebate",
-          availabilityStatus: "conditional",
-        }),
-        makeOpportunity({
-          opportunityId: "visible-disabled",
-          canonicalTitle: "Disabled HVAC Rebate",
-          availabilityStatus: "disabled",
-        }),
-      ],
-      now,
-    });
-
-    expect(payload.summary.matchedOpportunityCount).toBeGreaterThan(0);
-    expect(
-      payload.retrofits.flatMap((retrofit) => retrofit.opportunities).map((opportunity) => opportunity.opportunityId),
-    ).toEqual(expect.arrayContaining(["visible-conditional"]));
   });
 
   it("propagates award-audit fields into recommendation payload opportunities", () => {
@@ -575,7 +498,6 @@ describe("portal retrofit recommendations", () => {
           approvalRequirements: [],
           approvalStage: "none",
           awardLikelihood: "possible",
-          awardLikelihoodReason: "The evidence remains inconclusive.",
           awardLikelihoodEvidence: "Potential outcomes based on reviewed criteria.",
           reviewStatus: "needs_followup"
         })
@@ -589,7 +511,6 @@ describe("portal retrofit recommendations", () => {
       approvalRequirements: [],
       approvalStage: "none",
       awardLikelihood: "possible",
-      awardLikelihoodReason: "The evidence remains inconclusive.",
       awardLikelihoodEvidence: "Potential outcomes based on reviewed criteria.",
       reviewStatus: "needs_followup"
     });
@@ -620,8 +541,7 @@ describe("portal retrofit recommendations", () => {
       requiresProgramApproval: true,
       approvalRequirements: ["official permit", "energy audit"],
       approvalStage: "before_installation",
-      awardLikelihood: "near-guaranteed",
-      awardLikelihoodReason: "The benefit is statutory.",
+      awardLikelihood: "likely",
       awardLikelihoodEvidence: "Evidence shows clear award cadence.",
       reviewStatus: "audited"
     });
@@ -635,8 +555,7 @@ describe("portal retrofit recommendations", () => {
       requiresProgramApproval: true,
       approvalRequirements: ["official permit", "energy audit"],
       approvalStage: "before_installation",
-      awardLikelihood: "near_guaranteed",
-      awardLikelihoodReason: "The benefit is statutory.",
+      awardLikelihood: "likely",
       awardLikelihoodEvidence: "Evidence shows clear award cadence.",
       reviewStatus: "audited"
     });

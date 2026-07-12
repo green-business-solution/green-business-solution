@@ -1,10 +1,8 @@
 export function estimateIndependentValue(item) {
   return {
     portfolioItemId: String(item?.portfolioItemId || ""),
-    independentFinancialValueMinorUnits: toMinorUnits(
-      item?.independentFinancialValueMinorUnits,
-    ),
-    unit: "USD_CENTS",
+    independentFinancialValueMinorUnits: toMinorUnits(item?.independentFinancialValueMinorUnits),
+    unit: "USD_CENTS"
   };
 }
 

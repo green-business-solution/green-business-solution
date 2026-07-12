@@ -1,0 +1,543 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-011",
+  "inputFile": "batch-011_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T13:47:44Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5223",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Submit a complete City revolving-loan application.",
+        "Finance only an ENERGY STAR appliance costing from $400 through $2,500.",
+        "Pay the $25 application fee.",
+        "Authorize and pass the required credit review.",
+        "Receive a favorable determination from the City Loan Committee."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The loan is subject to credit review and a Loan Committee determination, so an otherwise eligible appliance purchase is not automatically financed.",
+      "evidenceUrls": [
+        "https://www.lauderhill-fl.gov/community-services/interest-free-loans"
+      ],
+      "evidenceText": "The current City program finances only ENERGY STAR appliances from $400 to $2,500. It requires an application, a $25 fee, a credit check, and a Loan Committee determination.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1665",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible City of Lompoc commercial or industrial utility customer.",
+        "Submit the applicable online commercial rebate application or contact the program administrator.",
+        "Install an eligible commercial lighting, business-improvement, product, or custom efficiency measure.",
+        "For a custom project, obtain inspection of the existing equipment before the retrofit.",
+        "Provide the project and purchase documentation required for the selected rebate path."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The City currently offers multiple commercial rebate paths. Prescriptive projects are generally payable when measure and documentation rules are met, while custom projects add a required pre-retrofit inspection.",
+      "evidenceUrls": [
+        "https://www.cityoflompoc.com/government/departments/utilities/conservation"
+      ],
+      "evidenceText": "The current City conservation page lists commercial lighting, business-improvement, product, and custom-project rebates. Custom projects require inspection of existing equipment, and rebates are available through the City's online application process.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1663",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible City of Lompoc residential utility customer; mobile-home residents may apply.",
+        "Purchase or install an eligible ENERGY STAR, WaterSense, HVAC, lighting, appliance, or water-saving measure.",
+        "Submit the online residential rebate application and required purchase or installation records.",
+        "For a leak-detection or repair project, give the rebate application to the licensed contractor before work begins and obtain any required permit.",
+        "Accept payment as a credit to the utility account associated with the applicant."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The active program uses published, measure-based qualifications and utility-account credits. An eligible customer who follows the applicable timing and documentation rules is likely to receive the rebate.",
+      "evidenceUrls": [
+        "https://www.cityoflompoc.com/government/departments/utilities/conservation"
+      ],
+      "evidenceText": "The City currently offers residential energy- and water-saving rebates through an online application. Residential awards are credited to the associated utility account, and leak projects require the application to be provided before work starts.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22676",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Control an eligible property in the Central Business Improvement District or another specifically allowed area.",
+        "Demonstrate that building renovations, site improvements, or new construction equal at least 60 percent of total project cost.",
+        "Pass the financial 'but for' test with complete financing, pro forma, project-cost, credit, and applicant documentation.",
+        "Complete eligibility screening and the mandatory pre-submittal conference before filing.",
+        "Submit a complete application and required fees before construction begins.",
+        "Receive a favorable Downtown Memphis Commission staff recommendation, Center City Revenue Finance Corporation Board approval, and Design Review Board approval.",
+        "Close the PILOT lease and complete the project in compliance with the approved plans and ongoing program conditions."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "PILOTs are expressly not entitlements. The Board may approve, deny, postpone, condition, or change the requested term after a financial-need test and multiple discretionary reviews.",
+      "evidenceUrls": [
+        "https://downtownmemphis.com/develop-and-invest/incentives-and-programs/downtown-property-pilot",
+        "https://ctycms.com/tn-memphis/docs/ccrfc-pilot-application-20250528.pdf"
+      ],
+      "evidenceText": "The current application packet is active through December 31, 2026 and states that PILOTs are not entitlements. Projects must pass a 'but for' test, meet the 60-percent improvement threshold, complete staff and board review, obtain design review, and remain compliant through completion.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4916",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own and occupy a one- to three-unit residence in the City of Milwaukee.",
+        "Use the loan for an eligible solar electric, solar hot-water, or solar hot-air project and eligible associated costs.",
+        "Use a Focus on Energy Residential Ally solar installer.",
+        "Apply through Summit Credit Union.",
+        "Satisfy the lender's credit and underwriting requirements."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program is currently available, but financing depends on Summit Credit Union underwriting rather than only on technical project eligibility.",
+      "evidenceUrls": [
+        "https://city.milwaukee.gov/eco/Buildings-Energy/Residential-Solar-Energy"
+      ],
+      "evidenceText": "Milwaukee Shines currently offers City homeowners up to $25,000 for eligible solar projects. The residence must be owner-occupied, the installer must be a Focus on Energy Residential Ally, and the applicant must obtain the loan through Summit Credit Union.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2006",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible City of New Bern electric customer with an existing residence.",
+        "Replace eligible equipment with a qualifying high-efficiency heat pump or other currently listed measure.",
+        "Submit the rebate application with the contractor or purchase invoice, proof of efficiency, model and serial information, installation date, and service address.",
+        "Permit installation of any required load-management control.",
+        "Receive City review and approval before the utility-account credit is issued."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program uses published equipment and documentation requirements and pays approved claims as utility credits, making award likely for a complete, qualifying installation.",
+      "evidenceUrls": [
+        "https://www.newbernnc.gov/departments/utilities/electric/energy_rebate_program.php"
+      ],
+      "evidenceText": "The City requires a completed rebate application, equipment-efficiency information, receipt or invoice, model and serial details, and installation information. Approved rebates are applied as a utility credit, and qualifying heat-pump installations require load-management participation.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4744",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Submit the required PECO interconnection application before seeking the City solar permit.",
+        "Obtain an electrical permit for the solar installation.",
+        "Obtain a building permit unless the project qualifies for the City's EZ solar permit route.",
+        "For EZ permitting, meet the published system-size, property-type, historic-status, and installation-standard criteria and submit the required certification.",
+        "Provide complete plans, equipment information, and itemized project costs and pass Licenses and Inspections review."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The expedited or simplified permit benefit is standards-based rather than competitive. A complete project that meets the published EZ or conventional permit criteria is likely to be approved.",
+      "evidenceUrls": [
+        "https://www.phila.gov/services/permits-violations-licenses/apply-for-a-permit/building-and-repair-permits/get-a-permit-to-install-solar-panels/",
+        "https://www.phila.gov/documents/ez-permit-applications-permits-without-plans/"
+      ],
+      "evidenceText": "Philadelphia currently requires PECO interconnection filing, an electrical permit, and either a building permit or eligibility for the EZ solar permit process. The EZ route is limited to qualifying small rooftop systems and still requires code-compliant documentation.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4790",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Request and receive Development Services Department confirmation that the project qualifies for the Sustainable Building Expedited Program.",
+        "Use an eligible project category and retain the sustainability measures used to qualify.",
+        "Submit the required sustainable-building agreement and applicable CALGreen checklist or equivalent qualification documents.",
+        "Submit a complete electronic permit package and pay the applicable permit and expedited-review fees.",
+        "Complete any additional discretionary or design review required for the project."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The service is optional but qualification is based on published project and sustainability criteria. A complete qualifying submittal is likely to receive expedited processing, subject to department capacity and permit compliance.",
+      "evidenceUrls": [
+        "https://www.sandiego.gov/development-services/news-programs/sbep",
+        "https://www.sandiego.gov/development-services/forms-publications/information-bulletins/538"
+      ],
+      "evidenceText": "The current program requires eligibility confirmation before the full permit submittal, a complete electronic package, the sustainable-building agreement, applicable CALGreen documentation, and payment of expedited-review fees. Removing qualifying measures can end expedited status.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22058",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an existing City of San Marcos electric utility customer in good standing.",
+        "Submit the commercial-lighting application and project documentation before purchasing or installing equipment.",
+        "Receive a written preapproval letter while program funds remain available.",
+        "Install eligible lighting or lighting controls within the approval period.",
+        "Submit final invoices, tax documentation, and other closeout records and permit a follow-up inspection."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The rebate is first-come and funding-dependent, but qualifying projects that secure preapproval, complete installation on time, and pass documentation or inspection review are likely to be paid.",
+      "evidenceUrls": [
+        "https://www.sanmarcostx.gov/3720/Energy-Rebate-Programs",
+        "https://sanmarcostx.gov/DocumentCenter/View/15577"
+      ],
+      "evidenceText": "The current commercial-lighting materials require application and approval before purchase or installation. Approved projects must be completed within the stated approval period and closed out with invoices, tax documentation, and possible inspection.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5117",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an existing City of San Marcos electric utility customer in good standing.",
+        "Complete the required energy audit and submit the distributed-generation application before installation.",
+        "Provide the system layout, specifications, production estimate, and other technical documents requested by the utility.",
+        "Receive written rebate approval while funds remain available.",
+        "Obtain required permits and interconnection approval.",
+        "Complete installation and final inspection and submit final invoices and closeout documentation."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program is first-come and funding-dependent, but the approval path is standards-based. A qualifying customer with preapproval, compliant interconnection, final inspection, and complete records is likely to receive the rebate.",
+      "evidenceUrls": [
+        "https://www.sanmarcostx.gov/3720/Energy-Rebate-Programs",
+        "https://sanmarcostx.gov/DocumentCenter/View/15575"
+      ],
+      "evidenceText": "The current distributed-generation program requires an audit and detailed application before installation, followed by utility approval, permitting and interconnection, final inspection, and submission of invoices and completion records.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5118",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an existing City of San Marcos electric utility customer in good standing.",
+        "Complete a City energy audit before the eligible home-efficiency work.",
+        "Install a measure meeting the current technical and contractor requirements and obtain any required permit.",
+        "Submit the application, itemized receipts, and supporting records within the program deadline.",
+        "Permit utility inspection when requested and maintain funding availability."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program uses published measure and documentation rules. An eligible customer who completes the audit, installs qualifying work, and submits a timely complete claim is likely to receive the utility credit, subject to available funds.",
+      "evidenceUrls": [
+        "https://www.sanmarcostx.gov/3720/Energy-Rebate-Programs",
+        "https://sanmarcostx.gov/DocumentCenter/View/15576"
+      ],
+      "evidenceText": "The current home rebate program requires an energy audit, qualifying installation and permits, and a timely claim with itemized receipts. The utility may inspect the completed work before issuing the bill credit.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2007",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Receive electric service from the City of Statesville and meet the applicable residential or commercial customer rules.",
+        "For residential heat-pump claims, install qualifying equipment through a licensed HVAC contractor and submit the application, paid invoice, and required technical records within the stated deadline.",
+        "For commercial projects, obtain written preapproval before ordering equipment or starting work.",
+        "For commercial projects, submit the application, measure worksheets, tax form, utility-bill information, and other requested documents.",
+        "Allow pre-project verification of existing equipment and post-installation verification, and provide final paid invoices.",
+        "Apply while program funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Residential awards follow objective equipment and claim rules, while commercial projects require written preapproval and verification. Complete qualifying projects are likely to be paid, although commercial funding is limited.",
+      "evidenceUrls": [
+        "https://www.statesvillenc.net/electric-utility-rebates/",
+        "https://www.statesvillenc.net/electric-heat-pump-rebates/",
+        "https://www.statesvillenc.net/energy-efficiency-rebate-application/"
+      ],
+      "evidenceText": "Statesville currently offers residential heat-pump rebates through a post-installation claim and commercial efficiency rebates through written preapproval. Commercial work started before approval is ineligible and both paths require invoices and program review.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3727",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Locate the residence and solar project within the City of Sunset Valley.",
+        "First obtain the applicable Austin Energy solar rebate letter of intent or equivalent program confirmation.",
+        "Use an Austin Energy-qualified system and meet the City's current installed-cost and technical limits.",
+        "Obtain the required City solar permit.",
+        "Submit the Sunset Valley solar rebate application and supporting documents and complete final project verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The City rebate supplements the Austin Energy process and uses published location, technical, permit, and application criteria. A qualifying coordinated project is likely to receive payment after completion review.",
+      "evidenceUrls": [
+        "https://www.sunsetvalley.gov/residents/community-programs/rebate-programs/solar-rebate-program"
+      ],
+      "evidenceText": "The current City program requires the Austin Energy solar rebate process to begin first, a qualifying system at an eligible Sunset Valley property, a City solar permit, and a complete City rebate application.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4225",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible City of Tallahassee utility customer with the required account history and accounts in good standing.",
+        "Complete any required energy audit or program prescreening.",
+        "Submit the loan application, contractor proposal, equipment documentation, and signed loan documents.",
+        "Meet the City's credit, lien, bankruptcy, foreclosure, and available-funding requirements.",
+        "Do not begin work until the promissory note is signed and formal loan approval is issued.",
+        "Complete permitted installation and pass the required final inspection before contractor payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The financing is subject to credit underwriting, account-history rules, property-security requirements, and funding availability. Technical eligibility alone does not ensure approval.",
+      "evidenceUrls": [
+        "https://www.talgov.com/you/you-products-home-loans"
+      ],
+      "evidenceText": "The current City loan process requires customer prescreening, credit and account review, contractor and equipment records, signed loan documents before work, and a passed inspection before funds are paid.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1774",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible City of Tallahassee electric customer at a qualifying residential property.",
+        "Request and complete the City's free home energy audit before installation.",
+        "Have the auditor determine that the insulation or retrofit measure is suitable and recommended.",
+        "Meet any applicable household-income criteria for the income-qualified grant level.",
+        "Use an approved contractor and allow the required pre-installation or completion inspection.",
+        "Submit required grant and project records."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The grants use defined customer, property, audit, and income rules rather than competitive scoring. A customer found eligible through the required audit is likely to receive the published grant assistance.",
+      "evidenceUrls": [
+        "https://www.talgov.com/you/you-products-home-ceiling-insulation",
+        "https://www.talgov.com/you/you-products-home-retrofit"
+      ],
+      "evidenceText": "The current City insulation and retrofit grant pages require a free home energy audit before work. Eligibility and grant level depend on the property, audit recommendation, and, for the higher assistance level, household income.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3029",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible City of Tallahassee electric utility customer.",
+        "Purchase and install equipment meeting the current rebate efficiency and product requirements.",
+        "Obtain required permits and pass final inspection for HVAC or other permitted work.",
+        "Submit a complete rebate application with receipts, model information, efficiency certification, and other measure-specific documents within the stated deadline.",
+        "Receive City review and approval for the utility-account credit."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The rebates are prescriptive and paid after qualifying installation, documentation, and any required inspection. Complete eligible claims are likely to be approved.",
+      "evidenceUrls": [
+        "https://www.talgov.com/you/you-products-home-hvac-rebates",
+        "https://www.talgov.com/you/you-products-home-es-rebates",
+        "https://www.talgov.com/you/you-products-home-es-rebates-terms"
+      ],
+      "evidenceText": "The current City pages require qualifying equipment, a complete claim with purchase and efficiency records, and, for HVAC work, permits and a passed final inspection before the rebate is credited.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1777",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible City of Tallahassee utility customer with the required account history and accounts in good standing.",
+        "Complete the required home energy audit and solar-project prescreening.",
+        "Use eligible solar equipment and provide design, contractor, certification, and interconnection documents.",
+        "Meet the City's credit, property-security, and available-funding requirements.",
+        "Sign the promissory note and receive formal approval before beginning work.",
+        "Obtain required permits and pass final inspection before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The solar loan is subject to the same credit, account, lien, documentation, and funding review as other City loans, so approval is not automatic for a technically eligible project.",
+      "evidenceUrls": [
+        "https://www.talgov.com/you/you-products-home-loans"
+      ],
+      "evidenceText": "The current City loan program requires an audit for solar financing, eligible certified equipment, credit and property review, signed loan documents before work, and final inspection before funds are released.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2847",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible City of Tallahassee utility customer.",
+        "Complete the required City energy audit before installation.",
+        "Install a qualifying freeze-protected solar domestic water-heating system using an appropriately licensed contractor.",
+        "Obtain required permits and pass final inspection.",
+        "Submit the completed rebate application, paid invoice, and required system documentation within the stated deadline."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The rebate is prescriptive. A customer who completes the audit, installs an eligible system, passes inspection, and submits a timely complete claim is likely to receive the credit.",
+      "evidenceUrls": [
+        "https://www.talgov.com/you/you-products-home-solar-water-rebates",
+        "https://www.talgov.com/Uploads/Public/Documents/you/solar_domestic_water_heater_rebate.pdf"
+      ],
+      "evidenceText": "The current City program requires an energy audit before installation, an eligible certified solar water-heating system, licensed installation, permits and final inspection, and a timely claim with the paid invoice.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5398",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible City of Winter Park electric or water utility customer for the selected measure.",
+        "For duct-repair or attic-insulation rebates, complete the free Home Energy Use Audit first and have the measure recommended by the energy specialist.",
+        "For a high-efficiency toilet rebate, replace an eligible older high-flow toilet with a qualifying WaterSense toilet and meet the residence, service-area, and disposal requirements.",
+        "For a weather-based irrigation-controller rebate, replace an eligible existing mechanical controller with a qualifying WaterSense controller.",
+        "Retain receipts, submit the applicable rebate request, and allow inspection or removal of replaced equipment when required.",
+        "Apply within the applicable claim period and while program funding remains available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The programs use published measure-specific eligibility and documentation rules. Complete qualifying claims are likely to receive bill credits, although water rebates are first-come and funding-dependent.",
+      "evidenceUrls": [
+        "https://cityofwinterpark.org/departments/natural-resources-sustainability/sustainability-division/buildings-energy-water/energy-conservation-rebates-incentive-program/",
+        "https://cityofwinterpark.org/departments/water-wastewater-utilities/water-conservation-information/high-efficiency-toilet-retrofit-rebate/",
+        "https://cityofwinterpark.org/departments/water-wastewater-utilities/water-conservation-information/weather-based-irrigation-controller-rebate/"
+      ],
+      "evidenceText": "Current City pages require a pre-work energy audit for duct and insulation rebates, while toilet and irrigation-controller rebates use separate service-area, equipment-replacement, application, and inspection rules. Approved incentives are issued as utility-bill credits and water-rebate funding is limited.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2702",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible City Utilities commercial electric customer.",
+        "Complete the commercial project workbook and rebate application.",
+        "Schedule and complete the required on-site pre-evaluation of existing equipment.",
+        "Receive project approval before removing or replacing existing lighting equipment.",
+        "Install eligible LED lighting, lighting controls, or another measure covered by the selected commercial program.",
+        "Submit final project records and allow post-installation verification as required."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The commercial lighting path is prescriptive and explicitly requires pre-evaluation and approval. A qualifying customer who waits for approval and completes the documented project is likely to receive the rebate.",
+      "evidenceUrls": [
+        "https://www.cityutilities.net/263/Commercial-Lighting-Rebate",
+        "https://www.cityutilities.net/165/Rebates"
+      ],
+      "evidenceText": "City Utilities currently requires commercial lighting applicants to submit the workbook and application, complete an on-site pre-evaluation, and receive approval before work. The active rebate menu also lists other commercial efficiency services and incentives.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2701",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible City Utilities residential customer for the applicable electric, gas, or water measure.",
+        "Purchase or install equipment meeting the current efficiency and service requirements.",
+        "Use a qualified contractor and obtain permits when required.",
+        "Submit the applicable online or mail-in rebate application with invoices, model and efficiency records, and other required documents.",
+        "Allow inspection or verification when required by the selected program."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The residential program offers published measure-specific rebates through standard claim forms. Qualifying customers with complete records are likely to receive payment or credit.",
+      "evidenceUrls": [
+        "https://www.cityutilities.net/165/Rebates",
+        "https://www.cityutilities.net/269/HVAC-Rebate"
+      ],
+      "evidenceText": "City Utilities currently lists residential applications for HVAC, insulation, thermostats, EV charging, and water-saving measures. The HVAC program requires eligible service, qualifying equipment, and a completed rebate claim.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4222",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Clallam County PUD residential electric customer.",
+        "Install or purchase equipment meeting the current measure-specific home, efficiency, and installation requirements.",
+        "Use a participating contractor when required for an instant heat-pump incentive.",
+        "For an eligible nonparticipating-contractor or self-installed heat-pump water heater, submit the alternative rebate form and supporting records.",
+        "Submit any required thermostat or other measure-specific form and accept the incentive as an instant discount or utility-bill credit."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current program uses published instant-incentive and rebate-form paths. Eligible installations completed through the applicable path are likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://www.clallampud.net/ways-to-save/rebates-incentives/residential/",
+        "https://www.clallampud.net/ways-to-save/rebates-incentives/residential/smart-thermostat-rebate-form/",
+        "https://www.clallampud.net/faqs/ductless-heat-pumps/"
+      ],
+      "evidenceText": "The current PUD residential page offers instant heat-pump incentives and alternative rebate forms for eligible water-heater installations. Smart-thermostat incentives are issued as bill credits after the required form is submitted.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2665",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Clark County REMC member.",
+        "Purchase and install qualifying HVAC, heat-pump, geothermal, tune-up, or water-heating equipment covered by the current rebate rules.",
+        "Meet the current efficiency, installation, and equipment-qualification terms.",
+        "Submit the current rebate application with proof of purchase, model or efficiency information, and other required installation records.",
+        "Receive cooperative review and approval while program funds and the current offer remain available."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The cooperative currently publishes active measure-specific rebates and qualification terms. Award is likely for a member with qualifying equipment and a complete claim, subject to program limits.",
+      "evidenceUrls": [
+        "https://www.clarkremc.coop/energy-efficiency/rebates/",
+        "https://www.clarkremc.coop/energy-efficiency/rebates/hvac-rebates/",
+        "https://www.clarkremc.coop/energy-efficiency/rebates/water-heaters/"
+      ],
+      "evidenceText": "Current official cooperative pages list residential HVAC, heat-pump, geothermal, tune-up, and water-heater rebates. Applicants must meet the published qualification terms and submit the required rebate documentation.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22359",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Clark Electric Cooperative member and install the charger on the cooperative's electric lines.",
+        "Purchase an eligible new smart electric-vehicle charging station with the required integrated metering and load-control capability.",
+        "Purchase and install the equipment during the current program year.",
+        "Submit the current incentive form, receipt or invoice, installation date, and proof of installation within the stated claim period.",
+        "Receive cooperative review and approval while rebate funds remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The 2026 program uses clear equipment, service-territory, purchase-year, and documentation rules. A complete qualifying claim is likely to be approved, although funds are limited.",
+      "evidenceUrls": [
+        "https://www.cecoop.com/2026-rebates",
+        "https://www.cecoop.com/sites/default/files/Clark%20Electric/Rebates/2026%20Incentive%20Form%20--%20EV%20Chargers.pdf"
+      ],
+      "evidenceText": "The current 2026 rebate requires a new qualifying smart EV charger installed on cooperative lines, the completed incentive form, receipt or invoice, installation proof, and timely submission. The cooperative makes the final approval decision and notes limited funds.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2639",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Clark Public Utilities residential electric customer and meet the selected measure's existing-home or heating-system rules.",
+        "Use a contractor from the utility's Contractor Network when the selected heat-pump or weatherization program requires it.",
+        "Install new equipment or improvements meeting current technical and efficiency requirements.",
+        "Obtain permits where required, including for qualifying Level 2 EV charging equipment.",
+        "Submit the measure-specific rebate form, invoice or receipt, and required technical documentation within the applicable deadline.",
+        "Allow utility or contractor verification before the incentive is issued."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The utility currently offers published contractor-network, instant, and post-installation rebate paths. Eligible customers who use the required path and provide complete records are likely to receive the incentive.",
+      "evidenceUrls": [
+        "https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/",
+        "https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/heat-pump-program/",
+        "https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/weatherization-program/",
+        "https://www.clarkpublicutilities.com/residential-customers/reduce-energy-waste-and-lower-your-bill/all-rebates-incentives/electric-vehicle-program/"
+      ],
+      "evidenceText": "Clark Public Utilities currently offers heat-pump, weatherization, water-heater, thermostat, and EV-charging incentives through measure-specific paths. Several programs require the utility's Contractor Network, while others use a completed form, receipt, permit, or bill-credit process.",
+      "reviewedAt": "2026-07-10T13:47:44Z",
+      "reviewStatus": "audited"
+    }
+  ]
+}

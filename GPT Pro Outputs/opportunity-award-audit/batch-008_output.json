@@ -1,0 +1,527 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-008",
+  "inputFile": "batch-008_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T13:42:38Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:d049d8b8e95077d7:ca-clean-fuel-reward",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Purchase or lease a new eligible Class 2b through Class 8 battery-electric commercial vehicle for qualifying California operations.",
+        "Use a participating retailer and satisfy the customer, vehicle, registration, use, and claim-documentation rules.",
+        "For Class 2b vehicles, meet the additional public-fleet eligibility restriction."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current reward reduces the price of eligible commercial battery-electric vehicles; it does not fund EV charger installation, so the mapped retrofit is outside the program scope.",
+      "evidenceUrls": [
+        "https://cleanfuelreward.com/",
+        "https://cleanfuelreward.com/site/program-details?more-info=vehicle-eligibility",
+        "https://cleanfuelreward.com/pdf/PROGRAM-GUIDE.pdf"
+      ],
+      "evidenceText": "The current program is a point-of-sale reward for eligible new medium- and heavy-duty commercial battery-electric vehicles, not charging equipment.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22629",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Submit a complete ECAMS application by the active solicitation deadline.",
+        "Propose eligible publicly accessible high-powered DC fast-charging stations and satisfy site, equipment, corridor, utility, permitting, environmental, and readiness requirements.",
+        "Provide exactly 20 percent match for total allowable project cost, with at least half of the match in cash.",
+        "Pass administrative screening, technical scoring, and cost-per-CCS-port ranking within available funds.",
+        "Obtain California Energy Commission Business Meeting approval, execute the grant agreement, and receive required federal authorization before reimbursable work."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "GFO-25-603 is active but competitive. Applications are screened, scored, ranked, and funded only while the available appropriation lasts, with later approval and agreement gates.",
+      "evidenceUrls": [
+        "https://www.energy.ca.gov/solicitations/2026-02/gfo-25-603-californias-national-electric-vehicle-infrastructure-formula",
+        "https://www.energy.ca.gov/sites/default/files/2026-07/00_GFO-25-603_Solicitation_Manual_Addendum_02_ada.docx",
+        "https://www.energy.ca.gov/sites/default/files/2026-03/GFO-25-603_NEVI_6_Pre-Application_Workshop_Slides_ADA.pdf"
+      ],
+      "evidenceText": "The active solicitation offers up to 79 million dollars but uses competitive screening, scoring, cost ranking, match, formal approval, agreement, and federal-authorization requirements.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22150",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Apply during an active CALeVIP funding window for an eligible California DC fast-charging site.",
+        "Meet applicant, site-access, public-availability, equipment, networking, and program geography requirements.",
+        "Provide ready-to-build evidence such as an issued permit and final utility service design when required by the window.",
+        "Receive a funds-reserved notice, meet equipment-order and construction milestones, complete installation and inspections, and submit final disbursement documents."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Upcoming windows are limited to qualifying DC fast-charger projects and prioritize installation-ready sites. Funding is reserved only after application review and remains subject to available funds and milestones.",
+      "evidenceUrls": [
+        "https://calevip.org/",
+        "https://calevip.org/upcoming-rebates",
+        "https://calevip.org/find-project-2",
+        "https://calevip.org/fast-charge-california-project"
+      ],
+      "evidenceText": "Current CALeVIP opportunities support DC fast-charger purchase and installation through defined application windows; window replacement is not an eligible measure.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1455",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible commercial, public, industrial, agricultural, or qualifying high-rise multifamily project in participating California investor-owned utility territory.",
+        "Be new construction or a qualifying major alteration rather than a stand-alone equipment replacement.",
+        "Engage the program early enough for whole-building energy and decarbonization design analysis.",
+        "Submit project information and complete the design-assistance and any related utility incentive verification process."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "CEDA is no-cost design assistance for eligible new construction and major alterations. An LED project can qualify only when it is part of a broader eligible design project, not merely because it is an LED retrofit.",
+      "evidenceUrls": [
+        "https://energyassistance.willdan.com/CEDA"
+      ],
+      "evidenceText": "CEDA evaluates eligible new construction and major-alteration projects during design and may identify utility incentives; it is not an automatic stand-alone lighting rebate.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5309",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Own an eligible property in a jurisdiction where RenewPACE financing is currently available.",
+        "Use financing for a qualifying permanently affixed improvement, including eligible energy-storage work.",
+        "Pass property-based eligibility, payment-history, equity, ability-to-pay, and other underwriting requirements.",
+        "Complete required disclosures, consents, contractor documentation, and financing agreements before funding."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current successor offering is financing rather than a rebate. Approval depends on participating-area availability, project eligibility, property underwriting, disclosures, and execution of financing documents.",
+      "evidenceUrls": [
+        "https://renewfinancial.com/",
+        "https://renewfinancial.com/welcome-renewpace",
+        "https://renewfinancial.com/resources/how-do-i-know-if-i-might-be-eligible-pace",
+        "https://renewfinancial.com/homeowners/residential-pace-participating-areas"
+      ],
+      "evidenceText": "RenewPACE is property-based PACE financing subject to approval and underwriting; qualifying energy improvements may be financed only in participating areas.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SDGE_BUSINESS:program_url:sdge_com_node_555",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible nonresidential SDG&E account, including qualifying bundled, direct-access, or community-choice service.",
+        "Enroll through an approved third-party aggregator or qualify and register as a self-aggregator.",
+        "Provide required enrollment documents and receive SDG&E eligibility confirmation.",
+        "Submit monthly capacity commitments, respond to dispatched events, and deliver verified load reduction."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "After approved enrollment, payments are operationally determined by monthly commitments and verified demand reduction. Controls can support performance, but the program does not award a hardware rebate.",
+      "evidenceUrls": [
+        "https://www.sdge.com/businesses/savings-center/energy-management-programs/demand-response/capacity-bidding-program"
+      ],
+      "evidenceText": "The program approves eligible accounts or aggregators, accepts monthly capacity commitments, and pays for verified event performance.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SCE_BUSINESS:sce_source_section:11acbe9699c17ca1:capacity-bidding-program-elect-cbp-e",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible SCE general-service or agricultural account with required interval metering.",
+        "Enroll through a registered aggregator or obtain approval to self-aggregate.",
+        "Submit monthly load-reduction nominations and comply with event-notification and dispatch requirements.",
+        "Achieve verified load reduction for settlement under the tariff."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "CBP-E payments follow approved enrollment, monthly nominations, and measured performance. Automated demand-response controls may help deliver reductions but are not themselves the paid measure.",
+      "evidenceUrls": [
+        "https://www.sce.com/business/save-costs-energy/savings-strategies-for-businesses/what-is-demand-response/capacity-bidding-program-elect-aggregators",
+        "https://www.sce.com/sites/default/files/custom-files/PDF_Files/ELECTRIC_SCHEDULES_CBP-E.pdf"
+      ],
+      "evidenceText": "SCE permits aggregator or approved self-aggregator participation and bases capacity payments on nominated and verified load reduction.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22414",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Cape Hatteras Electric Cooperative member with the charger installed at the member residence on Hatteras Island.",
+        "Install an eligible ChargePoint Level 2 charger with Wi-Fi connectivity.",
+        "Submit the rebate and data-sharing application with an itemized receipt and required account and device information.",
+        "Authorize the required charging-data access and satisfy program verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current member bill credit uses objective equipment, location, receipt, connectivity, and data-sharing requirements; a compliant claim is ordinarily awardable after review.",
+      "evidenceUrls": [
+        "https://www.chec.coop/EV",
+        "https://www.chec.coop/sites/default/files/documents/chargepointrebateanddatasharingapp.pdf"
+      ],
+      "evidenceText": "CHEC offers a member bill credit for an eligible ChargePoint Level 2 charger installed at a Hatteras Island residence after application and documentation review.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3488",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Cape Light Compact business customer with a qualifying measure and utility account.",
+        "Use the applicable instant, prescriptive, or custom pathway for the selected equipment or building measure.",
+        "Obtain preapproval before installation where the measure or custom pathway requires it.",
+        "Submit specifications, invoices, calculations, and access for inspection or benefit-cost review as applicable."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Many mapped measures have current prescriptive or instant incentives, while larger or nonstandard projects use preapproval and cost-effectiveness review. Meeting the correct pathway generally produces an award.",
+      "evidenceUrls": [
+        "https://www.capelightcompact.org/program/incentives-for-your-business/",
+        "https://www.capelightcompact.org/program/custom/",
+        "https://www.capelightcompact.org/program/heating-and-cooling/"
+      ],
+      "evidenceText": "Cape Light Compact provides business incentives through instant, prescriptive, and custom tracks, with preapproval or technical review required for specified measures.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5782",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible residential customer and property within Cape Light Compact program territory.",
+        "Purchase and install equipment or complete envelope work that meets current measure specifications.",
+        "Use approved or participating contractors and complete an assessment, weatherization, whole-home verification, or inspection where the selected measure requires it.",
+        "Submit the required claim, invoice, equipment, and installation documentation or receive the applicable instant incentive."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current residential incentives cover multiple mapped HVAC, water-heating, envelope, window, and appliance measures. Awards are generally objective once measure-specific verification and documents are complete.",
+      "evidenceUrls": [
+        "https://www.capelightcompact.org/residential/residential-rebates-and-incentives/",
+        "https://www.capelightcompact.org/program/heat-pumps/",
+        "https://www.capelightcompact.org/program/water-heating/"
+      ],
+      "evidenceText": "Cape Light Compact lists current residential rebates and incentives with measure-specific contractor, assessment, product, verification, and claim requirements.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2290",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Carbon Power and Light member-owner and install a currently listed qualifying product or measure.",
+        "Submit the program application within the stated post-purchase period, generally 90 days.",
+        "Provide invoices, proof of purchase, model or efficiency documentation, and other measure-specific records.",
+        "For EV charging, include the equipment and installation on one application and meet applicable electrical-code requirements.",
+        "Permit program inspection or additional verification when requested."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The live utility rebate schedule uses defined equipment and documentation rules and credits approved incentives to the member account. Multiple mapped measures are currently listed.",
+      "evidenceUrls": [
+        "https://www.carbonpower.com/rebates-2025",
+        "https://www.carbonpower.com/member-services",
+        "https://www.carbonpower.com/light-lines-2026"
+      ],
+      "evidenceText": "Carbon Power and Light currently advertises energy-efficiency credits and publishes measure-specific incentives, documentation rules, and claim timing on its live member rebate page.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2672",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Use the current Carroll White REMC successor program rather than the former Carroll County REMC entity.",
+        "Install an eligible air-source or ground-source heat pump at a qualifying member residence.",
+        "Provide proof of purchase and complete the required post-installation inspection.",
+        "Confirm whether the contractor or member is the current rebate recipient."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Carroll County REMC no longer operates as a separate current program administrator. The successor utility has a contractor heat-pump rebate, but the legacy record and intended award recipient require reconciliation.",
+      "evidenceUrls": [
+        "https://www.cwremc.coop/about/history/",
+        "https://www.cwremc.coop/programs/rebates/heat-pump-rebates/"
+      ],
+      "evidenceText": "Carroll White REMC is the post-merger utility and currently pays a heat-pump incentive to contractors after proof of purchase and successful inspection.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22810",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Carroll EMC member with the charger serving a residential account.",
+        "Purchase a new nonportable Level 2 charger certified by an accepted testing laboratory.",
+        "Submit the application and proof of purchase within 45 days of purchase.",
+        "Complete installation and pass Carroll EMC inspection before reimbursement."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current 250-dollar member rebate has objective charger, timing, documentation, and inspection conditions. A compliant member claim is normally payable after approval.",
+      "evidenceUrls": [
+        "https://carrollemc.com/ev/"
+      ],
+      "evidenceText": "Carroll EMC offers a residential Level 2 home-charger rebate after timely application, qualifying equipment verification, installation, and inspection.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2694",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Install an eligible air-source or ground-source heat pump at a Carroll White REMC member residence.",
+        "Use the current contractor rebate process.",
+        "Provide proof of purchase and pass the required post-installation inspection."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current successor utility states a fixed contractor rebate after proof of purchase and successful inspection, making payment likely when the stated requirements are met.",
+      "evidenceUrls": [
+        "https://www.cwremc.coop/programs/rebates/heat-pump-rebates/"
+      ],
+      "evidenceText": "Carroll White REMC currently offers contractors a fixed incentive for qualifying air-source or ground-source heat-pump installations after inspection.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2124",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Carteret-Craven Electric Cooperative member with an eligible residential service location.",
+        "Purchase and install a qualifying ENERGY STAR heat-pump water heater for the currently documented rebate.",
+        "Submit the application with a paid receipt and required equipment and account information.",
+        "Confirm current eligibility separately for mapped HVAC measures because the current official rebate page does not document those measures."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current official rebate page clearly supports a heat-pump water-heater rebate, but it does not substantiate the two mapped HVAC rebate categories. The opportunity is only partially evidenced.",
+      "evidenceUrls": [
+        "https://www.ccemc.com/energy-efficiency/rebates/",
+        "https://www.ccemc.com/energy-efficiency/rebates/hpwh-rebate-application/"
+      ],
+      "evidenceText": "The current cooperative rebate page documents a 300-dollar qualifying heat-pump water-heater rebate and application requirements; current HVAC rebate evidence was not found.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3901",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a qualifying Washington commercial or industrial Cascade Natural Gas customer on an eligible rate schedule.",
+        "Install current qualifying high-efficiency natural-gas equipment, weatherization, or another listed measure in compliance with code.",
+        "Obtain project-specific review before installation for custom measures and provide estimated cost, project details, and savings calculations.",
+        "Submit the current application with account information, invoices, model data, and measure-specific documentation.",
+        "Permit inspection or verification before final payment when selected."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The 2026 commercial program lists prescriptive incentives and a custom path. Prescriptive claims are generally objective; custom projects require prior technical review and verified savings.",
+      "evidenceUrls": [
+        "https://www.cngc.com/energy-efficiency/commercial-rebate-offerings/",
+        "https://www.cngc.com/energy-efficiency/commercial-rebate-offerings/commercial-and-industrial-rebate-application/",
+        "https://www.cngc.com/wp-content/uploads/PDFs/Conservation/2026/2026-WA-CNGC-Commercial-Industrial-Rebate-Application.pdf",
+        "https://www.cngc.com/wp-content/uploads/PDFs/Conservation/2026/CNGC-Commercial-Industrial-Incentives-Brochure_03_2026.pdf"
+      ],
+      "evidenceText": "Cascade Natural Gas publishes current Washington commercial incentives, eligible rate schedules, documentation rules, code requirements, and custom-project review criteria.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3342",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Washington residential Cascade Natural Gas customer on the applicable service and rate schedule.",
+        "Use natural gas as the primary heat source where the selected measure requires it.",
+        "Install current qualifying equipment or building-envelope measures and use a licensed contractor where required.",
+        "Submit the completed application, invoices, and measure-specific documentation within the current claim period, generally 90 days after installation.",
+        "Permit inspection or verification when selected."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current residential program provides objective equipment and envelope rebates after customer, fuel, product, installation, and claim verification. ENERGY STAR certification alone is not a separate incentive.",
+      "evidenceUrls": [
+        "https://www.cngc.com/energy-efficiency/residential-rebate-offerings/",
+        "https://www.cngc.com/energy-efficiency/residential-rebate-offerings/residential-rebate-application/",
+        "https://www.cngc.com/energy-efficiency/residential-rebate-offerings/residential-terms-and-conditions/"
+      ],
+      "evidenceText": "Cascade Natural Gas maintains current Washington residential rebate offerings with customer, equipment, installation, invoice, timing, and inspection conditions.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4145",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Cedar Falls Utilities commercial customer for the utility service associated with the measure.",
+        "Install currently qualifying equipment and meet the applicable efficiency and contractor requirements.",
+        "Obtain CFU preapproval before installation for custom equipment or other measures identified as preapproval-required.",
+        "Provide approved calculations, specifications, invoices, and the completed rebate application by the current deadline."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "CFU allows some listed equipment to proceed without preapproval and requires preapproval for custom projects. Awards are generally likely after following the correct measure-specific path.",
+      "evidenceUrls": [
+        "https://www.cfu.net/save-energy/residential-business/business-services-rebates",
+        "https://www.cfu.net/filesimages/save-energy/Residential-Rebates/2026/2026%20Application%20-%20Business%20Custom%20Project.pdf"
+      ],
+      "evidenceText": "CFU publishes current commercial rebates and states that custom projects require preapproval, approved savings calculations, licensed work, and a complete claim.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1788",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Receive the applicable Cedar Falls Utilities service at the residential installation address.",
+        "Install a currently qualifying product or complete qualifying envelope work through a professional or licensed contractor where required.",
+        "Obtain preapproval before specified envelope or other preapproval-required work begins.",
+        "Provide itemized invoices, model and efficiency records, permits, test results, or AHRI documentation as required by the measure.",
+        "Submit the current rebate application by its stated deadline."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "CFU maintains current residential applications for numerous mapped HVAC, water-heating, envelope, window, and EV measures. Approval is measure-specific but generally objective once prerequisites are met.",
+      "evidenceUrls": [
+        "https://www.cfu.net/save-energy/residential-business/residential-rebates",
+        "https://www.cfu.net/filesimages/save-energy/Residential-Rebates/2026/2026%20Application%20-%20Insulation%20and%20Air%20Sealing.pdf"
+      ],
+      "evidenceText": "CFU publishes current residential rebate forms with measure-specific preapproval, contractor, testing, product, invoice, and submission requirements.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3479",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Notify CFU Energy Services of intent to participate before the foundation inspection.",
+        "Construct an eligible single-family home using the required CFU utility services.",
+        "Meet all minimum code and program criteria and the full requirements of the selected ENERGY STAR, DOE Efficient New Homes, or Passive House tier.",
+        "Complete required inspections, rating, certification, and final application documentation."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The 2026 Better Home Program provides defined tiered rebates and objective preconstruction, inspection, and certification conditions. A compliant enrolled project is likely to receive the stated tier payment.",
+      "evidenceUrls": [
+        "https://www.cfu.net/save-energy/residential-business/residential-rebates",
+        "https://www.cfu.net/filesimages/save-energy/Residential-Rebates/2026/2026%20Application%20-%20Better%20Home%20Program%20-%20Single%20Family.pdf"
+      ],
+      "evidenceText": "CFU requires notification before foundation inspection and pays tiered new-home rebates after code compliance, program criteria, inspections, and certification.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4858",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Cedarburg Light and Water commercial, industrial, or agricultural customer with a qualifying efficiency project.",
+        "Complete preproject technical review and establish projected energy and cost savings.",
+        "Receive financing approval while program capital is available and execute the shared-savings agreement.",
+        "Complete the project, provide invoices and a completion certificate, and satisfy savings or installation verification.",
+        "Repay the approved financing through the utility-bill mechanism."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "This is a financing program with technical review, approval, agreement, and limited-capital constraints rather than an automatic rebate. Qualifying projects may receive up to the program financing limit.",
+      "evidenceUrls": [
+        "https://www.cedarburglightandwater.org/shared-savings-program",
+        "https://www.cedarburglightandwater.org/sites/cedarburglightandwater.org/files/Shared%20Savings.pdf"
+      ],
+      "evidenceText": "The utility offers businesses upfront capital for qualifying energy-efficiency projects, subject to project review, agreement, completion, and repayment requirements.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2041",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a customer of a utility participating in Focus on Energy, including eligible Cedarburg Light and Water customers.",
+        "Purchase or install a current qualifying product or measure and meet the applicable efficiency specifications.",
+        "Use a participating contractor, distributor, or seller for measures delivered as instant discounts when required.",
+        "For mail-in rebates, submit the application, invoices, and technical records within the stated measure deadline.",
+        "Obtain income-qualified approval before installation when seeking an enhanced-income incentive."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current Focus on Energy residential incentives use published product, contractor, utility-participation, and claim rules. Eligible standard claims are normally awarded after verification.",
+      "evidenceUrls": [
+        "https://www.cedarburglightandwater.org/energy-saving-programs",
+        "https://focusonenergy.com/residential-rebates-and-discounts",
+        "https://focusonenergy.com/residential/heating-and-cooling"
+      ],
+      "evidenceText": "Cedarburg directs customers to current Focus on Energy residential rebates and discounts, which use participating-utility, product, contractor, and timely-claim requirements.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2649",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Use an approved project sponsor and register the project in CenterPoint Energy ETrack.",
+        "Locate the eligible commercial or industrial project in CenterPoint Energy Houston Electric territory and propose qualifying efficiency measures.",
+        "Submit the project application and secure a funding reservation before installation.",
+        "Execute the Standard Agreement and provide any required deposit or project documentation.",
+        "Install the measures, submit installation and savings reports, and pass inspection and verified kilowatt and kilowatt-hour savings review."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The standard-offer process reserves limited incentive funds through approved sponsors before installation and pays against verified savings. Selection and payment are therefore project- and budget-dependent.",
+      "evidenceUrls": [
+        "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/commercial-industrial-standard-offer-program.aspx?au=bus&sa=ho",
+        "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/Electric-Efficiency-Programs-Business-Developers.aspx?au=bus&sa=HO"
+      ],
+      "evidenceText": "CenterPoint Energy requires sponsor registration, a preinstallation project application and agreement, installation reporting, inspection, and verified demand and energy savings before payment.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2650",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have an eligible home in CenterPoint Energy Houston Electric territory.",
+        "Receive the retrofit through a participating approved contractor or program sponsor because incentives are paid to sponsors rather than directly to customers.",
+        "Install measures that meet the current program specifications and allow pre- and post-installation verification.",
+        "For the hard-to-reach pathway, document the applicable household-income or other qualifying status.",
+        "Complete customer acknowledgments and provide site access and supporting records required by the sponsor and utility."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The utility delivers incentives through approved contractors and sponsors using verified savings and limited program budgets. Customer participation may be subsidized, but an award is not a direct automatic customer rebate.",
+      "evidenceUrls": [
+        "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/residential-standard-offer-program.aspx?au=res&sa=ho",
+        "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/electric-efficiency-distributors-contractors.aspx?au=bus&sa=HO",
+        "https://www.centerpointenergy.com/en-us/residential/save-energy-money/electric-efficiency-programs/residential-electric-efficiency?sa=ho"
+      ],
+      "evidenceText": "CenterPoint Energy residential and hard-to-reach incentives are implemented by approved sponsors, with qualifying measures, customer eligibility, and verified savings required.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3063",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Have the applicable CenterPoint Energy Indiana gas or electric service for the selected measure.",
+        "Purchase and install equipment or envelope work that meets current efficiency and product requirements.",
+        "Use an approved contractor for measures that require one, including specified attic-insulation and duct work.",
+        "Submit the rebate application, itemized invoice, and technical documentation, or obtain the incentive through a participating instant-discount channel.",
+        "Complete the transaction within the current program period and while funds remain available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Indiana program publishes standard rebates and instant discounts for several mapped HVAC, water-heating, thermostat, insulation, window, and appliance measures. Compliant claims are generally awardable.",
+      "evidenceUrls": [
+        "https://www.centerpointenergy.com/en-us/SaveEnergyandMoney/Pages/home-improvement-rebates-and-discounts.aspx?au=res&sa=in",
+        "https://www.centerpointenergy.com/en-us/residential/save-energy-money/efficiency-programs-and-rebates?sa=in"
+      ],
+      "evidenceText": "CenterPoint Energy Indiana lists current home-improvement rebates and discounts with service, equipment, contractor, invoice, and application requirements.",
+      "reviewedAt": "2026-07-10T13:42:38Z",
+      "reviewStatus": "audited"
+    }
+  ]
+}

@@ -1,0 +1,522 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-060",
+  "inputFile": "batch-060_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T16:31:07Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2503",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project site must receive service on an eligible nonresidential rate from a utility participating in Focus on Energy.",
+        "The installed renewable-energy measure must meet the current technology, ownership, equipment, warranty, siting, and code requirements.",
+        "A solar photovoltaic applicant must reserve funds through the current online reservation process before completing the final rebate claim.",
+        "A biogas, biomass, or solar-thermal project must use the applicable custom-incentive pathway and obtain project review or approval before making a disqualifying commitment.",
+        "The system must be professionally installed with required licenses and permits and must comply with utility interconnection requirements when applicable.",
+        "The applicant must submit the signed claim, itemized paid invoices, equipment records, tax information, photographs, and other supporting documents within the applicable deadline and permit verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Focus on Energy uses published prescriptive and custom rules rather than competitive project ranking. A qualifying project with reserved or approved funding and complete final documentation is likely to be paid, although annual funds are limited and first come, first served.",
+      "evidenceUrls": [
+        "https://focusonenergy.com/business/renewables"
+      ],
+      "evidenceText": "The current business-renewables page offers solar photovoltaic rebates and custom incentives for biogas, biomass, solar thermal, and wind. It requires participating-utility service, advance reservation or project review, qualifying installation, timely final documentation, and possible inspection.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5725",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The household must apply through the state, tribal, territorial, or local Weatherization Assistance Program administrator serving the residence.",
+        "The household must satisfy the applicable income rule, generally including the federal eligibility pathways stated by DOE and any valid state-selected LIHEAP criterion.",
+        "The applicant must provide the local provider with required income and household documentation.",
+        "An income-eligible applicant must remain subject to local waiting-list placement and statutory priority categories.",
+        "A renter must obtain or facilitate landlord permission before weatherization work begins.",
+        "The selected home must complete the program energy audit, approved scope of work, and final provider inspection."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Income eligibility does not assure prompt service because local providers use waiting lists, priority rules, available funding, audits, and final inspections. An eligible household may receive no-cost weatherization, but selection timing and capacity make an award only possible.",
+      "evidenceUrls": [
+        "https://www.energy.gov/cmei/scep/wap/how-apply-weatherization-assistance"
+      ],
+      "evidenceText": "DOE states that WAP is administered through state and local providers, requires income documentation, places eligible households on waiting lists, prioritizes specified households, and delivers work only after an energy audit and final inspection.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5618",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The homeowner or renter must meet Alaska's current Weatherization Program income limits.",
+        "The applicant must apply through the weatherization service provider or regional housing authority serving the residence.",
+        "The residence and applicant must satisfy provider ownership, rental, access, and documentation requirements.",
+        "The provider must determine eligibility and priority before scheduling program services.",
+        "The home must complete the provider's assessment, approved weatherization work, and required quality-control review."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Qualified applicants can receive weatherization at no cost, but service depends on provider determination, priority, capacity, and project delivery. Previously weatherized homes can also receive lower priority, so income eligibility alone does not make an award likely.",
+      "evidenceUrls": [
+        "https://www.ahfc.us/efficiency/weatherization"
+      ],
+      "evidenceText": "Alaska Housing Finance Corporation directs income-eligible owners and renters to local providers and states that qualified applicants receive services at no cost. Previously weatherized homes may be eligible but receive lower priority.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4807",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must maintain an eligible active Wellesley Municipal Light Plant residential electric account in good standing for the required period.",
+        "The measure must be new, permanently installed at the WMLP service address, and included in the current rebate offering.",
+        "The equipment and installation must meet the current measure-specific efficiency, contractor, permit, and technical rules.",
+        "The applicant must exclude leased equipment and other categories barred by the current program terms.",
+        "A complete application must be submitted within six months with invoices, receipts, product or ENERGY GUIDE documentation, and any measure-specific records.",
+        "The customer must permit WMLP to verify the equipment and installation when requested."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "WMLP publishes measure-specific residential rebates with objective account, equipment, installation, and documentation rules. A complete qualifying claim is likely to be approved after administrative review and any requested verification.",
+      "evidenceUrls": [
+        "https://wellesleyma.gov/799/Electrification-and-Efficiency-Rebates"
+      ],
+      "evidenceText": "The current WMLP page lists rebates for heat pumps, heat-pump water heaters, weatherization, smart thermostats, induction equipment, and Level 2 charging and requires eligible service, timely applications, invoices, product records, and possible verification.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:682",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The proposed project must advance sustainable energy and provide a material benefit within the West Penn Power service region or to its ratepayers.",
+        "The applicant must submit an initial financing request describing the borrower, project, location, technology, costs, benefits, and requested terms.",
+        "The borrower and project must pass technical, financial, organizational, legal, and mission-alignment due diligence.",
+        "The applicant must negotiate acceptable loan pricing, term, security, repayment, reporting, and closing conditions.",
+        "The West Penn Power Sustainable Energy Fund board must provide final approval before financing closes."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The fund offers customized financing rather than an entitlement. Approval depends on mission fit, regional benefit, project viability, borrower credit, negotiated terms, and board action, so an eligible biomass or storage project has a possible but not assured financing outcome.",
+      "evidenceUrls": [
+        "https://www.westpennenergyfund.org/get-funding",
+        "https://www.westpennenergyfund.org/faq"
+      ],
+      "evidenceText": "The current fund materials describe an initial request followed by mission screening, technical and financial diligence, customized loan terms, and final board approval for projects benefiting the West Penn Power region.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3405",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible White River Valley Electric Cooperative member and install the measure at a cooperative-served account.",
+        "The equipment must be included in the current rebate schedule and satisfy all measure-specific efficiency, capacity, installation, and use requirements.",
+        "New geothermal projects, commercial lighting projects, and any other designated measures must obtain the applicable advance review, audit, or preapproval before installation.",
+        "The applicant must submit the current form with invoices, model numbers, AHRI or product records, contractor information, and other required documentation.",
+        "The member must permit inspection or verification and remain within current rebate caps, useful-life limits, and available program funds."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The cooperative uses published member and equipment criteria, with advance review for designated projects and routine claim review for prescriptive measures. A complete qualifying project is likely to receive the scheduled rebate while funds remain.",
+      "evidenceUrls": [
+        "https://www.whiteriver.org/member-center/rebates-audits/"
+      ],
+      "evidenceText": "White River's current member page provides residential and commercial rebate forms, requires preapproval for designated geothermal and commercial-lighting work, and uses equipment documentation, invoices, monthly review, and possible verification.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22087",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must be installed for an eligible Willmar Municipal Utilities business customer at a served facility.",
+        "The equipment must qualify under a current Bright Energy Solutions prescriptive category or an approved custom-efficiency or electrification pathway.",
+        "The project must meet the applicable efficiency, baseline, installation, cost, operating, and customer requirements.",
+        "Custom projects must receive advance review and approval with documented energy-savings calculations before purchase or installation when required.",
+        "The applicant must submit the applicable form with paid invoices, model and specification records, contractor information, savings documentation, and any requested verification materials."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Bright Energy Solutions publishes prescriptive business rebates and project-reviewed custom pathways rather than competitively ranking routine claims. A complete qualifying Willmar project is likely to be paid after any required preapproval and final verification.",
+      "evidenceUrls": [
+        "https://www.brightenergysolutions.com/members/willmar-municipal-utilities?rebates=business"
+      ],
+      "evidenceText": "The current Willmar business page lists rebates for lighting, HVAC, refrigeration, compressed air, foodservice, forklifts, drives, and other efficiency work, plus custom efficiency and electrification projects that require project-specific review.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1949",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Willmar Municipal Utilities residential customer and install or purchase the measure for the served residence.",
+        "The product or project must appear in the current Bright Energy Solutions residential offering and satisfy its efficiency, equipment, installation, and customer specifications.",
+        "Any contractor, tariff, control, or program-enrollment requirements attached to the selected measure must be completed.",
+        "The applicant must submit the current claim with proof of purchase, paid invoice, model information, installation records, and other requested documents within the stated period.",
+        "The customer must permit program verification and remain within current quantity, cost, and funding limits."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current residential rebates are measure-specific and administrative rather than competitive. A complete claim for a listed measure is likely to receive payment, although the legacy mapping should not be read to include low-flow fixtures or commercial dishwashers unless a current form expressly does so.",
+      "evidenceUrls": [
+        "https://www.brightenergysolutions.com/members/willmar-municipal-utilities?rebates=residential"
+      ],
+      "evidenceText": "The current Willmar residential page lists rebates including EV charging, heating and cooling, heat-pump water heating, lighting, clothes washers, and dishwashers and requires measure-specific eligibility and claim documentation.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2670",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible WIN Energy REMC residential member and install the equipment at the member's served residence.",
+        "The heat pump, geothermal system, or heat-pump water heater must meet the current equipment type, whole-home use, capacity, efficiency, and AHRI requirements.",
+        "The installation must comply with current contractor, code, and operating requirements.",
+        "The applicant must submit the online rebate application with paid invoices, equipment make and model, AHRI documentation, installation details, and other requested records.",
+        "The claimed incentive must remain within the current equipment-cost percentage, per-account, and useful-life limits and may be subject to verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "WIN Energy REMC publishes objective 2026 equipment and documentation criteria. An eligible member with a qualifying completed installation and complete online claim is likely to receive the stated incentive after technical review.",
+      "evidenceUrls": [
+        "https://www.winenergyremc.com/residential-hvac-and-water-heating-incentive-program"
+      ],
+      "evidenceText": "The current cooperative page provides 2026 incentives and technical requirements for qualifying air-source and ductless heat pumps, geothermal systems, and heat-pump water heaters, with online applications and equipment documentation.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3599",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Pennsylvania business, economic-development organization, political subdivision, or other applicant type allowed by the current program.",
+        "The proposed grant use must fit a current grant category, such as eligible wind work, planning or feasibility activity, or renewable-energy component manufacturing, rather than an ordinary geothermal HVAC installation.",
+        "The applicant must provide the required matching contribution and pay the application fee.",
+        "A complete application must include site control, scope, engineering, permits, environmental, budget, financing, ownership, economic-impact, and applicant financial information.",
+        "The project must pass technical, financial, legal, and program review and receive Commonwealth Financing Authority board approval before an agreement is executed."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current grant categories do not provide a routine installation grant for a ground-source heat pump or generic high-efficiency HVAC replacement. A mapped physical retrofit would be awarded only if embedded in a separately qualifying planning, wind, or manufacturing proposal, making the outcome unlikely.",
+      "evidenceUrls": [
+        "https://dced.pa.gov/programs/renewable-energy-program-rep-geothermal-wind-projects/"
+      ],
+      "evidenceText": "Pennsylvania's current program page provides discretionary grants for specified wind, planning, feasibility, and component-manufacturing uses and requires match, application fees, extensive project review, and CFA approval; routine geothermal installation grants are not listed.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3601",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Pennsylvania borrower proposing a qualifying geothermal or wind project.",
+        "The applicant must submit the Commonwealth Financing Authority application before making a disqualifying project commitment and provide the required fee and matching contribution.",
+        "The application must include site control, project scope, engineering, energy-production or savings analysis, permits, environmental records, budget, financing, ownership, and borrower financial information.",
+        "The project and borrower must pass technical, financial, legal, credit, collateral, and program underwriting.",
+        "The Commonwealth Financing Authority must approve the loan, after which the borrower must execute all agreement, security, construction, reimbursement, reporting, and verification documents."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program provides a defined loan route for qualifying geothermal and wind projects, but financing remains discretionary and subject to match, underwriting, security, funding, and CFA board action. A genuine ground-source geothermal project may be financed; generic HVAC or air-source heat-pump work does not qualify merely because it is efficient.",
+      "evidenceUrls": [
+        "https://dced.pa.gov/programs/renewable-energy-program-rep-geothermal-wind-projects/"
+      ],
+      "evidenceText": "The current Pennsylvania page offers loans for eligible geothermal and wind projects and requires matching funds, a detailed application, technical and financial review, loan underwriting, CFA approval, and executed financing documents.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:601",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "The purchased property must be a qualifying wind-energy conversion system used as an electric-power source or qualifying materials used to manufacture, install, construct, repair, or replace such a system.",
+        "The purchaser and seller must apply the Minnesota sales-and-use-tax exemption to the qualifying transaction using any exemption certificate or documentation required for the sale.",
+        "The taxpayer must retain invoices, equipment descriptions, use records, and exemption documentation sufficient to substantiate the statutory treatment.",
+        "Property unrelated to a qualifying wind-electric system must not be included in the exempt purchase."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "This is a statutory, noncompetitive sales-tax exemption rather than a discretionary award. A purchase that clearly fits the wind-electric system definition and is properly documented should receive exempt treatment at the point of sale or through the ordinary refund process.",
+      "evidenceUrls": [
+        "https://www.revisor.mn.gov/statutes/cite/297A.68",
+        "https://www.revenue.state.mn.us/guide/nontaxable-sales"
+      ],
+      "evidenceText": "Minnesota law exempts qualifying wind-energy conversion systems used as electric-power sources and materials used to manufacture, install, construct, repair, or replace them. The benefit is administered through ordinary sales-tax documentation.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22729",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The Wisconsin household must complete the program's gross-household-income verification and fall below 150 percent of area median income.",
+        "The product or project must be a currently listed HEAR measure; LED lighting and general process-electrification equipment are not qualifying merely because they appear in the legacy mapping.",
+        "Most installed measures must be completed through an IRA Registered Contractor, while an allowed retail or self-install pathway may be used only for measures for which the current program expressly permits it.",
+        "The project must meet all current equipment, installation, code, contractor, household, and cost requirements.",
+        "The applicant, contractor, or retailer must submit the required approval, proof of purchase, installation records, invoices, and other documentation before the applicable incentive is released.",
+        "The incentive must remain within the income-tier percentage, measure cap, project-cost cap, and 14000-dollar household maximum."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "HEAR uses published income, measure, contractor, and cost rules rather than competitive scoring. An income-qualified household completing a currently listed measure through the correct pathway is likely to receive the formula rebate, subject to program funds and caps.",
+      "evidenceUrls": [
+        "https://focusonenergy.com/ira-hear"
+      ],
+      "evidenceText": "Wisconsin's current HEAR page requires income verification below 150 percent of area median income and provides contractor or approved retail pathways for listed heat-pump, heat-pump water-heater, insulation, air-sealing, electrical, cooking, and appliance measures.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22650",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant and proposed site must be eligible under the current WEVI Connecting Corridors Request for Proposals and fall within an identified evaluation zone or priority location.",
+        "A complete proposal must be submitted by July 24, 2026, at 11:59 p.m. Central Time.",
+        "The applicant must provide at least 20 percent nonfederal matching funds and document the project budget and financing.",
+        "The charging site, equipment, ownership, operation, maintenance, accessibility, networking, reliability, and public-use plan must satisfy NEVI and Wisconsin requirements.",
+        "The proposal must include site control, utility coordination, technical design, business and operating information, schedule, environmental records, and all required certifications.",
+        "The application must rank sufficiently through the competitive evaluation and then complete award, federal-compliance, contracting, construction, and reimbursement requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current round is open, but WEVI is a competitive grant program with location priorities, proposal evaluation, federal compliance, and limited funds. A complete eligible proposal can be selected, but eligibility alone does not make an award likely.",
+      "evidenceUrls": [
+        "https://wisconsindot.gov/Pages/projects/multimodal/electrification.aspx"
+      ],
+      "evidenceText": "WisDOT released the WEVI Connecting Corridors RFP on May 26, 2026, with applications due July 24, 2026. The program competitively funds NEVI-compliant charging projects at up to 80 percent federal share with at least 20 percent applicant match.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:234",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The claimant must be an eligible Missouri business producing or purchasing processed wood fuel derived from Missouri forestry-industry residue within the statutory program period.",
+        "The claimed quantity must satisfy the current processed-wood-fuel and transaction requirements; a generic biomass or biogas system does not qualify without eligible wood-fuel production or purchase.",
+        "The claimant must retain tonnage, source, sale, purchaser, processing, payment, and customer-list records required by the current application.",
+        "The annual application and purchaser verification must be submitted to the Department of Natural Resources by the applicable June 30 deadline.",
+        "The Department must authorize the credit, which remains subject to legislative appropriation, the statewide annual cap, and the statutory end date."
+      ],
+      "approvalStage": "before_operation",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The 2026 annual application deadline of June 30 had passed by the July 10 audit date. The program also depends on qualifying processed Missouri wood fuel, appropriation, and statewide caps, so a new current-year award is unlikely even though a later annual cycle may be available before the statutory phaseout.",
+      "evidenceUrls": [
+        "https://dnr.mo.gov/energy/financial-assistance-opportunities/wood-energy-tax-credit"
+      ],
+      "evidenceText": "Missouri currently provides a five-dollar-per-ton credit for qualifying processed wood fuel from Missouri forestry residue, requires an annual June 30 filing and purchaser verification, is subject to appropriation and a six-million-dollar aggregate cap, and ends new credits after June 30, 2028.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:143",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "The transaction must involve firewood sold for residential use or qualifying wood, bark, residue, or refuse-derived fuel used for heating purposes under Maryland law.",
+        "The seller and purchaser must apply the exemption only to qualifying fuel and use, not to unrelated heating equipment or installation costs.",
+        "The parties must retain receipts, product descriptions, use information, and any exemption documentation required to substantiate the sales-tax treatment."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "Maryland's current exemption applies to qualifying wood heating fuel, not to purchasing or replacing high-efficiency HVAC equipment. The mapped equipment retrofit is therefore unlikely to receive a benefit from this opportunity even though a qualifying fuel purchase is formulaically exempt.",
+      "evidenceUrls": [
+        "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gtg&enactments=false&section=11-207"
+      ],
+      "evidenceText": "Maryland law exempts specified firewood and wood-derived fuel used for heating from sales and use tax. It does not establish a rebate or tax benefit for an HVAC equipment replacement.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:46",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "The claimant must be an Alabama individual taxpayer with a domestic home whose primary heating source is converted from gas or electricity to wood.",
+        "The work must be an actual qualifying wood-heating conversion rather than a generic biomass, biogas, or unrelated renewable-energy installation.",
+        "Only eligible installation costs may be deducted, and the claimant must retain invoices, completion records, and proof of the prior and new primary heating sources.",
+        "The deduction must be claimed on the Alabama individual income-tax return for the year in which the conversion is completed."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "The deduction is a statutory tax provision rather than a competitive award. A taxpayer who completes the specifically required home-heating conversion and substantiates the costs should receive the deduction through ordinary return processing; generic biogas or nonheating biomass equipment does not qualify.",
+      "evidenceUrls": [
+        "https://alison.legislature.state.al.us/code-of-alabama?section=40-18-15",
+        "https://alison.legislature.state.al.us/files/pdf/lsa/Fiscal/TaxExpenditure/ExpendReport2025.pdf"
+      ],
+      "evidenceText": "Current Alabama legislative materials identify a deduction for the full installation cost of converting a domestic home's primary heating source from gas or electricity to wood, claimed in the completion year.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22245",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be a Utah business, nonprofit, local government, state institution of higher education, or other currently eligible entity.",
+        "The project must use eligible workplace Level 2 or direct-current fast-charging equipment and satisfy the current site, access, cost, and technical requirements.",
+        "The applicant must obtain program approval before purchasing or installing equipment because retroactive costs are not eligible.",
+        "A complete application must include utility notification, two bids, vendor and tax forms, project information, budget, and other required records.",
+        "An approved project must be completed within the agreement period and submit paid invoices, proof of payment, photographs, commissioning, and reimbursement documentation.",
+        "New funding must become available before the program can issue another award."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "rare",
+      "awardLikelihoodReason": "The official program page states that funding has run out and does not identify a current open funding round. A future award would require new funding and a reopened approval process, so a current workplace-charging award is rare.",
+      "evidenceUrls": [
+        "https://deq.utah.gov/daq/workplace-ev-charging-funding-assistance"
+      ],
+      "evidenceText": "Utah DEQ states that Workplace EV Charging Program funding has run out. The published process required advance approval, eligible workplace Level 2 or fast charging, utility notice, bids and vendor forms, and postinstallation reimbursement records.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2250",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Wright-Hennepin Cooperative Electric Association commercial, industrial, or agricultural member and install the project at a served account.",
+        "The measure must be included in the current commercial offering or accepted through a custom-efficiency review and must meet current equipment, savings, and installation rules.",
+        "The member should obtain project preapproval before committing funds where the current application or project type calls for it; custom or otherwise reviewed projects must receive approval before installation.",
+        "The applicant must submit the current form with itemized paid invoices, model and specification information, contractor records, savings calculations when required, and proof of completed installation.",
+        "The member must permit inspection and remain within measure caps, customer limits, and available annual funds."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The cooperative publishes current commercial rebate applications and treats qualifying projects through prescriptive or project-review pathways rather than competitive scoring. A complete qualifying claim is likely to be paid while funds remain; refrigeration equipment should be confirmed against the current measure forms rather than inferred from the legacy record.",
+      "evidenceUrls": [
+        "https://www.whe.org/commercial-programs-rebates"
+      ],
+      "evidenceText": "Wright-Hennepin's current commercial page serves business, agricultural, and industrial members, publishes 2026 rebate forms, recommends advance project approval, and makes payment subject to measure requirements, documentation, verification, and limited funds.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2249",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Wright-Hennepin residential member and install the measure at a cooperative-served residence.",
+        "The air-source heat pump, geothermal system, EV charger, motor, or other product must appear in the current residential offering and satisfy its technical and use requirements.",
+        "The member must complete any required contractor qualification, electric-service-program enrollment, control, or metering conditions for the selected measure.",
+        "The applicant must submit the current rebate form with paid invoices, model and rating information, installation records, and any program-enrollment documentation.",
+        "The member must permit verification and remain within the current rebate, quantity, account, and funding limits."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The cooperative publishes current residential rebates with objective equipment and enrollment conditions. A complete claim for a listed heat-pump, geothermal, EV-charging, or other qualifying measure is likely to be paid; a refrigeration-specific EC motor should not be assumed eligible merely from the broader motor listing.",
+      "evidenceUrls": [
+        "https://www.whe.org/rebates"
+      ],
+      "evidenceText": "Wright-Hennepin's current residential page lists 2026 incentives for air-source and ground-source heat pumps, EV charging, electronically commutated motors, and other measures, with program-specific contractor, service, documentation, and verification rules.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5840",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The borrower and property must fit a current Sustainable Energy Trust eligible category, such as qualifying multifamily, nonprofit, business, developer, or other non-single-family project in Washington.",
+        "The proposed project must fit a current energy-efficiency or clean-energy financing purpose; community-solar subscriptions, combined heat and power, and biomass or biogas eligibility require project-specific confirmation.",
+        "The applicant must provide an energy analysis, contractor or auditor scope, budget, expected savings or production, ownership, and project documentation, including third-party verification where required.",
+        "The borrower must submit financial statements, organizational records, repayment information, collateral or security information, and other underwriting documents.",
+        "The commission and participating lender must approve the project and borrower and execute all loan and closing documents before funds are available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The Sustainable Energy Trust offers defined financing, but every loan is underwritten and depends on borrower credit, project eligibility, verified savings or clean-energy scope, security, and closing. Financing is therefore possible rather than assured.",
+      "evidenceUrls": [
+        "https://www.wshfc.org/energy/index.htm"
+      ],
+      "evidenceText": "The Washington State Housing Finance Commission currently offers Sustainable Energy Trust loans of up to one million dollars for eligible multifamily, nonprofit, business, and clean-energy projects, with energy analysis, third-party verification, and full loan underwriting.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4914",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The property must be located within a Wyoming local government that has adopted and is currently operating a PACE program and designated the applicable area.",
+        "The owner and existing residential, commercial, or industrial building must satisfy the local program's property, ownership, tax, lien, and eligibility rules.",
+        "The battery-storage or other improvement must qualify as a cost-effective energy improvement under the local ordinance; the statewide statute alone does not establish standalone-battery eligibility.",
+        "The owner must submit the locally required application, energy audit or savings analysis, project cost, contractor, financing, and property information.",
+        "The proposed loan, fees, repayment, assessment lien, mortgage-holder conditions, and other underwriting terms must be approved before financing closes."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Wyoming law authorizes local PACE programs, but no specific active locality or current ordinance is identified for this opportunity, and standalone battery eligibility cannot be established from the statewide authorization alone. Current availability and award probability are therefore unknown.",
+      "evidenceUrls": [
+        "https://wyoleg.gov/statutes/compress/title15.pdf"
+      ],
+      "evidenceText": "Wyoming statutes authorize local governments to create PACE areas and finance cost-effective improvements to existing buildings through locally established applications, audits, loan terms, fees, and assessment liens. A specific active local program was not verified.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5770",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must be installed for an eligible Xcel Energy Wisconsin business, farm, school, government, or other nonresidential customer served through a utility participating in Focus on Energy.",
+        "The lighting, HVAC, refrigeration, or other measure must appear in the current Focus on Energy business offering and meet its equipment, efficiency, baseline, installation, and customer rules.",
+        "A prescriptive project must use the current application and comply with the applicable purchase, installation, and filing dates.",
+        "A custom project must obtain advance approval and provide engineering or savings calculations before making a disqualifying commitment.",
+        "The applicant must submit itemized paid invoices, model and specification records, contractor information, tax information, and any required photographs or savings documentation and permit verification."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Xcel Energy participates in Wisconsin's Focus on Energy program, which uses published prescriptive and custom rules rather than competitive ranking for routine efficiency claims. A complete qualifying project is likely to receive the incentive while funds remain.",
+      "evidenceUrls": [
+        "https://focusonenergy.com/utility-partners/xcel-energy-northern-states-power",
+        "https://focusonenergy.com/business",
+        "https://focusonenergy.com/business/equipment-replacement"
+      ],
+      "evidenceText": "Current Focus on Energy materials identify Xcel Energy as a participating Wisconsin utility and provide business rebates and custom incentives for qualifying lighting, HVAC, refrigeration, and other efficiency projects, with preapproval where required and final documentation.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1592",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project sponsor and customer site must be eligible for Xcel Energy's Texas Commercial Standard Offer Program.",
+        "The project must produce qualifying, measurable, permanent electric-demand and energy savings relative to the applicable baseline.",
+        "The sponsor must complete program enrollment and screening and provide required qualifications, licensing, insurance, customer agreements, project scope, savings calculations, and measure documentation.",
+        "The project must receive funding reservation, project preapproval, and an executed incentive contract before installation begins.",
+        "The sponsor must install the approved measures within the current program schedule and submit invoices, installation records, savings data, and other closeout documents.",
+        "The project must pass measurement and verification, inspection, and final approval before the performance-based incentive is paid."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program is a standard-offer efficiency pathway rather than a competitively scored grant. A qualified sponsor with reserved funding, an approved contract, verified savings, and complete closeout records is likely to receive the calculated incentive, although acceptance depends on available program funds and required preapproval.",
+      "evidenceUrls": [
+        "https://tx.my.xcelenergy.com/s/business/cost-savings/commercial-standard-offer",
+        "https://www.xcelenergy.com/staticfiles/xe-responsive/Business%20Programs%20%26%20Rebates/Xcel_Comm_Manual_2023_Final.pdf",
+        "https://interchange.puc.texas.gov/Documents/59166_16_1616623.PDF"
+      ],
+      "evidenceText": "Current Xcel and Texas regulatory materials describe a commercial standard-offer program in which qualified project sponsors reserve funds, obtain project approval and contracts, install eligible permanent savings measures, and receive payment after measurement, verification, inspection, and final approval.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1580",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Xcel Energy Colorado business customer and the measure must use the fuel or service required by the selected rebate.",
+        "The lighting, HVAC, refrigeration, foodservice, drive, insulation, water-efficiency, or other measure must appear in a current prescriptive application or qualify through the current custom-efficiency pathway.",
+        "Prescriptive equipment must meet all current model, efficiency, size, baseline, installation, and operating requirements.",
+        "A custom project must receive written preapproval before equipment is purchased or installed and must provide engineering and savings calculations.",
+        "The applicant must submit the current application within the applicable filing period with itemized invoices, model and specification records, AHRI or product documentation, contractor information, and any requested proof of operation.",
+        "The customer must permit inspection or verification and remain within current incremental-cost, rebate, customer, and funding limits; EV infrastructure must follow its separate current program rules."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Xcel Energy publishes prescriptive Colorado business rebates and a defined custom-efficiency pathway. A qualifying prescriptive claim or preapproved custom project is likely to receive payment after complete documentation and verification, subject to measure caps and available funds.",
+      "evidenceUrls": [
+        "https://co.my.xcelenergy.com/s/business/lighting-equipment-rebates",
+        "https://co.my.xcelenergy.com/s/business/cost-savings/custom-efficiency",
+        "https://co.my.xcelenergy.com/s/business/lighting-equipment-rebates/commercial-refrigeration"
+      ],
+      "evidenceText": "Current Xcel Colorado business pages provide prescriptive lighting, HVAC, refrigeration, foodservice, drives, and related rebates and require custom-efficiency preapproval before purchase. Claims require qualifying equipment, invoices, technical records, timely filing, and possible inspection.",
+      "reviewedAt": "2026-07-10T16:31:07Z",
+      "reviewStatus": "audited"
+    }
+  ]
+}

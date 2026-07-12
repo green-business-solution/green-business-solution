@@ -1,0 +1,513 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-010",
+  "inputFile": "batch-010_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T13:45:08Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1806",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Chicopee Electric Light residential customer for the installation address.",
+        "The equipment or measure must be new, installed at the served property, and meet the program's listed efficiency and product specifications.",
+        "A completed rebate application and purchase, model, and installation documentation must be submitted.",
+        "Home Efficiency Incentive Program measures require a qualifying energy audit before work begins and a post-installation inspection before the incentive claim.",
+        "Contractor installation is required for measures for which self-installation is excluded."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is a standard customer rebate process with published measure requirements; eligible, documented claims are generally payable after program review, although funding and inspection conditions remain.",
+      "evidenceUrls": [
+        "https://www.celd.com/energy-star-appliance-rates",
+        "https://www.celd.com/home-efficiency-incentive-program"
+      ],
+      "evidenceText": "CELD publishes current appliance and heat-pump incentives and a separate home-efficiency pathway that requires a pre-work audit and post-work verification for covered measures. Awards are subject to eligibility, documentation, inspection where applicable, and available program funds.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22265",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Chugach Electric Small or Large General Service member with an installation in Chugach's service territory.",
+        "The charger must meet the applicable commercial Level 2 or DC fast-charging program requirements and quantity limits.",
+        "DC fast-charging projects must meet the program's ownership, public-access, or fleet-use conditions.",
+        "The applicant must submit the program application with proof of purchase and installation.",
+        "Chugach must verify the installation and claim before issuing the account credit."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Published commercial charger rebates use objective customer, equipment, and installation criteria. Preapproval is recommended rather than mandatory, and compliant claims remain subject to Chugach verification.",
+      "evidenceUrls": [
+        "https://www.chugachelectric.com/energy-solutions/electric-vehicles",
+        "https://www.chugachelectric.com/energy-solutions/beneficial-electrification/electric-vehicles/commercial-ev-charging-program",
+        "https://www.chugachelectric.com/energy-solutions/electric-vehicles/commercial-dc-fast-charging-program"
+      ],
+      "evidenceText": "Chugach currently lists commercial Level 2 and DC fast-charging incentives for qualifying general-service members, with per-charger and per-account limits. Payment follows application, supporting documentation, and utility verification.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22264",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Chugach Electric residential member at the installation address.",
+        "The installation must be an eligible Level 2 charger, qualifying 240-volt receptacle, or qualifying mobile-connector arrangement under current program rules.",
+        "The applicant must comply with the per-account rebate limit.",
+        "A completed application and proof of purchase and installation must be submitted.",
+        "Chugach must verify the claim before applying the rebate credit."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The residential incentive is a published, fixed rebate for qualifying installations, so an eligible and complete claim is likely to be credited after routine utility review.",
+      "evidenceUrls": [
+        "https://www.chugachelectric.com/energy-solutions/electric-vehicles",
+        "https://www.chugachelectric.com/energy-solutions/beneficial-electrification/electric-vehicles/residential-ev-charging-program"
+      ],
+      "evidenceText": "Chugach currently offers a residential charging rebate for qualifying Level 2 charging arrangements, subject to customer eligibility, account limits, documentation, and utility verification.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3985",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must have an active Citizens Electric Corporation account in good standing and install the equipment at a served premises.",
+        "Equipment must be new and meet the applicable program efficiency specifications.",
+        "The claim must include paid invoices and required technical documentation, including AHRI or load-calculation materials where applicable.",
+        "The application must be submitted within the program deadline after installation.",
+        "The project must comply with annual incentive and percentage-of-project-cost caps, and Citizens Electric may inspect the installation."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program applies published rebate criteria and documentation rules rather than competitive ranking. A compliant claim is likely, but awards are first-come, limited by available funds, and subject to approval and possible inspection.",
+      "evidenceUrls": [
+        "https://www.cecmo.com/residential-rebates",
+        "https://directefficiency.com/citizens-electric-corporation-powerful-paybacks-program-rules/"
+      ],
+      "evidenceText": "Current program materials require an eligible account, qualifying new equipment, invoices and technical documentation, timely submission, and program approval. Funding is limited and Citizens Electric reserves inspection and verification rights.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3148",
+      "requiresProgramApproval": "unknown",
+      "approvalRequirements": [],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current official Citizens Energy rebate pages do not show a general commercial efficiency rebate for the mapped thermostat or furnace measures; the published current offering is a narrower natural-gas conversion program.",
+      "evidenceUrls": [
+        "https://info.citizensenergygroup.com/conservation/energy/rebates",
+        "https://info.citizensenergygroup.com/conservation/energy/rebates/indianapolis"
+      ],
+      "evidenceText": "Current Citizens Energy materials do not substantiate the older broad commercial efficiency opportunity. Business rebates for the mapped measures were not verified on the current official program pages.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3147",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible Citizens Energy natural-gas customer for the installation address.",
+        "The project must replace an eligible electric, oil, or propane appliance with qualifying new natural-gas equipment under the current conversion program.",
+        "The application must identify the customer account, contractor, equipment, and installation.",
+        "An itemized contractor invoice or qualifying self-install purchase documentation must be submitted.",
+        "Citizens may inspect or otherwise verify the installation before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "A current residential conversion rebate exists, but it is materially narrower than the older broad efficiency listing and covers only qualifying fuel-conversion equipment, not the full set of mapped measures.",
+      "evidenceUrls": [
+        "https://info.citizensenergygroup.com/conservation/energy/rebates",
+        "https://info.citizensenergygroup.com/conservation/energy/rebates/indianapolis"
+      ],
+      "evidenceText": "Citizens Energy currently publishes residential natural-gas conversion rebates for specified furnace and water-heating replacements. Claim approval depends on customer eligibility, qualifying conversion equipment, invoices or receipts, and verification.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5307",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be a Colorado homeowner financing an eligible energy project at a qualifying property.",
+        "The proposed project and contractor documentation must satisfy the lender's energy-loan requirements.",
+        "The applicant must complete an Elevations Credit Union loan application and become a member if approved.",
+        "The borrower must satisfy credit, income, collateral, and other underwriting requirements.",
+        "Loan proceeds may be used only for approved eligible project costs."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Energy-project eligibility alone does not secure financing; approval depends on borrower-specific credit underwriting, membership, property, and loan terms.",
+      "evidenceUrls": [
+        "https://www.elevationscu.com/personal/loans/energy/"
+      ],
+      "evidenceText": "Elevations currently offers Colorado home-energy loans for listed efficiency, electrification, solar, storage, and related improvements. Every loan remains subject to membership and credit approval.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22761",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible nonprofit, training provider, community college, or technical college under the current funding round.",
+        "The proposal must support qualifying green-workforce training for Denver-area employers and participants.",
+        "The proposed work must fit the program's eligible career areas and maximum performance period.",
+        "A complete application must be submitted through the designated portal by the round deadline.",
+        "Required organizational documents, including tax and Colorado good-standing records, must be supplied."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "This is a competitively reviewed mini-grant rather than an entitlement. Eligibility and a complete application allow consideration but do not establish an award probability.",
+      "evidenceUrls": [
+        "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-and-Resiliency/Cutting-Denvers-Carbon-Pollution/Green-Jobs/Green-Workforce-Funding"
+      ],
+      "evidenceText": "Denver's current green-workforce funding page describes a competitive 2026 mini-grant round, eligible organization types, a maximum award, required proposal scope, and application documentation. Selection occurs after program review.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22753",
+      "requiresProgramApproval": "unknown",
+      "approvalRequirements": [],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current City of Denver source identifies a group-buying program with negotiated pricing rather than a direct municipal solar rebate. Current direct rebate approval terms for this named opportunity were not verified.",
+      "evidenceUrls": [
+        "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Climate-Action-Sustainability-and-Resiliency/Cutting-Denvers-Carbon-Pollution/Efficient-Buildings-and-Homes/Group-Buying-Programs"
+      ],
+      "evidenceText": "Denver's current solar offering is presented as a group-purchasing pathway with bulk-buy pricing and contractor quotes, not as the older direct City solar rebate described by the source record.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3684",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The claimant must be the owner or an authorized filer for the Honolulu real property.",
+        "The improvement must qualify as renewable-energy production or storage property under the exemption rules.",
+        "The system must have required permits and be used primarily for public-utility or public consumption under a qualifying power-purchase arrangement where required.",
+        "The exemption claim and supporting site, cost, installation, lease, and power-purchase documentation must be filed by the annual deadline.",
+        "The property may not be used for disqualifying personal or private-business purposes."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The exemption is source-backed but narrowly conditioned. A battery or renewable-energy property does not qualify merely by being installed; the use, permitting, filing, and public-utility conditions must all be satisfied.",
+      "evidenceUrls": [
+        "https://realproperty.honolulu.gov/tax-relief-and-forms/exemptions/renewable-energy/",
+        "https://realproperty.honolulu.gov/media/o4qckeek/e-8-1012-rev-2022_18_11-fillable.pdf"
+      ],
+      "evidenceText": "Honolulu requires a formal renewable-energy property exemption claim and supporting records. The current rules impose permitting, qualifying-use, filing-deadline, and documentation conditions and allow denial or cancellation when conditions are not met.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:943",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible owner-occupant homeowner on Oahu and meet the applicable household-income limit.",
+        "The solar work must be accepted as an eligible rehabilitation or energy improvement under the City loan program.",
+        "The applicant must complete financial, ownership, property, and project underwriting.",
+        "Historic-preservation and other City approvals must be obtained when applicable.",
+        "Construction permits and work must follow loan approval and program instructions."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The financing pathway is income-restricted and requires extensive property and borrower underwriting. Current City materials describe rehabilitation lending, while a current state source identifies solar as an eligible use, so project-specific confirmation remains necessary.",
+      "evidenceUrls": [
+        "https://www.honolulu.gov/dcs/dcs-cad-loan-programs-for-homeowners/",
+        "https://energy.hawaii.gov/energy-efficiency-programs-rebates-and-solar-initiatives/"
+      ],
+      "evidenceText": "Current official materials support an income-qualified, no-interest City homeowner rehabilitation loan and identify solar photovoltaic and solar water-heating improvements as potential uses. Borrower, property, project, and pre-construction approvals are required.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5558",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The property and applicant must fit CORE's current commercial or multifamily geography and sector requirements.",
+        "The request must fund implementation of an eligible building-efficiency or electrification project rather than planning alone.",
+        "The applicant must work with CORE's Energy Concierge and provide project information for greenhouse-gas and impact review.",
+        "A complete grant request and supporting cost and scope documentation must be submitted.",
+        "The project must demonstrate a funding need and remain within available program resources."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "CORE evaluates project impact, scope, funding need, and available resources. The current funding is discretionary and project-specific rather than an automatic rebate.",
+      "evidenceUrls": [
+        "https://www.aspencore.org/commercial-multifamily-funding"
+      ],
+      "evidenceText": "CORE currently describes rolling commercial and multifamily implementation funding for qualifying efficiency and electrification projects in its service geography, with project screening, impact analysis, and discretionary award review.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22677",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must create, convert, or wholly renovate a qualifying market-rate rental property with at least ten dwelling units.",
+        "The project must satisfy the required per-unit investment, occupancy-permit timing, and high-performance building rating conditions.",
+        "The applicant must submit the Finance application, the sustainability submission, required fee, and supporting project and benefit information before the statutory application cutoff.",
+        "Finance and other designated City offices must review and approve the credit.",
+        "The property must maintain the qualifying rating, rental use, code compliance, and restrictions on overlapping City subsidies during the credit term."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The credit is established by current City law with defined qualification and percentage rules. A fully qualifying project is likely to receive the credit after required departmental review, but the program is not automatic and has timing and continuing-compliance conditions.",
+      "evidenceUrls": [
+        "https://codes.baltimorecity.gov/us/md/cities/baltimore/code/28/10-18",
+        "https://propertytaxcredits.baltimorecity.gov/propertytaxcredits/Account/Login.aspx"
+      ],
+      "evidenceText": "Baltimore's current code establishes a ten-year high-performance market-rate rental housing tax credit with project, investment, permit-date, rating, application, and continuing-compliance requirements. The City reviews the application before granting the credit.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5020",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The development must be eligible to use the sustainable-development incentives under the current Unified Development Ordinance.",
+        "The applicant must request the incentive through the applicable development, site-plan, zoning, or permit submission.",
+        "The project must document the qualifying sustainable design features or recognized certification level.",
+        "The project must comply with base zoning and development standards and any excluded-project provisions.",
+        "The applicant must carry the approved sustainability commitments through permit and final documentation."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The incentive consists of development bonuses or allowances that require project-specific land-use review. Current sources confirm the program framework, but the precise benefit depends on the proposed development and current ordinance criteria.",
+      "evidenceUrls": [
+        "https://bloomington.in.gov/sustainability/development-incentives",
+        "https://bloomington.in.gov/sites/default/files/2026-01/UDO_November_2025%20APPROVED.pdf",
+        "https://bloomington.in.gov/sustainability/energy"
+      ],
+      "evidenceText": "Bloomington's current sustainability materials and Unified Development Ordinance provide development incentives for qualifying sustainable projects, subject to application, certification or design documentation, and planning review. Detailed project-specific criteria require confirmation during review.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2948",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must be located in the City of Boulder and the applicant must be an eligible income-qualified homeowner or qualifying nonprofit.",
+        "A residential applicant must complete the required EnergySmart enrollment and income qualification.",
+        "The proposed photovoltaic or solar-thermal system must meet current program requirements.",
+        "The applicant must submit the grant application and required household, property, system, and cost documentation.",
+        "The award must remain within the per-watt, percentage-of-net-cost, and maximum-grant limits and available funds."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The grant uses published eligibility and amount rules and is accepted on a rolling, first-come basis while funding remains. A qualifying, timely application is likely but not guaranteed after funds are depleted.",
+      "evidenceUrls": [
+        "https://bouldercolorado.gov/services/solar-grants"
+      ],
+      "evidenceText": "Boulder currently offers solar grants to qualifying income-qualified homeowners and nonprofits, with published per-watt, percentage, and maximum award limits. Enrollment, eligibility verification, documentation, and available funding control approval.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4082",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The solar electric, solar thermal, or qualifying battery project must be installed within the City of Boulder.",
+        "The applicant must have paid eligible City sales or use tax on qualifying system materials or permits.",
+        "The system must pass final inspection before the rebate claim.",
+        "The application must be filed within the stated post-inspection deadline.",
+        "Required forms, identification, receipts, tax records, and inspection documentation must be submitted."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "This is a formula-based refund of a portion of qualifying City tax paid. A timely, fully documented eligible claim is likely to be approved after routine verification.",
+      "evidenceUrls": [
+        "https://bouldercolorado.gov/services/solar-and-battery-system-tax-rebates"
+      ],
+      "evidenceText": "Boulder currently rebates a portion of City sales and use tax paid on qualifying solar and battery systems. Final inspection, a timely claim, receipts, identification, and tax documentation are required.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3248",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must apply to participate in Chandler's Green Building Program before permit review.",
+        "The project must pursue the required recognized green-building rating, historically at least LEED Silver or an approved equivalent.",
+        "The submission must include green-program forms, rating-system registration, plans, checklists, and supporting design documentation.",
+        "Qualified green-building professionals and third-party certification documentation must be provided where required.",
+        "The Planning and Development Director or designated Green Building Coordinator must approve participation and expedited processing."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Current planning materials confirm expedited review as a green-building incentive, but approval and review timing are project-specific and may depend on qualifications, workload, and current implementation rules.",
+      "evidenceUrls": [
+        "https://www.chandleraz.gov/government/departments/development-services/planning-and-zoning/green-building-program",
+        "https://www.chandleraz.gov/sites/default/files/departments/development-services/City-of-Chandler-2026-General-Plan-Update.pdf",
+        "https://www.chandleraz.gov/sites/default/files/DEV-green-bldg-program-doc.pdf",
+        "https://www.chandleraz.gov/sites/default/files/documents/imported/UDM_GreenBldProApp.pdf"
+      ],
+      "evidenceText": "Chandler's current general-plan materials retain a Green Building Program and identify expedited review as an incentive. Detailed City forms describe pre-permit application, rating-system, plan, checklist, professional, and approval requirements, but those detailed forms appear older and should be reconfirmed.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2466",
+      "requiresProgramApproval": "unknown",
+      "approvalRequirements": [],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "The named City green-permit page is no longer accessible, and the current general permit page does not confirm a current green fast-track program. Legacy checklists are insufficient to determine present approval or award likelihood.",
+      "evidenceUrls": [
+        "https://www.chicago.gov/city/en/depts/bldgs/provdrs/permits/svcs/green-permits.html",
+        "https://www.chicago.gov/city/en/depts/bldgs/provdrs/permits.html",
+        "https://www.chicago.gov/dam/city/depts/bldgs/general/DelService/ChecklistForPermit101_29_08.pdf"
+      ],
+      "evidenceText": "The current City permit hub was accessible but did not substantiate the named green permit pathway. The specific source page was unavailable, and the remaining detailed City materials found were legacy documents.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "source_inaccessible"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2809",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The property and improvement must qualify under Cincinnati's current residential Community Reinvestment Area program.",
+        "Construction must be completed and all required permits must be closed before application.",
+        "The applicant must submit the online abatement application, project cost records, and the notarized Affidavit of Improvement Costs.",
+        "The applicable application fee must be paid.",
+        "Any requested green or sustainability enhancement must meet the current qualifying certification or performance criteria."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Cincinnati publishes a citywide residential CRA application process with defined completion and documentation requirements. A qualifying completed project is likely to receive the applicable abatement after verification, including any sustainability tier claimed.",
+      "evidenceUrls": [
+        "https://www.choosecincy.com/residentialcras"
+      ],
+      "evidenceText": "Cincinnati's current residential CRA program requires completed construction, closed permits, an online application, documented improvement costs, a notarized affidavit, and a fee. Sustainability features can affect the available incentive tier.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4146",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The property must be located in Cleveland and the improvement must be eligible under the current residential tax-abatement program.",
+        "All required permits must be valid and accurate, and final occupancy or completion records must be obtained where required.",
+        "The project must comply with the Cleveland Green Building Standard and the applicable abatement tier requirements.",
+        "Required certification, third-party verification, and application documentation must be submitted.",
+        "The project must satisfy any affordability, neighborhood, or continuing-compliance conditions that apply to its category."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The City publishes defined abatement percentages and green-building requirements. A project that closes permits and supplies the required certification and verification is likely to be approved, subject to category-specific conditions.",
+      "evidenceUrls": [
+        "https://www.clevelandohio.gov/city-hall/departments/community-development/programs-services/tax-abatement"
+      ],
+      "evidenceText": "Cleveland's current residential tax-abatement program conditions the benefit on City location, valid permits, compliance with the Cleveland Green Building Standard, certification or verification, a complete application, and any applicable affordability or neighborhood rules.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4243",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be an eligible City of Columbia commercial electric customer and property owner.",
+        "The project must be supported by the required energy assessment and consist of eligible energy-efficiency improvements.",
+        "The borrower must submit the signed loan application and project documentation before work begins.",
+        "The borrower must satisfy credit, collateral, deed-of-trust, and automatic-payment requirements.",
+        "The City must approve the loan before construction and verify completed work, invoices, and final inspection before final disbursement."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program offers published efficiency financing, but each loan depends on property-owner eligibility, credit and collateral underwriting, an energy assessment, preapproval, and final project verification.",
+      "evidenceUrls": [
+        "https://www.como.gov/utilities/columbia-power-partners/commercial-programs-and-tools/commercial-energy-efficiency-loans/"
+      ],
+      "evidenceText": "Columbia Water and Light currently offers commercial efficiency loans with stated loan limits and rates. Approval requires an eligible customer and property, energy assessment, credit and collateral review, pre-work authorization, and final inspection and invoice verification.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5153",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must have an active City of Concord electric account in good standing at the installation address.",
+        "The installed heat pump must meet the current efficiency, capacity, and equipment-type requirements.",
+        "Excluded equipment configurations are not eligible.",
+        "The application must be filed within the stated period after installation.",
+        "The claim must include the sales invoice, AHRI documentation, and any additional information requested for City verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The City publishes a fixed heat-pump rebate with objective account, equipment, and documentation criteria. A complete eligible claim is likely after routine City verification, subject to available funds and program rules.",
+      "evidenceUrls": [
+        "https://concordnc.gov/Departments/Electric-Systems/Electric-Heat-Pump-Rebate"
+      ],
+      "evidenceText": "Concord's current electric heat-pump rebate requires an eligible City electric customer, qualifying system specifications, timely application, invoice and AHRI records, and City review. The City may request additional information or reject noncompliant claims.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3622",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Applicant must be a City of High Point residential electric customer for the installation address.",
+        "The new or replacement heat-pump or geothermal system must meet the current efficiency and capacity requirements.",
+        "The project must comply with the program's equipment-frequency and location limits.",
+        "The application must be submitted within the stated period after installation with model, serial, efficiency, purchase, and installation information.",
+        "Required permits and City code inspection must be completed before rebate payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The rebate uses published residential-customer, equipment, timing, and inspection rules. An eligible installation with complete records and passed inspection is likely to be paid while program funding continues.",
+      "evidenceUrls": [
+        "https://www.highpointnc.gov/531/Appliance-Rebates"
+      ],
+      "evidenceText": "High Point currently publishes heat-pump and geothermal rebates for qualifying residential electric customers. Timely application, equipment documentation, permits, and a successful City inspection are required before payment.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4720",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must be a qualifying new or improved commercial facility in Houston.",
+        "The applicant must apply before construction or alteration begins and satisfy the minimum qualifying investment requirement.",
+        "The project must register for and intend to achieve an eligible LEED certification level.",
+        "The applicant must submit required financial, project, tax, and environmental documentation and complete the reinvestment-zone process.",
+        "City Council must approve the tax-abatement agreement, and final LEED certification and continuing agreement compliance are required."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current ordinance supports LEED-related commercial tax abatements, but each benefit requires preconstruction application, a qualifying investment, reinvestment-zone and City Council approval, an executed agreement, and final certification.",
+      "evidenceUrls": [
+        "https://www.houstontx.gov/ecodev/tax_abatements.html",
+        "https://www.houstontx.gov/ecodev/abatements/Ordinance-2024-624.pdf",
+        "https://library.municode.com/tx/houston/codes/code_of_ordinances?nodeId=COOR_CH44TA",
+        "https://www.houstontx.gov/council/committees/econdev/20260218/greens-bayou.pdf"
+      ],
+      "evidenceText": "Houston's current tax-abatement framework includes a LEED category and remains dependent on preconstruction application, minimum investment, reinvestment-zone and City Council action, an executed agreement, and final certification. The current program framework has a stated 2026 sunset unless extended.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22670",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must opt into Jacksonville's sustainable or green-building program through the applicable permit process.",
+        "The project must pursue a rating recognized by the current ordinance, such as LEED, Green Globes, Florida Green Building Coalition certification, or an approved alternative.",
+        "A qualified third party must verify the claimed green-building standard where required.",
+        "Complete plans and permit materials must demonstrate compliance with building, zoning, and sustainability requirements.",
+        "The City must accept the program participation and permit submission before expedited processing is provided."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Current City planning and ordinance sources confirm a voluntary green-building framework and expedited permitting support, but the detailed operational application and service-level conditions were not located and remain project-specific.",
+      "evidenceUrls": [
+        "https://www.jacksonville.gov/getContentAsset/652991b9-eac5-4ba9-bc93-aeb0bedb40d1/135b97c9-84fa-4e82-b956-0fbccec4aa1f/JAXMSA-Comprehensive-Climate-Action-Plan.pdf?language=en",
+        "https://library.municode.com/fl/jacksonville/codes/code_of_ordinances?nodeId=TITVIIICOREBUCO_CH327SUBUPR_S327.103DE",
+        "https://www.jacksonville.gov/departments/public-works/building-inspection-division/services"
+      ],
+      "evidenceText": "Jacksonville's current climate plan and code retain a voluntary green-building program, recognized rating systems, third-party verification, and expedited permitting support. Current detailed application and processing instructions were not verified on the general building-services page.",
+      "reviewedAt": "2026-07-10T13:45:08Z",
+      "reviewStatus": "needs_followup"
+    }
+  ]
+}

@@ -1,0 +1,527 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-002",
+  "inputFile": "batch-002_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T13:42:16Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:21861",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be a Rhode Island agricultural operation with an eligible energy-efficiency or renewable-energy project.",
+        "The current program guidance and applicable project application must be completed with the required project scope, cost, and supporting documentation.",
+        "The application must be submitted by the current funding-round deadline and comply with program terms, cost-share, and eligible-cost rules.",
+        "The Office of Energy Resources must select the project and execute any required grant agreement before grant funds are committed.",
+        "Project completion and reimbursement documentation must satisfy program verification requirements."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current round is discretionary and subject to available funds; a complete application does not guarantee selection.",
+      "evidenceUrls": [
+        "https://energy.ri.gov/energy-efficiency/farm-energy-programs"
+      ],
+      "evidenceText": "The 2026 Farm Energy Program accepts applications through November 6, 2026. Awards are subject to available funds and OER discretion, and submission does not guarantee an award.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4056",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must serve an eligible Vermont agricultural customer and use equipment that meets the current measure specifications.",
+        "Custom or non-prescriptive projects must be discussed with Efficiency Vermont and receive any required approval before purchase or installation.",
+        "Prescriptive rebate claims must include the current form and required invoice, product, installation, and customer documentation.",
+        "Efficiency Vermont may verify installation, performance, and customer eligibility before payment."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current agricultural offerings provide defined prescriptive rebates and a reviewed custom-incentive path; qualifying documented projects are generally awardable rather than competitively ranked.",
+      "evidenceUrls": [
+        "https://www.efficiencyvermont.com/rebates/list?cat=agricultural+equipment&type=",
+        "https://www.efficiencyvermont.com/Media/Default/docs/trade-partners/technical-resources/EVT%20Business%20Offerings%202026%20Final.pdf"
+      ],
+      "evidenceText": "Efficiency Vermont lists current agricultural-equipment rebates and 2026 business offerings, including prescriptive measures and custom incentives that require project review.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5251",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The participant must be an eligible Aiken Electric Cooperative member at an eligible service location.",
+        "The home must have compatible heating and cooling equipment, reliable internet service, and an eligible smart thermostat or qualify for the offered device and installation.",
+        "The member must apply for or enroll the thermostat in the cooperative program and permit qualifying peak-demand control events.",
+        "Aiken Electric must confirm account, device, connectivity, and enrollment eligibility."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current program offers a defined enrollment incentive or an installed thermostat to members who meet technical and participation conditions, without competitive scoring.",
+      "evidenceUrls": [
+        "https://www.aikenco-op.org/ecobee-smart-thermostat"
+      ],
+      "evidenceText": "Aiken Electric currently offers eligible members a smart-thermostat participation option, including an enrollment incentive for an existing device or an Ecobee thermostat with installation.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:78",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must present an Ohio project that qualifies as a clean-air improvement under the current Clean Air Improvement Program.",
+        "The applicant must submit the current application with project, environmental, ownership, financing, and cost documentation requested by OAQDA.",
+        "The project may require lender or investor financing, legal documentation, and satisfaction of applicable tax-exemption or bond-financing conditions.",
+        "OAQDA staff and Authority Members must review and approve the project before program financing or related incentives are authorized."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Projects are individually reviewed by OAQDA and may require Authority approval and financing execution, so eligibility alone does not make the incentive automatic.",
+      "evidenceUrls": [
+        "https://ohioairquality.ohio.gov/incentives-and-financing/clean-air-improvement-program",
+        "https://ohioairquality.ohio.gov/about/02-forms-and-documents/caip-application"
+      ],
+      "evidenceText": "OAQDA continues to accept Clean Air Improvement Program applications and presents eligible projects to Authority Members for consideration and approval.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5799",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The property must be commercial property in an Alabama jurisdiction that has established an operating C-PACE district or program.",
+        "The proposed improvement must satisfy the applicable local program and statutory eligible-improvement requirements.",
+        "The property owner must obtain required mortgage-holder consent and provide project, engineering, ownership, and financial documentation.",
+        "A participating capital provider must approve financing and the local administering entity must approve and record the assessment agreement.",
+        "All permits, construction, repayment, and assessment requirements must be satisfied."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The federal official listing for the statewide Alabama C-PACE authorization was archived in February 2026, and the enabling statute alone does not establish a currently open statewide application channel.",
+      "evidenceUrls": [
+        "https://afdc.energy.gov/laws/12990",
+        "https://adeca.alabama.gov/wp-content/uploads/Act-2015-494-PACE-PIERA.pdf"
+      ],
+      "evidenceText": "Federal program information now marks the Alabama C-PACE financing authorization as archived. Alabama law still permits local programs, so availability depends on a currently operating local district and capital provider.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22738",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Alabama Power business customer.",
+        "The electric forklift or material-handling equipment must meet the current program class, addition, replacement, or fuel-conversion conditions.",
+        "The customer must submit the program eligibility or rebate form with equipment and charging information.",
+        "Purchase, installation, and other requested supporting records must be provided for Alabama Power verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program provides a defined rebate for qualifying electric forklifts and conversions; payment depends mainly on documented eligibility rather than competitive selection.",
+      "evidenceUrls": [
+        "https://www.alabamapower.com/business/save-money-and-energy/offers-for-business-customers/electric-forklifts-and-etrus-.html"
+      ],
+      "evidenceText": "Alabama Power currently advertises rebates of up to $1,000 for qualifying electric forklifts and related material-handling conversions, subject to customer and equipment verification.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22739",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Alabama Power residential customer at a qualifying single-family service location.",
+        "The customer must own or lease a qualifying battery-electric or plug-in hybrid vehicle.",
+        "A new qualifying Level 2 charger must be installed on a dedicated 240-volt circuit at the service address.",
+        "The claim must be submitted within the program time limit with receipt, charger serial information, installation evidence, and required photographs.",
+        "The account must not exceed the program limit of one rebate per eligible site or account."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "The rebate has objective customer, vehicle, equipment, installation, and documentation rules and is not described as competitively scored; a compliant claim is expected to be paid subject to program funding and verification.",
+      "evidenceUrls": [
+        "https://www.alabamapower.com/residential/save-money-and-energy/electric-vehicles/ev-home-charger-rebate.html"
+      ],
+      "evidenceText": "Alabama Power currently offers a $500 residential EV home-charger rebate for qualifying customers who install a new Level 2 charger and submit the required proof within the stated claim period.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22546",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The site must be served by Alabama Power and satisfy the current business-customer and charging-project eligibility rules.",
+        "The customer must submit an initial application and receive program approval before beginning eligible make-ready construction.",
+        "The project must use qualified contractors, obtain permits, and install the approved electrical infrastructure and charging equipment.",
+        "A final application must include invoices, photographs, equipment information, and other completion records.",
+        "Alabama Power must verify the completed project and any required data-access or operational conditions before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program uses a defined preapproval and reimbursement process rather than competitive scoring, but funding availability, timely completion, and final verification remain conditions.",
+      "evidenceUrls": [
+        "https://www.alabamapower.com/business/business-customers-and-services/electric-transportation-business-programs/make-ready-program.html"
+      ],
+      "evidenceText": "Alabama Power describes a 2026 make-ready application and review process, followed by construction, final documentation, and utility verification. Incentives remain subject to available program funds.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22483",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must have an active eligible Alabama Power residential account.",
+        "The customer must purchase and install a new thermostat appearing on the current qualifying-products list.",
+        "Only the permitted number of reimbursements may be claimed for the account.",
+        "The customer must submit the reimbursement request within the program deadline with proof of purchase and requested equipment information.",
+        "Alabama Power must verify the account, product, purchase, and claim."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "The reimbursement uses objective account, product-list, purchase, and documentation requirements and is not described as competitive, so compliant claims are expected to be paid subject to program funds.",
+      "evidenceUrls": [
+        "https://www.alabamapower.com/residential/save-money-and-energy/rebates-and-incentives.html",
+        "https://www.alabamapower.com/content/dam/alabama-power/pdfs-docs/residential/rebates/smart-thermostat-rebate-qualifying-products-list.pdf"
+      ],
+      "evidenceText": "Alabama Power currently offers residential smart-thermostat reimbursement of up to $200 for qualifying products, with account limits and proof-of-purchase requirements.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1611",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must be a qualifying new nonresidential construction project that will receive Alameda Municipal Power service.",
+        "The design must satisfy the current whole-building performance threshold or applicable systems-based equipment requirements.",
+        "The applicant must submit design, energy-modeling or systems documentation, equipment specifications, cost information, and the current application.",
+        "Written AMP approval must be obtained before construction or equipment commitment when required by the program.",
+        "The completed project must pass required inspections and provide final invoices, permits, and completion documentation."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "AMP provides a defined technical approval path, but rebates are first-come, subject to available funds, and contingent on preapproval and completion verification.",
+      "evidenceUrls": [
+        "https://www.alamedamp.com/243/New-Construction",
+        "https://www.alamedamp.com/443/Business-Commercial-Rebates-and-Incentiv"
+      ],
+      "evidenceText": "AMP offers nonresidential incentives with project-specific technical requirements. Current terms make awards first-come and subject to available funds, with applications not guaranteeing payment.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1613",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must have an active eligible Alameda Municipal Power nonresidential account and install equipment at the service address.",
+        "The equipment and project must meet current measure-specific efficiency, fuel, size, and installation requirements.",
+        "Custom, electrification, food-service, or other designated projects must receive written AMP preapproval before purchase or installation.",
+        "The applicant must submit the current application with invoices, equipment specifications, installation records, and other requested documentation.",
+        "AMP may conduct pre-installation or post-installation inspections and must approve the final claim before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Most qualifying measures have defined rebate rules, but payment is first-come, subject to funds, and some project types require discretionary preapproval and inspection.",
+      "evidenceUrls": [
+        "https://www.alamedamp.com/443/Business-Commercial-Rebates-and-Incentiv",
+        "https://www.alamedamp.com/DocumentCenter/View/1540"
+      ],
+      "evidenceText": "AMP publishes current nonresidential rebate terms and measure requirements. Awards are first-come until funds are exhausted, and submission does not guarantee payment.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22274",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must have an active eligible Alameda Municipal Power residential account and qualifying service rate.",
+        "The charger must be new, unused, qualifying Level 2 equipment installed at the service address.",
+        "The claim must be submitted within the current program period with invoice, serial number, photographs, and installation information.",
+        "The account must satisfy current quantity and prior-rebate limits, and any income-qualified adder requires current enrollment in the applicable assistance program.",
+        "AMP must approve the completed claim and may request inspection or additional documentation."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The program uses objective claim requirements, but rebates are first-come, available only while funds remain, and an application does not guarantee payment.",
+      "evidenceUrls": [
+        "https://www.alamedamp.com/407/Rebates-and-Incentives"
+      ],
+      "evidenceText": "AMP currently lists residential Level 2 charger rebates with account, equipment, installation, and documentation rules. Payments are first-come and subject to available funds.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3357",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must have an active eligible Alameda Municipal Power residential account and install the measure at the service address.",
+        "The purchased equipment must be new and meet the current measure-specific efficiency and installation requirements.",
+        "The customer must submit the current rebate form within the applicable time limit with invoice, product, and installation documentation.",
+        "Any measure-specific preapproval, contractor, permit, enrollment, or inspection requirement must be satisfied.",
+        "AMP must verify and approve the claim before payment."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current residential rebates generally use objective measure rules, but payment is first-come, subject to available funds, and not guaranteed by claim submission.",
+      "evidenceUrls": [
+        "https://www.alamedamp.com/407/Rebates-and-Incentives",
+        "https://www.alamedamp.com/DocumentCenter/View/1179"
+      ],
+      "evidenceText": "AMP publishes current residential eligibility and measure terms. Rebates are issued first-come until approved funds are exhausted, and AMP may require additional verification.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22666",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant and proposed charging site must satisfy the requirements of a current Alaska NEVI solicitation or request for applications.",
+        "The proposal must include the required technical design, site control, operations, maintenance, budget, schedule, business, and non-federal match information.",
+        "The application must pass administrative and technical review and rank high enough under the solicitation scoring and price criteria.",
+        "Alaska Energy Authority and Alaska DOT&PF must select the project and complete the required project or grant agreement.",
+        "The project must satisfy federal environmental review, Buy America, public-access, interoperability, cybersecurity, reporting, and Title 23 requirements and obtain required FHWA authorization."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Alaska NEVI awards are made through scored and ranked solicitations with federal authorization and agreement gates; a compliant proposal is not entitled to funding.",
+      "evidenceUrls": [
+        "https://www.akenergyauthority.org/Portals/0/What%20We%20Do/Renewable%20Energy%20and%20Energy%20Efficiency/Electric%20Vehicles/20251013%20FINAL%20FY26%20Alaska%20NEVI%20Plan%20508%20Compliant.pdf?ver=1GzaY7TO8_JfAonOxwygFA%3D%3D",
+        "https://www.akenergyauthority.org/Portals/0/Who%20We%20Are/Governance/Board%20Meeting%20Schedule/20260416_BOARD-AEA-Meeting-Agenda-FINAL.pdf?ver=QdWwtn0dkU8kJ_P2aqWutw%3D%3D"
+      ],
+      "evidenceText": "Alaska’s current NEVI plan describes competitive solicitations with administrative, technical, and price evaluation, ranked selection, project agreements, and federal compliance and authorization requirements.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22263",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The sponsor must be an eligible local or tribal government, community partner, or other applicant accepted under current AP&T program rules.",
+        "The charger must be installed in an AP&T-served community and meet the current public-access and minimum charging-level requirements.",
+        "The applicant must document the proposed site, equipment, ownership, operations, maintenance, and community partnership arrangements.",
+        "The current application or incentive request and proof of purchase and installation must be submitted.",
+        "AP&T must verify eligibility, installation, public access, and any per-community or funding limits before payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "AP&T currently lists a defined public-charger incentive for qualifying local and tribal sponsors; payment depends on eligibility and installation verification rather than competitive ranking.",
+      "evidenceUrls": [
+        "https://aptalaska.com/power/incentives/",
+        "https://www.aptalaska.com/wp-content/uploads/2020/06/press.release.ampupevchargingstations.06032020.pdf"
+      ],
+      "evidenceText": "AP&T’s current incentives page lists support of up to $1,000 for qualifying public charging installations by local and tribal governments; program materials require public access and eligible charging equipment.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1931",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The project must be installed for an eligible Alexandria Light and Power commercial customer and meet the current Bright Energy Solutions measure requirements.",
+        "Projects exceeding the current preapproval threshold, and custom or otherwise designated projects, must receive approval before the project starts or equipment is ordered.",
+        "New qualifying equipment must be installed and operated at the eligible service location.",
+        "The applicant must submit the current incentive form with invoices, specification sheets, certifications, quantities, and installation documentation within the form deadline.",
+        "The utility or program administrator may inspect the project and must approve the final incentive calculation."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current commercial incentives have defined measure and documentation rules; most qualifying claims are not competitively scored, although large or custom projects require preapproval and all claims remain subject to verification.",
+      "evidenceUrls": [
+        "https://www.alputilities.com/commercial/rebates-programs/",
+        "https://www.alputilities.com/wp-content/uploads/2026-Indoor-Lighting-Retrofit-Business-Incentive.pdf"
+      ],
+      "evidenceText": "Alexandria Light and Power directs commercial customers to current Bright Energy Solutions forms. Current 2026 business forms require preapproval for large projects and supporting invoices and technical documentation after installation.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1930",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Alexandria Light and Power residential customer.",
+        "The equipment must be new, installed at the eligible service address, and meet the current Bright Energy Solutions measure specifications.",
+        "The customer must use the current measure form and submit invoices, model information, installation records, and any contractor documentation by the stated deadline.",
+        "Any measure-specific enrollment, load-control, preapproval, or inspection requirement must be completed.",
+        "The utility or program administrator must verify and approve the claim."
+      ],
+      "approvalStage": "after_installation",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The residential program uses current prescriptive forms and objective eligibility rules, so complete qualifying claims are generally awardable subject to verification and program funds.",
+      "evidenceUrls": [
+        "https://www.alputilities.com/residential/rebates-programs/"
+      ],
+      "evidenceText": "Alexandria Light and Power currently offers residential Bright Energy Solutions incentives and directs customers to find, complete, and submit the applicable rebate form for qualifying equipment.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4971",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The facility must be an eligible Alliant Energy Iowa business customer and the equipment must meet current program specifications.",
+        "Standard products must be purchased through a participating distributor or other approved instant-discount channel when that pathway applies.",
+        "Custom projects must be submitted to Alliant Energy and receive an accepted incentive proposal before the customer commits to the project.",
+        "The customer must install the approved equipment and retain invoices, product data, and installation records.",
+        "Alliant Energy must verify final project completion and, for custom projects, the achieved or calculated energy savings before issuing payment."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Standard measures receive defined instant discounts and accepted custom projects receive incentives after verification; neither pathway is generally competitively ranked, though custom approval and funding remain conditions.",
+      "evidenceUrls": [
+        "https://www.alliantenergy.com/ways-to-save/instant-discounts/iowa",
+        "https://www.alliantenergy.com/ways-to-save/custom-rebates",
+        "https://www.alliantenergy.com/ways-to-save/rebates/terms"
+      ],
+      "evidenceText": "Alliant Energy currently provides Iowa business instant discounts for qualifying standard equipment and a separate custom-rebate process requiring project acceptance before commitment and savings verification after completion.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1574",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Alliant Energy Iowa agricultural customer.",
+        "The agricultural equipment must meet current dairy, livestock, grain, irrigation, motor, lighting, refrigeration, or other measure specifications.",
+        "Standard equipment must be purchased through an approved dealer, distributor, or instant-discount channel where required.",
+        "A nonstandard or custom project must receive Alliant Energy review and an accepted incentive proposal before project commitment.",
+        "Installation, invoices, equipment data, and any savings-verification records must be provided as required."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Current agricultural measures use defined instant discounts, while custom projects require preapproval and verification; qualifying projects are generally not selected through a competitive grant process.",
+      "evidenceUrls": [
+        "https://www.alliantenergy.com/waystosave/rebatesandmarketplace/rebatelocatortool",
+        "https://www.alliantenergy.com/ways-to-save/instant-discounts/iowa",
+        "https://www.alliantenergy.com/ways-to-save/custom-rebates"
+      ],
+      "evidenceText": "Alliant Energy’s current rebate locator includes dairy, livestock, grain, irrigation, motors, lighting, and refrigeration categories, with instant-discount and custom-incentive pathways for Iowa customers.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1570",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "The purchaser must be an eligible Alliant Energy Iowa residential customer for the applicable offer.",
+        "The product must meet the current efficiency, compatibility, and customer-type specifications.",
+        "The purchase must be made through the Alliant Energy Marketplace, a participating instant-discount distributor, or another specified offer channel.",
+        "Any linked smart-device program requires device enrollment, connectivity, and continued compliance with participation rules.",
+        "The instant discount or enrollment reward is applied after automated or point-of-sale eligibility validation."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "Current Iowa residential savings are primarily delivered as instant marketplace or distributor discounts and defined enrollment rewards, making payment highly predictable once customer and product eligibility are validated.",
+      "evidenceUrls": [
+        "https://www.alliantenergy.com/ways-to-save/iowa-general-rebates",
+        "https://www.alliantenergy.com/ways-to-save/energy-saving-offers/iowa",
+        "https://www.alliantenergy.com/ways-to-save/smart-hours/iowa"
+      ],
+      "evidenceText": "Alliant Energy’s current Iowa residential offers emphasize instant product discounts and fixed Smart Hours enrollment and seasonal rewards rather than a competitively reviewed rebate application.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22158",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "A current successor program or solicitation administered by the Colorado Energy Office or another designated partner would need to be identified.",
+        "The applicant, vehicle or fueling-infrastructure project, site, technology, and geography would need to meet that current solicitation’s eligibility rules.",
+        "A complete technical and financial application, including any required match and supporting documentation, would need to be submitted.",
+        "The administering agency would need to score or otherwise select the project and execute an award agreement before funding is committed."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "RAQC’s current program index places ALT Fuels Colorado under retired programs, and no current application round for the named program is identified.",
+      "evidenceUrls": [
+        "https://raqc.org/our-programs/",
+        "https://raqc.org/our_programs/alt-fuels-colorado/"
+      ],
+      "evidenceText": "The current RAQC program index identifies ALT Fuels Colorado as retired and states that the program is now managed by the Colorado Energy Office. The named historical opportunity has no current application round on the official page.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3650",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant must be an eligible Pennsylvania business, economic-development organization, political subdivision, or other currently authorized applicant.",
+        "The project must qualify as alternative or clean energy under current ACE guidelines and be located in Pennsylvania.",
+        "The applicant must submit the Enterprise eGrants application with technical, ownership, cost, financing, environmental, and project-support documentation.",
+        "The required matching investment and application fee must be documented and paid.",
+        "DCED and DEP review must be completed and the Commonwealth Financing Authority must approve the loan, grant, or guarantee.",
+        "The applicant must execute required agreements and comply with closing, security, reporting, and project-completion conditions."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "ACE assistance requires substantive agency review and Commonwealth Financing Authority approval, with matching funds and limited public resources; eligibility does not assure an award.",
+      "evidenceUrls": [
+        "https://dced.pa.gov/programs/alternative-clean-energy-program-ace/",
+        "https://dced.pa.gov/programs-funding/commonwealth-financing-authority-cfa/energy-programs/"
+      ],
+      "evidenceText": "Pennsylvania currently offers ACE loans, grants, and loan guarantees for eligible clean-energy projects. Applications require matching funds, a fee, agency review, and Commonwealth Financing Authority approval.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2567",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The claimant must have a qualifying alternative-energy-product manufacturing expenditure and employment activity from a period before the credit’s July 1, 2025 repeal.",
+        "The manufacturer, product, equipment, expenditure, and job-creation facts must satisfy the legacy statutory and form requirements.",
+        "The claimant must submit the applicable legacy application and supporting expenditure, payroll, and equipment documentation to the New Mexico Taxation and Revenue Department.",
+        "The department must approve the credit before it is claimed on the applicable tax return and credit schedule.",
+        "The claimant must retain records and comply with any recapture or carryforward rules applicable to an approved legacy credit."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The official 2026 tax guidance states that the credit was repealed effective July 1, 2025, leaving only potential legacy claims for qualifying pre-repeal activity.",
+      "evidenceUrls": [
+        "https://realfile.tax.newmexico.gov/FYI-106.pdf",
+        "https://www.tax.newmexico.gov/forms-publications/"
+      ],
+      "evidenceText": "New Mexico’s current FYI-106 guidance identifies the Alternative Energy Product Manufacturers Tax Credit as repealed July 1, 2025. New retrofit-related manufacturing expenditures therefore are not expected to qualify.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:604",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "The applicant and project must satisfy the current Montana AERLP borrower, technology, property, and eligible-cost requirements.",
+        "The application must be submitted during a current quarterly application window and before the project is completed.",
+        "The applicant must provide the complete checklist package, bids or cost estimates, equipment specifications, permits or environmental information, and project documentation.",
+        "Montana DEQ must complete technical and environmental review and determine that the project is eligible.",
+        "The applicant must pass credit underwriting, provide required security, and rank high enough if demand exceeds available loan funds.",
+        "The borrower must execute loan documents and provide final completion and disbursement documentation."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Current AERLP applications undergo technical and financial review and may be ranked because demand can exceed available funds, so a qualifying application is not assured financing.",
+      "evidenceUrls": [
+        "https://deq.mt.gov/energy/Programs/AERLP",
+        "https://deq.mt.gov/files/Energy/Documents/AERLP/AERLP_Brochure_2026.pdf"
+      ],
+      "evidenceText": "Montana DEQ’s current AERLP materials describe quarterly application windows, technical and credit review, and ranking when requests exceed available funds.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1070",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "The purchaser or lessee must acquire qualifying machinery or equipment for use at a qualifying Utah alternative-energy facility.",
+        "The facility and property must satisfy the current statutory technology, ownership, operational, useful-life, and interconnection-use requirements.",
+        "The transaction must occur within the statutory eligibility period, and excluded land, building, construction, or other nonqualifying costs must not be claimed.",
+        "The purchaser must give the seller a properly completed TC-721 exemption certificate or submit the required refund documentation if tax was paid.",
+        "Records supporting facility and equipment qualification must be retained for Tax Commission review."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "near_guaranteed",
+      "awardLikelihoodReason": "The exemption is statutory and generally applies when the transaction and property meet objective requirements and the required certificate or refund documentation is completed; it is not competitively awarded.",
+      "evidenceUrls": [
+        "https://le.utah.gov/xcode/Title59/Chapter12/59-12-S104.html",
+        "https://files.tax.utah.gov/tax/forms/current/tc-721.pdf"
+      ],
+      "evidenceText": "Utah’s current sales-tax statute and TC-721 provide an alternative-energy exemption certification pathway for qualifying facility machinery and equipment rather than a discretionary grant selection process.",
+      "reviewedAt": "2026-07-10T13:42:16Z",
+      "reviewStatus": "audited"
+    }
+  ]
+}

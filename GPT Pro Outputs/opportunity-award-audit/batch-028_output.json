@@ -1,0 +1,518 @@
+{
+  "schemaVersion": "opportunity-award-audit-output.v1",
+  "batchId": "batch-028",
+  "inputFile": "batch-028_input.json",
+  "inputRecordCount": 25,
+  "generatedAt": "2026-07-10T14:17:40Z",
+  "reviews": [
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22312",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Indiana Michigan Power commercial customer with a charging project in the Indiana service territory.",
+        "Submit the charging-incentive application through the current PowerClerk portal before utility service work or other project commitments that require program review.",
+        "Use a qualifying Level 2 or DC fast-charging configuration and satisfy the applicable workplace, fleet, multifamily, public-access, port, and location rules.",
+        "Provide the requested customer, site, equipment, port, use-case, and electrical-service information.",
+        "Complete the approved installation, permitting, metering or service work, and any required inspection or verification while program funds and tariff authority remain available."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Indiana business program publishes fixed per-port incentives and a defined application pathway rather than competitive scoring. A qualifying project is likely to receive the applicable incentive after utility review and completion verification, subject to program funding and tariff limits.",
+      "evidenceUrls": [
+        "https://www.indianamichiganpower.com/clean-energy/electric-cars/business/charge-at-work-indiana",
+        "https://imev.powerclerk.com/"
+      ],
+      "evidenceText": "Indiana Michigan Power currently lists commercial Level 2 and public DC fast-charging incentives, including higher amounts for qualifying locations, and directs applicants to PowerClerk for project review.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4618",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Indiana Michigan Power commercial or industrial electric customer.",
+        "Select equipment or measures that meet the current prescriptive program specifications.",
+        "Submit a preapproval application and receive a program offer before work when the project, measure, incentive amount, or savings threshold requires advance approval.",
+        "Install the approved qualifying measures and submit the final application with invoices, equipment information, and other required completion documents by the applicable deadline.",
+        "Allow site inspection, savings verification, or document correction before payment if requested."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current prescriptive program uses published measure and documentation rules, with advance approval only for designated projects. A complete qualifying project is likely to be paid after final review, subject to incentive caps, deadlines, and remaining program funds.",
+      "evidenceUrls": [
+        "https://electricideas.com/at-work/prescriptive/"
+      ],
+      "evidenceText": "The current program requires an eligible business account, qualifying measures, preapproval for specified large or special projects, timely final documentation, and verification before incentive payment.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4615",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Indiana Michigan Power residential customer for the selected current residential offering.",
+        "Use a participating contractor for current instant HVAC and heat-pump-water-heater discounts when that pathway applies.",
+        "Purchase and install equipment that meets the current measure-specific efficiency and product requirements.",
+        "Complete contractor, point-of-sale, online-claim, or income-qualification verification required by the selected offering.",
+        "Confirm current eligibility separately for window replacement because the reviewed official pages do not substantiate that mapped measure under the named legacy program."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Indiana Michigan Power currently offers residential HVAC, water-heating, thermostat, product-discount, and income-qualified pathways, but the older broad Energy Savings Rebate Program has been divided into narrower offerings and the mapped window replacement was not verified. Award depends on using a currently supported pathway.",
+      "evidenceUrls": [
+        "https://electricideas.com/at-home/instant-discounts/",
+        "https://electricideas.com/at-home/in-store-products/",
+        "https://electricideas.com/at-home/home-energy-checkup/"
+      ],
+      "evidenceText": "Current residential offerings include qualifying HVAC and water-heating instant discounts, selected product incentives, and income-qualified home improvements; a current window-replacement rebate was not verified.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22331",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Indiana Michigan Power Michigan commercial customer with a qualifying workplace, fleet, multifamily, or small-commercial charging use.",
+        "Meet the applicable Michigan vehicle-registration, charging-use, customer-load, and charger-configuration rules.",
+        "Contact or apply to Indiana Michigan Power before completing electrical-service, submeter, or incentive-dependent work and provide the requested account, site, vehicle, and charger information.",
+        "Use a qualified electrician for the required charger, submeter base, or service installation.",
+        "Pass local inspection and Indiana Michigan Power metering, service, and project verification before the incentive is finalized."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current Michigan business charging program publishes defined customer, vehicle, metering, and per-port incentive rules. A conforming project is likely to receive the stated benefit after utility review and inspection rather than through competitive selection.",
+      "evidenceUrls": [
+        "https://www.indianamichiganpower.com/clean-energy/electric-cars/business/charge-at-work-michigan"
+      ],
+      "evidenceText": "Indiana Michigan Power currently describes Michigan workplace, fleet, multifamily, and small-commercial charging incentives that require eligible vehicles, project coordination, electrical work, inspection, and utility metering.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22311",
+      "requiresProgramApproval": "unknown",
+      "approvalRequirements": [],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unlikely",
+      "awardLikelihoodReason": "The current official Indiana home-charging page does not show a one-time residential charger-installation rebate. It instead offers Charge Sync Rewards monthly bill credits for eligible customers who enroll and charge during designated hours, so a current award pathway for the named installation rebate was not verified.",
+      "evidenceUrls": [
+        "https://www.indianamichiganpower.com/clean-energy/electric-cars/charge-at-home-indiana"
+      ],
+      "evidenceText": "The current Indiana home program provides managed-charging bill credits for residential customers with an electric vehicle and Level 2 charger, not a documented charger-installation rebate.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4854",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible AES Indiana residential electric customer; the former Indianapolis Power and Light program is now administered under AES Indiana branding.",
+        "For contractor-installed home improvements, use an AES Indiana Quality Contractor Network contractor and meet the published efficiency requirements.",
+        "For appliance or self-installed measures, purchase a currently qualifying product and retain the receipt, model, serial number, and other required records.",
+        "Have the contractor submit the application or apply the instant discount, or submit an eligible self-service claim within the stated deadline.",
+        "Satisfy any measure-specific electric-heating, electric-water-heating, product, installation, or verification condition."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "AES Indiana's current residential incentives are prescriptive and use objective customer, contractor, equipment, and documentation requirements. A currently qualifying measure is likely to receive the stated rebate or instant discount after routine review, although the legacy record's broad LED and commercial-equipment mappings are not fully supported.",
+      "evidenceUrls": [
+        "https://www.aesindiana.com/home-improvement-rebates",
+        "https://www.aesindiana.com/appliance-rebates"
+      ],
+      "evidenceText": "AES Indiana currently lists contractor-delivered HVAC, heat-pump-water-heater, duct-sealing, and insulation incentives plus residential appliance and self-install rebates with customer, product, receipt, and filing requirements.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3105",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Indianola Municipal Utilities customer eligible for the selected residential or commercial measure.",
+        "Purchase or install a current qualifying product or system that meets the applicable ENERGY STAR, efficiency, equipment, and customer-class requirements.",
+        "Contact Indianola Municipal Utilities before installation for commercial lighting and any other measure for which advance requirements must be confirmed.",
+        "Submit the current online or form-based rebate claim with the invoice, product, installation, and customer information requested for the measure.",
+        "Allow program review or installation verification before payment if requested."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Indianola Municipal Utilities publishes current residential and commercial measure lists and administrative claim routes. A qualifying, documented purchase or installation is likely to receive the listed rebate after review rather than competitive selection.",
+      "evidenceUrls": [
+        "https://www.indianola.com/about/utility-programs/energy-efficiency/",
+        "https://www.indianola.com/forms"
+      ],
+      "evidenceText": "The current utility page lists residential appliance, HVAC, thermostat, lighting, and recycling rebates plus commercial lighting and selected heat-pump and geothermal offerings, with measure-specific forms and advance contact for commercial lighting.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3153",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Oregon industrial or agricultural customer served by a participating Energy Trust utility.",
+        "Use a measure listed in the current Industry and Agriculture forms or submit a qualifying custom production-efficiency project.",
+        "Obtain Energy Trust review and approval before purchase or installation when using the custom-project pathway or when the applicable form requires advance approval.",
+        "Submit the current application, invoices, specifications, savings information, and other measure-specific documentation.",
+        "Complete any required inspection, commissioning, or savings verification while current-year funding remains available."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Energy Trust currently provides listed production-efficiency incentives and a reviewed custom-project path. Qualifying projects that follow the correct form and approval timing are likely to be paid, subject to current measure rules and funding.",
+      "evidenceUrls": [
+        "https://insider.energytrust.org/programs/industry-ag/",
+        "https://insider.energytrust.org/programs/industry-ag/forms/",
+        "https://insider.energytrust.org/production-efficiency-program-announces-updated-2026-incentive-forms-and-project-support/"
+      ],
+      "evidenceText": "Current Energy Trust materials describe 2026 industrial and agricultural standard incentives, forms, project support, and custom-project review for eligible participating-utility customers.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_SILICON_VALLEY_POWER:svp_source_section:f69ab77394818965:industrial-assessments",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Operate a small or medium-sized manufacturing facility that satisfies the San Jose State University Industrial Assessment Center and federal program eligibility criteria.",
+        "Submit the assessment interest or application form with the requested company, facility, contact, and energy-use information.",
+        "Pass eligibility and scheduling review by the assessment team.",
+        "Provide facility access and sufficient utility, equipment, and process information for the site assessment.",
+        "Participate in the site visit and follow-up needed to produce the assessment report."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The no-cost assessment is subject to manufacturer eligibility, program capacity, and scheduling rather than being automatically available to every applicant. The official page does not establish the target's low-flow-fixture mapping as a stand-alone award.",
+      "evidenceUrls": [
+        "https://www.siliconvalleypower.com/businesses/save-money",
+        "https://sjsu.qualtrics.com/jfe/form/SV_5pOrfSrHh36gP8W"
+      ],
+      "evidenceText": "Silicon Valley Power directs eligible small and medium manufacturers to a San Jose State University application for a federally funded no-cost industrial assessment and report; it is technical assistance rather than a fixture rebate.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "needs_followup"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2320",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Inland Power residential member with the improvement installed at a qualifying served home.",
+        "Install a measure currently listed by Inland Power and meet the applicable electric-heating, product, efficiency, contractor, and installation requirements.",
+        "Obtain permits and use qualified installation services where required.",
+        "Submit the current rebate application with a dated invoice, product or model information, and measure-specific records such as before-and-after photographs within the applicable deadline.",
+        "Allow inspection or other installation verification before the rebate is approved if requested."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Inland Power currently publishes prescriptive residential incentives and a defined documentation process. A qualifying member installation is likely to receive the rebate after timely filing and any requested verification.",
+      "evidenceUrls": [
+        "https://www.inlandpower.com/residential-incentives-rebates",
+        "https://www.inlandpower.com/windows-doors"
+      ],
+      "evidenceText": "Current Inland Power pages list residential heating, water-heating, thermostat, appliance, window, and door incentives and require eligible service, qualifying products, invoices, measure-specific documentation, and possible inspection.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2182",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Intercounty Electric Cooperative member with a permanent qualifying facility directly served by the cooperative and meet the current usage threshold.",
+        "Install equipment that remains eligible under the current rebate schedule and satisfy any updated system or dual-fuel requirement.",
+        "Submit a complete signed rebate application and required purchase, equipment, and installation documentation within sixty days after installation.",
+        "Allow inspection or other verification by the cooperative.",
+        "Do not rely on the legacy electric-vehicle charger mapping because the official page states that the EV charger rebate ended on December 31, 2025."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "Intercounty Electric Cooperative still has a rules-based rebate process for current qualifying measures, but the legacy opportunity includes measures that have changed or ended, including the EV charger rebate. Award is possible only for equipment on the current schedule.",
+      "evidenceUrls": [
+        "https://www.ieca.coop/rebates"
+      ],
+      "evidenceText": "The current cooperative page requires member and facility eligibility, a timely signed application, qualifying equipment, and possible inspection; it also states that the EV charger rebate ended at the close of 2025.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:1653",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an Intermountain Gas residential customer on an eligible Idaho residential rate at the installation address.",
+        "Use Intermountain Gas natural gas as the required exclusive heating or water-heating fuel for the selected measure.",
+        "Install new equipment that meets the current efficiency specifications and comply with code, permit, and licensed-contractor requirements unless an allowed self-installation pathway applies.",
+        "Submit the rebate application within ninety days with a final invoice or qualifying self-install records showing the installation date, cost, brand, model, and serial number.",
+        "Permit Intermountain Gas to verify the completed work through records review or an in-home inspection."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The current program has published customer, fuel, equipment, documentation, and inspection rules and pays approved claims after installation. A complete claim for a currently listed measure is likely to be awarded, although the legacy record's broader weatherization mapping should not be assumed.",
+      "evidenceUrls": [
+        "https://www.intgas.com/energy-efficiency_program/residential-energy-efficiency/appliance-rebates/",
+        "https://www.intgas.com/energy-efficiency_program/residential-energy-efficiency/residential-rebate-terms-and-conditions/"
+      ],
+      "evidenceText": "Intermountain Gas currently lists residential furnace, boiler, and water-heating rebates and requires eligible Idaho service, qualifying new equipment, timely invoices and product records, code-compliant installation, and possible inspection.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3428",
+      "requiresProgramApproval": false,
+      "approvalRequirements": [
+        "Qualify for an underlying federal investment tax credit included in Vermont's statutory credit calculation.",
+        "Have the qualifying investment or property attributable to Vermont.",
+        "Claim the Vermont credit on the applicable state income-tax return with the required federal and state forms and substantiation.",
+        "Apply any tax-liability limitation and permitted carryforward rules, including the statutory carryforward for unused solar-energy investment credit where applicable."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The Vermont credit is statutory and noncompetitive, so a taxpayer with a valid underlying federal credit and complete return documentation is likely to receive it through normal tax administration. Tax eligibility and available liability still require review.",
+      "evidenceUrls": [
+        "https://legislature.vermont.gov/statutes/section/32/151/05822",
+        "https://legislature.vermont.gov/statutes/fullchapter/32/151"
+      ],
+      "evidenceText": "Vermont law provides an income-tax credit based on specified federal credits attributable to Vermont property and includes carryforward treatment for unused solar-energy investment credit.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22199",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible New Jersey business, government entity, nonprofit, educational institution, or qualifying multifamily property applicant rather than a private single-family residence.",
+        "Submit the application through the State's grant system with the required instructions, three quotes, site, applicant, equipment, and supporting documents.",
+        "Receive program approval and execute the grant agreement before purchasing or installing the charging equipment.",
+        "Complete the approved installation within the applicable agreement period and submit paid invoices, proof of payment, photographs, and the expenditure report.",
+        "Pass final grant review while funding is available; recognize that new applications may be waitlisted and DC fast-charging funding is offered only through announced solicitations."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The program uses a defined first-come grant process, but current applications may be waitlisted and DC fast-charging awards depend on separate funding rounds. A complete eligible application can be awarded, but funding availability prevents treating payment as likely for every new applicant.",
+      "evidenceUrls": [
+        "https://dep.nj.gov/drivegreen/it-pays-to-plug-in/",
+        "https://dep.nj.gov/grantandloanprograms/it-pays-to-plug-in-njs-electric-vehicle-charging-grant-program/"
+      ],
+      "evidenceText": "New Jersey currently requires an online grant application, three quotes, approval and an executed agreement before purchase, followed by installation records and reimbursement review; new applications may be placed on a waitlist.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2677",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Jackson County REMC member with the equipment installed at a qualifying occupied residence served by the cooperative.",
+        "Install a current qualifying heat pump, mini-split, geothermal system, heat-pump water heater, thermostat, or other listed measure that meets the published specifications.",
+        "Use the current application and provide the paid invoice, AHRI certificate, model and efficiency information, and other measure-specific records.",
+        "Submit the claim within the current program period and comply with any whole-home, replacement, or equipment-limit requirement.",
+        "Allow installation verification or inspection if requested."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Jackson County REMC currently publishes prescriptive residential rebates with objective equipment and documentation requirements. A qualifying member claim is likely to be approved after routine review and any requested verification.",
+      "evidenceUrls": [
+        "https://www.jacksonremc.com/energy-services/rebates/"
+      ],
+      "evidenceText": "The current cooperative rebate page and forms cover qualifying residential heat pumps, mini-splits, geothermal systems, water heating, and related measures and require invoices, efficiency records, and program review.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:2272",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be a Jackson EMC member in good standing with an eligible energy-improvement project at a home served by the cooperative.",
+        "Use an approved or participating contractor and obtain a qualifying project proposal.",
+        "Complete the current PowerUp or successor loan application through the designated financing provider.",
+        "Pass lender credit, income, repayment, and other underwriting requirements and receive Jackson EMC and lender confirmation before work begins.",
+        "Use loan proceeds only for approved project costs and complete any required closing, installation, and final documentation."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "possible",
+      "awardLikelihoodReason": "The current successor financing program has defined eligible energy-improvement tiers, but approval depends on borrower-specific underwriting, contractor and project review, loan terms, and closing. Project eligibility alone does not assure financing.",
+      "evidenceUrls": [
+        "https://www.jacksonemc.com/member-services/home-services/rebates-incentives-loans/loans"
+      ],
+      "evidenceText": "Jackson EMC's current PowerUp lending page requires member and project eligibility, a participating contractor, an application through the financing partner, and approval before work; final financing remains subject to underwriting.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5236",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Jackson EMC member with the improvement installed at a qualifying served residence.",
+        "Install a current qualifying heat pump or other measure that meets the published age, efficiency, replacement, contractor, and equipment-limit rules.",
+        "For insulation or air-sealing incentives, complete the required home energy evaluation, use a participating contractor, and install measures recommended by the evaluation.",
+        "Submit the signed application, paid invoice, AHRI certificate or other technical records, and measure-specific documentation.",
+        "Pass the required post-installation inspection or follow-up verification before payment."
+      ],
+      "approvalStage": "unknown",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Jackson EMC currently offers fixed, rules-based residential rebates. A member who follows the correct evaluation or contractor pathway and submits complete qualifying documentation is likely to receive payment after inspection, although EV charging is handled under a separate current incentive.",
+      "evidenceUrls": [
+        "https://www.jacksonemc.com/member-services/home-services/rebates-incentives-loans",
+        "https://www.jacksonemc.com/member-services/home-services/rebates-incentives-loans/heat-pump-rebate",
+        "https://www.jacksonemc.com/member-services/home-services/rebates-incentives-loans/energy-evaluation-rebate"
+      ],
+      "evidenceText": "Current Jackson EMC pages describe heat-pump and evaluation-based home-efficiency rebates with member, equipment, contractor, invoice, AHRI, recommendation, and inspection requirements.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22620",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Jackson EMC residential member with the Level 2 charger serving the member's home.",
+        "Purchase a new qualifying Level 2 charging station through the cooperative marketplace or another eligible seller.",
+        "For a marketplace purchase, complete the customer and account validation required for the instant rebate; otherwise submit the current rebate application and proof of purchase.",
+        "Install the charger in accordance with electrical and program requirements.",
+        "Provide any additional equipment or installation information requested for verification."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Jackson EMC currently advertises a fixed residential Level 2 charger incentive through an instant marketplace route or a standard application. An eligible documented purchase is likely to receive the rebate after routine validation.",
+      "evidenceUrls": [
+        "https://www.jacksonemc.com/member-services/ev-and-renewable-energy/electric-vehicles",
+        "https://www.jacksonemc.com/member-services/home-services/rebates-incentives-loans"
+      ],
+      "evidenceText": "Jackson EMC currently offers a residential Level 2 charger rebate, available as an instant marketplace reduction or through a rebate application for an eligible purchase.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4608",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible JEA commercial customer for the project site and selected electric, water, or electrification measure.",
+        "Install equipment that meets the current lighting, HVAC, refrigeration, water-heating, envelope, water-savings, EV-charging, or custom-program requirements.",
+        "Use a registered trade ally where the selected electric rebate pathway requires one.",
+        "Obtain advance approval before starting a custom project or any project for which the current application or terms require preapproval.",
+        "Submit the application, invoices, specifications, savings records, and other required documents and pass any inspection or verification."
+      ],
+      "approvalStage": "multiple",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "JEA currently offers published business rebates across standard efficiency and electrification categories. Prescriptive projects are generally administrative rather than competitive, so a qualifying project is likely to receive the incentive after following the correct trade-ally, preapproval, and documentation pathway.",
+      "evidenceUrls": [
+        "https://www.jea.com/business_resources/rebates_for_businesses/business_rebate_program/",
+        "https://www.jea.com/Business_Resources/Rebates_for_Businesses/Electric_Savings/",
+        "https://www.jea.com/Business_Resources/Rebates_for_Businesses/Electrification_Rebates_Program/"
+      ],
+      "evidenceText": "JEA's current business pages list lighting, HVAC, refrigeration, water-heating, cool-roof, window-film, custom, water-savings, and electrification rebates, including EV charging, with measure-specific applications and verification.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:22751",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Maintain an active eligible JEA nonresidential electric account at a project site in JEA's service territory.",
+        "Develop a qualifying fleet-electrification project and demonstrate that the make-ready infrastructure supports charging for an eligible commercial fleet.",
+        "Submit the current application with the fleet plan, site plan, equipment and electrical scope, cost estimates, tax form, and other required project documents.",
+        "Receive project and cost eligibility review before relying on the incentive and comply with the current first-come funding terms.",
+        "Complete the approved work and submit itemized paid invoices, proof of payment, and completion records, then pass JEA's post-installation inspection."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "The make-ready incentive uses published cost-share and project requirements and is processed first-come rather than competitively scored. A complete qualifying fleet project is likely to be reimbursed after final review and inspection while funds remain available.",
+      "evidenceUrls": [
+        "https://www.jea.com/business_resources/fleet_electrification_program/",
+        "https://www.jea.com/Business_Resources/2023_JEA_MakeReady_Application_FINAL/"
+      ],
+      "evidenceText": "JEA's current fleet program provides make-ready support for qualifying nonresidential fleet charging and requires an eligible account and site, project documentation, invoices, proof of payment, and post-installation inspection, subject to first-come funding.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4723",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible JEA residential customer for the selected current rebate or instant-discount measure.",
+        "Purchase and install a product or improvement that meets the current ENERGY STAR, WaterSense, efficiency, replacement, and installation rules.",
+        "Use a prequalified contractor for HVAC, insulation, or any other measure that requires a contractor-delivered rebate.",
+        "Receive the contractor or retailer discount, or submit the online rebate claim with the receipt and measure-specific documentation by the applicable deadline.",
+        "Allow customer, product, installation, or account verification before the rebate is finalized."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "JEA's current residential rebates are fixed and rules-based for listed measures. A qualifying customer purchase or installation is likely to receive the discount or rebate after routine validation, although the legacy record includes unsupported categories such as combined heat and power and commercial dishwashers.",
+      "evidenceUrls": [
+        "https://www.jea.com/ways_to_save/residential_rebates/",
+        "https://www.jea.com/residential_customers/residential_rebates/faqs/"
+      ],
+      "evidenceText": "Current JEA residential offerings include HVAC, insulation, heat-pump water heaters, smart thermostats, clothes washers, toilets, irrigation controls, room air conditioners, and other listed products delivered through contractors, retailers, or online claims.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:4493",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Jo-Carroll Energy electric member for the selected residential, commercial, industrial, or agricultural incentive.",
+        "Use the current measure-specific application and install equipment that meets the published customer, product, efficiency, and installation rules.",
+        "Contact Jo-Carroll Energy before commercial, agricultural, custom, or analysis-dependent work when an incentive quote, project review, or energy analysis is needed.",
+        "Submit the completed form, itemized invoice, equipment records, and other required documentation within three months after purchase or installation.",
+        "Comply with the current annual member-account incentive cap and any inspection or verification request."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Jo-Carroll Energy publishes current measure forms and a defined claim process, with advance consultation for larger or custom business work. A qualifying, timely, documented project is likely to be paid subject to the annual cap and verification.",
+      "evidenceUrls": [
+        "https://jcecoop.com/incentives"
+      ],
+      "evidenceText": "Jo-Carroll Energy currently links residential and business incentive forms for heating, geothermal, appliances, lighting, water heating, envelope work, compressed-air assessments, and custom agricultural or commercial projects, with a three-month claim deadline and annual cap.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5381",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Johnson County REMC member with the measure installed at a qualifying served property.",
+        "Install equipment or improvements that meet the current 2026 measure specifications and quantity limits.",
+        "Provide the applicable invoice, AHRI certificate, duct-leakage report, vehicle or outlet record, thermostat information, or other measure-specific documentation.",
+        "Enroll in the required special time-of-use rate when seeking a smart-thermostat or electric-vehicle outlet rebate.",
+        "Submit the current online rebate request by the program deadline and allow review or verification before payment."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Johnson County REMC publishes current prescriptive requirements and an online claim process. A member who meets the equipment, documentation, rate-enrollment, and timing rules is likely to receive the rebate after review.",
+      "evidenceUrls": [
+        "https://jcremc.com/savings/rebates/",
+        "https://jcremc.com/community/rebate-request-form/"
+      ],
+      "evidenceText": "The current 2026 rebate page lists heat pumps, mini-splits, geothermal, heat-pump water heaters, insulation, duct sealing, thermostats, and EV outlet incentives with measure-specific documents and rate conditions.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:5248",
+      "requiresProgramApproval": true,
+      "approvalRequirements": [
+        "Be an eligible Jones-Onslow EMC member with the equipment serving a qualifying residential account.",
+        "Purchase and install a current qualifying ENERGY STAR or efficiency-rated appliance, HVAC system, heat-pump water heater, or other listed product during the applicable program year.",
+        "Meet the current product, size, efficiency, installation, and purchase-date requirements for the selected rebate.",
+        "Submit the current online claim with proof of purchase and the requested account, model, equipment, and installation information.",
+        "Provide additional documentation or permit verification if requested before the bill credit or rebate is issued."
+      ],
+      "approvalStage": "before_purchase",
+      "awardLikelihood": "likely",
+      "awardLikelihoodReason": "Jones-Onslow EMC currently offers rules-based member rebates for listed residential equipment. A complete qualifying claim is likely to be approved, although the legacy record's commercial refrigeration, commercial dishwasher, and broad geothermal mappings are not all substantiated by the current page.",
+      "evidenceUrls": [
+        "https://joemc.com/energywise/products-rebates/"
+      ],
+      "evidenceText": "Current Jones-Onslow EMC offerings include qualifying appliances, heat pumps, heat-pump water heaters, and a residential Level 2 charger incentive, with online forms and product-specific eligibility rules.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "audited"
+    },
+    {
+      "opportunityId": "SOURCE_DSIRE:dsire_program_id:3294",
+      "requiresProgramApproval": "unknown",
+      "approvalRequirements": [],
+      "approvalStage": "unknown",
+      "awardLikelihood": "unknown",
+      "awardLikelihoodReason": "Kansas City Board of Public Utilities' current 2026 budget confirms funding for rebates tied to all-electric or heat-pump equipment, and the current resource plan describes a continuing residential and commercial heat-pump and water-heater program. However, the current public website does not expose a commercial application, eligibility rules, documentation requirements, or approval sequence sufficient to estimate award likelihood.",
+      "evidenceUrls": [
+        "https://www.bpu.com/ResourcesServices/EnergySavings.aspx",
+        "https://www.bpu.com/portals/0/NewBPU/Annual-Report/2026/2026-Budget-Book-Web.pdf",
+        "https://www.bpu.com/Portals/0/pdf/2024-BPU_IRP_Report-2024_11-4-2024.pdf"
+      ],
+      "evidenceText": "Current official budget and planning materials show an ongoing rebate program for all-electric or heat-pump equipment, including commercial customers, but a current public commercial claim and approval process was not found.",
+      "reviewedAt": "2026-07-10T14:17:40Z",
+      "reviewStatus": "needs_evidence"
+    }
+  ]
+}

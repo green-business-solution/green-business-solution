@@ -81,7 +81,6 @@ The next product work should not start with new GPT Pro research. Start by makin
 - User state tracking for already-implemented retrofits and state-dependent/dependent opportunities.
 - User-selected opportunity planning where users can include/exclude opportunities from a scenario and immediately recalculate savings.
 - Scenario math verification after scenario-combination repairs.
-- Payback period on the test cases page.
 - Automation for DSIRE/opportunity collection, source repair, incentive extraction, tax dataset refresh, fixture regeneration, and repair escalation.
 - Research/modeling for regulatory penalties, environmental fines, carbon credits, RECs, clean-fuel credits, offsets, and environmental market instruments.
 
