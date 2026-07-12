@@ -2443,6 +2443,8 @@ function PasswordAuthForm({
       <label className="field">
         <span>Email</span>
         <input
+          aria-describedby={error ? "password-auth-error" : undefined}
+          aria-invalid={Boolean(error)}
           autoComplete="username"
           onChange={(event) => setUsername(event.target.value)}
           placeholder="Email"
@@ -2455,6 +2457,8 @@ function PasswordAuthForm({
         <span>Password</span>
         <span className="password-input-shell">
           <input
+            aria-describedby={error ? "password-auth-error" : undefined}
+            aria-invalid={Boolean(error)}
             autoComplete={isSignup ? "new-password" : "current-password"}
             minLength={8}
             onChange={(event) => setPassword(event.target.value)}
@@ -2473,7 +2477,11 @@ function PasswordAuthForm({
           </button>
         </span>
       </label>
-      {error ? <p className="error-message">{error}</p> : null}
+      {error ? (
+        <p className="error-message" id="password-auth-error" role="alert">
+          {error}
+        </p>
+      ) : null}
       <button disabled={isSubmitting} type="submit">
         {isSubmitting ? "Submitting..." : isSignup ? "Create account" : "Log in"}
       </button>
@@ -2866,6 +2874,7 @@ function OptionCard({
 }) {
   return (
     <button
+      aria-pressed={isSelected}
       className={isSelected ? "choice-card is-selected" : "choice-card"}
       onClick={onClick}
       type="button"
@@ -2891,17 +2900,18 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
 
   return (
     <div className="conversational-progress">
+      <p className="conversational-progress-label">{`Step ${current} of ${total}`}</p>
       <div
-        aria-label="Intake progress"
-        aria-valuemax={100}
-        aria-valuemin={0}
-        aria-valuenow={width}
+        aria-label={`Step ${current} of ${total}`}
+        aria-valuemax={total}
+        aria-valuemin={1}
+        aria-valuenow={current}
+        aria-valuetext={`Step ${current} of ${total}`}
         className="conversational-progress-track"
         role="progressbar"
       >
-        <span style={{ width: `${width}%` }} />
+        <span style={{ transform: `scaleX(${width / 100})` }} />
       </div>
-      <p className="conversational-progress-label">{`Step ${current} of ${total}`}</p>
     </div>
   );
 }
@@ -2990,6 +3000,22 @@ const HOME_HOW_IT_WORKS_SECTION_ID = "home-how-it-works";
 const HOME_INSIGHTS_SECTION_ID = "home-insights";
 const HOME_DASHBOARD_SECTION_ID = "home-dashboard";
 const HOME_PRICING_SECTION_ID = "home-pricing";
+const PUBLIC_SCROLL_RESET_ROUTES = new Set<Route>([
+  "home",
+  "about",
+  "about-mission",
+  "about-team",
+  "about-trust",
+  "about-contact",
+  "scan",
+  "scan-results",
+  "scan-energy-data",
+  "sign-in",
+]);
+function smoothHomeJourneyFrameProgress(start: number, end: number, value: number) {
+  const normalized = Math.min(1, Math.max(0, (value - start) / Math.max(0.0001, end - start)));
+  return normalized * normalized * (3 - 2 * normalized);
+}
 
 function scrollToHomeSectionFallback(sectionId: string) {
   if (typeof window === "undefined") {
@@ -3089,11 +3115,9 @@ function PublicNav({
 
     lastScrollYRef.current = Math.max(0, window.scrollY);
     window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("touchmove", requestUpdate, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("touchmove", requestUpdate);
       window.cancelAnimationFrame(animationFrame);
     };
   }, []);
@@ -3148,20 +3172,26 @@ function PublicNav({
       <div className="navbar-inner">
         <Brand onClick={() => go("home")} />
         <nav aria-label="Primary" className="site-nav">
-          <button className="link-button" onClick={() => openHomeSection("home-overview")} type="button">
-            Overview
-          </button>
-          <button className="link-button" onClick={() => openHomeSection(HOME_INSIGHTS_SECTION_ID)} type="button">
-            Insights
-          </button>
-          <button className="link-button" onClick={openHowItWorks} type="button">
+          <button
+            className="link-button"
+            onClick={openHowItWorks}
+            type="button"
+          >
             How It Works
           </button>
-          <button className="link-button" onClick={() => openHomeSection(HOME_DASHBOARD_SECTION_ID)} type="button">
-            Dashboard
-          </button>
-          <button className="link-button" onClick={() => openHomeSection(HOME_PRICING_SECTION_ID)} type="button">
+          <button
+            className="link-button"
+            onClick={() => openHomeSection(HOME_PRICING_SECTION_ID)}
+            type="button"
+          >
             Pricing
+          </button>
+          <button
+            className="link-button"
+            onClick={() => go("about")}
+            type="button"
+          >
+            About
           </button>
         </nav>
         <div className="nav-actions">
@@ -3190,20 +3220,26 @@ function PublicNav({
         ) : null}
         {isMenuOpen ? (
           <div className="mobile-menu-panel">
-            <button className="link-button" onClick={() => openHomeSection("home-overview")} type="button">
-              Overview
-            </button>
-            <button className="link-button" onClick={() => openHomeSection(HOME_INSIGHTS_SECTION_ID)} type="button">
-              Insights
-            </button>
-            <button className="link-button" onClick={openHowItWorks} type="button">
+            <button
+              className="link-button"
+              onClick={openHowItWorks}
+              type="button"
+            >
               How It Works
             </button>
-            <button className="link-button" onClick={() => openHomeSection(HOME_DASHBOARD_SECTION_ID)} type="button">
-              Dashboard
-            </button>
-            <button className="link-button" onClick={() => openHomeSection(HOME_PRICING_SECTION_ID)} type="button">
+            <button
+              className="link-button"
+              onClick={() => openHomeSection(HOME_PRICING_SECTION_ID)}
+              type="button"
+            >
               Pricing
+            </button>
+            <button
+              className="link-button"
+              onClick={() => go("about")}
+              type="button"
+            >
+              About
             </button>
             {renderAuthAction()}
             {canStartScan ? (
@@ -3356,18 +3392,43 @@ function SectionHeading({
   );
 }
 
-function AboutSubnav({ navigate }: { navigate: (route: Route) => void }) {
+function AboutSubnav({
+  activeRoute,
+  navigate,
+}: {
+  activeRoute?: Route;
+  navigate: (route: Route) => void;
+}) {
   return (
-    <div className="about-subnav">
-      <button className="about-subnav-link" onClick={() => navigate("about")} type="button">
+    <nav aria-label="About RetroFi" className="about-subnav">
+      <button
+        aria-current={activeRoute === "about" ? "page" : undefined}
+        className={
+          activeRoute === "about"
+            ? "about-subnav-link is-active"
+            : "about-subnav-link"
+        }
+        onClick={() => navigate("about")}
+        type="button"
+      >
         Overview
       </button>
       {aboutLinks.map((item) => (
-        <button className="about-subnav-link" key={item.route} onClick={() => navigate(item.route)} type="button">
+        <button
+          aria-current={activeRoute === item.route ? "page" : undefined}
+          className={
+            activeRoute === item.route
+              ? "about-subnav-link is-active"
+              : "about-subnav-link"
+          }
+          key={item.route}
+          onClick={() => navigate(item.route)}
+          type="button"
+        >
           {item.label}
         </button>
       ))}
-    </div>
+    </nav>
   );
 }
 
@@ -3394,7 +3455,12 @@ function AboutHubCard({
         <h3>{title}</h3>
         <p>{copy}</p>
       </div>
-      <button className="text-link with-icon" onClick={() => navigate(route)} type="button">
+      <button
+        aria-label={`Learn more about ${title}`}
+        className="text-link with-icon"
+        onClick={() => navigate(route)}
+        type="button"
+      >
         Learn more
         <ArrowUpRightIcon />
       </button>
@@ -3436,6 +3502,10 @@ function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
           </div>
         </div>
       </div>
+      <p aria-hidden="true" className="planet-scan-scroll-cue">
+        Scroll to explore
+        <span />
+      </p>
     </ScrollFrameScanner>
   );
 }
@@ -5084,16 +5154,25 @@ function HowItWorksJourneySection({
           </div>
         ) : null}
         {showIntro ? (
-          <header
-            className="journey-intro-copy"
-            style={{
-              opacity: introOpacity,
-              transform: `translate3d(0, calc(-50% - ${32 * cloudTravelProgress}px), 0)`
-            }}
-          >
-            <p className="journey-intro-eyebrow">How it works</p>
-            <h1>From outdated building to high-performing business</h1>
-          </header>
+          <>
+            <header
+              className="journey-intro-copy"
+              style={{
+                opacity: introOpacity,
+                transform: `translate3d(0, calc(-50% - ${32 * cloudTravelProgress}px), 0)`,
+              }}
+            >
+              <p className="journey-intro-eyebrow">How it works</p>
+              <h1>From outdated building to high-performing business</h1>
+            </header>
+            <p
+              aria-hidden="true"
+              className="journey-scroll-cue"
+              style={{ opacity: introOpacity }}
+            >
+              Swipe or scroll to explore
+            </p>
+          </>
         ) : (
           <div className="journey-story-shell">
             <article aria-live="polite" className="journey-story-copy" key={activeStage.title}>
@@ -5590,7 +5669,7 @@ function AboutPage({
         title="RetroFi helps homeowners make smarter retrofit decisions faster"
         copy="We turn messy home and utility data into clear guidance so people can understand upgrades, incentives, and next steps without the usual research burden."
       />
-      <AboutSubnav navigate={navigate} />
+      <AboutSubnav activeRoute="about" navigate={navigate} />
       <section className="split-section about-story-section">
         <div>
           <p className="eyebrow">Mission</p>
@@ -5672,7 +5751,7 @@ function MissionPage({
         title="Making sustainability upgrades financially practical."
         copy="RetroFi is building a cleaner path from incentive discovery to confident retrofit decisions."
       />
-      <AboutSubnav navigate={navigate} />
+      <AboutSubnav activeRoute="about-mission" navigate={navigate} />
       <section className="two-column-section">
         <article className="feature-card">
           <h2>The problem</h2>
@@ -5719,42 +5798,105 @@ function TeamPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
+  const founders = [
+    {
+      bio: "Neer helps shape RetroFi’s product vision and partnerships, with a focus on turning complex sustainability programs into practical opportunities for property owners.",
+      initial: "N",
+      name: "Neer",
+    },
+    {
+      bio: "Ryan leads the development of RetroFi’s technology and data systems, creating a dependable experience that makes retrofit planning clearer and more actionable.",
+      initial: "R",
+      name: "Ryan",
+    },
+    {
+      bio: "Rajvansh focuses on strategy, operations, and customer outcomes, helping ensure that RetroFi’s recommendations translate into meaningful financial and environmental results.",
+      initial: "R",
+      name: "Rajvansh",
+    },
+  ] as const;
+
   return (
-    <PublicShell navigate={navigate} publicAuth={publicAuth}>
-      <PageHero
-        compact
-        eyebrow="Team"
-        title="Meet the team"
-        copy="RetroFi is built by a small team focused on product, data systems, retrofit research, and customer workflow."
-      />
-      <AboutSubnav navigate={navigate} />
-      <section className="team-grid">
-        {[
-          [
-            "Neer Kuchlous",
-            "Founder",
-            "Focuses on business development, customer workflow, and market validation."
-          ],
-          [
-            "Rajvansh Gupta",
-            "Founder",
-            "Leads product, data systems, and retrofit opportunity research."
-          ],
-          [
-            "Ryan Shen",
-            "Product & Engineering",
-            "Drives frontend iteration, production deployment, and admin and customer workflow improvements across RetroFi."
-          ]
-        ].map(([name, role, copy]) => (
-          <article className="team-card" key={name}>
-            <span>{name.split(" ").map((part) => part[0]).join("")}</span>
-            <div className="team-copy">
-              <h3>{name}</h3>
-              <strong>{role}</strong>
-              <p>{copy}</p>
-            </div>
-          </article>
-        ))}
+    <PublicShell
+      navigate={navigate}
+      pageClassName="about-founders-page home-page"
+      publicAuth={publicAuth}
+      showFooter
+    >
+      <section
+        aria-labelledby="about-founders-title"
+        className="about-founders-hero"
+      >
+        <div className="about-founders-hero-copy">
+          <p className="about-founders-eyebrow">About RetroFi</p>
+          <h1 id="about-founders-title">
+            Built to make better buildings easier to fund.
+          </h1>
+          <p className="about-founders-intro">
+            RetroFi brings together technology, practical retrofit expertise,
+            and financial insight to help property owners move from opportunity
+            to action.
+          </p>
+        </div>
+      </section>
+      <AboutSubnav activeRoute="about-team" navigate={navigate} />
+      <section
+        aria-labelledby="about-founders-heading"
+        className="content-section about-founders-section"
+      >
+        <header className="home-infographics-header about-founders-heading">
+          <p>Founding team</p>
+          <h2 id="about-founders-heading">Meet the founders</h2>
+        </header>
+        <div className="about-founders-grid">
+          {founders.map((founder) => {
+            const founderHeadingId = `about-founder-${founder.name.toLowerCase()}`;
+
+            return (
+              <article
+                aria-labelledby={founderHeadingId}
+                className="home-infographic-card about-founder-card"
+                key={founder.name}
+              >
+                <span aria-hidden="true" className="about-founder-portrait">
+                  {founder.initial}
+                </span>
+                <div className="about-founder-copy">
+                  <p className="about-founder-role">Co-founder</p>
+                  <h3 id={founderHeadingId}>{founder.name}</h3>
+                  <p>{founder.bio}</p>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+      <section
+        aria-labelledby="about-founders-cta-heading"
+        className="home-infographics-cta about-founders-cta"
+      >
+        <div>
+          <h2 id="about-founders-cta-heading">
+            Ready to uncover your retrofit opportunities?
+          </h2>
+        </div>
+        <div className="about-founders-cta-actions">
+          <button
+            className="about-founders-cta-primary"
+            onClick={() => navigate("scan")}
+            type="button"
+          >
+            Get Started
+            <ArrowUpRightIcon />
+          </button>
+          <button
+            className="about-founders-cta-secondary"
+            onClick={scrollToHomeHowItWorksFallback}
+            type="button"
+          >
+            See How It Works
+          </button>
+        </div>
       </section>
     </PublicShell>
   );
@@ -5775,7 +5917,7 @@ function TrustPage({
         title="Trust & Data"
         copy="RetroFi uses business and utility information only to prepare recommendations, estimate savings, and identify relevant opportunities."
       />
-      <AboutSubnav navigate={navigate} />
+      <AboutSubnav activeRoute="about-trust" navigate={navigate} />
       <section className="card-grid two trust-grid">
         <article className="feature-card list-card">
           <h2>What we collect</h2>
@@ -5872,7 +6014,7 @@ function ContactPage({
         title="Contact RetroFi"
         copy="Have questions before starting a scan or uploading business information? Reach out to us."
       />
-      <AboutSubnav navigate={navigate} />
+      <AboutSubnav activeRoute="about-contact" navigate={navigate} />
       <section className="two-column-section contact-layout">
         <article className="feature-card contact-card">
           <h2>Contact email</h2>
@@ -6554,7 +6696,11 @@ function ScanResultsPage({
             </p>
           </article>
         ) : null}
-        {error ? <p className="error-message">{error}</p> : null}
+        {error ? (
+          <p className="error-message" role="alert">
+            {error}
+          </p>
+        ) : null}
         <div className="hero-actions">
           <CTAButton navigate={navigate} route="home" variant="secondary">Back to Home</CTAButton>
           <button onClick={() => navigate("scan-energy-data")} type="button">
@@ -6746,8 +6892,18 @@ function EnergyDataUploadPage({
                 <p>Latest next step: detailed savings and ROI analysis once usable energy data is attached.</p>
               </article>
             </div>
-            {error ? <p className="error-message">{error}</p> : null}
-            {isLoading ? <RetroFiLogoLoader label="Loading your uploaded files..." size="md" tone="card" /> : null}
+            {error ? (
+              <p className="error-message" role="alert">
+                {error}
+              </p>
+            ) : null}
+            {isLoading ? (
+              <RetroFiLogoLoader
+                label="Loading your uploaded files..."
+                size="md"
+                tone="card"
+              />
+            ) : null}
             <section className="energy-upload-results">
               <div className="energy-upload-header">
                 <h2>Uploaded files</h2>
@@ -6911,6 +7067,8 @@ function IntakePage({
   const [stepIndex, setStepIndex] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isInitialStepRender = useRef(true);
+  const questionHeadingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     storeIntakeFormDraft(form);
@@ -6920,13 +7078,38 @@ function IntakePage({
     setStepIndex((current) => Math.min(current, Math.max(steps.length - 1, 0)));
   }, [steps.length]);
 
+  useEffect(() => {
+    if (isInitialStepRender.current) {
+      isInitialStepRender.current = false;
+      return;
+    }
+
+    window.scrollTo({ behavior: "auto", top: 0 });
+    questionHeadingRef.current?.focus({ preventScroll: true });
+  }, [stepIndex]);
+
   const currentStep = steps[stepIndex];
   const flow = intakeFlowForOrganizationType(form.organizationType);
   const displayStepTotal = flow === "unselected" ? 12 : steps.length;
   const displayStepCurrent = Math.min(stepIndex + 1, displayStepTotal);
   const isLastVisibleStep = displayStepCurrent === displayStepTotal;
   const currentChoiceValue =
-    currentStep?.field && typeof form[currentStep.field] === "string" ? form[currentStep.field] : "";
+    currentStep?.field && typeof form[currentStep.field] === "string"
+      ? form[currentStep.field]
+      : "";
+  const currentQuestionId = "intake-step-question";
+  const currentDescriptionId = currentStep?.description
+    ? "intake-step-description"
+    : undefined;
+  const currentRequirementId =
+    currentStep && currentStep.kind !== "review"
+      ? "intake-step-requirement"
+      : undefined;
+  const currentErrorId = error ? "intake-step-error" : undefined;
+  const currentFieldDescription =
+    [currentDescriptionId, currentRequirementId, currentErrorId]
+      .filter(Boolean)
+      .join(" ") || undefined;
 
   const reviewRows = useMemo(() => {
     const rows: Array<{ label: string; value: string }> = [
@@ -7144,7 +7327,12 @@ function IntakePage({
     if (currentStep.kind === "choice" && currentStep.field && currentStep.options) {
       const selectedValue = form[currentStep.field];
       return (
-        <div className="conversational-choice-grid">
+        <div
+          aria-describedby={currentFieldDescription}
+          aria-labelledby={currentQuestionId}
+          className="conversational-choice-grid"
+          role="group"
+        >
           {currentStep.options.map((option) => (
             <OptionCard
               isSelected={selectedValue === option.value}
@@ -7183,45 +7371,90 @@ function IntakePage({
 
     if (currentStep.kind === "textarea") {
       return (
-        <label className="conversational-input-shell">
+        <div className="conversational-input-shell">
           <textarea
+            aria-describedby={currentFieldDescription}
+            aria-invalid={Boolean(error)}
+            aria-labelledby={currentQuestionId}
+            aria-required={!currentStep.optional}
             name={currentStep.field}
             onChange={(event) => updateField(currentStep.field as keyof IntakeFormState, event.target.value)}
             placeholder={currentStep.placeholder}
             value={value}
           />
-        </label>
+        </div>
       );
     }
 
     return (
-      <label className="conversational-input-shell">
+      <div className="conversational-input-shell">
         <input
-          inputMode={currentStep.inputMode === "numeric" ? "numeric" : undefined}
+          aria-describedby={currentFieldDescription}
+          aria-invalid={Boolean(error)}
+          aria-labelledby={currentQuestionId}
+          aria-required={!currentStep.optional}
+          inputMode={
+            currentStep.inputMode === "numeric" ? "numeric" : undefined
+          }
           name={currentStep.field}
           onChange={(event) => updateField(currentStep.field as keyof IntakeFormState, event.target.value)}
           placeholder={currentStep.placeholder}
           type={currentStep.inputMode === "email" ? "email" : currentStep.inputMode === "tel" ? "tel" : currentStep.inputMode === "url" ? "url" : "text"}
           value={value}
         />
-      </label>
+      </div>
     );
   }
 
   return (
-    <PublicShell navigate={navigate} publicAuth={publicAuth}>
+    <PublicShell
+      navigate={navigate}
+      pageClassName="get-started-page home-page"
+      publicAuth={publicAuth}
+    >
       <section className="scan-page form-shell">
         <form className="intake-form conversational-intake-form" onSubmit={submitForm}>
           <div className="intake-shell">
-            <section className="step-question-area" key={currentStep?.id}>
-              <h2>{currentStep?.question}</h2>
-              {currentStep?.description ? <p>{currentStep.description}</p> : null}
-              {currentStep?.optional ? <p className="required-note">Optional</p> : null}
+            <ProgressBar
+              current={displayStepCurrent}
+              total={displayStepTotal}
+            />
+            <section
+              aria-atomic="true"
+              aria-live="polite"
+              className="step-question-area"
+              key={currentStep?.id}
+            >
+              <h2
+                id={currentQuestionId}
+                ref={questionHeadingRef}
+                tabIndex={-1}
+              >
+                {currentStep?.question}
+              </h2>
+              {currentStep?.description ? (
+                <p id={currentDescriptionId}>{currentStep.description}</p>
+              ) : null}
+              {currentStep?.optional ? (
+                <p className="required-note" id={currentRequirementId}>
+                  Optional
+                </p>
+              ) : currentRequirementId ? (
+                <span className="sr-only" id={currentRequirementId}>
+                  Required question.
+                </span>
+              ) : null}
             </section>
-            <div className="step-body">
-              {renderStepBody()}
-            </div>
-            {error ? <p className="error-message intake-error">{error}</p> : null}
+            <div className="step-body">{renderStepBody()}</div>
+            {error ? (
+              <p
+                className="error-message intake-error"
+                id={currentErrorId}
+                role="alert"
+              >
+                {error}
+              </p>
+            ) : null}
             <div className="step-bottom-area">
               <div className="bottom-controls">
                 {stepIndex > 0 ? (
@@ -7238,8 +7471,12 @@ function IntakePage({
                     </button>
                   ) : null}
                   {currentStep && currentStep.kind !== "review" ? (
-                    <button className="step-next-button" disabled={isSubmitting} type="submit">
-                      {isLastVisibleStep ? "Submit" : "Next →"}
+                    <button
+                      className="step-next-button"
+                      disabled={isSubmitting}
+                      type="submit"
+                    >
+                      {isLastVisibleStep ? "Submit" : "Continue →"}
                     </button>
                   ) : null}
                   {currentStep?.kind === "review" ? (
@@ -7249,7 +7486,6 @@ function IntakePage({
                   ) : null}
                 </div>
               </div>
-              <ProgressBar current={displayStepCurrent} total={displayStepTotal} />
               <div className="privacy-line">
                 <LockIcon />
                 <span>Your information is kept private and used only to prepare your recommendations.</span>
@@ -13648,6 +13884,8 @@ function RetrofitDetailFormModal({
   retrofit: RetrofitPreviewCard;
   submitError?: string | null;
 }) {
+  const modalRef = useRef<HTMLFormElement>(null);
+  const onCloseRef = useRef(onClose);
   const [answers, setAnswers] = useState<Record<string, string>>(() =>
     Object.fromEntries(getRetrofitFormQuestions(retrofit, initialAnswers).map((question) => [question.id, initialAnswers[question.id] || ""]))
   );
@@ -13657,9 +13895,69 @@ function RetrofitDetailFormModal({
     setAnswers(Object.fromEntries(getRetrofitFormQuestions(retrofit, initialAnswers).map((question) => [question.id, initialAnswers[question.id] || ""])));
   }, [initialAnswers, retrofit]);
 
-  const answeredCount = questions.filter((question) => (answers[question.id] || "").trim().length > 0).length;
-  const requiredQuestions = questions.filter((question) => isRetrofitQuestionRequired(question, answers));
-  const canSubmit = !isSubmitting && (requiredQuestions.length === 0 || requiredQuestions.every((question) => (answers[question.id] || "").trim().length > 0));
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  useEffect(() => {
+    const previouslyFocused =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    const animationFrame = window.requestAnimationFrame(() => {
+      modalRef.current
+        ?.querySelector<HTMLElement>(
+          "button:not(:disabled), input:not(:disabled), select:not(:disabled)",
+        )
+        ?.focus();
+    });
+
+    function handleModalKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onCloseRef.current();
+        return;
+      }
+
+      if (event.key !== "Tab" || !modalRef.current) return;
+      const focusableElements = Array.from(
+        modalRef.current.querySelectorAll<HTMLElement>(
+          "button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [href], [tabindex]:not([tabindex='-1'])",
+        ),
+      ).filter((element) => element.getClientRects().length > 0);
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (!firstElement || !lastElement) return;
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleModalKeyDown);
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      document.removeEventListener("keydown", handleModalKeyDown);
+      previouslyFocused?.focus();
+    };
+  }, []);
+
+  const answeredCount = questions.filter(
+    (question) => (answers[question.id] || "").trim().length > 0,
+  ).length;
+  const requiredQuestions = questions.filter((question) =>
+    isRetrofitQuestionRequired(question, answers),
+  );
+  const canSubmit =
+    !isSubmitting &&
+    (requiredQuestions.length === 0 ||
+      requiredQuestions.every(
+        (question) => (answers[question.id] || "").trim().length > 0,
+      ));
 
   function handleAnswerChange(questionId: string, value: string) {
     setAnswers((current) => ({
@@ -13728,15 +14026,29 @@ function RetrofitDetailFormModal({
 
   return (
     <div className="retrofit-form-backdrop" role="presentation">
-      <form aria-label={`${retrofit.name} project details`} className="retrofit-form-modal" onSubmit={handleSubmit}>
-        <button aria-label="Close project details form" className="retrofit-form-close-button" onClick={onClose} type="button">
+      <form
+        aria-labelledby="retrofit-form-title"
+        aria-modal="true"
+        className="retrofit-form-modal"
+        onSubmit={handleSubmit}
+        ref={modalRef}
+        role="dialog"
+      >
+        <button
+          aria-label="Close project details form"
+          className="retrofit-form-close-button"
+          onClick={onClose}
+          type="button"
+        >
           x
         </button>
         <header className="retrofit-form-header">
           <span className="soft-badge">Project details</span>
           <div>
-            <h2>{retrofit.name}</h2>
-            <p>{answeredCount} of {questions.length} answered</p>
+            <h2 id="retrofit-form-title">{retrofit.name}</h2>
+            <p>
+              {answeredCount} of {questions.length} answered
+            </p>
           </div>
         </header>
         <div className="retrofit-form-question-list">
@@ -13755,7 +14067,11 @@ function RetrofitDetailFormModal({
             </label>
           ))}
         </div>
-        {submitError ? <p className="error-message">{submitError}</p> : null}
+        {submitError ? (
+          <p className="error-message" role="alert">
+            {submitError}
+          </p>
+        ) : null}
         <footer className="retrofit-form-footer">
           <button className="secondary-button" disabled={isSubmitting} onClick={onClose} type="button">
             Back
@@ -13792,11 +14108,23 @@ function BillUploadModal({
   );
   const [showSkipWarning, setShowSkipWarning] = useState(false);
   const [fileError, setFileError] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const modalRef = useRef<HTMLElement>(null);
+  const warningModalRef = useRef<HTMLDivElement>(null);
+  const skipButtonRef = useRef<HTMLButtonElement>(null);
+  const onCloseRef = useRef(onClose);
+  const uploadStateRef = useRef(uploadState);
+  const wasSkipWarningOpenRef = useRef(false);
   const modalSeedRef = useRef({ isOpen: false, storageKey });
 
   useEffect(() => {
-    const shouldSeedState = isOpen && (!modalSeedRef.current.isOpen || modalSeedRef.current.storageKey !== storageKey);
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  useEffect(() => {
+    const shouldSeedState =
+      isOpen &&
+      (!modalSeedRef.current.isOpen ||
+        modalSeedRef.current.storageKey !== storageKey);
     if (shouldSeedState) {
       setUploadState(initialState);
       setCurrentStepIndex(initialStepId != null ? getBillUploadStepIndex(initialStepId) : getBillUploadResumeIndex(initialState));
@@ -13811,9 +14139,86 @@ function BillUploadModal({
       storeBillUploadState(storageKey, uploadState);
       onStateChange?.(uploadState);
     }
+    uploadStateRef.current = uploadState;
   }, [isOpen, onStateChange, storageKey, uploadState]);
 
-  const currentStep = BILL_UPLOAD_STEPS[Math.min(currentStepIndex, BILL_UPLOAD_STEPS.length - 1)];
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const previouslyFocused =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    const animationFrame = window.requestAnimationFrame(() => {
+      modalRef.current
+        ?.querySelector<HTMLElement>("button:not(:disabled), input:not(:disabled)")
+        ?.focus();
+    });
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      previouslyFocused?.focus();
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      wasSkipWarningOpenRef.current = false;
+      return undefined;
+    }
+    const activeSurface = showSkipWarning
+      ? warningModalRef.current
+      : modalRef.current;
+    const wasSkipWarningOpen = wasSkipWarningOpenRef.current;
+    wasSkipWarningOpenRef.current = showSkipWarning;
+    const animationFrame = window.requestAnimationFrame(() => {
+      if (showSkipWarning) {
+        warningModalRef.current
+          ?.querySelector<HTMLElement>("button:not(:disabled)")
+          ?.focus();
+      } else if (wasSkipWarningOpen) {
+        skipButtonRef.current?.focus();
+      }
+    });
+
+    function handleModalKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        if (showSkipWarning) {
+          setShowSkipWarning(false);
+        } else {
+          handleClose();
+        }
+        return;
+      }
+
+      if (event.key !== "Tab" || !activeSurface) return;
+      const focusableElements = Array.from(
+        activeSurface.querySelectorAll<HTMLElement>(
+          "button:not(:disabled), input:not(:disabled), [href], [tabindex]:not([tabindex='-1'])",
+        ),
+      ).filter((element) => element.getClientRects().length > 0);
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (!firstElement || !lastElement) return;
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleModalKeyDown);
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      document.removeEventListener("keydown", handleModalKeyDown);
+    };
+  }, [isOpen, showSkipWarning]);
+
+  const currentStep =
+    BILL_UPLOAD_STEPS[Math.min(currentStepIndex, BILL_UPLOAD_STEPS.length - 1)];
   const currentStatus = uploadState.statuses[currentStep.id];
   const uploadedStepSummaries = getBillUploadStepSummary(uploadState);
   const currentStepUploaded = currentStatus === "uploaded";
@@ -13857,7 +14262,7 @@ function BillUploadModal({
     event.target.value = "";
   }
 
-  function handleDrop(event: DragEvent<HTMLDivElement>) {
+  function handleDrop(event: DragEvent<HTMLElement>) {
     event.preventDefault();
     const file = event.dataTransfer.files?.[0];
     if (!file) return;
@@ -13933,23 +14338,34 @@ function BillUploadModal({
   function handleClose() {
     setShowSkipWarning(false);
     setFileError(null);
-    storeBillUploadState(storageKey, uploadState);
-    onClose();
+    storeBillUploadState(storageKey, uploadStateRef.current);
+    onCloseRef.current();
   }
 
   if (!isOpen) return null;
 
   return (
     <div
-      aria-modal="true"
       className={`bill-upload-backdrop${showSkipWarning ? " is-warning-open" : ""}`}
       data-testid="bill-upload-modal"
-      role="dialog"
       onDragOver={(event) => event.preventDefault()}
       onDrop={handleDrop}
+      role="presentation"
     >
-      <section className={`bill-upload-modal${showSkipWarning ? " is-dimmed" : ""}`} aria-labelledby="bill-upload-modal-title">
-        <button aria-label="Close upload modal" className="bill-upload-close-button" onClick={handleClose} type="button">
+      <section
+        aria-hidden={showSkipWarning ? true : undefined}
+        aria-labelledby="bill-upload-modal-title"
+        aria-modal={showSkipWarning ? undefined : true}
+        className={`bill-upload-modal${showSkipWarning ? " is-dimmed" : ""}`}
+        ref={modalRef}
+        role="dialog"
+      >
+        <button
+          aria-label="Close upload modal"
+          className="bill-upload-close-button"
+          onClick={handleClose}
+          type="button"
+        >
           <CloseIcon />
         </button>
 
@@ -13966,6 +14382,10 @@ function BillUploadModal({
                 onClick={() => handleStepTabClick(index)}
                 type="button"
               >
+                <span
+                  aria-hidden="true"
+                  className="bill-upload-progress-track"
+                />
                 <span className="sr-only">{step.utilityLabel} bill</span>
               </button>
             );
@@ -13977,45 +14397,40 @@ function BillUploadModal({
           <p>{currentStepUploaded ? "This utility bill data is available for retrofit estimates." : currentStep.subtitle}</p>
         </div>
 
-        <div
+        <label
           className={`bill-upload-dropzone${currentStepUploaded ? " is-complete" : ""}`}
-          onClick={() => fileInputRef.current?.click()}
           onDragOver={(event) => event.preventDefault()}
           onDrop={handleDrop}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              event.preventDefault();
-              fileInputRef.current?.click();
-            }
-          }}
         >
           <input
             accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg"
-            aria-label="Choose file"
+            aria-label={`Choose ${currentStep.utilityLabel.toLowerCase()} bill file`}
             className="sr-only"
             onChange={handleFilesSelected}
-            ref={fileInputRef}
             type="file"
           />
           <div className="bill-upload-dropzone-icon" aria-hidden="true">
             {currentStepUploaded ? <CheckIcon /> : <UploadCloudIcon />}
           </div>
-          <strong>{currentStepUploaded ? `${currentStep.utilityLabel} bill data loaded` : "Drag and drop your file here"}</strong>
-          <span>{currentStepUploaded ? "Used in current estimates" : "or"}</span>
-          <button
+          <strong>
+            {currentStepUploaded
+              ? `${currentStep.utilityLabel} bill data loaded`
+              : "Drag and drop your file here"}
+          </strong>
+          <span>
+            {currentStepUploaded ? "Used in current estimates" : "or"}
+          </span>
+          <span
             className="bill-upload-file-button"
-            onClick={(event) => {
-              event.stopPropagation();
-              fileInputRef.current?.click();
-            }}
-            type="button"
           >
             {currentStepUploaded ? "Replace file" : "Choose file"}
-          </button>
-          <small>{currentStepUploaded ? "Upload a replacement file to update this bill." : "Accepted formats: PDF, PNG, JPG"}</small>
-        </div>
+          </span>
+          <small>
+            {currentStepUploaded
+              ? "Upload a replacement file to update this bill."
+              : "Accepted formats: PDF, PNG, JPG"}
+          </small>
+        </label>
 
         {fileError ? <p className="bill-upload-error" role="alert">{fileError}</p> : null}
 
@@ -14048,7 +14463,12 @@ function BillUploadModal({
         </div>
 
         <footer className="bill-upload-footer">
-          <button className="bill-upload-skip-button" onClick={handleSkipStart} type="button">
+          <button
+            className="bill-upload-skip-button"
+            onClick={handleSkipStart}
+            ref={skipButtonRef}
+            type="button"
+          >
             Skip for now
           </button>
           <button className="bill-upload-continue-button" disabled={!canContinue} onClick={handleContinue} type="button">
@@ -14058,8 +14478,17 @@ function BillUploadModal({
       </section>
 
       {showSkipWarning ? (
-        <section className="bill-upload-warning-backdrop" aria-label="Skip upload warning" role="dialog">
-          <div className="bill-upload-warning-modal" aria-labelledby="bill-upload-warning-title">
+        <section
+          className="bill-upload-warning-backdrop"
+          role="presentation"
+        >
+          <div
+            aria-labelledby="bill-upload-warning-title"
+            aria-modal="true"
+            className="bill-upload-warning-modal"
+            ref={warningModalRef}
+            role="dialog"
+          >
             <div className="bill-upload-warning-icon" aria-hidden="true">
               <WarningIcon />
             </div>
@@ -23286,6 +23715,9 @@ export function App() {
 
   useEffect(() => {
     if (route !== "home") {
+      if (PUBLIC_SCROLL_RESET_ROUTES.has(route)) {
+        window.scrollTo({ behavior: "auto", top: 0 });
+      }
       return undefined;
     }
 
@@ -23293,6 +23725,7 @@ export function App() {
     const targetId = pendingPublicScrollTargetRef.current || targetFromHash;
 
     if (!targetId) {
+      window.scrollTo({ behavior: "auto", top: 0 });
       return undefined;
     }
 
@@ -23379,6 +23812,9 @@ export function App() {
 
   function navigate(nextRoute: Route) {
     const path = pathForRoute(nextRoute);
+    if (PUBLIC_SCROLL_RESET_ROUTES.has(nextRoute)) {
+      window.scrollTo({ behavior: "auto", top: 0 });
+    }
     window.history.pushState({}, "", path);
     setRoute(nextRoute);
   }

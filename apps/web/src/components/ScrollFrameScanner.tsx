@@ -51,7 +51,13 @@ function drawCoverImage(canvas: HTMLCanvasElement, image: HTMLImageElement) {
   }
 
   const rect = canvas.getBoundingClientRect();
-  const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+  const maximumPixelRatio = window.matchMedia("(max-width: 768px)").matches
+    ? 1.5
+    : 2;
+  const pixelRatio = Math.min(
+    window.devicePixelRatio || 1,
+    maximumPixelRatio,
+  );
   const nextWidth = Math.max(1, Math.round(rect.width * pixelRatio));
   const nextHeight = Math.max(1, Math.round(rect.height * pixelRatio));
 
@@ -124,11 +130,20 @@ export function ScrollFrameScanner({
     let backgroundPreloadTimer: number | null = null;
     let isDisposed = false;
     let lastReportedProgress = -1;
+    let scrollAnimationFrame = 0;
     let targetFrameIndex = 0;
     const everLoaded = Array.from({ length: frames.length }, () => false);
     const loadQueue: number[] = [];
     const queuedFrames = new Set<number>();
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const compactViewportQuery = window.matchMedia("(max-width: 768px)");
+    const connection = (
+      navigator as Navigator & { connection?: { saveData?: boolean } }
+    ).connection;
+    const shouldLimitBackgroundPreload = () =>
+      reducedMotionQuery.matches ||
+      compactViewportQuery.matches ||
+      connection?.saveData === true;
     const safeReducedMotionFrameIndex = Math.min(frames.length - 1, Math.max(0, reducedMotionFrameIndex));
     const initialFrameIndex = reducedMotionQuery.matches ? safeReducedMotionFrameIndex : 0;
     const canDrawToCanvas = (() => {
@@ -427,9 +442,64 @@ export function ScrollFrameScanner({
       }, BACKGROUND_PRELOAD_DELAY_MS);
     };
 
+    const cancelBackgroundPreload = () => {
+      if (backgroundPreloadTimer !== null) {
+        window.clearTimeout(backgroundPreloadTimer);
+        backgroundPreloadTimer = null;
+      }
+      backgroundPreloadObserver?.disconnect();
+      backgroundPreloadObserver = null;
+    };
+
+    const syncBackgroundPreloadPolicy = () => {
+      if (shouldLimitBackgroundPreload()) {
+        cancelBackgroundPreload();
+        return;
+      }
+
+      if (
+        backgroundPreloadObserver ||
+        backgroundPreloadTimer !== null ||
+        backgroundCursor >= frames.length
+      ) {
+        return;
+      }
+
+      if (
+        frames.length > LARGE_SEQUENCE_THRESHOLD &&
+        typeof window.IntersectionObserver === "function"
+      ) {
+        backgroundPreloadObserver = new IntersectionObserver(
+          (entries) => {
+            if (entries.some((entry) => entry.isIntersecting)) {
+              backgroundPreloadObserver?.disconnect();
+              backgroundPreloadObserver = null;
+              scheduleBackgroundPreload();
+            }
+          },
+          { rootMargin: "200% 0px" },
+        );
+        backgroundPreloadObserver.observe(section);
+      } else {
+        scheduleBackgroundPreload();
+      }
+    };
+
     const handleResize = () => syncAndDraw(true);
-    const handleScroll = () => syncAndDraw();
-    const handleReducedMotionChange = () => syncAndDraw(true);
+    const handleScroll = () => {
+      if (scrollAnimationFrame) {
+        return;
+      }
+
+      scrollAnimationFrame = window.requestAnimationFrame(() => {
+        scrollAnimationFrame = 0;
+        syncAndDraw();
+      });
+    };
+    const handleResponsiveMediaChange = () => {
+      syncAndDraw(true);
+      syncBackgroundPreloadPolicy();
+    };
 
     enqueuePriorityFrames([
       initialFrameIndex,
@@ -440,36 +510,30 @@ export function ScrollFrameScanner({
       initialFrameIndex + 2,
       initialFrameIndex - 2
     ]);
-    if (frames.length > LARGE_SEQUENCE_THRESHOLD && typeof window.IntersectionObserver === "function") {
-      backgroundPreloadObserver = new IntersectionObserver(
-        (entries) => {
-          if (entries.some((entry) => entry.isIntersecting)) {
-            backgroundPreloadObserver?.disconnect();
-            backgroundPreloadObserver = null;
-            scheduleBackgroundPreload();
-          }
-        },
-        { rootMargin: "200% 0px" }
-      );
-      backgroundPreloadObserver.observe(section);
-    } else {
-      scheduleBackgroundPreload();
-    }
+    syncBackgroundPreloadPolicy();
     syncAndDraw(true);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
-    reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
+    reducedMotionQuery.addEventListener("change", handleResponsiveMediaChange);
+    compactViewportQuery.addEventListener("change", handleResponsiveMediaChange);
 
     return () => {
       isDisposed = true;
-      if (backgroundPreloadTimer !== null) {
-        window.clearTimeout(backgroundPreloadTimer);
+      cancelBackgroundPreload();
+      if (scrollAnimationFrame) {
+        window.cancelAnimationFrame(scrollAnimationFrame);
       }
-      backgroundPreloadObserver?.disconnect();
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
-      reducedMotionQuery.removeEventListener("change", handleReducedMotionChange);
+      reducedMotionQuery.removeEventListener(
+        "change",
+        handleResponsiveMediaChange,
+      );
+      compactViewportQuery.removeEventListener(
+        "change",
+        handleResponsiveMediaChange,
+      );
     };
   }, [frames, pauseFrameAt, pauseFrameWhileSelector, reducedMotionFrameIndex, resumeFrameSelector, scrollDistanceViewportHeights]);
 
