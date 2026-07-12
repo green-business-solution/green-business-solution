@@ -65,6 +65,8 @@ Rollback requires the original `--run-id` value, which the script emits in its J
 The script only touches active admin records and records its protection markers on the repaired rows so
 future rollbacks can target the exact repair batch.
 
+Its DynamoDB scan aliases the reserved `role` attribute in the projection expression, so the repair can inspect admin users without tripping over the reserved word.
+
 ## Deploy Command
 
 ```sh
