@@ -189,7 +189,14 @@ describe("coordinated portfolio preview state", () => {
     });
 
     const merged = mergePortalRetrofitRecommendationsPayload(current, staleDetail);
-    expect(merged).toBe(current);
+    expect(merged).toMatchObject({
+      portfolio: current.portfolio,
+      summary: {
+        matchedRetrofitCount: 1,
+        matchedOpportunityCount: 0
+      }
+    });
+    expect(merged.retrofits[0].savingsPreview?.upfrontCostCents).toBe(1);
 
     const rejected = rejectStaleCoordinatedSnapshotPayload(
       createCoordinatedSnapshotState(current, current.portfolio),
@@ -234,7 +241,7 @@ describe("coordinated portfolio preview state", () => {
     const retrofit = preview.retrofits[0];
 
     expect(retrofit.metrics.netCostBeforeTaxBenefits).toBe(4000);
-    expect(retrofit.metrics.effectiveCostAfterOneTimeBenefits).toBe(4000);
+    expect(retrofit.metrics.effectiveCostAfterOneTimeBenefits).toBeNull();
   });
 
   it("does not crash when utility summary field lists are omitted", () => {

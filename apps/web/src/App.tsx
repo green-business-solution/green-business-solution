@@ -8374,9 +8374,10 @@ function billUploadStepIdsFromIntake(intake: IntakeRecord) {
   intake.utilityExtractedValues.forEach((value) => addFieldId(value.fieldId));
   intake.siteEnergyProfile?.availableFieldIds?.forEach(addFieldId);
   intake.siteEnergyProfile?.utilitySummaries?.forEach((summary) => {
-    if (summary.uploadedFileCount || summary.processedFileCount || summary.availableFieldIds.length) {
+    const availableFieldIds = summary.availableFieldIds ?? [];
+    if (summary.uploadedFileCount || summary.processedFileCount || availableFieldIds.length) {
       addStepId(summary.utilityCategory);
-      summary.availableFieldIds.forEach(addFieldId);
+      availableFieldIds.forEach(addFieldId);
     }
   });
 

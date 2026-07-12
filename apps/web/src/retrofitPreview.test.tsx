@@ -3067,10 +3067,10 @@ describe("retrofit recommendations preview", () => {
     );
     const chatsRouteSource = source.slice(
       source.indexOf('if (effectiveRoute === "chats")'),
-      source.indexOf('if (effectiveRoute === "task-report")'),
+      source.indexOf('if (effectiveRoute === "tasks-report")'),
     );
     const reportRouteSource = source.slice(
-      source.indexOf('if (effectiveRoute === "task-report")'),
+      source.indexOf('if (effectiveRoute === "tasks-report")'),
       source.indexOf('if (effectiveRoute === "user-preview")'),
     );
     const adminPreviewRouteSource = source.slice(
@@ -3347,10 +3347,11 @@ describe("retrofit recommendations preview", () => {
     );
     expect(homeMobileNavCss).not.toContain("backdrop-filter");
     expect(homeMobileNavCss).not.toContain("rgba(237, 248, 242, 0.58)");
-    expect(homeSmallMobileCss).toContain(
+    const normalizedHomeSmallMobileCss = homeSmallMobileCss.replace(/\s+/g, " ");
+    expect(normalizedHomeSmallMobileCss).toContain(
       ".public-page.home-page .planet-scan-section.scroll-frame-scanner .planet-scan-title span",
     );
-    expect(homeSmallMobileCss).toContain("white-space: normal;");
+    expect(normalizedHomeSmallMobileCss).toContain("white-space: normal;");
   });
 
   it("renders the shared full-page loader with the RetroFi logo and dashboard status text", () => {
