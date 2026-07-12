@@ -3181,7 +3181,14 @@ function PublicNav({
           </button>
           <button
             className="link-button"
-            onClick={() => openHomeSection(HOME_PRICING_SECTION_ID)}
+            onClick={() => openHomeSection(HOME_DASHBOARD_SECTION_ID)}
+            type="button"
+          >
+            Dashboard
+          </button>
+          <button
+            className="link-button"
+            onClick={() => go("pricing")}
             type="button"
           >
             Pricing
@@ -3229,7 +3236,14 @@ function PublicNav({
             </button>
             <button
               className="link-button"
-              onClick={() => openHomeSection(HOME_PRICING_SECTION_ID)}
+              onClick={() => openHomeSection(HOME_DASHBOARD_SECTION_ID)}
+              type="button"
+            >
+              Dashboard
+            </button>
+            <button
+              className="link-button"
+              onClick={() => go("pricing")}
               type="button"
             >
               Pricing
@@ -3281,7 +3295,7 @@ function Footer({
         <button className="footer-link" onClick={() => scrollToHomeSectionFallback(HOME_DASHBOARD_SECTION_ID)} type="button">
           Dashboard
         </button>
-        <button className="footer-link" onClick={() => scrollToHomeSectionFallback(HOME_PRICING_SECTION_ID)} type="button">
+        <button className="footer-link" onClick={() => navigate("pricing")} type="button">
           Pricing
         </button>
         {canStartScan ? <button className="footer-link" onClick={() => navigate("scan")} type="button">Get Started</button> : null}
@@ -23913,6 +23927,10 @@ export function App() {
 
   if (effectiveRoute === "about-contact") {
     return <ContactPage navigate={navigate} publicAuth={publicAuth} />;
+  }
+
+  if (effectiveRoute === "pricing") {
+    return <PricingPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
   if (effectiveRoute === "scan") {

@@ -5,6 +5,7 @@ export type Route =
   | "about-team"
   | "about-trust"
   | "about-contact"
+  | "pricing"
   | "scan"
   | "scan-results"
   | "scan-energy-data"
@@ -39,7 +40,7 @@ export function routePathMatchFromPath(
   if (pathname === "/" || pathname === "/for-businesses")
     return { isKnownPath: true, route: "home" };
   if (pathname === "/how-it-works") return { isKnownPath: true, route: "home" };
-  if (pathname === "/pricing") return { isKnownPath: true, route: "home" };
+  if (pathname === "/pricing") return { isKnownPath: true, route: "pricing" };
   if (pathname === "/database") return { isKnownPath: true, route: "admin" };
   if (pathname === "/about") return { isKnownPath: true, route: "about" };
   if (pathname === "/about/mission")
