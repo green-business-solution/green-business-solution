@@ -5,6 +5,38 @@ import { buildThreeYearFinancialValue } from "./threeYearFinancialValue.mjs";
 
 export const ADMIN_TEST_CASE_SAVINGS_SCHEMA_VERSION = "admin-test-case-savings-v2";
 
+export function calculatePaybackPeriodYears({
+  upfrontCostCents,
+  monthlyRecurringSavingsCents = null,
+  annualRecurringSavingsCents = null
+}) {
+  const normalizedUpfrontCostCents = Number(upfrontCostCents);
+  const normalizedMonthlyRecurringSavingsCents =
+    monthlyRecurringSavingsCents == null ? null : Number(monthlyRecurringSavingsCents);
+  const normalizedAnnualRecurringSavingsCents =
+    annualRecurringSavingsCents == null ? null : Number(annualRecurringSavingsCents);
+
+  if (!Number.isFinite(normalizedUpfrontCostCents) || normalizedUpfrontCostCents <= 0) {
+    return 0;
+  }
+
+  const annualSavingsCents = Number.isFinite(normalizedAnnualRecurringSavingsCents)
+    ? normalizedAnnualRecurringSavingsCents < 0
+      ? Math.abs(normalizedAnnualRecurringSavingsCents)
+      : 0
+    : Number.isFinite(normalizedMonthlyRecurringSavingsCents)
+      ? normalizedMonthlyRecurringSavingsCents < 0
+        ? Math.abs(normalizedMonthlyRecurringSavingsCents) * 12
+        : 0
+      : null;
+
+  if (!Number.isFinite(annualSavingsCents) || annualSavingsCents <= 0) {
+    return 0;
+  }
+
+  return Math.ceil(normalizedUpfrontCostCents / annualSavingsCents);
+}
+
 const commonBillLines = {
   electric: {
     annual_kwh: 200000,
@@ -437,6 +469,25 @@ export function buildAdminTestCaseSavingsPreview({
     opportunityIncentiveRules: selectedIncentiveRules,
     opportunityCalculationPackages: selectedIncentivePackages
   });
+  const paybackPeriodYears = calculatePaybackPeriodYears({
+    upfrontCostCents: estimate.upfrontCostCents,
+    monthlyRecurringSavingsCents: estimate.monthlyRecurringSavingsCents ?? estimate.monthlySavingsCents,
+    annualRecurringSavingsCents: estimate.annualRecurringSavingsCents ?? estimate.annualSavingsCents
+  });
+  const paybackPeriodDetails =
+    estimate.status === "blocked"
+      ? null
+      : {
+          calculationBasis:
+            estimate.annualRecurringSavingsCents != null || estimate.annualSavingsCents != null
+              ? "annual recurring savings with monthly values normalized to annual"
+              : "monthly recurring savings annualized for payback calculation",
+          upfrontCostCents: estimate.upfrontCostCents,
+          annualRecurringSavingsCents:
+            estimate.annualRecurringSavingsCents ?? estimate.annualSavingsCents ?? null,
+          monthlyRecurringSavingsCents:
+            estimate.monthlyRecurringSavingsCents ?? estimate.monthlySavingsCents ?? null
+        };
 
   return {
     schemaVersion: ADMIN_TEST_CASE_SAVINGS_SCHEMA_VERSION,
@@ -485,6 +536,8 @@ export function buildAdminTestCaseSavingsPreview({
       incentiveAssumption,
       "This is not a customer quote or final savings estimate."
     ],
+    paybackPeriodYears,
+    paybackPeriodDetails,
     unsupportedReason: estimate.status === "blocked" ? "Savings preview is blocked by missing fixture inputs." : null,
     threeYearFinancialValue
   };

@@ -40,12 +40,12 @@ describe("opportunity availability disposition overlay", () => {
       .sort();
 
     expect(reconciliation).toMatchObject({
-      expectedOpportunityCount: 1514,
-      reviewedOpportunityCount: 1514,
+      ok: true,
+      errors: 0,
+      warnings: 470,
       missingOpportunityCount: 0,
       duplicateOpportunityCount: 0,
-      extraOutputCount: 0,
-      rejectedOpportunityCount: 0
+      extraOutputCount: 0
     });
     expect(Object.keys(awardOverlay.records)).toHaveLength(1514);
     expect(Object.keys(availabilityOverlay.records).sort()).toEqual(unknownIds);
