@@ -28,6 +28,10 @@ export function rowScopeForIdempotency(portfolioId, scenarioId = "default") {
   return `${portfolioStateKeys.idempotencyPrefix}#${portfolioId}#${scenarioId}`;
 }
 
+function legacyIdempotencyScope(portfolioId) {
+  return `${portfolioStateKeys.idempotencyPrefix}#${portfolioId}`;
+}
+
 export async function loadPortfolioById({ db, tableName, portfolioId, userId }) {
   const scope = portfolioStateKeys.scopeFor(portfolioId);
   const rows = await queryScopeItems(db, tableName, scope);
@@ -247,7 +251,7 @@ export async function loadIdempotencyReceipt({ db, tableName, portfolioId, scena
       new GetCommand({
         TableName: tableName,
         Key: {
-          stateScope: rowScopeForIdempotency(portfolioId),
+          stateScope: legacyIdempotencyScope(portfolioId),
           stateKey: String(idempotencyKey)
         },
         ConsistentRead: true

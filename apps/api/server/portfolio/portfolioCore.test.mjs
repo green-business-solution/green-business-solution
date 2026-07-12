@@ -374,7 +374,7 @@ describe("portfolio handlers", () => {
       idempotencyKey: "legacy-idem-001"
     });
 
-    expect(receipt).toMatchObject({ status: "LEGACY" });
+    expect(receipt?.result).toMatchObject({ status: "LEGACY" });
   });
 });
 

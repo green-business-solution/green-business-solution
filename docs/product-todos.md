@@ -77,8 +77,7 @@ conversation.
 - Keep detailed repaired blockers, requirements, applicant rules, geography, utility territories, and evidence available for debugging/admin review, but do not make that the primary user-facing experience.
 
 ## Test Cases Page
-
-- Add payback period information to the test cases page so each retrofit/test-case estimate can show the expected payback period alongside cost, savings, opportunity, and ROI details.
+The test cases page now shows payback period alongside cost, savings, opportunity, and ROI details.
 
 ## Publish Gate And Automation
 
