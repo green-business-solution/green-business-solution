@@ -4,6 +4,7 @@ import { calculatePortfolioReadModel } from "./calculation/marginalValues.mjs";
 import { loadAggregateFromEvents, aggregateSnapshot } from "./domain/aggregate.mjs";
 import { PORTFOLIO_EVENT_TYPES, createEventEnvelope } from "./domain/events.mjs";
 import { completePortfolioItemHandler, isPortfolioFeatureEnabled, recalculatePortfolioHandler, readPortfolioHandler } from "./http/portfolioHandlers.mjs";
+import { loadIdempotencyReceipt } from "./persistence/portfolioStore.mjs";
 
 const portfolioId = "portfolio_client_001";
 const user = {
@@ -194,6 +195,38 @@ describe("portfolio handlers", () => {
     }
   });
 
+  it("preserves intake order when seeding a new portfolio", async () => {
+    process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
+
+    const db = createMockDb();
+    const result = await readPortfolioHandler({
+      db,
+      tableName: "gbs-api-runtime-state",
+      user,
+      portfolioId,
+      intake: {
+        portfolioSeedItems: [
+          {
+            portfolioItemId: "item_b",
+            title: "Battery",
+            independentFinancialValueMinorUnits: 70000,
+            ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+          },
+          {
+            portfolioItemId: "item_a",
+            title: "Lighting",
+            independentFinancialValueMinorUnits: 60000,
+            ruleFamilyId: DEFAULT_CAP_RULE.ruleFamilyId
+          }
+        ]
+      },
+      scenarioId: "scenario-a",
+      now: new Date("2026-07-10T10:05:00.000Z")
+    });
+
+    expect(result.scenario.order).toEqual(["item_b", "item_a"]);
+  });
+
   it("supports idempotent completion, rejects payload drift, and blocks stale versions", async () => {
     process.env.RETROFI_PORTFOLIO_WRITE_ENABLED = "1";
 
@@ -241,7 +274,7 @@ describe("portfolio handlers", () => {
     expect(first.portfolioVersion).toBeGreaterThan(1);
     expect(db.items.filter((item) => item.recordType === "EVENT")).toHaveLength(4);
     expect(db.items.find((item) => item.recordType === "SNAPSHOT" && item.stateKey === "SNAPSHOT#PRIMARY")?.aggregateVersion).toBe(first.portfolioVersion);
-    expect(db.items.find((item) => item.stateScope === "PORTFOLIO_IDEMPOTENCY#portfolio_client_001" && item.stateKey === "idem-001")?.result).toEqual(first);
+    expect(db.items.find((item) => item.stateScope === "PORTFOLIO_IDEMPOTENCY#portfolio_client_001#default" && item.stateKey === "idem-001")?.result).toEqual(first);
 
     const duplicate = await completePortfolioItemHandler({
       db,
@@ -320,6 +353,28 @@ describe("portfolio handlers", () => {
       status: 409,
       code: "PORTFOLIO_CALCULATION_STALE"
     });
+  });
+
+  it("reuses legacy idempotency receipts", async () => {
+    const db = createMockDb([
+      {
+        stateScope: "PORTFOLIO_IDEMPOTENCY#portfolio_client_001",
+        stateKey: "legacy-idem-001",
+        payloadHash: "legacy-hash",
+        commandId: "legacy-command",
+        result: { status: "LEGACY" },
+        createdAt: "2026-07-10T10:00:00.000Z"
+      }
+    ]);
+
+    const receipt = await loadIdempotencyReceipt({
+      db,
+      tableName: "gbs-api-runtime-state",
+      portfolioId,
+      idempotencyKey: "legacy-idem-001"
+    });
+
+    expect(receipt).toMatchObject({ status: "LEGACY" });
   });
 });
 

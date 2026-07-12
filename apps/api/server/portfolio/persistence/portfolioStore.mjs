@@ -24,8 +24,8 @@ export function rowScopeForOutbox(portfolioId) {
   return `PORTFOLIO_OUTBOX#${portfolioId}`;
 }
 
-export function rowScopeForIdempotency(portfolioId) {
-  return `${portfolioStateKeys.idempotencyPrefix}#${portfolioId}`;
+export function rowScopeForIdempotency(portfolioId, scenarioId = "default") {
+  return `${portfolioStateKeys.idempotencyPrefix}#${portfolioId}#${scenarioId}`;
 }
 
 export async function loadPortfolioById({ db, tableName, portfolioId, userId }) {
@@ -97,6 +97,7 @@ export async function seedPortfolioRecord({
     calculationRunId: "run-0",
     calculationRunSequence: 0,
     eventCount: aggregate.aggregateVersion,
+    itemOrder: aggregate.itemOrder || [],
     updatedAt: now.toISOString()
   };
 
@@ -106,6 +107,7 @@ export async function seedPortfolioRecord({
     db,
     tableName,
     portfolioId,
+    scenarioId,
     expectedVersion: null,
     events: [seedEvent],
     snapshot,
@@ -121,6 +123,7 @@ export async function appendPortfolioUpdate({
   db,
   tableName,
   portfolioId,
+  scenarioId = "default",
   expectedVersion,
   events,
   snapshot,
@@ -208,7 +211,7 @@ export async function appendPortfolioUpdate({
       Put: {
         TableName: tableName,
         Item: {
-          stateScope: rowScopeForIdempotency(portfolioId),
+          stateScope: rowScopeForIdempotency(portfolioId, scenarioId),
           stateKey: String(idempotencyReceipt.idempotencyKey),
           payloadHash: idempotencyReceipt.payloadHash,
           commandId: idempotencyReceipt.commandId,
@@ -223,23 +226,44 @@ export async function appendPortfolioUpdate({
   await db.send(new TransactWriteCommand({ TransactItems: transactItems }));
 }
 
-export async function loadIdempotencyReceipt({ db, tableName, portfolioId, idempotencyKey }) {
+export async function loadIdempotencyReceipt({ db, tableName, portfolioId, scenarioId = "default", idempotencyKey }) {
   const result = await db.send(
     new GetCommand({
       TableName: tableName,
       Key: {
-        stateScope: rowScopeForIdempotency(portfolioId),
+        stateScope: rowScopeForIdempotency(portfolioId, scenarioId),
         stateKey: String(idempotencyKey)
-      }
+      },
+      ConsistentRead: true
     })
   );
-  return result.Item || null;
+
+  if (result.Item) {
+    return result.Item;
+  }
+
+  if (scenarioId === "default") {
+    const legacyResult = await db.send(
+      new GetCommand({
+        TableName: tableName,
+        Key: {
+          stateScope: rowScopeForIdempotency(portfolioId),
+          stateKey: String(idempotencyKey)
+        },
+        ConsistentRead: true
+      })
+    );
+    return legacyResult.Item || null;
+  }
+
+  return null;
 }
 
 export async function storeIdempotencyReceipt({
   db,
   tableName,
   portfolioId,
+  scenarioId = "default",
   idempotencyKey,
   payloadHash,
   commandId,
@@ -249,7 +273,7 @@ export async function storeIdempotencyReceipt({
     new PutCommand({
       TableName: tableName,
       Item: {
-        stateScope: rowScopeForIdempotency(portfolioId),
+        stateScope: rowScopeForIdempotency(portfolioId, scenarioId),
         stateKey: String(idempotencyKey),
         payloadHash,
         commandId,
@@ -292,6 +316,7 @@ function queryScopeItems(db, tableName, scope) {
           KeyConditionExpression: "#stateScope = :stateScope",
           ExpressionAttributeNames: { "#stateScope": "stateScope" },
           ExpressionAttributeValues: { ":stateScope": scope },
+          ConsistentRead: true,
           ExclusiveStartKey: exclusiveStartKey
         })
       );

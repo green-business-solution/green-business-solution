@@ -68,7 +68,7 @@ export function readPortfolioHandler({ db, tableName, user, portfolioId, intake 
     }
 
     const scenarioOrder = resolveScenarioOrder({
-      requestedItemIds: snapshot.itemOrder || [],
+      requestedItemIds: snapshot.itemOrder || aggregate.itemOrder || [],
       fallbackItemIds: Object.keys(aggregate.items || {})
     });
 
@@ -143,7 +143,7 @@ export async function completePortfolioItemHandler({
     financialSelection: payload.financialSelection
   });
 
-  const existingReceipt = await loadIdempotencyReceipt({ db, tableName, portfolioId, idempotencyKey });
+  const existingReceipt = await loadIdempotencyReceipt({ db, tableName, portfolioId, scenarioId, idempotencyKey });
   if (existingReceipt) {
     if (existingReceipt.payloadHash === payloadHash) {
       return existingReceipt.result;
@@ -237,7 +237,7 @@ export async function completePortfolioItemHandler({
   });
 
   const scenarioOrder = resolveScenarioOrder({
-    requestedItemIds: snapshot?.itemOrder || [],
+    requestedItemIds: snapshot?.itemOrder || aggregate.itemOrder || [],
     fallbackItemIds: Object.keys(nextAggregate.items || {})
   });
 
@@ -272,7 +272,8 @@ export async function completePortfolioItemHandler({
     latestCalculationBinding: calculationBinding,
     calculationRunId: currentRunId,
     calculationRunSequence: extractRunValue(currentRunId),
-    eventCount: nextAggregate.events.length
+    eventCount: nextAggregate.events.length,
+    itemOrder: nextAggregate.itemOrder || []
   };
 
   const response = {
@@ -290,6 +291,7 @@ export async function completePortfolioItemHandler({
       db,
       tableName,
       portfolioId,
+      scenarioId,
       expectedVersion: expectedPortfolioVersion,
       events: [completeEvent, recalculationEvent, ledgerEvent],
       snapshot: snapshotRecord,
@@ -309,7 +311,7 @@ export async function completePortfolioItemHandler({
       eventCount: aggregate.events.length
     });
   } catch (error) {
-    const retryReceipt = await loadIdempotencyReceipt({ db, tableName, portfolioId, idempotencyKey });
+    const retryReceipt = await loadIdempotencyReceipt({ db, tableName, portfolioId, scenarioId, idempotencyKey });
     if (retryReceipt?.payloadHash === payloadHash) {
       return retryReceipt.result;
     }
@@ -348,7 +350,7 @@ export async function recalculatePortfolioHandler({
   }
 
   const payloadHash = hashPayload(payload);
-  const existingReceipt = await loadIdempotencyReceipt({ db, tableName, portfolioId, idempotencyKey });
+  const existingReceipt = await loadIdempotencyReceipt({ db, tableName, portfolioId, scenarioId, idempotencyKey });
   if (existingReceipt) {
     if (existingReceipt.payloadHash === payloadHash) return existingReceipt.result;
     const error = new Error("Reused idempotency key with different payload.");
@@ -405,7 +407,7 @@ export async function recalculatePortfolioHandler({
   });
 
   const scenarioOrder = resolveScenarioOrder({
-    requestedItemIds: snapshot.itemOrder || [],
+    requestedItemIds: snapshot.itemOrder || aggregate.itemOrder || [],
     fallbackItemIds: Object.keys(nextAggregate.items || {})
   });
 
@@ -425,7 +427,8 @@ export async function recalculatePortfolioHandler({
     latestCalculationBinding: calculationBinding,
     calculationRunId: runId,
     calculationRunSequence: extractRunValue(runId),
-    eventCount: nextAggregate.events.length
+    eventCount: nextAggregate.events.length,
+    itemOrder: nextAggregate.itemOrder || []
   };
 
   const response = {
@@ -442,6 +445,7 @@ export async function recalculatePortfolioHandler({
       db,
       tableName,
       portfolioId,
+      scenarioId,
       expectedVersion: aggregate.aggregateVersion,
       events: [recalcEvent],
       snapshot: snapshotRecord,
@@ -461,7 +465,7 @@ export async function recalculatePortfolioHandler({
       eventCount: aggregate.events.length
     });
   } catch (error) {
-    const retryReceipt = await loadIdempotencyReceipt({ db, tableName, portfolioId, idempotencyKey });
+    const retryReceipt = await loadIdempotencyReceipt({ db, tableName, portfolioId, scenarioId, idempotencyKey });
     if (retryReceipt?.payloadHash === payloadHash) {
       return retryReceipt.result;
     }
