@@ -2,7 +2,9 @@
 
 The current RetroFi homepage is the design system source of truth.
 
-This document reverse engineers the homepage visual language from the public homepage modules and `apps/web/src/styles.css`. Treat these values and behaviors as constraints, not suggestions. Do not restyle, normalize, or "improve" them when building adjacent public surfaces unless the user explicitly asks to change the homepage system itself.
+This document reverse engineers the homepage visual language from the public homepage modules and `apps/web/src/styles.css`.
+Treat these values and behaviors as constraints, not suggestions.
+Do not restyle, normalize, or "improve" them when building adjacent public surfaces unless the user explicitly asks to change the homepage system itself.
 
 ## Scope
 
@@ -15,6 +17,7 @@ Canonical source files:
 - `apps/web/src/pages/home/sections/hero/PlanetScanHero.tsx`
 - `apps/web/src/pages/home/sections/insights/HomeInfographicSection.tsx`
 - `apps/web/src/pages/home/sections/journey/HomeJourneySections.tsx`
+- `apps/web/src/pages/home/sections/dashboard/HomeDashboardPreviewSection.tsx`
 - `apps/web/src/pages/home/sections/pricing/CustomerPricingSection.tsx`
 - `apps/web/src/components/public/PublicShell.tsx`
   - `PublicNav` and the shared public header/footer shell when rendered with `pageClassName="home-page"`.
@@ -23,6 +26,7 @@ Canonical source files:
 - `apps/web/src/pages/home/sections/hero/hero.css`
 - `apps/web/src/pages/home/sections/insights/insights.css`
 - `apps/web/src/pages/home/sections/journey/journey.css`
+- `apps/web/src/pages/home/sections/dashboard/dashboard.css`
 - `apps/web/src/pages/home/sections/pricing/pricing.css`
 - `apps/web/src/styles.css`
   - Public site root variables near `/* Retrofi public site */`
