@@ -845,11 +845,10 @@ export function HowItWorksJourneySection({
             data-journey-control="instructions"
           >
             <p>How it works</p>
-            <h2 id="journey-first-visit-prompt-title">Scroll rules</h2>
+            <h2 id="journey-first-visit-prompt-title">Scroll controls</h2>
             <span>
-              Click the slideshow to explore. While active, scrolling moves through the slides.
-              Click outside to return to page scrolling. At the end, keep scrolling to continue
-              down the page.
+              Click the slideshow, then scroll to move through the slides. Click outside to return
+              to the page. At the end, keep scrolling to continue down.
             </span>
             <button
               aria-label="Dismiss slideshow instructions"
