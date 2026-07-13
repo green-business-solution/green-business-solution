@@ -37,6 +37,17 @@ describe("select-ci-checks", () => {
     expect(classifyCiChecks(["package-lock.json"], { baseLock, headLock }).checks).toEqual(["web", "audit"]);
   });
 
+  it("routes frame-generator and Sharp lockfile changes to web checks", () => {
+    expect(classifyCiChecks(["scripts/generate-home-journey-frames.mjs"]).checks).toEqual([
+      "web",
+      "scripts"
+    ]);
+
+    const baseLock = lockfile({ sharpVersion: "0.34.4" });
+    const headLock = lockfile({ sharpVersion: "0.34.5" });
+    expect(classifyCiChecks(["package-lock.json"], { baseLock, headLock }).checks).toEqual(["web", "audit"]);
+  });
+
   it("routes test-only lockfile changes to script checks and audits", () => {
     const baseLock = lockfile({ vitestVersion: "3.2.5" });
     const headLock = lockfile({ vitestVersion: "3.2.6" });
@@ -49,6 +60,7 @@ function lockfile(options = {}) {
   const viteVersion = options.viteVersion || "7.3.6";
   const esbuildVersion = options.esbuildVersion || "0.28.1";
   const expressVersion = options.expressVersion || "5.2.1";
+  const sharpVersion = options.sharpVersion || "0.34.5";
   const vitestVersion = options.vitestVersion || "3.2.6";
 
   return {
@@ -56,6 +68,7 @@ function lockfile(options = {}) {
     packages: {
       "": {
         devDependencies: {
+          sharp: sharpVersion,
           vite: viteVersion,
           vitest: vitestVersion
         }
@@ -106,6 +119,18 @@ function lockfile(options = {}) {
           react: "^19.0.0"
         },
         version: "19.0.0"
+      },
+      "node_modules/sharp": {
+        dev: true,
+        optionalDependencies: {
+          "@img/sharp-linux-x64": sharpVersion
+        },
+        version: sharpVersion
+      },
+      "node_modules/@img/sharp-linux-x64": {
+        dev: true,
+        optional: true,
+        version: sharpVersion
       },
       "node_modules/typescript": {
         dev: true,

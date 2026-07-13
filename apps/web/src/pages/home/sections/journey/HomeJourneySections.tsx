@@ -11,6 +11,7 @@ import {
   homeJourneyFirstFrame,
   homeJourneyFrameCount,
   homeJourneyFrames,
+  homeJourneyFrameTiers,
 } from "../../../../lib/homeJourneyFrames";
 import type { Route } from "../../../../routes";
 import { HomeDashboardPreviewSection } from "../dashboard/HomeDashboardPreviewSection";
@@ -881,6 +882,7 @@ export function HomeJourneyFrameSection() {
         }
         ariaLabel="How RetroFi works and transitions into the performance dashboard"
         className="home-journey-frame-scanner"
+        frameTiers={homeJourneyFrameTiers}
         frames={homeJourneyFrames}
         gradientOpacity={dashboardHandoffOpacity}
         onProgress={handleFrameProgress}
