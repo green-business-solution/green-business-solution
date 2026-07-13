@@ -848,7 +848,7 @@ export function HowItWorksJourneySection({
             <h2 id="journey-first-visit-prompt-title">Scroll controls</h2>
             <span>
               Click the slideshow, then scroll to move through the slides. Click outside to return
-              to the page. At the end, keep scrolling to continue down.
+              to the page.
             </span>
             <button
               aria-label="Dismiss slideshow instructions"
