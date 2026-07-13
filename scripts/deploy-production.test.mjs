@@ -95,3 +95,34 @@ describe("deploy-production fixture patching flow", () => {
     expect(ensureCall).toBeLessThan(packageApiCall);
   });
 });
+
+describe("deploy-production frame asset caching", () => {
+  const scriptSource = fs.readFileSync(scriptPath, "utf8");
+
+  it("excludes content-versioned animation frames from the short-lived site sync", () => {
+    expect(scriptSource).toMatch(
+      /s3 sync dist\/[^]*--exclude "how-it-works\/scroll-frames\/generated\/\*"[^]*--cache-control "public,max-age=60"/,
+    );
+  });
+
+  it("uploads generated frame versions with immutable caching without deleting an active prior version", () => {
+    const frameSync = scriptSource.match(
+      /aws_region s3 sync dist\/how-it-works\/scroll-frames\/generated\/[^]*?--cache-control "public,max-age=31536000,immutable"/,
+    )?.[0];
+
+    expect(frameSync).toBeDefined();
+    expect(frameSync).not.toContain("--delete");
+  });
+
+  it("uploads immutable frame files before publishing the site bundle that references them", () => {
+    const frameSyncIndex = scriptSource.indexOf(
+      "aws_region s3 sync dist/how-it-works/scroll-frames/generated/",
+    );
+    const siteSyncIndex = scriptSource.indexOf(
+      'aws_region s3 sync dist/ "s3://${frontend_bucket}/"',
+    );
+
+    expect(frameSyncIndex).toBeGreaterThan(-1);
+    expect(siteSyncIndex).toBeGreaterThan(frameSyncIndex);
+  });
+});

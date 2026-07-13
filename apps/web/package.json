@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "cd ../.. && vite",
-    "build": "cd ../.. && tsc -b && vite build",
+    "dev": "cd ../.. && npm run frames:home-journey && vite",
+    "build": "cd ../.. && npm run frames:home-journey && tsc -b && vite build",
     "typecheck": "cd ../.. && tsc -b"
   },
   "dependencies": {

@@ -1,11 +1,20 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 
+import {
+  chooseDecodedFramesToEvict,
+  getCanvasBackingSize,
+  getFrameRequestWindow,
+  selectFrameDeliveryPolicy,
+  type FrameSequenceTier,
+} from "../lib/frameDelivery";
+
 type ScrollFrameScannerProps = {
   afterStickyChildren?: ReactNode;
   ariaLabel?: string;
   ariaLabelledBy?: string;
   children?: ReactNode;
   className?: string;
+  frameTiers?: readonly FrameSequenceTier[];
   frames: string[];
   gradientOpacity?: number;
   id?: string;
@@ -19,12 +28,27 @@ type ScrollFrameScannerProps = {
 
 type FrameLoadState = "error" | "idle" | "loaded" | "loading";
 
-const BACKGROUND_PRELOAD_BATCH_SIZE = 6;
-const BACKGROUND_PRELOAD_DELAY_MS = 40;
-const FRAME_PRELOAD_RADIUS = 8;
-const LARGE_SEQUENCE_CACHE_LIMIT = 24;
-const LARGE_SEQUENCE_THRESHOLD = 80;
-const MAX_CONCURRENT_FRAME_LOADS = 6;
+type CachedFrame = {
+  bytes: number;
+  image: HTMLImageElement;
+  lastUsed: number;
+};
+
+type ActiveFrameRequest = {
+  finished: boolean;
+  image: HTMLImageElement;
+  index: number;
+};
+
+type NetworkInformationLike = EventTarget & {
+  effectiveType?: string;
+  saveData?: boolean;
+};
+
+const FALLBACK_TIER_HEIGHT = 720;
+const FALLBACK_TIER_WIDTH = 1280;
+const TRANSPARENT_PIXEL =
+  "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
@@ -39,31 +63,39 @@ function smoothstep(start: number, end: number, value: number) {
   return progress * progress * (3 - 2 * progress);
 }
 
-function drawCoverImage(canvas: HTMLCanvasElement, image: HTMLImageElement) {
+function drawCoverImage(
+  canvas: HTMLCanvasElement,
+  image: HTMLImageElement,
+  maximumCanvasPixels: number,
+) {
   if (typeof canvas.getContext !== "function") {
     return false;
   }
 
-  const context = canvas.getContext("2d");
+  let context: CanvasRenderingContext2D | null;
+  try {
+    context = canvas.getContext("2d");
+  } catch {
+    return false;
+  }
 
-  if (!context) {
+  if (!context || !image.naturalWidth || !image.naturalHeight) {
     return false;
   }
 
   const rect = canvas.getBoundingClientRect();
-  const maximumPixelRatio = window.matchMedia("(max-width: 768px)").matches
-    ? 1.5
-    : 2;
-  const pixelRatio = Math.min(
-    window.devicePixelRatio || 1,
-    maximumPixelRatio,
-  );
-  const nextWidth = Math.max(1, Math.round(rect.width * pixelRatio));
-  const nextHeight = Math.max(1, Math.round(rect.height * pixelRatio));
+  const backingSize = getCanvasBackingSize({
+    cssHeight: rect.height,
+    cssWidth: rect.width,
+    devicePixelRatio: window.devicePixelRatio || 1,
+    maxPixels: maximumCanvasPixels,
+    sourceHeight: image.naturalHeight,
+    sourceWidth: image.naturalWidth,
+  });
 
-  if (canvas.width !== nextWidth || canvas.height !== nextHeight) {
-    canvas.width = nextWidth;
-    canvas.height = nextHeight;
+  if (canvas.width !== backingSize.width || canvas.height !== backingSize.height) {
+    canvas.width = backingSize.width;
+    canvas.height = backingSize.height;
   }
 
   const imageRatio = image.naturalWidth / image.naturalHeight;
@@ -84,8 +116,29 @@ function drawCoverImage(canvas: HTMLCanvasElement, image: HTMLImageElement) {
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.imageSmoothingEnabled = true;
   context.imageSmoothingQuality = "high";
-  context.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
+  context.drawImage(
+    image,
+    sourceX,
+    sourceY,
+    sourceWidth,
+    sourceHeight,
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+  );
   return true;
+}
+
+function getConnection() {
+  return (navigator as Navigator & { connection?: NetworkInformationLike }).connection;
+}
+
+function isSlowConnection(connection: NetworkInformationLike | undefined) {
+  return connection?.saveData === true ||
+    connection?.effectiveType === "slow-2g" ||
+    connection?.effectiveType === "2g" ||
+    connection?.effectiveType === "3g";
 }
 
 export function ScrollFrameScanner({
@@ -94,6 +147,7 @@ export function ScrollFrameScanner({
   ariaLabelledBy,
   children,
   className,
+  frameTiers,
   frames,
   gradientOpacity,
   id,
@@ -102,15 +156,14 @@ export function ScrollFrameScanner({
   pauseFrameWhileSelector,
   reducedMotionFrameIndex = 0,
   resumeFrameSelector,
-  scrollDistanceViewportHeights
+  scrollDistanceViewportHeights,
 }: ScrollFrameScannerProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const imagesRef = useRef<Array<HTMLImageElement | null>>([]);
-  const loadStatesRef = useRef<FrameLoadState[]>([]);
   const currentFrameRef = useRef(-1);
   const onProgressRef = useRef(onProgress);
   const [isInitialFrameLoaded, setIsInitialFrameLoaded] = useState(false);
+  const [selectedTierId, setSelectedTierId] = useState("pending");
 
   useEffect(() => {
     onProgressRef.current = onProgress;
@@ -124,151 +177,167 @@ export function ScrollFrameScanner({
       return undefined;
     }
 
-    let activeLoads = 0;
-    let backgroundCursor = 0;
-    let backgroundPreloadObserver: IntersectionObserver | null = null;
-    let backgroundPreloadTimer: number | null = null;
-    let isDisposed = false;
-    let lastReportedProgress = -1;
-    let scrollAnimationFrame = 0;
-    let targetFrameIndex = 0;
-    const everLoaded = Array.from({ length: frames.length }, () => false);
-    const loadQueue: number[] = [];
-    const queuedFrames = new Set<number>();
+    const fallbackTier: FrameSequenceTier = {
+      format: "jpeg",
+      frames,
+      height: FALLBACK_TIER_HEIGHT,
+      id: "source",
+      width: FALLBACK_TIER_WIDTH,
+    };
+    const validTiers = frameTiers?.filter((tier) => tier.frames.length === frames.length) ?? [];
+    const availableTiers = validTiers.length > 0 ? validTiers : [fallbackTier];
+    const fallbackDeliveryTier = availableTiers.find((tier) => tier.frames === frames) ?? fallbackTier;
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const compactViewportQuery = window.matchMedia("(max-width: 768px)");
-    const connection = (
-      navigator as Navigator & { connection?: { saveData?: boolean } }
-    ).connection;
-    const shouldLimitBackgroundPreload = () =>
-      reducedMotionQuery.matches ||
-      compactViewportQuery.matches ||
-      connection?.saveData === true;
+    const connection = getConnection();
+    const canvasBounds = canvas.getBoundingClientRect();
+    const policy = selectFrameDeliveryPolicy(availableTiers, {
+      deviceMemory: (navigator as Navigator & { deviceMemory?: number }).deviceMemory,
+      devicePixelRatio: window.devicePixelRatio || 1,
+      effectiveType: connection?.effectiveType,
+      reducedMotion: reducedMotionQuery.matches,
+      renderedHeight: canvasBounds.height || window.innerHeight,
+      renderedWidth: canvasBounds.width || window.innerWidth,
+      saveData: connection?.saveData === true,
+      viewportWidth: window.innerWidth,
+    });
+    const selectedFrames = policy.tier.frames;
+    const selectedTierUsesFallback = selectedFrames === frames;
+    const primaryCache: Array<CachedFrame | null> = Array.from({ length: frames.length }, () => null);
+    const fallbackCache: Array<CachedFrame | null> = Array.from({ length: frames.length }, () => null);
+    const loadStates: FrameLoadState[] = Array.from({ length: frames.length }, () => "idle");
+    const activeRequests = new Map<number, ActiveFrameRequest>();
+    const queuedFrames = new Set<number>();
     const safeReducedMotionFrameIndex = Math.min(frames.length - 1, Math.max(0, reducedMotionFrameIndex));
     const initialFrameIndex = reducedMotionQuery.matches ? safeReducedMotionFrameIndex : 0;
-    const canDrawToCanvas = (() => {
-      try {
-        return typeof canvas.getContext === "function" && Boolean(canvas.getContext("2d"));
-      } catch {
-        return false;
-      }
-    })();
     const primaryMessage = section.querySelector<HTMLElement>(".planet-scan-message-primary");
     const nextMessage = section.querySelector<HTMLElement>(".planet-scan-message-next");
-    imagesRef.current = Array.from({ length: frames.length }, () => null);
-    loadStatesRef.current = Array.from({ length: frames.length }, () => "idle");
+    let activeLoads = 0;
+    let currentDrawKey = "";
+    let fallbackRequest: ActiveFrameRequest | null = null;
+    let pendingFallbackIndex: number | null = null;
+    let intersectionObserver: IntersectionObserver | null = null;
+    let isDisposed = false;
+    let isNearViewport = typeof window.IntersectionObserver !== "function";
+    let lastReportedProgress = -1;
+    let lastTargetFrameIndex = initialFrameIndex;
+    let loadQueue: number[] = [];
+    let scrollAnimationFrame = 0;
+    let targetFrameIndex = initialFrameIndex;
+    let usageClock = 0;
+
     currentFrameRef.current = -1;
     setIsInitialFrameLoaded(false);
+    setSelectedTierId(policy.tier.id);
 
-    const getBestLoadedFrameIndex = (targetIndex: number) => {
-      if (loadStatesRef.current[targetIndex] === "loaded" && imagesRef.current[targetIndex]) {
-        return targetIndex;
+    const isActive = () => isNearViewport && document.visibilityState !== "hidden";
+    const currentPreloadRadius = () => {
+      if (reducedMotionQuery.matches) {
+        return 0;
+      }
+      return isSlowConnection(connection) ? Math.min(1, policy.preloadRadius) : policy.preloadRadius;
+    };
+    const currentConcurrency = () =>
+      isSlowConnection(connection) ? Math.min(2, policy.maxConcurrentLoads) : policy.maxConcurrentLoads;
+
+    const touchCachedFrame = (entry: CachedFrame | null) => {
+      if (entry) {
+        usageClock += 1;
+        entry.lastUsed = usageClock;
+      }
+      return entry;
+    };
+
+    const getBestLoadedFrame = (index: number) => {
+      const exactPrimary = touchCachedFrame(primaryCache[index]);
+      if (exactPrimary) {
+        return { entry: exactPrimary, fallback: false, index };
+      }
+
+      const exactFallback = touchCachedFrame(fallbackCache[index]);
+      if (exactFallback) {
+        return { entry: exactFallback, fallback: true, index };
       }
 
       for (let distance = 1; distance < frames.length; distance += 1) {
-        const previousIndex = targetIndex - distance;
-        const nextIndex = targetIndex + distance;
+        const previousIndex = index - distance;
+        const nextIndex = index + distance;
 
-        if (
-          previousIndex >= 0 &&
-          loadStatesRef.current[previousIndex] === "loaded" &&
-          imagesRef.current[previousIndex]
-        ) {
-          return previousIndex;
+        if (previousIndex >= 0) {
+          const previousPrimary = touchCachedFrame(primaryCache[previousIndex]);
+          if (previousPrimary) {
+            return { entry: previousPrimary, fallback: false, index: previousIndex };
+          }
+          const previousFallback = touchCachedFrame(fallbackCache[previousIndex]);
+          if (previousFallback) {
+            return { entry: previousFallback, fallback: true, index: previousIndex };
+          }
         }
 
-        if (
-          nextIndex < frames.length &&
-          loadStatesRef.current[nextIndex] === "loaded" &&
-          imagesRef.current[nextIndex]
-        ) {
-          return nextIndex;
-        }
-      }
-
-      return -1;
-    };
-
-    const getScrollProgress = () => {
-      const scrollDistance = Math.max(
-        1,
-        scrollDistanceViewportHeights === undefined
-          ? section.offsetHeight - window.innerHeight
-          : window.innerHeight * Math.max(0, scrollDistanceViewportHeights - 1)
-      );
-
-      if (pauseFrameAt !== undefined && pauseFrameWhileSelector) {
-        const pauseTarget = section.querySelector<HTMLElement>(pauseFrameWhileSelector);
-
-        if (pauseTarget) {
-          const pauseTargetBounds = pauseTarget.getBoundingClientRect();
-
-          if (pauseTargetBounds.top <= 0 && pauseTargetBounds.bottom >= 0) {
-            return clamp(pauseFrameAt);
+        if (nextIndex < frames.length) {
+          const nextPrimary = touchCachedFrame(primaryCache[nextIndex]);
+          if (nextPrimary) {
+            return { entry: nextPrimary, fallback: false, index: nextIndex };
+          }
+          const nextFallback = touchCachedFrame(fallbackCache[nextIndex]);
+          if (nextFallback) {
+            return { entry: nextFallback, fallback: true, index: nextIndex };
           }
         }
       }
 
-      if (pauseFrameAt !== undefined && resumeFrameSelector) {
-        const resumeTarget = section.querySelector<HTMLElement>(resumeFrameSelector);
-
-        if (resumeTarget) {
-          const resumeTargetBounds = resumeTarget.getBoundingClientRect();
-
-          if (resumeTargetBounds.top <= 0) {
-            const resumeDistance = Math.max(1, resumeTargetBounds.height);
-            return clamp(pauseFrameAt + (1 - pauseFrameAt) * (-resumeTargetBounds.top / resumeDistance));
-          }
-        }
-      }
-
-      return clamp(-section.getBoundingClientRect().top / scrollDistance);
+      return null;
     };
 
-    const drawFrame = (frameIndex: number, force = false) => {
-      const bestFrameIndex = getBestLoadedFrameIndex(frameIndex);
-      const image = bestFrameIndex >= 0 ? imagesRef.current[bestFrameIndex] : null;
-
-      if (!image || (!force && bestFrameIndex === currentFrameRef.current)) {
+    const drawFrame = (index: number, force = false) => {
+      const loadedFrame = getBestLoadedFrame(index);
+      if (!loadedFrame) {
         return;
       }
 
-      currentFrameRef.current = bestFrameIndex;
-      if (drawCoverImage(canvas, image)) {
+      const drawKey = `${loadedFrame.fallback ? "fallback" : "primary"}:${loadedFrame.index}:${loadedFrame.entry.image.currentSrc || loadedFrame.entry.image.src}`;
+      if (!force && drawKey === currentDrawKey) {
+        return;
+      }
+
+      currentDrawKey = drawKey;
+      currentFrameRef.current = loadedFrame.index;
+      if (drawCoverImage(canvas, loadedFrame.entry.image, policy.maxCanvasPixels)) {
         canvas.style.removeProperty("background-image");
       } else {
-        canvas.style.backgroundImage = `url("${image.currentSrc || image.src}")`;
+        canvas.style.backgroundImage = `url("${loadedFrame.entry.image.currentSrc || loadedFrame.entry.image.src}")`;
       }
     };
 
     const trimDecodedFrameCache = () => {
-      if (frames.length <= LARGE_SEQUENCE_THRESHOLD) {
-        return;
+      const entries = [
+        ...primaryCache.flatMap((entry, index) => entry ? [{
+          bytes: entry.bytes,
+          fallback: false,
+          index,
+          lastUsed: entry.lastUsed,
+        }] : []),
+        ...fallbackCache.flatMap((entry, index) => entry ? [{
+          bytes: entry.bytes,
+          fallback: true,
+          index,
+          lastUsed: entry.lastUsed,
+        }] : []),
+      ];
+      const evictions = chooseDecodedFramesToEvict({
+        budget: policy.decodedByteBudget,
+        currentIndex: currentFrameRef.current,
+        entries,
+        targetIndex: targetFrameIndex,
+      });
+
+      for (const eviction of evictions) {
+        if (eviction.fallback) {
+          fallbackCache[eviction.index] = null;
+        } else {
+          primaryCache[eviction.index] = null;
+          loadStates[eviction.index] = "idle";
+        }
       }
-
-      const protectedFrames = new Set([0, frames.length - 1, safeReducedMotionFrameIndex, targetFrameIndex, currentFrameRef.current]);
-
-      for (let distance = 1; distance <= FRAME_PRELOAD_RADIUS; distance += 1) {
-        protectedFrames.add(targetFrameIndex - distance);
-        protectedFrames.add(targetFrameIndex + distance);
-      }
-
-      const loadedIndices = imagesRef.current
-        .map((image, index) => (image && loadStatesRef.current[index] === "loaded" ? index : -1))
-        .filter((index) => index >= 0);
-
-      if (loadedIndices.length <= LARGE_SEQUENCE_CACHE_LIMIT) {
-        return;
-      }
-
-      loadedIndices
-        .filter((index) => !protectedFrames.has(index))
-        .sort((first, second) => Math.abs(second - targetFrameIndex) - Math.abs(first - targetFrameIndex))
-        .slice(0, loadedIndices.length - LARGE_SEQUENCE_CACHE_LIMIT)
-        .forEach((index) => {
-          imagesRef.current[index] = null;
-          loadStatesRef.current[index] = "idle";
-        });
     };
 
     const applyCopyMotion = (progress: number) => {
@@ -300,34 +369,147 @@ export function ScrollFrameScanner({
       nextMessage.style.pointerEvents = copyIn > 0.8 ? "auto" : "none";
     };
 
-    const syncProgress = () => {
-      const progress = reducedMotionQuery.matches
-        ? safeReducedMotionFrameIndex / Math.max(1, frames.length - 1)
-        : getScrollProgress();
-      const frameIndex = Math.min(frames.length - 1, Math.max(0, Math.round(progress * (frames.length - 1))));
-      targetFrameIndex = frameIndex;
-      prioritizeNearbyFrames(frameIndex);
-      applyCopyMotion(progress);
+    const getScrollProgress = () => {
+      const scrollDistance = Math.max(
+        1,
+        scrollDistanceViewportHeights === undefined
+          ? section.offsetHeight - window.innerHeight
+          : window.innerHeight * Math.max(0, scrollDistanceViewportHeights - 1),
+      );
 
-      if (!canDrawToCanvas) {
-        canvas.style.backgroundImage = `url("${frames[frameIndex]}")`;
+      if (pauseFrameAt !== undefined && pauseFrameWhileSelector) {
+        const pauseTarget = section.querySelector<HTMLElement>(pauseFrameWhileSelector);
+        if (pauseTarget) {
+          const pauseTargetBounds = pauseTarget.getBoundingClientRect();
+          if (pauseTargetBounds.top <= 0 && pauseTargetBounds.bottom >= 0) {
+            return clamp(pauseFrameAt);
+          }
+        }
       }
 
-      if (Math.abs(progress - lastReportedProgress) > 0.0001) {
-        lastReportedProgress = progress;
-        onProgressRef.current?.(progress);
+      if (pauseFrameAt !== undefined && resumeFrameSelector) {
+        const resumeTarget = section.querySelector<HTMLElement>(resumeFrameSelector);
+        if (resumeTarget) {
+          const resumeTargetBounds = resumeTarget.getBoundingClientRect();
+          if (resumeTargetBounds.top <= 0) {
+            const resumeDistance = Math.max(1, resumeTargetBounds.height);
+            return clamp(pauseFrameAt + (1 - pauseFrameAt) * (-resumeTargetBounds.top / resumeDistance));
+          }
+        }
       }
 
-      return frameIndex;
+      return clamp(-section.getBoundingClientRect().top / scrollDistance);
     };
 
-    const syncAndDraw = (force = false) => {
-      const frameIndex = syncProgress();
-      drawFrame(frameIndex, force);
+    const finishPrimaryRequest = (request: ActiveFrameRequest) => {
+      if (request.finished) {
+        return false;
+      }
+      request.finished = true;
+      activeRequests.delete(request.index);
+      activeLoads = Math.max(0, activeLoads - 1);
+      return true;
+    };
+
+    const cancelPrimaryRequest = (request: ActiveFrameRequest) => {
+      if (!finishPrimaryRequest(request)) {
+        return;
+      }
+      request.image.onload = null;
+      request.image.onerror = null;
+      request.image.src = TRANSPARENT_PIXEL;
+      if (loadStates[request.index] === "loading") {
+        loadStates[request.index] = "idle";
+      }
+    };
+
+    const cancelFallbackRequest = () => {
+      pendingFallbackIndex = null;
+      if (!fallbackRequest || fallbackRequest.finished) {
+        fallbackRequest = null;
+        return;
+      }
+      fallbackRequest.finished = true;
+      fallbackRequest.image.onload = null;
+      fallbackRequest.image.onerror = null;
+      fallbackRequest.image.src = TRANSPARENT_PIXEL;
+      fallbackRequest = null;
+    };
+
+    const pumpLoadQueue = () => {
+      while (!isDisposed && activeLoads < currentConcurrency() && loadQueue.length > 0) {
+        const index = loadQueue.shift();
+        if (index === undefined) {
+          return;
+        }
+        queuedFrames.delete(index);
+
+        if (!isActive() && index !== initialFrameIndex) {
+          loadQueue.unshift(index);
+          queuedFrames.add(index);
+          return;
+        }
+        if (document.visibilityState === "hidden") {
+          loadQueue.unshift(index);
+          queuedFrames.add(index);
+          return;
+        }
+        if (loadStates[index] !== "idle") {
+          continue;
+        }
+
+        const image = new Image();
+        const request: ActiveFrameRequest = { finished: false, image, index };
+        activeRequests.set(index, request);
+        activeLoads += 1;
+        loadStates[index] = "loading";
+        image.decoding = "async";
+        image.fetchPriority = index === initialFrameIndex || index === targetFrameIndex ? "high" : "auto";
+        image.onload = async () => {
+          try {
+            await image.decode();
+          } catch {
+            // onload confirms the image is drawable even when decode() is unavailable or rejects.
+          }
+          if (isDisposed || !finishPrimaryRequest(request)) {
+            return;
+          }
+
+          usageClock += 1;
+          primaryCache[index] = {
+            bytes: image.naturalWidth * image.naturalHeight * 4,
+            image,
+            lastUsed: usageClock,
+          };
+          loadStates[index] = "loaded";
+          if (index === initialFrameIndex) {
+            setIsInitialFrameLoaded(true);
+          }
+          if (index === targetFrameIndex) {
+            cancelFallbackRequest();
+          }
+          trimDecodedFrameCache();
+          if (isActive() || index === initialFrameIndex) {
+            drawFrame(targetFrameIndex, index === targetFrameIndex || currentFrameRef.current < 0);
+          }
+          pumpLoadQueue();
+        };
+        image.onerror = () => {
+          if (isDisposed || !finishPrimaryRequest(request)) {
+            return;
+          }
+          loadStates[index] = "error";
+          if (index === targetFrameIndex || index === initialFrameIndex) {
+            requestFallbackFrame(index);
+          }
+          pumpLoadQueue();
+        };
+        image.src = selectedFrames[index];
+      }
     };
 
     const enqueueFrame = (index: number, priority = false) => {
-      if (index < 0 || index >= frames.length || loadStatesRef.current[index] !== "idle") {
+      if (index < 0 || index >= frames.length || loadStates[index] !== "idle") {
         return;
       }
 
@@ -350,198 +532,249 @@ export function ScrollFrameScanner({
       }
     };
 
-    const pumpLoadQueue = () => {
-      while (!isDisposed && activeLoads < MAX_CONCURRENT_FRAME_LOADS && loadQueue.length > 0) {
-        const index = loadQueue.shift();
-
-        if (index === undefined) {
-          return;
-        }
-
-        queuedFrames.delete(index);
-        if (loadStatesRef.current[index] !== "idle") {
-          continue;
-        }
-
-        const image = new Image();
-        activeLoads += 1;
-        loadStatesRef.current[index] = "loading";
-        image.decoding = "async";
-        image.fetchPriority = index === 0 || index === frames.length - 1 || index === initialFrameIndex ? "high" : "auto";
-        image.onload = () => {
-          activeLoads -= 1;
-          if (isDisposed) {
-            return;
-          }
-
-          everLoaded[index] = true;
-          imagesRef.current[index] = image;
-          loadStatesRef.current[index] = "loaded";
-
-          if (index === initialFrameIndex) {
-            setIsInitialFrameLoaded(true);
-          }
-
-          trimDecodedFrameCache();
-          syncAndDraw(index === targetFrameIndex || currentFrameRef.current < 0);
-          pumpLoadQueue();
-        };
-        image.onerror = () => {
-          activeLoads -= 1;
-          if (isDisposed) {
-            return;
-          }
-
-          everLoaded[index] = true;
-          loadStatesRef.current[index] = "error";
-          pumpLoadQueue();
-        };
-        image.src = frames[index];
-      }
-    };
-
     const enqueuePriorityFrames = (indices: number[]) => {
-      indices
-        .slice()
-        .reverse()
-        .forEach((index) => enqueueFrame(index, true));
+      indices.slice().reverse().forEach((index) => enqueueFrame(index, true));
       pumpLoadQueue();
     };
 
-    function prioritizeNearbyFrames(centerIndex: number) {
-      const nearbyFrames = [centerIndex];
+    const cancelObsoleteWork = (neededIndices: Set<number>) => {
+      loadQueue = loadQueue.filter((index) => {
+        const keep = neededIndices.has(index);
+        if (!keep) {
+          queuedFrames.delete(index);
+        }
+        return keep;
+      });
+      for (const request of activeRequests.values()) {
+        if (!neededIndices.has(request.index) && request.index !== currentFrameRef.current) {
+          cancelPrimaryRequest(request);
+        }
+      }
+    };
 
-      for (let distance = 1; distance <= FRAME_PRELOAD_RADIUS; distance += 1) {
-        nearbyFrames.push(centerIndex - distance, centerIndex + distance);
+    const prioritizeNearbyFrames = (centerIndex: number) => {
+      const direction = centerIndex === lastTargetFrameIndex
+        ? 0
+        : centerIndex > lastTargetFrameIndex
+          ? 1
+          : -1;
+      const requestWindow = getFrameRequestWindow({
+        centerIndex,
+        direction,
+        frameCount: frames.length,
+        radius: currentPreloadRadius(),
+      });
+      const neededIndices = new Set(requestWindow);
+      neededIndices.add(centerIndex);
+      if (currentFrameRef.current >= 0) {
+        neededIndices.add(currentFrameRef.current);
+      }
+      cancelObsoleteWork(neededIndices);
+      enqueuePriorityFrames(requestWindow);
+      lastTargetFrameIndex = centerIndex;
+    };
+
+    function requestFallbackFrame(index: number) {
+      if (
+        isDisposed ||
+        selectedTierUsesFallback ||
+        selectedFrames[index] === frames[index] ||
+        primaryCache[index] ||
+        fallbackCache[index]
+      ) {
+        return;
       }
 
-      enqueuePriorityFrames(nearbyFrames);
+      if (fallbackRequest?.index === index) {
+        return;
+      }
+      if (fallbackRequest) {
+        pendingFallbackIndex = index;
+        return;
+      }
+
+      if (isDisposed || primaryCache[index] || index !== targetFrameIndex) {
+        return;
+      }
+
+      const image = new Image();
+      const request: ActiveFrameRequest = { finished: false, image, index };
+      fallbackRequest = request;
+      image.decoding = "async";
+      image.fetchPriority = "high";
+      image.onload = async () => {
+        try {
+          await image.decode();
+        } catch {
+          // onload confirms the fallback is drawable.
+        }
+        if (isDisposed || request.finished) {
+          return;
+        }
+        request.finished = true;
+        fallbackRequest = null;
+        usageClock += 1;
+        fallbackCache[index] = {
+          bytes: image.naturalWidth * image.naturalHeight * 4,
+          image,
+          lastUsed: usageClock,
+        };
+        if (index === initialFrameIndex) {
+          setIsInitialFrameLoaded(true);
+        }
+        trimDecodedFrameCache();
+        if (index === targetFrameIndex) {
+          drawFrame(index, true);
+        }
+        const nextFallbackIndex = pendingFallbackIndex;
+        pendingFallbackIndex = null;
+        if (nextFallbackIndex !== null) {
+          requestFallbackFrame(nextFallbackIndex);
+        }
+      };
+      image.onerror = () => {
+        if (request.finished) {
+          return;
+        }
+        request.finished = true;
+        fallbackRequest = null;
+        const nextFallbackIndex = pendingFallbackIndex;
+        pendingFallbackIndex = null;
+        if (nextFallbackIndex !== null) {
+          requestFallbackFrame(nextFallbackIndex);
+        }
+      };
+      image.src = fallbackDeliveryTier.frames[index] ?? frames[index];
     }
 
-    const scheduleBackgroundPreload = () => {
-      if (isDisposed || backgroundPreloadTimer !== null || backgroundCursor >= frames.length) {
-        return;
-      }
-
-      backgroundPreloadTimer = window.setTimeout(() => {
-        backgroundPreloadTimer = null;
-        let queuedCount = 0;
-
-        while (backgroundCursor < frames.length && queuedCount < BACKGROUND_PRELOAD_BATCH_SIZE) {
-          const index = backgroundCursor;
-          backgroundCursor += 1;
-
-          if (!everLoaded[index] && loadStatesRef.current[index] === "idle" && !queuedFrames.has(index)) {
-            enqueueFrame(index);
-            queuedCount += 1;
-          }
-        }
-
-        pumpLoadQueue();
-        scheduleBackgroundPreload();
-      }, BACKGROUND_PRELOAD_DELAY_MS);
-    };
-
-    const cancelBackgroundPreload = () => {
-      if (backgroundPreloadTimer !== null) {
-        window.clearTimeout(backgroundPreloadTimer);
-        backgroundPreloadTimer = null;
-      }
-      backgroundPreloadObserver?.disconnect();
-      backgroundPreloadObserver = null;
-    };
-
-    const syncBackgroundPreloadPolicy = () => {
-      if (shouldLimitBackgroundPreload()) {
-        cancelBackgroundPreload();
-        return;
-      }
-
-      if (
-        backgroundPreloadObserver ||
-        backgroundPreloadTimer !== null ||
-        backgroundCursor >= frames.length
-      ) {
-        return;
-      }
-
-      if (
-        frames.length > LARGE_SEQUENCE_THRESHOLD &&
-        typeof window.IntersectionObserver === "function"
-      ) {
-        backgroundPreloadObserver = new IntersectionObserver(
-          (entries) => {
-            if (entries.some((entry) => entry.isIntersecting)) {
-              backgroundPreloadObserver?.disconnect();
-              backgroundPreloadObserver = null;
-              scheduleBackgroundPreload();
-            }
-          },
-          { rootMargin: "200% 0px" },
-        );
-        backgroundPreloadObserver.observe(section);
+    const syncProgress = () => {
+      const progress = reducedMotionQuery.matches
+        ? safeReducedMotionFrameIndex / Math.max(1, frames.length - 1)
+        : getScrollProgress();
+      const frameIndex = Math.min(
+        frames.length - 1,
+        Math.max(0, Math.round(progress * (frames.length - 1))),
+      );
+      targetFrameIndex = frameIndex;
+      if (reducedMotionQuery.matches && !selectedTierUsesFallback) {
+        cancelObsoleteWork(new Set());
       } else {
-        scheduleBackgroundPreload();
+        prioritizeNearbyFrames(frameIndex);
       }
+      requestFallbackFrame(frameIndex);
+      applyCopyMotion(progress);
+
+      if (Math.abs(progress - lastReportedProgress) > 0.0001) {
+        lastReportedProgress = progress;
+        onProgressRef.current?.(progress);
+      }
+
+      return frameIndex;
     };
 
-    const handleResize = () => syncAndDraw(true);
-    const handleScroll = () => {
-      if (scrollAnimationFrame) {
+    const syncAndDraw = (force = false) => {
+      const frameIndex = syncProgress();
+      drawFrame(frameIndex, force);
+    };
+
+    const scheduleSyncAndDraw = (force = false) => {
+      if (scrollAnimationFrame || (!isActive() && !force)) {
         return;
       }
-
       scrollAnimationFrame = window.requestAnimationFrame(() => {
         scrollAnimationFrame = 0;
-        syncAndDraw();
+        if (isActive() || force) {
+          syncAndDraw(force);
+        }
       });
     };
-    const handleResponsiveMediaChange = () => {
-      syncAndDraw(true);
-      syncBackgroundPreloadPolicy();
+
+    const pauseFrameWork = () => {
+      if (scrollAnimationFrame) {
+        window.cancelAnimationFrame(scrollAnimationFrame);
+        scrollAnimationFrame = 0;
+      }
+      cancelFallbackRequest();
+      loadQueue = [];
+      queuedFrames.clear();
+      for (const request of activeRequests.values()) {
+        cancelPrimaryRequest(request);
+      }
     };
 
-    enqueuePriorityFrames([
-      initialFrameIndex,
-      0,
-      frames.length - 1,
-      initialFrameIndex + 1,
-      initialFrameIndex - 1,
-      initialFrameIndex + 2,
-      initialFrameIndex - 2
-    ]);
-    syncBackgroundPreloadPolicy();
-    syncAndDraw(true);
+    const handleScroll = () => scheduleSyncAndDraw();
+    const handleResize = () => {
+      if (isActive()) {
+        scheduleSyncAndDraw(true);
+      }
+    };
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        pauseFrameWork();
+      } else if (isNearViewport) {
+        scheduleSyncAndDraw(true);
+      }
+    };
+    const handleReducedMotionChange = () => {
+      if (reducedMotionQuery.matches) {
+        pauseFrameWork();
+        targetFrameIndex = safeReducedMotionFrameIndex;
+        requestFallbackFrame(safeReducedMotionFrameIndex);
+      }
+      scheduleSyncAndDraw(true);
+    };
+    const handleConnectionChange = () => {
+      if (isActive()) {
+        prioritizeNearbyFrames(targetFrameIndex);
+      }
+    };
+
+    enqueuePriorityFrames([initialFrameIndex]);
+    if (typeof window.IntersectionObserver === "function") {
+      intersectionObserver = new IntersectionObserver(
+        (entries) => {
+          const nextNearViewport = entries.some((entry) => entry.isIntersecting);
+          if (nextNearViewport === isNearViewport) {
+            return;
+          }
+          isNearViewport = nextNearViewport;
+          if (isNearViewport && document.visibilityState !== "hidden") {
+            scheduleSyncAndDraw(true);
+          } else {
+            pauseFrameWork();
+          }
+        },
+        { rootMargin: "100% 0px" },
+      );
+      intersectionObserver.observe(section);
+    } else {
+      scheduleSyncAndDraw(true);
+    }
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
-    reducedMotionQuery.addEventListener("change", handleResponsiveMediaChange);
-    compactViewportQuery.addEventListener("change", handleResponsiveMediaChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
+    connection?.addEventListener("change", handleConnectionChange);
 
     return () => {
       isDisposed = true;
-      cancelBackgroundPreload();
-      if (scrollAnimationFrame) {
-        window.cancelAnimationFrame(scrollAnimationFrame);
-      }
+      pauseFrameWork();
+      intersectionObserver?.disconnect();
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
-      reducedMotionQuery.removeEventListener(
-        "change",
-        handleResponsiveMediaChange,
-      );
-      compactViewportQuery.removeEventListener(
-        "change",
-        handleResponsiveMediaChange,
-      );
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      reducedMotionQuery.removeEventListener("change", handleReducedMotionChange);
+      connection?.removeEventListener("change", handleConnectionChange);
     };
-  }, [frames, pauseFrameAt, pauseFrameWhileSelector, reducedMotionFrameIndex, resumeFrameSelector, scrollDistanceViewportHeights]);
+  }, [frameTiers, frames, pauseFrameAt, pauseFrameWhileSelector, reducedMotionFrameIndex, resumeFrameSelector, scrollDistanceViewportHeights]);
 
   return (
     <section
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       className={["scroll-frame-scanner", className].filter(Boolean).join(" ")}
+      data-frame-tier={selectedTierId}
       data-loaded={isInitialFrameLoaded ? "true" : "false"}
       id={id}
       ref={sectionRef}

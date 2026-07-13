@@ -3,6 +3,7 @@ dist/
 build/
 coverage/
 var/
+public/how-it-works/scroll-frames/generated/
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts

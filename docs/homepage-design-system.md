@@ -391,6 +391,11 @@ Charts:
 
 Motion is precise, scroll-responsive, and reduced-motion aware.
 
+The frame-generation, responsive delivery, cache, and fallback contract for the
+homepage journey is documented in
+[homepage-frame-assets.md](./homepage-frame-assets.md). Do not add a new frame
+resolution or format without updating and revalidating that contract.
+
 Canonical curves and durations:
 
 - Header show/hide: opacity `220ms ease`, transform `260ms cubic-bezier(0.22, 1, 0.36, 1)`.

@@ -578,8 +578,17 @@ sync_frontend() {
 
   echo "Frontend dist hash: ${FRONTEND_DIST_HASH}"
   echo "Uploading frontend assets to s3://${frontend_bucket}..."
+  if [ -d dist/how-it-works/scroll-frames/generated ]; then
+    # Publish content-addressed frames before the HTML/JS that points to them.
+    # Keep prior versions so an already-open page can finish bounded requests.
+    aws_region s3 sync dist/how-it-works/scroll-frames/generated/ \
+      "s3://${frontend_bucket}/how-it-works/scroll-frames/generated/" \
+      --cache-control "public,max-age=31536000,immutable"
+  fi
+
   aws_region s3 sync dist/ "s3://${frontend_bucket}/" \
     --delete \
+    --exclude "how-it-works/scroll-frames/generated/*" \
     --cache-control "public,max-age=60"
 
   if [ -d dist/assets ]; then
