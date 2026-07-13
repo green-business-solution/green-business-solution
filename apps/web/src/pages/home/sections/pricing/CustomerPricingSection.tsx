@@ -120,11 +120,11 @@ export function CustomerPricingSection({ intake = null }: { intake?: CustomerPri
       <article className="funding-activation-fee-card">
         <div>
           <p className="eyebrow">Implementation support</p>
-          <h2>Funding Activation Fee</h2>
-          <p>If you choose to proceed with implementation help, RetroFi charges a prepaid fee based on a conservative estimate of incentive value in your selected retrofit.</p>
-          <small>We don't include operating savings and financing are not included in incentive value.</small>
+          <h2>Commission Fee</h2>
+          <p>If you choose to proceed with the retrofit, RetroFi charges a prepaid fee based on a conservative estimate of the incentive value in your selected retrofit.</p>
+          <small>Your operating savings are not included in incentive value, and if you receive less than incentive value, we will fully refund that portion's charged commission.</small>
         </div>
-        <div className="funding-activation-rate-table" aria-label="Funding Activation Fee rates">
+        <div className="funding-activation-rate-table" aria-label="Commission Fee rates">
           <div><span>Confidence-adjusted incentive value</span><span>Upfront fee rate</span></div>
           <div><span>$0–$2,500</span><strong>6%</strong></div>
           <div><span>$2,500–$10,000</span><strong>5%</strong></div>

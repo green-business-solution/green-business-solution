@@ -13,6 +13,17 @@ import {
   homeJourneyFrames,
   homeJourneyFrameTiers,
 } from "../../../../lib/homeJourneyFrames";
+import {
+  HOME_JOURNEY_INPUT_IDLE_MS,
+  HOME_JOURNEY_MAGNET_DURATION_MS,
+  HOME_JOURNEY_MAGNET_IDLE_MS,
+  decideHomeJourneyInput,
+  getHomeJourneyPositionState,
+  isFreshHomeJourneyGesture,
+  isHorizontalHomeJourneySwipe,
+  shouldStartHomeJourneyMagnet,
+  type HomeJourneyInteractionState,
+} from "../../../../lib/homeJourneyInteraction";
 import type { Route } from "../../../../routes";
 import { HomeDashboardPreviewSection } from "../dashboard/HomeDashboardPreviewSection";
 import { CustomerPricingSection } from "../pricing/CustomerPricingSection";
@@ -51,12 +62,30 @@ export function HowItWorksJourneySection({
   const transitionEnd = 0.62;
   const journeyRef = useRef<HTMLElement | null>(null);
   const journeyScrollRef = useRef<HTMLElement | null>(null);
+  const activateEmbeddedJourneyRef = useRef<(() => void) | null>(null);
+  const firstVisitJourneyPromptShownRef = useRef(false);
   const [sectionProgress, setSectionProgress] = useState(0);
+  const [embeddedInteractionState, setEmbeddedInteractionState] =
+    useState<HomeJourneyInteractionState>("passing");
+  const [showFirstVisitJourneyPrompt, setShowFirstVisitJourneyPrompt] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
     typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false
   );
   const stages = howItWorksJourneyStages;
   const cloudLayers = howItWorksJourneyCloudLayers;
+
+  useEffect(() => {
+    if (!embedded || !showFirstVisitJourneyPrompt) return undefined;
+
+    const dismissPrompt = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setShowFirstVisitJourneyPrompt(false);
+      }
+    };
+
+    window.addEventListener("keydown", dismissPrompt);
+    return () => window.removeEventListener("keydown", dismissPrompt);
+  }, [embedded, showFirstVisitJourneyPrompt]);
 
   const revealScrollUnits = 1.2;
   const journeyScrollUnits = stages.length - 1;
@@ -153,40 +182,365 @@ export function HowItWorksJourneySection({
       }
 
       const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let interactionState: HomeJourneyInteractionState = "passing";
+      let centeredAt = 0;
+      let lastDocumentScrollAt = window.performance.now();
+      let lastWheelAt: number | null = null;
+      let lastLockedInputAt: number | null = null;
+      let lastKeyboardAt: number | null = null;
+      let magnetTimer: number | null = null;
+      let magnetSettleTimer: number | null = null;
+      let positionAnimationFrame = 0;
+      let magnetAlignmentActive = false;
+      let pointerCandidateId: number | null = null;
       let pointerId: number | null = null;
       let pointerStartX = 0;
       let pointerStartScrollLeft = 0;
+      let touchStartX: number | null = null;
+      let touchStartY: number | null = null;
+      let touchLastX: number | null = null;
+      let touchLastY: number | null = null;
+      let touchHasConsumedInput = false;
+      let touchPageHandoffActive = false;
 
       const getMaxScrollLeft = () => Math.max(0, scrollSurface.scrollWidth - scrollSurface.clientWidth);
+      const getCenterOffset = () => {
+        const bounds = scrollSurface.getBoundingClientRect();
+        return bounds.top + bounds.height / 2 - window.innerHeight / 2;
+      };
+      const getCenteredScrollY = () => Math.max(0, window.scrollY + getCenterOffset());
+      const getMagnetDistance = () => Math.min(120, Math.max(72, window.innerHeight * 0.11));
+      const getCenteredTolerance = () => 24;
+      const getReleaseDistance = () => Math.min(220, Math.max(160, window.innerHeight * 0.22));
+      const hasReleasedInteraction = () => interactionState === "released";
+      const syncInteractionState = (nextState: HomeJourneyInteractionState) => {
+        if (interactionState === nextState) return;
+        interactionState = nextState;
+        if (nextState === "centered-awaiting-intent") {
+          centeredAt = window.performance.now();
+        }
+        setEmbeddedInteractionState(nextState);
+      };
+      const showFirstVisitPrompt = () => {
+        if (firstVisitJourneyPromptShownRef.current) {
+          return;
+        }
+
+        firstVisitJourneyPromptShownRef.current = true;
+
+        try {
+          if (window.localStorage.getItem("retrofi-home-how-it-works-prompt-seen") === "true") {
+            return;
+          }
+
+          window.localStorage.setItem("retrofi-home-how-it-works-prompt-seen", "true");
+        } catch {
+          // Continue with the in-memory first-visit prompt when storage is unavailable.
+        }
+
+        setShowFirstVisitJourneyPrompt(true);
+      };
       const updateProgress = () => {
         const maxScrollLeft = getMaxScrollLeft();
         setSectionProgress(maxScrollLeft === 0 ? 0 : clampProgress(scrollSurface.scrollLeft / maxScrollLeft));
       };
-      const handleWheel = (event: WheelEvent) => {
-        const horizontalDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+      const cancelMagnetAlignment = () => {
+        if (magnetTimer !== null) {
+          window.clearTimeout(magnetTimer);
+          magnetTimer = null;
+        }
+        if (magnetSettleTimer !== null) {
+          window.clearTimeout(magnetSettleTimer);
+          magnetSettleTimer = null;
+        }
+        magnetAlignmentActive = false;
+      };
+      const releaseInteraction = () => {
+        cancelMagnetAlignment();
+        lastLockedInputAt = null;
+        syncInteractionState("released");
+      };
+      const activateInteraction = () => {
+        if (interactionState === "locked") return;
+        cancelMagnetAlignment();
+        syncInteractionState("locked");
+        lastLockedInputAt = window.performance.now();
+        showFirstVisitPrompt();
+      };
+      const applyJourneyInput = (
+        event: WheelEvent | TouchEvent | KeyboardEvent,
+        delta: number,
+        timestamp: number,
+        freshGesture: boolean,
+        explicitIntent: boolean,
+      ) => {
         const maxScrollLeft = getMaxScrollLeft();
+        const decision = decideHomeJourneyInput({
+          atEnd: scrollSurface.scrollLeft >= maxScrollLeft - 1,
+          atStart: scrollSurface.scrollLeft <= 1,
+          direction: delta,
+          explicitIntent,
+          freshGesture,
+          state: interactionState,
+        });
+
+        if (decision.activated) {
+          activateInteraction();
+        } else if (decision.nextState !== interactionState) {
+          syncInteractionState(decision.nextState);
+        }
+
+        if (decision.released) {
+          lastLockedInputAt = timestamp;
+          return false;
+        }
+
+        if (!decision.consume) return false;
+        event.preventDefault();
+        scrollSurface.scrollLeft = Math.min(maxScrollLeft, Math.max(0, scrollSurface.scrollLeft + delta));
+        lastLockedInputAt = timestamp;
+        return true;
+      };
+      const startMagnetAlignment = () => {
+        if (interactionState !== "passing") return;
+        cancelMagnetAlignment();
+        magnetAlignmentActive = true;
+        const targetScrollY = getCenteredScrollY();
+        window.scrollTo({
+          behavior: mediaQuery.matches ? "auto" : "smooth",
+          top: targetScrollY,
+        });
+        magnetSettleTimer = window.setTimeout(
+          () => {
+            magnetSettleTimer = null;
+            magnetAlignmentActive = false;
+            if (interactionState !== "passing") return;
+            const centerOffset = getCenterOffset();
+            if (Math.abs(centerOffset) <= getCenteredTolerance() * 2) {
+              if (Math.abs(centerOffset) > getCenteredTolerance()) {
+                window.scrollTo({ top: getCenteredScrollY() });
+              }
+              syncInteractionState("centered-awaiting-intent");
+            }
+          },
+          mediaQuery.matches ? 0 : HOME_JOURNEY_MAGNET_DURATION_MS + 80,
+        );
+      };
+      const evaluatePosition = () => {
+        positionAnimationFrame = 0;
+        const centerOffset = getCenterOffset();
 
         if (
-          horizontalDelta === 0 ||
-          (horizontalDelta < 0 && scrollSurface.scrollLeft <= 0) ||
-          (horizontalDelta > 0 && scrollSurface.scrollLeft >= maxScrollLeft)
+          interactionState === "released" ||
+          interactionState === "centered-awaiting-intent"
         ) {
+          syncInteractionState(
+            getHomeJourneyPositionState({
+              centerOffset,
+              centeredTolerance: getCenteredTolerance(),
+              releaseDistance: getReleaseDistance(),
+              state: interactionState,
+            }),
+          );
+        }
+
+        if (interactionState !== "passing" || magnetAlignmentActive) return;
+        const elapsedSinceScroll = window.performance.now() - lastDocumentScrollAt;
+        const isScrollIdle = elapsedSinceScroll >= HOME_JOURNEY_MAGNET_IDLE_MS;
+
+        if (
+          shouldStartHomeJourneyMagnet({
+            centerOffset,
+            isScrollIdle,
+            magnetDistance: getMagnetDistance(),
+            state: interactionState,
+          })
+        ) {
+          startMagnetAlignment();
           return;
         }
 
-        event.preventDefault();
-        scrollSurface.scrollLeft = Math.min(maxScrollLeft, Math.max(0, scrollSurface.scrollLeft + horizontalDelta));
+        if (
+          !isScrollIdle &&
+          Math.abs(centerOffset) <= getMagnetDistance() &&
+          magnetTimer === null
+        ) {
+          magnetTimer = window.setTimeout(() => {
+            magnetTimer = null;
+            schedulePositionCheck();
+          }, HOME_JOURNEY_MAGNET_IDLE_MS - elapsedSinceScroll);
+        }
+      };
+      const schedulePositionCheck = () => {
+        if (!positionAnimationFrame) {
+          positionAnimationFrame = window.requestAnimationFrame(evaluatePosition);
+        }
+      };
+      const handleDocumentScroll = () => {
+        if (!magnetAlignmentActive) {
+          lastDocumentScrollAt = window.performance.now();
+          if (magnetTimer !== null) {
+            window.clearTimeout(magnetTimer);
+            magnetTimer = null;
+          }
+        }
+        schedulePositionCheck();
+      };
+      const handleUserScrollIntent = () => {
+        if (magnetAlignmentActive && interactionState === "passing") {
+          cancelMagnetAlignment();
+          lastDocumentScrollAt = window.performance.now();
+        }
+      };
+      const handleWheel = (event: WheelEvent) => {
+        const timestamp = event.timeStamp || window.performance.now();
+        const wheelUnit = event.deltaMode === 1
+          ? 16
+          : event.deltaMode === 2
+            ? scrollSurface.clientWidth
+            : 1;
+        const delta =
+          (Math.abs(event.deltaX) > Math.abs(event.deltaY)
+            ? event.deltaX
+            : event.deltaY) * wheelUnit;
+        const freshWheelGesture = isFreshHomeJourneyGesture(timestamp, lastWheelAt);
+        lastWheelAt = timestamp;
+
+        if (interactionState === "locked") {
+          applyJourneyInput(
+            event,
+            delta,
+            timestamp,
+            isFreshHomeJourneyGesture(timestamp, lastLockedInputAt),
+            true,
+          );
+          return;
+        }
+
+        if (
+          interactionState === "centered-awaiting-intent" &&
+          freshWheelGesture &&
+          timestamp - centeredAt >= HOME_JOURNEY_INPUT_IDLE_MS
+        ) {
+          applyJourneyInput(event, delta, timestamp, false, true);
+        }
+      };
+      const handleTouchStart = (event: TouchEvent) => {
+        handleUserScrollIntent();
+        const touch = event.touches[0];
+        touchStartX = touch?.clientX ?? null;
+        touchStartY = touch?.clientY ?? null;
+        touchLastX = touchStartX;
+        touchLastY = touchStartY;
+        touchHasConsumedInput = false;
+        touchPageHandoffActive = false;
+      };
+      const handleTouchMove = (event: TouchEvent) => {
+        const touch = event.touches[0];
+        const currentX = touch?.clientX;
+        const currentY = touch?.clientY;
+        if (
+          touchStartX == null ||
+          touchStartY == null ||
+          touchLastX == null ||
+          touchLastY == null ||
+          currentX == null ||
+          currentY == null
+        ) return;
+
+        const totalDeltaX = touchStartX - currentX;
+        const totalDeltaY = touchStartY - currentY;
+        const stepDeltaX = touchLastX - currentX;
+        const stepDeltaY = touchLastY - currentY;
+        touchLastX = currentX;
+        touchLastY = currentY;
+
+        const dominantStepDelta = Math.abs(stepDeltaX) > Math.abs(stepDeltaY)
+          ? stepDeltaX
+          : stepDeltaY;
+
+        if (touchPageHandoffActive) {
+          event.preventDefault();
+          window.scrollBy({ top: dominantStepDelta });
+          return;
+        }
+
+        if (
+          interactionState === "centered-awaiting-intent" &&
+          isHorizontalHomeJourneySwipe(totalDeltaX, totalDeltaY)
+        ) {
+          touchHasConsumedInput = applyJourneyInput(
+            event,
+            stepDeltaX,
+            window.performance.now(),
+            false,
+            true,
+          );
+          return;
+        }
+
+        if (interactionState === "locked") {
+          const wasLocked = interactionState === "locked";
+          const consumedInput = applyJourneyInput(
+            event,
+            dominantStepDelta,
+            window.performance.now(),
+            !touchHasConsumedInput,
+            true,
+          );
+          touchHasConsumedInput = consumedInput || touchHasConsumedInput;
+
+          if (wasLocked && hasReleasedInteraction() && !consumedInput) {
+            touchPageHandoffActive = true;
+            event.preventDefault();
+            window.scrollBy({ top: dominantStepDelta });
+          }
+        }
+      };
+      const resetTouch = () => {
+        touchStartX = null;
+        touchStartY = null;
+        touchLastX = null;
+        touchLastY = null;
+        touchHasConsumedInput = false;
+        touchPageHandoffActive = false;
       };
       const handlePointerDown = (event: PointerEvent) => {
-        if (event.button !== 0) return;
-
-        pointerId = event.pointerId;
+        handleUserScrollIntent();
+        if (event.pointerType === "touch" || event.button !== 0) return;
+        pointerCandidateId = event.pointerId;
         pointerStartX = event.clientX;
         pointerStartScrollLeft = scrollSurface.scrollLeft;
-        scrollSurface.setPointerCapture(event.pointerId);
+        if (interactionState === "locked") {
+          pointerId = event.pointerId;
+          scrollSurface.setPointerCapture(event.pointerId);
+        }
       };
       const handlePointerMove = (event: PointerEvent) => {
-        if (pointerId !== event.pointerId) return;
+        if (pointerCandidateId !== event.pointerId && pointerId !== event.pointerId) return;
+        const bounds = scrollSurface.getBoundingClientRect();
+        if (
+          event.clientX < bounds.left ||
+          event.clientX > bounds.right ||
+          event.clientY < bounds.top ||
+          event.clientY > bounds.bottom
+        ) {
+          releasePointer(event);
+          releaseInteraction();
+          return;
+        }
+
+        if (
+          pointerId == null &&
+          interactionState === "centered-awaiting-intent" &&
+          Math.abs(event.clientX - pointerStartX) >= 6
+        ) {
+          activateInteraction();
+          pointerId = event.pointerId;
+          scrollSurface.setPointerCapture(event.pointerId);
+        }
+
+        if (pointerId !== event.pointerId || interactionState !== "locked") return;
 
         scrollSurface.scrollLeft = Math.min(
           getMaxScrollLeft(),
@@ -194,47 +548,153 @@ export function HowItWorksJourneySection({
         );
       };
       const releasePointer = (event: PointerEvent) => {
-        if (pointerId !== event.pointerId) return;
-
+        if (pointerCandidateId !== event.pointerId && pointerId !== event.pointerId) return;
+        const capturedPointerId = pointerId;
+        pointerCandidateId = null;
         pointerId = null;
-        scrollSurface.releasePointerCapture(event.pointerId);
+        if (
+          capturedPointerId !== null &&
+          scrollSurface.hasPointerCapture(capturedPointerId)
+        ) {
+          scrollSurface.releasePointerCapture(capturedPointerId);
+        }
+      };
+      const handlePointerLeave = (event: PointerEvent) => {
+        if (event.pointerType === "touch") return;
+        resetTouch();
+        lastWheelAt = null;
+        if (pointerId !== null && scrollSurface.hasPointerCapture(pointerId)) {
+          scrollSurface.releasePointerCapture(pointerId);
+        }
+        pointerCandidateId = null;
+        pointerId = null;
+        releaseInteraction();
+      };
+      const handleWindowPointerMove = (event: PointerEvent) => {
+        if (interactionState !== "locked" || event.pointerType === "touch") return;
+        const bounds = scrollSurface.getBoundingClientRect();
+        if (
+          event.clientX < bounds.left ||
+          event.clientX > bounds.right ||
+          event.clientY < bounds.top ||
+          event.clientY > bounds.bottom
+        ) {
+          handlePointerLeave(event);
+        }
       };
       const handleKeyDown = (event: KeyboardEvent) => {
+        const target = event.target;
+        if (
+          target instanceof HTMLElement &&
+          target !== scrollSurface &&
+          target.closest("button, a, input, select, textarea, [role='button']")
+        ) {
+          return;
+        }
+
         const scrollAmount = Math.max(180, scrollSurface.clientWidth * 0.6);
-        let nextScrollLeft: number | null = null;
+        let delta: number | null = null;
 
-        if (event.key === "ArrowLeft") nextScrollLeft = scrollSurface.scrollLeft - scrollAmount;
-        if (event.key === "ArrowRight") nextScrollLeft = scrollSurface.scrollLeft + scrollAmount;
-        if (event.key === "Home") nextScrollLeft = 0;
-        if (event.key === "End") nextScrollLeft = getMaxScrollLeft();
-        if (nextScrollLeft === null) return;
+        if (event.key === "ArrowLeft" || event.key === "ArrowUp" || event.key === "PageUp") delta = -scrollAmount;
+        if (event.key === "ArrowRight" || event.key === "ArrowDown" || event.key === "PageDown" || event.key === " ") delta = scrollAmount;
+        if (event.key === "Home") delta = -getMaxScrollLeft();
+        if (event.key === "End") delta = getMaxScrollLeft();
+        if (delta === null) return;
 
-        event.preventDefault();
-        scrollSurface.scrollLeft = Math.min(getMaxScrollLeft(), Math.max(0, nextScrollLeft));
+        const timestamp = event.timeStamp || window.performance.now();
+        const freshKeyboardGesture =
+          !event.repeat && isFreshHomeJourneyGesture(timestamp, lastKeyboardAt);
+        lastKeyboardAt = timestamp;
+
+        if (interactionState !== "locked") {
+          cancelMagnetAlignment();
+          window.scrollTo({
+            behavior: "auto",
+            top: getCenteredScrollY(),
+          });
+          syncInteractionState("centered-awaiting-intent");
+          applyJourneyInput(event, delta, timestamp, false, true);
+          return;
+        }
+
+        const wasLocked = interactionState === "locked";
+        const consumedInput = applyJourneyInput(
+          event,
+          delta,
+          timestamp,
+          freshKeyboardGesture && isFreshHomeJourneyGesture(timestamp, lastLockedInputAt),
+          true,
+        );
+
+        if (wasLocked && hasReleasedInteraction() && !consumedInput) {
+          event.preventDefault();
+          window.scrollBy({
+            behavior: "auto",
+            top: Math.sign(delta) * Math.max(180, window.innerHeight * 0.45),
+          });
+        }
       };
       const updateMotionPreference = () => {
         setPrefersReducedMotion(mediaQuery.matches);
         updateProgress();
       };
 
+      activateEmbeddedJourneyRef.current = () => {
+        if (interactionState === "centered-awaiting-intent") {
+          activateInteraction();
+        }
+      };
+      syncInteractionState("passing");
       updateProgress();
+      schedulePositionCheck();
       scrollSurface.addEventListener("scroll", updateProgress, { passive: true });
       scrollSurface.addEventListener("wheel", handleWheel, { passive: false });
+      scrollSurface.addEventListener("touchstart", handleTouchStart, { passive: true });
+      scrollSurface.addEventListener("touchmove", handleTouchMove, { passive: false });
+      scrollSurface.addEventListener("touchend", resetTouch);
+      scrollSurface.addEventListener("touchcancel", resetTouch);
       scrollSurface.addEventListener("pointerdown", handlePointerDown);
       scrollSurface.addEventListener("pointermove", handlePointerMove);
       scrollSurface.addEventListener("pointerup", releasePointer);
       scrollSurface.addEventListener("pointercancel", releasePointer);
+      scrollSurface.addEventListener("pointerleave", handlePointerLeave);
       scrollSurface.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("scroll", handleDocumentScroll, { passive: true });
+      window.addEventListener("resize", schedulePositionCheck);
+      window.addEventListener("pointermove", handleWindowPointerMove, {
+        passive: true,
+      });
+      window.addEventListener("wheel", handleUserScrollIntent, {
+        capture: true,
+        passive: true,
+      });
       mediaQuery.addEventListener("change", updateMotionPreference);
 
       return () => {
+        activateEmbeddedJourneyRef.current = null;
+        cancelMagnetAlignment();
+        if (positionAnimationFrame) {
+          window.cancelAnimationFrame(positionAnimationFrame);
+        }
+        if (pointerId !== null && scrollSurface.hasPointerCapture(pointerId)) {
+          scrollSurface.releasePointerCapture(pointerId);
+        }
         scrollSurface.removeEventListener("scroll", updateProgress);
         scrollSurface.removeEventListener("wheel", handleWheel);
+        scrollSurface.removeEventListener("touchstart", handleTouchStart);
+        scrollSurface.removeEventListener("touchmove", handleTouchMove);
+        scrollSurface.removeEventListener("touchend", resetTouch);
+        scrollSurface.removeEventListener("touchcancel", resetTouch);
         scrollSurface.removeEventListener("pointerdown", handlePointerDown);
         scrollSurface.removeEventListener("pointermove", handlePointerMove);
         scrollSurface.removeEventListener("pointerup", releasePointer);
         scrollSurface.removeEventListener("pointercancel", releasePointer);
+        scrollSurface.removeEventListener("pointerleave", handlePointerLeave);
         scrollSurface.removeEventListener("keydown", handleKeyDown);
+        window.removeEventListener("scroll", handleDocumentScroll);
+        window.removeEventListener("resize", schedulePositionCheck);
+        window.removeEventListener("pointermove", handleWindowPointerMove);
+        window.removeEventListener("wheel", handleUserScrollIntent, true);
         mediaQuery.removeEventListener("change", updateMotionPreference);
       };
     }
@@ -535,6 +995,7 @@ export function HowItWorksJourneySection({
     <section
       aria-label={embedded ? "How RetroFi works. Scroll horizontally to explore the journey." : undefined}
       className={`how-it-works-journey-section${withDashboardHandoff ? " how-it-works-journey-section--home-handoff" : ""}${embedded ? " how-it-works-journey-section--home-embedded" : ""}`}
+      data-interaction-state={embedded ? embeddedInteractionState : undefined}
       id={sectionId}
       ref={(element) => {
         journeyRef.current = element;
@@ -617,25 +1078,16 @@ export function HowItWorksJourneySection({
           </div>
         ) : null}
         {showIntro ? (
-          <>
-            <header
-              className="journey-intro-copy"
-              style={{
-                opacity: introOpacity,
-                transform: `translate3d(0, calc(-50% - ${32 * cloudTravelProgress}px), 0)`,
-              }}
-            >
-              <p className="journey-intro-eyebrow">How it works</p>
-              <h1>From outdated building to high-performing business</h1>
-            </header>
-            <p
-              aria-hidden="true"
-              className="journey-scroll-cue"
-              style={{ opacity: introOpacity }}
-            >
-              Swipe or scroll to explore
-            </p>
-          </>
+          <header
+            className="journey-intro-copy"
+            style={{
+              opacity: introOpacity,
+              transform: `translate3d(0, calc(-50% - ${32 * cloudTravelProgress}px), 0)`,
+            }}
+          >
+            <p className="journey-intro-eyebrow">How it works</p>
+            <h1>From outdated building to high-performing business</h1>
+          </header>
         ) : (
           <div className="journey-story-shell">
             <article aria-live="polite" className="journey-story-copy" key={activeStage.title}>
@@ -657,6 +1109,46 @@ export function HowItWorksJourneySection({
             </div>
           </div>
         )}
+        {embedded && embeddedInteractionState === "centered-awaiting-intent" ? (
+          <button
+            className="journey-intent-cue"
+            onClick={() => activateEmbeddedJourneyRef.current?.()}
+            onPointerDown={(event) => event.stopPropagation()}
+            type="button"
+          >
+            Scroll to explore.
+            <span aria-hidden="true">↔</span>
+          </button>
+        ) : null}
+        {embedded && showFirstVisitJourneyPrompt ? (
+          <aside
+            aria-atomic="true"
+            aria-labelledby="journey-first-visit-prompt-title"
+            aria-live="polite"
+            className="journey-first-visit-prompt"
+          >
+            <p>How it works</p>
+            <h2 id="journey-first-visit-prompt-title">Scroll to explore the journey</h2>
+            <span>Each scroll reveals the next step. Keep going to continue down the page.</span>
+            <button
+              onClick={(event) => {
+                event.stopPropagation();
+                setShowFirstVisitJourneyPrompt(false);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === " " || event.key === "Enter") {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  setShowFirstVisitJourneyPrompt(false);
+                }
+              }}
+              onPointerDown={(event) => event.stopPropagation()}
+              type="button"
+            >
+              Got it
+            </button>
+          </aside>
+        ) : null}
       </div>
     </section>
   );
