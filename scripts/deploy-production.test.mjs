@@ -96,33 +96,33 @@ describe("deploy-production fixture patching flow", () => {
   });
 });
 
-describe("deploy-production frame asset caching", () => {
+describe("deploy-production homepage scroll-media caching", () => {
   const scriptSource = fs.readFileSync(scriptPath, "utf8");
 
-  it("excludes content-versioned animation frames from the short-lived site sync", () => {
+  it("excludes versioned scroll media from the short-lived site sync", () => {
     expect(scriptSource).toMatch(
-      /s3 sync dist\/[^]*--exclude "how-it-works\/scroll-frames\/generated\/\*"[^]*--cache-control "public,max-age=60"/,
+      /s3 sync dist\/[^]*--exclude "home-scroll-media\/\*"[^]*--cache-control "public,max-age=60"/,
     );
   });
 
-  it("uploads generated frame versions with immutable caching without deleting an active prior version", () => {
-    const frameSync = scriptSource.match(
-      /aws_region s3 sync dist\/how-it-works\/scroll-frames\/generated\/[^]*?--cache-control "public,max-age=31536000,immutable"/,
+  it("uploads immutable scroll media without deleting prior versions", () => {
+    const mediaSync = scriptSource.match(
+      /aws_region s3 sync dist\/home-scroll-media\/[^]*?--cache-control "public,max-age=31536000,immutable"/,
     )?.[0];
 
-    expect(frameSync).toBeDefined();
-    expect(frameSync).not.toContain("--delete");
+    expect(mediaSync).toBeDefined();
+    expect(mediaSync).not.toContain("--delete");
   });
 
-  it("uploads immutable frame files before publishing the site bundle that references them", () => {
-    const frameSyncIndex = scriptSource.indexOf(
-      "aws_region s3 sync dist/how-it-works/scroll-frames/generated/",
+  it("publishes immutable media before the site bundle that references it", () => {
+    const mediaSyncIndex = scriptSource.indexOf(
+      "aws_region s3 sync dist/home-scroll-media/",
     );
     const siteSyncIndex = scriptSource.indexOf(
       'aws_region s3 sync dist/ "s3://${frontend_bucket}/"',
     );
 
-    expect(frameSyncIndex).toBeGreaterThan(-1);
-    expect(siteSyncIndex).toBeGreaterThan(frameSyncIndex);
+    expect(mediaSyncIndex).toBeGreaterThan(-1);
+    expect(siteSyncIndex).toBeGreaterThan(mediaSyncIndex);
   });
 });

@@ -5,7 +5,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { ScrollFrameScanner } from "../../../../components/ScrollFrameScanner";
+import { ScrollVideoScanner } from "../../../../components/ScrollVideoScanner";
 import { ArrowUpRightIcon } from "../../../../components/public/PublicIcons";
 import {
   homeJourneyFirstFrame,
@@ -13,6 +13,7 @@ import {
   homeJourneyFrames,
   homeJourneyFrameTiers,
 } from "../../../../lib/homeJourneyFrames";
+import { forestScrollVideo } from "../../../../lib/homeScrollMedia";
 import {
   decideHomeJourneyOwnership,
   isFreshHomeJourneyGesture,
@@ -1086,7 +1087,7 @@ export function HomeJourneyFrameSection() {
       className="home-journey-frame-bridge"
       style={{ "--home-journey-first-frame": `url("${homeJourneyFirstFrame}")` } as CSSProperties}
     >
-      <ScrollFrameScanner
+      <ScrollVideoScanner
         afterStickyChildren={
           <>
             <HomeDashboardPreviewSection embeddedInJourney includePricing={false} />
@@ -1105,6 +1106,7 @@ export function HomeJourneyFrameSection() {
         reducedMotionFrameIndex={homeJourneyFrameCount - 1}
         resumeFrameSelector=".home-dashboard-exit-spacer"
         scrollDistanceViewportHeights={3.75}
+        videoAsset={forestScrollVideo}
       />
     </div>
   );

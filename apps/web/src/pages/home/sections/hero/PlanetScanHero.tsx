@@ -1,11 +1,17 @@
-import { ScrollFrameScanner } from "../../../../components/ScrollFrameScanner";
+import { ScrollVideoScanner } from "../../../../components/ScrollVideoScanner";
 import { ArrowUpRightIcon } from "../../../../components/public/PublicIcons";
+import { heroScrollVideo } from "../../../../lib/homeScrollMedia";
 import { scannerFrames } from "../../../../lib/scannerFrames";
 import type { Route } from "../../../../routes";
 
 export function PlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
   return (
-    <ScrollFrameScanner ariaLabelledBy="planet-scan-heading" className="planet-scan-section" frames={scannerFrames}>
+    <ScrollVideoScanner
+      ariaLabelledBy="planet-scan-heading"
+      className="planet-scan-section"
+      frames={scannerFrames}
+      videoAsset={heroScrollVideo}
+    >
       <div className="planet-scan-content">
         <div className="planet-scan-copy">
           <div className="planet-scan-message planet-scan-message-static planet-scan-message-primary">
@@ -37,6 +43,6 @@ export function PlanetScanHero({ navigate }: { navigate: (route: Route) => void 
         Scroll to explore
         <span />
       </p>
-    </ScrollFrameScanner>
+    </ScrollVideoScanner>
   );
 }

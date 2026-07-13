@@ -126,13 +126,6 @@ function checksForFile(file, context = {}) {
     return decision(allChecks(), "Shared CI/deploy workflow changed.");
   }
 
-  if (file === "scripts/generate-home-journey-frames.mjs") {
-    return decision(
-      ["web", "scripts"],
-      "Frontend frame-generation pipeline changed.",
-    );
-  }
-
   if (file.startsWith("apps/api/server/") || isApiRuntimeData(file)) {
     return decision(["api"], "API runtime source, test, or data changed.");
   }

@@ -8,16 +8,22 @@ import {
   type FrameSequenceTier,
 } from "../lib/frameDelivery";
 
-type ScrollFrameScannerProps = {
+export type ScrollFrameScannerProps = {
   afterStickyChildren?: ReactNode;
   ariaLabel?: string;
   ariaLabelledBy?: string;
   children?: ReactNode;
   className?: string;
+  fallbackPoster?: string;
   frameTiers?: readonly FrameSequenceTier[];
+  framesEnabled?: boolean;
   frames: string[];
   gradientOpacity?: number;
   id?: string;
+  mediaLayer?: ReactNode;
+  mediaLoaded?: boolean;
+  mediaMode?: string;
+  mediaTier?: string;
   onProgress?: (progress: number) => void;
   pauseFrameAt?: number;
   pauseFrameWhileSelector?: string;
@@ -147,10 +153,16 @@ export function ScrollFrameScanner({
   ariaLabelledBy,
   children,
   className,
+  fallbackPoster,
   frameTiers,
+  framesEnabled = true,
   frames,
   gradientOpacity,
   id,
+  mediaLayer,
+  mediaLoaded,
+  mediaMode,
+  mediaTier,
   onProgress,
   pauseFrameAt,
   pauseFrameWhileSelector,
@@ -227,7 +239,7 @@ export function ScrollFrameScanner({
 
     currentFrameRef.current = -1;
     setIsInitialFrameLoaded(false);
-    setSelectedTierId(policy.tier.id);
+    setSelectedTierId(framesEnabled ? policy.tier.id : "disabled");
 
     const isActive = () => isNearViewport && document.visibilityState !== "hidden";
     const currentPreloadRadius = () => {
@@ -656,12 +668,14 @@ export function ScrollFrameScanner({
         Math.max(0, Math.round(progress * (frames.length - 1))),
       );
       targetFrameIndex = frameIndex;
-      if (reducedMotionQuery.matches && !selectedTierUsesFallback) {
-        cancelObsoleteWork(new Set());
-      } else {
-        prioritizeNearbyFrames(frameIndex);
+      if (framesEnabled) {
+        if (reducedMotionQuery.matches && !selectedTierUsesFallback) {
+          cancelObsoleteWork(new Set());
+        } else {
+          prioritizeNearbyFrames(frameIndex);
+        }
+        requestFallbackFrame(frameIndex);
       }
-      requestFallbackFrame(frameIndex);
       applyCopyMotion(progress);
 
       if (Math.abs(progress - lastReportedProgress) > 0.0001) {
@@ -674,7 +688,9 @@ export function ScrollFrameScanner({
 
     const syncAndDraw = (force = false) => {
       const frameIndex = syncProgress();
-      drawFrame(frameIndex, force);
+      if (framesEnabled) {
+        drawFrame(frameIndex, force);
+      }
     };
 
     const scheduleSyncAndDraw = (force = false) => {
@@ -716,7 +732,7 @@ export function ScrollFrameScanner({
       }
     };
     const handleReducedMotionChange = () => {
-      if (reducedMotionQuery.matches) {
+      if (framesEnabled && reducedMotionQuery.matches) {
         pauseFrameWork();
         targetFrameIndex = safeReducedMotionFrameIndex;
         requestFallbackFrame(safeReducedMotionFrameIndex);
@@ -724,12 +740,14 @@ export function ScrollFrameScanner({
       scheduleSyncAndDraw(true);
     };
     const handleConnectionChange = () => {
-      if (isActive()) {
+      if (framesEnabled && isActive()) {
         prioritizeNearbyFrames(targetFrameIndex);
       }
     };
 
-    enqueuePriorityFrames([initialFrameIndex]);
+    if (framesEnabled) {
+      enqueuePriorityFrames([initialFrameIndex]);
+    }
     if (typeof window.IntersectionObserver === "function") {
       intersectionObserver = new IntersectionObserver(
         (entries) => {
@@ -744,7 +762,7 @@ export function ScrollFrameScanner({
             pauseFrameWork();
           }
         },
-        { rootMargin: "100% 0px" },
+        { rootMargin: "175% 0px" },
       );
       intersectionObserver.observe(section);
     } else {
@@ -767,7 +785,9 @@ export function ScrollFrameScanner({
       reducedMotionQuery.removeEventListener("change", handleReducedMotionChange);
       connection?.removeEventListener("change", handleConnectionChange);
     };
-  }, [frameTiers, frames, pauseFrameAt, pauseFrameWhileSelector, reducedMotionFrameIndex, resumeFrameSelector, scrollDistanceViewportHeights]);
+  }, [frameTiers, frames, framesEnabled, pauseFrameAt, pauseFrameWhileSelector, reducedMotionFrameIndex, resumeFrameSelector, scrollDistanceViewportHeights]);
+
+  const isMediaLoaded = mediaLoaded ?? isInitialFrameLoaded;
 
   return (
     <section
@@ -775,12 +795,25 @@ export function ScrollFrameScanner({
       aria-labelledby={ariaLabelledBy}
       className={["scroll-frame-scanner", className].filter(Boolean).join(" ")}
       data-frame-tier={selectedTierId}
-      data-loaded={isInitialFrameLoaded ? "true" : "false"}
+      data-loaded={isMediaLoaded ? "true" : "false"}
+      data-media-mode={mediaMode}
+      data-media-tier={mediaTier}
       id={id}
       ref={sectionRef}
     >
       <div className="scroll-frame-scanner-sticky">
-        <canvas aria-hidden="true" className="scroll-frame-scanner-canvas" ref={canvasRef} />
+        {mediaLayer}
+        <canvas
+          aria-hidden="true"
+          className="scroll-frame-scanner-canvas"
+          ref={canvasRef}
+          style={fallbackPoster ? {
+            backgroundImage: `url("${fallbackPoster}")`,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+          } : undefined}
+        />
         <div
           aria-hidden="true"
           className="scroll-frame-scanner-gradient"
