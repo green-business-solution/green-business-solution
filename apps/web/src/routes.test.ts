@@ -9,25 +9,20 @@ describe("routes", () => {
 
   it("does not canonicalize known routes or intentional aliases", () => {
     expect(shouldCanonicalizeUnknownHomeFallback("/")).toBe(false);
-    expect(shouldCanonicalizeUnknownHomeFallback("/pricing")).toBe(false);
     expect(shouldCanonicalizeUnknownHomeFallback("/admin")).toBe(false);
     expect(shouldCanonicalizeUnknownHomeFallback("/for-businesses")).toBe(false);
     expect(shouldCanonicalizeUnknownHomeFallback("/get-started")).toBe(false);
   });
 
-  it("routes the standalone pricing page", () => {
-    expect(routeFromPath("/pricing")).toBe("pricing");
-    expect(pathForRoute("pricing")).toBe("/pricing");
-  });
-
   it("keeps the About navigation focused on the active company pages", () => {
     expect(aboutLinks).toEqual([
+      { label: "Mission", route: "about-mission" },
       { label: "Team", route: "about-team" },
-      { label: "Trust & Data", route: "about-trust" },
       { label: "Contact", route: "about-contact" },
     ]);
-    expect(routeFromPath("/about")).toBe("about");
+    expect(routeFromPath("/about")).toBe("about-mission");
     expect(routeFromPath("/about/mission")).toBe("about-mission");
+    expect(pathForRoute("about")).toBe("/about/mission");
   });
 
   it("preserves server-handled API and auth callback paths", () => {

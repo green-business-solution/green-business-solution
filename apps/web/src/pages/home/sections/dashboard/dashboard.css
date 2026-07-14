@@ -15,9 +15,7 @@
     .home-chart-bar
   ):not(.home-dashboard-preview-tab):not(.home-dashboard-preview-link):not(
     .home-dashboard-preview-filter
-  ):not(.home-dashboard-preview-action):not(.pricing-primary-action):not(
-    .pricing-secondary-action
-  ):not(.pricing-plan-button):not(.pricing-final-button):not(
+  ):not(.home-dashboard-preview-action):not(
     .about-founders-cta-primary
   ):not(
     .about-founders-cta-secondary
@@ -45,9 +43,7 @@
     .home-chart-bar
   ):not(.home-dashboard-preview-tab):not(.home-dashboard-preview-link):not(
     .home-dashboard-preview-filter
-  ):not(.home-dashboard-preview-action):not(.pricing-primary-action):not(
-    .pricing-secondary-action
-  ):not(.pricing-plan-button):not(.pricing-final-button):not(
+  ):not(.home-dashboard-preview-action):not(
     .about-founders-cta-primary
   ):not(
     .about-founders-cta-secondary

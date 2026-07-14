@@ -21,7 +21,7 @@ Canonical source files:
 - `apps/web/src/pages/home/sections/dashboard/HomeDashboardPreviewSection.tsx`
 - `apps/web/src/pages/home/sections/pricing/CustomerPricingSection.tsx`
 - `apps/web/src/components/public/PublicShell.tsx`
-  - `PublicNav` and the shared public header/footer shell when rendered with `pageClassName="home-page"`.
+  - `PublicNav` and the shared public header/footer shell. The light glass navbar is the only supported public navbar treatment across routes.
 - `apps/web/src/components/ScrollFrameScanner.tsx`
 - `apps/web/src/pages/home/home.css`
 - `apps/web/src/pages/home/sections/hero/hero.css`
@@ -181,10 +181,10 @@ Do not use viewport-width-only font sizing. Keep the existing clamp patterns and
 Base layout constraints:
 
 - Public header height: `72px`.
-- Home header inset: `left/right: clamp(20px, 3.2vw, 56px)`, `top: 18px`.
-- Mobile home header inset: `left/right: 16px`, `top: 12px`.
-- Home nav gap: `clamp(34px, 4.5vw, 72px)`.
-- Home nav actions gap: `28px`.
+- Public header inset: `left/right: clamp(20px, 3.2vw, 56px)`, `top: 18px`.
+- Mobile public header inset: `left/right: 16px`, `top: 12px`.
+- Public nav gap: `clamp(34px, 4.5vw, 72px)`.
+- Public nav actions gap: `28px`.
 - Scanner section height: `375svh`; mobile `330svh`; reduced motion `100svh`.
 - Scanner sticky min-height: `680px`; mobile `600px`.
 - Hero copy position: `left: clamp(48px, 5.2vw, 92px)`, `top: clamp(166px, 22vh, 238px)`, `width: clamp(560px, 43vw, 760px)`.
@@ -217,7 +217,7 @@ Canonical radii:
 | `14px` | Emphasis glass, menu button |
 | `16px` | Icon tiles, dropdown panels |
 | `18px` | Nested ranked retrofit cards, mobile infographic cards |
-| `20px` | Homepage navbar |
+| `20px` | Shared public navbar |
 | `22px` | Infographic cards and final CTA band |
 | `24px` | General public panels/page hero |
 | `26px` | Dark glass nav fallback |
@@ -230,7 +230,7 @@ Do not round every control into capsules. The homepage uses squared premium CTAs
 Canonical shadows:
 
 ```css
-/* Home navbar */
+/* Shared public navbar */
 0 12px 30px rgba(6, 38, 25, 0.07),
 inset 0 1px 0 rgba(255, 255, 255, 0.46)
 

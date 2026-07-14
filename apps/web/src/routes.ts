@@ -5,7 +5,6 @@ export type Route =
   | "about-team"
   | "about-trust"
   | "about-contact"
-  | "pricing"
   | "scan"
   | "scan-results"
   | "scan-energy-data"
@@ -23,8 +22,8 @@ export type Route =
   | "testcases";
 
 export const aboutLinks: Array<{ label: string; route: Route }> = [
+  { label: "Mission", route: "about-mission" },
   { label: "Team", route: "about-team" },
-  { label: "Trust & Data", route: "about-trust" },
   { label: "Contact", route: "about-contact" },
 ];
 
@@ -39,9 +38,9 @@ export function routePathMatchFromPath(
   if (pathname === "/" || pathname === "/for-businesses")
     return { isKnownPath: true, route: "home" };
   if (pathname === "/how-it-works") return { isKnownPath: true, route: "home" };
-  if (pathname === "/pricing") return { isKnownPath: true, route: "pricing" };
   if (pathname === "/database") return { isKnownPath: true, route: "admin" };
-  if (pathname === "/about") return { isKnownPath: true, route: "about" };
+  if (pathname === "/about")
+    return { isKnownPath: true, route: "about-mission" };
   if (pathname === "/about/mission")
     return { isKnownPath: true, route: "about-mission" };
   if (pathname === "/about/team")
@@ -103,6 +102,7 @@ export function shouldCanonicalizeUnknownHomeFallback(
 
 export function pathForRoute(route: Route) {
   if (route === "home") return "/";
+  if (route === "about") return "/about/mission";
   if (route === "about-mission") return "/about/mission";
   if (route === "about-team") return "/about/team";
   if (route === "about-trust") return "/about/trust";

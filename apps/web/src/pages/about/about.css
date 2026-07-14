@@ -19,7 +19,9 @@
 .about-trust-principles,
 .about-data-boundaries,
 .about-editorial-cta,
-.about-contact-layout {
+.about-contact-layout,
+.about-mission-steps,
+.about-mission-why {
   margin-inline: auto;
   max-width: 1180px;
   width: calc(100% - clamp(32px, 7vw, 80px));
@@ -204,6 +206,161 @@
 .about-section-nav-link:focus-visible {
   outline: 3px solid rgba(8, 118, 63, 0.34);
   outline-offset: 4px;
+}
+
+.about-mission-steps {
+  margin-bottom: clamp(58px, 8vw, 104px);
+}
+
+.about-mission-section-heading {
+  display: grid;
+  gap: 14px;
+  margin-bottom: clamp(28px, 4vw, 46px);
+  max-width: 760px;
+}
+
+.about-mission-section-heading h2,
+.about-mission-section-heading p,
+.about-mission-step h3,
+.about-mission-step p,
+.about-mission-why h2,
+.about-mission-why p,
+.about-mission-inputs {
+  margin: 0;
+}
+
+.about-mission-section-heading h2,
+.about-mission-why h2 {
+  color: #082619;
+  font-family:
+    "Cormorant Garamond", "EB Garamond", "Iowan Old Style", Georgia, serif;
+  font-size: clamp(40px, 4.4vw, 64px);
+  font-weight: 560;
+  letter-spacing: -0.052em;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.about-mission-section-heading > p:last-child,
+.about-mission-why p {
+  color: rgba(6, 36, 25, 0.7);
+  font-size: 17px;
+  line-height: 1.62;
+}
+
+.about-mission-step-grid {
+  display: grid;
+  gap: clamp(20px, 2.4vw, 34px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.about-mission-step {
+  background:
+    linear-gradient(145deg, #ffffff, #fbfefb),
+    radial-gradient(circle at 92% 4%, rgba(35, 142, 82, 0.06), transparent 34%);
+  border: 1px solid rgba(8, 38, 25, 0.1);
+  border-radius: 22px;
+  box-shadow:
+    0 18px 50px rgba(8, 38, 25, 0.075),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  display: grid;
+  gap: 18px;
+  min-height: 330px;
+  padding: clamp(22px, 2.4vw, 30px);
+  position: relative;
+  transition:
+    border-color 200ms ease,
+    box-shadow 220ms ease,
+    transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.about-mission-step::before {
+  background: linear-gradient(90deg, rgba(11, 108, 60, 0.38), transparent);
+  border-radius: 22px 22px 0 0;
+  content: "";
+  height: 3px;
+  inset: 0 0 auto;
+  position: absolute;
+}
+
+.about-mission-step-topline {
+  align-items: start;
+  display: flex;
+  justify-content: space-between;
+}
+
+.about-mission-step .about-trust-icon .feature-icon {
+  background: transparent;
+  border: 0;
+  height: auto;
+  width: auto;
+}
+
+.about-mission-step-number {
+  color: rgba(8, 118, 63, 0.28);
+  font-size: clamp(38px, 3.5vw, 56px);
+  font-weight: 850;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+}
+
+.about-mission-step h3 {
+  color: #082619;
+  font-family:
+    "Cormorant Garamond", "EB Garamond", "Iowan Old Style", Georgia, serif;
+  font-size: clamp(28px, 2.6vw, 40px);
+  font-weight: 560;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.about-mission-step p {
+  color: rgba(6, 36, 25, 0.7);
+  font-size: 16px;
+  line-height: 1.62;
+}
+
+.about-mission-why {
+  align-items: start;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(8, 38, 25, 0.1);
+  border-radius: 22px;
+  box-shadow:
+    0 18px 50px rgba(8, 38, 25, 0.075),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  display: grid;
+  gap: clamp(32px, 5vw, 72px);
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  margin-bottom: clamp(58px, 8vw, 104px);
+  padding: clamp(28px, 4vw, 52px);
+}
+
+.about-mission-why > div:first-child {
+  display: grid;
+  gap: 14px;
+}
+
+.about-mission-why-copy {
+  display: grid;
+  gap: 18px;
+}
+
+.about-mission-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 4px 0 0;
+}
+
+.about-mission-inputs li {
+  background: #eff8ef;
+  border: 1px solid rgba(8, 38, 25, 0.12);
+  border-radius: 11px;
+  color: #17452f;
+  font-size: 13px;
+  font-weight: 680;
+  padding: 9px 12px;
 }
 
 .about-trust-principles {
@@ -564,6 +721,7 @@
   }
 
   .about-trust-principle:hover,
+  .about-mission-step:hover,
   .about-boundary-card:not(.is-dark):hover,
   .about-contact-card:hover,
   .about-contact-form:hover {
@@ -674,6 +832,15 @@
     padding-inline: 10px;
   }
 
+  .about-mission-step-grid,
+  .about-mission-why {
+    grid-template-columns: 1fr;
+  }
+
+  .about-mission-step {
+    min-height: 0;
+  }
+
   .about-data-boundaries,
   .about-contact-aside {
     grid-template-columns: 1fr;
@@ -699,7 +866,9 @@
   .about-trust-principles,
   .about-data-boundaries,
   .about-editorial-cta,
-  .about-contact-layout {
+  .about-contact-layout,
+  .about-mission-steps,
+  .about-mission-why {
     width: calc(100% - 28px);
   }
 
@@ -747,6 +916,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .about-section-nav-link,
+  .about-mission-step,
   .about-trust-principle,
   .about-boundary-card,
   .about-editorial-cta-button,
@@ -759,6 +929,7 @@
   }
 
   .about-section-nav-link:hover,
+  .about-mission-step:hover,
   .about-editorial-cta-button:hover,
   .about-contact-submit:hover,
   .about-contact-trust-link:hover .arrow-icon {

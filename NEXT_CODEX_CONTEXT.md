@@ -73,7 +73,7 @@ Key public routes:
 
 - `/` for home.
 - `/how-it-works` for the full process explanation.
-- `/pricing` for project-based pricing.
+- `/#home-pricing` for the homepage project-based pricing section.
 - `/about` for the about hub.
 - `/about/mission`, `/about/team`, `/about/trust`, and `/about/contact` for focused about pages.
 - `/scan` for free scan intake.

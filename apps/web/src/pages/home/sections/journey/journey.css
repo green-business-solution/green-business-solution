@@ -1525,14 +1525,7 @@
   .journey-intent-cue,
   .journey-scene-image,
   .journey-story-copy,
-  .journey-progress-dots i,
-  .pricing-primary-action,
-  .pricing-secondary-action,
-  .pricing-card,
-  .pricing-card button,
-  .pricing-final-cta button,
-  .pricing-path-card,
-  .pricing-faq-card {
+  .journey-progress-dots i {
     animation: none;
     transition: none;
   }

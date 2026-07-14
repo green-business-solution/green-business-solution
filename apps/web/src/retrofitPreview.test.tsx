@@ -1598,8 +1598,8 @@ describe("retrofit recommendations preview", () => {
     expect(html).not.toContain("sidebar-wordmark");
     expect(html).toContain("Retrofits");
     expect(html).toContain('aria-expanded="false"');
-    expect(html).not.toContain("sidebar-retrofit-list");
-    expect(html).not.toContain("sidebar-retrofit-item");
+    expect(html).not.toContain('class="sidebar-retrofit-list"');
+    expect(html).not.toContain('class="sidebar-retrofit-item');
     expect(html).toContain("Profile info");
     expect(html).toContain("Dashboard");
     expect(html).toContain("Instructions");
@@ -2896,8 +2896,10 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("onToggleCollapsed");
     expect(source).toContain("user-preview-sidebar-collapse");
     expect(source).toContain("onShowAllRetrofits={() =>");
-    expect(source).toContain("if (activeRetrofitId) {");
-    expect(source).toContain("onShowAllRetrofits();");
+    expect(source).toContain("onClick={onShowAllRetrofits}");
+    expect(source).toContain('aria-controls="sidebar-retrofit-list"');
+    expect(source).toContain('"Expand retrofit list"');
+    expect(source).toContain('"Collapse retrofit list"');
     expect(source).toContain("function RetrofitDetailFormModal(");
     expect(source).toContain("setActiveFormRetrofitId(retrofit.id)");
     expect(source).toContain("if (!readiness.questionsComplete)");
@@ -2958,13 +2960,11 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain(
       'safeStorageSet("session", INTAKE_JUST_COMPLETED_KEY, "true")',
     );
-    expect(source).toContain("const activeNavRetrofitId = activeRetrofitId;");
-    expect(source).not.toContain("activeRetrofitId || retrofits[0]?.id");
-    expect(source).toContain("if (activeRetrofitId) setRetrofitsOpen(true)");
-    expect(source).toContain("activeRetrofit ? (");
+    expect(source).toContain("const [retrofitsOpen, setRetrofitsOpen] = useState(false)");
+    expect(source).toContain("onClick={() => setRetrofitsOpen((current) => !current)}");
     expect(source).toContain("onSelectRetrofit(retrofit.id)");
+    expect(source).toContain("activeRetrofit ? (");
     expect(source).toContain("setMobileSidebarOpen(false)");
-    expect(source).toContain("sidebar-retrofit-item");
     expect(source).toContain("Grid</span>");
     expect(source).toContain("Panel</span>");
     expect(workspaceSource).toContain("data-workspace-tab");
@@ -3317,13 +3317,14 @@ describe("retrofit recommendations preview", () => {
     expect(queuedHtml).not.toContain("Report Feedback");
   });
 
-  it("keeps the home page primary navbar free of the mobile glass shell override", async () => {
+  it("uses the current light navbar treatment across every public page", async () => {
     const fsModuleName = "node:fs";
     const { readFileSync } = await import(fsModuleName);
     const shellCss = readFileSync(
       new URL("./components/public/public-shell.css", import.meta.url),
       "utf8",
     );
+    const globalCss = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
     const heroCss = readFileSync(
       new URL("./pages/home/sections/hero/hero.css", import.meta.url),
       "utf8",
@@ -3338,14 +3339,15 @@ describe("retrofit recommendations preview", () => {
       homeMobileNavEnd < 0 ? undefined : homeMobileNavEnd,
     );
 
-    expect(shellCss).toContain(".public-page.home-page .navbar-inner");
+    expect(shellCss).toContain(".public-page .navbar-inner");
     expect(shellCss).toContain("background: rgba(240, 248, 243, 0.46);");
-    expect(homeMobileNavCss).toContain(".public-page.home-page .site-header");
+    expect(homeMobileNavCss).toContain(".public-page .site-header");
     expect(homeMobileNavCss).not.toContain(
-      ".public-page.home-page .navbar-inner",
+      ".public-page .navbar-inner",
     );
     expect(homeMobileNavCss).not.toContain("backdrop-filter");
     expect(homeMobileNavCss).not.toContain("rgba(237, 248, 242, 0.58)");
+    expect(globalCss).not.toContain(".public-page .site-header .nav-actions .nav-cta,");
     const normalizedHomeSmallMobileCss = heroCss.replace(/\s+/g, " ");
     expect(normalizedHomeSmallMobileCss).toContain(
       ".public-page.home-page .planet-scan-section.scroll-frame-scanner .planet-scan-title span",
@@ -3781,6 +3783,10 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".picker-view-icon");
     expect(css).toContain(".sidebar-retrofit-item:hover");
     expect(css).toContain(".sidebar-retrofit-item.is-active");
+    expect(css).toContain(".sidebar-dashboard-subitem .sidebar-label");
+    expect(css).toContain("border-radius: 8px");
+    expect(css).toContain(".retrofit-preview-page .dashboard-main-tabs button:hover");
+    expect(css).toContain(".retrofit-preview-page .dashboard-sub-tabs button:focus-visible");
     expect(css).toContain(".user-preview-shell.is-sidebar-collapsed");
     expect(css).toContain(".user-preview-sidebar-collapse");
     expect(css).toContain(".process-onboarding-modal");
@@ -3807,7 +3813,8 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".process-onboarding-modal .process-modal-footer");
     expect(css).toContain(".process-onboarding-backdrop .process-next-button");
     expect(css).toContain("justify-content: flex-end");
-    expect(css).toContain("background: rgba(8, 18, 31, 0.74)");
+    expect(css).toContain("background: #0e4637");
+    expect(css).toContain("color: #f3fbf6");
     expect(css).toContain("min-width: clamp(180px, 13.4vw, 224px)");
     expect(css).toContain(".typewriter-caret");
     expect(css).toContain("border-right: 2px solid #4ea1ff");

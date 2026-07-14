@@ -43,8 +43,10 @@ import {
   type ContactFormState,
 } from "./pages/about/contactForm";
 import {
+  animateWindowScrollTo,
   HOME_HOW_IT_WORKS_SECTION_ID,
   scrollToHomeHowItWorksFallback,
+  takeRequestedHomeScrollDuration,
 } from "./pages/home/homeSections";
 import {
   UserPreviewTriageBadges,
@@ -2384,7 +2386,7 @@ function PasswordAuthPanel({
 
   return (
     <div className="password-auth-panel">
-      <h1>{isSignup ? "Create account" : "Log in"}</h1>
+      <h2>{isSignup ? "Create account" : "Log in"}</h2>
       <PasswordAuthForm
         initialUsername={initialUsername}
         mode={mode}
@@ -2928,7 +2930,6 @@ const PUBLIC_SCROLL_RESET_ROUTES = new Set<Route>([
   "about-team",
   "about-trust",
   "about-contact",
-  "pricing",
   "scan",
   "scan-results",
   "scan-energy-data",
@@ -3020,324 +3021,6 @@ function AboutSectionNav({
   );
 }
 
-function AboutHubCard({
-  copy,
-  icon,
-  label,
-  navigate,
-  route,
-  title
-}: {
-  copy: string;
-  icon: "mission" | "team" | "trust" | "contact";
-  label: string;
-  navigate: (route: Route) => void;
-  route: Route;
-  title: string;
-}) {
-  return (
-    <article className="hub-card">
-      <FeatureIcon icon={icon} />
-      <div>
-        <p className="eyebrow">{label}</p>
-        <h3>{title}</h3>
-        <p>{copy}</p>
-      </div>
-      <button
-        aria-label={`Learn more about ${title}`}
-        className="text-link with-icon"
-        onClick={() => navigate(route)}
-        type="button"
-      >
-        Learn more
-        <ArrowUpRightIcon />
-      </button>
-    </article>
-  );
-}
-
-function PricingPage({
-  navigate,
-  publicAuth
-}: {
-  navigate: (route: Route) => void;
-  publicAuth: PublicAuthState;
-}) {
-  const plans = [
-    {
-      audience: "Exploring potential opportunities",
-      cta: "Start free scan",
-      features: ["Basic opportunity preview", "Estimated value range", "General retrofit categories", "Utility bill prompt for sharper estimates"],
-      footnote: "No commitment. Useful before you collect documents.",
-      name: "Free Scan",
-      price: "$0",
-      route: "scan" as Route
-    },
-    {
-      audience: "Ready to decide whether a project is worth pursuing",
-      cta: "Start with free scan",
-      featured: true,
-      features: ["Exact incentive matches", "Eligibility analysis", "Savings and ROI estimates", "Prioritized retrofit roadmap", "Downloadable report and assumptions"],
-      footnote: "Best first paid step for a single property.",
-      name: "Opportunity Report",
-      price: "$950",
-      priceNote: "per site",
-      route: "scan" as Route
-    },
-    {
-      audience: "Moving from decision to application and execution",
-      cta: "Talk to us",
-      features: ["Application preparation support", "Document collection guidance", "Contractor quote review", "Financing guidance", "60-90 days of incentive tracking"],
-      footnote: "Scoped after we understand the retrofit and documents.",
-      name: "Implementation Support",
-      price: "$3,500+",
-      route: "about-contact" as Route
-    },
-    {
-      audience: "Portfolios, franchise groups, and regional operators",
-      cta: "Plan portfolio",
-      features: ["Site-by-site scans", "Portfolio prioritization", "Centralized incentive tracking", "Standardized recommendations", "Rollup view for decision makers"],
-      footnote: "Custom pricing based on portfolio size and workflow depth.",
-      name: "Multi-Site",
-      price: "Custom",
-      route: "about-contact" as Route
-    }
-  ];
-  const pathSteps = [
-    ["01", "Scan", "Find the likely incentive value before paying for deeper work."],
-    ["02", "Report", "Turn the best opportunities into project economics and next steps."],
-    ["03", "Support", "Move selected retrofits through documents, applications, and tracking."]
-  ];
-  const comparisonRows = [
-    ["Upfront cost", "Free", "$950 / site", "$3,500+", "Custom"],
-    ["Best output", "Opportunity preview", "Decision-ready report", "Application-ready workflow", "Portfolio roadmap"],
-    ["Utility bill depth", "Optional", "Recommended", "Required for selected projects", "Standardized by site"],
-    ["Application support", "Not included", "Guidance only", "Hands-on support", "Centralized support"],
-    ["Subscription", "No", "No", "No", "No"]
-  ];
-  const faqs = [
-    ["Why is the scan free?", "The scan helps you see whether deeper analysis is likely to create enough value before you pay."],
-    ["When do I pay?", "Only when you choose to upgrade to an Opportunity Report or implementation support."],
-    ["Do I need utility bills?", "Not for the free scan. Utility bills improve savings, ROI, and application readiness."],
-    ["Is this a subscription?", "No. RetroFi starts with project-based pricing instead of a recurring software fee."],
-    ["Do you charge a success fee?", "No success fee initially. Pricing stays tied to clear work products and support scope."],
-    ["Can this cover multiple sites?", "Yes. Multi-site pricing depends on portfolio size, reporting needs, and rollout complexity."]
-  ];
-
-  return (
-    <PublicShell navigate={navigate} pageClassName="pricing-page" publicAuth={publicAuth}>
-      <section className="pricing-hero" aria-labelledby="pricing-heading">
-        <div className="pricing-hero-copy">
-          <p className="pricing-eyebrow">Pricing</p>
-          <h1 id="pricing-heading">Start free. Pay when the opportunity is real.</h1>
-          <p>
-            RetroFi keeps pricing tied to clear decisions: scan for free, upgrade for project economics, then add support only when a retrofit is worth moving forward.
-          </p>
-          <div className="pricing-hero-actions">
-            <button className="pricing-primary-action" onClick={() => navigate("scan")} type="button">
-              Start free scan
-              <ArrowUpRightIcon />
-            </button>
-            <button className="pricing-secondary-action" onClick={() => navigate("about-contact")} type="button">
-              Talk to RetroFi
-            </button>
-          </div>
-          <ul className="pricing-trust-list" aria-label="Pricing assurances">
-            <li><CheckIcon /> No subscription</li>
-            <li><CheckIcon /> No success fee initially</li>
-            <li><CheckIcon /> Upgrade only after the scan</li>
-          </ul>
-        </div>
-        <aside className="pricing-hero-panel" aria-label="Recommended pricing path">
-          <span>Recommended path</span>
-          <strong>$0 first</strong>
-          <p>Use the free scan to decide whether a paid report is likely to pay for itself.</p>
-          <div className="pricing-hero-meter" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </div>
-        </aside>
-      </section>
-
-      <section className="pricing-path-section" aria-labelledby="pricing-path-heading">
-        <div className="pricing-section-heading">
-          <p className="pricing-eyebrow">How pricing scales</p>
-          <h2 id="pricing-path-heading">Each step earns the next one.</h2>
-          <span>Move from quick discovery to decision support to implementation without committing to a long-term contract.</span>
-        </div>
-        <div className="pricing-path-grid">
-          {pathSteps.map(([number, title, copy]) => (
-            <article className="pricing-path-card" key={title}>
-              <span>{number}</span>
-              <h3>{title}</h3>
-              <p>{copy}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="pricing-plan-grid" aria-label="Pricing plans">
-        {plans.map((plan) => (
-          <article className={plan.featured ? "pricing-card recommended" : "pricing-card"} key={plan.name}>
-            {plan.featured ? <span className="recommended-badge">Most useful first upgrade</span> : null}
-            <div className="pricing-card-header">
-              <h2>{plan.name}</h2>
-              <p>{plan.audience}</p>
-            </div>
-            <div className="pricing-price-line">
-              <strong>{plan.price}</strong>
-              {plan.priceNote ? <span>{plan.priceNote}</span> : null}
-            </div>
-            <ul>
-              {plan.features.map((item) => (
-                <li key={item}><CheckIcon /> {item}</li>
-              ))}
-            </ul>
-            <p className="pricing-card-footnote">{plan.footnote}</p>
-            <button className="pricing-plan-button" onClick={() => navigate(plan.route)} type="button">
-              {plan.cta}
-              <ArrowUpRightIcon />
-            </button>
-          </article>
-        ))}
-      </section>
-
-      <section className="pricing-comparison-section" aria-labelledby="pricing-comparison-heading">
-        <div className="pricing-section-heading">
-          <p className="pricing-eyebrow">Compare</p>
-          <h2 id="pricing-comparison-heading">Choose by decision stage.</h2>
-          <span>The difference is not feature bloat. It is how much certainty and hands-on execution you need.</span>
-        </div>
-        <div className="pricing-comparison-grid" role="table" aria-label="Pricing comparison">
-          <div className="pricing-comparison-row pricing-comparison-row--header" role="row">
-            <span role="columnheader">Question</span>
-            <span role="columnheader">Free Scan</span>
-            <span role="columnheader">Report</span>
-            <span role="columnheader">Support</span>
-            <span role="columnheader">Multi-Site</span>
-          </div>
-          {comparisonRows.map((row) => (
-            <div className="pricing-comparison-row" role="row" key={row[0]}>
-              {row.map((cell, index) => (
-                <span role={index === 0 ? "rowheader" : "cell"} key={cell}>{cell}</span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="pricing-faq-section" aria-labelledby="pricing-faq-heading">
-        <div className="pricing-section-heading">
-          <p className="pricing-eyebrow">Questions</p>
-          <h2 id="pricing-faq-heading">The short version.</h2>
-        </div>
-        <div className="pricing-faq-grid">
-          {faqs.map(([question, answer]) => (
-            <article className="pricing-faq-card" key={question}>
-              <h3>{question}</h3>
-              <p>{answer}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="pricing-final-cta">
-        <div>
-          <p>Ready to see whether there is money on the table?</p>
-          <span>Start with the free scan. Bring utility data later if the numbers deserve a closer look.</span>
-        </div>
-        <button className="pricing-final-button" onClick={() => navigate("scan")} type="button">
-          Start free scan
-          <ArrowUpRightIcon />
-        </button>
-      </section>
-    </PublicShell>
-  );
-}
-
-function AboutPage({
-  navigate,
-  publicAuth
-}: {
-  navigate: (route: Route) => void;
-  publicAuth: PublicAuthState;
-}) {
-  return (
-    <PublicShell navigate={navigate} pageClassName="home-page" publicAuth={publicAuth}>
-      <PageHero
-        compact
-        eyebrow="About RetroFi"
-        title="RetroFi helps homeowners make smarter retrofit decisions faster"
-        copy="We turn messy home and utility data into clear guidance so people can understand upgrades, incentives, and next steps without the usual research burden."
-      />
-      <AboutSectionNav activeRoute="about" navigate={navigate} />
-      <section className="split-section about-story-section">
-        <div>
-          <p className="eyebrow">Mission</p>
-          <h2>Clear retrofit guidance should be easier to get.</h2>
-        </div>
-        <p className="about-story-copy">
-          RetroFi is built to reduce confusion around home upgrades. Instead of asking homeowners to piece together savings estimates,
-          incentives, and retrofit options across disconnected sources, the product brings those inputs into one clearer report.
-        </p>
-      </section>
-      <section className="card-grid three about-principles-grid">
-        {[
-          ["Simple to use", "A lightweight flow gets homeowners from account setup to useful insight quickly.", "roadmap"],
-          ["Designed for clarity", "Recommendations are meant to be readable, personalized, and easy to act on.", "savings"],
-          ["Built to save time", "RetroFi reduces research overhead by organizing complex utility and retrofit information.", "mission"]
-        ].map(([title, copy, icon]) => (
-          <article className="feature-card" key={title}>
-            <FeatureIcon icon={icon as "roadmap" | "savings" | "mission"} />
-            <h3>{title}</h3>
-            <p>{copy}</p>
-          </article>
-        ))}
-      </section>
-      <section className="card-grid two about-hub-grid">
-        <AboutHubCard
-          copy="Learn why RetroFi is focused on making home upgrade decisions clearer and more practical."
-          icon="mission"
-          label="Mission"
-          navigate={navigate}
-          route="about-mission"
-          title="Why RetroFi exists"
-        />
-        <AboutHubCard
-          copy="Meet the people building the product, research workflows, and homeowner experience."
-          icon="team"
-          label="Team"
-          navigate={navigate}
-          route="about-team"
-          title="Meet the team"
-        />
-        <AboutHubCard
-          copy="Understand how home and utility data are used to prepare recommendations responsibly."
-          icon="trust"
-          label="Trust & Data"
-          navigate={navigate}
-          route="about-trust"
-          title="How we handle data"
-        />
-        <AboutHubCard
-          copy="Talk to us if you want to understand the product before creating an account or uploading bills."
-          icon="contact"
-          label="Contact"
-          navigate={navigate}
-          route="about-contact"
-          title="Questions before you start?"
-        />
-      </section>
-      <section className="final-cta">
-        <h2>RetroFi is built to make home upgrade choices easier to understand.</h2>
-        <p>Start with a lightweight account and see how fast home and utility data can turn into clearer retrofit guidance.</p>
-        <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
-      </section>
-    </PublicShell>
-  );
-}
-
 function MissionPage({
   navigate,
   publicAuth
@@ -3345,49 +3028,104 @@ function MissionPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
+  const missionSteps = [
+    {
+      copy: "Bring fragmented utility, government, tax, grant, and financing programs into one searchable view of the opportunities that may fit a business and its building.",
+      icon: "incentives" as const,
+      number: "01",
+      title: "Find the opportunity",
+    },
+    {
+      copy: "Combine incentive data with building information, utility usage, and financial analysis to make potential costs, savings, and tradeoffs easier to evaluate.",
+      icon: "savings" as const,
+      number: "02",
+      title: "Understand the economics",
+    },
+    {
+      copy: "Translate complex program requirements into practical recommendations and clearer next steps—without presenting estimates as guaranteed eligibility or savings.",
+      icon: "roadmap" as const,
+      number: "03",
+      title: "Move toward action",
+    },
+  ];
+
   return (
-    <PublicShell navigate={navigate} pageClassName="home-page" publicAuth={publicAuth}>
-      <PageHero
-        compact
-        eyebrow="Mission"
-        title="Making sustainability upgrades financially practical."
-        copy="RetroFi is building a cleaner path from incentive discovery to confident retrofit decisions."
-      />
-      <AboutSectionNav activeRoute="about-mission" navigate={navigate} />
-      <section className="two-column-section">
-        <article className="feature-card">
-          <h2>The problem</h2>
-          <p>
-            Businesses often want to reduce operating costs and improve efficiency, but incentive
-            programs are fragmented across utilities, agencies, tax rules, and financing providers.
+    <PublicShell
+      navigate={navigate}
+      pageClassName="about-editorial-page home-page about-mission-page"
+      publicAuth={publicAuth}
+      showFooter
+    >
+      <section aria-labelledby="about-mission-title" className="about-editorial-hero">
+        <div className="about-editorial-hero-copy">
+          <p className="about-editorial-eyebrow">About / Mission</p>
+          <h1 id="about-mission-title">Making better buildings easier to fund.</h1>
+          <p className="about-editorial-intro">
+            RetroFi helps businesses discover relevant building-efficiency incentives, understand
+            the economics, and move toward high-impact upgrades with greater confidence.
           </p>
-        </article>
-        <article className="feature-card">
-          <h2>Our mission</h2>
-          <p>
-            RetroFi exists to help businesses identify relevant opportunities, estimate savings, and
-            move toward practical facility upgrades with more confidence.
-          </p>
-        </article>
+        </div>
+        <aside aria-label="RetroFi mission summary" className="about-hero-note">
+          <span className="about-hero-note-icon"><FeatureIcon icon="mission" /></span>
+          <strong>Make sustainability financially practical.</strong>
+          <span>Turn scattered programs and building data into a clearer path from opportunity to action.</span>
+        </aside>
       </section>
-      <section className="content-section">
-        <SectionHeading eyebrow="What we believe" title="RetroFi should turn complexity into clear next steps" />
-        <div className="card-grid three">
-          {[
-            "Sustainability should be financially practical",
-            "Incentives should be easier to navigate",
-            "Businesses need clear next steps, not just links"
-          ].map((belief) => (
-            <article className="feature-card belief-card" key={belief}>
-              <FeatureIcon icon="mission" />
-              <h3>{belief}</h3>
+      <AboutSectionNav activeRoute="about-mission" navigate={navigate} />
+      <section aria-labelledby="about-mission-steps-title" className="about-mission-steps">
+        <header className="about-mission-section-heading">
+          <p className="about-card-kicker">From complexity to clarity</p>
+          <h2 id="about-mission-steps-title">A more practical path to better buildings.</h2>
+          <p>
+            RetroFi organizes the information businesses need to decide whether a retrofit opportunity deserves a closer look.
+          </p>
+        </header>
+        <div className="about-mission-step-grid">
+          {missionSteps.map((step) => (
+            <article className="about-mission-step" key={step.number}>
+              <div className="about-mission-step-topline">
+                <span className="about-trust-icon"><FeatureIcon icon={step.icon} /></span>
+                <span className="about-mission-step-number">{step.number}</span>
+              </div>
+              <h3>{step.title}</h3>
+              <p>{step.copy}</p>
             </article>
           ))}
         </div>
       </section>
-      <section className="final-cta">
-        <h2>Start with a free scan and evaluate where a real project may exist.</h2>
-        <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
+      <section aria-labelledby="about-mission-why-title" className="about-mission-why">
+        <div>
+          <p className="about-card-kicker">Why this matters</p>
+          <h2 id="about-mission-why-title">Less time searching. More confidence deciding.</h2>
+        </div>
+        <div className="about-mission-why-copy">
+          <p>
+            Efficiency incentives are fragmented across utilities, agencies, tax programs, grants,
+            and financing providers. That complexity can hide valuable opportunities and slow down
+            otherwise practical projects.
+          </p>
+          <p>
+            RetroFi brings incentive data together with building information, utility usage,
+            financial analysis, and practical recommendations so businesses can focus on the
+            upgrades most worth investigating.
+          </p>
+          <ul aria-label="Information RetroFi brings together" className="about-mission-inputs">
+            <li>Incentive data</li>
+            <li>Building information</li>
+            <li>Utility usage</li>
+            <li>Financial analysis</li>
+          </ul>
+        </div>
+      </section>
+      <section aria-labelledby="about-mission-cta-title" className="about-editorial-cta">
+        <div className="about-editorial-cta-copy">
+          <h2 id="about-mission-cta-title">See which opportunities may fit your building.</h2>
+          <p>Start with a free scan, then decide whether a deeper analysis is worth pursuing.</p>
+        </div>
+        <button className="about-editorial-cta-button" onClick={() => navigate("scan")} type="button">
+          Start free scan
+          <ArrowUpRightIcon />
+        </button>
       </section>
     </PublicShell>
   );
@@ -3402,19 +3140,22 @@ function TeamPage({
 }) {
   const founders = [
     {
-      bio: "Neer helps shape RetroFi’s product vision and partnerships, with a focus on turning complex sustainability programs into practical opportunities for property owners.",
-      initial: "N",
-      name: "Neer",
+      bio: "Sustainability entrepreneur leading RetroFi’s strategy, product direction, partnerships, and growth. He previously scaled a 40+ member environmental nonprofit and brings experience in ESG, policy, and green-business development.",
+      headshot: "/headshots/rajvansh-gupta.svg",
+      name: "Rajvansh Gupta",
+      title: "Co-Founder & CEO",
     },
     {
-      bio: "Ryan leads the development of RetroFi’s technology and data systems, creating a dependable experience that makes retrofit planning clearer and more actionable.",
-      initial: "R",
-      name: "Ryan",
+      bio: "Technical builder responsible for RetroFi’s architecture, incentive-data systems, automation, and platform reliability. He combines strong quantitative reasoning with hands-on experience building AI- and AWS-powered systems.",
+      headshot: "/headshots/neer-kuchlous.svg",
+      name: "Neer Kuchlous",
+      title: "Co-Founder & CTO",
     },
     {
-      bio: "Rajvansh focuses on strategy, operations, and customer outcomes, helping ensure that RetroFi’s recommendations translate into meaningful financial and environmental results.",
-      initial: "R",
-      name: "Rajvansh",
+      bio: "Designer and digital marketer leading RetroFi’s brand, customer-facing experience, and lead generation. He brings practical web-development experience, a strong understanding of online trends, and an eye for presenting complex information clearly.",
+      headshot: "/headshots/ryan-shen.svg",
+      name: "Ryan Shen",
+      title: "Co-Founder & CMO",
     },
   ] as const;
 
@@ -3460,11 +3201,14 @@ function TeamPage({
                 className="home-infographic-card about-founder-card"
                 key={founder.name}
               >
-                <span aria-hidden="true" className="about-founder-portrait">
-                  {founder.initial}
-                </span>
+                <div className="about-founder-portrait">
+                  <img
+                    alt={`${founder.name}, ${founder.title}`}
+                    src={founder.headshot}
+                  />
+                </div>
                 <div className="about-founder-copy">
-                  <p className="about-founder-role">Co-founder</p>
+                  <p className="about-founder-role">{founder.title}</p>
                   <h3 id={founderHeadingId}>{founder.name}</h3>
                   <p>{founder.bio}</p>
                 </div>
@@ -5219,14 +4963,33 @@ function SignInPage({
   publicAuth: PublicAuthState;
 }) {
   return (
-    <PublicShell navigate={navigate} pageClassName="sign-in-page" publicAuth={publicAuth} showFooter={false}>
-      <section className="sign-in-panel">
-        {message ? <p className="muted-message">{message}</p> : null}
-        <PasswordAuthPanel onAuthSuccess={onAuthSuccess} />
-        <div className="auth-divider" role="presentation">
-          <span>Or</span>
+    <PublicShell
+      navigate={navigate}
+      pageClassName="sign-in-page"
+      publicAuth={publicAuth}
+      showFooter={false}
+    >
+      <section aria-labelledby="sign-in-intro-title" className="sign-in-experience">
+        <div className="sign-in-intro">
+          <p className="sign-in-eyebrow">Your retrofit workspace</p>
+          <h1 id="sign-in-intro-title">A clearer path to better buildings.</h1>
+          <p className="sign-in-intro-copy">
+            Sign in to continue your building scan, review matched incentives, and turn the next
+            high-impact upgrade into a practical plan.
+          </p>
+          <div aria-label="Account benefits" className="sign-in-benefits">
+            <p><span aria-hidden="true">01</span> Your recommendations stay organized in one place.</p>
+            <p><span aria-hidden="true">02</span> Your building information remains private by design.</p>
+          </div>
         </div>
-        <GoogleSignInButton />
+        <div className="sign-in-panel">
+          {message ? <p className="muted-message sign-in-message" role="status">{message}</p> : null}
+          <PasswordAuthPanel onAuthSuccess={onAuthSuccess} />
+          <div className="auth-divider" role="presentation">
+            <span>Or</span>
+          </div>
+          <GoogleSignInButton />
+        </div>
       </section>
     </PublicShell>
   );
@@ -9985,11 +9748,7 @@ function UserPreviewSidebar({
 }) {
   const [retrofitsOpen, setRetrofitsOpen] = useState(false);
   const triageMode = useUserPreviewTriageMode();
-  const activeNavRetrofitId = activeRetrofitId;
   const dashboardOpen = activeView === "dashboard";
-  useEffect(() => {
-    if (activeRetrofitId) setRetrofitsOpen(true);
-  }, [activeRetrofitId]);
   return (
     <>
       {mobileOpen ? <button aria-label="Close retrofit navigation" className="user-preview-sidebar-scrim" onClick={onCloseMobile} type="button" /> : null}
@@ -10003,27 +9762,31 @@ function UserPreviewSidebar({
           <ChevronDownIcon />
         </button>
         <nav className="user-preview-sidebar-nav" aria-label="Retrofit navigation">
-          <button
-            aria-expanded={retrofitsOpen}
-            className={`sidebar-nav-row sidebar-section-trigger${activeView === "retrofits" ? " is-active" : ""}`}
-            onClick={() => {
-              if (activeRetrofitId) {
-                onShowAllRetrofits();
-                return;
-              }
-              setRetrofitsOpen((current) => !current);
-            }}
-            type="button"
-          >
-            <HomeOutlineIcon />
-            <span className="sidebar-label">Retrofits</span>
-            <ChevronDownIcon />
-          </button>
+          <div className={`sidebar-retrofits-control${activeView === "retrofits" ? " is-active" : ""}`}>
+            <button
+              className="sidebar-nav-row sidebar-section-link"
+              onClick={onShowAllRetrofits}
+              type="button"
+            >
+              <HomeOutlineIcon />
+              <span className="sidebar-label">Retrofits</span>
+            </button>
+            <button
+              aria-controls="sidebar-retrofit-list"
+              aria-expanded={retrofitsOpen}
+              aria-label={retrofitsOpen ? "Collapse retrofit list" : "Expand retrofit list"}
+              className="sidebar-retrofit-toggle"
+              onClick={() => setRetrofitsOpen((current) => !current)}
+              type="button"
+            >
+              <ChevronDownIcon />
+            </button>
+          </div>
           {retrofitsOpen ? (
-            <div className="sidebar-retrofit-list">
+            <div className="sidebar-retrofit-list" id="sidebar-retrofit-list">
               {retrofits.map((retrofit) => (
                 <button
-                  className={`sidebar-retrofit-item${activeNavRetrofitId === retrofit.id ? " is-active" : ""}`}
+                  className={`sidebar-retrofit-item${activeRetrofitId === retrofit.id ? " is-active" : ""}`}
                   key={retrofit.id}
                   onClick={() => onSelectRetrofit(retrofit.id)}
                   type="button"
@@ -12224,7 +11987,6 @@ function RetrofitPickerIcon({ retrofit }: { retrofit: RetrofitPreviewCard }) {
 }
 
 function SidebarRetrofitIcon({ retrofit }: { retrofit: RetrofitPreviewCard }) {
-  // TODO: replace these temporary category-derived icons with a proper retrofit icon set.
   const Icon = iconForRetrofit(retrofit);
   return (
     <span className="sidebar-retrofit-icon" aria-hidden="true">
@@ -21167,6 +20929,8 @@ export function App() {
       const nextRoute = routeFromPath();
       if (window.location.pathname === "/database") {
         window.history.replaceState({}, "", pathForRoute(nextRoute));
+      } else if (window.location.pathname === "/about") {
+        window.history.replaceState({}, "", pathForRoute("about-mission"));
       } else if (shouldCanonicalizeUnknownHomeFallback()) {
         window.history.replaceState({}, "", pathForRoute("home"));
       }
@@ -21193,6 +20957,7 @@ export function App() {
 
     const targetFromHash = typeof window !== "undefined" ? window.location.hash.replace(/^#/, "") : "";
     const targetId = pendingPublicScrollTargetRef.current || targetFromHash;
+    const requestedDurationMs = takeRequestedHomeScrollDuration();
 
     if (!targetId) {
       window.scrollTo({ behavior: "auto", top: 0 });
@@ -21201,6 +20966,7 @@ export function App() {
 
     let animationFrame = 0;
     let attempts = 0;
+    let cancelActiveScroll: () => void = () => undefined;
 
     const scrollToTarget = (behavior: ScrollBehavior) => {
       const section = document.getElementById(targetId);
@@ -21211,7 +20977,12 @@ export function App() {
 
       const headerOffset = 96;
       const top = Math.max(0, section.getBoundingClientRect().top + window.scrollY - headerOffset);
-      window.scrollTo({ behavior, top });
+      cancelActiveScroll = requestedDurationMs
+        ? animateWindowScrollTo(top, requestedDurationMs)
+        : (() => {
+            window.scrollTo({ behavior, top });
+            return () => undefined;
+          })();
       return true;
     };
 
@@ -21231,6 +21002,7 @@ export function App() {
 
     return () => {
       window.cancelAnimationFrame(animationFrame);
+      cancelActiveScroll();
     };
   }, [route]);
 
@@ -21365,11 +21137,7 @@ export function App() {
         }
       : null;
 
-  if (effectiveRoute === "about") {
-    return <AboutPage navigate={navigate} publicAuth={publicAuth} />;
-  }
-
-  if (effectiveRoute === "about-mission") {
+  if (effectiveRoute === "about" || effectiveRoute === "about-mission") {
     return <MissionPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
@@ -21383,10 +21151,6 @@ export function App() {
 
   if (effectiveRoute === "about-contact") {
     return <ContactPage navigate={navigate} publicAuth={publicAuth} />;
-  }
-
-  if (effectiveRoute === "pricing") {
-    return <PricingPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
   if (effectiveRoute === "scan") {

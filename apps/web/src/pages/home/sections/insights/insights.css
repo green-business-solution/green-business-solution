@@ -969,7 +969,6 @@
 
 @media (hover: none), (pointer: coarse) {
   .feature-card:hover,
-  .pricing-card:hover,
   .hub-card:hover,
   .home-infographics-cta button:hover,
   .get-started-page .step-next-button:hover,
@@ -1009,7 +1008,6 @@
 @media (prefers-reduced-motion: reduce) {
 
   .feature-card,
-  .pricing-card,
   .hub-card,
   .home-infographics-cta button,
   .public-page.home-page .site-header .nav-actions .nav-cta,
@@ -1019,7 +1017,6 @@
   }
 
   .feature-card:hover,
-  .pricing-card:hover,
   .hub-card:hover,
   .get-started-page .step-back-button:active,
   .get-started-page .step-next-button:active,
