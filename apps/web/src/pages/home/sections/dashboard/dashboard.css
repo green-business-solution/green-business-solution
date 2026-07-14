@@ -1,8 +1,10 @@
 .public-page
   button:not(.link-button):not(.brand-link):not(.footer-link):not(
     .secondary-button
-  ):not(.menu-button):not(.dropdown-link):not(.text-link):not(
-    .about-subnav-link
+  ):not(.menu-button):not(.text-link):not(
+    .about-section-nav-link
+  ):not(.about-editorial-cta-button):not(.about-contact-submit):not(
+    .about-contact-trust-link
   ):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(
     .google-loading-button
   ):not(.google-redirect-button):not(.choice-card):not(.step-back-link):not(
@@ -29,8 +31,10 @@
 .public-page
   button:not(.link-button):not(.brand-link):not(.footer-link):not(
     .secondary-button
-  ):not(.menu-button):not(.dropdown-link):not(.text-link):not(
-    .about-subnav-link
+  ):not(.menu-button):not(.text-link):not(
+    .about-section-nav-link
+  ):not(.about-editorial-cta-button):not(.about-contact-submit):not(
+    .about-contact-trust-link
   ):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(
     .google-loading-button
   ):not(.google-redirect-button):not(.choice-card):not(.step-back-link):not(
@@ -1151,7 +1155,7 @@
 
 @media (max-width: 860px) {
 
-  .public-page .about-subnav-link,
+  .public-page .about-section-nav-link,
   .public-page .hub-card .text-link,
   .public-page .auth-inline-link,
   .footer-link,

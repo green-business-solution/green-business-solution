@@ -19,14 +19,6 @@ describe("select-production-deploy-targets", () => {
     expect(classifyFiles(["package-lock.json"], { baseLock, headLock }).targets).toEqual(["frontend"]);
   });
 
-  it("routes frame-generator and Sharp lockfile changes to the frontend", () => {
-    expect(classifyFiles(["scripts/generate-home-journey-frames.mjs"]).targets).toEqual(["frontend"]);
-
-    const baseLock = lockfile({ sharpVersion: "0.34.4" });
-    const headLock = lockfile({ sharpVersion: "0.34.5" });
-    expect(classifyFiles(["package-lock.json"], { baseLock, headLock }).targets).toEqual(["frontend"]);
-  });
-
   it("routes API runtime lockfile changes to api only", () => {
     const baseLock = lockfile({ expressVersion: "5.2.0" });
     const headLock = lockfile({ expressVersion: "5.2.1" });
@@ -79,7 +71,6 @@ function lockfile(options = {}) {
   const viteVersion = options.viteVersion || "7.3.6";
   const esbuildVersion = options.esbuildVersion || "0.28.1";
   const expressVersion = options.expressVersion || "5.2.1";
-  const sharpVersion = options.sharpVersion || "0.34.5";
   const vitestVersion = options.vitestVersion || "3.2.6";
 
   return {
@@ -89,7 +80,6 @@ function lockfile(options = {}) {
         devDependencies: {
           "@aws-sdk/client-s3": "3.1075.0",
           concurrently: "10.0.3",
-          sharp: sharpVersion,
           vite: "7.3.6",
           vitest: vitestVersion
         }
@@ -147,18 +137,6 @@ function lockfile(options = {}) {
           react: "^19.0.0"
         },
         version: "19.0.0"
-      },
-      "node_modules/sharp": {
-        dev: true,
-        optionalDependencies: {
-          "@img/sharp-linux-x64": sharpVersion
-        },
-        version: sharpVersion
-      },
-      "node_modules/@img/sharp-linux-x64": {
-        dev: true,
-        optional: true,
-        version: sharpVersion
       },
       "node_modules/router": {
         version: "2.2.0"

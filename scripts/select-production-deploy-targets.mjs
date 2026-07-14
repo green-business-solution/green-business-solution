@@ -10,7 +10,6 @@ const webWorkspacePath = "apps/web";
 const frontendBuildDependencyRoots = new Set([
   "react",
   "react-dom",
-  "sharp",
   "vite",
   "@vitejs/plugin-react",
   "typescript",
@@ -128,13 +127,6 @@ function targetsForFile(file, context = {}) {
     return decision(
       ["ci", "data", "api", "infra", "frontend"],
       "Shared deploy/runtime configuration.",
-    );
-  }
-
-  if (file === "scripts/generate-home-journey-frames.mjs") {
-    return decision(
-      ["frontend"],
-      "Frontend frame-generation pipeline changed.",
     );
   }
 
@@ -372,12 +364,8 @@ function dependencyNamesFromManifest(manifest, options = {}) {
 
 function frontendBuildRoots(lock) {
   const manifest = lock?.packages?.[webWorkspacePath] || {};
-  const rootManifest = lock?.packages?.[""] || {};
   const roots = new Set(Object.keys(manifest.dependencies || {}));
   for (const dep of Object.keys(manifest.devDependencies || {})) {
-    if (frontendBuildDependencyRoots.has(dep)) roots.add(dep);
-  }
-  for (const dep of Object.keys(rootManifest.devDependencies || {})) {
     if (frontendBuildDependencyRoots.has(dep)) roots.add(dep);
   }
   return roots;

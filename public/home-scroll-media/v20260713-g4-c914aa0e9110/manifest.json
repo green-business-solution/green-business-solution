@@ -1,0 +1,85 @@
+{
+  "version": "v20260713-g4-c914aa0e9110",
+  "sources": {
+    "forest": {
+      "sha256": "0e9110168a2c2e84b40ec3daef1511b690a19f075533412477e2c0b926608239",
+      "size": 23650792
+    },
+    "hero": {
+      "sha256": "c914aa020727bfa79003b465ef7efe5549fd6f5e6628785c8c5540ceea6af37e",
+      "size": 5412091
+    }
+  },
+  "encoding": {
+    "audio": false,
+    "codec": "h264",
+    "crf": 20,
+    "faststart": true,
+    "fixedGopFrames": 4,
+    "frameRate": 24,
+    "level": "3.1",
+    "pixelFormat": "yuv420p",
+    "preset": "slow",
+    "profile": "High",
+    "sampleAspectRatio": "1:1",
+    "sceneCut": false
+  },
+  "assets": [
+    {
+      "duration": 10.041667,
+      "file": "forest-desktop-720p.mp4",
+      "frames": 241,
+      "height": 720,
+      "sha256": "133743a0600750adef51c12bceade4ebb4fad04c2b98b3a5ffd92e7401e6c8c5",
+      "size": 9824442,
+      "width": 1280
+    },
+    {
+      "duration": 10.041667,
+      "file": "forest-mobile-480p.mp4",
+      "frames": 241,
+      "height": 480,
+      "sha256": "2d5fd5b57ea8b46ac6af2cfd6596afdb4c5274edfb1e99a1426e950281059d44",
+      "size": 5311024,
+      "width": 854
+    },
+    {
+      "duration": 5.041667,
+      "file": "hero-desktop-720p.mp4",
+      "frames": 121,
+      "height": 720,
+      "sha256": "58c73c04b3818b248ba2fc0c654dbcce1907ca38f966e2522d3654f5000489ad",
+      "size": 4048335,
+      "width": 1280
+    },
+    {
+      "duration": 5.041667,
+      "file": "hero-mobile-480p.mp4",
+      "frames": 121,
+      "height": 480,
+      "sha256": "d99d551d6eb5f257a9b1e1ca9af92691164780787a7afb0c9ce94bb051b0f401",
+      "size": 2156048,
+      "width": 854
+    }
+  ],
+  "posters": [
+    {
+      "file": "forest-poster-720p.jpg",
+      "sha256": "c60caa9def0de6e70d7be7b92758743451be793a90d7e5b6e388da61799d66c8",
+      "size": 42391,
+      "timestamp": 0
+    },
+    {
+      "file": "forest-poster-final-720p.jpg",
+      "sha256": "66d6d62df5585e1017186a2cb01890d46ad181a5b506a77c878b9ef90a8cb30a",
+      "size": 278353,
+      "timestamp": 10
+    },
+    {
+      "file": "hero-poster-720p.jpg",
+      "sha256": "bf06d397d8dc31ae1b794e62e22f4989a8d2971746dfb344c460a2c189ce2b97",
+      "size": 78294,
+      "timestamp": 0
+    }
+  ]
+}

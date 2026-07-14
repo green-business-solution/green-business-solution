@@ -32,4 +32,26 @@ describe("HomePage", () => {
       return currentIndex;
     }, -1);
   });
+
+  it("renders poster-first video layers while keeping JPEG canvases available", () => {
+    const html = renderToStaticMarkup(
+      <HomePage
+        navigate={() => undefined}
+        onHowItWorksClick={() => undefined}
+        publicAuth={{
+          isAdmin: false,
+          isSignedIn: false,
+          onSignOut: () => undefined,
+        }}
+      />,
+    );
+
+    expect(html.match(/<video/g)).toHaveLength(2);
+    expect(html.match(/class="scroll-video-scanner-video"/g)).toHaveLength(2);
+    expect(html.match(/class="scroll-frame-scanner-canvas"/g)).toHaveLength(2);
+    expect(html.match(/data-media-mode="video"/g)).toHaveLength(2);
+    expect(html).toContain("hero-poster-720p.jpg");
+    expect(html).toContain("forest-poster-720p.jpg");
+    expect(html).not.toMatch(/<video[^>]+src=/);
+  });
 });

@@ -391,10 +391,11 @@ Charts:
 
 Motion is precise, scroll-responsive, and reduced-motion aware.
 
-The frame-generation, responsive delivery, cache, and fallback contract for the
-homepage journey is documented in
-[homepage-frame-assets.md](./homepage-frame-assets.md). Do not add a new frame
-resolution or format without updating and revalidating that contract.
+The short-GOP video, poster, JPEG fallback, cache, and delivery contract for the
+two homepage scroll animations is documented in
+[homepage-frame-assets.md](./homepage-frame-assets.md). Do not replace its
+versioned media or add another resolution or format without a measured seeking,
+bandwidth, compatibility, and visual-quality review.
 
 Canonical curves and durations:
 
@@ -459,6 +460,7 @@ Do not add nearby duplicate breakpoints without a clear reason.
 - Keep glass light on the homepage.
 - Keep gradients subtle and source-derived.
 - Keep hover/press motion small and tactile.
-- Keep scroll motion smooth, frame-based where already implemented, and reduced-motion safe.
+- Keep scroll motion smooth, short-GOP video-based where already implemented,
+  JPEG-fallback capable, and reduced-motion safe.
 - Do not introduce unrelated purple, blue-slate, beige, orange/brown, or heavy dark SaaS palettes into homepage-adjacent UI.
 - Do not replace the homepage system with generic utility classes unless they resolve to these same values.
