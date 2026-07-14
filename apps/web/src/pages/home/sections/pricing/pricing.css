@@ -547,8 +547,6 @@
   }
 
   .pricing-address-field input,
-  .contact-form-card input,
-  .contact-form-card select,
   .energy-upload-form-card input:not([type="file"]),
   .energy-upload-form-card select {
     min-height: 48px;

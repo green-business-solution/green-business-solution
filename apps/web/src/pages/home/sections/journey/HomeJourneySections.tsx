@@ -427,17 +427,6 @@ export function HowItWorksJourneySection({
       const clamped = clampProgress(value);
       return 1 - Math.pow(1 - clamped, 3);
     };
-    const resetDashboardHandoff = () => {
-      const scanner = document.querySelector<HTMLElement>(".planet-scan-section");
-
-      if (!scanner) {
-        return;
-      }
-
-      scanner.classList.remove("planet-scan-section--cloud-handoff");
-      scanner.style.removeProperty("--scanner-dashboard-handoff-scale");
-      scanner.style.removeProperty("--scanner-dashboard-handoff-y");
-    };
     const resetDashboardHandoffDeadzone = () => {
       dashboardHandoffDeadzoneConsumed = 0;
       dashboardHandoffDeadzoneReady = false;
@@ -471,30 +460,6 @@ export function HowItWorksJourneySection({
 
       return true;
     };
-    const syncDashboardHandoff = (normalizedProgress: number, isAtHandoffStart: boolean) => {
-      const scanner = document.querySelector<HTMLElement>(".planet-scan-section");
-
-      if (!scanner || !withDashboardHandoff || mediaQuery.matches || !isAtHandoffStart) {
-        resetDashboardHandoff();
-        return;
-      }
-
-      const handoffProgress = clampProgress(normalizedProgress / handoffEndProgress);
-      const handoffActive = handoffProgress < 0.995;
-
-      if (!handoffActive) {
-        resetDashboardHandoff();
-        return;
-      }
-
-      const handoffScale = 1 + 1.48 * smootherstep(handoffProgress);
-      const handoffY = 9 * smootherstep((handoffProgress - 0.24) / 0.56);
-
-      scanner.classList.add("planet-scan-section--cloud-handoff");
-      scanner.style.setProperty("--scanner-dashboard-handoff-scale", handoffScale.toFixed(4));
-      scanner.style.setProperty("--scanner-dashboard-handoff-y", `${handoffY.toFixed(2)}vh`);
-    };
-
     const updateProgress = () => {
       const timestamp = window.performance.now();
       const bounds = journey.getBoundingClientRect();
@@ -575,7 +540,6 @@ export function HowItWorksJourneySection({
         }
       }
 
-      syncDashboardHandoff(normalizedProgress, bounds.top <= 1 || autoHandoffActive);
       setSectionProgress(normalizedProgress);
       lastNormalizedProgress = normalizedProgress;
       animationFrame = 0;
@@ -693,7 +657,6 @@ export function HowItWorksJourneySection({
       window.removeEventListener("keydown", handleKeyDown);
       mediaQuery.removeEventListener("change", updateMotionPreference);
       window.cancelAnimationFrame(animationFrame);
-      resetDashboardHandoff();
     };
   }, [embedded, stages.length, withDashboardHandoff, revealShare]);
 

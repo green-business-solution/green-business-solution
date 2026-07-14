@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { pathForRoute, routeFromPath, shouldCanonicalizeUnknownHomeFallback } from "./routes";
+import { aboutLinks, pathForRoute, routeFromPath, shouldCanonicalizeUnknownHomeFallback } from "./routes";
 
 describe("routes", () => {
   it("keeps unknown public paths on the homepage route but marks them for URL replacement", () => {
@@ -18,6 +18,16 @@ describe("routes", () => {
   it("routes the standalone pricing page", () => {
     expect(routeFromPath("/pricing")).toBe("pricing");
     expect(pathForRoute("pricing")).toBe("/pricing");
+  });
+
+  it("keeps the About navigation focused on the active company pages", () => {
+    expect(aboutLinks).toEqual([
+      { label: "Team", route: "about-team" },
+      { label: "Trust & Data", route: "about-trust" },
+      { label: "Contact", route: "about-contact" },
+    ]);
+    expect(routeFromPath("/about")).toBe("about");
+    expect(routeFromPath("/about/mission")).toBe("about-mission");
   });
 
   it("preserves server-handled API and auth callback paths", () => {

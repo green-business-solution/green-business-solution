@@ -23,7 +23,6 @@ export type Route =
   | "testcases";
 
 export const aboutLinks: Array<{ label: string; route: Route }> = [
-  { label: "Mission", route: "about-mission" },
   { label: "Team", route: "about-team" },
   { label: "Trust & Data", route: "about-trust" },
   { label: "Contact", route: "about-contact" },
