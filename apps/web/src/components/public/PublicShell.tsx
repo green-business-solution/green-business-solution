@@ -1,9 +1,16 @@
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import {
+  type KeyboardEvent as ReactKeyboardEvent,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { aboutLinks, type Route } from "../../routes";
 import {
   HOME_DASHBOARD_SECTION_ID,
   HOME_INSIGHTS_SECTION_ID,
   scrollToHomeHowItWorksFallback,
+  scrollToHomePricingFallback,
   scrollToHomeSectionFallback,
 } from "../../pages/home/homeSections";
 
@@ -35,8 +42,10 @@ function PublicNav({
   onHowItWorksClick?: () => void;
   onSignOut?: () => void;
 }) {
+  const [isAboutMenuOpen, setIsAboutMenuOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNavVisible, setIsNavVisible] = useState(true);
+  const activeAboutTriggerRef = useRef<HTMLButtonElement | null>(null);
   const isMenuOpenRef = useRef(false);
   const lastScrollYRef = useRef(0);
   const isNavVisibleRef = useRef(true);
@@ -99,25 +108,57 @@ function PublicNav({
   }, []);
 
   useEffect(() => {
-    isMenuOpenRef.current = isMenuOpen;
+    isMenuOpenRef.current = isMenuOpen || isAboutMenuOpen;
 
-    if (isMenuOpen && !isNavVisibleRef.current) {
+    if ((isMenuOpen || isAboutMenuOpen) && !isNavVisibleRef.current) {
       isNavVisibleRef.current = true;
       setIsNavVisible(true);
     }
-  }, [isMenuOpen]);
+  }, [isAboutMenuOpen, isMenuOpen]);
+
+  useEffect(() => {
+    if (!isAboutMenuOpen || typeof document === "undefined") {
+      return undefined;
+    }
+
+    const closeFromOutside = (event: PointerEvent) => {
+      const target = event.target;
+      if (target instanceof Element && target.closest("[data-about-menu-root]")) {
+        return;
+      }
+      setIsAboutMenuOpen(false);
+    };
+
+    const closeFromEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") {
+        return;
+      }
+      setIsAboutMenuOpen(false);
+      activeAboutTriggerRef.current?.focus();
+    };
+
+    document.addEventListener("pointerdown", closeFromOutside);
+    document.addEventListener("keydown", closeFromEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeFromOutside);
+      document.removeEventListener("keydown", closeFromEscape);
+    };
+  }, [isAboutMenuOpen]);
 
   function go(route: Route) {
+    setIsAboutMenuOpen(false);
     setIsMenuOpen(false);
     navigate(route);
   }
 
   function signOutFromNav() {
+    setIsAboutMenuOpen(false);
     setIsMenuOpen(false);
     onSignOut?.();
   }
 
   function openHowItWorks() {
+    setIsAboutMenuOpen(false);
     setIsMenuOpen(false);
     if (onHowItWorksClick) {
       onHowItWorksClick();
@@ -126,9 +167,98 @@ function PublicNav({
     scrollToHomeHowItWorksFallback();
   }
 
-  function openHomeSection(sectionId: string) {
+  function openPricing() {
+    setIsAboutMenuOpen(false);
     setIsMenuOpen(false);
-    scrollToHomeSectionFallback(sectionId);
+    scrollToHomePricingFallback();
+  }
+
+  function toggleMobileMenu() {
+    setIsAboutMenuOpen(false);
+    setIsMenuOpen((current) => !current);
+  }
+
+  function toggleAboutMenu(trigger: HTMLButtonElement) {
+    activeAboutTriggerRef.current = trigger;
+    setIsAboutMenuOpen((current) => !current);
+  }
+
+  function openAboutMenuFromKeyboard(
+    event: ReactKeyboardEvent<HTMLButtonElement>,
+    menuId: string,
+    edge: "first" | "last",
+  ) {
+    if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
+      return;
+    }
+
+    event.preventDefault();
+    activeAboutTriggerRef.current = event.currentTarget;
+    setIsAboutMenuOpen(true);
+    window.requestAnimationFrame(() => {
+      const items = document.querySelectorAll<HTMLButtonElement>(
+        `#${menuId} [role="menuitem"]`,
+      );
+      const item = edge === "first" ? items[0] : items[items.length - 1];
+      item?.focus();
+    });
+  }
+
+  function handleAboutMenuKeyDown(event: ReactKeyboardEvent<HTMLDivElement>) {
+    const items = Array.from(
+      event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="menuitem"]'),
+    );
+    const currentIndex = items.indexOf(document.activeElement as HTMLButtonElement);
+    let nextIndex = currentIndex;
+
+    if (event.key === "ArrowDown") {
+      nextIndex = currentIndex < items.length - 1 ? currentIndex + 1 : 0;
+    } else if (event.key === "ArrowUp") {
+      nextIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
+    } else if (event.key === "Home") {
+      nextIndex = 0;
+    } else if (event.key === "End") {
+      nextIndex = items.length - 1;
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      setIsAboutMenuOpen(false);
+      activeAboutTriggerRef.current?.focus();
+      return;
+    } else {
+      return;
+    }
+
+    event.preventDefault();
+    items[nextIndex]?.focus();
+  }
+
+  function renderAboutMenu(menuId: string, className: string) {
+    if (!isAboutMenuOpen) {
+      return null;
+    }
+
+    return (
+      <div
+        aria-label="About RetroFi"
+        className={className}
+        id={menuId}
+        onKeyDown={handleAboutMenuKeyDown}
+        role="menu"
+      >
+        {aboutLinks.map((item) => (
+          <button
+            className="link-button about-menu-item"
+            key={item.route}
+            onClick={() => go(item.route)}
+            role="menuitem"
+            type="button"
+          >
+            <span>{item.label}</span>
+            <span aria-hidden="true" className="about-menu-item-arrow">↗</span>
+          </button>
+        ))}
+      </div>
+    );
   }
 
   function renderAuthAction() {
@@ -157,25 +287,32 @@ function PublicNav({
           </button>
           <button
             className="link-button"
-            onClick={() => openHomeSection(HOME_DASHBOARD_SECTION_ID)}
-            type="button"
-          >
-            Dashboard
-          </button>
-          <button
-            className="link-button"
-            onClick={() => go("pricing")}
+            onClick={openPricing}
             type="button"
           >
             Pricing
           </button>
-          <button
-            className="link-button"
-            onClick={() => go("about")}
-            type="button"
-          >
-            About
-          </button>
+          <div className="about-menu-root" data-about-menu-root>
+            <button
+              aria-controls="desktop-about-menu"
+              aria-expanded={isAboutMenuOpen}
+              aria-haspopup="menu"
+              className="link-button about-menu-trigger"
+              onClick={(event) => toggleAboutMenu(event.currentTarget)}
+              onKeyDown={(event) =>
+                openAboutMenuFromKeyboard(
+                  event,
+                  "desktop-about-menu",
+                  event.key === "ArrowUp" ? "last" : "first",
+                )
+              }
+              type="button"
+            >
+              About
+              <span aria-hidden="true" className="about-menu-chevron" />
+            </button>
+            {renderAboutMenu("desktop-about-menu", "about-menu-popover")}
+          </div>
         </nav>
         <div className="nav-actions">
           {renderAuthAction()}
@@ -189,7 +326,7 @@ function PublicNav({
           aria-expanded={isMenuOpen}
           aria-label="Toggle navigation"
           className="menu-button"
-          onClick={() => setIsMenuOpen((current) => !current)}
+          onClick={toggleMobileMenu}
           type="button"
         >
           <span />
@@ -212,25 +349,32 @@ function PublicNav({
             </button>
             <button
               className="link-button"
-              onClick={() => openHomeSection(HOME_DASHBOARD_SECTION_ID)}
-              type="button"
-            >
-              Dashboard
-            </button>
-            <button
-              className="link-button"
-              onClick={() => go("pricing")}
+              onClick={openPricing}
               type="button"
             >
               Pricing
             </button>
-            <button
-              className="link-button"
-              onClick={() => go("about")}
-              type="button"
-            >
-              About
-            </button>
+            <div className="about-menu-root about-menu-root-mobile" data-about-menu-root>
+              <button
+                aria-controls="mobile-about-menu"
+                aria-expanded={isAboutMenuOpen}
+                aria-haspopup="menu"
+                className="link-button about-menu-trigger"
+                onClick={(event) => toggleAboutMenu(event.currentTarget)}
+                onKeyDown={(event) =>
+                  openAboutMenuFromKeyboard(
+                    event,
+                    "mobile-about-menu",
+                    event.key === "ArrowUp" ? "last" : "first",
+                  )
+                }
+                type="button"
+              >
+                About
+                <span aria-hidden="true" className="about-menu-chevron" />
+              </button>
+              {renderAboutMenu("mobile-about-menu", "about-mobile-submenu")}
+            </div>
             {renderAuthAction()}
             {canStartScan ? (
               <button className="nav-cta" onClick={() => go("scan")} type="button">
@@ -271,7 +415,7 @@ function Footer({
         <button className="footer-link" onClick={() => scrollToHomeSectionFallback(HOME_DASHBOARD_SECTION_ID)} type="button">
           Dashboard
         </button>
-        <button className="footer-link" onClick={() => navigate("pricing")} type="button">
+        <button className="footer-link" onClick={scrollToHomePricingFallback} type="button">
           Pricing
         </button>
         {canStartScan ? <button className="footer-link" onClick={() => navigate("scan")} type="button">Get Started</button> : null}

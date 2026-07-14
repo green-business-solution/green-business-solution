@@ -57,7 +57,7 @@ Current public URL structure:
 
 - `/` = Home
 - `/how-it-works` = full process explanation
-- `/pricing` = project-based pricing
+- `/#home-pricing` = homepage project-based pricing section
 - `/about` = about overview hub
 - `/about/mission` = mission
 - `/about/team` = team

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Ryan Shen headshot placeholder</title>
+  <desc id="desc">A green editorial placeholder marked RS, ready to be replaced with Ryan Shen's headshot.</desc>
+  <defs>
+    <radialGradient id="glow" cx="78%" cy="18%" r="80%">
+      <stop offset="0" stop-color="#cce9c6"/>
+      <stop offset="1" stop-color="#eaf5e9"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#glow)"/>
+  <circle cx="690" cy="110" r="180" fill="#fff" opacity=".24"/>
+  <path d="M0 668C186 574 354 594 484 680c92 61 197 65 316 26v94H0Z" fill="#0e4637" opacity=".08"/>
+  <text x="400" y="430" fill="#0e4637" font-family="Georgia, serif" font-size="184" text-anchor="middle" letter-spacing="-10">RS</text>
+  <text x="400" y="532" fill="#0b6c3c" font-family="Arial, sans-serif" font-size="24" font-weight="700" text-anchor="middle" letter-spacing="7">HEADSHOT</text>
+</svg>

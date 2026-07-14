@@ -37,8 +37,16 @@ import {
 } from "./routes";
 import { HomePage } from "./pages/home/HomePage";
 import {
+  contactMailtoUrl,
+  validateContactForm,
+  type ContactFormErrors,
+  type ContactFormState,
+} from "./pages/about/contactForm";
+import {
+  animateWindowScrollTo,
   HOME_HOW_IT_WORKS_SECTION_ID,
   scrollToHomeHowItWorksFallback,
+  takeRequestedHomeScrollDuration,
 } from "./pages/home/homeSections";
 import {
   UserPreviewTriageBadges,
@@ -2385,7 +2393,7 @@ function PasswordAuthPanel({
 
   return (
     <div className="password-auth-panel">
-      <h1>{isSignup ? "Create account" : "Log in"}</h1>
+      <h2>{isSignup ? "Create account" : "Log in"}</h2>
       <PasswordAuthForm
         initialUsername={initialUsername}
         mode={mode}
@@ -2929,7 +2937,6 @@ const PUBLIC_SCROLL_RESET_ROUTES = new Set<Route>([
   "about-team",
   "about-trust",
   "about-contact",
-  "pricing",
   "scan",
   "scan-results",
   "scan-energy-data",
@@ -3784,49 +3791,104 @@ function MissionPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
+  const missionSteps = [
+    {
+      copy: "Bring fragmented utility, government, tax, grant, and financing programs into one searchable view of the opportunities that may fit a business and its building.",
+      icon: "incentives" as const,
+      number: "01",
+      title: "Find the opportunity",
+    },
+    {
+      copy: "Combine incentive data with building information, utility usage, and financial analysis to make potential costs, savings, and tradeoffs easier to evaluate.",
+      icon: "savings" as const,
+      number: "02",
+      title: "Understand the economics",
+    },
+    {
+      copy: "Translate complex program requirements into practical recommendations and clearer next steps—without presenting estimates as guaranteed eligibility or savings.",
+      icon: "roadmap" as const,
+      number: "03",
+      title: "Move toward action",
+    },
+  ];
+
   return (
-    <PublicShell navigate={navigate} publicAuth={publicAuth}>
-      <PageHero
-        compact
-        eyebrow="Mission"
-        title="Making sustainability upgrades financially practical."
-        copy="RetroFi is building a cleaner path from incentive discovery to confident retrofit decisions."
-      />
-      <AboutSubnav activeRoute="about-mission" navigate={navigate} />
-      <section className="two-column-section">
-        <article className="feature-card">
-          <h2>The problem</h2>
-          <p>
-            Businesses often want to reduce operating costs and improve efficiency, but incentive
-            programs are fragmented across utilities, agencies, tax rules, and financing providers.
+    <PublicShell
+      navigate={navigate}
+      pageClassName="about-editorial-page home-page about-mission-page"
+      publicAuth={publicAuth}
+      showFooter
+    >
+      <section aria-labelledby="about-mission-title" className="about-editorial-hero">
+        <div className="about-editorial-hero-copy">
+          <p className="about-editorial-eyebrow">About / Mission</p>
+          <h1 id="about-mission-title">Making better buildings easier to fund.</h1>
+          <p className="about-editorial-intro">
+            RetroFi helps businesses discover relevant building-efficiency incentives, understand
+            the economics, and move toward high-impact upgrades with greater confidence.
           </p>
-        </article>
-        <article className="feature-card">
-          <h2>Our mission</h2>
-          <p>
-            RetroFi exists to help businesses identify relevant opportunities, estimate savings, and
-            move toward practical facility upgrades with more confidence.
-          </p>
-        </article>
+        </div>
+        <aside aria-label="RetroFi mission summary" className="about-hero-note">
+          <span className="about-hero-note-icon"><FeatureIcon icon="mission" /></span>
+          <strong>Make sustainability financially practical.</strong>
+          <span>Turn scattered programs and building data into a clearer path from opportunity to action.</span>
+        </aside>
       </section>
-      <section className="content-section">
-        <SectionHeading eyebrow="What we believe" title="RetroFi should turn complexity into clear next steps" />
-        <div className="card-grid three">
-          {[
-            "Sustainability should be financially practical",
-            "Incentives should be easier to navigate",
-            "Businesses need clear next steps, not just links"
-          ].map((belief) => (
-            <article className="feature-card belief-card" key={belief}>
-              <FeatureIcon icon="mission" />
-              <h3>{belief}</h3>
+      <AboutSectionNav activeRoute="about-mission" navigate={navigate} />
+      <section aria-labelledby="about-mission-steps-title" className="about-mission-steps">
+        <header className="about-mission-section-heading">
+          <p className="about-card-kicker">From complexity to clarity</p>
+          <h2 id="about-mission-steps-title">A more practical path to better buildings.</h2>
+          <p>
+            RetroFi organizes the information businesses need to decide whether a retrofit opportunity deserves a closer look.
+          </p>
+        </header>
+        <div className="about-mission-step-grid">
+          {missionSteps.map((step) => (
+            <article className="about-mission-step" key={step.number}>
+              <div className="about-mission-step-topline">
+                <span className="about-trust-icon"><FeatureIcon icon={step.icon} /></span>
+                <span className="about-mission-step-number">{step.number}</span>
+              </div>
+              <h3>{step.title}</h3>
+              <p>{step.copy}</p>
             </article>
           ))}
         </div>
       </section>
-      <section className="final-cta">
-        <h2>Start with a free scan and evaluate where a real project may exist.</h2>
-        <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
+      <section aria-labelledby="about-mission-why-title" className="about-mission-why">
+        <div>
+          <p className="about-card-kicker">Why this matters</p>
+          <h2 id="about-mission-why-title">Less time searching. More confidence deciding.</h2>
+        </div>
+        <div className="about-mission-why-copy">
+          <p>
+            Efficiency incentives are fragmented across utilities, agencies, tax programs, grants,
+            and financing providers. That complexity can hide valuable opportunities and slow down
+            otherwise practical projects.
+          </p>
+          <p>
+            RetroFi brings incentive data together with building information, utility usage,
+            financial analysis, and practical recommendations so businesses can focus on the
+            upgrades most worth investigating.
+          </p>
+          <ul aria-label="Information RetroFi brings together" className="about-mission-inputs">
+            <li>Incentive data</li>
+            <li>Building information</li>
+            <li>Utility usage</li>
+            <li>Financial analysis</li>
+          </ul>
+        </div>
+      </section>
+      <section aria-labelledby="about-mission-cta-title" className="about-editorial-cta">
+        <div className="about-editorial-cta-copy">
+          <h2 id="about-mission-cta-title">See which opportunities may fit your building.</h2>
+          <p>Start with a free scan, then decide whether a deeper analysis is worth pursuing.</p>
+        </div>
+        <button className="about-editorial-cta-button" onClick={() => navigate("scan")} type="button">
+          Start free scan
+          <ArrowUpRightIcon />
+        </button>
       </section>
     </PublicShell>
   );
@@ -3841,19 +3903,22 @@ function TeamPage({
 }) {
   const founders = [
     {
-      bio: "Neer helps shape RetroFi’s product vision and partnerships, with a focus on turning complex sustainability programs into practical opportunities for property owners.",
-      initial: "N",
-      name: "Neer",
+      bio: "Sustainability entrepreneur leading RetroFi’s strategy, product direction, partnerships, and growth. He previously scaled a 40+ member environmental nonprofit and brings experience in ESG, policy, and green-business development.",
+      headshot: "/headshots/rajvansh-gupta.svg",
+      name: "Rajvansh Gupta",
+      title: "Co-Founder & CEO",
     },
     {
-      bio: "Ryan leads the development of RetroFi’s technology and data systems, creating a dependable experience that makes retrofit planning clearer and more actionable.",
-      initial: "R",
-      name: "Ryan",
+      bio: "Technical builder responsible for RetroFi’s architecture, incentive-data systems, automation, and platform reliability. He combines strong quantitative reasoning with hands-on experience building AI- and AWS-powered systems.",
+      headshot: "/headshots/neer-kuchlous.svg",
+      name: "Neer Kuchlous",
+      title: "Co-Founder & CTO",
     },
     {
-      bio: "Rajvansh focuses on strategy, operations, and customer outcomes, helping ensure that RetroFi’s recommendations translate into meaningful financial and environmental results.",
-      initial: "R",
-      name: "Rajvansh",
+      bio: "Designer and digital marketer leading RetroFi’s brand, customer-facing experience, and lead generation. He brings practical web-development experience, a strong understanding of online trends, and an eye for presenting complex information clearly.",
+      headshot: "/headshots/ryan-shen.svg",
+      name: "Ryan Shen",
+      title: "Co-Founder & CMO",
     },
   ] as const;
 
@@ -3899,11 +3964,14 @@ function TeamPage({
                 className="home-infographic-card about-founder-card"
                 key={founder.name}
               >
-                <span aria-hidden="true" className="about-founder-portrait">
-                  {founder.initial}
-                </span>
+                <div className="about-founder-portrait">
+                  <img
+                    alt={`${founder.name}, ${founder.title}`}
+                    src={founder.headshot}
+                  />
+                </div>
                 <div className="about-founder-copy">
-                  <p className="about-founder-role">Co-founder</p>
+                  <p className="about-founder-role">{founder.title}</p>
                   <h3 id={founderHeadingId}>{founder.name}</h3>
                   <p>{founder.bio}</p>
                 </div>
@@ -5532,14 +5600,33 @@ function SignInPage({
   publicAuth: PublicAuthState;
 }) {
   return (
-    <PublicShell navigate={navigate} pageClassName="sign-in-page" publicAuth={publicAuth} showFooter={false}>
-      <section className="sign-in-panel">
-        {message ? <p className="muted-message">{message}</p> : null}
-        <PasswordAuthPanel onAuthSuccess={onAuthSuccess} />
-        <div className="auth-divider" role="presentation">
-          <span>Or</span>
+    <PublicShell
+      navigate={navigate}
+      pageClassName="sign-in-page"
+      publicAuth={publicAuth}
+      showFooter={false}
+    >
+      <section aria-labelledby="sign-in-intro-title" className="sign-in-experience">
+        <div className="sign-in-intro">
+          <p className="sign-in-eyebrow">Your retrofit workspace</p>
+          <h1 id="sign-in-intro-title">A clearer path to better buildings.</h1>
+          <p className="sign-in-intro-copy">
+            Sign in to continue your building scan, review matched incentives, and turn the next
+            high-impact upgrade into a practical plan.
+          </p>
+          <div aria-label="Account benefits" className="sign-in-benefits">
+            <p><span aria-hidden="true">01</span> Your recommendations stay organized in one place.</p>
+            <p><span aria-hidden="true">02</span> Your building information remains private by design.</p>
+          </div>
         </div>
-        <GoogleSignInButton />
+        <div className="sign-in-panel">
+          {message ? <p className="muted-message sign-in-message" role="status">{message}</p> : null}
+          <PasswordAuthPanel onAuthSuccess={onAuthSuccess} />
+          <div className="auth-divider" role="presentation">
+            <span>Or</span>
+          </div>
+          <GoogleSignInButton />
+        </div>
       </section>
     </PublicShell>
   );
@@ -10298,11 +10385,7 @@ function UserPreviewSidebar({
 }) {
   const [retrofitsOpen, setRetrofitsOpen] = useState(false);
   const triageMode = useUserPreviewTriageMode();
-  const activeNavRetrofitId = activeRetrofitId;
   const dashboardOpen = activeView === "dashboard";
-  useEffect(() => {
-    if (activeRetrofitId) setRetrofitsOpen(true);
-  }, [activeRetrofitId]);
   return (
     <>
       {mobileOpen ? <button aria-label="Close retrofit navigation" className="user-preview-sidebar-scrim" onClick={onCloseMobile} type="button" /> : null}
@@ -10316,27 +10399,31 @@ function UserPreviewSidebar({
           <ChevronDownIcon />
         </button>
         <nav className="user-preview-sidebar-nav" aria-label="Retrofit navigation">
-          <button
-            aria-expanded={retrofitsOpen}
-            className={`sidebar-nav-row sidebar-section-trigger${activeView === "retrofits" ? " is-active" : ""}`}
-            onClick={() => {
-              if (activeRetrofitId) {
-                onShowAllRetrofits();
-                return;
-              }
-              setRetrofitsOpen((current) => !current);
-            }}
-            type="button"
-          >
-            <HomeOutlineIcon />
-            <span className="sidebar-label">Retrofits</span>
-            <ChevronDownIcon />
-          </button>
+          <div className={`sidebar-retrofits-control${activeView === "retrofits" ? " is-active" : ""}`}>
+            <button
+              className="sidebar-nav-row sidebar-section-link"
+              onClick={onShowAllRetrofits}
+              type="button"
+            >
+              <HomeOutlineIcon />
+              <span className="sidebar-label">Retrofits</span>
+            </button>
+            <button
+              aria-controls="sidebar-retrofit-list"
+              aria-expanded={retrofitsOpen}
+              aria-label={retrofitsOpen ? "Collapse retrofit list" : "Expand retrofit list"}
+              className="sidebar-retrofit-toggle"
+              onClick={() => setRetrofitsOpen((current) => !current)}
+              type="button"
+            >
+              <ChevronDownIcon />
+            </button>
+          </div>
           {retrofitsOpen ? (
-            <div className="sidebar-retrofit-list">
+            <div className="sidebar-retrofit-list" id="sidebar-retrofit-list">
               {retrofits.map((retrofit) => (
                 <button
-                  className={`sidebar-retrofit-item${activeNavRetrofitId === retrofit.id ? " is-active" : ""}`}
+                  className={`sidebar-retrofit-item${activeRetrofitId === retrofit.id ? " is-active" : ""}`}
                   key={retrofit.id}
                   onClick={() => onSelectRetrofit(retrofit.id)}
                   type="button"
@@ -12537,7 +12624,6 @@ function RetrofitPickerIcon({ retrofit }: { retrofit: RetrofitPreviewCard }) {
 }
 
 function SidebarRetrofitIcon({ retrofit }: { retrofit: RetrofitPreviewCard }) {
-  // TODO: replace these temporary category-derived icons with a proper retrofit icon set.
   const Icon = iconForRetrofit(retrofit);
   return (
     <span className="sidebar-retrofit-icon" aria-hidden="true">
@@ -21480,6 +21566,8 @@ export function App() {
       const nextRoute = routeFromPath();
       if (window.location.pathname === "/database") {
         window.history.replaceState({}, "", pathForRoute(nextRoute));
+      } else if (window.location.pathname === "/about") {
+        window.history.replaceState({}, "", pathForRoute("about-mission"));
       } else if (shouldCanonicalizeUnknownHomeFallback()) {
         window.history.replaceState({}, "", pathForRoute("home"));
       }
@@ -21506,6 +21594,7 @@ export function App() {
 
     const targetFromHash = typeof window !== "undefined" ? window.location.hash.replace(/^#/, "") : "";
     const targetId = pendingPublicScrollTargetRef.current || targetFromHash;
+    const requestedDurationMs = takeRequestedHomeScrollDuration();
 
     if (!targetId) {
       window.scrollTo({ behavior: "auto", top: 0 });
@@ -21514,6 +21603,7 @@ export function App() {
 
     let animationFrame = 0;
     let attempts = 0;
+    let cancelActiveScroll: () => void = () => undefined;
 
     const scrollToTarget = (behavior: ScrollBehavior) => {
       const section = document.getElementById(targetId);
@@ -21524,7 +21614,12 @@ export function App() {
 
       const headerOffset = 96;
       const top = Math.max(0, section.getBoundingClientRect().top + window.scrollY - headerOffset);
-      window.scrollTo({ behavior, top });
+      cancelActiveScroll = requestedDurationMs
+        ? animateWindowScrollTo(top, requestedDurationMs)
+        : (() => {
+            window.scrollTo({ behavior, top });
+            return () => undefined;
+          })();
       return true;
     };
 
@@ -21544,6 +21639,7 @@ export function App() {
 
     return () => {
       window.cancelAnimationFrame(animationFrame);
+      cancelActiveScroll();
     };
   }, [route]);
 
@@ -21678,11 +21774,7 @@ export function App() {
         }
       : null;
 
-  if (effectiveRoute === "about") {
-    return <AboutPage navigate={navigate} publicAuth={publicAuth} />;
-  }
-
-  if (effectiveRoute === "about-mission") {
+  if (effectiveRoute === "about" || effectiveRoute === "about-mission") {
     return <MissionPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
@@ -21696,10 +21788,6 @@ export function App() {
 
   if (effectiveRoute === "about-contact") {
     return <ContactPage navigate={navigate} publicAuth={publicAuth} />;
-  }
-
-  if (effectiveRoute === "pricing") {
-    return <PricingPage navigate={navigate} publicAuth={publicAuth} />;
   }
 
   if (effectiveRoute === "scan") {
