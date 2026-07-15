@@ -7145,7 +7145,6 @@ function buildNextBestActions(retrofits: RetrofitPreviewCard[], missingInputs: s
 
 type DashboardPageId = "summary" | "financial" | "environmental" | "certifications";
 type UserPreviewPrimaryView = "profile" | "retrofits" | "dashboard";
-type FinancialDashboardTabId = "overview" | "cash-flow" | "savings-by-retrofit";
 type EnvironmentalDashboardTabId = "overview" | "outlook";
 type CertificationDashboardTabId = "progress" | "gaps" | "next-actions";
 type DashboardTone = "green" | "blue" | "purple" | "orange" | "red" | "gray";
@@ -7310,12 +7309,6 @@ const DASHBOARD_MAIN_PAGES: Array<{ id: DashboardPageId; label: string }> = [
   { id: "financial", label: "Financial Performance" },
   { id: "environmental", label: "Environmental Impact" },
   { id: "certifications", label: "Certifications" }
-];
-
-const FINANCIAL_DASHBOARD_TABS: Array<{ id: FinancialDashboardTabId; label: string }> = [
-  { id: "overview", label: "Overview" },
-  { id: "cash-flow", label: "Cash Flow & Incentives" },
-  { id: "savings-by-retrofit", label: "Savings by Retrofit" }
 ];
 
 const ENVIRONMENTAL_DASHBOARD_TABS: Array<{ id: EnvironmentalDashboardTabId; label: string }> = [
@@ -9769,7 +9762,6 @@ function DashboardPerformanceHub({
   onPageChange: (page: DashboardPageId) => void;
   viewModel: DashboardViewModel;
 }) {
-  const [financialTab, setFinancialTab] = useState<FinancialDashboardTabId>("overview");
   const [environmentalTab, setEnvironmentalTab] = useState<EnvironmentalDashboardTabId>("overview");
   const [certificationTab, setCertificationTab] = useState<CertificationDashboardTabId>("progress");
   const [selectedPeriod, setSelectedPeriod] = useState(viewModel.periodLabel);
@@ -9781,9 +9773,7 @@ function DashboardPerformanceHub({
     },
     financial: {
       title: "Financial Performance",
-      subtitle: financialTab === "savings-by-retrofit"
-        ? "Performance across individual implemented retrofits."
-        : "Realized, current, and projected financial value across implemented retrofits."
+      subtitle: "Realized, current, and projected financial value across implemented retrofits."
     },
     environmental: {
       title: environmentalTab === "outlook" ? "Impact Outlook & Equivalencies" : "Environmental Impact",
@@ -9819,7 +9809,7 @@ function DashboardPerformanceHub({
       ) : null}
       {activePage === "summary" ? <DashboardSummaryPage viewModel={viewModel} /> : null}
       {activePage === "financial" ? (
-        <DashboardFinancialPage activeTab={financialTab} onTabChange={setFinancialTab} viewModel={viewModel} />
+        <DashboardFinancialPage viewModel={viewModel} />
       ) : null}
       {activePage === "environmental" ? (
         <DashboardEnvironmentalPage activeTab={environmentalTab} onTabChange={setEnvironmentalTab} viewModel={viewModel} />
@@ -9945,12 +9935,8 @@ function DashboardSummaryPage({ viewModel }: { viewModel: DashboardViewModel }) 
 }
 
 function DashboardFinancialPage({
-  activeTab,
-  onTabChange,
   viewModel
 }: {
-  activeTab: FinancialDashboardTabId;
-  onTabChange: (tab: FinancialDashboardTabId) => void;
   viewModel: DashboardViewModel;
 }) {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
@@ -9958,14 +9944,11 @@ function DashboardFinancialPage({
   return (
     <div className="dashboard-page-stack">
       <div className="dashboard-financial-toolbar">
-        <DashboardSubTabs tabs={FINANCIAL_DASHBOARD_TABS} activeTab={activeTab} onTabChange={onTabChange} />
         <button onClick={() => setQuoteModalOpen(true)} type="button">
           Add quote
         </button>
       </div>
-      {activeTab === "overview" ? <FinancialOverview viewModel={viewModel} /> : null}
-      {activeTab === "cash-flow" ? <FinancialCashFlow viewModel={viewModel} /> : null}
-      {activeTab === "savings-by-retrofit" ? <FinancialSavingsByRetrofit viewModel={viewModel} /> : null}
+      <FinancialOverview viewModel={viewModel} />
       {quoteModalOpen ? <AddQuotePlaceholderModal onClose={() => setQuoteModalOpen(false)} /> : null}
     </div>
   );
@@ -10005,132 +9988,31 @@ function AddQuotePlaceholderModal({ onClose }: { onClose: () => void }) {
 function FinancialOverview({ viewModel }: { viewModel: DashboardViewModel }) {
   const financial = viewModel.financial;
   return (
-    <>
-      <DashboardKpiGrid metrics={[
-        dashboardMetric("Total Project Cost", formatDashboardCurrencyCents(financial.totalProjectCostCents), "Across implemented retrofits", "green", financial.totalProjectCostCents == null),
-        dashboardMetric("Incentives Received", formatDashboardCurrencyCents(financial.incentivesReceivedCents), "Received or approved", "green", financial.incentivesReceivedCents == null),
-        dashboardMetric("Net Project Cost", formatDashboardCurrencyCents(financial.netProjectCostCents), "After incentives", "green", financial.netProjectCostCents == null),
-        dashboardMetric("Annual Savings", formatDashboardCurrencyCents(financial.totalAnnualSavingsCents), "Recurring savings", "green", financial.totalAnnualSavingsCents == null),
-        dashboardMetric("Monthly Savings", formatDashboardCurrencyCents(financial.totalMonthlySavingsCents), "Average monthly", "green", financial.totalMonthlySavingsCents == null),
-        dashboardMetric("ROI", formatDashboardPercent(financial.roiPercent), "Average across portfolio", "green", financial.roiPercent == null),
-        dashboardMetric("Payback Date", financial.paybackDateLabel, "Estimated", "green", financial.paybackDateLabel === "Unavailable")
-      ]} />
-      <DashboardThreeStateCards realized={financial.realized} current={financial.current} projected={financial.projected} />
-      <div className="dashboard-three-column">
-        <DashboardCard title="Cumulative Cash Flow">
-          <DashboardLineChart data={financial.cashFlowSeries} valuePrefix="$" />
-          <DashboardInlineAction label="View cash flow details" />
-        </DashboardCard>
-        <DashboardCard title="One-Time Cost">
-          <DashboardWaterfallChart
-            items={[
-              { label: "Total Project Cost", value: financial.totalProjectCostCents ?? 0 },
-              { label: "Incentives Received", value: -(financial.incentivesReceivedCents ?? 0) },
-              { label: "Other Credits", value: 0 },
-              { label: "Net Project Cost", value: financial.netProjectCostCents ?? 0 }
-            ]}
-          />
-          <DashboardInlineAction label="View cost breakdown" />
-        </DashboardCard>
-        <DashboardCard title="Incentive Tracking">
-          <DashboardDonutChart
-            centerLabel={formatDashboardCurrencyCents(financial.incentivesReceivedCents)}
-            segments={[
-              { label: "Approved", value: financial.incentivesApprovedCents ?? 0, tone: "green" },
-              { label: "Received", value: financial.incentivesReceivedCents ?? 0, tone: "blue" },
-              { label: "Pending", value: financial.incentivesPendingCents ?? 0, tone: "purple" },
-              { label: "Not Yet Claimed", value: financial.incentivesNotClaimedCents ?? 0, tone: "gray" }
-            ]}
-          />
-          <DashboardInlineAction label="View incentives" />
-        </DashboardCard>
-      </div>
-      <div className="dashboard-three-column">
-        <DashboardCard title="Recurring Savings Breakdown">
-          <DashboardStackedBar segments={[
-            { label: "Energy Savings", value: financial.totalAnnualSavingsCents ?? 0, tone: "green" },
-            { label: "Maintenance/O&M", value: 0, tone: "blue" },
-            { label: "Tax benefits", value: 0, tone: "gray" }
-          ]} totalLabel={formatDashboardCurrencyCents(financial.totalAnnualSavingsCents)} />
-        </DashboardCard>
-        <DashboardCard title="Actual vs. Estimated Performance">
-          <DashboardInfoRows rows={[
-            ["Annual Savings", formatDashboardCurrencyCents(financial.totalAnnualSavingsCents)],
-            ["Estimated Annual Savings", formatDashboardCurrencyCents(financial.totalAnnualSavingsCents)],
-            ["Performance Status", viewModel.dataQuality.basisLabel === "actual" ? "Actual" : viewModel.dataQuality.basisLabel === "unavailable" ? "Unavailable" : "Modeled / tracking pending"]
-          ]} />
-          <DashboardInlineAction label="View performance details" />
-        </DashboardCard>
-        <DashboardCard title="Key Takeaways">
-          <ul className="dashboard-check-list">
-            <li>Portfolio performance appears after implemented retrofit data is available.</li>
-            <li>Incentive progress is separated from operating savings.</li>
-            <li>Projected values are kept separate from realized/current values.</li>
-          </ul>
-          <DashboardInlineAction label="View recommendations" />
-        </DashboardCard>
-      </div>
-    </>
-  );
-}
-
-function FinancialCashFlow({ viewModel }: { viewModel: DashboardViewModel }) {
-  return (
-    <div className="dashboard-two-column">
-      <DashboardCard title="Cumulative Cash Flow Details">
-        <DashboardLineChart data={viewModel.financial.cashFlowSeries} valuePrefix="$" large />
-        <DashboardInlineAction label="View full cash flow trend" />
+    <div className="dashboard-three-column dashboard-financial-visuals">
+      <DashboardCard title="Cumulative Cash Flow">
+        <DashboardLineChart data={financial.cashFlowSeries} valuePrefix="$" />
+        <DashboardInlineAction label="View cash flow details" />
       </DashboardCard>
-      <DashboardCard title="Pending Claims Requiring Action">
-        <DashboardActionList actions={viewModel.certifications.nextActions.filter((action) => action.category === "financial" || action.category === "document")} />
-        <DashboardInlineAction label="View action plan" />
+      <DashboardCard title="Recurring Savings Breakdown">
+        <DashboardStackedBar segments={[
+          { label: "Energy Savings", value: financial.totalAnnualSavingsCents ?? 0, tone: "green" },
+          { label: "Maintenance/O&M", value: 0, tone: "blue" },
+          { label: "Tax benefits", value: 0, tone: "gray" }
+        ]} totalLabel={formatDashboardCurrencyCents(financial.totalAnnualSavingsCents)} />
       </DashboardCard>
-      <DashboardCard title="Expected Incentive Payout Dates">
-        <DashboardInfoRows rows={[
-          ["Approved", formatDashboardCurrencyCents(viewModel.financial.incentivesApprovedCents)],
-          ["Pending", formatDashboardCurrencyCents(viewModel.financial.incentivesPendingCents)],
-          ["Not Yet Claimed", formatDashboardCurrencyCents(viewModel.financial.incentivesNotClaimedCents)]
-        ]} />
-      </DashboardCard>
-      <DashboardCard title="Projected Remaining Incentive Value">
-        <strong className="dashboard-large-value">{formatDashboardCurrencyCents(sumNullableNumbers([viewModel.financial.incentivesPendingCents, viewModel.financial.incentivesNotClaimedCents]))}</strong>
-        <p>Pending, not-yet-claimed, or in-review incentive value.</p>
+      <DashboardCard title="Incentive Tracking">
+        <DashboardDonutChart
+          centerLabel={formatDashboardCurrencyCents(financial.incentivesReceivedCents)}
+          segments={[
+            { label: "Approved", value: financial.incentivesApprovedCents ?? 0, tone: "green" },
+            { label: "Received", value: financial.incentivesReceivedCents ?? 0, tone: "blue" },
+            { label: "Pending", value: financial.incentivesPendingCents ?? 0, tone: "purple" },
+            { label: "Not Yet Claimed", value: financial.incentivesNotClaimedCents ?? 0, tone: "gray" }
+          ]}
+        />
+        <DashboardInlineAction label="View incentives" />
       </DashboardCard>
     </div>
-  );
-}
-
-function FinancialSavingsByRetrofit({ viewModel }: { viewModel: DashboardViewModel }) {
-  return (
-    <>
-      <DashboardKpiGrid metrics={[
-        dashboardMetric("Total Implemented Retrofits", String(viewModel.implementedRetrofits.length || 0), "Post-implementation records", "green"),
-        dashboardMetric("Total Annual Savings", formatDashboardCurrencyCents(viewModel.financial.totalAnnualSavingsCents), "Across implemented retrofits", "green", viewModel.financial.totalAnnualSavingsCents == null),
-        dashboardMetric("Average Payback", viewModel.financial.averagePaybackYears == null ? "Unavailable" : `${viewModel.financial.averagePaybackYears.toFixed(1)} yrs`, "Across implemented retrofits", "green", viewModel.financial.averagePaybackYears == null),
-        dashboardMetric("Total Recovered So Far", formatDashboardCurrencyCents(viewModel.financial.totalRecoveredSoFarCents), "Savings plus incentives", "green", viewModel.financial.totalRecoveredSoFarCents == null),
-        dashboardMetric("Projected 10-Year Savings", formatDashboardCurrencyCents(viewModel.financial.projectedTenYearSavingsCents), "Future value", "green", viewModel.financial.projectedTenYearSavingsCents == null)
-      ]} />
-      <DashboardImplementedRetrofitsTable retrofits={viewModel.implementedRetrofits} />
-      <div className="dashboard-three-column">
-        <DashboardCard title="Top Performing Retrofits">
-          <DashboardHorizontalBars data={viewModel.financial.topSavingsRetrofits} valuePrefix="$" />
-        </DashboardCard>
-        <DashboardCard title="Payback Status">
-          <DashboardDonutChart
-            centerLabel={`${viewModel.implementedRetrofits.length || 0} Retrofits`}
-            segments={[
-              { label: "Paid Back", value: viewModel.implementedRetrofits.filter((retrofit) => (retrofit.paybackYears ?? 99) <= 3).length, tone: "green" },
-              { label: "Recovering", value: viewModel.implementedRetrofits.filter((retrofit) => (retrofit.paybackYears ?? 99) > 3).length, tone: "gray" }
-            ]}
-          />
-        </DashboardCard>
-        <DashboardCard title="Future Upside">
-          <strong className="dashboard-large-value">{formatDashboardCurrencyCents(viewModel.financial.projectedTenYearSavingsCents)}</strong>
-          <p>Projected 10-year savings from implemented retrofit families.</p>
-          <DashboardInlineAction label="View all retrofit families" />
-        </DashboardCard>
-      </div>
-    </>
   );
 }
 

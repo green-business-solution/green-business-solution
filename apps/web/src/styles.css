@@ -4220,10 +4220,10 @@ dd {
 }
 
 .dashboard-financial-toolbar {
-  align-items: end;
-  display: grid;
+  align-items: center;
+  display: flex;
   gap: 12px;
-  grid-template-columns: minmax(0, 1fr) auto;
+  justify-content: flex-end;
 }
 
 .dashboard-financial-toolbar .dashboard-sub-tabs {
