@@ -24,7 +24,10 @@ export type Route =
 export const aboutLinks: Array<{ label: string; route: Route }> = [
   { label: "Mission", route: "about-mission" },
   { label: "Team", route: "about-team" },
-  { label: "Contact", route: "about-contact" },
+];
+
+export const aboutMenuLinks: Array<{ label: string; route: Route }> = [
+  ...aboutLinks,
 ];
 
 export type RoutePathMatch = {

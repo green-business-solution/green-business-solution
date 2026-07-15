@@ -5,7 +5,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { aboutLinks, type Route } from "../../routes";
+import { aboutLinks, aboutMenuLinks, type Route } from "../../routes";
 import {
   HOME_DASHBOARD_SECTION_ID,
   HOME_INSIGHTS_SECTION_ID,
@@ -245,7 +245,7 @@ function PublicNav({
         onKeyDown={handleAboutMenuKeyDown}
         role="menu"
       >
-        {aboutLinks.map((item) => (
+        {aboutMenuLinks.map((item) => (
           <button
             className="link-button about-menu-item"
             key={item.route}
@@ -313,6 +313,13 @@ function PublicNav({
             </button>
             {renderAboutMenu("desktop-about-menu", "about-menu-popover")}
           </div>
+          <button
+            className="link-button"
+            onClick={() => go("about-contact")}
+            type="button"
+          >
+            Contact Us
+          </button>
         </nav>
         <div className="nav-actions">
           {renderAuthAction()}
@@ -375,6 +382,13 @@ function PublicNav({
               </button>
               {renderAboutMenu("mobile-about-menu", "about-mobile-submenu")}
             </div>
+            <button
+              className="link-button"
+              onClick={() => go("about-contact")}
+              type="button"
+            >
+              Contact Us
+            </button>
             {renderAuthAction()}
             {canStartScan ? (
               <button className="nav-cta" onClick={() => go("scan")} type="button">
