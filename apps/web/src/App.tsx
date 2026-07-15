@@ -29,7 +29,6 @@ import {
   StoreOutlineIcon
 } from "./icons";
 import {
-  aboutLinks,
   pathForRoute,
   routeFromPath,
   shouldCanonicalizeUnknownHomeFallback,
@@ -42,6 +41,7 @@ import {
   type ContactFormErrors,
   type ContactFormState,
 } from "./pages/about/contactForm";
+import { MissionPage } from "./pages/about/MissionPage";
 import {
   animateWindowScrollTo,
   HOME_HOW_IT_WORKS_SECTION_ID,
@@ -2261,13 +2261,6 @@ function clearStoredEnergyDataUploadSession() {
   }
 }
 
-export function buildScanRecommendationSessionBody(session: EnergyDataUploadSession) {
-  return {
-    userId: session.userId,
-    uploadToken: session.token
-  };
-}
-
 function adminAuthBody(credential: AuthCredential) {
   if (credential.provider === "password") {
     return { passwordSessionToken: credential.value };
@@ -2999,901 +2992,6 @@ function SectionHeading({
   );
 }
 
-function AboutSubnav({
-  activeRoute,
-  navigate,
-}: {
-  activeRoute?: Route;
-  navigate: (route: Route) => void;
-}) {
-  return (
-    <nav aria-label="About RetroFi" className="about-subnav">
-      <button
-        aria-current={activeRoute === "about" ? "page" : undefined}
-        className={
-          activeRoute === "about"
-            ? "about-subnav-link is-active"
-            : "about-subnav-link"
-        }
-        onClick={() => navigate("about")}
-        type="button"
-      >
-        Overview
-      </button>
-      {aboutLinks.map((item) => (
-        <button
-          aria-current={activeRoute === item.route ? "page" : undefined}
-          className={
-            activeRoute === item.route
-              ? "about-subnav-link is-active"
-              : "about-subnav-link"
-          }
-          key={item.route}
-          onClick={() => navigate(item.route)}
-          type="button"
-        >
-          {item.label}
-        </button>
-      ))}
-    </nav>
-  );
-}
-
-function AboutHubCard({
-  copy,
-  icon,
-  label,
-  navigate,
-  route,
-  title
-}: {
-  copy: string;
-  icon: "mission" | "team" | "trust" | "contact";
-  label: string;
-  navigate: (route: Route) => void;
-  route: Route;
-  title: string;
-}) {
-  return (
-    <article className="hub-card">
-      <FeatureIcon icon={icon} />
-      <div>
-        <p className="eyebrow">{label}</p>
-        <h3>{title}</h3>
-        <p>{copy}</p>
-      </div>
-      <button
-        aria-label={`Learn more about ${title}`}
-        className="text-link with-icon"
-        onClick={() => navigate(route)}
-        type="button"
-      >
-        Learn more
-        <ArrowUpRightIcon />
-      </button>
-    </article>
-  );
-}
-
-const scannerDashboardImage = "/home/final-4-cards-page.png";
-const scannerDashboardStartMotion = { scale: 2.34, x: 0, y: -18 };
-const scannerDashboardEndMotion = { scale: 1, x: 0, y: 0 };
-
-
-function LegacyPlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
-  const sectionRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let animationFrame = 0;
-    let targetProgress = 0;
-    let displayProgress = 0;
-    let hasMeasuredProgress = false;
-    let isDisposed = false;
-    let autoTransitionActive = false;
-    let autoTransitionSettledSide: "before" | "after" | null = null;
-    let autoTransitionDirection: "forward" | "reverse" | null = null;
-    let autoTransitionStartProgress = 0;
-    let autoTransitionEndProgress = 1;
-    let autoTransitionStartTime = 0;
-    let pendingAutoTransitionDirection: "forward" | "reverse" | null = null;
-    let dashboardScrollLockActive = false;
-    let dashboardScrollLockConsumed = 0;
-    let touchStartY: number | null = null;
-    let dashboardImageLoaded = false;
-    let dashboardImage: HTMLImageElement | null = null;
-    const scannerEnd = 0.68;
-    const resultClearStart = 0.7;
-    const resultClearEnd = 0.76;
-    const transitionStart = 0.78;
-    const transitionEnd = 1;
-    const forwardAutoTrigger = transitionStart + 0.006;
-    const reverseAutoTrigger = 0.995;
-    const autoTransitionDuration = 680;
-    const dashboardScrollLockDistance = 520;
-    const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value));
-    const lerp = (start: number, end: number, progress: number) => start + (end - start) * progress;
-    const smootherstep = (value: number) => {
-      const clamped = clamp(value);
-      return clamped * clamped * clamped * (clamped * (clamped * 6 - 15) + 10);
-    };
-    const easeOutCubic = (value: number) => {
-      const clamped = clamp(value);
-      return 1 - Math.pow(1 - clamped, 3);
-    };
-    const smoothstep = (start: number, end: number, value: number) => {
-      if (start === end) return value >= end ? 1 : 0;
-      const clamped = clamp((value - start) / (end - start));
-      return clamped * clamped * (3 - 2 * clamped);
-    };
-    const setDashboardMotion = (motion: { scale: number; x: number; y: number }) => {
-      section?.style.setProperty("--scanner-dashboard-scale", motion.scale.toFixed(4));
-      section?.style.setProperty("--scanner-dashboard-x", `${motion.x.toFixed(2)}vw`);
-      section?.style.setProperty("--scanner-dashboard-y", `${motion.y.toFixed(2)}vh`);
-    };
-
-    const measureScrollProgress = () => {
-      if (!section) {
-        return 0;
-      }
-
-      const scrollDistance = Math.max(1, section.offsetHeight - window.innerHeight);
-      return clamp(-section.getBoundingClientRect().top / scrollDistance);
-    };
-
-    const getScrollYForProgress = (progress: number) => {
-      if (!section) {
-        return window.scrollY;
-      }
-
-      const scrollDistance = Math.max(1, section.offsetHeight - window.innerHeight);
-      const sectionTop = window.scrollY + section.getBoundingClientRect().top;
-      return sectionTop + scrollDistance * clamp(progress);
-    };
-
-    const startAutoTransition = (direction: "forward" | "reverse", timestamp: number) => {
-      autoTransitionActive = true;
-      autoTransitionDirection = direction;
-      pendingAutoTransitionDirection = null;
-      dashboardScrollLockActive = false;
-      dashboardScrollLockConsumed = 0;
-      autoTransitionStartTime = timestamp;
-      autoTransitionStartProgress =
-        direction === "forward"
-          ? clamp(Math.max(targetProgress, transitionStart), transitionStart, 1)
-          : clamp(targetProgress, transitionStart, 1);
-      autoTransitionEndProgress = direction === "forward" ? 1 : transitionStart;
-      targetProgress = autoTransitionStartProgress;
-      displayProgress = autoTransitionStartProgress;
-      window.scrollTo(0, getScrollYForProgress(displayProgress));
-    };
-
-    const updateScan = (timestamp = window.performance.now()) => {
-      animationFrame = 0;
-
-      if (!section) {
-        return;
-      }
-
-      if (reducedMotionQuery.matches) {
-        section.style.setProperty("--planet-scan-position", "100%");
-        section.style.setProperty("--planet-scan-ray-opacity", "0");
-        section.style.setProperty("--planet-scan-hint-opacity", "0");
-        section.style.setProperty("--planet-scan-erase", "1");
-        section.style.setProperty("--planet-scan-reveal", "1");
-        section.style.setProperty("--planet-scan-result-copy-opacity", "0");
-        section.style.setProperty("--planet-scan-magic-opacity", "0");
-        section.style.setProperty("--planet-scan-layer-opacity", "0");
-        section.style.setProperty("--scanner-dashboard-opacity", "1");
-        setDashboardMotion(scannerDashboardEndMotion);
-        return;
-      }
-
-      if (!hasMeasuredProgress) {
-        targetProgress = measureScrollProgress();
-        displayProgress = targetProgress;
-        hasMeasuredProgress = true;
-      }
-
-      if (pendingAutoTransitionDirection && dashboardImageLoaded && !autoTransitionActive) {
-        startAutoTransition(pendingAutoTransitionDirection, timestamp);
-      }
-
-      if (autoTransitionActive) {
-        const autoProgress = clamp((timestamp - autoTransitionStartTime) / autoTransitionDuration);
-        const easedAutoProgress = easeOutCubic(autoProgress);
-        targetProgress = lerp(autoTransitionStartProgress, autoTransitionEndProgress, easedAutoProgress);
-        displayProgress = targetProgress;
-        window.scrollTo(0, getScrollYForProgress(displayProgress));
-
-        if (autoProgress >= 1) {
-          const settledProgress = autoTransitionEndProgress;
-          autoTransitionActive = false;
-          autoTransitionSettledSide = autoTransitionDirection === "forward" ? "after" : "before";
-          dashboardScrollLockActive = autoTransitionDirection === "forward";
-          dashboardScrollLockConsumed = 0;
-          autoTransitionDirection = null;
-          targetProgress = settledProgress;
-          displayProgress = settledProgress;
-          window.scrollTo(0, getScrollYForProgress(settledProgress));
-        }
-      } else {
-        const animationTargetProgress = dashboardImageLoaded ? targetProgress : Math.min(targetProgress, transitionStart);
-        const progressDelta = animationTargetProgress - displayProgress;
-        displayProgress = Math.abs(progressDelta) < 0.0006 ? animationTargetProgress : displayProgress + progressDelta * 0.12;
-      }
-
-      const rawProgress = displayProgress;
-      const scannerProgress = clamp(rawProgress / scannerEnd);
-      const easedProgress = smootherstep(scannerProgress);
-      const transitionProgress = clamp((rawProgress - transitionStart) / (transitionEnd - transitionStart));
-      const dashboardOpacity = smoothstep(0.03, 0.2, transitionProgress);
-      const scannerLayerOpacity = 1 - smoothstep(0.12, 0.42, transitionProgress);
-      const edgeFade = Math.min(1, scannerProgress * 10, (1 - scannerProgress) * 10);
-      const eraseProgress = Math.min(1, Math.max(0, (easedProgress - 0.08) / 0.34));
-      const revealProgress = Math.min(1, Math.max(0, (easedProgress - 0.54) / 0.3));
-      const resultCopyOpacity = 1 - smoothstep(resultClearStart, resultClearEnd, rawProgress);
-      const magicOpacity = Math.min(1, edgeFade, Math.max(0, (easedProgress - 0.06) / 0.12), Math.max(0, (0.96 - easedProgress) / 0.18));
-      const dashboardMotionProgress = smootherstep(transitionProgress);
-      const dashboardMotion = {
-        scale: lerp(scannerDashboardStartMotion.scale, scannerDashboardEndMotion.scale, dashboardMotionProgress),
-        x: lerp(scannerDashboardStartMotion.x, scannerDashboardEndMotion.x, dashboardMotionProgress),
-        y: lerp(scannerDashboardStartMotion.y, scannerDashboardEndMotion.y, dashboardMotionProgress)
-      };
-      const safeDashboardOpacity = dashboardImageLoaded ? dashboardOpacity : 0;
-      const safeScannerLayerOpacity = dashboardImageLoaded ? scannerLayerOpacity : 1;
-
-      section.style.setProperty("--planet-scan-position", `${easedProgress * 100}%`);
-      section.style.setProperty("--planet-scan-ray-opacity", `${Math.max(0, edgeFade)}`);
-      section.style.setProperty("--planet-scan-hint-opacity", `${Math.max(0, 1 - rawProgress * 6)}`);
-      section.style.setProperty("--planet-scan-erase", String(eraseProgress));
-      section.style.setProperty("--planet-scan-reveal", String(revealProgress));
-      section.style.setProperty("--planet-scan-result-copy-opacity", String(resultCopyOpacity));
-      section.style.setProperty("--planet-scan-magic-opacity", String(magicOpacity));
-      section.style.setProperty("--planet-scan-layer-opacity", String(safeScannerLayerOpacity));
-      section.style.setProperty("--scanner-dashboard-opacity", String(safeDashboardOpacity));
-      setDashboardMotion(dashboardMotion);
-
-      const shouldContinueSmoothing =
-        autoTransitionActive ||
-        Math.abs((dashboardImageLoaded ? targetProgress : Math.min(targetProgress, transitionStart)) - displayProgress) > 0.0006;
-
-      if (shouldContinueSmoothing) {
-        scheduleScanUpdate();
-      }
-    };
-
-    const scheduleScanUpdate = () => {
-      if (!animationFrame) {
-        animationFrame = window.requestAnimationFrame(updateScan);
-      }
-    };
-
-    const handleScrollProgressChange = () => {
-      const measuredProgress = measureScrollProgress();
-
-      if (autoTransitionActive) {
-        return;
-      }
-
-      if (!hasMeasuredProgress) {
-        targetProgress = measuredProgress;
-        displayProgress = measuredProgress;
-        autoTransitionSettledSide = measuredProgress >= reverseAutoTrigger ? "after" : "before";
-        hasMeasuredProgress = true;
-      }
-
-      if (autoTransitionSettledSide === "after" && measuredProgress < reverseAutoTrigger) {
-        pendingAutoTransitionDirection = "reverse";
-        targetProgress = measuredProgress;
-      } else if (autoTransitionSettledSide !== "after" && measuredProgress >= forwardAutoTrigger) {
-        pendingAutoTransitionDirection = "forward";
-        targetProgress = Math.max(measuredProgress, transitionStart);
-      } else {
-        pendingAutoTransitionDirection = null;
-        targetProgress = measuredProgress;
-        if (measuredProgress < transitionStart - 0.04) {
-          autoTransitionSettledSide = "before";
-        } else if (measuredProgress >= reverseAutoTrigger) {
-          autoTransitionSettledSide = "after";
-        }
-      }
-
-      scheduleScanUpdate();
-    };
-
-    const holdDashboardScrollLock = (scrollAmount: number) => {
-      if (!section || scrollAmount <= 0 || autoTransitionSettledSide !== "after") {
-        return false;
-      }
-
-      const measuredProgress = measureScrollProgress();
-      if (measuredProgress < reverseAutoTrigger) {
-        return false;
-      }
-
-      if (!dashboardScrollLockActive) {
-        return false;
-      }
-
-      dashboardScrollLockConsumed += scrollAmount;
-      window.scrollTo(0, getScrollYForProgress(1));
-
-      if (dashboardScrollLockConsumed >= dashboardScrollLockDistance) {
-        dashboardScrollLockActive = false;
-        dashboardScrollLockConsumed = 0;
-      }
-
-      return true;
-    };
-
-    const handleWheel = (event: WheelEvent) => {
-      if (autoTransitionActive) {
-        event.preventDefault();
-        return;
-      }
-
-      if (holdDashboardScrollLock(event.deltaY)) {
-        event.preventDefault();
-      }
-    };
-
-    const handleTouchStart = (event: TouchEvent) => {
-      touchStartY = event.touches[0]?.clientY ?? null;
-    };
-
-    const handleTouchMove = (event: TouchEvent) => {
-      if (autoTransitionActive) {
-        event.preventDefault();
-        return;
-      }
-
-      const currentY = event.touches[0]?.clientY;
-      if (touchStartY == null || currentY == null) {
-        return;
-      }
-
-      const scrollAmount = touchStartY - currentY;
-      if (holdDashboardScrollLock(scrollAmount)) {
-        event.preventDefault();
-      }
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (autoTransitionActive) {
-        event.preventDefault();
-        return;
-      }
-
-      const scrollKeys: Record<string, number> = {
-        " ": window.innerHeight * 0.8,
-        ArrowDown: 80,
-        PageDown: window.innerHeight * 0.8,
-        End: dashboardScrollLockDistance
-      };
-      const scrollAmount = scrollKeys[event.key] ?? 0;
-
-      if (holdDashboardScrollLock(scrollAmount)) {
-        event.preventDefault();
-      }
-    };
-
-    dashboardImage = new Image();
-    dashboardImage.decoding = "async";
-    dashboardImage.onload = () => {
-      const markDashboardLoaded = () => {
-        if (isDisposed) {
-          return;
-        }
-
-        dashboardImageLoaded = true;
-        scheduleScanUpdate();
-      };
-
-      if (dashboardImage?.decode) {
-        void dashboardImage.decode().then(markDashboardLoaded).catch(markDashboardLoaded);
-        return;
-      }
-
-      markDashboardLoaded();
-    };
-    dashboardImage.src = scannerDashboardImage;
-
-    handleScrollProgressChange();
-    window.addEventListener("scroll", handleScrollProgressChange, { passive: true });
-    window.addEventListener("resize", handleScrollProgressChange);
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
-    window.addEventListener("keydown", handleKeyDown);
-    reducedMotionQuery.addEventListener("change", scheduleScanUpdate);
-
-    return () => {
-      isDisposed = true;
-      window.cancelAnimationFrame(animationFrame);
-      if (dashboardImage) {
-        dashboardImage.onload = null;
-      }
-      window.removeEventListener("scroll", handleScrollProgressChange);
-      window.removeEventListener("resize", handleScrollProgressChange);
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("keydown", handleKeyDown);
-      reducedMotionQuery.removeEventListener("change", scheduleScanUpdate);
-    };
-  }, []);
-
-  return (
-    <section aria-labelledby="planet-scan-heading" className="planet-scan-section" ref={sectionRef}>
-      <div className="planet-scan-sticky">
-        <div aria-hidden="true" className="planet-scan-visual">
-          <img
-            alt=""
-            className="planet-scan-image planet-scan-image-before"
-            decoding="async"
-            fetchPriority="high"
-            loading="eager"
-            src="/home/planet-before.jpg"
-          />
-          <div className="planet-scan-after-reveal">
-            <img
-              alt=""
-              className="planet-scan-image planet-scan-image-after"
-              decoding="async"
-              fetchPriority="high"
-              loading="eager"
-              src="/home/planet-after.jpg"
-            />
-          </div>
-          <span className="planet-scan-ray" />
-          <div aria-hidden="true" className="planet-scan-magic-trail">
-            {Array.from({ length: 7 }, (_, index) => (
-              <span key={index} />
-            ))}
-          </div>
-        </div>
-
-        <div aria-hidden="true" className="planet-scan-shade" />
-
-        <div aria-hidden="true" className="scanner-dashboard-layer">
-          <img
-            alt=""
-            className="scanner-dashboard-panel"
-            decoding="async"
-            loading="eager"
-            src={scannerDashboardImage}
-          />
-        </div>
-
-        <div className="planet-scan-content">
-          <div className="planet-scan-copy">
-            <div className="planet-scan-message planet-scan-message-before">
-              <h1 className="planet-scan-title planet-scan-title--before" id="planet-scan-heading">
-                <span>Find the money</span>
-                <span>behind your next</span>
-                <span className="planet-scan-title-accent">retrofit.</span>
-              </h1>
-              <p className="planet-scan-subhead">Billions in retrofit incentives exist while building owners lose billions to operating expenses.</p>
-            </div>
-          </div>
-
-          <div className="planet-scan-result-copy">
-            <h2 className="planet-scan-title planet-scan-title--after">
-              <span>Find, compare, and claim</span>
-              <span>retrofit incentives.</span>
-            </h2>
-            <p className="planet-scan-emphasis">Sustainable. Profitable. Practical.</p>
-            <button className="planet-scan-cta planet-scan-primary planet-scan-cta--after" onClick={() => navigate("scan")} type="button">
-              Get Started
-            </button>
-          </div>
-        </div>
-
-        <div aria-hidden="true" className="planet-scan-scroll-cue">
-          <span />
-          Scroll to scan
-        </div>
-      </div>
-    </section>
-  );
-}
-
-
-
-function PricingPage({
-  navigate,
-  publicAuth
-}: {
-  navigate: (route: Route) => void;
-  publicAuth: PublicAuthState;
-}) {
-  const plans = [
-    {
-      audience: "Exploring potential opportunities",
-      cta: "Start free scan",
-      features: ["Basic opportunity preview", "Estimated value range", "General retrofit categories", "Utility bill prompt for sharper estimates"],
-      footnote: "No commitment. Useful before you collect documents.",
-      name: "Free Scan",
-      price: "$0",
-      route: "scan" as Route
-    },
-    {
-      audience: "Ready to decide whether a project is worth pursuing",
-      cta: "Start with free scan",
-      featured: true,
-      features: ["Exact incentive matches", "Eligibility analysis", "Savings and ROI estimates", "Prioritized retrofit roadmap", "Downloadable report and assumptions"],
-      footnote: "Best first paid step for a single property.",
-      name: "Opportunity Report",
-      price: "$950",
-      priceNote: "per site",
-      route: "scan" as Route
-    },
-    {
-      audience: "Moving from decision to application and execution",
-      cta: "Talk to us",
-      features: ["Application preparation support", "Document collection guidance", "Contractor quote review", "Financing guidance", "60-90 days of incentive tracking"],
-      footnote: "Scoped after we understand the retrofit and documents.",
-      name: "Implementation Support",
-      price: "$3,500+",
-      route: "about-contact" as Route
-    },
-    {
-      audience: "Portfolios, franchise groups, and regional operators",
-      cta: "Plan portfolio",
-      features: ["Site-by-site scans", "Portfolio prioritization", "Centralized incentive tracking", "Standardized recommendations", "Rollup view for decision makers"],
-      footnote: "Custom pricing based on portfolio size and workflow depth.",
-      name: "Multi-Site",
-      price: "Custom",
-      route: "about-contact" as Route
-    }
-  ];
-  const pathSteps = [
-    ["01", "Scan", "Find the likely incentive value before paying for deeper work."],
-    ["02", "Report", "Turn the best opportunities into project economics and next steps."],
-    ["03", "Support", "Move selected retrofits through documents, applications, and tracking."]
-  ];
-  const comparisonRows = [
-    ["Upfront cost", "Free", "$950 / site", "$3,500+", "Custom"],
-    ["Best output", "Opportunity preview", "Decision-ready report", "Application-ready workflow", "Portfolio roadmap"],
-    ["Utility bill depth", "Optional", "Recommended", "Required for selected projects", "Standardized by site"],
-    ["Application support", "Not included", "Guidance only", "Hands-on support", "Centralized support"],
-    ["Subscription", "No", "No", "No", "No"]
-  ];
-  const faqs = [
-    ["Why is the scan free?", "The scan helps you see whether deeper analysis is likely to create enough value before you pay."],
-    ["When do I pay?", "Only when you choose to upgrade to an Opportunity Report or implementation support."],
-    ["Do I need utility bills?", "Not for the free scan. Utility bills improve savings, ROI, and application readiness."],
-    ["Is this a subscription?", "No. RetroFi starts with project-based pricing instead of a recurring software fee."],
-    ["Do you charge a success fee?", "No success fee initially. Pricing stays tied to clear work products and support scope."],
-    ["Can this cover multiple sites?", "Yes. Multi-site pricing depends on portfolio size, reporting needs, and rollout complexity."]
-  ];
-
-  return (
-    <PublicShell navigate={navigate} pageClassName="pricing-page" publicAuth={publicAuth}>
-      <section className="pricing-hero" aria-labelledby="pricing-heading">
-        <div className="pricing-hero-copy">
-          <p className="pricing-eyebrow">Pricing</p>
-          <h1 id="pricing-heading">Start free. Pay when the opportunity is real.</h1>
-          <p>
-            RetroFi keeps pricing tied to clear decisions: scan for free, upgrade for project economics, then add support only when a retrofit is worth moving forward.
-          </p>
-          <div className="pricing-hero-actions">
-            <button className="pricing-primary-action" onClick={() => navigate("scan")} type="button">
-              Start free scan
-              <ArrowUpRightIcon />
-            </button>
-            <button className="pricing-secondary-action" onClick={() => navigate("about-contact")} type="button">
-              Talk to RetroFi
-            </button>
-          </div>
-          <ul className="pricing-trust-list" aria-label="Pricing assurances">
-            <li><CheckIcon /> No subscription</li>
-            <li><CheckIcon /> No success fee initially</li>
-            <li><CheckIcon /> Upgrade only after the scan</li>
-          </ul>
-        </div>
-        <aside className="pricing-hero-panel" aria-label="Recommended pricing path">
-          <span>Recommended path</span>
-          <strong>$0 first</strong>
-          <p>Use the free scan to decide whether a paid report is likely to pay for itself.</p>
-          <div className="pricing-hero-meter" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </div>
-        </aside>
-      </section>
-
-      <section className="pricing-path-section" aria-labelledby="pricing-path-heading">
-        <div className="pricing-section-heading">
-          <p className="pricing-eyebrow">How pricing scales</p>
-          <h2 id="pricing-path-heading">Each step earns the next one.</h2>
-          <span>Move from quick discovery to decision support to implementation without committing to a long-term contract.</span>
-        </div>
-        <div className="pricing-path-grid">
-          {pathSteps.map(([number, title, copy]) => (
-            <article className="pricing-path-card" key={title}>
-              <span>{number}</span>
-              <h3>{title}</h3>
-              <p>{copy}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="pricing-plan-grid" aria-label="Pricing plans">
-        {plans.map((plan) => (
-          <article className={plan.featured ? "pricing-card recommended" : "pricing-card"} key={plan.name}>
-            {plan.featured ? <span className="recommended-badge">Most useful first upgrade</span> : null}
-            <div className="pricing-card-header">
-              <h2>{plan.name}</h2>
-              <p>{plan.audience}</p>
-            </div>
-            <div className="pricing-price-line">
-              <strong>{plan.price}</strong>
-              {plan.priceNote ? <span>{plan.priceNote}</span> : null}
-            </div>
-            <ul>
-              {plan.features.map((item) => (
-                <li key={item}><CheckIcon /> {item}</li>
-              ))}
-            </ul>
-            <p className="pricing-card-footnote">{plan.footnote}</p>
-            <button className="pricing-plan-button" onClick={() => navigate(plan.route)} type="button">
-              {plan.cta}
-              <ArrowUpRightIcon />
-            </button>
-          </article>
-        ))}
-      </section>
-
-      <section className="pricing-comparison-section" aria-labelledby="pricing-comparison-heading">
-        <div className="pricing-section-heading">
-          <p className="pricing-eyebrow">Compare</p>
-          <h2 id="pricing-comparison-heading">Choose by decision stage.</h2>
-          <span>The difference is not feature bloat. It is how much certainty and hands-on execution you need.</span>
-        </div>
-        <div className="pricing-comparison-grid" role="table" aria-label="Pricing comparison">
-          <div className="pricing-comparison-row pricing-comparison-row--header" role="row">
-            <span role="columnheader">Question</span>
-            <span role="columnheader">Free Scan</span>
-            <span role="columnheader">Report</span>
-            <span role="columnheader">Support</span>
-            <span role="columnheader">Multi-Site</span>
-          </div>
-          {comparisonRows.map((row) => (
-            <div className="pricing-comparison-row" role="row" key={row[0]}>
-              {row.map((cell, index) => (
-                <span role={index === 0 ? "rowheader" : "cell"} key={cell}>{cell}</span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="pricing-faq-section" aria-labelledby="pricing-faq-heading">
-        <div className="pricing-section-heading">
-          <p className="pricing-eyebrow">Questions</p>
-          <h2 id="pricing-faq-heading">The short version.</h2>
-        </div>
-        <div className="pricing-faq-grid">
-          {faqs.map(([question, answer]) => (
-            <article className="pricing-faq-card" key={question}>
-              <h3>{question}</h3>
-              <p>{answer}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="pricing-final-cta">
-        <div>
-          <p>Ready to see whether there is money on the table?</p>
-          <span>Start with the free scan. Bring utility data later if the numbers deserve a closer look.</span>
-        </div>
-        <button className="pricing-final-button" onClick={() => navigate("scan")} type="button">
-          Start free scan
-          <ArrowUpRightIcon />
-        </button>
-      </section>
-    </PublicShell>
-  );
-}
-
-function AboutPage({
-  navigate,
-  publicAuth
-}: {
-  navigate: (route: Route) => void;
-  publicAuth: PublicAuthState;
-}) {
-  return (
-    <PublicShell navigate={navigate} publicAuth={publicAuth}>
-      <PageHero
-        compact
-        eyebrow="About RetroFi"
-        title="RetroFi helps homeowners make smarter retrofit decisions faster"
-        copy="We turn messy home and utility data into clear guidance so people can understand upgrades, incentives, and next steps without the usual research burden."
-      />
-      <AboutSubnav activeRoute="about" navigate={navigate} />
-      <section className="split-section about-story-section">
-        <div>
-          <p className="eyebrow">Mission</p>
-          <h2>Clear retrofit guidance should be easier to get.</h2>
-        </div>
-        <p className="about-story-copy">
-          RetroFi is built to reduce confusion around home upgrades. Instead of asking homeowners to piece together savings estimates,
-          incentives, and retrofit options across disconnected sources, the product brings those inputs into one clearer report.
-        </p>
-      </section>
-      <section className="card-grid three about-principles-grid">
-        {[
-          ["Simple to use", "A lightweight flow gets homeowners from account setup to useful insight quickly.", "roadmap"],
-          ["Designed for clarity", "Recommendations are meant to be readable, personalized, and easy to act on.", "savings"],
-          ["Built to save time", "RetroFi reduces research overhead by organizing complex utility and retrofit information.", "mission"]
-        ].map(([title, copy, icon]) => (
-          <article className="feature-card" key={title}>
-            <FeatureIcon icon={icon as "roadmap" | "savings" | "mission"} />
-            <h3>{title}</h3>
-            <p>{copy}</p>
-          </article>
-        ))}
-      </section>
-      <section className="card-grid two about-hub-grid">
-        <AboutHubCard
-          copy="Learn why RetroFi is focused on making home upgrade decisions clearer and more practical."
-          icon="mission"
-          label="Mission"
-          navigate={navigate}
-          route="about-mission"
-          title="Why RetroFi exists"
-        />
-        <AboutHubCard
-          copy="Meet the people building the product, research workflows, and homeowner experience."
-          icon="team"
-          label="Team"
-          navigate={navigate}
-          route="about-team"
-          title="Meet the team"
-        />
-        <AboutHubCard
-          copy="Understand how home and utility data are used to prepare recommendations responsibly."
-          icon="trust"
-          label="Trust & Data"
-          navigate={navigate}
-          route="about-trust"
-          title="How we handle data"
-        />
-        <AboutHubCard
-          copy="Talk to us if you want to understand the product before creating an account or uploading bills."
-          icon="contact"
-          label="Contact"
-          navigate={navigate}
-          route="about-contact"
-          title="Questions before you start?"
-        />
-      </section>
-      <section className="final-cta">
-        <h2>RetroFi is built to make home upgrade choices easier to understand.</h2>
-        <p>Start with a lightweight account and see how fast home and utility data can turn into clearer retrofit guidance.</p>
-        <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
-      </section>
-    </PublicShell>
-  );
-}
-
-function MissionPage({
-  navigate,
-  publicAuth
-}: {
-  navigate: (route: Route) => void;
-  publicAuth: PublicAuthState;
-}) {
-  const missionSteps = [
-    {
-      copy: "Bring fragmented utility, government, tax, grant, and financing programs into one searchable view of the opportunities that may fit a business and its building.",
-      icon: "incentives" as const,
-      number: "01",
-      title: "Find the opportunity",
-    },
-    {
-      copy: "Combine incentive data with building information, utility usage, and financial analysis to make potential costs, savings, and tradeoffs easier to evaluate.",
-      icon: "savings" as const,
-      number: "02",
-      title: "Understand the economics",
-    },
-    {
-      copy: "Translate complex program requirements into practical recommendations and clearer next steps—without presenting estimates as guaranteed eligibility or savings.",
-      icon: "roadmap" as const,
-      number: "03",
-      title: "Move toward action",
-    },
-  ];
-
-  return (
-    <PublicShell
-      navigate={navigate}
-      pageClassName="about-editorial-page home-page about-mission-page"
-      publicAuth={publicAuth}
-      showFooter
-    >
-      <section aria-labelledby="about-mission-title" className="about-editorial-hero">
-        <div className="about-editorial-hero-copy">
-          <p className="about-editorial-eyebrow">About / Mission</p>
-          <h1 id="about-mission-title">Making better buildings easier to fund.</h1>
-          <p className="about-editorial-intro">
-            RetroFi helps businesses discover relevant building-efficiency incentives, understand
-            the economics, and move toward high-impact upgrades with greater confidence.
-          </p>
-        </div>
-        <aside aria-label="RetroFi mission summary" className="about-hero-note">
-          <span className="about-hero-note-icon"><FeatureIcon icon="mission" /></span>
-          <strong>Make sustainability financially practical.</strong>
-          <span>Turn scattered programs and building data into a clearer path from opportunity to action.</span>
-        </aside>
-      </section>
-      <AboutSectionNav activeRoute="about-mission" navigate={navigate} />
-      <section aria-labelledby="about-mission-steps-title" className="about-mission-steps">
-        <header className="about-mission-section-heading">
-          <p className="about-card-kicker">From complexity to clarity</p>
-          <h2 id="about-mission-steps-title">A more practical path to better buildings.</h2>
-          <p>
-            RetroFi organizes the information businesses need to decide whether a retrofit opportunity deserves a closer look.
-          </p>
-        </header>
-        <div className="about-mission-step-grid">
-          {missionSteps.map((step) => (
-            <article className="about-mission-step" key={step.number}>
-              <div className="about-mission-step-topline">
-                <span className="about-trust-icon"><FeatureIcon icon={step.icon} /></span>
-                <span className="about-mission-step-number">{step.number}</span>
-              </div>
-              <h3>{step.title}</h3>
-              <p>{step.copy}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section aria-labelledby="about-mission-why-title" className="about-mission-why">
-        <div>
-          <p className="about-card-kicker">Why this matters</p>
-          <h2 id="about-mission-why-title">Less time searching. More confidence deciding.</h2>
-        </div>
-        <div className="about-mission-why-copy">
-          <p>
-            Efficiency incentives are fragmented across utilities, agencies, tax programs, grants,
-            and financing providers. That complexity can hide valuable opportunities and slow down
-            otherwise practical projects.
-          </p>
-          <p>
-            RetroFi brings incentive data together with building information, utility usage,
-            financial analysis, and practical recommendations so businesses can focus on the
-            upgrades most worth investigating.
-          </p>
-          <ul aria-label="Information RetroFi brings together" className="about-mission-inputs">
-            <li>Incentive data</li>
-            <li>Building information</li>
-            <li>Utility usage</li>
-            <li>Financial analysis</li>
-          </ul>
-        </div>
-      </section>
-      <section aria-labelledby="about-mission-cta-title" className="about-editorial-cta">
-        <div className="about-editorial-cta-copy">
-          <h2 id="about-mission-cta-title">See which opportunities may fit your building.</h2>
-          <p>Start with a free scan, then decide whether a deeper analysis is worth pursuing.</p>
-        </div>
-        <button className="about-editorial-cta-button" onClick={() => navigate("scan")} type="button">
-          Start free scan
-          <ArrowUpRightIcon />
-        </button>
-      </section>
-    </PublicShell>
-  );
-}
-
 function TeamPage({
   navigate,
   publicAuth
@@ -3910,13 +3008,13 @@ function TeamPage({
     },
     {
       bio: "Sustainability entrepreneur leading RetroFi’s strategy, product direction, partnerships, and growth. He previously scaled a 40+ member environmental nonprofit and brings experience in ESG, policy, and green-business development.",
-      headshot: "/headshots/rajvansh-gupta.svg",
+      headshot: "/headshots/rajvansh-gupta.webp",
       name: "Rajvansh Gupta",
       title: "Co-Founder & CEO",
     },
     {
       bio: "Technical builder responsible for RetroFi’s architecture, incentive-data systems, automation, and platform reliability. He combines strong quantitative reasoning with hands-on experience building AI- and AWS-powered systems.",
-      headshot: "/headshots/neer-kuchlous.svg",
+      headshot: "/headshots/neer-kuchlous.webp",
       name: "Neer Kuchlous",
       title: "Co-Founder & CTO",
     },
@@ -3929,23 +3027,6 @@ function TeamPage({
       publicAuth={publicAuth}
       showFooter
     >
-      <section
-        aria-labelledby="about-founders-title"
-        className="about-founders-hero"
-      >
-        <div className="about-founders-hero-copy">
-          <p className="about-founders-eyebrow">About RetroFi</p>
-          <h1 id="about-founders-title">
-            Built to make better buildings easier to fund.
-          </h1>
-          <p className="about-founders-intro">
-            RetroFi brings together technology, practical retrofit expertise,
-            and financial insight to help property owners move from opportunity
-            to action.
-          </p>
-        </div>
-      </section>
-      <AboutSubnav activeRoute="about-team" navigate={navigate} />
       <section
         aria-labelledby="about-founders-heading"
         className="content-section about-founders-section"
@@ -4018,67 +3099,92 @@ function TrustPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
+  const trustPrinciples = [
+    {
+      title: "Start with less",
+      copy: "You can begin a free scan without uploading utility bills. More detailed data is only useful when you want deeper savings, ROI, payback, and prioritization analysis.",
+    },
+    {
+      title: "Use it with purpose",
+      copy: "Business, building, and utility information is used to identify likely incentives, estimate savings, prioritize retrofit opportunities, and prepare recommendations.",
+    },
+    {
+      title: "Keep clear boundaries",
+      copy: "RetroFi does not sell business information, use utility bills for unrelated purposes, or share sensitive information without permission.",
+    },
+  ] as const;
+
   return (
-    <PublicShell navigate={navigate} publicAuth={publicAuth}>
-      <PageHero
-        compact
-        eyebrow="Trust & Data"
-        title="Trust & Data"
-        copy="RetroFi uses business and utility information only to prepare recommendations, estimate savings, and identify relevant opportunities."
-      />
-      <AboutSubnav activeRoute="about-trust" navigate={navigate} />
-      <section className="card-grid two trust-grid">
-        <article className="feature-card list-card">
-          <h2>What we collect</h2>
-          <ul>
-            {[
-              "Business name and contact information",
-              "Site address",
-              "Utility provider",
-              "Organization and building type",
-              "Approximate square footage",
-              "Utility bills if uploaded later"
-            ].map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-        <article className="feature-card list-card">
-          <h2>Why we collect it</h2>
-          <ul>
-            {[
-              "To identify likely incentives",
-              "To estimate savings and ROI",
-              "To prioritize retrofit opportunities",
-              "To prepare reports and recommendations"
-            ].map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-        <article className="feature-card list-card">
-          <h2>What we do not do</h2>
-          <ul>
-            {[
-              "Do not sell business information",
-              "Do not use utility bills for unrelated purposes",
-              "Do not share sensitive information without permission"
-            ].map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-        <article className="feature-card utility-note-card">
-          <h2>Utility bill note</h2>
-          <p>
-            Utility bills are only needed for detailed savings, ROI, payback, and prioritization.
-            The free scan can be started without uploading bills.
+    <PublicShell
+      navigate={navigate}
+      pageClassName="about-editorial-page home-page"
+      publicAuth={publicAuth}
+      showFooter
+    >
+      <section aria-labelledby="about-trust-title" className="about-editorial-hero">
+        <div className="about-editorial-hero-copy">
+          <p className="about-editorial-eyebrow">About / Trust &amp; Data</p>
+          <h1 id="about-trust-title">Your data should work for your decision.</h1>
+          <p className="about-editorial-intro">
+            RetroFi uses business, building, and utility information to make retrofit opportunities easier to understand—not for unrelated purposes.
           </p>
+        </div>
+        <aside className="about-hero-note" aria-label="Data sharing summary">
+          <span className="about-hero-note-icon"><LockIcon /></span>
+          <strong>Share in stages, beginning with a lightweight scan.</strong>
+          <span>Utility bills come later, only when deeper financial analysis is useful to you.</span>
+        </aside>
+      </section>
+      <section aria-label="RetroFi data principles" className="about-trust-principles">
+        {trustPrinciples.map((principle, index) => (
+          <article className="about-trust-principle" key={principle.title}>
+            <span className="about-trust-icon">
+              {index === 2 ? <LockIcon /> : <CheckIcon />}
+            </span>
+            <p className="about-card-kicker">0{index + 1}</p>
+            <h2>{principle.title}</h2>
+            <p>{principle.copy}</p>
+          </article>
+        ))}
+      </section>
+      <section aria-label="Data use boundaries" className="about-data-boundaries">
+        <article className="about-boundary-card">
+          <p className="about-card-kicker">Information used in a scan</p>
+          <h2>What helps shape your recommendations</h2>
+          <ul className="about-boundary-list">
+            {[
+              "Business name, contact information, and site address",
+              "Utility provider, organization type, and building type",
+              "Approximate square footage",
+              "Utility bills, if you choose to upload them later",
+            ].map((item) => (
+              <li key={item}><CheckIcon /><span>{item}</span></li>
+            ))}
+          </ul>
+        </article>
+        <article className="about-boundary-card is-dark">
+          <p className="about-card-kicker">Clear limits</p>
+          <h2>What your information is not for</h2>
+          <ul className="about-boundary-list">
+            {[
+              "Selling your business information",
+              "Using utility bills for unrelated purposes",
+              "Sharing sensitive information without permission",
+            ].map((item) => (
+              <li key={item}><CheckIcon /><span>{item}</span></li>
+            ))}
+          </ul>
         </article>
       </section>
-      <section className="final-cta">
-        <h2>Start with a free scan and share more only when deeper analysis is useful.</h2>
-        <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
+      <section className="about-editorial-cta">
+        <div className="about-editorial-cta-copy">
+          <h2>Start light. Add detail when it earns its place.</h2>
+          <p>The free scan does not require utility bills. Share more only when a closer analysis can help your decision.</p>
+        </div>
+        <button className="about-editorial-cta-button" onClick={() => navigate("scan")} type="button">
+          Start free scan
+          <ArrowUpRightIcon />
+        </button>
       </section>
     </PublicShell>
   );
@@ -4091,28 +3197,54 @@ function ContactPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
-  const [contactForm, setContactForm] = useState({
+  const [contactForm, setContactForm] = useState<ContactFormState>({
     name: "",
     email: "",
     company: "",
     message: ""
   });
+  const [contactErrors, setContactErrors] = useState<ContactFormErrors>({});
+  const [contactStatus, setContactStatus] = useState<
+    "idle" | "preparing" | "ready" | "error"
+  >("idle");
+
+  function updateContactField(field: keyof ContactFormState, value: string) {
+    setContactForm((current) => ({ ...current, [field]: value }));
+    setContactErrors((current) => {
+      if (!(field in current)) return current;
+      const nextErrors = { ...current };
+      delete nextErrors[field as keyof ContactFormErrors];
+      return nextErrors;
+    });
+    if (contactStatus !== "idle") setContactStatus("idle");
+  }
 
   function submitContactForm(event: FormEvent) {
     event.preventDefault();
+    const form = event.currentTarget as HTMLFormElement;
+    const errors = validateContactForm(contactForm);
 
-    const subject = contactForm.company
-      ? `RetroFi inquiry from ${contactForm.company}`
-      : `RetroFi inquiry from ${contactForm.name || "website visitor"}`;
-    const body = [
-      `Name: ${contactForm.name}`,
-      `Email: ${contactForm.email}`,
-      `Company: ${contactForm.company}`,
-      "",
-      contactForm.message
-    ].join("\n");
+    if (Object.keys(errors).length) {
+      setContactErrors(errors);
+      setContactStatus("error");
+      window.requestAnimationFrame(() => {
+        form.querySelector<HTMLElement>("[aria-invalid='true']")?.focus();
+      });
+      return;
+    }
 
-    window.location.href = `mailto:hello@retrofi.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setContactErrors({});
+    setContactStatus("preparing");
+    const mailtoUrl = contactMailtoUrl(contactForm);
+
+    window.setTimeout(() => {
+      try {
+        window.location.href = mailtoUrl;
+        setContactStatus("ready");
+      } catch {
+        setContactStatus("error");
+      }
+    }, 120);
   }
 
   return (
@@ -4129,68 +3261,123 @@ function ContactPage({
           <p className="about-editorial-intro">
             Whether you are deciding where to begin or what information to share, we can help you find the clearest next step.
           </p>
-          <p>Reach out before creating a scan or sending any business information.</p>
-        </article>
-        <form className="feature-card contact-form-card" onSubmit={submitContactForm}>
-          <h2>Contact form</h2>
-          <div className="field-grid">
-            <label className="field">
-              <span>
-                Name<b aria-label="required"> *</b>
-              </span>
+        </div>
+        <aside className="about-hero-note" aria-label="Contact summary">
+          <span className="about-hero-note-icon"><FeatureIcon icon="contact" /></span>
+          <strong>Questions are welcome before you start a scan.</strong>
+          <span>Your message opens in your email app, so you stay in control of what is sent.</span>
+        </aside>
+      </section>
+      <section className="about-contact-layout" aria-label="Contact RetroFi">
+        <aside className="about-contact-aside">
+          <article className="about-contact-card">
+            <span className="about-contact-icon"><FeatureIcon icon="contact" /></span>
+            <p className="about-card-kicker">Email us directly</p>
+            <h2>Prefer your own inbox?</h2>
+            <a className="about-contact-email" href="mailto:hello@retrofi.org">hello@retrofi.org</a>
+            <p>Reach out before creating a scan or sending business information.</p>
+          </article>
+          <article className="about-contact-card">
+            <span className="about-contact-icon"><LockIcon /></span>
+            <p className="about-card-kicker">Before you share</p>
+            <h2>Understand the data boundaries.</h2>
+            <ul className="about-contact-expectations">
+              <li><CheckIcon /><span>Start without utility bills.</span></li>
+              <li><CheckIcon /><span>Add detail only when deeper analysis is useful.</span></li>
+            </ul>
+            <button className="about-contact-trust-link" onClick={() => navigate("about-trust")} type="button">
+              Read Trust &amp; Data
+              <ArrowUpRightIcon />
+            </button>
+          </article>
+        </aside>
+        <form className="about-contact-form" noValidate onSubmit={submitContactForm}>
+          <header className="about-contact-form-header">
+            <p className="about-card-kicker">Send a note</p>
+            <h2>What can we help you clarify?</h2>
+            <p>Complete the form and we will prepare a message in your email app for you to review and send.</p>
+          </header>
+          <div className="about-contact-field-grid">
+            <label className="about-contact-field">
+              <span>Name <span aria-hidden="true" className="about-contact-required">*</span><span className="sr-only"> (required)</span></span>
               <input
+                aria-describedby={contactErrors.name ? "contact-name-error" : undefined}
+                aria-invalid={Boolean(contactErrors.name)}
+                autoComplete="name"
                 name="name"
-                onChange={(event) =>
-                  setContactForm((current) => ({ ...current, name: event.target.value }))
-                }
+                onChange={(event) => updateContactField("name", event.target.value)}
+                placeholder="Your name"
                 required
                 value={contactForm.name}
               />
+              {contactErrors.name ? <span className="about-contact-field-error" id="contact-name-error">{contactErrors.name}</span> : null}
             </label>
-            <label className="field">
-              <span>
-                Email<b aria-label="required"> *</b>
-              </span>
+            <label className="about-contact-field">
+              <span>Email <span aria-hidden="true" className="about-contact-required">*</span><span className="sr-only"> (required)</span></span>
               <input
+                aria-describedby={contactErrors.email ? "contact-email-error" : undefined}
+                aria-invalid={Boolean(contactErrors.email)}
+                autoComplete="email"
+                inputMode="email"
                 name="email"
-                onChange={(event) =>
-                  setContactForm((current) => ({ ...current, email: event.target.value }))
-                }
+                onChange={(event) => updateContactField("email", event.target.value)}
+                placeholder="you@example.com"
                 required
                 type="email"
                 value={contactForm.email}
               />
+              {contactErrors.email ? <span className="about-contact-field-error" id="contact-email-error">{contactErrors.email}</span> : null}
             </label>
-            <label className="field">
-              <span>Company</span>
+            <label className="about-contact-field is-wide">
+              <span>Company <span className="sr-only">(optional)</span></span>
               <input
+                autoComplete="organization"
                 name="company"
-                onChange={(event) =>
-                  setContactForm((current) => ({ ...current, company: event.target.value }))
-                }
+                onChange={(event) => updateContactField("company", event.target.value)}
+                placeholder="Company or organization (optional)"
                 value={contactForm.company}
               />
             </label>
-            <label className="field field-wide">
-              <span>
-                Message<b aria-label="required"> *</b>
-              </span>
+            <label className="about-contact-field is-wide">
+              <span>Message <span aria-hidden="true" className="about-contact-required">*</span><span className="sr-only"> (required)</span></span>
               <textarea
+                aria-describedby={contactErrors.message ? "contact-message-error" : "contact-message-note"}
+                aria-invalid={Boolean(contactErrors.message)}
                 name="message"
-                onChange={(event) =>
-                  setContactForm((current) => ({ ...current, message: event.target.value }))
-                }
+                onChange={(event) => updateContactField("message", event.target.value)}
+                placeholder="Tell us about your building, question, or next decision."
                 required
                 value={contactForm.message}
               />
+              {contactErrors.message ? (
+                <span className="about-contact-field-error" id="contact-message-error">{contactErrors.message}</span>
+              ) : (
+                <span className="about-contact-form-note" id="contact-message-note">Please do not include confidential documents or raw utility data in this message.</span>
+              )}
             </label>
           </div>
-          <div className="hero-actions">
-            <button type="submit">Email RetroFi</button>
-            <ScanStartButton navigate={navigate} publicAuth={publicAuth} variant="secondary">
-              Get Started
-            </ScanStartButton>
+          <div className="about-contact-form-actions">
+            <button className="about-contact-submit" disabled={contactStatus === "preparing"} type="submit">
+              {contactStatus === "preparing" ? "Preparing email…" : "Prepare email"}
+              <ArrowUpRightIcon />
+            </button>
+            <span className="about-contact-form-note">Required fields are marked with an asterisk.</span>
           </div>
+          {contactStatus !== "idle" ? (
+            <p
+              aria-live="polite"
+              className={`about-contact-status is-${contactStatus}`}
+              role={contactStatus === "error" ? "alert" : "status"}
+            >
+              {contactStatus === "preparing"
+                ? "Preparing your message…"
+                : contactStatus === "ready"
+                  ? "Your email app should be open with a draft ready to review."
+                  : Object.keys(contactErrors).length
+                    ? "Review the highlighted fields and try again."
+                    : "We could not open your email app. Email hello@retrofi.org directly instead."}
+            </p>
+          ) : null}
         </form>
       </section>
     </PublicShell>
@@ -4724,80 +3911,99 @@ function ScanResultsPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
-  const [storedSession] = useState<EnergyDataUploadSession | null>(() => readStoredEnergyDataUploadSession());
-  const [payload, setPayload] = useState<PortalRetrofitRecommendationsResponse | null>(null);
-  const [isLoading, setIsLoading] = useState(Boolean(storedSession));
-  const [isDetailLoading, setIsDetailLoading] = useState(false);
+  const [sessionPayload, setSessionPayload] = useState<EnergyDataSessionPayload | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const storedSession = readStoredEnergyDataUploadSession();
     if (!storedSession) {
+      setSessionPayload(null);
       return;
     }
 
     let isMounted = true;
-    const sessionBody = buildScanRecommendationSessionBody(storedSession);
-
-    setIsLoading(true);
-    setError(null);
-    apiPost<PortalRetrofitRecommendationsResponse>("/api/scan/retrofit-preview", sessionBody)
-      .then((previewPayload) => {
+    apiPost<EnergyDataSessionPayload>("/api/energy-data/session", {
+      userId: storedSession.userId,
+      uploadToken: storedSession.token
+    })
+      .then((payload) => {
         if (!isMounted) return;
-        setPayload(previewPayload);
-        setIsLoading(false);
-        setIsDetailLoading(true);
-        setError(null);
-        return apiPost<PortalRetrofitRecommendationsResponse>("/api/scan/retrofit-recommendations", sessionBody);
-      })
-      .then((recommendationPayload) => {
-        if (!isMounted || !recommendationPayload) return;
-        setPayload(recommendationPayload);
+        setSessionPayload(payload);
         setError(null);
       })
       .catch((requestError) => {
         if (!isMounted) return;
-        setError(requestError instanceof Error ? requestError.message : "Could not load your retrofit recommendations.");
-      })
-      .finally(() => {
-        if (!isMounted) return;
-        setIsLoading(false);
-        setIsDetailLoading(false);
+        clearStoredEnergyDataUploadSession();
+        setSessionPayload(null);
+        setError(requestError instanceof Error ? requestError.message : "Could not load your upload session.");
       });
 
     return () => {
       isMounted = false;
     };
-  }, [storedSession]);
+  }, []);
 
-  if (!storedSession || (!isLoading && !payload && error)) {
-    return (
-      <PublicShell navigate={navigate} publicAuth={publicAuth}>
-        <section className="results-panel">
-          <p className="eyebrow">Free scan</p>
-          <h1>{error ? "We couldn't load your recommendations" : "Start a free scan to see your recommendations"}</h1>
-          <p>{error || "Complete the short intake form so RetroFi can securely match your property to current retrofit opportunities."}</p>
-          <div className="hero-actions">
-            <CTAButton navigate={navigate} route="scan">Start a New Scan</CTAButton>
-            <CTAButton navigate={navigate} route="sign-in" variant="secondary">Sign In</CTAButton>
-          </div>
-        </section>
-      </PublicShell>
-    );
-  }
+  const latestRecord = sessionPayload?.uploadedUtilityFiles?.[0] || null;
+  const nextStepValue = latestRecord
+    ? latestRecord.processingStatus === "processed"
+      ? "Energy data uploaded. Detailed analysis can begin."
+      : latestRecord.processingStatus === "failed"
+        ? "Upload another file or review the failed import."
+        : latestRecord.processingStatus === "needs_review"
+          ? "File uploaded and queued for manual review."
+          : "Energy data uploaded and awaiting review."
+    : "Upload utility bills or a Green Button export for detailed savings and ROI";
 
   return (
-    <RetrofitRecommendationsPreview
-      credential={null}
-      emptyMessage="We couldn't confirm a currently eligible opportunity from the information provided. Review your profile details or add utility data to improve the match."
-      error={error}
-      eyebrow="Your initial opportunities"
-      intro="These recommendations are matched from the business, property, utility, and eligibility information you provided."
-      isDetailLoading={isDetailLoading}
-      isLoading={isLoading}
-      loadingMessage="Matching your profile to current retrofit opportunities..."
-      payload={payload}
-      title="Your Retrofit Recommendations"
-    />
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
+      <section className="results-panel">
+        <p className="eyebrow">Free scan</p>
+        <h1>Your free scan is being prepared</h1>
+        <p>
+          RetroFi is reviewing your business and site information to identify likely incentive and
+          retrofit opportunities.
+        </p>
+        <div className="card-grid three compact-cards">
+          {[
+            ["Estimated opportunity range", "Coming soon"],
+            ["Likely categories", "Pending analysis"],
+            ["Recommended next step", nextStepValue]
+          ].map(([label, value]) => (
+            <article className="feature-card" key={label}>
+              <span className="eyebrow">{label}</span>
+              <h3>{value}</h3>
+            </article>
+          ))}
+        </div>
+        {latestRecord ? (
+          <article className="feature-card energy-status-card">
+            <span className="eyebrow">Latest energy data</span>
+            <h3>{latestRecord.originalFilename}</h3>
+            <p>
+              {energyDataSourceTypeLabels[latestRecord.fileType]} · {formatUtilityCategory(latestRecord.utilityCategory)} · {formatProcessingStatus(latestRecord.processingStatus)}
+            </p>
+            <p>
+              Coverage:{" "}
+              {formatUtilityPeriod(
+                sessionPayload?.siteEnergyProfile?.latestBillingPeriodStart || null,
+                sessionPayload?.siteEnergyProfile?.latestBillingPeriodEnd || null
+              )}
+            </p>
+          </article>
+        ) : null}
+        {error ? (
+          <p className="error-message" role="alert">
+            {error}
+          </p>
+        ) : null}
+        <div className="hero-actions">
+          <CTAButton navigate={navigate} route="home" variant="secondary">Back to Home</CTAButton>
+          <button onClick={() => navigate("scan-energy-data")} type="button">
+            Upload Energy Data
+          </button>
+        </div>
+      </section>
+    </PublicShell>
   );
 }
 
@@ -9068,6 +8274,7 @@ export function RetrofitRecommendationsPreview({
   const [pickerVisibleCount, setPickerVisibleCount] = useState(6);
   const [activeRetrofitInitialWorkspaceTab, setActiveRetrofitInitialWorkspaceTab] = useState<"overview">("overview");
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showInstructionsModal, setShowInstructionsModal] = useState(false);
   const [instructionsOpenedFromNav, setInstructionsOpenedFromNav] = useState(false);
@@ -9122,6 +8329,18 @@ export function RetrofitRecommendationsPreview({
   useEffect(() => {
     storeBillUploadState(billUploadStorageKey, billUploadState);
   }, [billUploadState, billUploadStorageKey]);
+
+  useEffect(() => {
+    if (!mobileSidebarOpen || typeof document === "undefined") return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      setMobileSidebarOpen(false);
+      window.setTimeout(() => mobileMenuButtonRef.current?.focus(), 0);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [mobileSidebarOpen]);
 
   useEffect(() => {
     const postFormPreviewParam =
@@ -9434,6 +8653,12 @@ export function RetrofitRecommendationsPreview({
     safeStorageSet("local", INSTRUCTIONS_ONBOARDING_SEEN_KEY, "true");
     safeStorageRemove("session", INTAKE_JUST_COMPLETED_KEY);
     setShowInstructionsModal(false);
+    if (instructionsOpenedFromNav) {
+      window.setTimeout(() => {
+        document.querySelector<HTMLButtonElement>("[data-instructions-nav-item='true']")?.focus();
+      }, 0);
+    }
+    setInstructionsOpenedFromNav(false);
     setInstructionsPulse(true);
     if (typeof window !== "undefined") {
       window.setTimeout(() => setInstructionsPulse(false), 1100);
@@ -9463,7 +8688,10 @@ export function RetrofitRecommendationsPreview({
         activeView={activePrimaryView}
         collapsed={sidebarCollapsed}
         mobileOpen={mobileSidebarOpen}
-        onCloseMobile={() => setMobileSidebarOpen(false)}
+        onCloseMobile={() => {
+          setMobileSidebarOpen(false);
+          window.setTimeout(() => mobileMenuButtonRef.current?.focus(), 0);
+        }}
         onOpenDashboardPage={handleDashboardPageSelect}
         onOpenInstructions={openInstructionsFromNav}
         onOpenProfile={handleProfileSelect}
@@ -9481,7 +8709,12 @@ export function RetrofitRecommendationsPreview({
       <main className="user-preview-main">
         <section className="retrofit-preview-page">
           <UserPreviewTriagePanel />
-          <button className="user-preview-mobile-menu-button user-preview-inline-menu-button" onClick={() => setMobileSidebarOpen(true)} type="button">
+          <button
+            className="user-preview-mobile-menu-button user-preview-inline-menu-button"
+            onClick={() => setMobileSidebarOpen(true)}
+            ref={mobileMenuButtonRef}
+            type="button"
+          >
             <ViewPanelIcon />
             <span>{activePrimaryView === "profile" ? "Profile" : activePrimaryView === "dashboard" ? "Dashboard" : "Retrofits"}</span>
           </button>
@@ -10177,12 +9410,12 @@ function ProcessOnboardingModal({
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         event.preventDefault();
-        completeOnboarding();
+        onClose();
       }
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  });
+  }, [onClose]);
 
   function completeOnboarding() {
     if (shouldAnimateText && !isComplete) {
@@ -10383,6 +9616,7 @@ function UserPreviewSidebar({
   retrofits: RetrofitPreviewCard[];
 }) {
   const [retrofitsOpen, setRetrofitsOpen] = useState(false);
+  const retrofitsToggleRef = useRef<HTMLButtonElement | null>(null);
   const triageMode = useUserPreviewTriageMode();
   const dashboardOpen = activeView === "dashboard";
   return (
@@ -10397,9 +9631,23 @@ function UserPreviewSidebar({
         >
           <ChevronDownIcon />
         </button>
-        <nav className="user-preview-sidebar-nav" aria-label="Retrofit navigation">
-          <div className={`sidebar-retrofits-control${activeView === "retrofits" ? " is-active" : ""}`}>
+        <nav
+          className="user-preview-sidebar-nav"
+          aria-label="Retrofit navigation"
+          onKeyDown={(event) => {
+            if (event.key !== "Escape" || !retrofitsOpen) return;
+            event.preventDefault();
+            event.stopPropagation();
+            setRetrofitsOpen(false);
+            window.setTimeout(() => retrofitsToggleRef.current?.focus(), 0);
+          }}
+        >
+          <div
+            className={`sidebar-retrofits-control${activeView === "retrofits" ? " is-active" : ""}`}
+          >
             <button
+              aria-current={activeView === "retrofits" && !activeRetrofitId ? "page" : undefined}
+              aria-label="Retrofits"
               className="sidebar-nav-row sidebar-section-link"
               onClick={onShowAllRetrofits}
               type="button"
@@ -10413,6 +9661,7 @@ function UserPreviewSidebar({
               aria-label={retrofitsOpen ? "Collapse retrofit list" : "Expand retrofit list"}
               className="sidebar-retrofit-toggle"
               onClick={() => setRetrofitsOpen((current) => !current)}
+              ref={retrofitsToggleRef}
               type="button"
             >
               <ChevronDownIcon />
@@ -10422,9 +9671,13 @@ function UserPreviewSidebar({
             <div className="sidebar-retrofit-list" id="sidebar-retrofit-list">
               {retrofits.map((retrofit) => (
                 <button
+                  aria-current={activeRetrofitId === retrofit.id ? "page" : undefined}
                   className={`sidebar-retrofit-item${activeRetrofitId === retrofit.id ? " is-active" : ""}`}
                   key={retrofit.id}
-                  onClick={() => onSelectRetrofit(retrofit.id)}
+                  onClick={() => {
+                    setRetrofitsOpen(false);
+                    onSelectRetrofit(retrofit.id);
+                  }}
                   type="button"
                 >
                   <SidebarRetrofitIcon retrofit={retrofit} />
@@ -10435,6 +9688,7 @@ function UserPreviewSidebar({
           ) : null}
           <div className="user-preview-sidebar-secondary" role="group" aria-label="Profile navigation">
             <button
+              aria-label="Profile info"
               {...getUserPreviewTriageTargetProps({
                 className: `sidebar-nav-row sidebar-secondary-item sidebar-profile-item${activeView === "profile" ? " is-active" : ""}`,
                 enabled: triageMode,
@@ -10449,6 +9703,7 @@ function UserPreviewSidebar({
             </button>
             <button
               aria-expanded={dashboardOpen}
+              aria-label="Dashboard"
               {...getUserPreviewTriageTargetProps({
                 className: `sidebar-nav-row sidebar-secondary-item sidebar-dashboard-item${dashboardOpen ? " is-active" : ""}`,
                 enabled: triageMode,
@@ -10478,6 +9733,7 @@ function UserPreviewSidebar({
               </div>
             ) : null}
             <button
+              aria-label="Instructions"
               className={`sidebar-nav-row sidebar-secondary-item sidebar-instructions-item${instructionsPulse ? " is-pulsing" : ""}`}
               data-instructions-nav-item="true"
               onClick={onOpenInstructions}
@@ -13461,6 +12717,7 @@ function RetrofitPreviewCardView({
 }) {
   type EstimateWorkspaceTab = "overview" | "financials" | "scenariosOpportunities" | "environmental" | "application";
   const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<EstimateWorkspaceTab>(initialWorkspaceTab);
+  const workspaceTabsRef = useRef<HTMLElement | null>(null);
   const [financialPeriod, setFinancialPeriod] = useState<"monthly" | "annual">("annual");
   const [showCalculationBreakdown, setShowCalculationBreakdown] = useState(true);
   const [scenarioOpportunityDetailIdByRetrofit, setScenarioOpportunityDetailIdByRetrofit] = useState<Record<string, string>>({});
@@ -13471,6 +12728,10 @@ function RetrofitPreviewCardView({
   useEffect(() => {
     setActiveWorkspaceTab(initialWorkspaceTab);
   }, [initialWorkspaceTab, retrofit.id]);
+  useEffect(() => {
+    const activeTab = workspaceTabsRef.current?.querySelector<HTMLElement>(`[data-workspace-tab="${activeWorkspaceTab}"]`);
+    activeTab?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }, [activeWorkspaceTab]);
   const selectedCount = retrofit.opportunities.filter((opportunity) => selectedOpportunityIds[opportunity.id]).length;
   const selectedScenario = retrofit.scenarios.find((scenario) => scenario.id === selectedScenarioId) || retrofit.scenarios[0];
   const selectedScenarioOpportunities = getSelectedOpportunitiesForScenario(retrofit, selectedScenario, selectedOpportunityIds);
@@ -14006,7 +13267,11 @@ function RetrofitPreviewCardView({
             </header>
           )}
 
-          <nav aria-label="Estimate workspace tabs" className={`estimate-tabs retrofit-workspace-tabs${activeWorkspaceTab === "scenariosOpportunities" ? " is-scenarios-opportunities" : ""}`}>
+          <nav
+            aria-label="Estimate workspace tabs"
+            className={`estimate-tabs retrofit-workspace-tabs${activeWorkspaceTab === "scenariosOpportunities" ? " is-scenarios-opportunities" : ""}`}
+            ref={workspaceTabsRef}
+          >
             {workspaceTabs.map((item) => {
               const className = `estimate-tab workspace-tab${activeWorkspaceTab === item.key ? " is-active" : ""}`;
               const triageProps = item.key === "scenariosOpportunities"
@@ -14019,7 +13284,7 @@ function RetrofitPreviewCardView({
               return (
                 <button
                   key={item.key}
-                  aria-current={activeWorkspaceTab === item.key ? "true" : undefined}
+                  aria-current={activeWorkspaceTab === item.key ? "page" : undefined}
                   {...triageProps}
                   data-workspace-tab={item.key}
                   onClick={() => openWorkspaceTab(item.key)}
