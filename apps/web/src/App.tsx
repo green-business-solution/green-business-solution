@@ -4116,19 +4116,18 @@ function ContactPage({
   }
 
   return (
-    <PublicShell navigate={navigate} publicAuth={publicAuth}>
-      <PageHero
-        compact
-        eyebrow="Contact"
-        title="Contact RetroFi"
-        copy="Have questions before starting a scan or uploading business information? Reach out to us."
-      />
-      <AboutSubnav activeRoute="about-contact" navigate={navigate} />
-      <section className="two-column-section contact-layout">
-        <article className="feature-card contact-card">
-          <h2>Contact email</h2>
-          <p>
-            <a href="mailto:hello@retrofi.org">hello@retrofi.org</a>
+    <PublicShell
+      navigate={navigate}
+      pageClassName="about-editorial-page about-contact-page home-page"
+      publicAuth={publicAuth}
+      showFooter
+    >
+      <section aria-labelledby="about-contact-title" className="about-editorial-hero">
+        <div className="about-editorial-hero-copy">
+          <p className="about-editorial-eyebrow">About / Contact</p>
+          <h1 id="about-contact-title">Bring us the question behind the project.</h1>
+          <p className="about-editorial-intro">
+            Whether you are deciding where to begin or what information to share, we can help you find the clearest next step.
           </p>
           <p>Reach out before creating a scan or sending any business information.</p>
         </article>

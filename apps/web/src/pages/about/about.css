@@ -547,6 +547,79 @@
   margin-bottom: 80px;
 }
 
+.public-page.about-contact-page {
+  background: #062619;
+  isolation: isolate;
+  position: relative;
+}
+
+.public-page.about-contact-page::before {
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(4, 29, 20, 0.36) 0%,
+      rgba(5, 34, 24, 0.58) 42%,
+      rgba(6, 38, 25, 0.78) 100%
+    ),
+    radial-gradient(circle at 12% 18%, rgba(4, 36, 24, 0.08), rgba(4, 31, 22, 0.44) 72%),
+    url("./retrofi-sustainable-home.jpg");
+  background-position: center, center, center 42%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  content: "";
+  inset: 0;
+  position: fixed;
+  z-index: -1;
+}
+
+.about-contact-page .about-editorial-hero h1 {
+  color: #ffffff;
+  text-shadow: 0 3px 28px rgba(4, 29, 20, 0.34);
+}
+
+.about-contact-page .about-editorial-eyebrow {
+  color: #b7e39d;
+}
+
+.about-contact-page .about-editorial-intro {
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 2px 18px rgba(4, 29, 20, 0.3);
+}
+
+.about-contact-page .about-hero-note,
+.about-contact-page .about-section-nav-inner {
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+  backdrop-filter: blur(18px) saturate(125%);
+  background: rgba(245, 251, 247, 0.84);
+  border-color: rgba(255, 255, 255, 0.58);
+  box-shadow:
+    0 18px 50px rgba(4, 29, 20, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+.about-contact-page .about-contact-card,
+.about-contact-page .about-contact-form {
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  backdrop-filter: blur(18px) saturate(120%);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(247, 252, 248, 0.88)),
+    radial-gradient(circle at 92% 4%, rgba(35, 142, 82, 0.08), transparent 34%);
+  border-color: rgba(255, 255, 255, 0.64);
+  box-shadow:
+    0 24px 60px rgba(4, 29, 20, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.about-contact-page .site-footer {
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  backdrop-filter: blur(18px) saturate(120%);
+  background: rgba(245, 251, 247, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 22px;
+  box-shadow: 0 18px 50px rgba(4, 29, 20, 0.18);
+  margin-bottom: 20px;
+}
+
 .about-contact-aside {
   display: grid;
   gap: 20px;
@@ -798,6 +871,10 @@
 }
 
 @media (max-width: 760px) {
+  .public-page.about-contact-page::before {
+    background-position: center, center, 58% center;
+  }
+
   .about-editorial-hero {
     padding: 126px 0 52px;
   }
@@ -861,6 +938,10 @@
 }
 
 @media (max-width: 520px) {
+  .public-page.about-contact-page::before {
+    background-position: center, center, 62% center;
+  }
+
   .about-editorial-hero,
   .about-section-nav,
   .about-trust-principles,
