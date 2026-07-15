@@ -2717,11 +2717,9 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Grants");
     expect(source).toContain("Financing benefit");
     expect(source).toContain("You cover");
-    expect(workspaceSource).toContain("EstimateOneTimeCostWaterfallChart");
-    expect(workspaceSource).toContain("EstimatePaybackTimelineChart");
+    expect(workspaceSource).not.toContain("<EstimateOneTimeCostWaterfallChart");
+    expect(workspaceSource).not.toContain("<EstimatePaybackTimelineChart");
     expect(workspaceSource).toContain("EstimateCumulativeCashFlowChart");
-    expect(source).toContain("One-time cost waterfall");
-    expect(source).toContain("Payback timeline");
     expect(source).toContain("Cumulative cash flow over 10 years");
     expect(workspaceSource).not.toContain("opportunity-view-toggle");
     expect(workspaceSource).not.toContain("opportunity-review-layout");
@@ -2780,7 +2778,7 @@ describe("retrofit recommendations preview", () => {
     expect(componentSource).toContain('label="ROI"');
     expect(componentSource).toContain('subtitle="Average annual return"');
     expect(componentSource).toContain("Impact overview");
-    expect(componentSource).toContain("SustainabilityImpactCard");
+    expect(componentSource).not.toContain("<SustainabilityImpactCard");
     expect(workspaceSource).toContain(
       "{profile.included.length} included · {profile.excluded.length} excluded",
     );
@@ -2788,27 +2786,21 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Lowest upfront cost");
     expect(source).toContain("Fastest payback");
     expect(source).toContain("Highest one-time & recurring savings");
-    expect(workspaceSource).toContain("Main impact estimate");
-    expect(workspaceSource).toContain("estimate-impact-copy");
-    expect(workspaceSource).toContain("estimate-impact-value-row");
-    expect(workspaceSource).toContain(
-      "formatAnnualImpactUnitLabel(displayedEnvironmentalImpact.overall.unit)",
-    );
-    expect(workspaceSource).toContain(
-      "impactPlainLanguageSentence(displayedEnvironmentalImpact.overall)",
-    );
+    expect(workspaceSource).not.toContain("Main impact estimate");
+    expect(workspaceSource).not.toContain("estimate-impact-copy");
+    expect(workspaceSource).not.toContain("estimate-impact-value-row");
     expect(workspaceSource).not.toContain("avoided / year");
     expect(workspaceSource).toContain("Impact overview");
-    expect(workspaceSource).toContain("Certification contribution");
+    expect(workspaceSource).not.toContain("Certification contribution");
     expect(workspaceSource).toContain("EstimateImpactProjectionChart");
     expect(source).toContain("Cumulative CO2e avoided");
     expect(source).toContain("estimate-impact-projection-chart");
     expect(source).toContain("metric tons of carbon dioxide equivalent");
     expect(source).toContain("CO2e reduced/year");
     expect(source).not.toContain("CO2e reduced / year");
-    expect(source).toContain("LEED O+M");
-    expect(source).toContain("ENERGY STAR readiness");
-    expect(source).toContain("Green Business certification");
+    expect(workspaceSource).not.toContain("LEED O+M");
+    expect(workspaceSource).not.toContain("ENERGY STAR readiness");
+    expect(workspaceSource).not.toContain("Green Business certification");
     expect(workspaceSource).toContain("Opportunity name");
     expect(workspaceSource).toContain("Related retrofit");
     expect(workspaceSource).toContain("Pre-approval required");
