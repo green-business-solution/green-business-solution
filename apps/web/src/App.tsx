@@ -3407,7 +3407,7 @@ function ContactPage({
   return (
     <PublicShell
       navigate={navigate}
-      pageClassName="about-editorial-page home-page"
+      pageClassName="about-editorial-page about-contact-page home-page"
       publicAuth={publicAuth}
       showFooter
     >
