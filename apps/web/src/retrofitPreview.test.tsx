@@ -2942,6 +2942,8 @@ describe("retrofit recommendations preview", () => {
       "Once you proceed with a retrofit and confirm, other retrofit data will adjust accordingly for future selection.",
     );
     expect(source).toContain("process-editor-content");
+    expect(source).toContain('<div className="process-editor-content">');
+    expect(source).toContain('<div aria-hidden="true" className="process-editor-body">');
     expect(source).toContain("process-editor-title");
     expect(source).toContain("process-number");
     expect(source).toContain("code-accent");
@@ -3828,6 +3830,13 @@ describe("retrofit recommendations preview", () => {
     );
     expect(css).toContain(".user-preview-admin-controls-button:hover");
     expect(css).toContain(".user-preview-customer-mode-button:hover");
+    expect(css).toContain("/* RetroFi user preview");
+    expect(css).toContain(".user-preview-skip-link");
+    expect(css).toContain(".user-preview-standalone-page.is-customer-preview");
+    expect(css).toContain(".sidebar-retrofits-control.is-active");
+    expect(css).toContain(".sidebar-section-link:hover");
+    expect(css).toContain(".sidebar-retrofit-toggle:hover");
+    expect(css).not.toContain(".sidebar-section-trigger:hover");
     expect(css).toContain(".user-preview-form-toggle:hover");
     expect(css).toContain(".user-preview-form-toggle.is-active");
     expect(css).toContain(".user-preview-toolbar.is-customer-preview");

@@ -9606,8 +9606,8 @@ function ProcessOnboardingModal({
         role="dialog"
       >
         <h2 className="sr-only" id="process-onboarding-title">The Process</h2>
-        <div aria-hidden="true" className="process-editor-content">
-          <div className="process-editor-body">
+        <div className="process-editor-content">
+          <div aria-hidden="true" className="process-editor-body">
             <h2 className="process-editor-title">
               <ProcessAccentText text={title} accent="The Process" />
               <TypewriterCaret show={shouldAnimateText && activeLineId === "title"} />
