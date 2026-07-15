@@ -3612,7 +3612,9 @@ dd {
 
 .user-preview-sidebar {
   background: rgba(255, 255, 255, 0.92);
-  border-right: 1px solid var(--rf-border);
+  border: 1px solid var(--rf-border);
+  border-left: 0;
+  border-radius: 0 24px 24px 0;
   display: grid;
   gap: 12px;
   grid-template-rows: auto minmax(0, 1fr);
@@ -3706,10 +3708,17 @@ dd {
 
 .sidebar-retrofits-control {
   align-items: stretch;
+  align-self: start;
+  background: rgba(255, 255, 255, 0.96);
   border-radius: 12px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 38px;
+  height: 46px;
+  min-height: 46px;
   overflow: hidden;
+  position: sticky;
+  top: 0;
+  z-index: 3;
 }
 
 .sidebar-retrofits-control.is-active {
@@ -9006,43 +9015,6 @@ dd {
   padding-top: 24px;
 }
 
-.retrofit-preview-page:has(
-  .estimate-workspace-shell.is-scenarios-opportunities
-) {
-  gap: 0;
-  max-width: none;
-  padding: 0;
-}
-
-.user-preview-main:has(.estimate-workspace-shell.is-scenarios-opportunities) {
-  background: #ffffff;
-}
-
-.estimate-workspace-shell.is-scenarios-opportunities {
-  background: #ffffff;
-  gap: 0;
-  min-height: 100vh;
-  padding: 0;
-}
-
-.estimate-main-card.is-scenarios-opportunities {
-  border: 0;
-  border-radius: 0;
-  min-height: 100vh;
-  overflow: visible;
-  padding: 0;
-}
-
-.estimate-tabs.retrofit-workspace-tabs.is-scenarios-opportunities {
-  background: #ffffff;
-  gap: 28px;
-  overflow-x: auto;
-  padding: 0 32px;
-  position: sticky;
-  top: 0;
-  z-index: 9;
-}
-
 .scenario-opportunity-workspace {
   align-items: start;
   background: #ffffff;
@@ -9564,10 +9536,6 @@ dd {
 }
 
 @media (max-width: 760px) {
-  .estimate-tabs.retrofit-workspace-tabs.is-scenarios-opportunities {
-    padding: 0 16px;
-  }
-
   .scenario-opportunity-main,
   .scenario-opportunity-detail-panel {
     padding-left: 16px;
@@ -17486,6 +17454,7 @@ body {
     transform: translateX(-104%);
     transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
     width: 280px;
+    z-index: 60;
   }
 
   .user-preview-sidebar.is-mobile-open {
@@ -17499,7 +17468,7 @@ body {
     inset: 0;
     padding: 0;
     position: fixed;
-    z-index: 34;
+    z-index: 55;
   }
 
   .sidebar-label,

@@ -8830,7 +8830,7 @@ export function RetrofitRecommendationsPreview({
       ) : null}
       {showInstructionsModal ? (
         <ProcessOnboardingModal
-          animateText={!instructionsOpenedFromNav}
+          animateText={instructionsOpenedFromNav}
           onClose={handleInstructionsDismiss}
         />
       ) : null}
@@ -9616,9 +9616,19 @@ function UserPreviewSidebar({
   retrofits: RetrofitPreviewCard[];
 }) {
   const [retrofitsOpen, setRetrofitsOpen] = useState(false);
+  const sidebarNavRef = useRef<HTMLElement | null>(null);
   const retrofitsToggleRef = useRef<HTMLButtonElement | null>(null);
   const triageMode = useUserPreviewTriageMode();
   const dashboardOpen = activeView === "dashboard";
+
+  function handleRetrofitsToggle() {
+    const nextOpen = !retrofitsOpen;
+    setRetrofitsOpen(nextOpen);
+    if (nextOpen) {
+      window.setTimeout(() => sidebarNavRef.current?.scrollTo({ top: 0 }), 0);
+    }
+  }
+
   return (
     <>
       {mobileOpen ? <button aria-label="Close retrofit navigation" className="user-preview-sidebar-scrim" onClick={onCloseMobile} type="button" /> : null}
@@ -9641,6 +9651,7 @@ function UserPreviewSidebar({
             setRetrofitsOpen(false);
             window.setTimeout(() => retrofitsToggleRef.current?.focus(), 0);
           }}
+          ref={sidebarNavRef}
         >
           <div
             className={`sidebar-retrofits-control${activeView === "retrofits" ? " is-active" : ""}`}
@@ -9660,7 +9671,7 @@ function UserPreviewSidebar({
               aria-expanded={retrofitsOpen}
               aria-label={retrofitsOpen ? "Collapse retrofit list" : "Expand retrofit list"}
               className="sidebar-retrofit-toggle"
-              onClick={() => setRetrofitsOpen((current) => !current)}
+              onClick={handleRetrofitsToggle}
               ref={retrofitsToggleRef}
               type="button"
             >
@@ -13239,33 +13250,31 @@ function RetrofitPreviewCardView({
 
   return (
     <article className={`estimate-workspace-shell${activeWorkspaceTab === "scenariosOpportunities" ? " is-scenarios-opportunities" : ""}`}>
-      {activeWorkspaceTab === "scenariosOpportunities" ? null : <EstimateProgressStepper />}
+      <EstimateProgressStepper />
 
       <div className="estimate-workspace-layout">
-        <section className={`estimate-main-card${activeWorkspaceTab === "scenariosOpportunities" ? " is-scenarios-opportunities" : ""}`}>
-          {activeWorkspaceTab === "scenariosOpportunities" ? null : (
-            <header className="estimate-header">
-              <div className="estimate-header-left">
-                <RetrofitPickerIcon retrofit={retrofit} />
-                <div>
-                  <h2>{retrofit.name}</h2>
-                  <p>{retrofit.description}</p>
-                </div>
+        <section className="estimate-main-card">
+          <header className="estimate-header">
+            <div className="estimate-header-left">
+              <RetrofitPickerIcon retrofit={retrofit} />
+              <div>
+                <h2>{retrofit.name}</h2>
+                <p>{retrofit.description}</p>
               </div>
-              <div
-                {...getUserPreviewTriageTargetProps({
-                  className: "estimate-header-actions",
-                  enabled: triageMode,
-                  surfaceId: "workspace.actions"
-                })}
-                aria-label="Estimate actions"
-              >
-                <button className="estimate-primary-action" onClick={onAddToPlan} type="button">Confirm & move to next step</button>
-                <button className="estimate-secondary-action" type="button">Discard changes</button>
-                <UserPreviewTriageBadges surfaceId="workspace.actions" />
-              </div>
-            </header>
-          )}
+            </div>
+            <div
+              {...getUserPreviewTriageTargetProps({
+                className: "estimate-header-actions",
+                enabled: triageMode,
+                surfaceId: "workspace.actions"
+              })}
+              aria-label="Estimate actions"
+            >
+              <button className="estimate-primary-action" onClick={onAddToPlan} type="button">Confirm & move to next step</button>
+              <button className="estimate-secondary-action" type="button">Discard changes</button>
+              <UserPreviewTriageBadges surfaceId="workspace.actions" />
+            </div>
+          </header>
 
           <nav
             aria-label="Estimate workspace tabs"

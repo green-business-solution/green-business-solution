@@ -2673,6 +2673,8 @@ describe("retrofit recommendations preview", () => {
     expect(tabBarIndex).toBeGreaterThan(headerIndex);
     expect(firstPanelIndex).toBeGreaterThan(tabBarIndex);
     expect(workspaceSource).toContain("EstimateProgressStepper");
+    expect(workspaceSource).toContain('<section className="estimate-main-card">');
+    expect(workspaceSource).not.toContain('activeWorkspaceTab === "scenariosOpportunities" ? null : <EstimateProgressStepper />');
     expect(source).toContain('label: "Bills"');
     expect(source).toContain('label: "Questions"');
     expect(source).toContain('label: "Estimate"');
@@ -2920,6 +2922,8 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Dashboard");
     expect(source).toContain("Instructions");
     expect(source).toContain("ProcessOnboardingModal");
+    expect(source).toContain("animateText={instructionsOpenedFromNav}");
+    expect(source).not.toContain("animateText={!instructionsOpenedFromNav}");
     expect(source).toContain("Post Form Preview");
     expect(source).toContain("ADMIN_POST_FORM_PREVIEW_TAB");
     expect(source).toContain("postFormPreview");
@@ -2963,7 +2967,8 @@ describe("retrofit recommendations preview", () => {
       'safeStorageSet("session", INTAKE_JUST_COMPLETED_KEY, "true")',
     );
     expect(source).toContain("const [retrofitsOpen, setRetrofitsOpen] = useState(false)");
-    expect(source).toContain("onClick={() => setRetrofitsOpen((current) => !current)}");
+    expect(source).toContain("onClick={handleRetrofitsToggle}");
+    expect(source).toContain("sidebarNavRef.current?.scrollTo({ top: 0 })");
     expect(source).toContain("onSelectRetrofit(retrofit.id)");
     expect(source).toContain("activeRetrofit ? (");
     expect(source).toContain("setMobileSidebarOpen(false)");
@@ -3886,8 +3891,8 @@ describe("retrofit recommendations preview", () => {
     expect(css).toContain(".retrofit-workspace-tabs");
     expect(css).toContain(".active-command-center");
     expect(css).toContain(".active-command-center-top");
-    expect(css).toContain(
-      ".estimate-workspace-shell.is-scenarios-opportunities",
+    expect(css).not.toContain(
+      ".estimate-main-card.is-scenarios-opportunities",
     );
     expect(css).toContain(".scenario-opportunity-workspace");
     expect(css).toContain(".scenario-opportunity-detail-panel");
