@@ -122,11 +122,64 @@
   box-shadow: 0 18px 44px rgba(6, 38, 25, 0.12);
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1140px) {
   .public-page .site-header {
+    height: 66px;
     left: 16px;
     right: 16px;
     top: 12px;
+  }
+
+  .public-page .site-header .navbar-inner {
+    gap: 12px;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    padding: 0 14px 0 18px;
+  }
+
+  .public-page .site-header .site-nav,
+  .public-page .site-header .nav-actions {
+    display: none;
+  }
+
+  .public-page .site-header .menu-button {
+    display: inline-grid;
+    gap: 4px;
+    grid-column: 4;
+    justify-content: center;
+    justify-self: end;
+  }
+
+  .public-page .site-header .mobile-cta {
+    display: inline-flex;
+    font-size: 16px;
+    grid-column: 3;
+    height: 44px;
+    justify-self: end;
+    min-height: 44px;
+    padding: 0 18px;
+  }
+
+  .public-page .site-header .mobile-menu-panel {
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    backdrop-filter: blur(24px) saturate(150%);
+    border-radius: 18px;
+    display: grid;
+    gap: 6px;
+    left: 0;
+    padding: 12px;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    z-index: 30;
+  }
+
+  .public-page .site-header .about-menu-root-mobile,
+  .public-page .site-header .about-menu-root-mobile .about-menu-trigger {
+    width: 100%;
+  }
+
+  .public-page .site-header .about-menu-root-mobile .about-menu-trigger {
+    justify-content: space-between;
   }
 }
 
