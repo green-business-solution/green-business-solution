@@ -29,7 +29,6 @@ import {
   StoreOutlineIcon
 } from "./icons";
 import {
-  aboutLinks,
   pathForRoute,
   routeFromPath,
   shouldCanonicalizeUnknownHomeFallback,
@@ -42,6 +41,7 @@ import {
   type ContactFormErrors,
   type ContactFormState,
 } from "./pages/about/contactForm";
+import { MissionPage } from "./pages/about/MissionPage";
 import {
   animateWindowScrollTo,
   HOME_HOW_IT_WORKS_SECTION_ID,
@@ -2992,145 +2992,6 @@ function SectionHeading({
   );
 }
 
-function AboutSectionNav({
-  activeRoute,
-  navigate,
-}: {
-  activeRoute?: Route;
-  navigate: (route: Route) => void;
-}) {
-  return (
-    <nav aria-label="About RetroFi" className="about-section-nav">
-      <div className="about-section-nav-inner">
-        <span className="about-section-nav-label">About</span>
-        <div className="about-section-nav-links">
-          {aboutLinks.map((item) => (
-            <button
-              aria-current={activeRoute === item.route ? "page" : undefined}
-              className="about-section-nav-link"
-              key={item.route}
-              onClick={() => navigate(item.route)}
-              type="button"
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-      </div>
-    </nav>
-  );
-}
-
-function MissionPage({
-  navigate,
-  publicAuth
-}: {
-  navigate: (route: Route) => void;
-  publicAuth: PublicAuthState;
-}) {
-  const missionSteps = [
-    {
-      copy: "Bring fragmented utility, government, tax, grant, and financing programs into one searchable view of the opportunities that may fit a business and its building.",
-      icon: "incentives" as const,
-      number: "01",
-      title: "Find the opportunity",
-    },
-    {
-      copy: "Combine incentive data with building information, utility usage, and financial analysis to make potential costs, savings, and tradeoffs easier to evaluate.",
-      icon: "savings" as const,
-      number: "02",
-      title: "Understand the economics",
-    },
-    {
-      copy: "Translate complex program requirements into practical recommendations and clearer next steps—without presenting estimates as guaranteed eligibility or savings.",
-      icon: "roadmap" as const,
-      number: "03",
-      title: "Move toward action",
-    },
-  ];
-
-  return (
-    <PublicShell
-      navigate={navigate}
-      pageClassName="about-editorial-page home-page about-mission-page"
-      publicAuth={publicAuth}
-      showFooter
-    >
-      <section aria-labelledby="about-mission-title" className="about-editorial-hero">
-        <div className="about-editorial-hero-copy">
-          <p className="about-editorial-eyebrow">About / Mission</p>
-          <h1 id="about-mission-title">Making better buildings easier to fund.</h1>
-          <p className="about-editorial-intro">
-            RetroFi helps businesses discover relevant building-efficiency incentives, understand
-            the economics, and move toward high-impact upgrades with greater confidence.
-          </p>
-        </div>
-        <aside aria-label="RetroFi mission summary" className="about-hero-note">
-          <span className="about-hero-note-icon"><FeatureIcon icon="mission" /></span>
-          <strong>Make sustainability financially practical.</strong>
-          <span>Turn scattered programs and building data into a clearer path from opportunity to action.</span>
-        </aside>
-      </section>
-      <AboutSectionNav activeRoute="about-mission" navigate={navigate} />
-      <section aria-labelledby="about-mission-steps-title" className="about-mission-steps">
-        <header className="about-mission-section-heading">
-          <p className="about-card-kicker">From complexity to clarity</p>
-          <h2 id="about-mission-steps-title">A more practical path to better buildings.</h2>
-          <p>
-            RetroFi organizes the information businesses need to decide whether a retrofit opportunity deserves a closer look.
-          </p>
-        </header>
-        <div className="about-mission-step-grid">
-          {missionSteps.map((step) => (
-            <article className="about-mission-step" key={step.number}>
-              <div className="about-mission-step-topline">
-                <span className="about-trust-icon"><FeatureIcon icon={step.icon} /></span>
-                <span className="about-mission-step-number">{step.number}</span>
-              </div>
-              <h3>{step.title}</h3>
-              <p>{step.copy}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section aria-labelledby="about-mission-why-title" className="about-mission-why">
-        <div>
-          <p className="about-card-kicker">Why this matters</p>
-          <h2 id="about-mission-why-title">Less time searching. More confidence deciding.</h2>
-        </div>
-        <div className="about-mission-why-copy">
-          <p>
-            Efficiency incentives are fragmented across utilities, agencies, tax programs, grants,
-            and financing providers. That complexity can hide valuable opportunities and slow down
-            otherwise practical projects.
-          </p>
-          <p>
-            RetroFi brings incentive data together with building information, utility usage,
-            financial analysis, and practical recommendations so businesses can focus on the
-            upgrades most worth investigating.
-          </p>
-          <ul aria-label="Information RetroFi brings together" className="about-mission-inputs">
-            <li>Incentive data</li>
-            <li>Building information</li>
-            <li>Utility usage</li>
-            <li>Financial analysis</li>
-          </ul>
-        </div>
-      </section>
-      <section aria-labelledby="about-mission-cta-title" className="about-editorial-cta">
-        <div className="about-editorial-cta-copy">
-          <h2 id="about-mission-cta-title">See which opportunities may fit your building.</h2>
-          <p>Start with a free scan, then decide whether a deeper analysis is worth pursuing.</p>
-        </div>
-        <button className="about-editorial-cta-button" onClick={() => navigate("scan")} type="button">
-          Start free scan
-          <ArrowUpRightIcon />
-        </button>
-      </section>
-    </PublicShell>
-  );
-}
-
 function TeamPage({
   navigate,
   publicAuth
@@ -3147,13 +3008,13 @@ function TeamPage({
     },
     {
       bio: "Sustainability entrepreneur leading RetroFi’s strategy, product direction, partnerships, and growth. He previously scaled a 40+ member environmental nonprofit and brings experience in ESG, policy, and green-business development.",
-      headshot: "/headshots/rajvansh-gupta.svg",
+      headshot: "/headshots/rajvansh-gupta.webp",
       name: "Rajvansh Gupta",
       title: "Co-Founder & CEO",
     },
     {
       bio: "Technical builder responsible for RetroFi’s architecture, incentive-data systems, automation, and platform reliability. He combines strong quantitative reasoning with hands-on experience building AI- and AWS-powered systems.",
-      headshot: "/headshots/neer-kuchlous.svg",
+      headshot: "/headshots/neer-kuchlous.webp",
       name: "Neer Kuchlous",
       title: "Co-Founder & CTO",
     },
@@ -3166,23 +3027,6 @@ function TeamPage({
       publicAuth={publicAuth}
       showFooter
     >
-      <section
-        aria-labelledby="about-founders-title"
-        className="about-founders-hero"
-      >
-        <div className="about-founders-hero-copy">
-          <p className="about-founders-eyebrow">About RetroFi</p>
-          <h1 id="about-founders-title">
-            Built to make better buildings easier to fund.
-          </h1>
-          <p className="about-founders-intro">
-            RetroFi brings together technology, practical retrofit expertise,
-            and financial insight to help property owners move from opportunity
-            to action.
-          </p>
-        </div>
-      </section>
-      <AboutSectionNav activeRoute="about-team" navigate={navigate} />
       <section
         aria-labelledby="about-founders-heading"
         className="content-section about-founders-section"
@@ -3291,7 +3135,6 @@ function TrustPage({
           <span>Utility bills come later, only when deeper financial analysis is useful to you.</span>
         </aside>
       </section>
-      <AboutSectionNav activeRoute="about-trust" navigate={navigate} />
       <section aria-label="RetroFi data principles" className="about-trust-principles">
         {trustPrinciples.map((principle, index) => (
           <article className="about-trust-principle" key={principle.title}>
@@ -3425,7 +3268,6 @@ function ContactPage({
           <span>Your message opens in your email app, so you stay in control of what is sent.</span>
         </aside>
       </section>
-      <AboutSectionNav activeRoute="about-contact" navigate={navigate} />
       <section className="about-contact-layout" aria-label="Contact RetroFi">
         <aside className="about-contact-aside">
           <article className="about-contact-card">
@@ -8432,6 +8274,7 @@ export function RetrofitRecommendationsPreview({
   const [pickerVisibleCount, setPickerVisibleCount] = useState(6);
   const [activeRetrofitInitialWorkspaceTab, setActiveRetrofitInitialWorkspaceTab] = useState<"overview">("overview");
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showInstructionsModal, setShowInstructionsModal] = useState(false);
   const [instructionsOpenedFromNav, setInstructionsOpenedFromNav] = useState(false);
@@ -8486,6 +8329,18 @@ export function RetrofitRecommendationsPreview({
   useEffect(() => {
     storeBillUploadState(billUploadStorageKey, billUploadState);
   }, [billUploadState, billUploadStorageKey]);
+
+  useEffect(() => {
+    if (!mobileSidebarOpen || typeof document === "undefined") return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      setMobileSidebarOpen(false);
+      window.setTimeout(() => mobileMenuButtonRef.current?.focus(), 0);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [mobileSidebarOpen]);
 
   useEffect(() => {
     const postFormPreviewParam =
@@ -8798,6 +8653,12 @@ export function RetrofitRecommendationsPreview({
     safeStorageSet("local", INSTRUCTIONS_ONBOARDING_SEEN_KEY, "true");
     safeStorageRemove("session", INTAKE_JUST_COMPLETED_KEY);
     setShowInstructionsModal(false);
+    if (instructionsOpenedFromNav) {
+      window.setTimeout(() => {
+        document.querySelector<HTMLButtonElement>("[data-instructions-nav-item='true']")?.focus();
+      }, 0);
+    }
+    setInstructionsOpenedFromNav(false);
     setInstructionsPulse(true);
     if (typeof window !== "undefined") {
       window.setTimeout(() => setInstructionsPulse(false), 1100);
@@ -8827,7 +8688,10 @@ export function RetrofitRecommendationsPreview({
         activeView={activePrimaryView}
         collapsed={sidebarCollapsed}
         mobileOpen={mobileSidebarOpen}
-        onCloseMobile={() => setMobileSidebarOpen(false)}
+        onCloseMobile={() => {
+          setMobileSidebarOpen(false);
+          window.setTimeout(() => mobileMenuButtonRef.current?.focus(), 0);
+        }}
         onOpenDashboardPage={handleDashboardPageSelect}
         onOpenInstructions={openInstructionsFromNav}
         onOpenProfile={handleProfileSelect}
@@ -8845,7 +8709,12 @@ export function RetrofitRecommendationsPreview({
       <main className="user-preview-main">
         <section className="retrofit-preview-page">
           <UserPreviewTriagePanel />
-          <button className="user-preview-mobile-menu-button user-preview-inline-menu-button" onClick={() => setMobileSidebarOpen(true)} type="button">
+          <button
+            className="user-preview-mobile-menu-button user-preview-inline-menu-button"
+            onClick={() => setMobileSidebarOpen(true)}
+            ref={mobileMenuButtonRef}
+            type="button"
+          >
             <ViewPanelIcon />
             <span>{activePrimaryView === "profile" ? "Profile" : activePrimaryView === "dashboard" ? "Dashboard" : "Retrofits"}</span>
           </button>
@@ -9541,12 +9410,12 @@ function ProcessOnboardingModal({
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         event.preventDefault();
-        completeOnboarding();
+        onClose();
       }
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  });
+  }, [onClose]);
 
   function completeOnboarding() {
     if (shouldAnimateText && !isComplete) {
@@ -9747,6 +9616,7 @@ function UserPreviewSidebar({
   retrofits: RetrofitPreviewCard[];
 }) {
   const [retrofitsOpen, setRetrofitsOpen] = useState(false);
+  const retrofitsToggleRef = useRef<HTMLButtonElement | null>(null);
   const triageMode = useUserPreviewTriageMode();
   const dashboardOpen = activeView === "dashboard";
   return (
@@ -9761,9 +9631,23 @@ function UserPreviewSidebar({
         >
           <ChevronDownIcon />
         </button>
-        <nav className="user-preview-sidebar-nav" aria-label="Retrofit navigation">
-          <div className={`sidebar-retrofits-control${activeView === "retrofits" ? " is-active" : ""}`}>
+        <nav
+          className="user-preview-sidebar-nav"
+          aria-label="Retrofit navigation"
+          onKeyDown={(event) => {
+            if (event.key !== "Escape" || !retrofitsOpen) return;
+            event.preventDefault();
+            event.stopPropagation();
+            setRetrofitsOpen(false);
+            window.setTimeout(() => retrofitsToggleRef.current?.focus(), 0);
+          }}
+        >
+          <div
+            className={`sidebar-retrofits-control${activeView === "retrofits" ? " is-active" : ""}`}
+          >
             <button
+              aria-current={activeView === "retrofits" && !activeRetrofitId ? "page" : undefined}
+              aria-label="Retrofits"
               className="sidebar-nav-row sidebar-section-link"
               onClick={onShowAllRetrofits}
               type="button"
@@ -9777,6 +9661,7 @@ function UserPreviewSidebar({
               aria-label={retrofitsOpen ? "Collapse retrofit list" : "Expand retrofit list"}
               className="sidebar-retrofit-toggle"
               onClick={() => setRetrofitsOpen((current) => !current)}
+              ref={retrofitsToggleRef}
               type="button"
             >
               <ChevronDownIcon />
@@ -9786,9 +9671,13 @@ function UserPreviewSidebar({
             <div className="sidebar-retrofit-list" id="sidebar-retrofit-list">
               {retrofits.map((retrofit) => (
                 <button
+                  aria-current={activeRetrofitId === retrofit.id ? "page" : undefined}
                   className={`sidebar-retrofit-item${activeRetrofitId === retrofit.id ? " is-active" : ""}`}
                   key={retrofit.id}
-                  onClick={() => onSelectRetrofit(retrofit.id)}
+                  onClick={() => {
+                    setRetrofitsOpen(false);
+                    onSelectRetrofit(retrofit.id);
+                  }}
                   type="button"
                 >
                   <SidebarRetrofitIcon retrofit={retrofit} />
@@ -9799,6 +9688,7 @@ function UserPreviewSidebar({
           ) : null}
           <div className="user-preview-sidebar-secondary" role="group" aria-label="Profile navigation">
             <button
+              aria-label="Profile info"
               {...getUserPreviewTriageTargetProps({
                 className: `sidebar-nav-row sidebar-secondary-item sidebar-profile-item${activeView === "profile" ? " is-active" : ""}`,
                 enabled: triageMode,
@@ -9813,6 +9703,7 @@ function UserPreviewSidebar({
             </button>
             <button
               aria-expanded={dashboardOpen}
+              aria-label="Dashboard"
               {...getUserPreviewTriageTargetProps({
                 className: `sidebar-nav-row sidebar-secondary-item sidebar-dashboard-item${dashboardOpen ? " is-active" : ""}`,
                 enabled: triageMode,
@@ -9842,6 +9733,7 @@ function UserPreviewSidebar({
               </div>
             ) : null}
             <button
+              aria-label="Instructions"
               className={`sidebar-nav-row sidebar-secondary-item sidebar-instructions-item${instructionsPulse ? " is-pulsing" : ""}`}
               data-instructions-nav-item="true"
               onClick={onOpenInstructions}
@@ -12825,6 +12717,7 @@ function RetrofitPreviewCardView({
 }) {
   type EstimateWorkspaceTab = "overview" | "financials" | "scenariosOpportunities" | "environmental" | "application";
   const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<EstimateWorkspaceTab>(initialWorkspaceTab);
+  const workspaceTabsRef = useRef<HTMLElement | null>(null);
   const [financialPeriod, setFinancialPeriod] = useState<"monthly" | "annual">("annual");
   const [showCalculationBreakdown, setShowCalculationBreakdown] = useState(true);
   const [scenarioOpportunityDetailIdByRetrofit, setScenarioOpportunityDetailIdByRetrofit] = useState<Record<string, string>>({});
@@ -12835,6 +12728,10 @@ function RetrofitPreviewCardView({
   useEffect(() => {
     setActiveWorkspaceTab(initialWorkspaceTab);
   }, [initialWorkspaceTab, retrofit.id]);
+  useEffect(() => {
+    const activeTab = workspaceTabsRef.current?.querySelector<HTMLElement>(`[data-workspace-tab="${activeWorkspaceTab}"]`);
+    activeTab?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }, [activeWorkspaceTab]);
   const selectedCount = retrofit.opportunities.filter((opportunity) => selectedOpportunityIds[opportunity.id]).length;
   const selectedScenario = retrofit.scenarios.find((scenario) => scenario.id === selectedScenarioId) || retrofit.scenarios[0];
   const selectedScenarioOpportunities = getSelectedOpportunitiesForScenario(retrofit, selectedScenario, selectedOpportunityIds);
@@ -13370,7 +13267,11 @@ function RetrofitPreviewCardView({
             </header>
           )}
 
-          <nav aria-label="Estimate workspace tabs" className={`estimate-tabs retrofit-workspace-tabs${activeWorkspaceTab === "scenariosOpportunities" ? " is-scenarios-opportunities" : ""}`}>
+          <nav
+            aria-label="Estimate workspace tabs"
+            className={`estimate-tabs retrofit-workspace-tabs${activeWorkspaceTab === "scenariosOpportunities" ? " is-scenarios-opportunities" : ""}`}
+            ref={workspaceTabsRef}
+          >
             {workspaceTabs.map((item) => {
               const className = `estimate-tab workspace-tab${activeWorkspaceTab === item.key ? " is-active" : ""}`;
               const triageProps = item.key === "scenariosOpportunities"
@@ -13383,7 +13284,7 @@ function RetrofitPreviewCardView({
               return (
                 <button
                   key={item.key}
-                  aria-current={activeWorkspaceTab === item.key ? "true" : undefined}
+                  aria-current={activeWorkspaceTab === item.key ? "page" : undefined}
                   {...triageProps}
                   data-workspace-tab={item.key}
                   onClick={() => openWorkspaceTab(item.key)}

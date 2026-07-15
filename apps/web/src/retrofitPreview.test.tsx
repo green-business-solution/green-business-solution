@@ -2618,7 +2618,7 @@ describe("retrofit recommendations preview", () => {
       workspaceSource.indexOf("</header>", headerIndex),
     );
     const tabBarIndex = workspaceSource.indexOf(
-      '<nav aria-label="Estimate workspace tabs"',
+      'aria-label="Estimate workspace tabs"',
     );
     const firstPanelIndex = workspaceSource.indexOf(
       'data-workspace-panel="overview"',
@@ -3331,7 +3331,7 @@ describe("retrofit recommendations preview", () => {
       new URL("./pages/home/sections/hero/hero.css", import.meta.url),
       "utf8",
     );
-    const homeMobileNavStart = shellCss.indexOf("@media (max-width: 860px) {");
+    const homeMobileNavStart = shellCss.indexOf("@media (max-width: 1140px) {");
     const homeMobileNavEnd = shellCss.indexOf(
       "@media (max-width: 768px)",
       homeMobileNavStart,
@@ -3347,7 +3347,7 @@ describe("retrofit recommendations preview", () => {
     expect(homeMobileNavCss).not.toContain(
       ".public-page .navbar-inner",
     );
-    expect(homeMobileNavCss).not.toContain("backdrop-filter");
+    expect(homeMobileNavCss).toContain("backdrop-filter: blur(24px) saturate(150%)");
     expect(homeMobileNavCss).not.toContain("rgba(237, 248, 242, 0.58)");
     expect(globalCss).not.toContain(".public-page .site-header .nav-actions .nav-cta,");
     const normalizedHomeSmallMobileCss = heroCss.replace(/\s+/g, " ");

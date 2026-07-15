@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
   aboutLinks,
-  aboutMenuLinks,
   pathForRoute,
   routeFromPath,
   shouldCanonicalizeUnknownHomeFallback,
@@ -28,13 +27,6 @@ describe("routes", () => {
     expect(routeFromPath("/about")).toBe("about-mission");
     expect(routeFromPath("/about/mission")).toBe("about-mission");
     expect(pathForRoute("about")).toBe("/about/mission");
-  });
-
-  it("keeps Contact out of the About menu", () => {
-    expect(aboutMenuLinks).toEqual([
-      { label: "Mission", route: "about-mission" },
-      { label: "Team", route: "about-team" },
-    ]);
   });
 
   it("preserves server-handled API and auth callback paths", () => {

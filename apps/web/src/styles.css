@@ -3738,7 +3738,7 @@ dd {
 .sidebar-retrofit-toggle svg {
   height: 16px;
   transform: rotate(-90deg);
-  transition: transform 140ms ease;
+  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
   width: 16px;
 }
 
@@ -5919,6 +5919,7 @@ dd {
 @media (prefers-reduced-motion: reduce) {
   .process-onboarding-flight,
   .sidebar-instructions-item.is-pulsing,
+  .sidebar-retrofit-toggle svg,
   .typewriter-caret {
     animation: none;
     transition: none;
@@ -8960,13 +8961,19 @@ dd {
 }
 
 .estimate-tabs.retrofit-workspace-tabs {
+  -webkit-overflow-scrolling: touch;
   background: transparent;
   border: 0;
   border-bottom: 1px solid #dfe7e1;
   border-radius: 0;
+  flex-wrap: nowrap;
   gap: 22px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
   padding: 0;
   position: static;
+  scroll-padding-inline: 8px;
+  scrollbar-width: thin;
   white-space: nowrap;
 }
 
@@ -8986,7 +8993,7 @@ dd {
 }
 
 .estimate-tab.workspace-tab.is-active,
-.estimate-tab.workspace-tab[aria-current="true"] {
+.estimate-tab.workspace-tab[aria-current="page"] {
   background: transparent;
   border-color: #0f7a4f;
   color: #0f7a4f;
@@ -14768,54 +14775,11 @@ body {
   color: #071e16;
 }
 
-.about-founders-hero {
-  margin: 0 auto;
-  max-width: 1480px;
-  padding: clamp(166px, 22vh, 190px) clamp(20px, 5vw, 72px) 72px;
-}
-
-.about-founders-hero-copy {
-  display: grid;
-  gap: 20px;
-  max-width: 980px;
-}
-
-.about-founders-eyebrow,
-.about-founders-intro,
-.about-founders-hero h1 {
-  margin: 0;
-}
-
-.about-founders-eyebrow {
-  color: #0b6c3c;
-  font-size: 13px;
-  font-weight: 760;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.about-founders-hero h1 {
-  color: #082619;
-  font-family:
-    "Cormorant Garamond", "EB Garamond", "Iowan Old Style", Georgia, serif;
-  font-size: clamp(56px, 5.5vw, 98px);
-  font-weight: 520;
-  letter-spacing: -0.055em;
-  line-height: 0.9;
-  max-width: 840px;
-}
-
-.about-founders-intro {
-  color: rgba(6, 36, 25, 0.76);
-  font-size: clamp(20px, 1.55vw, 25px);
-  line-height: 1.38;
-  max-width: 590px;
-}
-
 .about-founders-section {
   display: grid;
   gap: 34px;
   margin-bottom: 72px;
+  padding-top: clamp(150px, 18vh, 170px);
 }
 
 .about-founders-heading {
@@ -14938,30 +14902,11 @@ body {
   }
 }
 
-@media (max-width: 860px) {
-  .about-founders-hero {
-    padding-top: 138px;
-  }
-}
-
 @media (max-width: 760px) {
-  .about-founders-hero {
-    padding: 126px 24px 58px;
-  }
-
-  .about-founders-hero h1 {
-    font-size: clamp(38px, 10vw, 58px);
-    max-width: 11ch;
-  }
-
-  .about-founders-intro {
-    font-size: 18px;
-    max-width: 32ch;
-  }
-
   .about-founders-section {
     gap: 30px;
     margin-bottom: 58px;
+    padding-top: 126px;
   }
 
   .about-founders-grid {
@@ -14970,10 +14915,6 @@ body {
 }
 
 @media (max-width: 520px) {
-  .about-founders-hero {
-    padding: 118px 18px 52px;
-  }
-
   .about-founders-section,
   .about-founders-cta {
     width: calc(100% - 28px);
@@ -17120,6 +17061,14 @@ body {
   padding: 8px;
 }
 
+.estimate-tabs.retrofit-workspace-tabs {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-padding-inline: 8px;
+  scrollbar-width: thin;
+}
+
 .workspace-tab,
 .retrofit-section-chip,
 .estimate-tab.workspace-tab {
@@ -17136,7 +17085,7 @@ body {
 .retrofit-section-chip.is-active,
 .retrofit-section-chip[aria-current="true"],
 .estimate-tab.workspace-tab.is-active,
-.estimate-tab.workspace-tab[aria-current="true"] {
+.estimate-tab.workspace-tab[aria-current="page"] {
   background: var(--retrofi-pale);
   border-color: rgba(8, 118, 63, 0.2);
   color: #0b6c3c;

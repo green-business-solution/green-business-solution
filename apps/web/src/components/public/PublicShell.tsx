@@ -5,7 +5,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { aboutLinks, aboutMenuLinks, type Route } from "../../routes";
+import { aboutLinks, type Route } from "../../routes";
 import {
   HOME_DASHBOARD_SECTION_ID,
   HOME_INSIGHTS_SECTION_ID,
@@ -245,7 +245,7 @@ function PublicNav({
         onKeyDown={handleAboutMenuKeyDown}
         role="menu"
       >
-        {aboutMenuLinks.map((item) => (
+        {aboutLinks.map((item) => (
           <button
             className="link-button about-menu-item"
             key={item.route}

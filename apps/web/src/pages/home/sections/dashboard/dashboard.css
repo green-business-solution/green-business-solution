@@ -2,8 +2,8 @@
   button:not(.link-button):not(.brand-link):not(.footer-link):not(
     .secondary-button
   ):not(.menu-button):not(.text-link):not(
-    .about-section-nav-link
-  ):not(.about-editorial-cta-button):not(.about-contact-submit):not(
+    .about-editorial-cta-button
+  ):not(.about-contact-submit):not(
     .about-contact-trust-link
   ):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(
     .google-loading-button
@@ -30,8 +30,8 @@
   button:not(.link-button):not(.brand-link):not(.footer-link):not(
     .secondary-button
   ):not(.menu-button):not(.text-link):not(
-    .about-section-nav-link
-  ):not(.about-editorial-cta-button):not(.about-contact-submit):not(
+    .about-editorial-cta-button
+  ):not(.about-contact-submit):not(
     .about-contact-trust-link
   ):not(.password-visibility-button):not(.database-list-item):not(.nav-cta):not(
     .google-loading-button
@@ -1151,7 +1151,6 @@
 
 @media (max-width: 860px) {
 
-  .public-page .about-section-nav-link,
   .public-page .hub-card .text-link,
   .public-page .auth-inline-link,
   .footer-link,

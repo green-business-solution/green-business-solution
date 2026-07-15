@@ -26,10 +26,6 @@ export const aboutLinks: Array<{ label: string; route: Route }> = [
   { label: "Team", route: "about-team" },
 ];
 
-export const aboutMenuLinks: Array<{ label: string; route: Route }> = [
-  ...aboutLinks,
-];
-
 export type RoutePathMatch = {
   isKnownPath: boolean;
   route: Route;
