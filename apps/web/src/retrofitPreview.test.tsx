@@ -2618,7 +2618,7 @@ describe("retrofit recommendations preview", () => {
       workspaceSource.indexOf("</header>", headerIndex),
     );
     const tabBarIndex = workspaceSource.indexOf(
-      '<nav aria-label="Estimate workspace tabs"',
+      'aria-label="Estimate workspace tabs"',
     );
     const firstPanelIndex = workspaceSource.indexOf(
       'data-workspace-panel="overview"',
@@ -2896,8 +2896,11 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("onToggleCollapsed");
     expect(source).toContain("user-preview-sidebar-collapse");
     expect(source).toContain("onShowAllRetrofits={() =>");
-    expect(source).toContain("if (activeRetrofitId) {");
-    expect(source).toContain("onShowAllRetrofits();");
+    expect(source).toContain('className="sidebar-retrofits-control"');
+    expect(source).toContain('className="sidebar-retrofit-toggle"');
+    expect(source).toContain('aria-controls="user-preview-retrofit-list"');
+    expect(source).toContain('event.key !== "Escape"');
+    expect(source).toContain("event.stopPropagation()");
     expect(source).toContain("function RetrofitDetailFormModal(");
     expect(source).toContain("setActiveFormRetrofitId(retrofit.id)");
     expect(source).toContain("if (!readiness.questionsComplete)");
@@ -2914,10 +2917,15 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("onOpenProfile={handleProfileSelect}");
     expect(source).toContain('activePrimaryView === "profile"');
     expect(source).toContain("sidebar-profile-item");
+    expect(source).toContain('aria-label="Profile info"');
+    expect(source).toContain('aria-label="Dashboard"');
+    expect(source).toContain('aria-label="Instructions"');
     expect(source).toContain("Bill data is hidden in this admin preview.");
     expect(source).toContain("Dashboard");
     expect(source).toContain("Instructions");
     expect(source).toContain("ProcessOnboardingModal");
+    expect(source).toContain("setInstructionsOpenedFromNav(false)");
+    expect(source).toContain("document.querySelector<HTMLButtonElement>(\"[data-instructions-nav-item='true']\")?.focus()");
     expect(source).toContain("Post Form Preview");
     expect(source).toContain("ADMIN_POST_FORM_PREVIEW_TAB");
     expect(source).toContain("postFormPreview");
@@ -2958,9 +2966,8 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain(
       'safeStorageSet("session", INTAKE_JUST_COMPLETED_KEY, "true")',
     );
-    expect(source).toContain("const activeNavRetrofitId = activeRetrofitId;");
-    expect(source).not.toContain("activeRetrofitId || retrofits[0]?.id");
-    expect(source).toContain("if (activeRetrofitId) setRetrofitsOpen(true)");
+    expect(source).not.toContain("const activeNavRetrofitId = activeRetrofitId;");
+    expect(source).not.toContain("if (activeRetrofitId) setRetrofitsOpen(true)");
     expect(source).toContain("activeRetrofit ? (");
     expect(source).toContain("onSelectRetrofit(retrofit.id)");
     expect(source).toContain("setMobileSidebarOpen(false)");
@@ -2968,6 +2975,10 @@ describe("retrofit recommendations preview", () => {
     expect(source).toContain("Grid</span>");
     expect(source).toContain("Panel</span>");
     expect(workspaceSource).toContain("data-workspace-tab");
+    expect(workspaceSource).toContain("workspaceTabsRef");
+    expect(source).toContain('scrollIntoView({ block: "nearest", inline: "nearest" })');
+    expect(source).toContain("mobileMenuButtonRef");
+    expect(source).toContain('document.addEventListener("keydown", handleKeyDown)');
     expect(workspaceSource).toContain('data-workspace-panel="environmental"');
     expect(workspaceSource).not.toContain("Submit application");
     expect(workspaceSource).not.toContain("Send email");

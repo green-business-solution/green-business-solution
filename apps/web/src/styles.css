@@ -3704,14 +3704,43 @@ dd {
   line-height: 20px;
 }
 
-.sidebar-section-trigger svg:last-child {
+.sidebar-retrofits-section {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.sidebar-retrofits-control {
+  display: grid;
+  gap: 4px;
+  grid-template-columns: minmax(0, 1fr) 38px;
+  min-width: 0;
+}
+
+.sidebar-section-link {
+  grid-template-columns: 24px minmax(0, 1fr);
+}
+
+.sidebar-retrofit-toggle {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  color: #263930;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0;
+}
+
+.sidebar-retrofit-toggle svg {
   height: 16px;
   transform: rotate(-90deg);
-  transition: transform 140ms ease;
+  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
   width: 16px;
 }
 
-.sidebar-section-trigger[aria-expanded="true"] svg:last-child {
+.sidebar-retrofit-toggle[aria-expanded="true"] svg {
   transform: rotate(0deg);
 }
 
@@ -3751,7 +3780,8 @@ dd {
   background: var(--rf-green);
 }
 
-.sidebar-section-trigger:hover,
+.sidebar-section-link:hover,
+.sidebar-retrofit-toggle:hover,
 .sidebar-retrofit-item:hover,
 .sidebar-secondary-item:hover {
   background: #f3faf6;
@@ -3759,7 +3789,7 @@ dd {
 }
 
 .sidebar-retrofit-icon,
-.sidebar-section-trigger > svg:first-child,
+.sidebar-section-link > svg:first-child,
 .sidebar-secondary-item > svg:first-child {
   color: currentColor;
   display: inline-flex;
@@ -3780,9 +3810,15 @@ dd {
 }
 
 .user-preview-shell.is-sidebar-collapsed .sidebar-label,
-.user-preview-shell.is-sidebar-collapsed
-  .sidebar-section-trigger
-  svg:last-child {
+.user-preview-shell.is-sidebar-collapsed .sidebar-retrofit-toggle {
+  display: none;
+}
+
+.user-preview-shell.is-sidebar-collapsed .sidebar-retrofits-control {
+  grid-template-columns: 1fr;
+}
+
+.user-preview-shell.is-sidebar-collapsed .sidebar-retrofit-list {
   display: none;
 }
 
@@ -3828,7 +3864,7 @@ dd {
   color: var(--rf-text);
 }
 
-.sidebar-section-trigger.is-active,
+.sidebar-section-link.is-active,
 .sidebar-profile-item.is-active,
 .sidebar-dashboard-item.is-active {
   background: #f1f8f3;
@@ -5859,6 +5895,7 @@ dd {
 @media (prefers-reduced-motion: reduce) {
   .process-onboarding-flight,
   .sidebar-instructions-item.is-pulsing,
+  .sidebar-retrofit-toggle svg,
   .typewriter-caret {
     animation: none;
     transition: none;
@@ -8900,13 +8937,19 @@ dd {
 }
 
 .estimate-tabs.retrofit-workspace-tabs {
+  -webkit-overflow-scrolling: touch;
   background: transparent;
   border: 0;
   border-bottom: 1px solid #dfe7e1;
   border-radius: 0;
+  flex-wrap: nowrap;
   gap: 22px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
   padding: 0;
   position: static;
+  scroll-padding-inline: 8px;
+  scrollbar-width: thin;
   white-space: nowrap;
 }
 
@@ -8926,7 +8969,7 @@ dd {
 }
 
 .estimate-tab.workspace-tab.is-active,
-.estimate-tab.workspace-tab[aria-current="true"] {
+.estimate-tab.workspace-tab[aria-current="page"] {
   background: transparent;
   border-color: #0f7a4f;
   color: #0f7a4f;
@@ -11999,10 +12042,6 @@ dd {
 }
 
 @media (max-width: 760px) {
-  .estimate-tabs.retrofit-workspace-tabs {
-    overflow-x: auto;
-  }
-
   .estimate-metric-grid,
   .estimate-impact-metric-grid,
   .estimate-split-summary,
@@ -12112,11 +12151,11 @@ dd {
   }
 
   .sidebar-label,
-  .sidebar-section-trigger svg:last-child {
+  .sidebar-retrofit-toggle {
     display: none;
   }
 
-  .sidebar-section-trigger,
+  .sidebar-section-link,
   .sidebar-retrofit-item,
   .sidebar-secondary-item {
     gap: 0;
@@ -12250,18 +12289,21 @@ dd {
   }
 
   .sidebar-label,
-  .sidebar-section-trigger svg:last-child {
-    display: inline;
+  .sidebar-retrofit-toggle {
+    display: inline-flex;
   }
 
   .user-preview-shell.is-sidebar-collapsed .sidebar-label,
-  .user-preview-shell.is-sidebar-collapsed
-    .sidebar-section-trigger
-    svg:last-child {
-    display: inline;
+  .user-preview-shell.is-sidebar-collapsed .sidebar-retrofit-toggle {
+    display: inline-flex;
   }
 
-  .sidebar-section-trigger,
+  .sidebar-retrofits-control,
+  .user-preview-shell.is-sidebar-collapsed .sidebar-retrofits-control {
+    grid-template-columns: minmax(0, 1fr) 38px;
+  }
+
+  .sidebar-section-link,
   .sidebar-retrofit-item,
   .sidebar-secondary-item {
     gap: 12px;
@@ -12271,7 +12313,7 @@ dd {
     padding-right: 10px;
   }
 
-  .user-preview-shell.is-sidebar-collapsed .sidebar-section-trigger,
+  .user-preview-shell.is-sidebar-collapsed .sidebar-section-link,
   .user-preview-shell.is-sidebar-collapsed .sidebar-retrofit-item,
   .user-preview-shell.is-sidebar-collapsed .sidebar-secondary-item {
     gap: 12px;

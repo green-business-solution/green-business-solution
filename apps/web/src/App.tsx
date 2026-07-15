@@ -8669,6 +8669,7 @@ export function RetrofitRecommendationsPreview({
   const [pickerVisibleCount, setPickerVisibleCount] = useState(6);
   const [activeRetrofitInitialWorkspaceTab, setActiveRetrofitInitialWorkspaceTab] = useState<"overview">("overview");
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showInstructionsModal, setShowInstructionsModal] = useState(false);
   const [instructionsOpenedFromNav, setInstructionsOpenedFromNav] = useState(false);
@@ -8723,6 +8724,18 @@ export function RetrofitRecommendationsPreview({
   useEffect(() => {
     storeBillUploadState(billUploadStorageKey, billUploadState);
   }, [billUploadState, billUploadStorageKey]);
+
+  useEffect(() => {
+    if (!mobileSidebarOpen || typeof document === "undefined") return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      setMobileSidebarOpen(false);
+      window.setTimeout(() => mobileMenuButtonRef.current?.focus(), 0);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [mobileSidebarOpen]);
 
   useEffect(() => {
     const postFormPreviewParam =
@@ -9035,6 +9048,12 @@ export function RetrofitRecommendationsPreview({
     safeStorageSet("local", INSTRUCTIONS_ONBOARDING_SEEN_KEY, "true");
     safeStorageRemove("session", INTAKE_JUST_COMPLETED_KEY);
     setShowInstructionsModal(false);
+    if (instructionsOpenedFromNav) {
+      window.setTimeout(() => {
+        document.querySelector<HTMLButtonElement>("[data-instructions-nav-item='true']")?.focus();
+      }, 0);
+    }
+    setInstructionsOpenedFromNav(false);
     setInstructionsPulse(true);
     if (typeof window !== "undefined") {
       window.setTimeout(() => setInstructionsPulse(false), 1100);
@@ -9064,7 +9083,10 @@ export function RetrofitRecommendationsPreview({
         activeView={activePrimaryView}
         collapsed={sidebarCollapsed}
         mobileOpen={mobileSidebarOpen}
-        onCloseMobile={() => setMobileSidebarOpen(false)}
+        onCloseMobile={() => {
+          setMobileSidebarOpen(false);
+          window.setTimeout(() => mobileMenuButtonRef.current?.focus(), 0);
+        }}
         onOpenDashboardPage={handleDashboardPageSelect}
         onOpenInstructions={openInstructionsFromNav}
         onOpenProfile={handleProfileSelect}
@@ -9082,7 +9104,12 @@ export function RetrofitRecommendationsPreview({
       <main className="user-preview-main">
         <section className="retrofit-preview-page">
           <UserPreviewTriagePanel />
-          <button className="user-preview-mobile-menu-button user-preview-inline-menu-button" onClick={() => setMobileSidebarOpen(true)} type="button">
+          <button
+            className="user-preview-mobile-menu-button user-preview-inline-menu-button"
+            onClick={() => setMobileSidebarOpen(true)}
+            ref={mobileMenuButtonRef}
+            type="button"
+          >
             <ViewPanelIcon />
             <span>{activePrimaryView === "profile" ? "Profile" : activePrimaryView === "dashboard" ? "Dashboard" : "Retrofits"}</span>
           </button>
@@ -9778,12 +9805,12 @@ function ProcessOnboardingModal({
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         event.preventDefault();
-        completeOnboarding();
+        onClose();
       }
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  });
+  }, [onClose]);
 
   function completeOnboarding() {
     if (shouldAnimateText && !isComplete) {
@@ -9984,12 +10011,9 @@ function UserPreviewSidebar({
   retrofits: RetrofitPreviewCard[];
 }) {
   const [retrofitsOpen, setRetrofitsOpen] = useState(false);
+  const retrofitsToggleRef = useRef<HTMLButtonElement | null>(null);
   const triageMode = useUserPreviewTriageMode();
-  const activeNavRetrofitId = activeRetrofitId;
   const dashboardOpen = activeView === "dashboard";
-  useEffect(() => {
-    if (activeRetrofitId) setRetrofitsOpen(true);
-  }, [activeRetrofitId]);
   return (
     <>
       {mobileOpen ? <button aria-label="Close retrofit navigation" className="user-preview-sidebar-scrim" onClick={onCloseMobile} type="button" /> : null}
@@ -10003,39 +10027,62 @@ function UserPreviewSidebar({
           <ChevronDownIcon />
         </button>
         <nav className="user-preview-sidebar-nav" aria-label="Retrofit navigation">
-          <button
-            aria-expanded={retrofitsOpen}
-            className={`sidebar-nav-row sidebar-section-trigger${activeView === "retrofits" ? " is-active" : ""}`}
-            onClick={() => {
-              if (activeRetrofitId) {
-                onShowAllRetrofits();
-                return;
-              }
-              setRetrofitsOpen((current) => !current);
+          <div
+            className="sidebar-retrofits-section"
+            onKeyDown={(event) => {
+              if (event.key !== "Escape" || !retrofitsOpen) return;
+              event.preventDefault();
+              event.stopPropagation();
+              setRetrofitsOpen(false);
+              window.setTimeout(() => retrofitsToggleRef.current?.focus(), 0);
             }}
-            type="button"
           >
-            <HomeOutlineIcon />
-            <span className="sidebar-label">Retrofits</span>
-            <ChevronDownIcon />
-          </button>
-          {retrofitsOpen ? (
-            <div className="sidebar-retrofit-list">
-              {retrofits.map((retrofit) => (
-                <button
-                  className={`sidebar-retrofit-item${activeNavRetrofitId === retrofit.id ? " is-active" : ""}`}
-                  key={retrofit.id}
-                  onClick={() => onSelectRetrofit(retrofit.id)}
-                  type="button"
-                >
-                  <SidebarRetrofitIcon retrofit={retrofit} />
-                  <span className="sidebar-label">{retrofit.name}</span>
-                </button>
-              ))}
+            <div className="sidebar-retrofits-control">
+              <button
+                aria-current={activeView === "retrofits" && !activeRetrofitId ? "page" : undefined}
+                aria-label="Retrofits"
+                className={`sidebar-nav-row sidebar-section-link${activeView === "retrofits" ? " is-active" : ""}`}
+                onClick={onShowAllRetrofits}
+                type="button"
+              >
+                <HomeOutlineIcon />
+                <span className="sidebar-label">Retrofits</span>
+              </button>
+              <button
+                aria-controls="user-preview-retrofit-list"
+                aria-expanded={retrofitsOpen}
+                aria-label={retrofitsOpen ? "Collapse retrofit list" : "Expand retrofit list"}
+                className="sidebar-retrofit-toggle"
+                onClick={() => setRetrofitsOpen((current) => !current)}
+                ref={retrofitsToggleRef}
+                type="button"
+              >
+                <ChevronDownIcon />
+              </button>
             </div>
-          ) : null}
+            {retrofitsOpen ? (
+              <div className="sidebar-retrofit-list" id="user-preview-retrofit-list">
+                {retrofits.map((retrofit) => (
+                  <button
+                    aria-current={activeRetrofitId === retrofit.id ? "page" : undefined}
+                    className={`sidebar-retrofit-item${activeRetrofitId === retrofit.id ? " is-active" : ""}`}
+                    key={retrofit.id}
+                    onClick={() => {
+                      setRetrofitsOpen(false);
+                      onSelectRetrofit(retrofit.id);
+                    }}
+                    type="button"
+                  >
+                    <SidebarRetrofitIcon retrofit={retrofit} />
+                    <span className="sidebar-label">{retrofit.name}</span>
+                  </button>
+                ))}
+              </div>
+            ) : null}
+          </div>
           <div className="user-preview-sidebar-secondary" role="group" aria-label="Profile navigation">
             <button
+              aria-label="Profile info"
               {...getUserPreviewTriageTargetProps({
                 className: `sidebar-nav-row sidebar-secondary-item sidebar-profile-item${activeView === "profile" ? " is-active" : ""}`,
                 enabled: triageMode,
@@ -10050,6 +10097,7 @@ function UserPreviewSidebar({
             </button>
             <button
               aria-expanded={dashboardOpen}
+              aria-label="Dashboard"
               {...getUserPreviewTriageTargetProps({
                 className: `sidebar-nav-row sidebar-secondary-item sidebar-dashboard-item${dashboardOpen ? " is-active" : ""}`,
                 enabled: triageMode,
@@ -10079,6 +10127,7 @@ function UserPreviewSidebar({
               </div>
             ) : null}
             <button
+              aria-label="Instructions"
               className={`sidebar-nav-row sidebar-secondary-item sidebar-instructions-item${instructionsPulse ? " is-pulsing" : ""}`}
               data-instructions-nav-item="true"
               onClick={onOpenInstructions}
@@ -13063,6 +13112,7 @@ function RetrofitPreviewCardView({
 }) {
   type EstimateWorkspaceTab = "overview" | "financials" | "scenariosOpportunities" | "environmental" | "application";
   const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<EstimateWorkspaceTab>(initialWorkspaceTab);
+  const workspaceTabsRef = useRef<HTMLElement | null>(null);
   const [financialPeriod, setFinancialPeriod] = useState<"monthly" | "annual">("annual");
   const [showCalculationBreakdown, setShowCalculationBreakdown] = useState(true);
   const [scenarioOpportunityDetailIdByRetrofit, setScenarioOpportunityDetailIdByRetrofit] = useState<Record<string, string>>({});
@@ -13073,6 +13123,10 @@ function RetrofitPreviewCardView({
   useEffect(() => {
     setActiveWorkspaceTab(initialWorkspaceTab);
   }, [initialWorkspaceTab, retrofit.id]);
+  useEffect(() => {
+    const activeTab = workspaceTabsRef.current?.querySelector<HTMLElement>(`[data-workspace-tab="${activeWorkspaceTab}"]`);
+    activeTab?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }, [activeWorkspaceTab]);
   const selectedCount = retrofit.opportunities.filter((opportunity) => selectedOpportunityIds[opportunity.id]).length;
   const selectedScenario = retrofit.scenarios.find((scenario) => scenario.id === selectedScenarioId) || retrofit.scenarios[0];
   const selectedScenarioOpportunities = getSelectedOpportunitiesForScenario(retrofit, selectedScenario, selectedOpportunityIds);
@@ -13608,7 +13662,11 @@ function RetrofitPreviewCardView({
             </header>
           )}
 
-          <nav aria-label="Estimate workspace tabs" className={`estimate-tabs retrofit-workspace-tabs${activeWorkspaceTab === "scenariosOpportunities" ? " is-scenarios-opportunities" : ""}`}>
+          <nav
+            aria-label="Estimate workspace tabs"
+            className={`estimate-tabs retrofit-workspace-tabs${activeWorkspaceTab === "scenariosOpportunities" ? " is-scenarios-opportunities" : ""}`}
+            ref={workspaceTabsRef}
+          >
             {workspaceTabs.map((item) => {
               const className = `estimate-tab workspace-tab${activeWorkspaceTab === item.key ? " is-active" : ""}`;
               const triageProps = item.key === "scenariosOpportunities"
@@ -13621,7 +13679,7 @@ function RetrofitPreviewCardView({
               return (
                 <button
                   key={item.key}
-                  aria-current={activeWorkspaceTab === item.key ? "true" : undefined}
+                  aria-current={activeWorkspaceTab === item.key ? "page" : undefined}
                   {...triageProps}
                   data-workspace-tab={item.key}
                   onClick={() => openWorkspaceTab(item.key)}
