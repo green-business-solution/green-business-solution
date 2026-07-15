@@ -12763,7 +12763,6 @@ function RetrofitPreviewCardView({
     opportunity.eligibilityStatus === "needs review" ||
     opportunity.requiredInfo.includes("utility territory confirmation")
   );
-  const sustainabilityImpact = retrofit.sustainabilityImpact || null;
   const environmentalImpact = retrofit.environmentalImpact;
   const displayedEnvironmentalImpact = billDataLocked
     ? maskEnvironmentalImpactForNoBillData(environmentalImpact)
@@ -13001,30 +13000,6 @@ function RetrofitPreviewCardView({
     setActiveWorkspaceTab(tab);
   }
 
-  const certificationRows = [
-    {
-      program: "LEED O+M",
-      description: "Supports emissions reduction and energy performance.",
-      value:
-        displayedEnvironmentalImpact.certificationContribution.find((item) => /leed/i.test(item.program))?.detail ||
-        displayedEnvironmentalImpact.certificationContribution.find((item) => /leed/i.test(item.program))?.status ||
-        "May support"
-    },
-    {
-      program: "ENERGY STAR readiness",
-      description: "Improves operational efficiency and tracking capabilities.",
-      value:
-        displayedEnvironmentalImpact.certificationContribution.find((item) => /energy star/i.test(item.program))?.detail ||
-        "Supports score improvement"
-    },
-    {
-      program: "Green Business certification",
-      description: "Advances sustainability and environmental leadership.",
-      value:
-        displayedEnvironmentalImpact.certificationContribution.find((item) => /green business/i.test(item.program))?.detail ||
-        "Potential contribution"
-    }
-  ];
   const financialPeriodLabel = financialPeriod === "monthly" ? "Monthly" : "Annual";
   const operatingSavingsPeriodValue = financialPeriod === "monthly" ? monthlyOperatingSavingsValue : annualOperatingSavingsValue;
   const incentiveSavingsPeriodValue = financialPeriod === "monthly" ? monthlyIncentiveSavingsValue : annualIncentiveSavingsValue;
@@ -13485,18 +13460,6 @@ function RetrofitPreviewCardView({
               </div>
 
               <EstimateProjectFundingChart segments={projectFundingSegments} totalCostCents={projectCostValue} />
-              <EstimateOneTimeCostWaterfallChart
-                effectiveCostCents={effectiveProjectCostValue}
-                oneTimeTaxBenefitsCents={billDataLocked ? null : taxCreditFundingCents}
-                projectCostCents={projectCostValue}
-                selectedRebatesCents={billDataLocked ? null : knownRebateGrantCents}
-                upfrontIncentiveCents={billDataLocked || displayedUpfrontFinancialIncentive == null ? null : upfrontFundingRemainder}
-              />
-              <EstimatePaybackTimelineChart
-                annualCashFlowCents={annualCashFlowValue}
-                initialInvestmentCents={initialCashFlowInvestmentValue}
-                paybackYears={selectedPaybackYears}
-              />
               <EstimateCumulativeCashFlowChart
                 annualCashFlowCents={annualCashFlowValue}
                 initialInvestmentCents={initialCashFlowInvestmentValue}
@@ -13637,39 +13600,6 @@ function RetrofitPreviewCardView({
           {activeWorkspaceTab === "environmental" ? (
             <section className="estimate-tab-panel estimate-impact-tab" data-workspace-panel="environmental">
               <h3>Impact overview</h3>
-              <section className="estimate-impact-hero">
-                <span className="estimate-impact-leaf" aria-hidden="true"><MetricSavingsIcon /></span>
-                <div className="estimate-impact-copy">
-                  <span className="estimate-impact-kicker">Main impact estimate</span>
-                  <div className="estimate-impact-value-row">
-                    <strong>{displayedEnvironmentalImpact.overall.displayValue}</strong>
-                    <b>{displayedEnvironmentalImpact.overall.displayValue === "?" ? displayedEnvironmentalImpact.overall.fallback || "Needs bills" : formatAnnualImpactUnitLabel(displayedEnvironmentalImpact.overall.unit)}</b>
-                  </div>
-                  <p>{impactPlainLanguageSentence(displayedEnvironmentalImpact.overall)}</p>
-                </div>
-                  <EstimateImpactIllustration />
-              </section>
-              {sustainabilityImpact ? <SustainabilityImpactCard sustainabilityImpact={sustainabilityImpact} /> : null}
-              <h3>Certification contribution</h3>
-              <div
-                {...getUserPreviewTriageTargetProps({
-                  className: "estimate-certification-list",
-                  enabled: triageMode,
-                  surfaceId: "impact.certification-list"
-                })}
-              >
-                <UserPreviewTriageBadges surfaceId="impact.certification-list" />
-                {certificationRows.map((row) => (
-                  <article className="estimate-certification-row" key={row.program}>
-                    <span className="estimate-card-icon"><MetricImpactIcon /></span>
-                    <div>
-                      <strong>{row.program}</strong>
-                      <p>{row.description}</p>
-                    </div>
-                    <b>{row.value}</b>
-                  </article>
-                ))}
-              </div>
               <EstimateImpactProjectionChart />
             </section>
           ) : null}
