@@ -734,7 +734,7 @@ describe("retrofit recommendations preview", () => {
     const mainPagesStart = source.indexOf("const DASHBOARD_MAIN_PAGES");
     const mainPagesSource = source.slice(
       mainPagesStart,
-      source.indexOf("const FINANCIAL_DASHBOARD_TABS", mainPagesStart),
+      source.indexOf("const ENVIRONMENTAL_DASHBOARD_TABS", mainPagesStart),
     );
 
     expect(source).toContain("export function buildDashboardPerformanceData");
@@ -750,14 +750,14 @@ describe("retrofit recommendations preview", () => {
     expect(mainPagesSource).not.toContain("Next Best Actions");
     expect(mainPagesSource).not.toContain("Savings by Retrofit");
     expect(mainPagesSource).not.toContain("Gaps & Readiness");
-    expect(source).toContain("Cash Flow & Incentives");
     expect(source).toContain("AdminDashboardPerformanceDataPanel");
     expect(source).toContain("Dashboard Performance Test Data");
     expect(source).toContain("/api/admin/dashboard-performance/test-cases");
     expect(source).toContain("/api/admin/dashboard-performance/seed-all");
     expect(source).toContain("Validate all generated data");
     expect(source).toContain("Open dashboard preview");
-    expect(source).toContain("Savings by Retrofit");
+    expect(source).not.toContain("Cash Flow & Incentives");
+    expect(source).not.toContain("Savings by Retrofit");
     expect(source).toContain("Outlook & Equivalencies");
     expect(source).toContain("Gaps & Readiness");
     expect(source).toContain("Next Best Actions");
@@ -770,7 +770,11 @@ describe("retrofit recommendations preview", () => {
     expect(dashboardSource).toContain("Cumulative Cash Flow");
     expect(dashboardSource).toContain("Incentive Tracking");
     expect(dashboardSource).toContain("Recurring Savings Breakdown");
-    expect(dashboardSource).toContain("Actual vs. Estimated Performance");
+    expect(dashboardSource).not.toContain("One-Time Cost");
+    expect(dashboardSource).not.toContain("Actual vs. Estimated Performance");
+    expect(dashboardSource).not.toContain("Key Takeaways");
+    expect(dashboardSource).not.toContain("Top Performing Retrofits");
+    expect(dashboardSource).not.toContain("Payback Status");
     expect(dashboardSource).toContain("Impact Data & Methodology");
     expect(dashboardSource).toContain("Application Readiness by Program");
     expect(dashboardSource).toContain("Recommended Next Best Actions");
