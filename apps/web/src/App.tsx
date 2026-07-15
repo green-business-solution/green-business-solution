@@ -3140,6 +3140,12 @@ function TeamPage({
 }) {
   const founders = [
     {
+      bio: "Designer and digital marketer leading RetroFi’s brand, customer-facing experience, and lead generation. He brings practical web-development experience, a strong understanding of online trends, and an eye for presenting complex information clearly.",
+      headshot: "/headshots/ryan-shen.svg",
+      name: "Ryan Shen",
+      title: "Co-Founder & CMO",
+    },
+    {
       bio: "Sustainability entrepreneur leading RetroFi’s strategy, product direction, partnerships, and growth. He previously scaled a 40+ member environmental nonprofit and brings experience in ESG, policy, and green-business development.",
       headshot: "/headshots/rajvansh-gupta.svg",
       name: "Rajvansh Gupta",
@@ -3150,12 +3156,6 @@ function TeamPage({
       headshot: "/headshots/neer-kuchlous.svg",
       name: "Neer Kuchlous",
       title: "Co-Founder & CTO",
-    },
-    {
-      bio: "Designer and digital marketer leading RetroFi’s brand, customer-facing experience, and lead generation. He brings practical web-development experience, a strong understanding of online trends, and an eye for presenting complex information clearly.",
-      headshot: "/headshots/ryan-shen.svg",
-      name: "Ryan Shen",
-      title: "Co-Founder & CMO",
     },
   ] as const;
 
