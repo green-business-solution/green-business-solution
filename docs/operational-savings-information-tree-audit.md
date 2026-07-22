@@ -207,13 +207,16 @@ The manual review must also reject false shared categories, whole-bill rates pre
 This is documentation-only and remains human-review material.
 Completion requires a clean focused validator, repository-selected checks, source-link validation, full diff review, committed and pushed changes on `docs/operational-savings-information-trees`, and an updated draft PR #29.
 It does not authorize deployment or merge.
+The repository selector returned `scripts` for the final diff.
+[GitHub Actions run 132](https://github.com/green-business-solution/green-business-solution/actions/runs/29916772193) completed successfully, including the selected script-test step and the validator mutation tests.
+The local Vitest binary hung before test discovery in this sandbox, while the direct validator, explicit mutation harness, syntax checks, and GitHub runner completed successfully.
 
 ## Final review checklist
 
-- [ ] Focused validator passes with 54 categories and 92 unique mappings.
-- [ ] All direct source URLs return an acceptable response or an explicitly documented access limitation.
-- [ ] Repository CI selector is run against `origin/main`.
-- [ ] Selected documentation checks pass.
-- [ ] Full diff contains no runtime calculation or dataset implementation.
-- [ ] Branch commits are pushed.
-- [ ] Draft PR #29 contains exact totals, checks, blockers, risks, and implementation estimate.
+- [x] Focused validator passes with 54 categories and 92 unique mappings.
+- [x] All direct source URLs return an acceptable response or an explicitly documented access limitation.
+- [x] Repository CI selector is run against `origin/main`.
+- [x] Selected documentation checks pass.
+- [x] Full diff contains no runtime calculation or dataset implementation.
+- [x] Branch commits are pushed.
+- [x] Draft PR #29 contains exact totals, checks, blockers, risks, and implementation estimate.
