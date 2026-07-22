@@ -23,7 +23,14 @@ The data page identifies the OEDI release, directory layout, data dictionary, en
 The measure page identifies the stable measure IDs and the assumptions behind each scenario.
 The reference PDF supplies the model, sampling, and applicability method.
 
-**Lookup Inputs:** Canonical retrofit ID, site state or county, canonical building type, floor-area bin, existing-condition selector, and proposed-option selector.
+**Lookup Inputs:**
+
+- `canonical_retrofit` - Canonical retrofit ID from the linked opportunity.
+- `site_geography` - Site state or county.
+- `building_type` - Canonical commercial building type.
+- `floor_area` - Profile floor area used to select the floor-area bin and scale the result.
+- `existing_condition` - Existing-condition selector for the documented measure.
+- `proposed_option` - Proposed-option selector for the documented measure.
 
 **Value Needed:** Weighted median annual resource delta per square foot for each modeled resource, plus the 25th and 75th percentiles, applicability share, sample count, release ID, and measure ID.
 
@@ -80,7 +87,15 @@ DOE establishes Scout as a building ECM impact model.
 The ECM summaries expose measure definitions.
 The repository supplies versioned definitions and processing code.
 
-**Lookup Inputs:** Canonical retrofit ID, commercial building type, climate zone, existing building vintage class, end use, fuel, existing-condition selector, and proposed-option selector.
+**Lookup Inputs:**
+
+- `canonical_retrofit` - Canonical retrofit ID from the linked opportunity.
+- `building_type` - Commercial building type.
+- `climate_zone` - Climate zone resolved from the site location.
+- `building_vintage` - Existing building vintage class.
+- `end_use_and_fuel` - Affected end use and fuel.
+- `existing_condition` - Existing-condition selector.
+- `proposed_option` - Proposed-option selector.
 
 **Value Needed:** Applicable annual fractional resource reduction by fuel and end use, the underlying performance assumption, Scout version, and supported market segment.
 
@@ -113,7 +128,9 @@ Do not import Scout costs, emissions, adoption, or national market totals.
 The database is the public source of manufacturer certification reports.
 The templates define product-specific fields and units.
 
-**Lookup Inputs:** Product group, manufacturer, basic model number, equipment class, and rating date.
+**Lookup Inputs:**
+
+- `ccms_product_selection` - Product group, manufacturer, basic model number, equipment class, and capacity for each existing or proposed product record.
 
 **Value Needed:** The certified efficiency, capacity, annual or daily resource use, test-procedure identifier, units, certification date, and active-record status required by the category.
 
@@ -146,7 +163,9 @@ Return no model rating on ambiguous or withdrawn matches.
 The advanced page exposes downloadable datasets that are updated daily.
 The product pages define fields and certified-product scope.
 
-**Lookup Inputs:** Product category, manufacturer, model, equipment subtype, capacity or size class, and status date.
+**Lookup Inputs:**
+
+- `energy_star_product_selection` - Product category, manufacturer, model, equipment subtype, and capacity or size class for each selected product record.
 
 **Value Needed:** Category-specific certified energy, water, capacity, efficiency, and low-power-state fields with units and certification dates.
 
@@ -191,7 +210,9 @@ Do not infer a missing source-reported field from another product family.
 The tool page identifies the open-source assessment modules.
 The calculator page identifies the supported lighting, motor, pump, fan, compressed-air, process-heating, and steam calculations.
 
-**Lookup Inputs:** Calculator ID plus only the calculator-specific equipment, operating-point, schedule, and resource inputs shown in the applicable category tree.
+**Lookup Inputs:**
+
+- `measur_calculator_inputs` - Every calculator-specific equipment, operating-point, schedule, and resource input shown as an atomic leaf in the applicable category tree; the category contract deterministically selects the calculator ID.
 
 **Value Needed:** Existing and proposed annual resource use or avoided resource use, with the calculator version, input units, and warnings.
 
@@ -221,7 +242,12 @@ Never substitute a calculator's typical default for a high-sensitivity project v
 
 **Source:** National Laboratory of the Rockies, [System Advisor Model](https://sam.nlr.gov/) and [SAM open-source repository](https://github.com/NatLabRockies/SAM).
 
-**Lookup Inputs:** Site coordinates, collector type and area, tilt and azimuth, storage volume, delivered hot-water load, backup fuel, and backup efficiency.
+**Lookup Inputs:**
+
+- `site_coordinates` - Resolved site latitude and longitude.
+- `solar_thermal_configuration` - Collector type, collector area, tilt, azimuth, and storage volume.
+- `hot_water_load` - Annual delivered hot-water thermal load.
+- `backup_resource` - Backup fuel and backup efficiency.
 
 **Value Needed:** Monthly and annual useful solar thermal energy, backup-resource displacement, and unmet-load warnings.
 
@@ -252,7 +278,10 @@ Store SAM version, weather-file identifier, full inputs, annual output, and warn
 PVWatts documents the required inputs and outputs.
 SAM supplies the local PVWatts compute module.
 
-**Lookup Inputs:** Coordinates, DC capacity, module type, array type, losses, tilt, azimuth, and weather dataset.
+**Lookup Inputs:**
+
+- `site_coordinates` - Resolved site latitude and longitude.
+- `pv_array_configuration` - DC capacity, module type, array type, losses, tilt, and azimuth.
 
 **Value Needed:** Hourly or monthly AC kWh, annual AC kWh, capacity factor, weather-file identifier, and warnings.
 
@@ -283,7 +312,11 @@ For annual energy-only value, cap same-period onsite consumption offset at impor
 The Toolkit supplies location and height resource data.
 SAM supplies the turbine power-curve simulation.
 
-**Lookup Inputs:** Coordinates, hub height, turbine power curve or exact model, losses, and analysis year.
+**Lookup Inputs:**
+
+- `site_coordinates` - Resolved site latitude and longitude.
+- `wind_system_configuration` - Hub height, exact turbine model or power curve, and losses.
+- `analysis_year` - Analysis year used to select the wind-resource series.
 
 **Value Needed:** Hourly and annual AC kWh, capacity factor, resource dataset version, and warnings.
 
@@ -314,7 +347,10 @@ Use hourly output for tariff coincidence and cap onsite offset at imported load 
 The API documentation defines stable V3 inputs and outputs.
 REopt.jl is the local optimization engine used by the API.
 
-**Lookup Inputs:** Chronological site load, complete tariff, analysis-year calendar, technology power and energy limits, charge and discharge efficiencies, initial and terminal state constraints, and category-specific availability or event constraints.
+**Lookup Inputs:**
+
+- `chronological_load_and_tariff` - Chronological site load, complete tariff, timezone, and analysis-year calendar.
+- `reopt_category_constraints` - Applicable technology power, energy, efficiency, state, availability, event, or fixed-load-template constraints shown as atomic leaves in the category tree.
 
 **Value Needed:** Baseline and proposed annual bill components, interval dispatch, imported and exported energy, monthly peaks, and solver status.
 
@@ -351,7 +387,12 @@ The technology page supplies prime-mover and fuel-cell performance characteristi
 The methodology supplies the separate heat-and-power energy balance.
 The calculator provides a reviewable workbook implementation.
 
-**Lookup Inputs:** Prime mover, fuel, capacity bin, annual operating hours or capacity factor, electric efficiency, recoverable-heat ratio, and useful thermal-load coincidence.
+**Lookup Inputs:**
+
+- `prime_mover_and_fuel` - Prime-mover technology and input fuel.
+- `generation_capacity` - Total installed capacity used to select the performance bin.
+- `operating_profile` - Annual operating hours, load fraction, or capacity factor.
+- `thermal_load_coincidence` - [Conditional] Coincident useful thermal-load limit when recovered heat is modeled.
 
 **Value Needed:** Annual electricity generation, annual input fuel, useful recovered heat, displaced boiler fuel, and source table or workbook version.
 
@@ -382,7 +423,9 @@ Exclude emissions and all cost assumptions in EPA tools.
 **Source:** U.S. Department of Energy and U.S. Environmental Protection Agency, [FuelEconomy.gov web services and bulk downloads](https://www.fueleconomy.gov/feg/ws/index.shtml).
 The page defines the downloadable current vehicle table and the `comb08` and `combE` fields used here.
 
-**Lookup Inputs:** Model year, make, model, drive or option, and fuel type for existing and proposed vehicles.
+**Lookup Inputs:**
+
+- `vehicle_selection` - Model year, make, model, drive or option, and fuel type for each selected vehicle record.
 
 **Value Needed:** Combined gallons per mile or kWh per mile, vehicle record ID, model year, and update date.
 
@@ -413,7 +456,9 @@ Do not use the dataset's annual cost fields because they embed generic mileage a
 **Source:** U.S. Environmental Protection Agency, [WaterSense commercial-building resources](https://www.epa.gov/watersense/commercial-buildings), [WaterSense at Work best-management-practice guide](https://www.epa.gov/watersense/best-management-practices), and [WaterSense urinal criteria](https://www.epa.gov/watersense/urinals).
 The guide contains fixture inventory methods, equations, and replacement-performance values.
 
-**Lookup Inputs:** Fixture type, existing rated flow or flush volume, proposed rated flow or flush volume, and applicable WaterSense specification version.
+**Lookup Inputs:**
+
+- `fixture_selection` - Fixture type and existing and proposed rated flow or flush volume.
 
 **Value Needed:** Gallons per minute or gallons per flush with specification and source location.
 
@@ -443,7 +488,11 @@ Never substitute a flush frequency for a rated flush volume.
 
 **Source:** U.S. Environmental Protection Agency, [Water Budget Tool and data download](https://www.epa.gov/watersense/water-budget-tool) and [commercial outdoor-water tools](https://www.epa.gov/watersense/tools-ci-facilities).
 
-**Lookup Inputs:** ZIP code, landscape area by hydrozone, plant factor, irrigation method or efficiency, and controller treatment.
+**Lookup Inputs:**
+
+- `site_zip` - Site ZIP code used for the climate lookup.
+- `hydrozone_definition` - Landscape area and plant factor for each hydrozone.
+- `irrigation_configuration` - Existing and proposed irrigation method, efficiency, and controller treatment.
 
 **Value Needed:** Annual baseline and proposed landscape water allowance in gallons, with climate-data and tool version.
 
@@ -473,7 +522,9 @@ Store workbook version and input hydrozones.
 
 **Source:** U.S. Environmental Protection Agency, [WaterSense at Work best-management practices](https://www.epa.gov/watersense/best-management-practices) and [tools for commercial and institutional facilities](https://www.epa.gov/watersense/tools-ci-facilities).
 
-**Lookup Inputs:** Applicable method, measured leak flow and duration, or cooling-tower evaporation, cycles of concentration, blowdown, and drift inputs.
+**Lookup Inputs:**
+
+- `watersense_method_inputs` - Measured leak flow and duration, or cooling-tower evaporation, cycles of concentration, blowdown, and drift inputs required by the method selected by the category contract.
 
 **Value Needed:** Annual avoidable gallons and the exact WaterSense equation or worksheet version.
 

@@ -10,78 +10,184 @@ const SOURCE_ROOT = fileURLToPath(new URL("..", import.meta.url));
 const fixtureRoots = [];
 
 afterEach(async () => {
-  await Promise.all(
-    fixtureRoots.splice(0).map((fixtureRoot) =>
-      rm(fixtureRoot, { recursive: true, force: true })
-    )
-  );
+  await Promise.all(fixtureRoots.splice(0).map((fixtureRoot) => rm(fixtureRoot, { recursive: true, force: true })));
 });
 
 describe("validate-operational-savings-information-trees", () => {
-  it("accepts the canonical taxonomy, trees, registry, and audit", async () => {
+  it("accepts the canonical registries and all current generated review pages", async () => {
     const fixtureRoot = await createFixture();
 
     expect(runValidator(fixtureRoot)).toContain(
-      "Operational-savings information-tree validation passed."
+      "Operational-savings information-tree and generated-review validation passed."
     );
   });
 
-  it("rejects stale category-index metadata", async () => {
+  it("rejects a missing generated category page", async () => {
     const fixtureRoot = await createFixture();
-    const treePath = join(fixtureRoot, "docs/operational-savings-information-trees.md");
-    const tree = await readFile(treePath, "utf8");
-    await writeFile(
-      treePath,
-      tree.replace(
-        "| `ITC-54` | Backup-power routine resource use | BLOCKED | 1 |",
-        "| `ITC-54` | Backup-power routine resource use | DRAFT | 1 |"
-      )
-    );
+    await rm(join(fixtureRoot, "docs/operational-savings-review/categories/ITC-54.md"));
 
-    expect(() => runValidator(fixtureRoot)).toThrow(
-      /ITC-54 Category Index metadata does not match/
-    );
+    expect(() => runValidator(fixtureRoot)).toThrow(/missing generated category page: ITC-54\.md/);
   });
 
-  it("rejects an information-tree terminal without a canonical source label", async () => {
+  it("rejects a stale generated category page", async () => {
     const fixtureRoot = await createFixture();
-    const treePath = join(fixtureRoot, "docs/operational-savings-information-trees.md");
-    const tree = await readFile(treePath, "utf8");
-    await writeFile(
-      treePath,
-      tree.replace(
-        "Count of identical units in project scope (User)",
-        "Count of identical units in project scope (Unknown)"
-      )
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-01.md"),
+      (text) => `${text}\nStale manual edit.\n`
     );
 
-    expect(() => runValidator(fixtureRoot)).toThrow(
-      /BR-SCOPE-QUANTITY terminal leaf lacks an allowed source label/
+    expect(() => runValidator(fixtureRoot)).toThrow(/stale generated review page: docs\/operational-savings-review\/categories\/ITC-01\.md/);
+  });
+
+  it("rejects an undefined shared branch", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateTree(fixtureRoot, (text) => text.replace(
+      "│  ├─ BR-ANNUAL-OPERATING-HOURS\n│  └─ MEASUR lighting-replacement result",
+      "│  ├─ BR-UNDEFINED-OPERATING-HOURS\n│  └─ MEASUR lighting-replacement result"
+    ));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(/undefined branch BR-UNDEFINED-OPERATING-HOURS/);
+  });
+
+  it("rejects a circular shared-branch reference", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateTree(fixtureRoot, (text) => text.replace(
+      "└─ Confirmed annual operating hours for the exact equipment or load {{lookup: measur_calculator_inputs, operating_profile}} (User)",
+      "└─ BR-ANNUAL-OPERATING-HOURS"
+    ));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(/circular shared-branch reference/);
+  });
+
+  it("rejects a missing embedded Standard", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-01.md"),
+      (text) => text.replace("### ■ STD-COMSTOCK-ANNUAL-DELTA —", "### Removed Standard —")
     );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(/ITC-01 generated page is missing embedded Standard STD-COMSTOCK-ANNUAL-DELTA/);
+  });
+
+  it("rejects a Standard without a source link", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateStandard(fixtureRoot, (text) => text.replace(
+      "https://www.fueleconomy.gov/feg/ws/index.shtml",
+      "www.fueleconomy.gov/feg/ws/index.shtml"
+    ));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(/STD-FUELECONOMY-VEHICLES Standard missing source link/);
+  });
+
+  it("rejects a Standard with a missing Automation field", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateStandard(fixtureRoot, (text) => text.replace(
+      "- **Difficulty:** Medium.\n- **Efficient Build-Time Estimate:** 3 to 5 developer days for the product groups used here.",
+      "- Difficulty: Medium.\n- **Efficient Build-Time Estimate:** 3 to 5 developer days for the product groups used here."
+    ));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(/STD-DOE-CCMS-RATINGS Standard missing Automation field \*\*Difficulty:\*\*/);
+  });
+
+  it("rejects an untraceable Standard Lookup Input", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateTree(fixtureRoot, (text) => text.replace(
+      "{{lookup: floor_area}}",
+      "{{lookup: floor_area_typo}}"
+    ));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(/ITC-01 has untraceable Standard Lookup Input STD-COMSTOCK-ANNUAL-DELTA:floor_area/);
+  });
+
+  it("rejects a formula and tree-root mismatch", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateTree(fixtureRoot, (text) => text.replace(
+      "Annual dollar savings\n├─ Annual gas reduction\n│  ├─ Current annual water-heating gas",
+      "Annual gas reduction\n├─ Current annual water-heating gas"
+    ));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(/ITC-07 formula\/tree root mismatch/);
+  });
+
+  it("rejects an incorrect atomic User-input count", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-07.md"),
+      (text) => text.replace("**Expanded User-input count:** 11", "**Expanded User-input count:** 10")
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(/ITC-07 generated atomic User-input count is 10; expected 11/);
+  });
+
+  it("rejects a missing retrofit mapping", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateTree(fixtureRoot, (text) => text.replace(
+      "- `building_benchmarking_compliance` - Building benchmarking compliance\n",
+      ""
+    ));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(/missing retrofit mapping: building_benchmarking_compliance/);
+  });
+
+  it("rejects a duplicate retrofit mapping", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateTree(fixtureRoot, (text) => text.replace(
+      "- `building_benchmarking_compliance` - Building benchmarking compliance",
+      "- `led_lighting_retrofit` - LED lighting retrofit"
+    ));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(/duplicate retrofit mapping: led_lighting_retrofit/);
+  });
+
+  it("rejects an incorrect Used By declaration", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateStandard(fixtureRoot, (text) => text.replace(
+      "**Used By:** ITC-01.",
+      "**Used By:** ITC-02."
+    ));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(/STD-COMSTOCK-ANNUAL-DELTA Used By mismatch/);
   });
 });
 
 async function createFixture() {
   const fixtureRoot = await mkdtemp(join(tmpdir(), "gbs-operational-savings-validator-"));
   fixtureRoots.push(fixtureRoot);
-  for (const directory of [
-    "docs",
-    "scripts",
-    "apps/api/server/matching"
-  ]) {
+  for (const directory of ["docs", "scripts", "apps/api/server/matching"]) {
     await mkdir(join(fixtureRoot, directory), { recursive: true });
   }
   for (const file of [
     "docs/operational-savings-information-trees.md",
     "docs/operational-savings-standard-registry.md",
     "docs/operational-savings-information-tree-audit.md",
+    "scripts/generate-operational-savings-review-pages.mjs",
     "scripts/validate-operational-savings-information-trees.mjs",
     "apps/api/server/matching/retrofitTaxonomy.mjs",
     "apps/api/server/matching/ontologies.mjs"
   ]) {
     await cp(join(SOURCE_ROOT, file), join(fixtureRoot, file));
   }
+  await cp(
+    join(SOURCE_ROOT, "docs/operational-savings-review"),
+    join(fixtureRoot, "docs/operational-savings-review"),
+    { recursive: true }
+  );
   return fixtureRoot;
+}
+
+async function mutateTree(fixtureRoot, mutate) {
+  await mutateFile(join(fixtureRoot, "docs/operational-savings-information-trees.md"), mutate);
+}
+
+async function mutateStandard(fixtureRoot, mutate) {
+  await mutateFile(join(fixtureRoot, "docs/operational-savings-standard-registry.md"), mutate);
+}
+
+async function mutateFile(path, mutate) {
+  const original = await readFile(path, "utf8");
+  const changed = mutate(original);
+  if (changed === original) throw new Error(`Mutation did not change ${path}`);
+  await writeFile(path, changed, "utf8");
 }
 
 function runValidator(fixtureRoot) {
