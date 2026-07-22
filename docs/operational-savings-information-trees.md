@@ -19,6 +19,7 @@ The focused validation command is `node scripts/validate-operational-savings-inf
 - Fixed charges are excluded unless the proposed case demonstrably removes the charge.
 - A whole-bill average is not a marginal rate.
 - Annual energy is not interval demand.
+- Categories without chronological load and tariff data value volumetric energy only and never claim demand-charge savings.
 - A utility-provider candidate is not a verified tariff or customer class.
 - User inputs are project facts that cannot be resolved safely from the profile, bills, or a Standard.
 - Standard-derived generic values must remain visible and editable.
@@ -46,7 +47,7 @@ Exclude fixed customer charges unless usage elimination also removes the charge.
 If only a whole-bill blended rate exists, use it only for a single volumetric tariff and flag the result as estimated.
 Otherwise return no dollar value while retaining the resource result.
 
-**Used By:** ITC-01 through ITC-14, ITC-17, ITC-19 through ITC-22, ITC-27 through ITC-30, and ITC-32 through ITC-47.
+**Used By:** ITC-01 through ITC-14, ITC-20 through ITC-22, ITC-29, ITC-30, and ITC-32 through ITC-54.
 
 ### BR-ANNUAL-BILL-RESOURCE - Annual billed resource baseline
 
@@ -63,7 +64,7 @@ Annual billed resource r
 Normalize only with explicit unit conversions, annualize only when at least 10 representative months are present, and retain the coverage fraction.
 Do not derive end-use energy from a whole-building bill without a documented Standard or user-confirmed allocation.
 
-**Used By:** ITC-01, ITC-03 through ITC-07, ITC-09, ITC-11, ITC-14, ITC-18, ITC-20 through ITC-22, ITC-29, ITC-34, ITC-36, ITC-45, and ITC-46.
+**Used By:** ITC-01, ITC-03 through ITC-07, ITC-09, ITC-11, ITC-14, ITC-18, ITC-20 through ITC-22, ITC-29, ITC-34, ITC-36, ITC-45, ITC-46, ITC-48, and ITC-49.
 
 ### BR-ANNUAL-OPERATING-HOURS - Confirmed annual operating time
 
@@ -73,13 +74,12 @@ Do not derive end-use energy from a whole-building bill without a documented Sta
 
 ```text
 Annual operating hours
-├─ Hours per operating day (User)
-└─ Operating days per year (User)
+└─ Confirmed annual operating hours for the exact equipment or load (User)
 ```
 
-The application may prefill hours from published business hours or an equipment schedule, but the project-specific value remains a User leaf.
+The application may derive a prefill from hours per day and operating days per year or from a published schedule, but the confirmed project-specific annual value remains one User leaf.
 
-**Used By:** ITC-09, ITC-12, ITC-20 through ITC-22, ITC-27, ITC-28, ITC-30, ITC-37 through ITC-44, and ITC-47.
+**Used By:** ITC-02, ITC-09, ITC-12, ITC-20, ITC-30, ITC-37, ITC-38, ITC-40 through ITC-43, ITC-47, and ITC-51.
 
 ### BR-INTERVAL-LOAD-AND-TARIFF - Chronological electric load and complete tariff
 
@@ -101,7 +101,7 @@ All intervals must be continuous, aligned to the tariff calendar, and reconciled
 Monthly peak values without timestamps are insufficient for dispatch, demand response, or time-of-use shifting.
 When this branch is missing, the affected interval-value category returns no estimate.
 
-**Used By:** ITC-16, ITC-17, ITC-19, ITC-23 through ITC-26, and ITC-31.
+**Used By:** ITC-16, ITC-17, ITC-19, ITC-23 through ITC-28, and ITC-31.
 
 ### BR-SCOPE-QUANTITY - In-scope equipment quantity
 
@@ -116,28 +116,28 @@ In-scope quantity
 
 Split a project into rows when equipment models, schedules, ratings, or operating conditions differ materially.
 
-**Used By:** ITC-02, ITC-06 through ITC-08, ITC-10, ITC-12, ITC-13, ITC-20 through ITC-22, ITC-27 through ITC-30, ITC-32, ITC-33, ITC-37 through ITC-44, and ITC-47.
+**Used By:** ITC-02, ITC-10, ITC-12, ITC-13, ITC-27, ITC-29, ITC-30, ITC-32, ITC-33, ITC-37 through ITC-44, ITC-47, and ITC-50 through ITC-54.
 
 ## Category Index
 
 | Category | Information-tree identity | Status | Retrofit count |
 |---|---|---|---:|
-| `ITC-01` | ComStock archetype annual resource delta | RESEARCHED — READY FOR HUMAN REVIEW | 14 |
+| `ITC-01` | ComStock archetype annual resource delta | RESEARCHED — READY FOR HUMAN REVIEW | 13 |
 | `ITC-02` | Exterior lighting power and schedule | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
-| `ITC-03` | Fuel-fired equipment efficiency replacement | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
+| `ITC-03` | Fuel-fired equipment efficiency replacement | DRAFT | 1 |
 | `ITC-04` | Boiler control fractional fuel reduction | DRAFT | 1 |
 | `ITC-05` | Duct loss reduction | DRAFT | 1 |
-| `ITC-06` | Heat-pump water-heater resource switching | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
-| `ITC-07` | Gas water-heater efficiency replacement | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
+| `ITC-06` | Heat-pump water-heater resource switching | DRAFT | 1 |
+| `ITC-07` | Gas water-heater efficiency replacement | DRAFT | 1 |
 | `ITC-08` | Solar thermal backup-resource displacement | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
 | `ITC-09` | Water-heating recirculation loss reduction | DRAFT | 1 |
-| `ITC-10` | Refrigeration certified-rating replacement | RESEARCHED — READY FOR HUMAN REVIEW | 2 |
+| `ITC-10` | Refrigeration certified-rating replacement | DRAFT | 1 |
 | `ITC-11` | Refrigeration control fractional reduction | DRAFT | 3 |
 | `ITC-12` | Refrigeration EC-motor power reduction | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
-| `ITC-13` | Product resource intensity per activity | RESEARCHED — READY FOR HUMAN REVIEW | 6 |
+| `ITC-13` | Ice-machine production resource intensity | DRAFT | 1 |
 | `ITC-14` | Scout ECM fractional resource screen | BLOCKED | 5 |
-| `ITC-15` | No direct operational-resource calculation | RESEARCHED — READY FOR HUMAN REVIEW | 13 |
-| `ITC-16` | Demand-response interval bill delta | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
+| `ITC-15` | No direct operational-resource calculation | RESEARCHED — READY FOR HUMAN REVIEW | 11 |
+| `ITC-16` | Demand-response interval bill delta | DRAFT | 1 |
 | `ITC-17` | PV interval generation and bill offset | RESEARCHED — READY FOR HUMAN REVIEW | 3 |
 | `ITC-18` | Community-solar contract bill delta | DRAFT | 1 |
 | `ITC-19` | Wind interval generation and bill offset | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
@@ -147,8 +147,8 @@ Split a project into rows when equipment models, schedules, ratings, or operatin
 | `ITC-23` | Battery interval dispatch | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
 | `ITC-24` | Solar-plus-storage interval dispatch | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
 | `ITC-25` | Thermal-storage interval dispatch | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
-| `ITC-26` | Microgrid composite interval dispatch | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
-| `ITC-27` | Public EVSE added-load bill impact | RESEARCHED — READY FOR HUMAN REVIEW | 3 |
+| `ITC-26` | Microgrid composite interval dispatch | DRAFT | 1 |
+| `ITC-27` | Public EVSE added-load bill impact | DRAFT | 3 |
 | `ITC-28` | Fleet charging added-load bill impact | DRAFT | 1 |
 | `ITC-29` | Light-duty vehicle resource switching | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
 | `ITC-30` | Forklift resource switching | BLOCKED | 1 |
@@ -158,7 +158,7 @@ Split a project into rows when equipment models, schedules, ratings, or operatin
 | `ITC-34` | Landscape water-budget reduction | RESEARCHED — READY FOR HUMAN REVIEW | 2 |
 | `ITC-35` | Measured leak avoidance | DRAFT | 1 |
 | `ITC-36` | Cooling-tower water and fan optimization | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
-| `ITC-37` | Demand-controlled kitchen ventilation | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
+| `ITC-37` | Demand-controlled kitchen ventilation | DRAFT | 1 |
 | `ITC-38` | Motor input-power efficiency replacement | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
 | `ITC-39` | Variable-speed load-bin reduction | RESEARCHED — READY FOR HUMAN REVIEW | 2 |
 | `ITC-40` | Pump wire-to-water replacement | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
@@ -169,6 +169,13 @@ Split a project into rows when equipment models, schedules, ratings, or operatin
 | `ITC-45` | Waste-heat useful-energy recovery | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
 | `ITC-46` | Industrial process electrification balance | RESEARCHED — READY FOR HUMAN REVIEW | 2 |
 | `ITC-47` | Steam-trap loss reduction | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
+| `ITC-48` | Induction-cooking measured resource switch | BLOCKED | 1 |
+| `ITC-49` | Walk-in refrigeration measured system delta | BLOCKED | 1 |
+| `ITC-50` | Commercial cooking tested-duty and idle balance | DRAFT | 3 |
+| `ITC-51` | Air-filtration fan-power delta | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
+| `ITC-52` | Commercial dishwasher water, heat, and idle balance | DRAFT | 1 |
+| `ITC-53` | Commercial laundry cycle resource balance | DRAFT | 1 |
+| `ITC-54` | Backup-power routine resource use | BLOCKED | 1 |
 
 ## Information Category Trees
 
@@ -190,7 +197,6 @@ Split a project into rows when equipment models, schedules, ratings, or operatin
 - `insulation_upgrade` - Insulation upgrade
 - `window_replacement` - Window replacement
 - `window_film_shading_retrofit` - Window film / shading retrofit
-- `induction_cooking_equipment` - Induction cooking equipment
 - `demand_controlled_ventilation` - Demand-controlled ventilation
 
 **Primary Formula:**
@@ -222,7 +228,8 @@ Annual direct resource savings
 
 **Standards:** STD-COMSTOCK-ANNUAL-DELTA.
 
-**Notes:** Only the 14 explicitly crosswalked ComStock measures belong here.
+**Notes:** Only the 13 explicitly crosswalked ComStock measures belong here.
+Return no estimate when the linked opportunity scope does not exactly match a documented ComStock upgrade-measure record.
 Do not add separate measure results together.
 Show the interquartile range and applicability share beside the screening estimate.
 
@@ -240,7 +247,7 @@ Show the interquartile range and applicability share beside the screening estima
 
 **Supporting Formula(s):**
 
-`annual_on_hours = darkness_hours × control_on_fraction`
+`fixture_input_kW = fixture_input_W / 1000`
 
 **Information Tree:**
 
@@ -249,9 +256,8 @@ Annual electricity reduction
 ├─ BR-SCOPE-QUANTITY
 ├─ Existing input kW per fixture (User)
 ├─ Proposed input kW per fixture (User)
-├─ Site coordinates (Profile)
-├─ Control-on fraction (User)
-├─ Darkness-hour calculation (Standard)
+├─ BR-ANNUAL-OPERATING-HOURS
+├─ MEASUR lighting-replacement result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
@@ -261,7 +267,7 @@ Annual electricity reduction
 
 ### ITC-03 - Fuel-fired equipment efficiency replacement
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Retrofits:**
 
@@ -291,6 +297,7 @@ Annual fuel reduction
 **Standards:** STD-DOE-CCMS-RATINGS.
 
 **Notes:** Return no result when furnace fuel cannot be isolated from other gas end uses.
+The category remains DRAFT until a repeatable DOE database export path is approved.
 
 ### ITC-04 - Boiler control fractional fuel reduction
 
@@ -361,7 +368,7 @@ Annual HVAC resource reduction
 
 ### ITC-06 - Heat-pump water-heater resource switching
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Retrofits:**
 
@@ -375,6 +382,8 @@ Annual HVAC resource reduction
 
 `annual_hot_water_load = current_annual_input × η_existing`
 
+`avoided_existing_resource = current_annual_input` for a complete replacement of the allocated load.
+
 `added_kWh = annual_hot_water_load / UEF_or_COP_proposed`
 
 **Information Tree:**
@@ -384,7 +393,6 @@ Annual resource switch
 ├─ Current annual water-heating input
 │  ├─ BR-ANNUAL-BILL-RESOURCE
 │  └─ Water-heating share (User)
-├─ BR-SCOPE-QUANTITY
 ├─ Existing water-heater model (User)
 ├─ Proposed heat-pump water-heater model (User)
 ├─ Certified existing and proposed performance (Standard)
@@ -394,10 +402,11 @@ Annual resource switch
 **Standards:** STD-DOE-CCMS-RATINGS and STD-ENERGY-STAR-PRODUCT-DATA.
 
 **Notes:** Do not use ComStock for this category because its published commercial service-water-heating coverage is incomplete.
+The category remains DRAFT until a repeatable DOE database export path is approved for existing products that are not in current ENERGY STAR data.
 
 ### ITC-07 - Gas water-heater efficiency replacement
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Retrofits:**
 
@@ -418,7 +427,6 @@ Annual gas reduction
 ├─ Current annual water-heating gas
 │  ├─ BR-ANNUAL-BILL-RESOURCE
 │  └─ Water-heating share (User)
-├─ BR-SCOPE-QUANTITY
 ├─ Existing model (User)
 ├─ Proposed model (User)
 ├─ Certified efficiencies (Standard)
@@ -428,6 +436,7 @@ Annual gas reduction
 **Standards:** STD-DOE-CCMS-RATINGS and STD-ENERGY-STAR-PRODUCT-DATA.
 
 **Notes:** The current end-use allocation must be confirmed rather than inferred from business type alone.
+The category remains DRAFT until a repeatable DOE database export path is approved.
 
 ### ITC-08 - Solar thermal backup-resource displacement
 
@@ -454,7 +463,6 @@ Annual backup-resource reduction
 ├─ Storage volume (User)
 ├─ Annual delivered hot-water load (User)
 ├─ Backup resource and efficiency (User)
-├─ BR-SCOPE-QUANTITY
 ├─ SAM solar-thermal output (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
@@ -500,12 +508,11 @@ Annual resource reduction
 
 ### ITC-10 - Refrigeration certified-rating replacement
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Retrofits:**
 
 - `high_efficiency_refrigeration_equipment` - High-efficiency refrigeration equipment
-- `walk_in_cooler_freezer_upgrade` - Walk-in cooler/freezer upgrade
 
 **Primary Formula:**
 
@@ -528,7 +535,8 @@ Annual electricity reduction
 
 **Standards:** STD-DOE-CCMS-RATINGS and STD-ENERGY-STAR-PRODUCT-DATA.
 
-**Notes:** These types share a category because they use different records within the same certified-rating tree and identical missing-model behavior.
+**Notes:** This category is limited to self-contained refrigeration products with a certified annual or daily energy-consumption value.
+The category remains DRAFT until a repeatable DOE database export path is approved.
 
 ### ITC-11 - Refrigeration control fractional reduction
 
@@ -598,42 +606,38 @@ Annual electricity reduction
 
 **Notes:** Fan duty must be unchanged; a changed fan operating profile belongs in ITC-39 or ITC-41.
 
-### ITC-13 - Product resource intensity per activity
+### ITC-13 - Ice-machine production resource intensity
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Retrofits:**
 
 - `efficient_ice_machine` - Efficient ice machine
-- `high_efficiency_laundry_equipment` - High-efficiency laundry equipment
-- `high_efficiency_commercial_dishwasher` - High-efficiency commercial dishwasher
-- `high_efficiency_fryer` - High-efficiency fryer
-- `high_efficiency_oven` - High-efficiency oven
-- `high_efficiency_steamer` - High-efficiency steamer
 
 **Primary Formula:**
 
-`S = quantity × annual_activity × Σ_r ((intensity_existing,r - intensity_proposed,r) × p_r)`
+`S = quantity × annual_ice_100lb_units_per_machine × ((kWh_per_100lb_existing - kWh_per_100lb_proposed) × p_electric + (water_gallons_per_100lb_existing - water_gallons_per_100lb_proposed) × p_water_sewer)`
 
 **Supporting Formula(s):**
 
-`annual_activity` uses the category dataset's tested activity unit, such as batches, cycles, racks, pounds of ice, or pounds of food.
+`annual_ice_100lb_units_per_machine = annual_ice_production_lb_per_machine / 100`
 
 **Information Tree:**
 
 ```text
-Annual multi-resource reduction
+Annual ice-machine resource reduction
 ├─ BR-SCOPE-QUANTITY
-├─ Existing product category and model (User)
-├─ Proposed product category and model (User)
-├─ Annual activity in the certified test unit (User)
-├─ Certified resource intensity by model and resource (Standard)
+├─ Existing ice-machine type and model (User)
+├─ Proposed ice-machine type and model (User)
+├─ Annual pounds of ice produced per machine (User)
+├─ Certified kWh and potable gallons per 100 pounds of ice (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
 **Standards:** STD-DOE-CCMS-RATINGS and STD-ENERGY-STAR-PRODUCT-DATA.
 
-**Notes:** The local product adapter must normalize each category to its own documented activity unit and must never compare unlike test methods.
+**Notes:** Batch and continuous machines must match on certified equipment type and ice-duty assumptions.
+The category remains DRAFT until DOE database access and the exact-model adapter are fixture-tested.
 
 ### ITC-14 - Scout ECM fractional resource screen
 
@@ -680,9 +684,7 @@ If any mapping fails, that retrofit must split into a project-engineering catego
 **Retrofits:**
 
 - `submetering_energy_monitoring` - Submetering / energy monitoring system
-- `resilience_backup_power_system` - Resilience / backup power system
 - `ev_make_ready_electrical_upgrade` - EV make-ready electrical upgrade
-- `air_filtration_system` - Air filtration system
 - `energy_audit` - Energy audit
 - `water_audit` - Water audit
 - `retro_commissioning_study` - Retro-commissioning study
@@ -710,12 +712,12 @@ Annual direct operational-resource savings equals zero
 
 **Standards:** None.
 
-**Notes:** Monitoring, studies, certification, compliance, enabling infrastructure, filtration, and resilience may enable later savings, but attributing another measure's savings here would double count or speculate.
+**Notes:** Monitoring, studies, certification, compliance, enabling infrastructure, and resilience may enable later savings, but attributing another measure's savings here would double count or speculate.
 Calculate a linked physical measure only in its own category.
 
 ### ITC-16 - Demand-response interval bill delta
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Retrofits:**
 
@@ -737,12 +739,15 @@ Annual bill reduction
 ├─ Controllable load and maximum shed kW (User)
 ├─ Event availability and duration (User)
 ├─ Rebound or recovery constraint (User)
-└─ REopt baseline and proposed dispatch result (Standard)
+└─ Audited load template and REopt bill result (Standard)
 ```
 
 **Standards:** STD-REOPT-LOCAL-DISPATCH.
 
-**Notes:** Program payments are incentives or revenue and remain out of scope.
+**Notes:** REopt has no generic demand-response input object.
+The adapter must first construct a fixed proposed load series from the explicit shed and rebound constraints, then use REopt only for tariff valuation.
+The category remains DRAFT until that load-template adapter has golden tests.
+Program payments are incentives or revenue and remain out of scope.
 Only avoided utility bill charges are included.
 
 ### ITC-17 - PV interval generation and bill offset
@@ -772,8 +777,7 @@ Annual PV bill reduction
 ├─ Site coordinates (Profile)
 ├─ DC capacity and array configuration (User)
 ├─ PVWatts interval AC generation (Standard)
-├─ BR-INTERVAL-LOAD-AND-TARIFF
-└─ BR-AVOIDABLE-RESOURCE-RATE
+└─ BR-INTERVAL-LOAD-AND-TARIFF
 ```
 
 **Standards:** STD-PVWATTS-V8.
@@ -837,8 +841,7 @@ Annual wind bill reduction
 ├─ Turbine model and hub height (User)
 ├─ Loss factor (User)
 ├─ WIND Toolkit resource and SAM generation (Standard)
-├─ BR-INTERVAL-LOAD-AND-TARIFF
-└─ BR-AVOIDABLE-RESOURCE-RATE
+└─ BR-INTERVAL-LOAD-AND-TARIFF
 ```
 
 **Standards:** STD-WIND-SAM.
@@ -859,18 +862,20 @@ Annual wind bill reduction
 
 **Supporting Formula(s):**
 
-`annual_generation = capacity_kW × BR-ANNUAL-OPERATING-HOURS × load_fraction`
+`annual_generation = capacity_kW × annual_operating_hours × load_fraction`
 
 `added_fuel = annual_generation / electric_efficiency`
+
+`avoided_grid_kWh = min(annual_generation, coincident_onsite_electric_load)` unless an explicit export rule exists.
 
 **Information Tree:**
 
 ```text
 Annual resource value
-├─ BR-SCOPE-QUANTITY
-├─ Capacity and prime-mover type (User)
+├─ Total installed capacity and prime-mover type (User)
 ├─ BR-ANNUAL-OPERATING-HOURS
 ├─ Operating load fraction (User)
+├─ Coincident onsite electric load or explicit export rule (User)
 ├─ Electric efficiency by technology and capacity (Standard)
 ├─ BR-ANNUAL-BILL-RESOURCE
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -898,14 +903,17 @@ Annual resource value
 
 `avoided_boiler_fuel = useful_heat / existing_boiler_efficiency`
 
+`generation = total_capacity_kW × 8760 × annual_capacity_factor`
+
+`CHP_input_fuel = generation / electric_efficiency`
+
 **Information Tree:**
 
 ```text
 Annual CHP resource value
-├─ BR-SCOPE-QUANTITY
-├─ Prime mover and capacity (User)
-├─ BR-ANNUAL-OPERATING-HOURS
-├─ Coincident useful thermal load (User)
+├─ Prime mover and total installed capacity (User)
+├─ Annual capacity factor (User)
+├─ Coincident onsite electric and useful thermal load constraints (User)
 ├─ Existing boiler efficiency (User)
 ├─ CHP performance by technology and capacity (Standard)
 ├─ BR-ANNUAL-BILL-RESOURCE
@@ -926,21 +934,26 @@ Annual CHP resource value
 
 **Primary Formula:**
 
-`S = avoided_purchased_resources - added_biomass_or_biogas_cost`
+`S = avoided_grid_kWh × p_electric + avoided_boiler_fuel × p_fuel - input_biomass_or_biogas × p_input_fuel`
 
 **Supporting Formula(s):**
 
-Use the ITC-21 energy balance with confirmed annual fuel quantity and lower heating value.
+`input_biomass_or_biogas = min(annual_available_fuel, scheduled_input_fuel)`
+
+`generation = input_biomass_or_biogas × lower_heating_value × electric_efficiency`
+
+`useful_heat = min(input_biomass_or_biogas × lower_heating_value × recoverable_heat_fraction, coincident_thermal_load)`
+
+`avoided_boiler_fuel = useful_heat / existing_boiler_efficiency`
 
 **Information Tree:**
 
 ```text
 Annual biomass or biogas resource value
-├─ BR-SCOPE-QUANTITY
 ├─ Confirmed annual fuel availability and unit (User)
 ├─ Fuel lower heating value (User)
 ├─ Conversion technology and capacity (User)
-├─ BR-ANNUAL-OPERATING-HOURS
+├─ Operating schedule and coincident onsite electric and useful thermal loads (User)
 ├─ Performance by technology and fuel (Standard)
 ├─ BR-ANNUAL-BILL-RESOURCE
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -973,7 +986,7 @@ Do not monetize avoided disposal, renewable credits, or fuel that is not contrac
 Annual battery bill reduction
 ├─ BR-INTERVAL-LOAD-AND-TARIFF
 ├─ Power and usable-energy capacity (User)
-├─ Round-trip efficiency (User)
+├─ Charge and discharge efficiencies (User)
 ├─ Dispatch availability and reserve constraint (User)
 └─ REopt baseline and proposed bill result (Standard)
 ```
@@ -1047,7 +1060,7 @@ Annual thermal-storage bill reduction
 
 ### ITC-26 - Microgrid composite interval dispatch
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Retrofits:**
 
@@ -1066,20 +1079,25 @@ Apply the ITC-17, ITC-20 or ITC-21, and ITC-23 resource balances inside one opti
 ```text
 Annual microgrid direct bill reduction
 ├─ BR-INTERVAL-LOAD-AND-TARIFF
-├─ Included generation technologies and capacities (User)
-├─ Included storage power and energy (User)
-├─ Fuel and useful-heat constraints (User)
-├─ CHP performance where applicable (Standard)
+├─ Included component types and fixed sizes (User)
+├─ Component site and operating inputs
+│  ├─ Site coordinates when PV or wind is included (Profile)
+│  └─ Complete applicable ITC-17, ITC-19, ITC-20, ITC-21, or ITC-23 input gate (User)
+├─ PV or wind interval generation when included (Standard)
+├─ Fuel-cell or CHP performance when included (Standard)
+├─ Storage power, energy, efficiency, and reserve constraint when included (User)
 └─ REopt composite dispatch result (Standard)
 ```
 
-**Standards:** STD-EPA-CHP-PERFORMANCE and STD-REOPT-LOCAL-DISPATCH.
+**Standards:** STD-PVWATTS-V8, STD-WIND-SAM, STD-EPA-CHP-PERFORMANCE, and STD-REOPT-LOCAL-DISPATCH.
 
-**Notes:** Reliability and resilience value are excluded even when the physical system can island.
+**Notes:** Every included component must pass its own category input gate before the composite may run.
+The category remains DRAFT until the conditional component schema and cross-category regression fixtures are approved.
+Reliability and resilience value are excluded even when the physical system can island.
 
 ### ITC-27 - Public EVSE added-load bill impact
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Retrofits:**
 
@@ -1089,30 +1107,31 @@ Annual microgrid direct bill reduction
 
 **Primary Formula:**
 
-`S = -(delivered_kWh / active_efficiency + standby_kWh) × p_electric`
+`S = baseline_annual_bill - proposed_annual_bill`
 
 **Supporting Formula(s):**
 
-`delivered_kWh = sessions_per_year × mean_delivered_kWh_per_session`
+`proposed_load_t = baseline_load_t + quantity × (charging_input_kWh_t + standby_kWh_t)`
 
-`standby_kWh = standby_kW × noncharging_hours`
+`charging_input_kWh_t = delivered_kWh_t / active_efficiency`
 
 **Information Tree:**
 
 ```text
-Annual added electric cost
+Annual public-charging bill impact
+├─ BR-INTERVAL-LOAD-AND-TARIFF
 ├─ BR-SCOPE-QUANTITY
-├─ Sessions per year (User)
-├─ Mean delivered kWh per session (User)
-├─ Charger model (User)
-├─ BR-ANNUAL-OPERATING-HOURS
+├─ Session arrival, duration, and delivered kWh distribution per charger (User)
+├─ Charger model and rated power (User)
 ├─ Certified active efficiency and standby power (Standard)
-└─ BR-AVOIDABLE-RESOURCE-RATE
+└─ Audited session-load template and REopt bill result (Standard)
 ```
 
-**Standards:** STD-ENERGY-STAR-PRODUCT-DATA.
+**Standards:** STD-ENERGY-STAR-PRODUCT-DATA and STD-REOPT-LOCAL-DISPATCH.
 
 **Notes:** A charger creates load rather than operational savings unless paired with a separately modeled avoided transportation fuel or managed-charging measure.
+The category remains DRAFT until the session-load template and tariff regression fixtures are approved.
+Charging revenue is excluded.
 
 ### ITC-28 - Fleet charging added-load bill impact
 
@@ -1124,28 +1143,32 @@ Annual added electric cost
 
 **Primary Formula:**
 
-`S = -(annual_vehicle_kWh / charging_efficiency + standby_kWh) × p_electric`
+`S = baseline_annual_bill - proposed_unmanaged_charging_bill`
 
 **Supporting Formula(s):**
 
 `annual_vehicle_kWh = fleet_annual_miles × vehicle_kWh_per_mile`
 
+`standby_kWh = installed_ports × standby_kW_per_port × noncharging_hours`
+
 **Information Tree:**
 
 ```text
 Annual fleet charging added cost
-├─ BR-SCOPE-QUANTITY
+├─ BR-INTERVAL-LOAD-AND-TARIFF
 ├─ Annual fleet miles and depot allocation (User)
 ├─ Selected vehicle model or measured kWh per mile (User)
-├─ Charger model and port count (User)
-├─ BR-ANNUAL-OPERATING-HOURS
+├─ Vehicle arrival, departure, and uncontrolled charging rule (User)
+├─ Charger model, rated power, and installed port count (User)
 ├─ Vehicle and charger efficiency (Standard)
-└─ BR-AVOIDABLE-RESOURCE-RATE
+└─ Audited fleet-load template and REopt bill result (Standard)
 ```
 
-**Standards:** STD-FUELECONOMY-VEHICLES and STD-ENERGY-STAR-PRODUCT-DATA.
+**Standards:** STD-FUELECONOMY-VEHICLES, STD-ENERGY-STAR-PRODUCT-DATA, and STD-REOPT-LOCAL-DISPATCH.
 
 **Notes:** Medium- and heavy-duty vehicles outside FuelEconomy.gov require a measured or vendor-confirmed efficiency and remain DRAFT.
+Do not add this electric bill impact to the electricity term in ITC-29.
+For a combined fleet-electrification view, use this category's bill delta with ITC-29's avoided fuel term only.
 
 ### ITC-29 - Light-duty vehicle resource switching
 
@@ -1157,7 +1180,7 @@ Annual fleet charging added cost
 
 **Primary Formula:**
 
-`S = avoided_fuel_units × p_fuel - added_kWh × p_electric`
+`S = quantity × (avoided_fuel_units × p_fuel - added_kWh × p_electric)`
 
 **Supporting Formula(s):**
 
@@ -1181,6 +1204,7 @@ Annual vehicle resource switch
 **Standards:** STD-FUELECONOMY-VEHICLES.
 
 **Notes:** Exclude purchase price, maintenance, incentives, and emissions.
+Do not add this category's electricity term to ITC-28.
 
 ### ITC-30 - Forklift resource switching
 
@@ -1270,7 +1294,7 @@ Annual managed-charging bill reduction
 Annual water and heating-resource reduction
 ├─ BR-SCOPE-QUANTITY
 ├─ Uses per year and duration per use (User)
-├─ Hot-water fraction (User)
+├─ Hot-water fraction and temperature rise when nonzero (User)
 ├─ Existing and proposed fixture type or rating (User)
 ├─ Rated flow values (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -1327,6 +1351,8 @@ Annual water reduction
 **Supporting Formula(s):**
 
 Use the WaterSense Water Budget Tool equations with constant climate and landscape area across cases.
+
+`avoided_water = min(max(baseline_landscape_gallons - proposed_landscape_gallons, 0), annual_billed_water)`
 
 **Information Tree:**
 
@@ -1412,7 +1438,7 @@ Annual cooling-tower resource reduction
 
 ### ITC-37 - Demand-controlled kitchen ventilation
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Retrofits:**
 
@@ -1426,6 +1452,8 @@ Annual cooling-tower resource reduction
 
 `fan_kW_fraction = airflow_fraction³` for applicable variable-speed fan systems.
 
+`avoided_fan_kWh = quantity × Σ_period hours_period × (existing_fan_kW_period - proposed_fan_kW_period)`
+
 **Information Tree:**
 
 ```text
@@ -1434,6 +1462,7 @@ Annual kitchen ventilation resource reduction
 ├─ Existing fan power and airflow (User)
 ├─ Existing and proposed airflow schedule (User)
 ├─ Makeup-air heating and cooling system (User)
+├─ Site location for outdoor conditions (Profile)
 ├─ BR-ANNUAL-OPERATING-HOURS
 ├─ MEASUR fan and thermal result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -1442,6 +1471,7 @@ Annual kitchen ventilation resource reduction
 **Standards:** STD-DOE-MEASUR.
 
 **Notes:** The cube law applies only within the validated system range and must not replace a measured fan curve when available.
+The category remains DRAFT until the makeup-air thermal calculation and weather adapter are source-mapped and fixture-tested.
 
 ### ITC-38 - Motor input-power efficiency replacement
 
@@ -1464,8 +1494,7 @@ No additional formula is required.
 ```text
 Annual motor electricity reduction
 ├─ BR-SCOPE-QUANTITY
-├─ Motor rated shaft power and speed (User)
-├─ Operating load fraction (User)
+├─ Motor rated shaft power, speed, and operating load fraction (User)
 ├─ Existing and proposed motor class (User)
 ├─ BR-ANNUAL-OPERATING-HOURS
 ├─ MEASUR motor efficiencies (Standard)
@@ -1501,7 +1530,6 @@ Annual variable-speed electricity reduction
 ├─ Existing full-load input kW (User)
 ├─ Annual hours by load or speed bin (User)
 ├─ Proposed minimum speed and control rule (User)
-├─ BR-ANNUAL-OPERATING-HOURS
 ├─ MEASUR load-bin result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
@@ -1532,8 +1560,7 @@ Annual variable-speed electricity reduction
 Annual pump electricity reduction
 ├─ BR-SCOPE-QUANTITY
 ├─ Flow and total dynamic head (User)
-├─ Existing pump and motor data (User)
-├─ Proposed pump and motor data (User)
+├─ Existing and proposed pump and motor data (User)
 ├─ BR-ANNUAL-OPERATING-HOURS
 ├─ MEASUR pump assessment result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -1566,8 +1593,7 @@ Annual pump electricity reduction
 Annual fan-system electricity reduction
 ├─ BR-SCOPE-QUANTITY
 ├─ Airflow and pressure rise (User)
-├─ Existing fan and motor data (User)
-├─ Proposed fan and motor data (User)
+├─ Existing and proposed fan and motor data (User)
 ├─ BR-ANNUAL-OPERATING-HOURS
 ├─ MEASUR fan assessment result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -1576,6 +1602,7 @@ Annual fan-system electricity reduction
 **Standards:** STD-DOE-MEASUR.
 
 **Notes:** The two taxonomy types share an identical fan-system boundary and calculation tree.
+Return no estimate when an efficient-ventilation opportunity changes heat recovery, outdoor-air quantity, or controls outside that fan-system boundary.
 
 ### ITC-42 - Air-compressor specific-power replacement
 
@@ -1631,8 +1658,7 @@ Use the selected MEASUR leak-measurement method to resolve `leak_flow`.
 Annual compressed-air leak electricity reduction
 ├─ BR-SCOPE-QUANTITY
 ├─ Measured leak method and observations (User)
-├─ System pressure (User)
-├─ Compressor specific power (User)
+├─ System pressure and compressor specific power (User)
 ├─ BR-ANNUAL-OPERATING-HOURS
 ├─ MEASUR leak-flow result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -1666,7 +1692,6 @@ Annual compressed-air control electricity reduction
 ├─ Compressor type and rated data (User)
 ├─ Existing and proposed control modes (User)
 ├─ Annual load profile by bin (User)
-├─ BR-ANNUAL-OPERATING-HOURS
 ├─ MEASUR control-profile result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
@@ -1685,11 +1710,13 @@ Annual compressed-air control electricity reduction
 
 **Primary Formula:**
 
-`S = useful_recovered_heat / displaced_system_efficiency × p_displaced_resource - added_auxiliary_kWh × p_electric`
+`S = avoided_displaced_resource × p_displaced_resource - added_auxiliary_kWh × p_electric`
 
 **Supporting Formula(s):**
 
 `useful_recovered_heat = min(available_waste_heat × recovery_efficiency, coincident_useful_heat_load)`
+
+`avoided_displaced_resource = min(useful_recovered_heat / displaced_system_efficiency, billed_displaced_resource)`
 
 **Information Tree:**
 
@@ -1742,6 +1769,7 @@ Annual process resource switch
 **Standards:** STD-DOE-MEASUR.
 
 **Notes:** The two retrofit types share the tree because the proposed technology selects the applicable efficiency or COP record inside the same useful-heat balance.
+Return no estimate when process-electrification scope is not a thermal process that can use this balance.
 
 ### ITC-47 - Steam-trap loss reduction
 
@@ -1758,6 +1786,8 @@ Annual process resource switch
 **Supporting Formula(s):**
 
 `boiler_fuel_per_steam_unit = steam_enthalpy_rise / boiler_efficiency`
+
+`avoided_steam_loss = steam_loss_rate × annual_pressurized_hours`
 
 **Information Tree:**
 
@@ -1776,10 +1806,262 @@ Annual steam-trap fuel reduction
 
 **Notes:** Use tested failed-trap condition, not the total installed trap count.
 
+### ITC-48 - Induction-cooking measured resource switch
+
+**Status:** BLOCKED
+
+**Retrofits:**
+
+- `induction_cooking_equipment` - Induction cooking equipment
+
+**Primary Formula:**
+
+`S = current_annual_cooking_fuel × p_fuel - proposed_annual_induction_kWh × p_electric`
+
+**Supporting Formula(s):**
+
+`current_annual_cooking_fuel = annual_billed_fuel × confirmed_cooking_share`
+
+`proposed_annual_induction_kWh = annual_cooking_activity × proposed_tested_kWh_per_activity_unit`
+
+**Information Tree:**
+
+```text
+Annual cooking resource switch
+├─ BR-ANNUAL-BILL-RESOURCE
+├─ Cooking share of billed fuel or a direct equipment measurement (User)
+├─ Annual cooking activity in the tested duty unit (User)
+├─ Proposed induction kWh per identical tested duty unit (User)
+├─ Existing and proposed duty-equivalence confirmation (User)
+└─ BR-AVOIDABLE-RESOURCE-RATE
+```
+
+**Standards:** None.
+
+**Notes:** BLOCKED because no authoritative public commercial induction model-level dataset or standardized cross-fuel duty lookup was validated.
+The broad ComStock electric-cooking scenario is not an induction-specific record and must not be used as one.
+The formula is usable only with a project-specific bill allocation or measurement and proposed performance tested for an identical cooking duty.
+
+### ITC-49 - Walk-in refrigeration measured system delta
+
+**Status:** BLOCKED
+
+**Retrofits:**
+
+- `walk_in_cooler_freezer_upgrade` - Walk-in cooler/freezer upgrade
+
+**Primary Formula:**
+
+`S = (current_annual_refrigeration_kWh - proposed_annual_refrigeration_kWh) × p_electric`
+
+**Supporting Formula(s):**
+
+`current_annual_refrigeration_kWh = annual_billed_kWh × confirmed_walk_in_share` unless direct submetering is available.
+
+**Information Tree:**
+
+```text
+Annual walk-in refrigeration electricity reduction
+├─ BR-ANNUAL-BILL-RESOURCE
+├─ Walk-in share of billed electricity or direct measurement (User)
+├─ Proposed annual system kWh for the same box load and duty (User)
+├─ Box dimensions, design temperatures, and duty-equivalence confirmation (User)
+└─ BR-AVOIDABLE-RESOURCE-RATE
+```
+
+**Standards:** None.
+
+**Notes:** BLOCKED because certified walk-in component ratings do not by themselves resolve whole-system annual kWh for a specific box and load.
+The formula is usable only with a project-specific baseline allocation or measurement and a proposed whole-system result for the same duty.
+
+### ITC-50 - Commercial cooking tested-duty and idle balance
+
+**Status:** DRAFT
+
+**Retrofits:**
+
+- `high_efficiency_fryer` - High-efficiency fryer
+- `high_efficiency_oven` - High-efficiency oven
+- `high_efficiency_steamer` - High-efficiency steamer
+
+**Primary Formula:**
+
+`S = quantity × Σ_r ((annual_activity_per_unit × (active_intensity_existing,r - active_intensity_proposed,r) + annual_idle_hours × (idle_rate_existing,r - idle_rate_proposed,r)) × p_r)`
+
+**Supporting Formula(s):**
+
+`active_input_per_test_unit = useful_test_load_per_unit / tested_cooking_efficiency` when the certification reports efficiency rather than direct input intensity.
+
+**Information Tree:**
+
+```text
+Annual commercial cooking resource reduction
+├─ BR-SCOPE-QUANTITY
+├─ Existing and proposed product category and model selections (User)
+├─ Annual activity per unit in the certified test unit (User)
+├─ Annual idle hours per unit (User)
+├─ Certified cooking efficiency and idle energy rate by resource (Standard)
+└─ BR-AVOIDABLE-RESOURCE-RATE
+```
+
+**Standards:** STD-DOE-CCMS-RATINGS and STD-ENERGY-STAR-PRODUCT-DATA.
+
+**Notes:** These three product families share the same tested-duty plus idle-energy tree, while each adapter preserves its exact test unit and resource.
+The category remains DRAFT until DOE database access and all three product adapters are fixture-tested.
+
+### ITC-51 - Air-filtration fan-power delta
+
+**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+
+**Retrofits:**
+
+- `air_filtration_system` - Air filtration system
+
+**Primary Formula:**
+
+`S = quantity × (existing_input_kW - proposed_input_kW) × annual_hours × p_electric`
+
+**Supporting Formula(s):**
+
+`fan_input_kW = airflow × pressure_rise / (fan_efficiency × motor_efficiency)` with consistent units.
+
+**Information Tree:**
+
+```text
+Annual filtration fan electricity change
+├─ BR-SCOPE-QUANTITY
+├─ Required airflow and clean or loaded pressure rise (User)
+├─ Existing and proposed fan or filtration input data (User)
+├─ BR-ANNUAL-OPERATING-HOURS
+├─ MEASUR fan-power result (Standard)
+└─ BR-AVOIDABLE-RESOURCE-RATE
+```
+
+**Standards:** STD-DOE-MEASUR.
+
+**Notes:** Use zero existing input for a new standalone filtration load, which yields a negative direct operational value.
+Health, productivity, and indoor-air-quality benefits remain out of scope.
+
+### ITC-52 - Commercial dishwasher water, heat, and idle balance
+
+**Status:** DRAFT
+
+**Retrofits:**
+
+- `high_efficiency_commercial_dishwasher` - High-efficiency commercial dishwasher
+
+**Primary Formula:**
+
+`S = avoided_water × p_water_sewer + avoided_water_heating_input × p_heating_resource + avoided_idle_kWh × p_electric`
+
+**Supporting Formula(s):**
+
+`avoided_water = quantity × annual_racks_per_unit × (water_per_rack_existing - water_per_rack_proposed)`
+
+`water_heating_input = quantity × annual_racks_per_unit × water_per_rack × thermal_energy_per_gallon / heater_efficiency`
+
+`avoided_idle_kWh = quantity × annual_idle_hours_per_unit × (idle_kW_existing - idle_kW_proposed)`
+
+`annual_idle_hours_per_unit` may be confirmed directly or derived as `annual_energized_hours_per_unit - annual_active_wash_hours_per_unit`.
+
+**Information Tree:**
+
+```text
+Annual commercial dishwasher resource reduction
+├─ BR-SCOPE-QUANTITY
+├─ Existing and proposed machine type, sanitation method, and model selections (User)
+├─ Annual racks or operating hours in the certified test unit (User)
+├─ Annual idle hours per unit (User)
+├─ Supply and sanitation temperature rise and heater efficiency (User)
+├─ Certified water use and idle energy by model (Standard)
+└─ BR-AVOIDABLE-RESOURCE-RATE
+```
+
+**Standards:** STD-DOE-CCMS-RATINGS and STD-ENERGY-STAR-PRODUCT-DATA.
+
+**Notes:** Flight-type machines use the certified hourly activity unit instead of racks and must not be converted with an assumed racks-per-hour value.
+Report only the modeled water, water-heating, and idle-energy components when the source does not separately report active-cycle machine electricity.
+The category remains DRAFT until the sanitation, booster-heater, water, and idle-energy adapter is fixture-tested.
+
+### ITC-53 - Commercial laundry cycle resource balance
+
+**Status:** DRAFT
+
+**Retrofits:**
+
+- `high_efficiency_laundry_equipment` - High-efficiency laundry equipment
+
+**Primary Formula:**
+
+`S = avoided_water × p_water_sewer + avoided_machine_kWh × p_electric + avoided_water_heating_input × p_heating_resource`
+
+**Supporting Formula(s):**
+
+`water_per_cycle = certified_tub_volume × certified_integrated_water_factor`
+
+`avoided_water = quantity × annual_cycles_per_unit × (water_per_cycle_existing - water_per_cycle_proposed)`
+
+`water_heating_input = quantity × annual_cycles_per_unit × hot_water_per_cycle × thermal_energy_per_gallon / heater_efficiency`
+
+**Information Tree:**
+
+```text
+Annual commercial laundry resource reduction
+├─ BR-SCOPE-QUANTITY
+├─ Existing and proposed commercial washer models (User)
+├─ Annual cycles and representative load per unit (User)
+├─ Hot-water fraction, temperature rise, resource, and heater efficiency (User)
+├─ Separately reported or measured machine electricity per cycle (User)
+├─ Certified tub volume and water or energy factors (Standard)
+└─ BR-AVOIDABLE-RESOURCE-RATE
+```
+
+**Standards:** STD-DOE-CCMS-RATINGS and STD-ENERGY-STAR-PRODUCT-DATA.
+
+**Notes:** Do not apply the standardized modified-energy-factor total directly to a site bill because it combines machine, water-heating, and remaining-moisture drying assumptions.
+Return no machine-electricity component unless it is separately reported or measured.
+Commercial dryers and combined washer-dryers return no estimate until a distinct source and tree are approved.
+
+### ITC-54 - Backup-power routine resource use
+
+**Status:** BLOCKED
+
+**Retrofits:**
+
+- `resilience_backup_power_system` - Resilience / backup power system
+
+**Primary Formula:**
+
+`S = -(annual_test_fuel × p_fuel + annual_standby_kWh × p_electric)`
+
+**Supporting Formula(s):**
+
+`annual_test_fuel = quantity × test_fuel_per_hour × annual_test_hours_per_unit`
+
+`annual_standby_kWh = quantity × standby_kW_per_unit × annual_energized_hours_per_unit`
+
+**Information Tree:**
+
+```text
+Annual routine backup-power resource cost
+├─ BR-SCOPE-QUANTITY
+├─ Backup technology and fuel type (User)
+├─ Tested fuel use and standby electric input per unit (User)
+├─ Scheduled annual test operating hours per unit (User)
+├─ Annual standby energized hours per unit (User)
+└─ BR-AVOIDABLE-RESOURCE-RATE
+```
+
+**Standards:** None.
+
+**Notes:** BLOCKED because the broad taxonomy type has no validated public model-level performance source across generator, battery, and hybrid systems.
+The formula is usable with project-specific tested or contractual routine-use values.
+Exclude unpredictable outage operation and all resilience, reliability, and avoided-loss value.
+
 ## Coverage contract
 
 The validator independently imports the canonical taxonomy and parses the category sections.
-The required result is 47 categories, 92 unique retrofit mappings, zero missing IDs, and zero duplicate IDs.
+The required result is 54 categories, 92 unique retrofit mappings, zero missing IDs, and zero duplicate IDs.
 It also checks category field order, allowed statuses, terminal source labels, canonical branch and Standard references, registry usage declarations, and direct-source URL syntax.
 
 ## Change procedure

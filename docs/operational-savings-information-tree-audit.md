@@ -2,21 +2,23 @@
 
 ## Executive result
 
-The strict identity audit produces 47 information categories for 92 canonical retrofit taxonomy types.
+The strict identity audit produces 54 information categories for 92 canonical retrofit taxonomy types.
 The mapping is intended to contain every canonical ID exactly once.
 The focused validator is the independent proof and must remain green after every edit.
 
 Current documentation state:
 
-- Categories: 47.
+- Categories: 54.
 - Canonical retrofit mappings: 92.
 - Missing mappings: 0.
 - Duplicate mappings: 0.
 - Shared branches: 5.
 - Canonical Standards: 14.
 - Standards with a selected automation strategy: 14.
-- Category statuses: 36 `RESEARCHED — READY FOR HUMAN REVIEW`, 9 `DRAFT`, and 2 `BLOCKED`.
-- Standard statuses: 13 `RESEARCHED — READY FOR HUMAN REVIEW` and 1 `LIMITED`.
+- Expanded maximum User inputs per category: 5.
+- Categories above four User inputs: ITC-37, ITC-47, ITC-52, ITC-53, ITC-54.
+- Category statuses: 28 `RESEARCHED — READY FOR HUMAN REVIEW`, 21 `DRAFT`, and 5 `BLOCKED`.
+- Standard statuses: 12 `RESEARCHED — READY FOR HUMAN REVIEW` and 2 `LIMITED`.
 
 ## Audit method
 
@@ -40,9 +42,9 @@ Each selected source below was opened and its relevant data, method, access path
 
 | Standard | Verified source surface | Access and version finding | Result |
 |---|---|---|---|
-| `STD-COMSTOCK-ANNUAL-DELTA` | ComStock data, upgrade measures, OEDI layout, and 2025 Release 3 reference PDF | Public release files, data dictionary, crosswalk, and known-issue pages are available | Ready with individual-building uncertainty |
+| `STD-COMSTOCK-ANNUAL-DELTA` | ComStock data, upgrade measures, OEDI layout, and 2025 Release 3 reference PDF | Public individual-building annual-result files, data dictionary, crosswalk, and known-issue pages are available | Ready with individual-building uncertainty |
 | `STD-SCOUT-ECM-SCREEN` | DOE Scout description, ECM summaries, and open-source definitions | Public and versionable, but the five category mappings need human semantic approval | Limited |
-| `STD-DOE-CCMS-RATINGS` | DOE certification database description and product templates | Public interactive records and versioned product templates | Ready; product-specific adapters required |
+| `STD-DOE-CCMS-RATINGS` | DOE certification database, program description, and product templates | Human-accessible interactive records; anonymous automated retrieval returned HTTP 403 | Limited; analyst export required |
 | `STD-ENERGY-STAR-PRODUCT-DATA` | Product Finder datasets and EV charger product pages | Public downloadable datasets updated frequently | Ready |
 | `STD-DOE-MEASUR` | DOE MEASUR modules, downloads, and calculator list | Public open-source local execution | Ready |
 | `STD-SAM-SOLAR-THERMAL` | SAM site and source repository | Public local compute modules | Ready |
@@ -57,6 +59,8 @@ Each selected source below was opened and its relevant data, method, access path
 
 No licensed source is required by the selected architecture.
 ASHRAE and proprietary engineering databases were intentionally not made runtime or build prerequisites.
+Link validation covered 37 unique direct registry URLs.
+Thirty-six returned HTTP 200 on July 22, 2026, and the direct DOE certification database returned the explicitly documented HTTP 403.
 
 ## Current implementation constraints
 
@@ -83,17 +87,41 @@ If any exact definition is absent, that taxonomy type must split into a project-
 No authoritative public model-level dataset was validated for comparable combustion and electric forklift resource consumption under a defined duty cycle.
 The category therefore requires measured or contractual project values and remains BLOCKED for automated model lookup.
 
+### ITC-48 induction cooking performance
+
+The available ComStock cooking scenario models broad electric cooking equipment and does not validate an induction-specific cross-fuel performance record.
+No authoritative public commercial model-level dataset or standardized cross-fuel duty lookup was validated.
+The category therefore remains BLOCKED unless the project supplies a bill allocation or direct measurement and proposed induction performance tested for the same cooking duty.
+
+### ITC-49 walk-in refrigeration system performance
+
+DOE certification records describe walk-in components, but those ratings do not independently resolve whole-system annual electricity for a specific box, climate, temperature, infiltration, and product load.
+The category therefore remains BLOCKED unless the project supplies a measured or allocated baseline and a proposed whole-system result under the same duty.
+
+### ITC-54 backup-power routine use
+
+The backup-power taxonomy spans generator, battery, and hybrid systems without one validated public model-level routine-use source.
+The category therefore remains BLOCKED for automation, but project-specific test fuel and standby-electricity values can produce a bounded negative resource result.
+
 ## Draft categories and what closes them
 
 - `ITC-04`: Golden-test the selected MEASUR boiler-control adapter and approve its minimum control-sequence inputs.
+- `ITC-03`, `ITC-06`, `ITC-07`, `ITC-10`, and `ITC-13`: Approve a repeatable DOE certification-database export process and fixture-test each product adapter.
 - `ITC-05`: Approve an exact Scout duct measure or replace it with a measured leakage path.
 - `ITC-09`: Prove a minimum-input recirculation calculation without hiding pipe geometry behind defaults.
 - `ITC-11`: Approve exact Scout refrigeration-control records or split the three retrofit types.
+- `ITC-16`: Golden-test the explicit shed and rebound load-template adapter because REopt has no generic demand-response object.
 - `ITC-18`: Product-approve the contract and bill field model for community-solar credits and charges.
 - `ITC-22`: Approve the treatment of project-specific biomass or biogas fuel quality and the older EPA catalog.
+- `ITC-26`: Approve the conditional microgrid component schema and cross-category regression fixtures.
+- `ITC-27`: Golden-test the public-charging session-load template and tariff valuation path.
 - `ITC-28`: Add an authoritative path for medium- and heavy-duty fleet efficiency or restrict the category to measured values.
-- `ITC-31`: Approve the fleet availability schema and unmanaged charging counterfactual.
+- `ITC-31`: Approve the fleet availability schema, unmanaged counterfactual, and fixed-load adapter because REopt has no EV managed-charging object.
 - `ITC-35`: Confirm product behavior that reports zero until a measured leak and repair duration exist.
+- `ITC-37`: Source-map and golden-test the weather-sensitive makeup-air thermal adapter.
+- `ITC-50`: Approve the three cooking-product adapters that preserve certified test units, active efficiency, and idle energy separately.
+- `ITC-52`: Fixture-test dishwasher sanitation, booster-heater, water-use, and idle-energy treatment without assuming a racks-per-hour conversion.
+- `ITC-53`: Approve the commercial-washer adapter and require separate site-resource decomposition instead of applying the composite modified energy factor to a utility bill.
 
 ## High-uncertainty Standards
 
@@ -106,17 +134,25 @@ The application should display uncertainty as a screening range, not an invented
 ## Category boundaries requiring the most human attention
 
 1. `ITC-14` is the highest-risk boundary because all five types depend on exact Scout semantic coverage.
-2. `ITC-01` contains 14 ComStock measure records under one identical lookup tree.
+2. `ITC-01` contains 13 ComStock measure records under one identical lookup tree.
 The grouping is valid only if product accepts the same existing-condition selector, proposed-option selector, uncertainty display, bill cap, and no-measure-combination behavior for all records.
-3. `ITC-13` normalizes six product families to their own tested activity unit.
-The grouping remains valid only if the platform exposes the unit explicitly and refuses comparisons across test methods.
+3. `ITC-50` groups fryers, ovens, and steamers only through the same tested cooking-duty plus idle-energy balance.
+The grouping remains valid only if every product adapter preserves its exact test load, fuel, and reported idle unit.
 4. `ITC-39` groups VFDs and pump or fan controls only when both use the same validated load-bin input tree.
 5. `ITC-41` groups efficient fans and efficient ventilation systems only at a fan-system boundary with identical airflow, pressure, schedule, and MEASUR inputs.
 6. `ITC-46` groups industrial heat pumps and other process electrification only through the same useful-process-heat balance, with technology-specific COP or efficiency as a record selection.
+7. `ITC-48` remains separate from both ComStock and industrial process electrification because commercial cooking duty, source coverage, and missing-data behavior differ.
+8. `ITC-26` composes only component models that independently pass their own input gates and remains DRAFT until that conditional contract is executable.
+9. `ITC-27` and `ITC-28` require interval tariff valuation because EV charging can create demand charges that a volumetric average cannot represent.
+10. `ITC-10` covers only self-contained refrigeration products with a certified whole-product energy value, while `ITC-49` isolates walk-in system modeling.
+11. `ITC-13` uses directly reported ice-production intensities, `ITC-50` models cooking efficiency and idle energy, `ITC-52` isolates dishwasher sanitation and water-heating behavior, and `ITC-53` prevents standardized laundry energy assumptions from being treated as site resources.
+12. `ITC-51` is excluded from the zero-value enabling category because filtration can create or change fan electricity use.
+13. `ITC-54` is excluded from the zero-value enabling category because backup systems can consume test fuel and standby electricity even though resilience value is out of scope.
 
 ## Minimum-information review
 
-Most categories ask for two to four user confirmations.
+Every category expands to at most five User inputs after shared branches are included.
+Only `ITC-37`, `ITC-47`, `ITC-52`, `ITC-53`, and `ITC-54` require five because they respectively combine fan and makeup-air behavior, steam-loss conditions, dishwasher water and idle behavior, laundry water and site-energy decomposition, or separate backup test and standby schedules.
 High-sensitivity facts remain User leaves when the profile and bills cannot resolve them, including equipment identity, operating schedule, load fraction, interval availability, process temperature, thermal coincidence, or site wind configuration.
 
 The architecture avoids broad new Stage 1 questions.
@@ -139,8 +175,8 @@ Each local artifact must retain source version, retrieval date, schema version, 
 
 ## Efficient implementation estimate
 
-The Standards individually estimate roughly 31 to 43 developer days if built as separate first-time efforts.
-Shared ingestion, provenance, schema-diff, and regression-test infrastructure should reduce the practical program estimate to 25 to 35 focused developer days for one experienced developer using AI assistance.
+The Standards individually estimate roughly 35 to 47 developer days if built as separate first-time efforts.
+Shared ingestion, provenance, schema-diff, and regression-test infrastructure should reduce the practical program estimate to 29 to 39 focused developer days for one experienced developer using AI assistance.
 
 Recommended order:
 
@@ -148,10 +184,10 @@ Recommended order:
 2. Implement ComStock, ENERGY STAR, DOE CCMS, WaterSense, and FuelEconomy bulk ingestions.
 3. Add local MEASUR adapters with DOE golden tests.
 4. Add local PVWatts and SAM solar-thermal wrappers.
-5. Add REopt interval dispatch only after interval load and tariff completeness gates exist.
+5. Add REopt interval dispatch and the shared EV charging load-template adapters only after interval load and tariff completeness gates exist.
 6. Add WIND Toolkit caching and wind simulation.
 7. Add the small EPA CHP performance table and biomass warnings.
-8. Resolve Scout and forklift blockers after human architecture review.
+8. Resolve the Scout, forklift, induction, walk-in refrigeration, and backup-power blockers after human architecture review.
 
 ## A1, A2, and A3 review record
 
@@ -164,7 +200,7 @@ No production code, AWS resource, deployment, secret, or main-branch state is ch
 ### A2 - Adversarial correctness
 
 The final validation must prove exact taxonomy coverage, source-label syntax, category field order, unique branch and Standard definitions, and valid references.
-The manual review must also reject false shared categories, whole-bill rates presented as marginal prices, annual energy presented as demand, silent high-sensitivity defaults, combined ComStock measures, and duplicate attribution to enabling measures.
+The manual review must also reject false shared categories, whole-bill rates presented as marginal prices, annual energy presented as demand, missing quantity factors, silent high-sensitivity defaults, combined ComStock measures, and duplicate attribution to enabling measures.
 
 ### A3 - Release readiness
 
@@ -174,7 +210,7 @@ It does not authorize deployment or merge.
 
 ## Final review checklist
 
-- [ ] Focused validator passes with 47 categories and 92 unique mappings.
+- [ ] Focused validator passes with 54 categories and 92 unique mappings.
 - [ ] All direct source URLs return an acceptable response or an explicitly documented access limitation.
 - [ ] Repository CI selector is run against `origin/main`.
 - [ ] Selected documentation checks pass.

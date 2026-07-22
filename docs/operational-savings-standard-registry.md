@@ -27,18 +27,39 @@ The reference PDF supplies the model, sampling, and applicability method.
 
 **Value Needed:** Weighted median annual resource delta per square foot for each modeled resource, plus the 25th and 75th percentiles, applicability share, sample count, release ID, and measure ID.
 
-**How to Use:** Download `measure_name_crosswalk.csv`, `upgrades_lookup.json`, `data_dictionary.tsv`, `enumeration_dictionary.tsv`, and the `metadata_and_annual_results_aggregates` files for `2025/comstock_amy2018_release_3` from OEDI.
+**How to Use:** Download `measure_name_crosswalk.csv`, `upgrades_lookup.json`, `data_dictionary.tsv`, `enumeration_dictionary.tsv`, and the individual-building `metadata_and_annual_results` files for `2025/comstock_amy2018_release_3` from OEDI.
 Map only taxonomy types listed for ITC-01 to an explicit universal measure ID documented on the upgrade-measure page.
+Return no lookup record when the linked opportunity's physical scope does not exactly match that documented measure, even when the taxonomy label is broader.
 Filter by geography, building type, and floor-area bin, then retain applicable baseline and upgrade pairs.
 For each resource `r`, calculate `delta_r = baseline_annual_r - upgrade_annual_r` and summarize the building-weighted distribution.
 Store one local versioned record keyed by release, measure ID, geography level, building type, and area bin with median, quartiles, applicability share, and sample count.
 Scale the selected per-square-foot delta by profile floor area, but cap avoided consumption at the corresponding annual bill resource use.
 Do not combine separately modeled ComStock measures, and do not use California service-water-heating fields from Release 3.
 
+The reviewed taxonomy-to-measure allowlist is:
+
+| Canonical retrofit ID | Allowed ComStock universal measure ID selections |
+|---|---|
+| `led_lighting_retrofit` | `ltg_0001` |
+| `lighting_controls_retrofit` | `ltg_0002` |
+| `high_efficiency_hvac_replacement` | `hvac_0024`, `hvac_0028` |
+| `heat_pump_hvac_retrofit` | `hvac_0003`, `hvac_0004`, `hvac_0005`, `hvac_0006`, `hvac_0010`, `hvac_0018`, `hvac_0020`, `hvac_0025` |
+| `smart_thermostat_zoning_retrofit` | `hvac_0030` only when the linked scope is thermostat setback control |
+| `hvac_controls_retrofit` | `hvac_0012`, `hvac_0014`, `hvac_0031` |
+| `energy_recovery_ventilation_retrofit` | `hvac_0008` |
+| `high_efficiency_boiler_retrofit` | `hvac_0026` |
+| `ground_source_geothermal_heat_pump` | `hvac_0015`, `hvac_0016`, `hvac_0017` |
+| `insulation_upgrade` | `env_0001`, `env_0002` |
+| `window_replacement` | `env_0005` |
+| `window_film_shading_retrofit` | `env_0004` only when the linked scope is window film |
+| `demand_controlled_ventilation` | `hvac_0007` |
+
+The adapter must reject package IDs and any unlisted measure ID.
+
 **Automation:**
 
 - **Selected Strategy:** Periodic OEDI ingestion into a compact local aggregate lookup.
-- **Automation Method:** A build-time downloader validates checksums and release metadata, joins the stable measure crosswalk, computes weighted summaries, and emits a versioned artifact plus provenance manifest.
+- **Automation Method:** A build-time downloader validates checksums and release metadata, reads only dictionary-selected columns from individual-building Parquet files, joins baseline and upgrade rows by building ID, computes weighted summaries, and emits a compact versioned artifact plus provenance manifest.
 - **Difficulty:** Medium.
 - **Efficient Build-Time Estimate:** 2 to 3 developer days.
 - **Expected Accuracy or Uncertainty:** Moderate to high uncertainty for an individual building and lower uncertainty for archetype screening.
@@ -84,11 +105,11 @@ Do not import Scout costs, emissions, adoption, or national market totals.
 
 ### ■ STD-DOE-CCMS-RATINGS - DOE certified equipment ratings
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Resolve certified current or proposed equipment energy and water performance by basic model.
 
-**Source:** U.S. Department of Energy, [Compliance Certification Database and CCMS description](https://www.energy.gov/cmei/buildings/implementation-certification-and-enforcement) and [product-specific certification and test-result templates](https://www.energy.gov/cmei/buildings/standardized-templates-recording-test-results).
+**Source:** U.S. Department of Energy, [Compliance Certification Database](https://www.regulations.doe.gov/certification-data/), [CCMS and database description](https://www.energy.gov/cmei/buildings/implementation-certification-and-enforcement), and [product-specific certification and test-result templates](https://www.energy.gov/cmei/buildings/standardized-templates-recording-test-results).
 The database is the public source of manufacturer certification reports.
 The templates define product-specific fields and units.
 
@@ -96,7 +117,7 @@ The templates define product-specific fields and units.
 
 **Value Needed:** The certified efficiency, capacity, annual or daily resource use, test-procedure identifier, units, certification date, and active-record status required by the category.
 
-**How to Use:** Export or query the public Compliance Certification Database for the requested product group.
+**How to Use:** An analyst exports the requested product-group report from the public Compliance Certification Database because anonymous automated requests to the direct database returned HTTP 403 during this audit.
 Select an exact normalized manufacturer and basic-model match, then disambiguate with equipment class and capacity.
 Read only fields defined in the current product-specific template and preserve the reported units and test-procedure version.
 Store a local slowly changing dimension keyed by product group, manufacturer, basic model, class, and certification effective date.
@@ -104,16 +125,16 @@ Return no model rating on ambiguous or withdrawn matches.
 
 **Automation:**
 
-- **Selected Strategy:** Scheduled local snapshot of only covered product groups.
-- **Automation Method:** Product-specific adapters map the published report fields into a normalized rating table while retaining raw field names and provenance.
+- **Selected Strategy:** Analyst-exported, versioned local snapshots for only the covered product groups.
+- **Automation Method:** Product-specific adapters ingest saved database exports into a normalized rating table while retaining raw field names and provenance.
 - **Difficulty:** Medium.
 - **Efficient Build-Time Estimate:** 3 to 5 developer days for the product groups used here.
 - **Expected Accuracy or Uncertainty:** Low uncertainty for a correctly matched certified model; high uncertainty when the current model is unknown.
 - **Basis:** Manufacturers certify the values under DOE test procedures, but model identity is project-specific and cannot be inferred safely.
-- **Why This Is the Best Value-for-Time Strategy:** It reuses mandatory federal certifications instead of inventing typical ratings.
-- **Access, Refresh, Versioning, and Maintenance Requirements:** Public interactive database; snapshot quarterly, record retrieval date and template version, retain superseded records, and monitor product-field changes.
+- **Why This Is the Best Value-for-Time Strategy:** It reuses mandatory federal certifications without building a brittle scraper against an interface that blocks anonymous automation.
+- **Access, Refresh, Versioning, and Maintenance Requirements:** The public interactive database is human-accessible, while anonymous automated retrieval returned HTTP 403; export quarterly until DOE provides a stable approved machine endpoint, record retrieval date and template version, retain superseded records, and monitor product-field changes.
 
-**Used By:** ITC-03, ITC-06, ITC-07, ITC-10, and ITC-13.
+**Used By:** ITC-03, ITC-06, ITC-07, ITC-10, ITC-13, ITC-50, ITC-52, and ITC-53.
 
 ### ■ STD-ENERGY-STAR-PRODUCT-DATA - ENERGY STAR product datasets
 
@@ -121,7 +142,7 @@ Return no model rating on ambiguous or withdrawn matches.
 
 **Purpose:** Resolve current certified high-efficiency product performance and EVSE standby or charging efficiency.
 
-**Source:** U.S. Environmental Protection Agency, [ENERGY STAR Product Finder datasets and API](https://www.energystar.gov/productfinder/advanced) and [EV charger product criteria and finder](https://www.energystar.gov/products/ev_chargers).
+**Source:** U.S. Environmental Protection Agency, [ENERGY STAR Product Finder datasets and API](https://www.energystar.gov/productfinder/advanced), [EV charger product criteria and finder](https://www.energystar.gov/products/ev_chargers), [commercial clothes washer dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Clothes-Washers/9g6r-cpdt), [commercial ice machine dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Ice-Machines/nak5-fsjf), [commercial dishwasher dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Dishwashers/pk8q-dim8), [commercial fryer dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Fryers/edi8-b5vk), [commercial oven dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Ovens/c8av-ccf7), and [commercial steam cooker dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Steam-Cookers/vtsv-aq9u).
 The advanced page exposes downloadable datasets that are updated daily.
 The product pages define fields and certified-product scope.
 
@@ -135,6 +156,18 @@ Select exact manufacturer and model matches, then validate subtype and capacity.
 For a proposed generic selection, return the median and quartiles of currently certified products within the exact subtype and capacity bin, not the best model.
 Store dataset publication date, specification version, and product status.
 
+The adapter contracts use these source-reported field families:
+
+| Category | Required source-reported field families |
+|---|---|
+| `ITC-13` ice machines | Harvest rate, energy use per 100 pounds of ice, and potable water per 100 pounds of ice |
+| `ITC-53` commercial clothes washers | Tub volume, modified or integrated energy factor, integrated water factor, and certified annual energy assumptions |
+| `ITC-27` and `ITC-28` EVSE | Equipment subtype, rated output, active efficiency where reported, and low-power-state demand |
+| `ITC-50` fryers, ovens, and steamers | Product subtype, fuel, cooking energy efficiency, idle energy rate, and reported water rate where applicable |
+| `ITC-52` commercial dishwashers | Machine type, sanitation method, water per rack or hour, machine idle rate, and booster-heater idle rate |
+
+Do not infer a missing source-reported field from another product family.
+
 **Automation:**
 
 - **Selected Strategy:** Nightly or weekly bulk-dataset ingestion into local category adapters.
@@ -146,7 +179,7 @@ Store dataset publication date, specification version, and product status.
 - **Why This Is the Best Value-for-Time Strategy:** Daily downloadable authoritative data avoids runtime network dependence and covers several categories with one maintained pipeline.
 - **Access, Refresh, Versioning, and Maintenance Requirements:** Public; capture download date and specification version, alert on column changes, and retain inactive models for existing-equipment matching.
 
-**Used By:** ITC-06, ITC-07, ITC-10, ITC-13, ITC-27, and ITC-28.
+**Used By:** ITC-06, ITC-07, ITC-10, ITC-13, ITC-27, ITC-28, ITC-50, ITC-52, and ITC-53.
 
 ### ■ STD-DOE-MEASUR - DOE MEASUR engineering calculators
 
@@ -154,7 +187,7 @@ Store dataset publication date, specification version, and product status.
 
 **Purpose:** Calculate equipment and industrial-system resource use from the minimum measured or confirmed operating inputs.
 
-**Source:** U.S. Department of Energy, [MEASUR tool and downloads](https://www.energy.gov/cmei/ito/measur) and [calculator list and descriptions](https://www.energy.gov/cmei/amo/measur-calculator-list-and-descriptions).
+**Source:** U.S. Department of Energy, [MEASUR tool and downloads](https://www.energy.gov/cmei/ito/measur), [calculator list and descriptions](https://www.energy.gov/cmei/amo/measur-calculator-list-and-descriptions), and [ORNL MEASUR source repository](https://github.com/ORNL-AMO/AMO-Tools-Desktop).
 The tool page identifies the open-source assessment modules.
 The calculator page identifies the supported lighting, motor, pump, fan, compressed-air, process-heating, and steam calculations.
 
@@ -178,7 +211,7 @@ Never substitute a calculator's typical default for a high-sensitivity project v
 - **Why This Is the Best Value-for-Time Strategy:** One maintained federal tool covers the industrial families and preserves tested formulas without duplicating them in application code.
 - **Access, Refresh, Versioning, and Maintenance Requirements:** Public and open source; pin releases, run golden tests before upgrades, retain input schema versions, and review changes annually.
 
-**Used By:** ITC-02, ITC-04, ITC-09, ITC-12, and ITC-36 through ITC-47.
+**Used By:** ITC-02, ITC-04, ITC-09, ITC-12, ITC-36 through ITC-47, and ITC-51.
 
 ### ■ STD-SAM-SOLAR-THERMAL - SAM solar water-heating simulation
 
@@ -238,7 +271,7 @@ For annual energy-only value, cap same-period onsite consumption offset at impor
 - **Why This Is the Best Value-for-Time Strategy:** It matches the official API math without runtime API keys or availability risk.
 - **Access, Refresh, Versioning, and Maintenance Requirements:** Public code; pin module and weather versions, refresh weather deliberately, and regression-test against documented API examples.
 
-**Used By:** ITC-17 and ITC-24.
+**Used By:** ITC-17, ITC-24, and ITC-26.
 
 ### ■ STD-WIND-SAM - Wind Toolkit and SAM small-wind production
 
@@ -269,7 +302,7 @@ Use hourly output for tariff coincidence and cap onsite offset at imported load 
 - **Why This Is the Best Value-for-Time Strategy:** It is the authoritative public resource while refusing false precision from generic capacity factors.
 - **Access, Refresh, Versioning, and Maintenance Requirements:** API key and email are required for downloads; cache all source files, pin dataset and SAM versions, and refresh only when the resource dataset changes.
 
-**Used By:** ITC-19.
+**Used By:** ITC-19 and ITC-26.
 
 ### ■ STD-REOPT-LOCAL-DISPATCH - REopt interval dispatch and bill optimization
 
@@ -277,16 +310,19 @@ Use hourly output for tariff coincidence and cap onsite offset at imported load 
 
 **Purpose:** Resolve direct bill change from storage, demand flexibility, managed charging, and composite distributed-energy dispatch.
 
-**Source:** National Laboratory of the Rockies, [REopt API V3 documentation](https://developer.nlr.gov/docs/energy-optimization/reopt/v3/) and [REopt.jl open-source package](https://github.com/NatLabRockies/REopt.jl).
+**Source:** National Laboratory of the Rockies, [REopt API V3 documentation](https://developer.nlr.gov/docs/energy-optimization/reopt/v3/), [REopt.jl input reference](https://natlabrockies.github.io/REopt.jl/dev/reopt/inputs/), and [REopt.jl open-source package](https://github.com/NatLabRockies/REopt.jl).
 The API documentation defines stable V3 inputs and outputs.
 REopt.jl is the local optimization engine used by the API.
 
-**Lookup Inputs:** Chronological site load, complete tariff, analysis-year calendar, technology power and energy limits, round-trip efficiency, initial and terminal state constraints, and category-specific availability or event constraints.
+**Lookup Inputs:** Chronological site load, complete tariff, analysis-year calendar, technology power and energy limits, charge and discharge efficiencies, initial and terminal state constraints, and category-specific availability or event constraints.
 
 **Value Needed:** Baseline and proposed annual bill components, interval dispatch, imported and exported energy, monthly peaks, and solver status.
 
-**How to Use:** Run a pinned REopt.jl release locally with an explicit baseline case and a proposed case that differ only by the modeled technology.
+**How to Use:** Run a pinned REopt.jl release locally with an explicit baseline case and a proposed case that differ only by the modeled technology or fixed proposed load series.
 Use the same chronological load and full tariff in both cases.
+For native REopt technologies, set each user-specified power or energy size as both its minimum and maximum, set project costs and incentives to zero, disable outage and non-bill objectives, and compare one-year bill outputs.
+For ITC-16, ITC-27, ITC-28, and ITC-31, REopt has no generic demand-response, public-charging session, or EV managed-charging object.
+Construct the fixed proposed load series in an audited category adapter from the stated constraints, then run load-only baseline and proposed cases so REopt performs tariff valuation rather than unsupported device dispatch.
 Return `baseline_bill - proposed_bill` and the component differences, but exclude incentives, tax, financing, capital, emissions, outage, and resilience objectives.
 Require an optimal solver status and preserve the exact input payload and tariff provenance.
 Do not produce demand or time-of-use value from annual or monthly energy totals.
@@ -296,13 +332,13 @@ Do not produce demand or time-of-use value from annual or monthly energy totals.
 - **Selected Strategy:** Local REopt.jl service with constrained category templates.
 - **Automation Method:** Containerize a pinned solver and package, validate typed inputs, execute two deterministic cases, and store solver and provenance metadata.
 - **Difficulty:** Hard.
-- **Efficient Build-Time Estimate:** 5 to 7 developer days.
+- **Efficient Build-Time Estimate:** 9 to 11 developer days, including the shared public and fleet charging load-template adapters.
 - **Expected Accuracy or Uncertainty:** Moderate uncertainty with complete interval data and high uncertainty otherwise.
 - **Basis:** Dispatch is mathematically reproducible, while tariffs, degradation, availability, and future load control the result.
 - **Why This Is the Best Value-for-Time Strategy:** It supplies tested interval optimization and avoids fragile runtime API dependence or duplicated dispatch logic.
 - **Access, Refresh, Versioning, and Maintenance Requirements:** Public open source; pin package, solver, and tariff versions, maintain regression fixtures, and review model changes before upgrades.
 
-**Used By:** ITC-16, ITC-23, ITC-24, ITC-25, ITC-26, and ITC-31.
+**Used By:** ITC-16, ITC-23 through ITC-28, and ITC-31.
 
 ### ■ STD-EPA-CHP-PERFORMANCE - EPA CHP and fuel-cell performance
 
@@ -462,7 +498,7 @@ Return no estimate for a detection system without a measured leak or for a cooli
 
 - Canonical Standards: 14.
 - Standards with one selected automation strategy: 14.
-- `RESEARCHED — READY FOR HUMAN REVIEW`: 13.
-- `LIMITED`: 1.
+- `RESEARCHED — READY FOR HUMAN REVIEW`: 12.
+- `LIMITED`: 2.
 - `BLOCKED`: 0.
 - High-uncertainty Standards: STD-SCOUT-ECM-SCREEN, STD-WIND-SAM, and generic biomass or biogas use of STD-EPA-CHP-PERFORMANCE.
