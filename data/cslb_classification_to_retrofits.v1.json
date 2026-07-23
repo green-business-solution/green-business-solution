@@ -1,0 +1,375 @@
+{
+  "schemaVersion": "cslb-classification-to-retrofits.v1",
+  "classifications": [
+    {
+      "classificationCode": "A",
+      "classificationName": "General Engineering Contractor",
+      "retrofitIds": [
+        "solar_water_heating_system",
+        "rooftop_solar_pv",
+        "ground_mounted_solar_pv",
+        "solar_carport",
+        "small_wind_turbine",
+        "fuel_cell_system",
+        "combined_heat_and_power_system",
+        "biomass_biogas_energy_system",
+        "battery_storage_system",
+        "solar_plus_storage_system",
+        "thermal_energy_storage",
+        "microgrid_system",
+        "resilience_backup_power_system",
+        "fleet_charging_infrastructure",
+        "ev_make_ready_electrical_upgrade",
+        "efficient_air_compressor",
+        "waste_heat_recovery",
+        "industrial_heat_pump",
+        "process_electrification_equipment"
+      ]
+    },
+    {
+      "classificationCode": "B",
+      "classificationName": "General Building Contractor",
+      "retrofitIds": [
+        "solar_water_heating_system",
+        "window_replacement",
+        "exterior_door_replacement",
+        "rooftop_solar_pv",
+        "ground_mounted_solar_pv",
+        "solar_carport",
+        "solar_plus_storage_system"
+      ]
+    },
+    {
+      "classificationCode": "C-2",
+      "classificationName": "Insulation and Acoustical Contractor",
+      "retrofitIds": [
+        "duct_sealing_and_insulation",
+        "insulation_upgrade"
+      ]
+    },
+    {
+      "classificationCode": "C-4",
+      "classificationName": "Boiler, Hot Water Heating and Steam Fitting Contractor",
+      "retrofitIds": [
+        "high_efficiency_boiler_retrofit",
+        "boiler_controls_burner_retrofit",
+        "high_efficiency_gas_water_heater",
+        "solar_water_heating_system",
+        "water_heating_controls_recirculation",
+        "thermal_energy_storage",
+        "waste_heat_recovery",
+        "steam_trap_replacement"
+      ]
+    },
+    {
+      "classificationCode": "C-5",
+      "classificationName": "Framing and Rough Carpentry Contractor",
+      "retrofitIds": [
+        "exterior_door_replacement"
+      ]
+    },
+    {
+      "classificationCode": "C-6",
+      "classificationName": "Cabinet, Millwork and Finish Carpentry Contractor",
+      "retrofitIds": [
+        "window_replacement",
+        "exterior_door_replacement"
+      ]
+    },
+    {
+      "classificationCode": "C-7",
+      "classificationName": "Low Voltage Systems Contractor",
+      "retrofitIds": [
+        "lighting_controls_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "hvac_controls_retrofit",
+        "water_heating_controls_recirculation",
+        "refrigeration_controls_retrofit",
+        "anti_sweat_heater_controls",
+        "building_automation_system",
+        "energy_management_system",
+        "submetering_energy_monitoring",
+        "automated_demand_response_controls",
+        "smart_irrigation_controller",
+        "leak_detection_system",
+        "cooling_tower_controls_optimization",
+        "demand_controlled_kitchen_ventilation",
+        "pump_fan_controls_retrofit",
+        "compressed_air_controls",
+        "demand_controlled_ventilation"
+      ]
+    },
+    {
+      "classificationCode": "C-10",
+      "classificationName": "Electrical Contractor",
+      "retrofitIds": [
+        "led_lighting_retrofit",
+        "lighting_controls_retrofit",
+        "exterior_site_lighting_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "hvac_controls_retrofit",
+        "water_heating_controls_recirculation",
+        "refrigeration_controls_retrofit",
+        "refrigeration_ec_motor_retrofit",
+        "anti_sweat_heater_controls",
+        "building_automation_system",
+        "energy_management_system",
+        "submetering_energy_monitoring",
+        "automated_demand_response_controls",
+        "rooftop_solar_pv",
+        "ground_mounted_solar_pv",
+        "solar_carport",
+        "small_wind_turbine",
+        "fuel_cell_system",
+        "battery_storage_system",
+        "solar_plus_storage_system",
+        "microgrid_system",
+        "resilience_backup_power_system",
+        "ev_charger_installation",
+        "level_2_ev_charger_installation",
+        "dc_fast_charger_installation",
+        "fleet_charging_infrastructure",
+        "ev_make_ready_electrical_upgrade",
+        "smart_irrigation_controller",
+        "leak_detection_system",
+        "cooling_tower_controls_optimization",
+        "demand_controlled_kitchen_ventilation",
+        "high_efficiency_motor_replacement",
+        "variable_frequency_drive_retrofit",
+        "pump_fan_controls_retrofit",
+        "compressed_air_controls",
+        "process_electrification_equipment",
+        "demand_controlled_ventilation"
+      ]
+    },
+    {
+      "classificationCode": "C-17",
+      "classificationName": "Glazing Contractor",
+      "retrofitIds": [
+        "window_replacement",
+        "exterior_door_replacement"
+      ]
+    },
+    {
+      "classificationCode": "C-20",
+      "classificationName": "Warm-Air Heating, Ventilating and Air-Conditioning Contractor",
+      "retrofitIds": [
+        "high_efficiency_hvac_replacement",
+        "heat_pump_hvac_retrofit",
+        "smart_thermostat_zoning_retrofit",
+        "hvac_controls_retrofit",
+        "energy_recovery_ventilation_retrofit",
+        "high_efficiency_furnace_retrofit",
+        "duct_sealing_and_insulation",
+        "ground_source_geothermal_heat_pump",
+        "heat_pump_water_heater",
+        "building_automation_system",
+        "energy_management_system",
+        "automated_demand_response_controls",
+        "thermal_energy_storage",
+        "cooling_tower_controls_optimization",
+        "demand_controlled_kitchen_ventilation",
+        "high_efficiency_motor_replacement",
+        "variable_frequency_drive_retrofit",
+        "efficient_pump_replacement",
+        "efficient_fan_blower_replacement",
+        "pump_fan_controls_retrofit",
+        "industrial_heat_pump",
+        "efficient_ventilation_system",
+        "air_filtration_system",
+        "demand_controlled_ventilation"
+      ]
+    },
+    {
+      "classificationCode": "C-27",
+      "classificationName": "Landscaping Contractor",
+      "retrofitIds": [
+        "smart_irrigation_controller",
+        "efficient_irrigation_retrofit"
+      ]
+    },
+    {
+      "classificationCode": "C-33",
+      "classificationName": "Painting and Decorating Contractor",
+      "retrofitIds": [
+        "cool_roof_reflective_roof"
+      ]
+    },
+    {
+      "classificationCode": "C-34",
+      "classificationName": "Pipeline Contractor",
+      "retrofitIds": [
+        "compressed_air_leak_repair"
+      ]
+    },
+    {
+      "classificationCode": "C-36",
+      "classificationName": "Plumbing Contractor",
+      "retrofitIds": [
+        "high_efficiency_boiler_retrofit",
+        "heat_pump_water_heater",
+        "high_efficiency_gas_water_heater",
+        "solar_water_heating_system",
+        "water_heating_controls_recirculation",
+        "low_flow_fixture_retrofit",
+        "high_efficiency_toilet_urinal",
+        "leak_detection_system",
+        "high_efficiency_laundry_equipment",
+        "high_efficiency_commercial_dishwasher",
+        "high_efficiency_fryer",
+        "high_efficiency_oven",
+        "high_efficiency_steamer",
+        "compressed_air_leak_repair",
+        "waste_heat_recovery",
+        "industrial_heat_pump",
+        "steam_trap_replacement"
+      ]
+    },
+    {
+      "classificationCode": "C-38",
+      "classificationName": "Refrigeration Contractor",
+      "retrofitIds": [
+        "high_efficiency_refrigeration_equipment",
+        "walk_in_cooler_freezer_upgrade",
+        "refrigeration_controls_retrofit",
+        "refrigeration_ec_motor_retrofit",
+        "anti_sweat_heater_controls",
+        "door_gasket_strip_curtain_night_cover",
+        "efficient_ice_machine",
+        "thermal_energy_storage",
+        "high_efficiency_motor_replacement",
+        "variable_frequency_drive_retrofit",
+        "efficient_fan_blower_replacement",
+        "pump_fan_controls_retrofit"
+      ]
+    },
+    {
+      "classificationCode": "C-39",
+      "classificationName": "Roofing Contractor",
+      "retrofitIds": [
+        "cool_roof_reflective_roof"
+      ]
+    },
+    {
+      "classificationCode": "C-43",
+      "classificationName": "Sheet Metal Contractor",
+      "retrofitIds": [
+        "duct_sealing_and_insulation",
+        "cool_roof_reflective_roof",
+        "high_efficiency_commercial_dishwasher",
+        "high_efficiency_fryer",
+        "high_efficiency_oven",
+        "high_efficiency_steamer",
+        "induction_cooking_equipment",
+        "demand_controlled_kitchen_ventilation",
+        "efficient_ventilation_system"
+      ]
+    },
+    {
+      "classificationCode": "C-46",
+      "classificationName": "Solar Contractor",
+      "retrofitIds": [
+        "solar_water_heating_system",
+        "rooftop_solar_pv",
+        "ground_mounted_solar_pv",
+        "solar_carport"
+      ]
+    },
+    {
+      "classificationCode": "C-53",
+      "classificationName": "Swimming Pool Contractor",
+      "retrofitIds": [
+        "solar_water_heating_system"
+      ]
+    },
+    {
+      "classificationCode": "C-57",
+      "classificationName": "Well Drilling Contractor",
+      "retrofitIds": [
+        "ground_source_geothermal_heat_pump"
+      ]
+    },
+    {
+      "classificationCode": "C-61/D-3",
+      "classificationName": "Awnings Contractor",
+      "retrofitIds": [
+        "window_film_shading_retrofit"
+      ]
+    },
+    {
+      "classificationCode": "C-61/D-21",
+      "classificationName": "Machinery and Pumps Contractor",
+      "retrofitIds": [
+        "submetering_energy_monitoring",
+        "efficient_pump_replacement"
+      ]
+    },
+    {
+      "classificationCode": "C-61/D-24",
+      "classificationName": "Metal Products Contractor",
+      "retrofitIds": [
+        "window_replacement",
+        "exterior_door_replacement"
+      ]
+    },
+    {
+      "classificationCode": "C-61/D-28",
+      "classificationName": "Doors, Gates and Activating Devices Contractor",
+      "retrofitIds": [
+        "exterior_door_replacement",
+        "window_film_shading_retrofit"
+      ]
+    },
+    {
+      "classificationCode": "C-61/D-34",
+      "classificationName": "Prefabricated Equipment Contractor",
+      "retrofitIds": [
+        "high_efficiency_refrigeration_equipment",
+        "walk_in_cooler_freezer_upgrade",
+        "efficient_ice_machine",
+        "high_efficiency_laundry_equipment",
+        "high_efficiency_commercial_dishwasher",
+        "high_efficiency_fryer",
+        "high_efficiency_oven",
+        "high_efficiency_steamer",
+        "induction_cooking_equipment",
+        "demand_controlled_kitchen_ventilation",
+        "air_filtration_system"
+      ]
+    },
+    {
+      "classificationCode": "C-61/D-52",
+      "classificationName": "Window Coverings Contractor",
+      "retrofitIds": [
+        "window_film_shading_retrofit"
+      ]
+    },
+    {
+      "classificationCode": "C-61/D-62",
+      "classificationName": "Air and Water Balancing Contractor",
+      "retrofitIds": [
+        "smart_thermostat_zoning_retrofit",
+        "hvac_controls_retrofit",
+        "energy_recovery_ventilation_retrofit",
+        "water_heating_controls_recirculation",
+        "cooling_tower_controls_optimization",
+        "demand_controlled_kitchen_ventilation",
+        "variable_frequency_drive_retrofit",
+        "efficient_pump_replacement",
+        "efficient_fan_blower_replacement",
+        "pump_fan_controls_retrofit",
+        "efficient_ventilation_system",
+        "demand_controlled_ventilation"
+      ]
+    },
+    {
+      "classificationCode": "C-61/D-65",
+      "classificationName": "Weatherization and Energy Conservation Contractor",
+      "retrofitIds": [
+        "air_sealing_weatherization",
+        "window_film_shading_retrofit",
+        "low_flow_fixture_retrofit"
+      ]
+    }
+  ]
+}
