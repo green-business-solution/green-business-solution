@@ -41,6 +41,7 @@ describe("official contractor directory parsing", () => {
         <div><div class="vendor-header">Contact Information</div>
           <a href="tel:510-555-0100">Phone</a>
           <a href="mailto:INFO@EXAMPLE.COM">Email</a>
+          <a href="https://example-energy.com/contact">Website</a>
           <span class="address-line1">100 Main St</span>
           <span class="locality">Oakland</span>
           <span class="administrative-area">CA</span>
@@ -58,8 +59,8 @@ describe("official contractor directory parsing", () => {
       email: "info@example.com",
       phone: "510-555-0100",
       programMemberships: ["socalgas_trade_pro"],
+      website: "https://example-energy.com/contact",
     });
-    expect(records[0]).not.toHaveProperty("website");
   });
 
   it("extracts explicit SoCalREN service areas and commercial evidence", () => {

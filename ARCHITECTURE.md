@@ -82,8 +82,8 @@ The `gbs-firstmate-tasks` DynamoDB table is a sanitized admin read model for Cod
 Firstmate remains authoritative, a separate least-privilege publisher writes versioned snapshots, and the RetroFi Lambda role only reads the table.
 Snapshots keep completed and archived task records inactive and include only bounded sanitized report payloads for admin report viewing.
 Closed inactive tasks are hidden by default unless a report is still awaiting admin review.
-The `gbs-contractors` DynamoDB table stores the standardized one-time CSLB contractor import and supports guarded missing-field enrichment from official directories and exact live-license resolution.
-The private contractor-source bucket stores the unchanged CSLB source, reviewed official-directory and live-license snapshots, import manifests, and aggregate reports.
+The `gbs-contractors` DynamoDB table stores the standardized one-time CSLB contractor import and supports guarded missing-field enrichment from official directories, exact live-license resolution, and separately reviewed first-party website evidence.
+The private contractor-source bucket stores the unchanged CSLB source, reviewed official-directory and live-license snapshots, web-enrichment proposals and evidence, import manifests, and aggregate reports.
 
 Committed `data/` files are source-controlled runtime inputs, normalized research artifacts, reports, or fixtures that code and tests need.
 Committed data in `data/`, `public/`, and `test-fixtures/` includes source repair artifacts, generated review reports, public opportunity indexes, sample matching cases, and test fixtures.

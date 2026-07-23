@@ -432,6 +432,7 @@ export function parseSocalGas(html, context) {
         programMemberships: [context.source.id],
         sectors,
         sourceRecordId: `${index}:${businessName}`,
+        website: externalWebsite(card, context.source.url),
         address: {
           line1: clean(card.find(".address-line1").first().text()),
           city: clean(card.find(".locality").first().text()),
@@ -475,6 +476,7 @@ export function parseSocalRenTradeAllies(html, context) {
         serviceAreas: splitServiceAreas(serviceAreaText),
         sourceRecordId: `${index}:${businessName}`,
         sourceText: clean(row.text()),
+        website: externalWebsite(row, context.source.url),
       });
     })
     .filter(Boolean);
@@ -501,6 +503,7 @@ export function parseSocalRenMultifamily(html, context) {
         programMemberships: [context.source.id],
         sourceRecordId: `${index}:${businessName}`,
         sourceText: clean(card.text()),
+        website: externalWebsite(card, context.source.url),
       });
     })
     .filter(Boolean);
@@ -520,6 +523,7 @@ export function parseSocalRenResidential(html, context) {
         programMemberships: [context.source.id],
         sourceRecordId: `${index}:${businessName}`,
         sourceText: clean(card.text()),
+        website: externalWebsite(card, context.source.url),
       });
     })
     .filter((record) => record.businessName);
@@ -570,6 +574,7 @@ export function parseBpiCompanies(html, context) {
           clean(card.find(".search-result-phone").first().text()),
         sourceRecordId: card.attr("id") || `${index}:${businessName}`,
         sourceText: clean(card.text()),
+        website: externalWebsite(card, context.source.url),
       });
     })
     .filter((record) => record.businessName);
@@ -655,6 +660,7 @@ function parseLicenseNumbers(value) {
 }
 
 function sourceRecord(context, input) {
+  const website = normalizeWebsite(input.website);
   return {
     sourceId: context.source.id,
     sourceName: context.source.name,
@@ -674,6 +680,7 @@ function sourceRecord(context, input) {
     sectors: sortedUnique(input.sectors),
     description: clean(input.description),
     sourceText: clean(input.sourceText),
+    ...(website ? { website } : {}),
   };
 }
 
@@ -702,6 +709,37 @@ function mailto(element) {
 function tel(element) {
   const href = element.find('a[href^="tel:"]').first().attr("href") || "";
   return decodeURIComponent(href.replace(/^tel:/i, ""));
+}
+
+function externalWebsite(element, sourceUrl) {
+  let sourceHost = "";
+  try {
+    sourceHost = new URL(sourceUrl).hostname.replace(/^www\./, "");
+  } catch {
+    sourceHost = "";
+  }
+  for (const anchor of element.find("a[href]").toArray()) {
+    const href = clean(element.find(anchor).attr("href"));
+    if (!/^https?:\/\//i.test(href)) continue;
+    try {
+      const url = new URL(href);
+      const hostname = url.hostname.toLowerCase().replace(/^www\./, "");
+      if (
+        !hostname ||
+        hostname === sourceHost ||
+        hostname.endsWith(`.${sourceHost}`) ||
+        /(?:facebook|instagram|linkedin|tiktok|twitter|youtube|yelp)\.com$/i.test(
+          hostname,
+        )
+      ) {
+        continue;
+      }
+      return url.toString();
+    } catch {
+      continue;
+    }
+  }
+  return "";
 }
 
 function phoneFromText(value) {
@@ -879,6 +917,23 @@ function cleanObject(value = {}) {
 function normalizeEmail(value) {
   const normalized = clean(value).toLowerCase();
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized) ? normalized : "";
+}
+
+function normalizeWebsite(value) {
+  const website = clean(value);
+  if (!website) return "";
+  try {
+    const url = new URL(
+      /^https?:\/\//i.test(website)
+        ? website
+        : `https://${website}`,
+    );
+    if (!["http:", "https:"].includes(url.protocol)) return "";
+    url.hash = "";
+    return url.toString();
+  } catch {
+    return "";
+  }
 }
 
 function normalizePhone(value) {

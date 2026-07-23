@@ -52,7 +52,7 @@ deploy shell now owns fixture refresh, savings regeneration, and package/build o
 | `gbs-application-profiles` | `us-east-2` | Application source/profile registry records |
 | `gbs-api-runtime-state` | `us-east-2` | Small API operational state such as Geocodio quota counters and retrofit portfolio event, snapshot, read model, outbox, and idempotency rows |
 | `gbs-firstmate-tasks` | `us-east-2` | Sanitized versioned Codex task snapshots and bounded admin-readable report payloads. RetroFi Lambda reads only; the optional ingestion role writes from an explicit publisher principal. |
-| `gbs-contractors` | `us-east-2` | One-time standardized CSLB contractor records plus guarded missing-field, official-directory, and exact-license resolution enrichment keyed by `contractorId`. |
+| `gbs-contractors` | `us-east-2` | One-time standardized CSLB contractor records plus guarded missing-field, official-directory, exact-license resolution, and separately reviewed first-party website enrichment keyed by `contractorId`. |
 
 The deleted `gbs-runtime-state` table was split into the four domain runtime tables above. The deleted
 `gbs-energy-data` DynamoDB table is not part of the active model.
@@ -67,7 +67,7 @@ The deleted `gbs-runtime-state` table was split into the four domain runtime tab
 | `gbs-retrofi-org-runtime-cache-059310317821` | `us-east-1` | Generated runtime cache payloads under `runtime-cache/` |
 | `gbs-retrofi-test-fixtures-059310317821-us-east-1` | `us-east-1` | Generated fixtures and synthetic test data under `generated-test-fixtures/` |
 | `gbs-retrofi-dev-work-059310317821-us-east-1` | `us-east-1` | Raw GPT Pro prompt/output archives under `gpt-pro-work/` |
-| `gbs-retrofi-contractor-source-data-059310317821-us-east-1` | `us-east-1` | Unchanged CSLB source, reviewed official-directory and live-license snapshots, import manifests, write reports, and aggregate verification reports |
+| `gbs-retrofi-contractor-source-data-059310317821-us-east-1` | `us-east-1` | Unchanged CSLB source, reviewed official-directory and live-license snapshots, web-enrichment proposals and evidence, import manifests, write reports, and aggregate verification reports |
 
 ## Deployment Commands
 
