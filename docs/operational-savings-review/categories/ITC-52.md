@@ -16,23 +16,23 @@ Annual Resource Reduction × Applicable Bill-Derived Resource Rate
 ```text
 For rack machines:
 
-Annual Operational Savings = Avoided Water Rack × Bill-Derived Water and Sewer Rate + Avoided Active kWh Rack × Bill-Derived Electricity Rate + Sum Across Resources of (Avoided Water Heating Rack R R × Bill-Derived Resource Rate) + Avoided Idle Electricity × Bill-Derived Electricity Rate
+Annual Operational Savings = Avoided Water Rack × Bill-Derived Water and Sewer Rate + Avoided Active kWh Rack × Bill-Derived Electricity Rate + Sum Across Resources of (Avoided Rack-Machine Water-Heating Resource by Resource × Bill-Derived Resource Rate) + Avoided Idle Electricity × Bill-Derived Electricity Rate
 
 For flight/conveyor machines:
 
-Annual Operational Savings = Avoided Water Flight × Bill-Derived Water and Sewer Rate + Avoided Active kWh Flight × Bill-Derived Electricity Rate + Sum Across Resources of (Avoided Water Heating Flight R R × Bill-Derived Resource Rate) + Avoided Idle Electricity × Bill-Derived Electricity Rate
+Annual Operational Savings = Avoided Water Flight × Bill-Derived Water and Sewer Rate + Avoided Active kWh Flight × Bill-Derived Electricity Rate + Sum Across Resources of (Avoided Flight-Machine Water-Heating Resource by Resource × Bill-Derived Resource Rate) + Avoided Idle Electricity × Bill-Derived Electricity Rate
 
 Avoided Water Rack = In-Scope Equipment Count × Annual Racks per Unit × (Existing Water per Rack - Proposed Water per Rack)
 
 Avoided Active kWh Rack = In-Scope Equipment Count × Annual Racks per Unit × (Active kWh Per Rack Existing - Active kWh Per Rack Proposed)
 
-Avoided Water Heating Rack R R = In-Scope Equipment Count × Annual Racks per Unit × (Existing Water-Heating Resource per Rack - Proposed Water-Heating Resource per Rack)
+Avoided Rack-Machine Water-Heating Resource by Resource = In-Scope Equipment Count × Annual Racks per Unit × (Existing Water-Heating Resource per Rack - Proposed Water-Heating Resource per Rack)
 
 Avoided Water Flight = In-Scope Equipment Count × Annual Operating Hours Per Unit × (Water Per Hour Existing - Water Per Hour Proposed)
 
 Avoided Active kWh Flight = In-Scope Equipment Count × Annual Operating Hours Per Unit × (Active kWh Per Hour Existing - Active kWh Per Hour Proposed)
 
-Avoided Water Heating Flight R R = In-Scope Equipment Count × Annual Operating Hours Per Unit × (Water Heating R Per Hour Existing - Water Heating R Per Hour Proposed)
+Avoided Flight-Machine Water-Heating Resource by Resource = In-Scope Equipment Count × Annual Operating Hours Per Unit × (Water Heating R Per Hour Existing - Water Heating R Per Hour Proposed)
 
 Avoided Idle Electricity = In-Scope Equipment Count × Annual Idle Hours per Unit × (Existing Idle Power - Proposed Idle Power)
 
@@ -64,6 +64,7 @@ Annual Operational Savings
 │  │  │  ├─ Active Weeks per Year (User)
 │  │  │  └─ Standard 1.4 — Rack-Machine Activity Resolution
 │  │  └─ Flight or Conveyor Machines Only
+│  │     ├─ Flight or Conveyor Machine Type and Sanitation Method (User)
 │  │     ├─ Exact Annual Operating Hours per Equipment Unit from Controls or Audit (Project Document)
 │  │     └─ Standard 1.5 — Flight or Conveyor Activity Resolution
 │  ├─ Idle Operation
@@ -127,16 +128,12 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 **Value Needed:**
 
-* One exact existing dishwasher native-field record
-
-**Input Bindings:**
-
-* Existing dishwasher machine type and sanitation method ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Existing Dishwasher Machine Type and Sanitation Method`. Apply the exact bound Existing dishwasher machine type and sanitation method to resolve and validate the authoritative record before Exact Existing Dishwasher Native-Field Resolution emits One exact existing dishwasher native-field record.
-* Existing exact make and model, retained certification record, or measured native performance from a Project Document ← Project Document at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Existing Exact Make and Model, Certification Record, or Measured Native Performance`. Apply the exact bound Existing exact make and model, retained certification record, or measured native performance from a Project Document to resolve and validate the authoritative record before Exact Existing Dishwasher Native-Field Resolution emits One exact existing dishwasher native-field record.
-
-**Output Bindings:**
-
-* One exact existing dishwasher native-field record → `existing_dishwasher_record` (record set; RECORD_SET) at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Standard 1.1 - Exact Existing Dishwasher Native-Field Resolution`.
+* Existing dishwasher native-field record
+* Existing rack-machine water use per rack
+* Existing rack-machine active electricity per rack
+* Existing flight or conveyor water use per operating hour
+* Existing flight or conveyor active electricity per operating hour
+* Existing idle power
 
 **How to Use:**
 
@@ -181,20 +178,16 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 **Lookup Inputs:**
 
 * Exact proposed dishwasher make and model from the linked opportunity
-* Machine type, sanitation method, application, and capacity
+* Proposed machine type, sanitation method, application, and capacity from the linked opportunity
 
 **Value Needed:**
 
-* One exact proposed dishwasher native-field record
-
-**Input Bindings:**
-
-* Exact proposed dishwasher make and model from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity names an exact dishwasher > Exact Proposed Dishwasher Product Information`. Apply the exact bound Exact proposed dishwasher make and model from the linked opportunity to resolve and validate the authoritative record before Exact Proposed Dishwasher Native-Field Resolution emits One exact proposed dishwasher native-field record.
-* Machine type, sanitation method, application, and capacity ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Existing Dishwasher Machine Type and Sanitation Method`. Apply the exact bound Machine type, sanitation method, application, and capacity to resolve and validate the authoritative record before Exact Proposed Dishwasher Native-Field Resolution emits One exact proposed dishwasher native-field record.
-
-**Output Bindings:**
-
-* One exact proposed dishwasher native-field record → `proposed_dishwasher_record` (record set; RECORD_SET) at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity names an exact dishwasher > Standard 1.2 - Exact Proposed Dishwasher Native-Field Resolution`.
+* Proposed dishwasher native-field record
+* Proposed rack-machine water use per rack
+* Proposed rack-machine active electricity per rack
+* Proposed flight or conveyor water use per operating hour
+* Proposed flight or conveyor active electricity per operating hour
+* Proposed idle power
 
 **How to Use:**
 
@@ -239,20 +232,16 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 **Lookup Inputs:**
 
 * Dishwasher requirements from the linked opportunity
-* Required machine type, sanitation method, application, and capacity
+* Required machine type, sanitation method, application, and capacity from the linked opportunity
 
 **Value Needed:**
 
-* One selected compatible proposed dishwasher native-field record
-
-**Input Bindings:**
-
-* Dishwasher requirements from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity specifies dishwasher requirements but no exact product > Dishwasher Requirements`. Apply the exact bound Dishwasher requirements from the linked opportunity as a compatibility filter before Requirement-Based Proposed Dishwasher Native-Field Resolution emits One selected compatible proposed dishwasher native-field record.
-* Required machine type, sanitation method, application, and capacity ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Existing Dishwasher Machine Type and Sanitation Method`. Apply the exact bound Required machine type, sanitation method, application, and capacity as a compatibility filter before Requirement-Based Proposed Dishwasher Native-Field Resolution emits One selected compatible proposed dishwasher native-field record.
-
-**Output Bindings:**
-
-* One selected compatible proposed dishwasher native-field record → `proposed_dishwasher_record` (record set; RECORD_SET) at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity specifies dishwasher requirements but no exact product > Standard 1.3 - Requirement-Based Proposed Dishwasher Native-Field Resolution`.
+* Proposed dishwasher native-field record
+* Proposed rack-machine water use per rack
+* Proposed rack-machine active electricity per rack
+* Proposed flight or conveyor water use per operating hour
+* Proposed flight or conveyor active electricity per operating hour
+* Proposed idle power
 
 **How to Use:**
 
@@ -296,17 +285,6 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 
 * Annual racks per equipment unit
 
-**Input Bindings:**
-
-* Rack-machine type and sanitation method ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Rack-Machine Type and Sanitation Method`. Pass the exact bound Rack-machine type and sanitation method to Rack-Machine Activity Resolution when computing Annual racks per equipment unit; do not substitute a value from another tree path.
-* Approximate racks per operating day, when known ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Approximate Racks per Operating Day`. Pass the exact bound Approximate racks per operating day, when known to Rack-Machine Activity Resolution when computing Annual racks per equipment unit; do not substitute a value from another tree path.
-* Operating days per week ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Operating Days per Week`. Pass the exact bound Operating days per week to Rack-Machine Activity Resolution when computing Annual racks per equipment unit; do not substitute a value from another tree path.
-* Active weeks per year ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Active Weeks per Year`. Pass the exact bound Active weeks per year to Rack-Machine Activity Resolution when computing Annual racks per equipment unit; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Annual racks per equipment unit → `annual_racks_per_unit` (racks/year; PER_EQUIPMENT_UNIT) at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Standard 1.4 - Rack-Machine Activity Resolution`.
-
 **How to Use:**
 
 1. Use exact project racks per operating day when available.
@@ -346,14 +324,6 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 
 * Annual flight or conveyor operating hours per equipment unit
 
-**Input Bindings:**
-
-* Exact annual operating hours per equipment unit from controls, an audit, or another Project Document ← Project Document at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Flight or Conveyor Machines Only > Exact Annual Operating Hours per Equipment Unit from Controls or Audit`. Pass the exact bound Exact annual operating hours per equipment unit from controls, an audit, or another Project Document to Flight or Conveyor Activity Resolution when computing Annual flight or conveyor operating hours per equipment unit; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Annual flight or conveyor operating hours per equipment unit → `annual_operating_hours_per_unit` (hours/year; PER_EQUIPMENT_UNIT) at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Flight or Conveyor Machines Only > Standard 1.5 - Flight or Conveyor Activity Resolution`.
-
 **How to Use:**
 
 1. Require exact annual operating hours per equipment unit from controls, an operating record, or an audit.
@@ -384,8 +354,11 @@ U.S. Environmental Protection Agency - ENERGY STAR Commercial Food Service Equip
 
 **Lookup Inputs:**
 
-* Rack or flight/conveyor machine type and sanitation method
-* Existing and proposed native water quantity from the connected product records
+* Rack-machine type and sanitation method, when the rack branch is used
+* Flight or conveyor machine type and sanitation method, when the flight branch is used
+* Existing native water quantity from the connected existing dishwasher record
+* Proposed native water quantity from the connected exact proposed dishwasher record, when used
+* Proposed native water quantity from the connected requirement-selected dishwasher record, when used
 * Incoming water temperature
 * Wash, rinse, or booster temperature or certified hot-water quantity
 * Water-heating resource type
@@ -393,20 +366,11 @@ U.S. Environmental Protection Agency - ENERGY STAR Commercial Food Service Equip
 
 **Value Needed:**
 
-* One native-unit existing and proposed dishwasher water-heating result set
-
-**Input Bindings:**
-
-* Rack or flight/conveyor machine type and sanitation method ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Rack-Machine Type and Sanitation Method`. Pass the exact bound Rack or flight/conveyor machine type and sanitation method to Dishwasher Water-Heating Conversion when computing One native-unit existing and proposed dishwasher water-heating result set; do not substitute a value from another tree path.
-* Existing and proposed native water quantity from the connected product records ← Standard Output at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity specifies dishwasher requirements but no exact product > Standard 1.3 - Requirement-Based Proposed Dishwasher Native-Field Resolution`. Pass the exact bound Existing and proposed native water quantity from the connected product records to Dishwasher Water-Heating Conversion when computing One native-unit existing and proposed dishwasher water-heating result set; do not substitute a value from another tree path.
-* Incoming water temperature ← Project Document at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Incoming Water Temperature`. Pass the exact bound Incoming water temperature to Dishwasher Water-Heating Conversion when computing One native-unit existing and proposed dishwasher water-heating result set; do not substitute a value from another tree path.
-* Wash, rinse, or booster temperature or certified hot-water quantity ← Project Document at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Wash, Rinse, or Booster Temperature or Certified Hot-Water Quantity`. Pass the exact bound Wash, rinse, or booster temperature or certified hot-water quantity to Dishwasher Water-Heating Conversion when computing One native-unit existing and proposed dishwasher water-heating result set; do not substitute a value from another tree path.
-* Water-heating resource type ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Water-Heating Resource Type`. Pass the exact bound Water-heating resource type to Dishwasher Water-Heating Conversion when computing One native-unit existing and proposed dishwasher water-heating result set; do not substitute a value from another tree path.
-* Water-heater efficiency ← Project Document at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Water-Heater Efficiency`. Pass the exact bound Water-heater efficiency to Dishwasher Water-Heating Conversion when computing One native-unit existing and proposed dishwasher water-heating result set; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One native-unit existing and proposed dishwasher water-heating result set → `dishwasher_water_heating_result` (record set; RECORD_SET) at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Standard 1.6 - Dishwasher Water-Heating Conversion`.
+* Dishwasher water-heating result set
+* Existing rack-machine water-heating resource per rack
+* Proposed rack-machine water-heating resource per rack
+* Existing flight or conveyor water-heating resource per operating hour
+* Proposed flight or conveyor water-heating resource per operating hour
 
 **How to Use:**
 

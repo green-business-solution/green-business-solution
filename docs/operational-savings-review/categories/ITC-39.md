@@ -28,11 +28,15 @@ Annual Operational Savings
 │  ├─ In-Scope Equipment Count (User)
 │  ├─ Existing Equipment Nameplate and Load Information from Uploaded Audit or Measurement (Project Document)
 │  ├─ Measured Load-Bin Profile
+│  │  ├─ Pump or Fan Application (User)
+│  │  ├─ Business Activity (Profile)
+│  │  ├─ Building Type (Profile)
+│  │  ├─ Equipment Capacity Class (User)
+│  │  ├─ Operating Schedule (User)
+│  │  ├─ Site Location (Profile)
 │  │  ├─ Load or Speed Fractions from Controls Trends or Engineering Audit (Project Document)
 │  │  ├─ Annual Hours by Bin from Controls Trends or Engineering Audit (Project Document)
 │  │  └─ Standard 1.1 — Pump or Fan Operating-Profile Benchmark
-│  │     ├─ Business activity and building type (Project Document)
-│  │     └─ Climate and geography (Project Document)
 │  ├─ Equipment is a Pump
 │  │  ├─ Required Flow and Total Dynamic Head from Engineering Assessment or Measurement (Project Document)
 │  │  ├─ Pump Curve or Documented Operating Points (Project Document)
@@ -65,32 +69,20 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 **Lookup Inputs:**
 
 * Pump or fan application
-* Business activity and building type
+* Business activity
+* Building type
 * Equipment capacity class
 * Operating schedule
-* Climate and geography
+* Site location
 
 **Value Needed:**
 
 * One normalized load or speed profile
 * One annual-hours allocation across its bins
 
-**Input Bindings:**
-
-* Pump or fan application ← Project Document at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Standard 1.1 - Pump or Fan Operating-Profile Benchmark > Business activity and building type`. Pass the exact bound Pump or fan application to Pump or Fan Operating-Profile Benchmark when computing One normalized load or speed profile and One annual-hours allocation across its bins; do not substitute a value from another tree path.
-* Business activity and building type ← Project Document at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Standard 1.1 - Pump or Fan Operating-Profile Benchmark > Business activity and building type`. Pass the exact bound Business activity and building type to Pump or Fan Operating-Profile Benchmark when computing One normalized load or speed profile and One annual-hours allocation across its bins; do not substitute a value from another tree path.
-* Equipment capacity class ← Project Document at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Equipment is a Fan > Fan Curve or Documented Operating Points`. Pass the exact bound Equipment capacity class to Pump or Fan Operating-Profile Benchmark when computing One normalized load or speed profile and One annual-hours allocation across its bins; do not substitute a value from another tree path.
-* Operating schedule ← Project Document at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Standard 1.1 - Pump or Fan Operating-Profile Benchmark > Business activity and building type`. Pass the exact bound Operating schedule to Pump or Fan Operating-Profile Benchmark when computing One normalized load or speed profile and One annual-hours allocation across its bins; do not substitute a value from another tree path.
-* Climate and geography ← Project Document at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Standard 1.1 - Pump or Fan Operating-Profile Benchmark > Climate and geography`. Pass the exact bound Climate and geography to Pump or Fan Operating-Profile Benchmark when computing One normalized load or speed profile and One annual-hours allocation across its bins; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One normalized load or speed profile → `hours_i` (hours/bin; PROJECT_TOTAL) at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Standard 1.1 - Pump or Fan Operating-Profile Benchmark`.
-* One annual-hours allocation across its bins → `hours_i` (hours/bin; PER_YEAR) at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Standard 1.1 - Pump or Fan Operating-Profile Benchmark`.
-
 **How to Use:**
 
-1. Map the Variable Frequency Drives and Pump or Fan Controls inputs to the documented Pump or Fan Operating-Profile Benchmark source fields or model inputs: Pump or fan application; Business activity and building type; Equipment capacity class; Operating schedule; Climate and geography.
+1. Map the Variable Frequency Drives and Pump or Fan Controls inputs to the documented Pump or Fan Operating-Profile Benchmark source fields or model inputs: Pump or fan application; Business activity; Building type; Equipment capacity class; Operating schedule; Site location.
 2. Apply the category's documented source-version and compatibility filters, execute its exact numeric rule, and retain the selected output, unit, scope, fixture, and population or equation provenance. Report a limitation when that source-specific implementation is absent.
 3. When an exact value is unavailable, use only a source-specific retained population or equation with documented filters, numeric rule, unit, scope, and version; otherwise report the implementation limitation.
 4. Return one selected normalized load or speed profile; One annual-hours allocation across its bins.
@@ -125,25 +117,16 @@ U.S. Department of Energy - MEASUR
 * Pump nameplate and measured input from a Project Document
 * Required flow and total dynamic head from a Project Document
 * Pump curve or documented operating points
-* Load or speed profile from a Project Document or the connected operating-profile benchmark
+* Load or speed fractions from a Project Document
+* Annual hours by bin from a Project Document
+* Normalized load or speed profile from the connected operating-profile benchmark
+* Annual-hours allocation from the connected operating-profile benchmark
 * Proposed minimum speed and pump control rule from the linked opportunity
 
 **Value Needed:**
 
-* One selected baseline and proposed annual pump-electricity result
-
-**Input Bindings:**
-
-* In-scope pump count ← User at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > In-Scope Equipment Count`. Pass the exact bound In-scope pump count to Pump Variable-Speed Engineering Calculation when computing One selected baseline and proposed annual pump-electricity result; do not substitute a value from another tree path.
-* Pump nameplate and measured input from a Project Document ← Project Document at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Standard 1.1 - Pump or Fan Operating-Profile Benchmark > Business activity and building type`. Pass the exact bound Pump nameplate and measured input from a Project Document to Pump Variable-Speed Engineering Calculation when computing One selected baseline and proposed annual pump-electricity result; do not substitute a value from another tree path.
-* Required flow and total dynamic head from a Project Document ← Project Document at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Equipment is a Pump > Required Flow and Total Dynamic Head from Engineering Assessment or Measurement`. Pass the exact bound Required flow and total dynamic head from a Project Document to Pump Variable-Speed Engineering Calculation when computing One selected baseline and proposed annual pump-electricity result; do not substitute a value from another tree path.
-* Pump curve or documented operating points ← Project Document at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Equipment is a Pump > Pump Curve or Documented Operating Points`. Pass the exact bound Pump curve or documented operating points to Pump Variable-Speed Engineering Calculation when computing One selected baseline and proposed annual pump-electricity result; do not substitute a value from another tree path.
-* Load or speed profile from a Project Document or the connected operating-profile benchmark ← Standard Output at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Standard 1.1 - Pump or Fan Operating-Profile Benchmark`. Pass the exact bound Load or speed profile from a Project Document or the connected operating-profile benchmark to Pump Variable-Speed Engineering Calculation when computing One selected baseline and proposed annual pump-electricity result; do not substitute a value from another tree path.
-* Proposed minimum speed and pump control rule from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Equipment is a Pump > Proposed Minimum Speed and Pump Control Rule`. Pass the exact bound Proposed minimum speed and pump control rule from the linked opportunity to Pump Variable-Speed Engineering Calculation when computing One selected baseline and proposed annual pump-electricity result; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One selected baseline and proposed annual pump-electricity result → `existing_kW_i` (kW/bin; RECORD_SET) at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Equipment is a Pump > Standard 1.2 - Pump Variable-Speed Engineering Calculation`.
+* Existing pump input power by load bin
+* Proposed pump input power by load bin
 
 **How to Use:**
 
@@ -182,25 +165,16 @@ U.S. Department of Energy - MEASUR
 * Fan nameplate and measured input from a Project Document
 * Required airflow and pressure rise from a Project Document
 * Fan curve or documented operating points
-* Load or speed profile from a Project Document or the connected operating-profile benchmark
+* Load or speed fractions from a Project Document
+* Annual hours by bin from a Project Document
+* Normalized load or speed profile from the connected operating-profile benchmark
+* Annual-hours allocation from the connected operating-profile benchmark
 * Proposed minimum speed and fan control rule from the linked opportunity
 
 **Value Needed:**
 
-* One selected baseline and proposed annual fan-electricity result
-
-**Input Bindings:**
-
-* In-scope fan count ← User at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > In-Scope Equipment Count`. Pass the exact bound In-scope fan count to Fan Variable-Speed Engineering Calculation when computing One selected baseline and proposed annual fan-electricity result; do not substitute a value from another tree path.
-* Fan nameplate and measured input from a Project Document ← Project Document at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Standard 1.1 - Pump or Fan Operating-Profile Benchmark > Business activity and building type`. Pass the exact bound Fan nameplate and measured input from a Project Document to Fan Variable-Speed Engineering Calculation when computing One selected baseline and proposed annual fan-electricity result; do not substitute a value from another tree path.
-* Required airflow and pressure rise from a Project Document ← Project Document at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Equipment is a Fan > Required Airflow and Pressure Rise from Engineering Assessment or Measurement`. Pass the exact bound Required airflow and pressure rise from a Project Document to Fan Variable-Speed Engineering Calculation when computing One selected baseline and proposed annual fan-electricity result; do not substitute a value from another tree path.
-* Fan curve or documented operating points ← Project Document at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Equipment is a Fan > Fan Curve or Documented Operating Points`. Pass the exact bound Fan curve or documented operating points to Fan Variable-Speed Engineering Calculation when computing One selected baseline and proposed annual fan-electricity result; do not substitute a value from another tree path.
-* Load or speed profile from a Project Document or the connected operating-profile benchmark ← Standard Output at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Standard 1.1 - Pump or Fan Operating-Profile Benchmark`. Pass the exact bound Load or speed profile from a Project Document or the connected operating-profile benchmark to Fan Variable-Speed Engineering Calculation when computing One selected baseline and proposed annual fan-electricity result; do not substitute a value from another tree path.
-* Proposed minimum speed and fan control rule from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Equipment is a Fan > Proposed Minimum Speed and Fan Control Rule`. Pass the exact bound Proposed minimum speed and fan control rule from the linked opportunity to Fan Variable-Speed Engineering Calculation when computing One selected baseline and proposed annual fan-electricity result; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One selected baseline and proposed annual fan-electricity result → `existing_kW_i` (kW/bin; RECORD_SET) at `Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Equipment is a Fan > Standard 1.3 - Fan Variable-Speed Engineering Calculation`.
+* Existing fan input power by load bin
+* Proposed fan input power by load bin
 
 **How to Use:**
 

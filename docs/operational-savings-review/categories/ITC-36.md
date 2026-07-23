@@ -52,7 +52,7 @@ Annual Operational Savings
 **■ Standard 1.1 — WaterSense Commercial Operations Calculation**
 
 **Purpose:**
-Use U.S. Environmental Protection Agency - WaterSense at Work to resolve annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates from the listed category inputs.
+Use U.S. Environmental Protection Agency - WaterSense at Work to resolve annual avoided cooling-tower makeup water from the listed category inputs.
 
 **Source:**
 U.S. Environmental Protection Agency - WaterSense at Work
@@ -71,24 +71,14 @@ U.S. Environmental Protection Agency - WaterSense at Work
 
 **Value Needed:**
 
-* Annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates
-
-**Input Bindings:**
-
-* Existing cycles of concentration ← Project Document at `Annual Operational Savings > Annual cooling-tower water and fan-electricity reduction > Documented Existing cycles of concentration from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Existing cycles of concentration to WaterSense Commercial Operations Calculation when computing Annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates; do not substitute a value from another tree path.
-* Proposed cycles of concentration ← Linked Opportunity at `Annual Operational Savings > Annual cooling-tower water and fan-electricity reduction > Proposed cycles of concentration`. Pass the exact bound Proposed cycles of concentration to WaterSense Commercial Operations Calculation when computing Annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates; do not substitute a value from another tree path.
-* Annual evaporation or equivalent heat rejection ← Project Document at `Annual Operational Savings > Annual cooling-tower water and fan-electricity reduction > Documented Annual evaporation or equivalent heat rejection from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Annual evaporation or equivalent heat rejection to WaterSense Commercial Operations Calculation when computing Annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates → `avoided_makeup_gallons` (gallons/year; PER_YEAR) at `Annual Operational Savings > Annual cooling-tower water and fan-electricity reduction > Standard 1.1 - WaterSense Commercial Operations Calculation`.
+* Annual avoided cooling-tower makeup water
 
 **How to Use:**
 
 1. Map the Cooling Tower Optimization inputs to the documented WaterSense Commercial Operations Calculation source fields or model inputs: Existing cycles of concentration; Proposed cycles of concentration; Annual evaporation or equivalent heat rejection.
 2. Validate measured project inputs, apply the selected equation with explicit units and dates, reject missing physical observations, and return annual avoidable water.
 3. When an exact value is unavailable, use only a source-specific retained population or equation with documented filters, numeric rule, unit, scope, and version; otherwise report the implementation limitation.
-4. Return one selected annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates.
+4. Return one selected annual avoided cooling-tower makeup water.
 5. Retain the WaterSense Commercial Operations Calculation source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
@@ -103,7 +93,7 @@ The official commercial best-practice and facility-tool pages were checked. Exac
 **■ Standard 1.2 — Cooling Tower Optimization Engineering Calculation**
 
 **Purpose:**
-Use U.S. Department of Energy - MEASUR to resolve existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings from the listed category inputs.
+Use U.S. Department of Energy - MEASUR to resolve annual avoided cooling-tower fan electricity from the listed category inputs.
 
 **Source:**
 U.S. Department of Energy - MEASUR
@@ -127,26 +117,14 @@ U.S. Department of Energy - MEASUR
 
 **Value Needed:**
 
-* Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings
-
-**Input Bindings:**
-
-* Existing cycles of concentration ← Project Document at `Annual Operational Savings > Annual cooling-tower water and fan-electricity reduction > Documented Existing cycles of concentration from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Existing cycles of concentration to Cooling Tower Optimization Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Proposed cycles of concentration ← Linked Opportunity at `Annual Operational Savings > Annual cooling-tower water and fan-electricity reduction > Proposed cycles of concentration`. Pass the exact bound Proposed cycles of concentration to Cooling Tower Optimization Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Annual evaporation or equivalent heat rejection ← Project Document at `Annual Operational Savings > Annual cooling-tower water and fan-electricity reduction > Documented Annual evaporation or equivalent heat rejection from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Annual evaporation or equivalent heat rejection to Cooling Tower Optimization Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Existing fan control profile ← Project Document at `Annual Operational Savings > Annual cooling-tower water and fan-electricity reduction > Documented Existing fan control profile from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Existing fan control profile to Cooling Tower Optimization Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Proposed fan control profile ← Linked Opportunity at `Annual Operational Savings > Annual cooling-tower water and fan-electricity reduction > Proposed fan control profile`. Pass the exact bound Proposed fan control profile to Cooling Tower Optimization Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings → `avoided_fan_kWh` (kWh/year; PER_YEAR) at `Annual Operational Savings > Annual cooling-tower water and fan-electricity reduction > Standard 1.2 - Cooling Tower Optimization Engineering Calculation`.
+* Annual avoided cooling-tower fan electricity
 
 **How to Use:**
 
 1. Load the Cooling Tower Optimization project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Cooling Tower Water Assessment.
 2. When an exact technical input is unavailable, use only a source-specific retained equipment or application population with documented filters, numeric rule, unit, scope, and version before running the Cooling Tower Water Assessment; otherwise report the implementation limitation.
 3. Run the pinned open-source Cooling Tower Water Assessment baseline and proposed cases using the category formula boundary shown in this card.
-4. Return one selected existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
+4. Return one selected annual avoided cooling-tower fan electricity.
 5. Retain the MEASUR version, Cooling Tower Water Assessment input object, exact and benchmark input provenance, context filters, eligible populations, selection rules, unit conversions, warnings, and baseline and proposed outputs.
 
 **Automation:**

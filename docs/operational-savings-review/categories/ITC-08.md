@@ -33,7 +33,10 @@ Annual Operational Savings
 │  │  └─ Standard 1.1 — Solar Water-Heating Input Benchmark
 │  ├─ Annual Hot-Water Load
 │  │  ├─ Hot-Water Load from Audit, Measurement, Engineering Assessment, or Operating Record (Project Document)
-│  │  ├─ Business Activity and Building Type (Profile)
+│  │  ├─ Business Activity (Profile)
+│  │  ├─ Building Type (Profile)
+│  │  ├─ Building Area (Profile)
+│  │  ├─ Operating Schedule (User)
 │  │  └─ Standard 1.1 — Solar Water-Heating Input Benchmark
 │  ├─ Backup Water-Heating System
 │  │  ├─ Backup Fuel Type (User)
@@ -67,11 +70,16 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 
 **Lookup Inputs:**
 
-* Business activity and building type
-* Building area and operating schedule
-* Bill water-heating resource use
+* Business activity
+* Building type
+* Building area
+* Operating schedule
+* Electricity use from the bill when water heating is electric
+* Gas use from the bill when water heating is gas
 * Collector requirements from the linked opportunity
-* Available collector, load, and backup-system Project Documents
+* Available collector and storage Project Document
+* Available hot-water-load Project Document
+* Available backup-system Project Document
 
 **Value Needed:**
 
@@ -79,23 +87,9 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 * One annual hot-water load
 * One backup-system efficiency
 
-**Input Bindings:**
-
-* Business activity and building type ← Profile at `Annual Operational Savings > Annual Backup-Resource Reduction > Annual Hot-Water Load > Business Activity and Building Type`. Pass the exact bound Business activity and building type to Solar Water-Heating Input Benchmark when computing One context-matched collector and storage configuration and One annual hot-water load and One backup-system efficiency; do not substitute a value from another tree path.
-* Building area and operating schedule ← Profile at `Annual Operational Savings > Annual Backup-Resource Reduction > Annual Hot-Water Load > Business Activity and Building Type`. Pass the exact bound Building area and operating schedule to Solar Water-Heating Input Benchmark when computing One context-matched collector and storage configuration and One annual hot-water load and One backup-system efficiency; do not substitute a value from another tree path.
-* Bill water-heating resource use ← Bill at `Annual Operational Savings > Applicable Resource Rates > Bill-Derived Electricity Rate > Electricity Use`. Pass the exact bound Bill water-heating resource use to Solar Water-Heating Input Benchmark when computing One context-matched collector and storage configuration and One annual hot-water load and One backup-system efficiency; do not substitute a value from another tree path.
-* Collector requirements from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual Backup-Resource Reduction > Collector and Storage Design > Collector and Storage Requirements Prescribed by the Opportunity`. Pass the exact bound Collector requirements from the linked opportunity to Solar Water-Heating Input Benchmark when computing One context-matched collector and storage configuration and One annual hot-water load and One backup-system efficiency; do not substitute a value from another tree path.
-* Available collector, load, and backup-system Project Documents ← Project Document at `Annual Operational Savings > Annual Backup-Resource Reduction > Collector and Storage Design > Collector and Storage Design from Contractor Specification, Engineering Assessment, or Proposed Construction Document`. Pass the exact bound Available collector, load, and backup-system Project Documents to Solar Water-Heating Input Benchmark when computing One context-matched collector and storage configuration and One annual hot-water load and One backup-system efficiency; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One context-matched collector and storage configuration → `annual_delivered_hot_water_load` (kWh-thermal/year; RECORD_SET) at `Annual Operational Savings > Annual Backup-Resource Reduction > Collector and Storage Design > Standard 1.1 - Solar Water-Heating Input Benchmark`.
-* One annual hot-water load → `annual_delivered_hot_water_load` (kWh-thermal/year; RECORD_SET) at `Annual Operational Savings > Annual Backup-Resource Reduction > Collector and Storage Design > Standard 1.1 - Solar Water-Heating Input Benchmark`.
-* One backup-system efficiency → `annual_delivered_hot_water_load` (kWh-thermal/year; RECORD_SET) at `Annual Operational Savings > Annual Backup-Resource Reduction > Collector and Storage Design > Standard 1.1 - Solar Water-Heating Input Benchmark`.
-
 **How to Use:**
 
-1. Map the Solar Water Heating inputs to the documented Solar Water-Heating Input Benchmark source fields or model inputs: Business activity and building type; Building area and operating schedule; Bill water-heating resource use; Collector requirements from the linked opportunity; Available collector, load, and backup-system Project Documents.
+1. Map the Solar Water Heating inputs to the documented Solar Water-Heating Input Benchmark source fields or model inputs: Business activity; Building type; Building area; Operating schedule; Electricity use from the bill when water heating is electric; Gas use from the bill when water heating is gas; Collector requirements from the linked opportunity; Available collector and storage Project Document; Available hot-water-load Project Document; Available backup-system Project Document.
 2. Apply the category's documented source-version and compatibility filters, execute its exact numeric rule, and retain the selected output, unit, scope, fixture, and population or equation provenance. Report a limitation when that source-specific implementation is absent.
 3. When an exact value is unavailable, use only a source-specific retained population or equation with documented filters, numeric rule, unit, scope, and version; otherwise report the implementation limitation.
 4. Return one selected context-matched collector and storage configuration; One annual hot-water load; One backup-system efficiency.
@@ -127,26 +121,17 @@ National Laboratory of the Rockies - System Advisor Model
 **Lookup Inputs:**
 
 * Site location
-* Collector and storage design from the linked opportunity or a Project Document
-* Annual hot-water load from a Project Document or the connected context benchmark
+* Collector and storage design from the linked opportunity
+* Collector and storage design from a Project Document
+* Annual hot-water load from a Project Document
+* Annual hot-water load from the connected context benchmark
 * Backup fuel type
-* Backup-system efficiency from a Project Document or the connected context benchmark
+* Backup-system efficiency from a Project Document
+* Backup-system efficiency from the connected context benchmark
 
 **Value Needed:**
 
 * Annual useful solar thermal output and displaced backup resource, with simulation inputs, units, and source version
-
-**Input Bindings:**
-
-* Site location ← Profile at `Annual Operational Savings > Annual Backup-Resource Reduction > Site Location`. Pass the exact bound Site location to Solar Thermal Production Simulation when computing Annual useful solar thermal output and displaced backup resource, with simulation inputs, units, and source version; do not substitute a value from another tree path.
-* Collector and storage design from the linked opportunity or a Project Document ← Linked Opportunity at `Annual Operational Savings > Annual Backup-Resource Reduction > Collector and Storage Design > Collector and Storage Requirements Prescribed by the Opportunity`. Pass the exact bound Collector and storage design from the linked opportunity or a Project Document to Solar Thermal Production Simulation when computing Annual useful solar thermal output and displaced backup resource, with simulation inputs, units, and source version; do not substitute a value from another tree path.
-* Annual hot-water load from a Project Document or the connected context benchmark ← Project Document at `Annual Operational Savings > Annual Backup-Resource Reduction > Annual Hot-Water Load > Hot-Water Load from Audit, Measurement, Engineering Assessment, or Operating Record`. Pass the exact bound Annual hot-water load from a Project Document or the connected context benchmark to Solar Thermal Production Simulation when computing Annual useful solar thermal output and displaced backup resource, with simulation inputs, units, and source version; do not substitute a value from another tree path.
-* Backup fuel type ← User at `Annual Operational Savings > Annual Backup-Resource Reduction > Backup Water-Heating System > Backup Fuel Type`. Pass the exact bound Backup fuel type to Solar Thermal Production Simulation when computing Annual useful solar thermal output and displaced backup resource, with simulation inputs, units, and source version; do not substitute a value from another tree path.
-* Backup-system efficiency from a Project Document or the connected context benchmark ← Project Document at `Annual Operational Savings > Annual Backup-Resource Reduction > Backup Water-Heating System > Backup Equipment Nameplate, Commissioning Record, or Engineering Assessment`. Pass the exact bound Backup-system efficiency from a Project Document or the connected context benchmark to Solar Thermal Production Simulation when computing Annual useful solar thermal output and displaced backup resource, with simulation inputs, units, and source version; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Annual useful solar thermal output and displaced backup resource, with simulation inputs, units, and source version → `SAM_output` (kWh-thermal/year; PER_YEAR) at `Annual Operational Savings > Annual Backup-Resource Reduction > Standard 1.2 - Solar Thermal Production Simulation`.
 
 **How to Use:**
 

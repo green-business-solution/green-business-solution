@@ -67,19 +67,6 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 * One existing resource intensity per identical tested cooking duty
 * One proposed resource intensity per identical tested cooking duty
 
-**Input Bindings:**
-
-* Existing cooking equipment type and resource ← User at `Annual Operational Savings > Annual Comparable-Duty Cooking Resource Difference > Existing Cooking Equipment Type and Resource`. Pass the exact bound Existing cooking equipment type and resource to Comparable Cooking-Duty Resolver when computing One existing resource intensity per identical tested cooking duty and One proposed resource intensity per identical tested cooking duty; do not substitute a value from another tree path.
-* Proposed induction equipment type and resource ← Linked Opportunity at `Annual Operational Savings > Annual Comparable-Duty Cooking Resource Difference > Proposed Induction Equipment Requirements`. Pass the exact bound Proposed induction equipment type and resource to Comparable Cooking-Duty Resolver when computing One existing resource intensity per identical tested cooking duty and One proposed resource intensity per identical tested cooking duty; do not substitute a value from another tree path.
-* Identical tested cooking duty definition ← Project Document at `Annual Operational Savings > Annual Comparable-Duty Cooking Resource Difference > Identical Tested Cooking Duty Definition`. Pass the exact bound Identical tested cooking duty definition to Comparable Cooking-Duty Resolver when computing One existing resource intensity per identical tested cooking duty and One proposed resource intensity per identical tested cooking duty; do not substitute a value from another tree path.
-* Annual activity in that tested duty unit ← User at `Annual Operational Savings > Annual Comparable-Duty Cooking Resource Difference > Annual Activity in the Identical Tested Duty Unit`. Pass the exact bound Annual activity in that tested duty unit to Comparable Cooking-Duty Resolver when computing One existing resource intensity per identical tested cooking duty and One proposed resource intensity per identical tested cooking duty; do not substitute a value from another tree path.
-* Exact project test records when available ← Project Document at `Annual Operational Savings > Annual Comparable-Duty Cooking Resource Difference > Exact Existing and Proposed Comparable Test Records`. Pass the exact bound Exact project test records when available to Comparable Cooking-Duty Resolver when computing One existing resource intensity per identical tested cooking duty and One proposed resource intensity per identical tested cooking duty; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One existing resource intensity per identical tested cooking duty → `existing_resource_per_activity_r` (resource/certified activity; PER_EVENT) at `Annual Operational Savings > Annual Comparable-Duty Cooking Resource Difference > Standard 1.1 - Comparable Cooking-Duty Resolver`.
-* One proposed resource intensity per identical tested cooking duty → `proposed_resource_per_activity_r` (resource/certified activity; PER_EVENT) at `Annual Operational Savings > Annual Comparable-Duty Cooking Resource Difference > Standard 1.1 - Comparable Cooking-Duty Resolver`.
-
 **How to Use:**
 
 1. Use exact project test records when existing and proposed equipment were measured under the same duty boundary.

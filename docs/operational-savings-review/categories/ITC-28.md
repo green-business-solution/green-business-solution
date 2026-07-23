@@ -28,6 +28,8 @@ Annual Standby Electricity = Installed Charging Ports × Standby Power per Port 
 ```text
 Annual Operational Cost Impact
 ├─ Chronological Electricity Load and Tariff
+│  ├─ Serving Electric Utility (Bill)
+│  ├─ Billing Period Start and End (Bill)
 │  ├─ Timestamped Interval Utility Data (Bill)
 │  ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
 │  ├─ Rate Schedule and Customer Class (Bill)
@@ -41,6 +43,8 @@ Annual Operational Cost Impact
 │  ├─ Exact Proposed Vehicle Model, Year, and Drivetrain, when Named by the Opportunity (Linked Opportunity)
 │  └─ Standard 1.2 — Vehicle Electricity-Intensity Resolution
 ├─ Fleet Charging Activity
+│  ├─ Business Operating Schedule (User)
+│  ├─ Fleet Vocation (User)
 │  ├─ Vehicle-Arrival Schedule from Fleet Study or Contractor Charging Design (Project Document)
 │  ├─ Vehicle-Departure Schedule from Fleet Study or Contractor Charging Design (Project Document)
 │  ├─ Uncontrolled Charging Rule from Fleet Study or Contractor Charging Design (Project Document)
@@ -82,17 +86,6 @@ U.S. Department of Energy OpenEI Utility Rate Database and exact published utili
 
 * One complete tariff input set with exact or conservative-screening provenance
 
-**Input Bindings:**
-
-* Serving electric utility from the bill ← Bill at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact`. Pass the exact bound Serving electric utility from the bill to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
-* Published rate schedule and customer class from the bill ← Bill at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Rate Schedule and Customer Class`. Pass the exact bound Published rate schedule and customer class from the bill to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
-* Tariff effective date covering the analysis period ← Bill at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Rate Schedule and Customer Class`. Pass the exact bound Tariff effective date covering the analysis period to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
-* Continuous interval energy and demand aligned to the tariff timezone ← Bill at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Timestamped Interval Utility Data`. Pass the exact bound Continuous interval energy and demand aligned to the tariff timezone to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One complete tariff input set with exact or conservative-screening provenance → `tariff_input_set` (record set; RECORD_SET) at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Standard 1.1 - Interval Tariff Resolution`.
-
 **How to Use:**
 
 1. Verify the serving utility, published schedule identifier, customer class, and analysis date against the source bill.
@@ -131,18 +124,7 @@ U.S. Department of Energy and U.S. Environmental Protection Agency - FuelEconomy
 
 **Value Needed:**
 
-* One selected vehicle electricity intensity in kilowatt-hours per mile at the wall
-
-**Input Bindings:**
-
-* Measured kilowatt-hours per mile from a Project Document, when available ← Project Document at `Annual Operational Cost Impact > Vehicle Electricity Intensity > Measured Kilowatt-Hours per Mile from Fleet Study or Contractor Charging Design`. Apply the exact bound Measured kilowatt-hours per mile from a Project Document, when available to resolve and validate the authoritative record before Vehicle Electricity-Intensity Resolution emits One selected vehicle electricity intensity in kilowatt-hours per mile at the wall.
-* Exact proposed vehicle make, model, year, and drivetrain from the linked opportunity, when named ← Linked Opportunity at `Annual Operational Cost Impact > Vehicle Electricity Intensity > Exact Proposed Vehicle Model, Year, and Drivetrain, when Named by the Opportunity`. Apply the exact bound Exact proposed vehicle make, model, year, and drivetrain from the linked opportunity, when named to resolve and validate the authoritative record before Vehicle Electricity-Intensity Resolution emits One selected vehicle electricity intensity in kilowatt-hours per mile at the wall.
-* Vehicle class and service need ← User at `Annual Operational Cost Impact > Vehicle Class and Service Need`. Apply the exact bound Vehicle class and service need to resolve and validate the authoritative record before Vehicle Electricity-Intensity Resolution emits One selected vehicle electricity intensity in kilowatt-hours per mile at the wall.
-* Class-matched electricity intensity from the connected Fleet DNA benchmark ← Standard Output at `Annual Operational Cost Impact > Fleet Charging Activity > Standard 1.3 - Fleet Charging Activity and Vehicle Benchmark`. Apply the exact bound Class-matched electricity intensity from the connected Fleet DNA benchmark to resolve and validate the authoritative record before Vehicle Electricity-Intensity Resolution emits One selected vehicle electricity intensity in kilowatt-hours per mile at the wall.
-
-**Output Bindings:**
-
-* One selected vehicle electricity intensity in kilowatt-hours per mile at the wall → `proposed_combE` (kWh/100 miles; PROJECT_TOTAL) at `Annual Operational Cost Impact > Vehicle Electricity Intensity > Standard 1.2 - Vehicle Electricity-Intensity Resolution`.
+* Vehicle electricity intensity at the wall
 
 **How to Use:**
 
@@ -186,20 +168,6 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 * One uncontrolled charging profile
 * One class-matched vehicle electricity intensity
 
-**Input Bindings:**
-
-* Vehicle class and service need ← User at `Annual Operational Cost Impact > Vehicle Class and Service Need`. Pass the exact bound Vehicle class and service need to Fleet Charging Activity and Vehicle Benchmark when computing One representative arrival and departure schedule and One uncontrolled charging profile and One class-matched vehicle electricity intensity; do not substitute a value from another tree path.
-* Annual fleet miles ← User at `Annual Operational Cost Impact > Annual fleet miles`. Pass the exact bound Annual fleet miles to Fleet Charging Activity and Vehicle Benchmark when computing One representative arrival and departure schedule and One uncontrolled charging profile and One class-matched vehicle electricity intensity; do not substitute a value from another tree path.
-* Business operating schedule ← Project Document at `Annual Operational Cost Impact > Fleet Charging Activity > Vehicle-Arrival Schedule from Fleet Study or Contractor Charging Design`. Pass the exact bound Business operating schedule to Fleet Charging Activity and Vehicle Benchmark when computing One representative arrival and departure schedule and One uncontrolled charging profile and One class-matched vehicle electricity intensity; do not substitute a value from another tree path.
-* Fleet vocation ← Standard Output at `Annual Operational Cost Impact > Standard 1.6 - Fleet Charging Infrastructure Interval Bill Calculation`. Pass the exact bound Fleet vocation to Fleet Charging Activity and Vehicle Benchmark when computing One representative arrival and departure schedule and One uncontrolled charging profile and One class-matched vehicle electricity intensity; do not substitute a value from another tree path.
-* Installed port count ← Linked Opportunity at `Annual Operational Cost Impact > Installed Port Count`. Pass the exact bound Installed port count to Fleet Charging Activity and Vehicle Benchmark when computing One representative arrival and departure schedule and One uncontrolled charging profile and One class-matched vehicle electricity intensity; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One representative arrival and departure schedule → `installed_ports` (count; PROJECT_TOTAL) at `Annual Operational Cost Impact > Fleet Charging Activity > Standard 1.3 - Fleet Charging Activity and Vehicle Benchmark`.
-* One uncontrolled charging profile → `proposed_combE` (kWh/100 miles; PROJECT_TOTAL) at `Annual Operational Cost Impact > Fleet Charging Activity > Standard 1.3 - Fleet Charging Activity and Vehicle Benchmark`.
-* One class-matched vehicle electricity intensity → `proposed_combE` (kWh/100 miles; PROJECT_TOTAL) at `Annual Operational Cost Impact > Fleet Charging Activity > Standard 1.3 - Fleet Charging Activity and Vehicle Benchmark`.
-
 **How to Use:**
 
 1. Map the Fleet Charging Infrastructure inputs to the documented Fleet Charging Activity and Vehicle Benchmark source fields or model inputs: Vehicle class and service need; Annual fleet miles; Business operating schedule; Fleet vocation; Installed port count.
@@ -240,20 +208,10 @@ U.S. Environmental Protection Agency - ENERGY STAR Product Finder
 
 **Value Needed:**
 
-* For AC-output chargers: maximum output power, no-vehicle or idle power, and mode-specific total-loss fields
-* For DC-output chargers: maximum output power, no-vehicle or idle power, and loading-adjusted efficiency
-
-**Input Bindings:**
-
-* Exact charger make and model ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Exact Charger Product Information`. Apply the exact bound Exact charger make and model to resolve and validate the authoritative record before Exact Charger Rating Lookup emits For AC-output chargers: maximum output power, no-vehicle or idle power, and mode-specific total-loss fields and For DC-output chargers: maximum output power, no-vehicle or idle power, and loading-adjusted efficiency.
-* Charger product type: AC-output or DC-output ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Exact Charger Product Information`. Apply the exact bound Charger product type: AC-output or DC-output to resolve and validate the authoritative record before Exact Charger Rating Lookup emits For AC-output chargers: maximum output power, no-vehicle or idle power, and mode-specific total-loss fields and For DC-output chargers: maximum output power, no-vehicle or idle power, and loading-adjusted efficiency.
-* Rated charger power and application ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Exact Charger Product Information`. Apply the exact bound Rated charger power and application to resolve and validate the authoritative record before Exact Charger Rating Lookup emits For AC-output chargers: maximum output power, no-vehicle or idle power, and mode-specific total-loss fields and For DC-output chargers: maximum output power, no-vehicle or idle power, and loading-adjusted efficiency.
-* Opportunity product information ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Exact Charger Product Information`. Apply the exact bound Opportunity product information to resolve and validate the authoritative record before Exact Charger Rating Lookup emits For AC-output chargers: maximum output power, no-vehicle or idle power, and mode-specific total-loss fields and For DC-output chargers: maximum output power, no-vehicle or idle power, and loading-adjusted efficiency.
-
-**Output Bindings:**
-
-* For AC-output chargers: maximum output power, no-vehicle or idle power, and mode-specific total-loss fields → `standby_kW_per_port` (kW/port; RECORD_SET) at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Standard 1.4 - Exact Charger Rating Lookup`.
-* For DC-output chargers: maximum output power, no-vehicle or idle power, and loading-adjusted efficiency → `standby_kW_per_port` (kW/port; RECORD_SET) at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Standard 1.4 - Exact Charger Rating Lookup`.
+* rated output power per port
+* AC mode-specific total loss
+* DC loading-adjusted efficiency
+* standby power per port
 
 **How to Use:**
 
@@ -296,20 +254,10 @@ U.S. Environmental Protection Agency - ENERGY STAR Product Finder
 
 **Value Needed:**
 
-* One selected native-field performance record from the compatible AC-output or DC-output population
-* The eligible population, filters, population size, and median selection rule retained internally
-
-**Input Bindings:**
-
-* Charger product type: AC-output or DC-output ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Charger Requirements`. Apply the exact bound Charger product type: AC-output or DC-output as a compatibility filter before Requirement-Based Charger Resolution emits One selected native-field performance record from the compatible AC-output or DC-output population and The eligible population, filters, population size, and median selection rule retained internally.
-* Charger class and intended application ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Charger Requirements`. Apply the exact bound Charger class and intended application as a compatibility filter before Requirement-Based Charger Resolution emits One selected native-field performance record from the compatible AC-output or DC-output population and The eligible population, filters, population size, and median selection rule retained internally.
-* Rated power requirement ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Charger Requirements`. Apply the exact bound Rated power requirement as a compatibility filter before Requirement-Based Charger Resolution emits One selected native-field performance record from the compatible AC-output or DC-output population and The eligible population, filters, population size, and median selection rule retained internally.
-* Opportunity performance requirements ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Charger Requirements`. Apply the exact bound Opportunity performance requirements as a compatibility filter before Requirement-Based Charger Resolution emits One selected native-field performance record from the compatible AC-output or DC-output population and The eligible population, filters, population size, and median selection rule retained internally.
-
-**Output Bindings:**
-
-* One selected native-field performance record from the compatible AC-output or DC-output population → `standby_kW_per_port` (kW/port; RECORD_SET) at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Standard 1.5 - Requirement-Based Charger Resolution`.
-* The eligible population, filters, population size, and median selection rule retained internally → `standby_kW_per_port` (kW/port; RECORD_SET) at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Standard 1.5 - Requirement-Based Charger Resolution`.
+* Selected rated output power per port
+* Selected AC mode-specific total loss
+* Selected DC loading-adjusted efficiency
+* Selected standby power per port
 
 **How to Use:**
 
@@ -332,7 +280,7 @@ The official ENERGY STAR EV charger criteria and Product Finder access path were
 **■ Standard 1.6 — Fleet Charging Infrastructure Interval Bill Calculation**
 
 **Purpose:**
-Use National Laboratory of the Rockies - REopt V3 and REopt.jl to resolve baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance from the listed category inputs.
+Use National Laboratory of the Rockies - REopt V3 and REopt.jl to resolve baseline annual bill; Proposed unmanaged-charging annual bill from the listed category inputs.
 
 **Source:**
 National Laboratory of the Rockies - REopt V3 and REopt.jl
@@ -357,41 +305,22 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 * Vehicle-arrival schedule from the fleet study or contractor charging design
 * Vehicle-departure schedule from the fleet study or contractor charging design
 * Uncontrolled charging rule from the fleet study or contractor charging design
-* Rated Charger Power or Capacity
 * Installed port count
 * Resolved vehicle electricity intensity from the connected vehicle process
-* Resolved charger efficiency, standby power, and rated capacity from the connected product process
+* Resolved charger efficiency, standby power, and rated capacity from the connected exact charger process, when used
+* Resolved charger efficiency, standby power, and rated capacity from the connected requirement-selected charger process, when used
 
 **Value Needed:**
 
-* Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance
-
-**Input Bindings:**
-
-* Timestamped interval utility data from the uploaded utility artifact ← Bill at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Timestamped Interval Utility Data`. Pass the exact bound Timestamped interval utility data from the uploaded utility artifact to Fleet Charging Infrastructure Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Time zone and daylight-saving metadata from the uploaded utility artifact ← Bill at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact`. Pass the exact bound Time zone and daylight-saving metadata from the uploaded utility artifact to Fleet Charging Infrastructure Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Annual fleet miles ← User at `Annual Operational Cost Impact > Annual fleet miles`. Pass the exact bound Annual fleet miles to Fleet Charging Infrastructure Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Depot allocation fraction ← Project Document at `Annual Operational Cost Impact > Documented Depot Allocation Fraction from Fleet Study or Contractor Design`. Pass the exact bound Depot allocation fraction to Fleet Charging Infrastructure Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Vehicle Class and Service Need ← User at `Annual Operational Cost Impact > Vehicle Class and Service Need`. Pass the exact bound Vehicle Class and Service Need to Fleet Charging Infrastructure Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Measured kWh per Mile from the fleet study or contractor charging design ← Project Document at `Annual Operational Cost Impact > Vehicle Electricity Intensity > Measured Kilowatt-Hours per Mile from Fleet Study or Contractor Charging Design`. Pass the exact bound Measured kWh per Mile from the fleet study or contractor charging design to Fleet Charging Infrastructure Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Vehicle-arrival schedule from the fleet study or contractor charging design ← Project Document at `Annual Operational Cost Impact > Fleet Charging Activity > Vehicle-Arrival Schedule from Fleet Study or Contractor Charging Design`. Pass the exact bound Vehicle-arrival schedule from the fleet study or contractor charging design to Fleet Charging Infrastructure Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Vehicle-departure schedule from the fleet study or contractor charging design ← Project Document at `Annual Operational Cost Impact > Fleet Charging Activity > Vehicle-Departure Schedule from Fleet Study or Contractor Charging Design`. Pass the exact bound Vehicle-departure schedule from the fleet study or contractor charging design to Fleet Charging Infrastructure Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Uncontrolled charging rule from the fleet study or contractor charging design ← Project Document at `Annual Operational Cost Impact > Fleet Charging Activity > Uncontrolled Charging Rule from Fleet Study or Contractor Charging Design`. Pass the exact bound Uncontrolled charging rule from the fleet study or contractor charging design to Fleet Charging Infrastructure Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Rated Charger Power or Capacity ← Standard Output at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Standard 1.4 - Exact Charger Rating Lookup`. Pass the exact bound Rated Charger Power or Capacity to Fleet Charging Infrastructure Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Installed port count ← Linked Opportunity at `Annual Operational Cost Impact > Installed Port Count`. Pass the exact bound Installed port count to Fleet Charging Infrastructure Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Resolved vehicle electricity intensity from the connected vehicle process ← Standard Output at `Annual Operational Cost Impact > Vehicle Electricity Intensity > Standard 1.2 - Vehicle Electricity-Intensity Resolution`. Pass the exact bound Resolved vehicle electricity intensity from the connected vehicle process to Fleet Charging Infrastructure Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Resolved charger efficiency, standby power, and rated capacity from the connected product process ← Standard Output at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Standard 1.5 - Requirement-Based Charger Resolution`. Pass the exact bound Resolved charger efficiency, standby power, and rated capacity from the connected product process to Fleet Charging Infrastructure Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance → `baseline_annual_bill` (USD/year; RECORD_SET) at `Annual Operational Cost Impact > Standard 1.6 - Fleet Charging Infrastructure Interval Bill Calculation`.
+* Baseline annual bill
+* Proposed unmanaged-charging annual bill
 
 **How to Use:**
 
-1. Map the Fleet Charging Infrastructure inputs to the documented Fleet Charging Infrastructure Interval Bill Calculation source fields or model inputs: Timestamped interval utility data from the uploaded utility artifact; Time zone and daylight-saving metadata from the uploaded utility artifact; Annual fleet miles; Depot allocation fraction; Vehicle Class and Service Need; Measured kWh per Mile from the fleet study or contractor charging design; Vehicle-arrival schedule from the fleet study or contractor charging design; Vehicle-departure schedule from the fleet study or contractor charging design; Uncontrolled charging rule from the fleet study or contractor charging design; Rated Charger Power or Capacity; Installed port count; Resolved vehicle electricity intensity from the connected vehicle process; Resolved charger efficiency, standby power, and rated capacity from the connected product process.
+1. Map the Fleet Charging Infrastructure inputs to the documented Fleet Charging Infrastructure Interval Bill Calculation source fields or model inputs: Timestamped interval utility data from the uploaded utility artifact; Time zone and daylight-saving metadata from the uploaded utility artifact; Annual fleet miles; Depot allocation fraction; Vehicle Class and Service Need; Measured kWh per Mile from the fleet study or contractor charging design; Vehicle-arrival schedule from the fleet study or contractor charging design; Vehicle-departure schedule from the fleet study or contractor charging design; Uncontrolled charging rule from the fleet study or contractor charging design; Installed port count; Resolved vehicle electricity intensity from the connected vehicle process; Resolved charger efficiency, standby power, and rated capacity from the connected exact charger process, when used; Resolved charger efficiency, standby power, and rated capacity from the connected requirement-selected charger process, when used.
 2. Align the interval load and tariff calendar, apply the category constraints, solve baseline and proposed cases, compare bill components, and retain solver and input provenance.
 3. When an exact value is unavailable, use only a source-specific retained population or equation with documented filters, numeric rule, unit, scope, and version; otherwise report the implementation limitation.
-4. Return one selected baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance.
+4. Return one selected baseline annual bill; Proposed unmanaged-charging annual bill.
 5. Retain the Fleet Charging Infrastructure Interval Bill Calculation source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**

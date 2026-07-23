@@ -25,12 +25,13 @@ Annual Operational Savings
 │  ├─ In-Scope Fixture Count (User)
 │  ├─ Recognizable Facility Activity
 │  │  ├─ Business Activity and Building Type (Profile)
-│  │  ├─ Approximate Occupants or Employees and Customers or Visitors (User)
+│  │  ├─ Female Eligible Population (User)
+│  │  ├─ Male Eligible Population (User)
+│  │  ├─ Customer or Visitor Population, when applicable (User)
 │  │  ├─ Operating Days per Week (User)
 │  │  ├─ Active Weeks per Year (User)
 │  │  ├─ Observed Restroom Study or Audit, when available (Project Document)
 │  │  └─ Standard 1.1 — Flush Activity Resolution
-│  │     └─ Female and male eligible populations (Project Document)
 │  ├─ Existing Fixture
 │  │  ├─ Existing Toilet or Urinal Type (User)
 │  │  ├─ Existing Gallons per Flush from Label, Specification, or Measurement (Project Document)
@@ -67,28 +68,17 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 **Lookup Inputs:**
 
 * Toilet or urinal type
-* Female and male eligible populations
+* Female eligible population
+* Male eligible population
 * Customer or visitor population when applicable
 * In-scope fixture count
-* Operating days
+* Operating days per week
+* Active weeks per year
 * Observed restroom study when available
 
 **Value Needed:**
 
 * Total annual flushes across the in-scope fixture group
-
-**Input Bindings:**
-
-* Toilet or urinal type ← User at `Annual Operational Savings > Annual Water Reduction > Existing Fixture > Existing Toilet or Urinal Type`. Pass the exact bound Toilet or urinal type to Flush Activity Resolution when computing Total annual flushes across the in-scope fixture group; do not substitute a value from another tree path.
-* Female and male eligible populations ← Project Document at `Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Standard 1.1 - Flush Activity Resolution > Female and male eligible populations`. Pass the exact bound Female and male eligible populations to Flush Activity Resolution when computing Total annual flushes across the in-scope fixture group; do not substitute a value from another tree path.
-* Customer or visitor population when applicable ← Project Document at `Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Observed Restroom Study or Audit, when available`. Pass the exact bound Customer or visitor population when applicable to Flush Activity Resolution when computing Total annual flushes across the in-scope fixture group; do not substitute a value from another tree path.
-* In-scope fixture count ← User at `Annual Operational Savings > Annual Water Reduction > In-Scope Fixture Count`. Pass the exact bound In-scope fixture count to Flush Activity Resolution when computing Total annual flushes across the in-scope fixture group; do not substitute a value from another tree path.
-* Operating days ← User at `Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Operating Days per Week`. Pass the exact bound Operating days to Flush Activity Resolution when computing Total annual flushes across the in-scope fixture group; do not substitute a value from another tree path.
-* Observed restroom study when available ← Project Document at `Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Observed Restroom Study or Audit, when available`. Pass the exact bound Observed restroom study when available to Flush Activity Resolution when computing Total annual flushes across the in-scope fixture group; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Total annual flushes across the in-scope fixture group → `total_annual_flushes_group` (flushes/year; PROJECT_TOTAL) at `Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Standard 1.1 - Flush Activity Resolution`.
 
 **How to Use:**
 
@@ -122,21 +112,10 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 
 * Existing toilet or urinal type
 * Existing label, specification, audit, or measurement when available
-* Installed fixture class and vintage when exact data are unavailable
 
 **Value Needed:**
 
 * One existing gallons-per-flush value
-
-**Input Bindings:**
-
-* Existing toilet or urinal type ← User at `Annual Operational Savings > Annual Water Reduction > Existing Fixture > Existing Toilet or Urinal Type`. Pass the exact bound Existing toilet or urinal type to Existing Flush Volume Resolution when computing One existing gallons-per-flush value; do not substitute a value from another tree path.
-* Existing label, specification, audit, or measurement when available ← Project Document at `Annual Operational Savings > Annual Water Reduction > Existing Fixture > Existing Gallons per Flush from Label, Specification, or Measurement`. Pass the exact bound Existing label, specification, audit, or measurement when available to Existing Flush Volume Resolution when computing One existing gallons-per-flush value; do not substitute a value from another tree path.
-* Installed fixture class and vintage when exact data are unavailable ← Standard Output at `Annual Operational Savings > Annual Water Reduction > Flush Fixture Performance > Linked Opportunity names an exact flush fixture > Standard 1.3 - Exact Proposed Flush Fixture Rating Lookup`. Pass the exact bound Installed fixture class and vintage when exact data are unavailable to Existing Flush Volume Resolution when computing One existing gallons-per-flush value; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One existing gallons-per-flush value → `gpf_existing` (gallons/flush; PER_FIXTURE) at `Annual Operational Savings > Annual Water Reduction > Existing Fixture > Standard 1.2 - Existing Flush Volume Resolution`.
 
 **How to Use:**
 
@@ -178,15 +157,6 @@ U.S. Environmental Protection Agency - WaterSense
 
 * Proposed rated gallons per flush with units and product provenance
 
-**Input Bindings:**
-
-* Exact proposed fixture make and model from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual Water Reduction > Flush Fixture Performance > Linked Opportunity names an exact flush fixture > Exact Flush Fixture Product Information`. Apply the exact bound Exact proposed fixture make and model from the linked opportunity to resolve and validate the authoritative record before Exact Proposed Flush Fixture Rating Lookup emits Proposed rated gallons per flush with units and product provenance.
-* Fixture type and application ← Linked Opportunity at `Annual Operational Savings > Annual Water Reduction > Flush Fixture Performance > Linked Opportunity names an exact flush fixture > Exact Flush Fixture Product Information`. Apply the exact bound Fixture type and application to resolve and validate the authoritative record before Exact Proposed Flush Fixture Rating Lookup emits Proposed rated gallons per flush with units and product provenance.
-
-**Output Bindings:**
-
-* Proposed rated gallons per flush with units and product provenance → `gpf_proposed` (gallons/flush; RECORD_SET) at `Annual Operational Savings > Annual Water Reduction > Flush Fixture Performance > Linked Opportunity names an exact flush fixture > Standard 1.3 - Exact Proposed Flush Fixture Rating Lookup`.
-
 **How to Use:**
 
 1. Read the exact manufacturer, model, and toilet or urinal type from the linked opportunity.
@@ -227,16 +197,6 @@ U.S. Environmental Protection Agency - WaterSense
 **Value Needed:**
 
 * One selected proposed rated gallons per flush, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally
-
-**Input Bindings:**
-
-* Fixture requirements from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual Water Reduction > Flush Fixture Performance > Linked Opportunity specifies flush fixture requirements but no exact product > Flush Fixture Requirements`. Apply the exact bound Fixture requirements from the linked opportunity as a compatibility filter before Requirement-Based Proposed Flush Fixture Resolution emits One selected proposed rated gallons per flush, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally.
-* Fixture type and application ← Linked Opportunity at `Annual Operational Savings > Annual Water Reduction > Flush Fixture Performance > Linked Opportunity specifies flush fixture requirements but no exact product > Flush Fixture Requirements`. Apply the exact bound Fixture type and application as a compatibility filter before Requirement-Based Proposed Flush Fixture Resolution emits One selected proposed rated gallons per flush, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally.
-* Required water-use criterion ← Linked Opportunity at `Annual Operational Savings > Annual Water Reduction > Flush Fixture Performance > Linked Opportunity specifies flush fixture requirements but no exact product > Flush Fixture Requirements`. Apply the exact bound Required water-use criterion as a compatibility filter before Requirement-Based Proposed Flush Fixture Resolution emits One selected proposed rated gallons per flush, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally.
-
-**Output Bindings:**
-
-* One selected proposed rated gallons per flush, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally → `gpf_proposed` (gallons/flush; RECORD_SET) at `Annual Operational Savings > Annual Water Reduction > Flush Fixture Performance > Linked Opportunity specifies flush fixture requirements but no exact product > Standard 1.4 - Requirement-Based Proposed Flush Fixture Resolution`.
 
 **How to Use:**
 

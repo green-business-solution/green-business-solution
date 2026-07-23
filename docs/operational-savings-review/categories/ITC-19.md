@@ -33,12 +33,15 @@ Annual Operational Savings
 ├─ Analysis Year (User)
 ├─ Standard 1.1 — Small Wind Production Simulation
 ├─ Interval onsite-offset and export calculation (Derived)
-└─ Chronological Electricity Load and Tariff
-   ├─ Timestamped Interval Utility Data (Bill)
-   ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
-   ├─ Rate Schedule and Customer Class (Bill)
-   ├─ Standard 1.2 — Interval Tariff Resolution
-   └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
+├─ Chronological Electricity Load and Tariff
+│  ├─ Serving Electric Utility (Bill)
+│  ├─ Billing Period Start and End (Bill)
+│  ├─ Timestamped Interval Utility Data (Bill)
+│  ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
+│  ├─ Rate Schedule and Customer Class (Bill)
+│  ├─ Standard 1.2 — Interval Tariff Resolution
+│  └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
+└─ Interconnection and Export-Credit Configuration (Linked Opportunity)
 ```
 
 **■ Standard 1.1 — Small Wind Production Simulation**
@@ -70,19 +73,6 @@ National Laboratory of the Rockies - WIND Toolkit and System Advisor Model
 **Value Needed:**
 
 * Interval and annual AC electricity generation, with wind resource, turbine, loss, unit, and source provenance
-
-**Input Bindings:**
-
-* Wind Turbine Class or Intended Application ← Linked Opportunity at `Annual Operational Savings > Wind Turbine Class or Intended Application`. Pass the exact bound Wind Turbine Class or Intended Application to Small Wind Production Simulation when computing Interval and annual AC electricity generation, with wind resource, turbine, loss, unit, and source provenance; do not substitute a value from another tree path.
-* Exact Turbine Model or Power Curve ← Linked Opportunity at `Annual Operational Savings > Exact Turbine Model or Power Curve`. Pass the exact bound Exact Turbine Model or Power Curve to Small Wind Production Simulation when computing Interval and annual AC electricity generation, with wind resource, turbine, loss, unit, and source provenance; do not substitute a value from another tree path.
-* Hub Height ← Linked Opportunity at `Annual Operational Savings > Hub Height`. Pass the exact bound Hub Height to Small Wind Production Simulation when computing Interval and annual AC electricity generation, with wind resource, turbine, loss, unit, and source provenance; do not substitute a value from another tree path.
-* Loss factor ← Linked Opportunity at `Annual Operational Savings > Loss factor`. Pass the exact bound Loss factor to Small Wind Production Simulation when computing Interval and annual AC electricity generation, with wind resource, turbine, loss, unit, and source provenance; do not substitute a value from another tree path.
-* Analysis Year ← User at `Annual Operational Savings > Analysis Year`. Pass the exact bound Analysis Year to Small Wind Production Simulation when computing Interval and annual AC electricity generation, with wind resource, turbine, loss, unit, and source provenance; do not substitute a value from another tree path.
-* Site Location ← Profile at `Annual Operational Savings > Site Location`. Pass the exact bound Site Location to Small Wind Production Simulation when computing Interval and annual AC electricity generation, with wind resource, turbine, loss, unit, and source provenance; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Interval and annual AC electricity generation, with wind resource, turbine, loss, unit, and source provenance → `wind_kWh_t` (kWh/interval; PROFILE) at `Annual Operational Savings > Standard 1.1 - Small Wind Production Simulation`.
 
 **How to Use:**
 
@@ -126,18 +116,6 @@ U.S. Department of Energy OpenEI Utility Rate Database and exact published utili
 **Value Needed:**
 
 * One complete tariff input set with exact or conservative-screening provenance
-
-**Input Bindings:**
-
-* Serving electric utility from the bill ← Bill at `Annual Operational Savings > Chronological Electricity Load and Tariff > Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact`. Pass the exact bound Serving electric utility from the bill to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
-* Published rate schedule and customer class from the bill ← Bill at `Annual Operational Savings > Chronological Electricity Load and Tariff > Rate Schedule and Customer Class`. Pass the exact bound Published rate schedule and customer class from the bill to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
-* Tariff effective date covering the analysis period ← Bill at `Annual Operational Savings > Chronological Electricity Load and Tariff > Rate Schedule and Customer Class`. Pass the exact bound Tariff effective date covering the analysis period to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
-* Continuous interval energy and demand aligned to the tariff timezone ← Bill at `Annual Operational Savings > Chronological Electricity Load and Tariff > Timestamped Interval Utility Data`. Pass the exact bound Continuous interval energy and demand aligned to the tariff timezone to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
-* Interconnection and export-credit configuration from the project agreement ← Derived at `Annual Operational Savings > Interval onsite-offset and export calculation`. Pass the exact bound Interconnection and export-credit configuration from the project agreement to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One complete tariff input set with exact or conservative-screening provenance → `tariff_input_set` (record set; RECORD_SET) at `Annual Operational Savings > Chronological Electricity Load and Tariff > Standard 1.2 - Interval Tariff Resolution`.
 
 **How to Use:**
 

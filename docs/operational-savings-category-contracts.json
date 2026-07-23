@@ -501,6 +501,26 @@
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
         },
         {
+          "name": "annual_kWh",
+          "dimension": "energy_per_time",
+          "unit_id": "kwh_year",
+          "display_unit": "kWh/year",
+          "quantity_kind": "energy_rate",
+          "tree_nodes": [
+            "Annual electricity reduction"
+          ],
+          "source_or_resolver": "Lighting-Replacement Calculation",
+          "exact_paths": [
+            "replacement fixture count × wattage difference × annual operating hours"
+          ],
+          "fallback_path": "single-value fallback policy",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Returns the annual project electricity reduction after applying fixture count and schedule exactly once",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
           "name": "p_electric",
           "dimension": "currency_per_energy",
           "unit_id": "usd_per_kilowatt_hour",
@@ -1589,6 +1609,26 @@
           "formula_use": "Values avoided backup resource",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "collector_and_storage_configuration",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Collector configuration"
+          ],
+          "source_or_resolver": "Solar Water-Heating Input Benchmark",
+          "exact_paths": [
+            "explicit Information Card output collector_and_storage_configuration"
+          ],
+          "fallback_path": "single-value fallback policy",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies the selected collector and storage configuration to the solar-thermal model",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -1597,7 +1637,10 @@
         "fuel-price"
       ],
       "profile_paths": [
-        "site.geo.coordinates"
+        "site.geo.coordinates",
+        "business.primaryActivityText",
+        "site.buildingTypes",
+        "site.squareFootage.value"
       ],
       "bill_field_ids": [
         "average_cost_per_kwh",
@@ -3039,6 +3082,66 @@
           "formula_use": "Supplies the energy periods, demand rules, seasons, tiers, ratchets, export treatment, and effective-date rules used by the interval bill calculation",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "maximum_shed_kW",
+          "dimension": "power",
+          "unit_id": "kw",
+          "display_unit": "kW",
+          "quantity_kind": "power",
+          "tree_nodes": [
+            "Maximum shed kW"
+          ],
+          "source_or_resolver": "Demand-Response Event Behavior Benchmark",
+          "exact_paths": [
+            "explicit Information Card output maximum_shed_kW"
+          ],
+          "fallback_path": "single-value fallback policy",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Bounds the maximum interval demand reduction",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "event_availability_schedule",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Event-availability schedule"
+          ],
+          "source_or_resolver": "Demand-Response Event Behavior Benchmark",
+          "exact_paths": [
+            "explicit Information Card output event_availability_schedule"
+          ],
+          "fallback_path": "single-value fallback policy",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Defines the intervals eligible for demand-response dispatch",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "maximum_event_duration",
+          "dimension": "time",
+          "unit_id": "hours_event",
+          "display_unit": "hours/event",
+          "quantity_kind": "duration",
+          "tree_nodes": [
+            "Maximum event duration"
+          ],
+          "source_or_resolver": "Demand-Response Event Behavior Benchmark",
+          "exact_paths": [
+            "explicit Information Card output maximum_event_duration"
+          ],
+          "fallback_path": "single-value fallback policy",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Limits the duration of each demand-response event",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -3046,7 +3149,10 @@
         "electric-time-of-use",
         "electric-demand"
       ],
-      "profile_paths": [],
+      "profile_paths": [
+        "business.primaryActivityText",
+        "site.buildingTypes"
+      ],
       "bill_field_ids": [
         "rate_schedule",
         "customer_class",
@@ -5686,6 +5792,106 @@
           "formula_use": "Supplies the energy periods, demand rules, seasons, tiers, ratchets, export treatment, and effective-date rules used by the interval bill calculation",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "PV_AC_kWh_t",
+          "dimension": "interval_energy",
+          "unit_id": "kwh_interval",
+          "display_unit": "kWh/interval",
+          "quantity_kind": "energy",
+          "tree_nodes": [
+            "PV or wind interval generation when included"
+          ],
+          "source_or_resolver": "PVWatts Solar Production Calculation",
+          "exact_paths": [
+            "explicit Information Card output PV_AC_kWh_t"
+          ],
+          "fallback_path": "single-value fallback policy",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies interval solar generation to composite dispatch",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "wind_kWh_t",
+          "dimension": "interval_energy",
+          "unit_id": "kwh_interval",
+          "display_unit": "kWh/interval",
+          "quantity_kind": "energy",
+          "tree_nodes": [
+            "PV or wind interval generation when included"
+          ],
+          "source_or_resolver": "Small Wind Production Simulation",
+          "exact_paths": [
+            "explicit Information Card output wind_kWh_t"
+          ],
+          "fallback_path": "single-value fallback policy",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies interval wind generation to composite dispatch",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "generation",
+          "dimension": "energy_per_time",
+          "unit_id": "kwh_year",
+          "display_unit": "kWh/year",
+          "quantity_kind": "energy_rate",
+          "tree_nodes": [
+            "Fuel-cell or CHP performance when included"
+          ],
+          "source_or_resolver": "Microgrid System Performance Balance",
+          "exact_paths": [
+            "explicit Information Card output generation"
+          ],
+          "fallback_path": "single-value fallback policy",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies annual onsite electricity generation to composite dispatch",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "input_fuel",
+          "dimension": "resource_per_time",
+          "unit_id": "fuel_unit_year",
+          "display_unit": "fuel-unit/year",
+          "quantity_kind": "resource_rate",
+          "tree_nodes": [
+            "Fuel-cell or CHP performance when included"
+          ],
+          "source_or_resolver": "Microgrid System Performance Balance",
+          "exact_paths": [
+            "explicit Information Card output input_fuel"
+          ],
+          "fallback_path": "single-value fallback policy",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies annual onsite-generation fuel use to composite dispatch",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "useful_heat",
+          "dimension": "energy_per_time",
+          "unit_id": "energy_year",
+          "display_unit": "energy/year",
+          "quantity_kind": "energy",
+          "tree_nodes": [
+            "Fuel-cell or CHP performance when included"
+          ],
+          "source_or_resolver": "Microgrid System Performance Balance",
+          "exact_paths": [
+            "explicit Information Card output useful_heat"
+          ],
+          "fallback_path": "single-value fallback policy",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies annual useful recovered heat to composite dispatch",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -6340,6 +6546,72 @@
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
         },
         {
+          "name": "rated_output_power_kW",
+          "dimension": "power",
+          "unit_id": "kilowatt",
+          "display_unit": "kW",
+          "quantity_kind": "power",
+          "tree_nodes": [
+            "Vehicle and charger efficiency (Standard)"
+          ],
+          "source_or_resolver": "STD-ENERGY-STAR-PRODUCT-DATA",
+          "exact_paths": [
+            "energy_star.evse_native_fields"
+          ],
+          "fallback_path": "exact product -> requirement-filtered compatible product",
+          "standard_output_key": "energy_star.evse_native_fields",
+          "evidence_ids": [
+            "E-ENERGY-STAR-EVSE-NATIVE"
+          ],
+          "formula_use": "Supplies the per-port charger power constraint to the fleet dispatch",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "ac_total_loss_W",
+          "dimension": "power",
+          "unit_id": "watt_ac",
+          "display_unit": "Wac",
+          "quantity_kind": "power",
+          "tree_nodes": [
+            "Vehicle and charger efficiency (Standard)"
+          ],
+          "source_or_resolver": "STD-ENERGY-STAR-PRODUCT-DATA",
+          "exact_paths": [
+            "energy_star.evse_native_fields"
+          ],
+          "fallback_path": "exact product -> requirement-filtered compatible AC-output product",
+          "standard_output_key": "energy_star.evse_native_fields",
+          "evidence_ids": [
+            "E-ENERGY-STAR-EVSE-NATIVE"
+          ],
+          "formula_use": "Supplies the AC-output charging-loss field to the fleet dispatch",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "dc_efficiency_fraction",
+          "dimension": "dimensionless",
+          "unit_id": "fraction",
+          "display_unit": "fraction",
+          "quantity_kind": "ratio",
+          "tree_nodes": [
+            "Vehicle and charger efficiency (Standard)"
+          ],
+          "source_or_resolver": "STD-ENERGY-STAR-PRODUCT-DATA",
+          "exact_paths": [
+            "energy_star.evse_native_fields"
+          ],
+          "fallback_path": "exact product -> requirement-filtered compatible DC-output product",
+          "standard_output_key": "energy_star.evse_native_fields",
+          "evidence_ids": [
+            "E-ENERGY-STAR-EVSE-NATIVE"
+          ],
+          "formula_use": "Supplies the DC-output charging-efficiency field to the fleet dispatch",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
+        },
+        {
           "name": "standby_kW_per_port",
           "dimension": "power",
           "unit_id": "kw_port",
@@ -6446,6 +6718,47 @@
           "formula_use": "Supplies the energy periods, demand rules, seasons, tiers, ratchets, export treatment, and effective-date rules used by the interval bill calculation",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "charging_activity_schedule",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Vehicle-arrival schedule",
+            "Vehicle-departure schedule"
+          ],
+          "source_or_resolver": "Fleet Charging Activity and Vehicle Benchmark",
+          "exact_paths": [
+            "explicit Information Card output charging_activity_schedule"
+          ],
+          "fallback_path": "single-value fallback policy",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies the selected arrival and departure schedule",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "uncontrolled_charging_profile_t",
+          "dimension": "interval_energy",
+          "unit_id": "kwh_interval",
+          "display_unit": "kWh/interval",
+          "quantity_kind": "energy",
+          "tree_nodes": [
+            "Uncontrolled charging rule"
+          ],
+          "source_or_resolver": "Fleet Charging Activity and Vehicle Benchmark",
+          "exact_paths": [
+            "explicit Information Card output uncontrolled_charging_profile_t"
+          ],
+          "fallback_path": "single-value fallback policy",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies the selected uncontrolled charging profile",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -8675,12 +8988,36 @@
           "formula_use": "Values annual kWh",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "load_fraction_i",
+          "dimension": "dimensionless",
+          "unit_id": "fraction",
+          "display_unit": "fraction",
+          "quantity_kind": "ratio",
+          "tree_nodes": [
+            "Repeatable load-bin profile"
+          ],
+          "source_or_resolver": "Pump or Fan Operating-Profile Benchmark",
+          "exact_paths": [
+            "explicit Information Card output load_fraction_i"
+          ],
+          "fallback_path": "single-value fallback policy",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies the normalized load or speed fraction for each bin",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
         "electric-volumetric"
       ],
-      "profile_paths": [],
+      "profile_paths": [
+        "business.primaryActivityText",
+        "site.buildingTypes",
+        "site.geo.coordinates"
+      ],
       "bill_field_ids": [
         "average_cost_per_kwh"
       ],

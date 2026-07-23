@@ -1,7 +1,7 @@
 {
   "schema_version": "operational-savings/user-input-realism-v2",
   "generated_from": "operational-savings Information Card presentation trees",
-  "user_leaf_count": 141,
+  "user_leaf_count": 157,
   "inputs": [
     {
       "category_id": "ITC-01",
@@ -81,15 +81,26 @@
       "missing_exact_value_behavior": "When Control Type and Timing Offset is unavailable, use the bound output Annual daylight-based operating hours from daylight-lighting-hours only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
+      "category_id": "ITC-02",
+      "tree_path": "Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Analysis Year",
+      "visible_label": "Analysis Year",
+      "decision": "USER_MEMORY",
+      "reason": "At Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Analysis Year, the representative can provide this recognizable project input without calculating the savings result.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Analysis Year only at Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Analysis Year after category-specific normalization.",
+      "missing_exact_value_behavior": "When Analysis Year is unavailable at Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Analysis Year, report the unresolved input. Do not borrow a nearby value or invent a replacement."
+    },
+    {
       "category_id": "ITC-03",
       "tree_path": "Annual Operational Savings > Annual fuel reduction > Furnace Performance > Existing Furnace > Existing Furnace Type or Application",
       "visible_label": "Existing Furnace Type or Application",
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual fuel reduction > Furnace Performance > Existing Furnace > Existing Furnace Type or Application, the representative can recognize the furnace type and the area or service it supports.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing furnace performance value with its exact unit and provenance",
+      "fallback_output": "Existing certified efficiency",
       "selected_value_method": "Use the stated Existing Furnace Type or Application only at Annual Operational Savings > Annual fuel reduction > Furnace Performance > Existing Furnace > Existing Furnace Type or Application after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Furnace Type or Application is unavailable, use the bound output One selected existing furnace performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Furnace Type or Application is unavailable, use the bound output Existing certified efficiency from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-03",
@@ -98,9 +109,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual fuel reduction > Furnace Performance > Existing Furnace > Existing Make and Model, when available, the representative may know the familiar make and model, and the field remains optional because a label is not assumed.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing furnace performance value with its exact unit and provenance",
+      "fallback_output": "Existing certified efficiency",
       "selected_value_method": "Use the stated Existing Make and Model, when available only at Annual Operational Savings > Annual fuel reduction > Furnace Performance > Existing Furnace > Existing Make and Model, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output One selected existing furnace performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output Existing certified efficiency from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-03",
@@ -109,9 +120,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual fuel reduction > Furnace Performance > Existing Furnace > Existing Capacity or Size Class, when available, the representative may recognize a familiar small, medium, large, rack, tonnage, or service-capacity class without supplying an engineering rating.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing furnace performance value with its exact unit and provenance",
+      "fallback_output": "Existing certified efficiency",
       "selected_value_method": "Use the stated Existing Capacity or Size Class, when available only at Annual Operational Savings > Annual fuel reduction > Furnace Performance > Existing Furnace > Existing Capacity or Size Class, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output One selected existing furnace performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output Existing certified efficiency from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-05",
@@ -142,9 +153,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Existing Water Heater > Existing Water Heater Type or Application, the representative can recognize the water-heater type and service.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing water heater performance value with its exact unit and provenance",
+      "fallback_output": "Existing certified efficiency",
       "selected_value_method": "Use the stated Existing Water Heater Type or Application only at Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Existing Water Heater > Existing Water Heater Type or Application after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Water Heater Type or Application is unavailable, use the bound output One selected existing water heater performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Water Heater Type or Application is unavailable, use the bound output Existing certified efficiency from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-06",
@@ -153,9 +164,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Existing Water Heater > Existing Make and Model, when available, the representative may know the familiar make and model, and the field remains optional because a label is not assumed.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing water heater performance value with its exact unit and provenance",
+      "fallback_output": "Existing certified efficiency",
       "selected_value_method": "Use the stated Existing Make and Model, when available only at Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Existing Water Heater > Existing Make and Model, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output One selected existing water heater performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output Existing certified efficiency from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-06",
@@ -164,9 +175,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Existing Water Heater > Existing Capacity or Size Class, when available, the representative may recognize a familiar small, medium, large, rack, tonnage, or service-capacity class without supplying an engineering rating.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing water heater performance value with its exact unit and provenance",
+      "fallback_output": "Existing certified efficiency",
       "selected_value_method": "Use the stated Existing Capacity or Size Class, when available only at Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Existing Water Heater > Existing Capacity or Size Class, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output One selected existing water heater performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output Existing certified efficiency from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-07",
@@ -175,9 +186,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual gas reduction > Gas Water Heater Performance > Existing Gas Water Heater > Existing Gas Water Heater Type or Application, the representative can recognize the gas water-heater type and service.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing gas water heater performance value with its exact unit and provenance",
+      "fallback_output": "Existing certified efficiency",
       "selected_value_method": "Use the stated Existing Gas Water Heater Type or Application only at Annual Operational Savings > Annual gas reduction > Gas Water Heater Performance > Existing Gas Water Heater > Existing Gas Water Heater Type or Application after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Gas Water Heater Type or Application is unavailable, use the bound output One selected existing gas water heater performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Gas Water Heater Type or Application is unavailable, use the bound output Existing certified efficiency from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-07",
@@ -186,9 +197,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual gas reduction > Gas Water Heater Performance > Existing Gas Water Heater > Existing Make and Model, when available, the representative may know the familiar make and model, and the field remains optional because a label is not assumed.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing gas water heater performance value with its exact unit and provenance",
+      "fallback_output": "Existing certified efficiency",
       "selected_value_method": "Use the stated Existing Make and Model, when available only at Annual Operational Savings > Annual gas reduction > Gas Water Heater Performance > Existing Gas Water Heater > Existing Make and Model, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output One selected existing gas water heater performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output Existing certified efficiency from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-07",
@@ -197,9 +208,20 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual gas reduction > Gas Water Heater Performance > Existing Gas Water Heater > Existing Capacity or Size Class, when available, the representative may recognize a familiar small, medium, large, rack, tonnage, or service-capacity class without supplying an engineering rating.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing gas water heater performance value with its exact unit and provenance",
+      "fallback_output": "Existing certified efficiency",
       "selected_value_method": "Use the stated Existing Capacity or Size Class, when available only at Annual Operational Savings > Annual gas reduction > Gas Water Heater Performance > Existing Gas Water Heater > Existing Capacity or Size Class, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output One selected existing gas water heater performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output Existing certified efficiency from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+    },
+    {
+      "category_id": "ITC-08",
+      "tree_path": "Annual Operational Savings > Annual Backup-Resource Reduction > Annual Hot-Water Load > Operating Schedule",
+      "visible_label": "Operating Schedule",
+      "decision": "USER_RECOGNIZABLE_ACTIVITY",
+      "reason": "At Annual Operational Savings > Annual Backup-Resource Reduction > Annual Hot-Water Load > Operating Schedule, the representative can recognize the normal operating schedule used to screen annual hot-water activity.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Operating Schedule only at Annual Operational Savings > Annual Backup-Resource Reduction > Annual Hot-Water Load > Operating Schedule after category-specific normalization.",
+      "missing_exact_value_behavior": "When Operating Schedule is unavailable at Annual Operational Savings > Annual Backup-Resource Reduction > Annual Hot-Water Load > Operating Schedule, report the unresolved input. Do not inherit a same-label decision, borrow a nearby process, or invent a value."
     },
     {
       "category_id": "ITC-08",
@@ -219,9 +241,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual thermal-input and pump-electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern, the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Avoided annual recirculation pump run hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual thermal-input and pump-electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Avoided annual recirculation pump run hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-09",
@@ -230,9 +252,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual thermal-input and pump-electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known, the representative can provide familiar schedule details when the business tracks them.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Avoided annual recirculation pump run hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual thermal-input and pump-electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Avoided annual recirculation pump run hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-10",
@@ -252,9 +274,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Existing Refrigeration Equipment > Existing Refrigeration Equipment Type or Application, the representative can recognize the refrigeration equipment type and application.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing refrigeration equipment performance value with its exact unit and provenance",
+      "fallback_output": "Existing annual electricity use per equipment unit",
       "selected_value_method": "Use the stated Existing Refrigeration Equipment Type or Application only at Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Existing Refrigeration Equipment > Existing Refrigeration Equipment Type or Application after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Refrigeration Equipment Type or Application is unavailable, use the bound output One selected existing refrigeration equipment performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Refrigeration Equipment Type or Application is unavailable, use the bound output Existing annual electricity use per equipment unit from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-10",
@@ -263,9 +285,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Existing Refrigeration Equipment > Existing Make and Model, when available, the representative may know the familiar make and model, and the field remains optional because a label is not assumed.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing refrigeration equipment performance value with its exact unit and provenance",
+      "fallback_output": "Existing annual electricity use per equipment unit",
       "selected_value_method": "Use the stated Existing Make and Model, when available only at Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Existing Refrigeration Equipment > Existing Make and Model, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output One selected existing refrigeration equipment performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output Existing annual electricity use per equipment unit from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-10",
@@ -274,9 +296,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Existing Refrigeration Equipment > Existing Capacity or Size Class, when available, the representative may recognize a familiar small, medium, large, rack, tonnage, or service-capacity class without supplying an engineering rating.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing refrigeration equipment performance value with its exact unit and provenance",
+      "fallback_output": "Existing annual electricity use per equipment unit",
       "selected_value_method": "Use the stated Existing Capacity or Size Class, when available only at Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Existing Refrigeration Equipment > Existing Capacity or Size Class, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output One selected existing refrigeration equipment performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output Existing annual electricity use per equipment unit from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-11",
@@ -318,9 +340,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern, the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-12",
@@ -329,9 +351,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known, the representative can provide familiar schedule details when the business tracks them.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-13",
@@ -351,9 +373,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual ice-machine electricity and water reduction > Ice Machine Performance > Existing Ice Machine > Existing Ice Machine Type or Application, the representative can recognize the ice-machine type and service.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing ice machine performance value with its exact unit and provenance",
+      "fallback_output": "Existing electricity use per 100 pounds of ice",
       "selected_value_method": "Use the stated Existing Ice Machine Type or Application only at Annual Operational Savings > Annual ice-machine electricity and water reduction > Ice Machine Performance > Existing Ice Machine > Existing Ice Machine Type or Application after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Ice Machine Type or Application is unavailable, use the bound output One selected existing ice machine performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Ice Machine Type or Application is unavailable, use the bound output Existing electricity use per 100 pounds of ice from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-13",
@@ -362,9 +384,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual ice-machine electricity and water reduction > Ice Machine Performance > Existing Ice Machine > Existing Make and Model, when available, the representative may know the familiar make and model, and the field remains optional because a label is not assumed.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing ice machine performance value with its exact unit and provenance",
+      "fallback_output": "Existing electricity use per 100 pounds of ice",
       "selected_value_method": "Use the stated Existing Make and Model, when available only at Annual Operational Savings > Annual ice-machine electricity and water reduction > Ice Machine Performance > Existing Ice Machine > Existing Make and Model, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output One selected existing ice machine performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output Existing electricity use per 100 pounds of ice from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-13",
@@ -373,9 +395,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual ice-machine electricity and water reduction > Ice Machine Performance > Existing Ice Machine > Existing Capacity or Size Class, when available, the representative may recognize a familiar small, medium, large, rack, tonnage, or service-capacity class without supplying an engineering rating.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing ice machine performance value with its exact unit and provenance",
+      "fallback_output": "Existing electricity use per 100 pounds of ice",
       "selected_value_method": "Use the stated Existing Capacity or Size Class, when available only at Annual Operational Savings > Annual ice-machine electricity and water reduction > Ice Machine Performance > Existing Ice Machine > Existing Capacity or Size Class, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output One selected existing ice machine performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output Existing electricity use per 100 pounds of ice from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-13",
@@ -411,6 +433,28 @@
       "missing_exact_value_behavior": "When Existing building vintage class is unavailable, use the bound output Documented resource-reduction factor for the approved measure and market segment, with source version and units from scout_ecm_screen only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
+      "category_id": "ITC-16",
+      "tree_path": "Annual Operational Savings > Demand-Response Event Inputs > Operating Schedule",
+      "visible_label": "Operating Schedule",
+      "decision": "USER_RECOGNIZABLE_ACTIVITY",
+      "reason": "At Annual Operational Savings > Demand-Response Event Inputs > Operating Schedule, the representative can provide this recognizable project input without calculating the savings result.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Operating Schedule only at Annual Operational Savings > Demand-Response Event Inputs > Operating Schedule after category-specific normalization.",
+      "missing_exact_value_behavior": "When Operating Schedule is unavailable at Annual Operational Savings > Demand-Response Event Inputs > Operating Schedule, report the unresolved input. Do not borrow a nearby value or invent a replacement."
+    },
+    {
+      "category_id": "ITC-16",
+      "tree_path": "Annual Operational Savings > Demand-Response Event Inputs > Controllable Equipment Types",
+      "visible_label": "Controllable Equipment Types",
+      "decision": "USER_MEMORY",
+      "reason": "At Annual Operational Savings > Demand-Response Event Inputs > Controllable Equipment Types, the representative can provide this recognizable project input without calculating the savings result.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Controllable Equipment Types only at Annual Operational Savings > Demand-Response Event Inputs > Controllable Equipment Types after category-specific normalization.",
+      "missing_exact_value_behavior": "When Controllable Equipment Types is unavailable at Annual Operational Savings > Demand-Response Event Inputs > Controllable Equipment Types, report the unresolved input. Do not borrow a nearby value or invent a replacement."
+    },
+    {
       "category_id": "ITC-19",
       "tree_path": "Annual Operational Savings > Analysis Year",
       "visible_label": "Analysis Year",
@@ -428,9 +472,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern, the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-20",
@@ -439,9 +483,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known, the representative can provide familiar schedule details when the business tracks them.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-22",
@@ -450,9 +494,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Confirmed annual fuel availability, if known, the representative may know a contracted or normally tracked annual fuel quantity without deriving its heating value.",
       "fallback_process_key": "epa_chp_performance",
-      "fallback_output": "Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity",
+      "fallback_output": "Annual electricity generation",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Confirmed annual fuel availability, if known and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Confirmed annual fuel availability, if known is unavailable, use the bound output Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity from epa_chp_performance only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Confirmed annual fuel availability, if known is unavailable, use the bound output Annual electricity generation from epa_chp_performance only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-22",
@@ -461,9 +505,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Fuel unit, the representative can identify the familiar purchased or tracked fuel unit.",
       "fallback_process_key": "epa_chp_performance",
-      "fallback_output": "Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity",
+      "fallback_output": "Annual electricity generation",
       "selected_value_method": "Use the stated Fuel unit only at Annual Operational Savings > Fuel unit after category-specific normalization.",
-      "missing_exact_value_behavior": "When Fuel unit is unavailable, use the bound output Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity from epa_chp_performance only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Fuel unit is unavailable, use the bound output Annual electricity generation from epa_chp_performance only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-22",
@@ -475,6 +519,17 @@
       "fallback_output": null,
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Operating schedule and convert it through the explicitly bound formula or Standard.",
       "missing_exact_value_behavior": "When Operating schedule is unavailable at Annual Operational Savings > Operating schedule, report the unresolved input. Do not inherit a same-label decision, borrow a nearby process, or invent a value."
+    },
+    {
+      "category_id": "ITC-23",
+      "tree_path": "Annual Operational Savings > Battery Design and Operating Constraints > Dispatch Horizon",
+      "visible_label": "Dispatch Horizon",
+      "decision": "USER_MEMORY",
+      "reason": "At Annual Operational Savings > Battery Design and Operating Constraints > Dispatch Horizon, the representative can provide this recognizable project input without calculating the savings result.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Dispatch Horizon only at Annual Operational Savings > Battery Design and Operating Constraints > Dispatch Horizon after category-specific normalization.",
+      "missing_exact_value_behavior": "When Dispatch Horizon is unavailable at Annual Operational Savings > Battery Design and Operating Constraints > Dispatch Horizon, report the unresolved input. Do not borrow a nearby value or invent a replacement."
     },
     {
       "category_id": "ITC-26",
@@ -521,6 +576,17 @@
       "missing_exact_value_behavior": "When Public Operating Hours is unavailable at Annual Operational Cost Impact > Public Operating Hours, report the unresolved input. Do not inherit a same-label decision, borrow a nearby process, or invent a value."
     },
     {
+      "category_id": "ITC-27",
+      "tree_path": "Annual Operational Cost Impact > Normalized Time-of-Day Charging Shape > Charging Scenario Selector",
+      "visible_label": "Charging Scenario Selector",
+      "decision": "USER_MEMORY",
+      "reason": "At Annual Operational Cost Impact > Normalized Time-of-Day Charging Shape > Charging Scenario Selector, the representative can select the documented public-charging scenario without estimating site utilization.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Charging Scenario Selector only at Annual Operational Cost Impact > Normalized Time-of-Day Charging Shape > Charging Scenario Selector after category-specific normalization.",
+      "missing_exact_value_behavior": "When Charging Scenario Selector is unavailable at Annual Operational Cost Impact > Normalized Time-of-Day Charging Shape > Charging Scenario Selector, report the unresolved input. Do not borrow a nearby value or invent a replacement."
+    },
+    {
       "category_id": "ITC-28",
       "tree_path": "Annual Operational Cost Impact > Annual fleet miles",
       "visible_label": "Annual fleet miles",
@@ -541,6 +607,28 @@
       "fallback_output": null,
       "selected_value_method": "Use the stated Vehicle Class and Service Need only at Annual Operational Cost Impact > Vehicle Class and Service Need after category-specific normalization.",
       "missing_exact_value_behavior": "When Vehicle Class and Service Need is unavailable at Annual Operational Cost Impact > Vehicle Class and Service Need, report the unresolved input. Do not inherit a same-label decision, borrow a nearby process, or invent a value."
+    },
+    {
+      "category_id": "ITC-28",
+      "tree_path": "Annual Operational Cost Impact > Fleet Charging Activity > Business Operating Schedule",
+      "visible_label": "Business Operating Schedule",
+      "decision": "USER_RECOGNIZABLE_ACTIVITY",
+      "reason": "At Annual Operational Cost Impact > Fleet Charging Activity > Business Operating Schedule, the fleet representative can describe the normal business or depot operating schedule used to select a charging-activity population.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Business Operating Schedule only at Annual Operational Cost Impact > Fleet Charging Activity > Business Operating Schedule after category-specific normalization.",
+      "missing_exact_value_behavior": "When Business Operating Schedule is unavailable at Annual Operational Cost Impact > Fleet Charging Activity > Business Operating Schedule, report the unresolved input. Do not inherit a same-label decision, borrow a nearby process, or invent a value."
+    },
+    {
+      "category_id": "ITC-28",
+      "tree_path": "Annual Operational Cost Impact > Fleet Charging Activity > Fleet Vocation",
+      "visible_label": "Fleet Vocation",
+      "decision": "USER_MEMORY",
+      "reason": "At Annual Operational Cost Impact > Fleet Charging Activity > Fleet Vocation, the fleet representative can recognize the fleet vocation used to select a compatible duty-cycle population.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Fleet Vocation only at Annual Operational Cost Impact > Fleet Charging Activity > Fleet Vocation after category-specific normalization.",
+      "missing_exact_value_behavior": "When Fleet Vocation is unavailable at Annual Operational Cost Impact > Fleet Charging Activity > Fleet Vocation, report the unresolved input. Do not inherit a same-label decision, borrow a nearby process, or invent a value."
     },
     {
       "category_id": "ITC-29",
@@ -643,6 +731,17 @@
     },
     {
       "category_id": "ITC-30",
+      "tree_path": "Annual Operational Savings > Annual Material-Handling Resource Switch > Fuel or Electric Propulsion Type",
+      "visible_label": "Fuel or Electric Propulsion Type",
+      "decision": "USER_MEMORY",
+      "reason": "At Annual Operational Savings > Annual Material-Handling Resource Switch > Fuel or Electric Propulsion Type, the representative can provide this recognizable project input without calculating the savings result.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Fuel or Electric Propulsion Type only at Annual Operational Savings > Annual Material-Handling Resource Switch > Fuel or Electric Propulsion Type after category-specific normalization.",
+      "missing_exact_value_behavior": "When Fuel or Electric Propulsion Type is unavailable at Annual Operational Savings > Annual Material-Handling Resource Switch > Fuel or Electric Propulsion Type, report the unresolved input. Do not borrow a nearby value or invent a replacement."
+    },
+    {
+      "category_id": "ITC-30",
       "tree_path": "Annual Operational Savings > Annual Material-Handling Resource Switch > Comparable Operating Duty",
       "visible_label": "Comparable Operating Duty",
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
@@ -659,9 +758,20 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Recognizable Business, Shift, Seasonal, or Usage Pattern, the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Recognizable Business, Shift, Seasonal, or Usage Pattern and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+    },
+    {
+      "category_id": "ITC-30",
+      "tree_path": "Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Detailed Operating Days, Shifts, or Active Season, if known",
+      "visible_label": "Detailed Operating Days, Shifts, or Active Season, if known",
+      "decision": "USER_RECOGNIZABLE_ACTIVITY",
+      "reason": "At Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Detailed Operating Days, Shifts, or Active Season, if known, the representative can provide this recognizable project input without calculating the savings result.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Detailed Operating Days, Shifts, or Active Season, if known only at Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Detailed Operating Days, Shifts, or Active Season, if known after category-specific normalization.",
+      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable at Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Detailed Operating Days, Shifts, or Active Season, if known, report the unresolved input. Do not borrow a nearby value or invent a replacement."
     },
     {
       "category_id": "ITC-32",
@@ -753,14 +863,36 @@
     },
     {
       "category_id": "ITC-33",
-      "tree_path": "Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Approximate Occupants or Employees and Customers or Visitors",
-      "visible_label": "Approximate Occupants or Employees and Customers or Visitors",
-      "decision": "USER_RECOGNIZABLE_ACTIVITY",
-      "reason": "At Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Approximate Occupants or Employees and Customers or Visitors, the business can provide familiar occupant and visitor activity instead of estimating flushes.",
+      "tree_path": "Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Female Eligible Population",
+      "visible_label": "Female Eligible Population",
+      "decision": "USER_MEMORY",
+      "reason": "At Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Female Eligible Population, the representative can provide this recognizable project input without calculating the savings result.",
       "fallback_process_key": null,
       "fallback_output": null,
-      "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Approximate Occupants or Employees and Customers or Visitors and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Approximate Occupants or Employees and Customers or Visitors is unavailable at Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Approximate Occupants or Employees and Customers or Visitors, report the unresolved input. Do not inherit a same-label decision, borrow a nearby process, or invent a value."
+      "selected_value_method": "Use the stated Female Eligible Population only at Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Female Eligible Population after category-specific normalization.",
+      "missing_exact_value_behavior": "When Female Eligible Population is unavailable at Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Female Eligible Population, report the unresolved input. Do not borrow a nearby value or invent a replacement."
+    },
+    {
+      "category_id": "ITC-33",
+      "tree_path": "Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Male Eligible Population",
+      "visible_label": "Male Eligible Population",
+      "decision": "USER_MEMORY",
+      "reason": "At Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Male Eligible Population, the representative can provide this recognizable project input without calculating the savings result.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Male Eligible Population only at Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Male Eligible Population after category-specific normalization.",
+      "missing_exact_value_behavior": "When Male Eligible Population is unavailable at Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Male Eligible Population, report the unresolved input. Do not borrow a nearby value or invent a replacement."
+    },
+    {
+      "category_id": "ITC-33",
+      "tree_path": "Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Customer or Visitor Population, when applicable",
+      "visible_label": "Customer or Visitor Population, when applicable",
+      "decision": "USER_MEMORY",
+      "reason": "At Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Customer or Visitor Population, when applicable, the representative can provide this recognizable project input without calculating the savings result.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Customer or Visitor Population, when applicable only at Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Customer or Visitor Population, when applicable after category-specific normalization.",
+      "missing_exact_value_behavior": "When Customer or Visitor Population, when applicable is unavailable at Annual Operational Savings > Annual Water Reduction > Recognizable Facility Activity > Customer or Visitor Population, when applicable, report the unresolved input. Do not borrow a nearby value or invent a replacement."
     },
     {
       "category_id": "ITC-33",
@@ -802,9 +934,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual irrigation water reduction > Repeatable hydrozone definition > Approximate Landscape Area for Each Hydrozone, the representative can provide or approximate visible landscaped areas without calculating an irrigation demand.",
       "fallback_process_key": "watersense_landscape",
-      "fallback_output": "Baseline and proposed annual design water allowances, with climate, hydrozone, efficiency, unit, and method provenance",
+      "fallback_output": "Baseline annual design water allowance",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual irrigation water reduction > Repeatable hydrozone definition > Approximate Landscape Area for Each Hydrozone and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Approximate Landscape Area for Each Hydrozone is unavailable, use the bound output Baseline and proposed annual design water allowances, with climate, hydrozone, efficiency, unit, and method provenance from watersense_landscape only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Approximate Landscape Area for Each Hydrozone is unavailable, use the bound output Baseline annual design water allowance from watersense_landscape only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-34",
@@ -813,9 +945,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual irrigation water reduction > Repeatable hydrozone definition > Recognizable Plant or Landscape Type for Each Hydrozone, the representative can recognize turf, shrubs, trees, or another familiar landscape class.",
       "fallback_process_key": "watersense_landscape",
-      "fallback_output": "Baseline and proposed annual design water allowances, with climate, hydrozone, efficiency, unit, and method provenance",
+      "fallback_output": "Baseline annual design water allowance",
       "selected_value_method": "Use the stated Recognizable Plant or Landscape Type for Each Hydrozone only at Annual Operational Savings > Annual irrigation water reduction > Repeatable hydrozone definition > Recognizable Plant or Landscape Type for Each Hydrozone after category-specific normalization.",
-      "missing_exact_value_behavior": "When Recognizable Plant or Landscape Type for Each Hydrozone is unavailable, use the bound output Baseline and proposed annual design water allowances, with climate, hydrozone, efficiency, unit, and method provenance from watersense_landscape only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Recognizable Plant or Landscape Type for Each Hydrozone is unavailable, use the bound output Baseline annual design water allowance from watersense_landscape only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-34",
@@ -824,9 +956,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual irrigation water reduction > Existing irrigation configuration > Irrigation method, the representative can recognize spray, drip, bubbler, or another familiar irrigation method.",
       "fallback_process_key": "watersense_landscape",
-      "fallback_output": "Baseline and proposed annual design water allowances, with climate, hydrozone, efficiency, unit, and method provenance",
+      "fallback_output": "Baseline annual design water allowance",
       "selected_value_method": "Use the stated Irrigation method only at Annual Operational Savings > Annual irrigation water reduction > Existing irrigation configuration > Irrigation method after category-specific normalization.",
-      "missing_exact_value_behavior": "When Irrigation method is unavailable, use the bound output Baseline and proposed annual design water allowances, with climate, hydrozone, efficiency, unit, and method provenance from watersense_landscape only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Irrigation method is unavailable, use the bound output Baseline annual design water allowance from watersense_landscape only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-34",
@@ -835,9 +967,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual irrigation water reduction > Existing irrigation configuration > Controller treatment, the representative can recognize a timer, weather-based controller, or soil-moisture controller.",
       "fallback_process_key": "watersense_landscape",
-      "fallback_output": "Baseline and proposed annual design water allowances, with climate, hydrozone, efficiency, unit, and method provenance",
+      "fallback_output": "Baseline annual design water allowance",
       "selected_value_method": "Use the stated Controller treatment only at Annual Operational Savings > Annual irrigation water reduction > Existing irrigation configuration > Controller treatment after category-specific normalization.",
-      "missing_exact_value_behavior": "When Controller treatment is unavailable, use the bound output Baseline and proposed annual design water allowances, with climate, hydrozone, efficiency, unit, and method provenance from watersense_landscape only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Controller treatment is unavailable, use the bound output Baseline annual design water allowance from watersense_landscape only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-35",
@@ -846,9 +978,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual measured leak water reduction > Confirmed leak start date, the representative can provide the observed or recorded start date for the confirmed leak.",
       "fallback_process_key": "watersense_ci_operations",
-      "fallback_output": "Annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates",
+      "fallback_output": "Confirmed annual leak duration",
       "selected_value_method": "Use the stated Confirmed leak start date only at Annual Operational Savings > Annual measured leak water reduction > Confirmed leak start date after category-specific normalization.",
-      "missing_exact_value_behavior": "When Confirmed leak start date is unavailable, use the bound output Annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates from watersense_ci_operations only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Confirmed leak start date is unavailable, use the bound output Confirmed annual leak duration from watersense_ci_operations only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-35",
@@ -901,9 +1033,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual kitchen ventilation fan and makeup-air resource reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern, the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Operating hours by modeled period",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual kitchen ventilation fan and makeup-air resource reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Operating hours by modeled period from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-37",
@@ -912,9 +1044,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual kitchen ventilation fan and makeup-air resource reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known, the representative can provide familiar schedule details when the business tracks them.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Operating hours by modeled period",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual kitchen ventilation fan and makeup-air resource reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Operating hours by modeled period from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-38",
@@ -945,9 +1077,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual motor electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern, the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual motor electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-38",
@@ -956,9 +1088,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual motor electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known, the representative can provide familiar schedule details when the business tracks them.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual motor electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-39",
@@ -970,6 +1102,39 @@
       "fallback_output": null,
       "selected_value_method": "Use the stated In-Scope Equipment Count only at Annual Operational Savings > Annual Variable-Speed Electricity Reduction > In-Scope Equipment Count after category-specific normalization.",
       "missing_exact_value_behavior": "When In-Scope Equipment Count is unavailable at Annual Operational Savings > Annual Variable-Speed Electricity Reduction > In-Scope Equipment Count, report the unresolved input. Do not inherit a same-label decision, borrow a nearby process, or invent a value."
+    },
+    {
+      "category_id": "ITC-39",
+      "tree_path": "Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Pump or Fan Application",
+      "visible_label": "Pump or Fan Application",
+      "decision": "USER_MEMORY",
+      "reason": "At Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Pump or Fan Application, the representative can provide this recognizable project input without calculating the savings result.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Pump or Fan Application only at Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Pump or Fan Application after category-specific normalization.",
+      "missing_exact_value_behavior": "When Pump or Fan Application is unavailable at Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Pump or Fan Application, report the unresolved input. Do not borrow a nearby value or invent a replacement."
+    },
+    {
+      "category_id": "ITC-39",
+      "tree_path": "Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Equipment Capacity Class",
+      "visible_label": "Equipment Capacity Class",
+      "decision": "USER_MEMORY",
+      "reason": "At Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Equipment Capacity Class, the representative can provide this recognizable project input without calculating the savings result.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Equipment Capacity Class only at Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Equipment Capacity Class after category-specific normalization.",
+      "missing_exact_value_behavior": "When Equipment Capacity Class is unavailable at Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Equipment Capacity Class, report the unresolved input. Do not borrow a nearby value or invent a replacement."
+    },
+    {
+      "category_id": "ITC-39",
+      "tree_path": "Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Operating Schedule",
+      "visible_label": "Operating Schedule",
+      "decision": "USER_RECOGNIZABLE_ACTIVITY",
+      "reason": "At Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Operating Schedule, the representative can provide this recognizable project input without calculating the savings result.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Operating Schedule only at Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Operating Schedule after category-specific normalization.",
+      "missing_exact_value_behavior": "When Operating Schedule is unavailable at Annual Operational Savings > Annual Variable-Speed Electricity Reduction > Measured Load-Bin Profile > Operating Schedule, report the unresolved input. Do not borrow a nearby value or invent a replacement."
     },
     {
       "category_id": "ITC-40",
@@ -989,9 +1154,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual pump electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern, the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual pump electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-40",
@@ -1000,9 +1165,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual pump electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known, the representative can provide familiar schedule details when the business tracks them.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual pump electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-41",
@@ -1022,9 +1187,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual fan-system electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern, the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual fan-system electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-41",
@@ -1033,9 +1198,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual fan-system electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known, the representative can provide familiar schedule details when the business tracks them.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual fan-system electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-42",
@@ -1066,9 +1231,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual compressor electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern, the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual compressor electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-42",
@@ -1077,9 +1242,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual compressor electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known, the representative can provide familiar schedule details when the business tracks them.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual compressor electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-43",
@@ -1099,9 +1264,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual compressed-air leak electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern, the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual pressurized hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual compressed-air leak electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual pressurized hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-43",
@@ -1110,9 +1275,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual compressed-air leak electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known, the representative can provide familiar schedule details when the business tracks them.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual pressurized hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual compressed-air leak electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual pressurized hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-44",
@@ -1121,9 +1286,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual compressed-air control electricity reduction > In-Scope Equipment Count, the representative can count the equipment units included in the project scope.",
       "fallback_process_key": "doe_measur",
-      "fallback_output": "Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings",
+      "fallback_output": "Existing compressor input power by load bin",
       "selected_value_method": "Use the stated In-Scope Equipment Count only at Annual Operational Savings > Annual compressed-air control electricity reduction > In-Scope Equipment Count after category-specific normalization.",
-      "missing_exact_value_behavior": "When In-Scope Equipment Count is unavailable, use the bound output Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings from doe_measur only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When In-Scope Equipment Count is unavailable, use the bound output Existing compressor input power by load bin from doe_measur only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-44",
@@ -1132,9 +1297,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual compressed-air control electricity reduction > Compressor type, the representative can recognize the compressor technology and application.",
       "fallback_process_key": "doe_measur",
-      "fallback_output": "Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings",
+      "fallback_output": "Existing compressor input power by load bin",
       "selected_value_method": "Use the stated Compressor type only at Annual Operational Savings > Annual compressed-air control electricity reduction > Compressor type after category-specific normalization.",
-      "missing_exact_value_behavior": "When Compressor type is unavailable, use the bound output Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings from doe_measur only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Compressor type is unavailable, use the bound output Existing compressor input power by load bin from doe_measur only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-44",
@@ -1143,9 +1308,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual compressed-air control electricity reduction > Existing control mode, the representative can recognize the current compressor control mode.",
       "fallback_process_key": "doe_measur",
-      "fallback_output": "Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings",
+      "fallback_output": "Existing compressor input power by load bin",
       "selected_value_method": "Use the stated Existing control mode only at Annual Operational Savings > Annual compressed-air control electricity reduction > Existing control mode after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing control mode is unavailable, use the bound output Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings from doe_measur only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing control mode is unavailable, use the bound output Existing compressor input power by load bin from doe_measur only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-45",
@@ -1154,9 +1319,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Waste-stream schedule, the representative can describe when the familiar production process creates the recoverable waste stream without calculating a thermal profile.",
       "fallback_process_key": "doe_measur",
-      "fallback_output": "Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings",
+      "fallback_output": "Annual available waste heat",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Waste-stream schedule and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Waste-stream schedule is unavailable, use the bound output Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings from doe_measur only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Waste-stream schedule is unavailable, use the bound output Annual available waste heat from doe_measur only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-46",
@@ -1165,9 +1330,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual process resource switch > Existing Process or Fuel Type, the representative can recognize the existing process and its fuel.",
       "fallback_process_key": "doe_measur",
-      "fallback_output": "Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings",
+      "fallback_output": "Existing process efficiency",
       "selected_value_method": "Use the stated Existing Process or Fuel Type only at Annual Operational Savings > Annual process resource switch > Existing Process or Fuel Type after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Process or Fuel Type is unavailable, use the bound output Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings from doe_measur only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Process or Fuel Type is unavailable, use the bound output Existing process efficiency from doe_measur only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-47",
@@ -1220,9 +1385,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual steam-trap fuel reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern, the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual pressurized hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual steam-trap fuel reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual pressurized hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-47",
@@ -1231,9 +1396,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Savings > Annual steam-trap fuel reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known, the representative can provide familiar schedule details when the business tracks them.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual pressurized hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Savings > Annual steam-trap fuel reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual pressurized hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-48",
@@ -1308,9 +1473,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Existing Cooking Equipment > Existing Cooking Equipment Type or Application, the representative can recognize the cooking-equipment type and application.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing cooking equipment performance value with its exact unit and provenance",
+      "fallback_output": "Existing active resource intensity",
       "selected_value_method": "Use the stated Existing Cooking Equipment Type or Application only at Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Existing Cooking Equipment > Existing Cooking Equipment Type or Application after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Cooking Equipment Type or Application is unavailable, use the bound output One selected existing cooking equipment performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Cooking Equipment Type or Application is unavailable, use the bound output Existing active resource intensity from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-50",
@@ -1319,9 +1484,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Existing Cooking Equipment > Existing Make and Model, when available, the representative may know the familiar make and model, and the field remains optional because a label is not assumed.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing cooking equipment performance value with its exact unit and provenance",
+      "fallback_output": "Existing active resource intensity",
       "selected_value_method": "Use the stated Existing Make and Model, when available only at Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Existing Cooking Equipment > Existing Make and Model, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output One selected existing cooking equipment performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output Existing active resource intensity from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-50",
@@ -1330,9 +1495,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Existing Cooking Equipment > Existing Capacity or Size Class, when available, the representative may recognize a familiar small, medium, large, rack, tonnage, or service-capacity class without supplying an engineering rating.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing cooking equipment performance value with its exact unit and provenance",
+      "fallback_output": "Existing active resource intensity",
       "selected_value_method": "Use the stated Existing Capacity or Size Class, when available only at Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Existing Cooking Equipment > Existing Capacity or Size Class, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output One selected existing cooking equipment performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output Existing active resource intensity from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-50",
@@ -1363,9 +1528,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Cost Impact > Annual filtration fan electricity change > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern, the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Cost Impact > Annual filtration fan electricity change > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Recognizable Business, Shift, Seasonal, or Usage Pattern is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-51",
@@ -1374,9 +1539,9 @@
       "decision": "USER_RECOGNIZABLE_ACTIVITY",
       "reason": "At Annual Operational Cost Impact > Annual filtration fan electricity change > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known, the representative can provide familiar schedule details when the business tracks them.",
       "fallback_process_key": "operating_schedule",
-      "fallback_output": "Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance",
+      "fallback_output": "Annual operating hours",
       "selected_value_method": "Use the stated recognizable activity only at Annual Operational Cost Impact > Annual filtration fan electricity change > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known and convert it through the explicitly bound formula or Standard.",
-      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Detailed Operating Days, Shifts, or Active Season, if known is unavailable, use the bound output Annual operating hours from operating_schedule only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-52",
@@ -1396,9 +1561,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Existing Dishwasher Machine Type and Sanitation Method, the representative can identify the installed dishwasher family and whether it uses low-temperature or high-temperature sanitizing.",
       "fallback_process_key": "exact-existing-dishwasher-record",
-      "fallback_output": "One exact existing dishwasher native-field record",
+      "fallback_output": "Existing dishwasher native-field record",
       "selected_value_method": "Use the stated Existing Dishwasher Machine Type and Sanitation Method only at Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Existing Dishwasher Machine Type and Sanitation Method after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Dishwasher Machine Type and Sanitation Method is unavailable, use the bound output One exact existing dishwasher native-field record from exact-existing-dishwasher-record only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Dishwasher Machine Type and Sanitation Method is unavailable, use the bound output Existing dishwasher native-field record from exact-existing-dishwasher-record only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-52",
@@ -1446,14 +1611,25 @@
     },
     {
       "category_id": "ITC-52",
+      "tree_path": "Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Flight or Conveyor Machines Only > Flight or Conveyor Machine Type and Sanitation Method",
+      "visible_label": "Flight or Conveyor Machine Type and Sanitation Method",
+      "decision": "USER_MEMORY",
+      "reason": "At Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Flight or Conveyor Machines Only > Flight or Conveyor Machine Type and Sanitation Method, the representative can provide this recognizable project input without calculating the savings result.",
+      "fallback_process_key": null,
+      "fallback_output": null,
+      "selected_value_method": "Use the stated Flight or Conveyor Machine Type and Sanitation Method only at Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Flight or Conveyor Machines Only > Flight or Conveyor Machine Type and Sanitation Method after category-specific normalization.",
+      "missing_exact_value_behavior": "When Flight or Conveyor Machine Type and Sanitation Method is unavailable at Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Flight or Conveyor Machines Only > Flight or Conveyor Machine Type and Sanitation Method, report the unresolved input. Do not borrow a nearby value or invent a replacement."
+    },
+    {
+      "category_id": "ITC-52",
       "tree_path": "Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Water-Heating Resource Type",
       "visible_label": "Water-Heating Resource Type",
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Water-Heating Resource Type, the representative can recognize whether dishwasher water heating uses electricity, gas, or another purchased resource.",
       "fallback_process_key": "dishwasher-water-heating-conversion",
-      "fallback_output": "One native-unit existing and proposed dishwasher water-heating result set",
+      "fallback_output": "Dishwasher water-heating result set",
       "selected_value_method": "Use the stated Water-Heating Resource Type only at Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Water-Heating Resource Type after category-specific normalization.",
-      "missing_exact_value_behavior": "When Water-Heating Resource Type is unavailable, use the bound output One native-unit existing and proposed dishwasher water-heating result set from dishwasher-water-heating-conversion only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Water-Heating Resource Type is unavailable, use the bound output Dishwasher water-heating result set from dishwasher-water-heating-conversion only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-53",
@@ -1473,9 +1649,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual commercial laundry resource reduction > Commercial Washer Performance > Existing Commercial Washer > Existing Commercial Washer Type or Application, the representative can recognize the commercial washer type and application.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing commercial washer performance value with its exact unit and provenance",
+      "fallback_output": "Existing water use per cycle",
       "selected_value_method": "Use the stated Existing Commercial Washer Type or Application only at Annual Operational Savings > Annual commercial laundry resource reduction > Commercial Washer Performance > Existing Commercial Washer > Existing Commercial Washer Type or Application after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Commercial Washer Type or Application is unavailable, use the bound output One selected existing commercial washer performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Commercial Washer Type or Application is unavailable, use the bound output Existing water use per cycle from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-53",
@@ -1484,9 +1660,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual commercial laundry resource reduction > Commercial Washer Performance > Existing Commercial Washer > Existing Make and Model, when available, the representative may know the familiar make and model, and the field remains optional because a label is not assumed.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing commercial washer performance value with its exact unit and provenance",
+      "fallback_output": "Existing water use per cycle",
       "selected_value_method": "Use the stated Existing Make and Model, when available only at Annual Operational Savings > Annual commercial laundry resource reduction > Commercial Washer Performance > Existing Commercial Washer > Existing Make and Model, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output One selected existing commercial washer performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Make and Model, when available is unavailable, use the bound output Existing water use per cycle from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-53",
@@ -1495,9 +1671,9 @@
       "decision": "USER_MEMORY",
       "reason": "At Annual Operational Savings > Annual commercial laundry resource reduction > Commercial Washer Performance > Existing Commercial Washer > Existing Capacity or Size Class, when available, the representative may recognize a familiar small, medium, large, rack, tonnage, or service-capacity class without supplying an engineering rating.",
       "fallback_process_key": "existing-product-rating",
-      "fallback_output": "One selected existing commercial washer performance value with its exact unit and provenance",
+      "fallback_output": "Existing water use per cycle",
       "selected_value_method": "Use the stated Existing Capacity or Size Class, when available only at Annual Operational Savings > Annual commercial laundry resource reduction > Commercial Washer Performance > Existing Commercial Washer > Existing Capacity or Size Class, when available after category-specific normalization.",
-      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output One selected existing commercial washer performance value with its exact unit and provenance from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
+      "missing_exact_value_behavior": "When Existing Capacity or Size Class, when available is unavailable, use the bound output Existing water use per cycle from existing-product-rating only if that process can run from its remaining exact inputs; otherwise report the implementation limitation."
     },
     {
       "category_id": "ITC-53",

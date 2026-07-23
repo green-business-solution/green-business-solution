@@ -63,32 +63,22 @@ U.S. Department of Energy and U.S. Environmental Protection Agency - FuelEconomy
 
 * Existing vehicle make and model
 * Proposed vehicle make and model
-* Approximate model years
-* Version or drivetrain details only when needed to resolve an ambiguous match
+* Existing approximate model year
+* Proposed approximate model year
+* Existing version or drivetrain details only when needed to resolve an ambiguous match
+* Proposed version or drivetrain details only when needed to resolve an ambiguous match
 
 **Value Needed:**
 
-* Existing combined fuel economy in miles per gallon
-* Proposed electricity use in kilowatt-hours per 100 miles at the wall
-
-**Input Bindings:**
-
-* Existing vehicle make and model ← User at `Annual Operational Savings > Avoided Gasoline Cost > Existing Vehicle Make and Model`. Apply the exact bound Existing vehicle make and model to resolve and validate the authoritative record before Exact Vehicle Efficiency Lookup emits Existing combined fuel economy in miles per gallon and Proposed electricity use in kilowatt-hours per 100 miles at the wall.
-* Proposed vehicle make and model ← Linked Opportunity at `Annual Operational Savings > Added Electricity Cost > Proposed Vehicle Make and Model`. Apply the exact bound Proposed vehicle make and model to resolve and validate the authoritative record before Exact Vehicle Efficiency Lookup emits Existing combined fuel economy in miles per gallon and Proposed electricity use in kilowatt-hours per 100 miles at the wall.
-* Approximate model years ← User at `Annual Operational Savings > Avoided Gasoline Cost > Approximate Model Year`. Apply the exact bound Approximate model years to resolve and validate the authoritative record before Exact Vehicle Efficiency Lookup emits Existing combined fuel economy in miles per gallon and Proposed electricity use in kilowatt-hours per 100 miles at the wall.
-* Version or drivetrain details only when needed to resolve an ambiguous match ← User at `Annual Operational Savings > Avoided Gasoline Cost > Additional Version or Drivetrain Details, only when the match is ambiguous`. Apply the exact bound Version or drivetrain details only when needed to resolve an ambiguous match to resolve and validate the authoritative record before Exact Vehicle Efficiency Lookup emits Existing combined fuel economy in miles per gallon and Proposed electricity use in kilowatt-hours per 100 miles at the wall.
-
-**Output Bindings:**
-
-* Existing combined fuel economy in miles per gallon → `existing_combined_mpg` (miles/gallon; PROJECT_TOTAL) at `Annual Operational Savings > Avoided Gasoline Cost > Standard 1.1 - Exact Vehicle Efficiency Lookup`.
-* Proposed electricity use in kilowatt-hours per 100 miles at the wall → `proposed_combE` (kWh/100 miles; PROJECT_TOTAL) at `Annual Operational Savings > Avoided Gasoline Cost > Standard 1.1 - Exact Vehicle Efficiency Lookup`.
+* Existing combined fuel economy
+* Proposed electricity use at the wall
 
 **How to Use:**
 
 1. Read the exact manufacturer, model, and product configuration from the linked electric vehicle purchase opportunity.
 2. Query the official source for the exact model and filter by application, capacity, active specification, and the native certified fields required by this formula.
 3. Require one compatible record; reject partial model matches, inactive listings, incompatible configurations, and records whose native test unit does not match the formula.
-4. Return existing combined fuel economy in miles per gallon; Proposed electricity use in kilowatt-hours per 100 miles at the wall.
+4. Return existing combined fuel economy; Proposed electricity use at the wall.
 5. Retain the source version, exact record identity, matched model text, returned native fields and units, and any ambiguity decision.
 
 **Automation:**

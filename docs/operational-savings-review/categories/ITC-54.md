@@ -94,17 +94,6 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 
 * One exact backup-power routine-use input set
 
-**Input Bindings:**
-
-* Tested fuel use per operating hour per unit ← Project Document at `Annual Routine Backup-Power Resource Cost > Exact Routine-Use Path > Tested Fuel Use per Operating Hour per Unit from Manufacturer or Commissioning Record`. Apply the exact bound Tested fuel use per operating hour per unit to resolve and validate the authoritative record before Exact Backup-Power Routine-Use Input Resolution emits One exact backup-power routine-use input set.
-* Scheduled annual test operating hours per unit ← Project Document at `Annual Routine Backup-Power Resource Cost > Exact Routine-Use Path > Scheduled Annual Test Operating Hours per Unit from Maintenance Plan or Contractor Specification`. Apply the exact bound Scheduled annual test operating hours per unit to resolve and validate the authoritative record before Exact Backup-Power Routine-Use Input Resolution emits One exact backup-power routine-use input set.
-* Standby electric input kilowatts per unit ← Project Document at `Annual Routine Backup-Power Resource Cost > Exact Routine-Use Path > Standby Electric Input per Unit from Product or Commissioning Record`. Apply the exact bound Standby electric input kilowatts per unit to resolve and validate the authoritative record before Exact Backup-Power Routine-Use Input Resolution emits One exact backup-power routine-use input set.
-* Annual standby energized hours per unit ← Project Document at `Annual Routine Backup-Power Resource Cost > Exact Routine-Use Path > Annual Standby Energized Hours per Unit from Controls or Commissioning Record`. Apply the exact bound Annual standby energized hours per unit to resolve and validate the authoritative record before Exact Backup-Power Routine-Use Input Resolution emits One exact backup-power routine-use input set.
-
-**Output Bindings:**
-
-* One exact backup-power routine-use input set → `exact_backup_routine_input_set` (record set; RECORD_SET) at `Annual Routine Backup-Power Resource Cost > Exact Routine-Use Path > Standard 1.1 - Exact Backup-Power Routine-Use Input Resolution`.
-
 **How to Use:**
 
 1. Read fuel use per hour and annual test hours per unit from a manufacturer document, commissioning record, maintenance plan, or contractor specification.
@@ -145,16 +134,6 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 **Value Needed:**
 
 * Annual full-load diesel test fuel per equipment unit
-
-**Input Bindings:**
-
-* Confirmed diesel-generator technology and fuel type ← User at `Annual Routine Backup-Power Resource Cost > Backup Technology and Fuel Type`. Pass the exact bound Confirmed diesel-generator technology and fuel type to FEMA Full-Load Diesel Test-Fuel Calculation when computing Annual full-load diesel test fuel per equipment unit; do not substitute a value from another tree path.
-* Diesel generator rated capacity in kilowatts ← Project Document at `Annual Routine Backup-Power Resource Cost > Full-Load Diesel Routine-Test Benchmark Path > Diesel Generator Rated Capacity in Kilowatts`. Pass the exact bound Diesel generator rated capacity in kilowatts to FEMA Full-Load Diesel Test-Fuel Calculation when computing Annual full-load diesel test fuel per equipment unit; do not substitute a value from another tree path.
-* Scheduled annual full-load test operating hours per unit ← Project Document at `Annual Routine Backup-Power Resource Cost > Full-Load Diesel Routine-Test Benchmark Path > Scheduled Annual Full-Load Test Operating Hours per Unit`. Pass the exact bound Scheduled annual full-load test operating hours per unit to FEMA Full-Load Diesel Test-Fuel Calculation when computing Annual full-load diesel test fuel per equipment unit; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Annual full-load diesel test fuel per equipment unit → `benchmark_annual_test_fuel_per_unit` (fuel-unit/year; PER_EQUIPMENT_UNIT) at `Annual Routine Backup-Power Resource Cost > Full-Load Diesel Routine-Test Benchmark Path > Standard 1.2 - FEMA Full-Load Diesel Test-Fuel Calculation`.
 
 **How to Use:**
 

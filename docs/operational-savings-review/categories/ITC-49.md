@@ -27,7 +27,8 @@ Annual Operational Savings
 │  ├─ Walk-In Component Type and DOE Equipment Class (User)
 │  ├─ Temperature Class and Indoor or Outdoor Configuration (User)
 │  ├─ Panel Area, when a Panel Intensity Is Selected (Project Document)
-│  ├─ Existing and Proposed Efficiency Levels (Linked Opportunity)
+│  ├─ Existing Efficiency Level (Project Document)
+│  ├─ Proposed Efficiency Level (Linked Opportunity)
 │  ├─ Exact Existing or Proposed Annual Component Energy (Project Document)
 │  ├─ Existing and Proposed Duty-Equivalence Confirmation (User)
 │  └─ Standard 1.1 — Walk-In Component Energy Benchmark
@@ -56,25 +57,13 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 * Walk-in temperature class
 * Indoor or outdoor configuration
 * Panel area when a panel intensity is selected
-* Existing and proposed efficiency levels
+* Existing efficiency level from a Project Document
+* Proposed efficiency level from the linked opportunity
 
 **Value Needed:**
 
 * One class-matched existing annual component energy
 * One class-matched proposed annual component energy
-
-**Input Bindings:**
-
-* Component type and DOE equipment class ← User at `Annual Operational Savings > Annual Walk-In Component Electricity Reduction > Walk-In Component Type and DOE Equipment Class`. Pass the exact bound Component type and DOE equipment class to Walk-In Component Energy Benchmark when computing One class-matched existing annual component energy and One class-matched proposed annual component energy; do not substitute a value from another tree path.
-* Walk-in temperature class ← User at `Annual Operational Savings > Annual Walk-In Component Electricity Reduction > Temperature Class and Indoor or Outdoor Configuration`. Pass the exact bound Walk-in temperature class to Walk-In Component Energy Benchmark when computing One class-matched existing annual component energy and One class-matched proposed annual component energy; do not substitute a value from another tree path.
-* Indoor or outdoor configuration ← User at `Annual Operational Savings > Annual Walk-In Component Electricity Reduction > Temperature Class and Indoor or Outdoor Configuration`. Pass the exact bound Indoor or outdoor configuration to Walk-In Component Energy Benchmark when computing One class-matched existing annual component energy and One class-matched proposed annual component energy; do not substitute a value from another tree path.
-* Panel area when a panel intensity is selected ← Project Document at `Annual Operational Savings > Annual Walk-In Component Electricity Reduction > Panel Area, when a Panel Intensity Is Selected`. Pass the exact bound Panel area when a panel intensity is selected to Walk-In Component Energy Benchmark when computing One class-matched existing annual component energy and One class-matched proposed annual component energy; do not substitute a value from another tree path.
-* Existing and proposed efficiency levels ← Linked Opportunity at `Annual Operational Savings > Annual Walk-In Component Electricity Reduction > Existing and Proposed Efficiency Levels`. Pass the exact bound Existing and proposed efficiency levels to Walk-In Component Energy Benchmark when computing One class-matched existing annual component energy and One class-matched proposed annual component energy; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One class-matched existing annual component energy → `current_annual_refrigeration_kWh` (kWh/year; PER_EQUIPMENT_UNIT) at `Annual Operational Savings > Annual Walk-In Component Electricity Reduction > Standard 1.1 - Walk-In Component Energy Benchmark`.
-* One class-matched proposed annual component energy → `proposed_annual_refrigeration_kWh` (kWh/year; PER_EQUIPMENT_UNIT) at `Annual Operational Savings > Annual Walk-In Component Electricity Reduction > Standard 1.1 - Walk-In Component Energy Benchmark`.
 
 **How to Use:**
 

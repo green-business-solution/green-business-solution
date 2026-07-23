@@ -578,6 +578,10 @@ The category remains DRAFT until a repeatable DOE database export path is approv
 Annual dollar savings
 ├─ Annual backup-resource reduction
 │  ├─ site.geo.coordinates, verified rather than address-only {{lookup: site_coordinates}} (Profile)
+│  ├─ business.primaryActivityText {{lookup: benchmark_context}} (Profile)
+│  ├─ site.buildingTypes {{lookup: benchmark_context}} (Profile)
+│  ├─ site.squareFootage.value {{lookup: benchmark_context}} (Profile)
+│  ├─ Operating schedule {{lookup: benchmark_context}} {{input: required}} (User)
 │  ├─ Collector configuration
 │  │  ├─ Collector type {{lookup: solar_thermal_configuration}} {{input: required}} (User)
 │  │  ├─ Collector area {{lookup: solar_thermal_configuration}} {{input: required}} (User)
@@ -907,6 +911,8 @@ Calculate a linked physical measure only in its own category.
 ```text
 Annual bill reduction
 ├─ BR-INTERVAL-LOAD-AND-TARIFF
+├─ business.primaryActivityText {{lookup: reopt_category_constraints}} (Profile)
+├─ site.buildingTypes {{lookup: reopt_category_constraints}} (Profile)
 ├─ Controllable-load definition {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ Maximum shed kW {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ Event-availability schedule {{lookup: reopt_category_constraints}} {{input: required}} (User)
@@ -1986,6 +1992,9 @@ Annual dollar savings
 │  ├─ BR-SCOPE-QUANTITY
 │  ├─ Existing full-load input kW {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Repeatable load-bin profile
+│  │  ├─ business.primaryActivityText {{lookup: measur_calculator_inputs}} (Profile)
+│  │  ├─ site.buildingTypes {{lookup: measur_calculator_inputs}} (Profile)
+│  │  ├─ site.geo.coordinates {{lookup: measur_calculator_inputs}} (Profile)
 │  │  ├─ Load or speed fraction for each bin {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  │  └─ Annual hours for each bin {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Proposed Minimum Speed {{lookup: measur_calculator_inputs}} {{input: required}} (User)

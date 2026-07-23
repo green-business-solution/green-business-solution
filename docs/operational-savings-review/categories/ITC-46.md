@@ -55,7 +55,7 @@ Annual Operational Savings
 **■ Standard 1.1 — Industrial Process Electrification Engineering Calculation**
 
 **Purpose:**
-Use U.S. Department of Energy - MEASUR to resolve existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings from the listed category inputs.
+Use U.S. Department of Energy - MEASUR to resolve existing process efficiency; Useful process heat; Proposed coefficient of performance or efficiency from the listed category inputs.
 
 **Source:**
 U.S. Department of Energy - MEASUR
@@ -81,28 +81,16 @@ U.S. Department of Energy - MEASUR
 
 **Value Needed:**
 
-* Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings
-
-**Input Bindings:**
-
-* Process share of billed fuel ← Project Document at `Annual Operational Savings > Annual process resource switch > Documented Process share of billed fuel from Submeter, Controls Trend, Audit, or Contractor Specification`. Pass the exact bound Process share of billed fuel to Industrial Process Electrification Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Existing Process or Fuel Type ← User at `Annual Operational Savings > Annual process resource switch > Existing Process or Fuel Type`. Pass the exact bound Existing Process or Fuel Type to Industrial Process Electrification Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Required Process Temperature from a nameplate, measurement, audit, or contractor specification ← Project Document at `Annual Operational Savings > Annual process resource switch > Documented Required Process Temperature from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Required Process Temperature from a nameplate, measurement, audit, or contractor specification to Industrial Process Electrification Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Useful Process Load ← Project Document at `Annual Operational Savings > Annual process resource switch > Documented Useful Process Load from Submeter, Controls Trend, Audit, or Contractor Specification`. Pass the exact bound Useful Process Load to Industrial Process Electrification Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Existing Process Nameplate or Test Information ← Project Document at `Annual Operational Savings > Annual process resource switch > Existing Process Nameplate or Test Information`. Pass the exact bound Existing Process Nameplate or Test Information to Industrial Process Electrification Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Proposed technology ← Linked Opportunity at `Annual Operational Savings > Annual process resource switch > Proposed technology`. Pass the exact bound Proposed technology to Industrial Process Electrification Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Proposed COP or efficiency from a nameplate, measurement, audit, or contractor specification ← Project Document at `Annual Operational Savings > Annual process resource switch > Documented Required Process Temperature from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Proposed COP or efficiency from a nameplate, measurement, audit, or contractor specification to Industrial Process Electrification Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings → `proposed_COP_or_efficiency` (fraction; PER_YEAR) at `Annual Operational Savings > Annual process resource switch > Standard 1.1 - Industrial Process Electrification Engineering Calculation`.
+* Existing process efficiency
+* Useful process heat
+* Proposed coefficient of performance or efficiency
 
 **How to Use:**
 
 1. Load the Industrial Process Electrification project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Process Heating Assessment.
 2. When an exact technical input is unavailable, use only a source-specific retained equipment or application population with documented filters, numeric rule, unit, scope, and version before running the Process Heating Assessment; otherwise report the implementation limitation.
 3. Run the pinned open-source Process Heating Assessment baseline and proposed cases using the category formula boundary shown in this card.
-4. Return one selected existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
+4. Return one selected existing process efficiency; Useful process heat; Proposed coefficient of performance or efficiency.
 5. Retain the MEASUR version, Process Heating Assessment input object, exact and benchmark input provenance, context filters, eligible populations, selection rules, unit conversions, warnings, and baseline and proposed outputs.
 
 **Automation:**

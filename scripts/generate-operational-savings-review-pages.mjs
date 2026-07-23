@@ -92,6 +92,7 @@ export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
     unitRegistryText,
     profilePathFixtureText,
     informationCardSchemaText,
+    informationCardBindingRegistryText,
     userInputRealismSchemaText,
     userInputDecisionRegistryText
   ] = await Promise.all([
@@ -105,6 +106,7 @@ export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
     readFile(join(root, "docs/operational-savings-unit-registry.json"), "utf8"),
     readFile(join(root, "docs/operational-savings-fixtures/profile/normalized-profile-paths.json"), "utf8"),
     readFile(join(root, "docs/operational-savings-information-card.schema.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-information-card-bindings.json"), "utf8"),
     readFile(join(root, "docs/operational-savings-user-input-realism.schema.json"), "utf8"),
     readFile(join(root, "docs/operational-savings-user-input-decisions.json"), "utf8")
   ]);
@@ -146,6 +148,7 @@ export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
     profilePathFixture: JSON.parse(profilePathFixtureText),
     actualProfilePathContract,
     informationCardSchema: JSON.parse(informationCardSchemaText),
+    informationCardBindingRegistry: JSON.parse(informationCardBindingRegistryText),
     userInputRealismSchema: JSON.parse(userInputRealismSchemaText),
     userInputDecisionRegistry: JSON.parse(userInputDecisionRegistryText),
     goldenFixtures,
@@ -292,6 +295,11 @@ export function buildOperationalSavingsReview(sources) {
     sources.sourceFixtures,
     errors
   );
+  validateAuditEvidenceCount(
+    sources.auditDocument,
+    sources.evidenceManifest,
+    errors
+  );
   validateRateComponentDefinitions(sources.categoryContracts, canonicalBillFields, errors);
   validateCategoryContracts(
     categories,
@@ -408,9 +416,13 @@ export function buildOperationalSavingsReview(sources) {
         sources.evidenceManifest,
         evidenceById,
         tracedStandards
-      )
+      ),
+      informationCardBindingRegistry: sources.informationCardBindingRegistry
     };
-    categoryReview.informationCard = buildInformationCardProjection(categoryReview);
+    categoryReview.informationCard = buildInformationCardProjection(
+      categoryReview,
+      sources.informationCardBindingRegistry
+    );
     categoryReview.userInputRealism = buildUserInputRealismEntries(
       categoryReview.id,
       categoryReview.informationCard.tree,
@@ -423,13 +435,19 @@ export function buildOperationalSavingsReview(sources) {
       standardById,
       sources.informationCardSchema,
       sources.evidenceManifest,
-      errors
+      errors,
+      sources.informationCardBindingRegistry
     );
     categoryReviews.push(categoryReview);
   }
 
   validateUsageDeclarations(branches, branchUsage, categoryById, errors);
   validateUsageDeclarations(standards, standardUsage, categoryById, errors);
+  validateInformationCardBindingRegistry(
+    categoryReviews,
+    sources.informationCardBindingRegistry,
+    errors
+  );
 
   const userInputRealismContract = {
     schema_version: "operational-savings/user-input-realism-v2",
@@ -930,6 +948,31 @@ function validateProfilePathContract(fixture, actual, errors) {
   }
   if (fixture.contract_sha256 !== actual.contract_sha256) {
     errors.push("normalized Profile path fixture checksum is stale");
+  }
+}
+
+function validateAuditEvidenceCount(auditDocument, evidenceManifest, errors) {
+  const verifiedCount = (evidenceManifest.evidence_records || []).filter(
+    (record) => record.evidence_status === "VERIFIED"
+  ).length;
+  const reportedCount = Number(
+    auditDocument.match(
+      /Source-evidence statuses:[^\n]*\bVERIFIED\s+(\d+)\b/
+    )?.[1]
+  );
+  if (reportedCount !== verifiedCount) {
+    errors.push(
+      `Operational-savings audit reports ${reportedCount || "no"} VERIFIED evidence records; manifest contains ${verifiedCount}`
+    );
+  }
+  if (
+    /\b(?:all|the)\s+(?:\d+|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)\s+`?VERIFIED`?\s+evidence records\b/i.test(
+      auditDocument
+    )
+  ) {
+    errors.push(
+      "Operational-savings audit hardcodes the VERIFIED evidence count in narrative prose"
+    );
   }
 }
 
@@ -2304,13 +2347,105 @@ const PROJECT_DOCUMENT_TERMS =
 const TECHNICAL_USAGE_TERMS =
   /(?:flushes per day|uses per day per fixture|minutes per use|load-bin fraction|probability distribution|exact standby demand|technical annual usage|annual test fuel per unit|annual standby input per unit)/i;
 
+function inputBindingRegistryKey(categoryId, processKey, lookupInput) {
+  return `${categoryId}\u0000${processKey}\u0000${lookupInput}`;
+}
+
+function outputBindingRegistryKey(categoryId, processKey, outputName) {
+  return `${categoryId}\u0000${processKey}\u0000${outputName}`;
+}
+
+function exactRegistryBinding(bindings, keyForBinding, expectedKey) {
+  return (bindings || []).filter(
+    (binding) => keyForBinding(binding) === expectedKey
+  );
+}
+
+export function validateInformationCardBindingRegistry(
+  categoryReviews,
+  registry,
+  errors
+) {
+  if (
+    registry?.schema_version !==
+    "operational-savings/information-card-bindings-v1"
+  ) {
+    errors.push("Information Card binding registry has an unsupported schema version");
+  }
+  const expectedInputKeys = new Set();
+  const expectedOutputKeys = new Set();
+  for (const category of categoryReviews) {
+    for (const process of category.informationCard?.processes || []) {
+      for (const lookupInput of process.lookupInputs || []) {
+        expectedInputKeys.add(
+          inputBindingRegistryKey(category.id, process.key, lookupInput)
+        );
+      }
+      for (const outputName of process.valueNeeded || []) {
+        expectedOutputKeys.add(
+          outputBindingRegistryKey(category.id, process.key, outputName)
+        );
+      }
+    }
+  }
+  const seenInputKeys = new Set();
+  for (const binding of registry?.input_bindings || []) {
+    const key = inputBindingRegistryKey(
+      binding.category_id,
+      binding.process_key,
+      binding.lookup_input
+    );
+    if (seenInputKeys.has(key)) {
+      errors.push(
+        `Information Card binding registry duplicates input ${binding.category_id} ${binding.process_key} ${binding.lookup_input}`
+      );
+    }
+    seenInputKeys.add(key);
+    if (!expectedInputKeys.has(key)) {
+      errors.push(
+        `Information Card binding registry contains stale input ${binding.category_id} ${binding.process_key} ${binding.lookup_input}`
+      );
+    }
+  }
+  const seenOutputKeys = new Set();
+  for (const binding of registry?.output_bindings || []) {
+    const key = outputBindingRegistryKey(
+      binding.category_id,
+      binding.process_key,
+      binding.output_name
+    );
+    if (seenOutputKeys.has(key)) {
+      errors.push(
+        `Information Card binding registry duplicates output ${binding.category_id} ${binding.process_key} ${binding.output_name}`
+      );
+    }
+    seenOutputKeys.add(key);
+    if (!expectedOutputKeys.has(key)) {
+      errors.push(
+        `Information Card binding registry contains stale output ${binding.category_id} ${binding.process_key} ${binding.output_name}`
+      );
+    }
+  }
+  for (const key of expectedInputKeys) {
+    if (!seenInputKeys.has(key)) {
+      errors.push(`Information Card binding registry is missing input ${key.replaceAll("\u0000", " ")}`);
+    }
+  }
+  for (const key of expectedOutputKeys) {
+    if (!seenOutputKeys.has(key)) {
+      errors.push(`Information Card binding registry is missing output ${key.replaceAll("\u0000", " ")}`);
+    }
+  }
+}
+
 export function validateInformationCardProjection(
   card,
   category,
   standardById,
   schema,
   evidenceManifest,
-  errors
+  errors,
+  bindingRegistry = null
 ) {
   if (INFORMATION_CARD_REGISTRY_METADATA.categoryCount !== 54) {
     errors.push(
@@ -2455,33 +2590,33 @@ export function validateInformationCardProjection(
           `${category.id} Information Card process ${process.name} binds ${lookupInput} with source ${binding.sourceLabel || "missing"} instead of ${location.sourceLabel}`
         );
       }
-      const proposedLookupTokens = new Set(
-        normalizeText(lookupInput)
-          .split(" ")
-          .filter((token) => token !== "proposed" && token.length > 3)
-      );
-      const hasCompatibleLinkedOpportunityPath =
-        proposedLookupTokens.size > 0 &&
-        treeBindingLocations.some((candidate) => {
-          if (candidate.sourceLabel !== "Linked Opportunity") return false;
-          const candidateTokens = new Set(
-            normalizeText(candidate.treePath).split(" ")
-          );
-          return [...proposedLookupTokens].filter((token) =>
-            candidateTokens.has(token)
-          ).length >= Math.min(2, proposedLookupTokens.size);
-        });
-      if (
-        /^Proposed\b/i.test(lookupInput) &&
-        hasCompatibleLinkedOpportunityPath &&
-        !/(?:Project Document|nameplate|measurement|measured|contractor|engineering|study|audit|specification|test record)/i.test(
-          lookupInput
-        ) &&
-        binding?.sourceLabel !== "Linked Opportunity"
-      ) {
-        errors.push(
-          `${category.id} Information Card process ${process.name} binds proposed input ${lookupInput} to an unrelated ${binding?.sourceLabel || "missing"} branch`
+      if (bindingRegistry) {
+        const registryBindings = exactRegistryBinding(
+          bindingRegistry.input_bindings,
+          (candidate) =>
+            inputBindingRegistryKey(
+              candidate.category_id,
+              candidate.process_key,
+              candidate.lookup_input
+            ),
+          inputBindingRegistryKey(category.id, process.key, lookupInput)
         );
+        if (registryBindings.length !== 1) {
+          errors.push(
+            `${category.id} Information Card process ${process.name} does not have exactly one explicit registry binding for ${lookupInput}`
+          );
+        } else {
+          const expected = registryBindings[0];
+          if (
+            binding.treePath !== expected.tree_path ||
+            binding.sourceLabel !== expected.source_label ||
+            binding.use !== expected.use
+          ) {
+            errors.push(
+              `${category.id} Information Card process ${process.name} binding for ${lookupInput} differs from the explicit registry`
+            );
+          }
+        }
       }
     }
     for (const bindingInput of bindingInputs) {
@@ -2575,6 +2710,35 @@ export function validateInformationCardProjection(
         errors.push(
           `${category.id} Information Card process ${process.name} output ${outputName} has invalid scope ${binding.outputScope}`
         );
+      }
+      if (bindingRegistry) {
+        const registryBindings = exactRegistryBinding(
+          bindingRegistry.output_bindings,
+          (candidate) =>
+            outputBindingRegistryKey(
+              candidate.category_id,
+              candidate.process_key,
+              candidate.output_name
+            ),
+          outputBindingRegistryKey(category.id, process.key, outputName)
+        );
+        if (registryBindings.length !== 1) {
+          errors.push(
+            `${category.id} Information Card process ${process.name} does not have exactly one explicit registry binding for output ${outputName}`
+          );
+        } else {
+          const expected = registryBindings[0];
+          if (
+            binding.treePath !== expected.tree_path ||
+            binding.formulaTerm !== expected.formula_term ||
+            binding.outputUnit !== expected.output_unit ||
+            binding.outputScope !== expected.output_scope
+          ) {
+            errors.push(
+              `${category.id} Information Card process ${process.name} output ${outputName} differs from the explicit registry`
+            );
+          }
+        }
       }
       const formulaText = `${category.primaryFormula}\n${category.supportingFormulas}`;
       const escapedTerm = binding.formulaTerm.replace(
@@ -3243,24 +3407,6 @@ function renderInformationCardProcess(process, standardById) {
     "**Value Needed:**",
     "",
     process.valueNeeded.map((value) => `* ${value}`).join("\n"),
-    "",
-    "**Input Bindings:**",
-    "",
-    process.inputBindings
-      .map(
-        (binding) =>
-          `* ${binding.lookupInput} ← ${binding.sourceLabel} at \`${binding.treePath}\`. ${binding.use}`
-      )
-      .join("\n"),
-    "",
-    "**Output Bindings:**",
-    "",
-    process.outputBindings
-      .map(
-        (binding) =>
-          `* ${binding.outputName} → \`${binding.formulaTerm}\` (${binding.outputUnit}; ${binding.outputScope}) at \`${binding.treePath}\`.`
-      )
-      .join("\n"),
     "",
     "**How to Use:**",
     "",

@@ -43,7 +43,7 @@ describe("validate-operational-savings-information-trees", () => {
     const fixtureRoot = await createFixture();
     await mutateTree(fixtureRoot, (text) => text.replace(
       "│  ├─ BR-ANNUAL-OPERATING-HOURS\n│  └─ MEASUR thermal and pump result",
-      "│  ├─ BR-UNDEFINED-OPERATING-HOURS\n│  └─ MEASUR thermal and pump result"
+      "│  ├─ BR-ANNUAL-OPERATING-HOURS\n│  ├─ BR-UNDEFINED-OPERATING-HOURS\n│  └─ MEASUR thermal and pump result"
     ));
 
     expect(() => runValidator(fixtureRoot)).toThrow(/undefined branch BR-UNDEFINED-OPERATING-HOURS/);
@@ -306,13 +306,15 @@ describe("validate-operational-savings-information-trees", () => {
 
   it("rejects a visible multi-value output where one selected value is required", async () => {
     const fixtureRoot = await createFixture();
-    await mutateFile(
-      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
-      (text) => text.replace(
-        '"One existing input-watt value per fixture"',
-        '"Low, median, and high existing input-watt values per fixture"'
-      )
-    );
+    await mutateBindings(fixtureRoot, (registry) => {
+      const binding = registry.output_bindings.find(
+        (entry) =>
+          entry.category_id === "ITC-02" &&
+          entry.process_key === "context_benchmarks" &&
+          entry.output_name === "One existing input-watt value per fixture"
+      );
+      binding.output_name = "Low, median, and high existing input-watt values per fixture";
+    });
     await mutateDecisions(fixtureRoot, (registry) => {
       for (const entry of registry.inputs) {
         if (
@@ -345,30 +347,26 @@ describe("validate-operational-savings-information-trees", () => {
     );
   });
 
-  it("rejects a Standard that omits a technical tree input", async () => {
+  it("rejects a Standard lookup without an explicit binding", async () => {
     const fixtureRoot = await createFixture();
     await mutateFile(
       join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
       (text) => text.replace(
-        '"Maximum event duration from a Project Document, the linked opportunity, or the connected context benchmark",',
+        '"Maximum event duration from a Project Document",',
         '"Event notification from a Project Document",'
       )
     );
 
     expect(() => runValidator(fixtureRoot)).toThrow(
-      /ITC-16 Information Card process Automated Demand Response Interval Bill Calculation omits required technical tree input Maximum event duration/
+      /ITC-16 process reopt_local_dispatch lookup input Event notification from a Project Document requires exactly one explicit binding; found 0/
     );
   });
 
   it("rejects a Standard input whose use is not documented", async () => {
     const fixtureRoot = await createFixture();
-    await mutateFile(
-      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
-      (text) => text.replace(
-        "return `Pass the exact bound ${lookupInput} to ${process.name} when computing ${outputs}; do not substitute a value from another tree path.`;",
-        'return "This input is listed but is not used.";'
-      )
-    );
+    await mutateBindings(fixtureRoot, (registry) => {
+      registry.input_bindings[0].use = "This input is listed but is not used.";
+    });
 
     expect(() => runValidator(fixtureRoot)).toThrow(
       /Information Card process .* does not document how Lookup Input .* is used/
@@ -384,6 +382,19 @@ describe("validate-operational-savings-information-trees", () => {
         'solarWaterHeating\n          ? [\n              "Site location",\n              "Fuel price",'
       )
     );
+    await mutateBindings(fixtureRoot, (registry) => {
+      const binding = registry.input_bindings.find(
+        (entry) =>
+          entry.category_id === "ITC-08" &&
+          entry.process_key === "sam_solar_thermal" &&
+          entry.lookup_input === "Backup fuel type"
+      );
+      registry.input_bindings.push({
+        ...binding,
+        lookup_input: "Fuel price",
+        use: "Use the exact bound fuel price in the solar-thermal simulation."
+      });
+    });
 
     expect(() => runValidator(fixtureRoot)).toThrow(
       /ITC-08 Information Card simulator process Solar Thermal Production Simulation includes price before resolving the physical result/
@@ -600,6 +611,16 @@ describe("validate-operational-savings-information-trees", () => {
         'lookupInputs: ["Exact proposed make and model from the linked opportunity", "Product type and capacity", "Operating schedule"],'
       )
     );
+    await mutateBindings(fixtureRoot, (registry) => {
+      for (const binding of registry.input_bindings) {
+        if (
+          binding.process_key === "exact-proposed-product-rating" &&
+          binding.lookup_input === "Applicable certified test method"
+        ) {
+          binding.lookup_input = "Operating schedule";
+        }
+      }
+    });
 
     expect(() => runValidator(fixtureRoot)).toThrow(
       /Information Card product process .* incorrectly resolves usage or an operating schedule/
@@ -1387,6 +1408,7 @@ async function createFixture() {
     "docs/operational-savings-standard-registry.md",
     "docs/operational-savings-information-tree-audit.md",
     "docs/operational-savings-information-card.schema.json",
+    "docs/operational-savings-information-card-bindings.json",
     "docs/operational-savings-user-input-decisions.json",
     "docs/operational-savings-user-input-realism.schema.json",
     "docs/operational-savings-user-input-realism.json",
@@ -1435,6 +1457,13 @@ async function mutateContract(fixtureRoot, mutate) {
 async function mutateDecisions(fixtureRoot, mutate) {
   await mutateJson(
     join(fixtureRoot, "docs/operational-savings-user-input-decisions.json"),
+    mutate
+  );
+}
+
+async function mutateBindings(fixtureRoot, mutate) {
+  await mutateJson(
+    join(fixtureRoot, "docs/operational-savings-information-card-bindings.json"),
     mutate
   );
 }

@@ -46,7 +46,7 @@ Annual Operational Savings
 **■ Standard 1.1 — Motor Replacement Annual Operating Hours**
 
 **Purpose:**
-Use U.S. Department of Energy reference buildings and U.S. Naval Observatory daylight data to resolve annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from the listed category inputs.
+Use U.S. Department of Energy reference buildings and U.S. Naval Observatory daylight data to resolve annual operating hours from the listed category inputs.
 
 **Source:**
 U.S. Department of Energy - Commercial Reference Buildings
@@ -63,25 +63,14 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **Value Needed:**
 
-* Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance
-
-**Input Bindings:**
-
-* Recognizable Business, Shift, Seasonal, or Usage Pattern ← User at `Annual Operational Savings > Annual motor electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern`. Pass the exact bound Recognizable Business, Shift, Seasonal, or Usage Pattern to Motor Replacement Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
-* Detailed Operating Days, Shifts, or Active Season, if known ← User at `Annual Operational Savings > Annual motor electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known`. Pass the exact bound Detailed Operating Days, Shifts, or Active Season, if known to Motor Replacement Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
-* Measured Annual Operating Hours, if known ← Project Document at `Annual Operational Savings > Annual motor electricity reduction > Annual operating hours > Measured Annual Operating Hours, if known`. Pass the exact bound Measured Annual Operating Hours, if known to Motor Replacement Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
-* Site Location and Business Activity ← Profile at `Annual Operational Savings > Annual motor electricity reduction > Annual operating hours > Site Location and Business Activity`. Pass the exact bound Site Location and Business Activity to Motor Replacement Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance → `annual_hours` (hours/year; PER_YEAR) at `Annual Operational Savings > Annual motor electricity reduction > Annual operating hours > Standard 1.1 - Motor Replacement Annual Operating Hours`.
+* Annual operating hours
 
 **How to Use:**
 
 1. Map the High-Efficiency Motor Replacement inputs to the documented Motor Replacement Annual Operating Hours source fields or model inputs: Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
 3. When an exact value is unavailable, use only a source-specific retained population or equation with documented filters, numeric rule, unit, scope, and version; otherwise report the implementation limitation.
-4. Return one selected annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
+4. Return one selected annual operating hours.
 5. Retain the Motor Replacement Annual Operating Hours source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
@@ -96,7 +85,7 @@ The DOE commercial reference-building schedule context was checked. Calendar ari
 **■ Standard 1.2 — Motor Replacement Engineering Calculation**
 
 **Purpose:**
-Use U.S. Department of Energy - MEASUR to resolve existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings from the listed category inputs.
+Use U.S. Department of Energy - MEASUR to resolve existing motor efficiency; Proposed motor efficiency from the listed category inputs.
 
 **Source:**
 U.S. Department of Energy - MEASUR
@@ -122,28 +111,15 @@ U.S. Department of Energy - MEASUR
 
 **Value Needed:**
 
-* Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings
-
-**Input Bindings:**
-
-* In-Scope Equipment Count ← User at `Annual Operational Savings > Annual motor electricity reduction > In-Scope Equipment Count`. Pass the exact bound In-Scope Equipment Count to Motor Replacement Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Motor rated shaft power from a nameplate, measurement, audit, or contractor specification ← Project Document at `Annual Operational Savings > Annual motor electricity reduction > Documented Motor rated shaft power from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Motor rated shaft power from a nameplate, measurement, audit, or contractor specification to Motor Replacement Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Motor rated speed from a nameplate, measurement, audit, or contractor specification ← Project Document at `Annual Operational Savings > Annual motor electricity reduction > Documented Motor rated shaft power from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Motor rated speed from a nameplate, measurement, audit, or contractor specification to Motor Replacement Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Operating load fraction from an uploaded site study, controls trend, or engineering audit ← Project Document at `Annual Operational Savings > Annual motor electricity reduction > Documented Operating load fraction from Controls Trends or Engineering Audit`. Pass the exact bound Operating load fraction from an uploaded site study, controls trend, or engineering audit to Motor Replacement Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Existing motor class ← User at `Annual Operational Savings > Annual motor electricity reduction > Existing motor class`. Pass the exact bound Existing motor class to Motor Replacement Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Proposed motor class ← Linked Opportunity at `Annual Operational Savings > Annual motor electricity reduction > Proposed motor class`. Pass the exact bound Proposed motor class to Motor Replacement Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-* Annual operating hours from the connected schedule process ← Standard Output at `Annual Operational Savings > Annual motor electricity reduction > Annual operating hours > Standard 1.1 - Motor Replacement Annual Operating Hours`. Pass the exact bound Annual operating hours from the connected schedule process to Motor Replacement Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings → `η_existing` (fraction; PER_YEAR) at `Annual Operational Savings > Annual motor electricity reduction > Standard 1.2 - Motor Replacement Engineering Calculation`.
+* Existing motor efficiency
+* Proposed motor efficiency
 
 **How to Use:**
 
 1. Load the High-Efficiency Motor Replacement project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Motor Inventory and Motor Performance calculators.
 2. When an exact technical input is unavailable, use only a source-specific retained equipment or application population with documented filters, numeric rule, unit, scope, and version before running the Motor Inventory and Motor Performance calculators; otherwise report the implementation limitation.
 3. Run the pinned open-source Motor Inventory and Motor Performance calculators baseline and proposed cases using the category formula boundary shown in this card.
-4. Return one selected existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
+4. Return one selected existing motor efficiency; Proposed motor efficiency.
 5. Retain the MEASUR version, Motor Inventory and Motor Performance calculators input object, exact and benchmark input provenance, context filters, eligible populations, selection rules, unit conversions, warnings, and baseline and proposed outputs.
 
 **Automation:**

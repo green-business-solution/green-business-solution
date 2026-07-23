@@ -427,6 +427,15 @@
         "time": 1
       }
     },
+    "hours_event": {
+      "unit_id": "hours_event",
+      "display_unit": "hours/event",
+      "dimension": "time",
+      "quantity_kind": "duration",
+      "dimension_vector": {
+        "time": 1
+      }
+    },
     "hours_interval": {
       "unit_id": "hours_interval",
       "display_unit": "hours/interval",

@@ -41,9 +41,10 @@ Annual Operational Savings
 │  ├─ Water-Heating Service
 │  │  ├─ Fixture Uses Hot Water (User)
 │  │  ├─ Water-Heating Fuel Type (User)
+│  │  ├─ Hot-Water Fraction from Audit or Engineering Assessment (Project Document)
+│  │  ├─ Temperature Rise from Audit or Engineering Assessment (Project Document)
 │  │  ├─ Water-Heater Nameplate or Commissioning Information, if available (Project Document)
 │  │  └─ Standard 1.3 — Water-Heating Input Resolution
-│  │     └─ Temperature rise (Project Document)
 │  └─ Flow Fixture Performance
 │     ├─ Linked Opportunity names an exact flow fixture
 │     │  ├─ Exact Flow Fixture Product Information (Linked Opportunity)
@@ -88,24 +89,13 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 * Supported fixture type
 * In-scope fixture count
 * Recognizable occupants, customers, rooms, meals, or another source-compatible activity
-* Operating days and hours
+* Operating days per week
+* Active weeks per year
 * Observed fixture-use study when available
 
 **Value Needed:**
 
 * Total annual active minutes across the in-scope fixture group
-
-**Input Bindings:**
-
-* Supported fixture type ← User at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Existing Fixture > Existing Fixture Type or Application`. Pass the exact bound Supported fixture type to Flow Fixture Activity Resolution when computing Total annual active minutes across the in-scope fixture group; do not substitute a value from another tree path.
-* In-scope fixture count ← User at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > In-Scope Fixture Count`. Pass the exact bound In-scope fixture count to Flow Fixture Activity Resolution when computing Total annual active minutes across the in-scope fixture group; do not substitute a value from another tree path.
-* Recognizable occupants, customers, rooms, meals, or another source-compatible activity ← User at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Recognizable Facility Activity > Approximate Occupants, Employees, Customers, Rooms, Beds, or Meals`. Pass the exact bound Recognizable occupants, customers, rooms, meals, or another source-compatible activity to Flow Fixture Activity Resolution when computing Total annual active minutes across the in-scope fixture group; do not substitute a value from another tree path.
-* Operating days and hours ← User at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Recognizable Facility Activity > Operating Days per Week`. Pass the exact bound Operating days and hours to Flow Fixture Activity Resolution when computing Total annual active minutes across the in-scope fixture group; do not substitute a value from another tree path.
-* Observed fixture-use study when available ← Project Document at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Recognizable Facility Activity > Observed Fixture-Use Study or Audit, when available`. Pass the exact bound Observed fixture-use study when available to Flow Fixture Activity Resolution when computing Total annual active minutes across the in-scope fixture group; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Total annual active minutes across the in-scope fixture group → `total_annual_active_minutes` (minutes/year; PROJECT_TOTAL) at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Recognizable Facility Activity > Standard 1.1 - Flow Fixture Activity Resolution`.
 
 **How to Use:**
 
@@ -139,21 +129,10 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 
 * Existing fixture type and application
 * Existing label, specification, audit, or measurement when available
-* Installed fixture class and vintage when exact data are unavailable
 
 **Value Needed:**
 
 * One existing rated flow in gallons per minute
-
-**Input Bindings:**
-
-* Existing fixture type and application ← User at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Existing Fixture > Existing Fixture Type or Application`. Pass the exact bound Existing fixture type and application to Existing Flow Rate Resolution when computing One existing rated flow in gallons per minute; do not substitute a value from another tree path.
-* Existing label, specification, audit, or measurement when available ← Project Document at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Existing Fixture > Existing Rated Flow from Label, Specification, or Measurement`. Pass the exact bound Existing label, specification, audit, or measurement when available to Existing Flow Rate Resolution when computing One existing rated flow in gallons per minute; do not substitute a value from another tree path.
-* Installed fixture class and vintage when exact data are unavailable ← Project Document at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Recognizable Facility Activity > Observed Fixture-Use Study or Audit, when available`. Pass the exact bound Installed fixture class and vintage when exact data are unavailable to Existing Flow Rate Resolution when computing One existing rated flow in gallons per minute; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One existing rated flow in gallons per minute → `gpm_existing` (gallons/minute; PER_FIXTURE) at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Existing Fixture > Standard 1.2 - Existing Flow Rate Resolution`.
 
 **How to Use:**
 
@@ -197,20 +176,6 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 * One hot-water temperature rise
 * One water-heater efficiency
 
-**Input Bindings:**
-
-* Confirmed hot-water or cold-only fixture service ← User at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Water-Heating Service > Fixture Uses Hot Water`. Pass the exact bound Confirmed hot-water or cold-only fixture service to Water-Heating Input Resolution when computing One hot-water fraction and One hot-water temperature rise and One water-heater efficiency; do not substitute a value from another tree path.
-* Water-heating resource ← Project Document at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Water-Heating Service > Standard 1.3 - Water-Heating Input Resolution > Temperature rise`. Pass the exact bound Water-heating resource to Water-Heating Input Resolution when computing One hot-water fraction and One hot-water temperature rise and One water-heater efficiency; do not substitute a value from another tree path.
-* Hot-water fraction ← User at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Water-Heating Service > Fixture Uses Hot Water`. Pass the exact bound Hot-water fraction to Water-Heating Input Resolution when computing One hot-water fraction and One hot-water temperature rise and One water-heater efficiency; do not substitute a value from another tree path.
-* Temperature rise ← Project Document at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Water-Heating Service > Standard 1.3 - Water-Heating Input Resolution > Temperature rise`. Pass the exact bound Temperature rise to Water-Heating Input Resolution when computing One hot-water fraction and One hot-water temperature rise and One water-heater efficiency; do not substitute a value from another tree path.
-* Water-heater efficiency ← Project Document at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Water-Heating Service > Water-Heater Nameplate or Commissioning Information, if available`. Pass the exact bound Water-heater efficiency to Water-Heating Input Resolution when computing One hot-water fraction and One hot-water temperature rise and One water-heater efficiency; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One hot-water fraction → `hot_fraction` (fraction; RECORD_SET) at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Water-Heating Service > Standard 1.3 - Water-Heating Input Resolution`.
-* One hot-water temperature rise → `thermal_energy_per_gallon` (energy/gallon; RECORD_SET) at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Water-Heating Service > Standard 1.3 - Water-Heating Input Resolution`.
-* One water-heater efficiency → `heater_efficiency` (fraction; RECORD_SET) at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Water-Heating Service > Standard 1.3 - Water-Heating Input Resolution`.
-
 **How to Use:**
 
 1. Use zero hot-water contribution only when the fixture is confirmed cold-only.
@@ -250,15 +215,6 @@ U.S. Environmental Protection Agency - WaterSense
 **Value Needed:**
 
 * Proposed rated flow with units and product provenance
-
-**Input Bindings:**
-
-* Exact proposed fixture make and model from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Flow Fixture Performance > Linked Opportunity names an exact flow fixture > Exact Flow Fixture Product Information`. Apply the exact bound Exact proposed fixture make and model from the linked opportunity to resolve and validate the authoritative record before Exact Proposed Flow Fixture Rating Lookup emits Proposed rated flow with units and product provenance.
-* Fixture type and application ← Linked Opportunity at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Flow Fixture Performance > Linked Opportunity names an exact flow fixture > Exact Flow Fixture Product Information`. Apply the exact bound Fixture type and application to resolve and validate the authoritative record before Exact Proposed Flow Fixture Rating Lookup emits Proposed rated flow with units and product provenance.
-
-**Output Bindings:**
-
-* Proposed rated flow with units and product provenance → `gpm_proposed` (gallons/minute; RECORD_SET) at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Flow Fixture Performance > Linked Opportunity names an exact flow fixture > Standard 1.4 - Exact Proposed Flow Fixture Rating Lookup`.
 
 **How to Use:**
 
@@ -300,16 +256,6 @@ U.S. Environmental Protection Agency - WaterSense
 **Value Needed:**
 
 * One selected proposed rated flow, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally
-
-**Input Bindings:**
-
-* Fixture requirements from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Flow Fixture Performance > Linked Opportunity specifies flow fixture requirements but no exact product > Flow Fixture Requirements`. Apply the exact bound Fixture requirements from the linked opportunity as a compatibility filter before Requirement-Based Proposed Flow Fixture Resolution emits One selected proposed rated flow, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally.
-* Fixture type and application ← Linked Opportunity at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Flow Fixture Performance > Linked Opportunity specifies flow fixture requirements but no exact product > Flow Fixture Requirements`. Apply the exact bound Fixture type and application as a compatibility filter before Requirement-Based Proposed Flow Fixture Resolution emits One selected proposed rated flow, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally.
-* Required water-use criterion ← Linked Opportunity at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Flow Fixture Performance > Linked Opportunity specifies flow fixture requirements but no exact product > Flow Fixture Requirements`. Apply the exact bound Required water-use criterion as a compatibility filter before Requirement-Based Proposed Flow Fixture Resolution emits One selected proposed rated flow, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally.
-
-**Output Bindings:**
-
-* One selected proposed rated flow, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally → `gpm_proposed` (gallons/minute; RECORD_SET) at `Annual Operational Savings > Annual Water and Heating-Resource Reduction > Flow Fixture Performance > Linked Opportunity specifies flow fixture requirements but no exact product > Standard 1.5 - Requirement-Based Proposed Flow Fixture Resolution`.
 
 **How to Use:**
 

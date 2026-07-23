@@ -16,10 +16,10 @@ Current documentation state:
 - Visible Information Cards: 54.
 - Visible category-local Standard processes: 124.
 - Visible direct source-link occurrences: 317.
-- Visible terminal User leaves: 141.
-- Explicit User-input realism decisions: 93 `USER_MEMORY` and 48 `USER_RECOGNIZABLE_ACTIVITY`.
-- Visible Project Document leaves: 155.
-- Visible Linked Opportunity leaves: 149.
+- Visible terminal User leaves: 157.
+- Explicit User-input realism decisions: 105 `USER_MEMORY` and 52 `USER_RECOGNIZABLE_ACTIVITY`.
+- Visible Project Document leaves: 154.
+- Visible Linked Opportunity leaves: 152.
 - Information Card schema version: `operational-savings/information-card-v1`.
 - Canonical retrofit mappings: 92.
 - Missing mappings: 0.
@@ -28,7 +28,7 @@ Current documentation state:
 - Canonical Standards: 19.
 - Standards with a selected automation strategy: 19.
 - Expanded maximum atomic User inputs per category: 30.
-- Expanded Required Screening inputs: 366.
+- Expanded Required Screening inputs: 367.
 - Expanded Conditional Calculation Gates: 6.
 - Expanded Optional Known Details: 86.
 - Maximum Required Screening inputs per category: 29.
@@ -37,7 +37,7 @@ Current documentation state:
 - Standard statuses: 19 `LIMITED`.
 - Machine-readable source-evidence records: 54.
 - Source-evidence statuses: LIMITED 3, UNSUPPORTED 7, UNVERIFIED 28, VERIFIED 16.
-- Atomic formula terms: 481.
+- Atomic formula terms: 497.
 - Recorded category manual verdicts: 54.
 - Recorded Standard manual verdicts: 19.
 - Executable Ready-category golden fixtures: 2.
@@ -115,7 +115,7 @@ Each evidence record declares every source role it supports and must appear unde
 It does not mean that unrelated roles or project-specific inputs are supported.
 Link validation covered 56 unique direct registry URLs.
 
-The ten verified records cover the reviewed ENERGY STAR commercial dishwasher and EVSE fields, FuelEconomy `comb08` and `combE`, PVWatts V8 input and output fields, WaterSense landscape design scope, EPA toilet and urinal activity, DOE outdoor application wattage, and the two reviewed FEMP exterior-lighting table scopes.
+The complete VERIFIED evidence set covers the reviewed ENERGY STAR commercial dishwasher and EVSE fields, FuelEconomy `comb08` and `combE`, PVWatts V8 input and output fields, WaterSense landscape design scope, EPA toilet and urinal activity, DOE outdoor application wattage, and the two reviewed FEMP exterior-lighting table scopes.
 Twenty-eight records remain unverified because an exact adapter, source export, module function, equation, or worked example has not been pinned.
 Seven records explicitly mark unsupported existing-baseline or distribution uses.
 Certification and product datasets resolve compatible equipment ratings only.
@@ -388,7 +388,7 @@ The DOE walk-in fixture preserves panel intensity and annual door or refrigerati
 The dishwasher calculator fixture preserves separate rack and flight activity units and water-heating equations.
 The FEMA fixture preserves only the `0.07 gallon/hour × generator kW` full-load diesel equation.
 
-All sixteen `VERIFIED` evidence records were inspected against their JSON Pointer bindings.
+The complete `VERIFIED` evidence set was inspected against its JSON Pointer bindings.
 The bound URL, version, artifact, checksum, coverage, fields, canonical units, exact values when present, unsupported inferences, and substantive records match their evidence metadata.
 No `LIMITED` evidence record is used by ITC-29.
 ITC-29 uses two `VERIFIED` evidence records and one `UNSUPPORTED` distribution record only to document why the class-based adapter remains implementation-pending.

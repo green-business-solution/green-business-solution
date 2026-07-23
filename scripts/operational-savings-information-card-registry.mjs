@@ -750,19 +750,27 @@ const IDENTIFIER_LABELS = new Map([
   ["S", "Annual Operational Savings"]
 ]);
 
-export function buildInformationCardProjection(category) {
+export function buildInformationCardProjection(category, bindingRegistry) {
   const copy = CARD_COPY[category.id];
   if (!copy) throw new Error(`Missing Information Card copy for ${category.id}`);
-  const processDefinitions = buildProcessDefinitions(category);
-  const tree = buildPresentationTree(category, processDefinitions);
+  const categoryWithBindings = {
+    ...category,
+    informationCardBindingRegistry: bindingRegistry
+  };
+  const processDefinitions = buildProcessDefinitions(categoryWithBindings);
+  const tree = buildPresentationTree(categoryWithBindings, processDefinitions);
   attachIntervalTariffProcess(tree, processDefinitions);
-  ensureProcessInputTreeBindings(category, tree, processDefinitions);
   const referencedKeys = collectProcessReferences(tree);
   const processByKey = new Map(processDefinitions.map((process) => [process.key, process]));
   const orderedProcesses = referencedKeys.map((key) => processByKey.get(key)).filter(Boolean);
   const numbers = assignProcessNumbers(category.id, orderedProcesses);
   for (const process of orderedProcesses) process.displayNumber = numbers.get(process.key);
-  finalizeProcessBindings(category, tree, orderedProcesses);
+  finalizeProcessBindings(
+    categoryWithBindings,
+    tree,
+    orderedProcesses,
+    bindingRegistry
+  );
   return {
     categoryId: category.id,
     title: copy.title,
@@ -807,8 +815,10 @@ function buildProcessDefinitions(category) {
           lookupInputs: [
             "Existing vehicle make and model",
             "Proposed vehicle make and model",
-            "Approximate model years",
-            "Version or drivetrain details only when needed to resolve an ambiguous match"
+            "Existing approximate model year",
+            "Proposed approximate model year",
+            "Existing version or drivetrain details only when needed to resolve an ambiguous match",
+            "Proposed version or drivetrain details only when needed to resolve an ambiguous match"
           ],
           valueNeeded: [
             "Existing combined fuel economy in miles per gallon",
@@ -926,32 +936,7 @@ function buildProcessDefinitions(category) {
             "Normalize DC active input power as output power divided by loading-adjusted efficiency, then apply native no-vehicle or idle input only to the corresponding non-charging duration.",
             "Return one exact compatible native-field record and retain the product ID, source version, fields, units, and charger-type normalization path."
           ],
-          validation: "The retained official ENERGY STAR fixture inspects separate AC-output and DC-output certified records and binds maximum output power, AC mode-specific total loss, native idle or no-vehicle input, and DC loading-adjusted efficiency as the fraction 0.95. The category adapter and formula-level golden test have not yet been added, so source-field support is verified while category execution proof remains pending.",
-          outputBindings: category.id === "ITC-27" ? [
-            {
-              outputName: "Rated output power per port",
-              formulaTerm: "rated_output_power_kW",
-              outputScope: "PER_PORT"
-            },
-            {
-              outputName:
-                "Applicable AC mode-specific total loss in watts when the record is AC-output",
-              formulaTerm: "ac_total_loss_W",
-              outputScope: "PER_PORT"
-            },
-            {
-              outputName:
-                "DC loading-adjusted efficiency as a fraction when the record is DC-output",
-              formulaTerm: "dc_efficiency_fraction",
-              outputScope: "PER_PORT"
-            },
-            {
-              outputName:
-                "Applicable no-vehicle or idle standby power per port",
-              formulaTerm: "standby_power_kW_per_port",
-              outputScope: "PER_PORT"
-            }
-          ] : undefined
+          validation: "The retained official ENERGY STAR fixture inspects separate AC-output and DC-output certified records and binds maximum output power, AC mode-specific total loss, native idle or no-vehicle input, and DC loading-adjusted efficiency as the fraction 0.95. The category adapter and formula-level golden test have not yet been added, so source-field support is verified while category execution proof remains pending."
         }),
         makeProcess(category, standard.id, "requirement-charger-rating", "Requirement-Based Charger Resolution", {
           sourceLinkLabels: ENERGY_STAR_LINK_SELECTIONS[category.id],
@@ -976,32 +961,7 @@ function buildProcessDefinitions(category) {
             "For DC-output records, calculate active input as output power divided by loading-adjusted efficiency and keep idle or no-vehicle AC input separate.",
             "Return one selected compatible native-field record without choosing a future contractor product, and retain the complete population and selection trace."
           ],
-          validation: "The official ENERGY STAR EV charger criteria and Product Finder access path were checked. The source distinguishes AC-output total-loss fields from DC-output loading-adjusted efficiency, which is normalized to a fraction. No retained category export currently proves the requirement filters, eligible population, population size, or selected median, so implementation proof remains pending.",
-          outputBindings: category.id === "ITC-27" ? [
-            {
-              outputName: "Rated output power per port",
-              formulaTerm: "rated_output_power_kW",
-              outputScope: "PER_PORT"
-            },
-            {
-              outputName:
-                "Applicable AC mode-specific total loss in watts when the selected record is AC-output",
-              formulaTerm: "ac_total_loss_W",
-              outputScope: "PER_PORT"
-            },
-            {
-              outputName:
-                "DC loading-adjusted efficiency as a fraction when the selected record is DC-output",
-              formulaTerm: "dc_efficiency_fraction",
-              outputScope: "PER_PORT"
-            },
-            {
-              outputName:
-                "Applicable no-vehicle or idle standby power per port",
-              formulaTerm: "standby_power_kW_per_port",
-              outputScope: "PER_PORT"
-            }
-          ] : undefined
+          validation: "The official ENERGY STAR EV charger criteria and Product Finder access path were checked. The source distinguishes AC-output total-loss fields from DC-output loading-adjusted efficiency, which is normalized to a fraction. No retained category export currently proves the requirement filters, eligible population, population size, or selected median, so implementation proof remains pending."
         })
       );
       continue;
@@ -1085,26 +1045,38 @@ function buildProcessDefinitions(category) {
             "Public operating hours",
             "Site daily delivered charging energy from the connected exact project resolver",
             "Normalized weekday and weekend 15-minute shape from the connected EVI-Pro resolver",
-            "Resolved native AC-output or DC-output charger fields from the connected product process"
+            "Resolved native AC-output or DC-output charger fields from the connected exact charger process, when used",
+            "Resolved native AC-output or DC-output charger fields from the connected requirement-selected charger process, when used"
           ]
         : solarWaterHeating
           ? [
               "Site location",
-              "Collector and storage design from the linked opportunity or a Project Document",
-              "Annual hot-water load from a Project Document or the connected context benchmark",
+              "Collector and storage design from the linked opportunity",
+              "Collector and storage design from a Project Document",
+              "Annual hot-water load from a Project Document",
+              "Annual hot-water load from the connected context benchmark",
               "Backup fuel type",
-              "Backup-system efficiency from a Project Document or the connected context benchmark"
+              "Backup-system efficiency from a Project Document",
+              "Backup-system efficiency from the connected context benchmark"
             ]
         : demandResponseDispatch
           ? [
               "Timestamped interval utility data from the uploaded utility artifact",
               "Time zone and daylight-saving metadata from the uploaded utility artifact",
               "Resolved interval tariff input set from the connected tariff process",
-              "Controllable-load definition from a Project Document or the connected context benchmark",
-              "Maximum shed from a Project Document, the linked opportunity, or the connected context benchmark",
-              "Event-availability schedule from a Project Document, the linked opportunity, or the connected context benchmark",
-              "Maximum event duration from a Project Document, the linked opportunity, or the connected context benchmark",
-              "Rebound or recovery constraint from a Project Document or the connected context benchmark"
+              "Controllable-load definition from a Project Document",
+              "Controllable-load definition from the connected context benchmark",
+              "Maximum shed from a Project Document",
+              "Maximum shed restrictions from the linked opportunity",
+              "Maximum shed from the connected context benchmark",
+              "Event-availability schedule from a Project Document",
+              "Event restrictions from the linked opportunity",
+              "Event-availability schedule from the connected context benchmark",
+              "Maximum event duration from a Project Document",
+              "Maximum event duration restrictions from the linked opportunity",
+              "Maximum event duration from the connected context benchmark",
+              "Rebound or recovery constraint from a Project Document",
+              "Rebound or recovery profile from the connected context benchmark"
             ]
         : batteryDispatch
           ? [
@@ -1116,7 +1088,9 @@ function buildProcessDefinitions(category) {
               "Charge efficiency from a nameplate, measurement, audit, or contractor specification",
               "Discharge efficiency from a nameplate, measurement, audit, or contractor specification",
               "Initial state of charge",
-              "Terminal state-of-charge constraint from the linked opportunity, a Project Document, or the connected context benchmark",
+              "Terminal state-of-charge constraint from the linked opportunity",
+              "Terminal state-of-charge constraint from a Project Document",
+              "Terminal state-of-charge constraint from the connected context benchmark",
               "Dispatch-availability schedule",
               "Reserve constraint"
             ]
@@ -1196,14 +1170,7 @@ function buildBackupPowerContextProcesses(category) {
           "The exact path is deterministic when compatible Project Documents supply the required fields. No category golden fixture is retained, so implementation proof remains pending.",
         selectionPolicy: {
           outputCardinality: "ONE_SELECTED_INPUT_SET"
-        },
-        outputBindings: [
-          {
-            outputName: "One exact backup-power routine-use input set",
-            formulaTerm: "exact_backup_routine_input_set",
-            outputScope: "RECORD_SET"
-          }
-        ]
+        }
       }
     ),
     makeProcess(
@@ -1236,15 +1203,7 @@ function buildBackupPowerContextProcesses(category) {
           multipleRecordRule: "NOT_APPLICABLE_DETERMINISTIC_SELECTION",
           selectedValueMethod:
             "Execute the one retained source formula for a confirmed compatible full-load diesel-generator test. No population selection or median is used."
-        },
-        outputBindings: [
-          {
-            outputName:
-              "Annual full-load diesel test fuel per equipment unit",
-            formulaTerm: "benchmark_annual_test_fuel_per_unit",
-            outputScope: "PER_EQUIPMENT_UNIT"
-          }
-        ]
+        }
       }
     )
   ];
@@ -1265,7 +1224,8 @@ function buildPublicChargingContextProcesses(category) {
         lookupInputs: [
           "Selected site daily delivered energy from a charging study or contractor design",
           "Installed charger count",
-          "Rated output power per port",
+          "Rated output power per port from the connected exact charger record, when used",
+          "Rated output power per port from the connected requirement-selected charger record, when used",
           "Public operating hours",
           "Capacity cap fraction"
         ],
@@ -1291,15 +1251,7 @@ function buildPublicChargingContextProcesses(category) {
             "Report an implementation limitation when exact site daily delivered energy is unavailable."
         },
         validation:
-          "EVI-Pro Lite does not provide site daily energy or site utilization. This resolver therefore supports only an exact project record plus a physical cap, remains blocked when that record is absent, and has no retained category golden fixture, so implementation proof is pending.",
-        outputBindings: [
-          {
-            outputName:
-              "One site-total daily delivered charging-energy value in kilowatt-hours per day",
-            formulaTerm: "site_daily_delivered_kWh",
-            outputScope: "SITE_TOTAL"
-          }
-        ]
+          "EVI-Pro Lite does not provide site daily energy or site utilization. This resolver therefore supports only an exact project record plus a physical cap, remains blocked when that record is absent, and has no retained category golden fixture, so implementation proof is pending."
       }
     ),
     makeProcess(
@@ -1312,8 +1264,10 @@ function buildPublicChargingContextProcesses(category) {
         purpose:
           "Resolve a normalized weekday and weekend 15-minute time-of-day charging shape without assigning a site utilization level.",
         lookupInputs: [
-          "Site location and charging scenario",
-          "AC-output or DC-output charger type",
+          "Site location",
+          "Charging scenario selector",
+          "AC-output or DC-output charger type from the connected exact charger record, when used",
+          "AC-output or DC-output charger type from the connected requirement-selected charger record, when used",
           "Public operating hours"
         ],
         valueNeeded: [
@@ -1336,15 +1290,7 @@ function buildPublicChargingContextProcesses(category) {
             "Select one EVI-Pro Lite scenario response compatible with the documented site location and charger scenario."
         },
         validation:
-          "The official EVI-Pro Lite API documents normalized 24-hour weekday and weekend charging shapes in 15-minute steps. A retained request and response fixture is still pending, so endpoint semantics are verified while execution proof remains incomplete.",
-        outputBindings: [
-          {
-            outputName:
-              "One normalized weekday and weekend 15-minute charging-shape profile",
-            formulaTerm: "normalized_shape_t",
-            outputScope: "PROFILE"
-          }
-        ]
+          "The official EVI-Pro Lite API documents normalized 24-hour weekday and weekend charging shapes in 15-minute steps. A retained request and response fixture is still pending, so endpoint semantics are verified while execution proof remains incomplete."
       }
     )
   ];
@@ -1366,7 +1312,8 @@ function buildFlowFixtureContextProcesses(category) {
           "Supported fixture type",
           "In-scope fixture count",
           "Recognizable occupants, customers, rooms, meals, or another source-compatible activity",
-          "Operating days and hours",
+          "Operating days per week",
+          "Active weeks per year",
           "Observed fixture-use study when available"
         ],
         valueNeeded: [
@@ -1380,15 +1327,7 @@ function buildFlowFixtureContextProcesses(category) {
           "Retain fixture type, source equation, activity driver, fixture count, operating calendar, selected assumptions, unit, and warnings."
         ],
         validation:
-          "WaterSense at Work documents commercial fixture inventory and savings methods, but the retained source fixture does not yet prove the flow-fixture activity fields and equations. The group-total contract and no-double-count boundary are explicit while source-field execution remains pending.",
-        outputBindings: [
-          {
-            outputName:
-              "Total annual active minutes across the in-scope fixture group",
-            formulaTerm: "total_annual_active_minutes",
-            outputScope: "PROJECT_TOTAL"
-          }
-        ]
+          "WaterSense at Work documents commercial fixture inventory and savings methods, but the retained source fixture does not yet prove the flow-fixture activity fields and equations. The group-total contract and no-double-count boundary are explicit while source-field execution remains pending."
       }
     ),
     makeProcess(
@@ -1402,8 +1341,7 @@ function buildFlowFixtureContextProcesses(category) {
           "Resolve one existing gallons-per-minute value without using the proposed efficient-product population as the installed baseline.",
         lookupInputs: [
           "Existing fixture type and application",
-          "Existing label, specification, audit, or measurement when available",
-          "Installed fixture class and vintage when exact data are unavailable"
+          "Existing label, specification, audit, or measurement when available"
         ],
         valueNeeded: [
           "One existing rated flow in gallons per minute"
@@ -1416,14 +1354,7 @@ function buildFlowFixtureContextProcesses(category) {
           "If no compatible installed population is retained, report the implementation limitation instead of inventing a flow rate."
         ],
         validation:
-          "WaterSense proposed-product criteria do not supply an installed existing-flow population. No retained installed-flow fixture currently proves a benchmark, so only exact project evidence is supported and the benchmark path remains implementation-pending.",
-        outputBindings: [
-          {
-            outputName: "One existing rated flow in gallons per minute",
-            formulaTerm: "gpm_existing",
-            outputScope: "PER_FIXTURE"
-          }
-        ]
+          "WaterSense proposed-product criteria do not supply an installed existing-flow population. No retained installed-flow fixture currently proves a benchmark, so only exact project evidence is supported and the benchmark path remains implementation-pending."
       }
     ),
     makeProcess(
@@ -1458,24 +1389,7 @@ function buildFlowFixtureContextProcesses(category) {
           "The physical conversion is explicit, but no retained commercial flow-fixture and water-heater population currently proves a complete hot-water input set. Exact project inputs and a confirmed cold-only zero boundary are supported; context execution remains pending.",
         selectionPolicy: {
           outputCardinality: "ONE_SELECTED_INPUT_SET"
-        },
-        outputBindings: [
-          {
-            outputName: "One hot-water fraction",
-            formulaTerm: "hot_fraction",
-            outputScope: "RECORD_SET"
-          },
-          {
-            outputName: "One hot-water temperature rise",
-            formulaTerm: "thermal_energy_per_gallon",
-            outputScope: "RECORD_SET"
-          },
-          {
-            outputName: "One water-heater efficiency",
-            formulaTerm: "heater_efficiency",
-            outputScope: "RECORD_SET"
-          }
-        ]
+        }
       }
     )
   ];
@@ -1495,10 +1409,12 @@ function buildFlushFixtureContextProcesses(category) {
           "Resolve total annual flushes across the complete in-scope toilet or urinal group.",
         lookupInputs: [
           "Toilet or urinal type",
-          "Female and male eligible populations",
+          "Female eligible population",
+          "Male eligible population",
           "Customer or visitor population when applicable",
           "In-scope fixture count",
-          "Operating days",
+          "Operating days per week",
+          "Active weeks per year",
           "Observed restroom study when available"
         ],
         valueNeeded: [
@@ -1512,15 +1428,7 @@ function buildFlushFixtureContextProcesses(category) {
           "Retain population inputs, fixture type, daily assumptions, operating days, allocation method, annual total, source version, and warnings."
         ],
         validation:
-          "The retained WaterSense fixture proves the female toilet, male toilet, and male urinal daily assumptions and annual flush-count equation. A category calculation golden fixture remains pending, but the source fields and no-double-count boundary are explicit.",
-        outputBindings: [
-          {
-            outputName:
-              "Total annual flushes across the in-scope fixture group",
-            formulaTerm: "total_annual_flushes_group",
-            outputScope: "PROJECT_TOTAL"
-          }
-        ]
+          "The retained WaterSense fixture proves the female toilet, male toilet, and male urinal daily assumptions and annual flush-count equation. A category calculation golden fixture remains pending, but the source fields and no-double-count boundary are explicit."
       }
     ),
     makeProcess(
@@ -1534,8 +1442,7 @@ function buildFlushFixtureContextProcesses(category) {
           "Resolve one existing gallons-per-flush value separately from the activity benchmark.",
         lookupInputs: [
           "Existing toilet or urinal type",
-          "Existing label, specification, audit, or measurement when available",
-          "Installed fixture class and vintage when exact data are unavailable"
+          "Existing label, specification, audit, or measurement when available"
         ],
         valueNeeded: [
           "One existing gallons-per-flush value"
@@ -1548,14 +1455,7 @@ function buildFlushFixtureContextProcesses(category) {
           "If no installed population is retained, report the implementation limitation instead of inventing a flush volume."
         ],
         validation:
-          "The retained EPA activity fixture does not supply installed gallons-per-flush values. Exact project evidence is supported, while an installed-volume benchmark remains implementation-pending.",
-        outputBindings: [
-          {
-            outputName: "One existing gallons-per-flush value",
-            formulaTerm: "gpf_existing",
-            outputScope: "PER_FIXTURE"
-          }
-        ]
+          "The retained EPA activity fixture does not supply installed gallons-per-flush values. Exact project evidence is supported, while an installed-volume benchmark remains implementation-pending."
       }
     )
   ];
@@ -1610,15 +1510,7 @@ function buildIntervalTariffProcess(category) {
         "The official OpenEI Utility Rate Database and API documentation define structured utility-rate access. No retained utility tariff, parser fixture, or bill-reconciliation golden case currently proves this category adapter, so exact execution remains implementation-pending and the conservative screen must remain explicitly labeled.",
       selectionPolicy: {
         outputCardinality: "ONE_SELECTED_INPUT_SET"
-      },
-      outputBindings: [
-        {
-          outputName:
-            "One complete tariff input set with exact or conservative-screening provenance",
-          formulaTerm: "tariff_input_set",
-          outputScope: "RECORD_SET"
-        }
-      ]
+      }
     }
   );
 }
@@ -1639,7 +1531,10 @@ function buildVariableSpeedProcesses(category) {
         "Pump nameplate and measured input from a Project Document",
         "Required flow and total dynamic head from a Project Document",
         "Pump curve or documented operating points",
-        "Load or speed profile from a Project Document or the connected operating-profile benchmark",
+        "Load or speed fractions from a Project Document",
+        "Annual hours by bin from a Project Document",
+        "Normalized load or speed profile from the connected operating-profile benchmark",
+        "Annual-hours allocation from the connected operating-profile benchmark",
         "Proposed minimum speed and pump control rule from the linked opportunity"
       ],
       valueNeeded: ["One selected baseline and proposed annual pump-electricity result"],
@@ -1662,7 +1557,10 @@ function buildVariableSpeedProcesses(category) {
         "Fan nameplate and measured input from a Project Document",
         "Required airflow and pressure rise from a Project Document",
         "Fan curve or documented operating points",
-        "Load or speed profile from a Project Document or the connected operating-profile benchmark",
+        "Load or speed fractions from a Project Document",
+        "Annual hours by bin from a Project Document",
+        "Normalized load or speed profile from the connected operating-profile benchmark",
+        "Annual-hours allocation from the connected operating-profile benchmark",
         "Proposed minimum speed and fan control rule from the linked opportunity"
       ],
       valueNeeded: ["One selected baseline and proposed annual fan-electricity result"],
@@ -1751,13 +1649,6 @@ function buildDishwasherProcesses(category) {
       ...ENERGY_STAR_LINK_SELECTIONS[category.id]
     ]
   };
-  const productRecordOutput = (outputName, formulaTerm) => [
-    {
-      outputName,
-      formulaTerm,
-      outputScope: "RECORD_SET"
-    }
-  ];
   return [
     makeCombinedProcess(
       category,
@@ -1771,9 +1662,6 @@ function buildDishwasherProcesses(category) {
         lookupInputs: [
           "Existing dishwasher machine type and sanitation method",
           "Existing exact make and model, retained certification record, or measured native performance from a Project Document"
-        ],
-        valueNeeded: [
-          "One exact existing dishwasher native-field record"
         ],
         howToUse: [
           "Require an exact existing model in a retained historical certification snapshot or a project measurement that reports compatible native fields.",
@@ -1789,11 +1677,7 @@ function buildDishwasherProcesses(category) {
           multipleRecordRule: "NOT_APPLICABLE_DETERMINISTIC_SELECTION",
           selectedValueMethod:
             "Return one exact existing project or retained historical certification record. No population fallback is allowed."
-        },
-        outputBindings: productRecordOutput(
-          "One exact existing dishwasher native-field record",
-          "existing_dishwasher_record"
-        )
+        }
       }
     ),
     makeCombinedProcess(
@@ -1807,10 +1691,7 @@ function buildDishwasherProcesses(category) {
           "Resolve one exact opportunity-named proposed dishwasher record while preserving rack and flight fields in their native units.",
         lookupInputs: [
           "Exact proposed dishwasher make and model from the linked opportunity",
-          "Machine type, sanitation method, application, and capacity"
-        ],
-        valueNeeded: [
-          "One exact proposed dishwasher native-field record"
+          "Proposed machine type, sanitation method, application, and capacity from the linked opportunity"
         ],
         howToUse: [
           "Match the exact manufacturer and model and require an active compatible certification record.",
@@ -1820,11 +1701,7 @@ function buildDishwasherProcesses(category) {
           "Reject any calculation that would convert gallons per rack to gallons per hour or active kilowatt-hours per rack to an hourly value."
         ],
         validation:
-          "The retained ENERGY STAR schema fixture proves machine type, sanitation, rack water, flight water, rack active electricity, and idle-power fields. It does not prove a flight active-electricity-per-hour field, an exact category adapter, or an end-to-end golden case, so unsupported flight fields remain blocked and implementation proof is pending.",
-        outputBindings: productRecordOutput(
-          "One exact proposed dishwasher native-field record",
-          "proposed_dishwasher_record"
-        )
+          "The retained ENERGY STAR schema fixture proves machine type, sanitation, rack water, flight water, rack active electricity, and idle-power fields. It does not prove a flight active-electricity-per-hour field, an exact category adapter, or an end-to-end golden case, so unsupported flight fields remain blocked and implementation proof is pending."
       }
     ),
     makeCombinedProcess(
@@ -1838,10 +1715,7 @@ function buildDishwasherProcesses(category) {
           "Select one compatible proposed dishwasher record from explicit opportunity requirements without mixing rack and flight populations.",
         lookupInputs: [
           "Dishwasher requirements from the linked opportunity",
-          "Required machine type, sanitation method, application, and capacity"
-        ],
-        valueNeeded: [
-          "One selected compatible proposed dishwasher native-field record"
+          "Required machine type, sanitation method, application, and capacity from the linked opportunity"
         ],
         howToUse: [
           "Extract every mandatory machine-type, sanitation, application, capacity, and performance restriction from the linked opportunity.",
@@ -1851,11 +1725,7 @@ function buildDishwasherProcesses(category) {
           "Return one complete compatible record and retain the source version, filters, population, population size, selection rule, fields, native units, and limitations."
         ],
         validation:
-          "The retained ENERGY STAR schema fixture proves the native field families and filter fields. No retained eligible candidate population or category golden fixture proves the selected record, and the published schema does not prove flight active electricity per hour, so implementation remains pending.",
-        outputBindings: productRecordOutput(
-          "One selected compatible proposed dishwasher native-field record",
-          "proposed_dishwasher_record"
-        )
+          "The retained ENERGY STAR schema fixture proves the native field families and filter fields. No retained eligible candidate population or category golden fixture proves the selected record, and the published schema does not prove flight active electricity per hour, so implementation remains pending."
       }
     ),
     makeProcess(
@@ -1884,14 +1754,7 @@ function buildDishwasherProcesses(category) {
           "Do not use this resolver for flight or conveyor machines and do not convert the result to operating hours."
         ],
         validation:
-          "The retained ENERGY STAR calculator fixture proves explicit rack-machine daily defaults for supported types and the annualization equation. The category adapter and end-to-end golden fixture remain pending.",
-        outputBindings: [
-          {
-            outputName: "Annual racks per equipment unit",
-            formulaTerm: "annual_racks_per_unit",
-            outputScope: "PER_EQUIPMENT_UNIT"
-          }
-        ]
+          "The retained ENERGY STAR calculator fixture proves explicit rack-machine daily defaults for supported types and the annualization equation. The category adapter and end-to-end golden fixture remain pending."
       }
     ),
     makeProcess(
@@ -1922,15 +1785,7 @@ function buildDishwasherProcesses(category) {
           multipleRecordRule: "NOT_APPLICABLE_DETERMINISTIC_SELECTION",
           selectedValueMethod:
             "Return one exact per-equipment-unit annual-hours value. No rack or generic activity fallback is allowed."
-        },
-        outputBindings: [
-          {
-            outputName:
-              "Annual flight or conveyor operating hours per equipment unit",
-            formulaTerm: "annual_operating_hours_per_unit",
-            outputScope: "PER_EQUIPMENT_UNIT"
-          }
-        ]
+        }
       }
     ),
     makeProcess(
@@ -1942,15 +1797,22 @@ function buildDishwasherProcesses(category) {
         purpose:
           "Convert existing and proposed native water quantities to purchased building and booster heating resource in the selected machine's same rack or hourly activity unit.",
         lookupInputs: [
-          "Rack or flight/conveyor machine type and sanitation method",
-          "Existing and proposed native water quantity from the connected product records",
+          "Rack-machine type and sanitation method, when the rack branch is used",
+          "Flight or conveyor machine type and sanitation method, when the flight branch is used",
+          "Existing native water quantity from the connected existing dishwasher record",
+          "Proposed native water quantity from the connected exact proposed dishwasher record, when used",
+          "Proposed native water quantity from the connected requirement-selected dishwasher record, when used",
           "Incoming water temperature",
           "Wash, rinse, or booster temperature or certified hot-water quantity",
           "Water-heating resource type",
           "Water-heater efficiency"
         ],
         valueNeeded: [
-          "One native-unit existing and proposed dishwasher water-heating result set"
+          "Dishwasher water-heating result set",
+          "Existing rack-machine water-heating resource per rack",
+          "Proposed rack-machine water-heating resource per rack",
+          "Existing flight or conveyor water-heating resource per operating hour",
+          "Proposed flight or conveyor water-heating resource per operating hour"
         ],
         howToUse: [
           "Select the rack or flight/conveyor branch before calculating water heating.",
@@ -1963,15 +1825,7 @@ function buildDishwasherProcesses(category) {
           "The retained March 2024 ENERGY STAR calculator fixture proves the building and booster temperature-rise and efficiency equations. The category adapter and end-to-end golden fixture remain pending, and incompatible or incomplete project boundaries remain blocked.",
         selectionPolicy: {
           outputCardinality: "ONE_SELECTED_RESULT_SET"
-        },
-        outputBindings: [
-          {
-            outputName:
-              "One native-unit existing and proposed dishwasher water-heating result set",
-            formulaTerm: "dishwasher_water_heating_result",
-            outputScope: "RECORD_SET"
-          }
-        ]
+        }
       }
     )
   ];
@@ -1983,7 +1837,6 @@ const CONTEXT_BENCHMARK_CONFIG = {
     purpose: "Select one existing exterior-fixture wattage when a nameplate, photometric report, or field measurement is unavailable.",
     lookupInputs: [
       "Existing fixture type or exterior application",
-      "Building and site context",
       "Exact existing wattage from a Project Document, when available"
     ],
     valueNeeded: [
@@ -2002,11 +1855,16 @@ const CONTEXT_BENCHMARK_CONFIG = {
     name: "Solar Water-Heating Input Benchmark",
     purpose: "Select one screening collector, hot-water-load, and backup-system input set when exact project documents are incomplete.",
     lookupInputs: [
-      "Business activity and building type",
-      "Building area and operating schedule",
-      "Bill water-heating resource use",
+      "Business activity",
+      "Building type",
+      "Building area",
+      "Operating schedule",
+      "Electricity use from the bill when water heating is electric",
+      "Gas use from the bill when water heating is gas",
       "Collector requirements from the linked opportunity",
-      "Available collector, load, and backup-system Project Documents"
+      "Available collector and storage Project Document",
+      "Available hot-water-load Project Document",
+      "Available backup-system Project Document"
     ],
     valueNeeded: [
       "One context-matched collector and storage configuration",
@@ -2019,7 +1877,8 @@ const CONTEXT_BENCHMARK_CONFIG = {
     name: "Demand-Response Event Behavior Benchmark",
     purpose: "Select one conservative shed, availability, duration, and rebound profile when a Project Document does not provide exact event behavior.",
     lookupInputs: [
-      "Business activity and building type",
+      "Business activity",
+      "Building type",
       "Operating schedule",
       "Interval utility data",
       "Controllable equipment types",
@@ -2039,7 +1898,8 @@ const CONTEXT_BENCHMARK_CONFIG = {
     lookupInputs: [
       "Initial state of charge",
       "Dispatch horizon",
-      "Opportunity or Project Document reserve requirement"
+      "Opportunity reserve requirement",
+      "Project Document reserve requirement"
     ],
     valueNeeded: [
       "One terminal state-of-charge constraint"
@@ -2091,29 +1951,18 @@ const CONTEXT_BENCHMARK_CONFIG = {
       "Do not extrapolate the paired record to another capacity, duty, fuel, battery, charger, shift pattern, or annual schedule.",
       "Return one existing and one proposed intensity in native hourly units and retain the source version, filters, selected record, units, and limitation."
     ],
-    validation: "The retained Argonne fixture proves a 5,000-pound electric forklift value of 7.5 kWh per operating hour and a paired propane value of 1.38 gallons per operating hour, plus separate useful-work intensities. The broad category remains blocked outside exact project inputs or this compatible record because the report documents material usage variability and limited operating data. No category calculation golden fixture is retained, so end-to-end execution proof remains pending.",
-    outputBindings: [
-      {
-        outputName: "One compatible existing fuel-use intensity",
-        formulaTerm: "existing_fuel_per_hour",
-        outputScope: "PER_HOUR"
-      },
-      {
-        outputName: "One compatible proposed wall-electricity intensity",
-        formulaTerm: "proposed_kWh_per_hour",
-        outputScope: "PER_HOUR"
-      }
-    ]
+    validation: "The retained Argonne fixture proves a 5,000-pound electric forklift value of 7.5 kWh per operating hour and a paired propane value of 1.38 gallons per operating hour, plus separate useful-work intensities. The broad category remains blocked outside exact project inputs or this compatible record because the report documents material usage variability and limited operating data. No category calculation golden fixture is retained, so end-to-end execution proof remains pending."
   },
   "ITC-39": {
     name: "Pump or Fan Operating-Profile Benchmark",
     purpose: "Select one representative operating profile when controls trends, measurements, or an engineering audit do not provide load bins.",
     lookupInputs: [
       "Pump or fan application",
-      "Business activity and building type",
+      "Business activity",
+      "Building type",
       "Equipment capacity class",
       "Operating schedule",
-      "Climate and geography"
+      "Site location"
     ],
     valueNeeded: [
       "One normalized load or speed profile",
@@ -2142,19 +1991,7 @@ const CONTEXT_BENCHMARK_CONFIG = {
       "Reject gas-to-electric, different batch, different temperature rise, different product family, and unmatched food-duty comparisons.",
       "Multiply the selected intensity difference by annual activity in the same duty unit and retain the source version, exact filters, native units, and unsupported-scope warning."
     ],
-    validation: "The retained ENERGY STAR CFS calculator fixture proves the electric-cooktop 20-pound water-boil duty, conventional and efficient cooking efficiencies, 1.03 and 0.91 kWh per boil values, and annualization equation. It does not prove gas-to-induction savings or a different cooking duty, so those cases remain blocked without exact comparable project tests. No category calculation golden fixture is retained, so end-to-end execution proof remains pending.",
-    outputBindings: [
-      {
-        outputName: "One existing resource intensity per identical tested cooking duty",
-        formulaTerm: "existing_resource_per_activity_r",
-        outputScope: "PER_EVENT"
-      },
-      {
-        outputName: "One proposed resource intensity per identical tested cooking duty",
-        formulaTerm: "proposed_resource_per_activity_r",
-        outputScope: "PER_EVENT"
-      }
-    ]
+    validation: "The retained ENERGY STAR CFS calculator fixture proves the electric-cooktop 20-pound water-boil duty, conventional and efficient cooking efficiencies, 1.03 and 0.91 kWh per boil values, and annualization equation. It does not prove gas-to-induction savings or a different cooking duty, so those cases remain blocked without exact comparable project tests. No category calculation golden fixture is retained, so end-to-end execution proof remains pending."
   },
   "ITC-49": {
     name: "Walk-In Component Energy Benchmark",
@@ -2164,7 +2001,8 @@ const CONTEXT_BENCHMARK_CONFIG = {
       "Walk-in temperature class",
       "Indoor or outdoor configuration",
       "Panel area when a panel intensity is selected",
-      "Existing and proposed efficiency levels"
+      "Existing efficiency level from a Project Document",
+      "Proposed efficiency level from the linked opportunity"
     ],
     valueNeeded: [
       "One class-matched existing annual component energy",
@@ -2177,19 +2015,7 @@ const CONTEXT_BENCHMARK_CONFIG = {
       "For doors and refrigeration systems, use the selected annual kWh value directly and do not multiply by operating hours.",
       "Sum only explicitly in-scope components and retain table number, row code, efficiency level, native unit, source version, and all class filters."
     ],
-    validation: "The retained DOE fixture records reviewed class rows and native units from Tables IV.31, IV.32, and IV.33. It proves a class-matched component benchmark, not whole-box project energy. The category remains blocked when the component boundary, class filters, panel area, or same-duty project scope is unavailable. No category calculation golden fixture is retained, so end-to-end execution proof remains pending.",
-    outputBindings: [
-      {
-        outputName: "One class-matched existing annual component energy",
-        formulaTerm: "current_annual_refrigeration_kWh",
-        outputScope: "PER_EQUIPMENT_UNIT"
-      },
-      {
-        outputName: "One class-matched proposed annual component energy",
-        formulaTerm: "proposed_annual_refrigeration_kWh",
-        outputScope: "PER_EQUIPMENT_UNIT"
-      }
-    ]
+    validation: "The retained DOE fixture records reviewed class rows and native units from Tables IV.31, IV.32, and IV.33. It proves a class-matched component benchmark, not whole-box project energy. The category remains blocked when the component boundary, class filters, panel area, or same-duty project scope is unavailable. No category calculation golden fixture is retained, so end-to-end execution proof remains pending."
   }
 };
 
@@ -2210,7 +2036,6 @@ function buildContextBenchmarkProcess(category) {
       valueNeeded: config.valueNeeded,
       howToUse: config.howToUse,
       validation: config.validation,
-      outputBindings: config.outputBindings,
       selectionPolicy: config.selectionPolicy
     }
   );
@@ -2269,7 +2094,14 @@ function buildExteriorLightingProcesses(category) {
       {
         sourceName: "DOE FEMP, DesignLights Consortium, DOE reference buildings, and U.S. Naval Observatory",
         purpose: "Calculate annual electricity reduction from fixture count, existing and proposed watts, and the resolved annual schedule.",
-        lookupInputs: ["Replacement fixture count", "Existing fixture watts", "New fixture watts", "Annual operating hours"],
+        lookupInputs: [
+          "Replacement fixture count",
+          "Existing fixture watts",
+          "Proposed fixture watts from the exact-product process, when used",
+          "Proposed fixture watts from the requirement-selected process, when used",
+          "Annual operating hours from the fixed-schedule process, when used",
+          "Annual operating hours from the daylight-based process, when used"
+        ],
         valueNeeded: ["Annual electricity reduction in kilowatt-hours"],
         howToUse: [
           "Confirm that all fixtures in the row share the same existing watts, proposed watts, and operating schedule.",
@@ -2294,7 +2126,30 @@ function makeProcess(category, standardId, key, name, overrides = {}) {
 function makeCombinedProcess(category, standardIds, key, name, overrides = {}) {
   const primary = PROCESS_LIBRARY[standardIds[0]];
   if (!primary) throw new Error(`Missing process library entry for ${standardIds[0]}`);
-  const valueNeeded = overrides.valueNeeded || [primary.valueNeeded];
+  const registeredOutputs = (
+    category.informationCardBindingRegistry?.output_bindings || []
+  )
+    .filter(
+      (binding) =>
+        binding.category_id === category.id &&
+        binding.process_key === key
+    )
+    .sort((left, right) => left.position - right.position);
+  if (registeredOutputs.length === 0) {
+    throw new Error(
+      `${category.id} process ${key} has no explicit registered output fields`
+    );
+  }
+  const expectedPositions = registeredOutputs.map((_, index) => index + 1);
+  if (
+    JSON.stringify(registeredOutputs.map((binding) => binding.position)) !==
+    JSON.stringify(expectedPositions)
+  ) {
+    throw new Error(
+      `${category.id} process ${key} output positions must be unique and contiguous`
+    );
+  }
+  const valueNeeded = registeredOutputs.map((binding) => binding.output_name);
   const lookupInputs = overrides.lookupInputs || inferLookupInputs(category, standardIds);
   const outputSummary = valueNeeded.join("; ").replace(/\.$/, "");
   const processSpecific = buildProcessSpecificContent(
@@ -2322,11 +2177,8 @@ function makeCombinedProcess(category, standardIds, key, name, overrides = {}) {
     },
     validation: overrides.validation || buildValidation(category, standardIds),
     evidenceState: overrides.evidenceState || processSpecific.evidenceState,
-    inputBindings: overrides.inputBindings || lookupInputs.map((lookupInput) => ({
-      lookupInput,
-      use: describeLookupInputUse(category, key, lookupInput)
-    })),
-    outputBindings: overrides.outputBindings || [],
+    inputBindings: [],
+    outputBindings: [],
     selectionPolicy: buildSelectionPolicy(
       category,
       key,
@@ -2336,26 +2188,6 @@ function makeCombinedProcess(category, standardIds, key, name, overrides = {}) {
   };
   if (overrides.sourceLinkLabels) process.sourceLinkLabels = overrides.sourceLinkLabels;
   return process;
-}
-
-function describeLookupInputUse(category, processKey, lookupInput) {
-  const purpose = /^requirement-/.test(processKey)
-    ? "filter the compatible authoritative product population before selecting one value"
-    : /^exact-/.test(processKey) || processKey === "fueleconomy_vehicles"
-      ? "resolve and validate one exact authoritative record"
-      : "filter the applicable authoritative benchmark or supply the displayed calculation";
-  return `${lookupInput} is used by ${CARD_COPY[category.id].title} to ${purpose}.`;
-}
-
-function describeBoundInputUse(process, lookupInput) {
-  const outputs = process.valueNeeded.join(" and ");
-  if (/^requirement-/.test(process.key)) {
-    return `Apply the exact bound ${lookupInput} as a compatibility filter before ${process.name} emits ${outputs}.`;
-  }
-  if (/^exact-/.test(process.key) || process.key === "fueleconomy_vehicles") {
-    return `Apply the exact bound ${lookupInput} to resolve and validate the authoritative record before ${process.name} emits ${outputs}.`;
-  }
-  return `Pass the exact bound ${lookupInput} to ${process.name} when computing ${outputs}; do not substitute a value from another tree path.`;
 }
 
 function buildSelectionPolicy(category, key, valueNeeded, overrides = {}) {
@@ -2434,56 +2266,6 @@ function inferOutputCardinality(key, valueNeeded) {
   return "ONE_SELECTED_SCALAR";
 }
 
-function ensureProcessInputTreeBindings(category, tree, processes) {
-  const processByKey = new Map(processes.map((process) => [process.key, process]));
-  for (const process of processes) {
-    const processNodes = [];
-    const collect = (treeNode) => {
-      if (treeNode.processKey === process.key) processNodes.push(treeNode);
-      for (const child of treeNode.children || []) collect(child);
-    };
-    collect(tree);
-    if (processNodes.length === 0) continue;
-    for (const processNodeReference of processNodes) {
-      const locations = collectBindingLocations(tree, processByKey);
-      const processLocations = locations.filter(
-        (location) => location.processKey === process.key
-      );
-      for (const lookupInput of process.lookupInputs) {
-        const candidates = locations
-          .filter(
-            (location) =>
-              location.processKey !== process.key &&
-              location.sourceLabel
-          )
-          .map((location) => ({
-            location,
-            score: scoreBindingLocation(
-              lookupInput,
-              process,
-              processLocations[0],
-              location
-            )
-          }))
-          .sort((left, right) => right.score - left.score);
-        if (candidates[0]?.score > 0) continue;
-        const sourceLabel = inferLookupInputSourceLabel(
-          category,
-          process,
-          lookupInput
-        );
-        const visibleInput = friendlyTechnicalInput(
-          stripInternalTreeText(lookupInput),
-          sourceLabel
-        );
-        processNodeReference.children.push(
-          node(`${visibleInput} (${sourceLabel})`)
-        );
-      }
-    }
-  }
-}
-
 function attachIntervalTariffProcess(tree, processes) {
   if (!processes.some((process) => process.key === "interval_tariff")) return;
   if (collectProcessReferences(tree).includes("interval_tariff")) return;
@@ -2501,71 +2283,18 @@ function attachIntervalTariffProcess(tree, processes) {
   (target || tree).children.push(processNode("interval_tariff"));
 }
 
-function inferLookupInputSourceLabel(category, process, lookupInput) {
-  if (/^exact-|^requirement-/.test(process.key)) return "Linked Opportunity";
-  if (
-    /\b(?:bill|tariff|rate schedule|utility data|utility artifact)\b/i.test(
-      lookupInput
-    )
-  ) {
-    return "Bill";
-  }
-  if (
-    /\b(?:profile|building type|site context|site location|geography|floor area)\b/i.test(
-      lookupInput
-    ) &&
-    (category.inputs?.Profile || []).length > 0
-  ) {
-    return "Profile";
-  }
-  if (
-    /\bfrom the connected\b/i.test(lookupInput)
-  ) {
-    return "Derived";
-  }
-  return "Project Document";
-}
-
 const SOURCE_LABEL_PATTERN =
   /\s+\((User|Profile|Bill|Linked Opportunity|Project Document|Derived)\)$/;
-const BINDING_STOP_WORDS = new Set([
-  "a",
-  "an",
-  "and",
-  "annual",
-  "applicable",
-  "by",
-  "category",
-  "connected",
-  "current",
-  "documented",
-  "each",
-  "exact",
-  "for",
-  "from",
-  "in",
-  "input",
-  "inputs",
-  "of",
-  "one",
-  "or",
-  "per",
-  "process",
-  "project",
-  "resolved",
-  "selected",
-  "site",
-  "source",
-  "the",
-  "to",
-  "value",
-  "with"
-]);
 
-function finalizeProcessBindings(category, tree, processes) {
+function finalizeProcessBindings(category, tree, processes, bindingRegistry) {
+  if (
+    bindingRegistry?.schema_version !==
+    "operational-savings/information-card-bindings-v1"
+  ) {
+    throw new Error("Information Card binding registry has an unsupported schema version");
+  }
   const processByKey = new Map(processes.map((process) => [process.key, process]));
   const locations = collectBindingLocations(tree, processByKey);
-  const formulaTerms = category.semanticContract?.formula_terms || [];
   for (const process of processes) {
     const processLocations = locations.filter(
       (location) => location.processKey === process.key
@@ -2574,38 +2303,44 @@ function finalizeProcessBindings(category, tree, processes) {
       throw new Error(`${category.id} process ${process.key} has no tree location`);
     }
     process.inputBindings = process.lookupInputs.map((lookupInput) => {
-      const location = resolveInputBindingLocation(
-        lookupInput,
-        process,
-        processLocations,
-        locations
+      const matches = (bindingRegistry.input_bindings || []).filter(
+        (binding) =>
+          binding.category_id === category.id &&
+          binding.process_key === process.key &&
+          binding.lookup_input === lookupInput
       );
+      if (matches.length !== 1) {
+        throw new Error(
+          `${category.id} process ${process.key} lookup input ${lookupInput} requires exactly one explicit binding; found ${matches.length}`
+        );
+      }
+      const binding = matches[0];
       return {
         lookupInput,
-        treePath: location.treePath,
-        sourceLabel: location.sourceLabel,
-        use: describeBoundInputUse(process, lookupInput)
+        treePath: binding.tree_path,
+        sourceLabel: binding.source_label,
+        use: binding.use
       };
     });
     process.outputBindings = process.valueNeeded.map((outputName) => {
-      const hint = (process.outputBindings || []).find(
-        (binding) => binding.outputName === outputName
+      const matches = (bindingRegistry.output_bindings || []).filter(
+        (binding) =>
+          binding.category_id === category.id &&
+          binding.process_key === process.key &&
+          binding.output_name === outputName
       );
-      const term = resolveOutputFormulaTerm(
-        category,
-        process,
-        outputName,
-        formulaTerms,
-        hint?.formulaTerm
-      );
+      if (matches.length !== 1) {
+        throw new Error(
+          `${category.id} process ${process.key} output ${outputName} requires exactly one explicit binding; found ${matches.length}`
+        );
+      }
+      const binding = matches[0];
       return {
         outputName,
-        treePath: processLocations[0].treePath,
-        formulaTerm: term.name,
-        outputUnit: term.display_unit,
-        outputScope:
-          hint?.outputScope ||
-          inferOutputScope(process, outputName, term)
+        treePath: binding.tree_path,
+        formulaTerm: binding.formula_term,
+        outputUnit: binding.output_unit,
+        outputScope: binding.output_scope
       };
     });
   }
@@ -2636,248 +2371,6 @@ function collectBindingLocations(tree, processByKey) {
   };
   visit(tree, []);
   return locations;
-}
-
-function resolveInputBindingLocation(
-  lookupInput,
-  process,
-  processLocations,
-  locations
-) {
-  const processLocation = processLocations[0];
-  const candidates = locations.filter(
-    (location) =>
-      location.processKey !== process.key &&
-      location.sourceLabel
-  );
-  const scored = candidates
-    .map((location) => ({
-      location,
-      score: scoreBindingLocation(
-        lookupInput,
-        process,
-        processLocation,
-        location
-      )
-    }))
-    .sort((left, right) =>
-      right.score - left.score ||
-      left.location.treePath.localeCompare(right.location.treePath)
-    );
-  if (!scored.length || scored[0].score < 1) {
-    throw new Error(
-      `${process.key} lookup input ${lookupInput} has no exact tree-path candidate`
-    );
-  }
-  return scored[0].location;
-}
-
-function scoreBindingLocation(lookupInput, process, processLocation, candidate) {
-  const lookupTokens = bindingTokens(lookupInput);
-  const candidateTokens = bindingTokens(
-    `${candidate.text} ${candidate.treePath}`
-  );
-  let semanticScore =
-    [...lookupTokens].filter((token) => candidateTokens.has(token)).length * 12;
-  const commonDepth = commonPrefixDepth(
-    processLocation.segments,
-    candidate.segments
-  );
-  if (
-    /\bfrom the connected\b/i.test(lookupInput) &&
-    candidate.sourceLabel === "Standard Output"
-  ) {
-    semanticScore += 25;
-  }
-  const requestedSource = lookupInput.match(
-    /\b(Profile|Bill|Linked Opportunity|Project Document)\b/i
-  )?.[1];
-  if (
-    requestedSource &&
-    requestedSource.toLowerCase() === candidate.sourceLabel.toLowerCase()
-  ) {
-    semanticScore += 25;
-  }
-  if (
-    /(?:nameplate|measurement|measured|contractor|engineering|uploaded|study|audit|specification)/i.test(
-      lookupInput
-    ) &&
-    candidate.sourceLabel === "Project Document"
-  ) {
-    semanticScore += 18;
-  }
-  if (
-    /(?:requirement|linked opportunity|replacement product|proposed design)/i.test(
-      lookupInput
-    ) &&
-    candidate.sourceLabel === "Linked Opportunity"
-  ) {
-    semanticScore += 18;
-  }
-  if (
-    /\bproposed\b/i.test(lookupInput) &&
-    candidate.sourceLabel === "Linked Opportunity"
-  ) {
-    semanticScore += 30;
-  }
-  if (
-    /^exact-/.test(process.key) &&
-    candidate.sourceLabel === "Linked Opportunity"
-  ) {
-    semanticScore += 20;
-  }
-  if (
-    /^requirement-/.test(process.key) &&
-    candidate.sourceLabel === "Linked Opportunity" &&
-    /\brequirement/i.test(candidate.text)
-  ) {
-    semanticScore += 20;
-  }
-  if (
-    /(?:rate|tariff|bill|utility)/i.test(lookupInput) &&
-    candidate.sourceLabel === "Bill"
-  ) {
-    semanticScore += 12;
-  }
-  if (
-    /(?:count|quantity|recognizable|user-confirmed|user confirmed)/i.test(
-      lookupInput
-    ) &&
-    candidate.sourceLabel === "User"
-  ) {
-    semanticScore += 10;
-  }
-  if (
-    /\bbuilding and site context\b/i.test(lookupInput) &&
-    candidate.sourceLabel === "Profile"
-  ) {
-    semanticScore += 20;
-  }
-  if (
-    candidate.sourceLabel === "Standard Output" &&
-    bindingTokens(process.name).size > 0
-  ) {
-    semanticScore += [...bindingTokens(lookupInput)].filter((token) =>
-      bindingTokens(candidate.text).has(token)
-    ).length * 6;
-  }
-  if (semanticScore === 0) return 0;
-  let score = semanticScore + commonDepth * 2;
-  if (commonDepth >= Math.max(1, processLocation.segments.length - 2)) score += 10;
-  return score;
-}
-
-function bindingTokens(value) {
-  const aliases = new Map([
-    ["chargers", "charger"],
-    ["charging", "charger"],
-    ["fixtures", "fixture"],
-    ["hours", "hour"],
-    ["models", "model"],
-    ["operating", "operation"],
-    ["required", "requirement"],
-    ["requirements", "requirement"],
-    ["schedules", "schedule"],
-    ["vehicles", "vehicle"],
-    ["watts", "watt"]
-  ]);
-  return new Set(
-    String(value || "")
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, " ")
-      .trim()
-      .split(/\s+/)
-      .map((token) => aliases.get(token) || token)
-      .filter((token) => token.length > 1 && !BINDING_STOP_WORDS.has(token))
-  );
-}
-
-function commonPrefixDepth(left, right) {
-  let depth = 0;
-  while (depth < left.length && depth < right.length && left[depth] === right[depth]) {
-    depth += 1;
-  }
-  return depth;
-}
-
-function resolveOutputFormulaTerm(
-  category,
-  process,
-  outputName,
-  formulaTerms,
-  preferredName
-) {
-  if (preferredName) {
-    const preferred = formulaTerms.find((term) => term.name === preferredName);
-    if (!preferred) {
-      throw new Error(
-        `${category.id} process ${process.key} references unknown formula term ${preferredName}`
-      );
-    }
-    return preferred;
-  }
-  const processEvidence = new Set(
-    process.canonicalStandardIds.flatMap((standardId) =>
-      (category.sourceEvidence?.records || [])
-        .filter((record) => record.standard_id === standardId)
-        .map((record) => record.output_key)
-    )
-  );
-  const scored = formulaTerms
-    .map((term) => {
-      const targetTokens = bindingTokens(
-        `${outputName} ${process.name} ${process.purpose}`
-      );
-      const termTokens = bindingTokens(
-        `${term.name} ${(term.tree_nodes || []).join(" ")} ${term.formula_use || ""}`
-      );
-      let score = [...targetTokens].filter((token) => termTokens.has(token)).length * 10;
-      if (term.standard_output_key && processEvidence.has(term.standard_output_key)) {
-        score += 40;
-      }
-      if (
-        /(?:price|rate|bill)/i.test(term.name) !==
-        /(?:price|rate|bill)/i.test(outputName)
-      ) {
-        score -= 10;
-      }
-      return { term, score };
-    })
-    .sort((left, right) =>
-      right.score - left.score ||
-      left.term.name.localeCompare(right.term.name)
-    );
-  if (!scored.length) {
-    throw new Error(`${category.id} process ${process.key} has no formula term contract`);
-  }
-  return scored[0].term;
-}
-
-function inferOutputScope(process, outputName, term) {
-  const text = `${outputName} ${term.name} ${term.display_unit}`;
-  const outputCardinality = process.selectionPolicy.outputCardinality;
-  if (outputCardinality === "ONE_SELECTED_PROFILE") {
-    return "PROFILE";
-  }
-  if (
-    [
-      "ONE_SELECTED_INPUT_SET",
-      "ONE_SELECTED_RECORD",
-      "ONE_SELECTED_RESULT_SET"
-    ].includes(outputCardinality)
-  ) {
-    return "RECORD_SET";
-  }
-  if (/\bper fixture\b|\/fixture\b/i.test(text)) return "PER_FIXTURE";
-  if (/\bper port\b|\/port\b/i.test(text)) return "PER_PORT";
-  if (/\bper event\b|\/event\b/i.test(text)) return "PER_EVENT";
-  if (/\bper hour\b|\/hour\b/i.test(text)) return "PER_HOUR";
-  if (/\bper (?:equipment )?unit\b|\/unit\b/i.test(text)) {
-    return "PER_EQUIPMENT_UNIT";
-  }
-  if (/\/year\b|\bannual\b/i.test(text)) return "PER_YEAR";
-  if (/site|utility bill|tariff/i.test(text)) return "SITE_TOTAL";
-  return "PROJECT_TOTAL";
 }
 
 function buildValidation(category, standardIds) {
@@ -3043,7 +2536,7 @@ function inferLookupInputs(category, standardIds) {
     return engineeringInputs;
   }
   if (standardId === "STD-REOPT-LOCAL-DISPATCH") {
-    const dispatchInputs = inputs.filter((input) =>
+    let dispatchInputs = inputs.filter((input) =>
       /(?:Timestamped interval|Time zone|tariff mapping|power capacity|energy capacity|efficiency|state of charge|state constraint|dispatch|reserve|availability|thermal capacity|charge limit|discharge limit|standing loss|thermal state|component types|annual operating profile|site power|charger power|arrival|departure|required energy|charging template|uncontrolled charging|port count|fleet miles|depot allocation|vehicle class|kWh per mile)/i.test(
         input
       )
@@ -3053,13 +2546,19 @@ function inferLookupInputs(category, standardIds) {
     }
     if (category.id === "ITC-26") {
       dispatchInputs.push(
-        "Interval generation and resource profiles from the connected PVWatts, wind, and onsite-generation processes"
+        "Interval solar generation from the connected PVWatts process",
+        "Interval wind generation from the connected wind process",
+        "Annual generation, input fuel, and useful recovered heat from the connected onsite-generation process"
       );
     }
     if (category.id === "ITC-28") {
+      dispatchInputs = dispatchInputs.filter(
+        (input) => !/^Rated Charger Power or Capacity$/i.test(input)
+      );
       dispatchInputs.push(
         "Resolved vehicle electricity intensity from the connected vehicle process",
-        "Resolved charger efficiency, standby power, and rated capacity from the connected product process"
+        "Resolved charger efficiency, standby power, and rated capacity from the connected exact charger process, when used",
+        "Resolved charger efficiency, standby power, and rated capacity from the connected requirement-selected charger process, when used"
       );
     }
     return [...new Set(dispatchInputs)];
@@ -3097,6 +2596,12 @@ function semanticLookupInput(categoryId, input) {
     /^(?:Measured kWh per Mile|Vehicle-arrival schedule|Vehicle-departure schedule|Uncontrolled charging rule)$/i.test(label)
   ) {
     return `${label} from the fleet study or contractor charging design`;
+  }
+  if (
+    ["ITC-24", "ITC-25", "ITC-26"].includes(categoryId) &&
+    /^(?:Charge efficiency|Discharge efficiency)$/i.test(label)
+  ) {
+    return `${label} prescribed by the linked opportunity`;
   }
   if (
     /(?:specific power|pressure|flow|efficiency|temperature|load fraction|standby|tested fuel|heating value|rated shaft|rated speed)/i.test(
@@ -3144,6 +2649,7 @@ function buildPresentationTree(category, processes) {
       node("No direct purchased-resource reduction is assigned to this activity (Derived)")
     ]);
   }
+  if (category.id === "ITC-16") return buildDemandResponseTree();
   if (category.id === "ITC-29") return buildVehicleTree();
   if (category.id === "ITC-08") return buildSolarWaterHeatingTree(category);
   if (category.id === "ITC-23") return buildBatteryStorageTree();
@@ -3160,6 +2666,11 @@ function buildPresentationTree(category, processes) {
 
   const transformed = transformTreeNode(category.expandedTree, category, processes);
   transformed.text = rootLabelFor(category);
+  if (["ITC-17", "ITC-19"].includes(category.id)) {
+    transformed.children.push(
+      node("Interconnection and Export-Credit Configuration (Linked Opportunity)")
+    );
+  }
   attachIntervalTariffProcess(transformed, processes);
   ensureEveryProcessIsReferenced(transformed, processes);
   return applySemanticOwnership(category.id, transformed);
@@ -3176,7 +2687,10 @@ function buildSolarWaterHeatingTree(category) {
       ]),
       node("Annual Hot-Water Load", [
         node("Hot-Water Load from Audit, Measurement, Engineering Assessment, or Operating Record (Project Document)"),
-        node("Business Activity and Building Type (Profile)"),
+        node("Business Activity (Profile)"),
+        node("Building Type (Profile)"),
+        node("Building Area (Profile)"),
+        node("Operating Schedule (User)"),
         processNode("context_benchmarks")
       ]),
       node("Backup Water-Heating System", [
@@ -3187,6 +2701,26 @@ function buildSolarWaterHeatingTree(category) {
       processNode("sam_solar_thermal")
     ]),
     buildBillRateTreeForComponents(category.semanticContract.rate_components || [])
+  ]);
+}
+
+function buildDemandResponseTree() {
+  return node("Annual Operational Savings", [
+    buildIntervalLoadTree(),
+    node("Demand-Response Event Inputs", [
+      node("Business Activity (Profile)"),
+      node("Building Type (Profile)"),
+      node("Operating Schedule (User)"),
+      node("Controllable Equipment Types (User)"),
+      node("Opportunity Event and Maximum-Shed Restrictions (Linked Opportunity)"),
+      node("Controllable-Load Definition from Audit, Controls Trend, or Engineering Study (Project Document)"),
+      node("Maximum Shed from Audit, Controls Trend, or Engineering Study (Project Document)"),
+      node("Event-Availability Schedule from Audit, Controls Trend, or Engineering Study (Project Document)"),
+      node("Maximum Event Duration from Audit, Controls Trend, or Engineering Study (Project Document)"),
+      node("Rebound or Recovery Constraint from Audit, Controls Trend, or Engineering Study (Project Document)"),
+      processNode("context_benchmarks")
+    ]),
+    processNode("reopt_local_dispatch")
   ]);
 }
 
@@ -3220,6 +2754,7 @@ function buildExteriorLightingTree() {
           node("Lighting is dusk-to-dawn or photocell-controlled", [
             node("Control Type and Timing Offset (User)"),
             node("Site Location (Profile)"),
+            node("Analysis Year (User)"),
             processNode("daylight-lighting-hours")
           ])
         ])
@@ -3246,7 +2781,8 @@ function buildPublicChargingTree() {
       processNode("public_charging_site_energy")
     ]),
     node("Normalized Time-of-Day Charging Shape", [
-      node("Site Location and Charging Scenario (Profile)"),
+      node("Site Location (Profile)"),
+      node("Charging Scenario Selector (User)"),
       processNode("evi_charging_shape")
     ]),
     node("Charger Performance", [
@@ -3279,6 +2815,7 @@ function buildBatteryStorageTree() {
         node("Reserve Constraint (Linked Opportunity)")
       ]),
       node("Contractor or Engineering Battery Design (Project Document)"),
+      node("Dispatch Horizon (User)"),
       processNode("context_benchmarks")
     ]),
     processNode("reopt_local_dispatch")
@@ -3297,6 +2834,8 @@ function buildFleetChargingTree() {
       processNode("fueleconomy_vehicles")
     ]),
     node("Fleet Charging Activity", [
+      node("Business Operating Schedule (User)"),
+      node("Fleet Vocation (User)"),
       node("Vehicle-Arrival Schedule from Fleet Study or Contractor Charging Design (Project Document)"),
       node("Vehicle-Departure Schedule from Fleet Study or Contractor Charging Design (Project Document)"),
       node("Uncontrolled Charging Rule from Fleet Study or Contractor Charging Design (Project Document)"),
@@ -3323,10 +2862,13 @@ function buildMaterialHandlingTree() {
     node("Annual Material-Handling Resource Switch", [
       node("In-Scope Equipment Count (User)"),
       node("Equipment Class and Rated Capacity (User)"),
+      node("Fuel or Electric Propulsion Type (User)"),
       node("Comparable Operating Duty (User)"),
       node("Annual Operating Hours", [
         node("Recognizable Business, Shift, Seasonal, or Usage Pattern (User)"),
+        node("Detailed Operating Days, Shifts, or Active Season, if known (User)"),
         node("Measured Annual Operating Hours, if known (Project Document)"),
+        node("Site Location and Business Activity (Profile)"),
         processNode("operating_schedule")
       ]),
       node("Exact Existing and Proposed Hourly Resource Use (Project Document)"),
@@ -3362,7 +2904,8 @@ function buildWalkInTree() {
       node("Walk-In Component Type and DOE Equipment Class (User)"),
       node("Temperature Class and Indoor or Outdoor Configuration (User)"),
       node("Panel Area, when a Panel Intensity Is Selected (Project Document)"),
-      node("Existing and Proposed Efficiency Levels (Linked Opportunity)"),
+      node("Existing Efficiency Level (Project Document)"),
+      node("Proposed Efficiency Level (Linked Opportunity)"),
       node("Exact Existing or Proposed Annual Component Energy (Project Document)"),
       node("Existing and Proposed Duty-Equivalence Confirmation (User)"),
       processNode("context_benchmarks")
@@ -3391,6 +2934,8 @@ function buildFlowFixtureTree() {
       node("Water-Heating Service", [
         node("Fixture Uses Hot Water (User)"),
         node("Water-Heating Fuel Type (User)"),
+        node("Hot-Water Fraction from Audit or Engineering Assessment (Project Document)"),
+        node("Temperature Rise from Audit or Engineering Assessment (Project Document)"),
         node("Water-Heater Nameplate or Commissioning Information, if available (Project Document)"),
         processNode("water_heating_inputs")
       ]),
@@ -3420,7 +2965,9 @@ function buildFlushFixtureTree() {
       node("In-Scope Fixture Count (User)"),
       node("Recognizable Facility Activity", [
         node("Business Activity and Building Type (Profile)"),
-        node("Approximate Occupants or Employees and Customers or Visitors (User)"),
+        node("Female Eligible Population (User)"),
+        node("Male Eligible Population (User)"),
+        node("Customer or Visitor Population, when applicable (User)"),
         node("Operating Days per Week (User)"),
         node("Active Weeks per Year (User)"),
         node("Observed Restroom Study or Audit, when available (Project Document)"),
@@ -3452,6 +2999,12 @@ function buildVariableSpeedTree() {
       node("In-Scope Equipment Count (User)"),
       node("Existing Equipment Nameplate and Load Information from Uploaded Audit or Measurement (Project Document)"),
       node("Measured Load-Bin Profile", [
+        node("Pump or Fan Application (User)"),
+        node("Business Activity (Profile)"),
+        node("Building Type (Profile)"),
+        node("Equipment Capacity Class (User)"),
+        node("Operating Schedule (User)"),
+        node("Site Location (Profile)"),
         node("Load or Speed Fractions from Controls Trends or Engineering Audit (Project Document)"),
         node("Annual Hours by Bin from Controls Trends or Engineering Audit (Project Document)"),
         processNode("context_benchmarks")
@@ -3501,6 +3054,7 @@ function buildDishwasherTree() {
           processNode("rack-dishwasher-activity")
         ]),
         node("Flight or Conveyor Machines Only", [
+          node("Flight or Conveyor Machine Type and Sanitation Method (User)"),
           node("Exact Annual Operating Hours per Equipment Unit from Controls or Audit (Project Document)"),
           processNode("flight-dishwasher-activity")
         ])
@@ -3765,6 +3319,8 @@ function buildBillRateTreeForComponents(rateComponents) {
 
 function buildIntervalLoadTree() {
   return node("Chronological Electricity Load and Tariff", [
+    node("Serving Electric Utility (Bill)"),
+    node("Billing Period Start and End (Bill)"),
     node("Timestamped Interval Utility Data (Bill)"),
     node("Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)"),
     node("Rate Schedule and Customer Class (Bill)"),
@@ -3974,6 +3530,17 @@ function humanizeFormulaLine(line) {
 function applyCategoryFormulaLabels(line, category) {
   if (category.id === "ITC-54") {
     return line.replace(/^Annual Operational Savings = -\(/, "Annual Operational Impact = -(");
+  }
+  if (category.id === "ITC-52") {
+    return line
+      .replaceAll(
+        "Avoided Water Heating Rack R R",
+        "Avoided Rack-Machine Water-Heating Resource by Resource"
+      )
+      .replaceAll(
+        "Avoided Water Heating Flight R R",
+        "Avoided Flight-Machine Water-Heating Resource by Resource"
+      );
   }
   const rateComponents = new Set(category.semanticContract.rate_components || []);
   if (rateComponents.has("gas-volumetric") && !rateComponents.has("fuel-price")) {

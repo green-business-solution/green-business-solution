@@ -24,10 +24,13 @@ Annual Operational Savings
 ├─ Annual Material-Handling Resource Switch
 │  ├─ In-Scope Equipment Count (User)
 │  ├─ Equipment Class and Rated Capacity (User)
+│  ├─ Fuel or Electric Propulsion Type (User)
 │  ├─ Comparable Operating Duty (User)
 │  ├─ Annual Operating Hours
 │  │  ├─ Recognizable Business, Shift, Seasonal, or Usage Pattern (User)
+│  │  ├─ Detailed Operating Days, Shifts, or Active Season, if known (User)
 │  │  ├─ Measured Annual Operating Hours, if known (Project Document)
+│  │  ├─ Site Location and Business Activity (Profile)
 │  │  └─ Standard 1.1 — Electric Forklift or Material Handling Equipment Annual Operating Hours
 │  ├─ Exact Existing and Proposed Hourly Resource Use (Project Document)
 │  └─ Standard 1.2 — Material-Handling Resource-Intensity Resolver
@@ -43,7 +46,7 @@ Annual Operational Savings
 **■ Standard 1.1 — Electric Forklift or Material Handling Equipment Annual Operating Hours**
 
 **Purpose:**
-Use U.S. Department of Energy reference buildings and U.S. Naval Observatory daylight data to resolve annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance from the listed category inputs.
+Use U.S. Department of Energy reference buildings and U.S. Naval Observatory daylight data to resolve annual operating hours from the listed category inputs.
 
 **Source:**
 U.S. Department of Energy - Commercial Reference Buildings
@@ -60,25 +63,14 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **Value Needed:**
 
-* Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance
-
-**Input Bindings:**
-
-* Recognizable Business, Shift, Seasonal, or Usage Pattern ← User at `Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Recognizable Business, Shift, Seasonal, or Usage Pattern`. Pass the exact bound Recognizable Business, Shift, Seasonal, or Usage Pattern to Electric Forklift or Material Handling Equipment Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
-* Detailed Operating Days, Shifts, or Active Season, if known ← Project Document at `Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Measured Annual Operating Hours, if known`. Pass the exact bound Detailed Operating Days, Shifts, or Active Season, if known to Electric Forklift or Material Handling Equipment Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
-* Measured Annual Operating Hours, if known ← Project Document at `Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Measured Annual Operating Hours, if known`. Pass the exact bound Measured Annual Operating Hours, if known to Electric Forklift or Material Handling Equipment Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
-* Site Location and Business Activity ← User at `Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Recognizable Business, Shift, Seasonal, or Usage Pattern`. Pass the exact bound Site Location and Business Activity to Electric Forklift or Material Handling Equipment Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance → `annual_hours` (hours/year; PER_YEAR) at `Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Standard 1.1 - Electric Forklift or Material Handling Equipment Annual Operating Hours`.
+* Annual operating hours
 
 **How to Use:**
 
 1. Map the Electric Forklift or Material Handling Equipment inputs to the documented Electric Forklift or Material Handling Equipment Annual Operating Hours source fields or model inputs: Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
 3. When an exact value is unavailable, use only a source-specific retained population or equation with documented filters, numeric rule, unit, scope, and version; otherwise report the implementation limitation.
-4. Return one selected annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
+4. Return one selected annual operating hours.
 5. Retain the Electric Forklift or Material Handling Equipment Annual Operating Hours source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
@@ -113,19 +105,6 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 
 * One compatible existing fuel-use intensity
 * One compatible proposed wall-electricity intensity
-
-**Input Bindings:**
-
-* Exact measured or contractual hourly resource use from a Project Document ← Project Document at `Annual Operational Savings > Annual Material-Handling Resource Switch > Exact Existing and Proposed Hourly Resource Use`. Pass the exact bound Exact measured or contractual hourly resource use from a Project Document to Material-Handling Resource-Intensity Resolver when computing One compatible existing fuel-use intensity and One compatible proposed wall-electricity intensity; do not substitute a value from another tree path.
-* Equipment class and rated capacity ← User at `Annual Operational Savings > Annual Material-Handling Resource Switch > Equipment Class and Rated Capacity`. Pass the exact bound Equipment class and rated capacity to Material-Handling Resource-Intensity Resolver when computing One compatible existing fuel-use intensity and One compatible proposed wall-electricity intensity; do not substitute a value from another tree path.
-* Fuel or electric propulsion type ← Standard Output at `Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Standard 1.1 - Electric Forklift or Material Handling Equipment Annual Operating Hours`. Pass the exact bound Fuel or electric propulsion type to Material-Handling Resource-Intensity Resolver when computing One compatible existing fuel-use intensity and One compatible proposed wall-electricity intensity; do not substitute a value from another tree path.
-* Comparable operating duty ← User at `Annual Operational Savings > Annual Material-Handling Resource Switch > Comparable Operating Duty`. Pass the exact bound Comparable operating duty to Material-Handling Resource-Intensity Resolver when computing One compatible existing fuel-use intensity and One compatible proposed wall-electricity intensity; do not substitute a value from another tree path.
-* Annual operating hours from the connected schedule process ← Standard Output at `Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Standard 1.1 - Electric Forklift or Material Handling Equipment Annual Operating Hours`. Pass the exact bound Annual operating hours from the connected schedule process to Material-Handling Resource-Intensity Resolver when computing One compatible existing fuel-use intensity and One compatible proposed wall-electricity intensity; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One compatible existing fuel-use intensity → `existing_fuel_per_hour` (fuel-unit/hour; PER_HOUR) at `Annual Operational Savings > Annual Material-Handling Resource Switch > Standard 1.2 - Material-Handling Resource-Intensity Resolver`.
-* One compatible proposed wall-electricity intensity → `proposed_kWh_per_hour` (kWh/hour; PER_HOUR) at `Annual Operational Savings > Annual Material-Handling Resource Switch > Standard 1.2 - Material-Handling Resource-Intensity Resolver`.
 
 **How to Use:**
 

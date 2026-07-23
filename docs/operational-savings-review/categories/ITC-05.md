@@ -80,19 +80,6 @@ U.S. Department of Energy - Scout
 
 * Documented resource-reduction factor for the approved measure and market segment, with source version and units
 
-**Input Bindings:**
-
-* HVAC share of billed resource, if known ← Project Document at `Annual Operational Savings > Annual HVAC resource reduction > Annual HVAC resource by end use and fuel > Documented HVAC share of billed resource, if known from Submeter, Controls Trend, Audit, or Contractor Specification`. Pass the exact bound HVAC share of billed resource, if known to Building Measure Performance Screen when computing Documented resource-reduction factor for the approved measure and market segment, with source version and units; do not substitute a value from another tree path.
-* Existing building vintage class ← User at `Annual Operational Savings > Annual HVAC resource reduction > Existing building vintage class`. Pass the exact bound Existing building vintage class to Building Measure Performance Screen when computing Documented resource-reduction factor for the approved measure and market segment, with source version and units; do not substitute a value from another tree path.
-* Existing duct location and condition ← User at `Annual Operational Savings > Annual HVAC resource reduction > Existing duct location and condition`. Pass the exact bound Existing duct location and condition to Building Measure Performance Screen when computing Documented resource-reduction factor for the approved measure and market segment, with source version and units; do not substitute a value from another tree path.
-* Proposed sealing and insulation scope ← Linked Opportunity at `Annual Operational Savings > Annual HVAC resource reduction > Proposed sealing and insulation scope`. Pass the exact bound Proposed sealing and insulation scope to Building Measure Performance Screen when computing Documented resource-reduction factor for the approved measure and market segment, with source version and units; do not substitute a value from another tree path.
-* Building Type ← Profile at `Annual Operational Savings > Annual HVAC resource reduction > Building Type`. Pass the exact bound Building Type to Building Measure Performance Screen when computing Documented resource-reduction factor for the approved measure and market segment, with source version and units; do not substitute a value from another tree path.
-* Site Climate Zone ← Profile at `Annual Operational Savings > Annual HVAC resource reduction > Site Climate Zone`. Pass the exact bound Site Climate Zone to Building Measure Performance Screen when computing Documented resource-reduction factor for the approved measure and market segment, with source version and units; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Documented resource-reduction factor for the approved measure and market segment, with source version and units → `duct_loss_reduction_fraction` (fraction; PROJECT_TOTAL) at `Annual Operational Savings > Annual HVAC resource reduction > Standard 1.1 - Building Measure Performance Screen`.
-
 **How to Use:**
 
 1. Map the Duct Sealing and Insulation inputs to the documented Building Measure Performance Screen source fields or model inputs: HVAC share of billed resource, if known; Existing building vintage class; Existing duct location and condition; Proposed sealing and insulation scope; Building Type; Site Climate Zone.

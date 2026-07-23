@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { readFile } from "node:fs/promises";
 
 import {
   buildOperationalSavingsReview,
@@ -19,7 +20,8 @@ function validateMutatedCard(result, sources, categoryId, mutate) {
     new Map(result.standards.map((standard) => [standard.id, standard])),
     sources.informationCardSchema,
     sources.evidenceManifest,
-    errors
+    errors,
+    sources.informationCardBindingRegistry
   );
   return errors;
 }
@@ -35,9 +37,9 @@ describe("generate-operational-savings-review-pages", () => {
     expect(first.report.mappedRetrofits).toBe(92);
     expect(first.report.visibleStandardProcesses).toBe(124);
     expect(first.report.sourceLinksRendered).toBe(317);
-    expect(first.report.visibleUserLeaves).toBe(141);
-    expect(first.report.visibleProjectDocumentLeaves).toBe(155);
-    expect(first.report.visibleLinkedOpportunityLeaves).toBe(149);
+    expect(first.report.visibleUserLeaves).toBe(157);
+    expect(first.report.visibleProjectDocumentLeaves).toBe(154);
+    expect(first.report.visibleLinkedOpportunityLeaves).toBe(152);
     expect(first.artifacts.size).toBe(56);
     expect([...first.artifacts]).toEqual([...second.artifacts]);
   });
@@ -140,7 +142,7 @@ describe("generate-operational-savings-review-pages", () => {
     );
 
     expect(contract.schema_version).toBe("operational-savings/user-input-realism-v2");
-    expect(contract.user_leaf_count).toBe(141);
+    expect(contract.user_leaf_count).toBe(157);
     expect(contract.inputs).toHaveLength(result.report.visibleUserLeaves);
     expect(contract.inputs.every((entry) =>
       ["USER_MEMORY", "USER_RECOGNIZABLE_ACTIVITY"].includes(entry.decision)
@@ -195,6 +197,265 @@ describe("generate-operational-savings-review-pages", () => {
     expect(backup).toContain("No Defensible Annual Standby Benchmark Retained (Derived)");
     expect(backup).toContain("Standard 1.1 — Exact Backup-Power Routine-Use Input Resolution");
     expect(backup).toContain("Standard 1.2 — FEMA Full-Load Diesel Test-Fuel Calculation");
+  });
+
+  it("binds every named correction to its exact semantic source", async () => {
+    const result = buildOperationalSavingsReview(
+      await loadOperationalSavingsSources()
+    );
+    const process = (categoryId, processKey) =>
+      result.categoryReviews
+        .find((category) => category.id === categoryId)
+        .informationCard.processes.find(
+          (candidate) => candidate.key === processKey
+        );
+    const input = (categoryId, processKey, lookupInput) =>
+      process(categoryId, processKey).inputBindings.find(
+        (binding) => binding.lookupInput === lookupInput
+      );
+
+    expect(
+      input(
+        "ITC-27",
+        "interval_tariff",
+        "Serving electric utility from the bill"
+      )
+    ).toEqual(
+      expect.objectContaining({
+        sourceLabel: "Bill",
+        treePath:
+          "Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Serving Electric Utility"
+      })
+    );
+    expect(
+      input(
+        "ITC-27",
+        "public_charging_site_energy",
+        "Rated output power per port from the connected exact charger record, when used"
+      )
+    ).toEqual(
+      expect.objectContaining({
+        sourceLabel: "Standard Output",
+        treePath:
+          "Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Standard 1.4 - Exact Charger Rating Lookup"
+      })
+    );
+    expect(
+      input(
+        "ITC-27",
+        "evi_charging_shape",
+        "AC-output or DC-output charger type from the connected requirement-selected charger record, when used"
+      )
+    ).toEqual(
+      expect.objectContaining({
+        sourceLabel: "Standard Output",
+        treePath:
+          "Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Standard 1.5 - Requirement-Based Charger Resolution"
+      })
+    );
+
+    expect(
+      input("ITC-32", "water_heating_inputs", "Water-heating resource")
+    ).toEqual(
+      expect.objectContaining({
+        sourceLabel: "User",
+        treePath:
+          "Annual Operational Savings > Annual Water and Heating-Resource Reduction > Water-Heating Service > Water-Heating Fuel Type"
+      })
+    );
+    expect(
+      input("ITC-32", "water_heating_inputs", "Hot-water fraction")
+    ).toEqual(
+      expect.objectContaining({
+        sourceLabel: "Project Document",
+        treePath:
+          "Annual Operational Savings > Annual Water and Heating-Resource Reduction > Water-Heating Service > Hot-Water Fraction from Audit or Engineering Assessment"
+      })
+    );
+    expect(
+      input("ITC-32", "water_heating_inputs", "Temperature rise")
+    ).toEqual(
+      expect.objectContaining({
+        sourceLabel: "Project Document",
+        treePath:
+          "Annual Operational Savings > Annual Water and Heating-Resource Reduction > Water-Heating Service > Temperature Rise from Audit or Engineering Assessment"
+      })
+    );
+    expect(process("ITC-32", "existing_flow_rate").lookupInputs.join(" "))
+      .not.toMatch(/class|vintage/i);
+    expect(process("ITC-33", "existing_flush_rate").lookupInputs.join(" "))
+      .not.toMatch(/class|vintage/i);
+
+    expect(
+      input(
+        "ITC-30",
+        "context_benchmarks",
+        "Fuel or electric propulsion type"
+      )
+    ).toEqual(
+      expect.objectContaining({
+        sourceLabel: "User",
+        treePath:
+          "Annual Operational Savings > Annual Material-Handling Resource Switch > Fuel or Electric Propulsion Type"
+      })
+    );
+    expect(
+      input(
+        "ITC-30",
+        "operating_schedule",
+        "Detailed Operating Days, Shifts, or Active Season, if known"
+      )
+    ).toEqual(
+      expect.objectContaining({
+        sourceLabel: "User",
+        treePath:
+          "Annual Operational Savings > Annual Material-Handling Resource Switch > Annual Operating Hours > Detailed Operating Days, Shifts, or Active Season, if known"
+      })
+    );
+
+    for (const [processKey, lookupInput, expectedPath] of [
+      [
+        "exact-proposed-dishwasher-record",
+        "Proposed machine type, sanitation method, application, and capacity from the linked opportunity",
+        "Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity names an exact dishwasher > Exact Proposed Dishwasher Product Information"
+      ],
+      [
+        "requirement-proposed-dishwasher-record",
+        "Required machine type, sanitation method, application, and capacity from the linked opportunity",
+        "Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity specifies dishwasher requirements but no exact product > Dishwasher Requirements"
+      ]
+    ]) {
+      expect(input("ITC-52", processKey, lookupInput)).toEqual(
+        expect.objectContaining({
+          sourceLabel: "Linked Opportunity",
+          treePath: expectedPath
+        })
+      );
+    }
+    expect(
+      input(
+        "ITC-52",
+        "dishwasher-water-heating-conversion",
+        "Existing native water quantity from the connected existing dishwasher record"
+      )
+    ).toEqual(
+      expect.objectContaining({
+        treePath:
+          "Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Standard 1.1 - Exact Existing Dishwasher Native-Field Resolution"
+      })
+    );
+    for (const [lookupInput, expectedPath] of [
+      [
+        "Proposed native water quantity from the connected exact proposed dishwasher record, when used",
+        "Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity names an exact dishwasher > Standard 1.2 - Exact Proposed Dishwasher Native-Field Resolution"
+      ],
+      [
+        "Proposed native water quantity from the connected requirement-selected dishwasher record, when used",
+        "Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity specifies dishwasher requirements but no exact product > Standard 1.3 - Requirement-Based Proposed Dishwasher Native-Field Resolution"
+      ]
+    ]) {
+      expect(
+        input(
+          "ITC-52",
+          "dishwasher-water-heating-conversion",
+          lookupInput
+        )
+      ).toEqual(expect.objectContaining({ treePath: expectedPath }));
+    }
+  });
+
+  it("rejects all five deliberately incorrect semantic binding mutations", async () => {
+    const sources = await loadOperationalSavingsSources();
+    const result = buildOperationalSavingsReview(sources);
+    const mutations = [
+      [
+        "ITC-27",
+        (card) => {
+          const binding = card.processes
+            .find((process) => process.key === "public_charging_site_energy")
+            .inputBindings.find((candidate) =>
+              candidate.lookupInput.startsWith(
+                "Rated output power per port from the connected exact"
+              )
+            );
+          binding.treePath =
+            "Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Rate Schedule and Customer Class";
+          binding.sourceLabel = "Bill";
+        }
+      ],
+      [
+        "ITC-52",
+        (card) => {
+          const binding = card.processes
+            .find(
+              (process) =>
+                process.key === "dishwasher-water-heating-conversion"
+            )
+            .inputBindings.find((candidate) =>
+              candidate.lookupInput.startsWith("Existing native water")
+            );
+          binding.treePath =
+            "Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity names an exact dishwasher > Standard 1.2 - Exact Proposed Dishwasher Native-Field Resolution";
+        }
+      ],
+      [
+        "ITC-20",
+        (card) => {
+          const binding = card.processes
+            .find((process) => process.key === "epa_chp_performance")
+            .inputBindings.find(
+              (candidate) => candidate.lookupInput === "Input fuel"
+            );
+          binding.treePath =
+            "Annual Operational Savings > Annual operating hours > Standard 1.1 - Fuel Cell Electricity Generation Annual Operating Hours";
+          binding.sourceLabel = "Standard Output";
+        }
+      ],
+      [
+        "ITC-32",
+        (card) => {
+          const binding = card.processes
+            .find((process) => process.key === "water_heating_inputs")
+            .inputBindings.find(
+              (candidate) =>
+                candidate.lookupInput === "Water-heating resource"
+            );
+          binding.treePath =
+            "Annual Operational Savings > Annual Water and Heating-Resource Reduction > Water-Heating Service > Temperature Rise from Audit or Engineering Assessment";
+          binding.sourceLabel = "Project Document";
+        }
+      ],
+      [
+        "ITC-52",
+        (card) => {
+          const binding = card.processes
+            .find(
+              (process) =>
+                process.key === "requirement-proposed-dishwasher-record"
+            )
+            .inputBindings.find((candidate) =>
+              candidate.lookupInput.startsWith("Required machine type")
+            );
+          binding.treePath =
+            "Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Existing Dishwasher Machine Type and Sanitation Method";
+          binding.sourceLabel = "User";
+        }
+      ]
+    ];
+
+    for (const [categoryId, mutate] of mutations) {
+      const errors = validateMutatedCard(
+        result,
+        sources,
+        categoryId,
+        mutate
+      );
+      expect(
+        errors.some((error) =>
+          error.includes("differs from the explicit registry")
+        )
+      ).toBe(true);
+    }
   });
 
   it("makes process content source-specific and exact-product routing distinct", async () => {
@@ -272,6 +533,148 @@ describe("generate-operational-savings-review-pages", () => {
     }
   });
 
+  it("uses one closed explicit binding registry with no inferred fallback path", async () => {
+    const sources = await loadOperationalSavingsSources();
+    const result = buildOperationalSavingsReview(sources);
+    const registry = sources.informationCardBindingRegistry;
+    const inputKeys = registry.input_bindings.map(
+      (binding) =>
+        `${binding.category_id}\u0000${binding.process_key}\u0000${binding.lookup_input}`
+    );
+    const outputKeys = registry.output_bindings.map(
+      (binding) =>
+        `${binding.category_id}\u0000${binding.process_key}\u0000${binding.output_name}`
+    );
+
+    expect(registry.schema_version).toBe(
+      "operational-savings/information-card-bindings-v1"
+    );
+    expect(registry.input_bindings).toHaveLength(632);
+    expect(registry.output_bindings).toHaveLength(215);
+    expect(new Set(inputKeys).size).toBe(inputKeys.length);
+    expect(new Set(outputKeys).size).toBe(outputKeys.length);
+    expect(
+      registry.input_bindings.every(
+        (binding) =>
+          binding.tree_path &&
+          binding.source_label &&
+          binding.use.includes(binding.lookup_input)
+      )
+    ).toBe(true);
+    const outputGroups = new Map();
+    for (const binding of registry.output_bindings) {
+      const key = `${binding.category_id}\u0000${binding.process_key}`;
+      if (!outputGroups.has(key)) outputGroups.set(key, []);
+      outputGroups.get(key).push(binding);
+    }
+    for (const bindings of outputGroups.values()) {
+      expect(bindings.map((binding) => binding.position)).toEqual(
+        Array.from({ length: bindings.length }, (_, index) => index + 1)
+      );
+    }
+    expect(
+      result.categoryReviews.some((category) =>
+        category.informationCard.processes.some((process) =>
+          process.inputBindings.some((binding) =>
+            /Standard \d+\.\d+ - [^>]+ >/.test(binding.treePath)
+          )
+        )
+      )
+    ).toBe(false);
+
+    const source = await readFile(
+      new URL(
+        "./operational-savings-information-card-registry.mjs",
+        import.meta.url
+      ),
+      "utf8"
+    );
+    expect(source).not.toMatch(
+      /scoreBindingLocation|bindingTokens|commonPrefixDepth|resolveInputBindingLocation|resolveOutputFormulaTerm|inferOutputScope|inferLookupInputSourceLabel|ensureProcessInputTreeBindings|semanticScore/
+    );
+  });
+
+  it("fails closed for missing, duplicate, and stale registry entries", async () => {
+    const sources = await loadOperationalSavingsSources();
+
+    const missing = {
+      ...sources,
+      informationCardBindingRegistry: structuredClone(
+        sources.informationCardBindingRegistry
+      )
+    };
+    missing.informationCardBindingRegistry.input_bindings.shift();
+    expect(() => buildOperationalSavingsReview(missing)).toThrow(
+      /requires exactly one explicit binding; found 0/
+    );
+
+    const duplicate = {
+      ...sources,
+      informationCardBindingRegistry: structuredClone(
+        sources.informationCardBindingRegistry
+      )
+    };
+    duplicate.informationCardBindingRegistry.input_bindings.push(
+      structuredClone(
+        duplicate.informationCardBindingRegistry.input_bindings[0]
+      )
+    );
+    expect(() => buildOperationalSavingsReview(duplicate)).toThrow(
+      /requires exactly one explicit binding; found 2/
+    );
+
+    const stale = {
+      ...sources,
+      informationCardBindingRegistry: structuredClone(
+        sources.informationCardBindingRegistry
+      )
+    };
+    stale.informationCardBindingRegistry.input_bindings.push({
+      category_id: "ITC-01",
+      process_key: "comstock_annual_delta",
+      lookup_input: "Stale input",
+      tree_path: "Annual Operational Savings",
+      source_label: "User",
+      use: "Stale input is deliberately invalid."
+    });
+    expect(
+      buildOperationalSavingsReview(stale).errors.some((error) =>
+        error.includes("contains stale input")
+      )
+    ).toBe(true);
+  });
+
+  it("keeps expanded formulas free of duplicated indices and raw identifiers", async () => {
+    const result = buildOperationalSavingsReview(
+      await loadOperationalSavingsSources()
+    );
+
+    for (const category of result.categoryReviews) {
+      expect(category.informationCard.expandedFormula).not.toMatch(
+        /\b(?:R R|T T)\b|\b[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)+\b/
+      );
+    }
+    expect(
+      result.categoryReviews.find((category) => category.id === "ITC-52")
+        .informationCard.expandedFormula
+    ).toContain(
+      "Avoided Rack-Machine Water-Heating Resource by Resource"
+    );
+  });
+
+  it("derives the VERIFIED evidence count from the manifest contract", async () => {
+    const sources = await loadOperationalSavingsSources();
+    const verifiedCount = sources.evidenceManifest.evidence_records.filter(
+      (record) => record.evidence_status === "VERIFIED"
+    ).length;
+
+    expect(verifiedCount).toBe(16);
+    expect(sources.auditDocument).toContain(`VERIFIED ${verifiedCount}`);
+    expect(sources.auditDocument).not.toMatch(
+      /\b(?:all|the)\s+(?:\d+|ten|sixteen)\s+`?VERIFIED`?\s+evidence records\b/i
+    );
+  });
+
   it("keeps each multi-Standard process limited to its own inputs and connected outputs", async () => {
     const result = buildOperationalSavingsReview(await loadOperationalSavingsSources());
     const solarStorage = result.categoryReviews.find((category) => category.id === "ITC-24");
@@ -295,8 +698,12 @@ describe("generate-operational-savings-review-pages", () => {
       microgrid.informationCard.processes
         .find((process) => process.canonicalStandardIds.includes("STD-REOPT-LOCAL-DISPATCH"))
         .lookupInputs
-    ).toContain(
-      "Interval generation and resource profiles from the connected PVWatts, wind, and onsite-generation processes"
+    ).toEqual(
+      expect.arrayContaining([
+        "Interval solar generation from the connected PVWatts process",
+        "Interval wind generation from the connected wind process",
+        "Annual generation, input fuel, and useful recovered heat from the connected onsite-generation process"
+      ])
     );
 
     const vehicle = fleet.informationCard.processes.find((process) => process.canonicalStandardIds.includes("STD-FUELECONOMY-VEHICLES"));
@@ -338,8 +745,6 @@ describe("generate-operational-savings-review-pages", () => {
         "**Source:**",
         "**Lookup Inputs:**",
         "**Value Needed:**",
-        "**Input Bindings:**",
-        "**Output Bindings:**",
         "**How to Use:**",
         "**Automation:**",
         "**Selected Strategy:**",
@@ -350,6 +755,8 @@ describe("generate-operational-savings-review-pages", () => {
         expect((page.match(new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length)
           .toBe(sections.length);
       }
+      expect(page).not.toContain("**Input Bindings:**");
+      expect(page).not.toContain("**Output Bindings:**");
     }
   });
 
@@ -468,13 +875,23 @@ describe("generate-operational-savings-review-pages", () => {
     expect(process.canonicalStandardIds).toEqual([
       "STD-DISHWASHER-WATER-HEATING"
     ]);
-    expect(process.outputBindings).toEqual([
-      expect.objectContaining({
-        formulaTerm: "dishwasher_water_heating_result",
-        outputUnit: "record set",
-        outputScope: "RECORD_SET"
-      })
-    ]);
+    expect(process.outputBindings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          formulaTerm: "dishwasher_water_heating_result",
+          outputUnit: "record set",
+          outputScope: "RECORD_SET"
+        }),
+        expect.objectContaining({
+          formulaTerm: "water_heating_R_per_rack_existing",
+          outputScope: "PER_EVENT"
+        }),
+        expect.objectContaining({
+          formulaTerm: "water_heating_R_per_hour_proposed",
+          outputScope: "PER_HOUR"
+        })
+      ])
+    );
     expect(category.informationCard.tree).not.toEqual(
       expect.objectContaining({
         text: "One Selected Water-Heating Conversion from Project Documents or the Context Benchmark (Derived)"
@@ -728,7 +1145,7 @@ describe("generate-operational-savings-review-pages", () => {
     });
 
     expect(errors).toContain(
-      "ITC-48 Information Card process Comparable Cooking-Duty Resolver binds proposed input Proposed induction equipment type and resource to an unrelated User branch"
+      "ITC-48 Information Card process Comparable Cooking-Duty Resolver binding for Proposed induction equipment type and resource differs from the explicit registry"
     );
   });
 

@@ -58,7 +58,7 @@ Annual Operational Savings
 **■ Standard 1.1 — Combined Heat and Power Performance Balance**
 
 **Purpose:**
-Use U.S. Environmental Protection Agency - CHP technologies and calculator to resolve annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity from the listed category inputs.
+Use U.S. Environmental Protection Agency - CHP technologies and calculator to resolve annual electricity generation; Annual CHP input fuel; Annual useful recovered heat from the listed category inputs.
 
 **Source:**
 U.S. Environmental Protection Agency - CHP technologies and calculator
@@ -85,29 +85,16 @@ U.S. Environmental Protection Agency - CHP technologies and calculator
 
 **Value Needed:**
 
-* Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity
-
-**Input Bindings:**
-
-* Prime mover ← Linked Opportunity at `Annual Operational Savings > Prime mover`. Pass the exact bound Prime mover to Combined Heat and Power Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
-* Input fuel ← Project Document at `Annual Operational Savings > Applicable Resource Rates > Current Fuel Price from Receipt, Contract, or Operating Record`. Pass the exact bound Input fuel to Combined Heat and Power Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
-* Selected Unit Model, if known ← Linked Opportunity at `Annual Operational Savings > Selected Unit Model, if known`. Pass the exact bound Selected Unit Model, if known to Combined Heat and Power Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
-* Total installed capacity ← Linked Opportunity at `Annual Operational Savings > Total installed capacity`. Pass the exact bound Total installed capacity to Combined Heat and Power Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
-* Annual capacity factor ← Linked Opportunity at `Annual Operational Savings > Annual capacity factor`. Pass the exact bound Annual capacity factor to Combined Heat and Power Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
-* Coincident onsite electric-load constraint, if known ← Project Document at `Annual Operational Savings > Documented Coincident onsite electric-load constraint, if known from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Coincident onsite electric-load constraint, if known to Combined Heat and Power Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
-* Coincident useful thermal-load constraint ← Project Document at `Annual Operational Savings > Documented Coincident useful thermal-load constraint from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Coincident useful thermal-load constraint to Combined Heat and Power Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
-* Existing Boiler Nameplate or Combustion-Test Information, if known ← Project Document at `Annual Operational Savings > Existing Boiler Nameplate or Combustion-Test Information, if known`. Pass the exact bound Existing Boiler Nameplate or Combustion-Test Information, if known to Combined Heat and Power Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity → `avoided_boiler_fuel` (fuel-unit/year; PER_YEAR) at `Annual Operational Savings > Standard 1.1 - Combined Heat and Power Performance Balance`.
+* Annual electricity generation
+* Annual CHP input fuel
+* Annual useful recovered heat
 
 **How to Use:**
 
 1. Map the Combined Heat and Power inputs to the documented Combined Heat and Power Performance Balance source fields or model inputs: Prime mover; Input fuel; Selected Unit Model, if known; Total installed capacity; Annual capacity factor; Coincident onsite electric-load constraint, if known; Coincident useful thermal-load constraint; Existing Boiler Nameplate or Combustion-Test Information, if known.
 2. Select the compatible technology and capacity row, apply the explicit operating and coincidence constraints, calculate electricity, fuel, and useful heat, and cap outputs at site loads.
 3. When an exact value is unavailable, use only a source-specific retained population or equation with documented filters, numeric rule, unit, scope, and version; otherwise report the implementation limitation.
-4. Return one selected annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity.
+4. Return one selected annual electricity generation; Annual CHP input fuel; Annual useful recovered heat.
 5. Retain the Combined Heat and Power Performance Balance source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**

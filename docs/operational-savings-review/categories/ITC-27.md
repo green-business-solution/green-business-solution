@@ -34,6 +34,8 @@ Proposed Load in Each Interval = Baseline Load in Each Interval + Charging Elect
 ```text
 Annual Operational Cost Impact
 ├─ Chronological Electricity Load and Tariff
+│  ├─ Serving Electric Utility (Bill)
+│  ├─ Billing Period Start and End (Bill)
 │  ├─ Timestamped Interval Utility Data (Bill)
 │  ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
 │  ├─ Rate Schedule and Customer Class (Bill)
@@ -46,7 +48,8 @@ Annual Operational Cost Impact
 │  ├─ Capacity Cap Fraction (Project Document)
 │  └─ Standard 1.2 — Site Daily Delivered-Energy Resolution
 ├─ Normalized Time-of-Day Charging Shape
-│  ├─ Site Location and Charging Scenario (Profile)
+│  ├─ Site Location (Profile)
+│  ├─ Charging Scenario Selector (User)
 │  └─ Standard 1.3 — EVI-Pro Normalized Charging-Shape Resolution
 ├─ Charger Performance
 │  ├─ Linked Opportunity names an exact charger
@@ -84,17 +87,6 @@ U.S. Department of Energy OpenEI Utility Rate Database and exact published utili
 
 * One complete tariff input set with exact or conservative-screening provenance
 
-**Input Bindings:**
-
-* Serving electric utility from the bill ← Bill at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact`. Pass the exact bound Serving electric utility from the bill to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
-* Published rate schedule and customer class from the bill ← Bill at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Rate Schedule and Customer Class`. Pass the exact bound Published rate schedule and customer class from the bill to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
-* Tariff effective date covering the analysis period ← Bill at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Rate Schedule and Customer Class`. Pass the exact bound Tariff effective date covering the analysis period to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
-* Continuous interval energy and demand aligned to the tariff timezone ← Bill at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Timestamped Interval Utility Data`. Pass the exact bound Continuous interval energy and demand aligned to the tariff timezone to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One complete tariff input set with exact or conservative-screening provenance → `tariff_input_set` (record set; RECORD_SET) at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Standard 1.1 - Interval Tariff Resolution`.
-
 **How to Use:**
 
 1. Verify the serving utility, published schedule identifier, customer class, and analysis date against the source bill.
@@ -128,25 +120,14 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 
 * Selected site daily delivered energy from a charging study or contractor design
 * Installed charger count
-* Rated output power per port
+* Rated output power per port from the connected exact charger record, when used
+* Rated output power per port from the connected requirement-selected charger record, when used
 * Public operating hours
 * Capacity cap fraction
 
 **Value Needed:**
 
 * One site-total daily delivered charging-energy value in kilowatt-hours per day
-
-**Input Bindings:**
-
-* Selected site daily delivered energy from a charging study or contractor design ← Project Document at `Annual Operational Cost Impact > Site Daily Delivered Energy > Selected Site Daily Delivered Energy from Charging Study or Contractor Design`. Pass the exact bound Selected site daily delivered energy from a charging study or contractor design to Site Daily Delivered-Energy Resolution when computing One site-total daily delivered charging-energy value in kilowatt-hours per day; do not substitute a value from another tree path.
-* Installed charger count ← User at `Annual Operational Cost Impact > Installed Charger Count`. Pass the exact bound Installed charger count to Site Daily Delivered-Energy Resolution when computing One site-total daily delivered charging-energy value in kilowatt-hours per day; do not substitute a value from another tree path.
-* Rated output power per port ← Bill at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Rate Schedule and Customer Class`. Pass the exact bound Rated output power per port to Site Daily Delivered-Energy Resolution when computing One site-total daily delivered charging-energy value in kilowatt-hours per day; do not substitute a value from another tree path.
-* Public operating hours ← User at `Annual Operational Cost Impact > Public Operating Hours`. Pass the exact bound Public operating hours to Site Daily Delivered-Energy Resolution when computing One site-total daily delivered charging-energy value in kilowatt-hours per day; do not substitute a value from another tree path.
-* Capacity cap fraction ← Project Document at `Annual Operational Cost Impact > Site Daily Delivered Energy > Capacity Cap Fraction`. Pass the exact bound Capacity cap fraction to Site Daily Delivered-Energy Resolution when computing One site-total daily delivered charging-energy value in kilowatt-hours per day; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One site-total daily delivered charging-energy value in kilowatt-hours per day → `site_daily_delivered_kWh` (kWh/day; SITE_TOTAL) at `Annual Operational Cost Impact > Site Daily Delivered Energy > Standard 1.2 - Site Daily Delivered-Energy Resolution`.
 
 **How to Use:**
 
@@ -178,23 +159,15 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 
 **Lookup Inputs:**
 
-* Site location and charging scenario
-* AC-output or DC-output charger type
+* Site location
+* Charging scenario selector
+* AC-output or DC-output charger type from the connected exact charger record, when used
+* AC-output or DC-output charger type from the connected requirement-selected charger record, when used
 * Public operating hours
 
 **Value Needed:**
 
 * One normalized weekday and weekend 15-minute charging-shape profile
-
-**Input Bindings:**
-
-* Site location and charging scenario ← Profile at `Annual Operational Cost Impact > Normalized Time-of-Day Charging Shape > Site Location and Charging Scenario`. Pass the exact bound Site location and charging scenario to EVI-Pro Normalized Charging-Shape Resolution when computing One normalized weekday and weekend 15-minute charging-shape profile; do not substitute a value from another tree path.
-* AC-output or DC-output charger type ← Derived at `Annual Operational Cost Impact > Charging-Station Interval Load Profile with Separate AC, DC, and Standby Normalization`. Pass the exact bound AC-output or DC-output charger type to EVI-Pro Normalized Charging-Shape Resolution when computing One normalized weekday and weekend 15-minute charging-shape profile; do not substitute a value from another tree path.
-* Public operating hours ← User at `Annual Operational Cost Impact > Public Operating Hours`. Pass the exact bound Public operating hours to EVI-Pro Normalized Charging-Shape Resolution when computing One normalized weekday and weekend 15-minute charging-shape profile; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* One normalized weekday and weekend 15-minute charging-shape profile → `normalized_shape_t` (fraction; PROFILE) at `Annual Operational Cost Impact > Normalized Time-of-Day Charging Shape > Standard 1.3 - EVI-Pro Normalized Charging-Shape Resolution`.
 
 **How to Use:**
 
@@ -240,20 +213,6 @@ U.S. Environmental Protection Agency - ENERGY STAR Product Finder
 * Applicable AC mode-specific total loss in watts when the record is AC-output
 * DC loading-adjusted efficiency as a fraction when the record is DC-output
 * Applicable no-vehicle or idle standby power per port
-
-**Input Bindings:**
-
-* Exact charger make and model ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Exact Charger Product Information`. Apply the exact bound Exact charger make and model to resolve and validate the authoritative record before Exact Charger Rating Lookup emits Rated output power per port and Applicable AC mode-specific total loss in watts when the record is AC-output and DC loading-adjusted efficiency as a fraction when the record is DC-output and Applicable no-vehicle or idle standby power per port.
-* Charger product type: AC-output or DC-output ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Exact Charger Product Information`. Apply the exact bound Charger product type: AC-output or DC-output to resolve and validate the authoritative record before Exact Charger Rating Lookup emits Rated output power per port and Applicable AC mode-specific total loss in watts when the record is AC-output and DC loading-adjusted efficiency as a fraction when the record is DC-output and Applicable no-vehicle or idle standby power per port.
-* Rated charger power and application ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Exact Charger Product Information`. Apply the exact bound Rated charger power and application to resolve and validate the authoritative record before Exact Charger Rating Lookup emits Rated output power per port and Applicable AC mode-specific total loss in watts when the record is AC-output and DC loading-adjusted efficiency as a fraction when the record is DC-output and Applicable no-vehicle or idle standby power per port.
-* Opportunity product information ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Exact Charger Product Information`. Apply the exact bound Opportunity product information to resolve and validate the authoritative record before Exact Charger Rating Lookup emits Rated output power per port and Applicable AC mode-specific total loss in watts when the record is AC-output and DC loading-adjusted efficiency as a fraction when the record is DC-output and Applicable no-vehicle or idle standby power per port.
-
-**Output Bindings:**
-
-* Rated output power per port → `rated_output_power_kW` (kW; PER_PORT) at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Standard 1.4 - Exact Charger Rating Lookup`.
-* Applicable AC mode-specific total loss in watts when the record is AC-output → `ac_total_loss_W` (Wac; PER_PORT) at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Standard 1.4 - Exact Charger Rating Lookup`.
-* DC loading-adjusted efficiency as a fraction when the record is DC-output → `dc_efficiency_fraction` (fraction; PER_PORT) at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Standard 1.4 - Exact Charger Rating Lookup`.
-* Applicable no-vehicle or idle standby power per port → `standby_power_kW_per_port` (kW/port; PER_PORT) at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity names an exact charger > Standard 1.4 - Exact Charger Rating Lookup`.
 
 **How to Use:**
 
@@ -301,20 +260,6 @@ U.S. Environmental Protection Agency - ENERGY STAR Product Finder
 * DC loading-adjusted efficiency as a fraction when the selected record is DC-output
 * Applicable no-vehicle or idle standby power per port
 
-**Input Bindings:**
-
-* Charger product type: AC-output or DC-output ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Charger Requirements`. Apply the exact bound Charger product type: AC-output or DC-output as a compatibility filter before Requirement-Based Charger Resolution emits Rated output power per port and Applicable AC mode-specific total loss in watts when the selected record is AC-output and DC loading-adjusted efficiency as a fraction when the selected record is DC-output and Applicable no-vehicle or idle standby power per port.
-* Charger class and intended application ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Charger Requirements`. Apply the exact bound Charger class and intended application as a compatibility filter before Requirement-Based Charger Resolution emits Rated output power per port and Applicable AC mode-specific total loss in watts when the selected record is AC-output and DC loading-adjusted efficiency as a fraction when the selected record is DC-output and Applicable no-vehicle or idle standby power per port.
-* Rated power requirement ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Charger Requirements`. Apply the exact bound Rated power requirement as a compatibility filter before Requirement-Based Charger Resolution emits Rated output power per port and Applicable AC mode-specific total loss in watts when the selected record is AC-output and DC loading-adjusted efficiency as a fraction when the selected record is DC-output and Applicable no-vehicle or idle standby power per port.
-* Opportunity performance requirements ← Linked Opportunity at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Charger Requirements`. Apply the exact bound Opportunity performance requirements as a compatibility filter before Requirement-Based Charger Resolution emits Rated output power per port and Applicable AC mode-specific total loss in watts when the selected record is AC-output and DC loading-adjusted efficiency as a fraction when the selected record is DC-output and Applicable no-vehicle or idle standby power per port.
-
-**Output Bindings:**
-
-* Rated output power per port → `rated_output_power_kW` (kW; PER_PORT) at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Standard 1.5 - Requirement-Based Charger Resolution`.
-* Applicable AC mode-specific total loss in watts when the selected record is AC-output → `ac_total_loss_W` (Wac; PER_PORT) at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Standard 1.5 - Requirement-Based Charger Resolution`.
-* DC loading-adjusted efficiency as a fraction when the selected record is DC-output → `dc_efficiency_fraction` (fraction; PER_PORT) at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Standard 1.5 - Requirement-Based Charger Resolution`.
-* Applicable no-vehicle or idle standby power per port → `standby_power_kW_per_port` (kW/port; PER_PORT) at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Standard 1.5 - Requirement-Based Charger Resolution`.
-
 **How to Use:**
 
 1. Extract the charger type, application, rated-power requirement, certification requirement, and every mandatory performance limit from the opportunity.
@@ -336,7 +281,7 @@ The official ENERGY STAR EV charger criteria and Product Finder access path were
 **■ Standard 1.6 — Public Electric Vehicle Charging Interval Bill Calculation**
 
 **Purpose:**
-Use National Laboratory of the Rockies - REopt V3 and REopt.jl to resolve baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance from the listed category inputs.
+Use National Laboratory of the Rockies - REopt V3 and REopt.jl to resolve baseline annual bill; Proposed annual bill from the listed category inputs.
 
 **Source:**
 National Laboratory of the Rockies - REopt V3 and REopt.jl
@@ -359,26 +304,13 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 * Public operating hours
 * Site daily delivered charging energy from the connected exact project resolver
 * Normalized weekday and weekend 15-minute shape from the connected EVI-Pro resolver
-* Resolved native AC-output or DC-output charger fields from the connected product process
+* Resolved native AC-output or DC-output charger fields from the connected exact charger process, when used
+* Resolved native AC-output or DC-output charger fields from the connected requirement-selected charger process, when used
 
 **Value Needed:**
 
-* Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance
-
-**Input Bindings:**
-
-* Timestamped interval utility data from the uploaded utility artifact ← Bill at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Timestamped Interval Utility Data`. Pass the exact bound Timestamped interval utility data from the uploaded utility artifact to Public Electric Vehicle Charging Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Time zone and daylight-saving metadata from the uploaded utility artifact ← Bill at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact`. Pass the exact bound Time zone and daylight-saving metadata from the uploaded utility artifact to Public Electric Vehicle Charging Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Resolved interval tariff input set from the connected tariff process ← Standard Output at `Annual Operational Cost Impact > Chronological Electricity Load and Tariff > Standard 1.1 - Interval Tariff Resolution`. Pass the exact bound Resolved interval tariff input set from the connected tariff process to Public Electric Vehicle Charging Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Installed charger count ← User at `Annual Operational Cost Impact > Installed Charger Count`. Pass the exact bound Installed charger count to Public Electric Vehicle Charging Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Public operating hours ← User at `Annual Operational Cost Impact > Public Operating Hours`. Pass the exact bound Public operating hours to Public Electric Vehicle Charging Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Site daily delivered charging energy from the connected exact project resolver ← Standard Output at `Annual Operational Cost Impact > Site Daily Delivered Energy > Standard 1.2 - Site Daily Delivered-Energy Resolution`. Pass the exact bound Site daily delivered charging energy from the connected exact project resolver to Public Electric Vehicle Charging Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Normalized weekday and weekend 15-minute shape from the connected EVI-Pro resolver ← Standard Output at `Annual Operational Cost Impact > Normalized Time-of-Day Charging Shape > Standard 1.3 - EVI-Pro Normalized Charging-Shape Resolution`. Pass the exact bound Normalized weekday and weekend 15-minute shape from the connected EVI-Pro resolver to Public Electric Vehicle Charging Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-* Resolved native AC-output or DC-output charger fields from the connected product process ← Standard Output at `Annual Operational Cost Impact > Charger Performance > Linked Opportunity specifies charger requirements but no exact product > Standard 1.5 - Requirement-Based Charger Resolution`. Pass the exact bound Resolved native AC-output or DC-output charger fields from the connected product process to Public Electric Vehicle Charging Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
-
-**Output Bindings:**
-
-* Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance → `baseline_annual_bill` (USD/year; RECORD_SET) at `Annual Operational Cost Impact > Standard 1.6 - Public Electric Vehicle Charging Interval Bill Calculation`.
+* Baseline annual bill
+* Proposed annual bill
 
 **How to Use:**
 
