@@ -6,6 +6,9 @@
     "apps/*"
   ],
   "type": "module",
+  "overrides": {
+    "shell-quote": "1.10.0"
+  },
   "scripts": {
     "dev": "concurrently -k -n api,web -c blue,green \"npm run dev -w @gbs/api\" \"npm run dev -w @gbs/web\"",
     "dev:local": "node scripts/dev-local.mjs",
