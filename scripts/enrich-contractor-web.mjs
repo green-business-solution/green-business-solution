@@ -42,9 +42,12 @@ import {
   loadReviewedDirectoryRecords,
 } from "./contractor-directory-sources.mjs";
 import {
+  createPersistentRunState,
+  forEachAdaptiveConcurrent,
+} from "./contractor-web-enrichment-run-state.mjs";
+import {
   buildExactIndices,
   createAwsAdapter,
-  forEachConcurrent,
   matchExact,
 } from "./enrich-contractor-directories.mjs";
 import {
@@ -58,7 +61,7 @@ import {
 
 const execFileAsync = promisify(execFile);
 
-export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.0.0";
+export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.1.0";
 export const WEB_ENRICHMENT_REPORT_SCHEMA_VERSION =
   "contractor-web-enrichment-report.v1";
 
@@ -124,6 +127,7 @@ export async function runContractorWebEnrichment(
       path.join("var", "contractor-web-enrichment", runId),
   );
   await fsPromises.mkdir(outputDirectory, { recursive: true });
+  let runState;
   if (options.resume) {
     try {
       const previousReport = JSON.parse(
@@ -237,15 +241,39 @@ export async function runContractorWebEnrichment(
       ...officialSeeds.keys(),
       ...allOsmSeeds.seeds.keys(),
     ]);
-    const selectedIdentities =
-      options.scope === "pilot"
+    const targetContractorIds = await readContractorIds(
+      options.targetContractorsFile,
+    );
+    const excludedContractorIds = await readContractorIds(
+      options.excludeContractorsFile,
+    );
+    const selectableIdentities = identities.filter(
+      (identity) =>
+        !excludedContractorIds.has(identity.contractorId),
+    );
+    const selectedIdentities = targetContractorIds.size
+      ? selectableIdentities.filter((identity) =>
+          targetContractorIds.has(identity.contractorId),
+        )
+      : options.scope === "pilot"
         ? selectStratifiedPilot({
-            identities,
+            identities: selectableIdentities,
             knownDomainContractorIds,
             pilotSize: options.pilotSize,
             seed: options.selectionSeed,
           })
         : identities;
+    if (
+      targetContractorIds.size &&
+      selectedIdentities.length !== targetContractorIds.size
+    ) {
+      throw new Error(
+        `Requested ${targetContractorIds.size} targeted contractors, but ${selectedIdentities.length} are eligible and present.`,
+      );
+    }
+    selectedIdentities.sort((left, right) =>
+      left.contractorId.localeCompare(right.contractorId),
+    );
     const selectedIds = new Set(
       selectedIdentities.map((identity) => identity.contractorId),
     );
@@ -282,6 +310,10 @@ export async function runContractorWebEnrichment(
     const appender = createJsonLinesAppender(resultPath, {
       truncate: !options.resume,
     });
+    runState = await createPersistentRunState({
+      outputDirectory,
+      resume: options.resume,
+    });
     const domainLocks = new Map();
     const remaining = selectedIdentities.filter(
       (identity) => !resultsById.has(identity.contractorId),
@@ -297,61 +329,240 @@ export async function runContractorWebEnrichment(
       );
     }
 
-    await forEachConcurrent({
-      concurrency: options.concurrency,
-      onProgress: (completed, total) => {
-        if (
-          !options.quiet &&
-          (completed % 100 === 0 || completed === total)
-        ) {
-          console.log(
-            `Processed ${completed} of ${total} remaining pilot contractors.`,
-          );
-        }
-      },
-      values: remaining,
-      worker: async (identity) => {
-        let result;
-        try {
-          result = await processContractor({
-            fetchImpl: dependencies.fetchImpl || fetch,
+    const hardDeadlineMs =
+      options.scope === "full"
+        ? Date.parse(startedAt) +
+          options.maxRuntimeHours * 60 * 60 * 1_000
+        : Number.POSITIVE_INFINITY;
+    const processingDeadlineMs =
+      hardDeadlineMs -
+      options.reserveFinalizationMinutes * 60 * 1_000;
+    let checkpointSequence = await nextCheckpointSequence(
+      outputDirectory,
+    );
+    if (checkpointSequence === 0) {
+      await writeCheckpointSnapshot({
+        completedContractorCount: resultsById.size,
+        outputDirectory,
+        phase: "selection",
+        runId,
+        runState,
+        s3,
+        selectedContractorIds: selectedIdentities.map(
+          (identity) => identity.contractorId,
+        ),
+        sequence: checkpointSequence,
+        totalContractorCount: selectedIdentities.length,
+        upload: options.upload,
+      });
+      checkpointSequence += 1;
+    }
+    let fastPassStopped = false;
+    for (
+      let offset = 0;
+      offset < remaining.length;
+      offset += options.checkpointEvery
+    ) {
+      if (Date.now() >= processingDeadlineMs) {
+        fastPassStopped = true;
+        break;
+      }
+      const batch = remaining.slice(
+        offset,
+        offset + options.checkpointEvery,
+      );
+      await forEachAdaptiveConcurrent({
+        initialConcurrency: Math.min(12, options.concurrency),
+        maxConcurrency: options.concurrency,
+        metrics: runState.requestMetrics,
+        onConcurrencyChange: ({ currentConcurrency, snapshot }) => {
+          if (!options.quiet) {
+            console.log(
+              `Adjusted contractor concurrency to ${currentConcurrency} after ${snapshot.requests} network requests.`,
+            );
+          }
+        },
+        onProgress: (completed) => {
+          const totalCompleted =
+            offset + completed;
+          if (
+            !options.quiet &&
+            (totalCompleted % 100 === 0 ||
+              totalCompleted === remaining.length)
+          ) {
+            console.log(
+              `Processed ${totalCompleted} of ${remaining.length} remaining contractors.`,
+            );
+          }
+        },
+        shouldStop: () => false,
+        values: batch,
+        worker: async (identity) => {
+          const result = await processIdentitySafely({
+            combinedSeeds,
+            dependencies,
+            domainLocks,
             identity,
             mode: options.mode,
             pageLimit: options.mode === "deep" ? 8 : 4,
             placeReference,
-            seeds: combinedSeeds.get(identity.contractorId) || [],
+            runState,
             timeoutMs: options.timeoutMs,
-            withDomainLock: (domain, task) =>
-              withDomainLock(domainLocks, domain, task),
           });
-        } catch (error) {
-          result = {
-            contractorId: identity.contractorId,
-            contractorIdToken: token(identity.contractorId),
-            domainDisposition: "NO_VERIFIED_DOMAIN",
-            discoveryMethod: "",
-            error: cleanError(error),
-            outcomes: ["NO_VERIFIED_DOMAIN"],
-            proposal: {},
-          };
+          resultsById.set(identity.contractorId, result);
+          await appender.append(result);
+          processedThisInvocation += 1;
+        },
+      });
+      await runState.flush();
+      await writeCheckpointSnapshot({
+        completedContractorCount: resultsById.size,
+        outputDirectory,
+        phase: "fast",
+        runId,
+        runState,
+        s3,
+        sequence: checkpointSequence,
+        totalContractorCount: selectedIdentities.length,
+        upload: options.upload,
+      });
+      checkpointSequence += 1;
+    }
+    const fastPassComplete = selectedIdentities.every((identity) =>
+      resultsById.has(identity.contractorId),
+    );
+    let deepPassProcessed =
+      runState.deepPassCompletedIds.size;
+    let deepPassImproved =
+      runState.deepPassImprovedIds.size;
+    let deepPassStopped = false;
+    if (
+      options.scope === "full" &&
+      options.deepIfTime &&
+      fastPassComplete &&
+      Date.now() < processingDeadlineMs
+    ) {
+      const deepCandidates = selectDeepPassCandidates({
+        identities: selectedIdentities,
+        resultsById,
+      }).filter(
+        (identity) =>
+          !runState.deepPassCompletedIds.has(
+            identity.contractorId,
+          ),
+      );
+      for (
+        let offset = 0;
+        offset < deepCandidates.length;
+        offset += options.checkpointEvery
+      ) {
+        if (Date.now() >= processingDeadlineMs) {
+          deepPassStopped = true;
+          break;
         }
-        resultsById.set(identity.contractorId, result);
-        await appender.append(result);
-        processedThisInvocation += 1;
-      },
+        const batch = deepCandidates.slice(
+          offset,
+          offset + options.checkpointEvery,
+        );
+        await forEachAdaptiveConcurrent({
+          initialConcurrency: Math.min(8, options.concurrency),
+          maxConcurrency: options.concurrency,
+          metrics: runState.requestMetrics,
+          values: batch,
+          worker: async (identity) => {
+            const prior = resultsById.get(identity.contractorId);
+            const candidate = await processIdentitySafely({
+              combinedSeeds,
+              dependencies,
+              domainLocks,
+              identity,
+              mode: "deep",
+              pageLimit: 8,
+              placeReference,
+              runState,
+              timeoutMs: options.timeoutMs,
+            });
+            const result = chooseBetterResult(prior, candidate);
+            const improved = result !== prior;
+            if (improved) {
+              resultsById.set(identity.contractorId, result);
+              await appender.append(result);
+              deepPassImproved += 1;
+            }
+            runState.markDeepPassCompleted(
+              identity.contractorId,
+              { improved },
+            );
+            deepPassProcessed += 1;
+          },
+        });
+        await runState.flush();
+        await writeCheckpointSnapshot({
+          completedContractorCount: resultsById.size,
+          deepPassProcessed,
+          outputDirectory,
+          phase: "deep",
+          runId,
+          runState,
+          s3,
+          sequence: checkpointSequence,
+          totalContractorCount: selectedIdentities.length,
+          upload: options.upload,
+        });
+        checkpointSequence += 1;
+      }
+    }
+    await runState.flush();
+    await writeCheckpointSnapshot({
+      completedContractorCount: selectedIdentities.filter(
+        (identity) => resultsById.has(identity.contractorId),
+      ).length,
+      deepPassProcessed,
+      outputDirectory,
+      phase: "finalizing",
+      runId,
+      runState,
+      s3,
+      sequence: checkpointSequence,
+      totalContractorCount: selectedIdentities.length,
+      upload: options.upload,
     });
+    checkpointSequence += 1;
     await appender.close();
+    const requestMetrics =
+      runState.requestMetrics.snapshot();
+    await runState.close();
+    runState = null;
 
-    const results = selectedIdentities
-      .map((identity) => resultsById.get(identity.contractorId))
-      .filter(Boolean)
-      .map(normalizeResultForArtifacts);
-    if (results.length !== selectedIdentities.length) {
+    const eligibleResults = selectedIdentities.map((identity) => {
+      const result = resultsById.get(identity.contractorId);
+      return result
+        ? normalizeResultForArtifacts(result)
+        : buildUnprocessedResult(identity);
+    });
+    const eligibleResultsById = new Map(
+      eligibleResults.map((result) => [
+        result.contractorId,
+        result,
+      ]),
+    );
+    const results =
+      options.scope === "full"
+        ? contractors.map(
+            (contractor) =>
+              eligibleResultsById.get(contractor.contractorId) ||
+              buildSkippedResult(contractor),
+          )
+        : eligibleResults;
+    if (
+      options.scope === "full" &&
+      results.length !== contractors.length
+    ) {
       throw new Error(
-        `Expected ${selectedIdentities.length} results, found ${results.length}.`,
+        `Expected ${contractors.length} statewide outcomes, found ${results.length}.`,
       );
     }
-    const acceptedResults = results.filter(
+    const acceptedResults = eligibleResults.filter(
       (result) => result.domainDisposition === "VERIFIED_DOMAIN",
     );
     const audit = buildPilotAudit({
@@ -359,7 +570,7 @@ export async function runContractorWebEnrichment(
       minimumSampleSize: 400,
       seed: options.auditSeed,
     });
-    const proposals = results
+    const proposals = eligibleResults
       .filter((result) => Object.keys(result.proposal || {}).length)
       .map((result) => ({
         contractorId: result.contractorId,
@@ -370,6 +581,24 @@ export async function runContractorWebEnrichment(
         domainEvidence: result.identityVerification,
       }));
     assertProposalSafety({ contractors, proposals });
+    const reviewQueue = buildStatewideReviewQueue({
+      results: eligibleResults,
+      seed: options.auditSeed,
+    });
+    const licenseTransitionReview =
+      buildLicenseTransitionReview(eligibleResults);
+    const unresolved = buildUnresolvedRecords({
+      identities: selectedIdentities,
+      resultsById: eligibleResultsById,
+    });
+    const validation = validateFinalArtifacts({
+      contractors,
+      eligibleResults,
+      fullScope: options.scope === "full",
+      licenseTransitionReview,
+      proposals,
+      results,
+    });
 
     const completedAt =
       options.resume && !remaining.length && priorCompletedAt
@@ -385,7 +614,7 @@ export async function runContractorWebEnrichment(
       osmSeeds,
       processedThisInvocation,
       proposals,
-      results,
+      results: eligibleResults,
       runId,
       scope: options.scope,
       selectedIdentities,
@@ -394,7 +623,43 @@ export async function runContractorWebEnrichment(
       statusCounts,
       usableContractors,
     });
-    const expectedS3ObjectCount = options.upload ? 6 : 0;
+    report.execution = {
+      checkpointCount: checkpointSequence,
+      deepPassImproved,
+      deepPassProcessed,
+      deepPassStopped,
+      eligibleCompleted: eligibleResults.filter(
+        (result) =>
+          result.domainDisposition !==
+          "NOT_PROCESSED_TIME_LIMIT",
+      ).length,
+      eligibleRemaining: eligibleResults.filter(
+        (result) =>
+          result.domainDisposition ===
+          "NOT_PROCESSED_TIME_LIMIT",
+      ).length,
+      fastPassComplete,
+      fastPassStopped,
+      hardDeadline: Number.isFinite(hardDeadlineMs)
+        ? new Date(hardDeadlineMs).toISOString()
+        : null,
+      outcomeAccountingCount: results.length,
+      requestMetrics,
+    };
+    report.deepModeBenefitEstimate = {
+      available: deepPassProcessed > 0,
+      contractorsProcessed: deepPassProcessed,
+      contractorsImproved: deepPassImproved,
+      incrementalProposalRate: divide(
+        deepPassImproved,
+        deepPassProcessed,
+      ),
+      stoppedAtDeadline: deepPassStopped,
+    };
+    const finalArtifactCount = 10;
+    const expectedS3ObjectCount = options.upload
+      ? finalArtifactCount + checkpointSequence
+      : 0;
     report.s3Upload = {
       enabled: options.upload,
       objectCount: expectedS3ObjectCount,
@@ -422,6 +687,11 @@ export async function runContractorWebEnrichment(
         liveContractorCount: contractors.length,
         usableContractorCount: usableContractors.length,
         selectedContractorCount: selectedIdentities.length,
+        checkpointKeys: Array.from(
+          { length: checkpointSequence },
+          (_, index) =>
+            `imports/web-enrichment/${runId}/checkpoints/${String(index).padStart(6, "0")}.json`,
+        ),
         cslbSource: {
           s3Key: cslbSource.s3Key,
           sha256: cslbSource.sha256,
@@ -454,7 +724,9 @@ export async function runContractorWebEnrichment(
         },
       },
       outputDirectory,
+      licenseTransitionReview,
       proposals,
+      reviewQueue,
       rawEvidence: results
         .filter((result) => result.domain)
         .map((result) => ({
@@ -468,6 +740,8 @@ export async function runContractorWebEnrichment(
       report,
       results,
       runId,
+      unresolved,
+      validation,
     });
 
     let uploadedObjectCount = 0;
@@ -477,9 +751,12 @@ export async function runContractorWebEnrichment(
         s3,
       });
     }
-    if (uploadedObjectCount !== expectedS3ObjectCount) {
+    const totalUploadedObjectCount =
+      uploadedObjectCount +
+      (options.upload ? checkpointSequence : 0);
+    if (totalUploadedObjectCount !== expectedS3ObjectCount) {
       throw new Error(
-        `Expected ${expectedS3ObjectCount} S3 artifacts, completed ${uploadedObjectCount}.`,
+        `Expected ${expectedS3ObjectCount} S3 artifacts, completed ${totalUploadedObjectCount}.`,
       );
     }
 
@@ -506,6 +783,9 @@ export async function runContractorWebEnrichment(
       outputDirectory,
     };
   } finally {
+    if (runState) {
+      await runState.close();
+    }
     await fsPromises.rm(temporaryDirectory, {
       force: true,
       recursive: true,
@@ -519,6 +799,7 @@ async function processContractor({
   mode,
   pageLimit,
   placeReference,
+  runState,
   seeds,
   timeoutMs,
   withDomainLock,
@@ -578,8 +859,12 @@ async function processContractor({
   let sawReachable = false;
   let sawUnreachable = false;
   let ambiguousResult = null;
+  let licenseTransitionResult = null;
   for (const candidate of candidates) {
-    const dnsAvailable = await domainResolves(candidate.domain);
+    const dnsAvailable = await domainResolves(
+      candidate.domain,
+      runState,
+    );
     if (!dnsAvailable) {
       attemptedDomains.push({
         domain: candidate.domain,
@@ -597,6 +882,7 @@ async function processContractor({
           identity,
           pageLimit,
           placeReference,
+          runState,
           timeoutMs,
         }),
     );
@@ -604,12 +890,30 @@ async function processContractor({
       domain: candidate.domain,
       disposition: evaluated.domainDisposition,
       reason: evaluated.reason,
+      ...(evaluated.domainDisposition ===
+      "LICENSE_TRANSITION_REVIEW"
+        ? {
+            databaseLicenseNumber:
+              evaluated.identityVerification
+                ?.databaseLicenseNumber || "",
+            websiteLicenseNumbers:
+              evaluated.identityVerification
+                ?.websiteLicenseNumbers || [],
+          }
+        : {}),
     });
     if (evaluated.domainDisposition === "WEBSITE_UNREACHABLE") {
       sawUnreachable = true;
       continue;
     }
     sawReachable = true;
+    if (
+      evaluated.domainDisposition ===
+      "LICENSE_TRANSITION_REVIEW"
+    ) {
+      licenseTransitionResult ||= evaluated;
+      continue;
+    }
     if (evaluated.domainDisposition === "AMBIGUOUS_DOMAIN") {
       ambiguousResult ||= evaluated;
       continue;
@@ -624,6 +928,17 @@ async function processContractor({
     };
   }
 
+  if (licenseTransitionResult) {
+    return {
+      contractorId: identity.contractorId,
+      contractorIdToken: token(identity.contractorId),
+      attemptedDomainCount: attemptedDomains.length,
+      attemptedDomains,
+      ...licenseTransitionResult,
+      outcomes: ["LICENSE_TRANSITION_REVIEW"],
+      proposal: {},
+    };
+  }
   if (ambiguousResult) {
     return {
       contractorId: identity.contractorId,
@@ -653,60 +968,282 @@ async function processContractor({
   };
 }
 
+async function processIdentitySafely({
+  combinedSeeds,
+  dependencies,
+  domainLocks,
+  identity,
+  mode,
+  pageLimit,
+  placeReference,
+  runState,
+  timeoutMs,
+}) {
+  try {
+    return await processContractor({
+      fetchImpl: dependencies.fetchImpl || fetch,
+      identity,
+      mode,
+      pageLimit,
+      placeReference,
+      runState,
+      seeds: combinedSeeds.get(identity.contractorId) || [],
+      timeoutMs,
+      withDomainLock: (domain, task) =>
+        withDomainLock(domainLocks, domain, task),
+    });
+  } catch (error) {
+    return {
+      contractorId: identity.contractorId,
+      contractorIdToken: token(identity.contractorId),
+      discoveryMethod: "",
+      domainDisposition: "NO_VERIFIED_DOMAIN",
+      error: cleanError(error),
+      outcomes: ["NO_VERIFIED_DOMAIN"],
+      proposal: {},
+    };
+  }
+}
+
+function verificationCacheKey({
+  candidate,
+  identity,
+  pages,
+}) {
+  return [
+    identity.contractorId,
+    candidate.domain,
+    candidate.seed?.sourceType || "",
+    candidate.seed?.matchMethod || "",
+    pages.map((page) => page.contentSha256).join(","),
+  ].join("|");
+}
+
+function selectDeepPassCandidates({
+  identities,
+  resultsById,
+}) {
+  return identities
+    .filter((identity) => {
+      const result = resultsById.get(identity.contractorId);
+      if (!result) return true;
+      if (result.domainDisposition !== "VERIFIED_DOMAIN") {
+        return true;
+      }
+      return identity.fieldsNeeded.some(
+        (field) =>
+          !Object.hasOwn(result.proposal || {}, field),
+      );
+    })
+    .sort(
+      (left, right) =>
+        deepPassPriority(right, resultsById.get(right.contractorId)) -
+          deepPassPriority(
+            left,
+            resultsById.get(left.contractorId),
+          ) ||
+        left.contractorId.localeCompare(right.contractorId),
+    );
+}
+
+function deepPassPriority(identity, result) {
+  let score = 0;
+  if (identity.phone) score += 4;
+  if (
+    identity.address.line1 &&
+    identity.address.city &&
+    identity.address.postalCode
+  ) {
+    score += 4;
+  }
+  if (identity.normalizedNames.some((name) => name.split(" ").length > 1)) {
+    score += 2;
+  }
+  if (result?.domainDisposition === "VERIFIED_DOMAIN") score += 6;
+  if (result?.domainDisposition === "WEBSITE_UNREACHABLE") score += 3;
+  return score;
+}
+
+function chooseBetterResult(prior, candidate) {
+  if (!prior) return candidate;
+  const priorScore = resultQuality(prior);
+  const candidateScore = resultQuality(candidate);
+  if (candidateScore > priorScore) return candidate;
+  if (
+    candidateScore === priorScore &&
+    Object.keys(candidate.proposal || {}).length >
+      Object.keys(prior.proposal || {}).length
+  ) {
+    return candidate;
+  }
+  return prior;
+}
+
+function resultQuality(result) {
+  if (result?.domainDisposition === "VERIFIED_DOMAIN") return 4;
+  if (
+    result?.domainDisposition === "LICENSE_TRANSITION_REVIEW"
+  ) {
+    return 3;
+  }
+  if (result?.domainDisposition === "AMBIGUOUS_DOMAIN") return 2;
+  if (result?.domainDisposition === "WEBSITE_UNREACHABLE") return 1;
+  return 0;
+}
+
 async function evaluateDomainCandidate({
   candidate,
   fetchImpl,
   identity,
   pageLimit,
   placeReference,
+  runState,
   timeoutMs,
 }) {
-  const homepage = await fetchCandidateHomepage({
-    domain: candidate.domain,
-    fetchImpl,
-    timeoutMs,
-  });
-  if (!homepage) {
-    return {
+  let crawlState = runState.domainCrawlCache.get(
+    candidate.domain,
+  );
+  const crawlStateWasCached = Boolean(crawlState);
+  if (!crawlState) {
+    const homepage = await fetchCandidateHomepage({
       domain: candidate.domain,
-      domainDisposition: "WEBSITE_UNREACHABLE",
-      discoveryMethod: candidate.discoveryMethod,
-      reason: "homepage_unreachable",
+      fetchImpl,
+      runState,
+      timeoutMs,
+    });
+    if (!homepage) {
+      return {
+        domain: candidate.domain,
+        domainDisposition: "WEBSITE_UNREACHABLE",
+        discoveryMethod: candidate.discoveryMethod,
+        reason: "homepage_unreachable",
+      };
+    }
+    const homepagePage = parseHtmlPage(homepage);
+    crawlState = {
+      pageLimit: 1,
+      pages: [homepagePage],
+      robots: homepage.robots,
     };
   }
-  const homepagePage = parseHtmlPage(homepage);
+  const homepagePage = crawlState.pages[0];
   const verifiedDomain =
     domainFromUrl(homepagePage.url) || candidate.domain;
-  const identityVerification = scoreDomainIdentity({
-    homepageText: homepagePage.text,
+  const initialVerificationKey = verificationCacheKey({
+    candidate,
     identity,
-    seed: candidate.seed,
+    pages: [homepagePage],
   });
+  let identityVerification = runState.verificationCache.get(
+    initialVerificationKey,
+  );
+  if (!identityVerification) {
+    identityVerification = scoreDomainIdentity({
+      homepageText: homepagePage.text,
+      identity,
+      seed: candidate.seed,
+    });
+    if (identityVerification.disposition !== "REJECTED_DOMAIN") {
+      await runState.setVerification(
+        initialVerificationKey,
+        identityVerification,
+      );
+    }
+  }
   if (!identityVerification.accepted) {
+    if (
+      !crawlStateWasCached &&
+      (candidate.discoveryMethod !== "candidate_generation" ||
+        identityVerification.disposition !== "REJECTED_DOMAIN")
+    ) {
+      await runState.setDomainCrawl(candidate.domain, crawlState);
+    }
     return {
       domain: candidate.domain,
       domainDisposition: identityVerification.disposition,
       discoveryMethod: candidate.discoveryMethod,
       identityVerification,
-      reason: identityVerification.ambiguous
-        ? "insufficient_identity_evidence"
-        : "identity_rejected",
+      reason:
+        identityVerification.disposition ===
+        "LICENSE_TRANSITION_REVIEW"
+          ? "different_current_license_displayed"
+          : identityVerification.ambiguous
+            ? "insufficient_identity_evidence"
+            : "identity_rejected",
     };
   }
-  const pages = [homepagePage];
-  const crawlLinks = chooseInternalCrawlLinks({
-    homepageUrl: homepagePage.url,
-    links: homepagePage.links,
-    limit: Math.max(0, pageLimit - 1),
-  });
-  for (const url of crawlLinks) {
-    const page = await fetchHtmlPage({
-      fetchImpl,
-      robots: homepage.robots,
-      timeoutMs,
-      url,
+  if (crawlState.pageLimit < pageLimit) {
+    const pages = [...crawlState.pages];
+    const existingUrls = new Set(
+      pages.map((page) => page.url),
+    );
+    const crawlLinks = chooseInternalCrawlLinks({
+      homepageUrl: homepagePage.url,
+      links: homepagePage.links,
+      limit: Math.max(0, pageLimit - 1),
     });
-    if (page) pages.push(parseHtmlPage(page));
+    for (const url of crawlLinks) {
+      if (existingUrls.has(url)) continue;
+      const page = await fetchHtmlPage({
+        fetchImpl,
+        robots: crawlState.robots,
+        runState,
+        timeoutMs,
+        url,
+      });
+      if (page) {
+        const parsed = parseHtmlPage(page);
+        pages.push(parsed);
+        existingUrls.add(parsed.url);
+      }
+      if (pages.length >= pageLimit) break;
+    }
+    crawlState = {
+      ...crawlState,
+      pageLimit,
+      pages,
+    };
+    await runState.setDomainCrawl(candidate.domain, crawlState);
+  }
+  const pages = crawlState.pages.slice(0, pageLimit);
+  const finalVerificationKey = verificationCacheKey({
+    candidate,
+    identity,
+    pages,
+  });
+  let finalIdentityVerification =
+    runState.verificationCache.get(finalVerificationKey);
+  if (!finalIdentityVerification) {
+    finalIdentityVerification = scoreDomainIdentity({
+      homepageText: pages.map((page) => page.text).join("\n"),
+      identity,
+      seed: candidate.seed,
+    });
+    if (
+      finalIdentityVerification.disposition !==
+      "REJECTED_DOMAIN"
+    ) {
+      await runState.setVerification(
+        finalVerificationKey,
+        finalIdentityVerification,
+      );
+    }
+  }
+  if (!finalIdentityVerification.accepted) {
+    return {
+      domain: candidate.domain,
+      domainDisposition: finalIdentityVerification.disposition,
+      discoveryMethod: candidate.discoveryMethod,
+      identityVerification: finalIdentityVerification,
+      pages: pages.map(sanitizePageMetadata),
+      reason:
+        finalIdentityVerification.disposition ===
+        "LICENSE_TRANSITION_REVIEW"
+          ? "different_current_license_displayed"
+          : finalIdentityVerification.ambiguous
+            ? "insufficient_identity_evidence"
+            : "identity_rejected",
+    };
   }
   const extracted = extractWebsiteFields({
     domain: verifiedDomain,
@@ -757,7 +1294,8 @@ async function evaluateDomainCandidate({
     domainDisposition: "VERIFIED_DOMAIN",
     discoveryMethod: candidate.discoveryMethod,
     expected,
-    identityVerification,
+    confidenceTier: finalIdentityVerification.confidenceTier,
+    identityVerification: finalIdentityVerification,
     outcomes,
     pages: pages.map(sanitizePageMetadata),
     proposal,
@@ -768,6 +1306,7 @@ async function evaluateDomainCandidate({
 async function fetchCandidateHomepage({
   domain,
   fetchImpl,
+  runState,
   timeoutMs,
 }) {
   const variants = [
@@ -786,12 +1325,14 @@ async function fetchCandidateHomepage({
     const robots = await fetchRobots({
       fetchImpl,
       origin,
+      runState,
       timeoutMs,
     });
     if (!robotsAllows(robots, "/")) continue;
     const page = await fetchHtmlPage({
       fetchImpl,
       robots,
+      runState,
       timeoutMs,
       url,
     });
@@ -803,6 +1344,7 @@ async function fetchCandidateHomepage({
 async function fetchHtmlPage({
   fetchImpl,
   robots,
+  runState,
   timeoutMs,
   url,
 }) {
@@ -822,9 +1364,17 @@ async function fetchHtmlPage({
         signal: AbortSignal.timeout(timeoutMs),
       });
       if (!response.ok) {
+        if (response.status === 429) {
+          runState.requestMetrics.record("http429");
+        } else if (response.status >= 500) {
+          runState.requestMetrics.record("http5xx");
+        } else {
+          runState.requestMetrics.record("successes");
+        }
         if (response.status >= 500 && attempt === 1) continue;
         return null;
       }
+      runState.requestMetrics.record("successes");
       const contentType = response.headers.get("content-type") || "";
       const contentLength = Number(
         response.headers.get("content-length") || 0,
@@ -846,6 +1396,12 @@ async function fetchHtmlPage({
       };
     } catch (error) {
       lastError = error;
+      runState.requestMetrics.record(
+        error?.name === "TimeoutError" ||
+          error?.name === "AbortError"
+          ? "timeouts"
+          : "networkErrors",
+      );
       if (attempt === 1) continue;
     }
   }
@@ -856,19 +1412,45 @@ async function fetchHtmlPage({
 async function fetchRobots({
   fetchImpl,
   origin,
+  runState,
   timeoutMs,
 }) {
+  if (runState.robotsCache.has(origin)) {
+    return runState.robotsCache.get(origin);
+  }
   try {
     const response = await fetchImpl(`${origin}/robots.txt`, {
       headers: { "user-agent": USER_AGENT },
       redirect: "follow",
       signal: AbortSignal.timeout(timeoutMs),
     });
-    if (!response.ok) return { rules: [] };
+    if (!response.ok) {
+      runState.requestMetrics.record(
+        response.status === 429
+          ? "http429"
+          : response.status >= 500
+            ? "http5xx"
+            : "successes",
+      );
+      const value = { rules: [] };
+      runState.robotsCache.set(origin, value);
+      return value;
+    }
     const body = await response.text();
-    return parseRobots(body);
-  } catch {
-    return { rules: [] };
+    runState.requestMetrics.record("successes");
+    const value = parseRobots(body);
+    runState.robotsCache.set(origin, value);
+    return value;
+  } catch (error) {
+    runState.requestMetrics.record(
+      error?.name === "TimeoutError" ||
+        error?.name === "AbortError"
+        ? "timeouts"
+        : "networkErrors",
+    );
+    const value = { rules: [] };
+    runState.robotsCache.set(origin, value);
+    return value;
   }
 }
 
@@ -915,7 +1497,7 @@ function robotsAllows(robots, pathname) {
   return candidates[0].type === "allow";
 }
 
-function parseHtmlPage(page) {
+export function parseHtmlPage(page) {
   const $ = cheerio.load(page.html);
   $("script, style, noscript, svg, template").remove();
   $("br").replaceWith("\n");
@@ -937,22 +1519,50 @@ function parseHtmlPage(page) {
     .filter((link) => link.href);
   const emails = [];
   for (const anchor of $('a[href^="mailto:"]').toArray()) {
-    const href = decodeURIComponent(
-      clean($(anchor).attr("href")),
-    );
+    let href = clean($(anchor).attr("href"));
+    try {
+      href = decodeURIComponent(href);
+    } catch {
+      continue;
+    }
     const value = href
       .replace(/^mailto:/i, "")
       .split("?")[0]
       .trim();
     emails.push({
+      sourceMethod: "mailto",
       value,
       snippet: clean($(anchor).parent().text()) || value,
     });
+  }
+  const textNodes = [];
+  $("body")
+    .add("body *")
+    .each((_, element) => {
+      for (const child of element.children || []) {
+        if (child.type === "text") {
+          textNodes.push(child);
+        }
+      }
+    });
+  for (const node of textNodes) {
+    const nodeText = clean(node.data);
+    if (!nodeText || nodeText.length > 500) continue;
+    for (const match of nodeText.matchAll(
+      /\b[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi,
+    )) {
+      emails.push({
+        sourceMethod: "isolated_text_node",
+        value: match[0],
+        snippet: nodeText,
+      });
+    }
   }
   for (const match of text.matchAll(
     /\b[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi,
   )) {
     emails.push({
+      sourceMethod: "visible_text",
       value: match[0],
       snippet: text.slice(
         Math.max(0, match.index - 100),
@@ -962,7 +1572,18 @@ function parseHtmlPage(page) {
   }
   return {
     contentSha256: sha256Text(page.html),
-    emails,
+    emails: [
+      ...new Map(
+        emails.map((email) => [
+          [
+            email.sourceMethod,
+            clean(email.value).toLowerCase(),
+            clean(email.snippet),
+          ].join("|"),
+          email,
+        ]),
+      ).values(),
+    ],
     links,
     retrievedAt: page.retrievedAt,
     status: page.status,
@@ -982,7 +1603,10 @@ function sanitizePageMetadata(page) {
   };
 }
 
-async function domainResolves(domain) {
+async function domainResolves(domain, runState) {
+  if (runState.dnsCache.has(domain)) {
+    return runState.dnsCache.get(domain);
+  }
   try {
     const result = await Promise.race([
       dns.resolveAny(domain),
@@ -993,8 +1617,11 @@ async function domainResolves(domain) {
         ),
       ),
     ]);
-    return Array.isArray(result) && result.length > 0;
+    const resolved = Array.isArray(result) && result.length > 0;
+    runState.dnsCache.set(domain, resolved);
+    return resolved;
   } catch {
+    runState.dnsCache.set(domain, false);
     return false;
   }
 }
@@ -1460,7 +2087,8 @@ function assertProposalSafety({ contractors, proposals }) {
         field !== "enrichmentEvidence" &&
         field !== "serviceAreas" &&
         contractor[field] !== undefined &&
-        contractor[field] !== ""
+        contractor[field] !== "" &&
+        clean(contractor[field]).toUpperCase() !== "UNKNOWN"
       ) {
         throw new Error(
           `Proposal attempted to replace existing ${field} for ${proposal.contractorId}.`,
@@ -1469,7 +2097,9 @@ function assertProposalSafety({ contractors, proposals }) {
       if (
         field === "serviceAreas" &&
         Array.isArray(contractor.serviceAreas) &&
-        contractor.serviceAreas.length
+        contractor.serviceAreas.some(
+          (value) => clean(value).toUpperCase() !== "UNKNOWN",
+        )
       ) {
         throw new Error(
           `Proposal attempted to replace existing serviceAreas for ${proposal.contractorId}.`,
@@ -1509,6 +2139,13 @@ function buildReport({
   const discoveryMethodCounts = countBy(
     acceptedResults,
     (result) => result.discoveryMethod || "<UNKNOWN>",
+  );
+  const confidenceTierCounts = countBy(
+    acceptedResults,
+    (result) =>
+      result.confidenceTier ||
+      result.identityVerification?.confidenceTier ||
+      "<UNKNOWN>",
   );
   const fieldCounts = countBy(
     proposals.flatMap((proposal) =>
@@ -1563,6 +2200,13 @@ function buildReport({
     residentialIndicatorsFound:
       fieldCounts.servesResidential || 0,
     serviceAreasFound: fieldCounts.serviceAreas || 0,
+    serviceAreaValuesFound: proposals.reduce(
+      (total, proposal) =>
+        total + (proposal.set.serviceAreas?.length || 0),
+      0,
+    ),
+    licenseTransitionCases:
+      domainDispositionCounts.LICENSE_TRANSITION_REVIEW || 0,
     contractorProposals: proposals.length,
     coverage: {
       verifiedDomainRate: divide(
@@ -1612,6 +2256,7 @@ function buildReport({
     domainDispositionCounts,
     attemptedDomainDispositionCounts,
     verifiedDomainDiscoveryMethodCounts: discoveryMethodCounts,
+    verifiedDomainConfidenceTierCounts: confidenceTierCounts,
     proposalFieldCounts: fieldCounts,
     unresolvedOutcomeCounts: summarizeOutcomes(results),
     summary,
@@ -1694,27 +2339,45 @@ function buildReport({
 
 async function writeRunArtifacts({
   audit,
+  licenseTransitionReview,
   manifestBase,
   outputDirectory,
   proposals,
   rawEvidence,
   report,
+  reviewQueue,
   results,
   runId,
+  unresolved,
+  validation,
 }) {
   const paths = {
     audit: path.join(outputDirectory, "audit.json"),
+    licenseTransitionReview: path.join(
+      outputDirectory,
+      "license-transition-review.jsonl",
+    ),
     manifest: path.join(outputDirectory, "manifest.json"),
     proposals: path.join(outputDirectory, "proposals.jsonl"),
     rawEvidence: path.join(outputDirectory, "raw-evidence.jsonl"),
     report: path.join(outputDirectory, "report.json"),
+    reviewQueue: path.join(outputDirectory, "review-queue.jsonl"),
     results: path.join(outputDirectory, "results.jsonl"),
+    unresolved: path.join(outputDirectory, "unresolved.jsonl"),
+    validation: path.join(outputDirectory, "validation.json"),
   };
   await writeJsonLines(paths.proposals, proposals);
   await writeJsonLines(paths.rawEvidence, rawEvidence);
+  await writeJsonLines(paths.reviewQueue, reviewQueue);
+  await writeJsonLines(
+    paths.licenseTransitionReview,
+    licenseTransitionReview,
+  );
+  await writeJsonLines(paths.unresolved, unresolved);
   await writeJsonLines(paths.results, results);
   await writeJson(paths.audit, audit);
   await writeJson(paths.report, report);
+  await writeJson(paths.validation, validation);
   const hashes = {};
   for (const [name, filePath] of Object.entries(paths)) {
     if (name === "manifest") continue;
@@ -1725,11 +2388,16 @@ async function writeRunArtifacts({
   }
   const s3Keys = {
     audit: `imports/web-enrichment/${runId}/audit.json`,
+    licenseTransitionReview:
+      `raw/web-enrichment/${runId}/license-transition-review.jsonl`,
     manifest: `imports/web-enrichment/${runId}/manifest.json`,
     proposals: `imports/web-enrichment/${runId}/proposals.jsonl`,
     rawEvidence: `raw/web-enrichment/${runId}/evidence.jsonl`,
     report: `imports/web-enrichment/${runId}/report.json`,
+    reviewQueue: `raw/web-enrichment/${runId}/review-queue.jsonl`,
     results: `raw/web-enrichment/${runId}/outcomes.jsonl`,
+    unresolved: `raw/web-enrichment/${runId}/unresolved.jsonl`,
+    validation: `imports/web-enrichment/${runId}/validation.json`,
   };
   const manifest = {
     ...manifestBase,
@@ -1755,8 +2423,12 @@ async function uploadRunArtifacts({
     ["proposals", "application/x-ndjson"],
     ["report", "application/json"],
     ["audit", "application/json"],
+    ["validation", "application/json"],
     ["rawEvidence", "application/x-ndjson"],
     ["results", "application/x-ndjson"],
+    ["reviewQueue", "application/x-ndjson"],
+    ["licenseTransitionReview", "application/x-ndjson"],
+    ["unresolved", "application/x-ndjson"],
   ];
   let count = 0;
   for (const [name, contentType] of uploads) {
@@ -1820,6 +2492,21 @@ async function uploadFileIdempotent({
       IfNoneMatch: "*",
     }),
   );
+  const uploaded = await s3.send(
+    new HeadObjectCommand({
+      Bucket: CONTRACTOR_SOURCE_BUCKET,
+      ChecksumMode: "ENABLED",
+      Key: key,
+    }),
+  );
+  if (
+    Number(uploaded.ContentLength) !== Number(sizeBytes) ||
+    uploaded.ChecksumSHA256 !== checksum
+  ) {
+    throw new Error(
+      `Uploaded artifact verification failed for s3://${CONTRACTOR_SOURCE_BUCKET}/${key}.`,
+    );
+  }
 }
 
 function createJsonLinesAppender(filePath, { truncate }) {
@@ -2068,19 +2755,365 @@ function normalizeResultForArtifacts(result) {
   };
 }
 
+function buildSkippedResult(contractor) {
+  return {
+    contractorId: contractor.contractorId,
+    contractorIdToken: token(contractor.contractorId),
+    discoveryMethod: "",
+    domainDisposition: "SKIPPED_LICENSE_STATUS",
+    licenseStatus: contractor.licenseStatus || "",
+    outcomes: ["SKIPPED_LICENSE_STATUS"],
+    proposal: {},
+    skipReason:
+      contractor.licenseStatus !== "CLEAR"
+        ? "license_status_not_clear"
+        : "no_supported_retrofit_ids",
+  };
+}
+
+function buildUnprocessedResult(identity) {
+  return {
+    contractorId: identity.contractorId,
+    contractorIdToken: token(identity.contractorId),
+    discoveryMethod: "",
+    domainDisposition: "NOT_PROCESSED_TIME_LIMIT",
+    outcomes: ["NOT_PROCESSED_TIME_LIMIT"],
+    proposal: {},
+  };
+}
+
+function buildStatewideReviewQueue({
+  results,
+  seed,
+}) {
+  const strata = new Map();
+  for (const result of results) {
+    if (result.domainDisposition !== "VERIFIED_DOMAIN") continue;
+    const names = [
+      `discovery:${result.discoveryMethod || "unknown"}`,
+      `tier:${result.confidenceTier || result.identityVerification?.confidenceTier || "unknown"}`,
+    ];
+    for (const field of Object.keys(result.proposal || {})) {
+      if (field !== "enrichmentEvidence") {
+        names.push(`field:${field}`);
+      }
+    }
+    for (const name of names) {
+      const values = strata.get(name) || [];
+      values.push(result);
+      strata.set(name, values);
+    }
+  }
+  const selected = new Map();
+  for (const [stratum, values] of strata) {
+    const ordered = [...values].sort((left, right) =>
+      sha256Text(`${seed}|${stratum}|${left.contractorId}`).localeCompare(
+        sha256Text(`${seed}|${stratum}|${right.contractorId}`),
+      ),
+    );
+    for (const result of ordered.slice(0, 100)) {
+      const key = `${result.contractorId}|${result.domain}`;
+      const evidenceChecks = fieldEvidenceChecks(result);
+      const proposedFields = Object.keys(result.proposal || {})
+        .filter((field) => field !== "enrichmentEvidence")
+        .sort();
+      const existing = selected.get(key) || {
+        automatedAuditVerdict: proposedFields.every(
+          (field) => evidenceChecks[field] === true,
+        )
+          ? "CORRECT"
+          : "INCONCLUSIVE",
+        confidenceTier:
+          result.confidenceTier ||
+          result.identityVerification?.confidenceTier ||
+          "",
+        contractorId: result.contractorId,
+        contractorIdToken: result.contractorIdToken,
+        discoveryMethod: result.discoveryMethod,
+        domain: result.domain,
+        evidenceChecks,
+        identityVerification: result.identityVerification,
+        pagesReviewed: result.pages || [],
+        proposedFields,
+        reviewStrata: [],
+      };
+      existing.reviewStrata.push(stratum);
+      selected.set(key, existing);
+    }
+  }
+  return [...selected.values()]
+    .map((entry) => ({
+      ...entry,
+      reviewStrata: [...new Set(entry.reviewStrata)].sort(),
+    }))
+    .sort(
+      (left, right) =>
+        left.contractorId.localeCompare(right.contractorId) ||
+        left.domain.localeCompare(right.domain),
+    );
+}
+
+function buildLicenseTransitionReview(results) {
+  const values = [];
+  for (const result of results) {
+    if (
+      result.domainDisposition ===
+      "LICENSE_TRANSITION_REVIEW"
+    ) {
+      values.push({
+        contractorId: result.contractorId,
+        contractorIdToken: result.contractorIdToken,
+        databaseLicenseNumber:
+          result.identityVerification?.databaseLicenseNumber || "",
+        discoveryMethod: result.discoveryMethod,
+        domain: result.domain,
+        identityVerification: result.identityVerification,
+        websiteLicenseNumbers:
+          result.identityVerification?.websiteLicenseNumbers || [],
+      });
+    }
+    for (const attempt of result.attemptedDomains || []) {
+      if (
+        attempt.disposition !==
+        "LICENSE_TRANSITION_REVIEW"
+      ) {
+        continue;
+      }
+      values.push({
+        contractorId: result.contractorId,
+        contractorIdToken: result.contractorIdToken,
+        databaseLicenseNumber:
+          attempt.databaseLicenseNumber || "",
+        discoveryMethod: "",
+        domain: attempt.domain,
+        websiteLicenseNumbers:
+          attempt.websiteLicenseNumbers || [],
+      });
+    }
+  }
+  return [
+    ...new Map(
+      values.map((value) => [
+        `${value.contractorId}|${value.domain}|${value.websiteLicenseNumbers.join(",")}`,
+        value,
+      ]),
+    ).values(),
+  ].sort(
+    (left, right) =>
+      left.contractorId.localeCompare(right.contractorId) ||
+      left.domain.localeCompare(right.domain),
+  );
+}
+
+function buildUnresolvedRecords({
+  identities,
+  resultsById,
+}) {
+  const records = [];
+  for (const identity of identities) {
+    const result = resultsById.get(identity.contractorId);
+    const unresolvedFields = identity.fieldsNeeded.filter(
+      (field) =>
+        !Object.hasOwn(result?.proposal || {}, field),
+    );
+    if (
+      !unresolvedFields.length &&
+      result?.domainDisposition === "VERIFIED_DOMAIN"
+    ) {
+      continue;
+    }
+    records.push({
+      attemptedDomainCount:
+        result?.attemptedDomainCount || 0,
+      contractorId: identity.contractorId,
+      contractorIdToken: token(identity.contractorId),
+      domainDisposition:
+        result?.domainDisposition || "NOT_PROCESSED_TIME_LIMIT",
+      outcomes: result?.outcomes || ["NOT_PROCESSED_TIME_LIMIT"],
+      unresolvedFields,
+    });
+  }
+  return records;
+}
+
+function validateFinalArtifacts({
+  contractors,
+  eligibleResults,
+  fullScope,
+  licenseTransitionReview,
+  proposals,
+  results,
+}) {
+  const failures = [];
+  const eligibleResultsById = new Map(
+    eligibleResults.map((result) => [
+      result.contractorId,
+      result,
+    ]),
+  );
+  const recordFailure = (condition, message) => {
+    if (!condition) failures.push(message);
+  };
+  recordFailure(
+    !fullScope || results.length === contractors.length,
+    "outcome accounting does not include every live contractor",
+  );
+  recordFailure(
+    new Set(results.map((result) => result.contractorId)).size ===
+      results.length,
+    "duplicate contractor outcomes",
+  );
+  recordFailure(
+    new Set(proposals.map((proposal) => proposal.contractorId)).size ===
+      proposals.length,
+    "duplicate contractor proposals",
+  );
+  const allowedFields = new Set([
+    "email",
+    "enrichmentEvidence",
+    "servesCommercial",
+    "servesResidential",
+    "serviceAreas",
+  ]);
+  for (const proposal of proposals) {
+    for (const field of Object.keys(proposal.set)) {
+      recordFailure(
+        allowedFields.has(field),
+        `protected proposal field ${field}`,
+      );
+    }
+    if (proposal.set.email) {
+      recordFailure(
+        isAcceptableEmail(
+          proposal.set.email,
+          proposal.verifiedDomain,
+        ),
+        `malformed email for ${proposal.contractorId}`,
+      );
+    }
+    if (proposal.set.serviceAreas) {
+      recordFailure(
+        new Set(proposal.set.serviceAreas).size ===
+          proposal.set.serviceAreas.length,
+        `duplicate service area for ${proposal.contractorId}`,
+      );
+    }
+    const evidence = proposal.set.enrichmentEvidence || [];
+    const evidenceKeys = evidence.map((entry) =>
+      [
+        entry.sourceId || "",
+        entry.sourceUrl || "",
+        entry.field || "",
+        entry.matchMethod || entry.matchingMethod || "",
+        entry.sourceValue || "",
+        entry.supportingTextSnippet || "",
+      ].join("|"),
+    );
+    recordFailure(
+      new Set(evidenceKeys).size === evidenceKeys.length,
+      `duplicate evidence for ${proposal.contractorId}`,
+    );
+    const result = eligibleResultsById.get(
+      proposal.contractorId,
+    );
+    const checks = fieldEvidenceChecks(result);
+    for (const field of Object.keys(proposal.set)) {
+      if (field === "enrichmentEvidence") continue;
+      recordFailure(
+        checks[field] === true,
+        `missing field evidence for ${proposal.contractorId} ${field}`,
+      );
+    }
+  }
+  for (const result of eligibleResults) {
+    if (result.domainDisposition === "VERIFIED_DOMAIN") {
+      recordFailure(
+        [
+          "TIER_A_EXACT_LICENSE",
+          "TIER_B_PHONE_AND_NAME",
+          "TIER_C_NAME_LOCATION_TRADE",
+        ].includes(
+          result.confidenceTier ||
+            result.identityVerification?.confidenceTier,
+        ),
+        `historical-seed-only domain ${result.contractorId}`,
+      );
+    }
+    if (
+      result.domainDisposition ===
+      "LICENSE_TRANSITION_REVIEW"
+    ) {
+      recordFailure(
+        Object.keys(result.proposal || {}).length === 0,
+        `license transition produced proposal ${result.contractorId}`,
+      );
+    }
+  }
+  recordFailure(
+    licenseTransitionReview.every(
+      (entry) =>
+        entry.databaseLicenseNumber &&
+        entry.websiteLicenseNumbers.length,
+    ),
+    "incomplete license-transition review record",
+  );
+  if (failures.length) {
+    throw new Error(
+      `Final contractor web-enrichment validation failed: ${failures
+        .slice(0, 20)
+        .join("; ")}`,
+    );
+  }
+  const eligibleRemaining = eligibleResults.filter(
+    (result) =>
+      result.domainDisposition === "NOT_PROCESSED_TIME_LIMIT",
+  ).length;
+  return {
+    schemaVersion: "contractor-web-enrichment-validation.v1",
+    status: eligibleRemaining ? "PARTIAL" : "PASS",
+    checkedAt: new Date().toISOString(),
+    checks: {
+      allLiveContractorsAccountedFor: true,
+      duplicateContractorOutcomes: 0,
+      duplicateContractorProposals: 0,
+      duplicateEvidenceValues: 0,
+      duplicateServiceAreaValues: 0,
+      historicalSeedOnlyAcceptedDomains: 0,
+      licenseTransitionProposals: 0,
+      malformedEmails: 0,
+      protectedFieldProposals: 0,
+      proposalsMissingFieldEvidence: 0,
+    },
+    counts: {
+      eligibleContractors: eligibleResults.length,
+      eligibleRemaining,
+      licenseTransitionCases: licenseTransitionReview.length,
+      liveContractors: contractors.length,
+      proposals: proposals.length,
+    },
+    invariants: {
+      certificationsModified: false,
+      dynamodbWrites: 0,
+      existingSubstantiveValuesReplaced: false,
+      programMembershipsModified: false,
+      supportedRetrofitIdsModified: false,
+    },
+    failures: [],
+  };
+}
+
 function finalIdentityPolicyAccepts(signals) {
   return Boolean(
     !signals.conflictingLicense &&
       !signals.parkedOrUnrelated &&
-      (signals.exactLicense ||
-        signals.exactPhone ||
-        (signals.nameStrong &&
-          signals.tradeMatch &&
-          (signals.streetMatch ||
-            signals.zipMatch ||
-            signals.sourceBackedSeed ||
-            signals.officialSeed ||
-            signals.osmStrongSeed))),
+      !signals.conflictingPhoneAndAddress &&
+      !signals.substantiallyConflictingGeography &&
+      !signals.clearlyUnrelatedBusinessType &&
+      [
+        "TIER_A_EXACT_LICENSE",
+        "TIER_B_PHONE_AND_NAME",
+        "TIER_C_NAME_LOCATION_TRADE",
+      ].includes(signals.confidenceTier),
   );
 }
 
@@ -2214,6 +3247,117 @@ async function readJsonLines(filePath) {
   }
 }
 
+async function readContractorIds(filePath) {
+  if (!filePath) return new Set();
+  const contents = await fsPromises.readFile(
+    path.resolve(filePath),
+    "utf8",
+  );
+  try {
+    const parsed = JSON.parse(contents);
+    const values = Array.isArray(parsed)
+      ? parsed
+      : parsed.contractorIds || parsed.entries || [];
+    return new Set(
+      values
+        .map((value) =>
+          typeof value === "string"
+            ? value
+            : value?.contractorId,
+        )
+        .filter(Boolean),
+    );
+  } catch {
+    return new Set(
+      contents
+        .split("\n")
+        .filter(Boolean)
+        .map((line) => JSON.parse(line))
+        .map((value) => value.contractorId)
+        .filter(Boolean),
+    );
+  }
+}
+
+async function nextCheckpointSequence(outputDirectory) {
+  const directory = path.join(outputDirectory, "checkpoints");
+  try {
+    const names = await fsPromises.readdir(directory);
+    const sequences = names
+      .map((name) => Number.parseInt(name.match(/^(\d+)\.json$/)?.[1], 10))
+      .filter(Number.isInteger);
+    return sequences.length ? Math.max(...sequences) + 1 : 0;
+  } catch (error) {
+    if (error?.code === "ENOENT") return 0;
+    throw error;
+  }
+}
+
+async function writeCheckpointSnapshot({
+  completedContractorCount,
+  deepPassProcessed = 0,
+  outputDirectory,
+  phase,
+  runId,
+  runState,
+  s3,
+  selectedContractorIds,
+  sequence,
+  totalContractorCount,
+  upload,
+}) {
+  const sequenceName = String(sequence).padStart(6, "0");
+  const localPath = path.join(
+    outputDirectory,
+    "checkpoints",
+    `${sequenceName}.json`,
+  );
+  const payload = {
+    schemaVersion: "contractor-web-enrichment-checkpoint.v1",
+    runId,
+    sequence,
+    phase,
+    createdAt: new Date().toISOString(),
+    completedContractorCount,
+    totalContractorCount,
+    remainingContractorCount: Math.max(
+      0,
+      totalContractorCount - completedContractorCount,
+    ),
+    deepPassProcessed,
+    caches: {
+      dnsEntries: runState.dnsCache.size,
+      domainCrawlEntries: runState.domainCrawlCache.size,
+      domainVerificationEntries:
+        runState.verificationCache.size,
+      robotsEntries: runState.robotsCache.size,
+    },
+    requestMetrics: runState.requestMetrics.snapshot(),
+    ...(selectedContractorIds
+      ? {
+          selectedContractorHash: sha256Text(
+            selectedContractorIds.join("\n"),
+          ),
+          selectedContractorIds,
+        }
+      : {}),
+  };
+  await writeJson(localPath, payload);
+  const s3Key =
+    `imports/web-enrichment/${runId}/checkpoints/${sequenceName}.json`;
+  if (upload) {
+    const stat = await fsPromises.stat(localPath);
+    await uploadFileIdempotent({
+      contentType: "application/json",
+      key: s3Key,
+      localPath,
+      s3,
+      sizeBytes: stat.size,
+    });
+  }
+  return { localPath, s3Key };
+}
+
 async function writeJsonLines(filePath, values) {
   await fsPromises.mkdir(path.dirname(filePath), {
     recursive: true,
@@ -2283,10 +3427,12 @@ function cleanError(error) {
 async function assertReviewedPilotApproval(options) {
   if (
     !options.approvedPilotReportSha256 ||
+    !options.approvedManualBundleSha256 ||
+    !options.reviewedManualBundle ||
     !options.approval
   ) {
     throw new Error(
-      "Full scope requires --approved-pilot-report-sha256 and --approval.",
+      "Full scope requires the approved pilot report, manual-review bundle, hashes, and approval run ID.",
     );
   }
   const reportPath = path.resolve(options.reviewedPilotReport);
@@ -2311,11 +3457,36 @@ async function assertReviewedPilotApproval(options) {
       "The reviewed pilot report does not satisfy the full-scope accuracy guards.",
     );
   }
+  const manualBundlePath = path.resolve(
+    options.reviewedManualBundle,
+  );
+  const manualBundleSha256 = await sha256File(manualBundlePath);
+  if (
+    manualBundleSha256 !== options.approvedManualBundleSha256 ||
+    manualBundleSha256 !==
+      "45f9281129e58042319df19f88007c69b8f8efa3499b8d5ef3ebd6aab5422d9a"
+  ) {
+    throw new Error("The reviewed manual-audit bundle hash changed.");
+  }
+  const manualRows = await readJsonLines(manualBundlePath);
+  if (
+    manualRows.length !== 400 ||
+    new Set(
+      manualRows.map(
+        (row) => `${row.contractorId}|${row.domain}`,
+      ),
+    ).size !== 400
+  ) {
+    throw new Error(
+      "The reviewed manual-audit bundle is not the approved 400-row sample.",
+    );
+  }
 }
 
 function parseArgs(argv) {
   const options = {
     approval: "",
+    approvedManualBundleSha256: "",
     approvedPilotReportSha256: "",
     auditSeed: "retrofi-statewide-web-enrichment-audit-v1",
     cacheDirectory: path.resolve(
@@ -2323,20 +3494,27 @@ function parseArgs(argv) {
       "contractor-web-enrichment",
       "cache",
     ),
-    concurrency: 24,
+    checkpointEvery: 500,
+    concurrency: 32,
+    deepIfTime: false,
+    excludeContractorsFile: "",
+    maxRuntimeHours: 16,
     mode: "fast",
     osmPbfPath: "",
     outputDirectory: "",
     pilotSize: 5_000,
     profile: "",
     quiet: false,
+    reserveFinalizationMinutes: 60,
     resume: false,
+    reviewedManualBundle: "",
     reviewedPilotReport: "",
     runId: "",
     scope: "",
     selectionSeed:
       "retrofi-statewide-web-enrichment-pilot-v1",
     timeoutMs: 8_000,
+    targetContractorsFile: "",
     upload: false,
     write: false,
   };
@@ -2361,6 +3539,24 @@ function parseArgs(argv) {
         requiredArg(argv, ++index, arg),
         arg,
         100,
+      );
+    } else if (arg === "--checkpoint-every") {
+      options.checkpointEvery = positiveInteger(
+        requiredArg(argv, ++index, arg),
+        arg,
+        10_000,
+      );
+    } else if (arg === "--max-runtime-hours") {
+      options.maxRuntimeHours = positiveNumber(
+        requiredArg(argv, ++index, arg),
+        arg,
+        24,
+      );
+    } else if (arg === "--reserve-finalization-minutes") {
+      options.reserveFinalizationMinutes = positiveInteger(
+        requiredArg(argv, ++index, arg),
+        arg,
+        240,
       );
     } else if (arg === "--timeout-ms") {
       options.timeoutMs = positiveInteger(
@@ -2390,12 +3586,38 @@ function parseArgs(argv) {
         ++index,
         arg,
       );
+    } else if (arg === "--reviewed-manual-bundle") {
+      options.reviewedManualBundle = requiredArg(
+        argv,
+        ++index,
+        arg,
+      );
+    } else if (arg === "--approved-manual-bundle-sha256") {
+      options.approvedManualBundleSha256 = requiredArg(
+        argv,
+        ++index,
+        arg,
+      );
+    } else if (arg === "--target-contractors-file") {
+      options.targetContractorsFile = requiredArg(
+        argv,
+        ++index,
+        arg,
+      );
+    } else if (arg === "--exclude-contractors-file") {
+      options.excludeContractorsFile = requiredArg(
+        argv,
+        ++index,
+        arg,
+      );
     } else if (arg === "--approval") {
       options.approval = requiredArg(argv, ++index, arg);
     } else if (arg === "--resume") {
       options.resume = true;
     } else if (arg === "--upload") {
       options.upload = true;
+    } else if (arg === "--deep-if-time") {
+      options.deepIfTime = true;
     } else if (arg === "--write") {
       options.write = true;
     } else if (arg === "--quiet") {
@@ -2459,6 +3681,20 @@ function positiveInteger(value, flag, maximum) {
   return parsed;
 }
 
+function positiveNumber(value, flag, maximum) {
+  const parsed = Number(value);
+  if (
+    !Number.isFinite(parsed) ||
+    parsed <= 0 ||
+    parsed > maximum
+  ) {
+    throw new Error(
+      `${flag} must be greater than zero and no more than ${maximum}.`,
+    );
+  }
+  return parsed;
+}
+
 function printHelp() {
   console.log(`Run the one-time contractor web-enrichment pipeline.
 
@@ -2467,22 +3703,33 @@ Usage:
   npm run contractors:web-enrich -- --full --mode fast \\
     --reviewed-pilot-report <path> \\
     --approved-pilot-report-sha256 <hash> \\
+    --reviewed-manual-bundle <path> \\
+    --approved-manual-bundle-sha256 <hash> \\
     --approval <pilot-run-id>
 
 Options:
   --profile <name>          AWS profile. Must be retrofi-prod.
   --pilot-size <count>      Pilot size. Default: 5000.
-  --concurrency <count>     Concurrent contractor workers. Default: 24.
+  --concurrency <count>     Maximum adaptive concurrency. Default: 32.
+  --checkpoint-every <n>    Contractors per checkpoint. Default: 500.
   --timeout-ms <count>      Request timeout. Default: 8000.
+  --max-runtime-hours <n>   Full-run wall-clock ceiling. Default: 16.
+  --reserve-finalization-minutes <n>
+                             Finalization reserve. Default: 60.
   --run-id <id>             Stable run ID for resume.
   --resume                  Resume completed contractor results.
-  --upload                  Upload completed pilot artifacts to source S3.
+  --upload                  Upload checkpoints and final artifacts to S3.
+  --deep-if-time            Run deep processing after the full fast pass.
+  --target-contractors-file <path>
+                             Process only listed contractor IDs.
+  --exclude-contractors-file <path>
+                             Exclude listed IDs from pilot selection.
   --osm-pbf <path>          Reuse a downloaded California PBF.
   --cache-dir <path>        Persistent source cache directory.
   --output-dir <path>       Local run artifact directory.
   --quiet                   Suppress progress output.
 
-DynamoDB write mode is disabled until a pilot report is explicitly reviewed.`);
+DynamoDB write mode is unavailable and --write always fails closed.`);
 }
 
 async function main() {

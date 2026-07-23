@@ -15,7 +15,7 @@
     "@aws-sdk/lib-dynamodb": "3.1073.0",
     "@aws-sdk/s3-request-presigner": "3.1075.0",
     "express": "5.2.1",
-    "fast-xml-parser": "5.9.3",
+    "fast-xml-parser": "5.10.1",
     "pdf-parse": "1.1.4",
     "serverless-http": "4.0.0"
   }

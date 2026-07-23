@@ -1,0 +1,303 @@
+{
+  "schemaVersion": "contractor-web-enrichment-manual-audit-regressions.v1",
+  "sourceBundle": {
+    "path": "var/contractor-web-enrichment/web-enrichment-pilot-fast-20260723T205700Z/manual-review-sample.jsonl",
+    "sha256": "45f9281129e58042319df19f88007c69b8f8efa3499b8d5ef3ebd6aab5422d9a"
+  },
+  "findings": [
+    {
+      "id": "toro_wrong_australian_domain",
+      "type": "domain_identity",
+      "businessName": "TORO CONSTRUCTION",
+      "licenseNumber": "838484",
+      "phone": "8054524047",
+      "address": {
+        "line1": "3463 STATE STREET APT #365",
+        "city": "SANTA BARBARA",
+        "state": "CA",
+        "postalCode": "93105"
+      },
+      "licenseClassifications": ["B", "C-10", "C-36"],
+      "domain": "tonytoroconstruction.com",
+      "seed": {
+        "sourceType": "openstreetmap",
+        "matchMethod": "exact_phone"
+      },
+      "pageText": "Tony Toro Construction is Australia's property buyers agency. Our commercial buyers agents help clients find properties in Brisbane and Sydney.",
+      "expectedDisposition": "REJECTED_DOMAIN"
+    },
+    {
+      "id": "norcal_chimney_items_prefix",
+      "type": "email",
+      "businessName": "NOR-CAL CHIMNEY SERVICE",
+      "domain": "norcalchimneyservice.com",
+      "email": "items.rodney@norcalchimneyservice.com",
+      "expectedAccepted": false
+    },
+    {
+      "id": "empire_fenix_form_label_prefix",
+      "type": "email",
+      "businessName": "EMPIRE FENIX PAINTING",
+      "domain": "empirefenixpainting.com",
+      "email": "email*message*submitcontactsempirefenixpainting09@gmail.com",
+      "expectedAccepted": false
+    },
+    {
+      "id": "laguna_habitat_restoration_not_commercial",
+      "type": "customer_type",
+      "businessName": "LAGUNA LANDSCAPING",
+      "field": "servesCommercial",
+      "pageText": "These plants play a critical role in habitat restoration projects for the Laguna Foundation and other local organizations and government agencies.",
+      "expectedValue": null
+    },
+    {
+      "id": "san_gabriel_nursery_demand_not_commercial",
+      "type": "customer_type",
+      "businessName": "SAN GABRIEL NURSERY AND FLORIST",
+      "field": "servesCommercial",
+      "pageText": "There has also been an increase in commercial demand for using the larger Pachiras for decorating office buildings, hotels and shopping malls.",
+      "expectedValue": null
+    },
+    {
+      "id": "woody_person_name_not_service_area",
+      "type": "service_area",
+      "businessName": "WOODY'S SCREENS CENTER",
+      "pageText": "We have been serving Burbank and surrounding areas since Woody started it back in 1950.",
+      "placeNames": ["Burbank", "Woody"],
+      "expectedIncluded": ["Burbank"],
+      "expectedExcluded": ["Woody"]
+    },
+    {
+      "id": "freedom_business_name_not_service_area",
+      "type": "service_area",
+      "businessName": "DYMEK'S FREEDOM PLUMBING INC",
+      "pageText": "Serving Orange County since 1999, Freedom Plumbing specialties include water heaters.",
+      "placeNames": ["Freedom", "Orange County"],
+      "expectedIncluded": ["Orange County"],
+      "expectedExcluded": ["Freedom"]
+    },
+    {
+      "id": "economy_roofing_industry_common_noun",
+      "type": "service_area",
+      "businessName": "ECONOMY ROOFING",
+      "pageText": "For five decades, we have been serving Southern California homeowners and businesses in the roofing industry.",
+      "placeNames": ["Industry"],
+      "expectedIncluded": ["Southern California"],
+      "expectedExcluded": ["Industry", "City of Industry"]
+    },
+    {
+      "id": "anchor_awning_industry_common_noun",
+      "type": "service_area",
+      "businessName": "ANCHOR AWNING",
+      "pageText": "We have been serving homeowners and businesses in Southern California since 1985 and have decades of experience in the awning industry.",
+      "placeNames": ["Industry"],
+      "expectedIncluded": ["Southern California"],
+      "expectedExcluded": ["Industry", "City of Industry"]
+    },
+    {
+      "id": "dynamite_roofing_clay_material",
+      "type": "service_area",
+      "businessName": "DYNAMITE ROOFING",
+      "pageText": "Serving Monterey, Salinas, and surrounding areas with clay tile roofing.",
+      "placeNames": ["Clay", "Monterey", "Salinas"],
+      "expectedIncluded": ["Monterey", "Salinas"],
+      "expectedExcluded": ["Clay"]
+    },
+    {
+      "id": "blue_sky_preserve_carson_city",
+      "type": "service_area",
+      "businessName": "BLUE SKY SHUTTERS & SHADES INC",
+      "pageText": "We proudly serve Carson City and surrounding areas.",
+      "placeNames": ["Carson"],
+      "expectedIncluded": ["Carson City"],
+      "expectedExcluded": ["Carson"]
+    },
+    {
+      "id": "south_shore_preserve_carson_valley",
+      "type": "service_area",
+      "businessName": "SOUTH SHORE GUTTERS",
+      "pageText": "Our service area includes Carson Valley and nearby communities.",
+      "placeNames": ["Carson"],
+      "expectedIncluded": ["Carson Valley"],
+      "expectedExcluded": ["Carson"]
+    },
+    {
+      "id": "south_coast_preserve_corona_del_mar",
+      "type": "service_area",
+      "businessName": "SOUTH COAST WINDOW TINTING INC",
+      "pageText": "We serve Corona del Mar and surrounding coastal communities.",
+      "placeNames": ["Corona"],
+      "expectedIncluded": ["Corona del Mar"],
+      "expectedExcluded": ["Corona"]
+    },
+    {
+      "id": "avaunt_preserve_corona_del_mar",
+      "type": "service_area",
+      "businessName": "AVAUNT GARAGE DOORS INC",
+      "pageText": "Proudly serving Corona del Mar for garage door installation and repair.",
+      "placeNames": ["Corona"],
+      "expectedIncluded": ["Corona del Mar"],
+      "expectedExcluded": ["Corona"]
+    },
+    {
+      "id": "dalinghaus_preserve_woodland_hills",
+      "type": "service_area",
+      "businessName": "DALINGHAUS CONSTRUCTION INC",
+      "pageText": "We provide foundation services throughout Woodland Hills.",
+      "placeNames": ["Woodland"],
+      "expectedIncluded": ["Woodland Hills"],
+      "expectedExcluded": ["Woodland"]
+    },
+    {
+      "id": "cavalier_preserve_woodland_hills",
+      "type": "service_area",
+      "businessName": "CAVALIER BUILDERS INC",
+      "pageText": "Our service area includes Woodland Hills and nearby Los Angeles communities.",
+      "placeNames": ["Woodland", "Los Angeles"],
+      "expectedIncluded": ["Los Angeles", "Woodland Hills"],
+      "expectedExcluded": ["Woodland"]
+    },
+    {
+      "id": "a_plus_tree_preserve_richmond_district",
+      "type": "service_area",
+      "businessName": "A PLUS TREE LLC",
+      "pageText": "We serve San Francisco's Richmond district with professional tree care.",
+      "placeNames": ["Richmond", "San Francisco"],
+      "expectedIncluded": ["Richmond District", "San Francisco"],
+      "expectedExcluded": ["Richmond"]
+    },
+    {
+      "id": "frontline_preserve_paradise_valley",
+      "type": "service_area",
+      "businessName": "FRONTLINE ELECTRICAL SERVICES",
+      "pageText": "We proudly serve Paradise Valley and nearby communities.",
+      "placeNames": ["Paradise"],
+      "expectedIncluded": ["Paradise Valley"],
+      "expectedExcluded": ["Paradise"]
+    },
+    {
+      "id": "burgess_preserve_antelope_valley",
+      "type": "service_area",
+      "businessName": "BURGESS HEATING AND AIR INC",
+      "pageText": "Serving Antelope Valley homes and businesses with HVAC service.",
+      "placeNames": ["Antelope"],
+      "expectedIncluded": ["Antelope Valley"],
+      "expectedExcluded": ["Antelope"]
+    },
+    {
+      "id": "rock_hard_preserve_san_fernando_valley",
+      "type": "service_area",
+      "businessName": "ROCK HARD EFFEX INC",
+      "pageText": "Our service area includes the San Fernando Valley.",
+      "placeNames": ["San Fernando"],
+      "expectedIncluded": ["San Fernando Valley"],
+      "expectedExcluded": ["San Fernando"]
+    },
+    {
+      "id": "drain_pros_preserve_san_fernando_valley",
+      "type": "service_area",
+      "businessName": "DRAIN PROS",
+      "pageText": "Proudly serving Ventura County, the San Fernando Valley, and Santa Clarita.",
+      "placeNames": ["San Fernando", "Santa Clarita", "Ventura County"],
+      "expectedIncluded": ["San Fernando Valley", "Santa Clarita", "Ventura County"],
+      "expectedExcluded": ["San Fernando"]
+    },
+    {
+      "id": "secure_tech_preserve_san_fernando_valley",
+      "type": "service_area",
+      "businessName": "SECURE TECH",
+      "pageText": "Serving Los Angeles, San Fernando Valley, and Santa Clarita.",
+      "placeNames": ["Los Angeles", "San Fernando", "Santa Clarita"],
+      "expectedIncluded": ["Los Angeles", "San Fernando Valley", "Santa Clarita"],
+      "expectedExcluded": ["San Fernando"]
+    },
+    {
+      "id": "tassio_preserve_san_fernando_valley",
+      "type": "service_area",
+      "businessName": "TASSIO TEMPERATURE CONTROL",
+      "pageText": "Serving all of the San Fernando Valley.",
+      "placeNames": ["San Fernando"],
+      "expectedIncluded": ["San Fernando Valley"],
+      "expectedExcluded": ["San Fernando"]
+    },
+    {
+      "id": "z_signs_preserve_san_fernando_valley",
+      "type": "service_area",
+      "businessName": "Z SIGNS & GRAPHICS INC",
+      "pageText": "We love supporting and serving our local businesses in Simi Valley, San Fernando Valley, and Los Angeles.",
+      "placeNames": ["Los Angeles", "San Fernando", "Simi Valley"],
+      "expectedIncluded": ["Los Angeles", "San Fernando Valley", "Simi Valley"],
+      "expectedExcluded": ["San Fernando"]
+    },
+    {
+      "id": "royal_fireplace_preserve_san_gabriel_valley",
+      "type": "service_area",
+      "businessName": "ROYAL FIREPLACE INC",
+      "pageText": "Serving the San Gabriel Valley.",
+      "placeNames": ["San Gabriel"],
+      "expectedIncluded": ["San Gabriel Valley"],
+      "expectedExcluded": ["San Gabriel"]
+    },
+    {
+      "id": "delta_preserve_coachella_valley",
+      "type": "service_area",
+      "businessName": "DELTA CUSTOM FINISHES",
+      "pageText": "We are currently serving the entire Coachella Valley and surrounding areas.",
+      "placeNames": ["Coachella"],
+      "expectedIncluded": ["Coachella Valley"],
+      "expectedExcluded": ["Coachella"]
+    },
+    {
+      "id": "clemmons_preserve_playa_vista",
+      "type": "service_area",
+      "businessName": "CLEMMONS MITCH PLUMBING",
+      "pageText": "Serving Culver City, Playa Vista, and surrounding areas.",
+      "placeNames": ["Culver City", "Vista"],
+      "expectedIncluded": ["Culver City", "Playa Vista"],
+      "expectedExcluded": ["Vista"]
+    },
+    {
+      "id": "avaunt_preserve_portola_hills",
+      "type": "service_area",
+      "businessName": "AVAUNT GARAGE DOORS INC",
+      "pageText": "Our service area includes Portola Hills and nearby communities.",
+      "placeNames": ["Portola"],
+      "expectedIncluded": ["Portola Hills"],
+      "expectedExcluded": ["Portola"]
+    },
+    {
+      "id": "pro_star_license_transition",
+      "type": "license_transition",
+      "businessName": "PRO STAR MECHANICAL SERVICES",
+      "licenseNumber": "936846",
+      "phone": "7149991177",
+      "address": {
+        "line1": "2643 W WOODLAND DRIVE",
+        "city": "ANAHEIM",
+        "state": "CA",
+        "postalCode": "92801"
+      },
+      "licenseClassifications": ["B", "C-20", "C-4"],
+      "pageText": "Pro Star Mechanical Services. Call 714-999-1177. CA Contractor License #1044879. We provide commercial HVAC services.",
+      "expectedDisposition": "LICENSE_TRANSITION_REVIEW",
+      "expectedWebsiteLicenses": ["1044879"]
+    },
+    {
+      "id": "willbii_license_transition",
+      "type": "license_transition",
+      "businessName": "WILLBII INC",
+      "licenseNumber": "1108001",
+      "phone": "6268088766",
+      "address": {
+        "line1": "2158 HUNTINGTON DRIVE",
+        "city": "SAN MARINO",
+        "state": "CA",
+        "postalCode": "91108"
+      },
+      "licenseClassifications": ["B"],
+      "pageText": "Willbii Inc provides construction services. Call 626-808-8766. California contractor license #1113528.",
+      "expectedDisposition": "LICENSE_TRANSITION_REVIEW",
+      "expectedWebsiteLicenses": ["1113528"]
+    }
+  ]
+}

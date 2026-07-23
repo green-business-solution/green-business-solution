@@ -18,8 +18,9 @@ The workflow may propose only these missing fields:
 - `serviceAreas`
 - `enrichmentEvidence`
 
-An existing scalar value, including `UNKNOWN`, is treated as filled.
-An existing nonempty `serviceAreas` array is treated as filled.
+An exact scalar value of `UNKNOWN` is unresolved and may receive a stronger evidence-backed proposal.
+An absent or `["UNKNOWN"]` service-area array is unresolved.
+Every other existing nonempty scalar or service-area array is treated as substantively filled.
 Existing emails, customer-type values, service areas, program memberships, certifications, and evidence are never replaced.
 The workflow cannot propose changes to license fields, classifications, or `supportedRetrofitIds`.
 It never infers program memberships or certifications from a contractor website.
@@ -59,9 +60,16 @@ For unresolved identities, fast mode generates no more than 12 candidates from b
 Deep mode supports up to 40 candidates and eight pages but is not part of the initial pilot.
 
 A candidate must resolve in DNS and return usable HTML.
-The first-party page must contain an exact CSLB license number, an exact CSLB phone number, or a strong nonconflicting combination of business name, location, and compatible trade language.
+The current first-party page must satisfy one of three confidence tiers.
+
+1. `TIER_A_EXACT_LICENSE` requires the exact current CSLB license number.
+2. `TIER_B_PHONE_AND_NAME` requires the exact current contractor phone plus a strong business-name or recognized-DBA match.
+3. `TIER_C_NAME_LOCATION_TRADE` requires a strong business-name or recognized-DBA match, an exact street address or ZIP, and compatible contractor trade language.
+
 Name similarity alone is never enough.
-A conflicting license number, parked domain, or unrelated identity rejects the candidate.
+Historical official-directory and OpenStreetMap associations are discovery clues only and never satisfy current identity verification.
+A conflicting phone and address, conflicting geographic market, parked domain, or unrelated identity rejects the candidate.
+When a site strongly matches the business but displays a different CSLB license, it is quarantined as `LICENSE_TRANSITION_REVIEW` and cannot produce a proposal.
 
 ## Bounded Crawl And Extraction
 
@@ -69,13 +77,16 @@ The crawler checks HTTPS before HTTP, respects `robots.txt`, permits one active 
 Fast mode reads the homepage and at most three relevant internal contact, service, about, location, or service-area pages.
 It does not crawl social networks, submit forms, execute downloads, or retain full HTML in the durable artifacts.
 
-Email proposals must be visible text or a `mailto:` value.
-Placeholder, developer, privacy, unrelated third-party, image filename, and marketing-agency contacts are rejected.
-The workflow prefers general business addresses and addresses on the verified first-party domain.
+Email extraction prefers decoded `mailto:` values, isolated DOM text nodes, and then carefully bounded visible-text matches.
+Placeholder, phone-prefixed, form-label-contaminated, developer, privacy, unrelated third-party, image filename, and marketing-agency contacts are rejected.
+Clearly published small-business addresses on providers such as Gmail, Yahoo, Outlook, and SBCGlobal remain eligible.
 
-Customer-type proposals require explicit service context.
+Customer-type proposals require an explicit actor, service, customer, property, project, installation, repair, or maintenance relationship.
 The pipeline does not infer commercial or residential work from CSLB classifications.
-Service areas require explicit coverage language and are normalized against the official California city and county list.
+Generic market-demand, product, blog, privacy, habitat-restoration, and agency references do not establish customer type.
+Service areas require explicit coverage language and use typed, longest-match-first extraction against California cities, counties, and reviewed regions.
+Complete place names such as `San Fernando Valley`, `Corona del Mar`, and `Woodland Hills` take precedence over contained shorter names.
+Ambiguous common words such as `Clay`, `Freedom`, `Industry`, and `Woody` require an explicit typed place cue.
 The contractor mailing address is never treated as a service area.
 
 Every proposed field includes the source URL, retrieval time, matching method, bounded supporting text, and source value.
@@ -96,7 +107,7 @@ npm run contractors:web-enrich -- \
 
 Use `--resume` with the same run ID after an interrupted run.
 Use `--upload` only after the local report, proposals, evidence, and hashes have been inspected.
-Pilot upload writes only six review artifacts to the existing private contractor-source S3 bucket.
+Pilot upload writes only review artifacts and immutable checkpoints to the existing private contractor-source S3 bucket.
 It never writes to DynamoDB.
 
 The report records every selected contractor outcome, all skipped license-status counts, source and artifact hashes, domain dispositions, discovery methods, field counts, coverage, sanitized examples, and the audit gate.
@@ -108,7 +119,7 @@ Its deterministic evidence checks are a review aid, not a substitute for the req
 The pilot report always has `statewideWriteAuthorized: false` and `status: AWAITING_REVIEW`.
 The statewide run must not begin until the pilot has been explicitly reviewed, verified-domain precision is at least 98 percent, no systemic identity problem is present, and no major source or parser failure is present.
 
-The full-scope command requires the exact reviewed pilot report path, its SHA-256 hash, and the pilot run ID:
+The full-scope command requires the exact reviewed pilot report and manual-audit bundle paths, both SHA-256 hashes, and the pilot run ID:
 
 ```sh
 npm run contractors:web-enrich -- \
@@ -117,6 +128,8 @@ npm run contractors:web-enrich -- \
   --profile retrofi-prod \
   --reviewed-pilot-report "<pilot-report-path>" \
   --approved-pilot-report-sha256 "<pilot-report-sha256>" \
+  --reviewed-manual-bundle "<manual-review-bundle-path>" \
+  --approved-manual-bundle-sha256 "<manual-review-bundle-sha256>" \
   --approval "<pilot-run-id>"
 ```
 
@@ -161,6 +174,10 @@ The pilot gate remains `AWAITING_REVIEW`, requires human review, and has `statew
 No full statewide run or DynamoDB update was executed.
 Deep-mode benefit remains unmeasured because no reviewed deep follow-up pilot was run.
 
+The independently completed manual review inspected 100 contractor/domain pairs from the 400-row bundle.
+It found 99 correct domains and one incorrect domain, for 99.0 percent observed domain precision.
+The statewide proposal run is approved only after the 30 recorded identity, email, customer-type, service-area, and license-transition findings pass the committed regression fixture and the automatic preflight.
+
 ## S3 Artifacts
 
 An approved pilot upload uses:
@@ -168,15 +185,48 @@ An approved pilot upload uses:
 ```text
 raw/web-enrichment/<run-id>/evidence.jsonl
 raw/web-enrichment/<run-id>/outcomes.jsonl
+raw/web-enrichment/<run-id>/review-queue.jsonl
+raw/web-enrichment/<run-id>/license-transition-review.jsonl
+raw/web-enrichment/<run-id>/unresolved.jsonl
 imports/web-enrichment/<run-id>/manifest.json
 imports/web-enrichment/<run-id>/proposals.jsonl
 imports/web-enrichment/<run-id>/report.json
-imports/web-enrichment/<run-id>/audit.json
+imports/web-enrichment/<run-id>/validation.json
+imports/web-enrichment/<run-id>/checkpoints/<sequence>.json
 ```
 
 Uploads use SHA-256 checksums and refuse to replace a different object at the same key.
 Raw evidence and proposals remain in the existing private contractor-source bucket.
 Only sanitized summaries belong in GitHub documentation.
+The local run directory also retains an automated `audit.json` review aid.
+
+## Statewide Resume
+
+Use a stable run ID, `--upload`, and `--deep-if-time` for the approved statewide proposal run.
+The fast pass processes every eligible contractor before deep processing begins.
+The run starts with conservative concurrency and adapts within the configured bound based on timeout, HTTP 429, HTTP 5xx, and network-error pressure.
+It reserves the final hour of the 16-hour ceiling for validation and uploads.
+
+The run continuously persists selected contractor IDs, completed outcomes and proposal state, DNS results, robots rules, parsed page state and content hashes, domain-verification results, deep-pass progress, and immutable numbered checkpoints.
+Resume an interrupted run with the same run ID and output directory:
+
+```sh
+npm run contractors:web-enrich -- \
+  --full \
+  --mode fast \
+  --profile retrofi-prod \
+  --run-id "<statewide-run-id>" \
+  --resume \
+  --upload \
+  --deep-if-time \
+  --reviewed-pilot-report "<pilot-report-path>" \
+  --approved-pilot-report-sha256 "<pilot-report-sha256>" \
+  --reviewed-manual-bundle "<manual-review-bundle-path>" \
+  --approved-manual-bundle-sha256 "<manual-review-bundle-sha256>" \
+  --approval "<pilot-run-id>"
+```
+
+Passing `--write` fails before an AWS client is created.
 
 ## Operational Safety
 

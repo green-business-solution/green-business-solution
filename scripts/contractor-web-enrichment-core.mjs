@@ -62,18 +62,37 @@ const FREE_EMAIL_DOMAINS = new Set([
 ]);
 
 const SERVICE_REGIONS = [
+  "Antelope Valley",
   "Bay Area",
+  "Carson City",
+  "Carson Valley",
   "Central Coast",
   "Central Valley",
+  "Coachella Valley",
+  "Corona del Mar",
   "Greater Los Angeles",
   "Inland Empire",
   "Northern California",
   "Orange County",
+  "Paradise Valley",
+  "Playa Vista",
+  "Portola Hills",
+  "Richmond District",
   "Sacramento Area",
   "San Diego County",
+  "San Fernando Valley",
   "San Francisco Bay Area",
+  "San Gabriel Valley",
   "Southern California",
+  "Woodland Hills",
 ];
+
+const AMBIGUOUS_SINGLE_WORD_PLACES = new Set([
+  "clay",
+  "freedom",
+  "industry",
+  "woody",
+]);
 
 export function isUsableContractor(contractor) {
   return (
@@ -85,14 +104,19 @@ export function isUsableContractor(contractor) {
 
 export function fieldsNeedingEnrichment(contractor) {
   const fields = [];
-  if (!clean(contractor.email)) fields.push("email");
-  if (!clean(contractor.servesCommercial)) {
+  if (isUnresolvedScalar(contractor.email)) fields.push("email");
+  if (isUnresolvedScalar(contractor.servesCommercial)) {
     fields.push("servesCommercial");
   }
-  if (!clean(contractor.servesResidential)) {
+  if (isUnresolvedScalar(contractor.servesResidential)) {
     fields.push("servesResidential");
   }
-  if (!Array.isArray(contractor.serviceAreas) || !contractor.serviceAreas.length) {
+  if (
+    !Array.isArray(contractor.serviceAreas) ||
+    !contractor.serviceAreas.some(
+      (value) => clean(value).toUpperCase() !== "UNKNOWN",
+    )
+  ) {
     fields.push("serviceAreas");
   }
   return fields;
@@ -457,7 +481,6 @@ export function scoreDomainIdentity({
     Boolean(identity.phone) && pagePhones.includes(identity.phone);
   const conflictingLicense =
     extractedLicenses.length > 0 &&
-    !exactLicense &&
     extractedLicenses.some(
       (license) => license !== normalizeLicense(identity.licenseNumber),
     );
@@ -475,9 +498,7 @@ export function scoreDomainIdentity({
   const streetMatch =
     Boolean(identity.address.line1) &&
     streetEvidenceMatches(text, identity.address.line1);
-  const tradeMatch = tradeTermsFor(identity).some((term) =>
-    new RegExp(`\\b${escapeRegex(term)}\\b`, "i").test(text),
-  );
+  const tradeMatch = hasCompatibleTradeLanguage(text, identity);
   const officialSeed =
     seed?.sourceType === "official_directory" &&
     seed?.matchMethod &&
@@ -491,38 +512,93 @@ export function scoreDomainIdentity({
     );
   const locationMatch = cityMatch || zipMatch || streetMatch;
   const sourceBackedSeed = officialSeed || osmStrongSeed;
-  const strongCombination =
+  const pagePostalCodes = extractPostalCodes(text);
+  const conflictingPhoneAndAddress =
+    nameStrong &&
+    pagePhones.length > 0 &&
+    !exactPhone &&
+    pagePostalCodes.length > 0 &&
+    !zipMatch &&
+    !streetMatch;
+  const substantiallyConflictingGeography =
+    /\b(?:australia|brisbane|sydney|queensland|new south wales)\b/i.test(
+      text,
+    );
+  const clearlyUnrelatedBusinessType =
+    /\b(?:buyers?'?\s+agents?|property\s+buyers?'?\s+agency|real\s+estate\s+agency|property\s+acquisition)\b/i.test(
+      text,
+    );
+  const tierA =
+    exactLicense &&
+    !conflictingLicense;
+  const tierB =
+    exactPhone &&
+    nameStrong &&
+    !conflictingLicense;
+  const tierC =
     nameStrong &&
     tradeMatch &&
-    (streetMatch || zipMatch || sourceBackedSeed);
-  const accepted =
-    !conflictingLicense &&
+    (streetMatch || zipMatch) &&
+    !conflictingLicense;
+  const licenseTransition =
+    !exactLicense &&
+    conflictingLicense &&
+    nameStrong &&
+    (exactPhone || ((streetMatch || zipMatch) && tradeMatch)) &&
     !parkedOrUnrelated &&
-    (exactLicense || exactPhone || strongCombination);
+    !substantiallyConflictingGeography &&
+    !clearlyUnrelatedBusinessType;
+  const confidenceTier = tierA
+    ? "TIER_A_EXACT_LICENSE"
+    : tierB
+      ? "TIER_B_PHONE_AND_NAME"
+      : tierC
+        ? "TIER_C_NAME_LOCATION_TRADE"
+        : "";
+  const accepted =
+    Boolean(confidenceTier) &&
+    !parkedOrUnrelated &&
+    !conflictingPhoneAndAddress &&
+    !substantiallyConflictingGeography &&
+    !clearlyUnrelatedBusinessType;
   const ambiguous =
     !accepted &&
+    !licenseTransition &&
     !conflictingLicense &&
     !parkedOrUnrelated &&
+    !conflictingPhoneAndAddress &&
+    !substantiallyConflictingGeography &&
+    !clearlyUnrelatedBusinessType &&
     (nameStrong || exactPhone || locationMatch);
   return {
     accepted,
     ambiguous,
-    disposition: accepted
-      ? "VERIFIED_DOMAIN"
-      : ambiguous
-        ? "AMBIGUOUS_DOMAIN"
-        : "REJECTED_DOMAIN",
+    confidenceTier,
+    databaseLicenseNumber: normalizeLicense(identity.licenseNumber),
+    disposition: licenseTransition
+      ? "LICENSE_TRANSITION_REVIEW"
+      : accepted
+        ? "VERIFIED_DOMAIN"
+        : ambiguous
+          ? "AMBIGUOUS_DOMAIN"
+          : "REJECTED_DOMAIN",
+    websiteLicenseNumbers: extractedLicenses,
     signals: {
       cityMatch,
+      clearlyUnrelatedBusinessType,
+      confidenceTier,
       conflictingLicense,
+      conflictingPhoneAndAddress,
       exactLicense,
       exactPhone,
+      licenseTransition,
       locationMatch,
       nameScore: round(nameScore, 4),
       nameStrong,
       officialSeed,
       osmStrongSeed,
       parkedOrUnrelated,
+      substantiallyConflictingGeography,
       sourceBackedSeed,
       streetMatch,
       tradeMatch,
@@ -666,17 +742,13 @@ export function buildPilotAudit({
   const audited = ordered.slice(0, sampleSize).map((result) => {
     const signals = result.identityVerification.signals;
     const independentlyVerified =
-      signals.exactLicense ||
-      signals.exactPhone ||
-      (signals.nameStrong &&
-        signals.tradeMatch &&
-        (signals.sourceBackedSeed ||
-          signals.officialSeed ||
-          signals.osmStrongSeed)) ||
-      (signals.nameStrong &&
-        signals.tradeMatch &&
-        signals.streetMatch &&
-        signals.zipMatch);
+      [
+        "TIER_A_EXACT_LICENSE",
+        "TIER_B_PHONE_AND_NAME",
+        "TIER_C_NAME_LOCATION_TRADE",
+      ].includes(
+        result.confidenceTier || signals.confidenceTier,
+      );
     const verdict = independentlyVerified
       ? "CORRECT"
       : "INCONCLUSIVE";
@@ -830,11 +902,11 @@ function customerTypeEvidence(sentences, type) {
         snippet: matchingSnippet(no, noPattern),
       };
     }
-    const yesPattern =
-      /\bcommercial\b|\bindustrial\b|\bmultifamily\b|\bagricultur(?:e|al)\b|\binstitutional\b|\bgovernment\b|\bpublic[- ]sector\b|\bmunicipal\b/i;
+    const yesPattern = commercialCustomerPattern();
     const yes = sentences.find(
       (sentence) =>
-        yesPattern.test(sentence) && hasServiceContext(sentence),
+        yesPattern.test(sentence) &&
+        hasExplicitCustomerServiceContext(sentence, type),
     );
     if (yes) {
       return {
@@ -854,10 +926,11 @@ function customerTypeEvidence(sentences, type) {
     };
   }
   const yesPattern =
-    /\bresidential\b|\bhomeowners?\b|\bsingle[- ]family\b|\bhome services?\b/i;
+    residentialCustomerPattern();
   const yes = sentences.find(
     (sentence) =>
-      yesPattern.test(sentence) && hasServiceContext(sentence),
+      yesPattern.test(sentence) &&
+      hasExplicitCustomerServiceContext(sentence, type),
   );
   return yes
     ? {
@@ -869,35 +942,59 @@ function customerTypeEvidence(sentences, type) {
 
 function extractServiceAreas(sentences, placeReference) {
   const referenceNames = sortedUnique([
-    ...(placeReference?.cities || []),
-    ...(placeReference?.counties || []),
     ...SERVICE_REGIONS,
-  ]).sort((left, right) => right.length - left.length);
+    ...(placeReference?.counties || []),
+    ...(placeReference?.cities || []),
+  ]).sort(
+    (left, right) =>
+      right.length - left.length || left.localeCompare(right),
+  );
   const values = new Set();
   const evidence = [];
   for (const sentence of sentences) {
     if (
-      !/\b(?:areas? (?:served|we serve|includes?)|service areas?|serving|we serve|proudly serve|coverage area|serves customers? (?:in|throughout))\b/i.test(
+      !/\b(?:areas? (?:served|we serve|includes?)|service areas?|serving|served|we serve|proudly serve|coverage area|serves customers? (?:in|throughout)|(?:provide|offer)[^.!?]{0,80}\b(?:across|in|throughout))\b/i.test(
         sentence,
       )
     ) {
       continue;
     }
-    const sentenceValues = [];
+    const matches = [];
     for (const name of referenceNames) {
+      const pattern = new RegExp(`\\b${escapeRegex(name)}\\b`, "i");
+      const match = sentence.match(pattern);
+      if (!match || match.index === undefined) continue;
       if (
-        sentenceValues.some((selected) =>
-          selected.toLowerCase().includes(name.toLowerCase()),
+        AMBIGUOUS_SINGLE_WORD_PLACES.has(name.toLowerCase()) &&
+        !hasTypedPlaceCue(sentence, name)
+      ) {
+        continue;
+      }
+      matches.push({
+        end: match.index + match[0].length,
+        name:
+          name.toLowerCase() === "industry"
+            ? "City of Industry"
+            : name,
+        start: match.index,
+      });
+    }
+    const acceptedMatches = [];
+    for (const match of matches) {
+      if (
+        acceptedMatches.some(
+          (selected) =>
+            match.start >= selected.start &&
+            match.end <= selected.end,
         )
       ) {
         continue;
       }
-      if (
-        new RegExp(`\\b${escapeRegex(name)}\\b`, "i").test(sentence)
-      ) {
-        sentenceValues.push(name);
-      }
+      acceptedMatches.push(match);
     }
+    const sentenceValues = sortedUnique(
+      acceptedMatches.map((match) => match.name),
+    );
     if (!sentenceValues.length) continue;
     for (const value of sentenceValues) values.add(value);
     for (const name of sentenceValues) {
@@ -936,7 +1033,6 @@ function selectEmailCandidate({ domain, pages }) {
         registrableDomain(domain);
       const context = clean(email.snippet || "");
       if (
-        !sameDomain &&
         /\b(?:web(?:site)?\s+(?:design|development|by)|marketing agency|site by|powered by|privacy policy)\b/i.test(
           context,
         )
@@ -947,11 +1043,26 @@ function selectEmailCandidate({ domain, pages }) {
         /^(?:contact|hello|info|office|sales|service|support)@/i.test(
           normalized,
         );
+      const sourcePriority = {
+        mailto: 3,
+        isolated_text_node: 2,
+        visible_text: 1,
+      }[email.sourceMethod] || 0;
+      if (
+        !sameDomain &&
+        !FREE_EMAIL_DOMAINS.has(emailDomain) &&
+        !/\b(?:contact|email|e-mail|reach|office|call|questions?)\b/i.test(
+          context,
+        )
+      ) {
+        continue;
+      }
       candidates.push({
         email: normalized,
         page,
         sameDomain,
         generic,
+        sourcePriority,
         snippet: matchingSnippet(
           email.snippet || page.text.match(
             new RegExp(
@@ -967,6 +1078,7 @@ function selectEmailCandidate({ domain, pages }) {
   }
   return candidates.sort(
     (left, right) =>
+      right.sourcePriority - left.sourcePriority ||
       Number(right.sameDomain) - Number(left.sameDomain) ||
       Number(right.generic) - Number(left.generic) ||
       left.email.localeCompare(right.email),
@@ -1033,25 +1145,69 @@ function hasServiceContext(value) {
   );
 }
 
+function commercialCustomerPattern() {
+  return /\b(?:commercial|industrial|multi[- ]?family|institutional|government|public[- ]sector|municipal|agricultur(?:e|al)|business(?:es| owners?)?)\b/i;
+}
+
+function residentialCustomerPattern() {
+  return /\b(?:residential|homeowners?|homes?|single[- ]family)\b/i;
+}
+
+function hasExplicitCustomerServiceContext(value, type) {
+  const text = clean(value);
+  const customerSource =
+    type === "commercial"
+      ? commercialCustomerPattern().source
+      : residentialCustomerPattern().source;
+  const actor =
+    "(?:we|our\\s+(?:team|company|business)|the\\s+company|our)";
+  const action =
+    "(?:serve|service|provide|offer|specialize\\s+in|work\\s+(?:with|for)|deliver|handle)";
+  const serviceNoun =
+    "(?:services?|projects?|customers?|clients?|properties|facilities|installations?|repairs?|maintenance|work|plumbers?|electricians?|roofers?|contractors?)";
+  const patterns = [
+    new RegExp(
+      `\\b${actor}\\s+${action}[^.!?]{0,140}${customerSource}`,
+      "i",
+    ),
+    new RegExp(
+      `\\b(?:serving|services?\\s+(?:for|to)|solutions?\\s+(?:for|to)|work(?:ing)?\\s+with)[^.!?]{0,100}${customerSource}`,
+      "i",
+    ),
+    new RegExp(
+      `${customerSource}(?:\\s+[a-z&/-]+){0,3}\\s+${serviceNoun}\\b`,
+      "i",
+    ),
+    new RegExp(
+      `\\b(?:services?|solutions?)\\s+(?:for\\s+)?(?:both\\s+)?[^.!?]{0,80}${customerSource}[^.!?]{0,50}${serviceNoun}\\b`,
+      "i",
+    ),
+  ];
+  return patterns.some((pattern) => pattern.test(text));
+}
+
+function hasTypedPlaceCue(sentence, name) {
+  return new RegExp(
+    `\\b(?:city|town|community|village)\\s+of\\s+${escapeRegex(name)}\\b|\\b${escapeRegex(name)}\\s*,?\\s+(?:CA|California)\\b`,
+    "i",
+  ).test(sentence);
+}
+
 function customerEvidenceSupports({ field, snippet, value }) {
   if (field === "servesCommercial") {
     return value === "NO"
       ? /\b(?:residential|homeowners?|homes?)\s+only\b|\bexclusively residential\b/i.test(
           snippet,
         )
-      : hasServiceContext(snippet) &&
-          /\bcommercial\b|\bindustrial\b|\bmultifamily\b|\bagricultur(?:e|al)\b|\binstitutional\b|\bgovernment\b|\bpublic[- ]sector\b|\bmunicipal\b/i.test(
-            snippet,
-          );
+      : commercialCustomerPattern().test(snippet) &&
+          hasExplicitCustomerServiceContext(snippet, "commercial");
   }
   return value === "NO"
     ? /\bcommercial\s+only\b|\bexclusively (?:commercial|industrial)\b/i.test(
         snippet,
       )
-    : hasServiceContext(snippet) &&
-        /\bresidential\b|\bhomeowners?\b|\bsingle[- ]family\b|\bhome services?\b/i.test(
-          snippet,
-        );
+    : residentialCustomerPattern().test(snippet) &&
+        hasExplicitCustomerServiceContext(snippet, "residential");
 }
 
 export function isAcceptableEmail(email, domain) {
@@ -1062,11 +1218,18 @@ export function isAcceptableEmail(email, domain) {
     local.startsWith(".") ||
     local.endsWith(".") ||
     local.includes("..") ||
-    /^(?:\d[.-]?){7,}/.test(local) ||
+    /^\d{5,}(?:[._-]?\d+)*/.test(local) ||
+    /^(?:items?|email|message|submit|contacts?)[.*_+-]+.+/i.test(
+      local,
+    ) ||
+    /^(?:(?:items?|email|message|submit|contacts?)[*._+-]*){2,}/i.test(
+      local,
+    ) ||
+    local.includes("*") ||
     emailDomain.includes("..") ||
     PLACEHOLDER_EMAIL_DOMAINS.has(emailDomain) ||
     /\.(?:png|jpe?g|gif|svg|webp)$/i.test(email) ||
-    /^(?:abuse|developer|noreply|no-reply|privacy|webmaster)$/i.test(
+    /^(?:abuse|developer|do-not-reply|marketing|noreply|no-reply|privacy|webmaster)$/i.test(
       local,
     )
   ) {
@@ -1132,6 +1295,14 @@ function extractPhoneNumbers(value) {
   );
 }
 
+function extractPostalCodes(value) {
+  return sortedUnique(
+    [...String(value || "").matchAll(/\b9\d{4}(?:-\d{4})?\b/g)].map(
+      (match) => normalizeZip(match[0]),
+    ),
+  );
+}
+
 function nameMatchScore(name, normalizedPageText) {
   if (!name || !normalizedPageText) return 0;
   if (containsNormalized(normalizedPageText, name)) return 1;
@@ -1174,6 +1345,17 @@ function tradeTermsFor(identity) {
           "construction",
         ],
     ),
+  );
+}
+
+function hasCompatibleTradeLanguage(value, identity) {
+  const terms = tradeTermsFor(identity);
+  return sentenceSegments(value).some(
+    (sentence) =>
+      hasServiceContext(sentence) &&
+      terms.some((term) =>
+        new RegExp(`\\b${escapeRegex(term)}\\b`, "i").test(sentence),
+      ),
   );
 }
 
@@ -1294,6 +1476,11 @@ function clean(value) {
     .replace(/\u00a0/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function isUnresolvedScalar(value) {
+  const normalized = clean(value).toUpperCase();
+  return !normalized || normalized === "UNKNOWN";
 }
 
 function escapeRegex(value) {

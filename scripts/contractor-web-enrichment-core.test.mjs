@@ -1,3 +1,5 @@
+import fs from "node:fs";
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -8,11 +10,22 @@ import {
   extractWebsiteFields,
   fieldsNeedingEnrichment,
   generateCandidateDomains,
+  isAcceptableEmail,
   isUsableContractor,
   matchOsmRecord,
   scoreDomainIdentity,
   selectStratifiedPilot,
 } from "./contractor-web-enrichment-core.mjs";
+
+const manualAuditRegressions = JSON.parse(
+  fs.readFileSync(
+    new URL(
+      "../test-fixtures/contractor-web-enrichment-manual-audit-regressions.json",
+      import.meta.url,
+    ),
+    "utf8",
+  ),
+);
 
 describe("contractor web-enrichment scope and selection", () => {
   it("uses only exact CLEAR licenses with mapped retrofits", () => {
@@ -36,7 +49,7 @@ describe("contractor web-enrichment scope and selection", () => {
     ).toBe(false);
   });
 
-  it("never treats an existing UNKNOWN value as missing", () => {
+  it("treats UNKNOWN customer values as unresolved", () => {
     expect(
       fieldsNeedingEnrichment({
         email: "public@example.test",
@@ -44,7 +57,7 @@ describe("contractor web-enrichment scope and selection", () => {
         servesResidential: "UNKNOWN",
         serviceAreas: ["Bay Area"],
       }),
-    ).toEqual([]);
+    ).toEqual(["servesCommercial", "servesResidential"]);
   });
 
   it("selects a deterministic pilot and retains known-domain records", () => {
@@ -161,7 +174,7 @@ describe("website identity validation and extraction", () => {
     expect(result.disposition).toBe("AMBIGUOUS_DOMAIN");
   });
 
-  it("requires durable location or an exact source seed for a combined match", () => {
+  it("requires current website evidence even when a historical seed matched", () => {
     const value = identity();
     const cityOnly = scoreDomainIdentity({
       homepageText:
@@ -184,7 +197,8 @@ describe("website identity validation and extraction", () => {
 
     expect(cityOnly.accepted).toBe(false);
     expect(cityOnly.disposition).toBe("AMBIGUOUS_DOMAIN");
-    expect(exactOsmSeed.accepted).toBe(true);
+    expect(exactOsmSeed.accepted).toBe(false);
+    expect(exactOsmSeed.disposition).toBe("AMBIGUOUS_DOMAIN");
   });
 
   it("accepts exact license or phone evidence and rejects a conflicting license", () => {
@@ -209,6 +223,14 @@ describe("website identity validation and extraction", () => {
       scoreDomainIdentity({
         homepageText:
           "Acme Mechanical HVAC in Oakland. Contractor license #999999.",
+        identity: value,
+        seed: {},
+      }).accepted,
+    ).toBe(false);
+    expect(
+      scoreDomainIdentity({
+        homepageText:
+          "Different Company HVAC in Oakland. Call (510) 555-0100.",
         identity: value,
         seed: {},
       }).accepted,
@@ -358,10 +380,126 @@ describe("website identity validation and extraction", () => {
   });
 });
 
+describe("independent manual-audit regression fixture", () => {
+  it("contains all 30 confirmed findings", () => {
+    expect(manualAuditRegressions.findings).toHaveLength(30);
+  });
+
+  for (const finding of manualAuditRegressions.findings) {
+    it(`fixes ${finding.id}`, () => {
+      if (
+        finding.type === "domain_identity" ||
+        finding.type === "license_transition"
+      ) {
+        const result = scoreDomainIdentity({
+          homepageText: finding.pageText,
+          identity: identityFromFinding(finding),
+          seed: finding.seed || {
+            sourceType: "candidate_generation",
+            matchMethod: "generated_from_cslb_identity",
+          },
+        });
+        expect(result.disposition).toBe(
+          finding.expectedDisposition,
+        );
+        if (finding.expectedWebsiteLicenses) {
+          expect(result.websiteLicenseNumbers).toEqual(
+            finding.expectedWebsiteLicenses,
+          );
+          expect(result.accepted).toBe(false);
+        }
+        return;
+      }
+      if (finding.type === "email") {
+        expect(
+          isAcceptableEmail(finding.email, finding.domain),
+        ).toBe(finding.expectedAccepted);
+        return;
+      }
+      const extracted = extractWebsiteFields({
+        domain: "manual-audit-regression.example",
+        identity: identity({
+          businessName: finding.businessName,
+        }),
+        pages: [
+          {
+            url: "https://manual-audit-regression.example/",
+            retrievedAt: "2026-07-23T20:00:00.000Z",
+            text: finding.pageText,
+            emails: [],
+          },
+        ],
+        placeReference: {
+          cities: finding.placeNames || [],
+          counties: [],
+        },
+      });
+      if (finding.type === "customer_type") {
+        expect(
+          extracted.proposal[finding.field] ?? null,
+        ).toBe(finding.expectedValue);
+        return;
+      }
+      for (const value of finding.expectedIncluded) {
+        expect(extracted.proposal.serviceAreas).toContain(value);
+      }
+      for (const value of finding.expectedExcluded) {
+        expect(
+          extracted.proposal.serviceAreas || [],
+        ).not.toContain(value);
+      }
+    });
+  }
+
+  it("retains valid domain, email, customer-type, and service-area cases", () => {
+    const value = identity();
+    expect(
+      scoreDomainIdentity({
+        homepageText:
+          "Acme Mechanical LLC. CSLB #123456. We provide HVAC services.",
+        identity: value,
+        seed: {},
+      }),
+    ).toMatchObject({
+      accepted: true,
+      confidenceTier: "TIER_A_EXACT_LICENSE",
+    });
+    expect(
+      isAcceptableEmail(
+        "rodney@norcalchimneyservice.com",
+        "norcalchimneyservice.com",
+      ),
+    ).toBe(true);
+    const extracted = extractWebsiteFields({
+      domain: "acmemechanical.com",
+      identity: value,
+      pages: [
+        {
+          url: "https://acmemechanical.com/services",
+          retrievedAt: "2026-07-23T20:00:00.000Z",
+          text:
+            "We provide commercial HVAC services and residential repairs. We proudly serve San Fernando Valley and Oakland.",
+          emails: [],
+        },
+      ],
+      placeReference: {
+        cities: ["Oakland", "San Fernando"],
+        counties: [],
+      },
+    });
+    expect(extracted.proposal).toMatchObject({
+      servesCommercial: "YES",
+      servesResidential: "YES",
+      serviceAreas: ["Oakland", "San Fernando Valley"],
+    });
+  });
+});
+
 describe("pilot audit gate", () => {
   it("audits at least 400 accepted domains and keeps statewide writes disabled", () => {
     const accepted = Array.from({ length: 450 }, (_, index) => ({
       contractorId: `CA_CSLB_${index}`,
+      confidenceTier: "TIER_A_EXACT_LICENSE",
       domain: `contractor-${index}.com`,
       discoveryMethod: "candidate_generation",
       proposal: { email: `info@contractor-${index}.com` },
@@ -393,6 +531,7 @@ describe("pilot audit gate", () => {
       acceptedResults: [
         {
           contractorId: "CA_CSLB_1",
+          confidenceTier: "TIER_A_EXACT_LICENSE",
           domain: "contractor.example",
           discoveryMethod: "candidate_generation",
           proposal: {},
@@ -456,6 +595,21 @@ function identity({
         state: "CA",
         postalCode: "94612",
       },
+    }),
+  });
+}
+
+function identityFromFinding(finding) {
+  return buildIdentityRecord({
+    aliases: finding.aliases || [],
+    contractor: contractor({
+      businessAddress: finding.address,
+      businessName: finding.businessName,
+      contractorId: `CA_CSLB_${finding.licenseNumber}`,
+      licenseClassifications:
+        finding.licenseClassifications || ["B"],
+      licenseNumber: finding.licenseNumber,
+      phone: finding.phone,
     }),
   });
 }
