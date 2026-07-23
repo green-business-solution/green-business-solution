@@ -205,10 +205,10 @@
         },
         {
           "name": "median_ComStock_delta_r_per_ft²",
-          "dimension": "area",
+          "dimension": "resource_per_area_time",
           "unit_id": "resource_unit_ft2_year",
           "display_unit": "resource-unit/ft2-year",
-          "quantity_kind": "area",
+          "quantity_kind": "resource_intensity",
           "tree_nodes": [
             "ComStock per-area delta distribution",
             "Annual resource delta by resource"
@@ -1107,10 +1107,10 @@
         },
         {
           "name": "annual_hot_water_load",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_thermal_year",
           "display_unit": "kWh-thermal/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Certified existing and proposed product resolution"
           ],
@@ -1152,10 +1152,10 @@
         },
         {
           "name": "added_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Certified existing and proposed product resolution"
           ],
@@ -1428,10 +1428,10 @@
       "formula_terms": [
         {
           "name": "SAM_output",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_thermal_year",
           "display_unit": "kWh-thermal/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "SAM solar-thermal output (Standard)"
           ],
@@ -1450,10 +1450,10 @@
         },
         {
           "name": "useful_solar_thermal_output",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_thermal_year",
           "display_unit": "kWh-thermal/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "SAM solar-thermal output (Standard)"
           ],
@@ -1472,10 +1472,10 @@
         },
         {
           "name": "annual_delivered_hot_water_load",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_thermal_year",
           "display_unit": "kWh-thermal/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Annual delivered hot-water thermal load, if known (User)"
           ],
@@ -1807,10 +1807,10 @@
         },
         {
           "name": "avoided_pump_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "MEASUR thermal and pump result",
             "Annual operating hours"
@@ -1978,10 +1978,10 @@
         },
         {
           "name": "annual_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Certified existing and proposed product resolution"
           ],
@@ -1998,10 +1998,10 @@
         },
         {
           "name": "daily_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_day",
           "display_unit": "kWh/day",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Certified existing and proposed product resolution"
           ],
@@ -2018,10 +2018,10 @@
         },
         {
           "name": "existing_annual_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_item_time",
           "unit_id": "kwh_unit_year",
           "display_unit": "kWh/unit-year",
-          "quantity_kind": "power",
+          "quantity_kind": "resource_rate",
           "tree_nodes": [
             "Certified existing and proposed product resolution"
           ],
@@ -2041,10 +2041,10 @@
         },
         {
           "name": "proposed_annual_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_item_time",
           "unit_id": "kwh_unit_year",
           "display_unit": "kWh/unit-year",
-          "quantity_kind": "power",
+          "quantity_kind": "resource_rate",
           "tree_nodes": [
             "Certified existing and proposed product resolution"
           ],
@@ -2125,10 +2125,10 @@
       "formula_terms": [
         {
           "name": "annual_affected_refrigeration_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Affected refrigeration annual kWh"
           ],
@@ -2145,10 +2145,10 @@
         },
         {
           "name": "baseline_annual_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Exact refrigeration ECM factor (Standard)"
           ],
@@ -2167,10 +2167,10 @@
         },
         {
           "name": "proposed_annual_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Exact refrigeration ECM factor (Standard)"
           ],
@@ -2553,10 +2553,10 @@
         },
         {
           "name": "kWh_per_100lb_existing",
-          "dimension": "power",
+          "dimension": "energy_per_mass",
           "unit_id": "kwh_100_lb",
           "display_unit": "kWh/100 lb",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_intensity",
           "tree_nodes": [
             "Certified existing and proposed product resolution"
           ],
@@ -2597,10 +2597,10 @@
         },
         {
           "name": "kWh_per_100lb_proposed",
-          "dimension": "power",
+          "dimension": "energy_per_mass",
           "unit_id": "kwh_100_lb",
           "display_unit": "kWh/100 lb",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_intensity",
           "tree_nodes": [
             "Certified kWh and potable gallons per 100 pounds of ice (Standard)"
           ],
@@ -2893,10 +2893,10 @@
       "formula_terms": [
         {
           "name": "baseline_load_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Chronological load and tariff"
           ],
@@ -2913,10 +2913,10 @@
         },
         {
           "name": "shed_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Maximum shed kW, if known (User)",
             "Rebound or recovery constraint, if known (User)"
@@ -2934,10 +2934,10 @@
         },
         {
           "name": "rebound_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Maximum shed kW, if known (User)",
             "Rebound or recovery constraint, if known (User)"
@@ -2955,10 +2955,10 @@
         },
         {
           "name": "proposed_load_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Maximum shed kW, if known (User)",
             "Rebound or recovery constraint, if known (User)"
@@ -3017,6 +3017,28 @@
           "formula_use": "Final bill difference",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "tariff_input_set",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Chronological load and tariff"
+          ],
+          "source_or_resolver": "STD-INTERVAL-TARIFF",
+          "exact_paths": [
+            "evidence:E-INTERVAL-TARIFF"
+          ],
+          "fallback_path": "exact published tariff -> itemized bill-derived screen -> explicit conservative screen",
+          "standard_output_key": "interval_tariff.input_set",
+          "evidence_ids": [
+            "E-INTERVAL-TARIFF"
+          ],
+          "formula_use": "Supplies the energy periods, demand rules, seasons, tiers, ratchets, export treatment, and effective-date rules used by the interval bill calculation",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -3066,10 +3088,10 @@
       "formula_terms": [
         {
           "name": "PV_AC_kWh_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "PVWatts interval AC generation (Standard)"
           ],
@@ -3088,10 +3110,10 @@
         },
         {
           "name": "baseline_import_kWh_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Chronological load and tariff",
             "Interval onsite-offset and export calculation"
@@ -3111,10 +3133,10 @@
         },
         {
           "name": "onsite_offset_kWh_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Chronological load and tariff",
             "Interval onsite-offset and export calculation"
@@ -3134,10 +3156,10 @@
         },
         {
           "name": "export_kWh_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Chronological load and tariff",
             "Interval onsite-offset and export calculation"
@@ -3198,6 +3220,28 @@
           "formula_use": "Values onsite energy and exports",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "tariff_input_set",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Chronological load and tariff"
+          ],
+          "source_or_resolver": "STD-INTERVAL-TARIFF",
+          "exact_paths": [
+            "evidence:E-INTERVAL-TARIFF"
+          ],
+          "fallback_path": "exact published tariff -> itemized bill-derived screen -> explicit conservative screen",
+          "standard_output_key": "interval_tariff.input_set",
+          "evidence_ids": [
+            "E-INTERVAL-TARIFF"
+          ],
+          "formula_use": "Supplies the energy periods, demand rules, seasons, tiers, ratchets, export treatment, and effective-date rules used by the interval bill calculation",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -3249,10 +3293,10 @@
       "formula_terms": [
         {
           "name": "credited_kWh_period",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_period",
           "display_unit": "kWh/period",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Allocated or credited kWh by period from the executed contract or statement (User)",
             "Credit rate by period from the executed contract or statement (User)"
@@ -3416,10 +3460,10 @@
       "formula_terms": [
         {
           "name": "wind_kWh_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "WIND Toolkit resource and SAM generation (Standard)"
           ],
@@ -3438,10 +3482,10 @@
         },
         {
           "name": "baseline_import_kWh_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Chronological load and tariff",
             "Interval onsite-offset and export calculation"
@@ -3461,10 +3505,10 @@
         },
         {
           "name": "onsite_offset_kWh_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Chronological load and tariff",
             "Interval onsite-offset and export calculation"
@@ -3484,10 +3528,10 @@
         },
         {
           "name": "export_kWh_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Chronological load and tariff",
             "Interval onsite-offset and export calculation"
@@ -3548,6 +3592,28 @@
           "formula_use": "Values onsite energy and exports",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "tariff_input_set",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Chronological load and tariff"
+          ],
+          "source_or_resolver": "STD-INTERVAL-TARIFF",
+          "exact_paths": [
+            "evidence:E-INTERVAL-TARIFF"
+          ],
+          "fallback_path": "exact published tariff -> itemized bill-derived screen -> explicit conservative screen",
+          "standard_output_key": "interval_tariff.input_set",
+          "evidence_ids": [
+            "E-INTERVAL-TARIFF"
+          ],
+          "formula_use": "Supplies the energy periods, demand rules, seasons, tiers, ratchets, export treatment, and effective-date rules used by the interval bill calculation",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -3683,10 +3749,10 @@
         },
         {
           "name": "annual_generation",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Total installed capacity, if known (User)",
             "Annual operating hours",
@@ -3775,10 +3841,10 @@
         },
         {
           "name": "avoided_grid_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Coincident onsite electric load"
           ],
@@ -3969,10 +4035,10 @@
         },
         {
           "name": "generation",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Total installed capacity, if known (User)",
             "Annual capacity factor, if known (User)"
@@ -4244,10 +4310,10 @@
         },
         {
           "name": "avoided_grid_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Annual CHP resource value",
             "Coincident onsite electric-load constraint, if known (User)",
@@ -4493,10 +4559,10 @@
         },
         {
           "name": "generation",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Fuel lower heating value, if known (User)",
             "Performance by technology and fuel (Standard)"
@@ -4704,10 +4770,10 @@
         },
         {
           "name": "avoided_grid_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Annual biomass or biogas resource value",
             "Coincident onsite electric-load constraint, if known (User)",
@@ -4838,10 +4904,10 @@
       "formula_terms": [
         {
           "name": "state_of_charge_t",
-          "dimension": "power",
+          "dimension": "energy",
           "unit_id": "kwh",
           "display_unit": "kWh",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Usable-energy capacity, if known (User)",
             "Charge efficiency, if known (User)",
@@ -4864,10 +4930,10 @@
         },
         {
           "name": "state_of_charge_(t-1)",
-          "dimension": "power",
+          "dimension": "energy",
           "unit_id": "kwh",
           "display_unit": "kWh",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Usable-energy capacity, if known (User)",
             "Charge efficiency, if known (User)",
@@ -4890,10 +4956,10 @@
         },
         {
           "name": "charge_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Usable-energy capacity, if known (User)",
             "Charge efficiency, if known (User)",
@@ -4916,10 +4982,10 @@
         },
         {
           "name": "discharge_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Usable-energy capacity, if known (User)",
             "Charge efficiency, if known (User)",
@@ -5035,6 +5101,28 @@
           "formula_use": "Final bill difference",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "tariff_input_set",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Chronological load and tariff"
+          ],
+          "source_or_resolver": "STD-INTERVAL-TARIFF",
+          "exact_paths": [
+            "evidence:E-INTERVAL-TARIFF"
+          ],
+          "fallback_path": "exact published tariff -> itemized bill-derived screen -> explicit conservative screen",
+          "standard_output_key": "interval_tariff.input_set",
+          "evidence_ids": [
+            "E-INTERVAL-TARIFF"
+          ],
+          "formula_use": "Supplies the energy periods, demand rules, seasons, tiers, ratchets, export treatment, and effective-date rules used by the interval bill calculation",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -5084,10 +5172,10 @@
       "formula_terms": [
         {
           "name": "PV_AC_kWh_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "PVWatts interval generation (Standard)"
           ],
@@ -5147,6 +5235,28 @@
           "formula_use": "Final combined PV and storage bill difference",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "tariff_input_set",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Chronological load and tariff"
+          ],
+          "source_or_resolver": "STD-INTERVAL-TARIFF",
+          "exact_paths": [
+            "evidence:E-INTERVAL-TARIFF"
+          ],
+          "fallback_path": "exact published tariff -> itemized bill-derived screen -> explicit conservative screen",
+          "standard_output_key": "interval_tariff.input_set",
+          "evidence_ids": [
+            "E-INTERVAL-TARIFF"
+          ],
+          "formula_use": "Supplies the energy periods, demand rules, seasons, tiers, ratchets, export treatment, and effective-date rules used by the interval bill calculation",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -5199,10 +5309,10 @@
       "formula_terms": [
         {
           "name": "thermal_state_t",
-          "dimension": "power",
+          "dimension": "energy",
           "unit_id": "kwh",
           "display_unit": "kWh",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Thermal capacity, if known (User)",
             "Charge efficiency, if known (User)",
@@ -5226,10 +5336,10 @@
         },
         {
           "name": "thermal_state_(t-1)",
-          "dimension": "power",
+          "dimension": "energy",
           "unit_id": "kwh",
           "display_unit": "kWh",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Thermal capacity, if known (User)",
             "Charge efficiency, if known (User)",
@@ -5253,10 +5363,10 @@
         },
         {
           "name": "charge_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Thermal capacity, if known (User)",
             "Charge efficiency, if known (User)",
@@ -5280,10 +5390,10 @@
         },
         {
           "name": "discharge_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Thermal capacity, if known (User)",
             "Charge efficiency, if known (User)",
@@ -5429,6 +5539,28 @@
           "formula_use": "Final bill difference",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "tariff_input_set",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Chronological load and tariff"
+          ],
+          "source_or_resolver": "STD-INTERVAL-TARIFF",
+          "exact_paths": [
+            "evidence:E-INTERVAL-TARIFF"
+          ],
+          "fallback_path": "exact published tariff -> itemized bill-derived screen -> explicit conservative screen",
+          "standard_output_key": "interval_tariff.input_set",
+          "evidence_ids": [
+            "E-INTERVAL-TARIFF"
+          ],
+          "formula_use": "Supplies the energy periods, demand rules, seasons, tiers, ratchets, export treatment, and effective-date rules used by the interval bill calculation",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -5532,6 +5664,28 @@
           "formula_use": "Final composite bill difference without summing separate category results",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "tariff_input_set",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Chronological load and tariff"
+          ],
+          "source_or_resolver": "STD-INTERVAL-TARIFF",
+          "exact_paths": [
+            "evidence:E-INTERVAL-TARIFF"
+          ],
+          "fallback_path": "exact published tariff -> itemized bill-derived screen -> explicit conservative screen",
+          "standard_output_key": "interval_tariff.input_set",
+          "evidence_ids": [
+            "E-INTERVAL-TARIFF"
+          ],
+          "formula_use": "Supplies the energy periods, demand rules, seasons, tiers, ratchets, export treatment, and effective-date rules used by the interval bill calculation",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -5591,129 +5745,248 @@
           "display_unit": "count",
           "quantity_kind": "count",
           "tree_nodes": [
-            "In-scope quantity"
+            "Count of identical units in project scope"
           ],
           "source_or_resolver": "User",
           "exact_paths": [
-            "Information Tree > In-scope quantity"
+            "Information Tree > Installed Charger Count"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Scopes installed ports",
+          "formula_use": "Sets installed-port count and the physical daily-energy cap",
           "default_path_resolved": true,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REQUIRE_EXACT_INPUT"
         },
         {
-          "name": "delivered_kWh_t",
-          "dimension": "power",
-          "unit_id": "kwh_interval",
-          "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "name": "selected_site_daily_delivered_kWh",
+          "dimension": "energy_per_time",
+          "unit_id": "kwh_day",
+          "display_unit": "kWh/day",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
-            "Delivered-kWh distribution per charger (User)",
-            "Chronological load and tariff"
+            "site daily delivered energy"
           ],
-          "source_or_resolver": "Exact project interval inputs",
+          "source_or_resolver": "Exact Project Document",
           "exact_paths": [
-            "User delivered-kWh distribution",
-            "Uploaded interval load artifact"
+            "Project Document > charging study or contractor design > site daily delivered energy"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no benchmark fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Supplies delivered charging energy and baseline interval load without a product-data usage assumption",
+          "formula_use": "Supplies exact site daily delivered energy before the physical cap",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
         },
         {
-          "name": "baseline_load_t",
+          "name": "rated_output_power_kW",
           "dimension": "power",
-          "unit_id": "kwh_interval",
-          "display_unit": "kWh/interval",
+          "unit_id": "kilowatt",
+          "display_unit": "kW",
           "quantity_kind": "power",
           "tree_nodes": [
-            "Delivered-kWh distribution per charger (User)",
-            "Chronological load and tariff"
+            "Certified AC total loss or DC efficiency fraction and standby power"
           ],
-          "source_or_resolver": "Exact project interval inputs",
+          "source_or_resolver": "STD-ENERGY-STAR-PRODUCT-DATA",
           "exact_paths": [
-            "User delivered-kWh distribution",
-            "Uploaded interval load artifact"
+            "energy_star.evse_native_fields"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Supplies delivered charging energy and baseline interval load without a product-data usage assumption",
+          "fallback_path": "exact product -> requirement-filtered compatible product",
+          "standard_output_key": "energy_star.evse_native_fields",
+          "evidence_ids": [
+            "E-ENERGY-STAR-EVSE-NATIVE"
+          ],
+          "formula_use": "Sets the per-port physical charging-capacity cap",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
         },
         {
-          "name": "active_efficiency",
+          "name": "public_operating_hours",
+          "dimension": "time",
+          "unit_id": "hours_day",
+          "display_unit": "hours/day",
+          "quantity_kind": "duration",
+          "tree_nodes": [
+            "Public Operating Hours"
+          ],
+          "source_or_resolver": "User",
+          "exact_paths": [
+            "Information Tree > Public Operating Hours"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Sets the daily duration of the physical charging-capacity cap",
+          "default_path_resolved": true,
+          "missing_data_behavior": "REQUIRE_EXACT_INPUT"
+        },
+        {
+          "name": "capacity_cap_fraction",
           "dimension": "dimensionless",
           "unit_id": "fraction",
           "display_unit": "fraction",
           "quantity_kind": "ratio",
           "tree_nodes": [
-            "Certified active efficiency and standby power (Standard)"
+            "Capacity Cap Fraction"
           ],
-          "source_or_resolver": "Exact proposed EVSE rating",
+          "source_or_resolver": "Exact Project Document",
           "exact_paths": [
-            "energy_star.other_current_product_fields"
+            "Project Document > contractor design > capacity cap fraction"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": "energy_star.other_current_product_fields",
-          "evidence_ids": [
-            "E-ENERGY-STAR-OTHER"
-          ],
-          "formula_use": "Supplies product efficiency and standby power only",
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Limits the physical daily charging capacity to the documented usable fraction",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REQUIRE_EXACT_INPUT"
         },
         {
-          "name": "standby_power_kW",
+          "name": "site_daily_delivered_kWh",
+          "dimension": "energy_per_time",
+          "unit_id": "kwh_day",
+          "display_unit": "kWh/day",
+          "quantity_kind": "energy_rate",
+          "tree_nodes": [
+            "Site daily delivered-energy resolution"
+          ],
+          "source_or_resolver": "STD-CONTEXT-BENCHMARKS exact-project resolver",
+          "exact_paths": [
+            "process:public_charging_site_energy"
+          ],
+          "fallback_path": "exact project value capped by installed capacity; no utilization benchmark",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Returns the site-total daily delivered energy used to scale the normalized shape",
+          "default_path_resolved": false,
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
+        },
+        {
+          "name": "normalized_shape_t",
+          "dimension": "dimensionless",
+          "unit_id": "fraction",
+          "display_unit": "fraction",
+          "quantity_kind": "ratio",
+          "tree_nodes": [
+            "Normalized weekday and weekend 15-minute charging shape"
+          ],
+          "source_or_resolver": "STD-CONTEXT-BENCHMARKS EVI-Pro shape resolver",
+          "exact_paths": [
+            "process:evi_charging_shape"
+          ],
+          "fallback_path": "one compatible EVI-Pro scenario response",
+          "standard_output_key": "context.public_charging_shape",
+          "evidence_ids": [
+            "E-CONTEXT-EVI-SHAPE"
+          ],
+          "formula_use": "Allocates site daily delivered energy across 15-minute weekday and weekend intervals without setting utilization",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_PROFILE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "delivered_kWh_t",
+          "dimension": "interval_energy",
+          "unit_id": "kwh_interval",
+          "display_unit": "kWh/interval",
+          "quantity_kind": "energy",
+          "tree_nodes": [
+            "EVSE interval load profile"
+          ],
+          "source_or_resolver": "Formula",
+          "exact_paths": [
+            "site_daily_delivered_kWh × normalized_shape_t"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Calculates site-total delivered charging energy by interval",
+          "default_path_resolved": false,
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
+        },
+        {
+          "name": "ac_total_loss_W",
+          "dimension": "power",
+          "unit_id": "watt_ac",
+          "display_unit": "Wac",
+          "quantity_kind": "power",
+          "tree_nodes": [
+            "Certified AC total loss or DC efficiency fraction and standby power"
+          ],
+          "source_or_resolver": "STD-ENERGY-STAR-PRODUCT-DATA",
+          "exact_paths": [
+            "energy_star.evse_native_fields"
+          ],
+          "fallback_path": "exact product -> requirement-filtered compatible AC-output product",
+          "standard_output_key": "energy_star.evse_native_fields",
+          "evidence_ids": [
+            "E-ENERGY-STAR-EVSE-NATIVE"
+          ],
+          "formula_use": "Adds the applicable AC charging-mode loss during charging intervals only",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "charging_interval_hours_t",
+          "dimension": "time",
+          "unit_id": "hours_interval",
+          "display_unit": "hours/interval",
+          "quantity_kind": "duration",
+          "tree_nodes": [
+            "EVSE interval load profile"
+          ],
+          "source_or_resolver": "Formula",
+          "exact_paths": [
+            "interval charging-state calculation"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Applies AC total loss only to active charging time in each interval",
+          "default_path_resolved": false,
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
+        },
+        {
+          "name": "dc_efficiency_fraction",
+          "dimension": "dimensionless",
+          "unit_id": "fraction",
+          "display_unit": "fraction",
+          "quantity_kind": "ratio",
+          "tree_nodes": [
+            "Certified AC total loss or DC efficiency fraction and standby power"
+          ],
+          "source_or_resolver": "STD-ENERGY-STAR-PRODUCT-DATA",
+          "exact_paths": [
+            "energy_star.evse_native_fields"
+          ],
+          "fallback_path": "exact product -> requirement-filtered compatible DC-output product",
+          "standard_output_key": "energy_star.evse_native_fields",
+          "evidence_ids": [
+            "E-ENERGY-STAR-EVSE-NATIVE"
+          ],
+          "formula_use": "Converts delivered DC charging energy to AC input energy once",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "standby_power_kW_per_port",
           "dimension": "power",
           "unit_id": "kw_port",
           "display_unit": "kW/port",
           "quantity_kind": "power",
           "tree_nodes": [
-            "Certified active efficiency and standby power (Standard)"
+            "Certified AC total loss or DC efficiency fraction and standby power"
           ],
-          "source_or_resolver": "Exact proposed EVSE rating",
+          "source_or_resolver": "STD-ENERGY-STAR-PRODUCT-DATA",
           "exact_paths": [
-            "energy_star.other_current_product_fields"
+            "energy_star.evse_native_fields"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": "energy_star.other_current_product_fields",
+          "fallback_path": "exact product -> requirement-filtered compatible product",
+          "standard_output_key": "energy_star.evse_native_fields",
           "evidence_ids": [
-            "E-ENERGY-STAR-OTHER"
+            "E-ENERGY-STAR-EVSE-NATIVE"
           ],
-          "formula_use": "Supplies product efficiency and standby power only",
+          "formula_use": "Supplies native no-vehicle or idle standby power per port",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
-          "name": "charging_input_kWh_t",
-          "dimension": "power",
-          "unit_id": "kwh_interval",
-          "display_unit": "kWh/interval",
-          "quantity_kind": "power",
-          "tree_nodes": [
-            "Session-arrival distribution per charger (User)",
-            "Session-duration distribution per charger (User)",
-            "EVSE interval load profile"
-          ],
-          "source_or_resolver": "Formula using exact session and interval inputs",
-          "exact_paths": [
-            "User session distributions",
-            "Formula"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Builds charging and standby interval load with efficiency applied once",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
         },
         {
           "name": "noncharging_interval_hours_t",
@@ -5722,67 +5995,98 @@
           "display_unit": "hours/interval",
           "quantity_kind": "duration",
           "tree_nodes": [
-            "Session-arrival distribution per charger (User)",
-            "Session-duration distribution per charger (User)",
             "EVSE interval load profile"
           ],
-          "source_or_resolver": "Formula using exact session and interval inputs",
+          "source_or_resolver": "Formula",
           "exact_paths": [
-            "User session distributions",
-            "Formula"
+            "interval non-charging-state calculation"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Builds charging and standby interval load with efficiency applied once",
+          "formula_use": "Restricts standby energy to non-charging time in each interval",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
+        },
+        {
+          "name": "charging_input_kWh_t",
+          "dimension": "interval_energy",
+          "unit_id": "kwh_interval",
+          "display_unit": "kWh/interval",
+          "quantity_kind": "energy",
+          "tree_nodes": [
+            "EVSE interval load profile"
+          ],
+          "source_or_resolver": "Formula",
+          "exact_paths": [
+            "AC or DC type-specific input normalization"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Calculates active AC-input energy by interval with separate AC and DC methods",
+          "default_path_resolved": false,
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
         },
         {
           "name": "standby_kWh_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
-            "Session-arrival distribution per charger (User)",
-            "Session-duration distribution per charger (User)",
             "EVSE interval load profile"
           ],
-          "source_or_resolver": "Formula using exact session and interval inputs",
+          "source_or_resolver": "Formula",
           "exact_paths": [
-            "User session distributions",
-            "Formula"
+            "quantity × standby power × noncharging interval hours"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Builds charging and standby interval load with efficiency applied once",
+          "formula_use": "Calculates site standby energy only in non-charging intervals",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
+        },
+        {
+          "name": "baseline_load_t",
+          "dimension": "interval_energy",
+          "unit_id": "kwh_interval",
+          "display_unit": "kWh/interval",
+          "quantity_kind": "energy",
+          "tree_nodes": [
+            "Chronological load and tariff"
+          ],
+          "source_or_resolver": "Exact Bill interval artifact",
+          "exact_paths": [
+            "Bill > Timestamped Interval Utility Data"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies baseline site load by interval",
+          "default_path_resolved": false,
+          "missing_data_behavior": "REQUIRE_EXACT_INPUT"
         },
         {
           "name": "proposed_load_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
-            "Session-arrival distribution per charger (User)",
-            "Session-duration distribution per charger (User)",
             "EVSE interval load profile"
           ],
-          "source_or_resolver": "Formula using exact session and interval inputs",
+          "source_or_resolver": "Formula",
           "exact_paths": [
-            "User session distributions",
-            "Formula"
+            "baseline_load_t + charging_input_kWh_t + standby_kWh_t"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Builds charging and standby interval load with efficiency applied once",
+          "formula_use": "Adds active and standby EVSE input energy to the baseline interval load",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
         },
         {
           "name": "baseline_annual_bill",
@@ -5791,20 +6095,20 @@
           "display_unit": "USD/year",
           "quantity_kind": "currency_flow",
           "tree_nodes": [
-            "Audited session-load template and REopt bill result (Standard)"
+            "Audited Session-Load Template and REopt Bill Result"
           ],
           "source_or_resolver": "STD-REOPT-LOCAL-DISPATCH",
           "exact_paths": [
             "evidence:E-REOPT-DISPATCH"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": "reopt.interval_dispatch_bill",
           "evidence_ids": [
             "E-REOPT-DISPATCH"
           ],
-          "formula_use": "Calculates added-load bill impact",
+          "formula_use": "Calculates the baseline annual bill under the resolved tariff",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
         },
         {
           "name": "proposed_annual_bill",
@@ -5813,20 +6117,42 @@
           "display_unit": "USD/year",
           "quantity_kind": "currency_flow",
           "tree_nodes": [
-            "Audited session-load template and REopt bill result (Standard)"
+            "Audited Session-Load Template and REopt Bill Result"
           ],
           "source_or_resolver": "STD-REOPT-LOCAL-DISPATCH",
           "exact_paths": [
             "evidence:E-REOPT-DISPATCH"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": "reopt.interval_dispatch_bill",
           "evidence_ids": [
             "E-REOPT-DISPATCH"
           ],
-          "formula_use": "Calculates added-load bill impact",
+          "formula_use": "Calculates the proposed annual bill with added EVSE load",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
+        },
+        {
+          "name": "tariff_input_set",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Chronological load and tariff"
+          ],
+          "source_or_resolver": "STD-INTERVAL-TARIFF",
+          "exact_paths": [
+            "evidence:E-INTERVAL-TARIFF"
+          ],
+          "fallback_path": "exact published tariff -> itemized bill-derived screen -> explicit conservative screen",
+          "standard_output_key": "interval_tariff.input_set",
+          "evidence_ids": [
+            "E-INTERVAL-TARIFF"
+          ],
+          "formula_use": "Supplies the energy periods, demand rules, seasons, tiers, ratchets, export treatment, and effective-date rules used by the interval bill calculation",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -5844,27 +6170,33 @@
       "default_path": {
         "scenario": "insufficient-data",
         "minimum_required_inputs": [
-          "port count",
-          "delivered-energy profile",
-          "EVSE efficiency and standby",
+          "installed port count",
+          "public operating hours",
+          "exact site daily delivered energy",
+          "capacity cap fraction",
+          "compatible normalized EVI-Pro time-of-day shape",
+          "type-specific EVSE fields",
           "complete interval load and tariff"
         ],
         "source_fixture": null,
-        "selected_value_calculation": "Use the highest available fallback level and return one value; use an official recommended or typical value when available, otherwise a valid weighted median, otherwise the ordinary median of the eligible compatible population.",
-        "final_result_path": "added interval load -> proposed bill minus baseline bill",
+        "selected_value_calculation": "Require exact site daily delivered energy, cap it by documented physical capacity, scale one normalized EVI-Pro shape, apply separate AC or DC active-input normalization, apply standby only outside charging, and compare baseline and proposed interval bills.",
+        "final_result_path": "exact daily energy and normalized shape -> type-specific interval EVSE input -> proposed bill minus baseline bill",
         "uncertainty": "High",
         "executable_golden_fixture": null,
-        "unresolved_gate": "Implementation limitation retained without removing the screening estimate: EVSE schema fixture, usage profile, and REopt golden fixture."
+        "unresolved_gate": "Site daily delivered energy has no benchmark fallback. The category remains blocked without an exact project record and still lacks retained EVI-Pro request-response and REopt bill golden fixtures."
       },
-      "manual_review_verdict": "Demand is explicit from interval added load. Export is excluded.",
+      "manual_review_verdict": "Demand is explicit from interval added load. EVI-Pro supplies only the normalized shape, and exact site daily energy is mandatory. AC, DC, and standby power are normalized separately.",
       "scenarios": [
         {
           "scenario_id": "insufficient-data",
           "label": "insufficient data",
           "readiness": "UNVERIFIED",
-          "evidence": [],
+          "evidence": [
+            "E-ENERGY-STAR-EVSE-NATIVE",
+            "E-INTERVAL-TARIFF"
+          ],
           "executable_fixture": null,
-          "limitation": "EVSE schema fixture, usage profile, and REopt golden fixture."
+          "limitation": "No exact site daily delivered-energy record, retained EVI-Pro request-response fixture, or REopt bill golden fixture."
         }
       ],
       "ready_scenario_id": null,
@@ -5944,10 +6276,10 @@
         },
         {
           "name": "annual_vehicle_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Annual fleet miles (User)",
             "Vehicle and charger efficiency (Standard)"
@@ -6031,10 +6363,10 @@
         },
         {
           "name": "standby_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "EVSE standby energy"
           ],
@@ -6092,6 +6424,28 @@
           "formula_use": "Calculates unmanaged charging bill impact",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "tariff_input_set",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Chronological load and tariff"
+          ],
+          "source_or_resolver": "STD-INTERVAL-TARIFF",
+          "exact_paths": [
+            "evidence:E-INTERVAL-TARIFF"
+          ],
+          "fallback_path": "exact published tariff -> itemized bill-derived screen -> explicit conservative screen",
+          "standard_output_key": "interval_tariff.input_set",
+          "evidence_ids": [
+            "E-INTERVAL-TARIFF"
+          ],
+          "formula_use": "Supplies the energy periods, demand rules, seasons, tiers, ratchets, export treatment, and effective-date rules used by the interval bill calculation",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -6481,19 +6835,20 @@
           "display_unit": "fuel-unit/hour",
           "quantity_kind": "numeric",
           "tree_nodes": [
-            "Existing fuel use per operating hour",
-            "Proposed charging kWh per operating hour"
+            "Material-handling resource-intensity resolver"
           ],
-          "source_or_resolver": "Measured or contractual project inputs",
+          "source_or_resolver": "Exact Project Document or STD-CONTEXT-BENCHMARKS material-handling resolver",
           "exact_paths": [
-            "User exact performance inputs"
+            "Project resource-intensity record or evidence:E-CONTEXT-FORKLIFT"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
+          "fallback_path": "exact project pair -> compatible authoritative population -> retained class-capacity-duty pair -> explicit limitation",
+          "standard_output_key": "context.material_handling_intensity",
+          "evidence_ids": [
+            "E-CONTEXT-FORKLIFT"
+          ],
           "formula_use": "Cross-fuel performance terms",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
         },
         {
           "name": "proposed_kWh_per_hour",
@@ -6502,19 +6857,20 @@
           "display_unit": "kWh/hour",
           "quantity_kind": "power",
           "tree_nodes": [
-            "Existing fuel use per operating hour",
-            "Proposed charging kWh per operating hour"
+            "Material-handling resource-intensity resolver"
           ],
-          "source_or_resolver": "Measured or contractual project inputs",
+          "source_or_resolver": "Exact Project Document or STD-CONTEXT-BENCHMARKS material-handling resolver",
           "exact_paths": [
-            "User exact performance inputs"
+            "Project resource-intensity record or evidence:E-CONTEXT-FORKLIFT"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
+          "fallback_path": "exact project pair -> compatible authoritative population -> retained class-capacity-duty pair -> explicit limitation",
+          "standard_output_key": "context.material_handling_intensity",
+          "evidence_ids": [
+            "E-CONTEXT-FORKLIFT"
+          ],
           "formula_use": "Cross-fuel performance terms",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
         },
         {
           "name": "p_fuel",
@@ -6570,7 +6926,7 @@
       ],
       "sewer_applicability": null,
       "default_path": {
-        "scenario": "exact-project-inputs-only",
+        "scenario": "exact-or-compatible-intensity",
         "minimum_required_inputs": [
           "quantity",
           "hours",
@@ -6578,22 +6934,24 @@
           "proposed kWh/hour",
           "prices"
         ],
-        "source_fixture": null,
-        "selected_value_calculation": "Use the highest available fallback level and return one value; use an official recommended or typical value when available, otherwise a valid weighted median, otherwise the ordinary median of the eligible compatible population.",
+        "source_fixture": "docs/operational-savings-fixtures/sources/argonne-forklift-energy-intensity.json",
+        "selected_value_calculation": "Use exact comparable project intensities first. Otherwise use a compatible authoritative population. Use the retained 5,000-pound electric and propane pair only when capacity and duty match; otherwise report the explicit limitation.",
         "final_result_path": "cross-fuel hourly balance -> annual value",
         "uncertainty": "High",
         "executable_golden_fixture": null,
-        "unresolved_gate": "Implementation limitation retained without removing the screening estimate: No authoritative cross-fuel model dataset."
+        "unresolved_gate": "No source-backed benchmark is available outside exact project values or the retained compatible 5,000-pound electric and propane comparison."
       },
-      "manual_review_verdict": "Blocked except for exact measured or contractual project inputs.",
+      "manual_review_verdict": "The retained Argonne pair supports one narrow screening path. Other capacities, duties, and propulsion comparisons remain blocked.",
       "scenarios": [
         {
-          "scenario_id": "exact-project-inputs-only",
-          "label": "exact project inputs only",
-          "readiness": "UNSUPPORTED",
-          "evidence": [],
+          "scenario_id": "exact-or-compatible-intensity",
+          "label": "exact or compatible resource intensity",
+          "readiness": "UNVERIFIED",
+          "evidence": [
+            "E-CONTEXT-FORKLIFT"
+          ],
           "executable_fixture": null,
-          "limitation": "No authoritative cross-fuel model dataset."
+          "limitation": "No category calculation golden fixture and no broad material-handling population."
         }
       ],
       "ready_scenario_id": null,
@@ -6626,10 +6984,10 @@
         },
         {
           "name": "delivered_kWh_t",
-          "dimension": "power",
+          "dimension": "interval_energy",
           "unit_id": "kwh_interval",
           "display_unit": "kWh/interval",
-          "quantity_kind": "power",
+          "quantity_kind": "energy",
           "tree_nodes": [
             "Required energy by departure",
             "Managed charging template"
@@ -6709,6 +7067,28 @@
           "formula_use": "Final managed-charging bill difference",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "tariff_input_set",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Chronological load and tariff"
+          ],
+          "source_or_resolver": "STD-INTERVAL-TARIFF",
+          "exact_paths": [
+            "evidence:E-INTERVAL-TARIFF"
+          ],
+          "fallback_path": "exact published tariff -> itemized bill-derived screen -> explicit conservative screen",
+          "standard_output_key": "interval_tariff.input_set",
+          "evidence_ids": [
+            "E-INTERVAL-TARIFF"
+          ],
+          "formula_use": "Supplies the energy periods, demand rules, seasons, tiers, ratchets, export treatment, and effective-date rules used by the interval bill calculation",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -6758,70 +7138,24 @@
       "verdict": "DRAFT",
       "formula_terms": [
         {
-          "name": "quantity",
-          "dimension": "count",
-          "unit_id": "count",
-          "display_unit": "count",
-          "quantity_kind": "count",
-          "tree_nodes": [
-            "In-scope quantity",
-            "Recognizable Fixture Usage Pattern",
-            "Typical Minutes per Use"
-          ],
-          "source_or_resolver": "User or separately verified commercial usage method",
-          "exact_paths": [
-            "User usage inputs"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Annual activity basis without a WaterSense usage assumption",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
-          "name": "uses_per_year",
-          "dimension": "activity_per_time",
-          "unit_id": "uses_fixture_year",
-          "display_unit": "uses/fixture-year",
-          "quantity_kind": "activity_rate",
-          "tree_nodes": [
-            "In-scope quantity",
-            "Recognizable Fixture Usage Pattern",
-            "Typical Minutes per Use"
-          ],
-          "source_or_resolver": "User or separately verified commercial usage method",
-          "exact_paths": [
-            "User usage inputs"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Annual activity basis without a WaterSense usage assumption",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
-          "name": "duration_minutes",
+          "name": "total_annual_active_minutes",
           "dimension": "declared",
-          "unit_id": "minutes_use",
-          "display_unit": "minutes/use",
+          "unit_id": "minutes_year",
+          "display_unit": "minutes/year",
           "quantity_kind": "numeric",
           "tree_nodes": [
-            "In-scope quantity",
-            "Recognizable Fixture Usage Pattern",
-            "Typical Minutes per Use"
+            "Total annual active minutes across the in-scope fixture group"
           ],
-          "source_or_resolver": "User or separately verified commercial usage method",
+          "source_or_resolver": "Flow Fixture Activity Resolution",
           "exact_paths": [
-            "User usage inputs"
+            "Observed fixture-use study or source-specific compatible activity method"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "observed group activity -> compatible source method -> explicit limitation",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Annual activity basis without a WaterSense usage assumption",
+          "formula_use": "Supplies group-level active duration so fixture count is applied exactly once inside the resolver",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
         },
         {
           "name": "gpm_existing",
@@ -6830,13 +7164,13 @@
           "display_unit": "gallons/minute",
           "quantity_kind": "volume",
           "tree_nodes": [
-            "Existing rated flow"
+            "Existing flow-rate resolution"
           ],
-          "source_or_resolver": "Exact existing rating or measurement",
+          "source_or_resolver": "Existing Flow Rate Resolution",
           "exact_paths": [
-            "User Existing rated flow"
+            "Existing label, specification, audit, or measurement"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "exact existing rating -> retained installed population -> explicit limitation",
           "standard_output_key": null,
           "evidence_ids": [],
           "formula_use": "Existing water intensity from a direct project input",
@@ -6893,15 +7227,13 @@
           "display_unit": "fraction",
           "quantity_kind": "ratio",
           "tree_nodes": [
-            "Hot-water fraction",
-            "Hot-water temperature rise",
-            "Water-heating resource or cold-only selection"
+            "Water-heating input resolution"
           ],
-          "source_or_resolver": "Exact project inputs and deterministic thermodynamics",
+          "source_or_resolver": "Water-Heating Input Resolution",
           "exact_paths": [
-            "User hot fraction, temperature rise, resource, and efficiency"
+            "Confirmed cold-only boundary or exact compatible water-heating input set"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "confirmed cold-only zero or exact compatible input set -> explicit limitation",
           "standard_output_key": null,
           "evidence_ids": [],
           "formula_use": "Optional non-cold-only hot-water input",
@@ -6915,15 +7247,13 @@
           "display_unit": "energy/gallon",
           "quantity_kind": "energy",
           "tree_nodes": [
-            "Hot-water fraction",
-            "Hot-water temperature rise",
-            "Water-heating resource or cold-only selection"
+            "Water-heating input resolution"
           ],
-          "source_or_resolver": "Exact project inputs and deterministic thermodynamics",
+          "source_or_resolver": "Water-Heating Input Resolution",
           "exact_paths": [
-            "User hot fraction, temperature rise, resource, and efficiency"
+            "Confirmed cold-only boundary or exact compatible water-heating input set"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "confirmed cold-only zero or exact compatible input set -> explicit limitation",
           "standard_output_key": null,
           "evidence_ids": [],
           "formula_use": "Optional non-cold-only hot-water input",
@@ -6937,15 +7267,13 @@
           "display_unit": "fraction",
           "quantity_kind": "ratio",
           "tree_nodes": [
-            "Hot-water fraction",
-            "Hot-water temperature rise",
-            "Water-heating resource or cold-only selection"
+            "Water-heating input resolution"
           ],
-          "source_or_resolver": "Exact project inputs and deterministic thermodynamics",
+          "source_or_resolver": "Water-Heating Input Resolution",
           "exact_paths": [
-            "User hot fraction, temperature rise, resource, and efficiency"
+            "Confirmed cold-only boundary or exact compatible water-heating input set"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "confirmed cold-only zero or exact compatible input set -> explicit limitation",
           "standard_output_key": null,
           "evidence_ids": [],
           "formula_use": "Optional non-cold-only hot-water input",
@@ -7076,20 +7404,19 @@
       "default_path": {
         "scenario": "insufficient-data",
         "minimum_required_inputs": [
-          "quantity",
-          "commercial use pattern",
-          "existing and proposed flow",
-          "cold-only or heating resource",
-          "hot-water inputs when nonzero"
+          "total annual active minutes across the fixture group",
+          "existing and proposed gallons per minute",
+          "hot-water input set or confirmed cold-only boundary",
+          "matching rates"
         ],
         "source_fixture": null,
-        "selected_value_calculation": "Use the highest available fallback level and return one value; use an official recommended or typical value when available, otherwise a valid weighted median, otherwise the ordinary median of the eligible compatible population.",
-        "final_result_path": "water reduction plus optional heating-resource reduction -> separate rates",
+        "selected_value_calculation": "Resolve total annual active minutes for the complete fixture group, then multiply by the gallons-per-minute difference exactly once. Resolve existing flow and the hot-water input set through separate processes. Report an explicit limitation when a source-specific input is unavailable.",
+        "final_result_path": "group active minutes -> flow difference -> water and optional water-heating resource -> separate rates",
         "uncertainty": "High",
         "executable_golden_fixture": null,
         "unresolved_gate": "Implementation limitation retained without removing the screening estimate: Commercial usage source, existing baseline, proposed fixture fixture, and hot-water method."
       },
-      "manual_review_verdict": "Annual uses, minutes per use, existing rated flow, hot-water fraction, temperature rise, and heater efficiency are explicit. WaterSense supplies only compatible proposed performance.",
+      "manual_review_verdict": "The formula now uses group-level active minutes without a second fixture-count multiplier. Flow activity, existing flow, and water-heating inputs remain separate resolution processes.",
       "scenarios": [
         {
           "scenario_id": "insufficient-data",
@@ -7108,48 +7435,26 @@
       "verdict": "DRAFT",
       "formula_terms": [
         {
-          "name": "quantity",
-          "dimension": "count",
-          "unit_id": "count",
-          "display_unit": "count",
-          "quantity_kind": "count",
-          "tree_nodes": [
-            "In-scope quantity",
-            "Recognizable Flush Usage Pattern",
-            "Annual flushes per fixture (User)"
-          ],
-          "source_or_resolver": "User exact commercial usage input",
-          "exact_paths": [
-            "User quantity and flush frequency"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Annual activity basis without a WaterSense usage assumption",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
-          "name": "flushes_per_year",
+          "name": "total_annual_flushes_group",
           "dimension": "activity_per_time",
-          "unit_id": "flushes_fixture_year",
-          "display_unit": "flushes/fixture-year",
+          "unit_id": "flushes_year",
+          "display_unit": "flushes/year",
           "quantity_kind": "activity_rate",
           "tree_nodes": [
-            "In-scope quantity",
-            "Recognizable Flush Usage Pattern",
-            "Annual flushes per fixture (User)"
+            "Total annual flushes across the in-scope fixture group"
           ],
-          "source_or_resolver": "User exact commercial usage input",
+          "source_or_resolver": "Flush Activity Resolution using WaterSense at Work 2023",
           "exact_paths": [
-            "User quantity and flush frequency"
+            "Observed restroom study or evidence:E-CONTEXT-FLUSH-ACTIVITY"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Annual activity basis without a WaterSense usage assumption",
+          "fallback_path": "observed group flushes -> EPA fixture-specific activity method -> explicit limitation",
+          "standard_output_key": "context.commercial_flush_activity",
+          "evidence_ids": [
+            "E-CONTEXT-FLUSH-ACTIVITY"
+          ],
+          "formula_use": "Supplies one group-level annual flush total so fixture count is not applied again",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
         },
         {
           "name": "gpf_existing",
@@ -7158,13 +7463,13 @@
           "display_unit": "gallons/flush",
           "quantity_kind": "volume",
           "tree_nodes": [
-            "Existing rated gallons per flush"
+            "Existing flush-volume resolution"
           ],
-          "source_or_resolver": "Exact existing rating or measurement",
+          "source_or_resolver": "Existing Flush Volume Resolution",
           "exact_paths": [
-            "User Existing rated gallons per flush"
+            "Existing label, specification, audit, or measurement"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "exact installed rating -> retained installed population -> explicit limitation",
           "standard_output_key": null,
           "evidence_ids": [],
           "formula_use": "Existing water intensity from a direct project input",
@@ -7233,19 +7538,18 @@
       "default_path": {
         "scenario": "insufficient-data",
         "minimum_required_inputs": [
-          "quantity",
-          "commercial flush frequency",
-          "existing gpf",
-          "proposed gpf"
+          "total annual flushes across the fixture group",
+          "existing and proposed gallons per flush",
+          "matching water and sewer rate"
         ],
         "source_fixture": null,
-        "selected_value_calculation": "Use the highest available fallback level and return one value; use an official recommended or typical value when available, otherwise a valid weighted median, otherwise the ordinary median of the eligible compatible population.",
-        "final_result_path": "annual gallons avoided -> separate water and sewer rates",
+        "selected_value_calculation": "Use an observed group flush total when available. Otherwise apply the retained female toilet, male toilet, and male urinal assumptions separately and return one group total. Multiply by the gallons-per-flush difference without applying fixture count again.",
+        "final_result_path": "group annual flushes -> gallons-per-flush difference -> water and sewer rate",
         "uncertainty": "High",
         "executable_golden_fixture": null,
         "unresolved_gate": "Implementation limitation retained without removing the screening estimate: Commercial flush-frequency source and existing baseline fixture."
       },
-      "manual_review_verdict": "Annual flushes and existing rated flush volume are explicit. WaterSense supplies only compatible proposed performance.",
+      "manual_review_verdict": "The retained EPA activity method is fixture-specific and the formula consumes one group-level annual flush count without a second fixture-count multiplier.",
       "scenarios": [
         {
           "scenario_id": "insufficient-data",
@@ -7650,10 +7954,10 @@
         },
         {
           "name": "avoided_fan_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "MEASUR fan-energy result (Standard)"
           ],
@@ -7913,10 +8217,10 @@
         },
         {
           "name": "avoided_fan_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Existing fan input power, if known (User)",
             "Existing Design Airflow, if known (User)",
@@ -9760,10 +10064,10 @@
         },
         {
           "name": "added_auxiliary_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Recovery auxiliary power, if known (User)",
             "Avoidable marginal resource price"
@@ -9971,10 +10275,10 @@
         },
         {
           "name": "proposed_electric_input",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Proposed technology (User)",
             "Proposed COP or efficiency, if known (User)",
@@ -10438,175 +10742,95 @@
       "verdict": "BLOCKED",
       "formula_terms": [
         {
-          "name": "annual_billed_fuel",
-          "dimension": "resource_per_time",
-          "unit_id": "fuel_unit_year",
-          "display_unit": "fuel-unit/year",
-          "quantity_kind": "resource_rate",
-          "tree_nodes": [
-            "BR-ANNUAL-BILL-RESOURCE",
-            "Cooking share of billed fuel or direct equipment measurement, if known (User)"
-          ],
-          "source_or_resolver": "Bill plus confirmed end-use allocation",
-          "exact_paths": [
-            "annual_therms or exact fuel record plus User cooking share"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Existing cooking fuel basis",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
-          "name": "confirmed_cooking_share",
-          "dimension": "dimensionless",
-          "unit_id": "fraction",
-          "display_unit": "fraction",
-          "quantity_kind": "ratio",
-          "tree_nodes": [
-            "BR-ANNUAL-BILL-RESOURCE",
-            "Cooking share of billed fuel or direct equipment measurement, if known (User)"
-          ],
-          "source_or_resolver": "Bill plus confirmed end-use allocation",
-          "exact_paths": [
-            "annual_therms or exact fuel record plus User cooking share"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Existing cooking fuel basis",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
-          "name": "current_annual_cooking_fuel",
-          "dimension": "resource_per_time",
-          "unit_id": "fuel_unit_year",
-          "display_unit": "fuel-unit/year",
-          "quantity_kind": "resource_rate",
-          "tree_nodes": [
-            "BR-ANNUAL-BILL-RESOURCE",
-            "Cooking share of billed fuel or direct equipment measurement, if known (User)"
-          ],
-          "source_or_resolver": "Bill plus confirmed end-use allocation",
-          "exact_paths": [
-            "annual_therms or exact fuel record plus User cooking share"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Existing cooking fuel basis",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
           "name": "annual_cooking_activity",
           "dimension": "activity_per_time",
           "unit_id": "activity_year",
           "display_unit": "activity/year",
           "quantity_kind": "activity_rate",
           "tree_nodes": [
-            "Annual Cooking Activity in the Tested Duty Unit, if known (User)",
-            "Proposed Induction kWh per Identical Tested Duty Unit, if known (User)"
+            "Annual activity in the identical tested duty unit"
           ],
-          "source_or_resolver": "Measured activity and exact proposed test result",
+          "source_or_resolver": "Exact project record or STD-CONTEXT-BENCHMARKS comparable-duty adapter",
           "exact_paths": [
-            "User exact project inputs"
+            "User recognizable activity or evidence:E-CONTEXT-COOKTOP"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Proposed electricity once",
+          "fallback_path": "exact matched-duty activity -> source-compatible activity -> explicit limitation",
+          "standard_output_key": "context.commercial_cooktop_comparable_duty",
+          "evidence_ids": [
+            "E-CONTEXT-COOKTOP"
+          ],
+          "formula_use": "Scales the resource-intensity difference using the identical tested duty unit",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
         },
         {
-          "name": "proposed_tested_kWh_per_activity_unit",
-          "dimension": "power",
-          "unit_id": "kwh_activity",
-          "display_unit": "kWh/activity",
-          "quantity_kind": "power",
+          "name": "existing_resource_per_activity_r",
+          "dimension": "resource_per_activity",
+          "unit_id": "resource_certified_activity",
+          "display_unit": "resource/certified activity",
+          "quantity_kind": "intensity",
           "tree_nodes": [
-            "Annual Cooking Activity in the Tested Duty Unit, if known (User)",
-            "Proposed Induction kWh per Identical Tested Duty Unit, if known (User)"
+            "Comparable cooking-duty resolver"
           ],
-          "source_or_resolver": "Measured activity and exact proposed test result",
+          "source_or_resolver": "Exact comparable test or STD-CONTEXT-BENCHMARKS",
           "exact_paths": [
-            "User exact project inputs"
+            "Project test record or evidence:E-CONTEXT-COOKTOP"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Proposed electricity once",
+          "fallback_path": "exact comparable test -> compatible source row -> explicit limitation",
+          "standard_output_key": "context.commercial_cooktop_comparable_duty",
+          "evidence_ids": [
+            "E-CONTEXT-COOKTOP"
+          ],
+          "formula_use": "Supplies existing purchased resource per identical tested duty",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
         },
         {
-          "name": "proposed_annual_induction_kWh",
-          "dimension": "power",
-          "unit_id": "kwh_year",
-          "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "name": "proposed_resource_per_activity_r",
+          "dimension": "resource_per_activity",
+          "unit_id": "resource_certified_activity",
+          "display_unit": "resource/certified activity",
+          "quantity_kind": "intensity",
           "tree_nodes": [
-            "Annual Cooking Activity in the Tested Duty Unit, if known (User)",
-            "Proposed Induction kWh per Identical Tested Duty Unit, if known (User)"
+            "Comparable cooking-duty resolver"
           ],
-          "source_or_resolver": "Measured activity and exact proposed test result",
+          "source_or_resolver": "Exact comparable test or STD-CONTEXT-BENCHMARKS",
           "exact_paths": [
-            "User exact project inputs"
+            "Project test record or evidence:E-CONTEXT-COOKTOP"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Proposed electricity once",
+          "fallback_path": "exact comparable test -> compatible source row -> explicit limitation",
+          "standard_output_key": "context.commercial_cooktop_comparable_duty",
+          "evidence_ids": [
+            "E-CONTEXT-COOKTOP"
+          ],
+          "formula_use": "Supplies proposed purchased resource per identical tested duty",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
         },
         {
-          "name": "existing_duty_definition",
+          "name": "tested_duty_definition",
           "dimension": "metadata",
           "unit_id": "tested_duty_definition",
           "display_unit": "tested-duty definition",
           "quantity_kind": "metadata",
           "tree_nodes": [
-            "Existing cooking-duty definition (User)",
-            "Proposed duty-equivalence confirmation (User)"
+            "Identical tested cooking duty definition"
           ],
-          "source_or_resolver": "User-confirmed project test boundary",
+          "source_or_resolver": "Project test record or retained source duty definition",
           "exact_paths": [
-            "User exact project inputs"
+            "Project test record or evidence:E-CONTEXT-COOKTOP"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Guards against comparing unlike cooking duties",
+          "fallback_path": "exact comparable duty -> retained source duty -> explicit limitation",
+          "standard_output_key": "context.commercial_cooktop_comparable_duty",
+          "evidence_ids": [
+            "E-CONTEXT-COOKTOP"
+          ],
+          "formula_use": "Rejects comparisons that do not share batch, temperature rise, product family, and test method",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
         },
         {
-          "name": "proposed_duty_equivalence_confirmed",
-          "dimension": "boolean",
-          "unit_id": "boolean",
-          "display_unit": "boolean",
-          "quantity_kind": "boolean",
-          "tree_nodes": [
-            "Existing cooking-duty definition (User)",
-            "Proposed duty-equivalence confirmation (User)"
-          ],
-          "source_or_resolver": "User-confirmed project test boundary",
-          "exact_paths": [
-            "User exact project inputs"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Guards against comparing unlike cooking duties",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
-          "name": "p_fuel",
+          "name": "p_r",
           "dimension": "currency_per_resource",
           "unit_id": "usd_per_resource_unit",
           "display_unit": "USD/resource-unit",
@@ -10614,34 +10838,14 @@
           "tree_nodes": [
             "Avoidable marginal resource price"
           ],
-          "source_or_resolver": "Bill or documented fuel price",
+          "source_or_resolver": "Bill or documented project price",
           "exact_paths": [
             "rate_components"
           ],
           "fallback_path": "single-value fallback policy",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Values resource switch",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
-          "name": "p_electric",
-          "dimension": "currency_per_energy",
-          "unit_id": "usd_per_kilowatt_hour",
-          "display_unit": "USD/kWh",
-          "quantity_kind": "price",
-          "tree_nodes": [
-            "Avoidable marginal resource price"
-          ],
-          "source_or_resolver": "Bill or documented fuel price",
-          "exact_paths": [
-            "rate_components"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Values resource switch",
+          "formula_use": "Values each comparable resource difference",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
         }
@@ -10653,35 +10857,36 @@
       ],
       "profile_paths": [],
       "bill_field_ids": [
-        "annual_therms",
         "average_cost_per_therm",
         "average_cost_per_kwh"
       ],
       "sewer_applicability": null,
       "default_path": {
-        "scenario": "exact-project-inputs-only",
+        "scenario": "exact-or-compatible-duty",
         "minimum_required_inputs": [
-          "confirmed cooking fuel allocation",
-          "cooking activity",
-          "proposed tested kWh/activity",
-          "prices"
+          "identical tested duty definition",
+          "annual activity in that duty",
+          "existing and proposed comparable resource intensity",
+          "matching prices"
         ],
-        "source_fixture": null,
-        "selected_value_calculation": "Use the highest available fallback level and return one value; use an official recommended or typical value when available, otherwise a valid weighted median, otherwise the ordinary median of the eligible compatible population.",
-        "final_result_path": "fuel avoided minus induction electricity -> rates",
+        "source_fixture": "docs/operational-savings-fixtures/sources/energy-star-commercial-cooktop-calculator.json",
+        "selected_value_calculation": "Use exact comparable project tests first. Otherwise use the retained conventional and efficient electric-cooktop values only for the identical 20-pound water-boil duty. Report an explicit limitation for gas or different-duty cases.",
+        "final_result_path": "matched-duty resource-intensity difference -> annual activity -> matching rates",
         "uncertainty": "High",
         "executable_golden_fixture": null,
-        "unresolved_gate": "Implementation limitation retained without removing the screening estimate: No validated cross-fuel commercial cooking method."
+        "unresolved_gate": "Gas-to-electric and different-duty cases lack a validated comparable test source."
       },
-      "manual_review_verdict": "Blocked except for a measured project-specific comparison.",
+      "manual_review_verdict": "The retained electric-cooktop duty is source-supported. Gas-to-electric and different-duty cases remain blocked without exact comparable project tests.",
       "scenarios": [
         {
-          "scenario_id": "exact-project-inputs-only",
-          "label": "exact project inputs only",
-          "readiness": "UNSUPPORTED",
-          "evidence": [],
+          "scenario_id": "exact-or-compatible-duty",
+          "label": "exact or compatible tested duty",
+          "readiness": "UNVERIFIED",
+          "evidence": [
+            "E-CONTEXT-COOKTOP"
+          ],
           "executable_fixture": null,
-          "limitation": "No validated cross-fuel commercial cooking method."
+          "limitation": "No category calculation golden fixture and no validated gas-to-electric comparable-duty source."
         }
       ],
       "ready_scenario_id": null,
@@ -10692,87 +10897,112 @@
       "verdict": "BLOCKED",
       "formula_terms": [
         {
-          "name": "annual_billed_kWh",
-          "dimension": "power",
-          "unit_id": "kwh_year",
-          "display_unit": "kWh/year",
-          "quantity_kind": "power",
-          "tree_nodes": [
-            "BR-ANNUAL-BILL-RESOURCE",
-            "Walk-in share of billed electricity or direct measurement, if known (User)"
-          ],
-          "source_or_resolver": "Bill plus confirmed end-use allocation",
-          "exact_paths": [
-            "utilityExtractedValues[].fieldId=annual_kwh plus User walk-in share"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Existing system energy basis",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
-          "name": "confirmed_walk_in_share",
-          "dimension": "dimensionless",
-          "unit_id": "fraction",
-          "display_unit": "fraction",
-          "quantity_kind": "ratio",
-          "tree_nodes": [
-            "BR-ANNUAL-BILL-RESOURCE",
-            "Walk-in share of billed electricity or direct measurement, if known (User)"
-          ],
-          "source_or_resolver": "Bill plus confirmed end-use allocation",
-          "exact_paths": [
-            "utilityExtractedValues[].fieldId=annual_kwh plus User walk-in share"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Existing system energy basis",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
           "name": "current_annual_refrigeration_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
-            "BR-ANNUAL-BILL-RESOURCE",
-            "Walk-in share of billed electricity or direct measurement, if known (User)"
+            "Walk-in component energy benchmark"
           ],
-          "source_or_resolver": "Bill plus confirmed end-use allocation",
+          "source_or_resolver": "Exact Project Document or class-matched DOE component benchmark",
           "exact_paths": [
-            "utilityExtractedValues[].fieldId=annual_kwh plus User walk-in share"
+            "Project component record or evidence:E-CONTEXT-WALK-IN"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Existing system energy basis",
+          "formula_use": "Existing component annual energy for the same class and duty",
+          "fallback_path": "exact component energy -> same-row DOE class benchmark -> explicit limitation",
+          "standard_output_key": "context.walk_in_component_energy",
+          "evidence_ids": [
+            "E-CONTEXT-WALK-IN"
+          ],
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
         },
         {
           "name": "proposed_annual_refrigeration_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
-            "Proposed Annual System kWh for the Same Box Load and Duty, if known (User)"
+            "Walk-in component energy benchmark"
           ],
-          "source_or_resolver": "Project-specific whole-system engineering result",
+          "source_or_resolver": "Exact Project Document or class-matched DOE component benchmark",
           "exact_paths": [
-            "User or engineer proposed annual kWh"
+            "Project component record or evidence:E-CONTEXT-WALK-IN"
           ],
-          "fallback_path": "single-value fallback policy",
+          "formula_use": "Proposed component annual energy for the same class and duty",
+          "fallback_path": "exact component energy -> same-row DOE class benchmark -> explicit limitation",
+          "standard_output_key": "context.walk_in_component_energy",
+          "evidence_ids": [
+            "E-CONTEXT-WALK-IN"
+          ],
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "component_annual_kWh",
+          "dimension": "energy_per_time",
+          "unit_id": "kwh_year",
+          "display_unit": "kWh/year",
+          "quantity_kind": "energy_rate",
+          "tree_nodes": [
+            "Walk-in component energy benchmark"
+          ],
+          "source_or_resolver": "Class-matched component formula",
+          "exact_paths": [
+            "evidence:E-CONTEXT-WALK-IN"
+          ],
+          "formula_use": "Preserves the annual component boundary and prevents annual-hours multiplication",
+          "fallback_path": "exact component energy -> same-row DOE class benchmark -> explicit limitation",
+          "standard_output_key": "context.walk_in_component_energy",
+          "evidence_ids": [
+            "E-CONTEXT-WALK-IN"
+          ],
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "panel_area",
+          "dimension": "area",
+          "unit_id": "ft2",
+          "display_unit": "ft2",
+          "quantity_kind": "area",
+          "tree_nodes": [
+            "Panel area when a panel intensity is selected"
+          ],
+          "source_or_resolver": "Project Document",
+          "exact_paths": [
+            "Project panel area"
+          ],
+          "fallback_path": "exact panel area -> explicit limitation",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Proposed system energy",
+          "formula_use": "Scales a panel intensity exactly once",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "panel_kWh_per_ft2_year",
+          "dimension": "energy_per_area_time",
+          "unit_id": "kwh_ft2_year",
+          "display_unit": "kWh/ft2-year",
+          "quantity_kind": "energy_intensity",
+          "tree_nodes": [
+            "Walk-in component energy benchmark"
+          ],
+          "source_or_resolver": "DOE Table IV.31 same-row panel benchmark",
+          "exact_paths": [
+            "evidence:E-CONTEXT-WALK-IN"
+          ],
+          "fallback_path": "same-row DOE panel class -> explicit limitation",
+          "standard_output_key": "context.walk_in_component_energy",
+          "evidence_ids": [
+            "E-CONTEXT-WALK-IN"
+          ],
+          "formula_use": "Supplies panel annual energy intensity in its native unit",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
         },
         {
           "name": "duty_equivalence_confirmed",
@@ -10781,18 +11011,18 @@
           "display_unit": "boolean",
           "quantity_kind": "boolean",
           "tree_nodes": [
-            "Existing and proposed duty-equivalence confirmation (User)"
+            "Existing and proposed duty-equivalence confirmation"
           ],
-          "source_or_resolver": "User-confirmed project comparison boundary",
+          "source_or_resolver": "User confirmation plus class filters",
           "exact_paths": [
-            "User duty-equivalence confirmation"
+            "User confirmation"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "explicit confirmation required",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Guards against comparing annual kWh for unlike box loads or duties",
+          "formula_use": "Rejects unlike component and duty comparisons",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
         },
         {
           "name": "p_electric",
@@ -10803,14 +11033,14 @@
           "tree_nodes": [
             "Electric volumetric charge"
           ],
-          "source_or_resolver": "Bill",
+          "source_or_resolver": "Bill-derived variable rate",
           "exact_paths": [
-            "rate_component:electric-volumetric"
+            "rate_components"
           ],
           "fallback_path": "single-value fallback policy",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Values annual kWh difference",
+          "formula_use": "Values annual component electricity reduction",
           "default_path_resolved": false,
           "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
         }
@@ -10820,37 +11050,54 @@
       ],
       "profile_paths": [],
       "bill_field_ids": [
-        "annual_kwh",
         "average_cost_per_kwh"
       ],
       "sewer_applicability": null,
       "default_path": {
-        "scenario": "exact-project-inputs-only",
+        "scenario": "exact-or-class-matched-component",
         "minimum_required_inputs": [
-          "confirmed walk-in allocation",
-          "proposed whole-system annual kWh",
+          "component type and DOE class",
+          "temperature and indoor or outdoor configuration",
+          "existing and proposed efficiency levels",
+          "panel area for a panel row",
+          "same-duty confirmation",
           "electric rate"
         ],
-        "source_fixture": null,
-        "selected_value_calculation": "Use the highest available fallback level and return one value; use an official recommended or typical value when available, otherwise a valid weighted median, otherwise the ordinary median of the eligible compatible population.",
-        "final_result_path": "whole-system annual kWh difference -> rate",
+        "source_fixture": "docs/operational-savings-fixtures/sources/doe-walk-in-energy-benchmarks.json",
+        "selected_value_calculation": "Use exact annual component energy when available. Otherwise select baseline and proposed values from the same DOE class row, preserve native panel versus annual units, and report an explicit limitation when class filters are incomplete.",
+        "final_result_path": "same-class existing component annual kWh minus proposed component annual kWh -> electric rate",
         "uncertainty": "High",
         "executable_golden_fixture": null,
-        "unresolved_gate": "Implementation limitation retained without removing the screening estimate: No public component dataset resolves whole-system annual performance."
+        "unresolved_gate": "Whole-box energy and unmatched component classes remain unsupported."
       },
-      "manual_review_verdict": "Blocked because component ratings cannot be promoted to a whole-box annual result.",
+      "manual_review_verdict": "The DOE tables support a class-matched component screening path. They do not supply whole-box project energy.",
       "scenarios": [
         {
-          "scenario_id": "exact-project-inputs-only",
-          "label": "exact project inputs only",
-          "readiness": "UNSUPPORTED",
-          "evidence": [],
+          "scenario_id": "exact-or-class-matched-component",
+          "label": "exact or class-matched component",
+          "readiness": "UNVERIFIED",
+          "evidence": [
+            "E-CONTEXT-WALK-IN"
+          ],
           "executable_fixture": null,
-          "limitation": "No public component dataset resolves whole-system annual performance."
+          "limitation": "No category calculation golden fixture and no whole-box duty adapter."
         }
       ],
       "ready_scenario_id": null,
-      "conditional_gates": []
+      "conditional_gates": [
+        {
+          "gate_id": "panel-area-for-panel-intensity",
+          "tree_node": "Panel area when a panel intensity is selected",
+          "activation_condition": "Require panel area only after the selected DOE component class is a panel row expressed in kWh per square foot per year.",
+          "resolves_terms": [
+            "panel_area",
+            "component_annual_kWh"
+          ],
+          "future_verified_standard_could_remove": false,
+          "otherwise_use_single_value_fallback": false,
+          "unresolved_behavior": "Report the panel component path as unavailable. Do not invent panel area, do not substitute a door or refrigeration row, and do not calculate panel annual energy."
+        }
+      ]
     },
     {
       "category_id": "ITC-50",
@@ -10927,10 +11174,10 @@
         },
         {
           "name": "active_intensity_existing,r",
-          "dimension": "declared",
+          "dimension": "resource_per_activity",
           "unit_id": "resource_certified_activity",
           "display_unit": "resource/certified activity",
-          "quantity_kind": "numeric",
+          "quantity_kind": "intensity",
           "tree_nodes": [
             "Certified existing and proposed product resolution"
           ],
@@ -10950,10 +11197,10 @@
         },
         {
           "name": "idle_rate_existing,r",
-          "dimension": "declared",
+          "dimension": "resource_per_time",
           "unit_id": "resource_hour",
           "display_unit": "resource/hour",
-          "quantity_kind": "numeric",
+          "quantity_kind": "resource_rate",
           "tree_nodes": [
             "Certified existing and proposed product resolution"
           ],
@@ -10973,10 +11220,10 @@
         },
         {
           "name": "active_intensity_proposed,r",
-          "dimension": "declared",
+          "dimension": "resource_per_activity",
           "unit_id": "resource_certified_activity",
           "display_unit": "resource/certified activity",
-          "quantity_kind": "numeric",
+          "quantity_kind": "intensity",
           "tree_nodes": [
             "Certified cooking efficiency and idle energy rate"
           ],
@@ -10996,10 +11243,10 @@
         },
         {
           "name": "idle_rate_proposed,r",
-          "dimension": "declared",
+          "dimension": "resource_per_time",
           "unit_id": "resource_hour",
           "display_unit": "resource/hour",
-          "quantity_kind": "numeric",
+          "quantity_kind": "resource_rate",
           "tree_nodes": [
             "Certified cooking efficiency and idle energy rate"
           ],
@@ -11487,20 +11734,60 @@
           "display_unit": "count",
           "quantity_kind": "count",
           "tree_nodes": [
-            "In-scope quantity",
-            "Recognizable Dishwasher Usage Pattern",
-            "Annual Idle Hours per Unit"
+            "Count of identical units in project scope"
           ],
-          "source_or_resolver": "Exact operating inputs",
+          "source_or_resolver": "User",
           "exact_paths": [
-            "User dishwasher activity and hours"
+            "Information Tree > Count of identical units in project scope"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Annual activity and idle bases with idle hours derived once when needed",
+          "formula_use": "Multiplies per-equipment-unit rack, flight, and idle results exactly once",
+          "default_path_resolved": true,
+          "missing_data_behavior": "REQUIRE_EXACT_INPUT"
+        },
+        {
+          "name": "existing_dishwasher_record",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Existing and proposed native water, active electricity, and idle power by model"
+          ],
+          "source_or_resolver": "Exact existing Project Document or retained historical certification record",
+          "exact_paths": [
+            "process:exact-existing-dishwasher-record"
+          ],
+          "fallback_path": "no population fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies the existing rack or flight native performance fields without cross-conversion",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
+        },
+        {
+          "name": "proposed_dishwasher_record",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Existing and proposed native water, active electricity, and idle power by model"
+          ],
+          "source_or_resolver": "Exact or requirement-filtered certified proposed record",
+          "exact_paths": [
+            "energy_star.commercial_dishwasher_fields"
+          ],
+          "fallback_path": "exact opportunity product -> requirement-filtered compatible population",
+          "standard_output_key": "energy_star.commercial_dishwasher_fields",
+          "evidence_ids": [
+            "E-ENERGY-STAR-DISHWASHER"
+          ],
+          "formula_use": "Supplies the proposed rack or flight native performance fields without cross-conversion",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_RECORD_BY_FALLBACK_POLICY"
         },
         {
           "name": "annual_racks_per_unit",
@@ -11509,42 +11796,40 @@
           "display_unit": "racks/year",
           "quantity_kind": "activity_rate",
           "tree_nodes": [
-            "In-scope quantity",
-            "Recognizable Dishwasher Usage Pattern",
-            "Annual Idle Hours per Unit"
+            "Annual racks per equipment unit"
           ],
-          "source_or_resolver": "Exact operating inputs",
+          "source_or_resolver": "STD-CONTEXT-BENCHMARKS rack activity resolver",
           "exact_paths": [
-            "User dishwasher activity and hours"
+            "context.dishwasher_rack_activity"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Annual activity and idle bases with idle hours derived once when needed",
+          "fallback_path": "exact racks/day -> exact retained compatible rack-machine default",
+          "standard_output_key": "context.dishwasher_rack_activity",
+          "evidence_ids": [
+            "E-CONTEXT-DISHWASHER-ACTIVITY"
+          ],
+          "formula_use": "Supplies annual rack activity per equipment unit for rack machines only",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
         },
         {
-          "name": "annual_idle_hours_per_unit",
+          "name": "annual_operating_hours_per_unit",
           "dimension": "time",
           "unit_id": "hour_per_year",
           "display_unit": "hours/year",
           "quantity_kind": "duration",
           "tree_nodes": [
-            "In-scope quantity",
-            "Recognizable Dishwasher Usage Pattern",
-            "Annual Idle Hours per Unit"
+            "Annual flight or conveyor operating hours per equipment unit"
           ],
-          "source_or_resolver": "Exact operating inputs",
+          "source_or_resolver": "Exact flight or conveyor Project Document resolver",
           "exact_paths": [
-            "User dishwasher activity and hours"
+            "process:flight-dishwasher-activity"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no rack or generic fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Annual activity and idle bases with idle hours derived once when needed",
+          "formula_use": "Supplies annual operating hours per equipment unit for flight or conveyor machines only",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
         },
         {
           "name": "annual_energized_hours_per_unit",
@@ -11553,20 +11838,18 @@
           "display_unit": "hours/year",
           "quantity_kind": "duration",
           "tree_nodes": [
-            "In-scope quantity",
-            "Recognizable Dishwasher Usage Pattern",
-            "Annual Idle Hours per Unit"
+            "Annual energized and active-wash hours per equipment unit"
           ],
-          "source_or_resolver": "Exact operating inputs",
+          "source_or_resolver": "Exact Project Document",
           "exact_paths": [
-            "User dishwasher activity and hours"
+            "Project Document > annual energized hours per equipment unit"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Annual activity and idle bases with idle hours derived once when needed",
+          "formula_use": "Supplies the energized-hours boundary for idle-hour derivation",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REQUIRE_EXACT_INPUT"
         },
         {
           "name": "annual_active_wash_hours_per_unit",
@@ -11575,42 +11858,206 @@
           "display_unit": "hours/year",
           "quantity_kind": "duration",
           "tree_nodes": [
-            "In-scope quantity",
-            "Recognizable Dishwasher Usage Pattern",
-            "Annual Idle Hours per Unit"
+            "Annual energized and active-wash hours per equipment unit"
           ],
-          "source_or_resolver": "Exact operating inputs",
+          "source_or_resolver": "Exact Project Document",
           "exact_paths": [
-            "User dishwasher activity and hours"
+            "Project Document > annual active-wash hours per equipment unit"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Annual activity and idle bases with idle hours derived once when needed",
+          "formula_use": "Supplies the active-wash-hours boundary for idle-hour derivation",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REQUIRE_EXACT_INPUT"
+        },
+        {
+          "name": "annual_idle_hours_per_unit",
+          "dimension": "time",
+          "unit_id": "hour_per_year",
+          "display_unit": "hours/year",
+          "quantity_kind": "duration",
+          "tree_nodes": [
+            "Annual energized and active-wash hours per equipment unit"
+          ],
+          "source_or_resolver": "Exact Project Document or deterministic difference",
+          "exact_paths": [
+            "annual_energized_hours_per_unit - annual_active_wash_hours_per_unit"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies idle hours per equipment unit without overlapping active wash",
+          "default_path_resolved": false,
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
         },
         {
           "name": "water_per_rack_existing",
           "dimension": "volume",
-          "unit_id": "gallons_rack",
+          "unit_id": "gallon_per_rack",
           "display_unit": "gallons/rack",
           "quantity_kind": "volume",
           "tree_nodes": [
-            "Certified existing and proposed product resolution"
+            "Existing and proposed native water, active electricity, and idle power by model"
           ],
-          "source_or_resolver": "Exact existing record or measurement",
+          "source_or_resolver": "existing_dishwasher_record",
           "exact_paths": [
-            "User Existing Model"
+            "existing_dishwasher_record.water_use_gallons_per_rack"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": "energy_star.existing_installed_baseline",
-          "evidence_ids": [
-            "E-ENERGY-STAR-EXISTING-UNSUPPORTED"
-          ],
-          "formula_use": "Existing water and idle intensity",
+          "fallback_path": "no cross-unit fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies existing rack-machine water intensity",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
+        },
+        {
+          "name": "water_per_rack_proposed",
+          "dimension": "volume",
+          "unit_id": "gallon_per_rack",
+          "display_unit": "gallons/rack",
+          "quantity_kind": "volume",
+          "tree_nodes": [
+            "Existing and proposed native water, active electricity, and idle power by model"
+          ],
+          "source_or_resolver": "proposed_dishwasher_record",
+          "exact_paths": [
+            "proposed_dishwasher_record.water_use_gallons_per_rack"
+          ],
+          "fallback_path": "exact or selected compatible proposed rack record",
+          "standard_output_key": null,
+          "evidence_ids": [
+            "E-ENERGY-STAR-DISHWASHER"
+          ],
+          "formula_use": "Supplies proposed rack-machine water intensity",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "active_kWh_per_rack_existing",
+          "dimension": "energy_per_activity",
+          "unit_id": "kilowatt_hour_per_rack",
+          "display_unit": "kWh/rack",
+          "quantity_kind": "intensity",
+          "tree_nodes": [
+            "Existing and proposed native water, active electricity, and idle power by model"
+          ],
+          "source_or_resolver": "existing_dishwasher_record",
+          "exact_paths": [
+            "existing_dishwasher_record.active_kWh_per_rack"
+          ],
+          "fallback_path": "no cross-unit fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies existing rack-machine active electricity per rack",
+          "default_path_resolved": false,
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
+        },
+        {
+          "name": "active_kWh_per_rack_proposed",
+          "dimension": "energy_per_activity",
+          "unit_id": "kilowatt_hour_per_rack",
+          "display_unit": "kWh/rack",
+          "quantity_kind": "intensity",
+          "tree_nodes": [
+            "Existing and proposed native water, active electricity, and idle power by model"
+          ],
+          "source_or_resolver": "proposed_dishwasher_record",
+          "exact_paths": [
+            "proposed_dishwasher_record.active_kWh_per_rack"
+          ],
+          "fallback_path": "exact or selected compatible proposed rack record",
+          "standard_output_key": null,
+          "evidence_ids": [
+            "E-ENERGY-STAR-DISHWASHER"
+          ],
+          "formula_use": "Supplies proposed rack-machine active electricity per rack",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "water_per_hour_existing",
+          "dimension": "volume_per_time",
+          "unit_id": "gallon_per_hour",
+          "display_unit": "gallons/hour",
+          "quantity_kind": "volume",
+          "tree_nodes": [
+            "Existing and proposed native water, active electricity, and idle power by model"
+          ],
+          "source_or_resolver": "existing_dishwasher_record",
+          "exact_paths": [
+            "existing_dishwasher_record.water_use_gallons_per_hour"
+          ],
+          "fallback_path": "no rack conversion",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies existing flight-machine water per operating hour",
+          "default_path_resolved": false,
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
+        },
+        {
+          "name": "water_per_hour_proposed",
+          "dimension": "volume_per_time",
+          "unit_id": "gallon_per_hour",
+          "display_unit": "gallons/hour",
+          "quantity_kind": "volume",
+          "tree_nodes": [
+            "Existing and proposed native water, active electricity, and idle power by model"
+          ],
+          "source_or_resolver": "proposed_dishwasher_record",
+          "exact_paths": [
+            "proposed_dishwasher_record.water_use_gallons_per_hour"
+          ],
+          "fallback_path": "exact or selected compatible proposed flight record",
+          "standard_output_key": null,
+          "evidence_ids": [
+            "E-ENERGY-STAR-DISHWASHER"
+          ],
+          "formula_use": "Supplies proposed flight-machine water per operating hour",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "active_kWh_per_hour_existing",
+          "dimension": "power",
+          "unit_id": "kwh_hour",
+          "display_unit": "kWh/hour",
+          "quantity_kind": "power",
+          "tree_nodes": [
+            "Existing and proposed native water, active electricity, and idle power by model"
+          ],
+          "source_or_resolver": "existing_dishwasher_record",
+          "exact_paths": [
+            "existing_dishwasher_record.active_kWh_per_hour"
+          ],
+          "fallback_path": "no rack conversion",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies existing flight-machine active electricity per operating hour",
+          "default_path_resolved": false,
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
+        },
+        {
+          "name": "active_kWh_per_hour_proposed",
+          "dimension": "power",
+          "unit_id": "kwh_hour",
+          "display_unit": "kWh/hour",
+          "quantity_kind": "power",
+          "tree_nodes": [
+            "Existing and proposed native water, active electricity, and idle power by model"
+          ],
+          "source_or_resolver": "proposed_dishwasher_record",
+          "exact_paths": [
+            "proposed_dishwasher_record.active_kWh_per_hour"
+          ],
+          "fallback_path": "no rack conversion",
+          "standard_output_key": null,
+          "evidence_ids": [
+            "E-ENERGY-STAR-DISHWASHER"
+          ],
+          "formula_use": "Supplies proposed flight-machine active electricity per operating hour when explicitly reported",
+          "default_path_resolved": false,
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
         },
         {
           "name": "idle_kW_existing",
@@ -11619,42 +12066,18 @@
           "display_unit": "kW",
           "quantity_kind": "power",
           "tree_nodes": [
-            "Certified existing and proposed product resolution"
+            "Existing and proposed native water, active electricity, and idle power by model"
           ],
-          "source_or_resolver": "Exact existing record or measurement",
+          "source_or_resolver": "existing_dishwasher_record",
           "exact_paths": [
-            "User Existing Model"
+            "existing_dishwasher_record.idle_kW"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": "energy_star.existing_installed_baseline",
-          "evidence_ids": [
-            "E-ENERGY-STAR-EXISTING-UNSUPPORTED"
-          ],
-          "formula_use": "Existing water and idle intensity",
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies existing idle power per machine",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
-          "name": "water_per_rack_proposed",
-          "dimension": "volume",
-          "unit_id": "gallons_rack",
-          "display_unit": "gallons/rack",
-          "quantity_kind": "volume",
-          "tree_nodes": [
-            "Certified water use and idle energy by model"
-          ],
-          "source_or_resolver": "Exact proposed ENERGY STAR record",
-          "exact_paths": [
-            "energy_star.commercial_dishwasher_fields"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": "energy_star.commercial_dishwasher_fields",
-          "evidence_ids": [
-            "E-ENERGY-STAR-DISHWASHER"
-          ],
-          "formula_use": "Proposed water and idle intensity",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
         },
         {
           "name": "idle_kW_proposed",
@@ -11663,23 +12086,133 @@
           "display_unit": "kW",
           "quantity_kind": "power",
           "tree_nodes": [
-            "Certified water use and idle energy by model"
+            "Existing and proposed native water, active electricity, and idle power by model"
           ],
-          "source_or_resolver": "Exact proposed ENERGY STAR record",
+          "source_or_resolver": "proposed_dishwasher_record",
           "exact_paths": [
-            "energy_star.commercial_dishwasher_fields"
+            "proposed_dishwasher_record.idle_kW"
           ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": "energy_star.commercial_dishwasher_fields",
+          "fallback_path": "exact or selected compatible proposed record",
+          "standard_output_key": null,
           "evidence_ids": [
             "E-ENERGY-STAR-DISHWASHER"
           ],
-          "formula_use": "Proposed water and idle intensity",
+          "formula_use": "Supplies proposed idle power per machine",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
         },
         {
-          "name": "avoided_water",
+          "name": "dishwasher_water_heating_result",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Purchased water-heating resource per rack or per operating hour"
+          ],
+          "source_or_resolver": "STD-DISHWASHER-WATER-HEATING",
+          "exact_paths": [
+            "dishwasher.water_heating_conversion"
+          ],
+          "fallback_path": "complete project input set -> exact compatible retained calculator input set",
+          "standard_output_key": "dishwasher.water_heating_conversion",
+          "evidence_ids": [
+            "E-DISHWASHER-WATER-HEATING"
+          ],
+          "formula_use": "Supplies existing and proposed purchased resource in the selected rack or hourly native activity unit",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_RESULT_SET_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "water_heating_R_per_rack_existing",
+          "dimension": "resource_per_activity",
+          "unit_id": "resource_certified_activity",
+          "display_unit": "resource/certified activity",
+          "quantity_kind": "intensity",
+          "tree_nodes": [
+            "Purchased water-heating resource per rack or per operating hour"
+          ],
+          "source_or_resolver": "dishwasher_water_heating_result",
+          "exact_paths": [
+            "dishwasher_water_heating_result.existing_resource_per_rack"
+          ],
+          "fallback_path": "no hourly conversion",
+          "standard_output_key": null,
+          "evidence_ids": [
+            "E-DISHWASHER-WATER-HEATING"
+          ],
+          "formula_use": "Supplies existing purchased water-heating resource per rack",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "water_heating_R_per_rack_proposed",
+          "dimension": "resource_per_activity",
+          "unit_id": "resource_certified_activity",
+          "display_unit": "resource/certified activity",
+          "quantity_kind": "intensity",
+          "tree_nodes": [
+            "Purchased water-heating resource per rack or per operating hour"
+          ],
+          "source_or_resolver": "dishwasher_water_heating_result",
+          "exact_paths": [
+            "dishwasher_water_heating_result.proposed_resource_per_rack"
+          ],
+          "fallback_path": "no hourly conversion",
+          "standard_output_key": null,
+          "evidence_ids": [
+            "E-DISHWASHER-WATER-HEATING"
+          ],
+          "formula_use": "Supplies proposed purchased water-heating resource per rack",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "water_heating_R_per_hour_existing",
+          "dimension": "resource_per_time",
+          "unit_id": "resource_hour",
+          "display_unit": "resource/hour",
+          "quantity_kind": "resource_rate",
+          "tree_nodes": [
+            "Purchased water-heating resource per rack or per operating hour"
+          ],
+          "source_or_resolver": "dishwasher_water_heating_result",
+          "exact_paths": [
+            "dishwasher_water_heating_result.existing_resource_per_hour"
+          ],
+          "fallback_path": "no rack conversion",
+          "standard_output_key": null,
+          "evidence_ids": [
+            "E-DISHWASHER-WATER-HEATING"
+          ],
+          "formula_use": "Supplies existing purchased water-heating resource per flight operating hour",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "water_heating_R_per_hour_proposed",
+          "dimension": "resource_per_time",
+          "unit_id": "resource_hour",
+          "display_unit": "resource/hour",
+          "quantity_kind": "resource_rate",
+          "tree_nodes": [
+            "Purchased water-heating resource per rack or per operating hour"
+          ],
+          "source_or_resolver": "dishwasher_water_heating_result",
+          "exact_paths": [
+            "dishwasher_water_heating_result.proposed_resource_per_hour"
+          ],
+          "fallback_path": "no rack conversion",
+          "standard_output_key": null,
+          "evidence_ids": [
+            "E-DISHWASHER-WATER-HEATING"
+          ],
+          "formula_use": "Supplies proposed purchased water-heating resource per flight operating hour",
+          "default_path_resolved": false,
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
+        },
+        {
+          "name": "avoided_water_rack",
           "dimension": "volume_per_time",
           "unit_id": "gallons_year",
           "display_unit": "gallons/year",
@@ -11689,100 +12222,134 @@
           ],
           "source_or_resolver": "Formula",
           "exact_paths": [
-            "quantity × racks/year × water-per-rack difference"
+            "quantity × annual_racks_per_unit × native gallons-per-rack difference"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Calculates annual avoided water once",
+          "formula_use": "Calculates annual avoided rack-machine water exactly once",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
         },
         {
-          "name": "water_heating_R_per_rack_existing",
-          "dimension": "volume",
-          "unit_id": "gallons_rack",
-          "display_unit": "gallons/rack",
-          "quantity_kind": "volume",
+          "name": "avoided_active_kWh_rack",
+          "dimension": "energy_per_time",
+          "unit_id": "kwh_year",
+          "display_unit": "kWh/year",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
-            "Water-heating resources represented by the per-rack inputs (User)",
-            "Existing purchased water-heating input per certified rack by resource (User)",
-            "Proposed purchased water-heating input per certified rack by resource (User)"
+            "Annual commercial dishwasher resource reduction"
           ],
-          "source_or_resolver": "Exact project-engineered purchased-input boundary by resource",
+          "source_or_resolver": "Formula",
           "exact_paths": [
-            "User existing and proposed purchased water-heating input per certified rack by resource"
+            "quantity × annual_racks_per_unit × native kWh-per-rack difference"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Calculates each purchased water-heating resource delta without inferring wash or booster boundaries from total water",
+          "formula_use": "Calculates annual avoided rack-machine active electricity exactly once",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
         },
         {
-          "name": "water_heating_R_per_rack_proposed",
-          "dimension": "volume",
-          "unit_id": "gallons_rack",
-          "display_unit": "gallons/rack",
-          "quantity_kind": "volume",
+          "name": "avoided_water_heating_rack_R_r",
+          "dimension": "resource_per_time",
+          "unit_id": "resource_unit_year",
+          "display_unit": "resource-unit/year",
+          "quantity_kind": "resource_rate",
           "tree_nodes": [
-            "Water-heating resources represented by the per-rack inputs (User)",
-            "Existing purchased water-heating input per certified rack by resource (User)",
-            "Proposed purchased water-heating input per certified rack by resource (User)"
+            "Annual commercial dishwasher resource reduction"
           ],
-          "source_or_resolver": "Exact project-engineered purchased-input boundary by resource",
+          "source_or_resolver": "Formula",
           "exact_paths": [
-            "User existing and proposed purchased water-heating input per certified rack by resource"
+            "quantity × annual_racks_per_unit × native resource-per-rack difference"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Calculates each purchased water-heating resource delta without inferring wash or booster boundaries from total water",
+          "formula_use": "Calculates annual avoided rack-machine water-heating resource exactly once",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
         },
         {
-          "name": "avoided_water_heating_R_r",
+          "name": "avoided_water_flight",
           "dimension": "volume_per_time",
           "unit_id": "gallons_year",
           "display_unit": "gallons/year",
           "quantity_kind": "volume",
           "tree_nodes": [
-            "Water-heating resources represented by the per-rack inputs (User)",
-            "Existing purchased water-heating input per certified rack by resource (User)",
-            "Proposed purchased water-heating input per certified rack by resource (User)"
-          ],
-          "source_or_resolver": "Exact project-engineered purchased-input boundary by resource",
-          "exact_paths": [
-            "User existing and proposed purchased water-heating input per certified rack by resource"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Calculates each purchased water-heating resource delta without inferring wash or booster boundaries from total water",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
-          "name": "avoided_idle_kWh",
-          "dimension": "power",
-          "unit_id": "kwh_year",
-          "display_unit": "kWh/year",
-          "quantity_kind": "power",
-          "tree_nodes": [
-            "Certified water use and idle energy by model"
+            "Annual commercial dishwasher resource reduction"
           ],
           "source_or_resolver": "Formula",
           "exact_paths": [
-            "quantity × idle hours × idle-kW difference"
+            "quantity × annual_operating_hours_per_unit × native gallons-per-hour difference"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Idle-energy reduction",
+          "formula_use": "Calculates annual avoided flight-machine water exactly once",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
+        },
+        {
+          "name": "avoided_active_kWh_flight",
+          "dimension": "energy_per_time",
+          "unit_id": "kwh_year",
+          "display_unit": "kWh/year",
+          "quantity_kind": "energy_rate",
+          "tree_nodes": [
+            "Annual commercial dishwasher resource reduction"
+          ],
+          "source_or_resolver": "Formula",
+          "exact_paths": [
+            "quantity × annual_operating_hours_per_unit × native kWh-per-hour difference"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Calculates annual avoided flight-machine active electricity exactly once",
+          "default_path_resolved": false,
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
+        },
+        {
+          "name": "avoided_water_heating_flight_R_r",
+          "dimension": "resource_per_time",
+          "unit_id": "resource_unit_year",
+          "display_unit": "resource-unit/year",
+          "quantity_kind": "resource_rate",
+          "tree_nodes": [
+            "Annual commercial dishwasher resource reduction"
+          ],
+          "source_or_resolver": "Formula",
+          "exact_paths": [
+            "quantity × annual_operating_hours_per_unit × native resource-per-hour difference"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Calculates annual avoided flight-machine water-heating resource exactly once",
+          "default_path_resolved": false,
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
+        },
+        {
+          "name": "avoided_idle_kWh",
+          "dimension": "energy_per_time",
+          "unit_id": "kwh_year",
+          "display_unit": "kWh/year",
+          "quantity_kind": "energy_rate",
+          "tree_nodes": [
+            "Annual commercial dishwasher resource reduction"
+          ],
+          "source_or_resolver": "Formula",
+          "exact_paths": [
+            "quantity × annual_idle_hours_per_unit × idle-kW difference"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Calculates annual avoided idle electricity without active-hour overlap",
+          "default_path_resolved": false,
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
         },
         {
           "name": "p_water_sewer",
@@ -11793,16 +12360,16 @@
           "tree_nodes": [
             "Avoidable marginal resource price"
           ],
-          "source_or_resolver": "Separate bill components",
+          "source_or_resolver": "Separate Bill water and sewer components",
           "exact_paths": [
             "rate_components"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "bill-derived simple volumetric rate",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Values water, resource-specific water heating, and idle energy",
+          "formula_use": "Values annual avoided water",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
         },
         {
           "name": "p_r",
@@ -11813,16 +12380,16 @@
           "tree_nodes": [
             "Avoidable marginal resource price"
           ],
-          "source_or_resolver": "Separate bill components",
+          "source_or_resolver": "Separate Bill resource components",
           "exact_paths": [
             "rate_components"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "bill-derived simple volumetric rate",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Values water, resource-specific water heating, and idle energy",
+          "formula_use": "Values annual avoided water-heating resource",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
         },
         {
           "name": "p_electric",
@@ -11833,16 +12400,16 @@
           "tree_nodes": [
             "Avoidable marginal resource price"
           ],
-          "source_or_resolver": "Separate bill components",
+          "source_or_resolver": "Bill-derived simple volumetric electricity rate",
           "exact_paths": [
             "rate_components"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "bill-derived simple volumetric rate",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Values water, resource-specific water heating, and idle energy",
+          "formula_use": "Values annual avoided active and idle electricity",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -11864,29 +12431,35 @@
       "default_path": {
         "scenario": "insufficient-data",
         "minimum_required_inputs": [
-          "machine type",
-          "quantity",
-          "certified activity unit",
-          "activity and idle hours",
-          "existing and proposed records",
-          "purchased water-heating input per activity unit by resource"
+          "machine type and sanitation method",
+          "equipment quantity",
+          "one exact existing native-field record",
+          "one exact or requirements-filtered proposed native-field record",
+          "annual racks per equipment unit for rack machines or exact annual operating hours per equipment unit for flight machines",
+          "annual idle hours per equipment unit",
+          "complete compatible water-heating conversion input set",
+          "applicable resource rates"
         ],
-        "source_fixture": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-schema.json",
-        "selected_value_calculation": "Use the highest available fallback level and return one value; use an official recommended or typical value when available, otherwise a valid weighted median, otherwise the ordinary median of the eligible compatible population.",
-        "final_result_path": "water, resource-specific water-heating, and idle-energy deltas -> separate rates",
+        "source_fixture": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-calculator.json",
+        "selected_value_calculation": "Select one rack or flight branch, preserve all native activity units, multiply per-equipment-unit activity by quantity exactly once, execute the separate water-heating conversion in the same activity unit, and value water, active electricity, water heating, and idle electricity separately.",
+        "final_result_path": "native rack or flight activity -> separate water, active, water-heating, and idle deltas -> separate rates",
         "uncertainty": "High",
         "executable_golden_fixture": null,
-        "unresolved_gate": "Implementation limitation retained without removing the screening estimate: Existing baseline, usage adapter, wash/rinse/booster purchased-input boundary, and end-to-end fixture."
+        "unresolved_gate": "No retained existing installed-equipment record population, no flight-machine activity benchmark, no proven proposed flight active-electricity-per-hour field, and no category end-to-end golden fixture."
       },
-      "manual_review_verdict": "Flight-type gallons/hour and rack-machine gallons/rack remain separate, and total water is not promoted to purchased water-heating input without a wash, rinse, booster, and resource boundary.",
+      "manual_review_verdict": "Rack and flight/conveyor formulas, activity resolvers, product fields, and water-heating outputs remain separate. Rack defaults are per equipment unit and equipment quantity is applied exactly once.",
       "scenarios": [
         {
           "scenario_id": "insufficient-data",
           "label": "insufficient data",
           "readiness": "UNVERIFIED",
-          "evidence": [],
+          "evidence": [
+            "E-ENERGY-STAR-DISHWASHER",
+            "E-CONTEXT-DISHWASHER-ACTIVITY",
+            "E-DISHWASHER-WATER-HEATING"
+          ],
           "executable_fixture": null,
-          "limitation": "Existing baseline, usage adapter, wash/rinse/booster purchased-input boundary, and end-to-end fixture."
+          "limitation": "Existing baseline, flight activity, proposed flight active-electricity field, category adapter, and end-to-end golden fixture remain incomplete."
         }
       ],
       "ready_scenario_id": null,
@@ -12230,10 +12803,10 @@
         },
         {
           "name": "thermal_energy_per_gallon",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_thermal_year",
           "display_unit": "kWh-thermal/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Annual commercial laundry resource reduction",
             "Existing hot-water fraction (User)",
@@ -12345,10 +12918,10 @@
         },
         {
           "name": "machine_kWh_per_cycle_existing",
-          "dimension": "power",
+          "dimension": "energy_per_activity",
           "unit_id": "kwh_cycle",
           "display_unit": "kWh/cycle",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_intensity",
           "tree_nodes": [
             "Existing and proposed separately reported or measured machine electricity per cycle, if known (User)"
           ],
@@ -12367,10 +12940,10 @@
         },
         {
           "name": "machine_kWh_per_cycle_proposed",
-          "dimension": "power",
+          "dimension": "energy_per_activity",
           "unit_id": "kwh_cycle",
           "display_unit": "kWh/cycle",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_intensity",
           "tree_nodes": [
             "Existing and proposed separately reported or measured machine electricity per cycle, if known (User)"
           ],
@@ -12389,10 +12962,10 @@
         },
         {
           "name": "avoided_machine_kWh",
-          "dimension": "power",
+          "dimension": "energy_per_time",
           "unit_id": "kwh_year",
           "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "quantity_kind": "energy_rate",
           "tree_nodes": [
             "Existing and proposed separately reported or measured machine electricity per cycle, if known (User)"
           ],
@@ -12527,19 +13100,18 @@
           "display_unit": "enumeration",
           "quantity_kind": "metadata",
           "tree_nodes": [
-            "Backup technology (User)",
-            "Fuel type (User)"
+            "Backup technology and fuel type"
           ],
-          "source_or_resolver": "User-confirmed project configuration",
+          "source_or_resolver": "User",
           "exact_paths": [
-            "User project inputs"
+            "Information Tree > Backup technology and fuel type"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Selects the applicable routine fuel-use term and matching price unit",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "formula_use": "Gates the exact path and the narrow full-load diesel benchmark",
+          "default_path_resolved": true,
+          "missing_data_behavior": "REQUIRE_EXACT_INPUT"
         },
         {
           "name": "fuel_type",
@@ -12548,19 +13120,18 @@
           "display_unit": "enumeration",
           "quantity_kind": "metadata",
           "tree_nodes": [
-            "Backup technology (User)",
-            "Fuel type (User)"
+            "Backup technology and fuel type"
           ],
-          "source_or_resolver": "User-confirmed project configuration",
+          "source_or_resolver": "User",
           "exact_paths": [
-            "User project inputs"
+            "Information Tree > Backup technology and fuel type"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Selects the applicable routine fuel-use term and matching price unit",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "formula_use": "Selects the compatible fuel unit and price and gates the diesel-only benchmark",
+          "default_path_resolved": true,
+          "missing_data_behavior": "REQUIRE_EXACT_INPUT"
         },
         {
           "name": "quantity",
@@ -12569,20 +13140,38 @@
           "display_unit": "count",
           "quantity_kind": "count",
           "tree_nodes": [
-            "In-scope quantity",
-            "Tested fuel use per operating hour",
-            "Scheduled annual test operating hours"
+            "Count of identical units in project scope"
           ],
-          "source_or_resolver": "Exact tested or contractual project inputs",
+          "source_or_resolver": "User",
           "exact_paths": [
-            "User project inputs"
+            "Information Tree > Count of identical units in project scope"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Calculates routine test fuel once",
+          "formula_use": "Multiplies per-equipment-unit exact or benchmark annual outputs exactly once",
+          "default_path_resolved": true,
+          "missing_data_behavior": "REQUIRE_EXACT_INPUT"
+        },
+        {
+          "name": "exact_backup_routine_input_set",
+          "dimension": "metadata",
+          "unit_id": "record_set",
+          "display_unit": "record set",
+          "quantity_kind": "metadata",
+          "tree_nodes": [
+            "Exact routine-use input set"
+          ],
+          "source_or_resolver": "STD-CONTEXT-BENCHMARKS exact project resolver",
+          "exact_paths": [
+            "process:exact-backup-routine-inputs"
+          ],
+          "fallback_path": "no benchmark substitution inside the exact path",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Supplies the compatible exact hourly and schedule fields as one input set",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_INPUT_SET_BY_FALLBACK_POLICY"
         },
         {
           "name": "test_fuel_per_hour",
@@ -12591,20 +13180,18 @@
           "display_unit": "fuel-unit/hour",
           "quantity_kind": "numeric",
           "tree_nodes": [
-            "In-scope quantity",
-            "Tested fuel use per operating hour",
-            "Scheduled annual test operating hours"
+            "Exact routine-use input set"
           ],
-          "source_or_resolver": "Exact tested or contractual project inputs",
+          "source_or_resolver": "exact_backup_routine_input_set",
           "exact_paths": [
-            "User project inputs"
+            "exact_backup_routine_input_set.test_fuel_per_hour"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Calculates routine test fuel once",
+          "formula_use": "Supplies exact fuel use per operating hour per unit",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
         },
         {
           "name": "annual_test_hours_per_unit",
@@ -12613,42 +13200,19 @@
           "display_unit": "hours/year",
           "quantity_kind": "duration",
           "tree_nodes": [
-            "In-scope quantity",
-            "Tested fuel use per operating hour",
-            "Scheduled annual test operating hours"
+            "Exact routine-use input set"
           ],
-          "source_or_resolver": "Exact tested or contractual project inputs",
+          "source_or_resolver": "exact_backup_routine_input_set or documented diesel benchmark input",
           "exact_paths": [
-            "User project inputs"
+            "exact_backup_routine_input_set.annual_test_hours_per_unit",
+            "Project Document > scheduled annual full-load test hours per unit"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no source-derived hours fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Calculates routine test fuel once",
+          "formula_use": "Annualizes exact hourly fuel use and the narrow FEMA full-load diesel formula",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
-        },
-        {
-          "name": "annual_test_fuel",
-          "dimension": "resource_per_time",
-          "unit_id": "fuel_unit_year",
-          "display_unit": "fuel-unit/year",
-          "quantity_kind": "resource_rate",
-          "tree_nodes": [
-            "In-scope quantity",
-            "Tested fuel use per operating hour",
-            "Scheduled annual test operating hours"
-          ],
-          "source_or_resolver": "Exact tested or contractual project inputs",
-          "exact_paths": [
-            "User project inputs"
-          ],
-          "fallback_path": "single-value fallback policy",
-          "standard_output_key": null,
-          "evidence_ids": [],
-          "formula_use": "Calculates routine test fuel once",
-          "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
         },
         {
           "name": "standby_kW_per_unit",
@@ -12657,19 +13221,18 @@
           "display_unit": "kW/unit",
           "quantity_kind": "power",
           "tree_nodes": [
-            "Standby electric input",
-            "Annual standby energized hours"
+            "Exact routine-use input set"
           ],
-          "source_or_resolver": "Exact tested or contractual project inputs",
+          "source_or_resolver": "exact_backup_routine_input_set",
           "exact_paths": [
-            "User project inputs"
+            "exact_backup_routine_input_set.standby_kW_per_unit"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Calculates standby electricity once",
+          "formula_use": "Supplies exact standby input per equipment unit",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
         },
         {
           "name": "annual_energized_hours_per_unit",
@@ -12678,40 +13241,222 @@
           "display_unit": "hours/year",
           "quantity_kind": "duration",
           "tree_nodes": [
-            "Standby electric input",
-            "Annual standby energized hours"
+            "Exact routine-use input set"
           ],
-          "source_or_resolver": "Exact tested or contractual project inputs",
+          "source_or_resolver": "exact_backup_routine_input_set",
           "exact_paths": [
-            "User project inputs"
+            "exact_backup_routine_input_set.annual_energized_hours_per_unit"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Calculates standby electricity once",
+          "formula_use": "Annualizes exact standby input without an invented schedule",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
         },
         {
-          "name": "annual_standby_kWh",
-          "dimension": "power",
-          "unit_id": "kwh_year",
-          "display_unit": "kWh/year",
-          "quantity_kind": "power",
+          "name": "exact_annual_test_fuel",
+          "dimension": "resource_per_time",
+          "unit_id": "fuel_unit_year",
+          "display_unit": "fuel-unit/year",
+          "quantity_kind": "resource_rate",
           "tree_nodes": [
-            "Standby electric input",
-            "Annual standby energized hours"
+            "Selected exact or benchmark annual routine-use result"
           ],
-          "source_or_resolver": "Exact tested or contractual project inputs",
+          "source_or_resolver": "Formula",
           "exact_paths": [
-            "User project inputs"
+            "quantity × test_fuel_per_hour × annual_test_hours_per_unit"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "no fallback",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Calculates standby electricity once",
+          "formula_use": "Calculates total exact-path annual routine-test fuel",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
+        },
+        {
+          "name": "exact_annual_standby_kWh",
+          "dimension": "energy_per_time",
+          "unit_id": "kwh_year",
+          "display_unit": "kWh/year",
+          "quantity_kind": "energy_rate",
+          "tree_nodes": [
+            "Selected exact or benchmark annual routine-use result"
+          ],
+          "source_or_resolver": "Formula",
+          "exact_paths": [
+            "quantity × standby_kW_per_unit × annual_energized_hours_per_unit"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Calculates total exact-path annual standby electricity",
+          "default_path_resolved": false,
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
+        },
+        {
+          "name": "full_load_diesel_coefficient",
+          "dimension": "volume_per_energy",
+          "unit_id": "gallon_per_kwh",
+          "display_unit": "gallon/kWh",
+          "quantity_kind": "resource_intensity",
+          "tree_nodes": [
+            "Annual full-load diesel test fuel per equipment unit"
+          ],
+          "source_or_resolver": "FEMA full-load diesel formula",
+          "exact_paths": [
+            "context.diesel_generator_full_load_test_fuel > full_load_diesel_fuel_coefficient_value"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": "context.diesel_generator_full_load_test_fuel",
+          "evidence_ids": [
+            "E-CONTEXT-FEMA-DIESEL-GENERATOR"
+          ],
+          "formula_use": "Supplies the 0.07 gallon-per-kWh full-load diesel coefficient",
+          "default_path_resolved": false,
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
+        },
+        {
+          "name": "rated_capacity_kW",
+          "dimension": "power",
+          "unit_id": "kilowatt",
+          "display_unit": "kW",
+          "quantity_kind": "power",
+          "tree_nodes": [
+            "Annual full-load diesel test fuel per equipment unit"
+          ],
+          "source_or_resolver": "Exact Project Document",
+          "exact_paths": [
+            "Project Document > diesel generator rated capacity in kilowatts"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Scales the FEMA full-load diesel coefficient by generator capacity",
+          "default_path_resolved": false,
+          "missing_data_behavior": "REQUIRE_EXACT_INPUT"
+        },
+        {
+          "name": "benchmark_annual_test_fuel_per_unit",
+          "dimension": "resource_per_time",
+          "unit_id": "fuel_unit_year",
+          "display_unit": "fuel-unit/year",
+          "quantity_kind": "resource_rate",
+          "tree_nodes": [
+            "Annual full-load diesel test fuel per equipment unit"
+          ],
+          "source_or_resolver": "STD-CONTEXT-BENCHMARKS FEMA full-load diesel calculation",
+          "exact_paths": [
+            "context.diesel_generator_full_load_test_fuel"
+          ],
+          "fallback_path": "confirmed full-load diesel formula only",
+          "standard_output_key": "context.diesel_generator_full_load_test_fuel",
+          "evidence_ids": [
+            "E-CONTEXT-FEMA-DIESEL-GENERATOR"
+          ],
+          "formula_use": "Returns annual routine-test fuel per equipment unit for the benchmark path",
+          "default_path_resolved": false,
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
+        },
+        {
+          "name": "benchmark_annual_test_fuel",
+          "dimension": "resource_per_time",
+          "unit_id": "fuel_unit_year",
+          "display_unit": "fuel-unit/year",
+          "quantity_kind": "resource_rate",
+          "tree_nodes": [
+            "Selected exact or benchmark annual routine-use result"
+          ],
+          "source_or_resolver": "Formula",
+          "exact_paths": [
+            "quantity × benchmark_annual_test_fuel_per_unit"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Calculates total benchmark-path annual routine-test fuel without multiplying by exact hourly inputs",
+          "default_path_resolved": false,
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
+        },
+        {
+          "name": "benchmark_annual_standby_kWh_per_unit",
+          "dimension": "energy_per_item_time",
+          "unit_id": "kwh_unit_year",
+          "display_unit": "kWh/unit-year",
+          "quantity_kind": "resource_rate",
+          "tree_nodes": [
+            "Annual standby benchmark per equipment unit unavailable because no defensible source is retained"
+          ],
+          "source_or_resolver": "Unresolved: no defensible retained source",
+          "exact_paths": [
+            "unresolved:no-defensible-standby-electricity-source"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Would supply annual standby electricity per unit for the benchmark path, but remains unavailable",
+          "default_path_resolved": false,
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
+        },
+        {
+          "name": "benchmark_annual_standby_kWh",
+          "dimension": "energy_per_time",
+          "unit_id": "kwh_year",
+          "display_unit": "kWh/year",
+          "quantity_kind": "energy_rate",
+          "tree_nodes": [
+            "Selected exact or benchmark annual routine-use result"
+          ],
+          "source_or_resolver": "Formula when benchmark_annual_standby_kWh_per_unit is resolved",
+          "exact_paths": [
+            "quantity × benchmark_annual_standby_kWh_per_unit"
+          ],
+          "fallback_path": "no fallback",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Would calculate total benchmark-path annual standby electricity without exact-hour multiplication",
+          "default_path_resolved": false,
+          "missing_data_behavior": "REPORT_IMPLEMENTATION_LIMITATION"
+        },
+        {
+          "name": "selected_annual_test_fuel",
+          "dimension": "resource_per_time",
+          "unit_id": "fuel_unit_year",
+          "display_unit": "fuel-unit/year",
+          "quantity_kind": "resource_rate",
+          "tree_nodes": [
+            "Selected exact or benchmark annual routine-use result"
+          ],
+          "source_or_resolver": "Exclusive exact-or-benchmark branch selection",
+          "exact_paths": [
+            "exact_annual_test_fuel OR benchmark_annual_test_fuel"
+          ],
+          "fallback_path": "no combined path",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Selects exactly one annual test-fuel result for valuation",
+          "default_path_resolved": false,
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
+        },
+        {
+          "name": "selected_annual_standby_kWh",
+          "dimension": "energy_per_time",
+          "unit_id": "kwh_year",
+          "display_unit": "kWh/year",
+          "quantity_kind": "energy_rate",
+          "tree_nodes": [
+            "Selected exact or benchmark annual routine-use result"
+          ],
+          "source_or_resolver": "Exclusive exact-or-benchmark branch selection",
+          "exact_paths": [
+            "exact_annual_standby_kWh OR benchmark_annual_standby_kWh"
+          ],
+          "fallback_path": "no combined path",
+          "standard_output_key": null,
+          "evidence_ids": [],
+          "formula_use": "Selects exactly one annual standby-electricity result for valuation",
+          "default_path_resolved": false,
+          "missing_data_behavior": "DERIVE_FROM_BOUND_INPUTS"
         },
         {
           "name": "p_fuel",
@@ -12726,12 +13471,12 @@
           "exact_paths": [
             "rate_components"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "bill or receipt-derived unit price",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Values negative routine resource use",
+          "formula_use": "Values selected annual routine-test fuel",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
         },
         {
           "name": "p_electric",
@@ -12742,16 +13487,16 @@
           "tree_nodes": [
             "Avoidable marginal resource price"
           ],
-          "source_or_resolver": "Bill or documented project fuel price",
+          "source_or_resolver": "Bill-derived simple volumetric electricity rate",
           "exact_paths": [
             "rate_components"
           ],
-          "fallback_path": "single-value fallback policy",
+          "fallback_path": "bill-derived simple volumetric rate",
           "standard_output_key": null,
           "evidence_ids": [],
-          "formula_use": "Values negative routine resource use",
+          "formula_use": "Values selected annual standby electricity",
           "default_path_resolved": false,
-          "missing_data_behavior": "SELECT_SINGLE_VALUE_BY_FALLBACK_POLICY"
+          "missing_data_behavior": "SELECT_ONE_SCALAR_BY_FALLBACK_POLICY"
         }
       ],
       "rate_components": [
@@ -12768,29 +13513,29 @@
       "default_path": {
         "scenario": "exact-project-inputs-only",
         "minimum_required_inputs": [
-          "technology",
-          "quantity",
-          "test fuel/hour",
-          "test hours",
-          "standby kW and energized hours when applicable",
-          "prices"
+          "technology and fuel type",
+          "equipment quantity",
+          "complete exact routine-use input set or a confirmed full-load diesel generator with rated capacity and documented annual full-load test hours",
+          "applicable fuel and electricity prices"
         ],
-        "source_fixture": null,
-        "selected_value_calculation": "Use the highest available fallback level and return one value; use an official recommended or typical value when available, otherwise a valid weighted median, otherwise the ordinary median of the eligible compatible population.",
-        "final_result_path": "negative routine fuel and standby electricity value",
+        "source_fixture": "docs/operational-savings-fixtures/sources/fema-diesel-generator-full-load-fuel.json",
+        "selected_value_calculation": "Use either the exact hourly path or the annual benchmark path. For the narrow full-load diesel benchmark, calculate 0.07 gallon/kWh times rated kW times documented annual full-load test hours per equipment unit, then multiply by equipment quantity exactly once. Do not combine the two paths.",
+        "final_result_path": "exclusive exact or benchmark annual routine fuel and standby electricity -> negative resource cost",
         "uncertainty": "High",
         "executable_golden_fixture": null,
-        "unresolved_gate": "Implementation limitation retained without removing the screening estimate: No validated source across generator, battery, and hybrid backup technologies."
+        "unresolved_gate": "No defensible standby-electricity benchmark and no source-derived annual test-hour schedule. Non-diesel, part-load, battery, fuel-cell, propane, natural-gas, and hybrid benchmark paths remain unavailable."
       },
-      "manual_review_verdict": "Blocked for defaults. Outage operation and resilience value remain excluded.",
+      "manual_review_verdict": "BLOCKED. The FEMA fixture implements only a full-load diesel routine-test fuel formula. Exact and annual benchmark paths are exclusive, and this pass does not complete the standby or broad-technology default estimate.",
       "scenarios": [
         {
           "scenario_id": "exact-project-inputs-only",
-          "label": "exact project inputs only",
+          "label": "exact project inputs or narrow full-load diesel fuel formula",
           "readiness": "UNSUPPORTED",
-          "evidence": [],
+          "evidence": [
+            "E-CONTEXT-FEMA-DIESEL-GENERATOR"
+          ],
           "executable_fixture": null,
-          "limitation": "No validated source across generator, battery, and hybrid backup technologies."
+          "limitation": "No defensible standby-electricity benchmark, no source-derived annual test hours, and no broad backup-technology population."
         }
       ],
       "ready_scenario_id": null,

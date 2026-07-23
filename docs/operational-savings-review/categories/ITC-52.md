@@ -14,11 +14,25 @@ Annual Resource Reduction × Applicable Bill-Derived Resource Rate
 **Expanded Formula**
 
 ```text
-Annual Operational Savings = Avoided Water × Bill-Derived Water and Sewer Rate + Sum Across Resources of (Avoided Water-Heating Resource × Bill-Derived Resource Rate) + Avoided Idle Electricity × Bill-Derived Electricity Rate
+For rack machines:
 
-Avoided Water = In-Scope Equipment Count × Annual Racks per Unit × (Existing Water per Rack - Proposed Water per Rack)
+Annual Operational Savings = Avoided Water Rack × Bill-Derived Water and Sewer Rate + Avoided Active kWh Rack × Bill-Derived Electricity Rate + Sum Across Resources of (Avoided Water Heating Rack R R × Bill-Derived Resource Rate) + Avoided Idle Electricity × Bill-Derived Electricity Rate
 
-Avoided Water-Heating Resource = In-Scope Equipment Count × Annual Racks per Unit × (Existing Water-Heating Resource per Rack - Proposed Water-Heating Resource per Rack)
+For flight/conveyor machines:
+
+Annual Operational Savings = Avoided Water Flight × Bill-Derived Water and Sewer Rate + Avoided Active kWh Flight × Bill-Derived Electricity Rate + Sum Across Resources of (Avoided Water Heating Flight R R × Bill-Derived Resource Rate) + Avoided Idle Electricity × Bill-Derived Electricity Rate
+
+Avoided Water Rack = In-Scope Equipment Count × Annual Racks per Unit × (Existing Water per Rack - Proposed Water per Rack)
+
+Avoided Active kWh Rack = In-Scope Equipment Count × Annual Racks per Unit × (Active kWh Per Rack Existing - Active kWh Per Rack Proposed)
+
+Avoided Water Heating Rack R R = In-Scope Equipment Count × Annual Racks per Unit × (Existing Water-Heating Resource per Rack - Proposed Water-Heating Resource per Rack)
+
+Avoided Water Flight = In-Scope Equipment Count × Annual Operating Hours Per Unit × (Water Per Hour Existing - Water Per Hour Proposed)
+
+Avoided Active kWh Flight = In-Scope Equipment Count × Annual Operating Hours Per Unit × (Active kWh Per Hour Existing - Active kWh Per Hour Proposed)
+
+Avoided Water Heating Flight R R = In-Scope Equipment Count × Annual Operating Hours Per Unit × (Water Heating R Per Hour Existing - Water Heating R Per Hour Proposed)
 
 Avoided Idle Electricity = In-Scope Equipment Count × Annual Idle Hours per Unit × (Existing Idle Power - Proposed Idle Power)
 
@@ -31,35 +45,37 @@ Annual Idle Hours per Unit may be confirmed directly or derived as Annual Energi
 Annual Operational Savings
 ├─ Annual Commercial Dishwasher Resource Reduction
 │  ├─ In-Scope Equipment Count (User)
-│  ├─ Commercial Dishwasher Performance
-│  │  ├─ Existing Commercial Dishwasher
-│  │  │  ├─ Existing Commercial Dishwasher Type or Application (User)
-│  │  │  ├─ Existing Make and Model, when available (User)
-│  │  │  ├─ Existing Capacity or Size Class, when available (User)
-│  │  │  └─ Standard 1.1 — Existing Commercial Dishwasher Rating Resolution
-│  │  └─ Proposed Commercial Dishwasher
-│  │     ├─ Linked Opportunity names an exact product
-│  │     │  ├─ Exact Product Information (Linked Opportunity)
-│  │     │  └─ Standard 1.2 — Exact Proposed Commercial Dishwasher Rating Lookup
-│  │     └─ Linked Opportunity specifies requirements but no exact product
-│  │        ├─ Product Requirements (Linked Opportunity)
-│  │        └─ Standard 1.3 — Requirement-Based Proposed Commercial Dishwasher Resolution
-│  ├─ Certified Activity Basis
-│  │  ├─ Rack Machines
+│  ├─ Existing Dishwasher Native Performance
+│  │  ├─ Existing Dishwasher Machine Type and Sanitation Method (User)
+│  │  ├─ Existing Exact Make and Model, Certification Record, or Measured Native Performance (Project Document)
+│  │  └─ Standard 1.1 — Exact Existing Dishwasher Native-Field Resolution
+│  ├─ Proposed Dishwasher Native Performance
+│  │  ├─ Linked Opportunity names an exact dishwasher
+│  │  │  ├─ Exact Proposed Dishwasher Product Information (Linked Opportunity)
+│  │  │  └─ Standard 1.2 — Exact Proposed Dishwasher Native-Field Resolution
+│  │  └─ Linked Opportunity specifies dishwasher requirements but no exact product
+│  │     ├─ Dishwasher Requirements (Linked Opportunity)
+│  │     └─ Standard 1.3 — Requirement-Based Proposed Dishwasher Native-Field Resolution
+│  ├─ Native Activity Basis
+│  │  ├─ Rack Machines Only
+│  │  │  ├─ Rack-Machine Type and Sanitation Method (User)
 │  │  │  ├─ Approximate Racks per Operating Day (User)
 │  │  │  ├─ Operating Days per Week (User)
-│  │  │  └─ Active Weeks per Year (User)
-│  │  ├─ Flight or Conveyor Machines
-│  │  │  └─ Documented Conveyor Operating Hours and Throughput from Controls or Audit (Project Document)
-│  │  ├─ Recognizable Meals, Trays, Racks, Seats, Rooms, or Beds (User)
-│  │  ├─ Standard 1.4 — Commercial Dishwasher Activity Benchmark
-│  │  └─ Do Not Convert Gallons per Rack to Gallons per Hour (Derived)
+│  │  │  ├─ Active Weeks per Year (User)
+│  │  │  └─ Standard 1.4 — Rack-Machine Activity Resolution
+│  │  └─ Flight or Conveyor Machines Only
+│  │     ├─ Exact Annual Operating Hours per Equipment Unit from Controls or Audit (Project Document)
+│  │     └─ Standard 1.5 — Flight or Conveyor Activity Resolution
 │  ├─ Idle Operation
 │  │  ├─ Documented Energized and Active-Wash Hours from Controls or Operating Records (Project Document)
 │  │  └─ Annual Idle Hours (Derived)
-│  ├─ Certified Native Performance Difference (Derived)
-│  └─ Separate Water-Heating Resource Impact
-│     └─ One Selected Water-Heating Conversion from Project Documents or the Context Benchmark (Derived)
+│  ├─ Dishwasher Water-Heating Conversion
+│  │  ├─ Incoming Water Temperature (Project Document)
+│  │  ├─ Wash, Rinse, or Booster Temperature or Certified Hot-Water Quantity (Project Document)
+│  │  ├─ Water-Heating Resource Type (User)
+│  │  ├─ Water-Heater Efficiency (Project Document)
+│  │  └─ Standard 1.6 — Dishwasher Water-Heating Conversion
+│  └─ Separate Rack, Flight, and Idle Resource Results (Derived)
 └─ Applicable Resource Rates
    ├─ Bill-Derived Electricity Rate
    │  ├─ Electricity Use (Bill)
@@ -81,10 +97,10 @@ Annual Operational Savings
       └─ Avoidable Sewer Rate (Derived)
 ```
 
-**■ Standard 1.1 — Existing Commercial Dishwasher Rating Resolution**
+**■ Standard 1.1 — Exact Existing Dishwasher Native-Field Resolution**
 
 **Purpose:**
-Resolve the existing commercial dishwasher performance only from a documented exact model or retained certification record.
+Resolve one exact existing dishwasher record or project measurement while preserving rack and flight fields in their native units.
 
 **Source:**
 U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY STAR Product Finder
@@ -106,71 +122,29 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 **Lookup Inputs:**
 
-* Existing commercial dishwasher type or application
-* Existing make and model, when available
-* Existing capacity or size class
+* Existing dishwasher machine type and sanitation method
+* Existing exact make and model, retained certification record, or measured native performance from a Project Document
 
 **Value Needed:**
 
-* One selected existing commercial dishwasher performance value with its exact unit and provenance
+* One exact existing dishwasher native-field record
+
+**Input Bindings:**
+
+* Existing dishwasher machine type and sanitation method ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Existing Dishwasher Machine Type and Sanitation Method`. Apply the exact bound Existing dishwasher machine type and sanitation method to resolve and validate the authoritative record before Exact Existing Dishwasher Native-Field Resolution emits One exact existing dishwasher native-field record.
+* Existing exact make and model, retained certification record, or measured native performance from a Project Document ← Project Document at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Existing Exact Make and Model, Certification Record, or Measured Native Performance`. Apply the exact bound Existing exact make and model, retained certification record, or measured native performance from a Project Document to resolve and validate the authoritative record before Exact Existing Dishwasher Native-Field Resolution emits One exact existing dishwasher native-field record.
+
+**Output Bindings:**
+
+* One exact existing dishwasher native-field record → `existing_dishwasher_record` (record set; RECORD_SET) at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Standard 1.1 - Exact Existing Dishwasher Native-Field Resolution`.
 
 **How to Use:**
 
-1. Normalize the documented existing manufacturer and model for the high-efficiency commercial dishwasher when it is available.
-2. Search the applicable certification export for that exact model and filter by the displayed product type, capacity or size class, and native test procedure.
-3. If an exact record is unavailable, select one context-matched existing-equipment benchmark from an authoritative historical or installed-stock source; never substitute the current efficient-product population for the installed baseline.
-4. Return one selected existing commercial dishwasher performance value with its exact unit and provenance.
-5. Retain the dataset version, record identity or benchmark population, context filters, population size, selection rule, native fields, units, and fallback level.
-
-**Automation:**
-
-* **Selected Strategy:** Exact-record lookup followed by a context-matched installed-equipment benchmark for high-efficiency commercial dishwasher.
-* **Automation Method:** Normalize the submitted model, query the applicable certification export, and use one exact compatible native-unit record when available; otherwise apply reviewed installed-stock filters and select the official typical value, weighted median, or median.
-* **Difficulty:** Medium
-
-**Validation:**
-The official certification access paths and native product-family fields were checked. Current efficient-product records do not represent the installed baseline. An exact documented existing model is preferred; when it is unavailable, a separately sourced context-matched installed-equipment benchmark is required. That benchmark adapter and the category golden test have not yet been added.
-
-**■ Standard 1.2 — Exact Proposed Commercial Dishwasher Rating Lookup**
-
-**Purpose:**
-Resolve proposed commercial dishwasher performance when the linked opportunity names an exact product.
-
-**Source:**
-U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY STAR Product Finder
-
-**Compliance Certification Database:**
-[https://www.regulations.doe.gov/certification-data/](https://www.regulations.doe.gov/certification-data/)
-
-**CCMS and database description:**
-[https://www.energy.gov/cmei/buildings/implementation-certification-and-enforcement](https://www.energy.gov/cmei/buildings/implementation-certification-and-enforcement)
-
-**Product-specific certification and test-result templates:**
-[https://www.energy.gov/cmei/buildings/standardized-templates-recording-test-results](https://www.energy.gov/cmei/buildings/standardized-templates-recording-test-results)
-
-**ENERGY STAR Product Finder datasets and API:**
-[https://www.energystar.gov/productfinder/advanced](https://www.energystar.gov/productfinder/advanced)
-
-**Commercial dishwasher dataset:**
-[https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Dishwashers/pk8q-dim8](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Dishwashers/pk8q-dim8)
-
-**Lookup Inputs:**
-
-* Exact proposed make and model from the linked opportunity
-* Product type and capacity
-* Applicable certified test method
-
-**Value Needed:**
-
-* Proposed certified commercial dishwasher performance with its exact unit
-
-**How to Use:**
-
-1. Read the exact manufacturer, model, and product configuration from the linked high-efficiency commercial dishwasher opportunity.
-2. Query the official source for the exact model and filter by application, capacity, active specification, and the native certified fields required by this formula.
-3. Require one compatible record; reject partial model matches, inactive listings, incompatible configurations, and records whose native test unit does not match the formula.
-4. Return proposed certified commercial dishwasher performance with its exact unit.
-5. Retain the source version, exact record identity, matched model text, returned native fields and units, and any ambiguity decision.
+1. Require an exact existing model in a retained historical certification snapshot or a project measurement that reports compatible native fields.
+2. Classify the record as rack or flight/conveyor before reading performance fields.
+3. For rack machines, retain gallons per rack, active kilowatt-hours per rack, and idle kilowatts.
+4. For flight/conveyor machines, retain gallons per hour, active kilowatt-hours per hour when explicitly reported, and idle kilowatts.
+5. If the exact record does not expose a required native field, report that field as unresolved and block the affected formula branch. Never convert rack fields to hourly fields.
 
 **Automation:**
 
@@ -179,12 +153,12 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 * **Difficulty:** Medium
 
 **Validation:**
-The official commercial dishwasher dataset and access method were checked. The retained fixture validates model, machine-type, sanitation, water-use, active-energy, idle-power, date, unit, version, and checksum fields. The exact-product adapter and formula-level golden test have not yet been added, and rack and flight-machine units must remain separate.
+Current efficient-product records do not represent the installed baseline. No retained historical existing-model population or category golden fixture is present, so only an exact project record can support this process and implementation proof remains pending.
 
-**■ Standard 1.3 — Requirement-Based Proposed Commercial Dishwasher Resolution**
+**■ Standard 1.2 — Exact Proposed Dishwasher Native-Field Resolution**
 
 **Purpose:**
-Interpret the linked opportunity requirements and determine whether they identify a compatible certified commercial dishwasher record.
+Resolve one exact opportunity-named proposed dishwasher record while preserving rack and flight fields in their native units.
 
 **Source:**
 U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY STAR Product Finder
@@ -206,21 +180,87 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 **Lookup Inputs:**
 
-* Product requirements from the linked opportunity
-* Required application and capacity
-* Applicable efficiency or resource-use criteria
+* Exact proposed dishwasher make and model from the linked opportunity
+* Machine type, sanitation method, application, and capacity
 
 **Value Needed:**
 
-* One selected proposed commercial dishwasher native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally
+* One exact proposed dishwasher native-field record
+
+**Input Bindings:**
+
+* Exact proposed dishwasher make and model from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity names an exact dishwasher > Exact Proposed Dishwasher Product Information`. Apply the exact bound Exact proposed dishwasher make and model from the linked opportunity to resolve and validate the authoritative record before Exact Proposed Dishwasher Native-Field Resolution emits One exact proposed dishwasher native-field record.
+* Machine type, sanitation method, application, and capacity ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Existing Dishwasher Machine Type and Sanitation Method`. Apply the exact bound Machine type, sanitation method, application, and capacity to resolve and validate the authoritative record before Exact Proposed Dishwasher Native-Field Resolution emits One exact proposed dishwasher native-field record.
+
+**Output Bindings:**
+
+* One exact proposed dishwasher native-field record → `proposed_dishwasher_record` (record set; RECORD_SET) at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity names an exact dishwasher > Standard 1.2 - Exact Proposed Dishwasher Native-Field Resolution`.
 
 **How to Use:**
 
-1. Extract the application, capacity, certification, and performance limits from the linked high-efficiency commercial dishwasher opportunity requirements.
-2. Filter the official current-product population by every mandatory requirement, product-family boundary, active specification, and native test unit.
-3. Use the source's official recommended or typical value when it provides one; otherwise select the weighted median when valid weights exist, or the ordinary median of the eligible compatible population.
-4. Return one selected proposed commercial dishwasher native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally without choosing a future contractor product arbitrarily.
-5. Retain the source version, complete filters, eligible record identities, population size, native units, selection rule, selected value, and fallback level.
+1. Match the exact manufacturer and model and require an active compatible certification record.
+2. Classify the record as rack or flight/conveyor before reading performance fields.
+3. For rack machines, retain gallons per rack, active kilowatt-hours per rack, and idle kilowatts.
+4. For flight/conveyor machines, retain gallons per hour, active kilowatt-hours per hour only when explicitly reported, and idle kilowatts.
+5. Reject any calculation that would convert gallons per rack to gallons per hour or active kilowatt-hours per rack to an hourly value.
+
+**Automation:**
+
+* **Selected Strategy:** Exact linked-opportunity product match against the official U.S. Department of Energy - Compliance Certification Database records.
+* **Automation Method:** Normalize the opportunity model identifiers, perform an exact active-record lookup, apply category compatibility filters, and return only the required native source fields.
+* **Difficulty:** Medium
+
+**Validation:**
+The retained ENERGY STAR schema fixture proves machine type, sanitation, rack water, flight water, rack active electricity, and idle-power fields. It does not prove a flight active-electricity-per-hour field, an exact category adapter, or an end-to-end golden case, so unsupported flight fields remain blocked and implementation proof is pending.
+
+**■ Standard 1.3 — Requirement-Based Proposed Dishwasher Native-Field Resolution**
+
+**Purpose:**
+Select one compatible proposed dishwasher record from explicit opportunity requirements without mixing rack and flight populations.
+
+**Source:**
+U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY STAR Product Finder
+
+**Compliance Certification Database:**
+[https://www.regulations.doe.gov/certification-data/](https://www.regulations.doe.gov/certification-data/)
+
+**CCMS and database description:**
+[https://www.energy.gov/cmei/buildings/implementation-certification-and-enforcement](https://www.energy.gov/cmei/buildings/implementation-certification-and-enforcement)
+
+**Product-specific certification and test-result templates:**
+[https://www.energy.gov/cmei/buildings/standardized-templates-recording-test-results](https://www.energy.gov/cmei/buildings/standardized-templates-recording-test-results)
+
+**ENERGY STAR Product Finder datasets and API:**
+[https://www.energystar.gov/productfinder/advanced](https://www.energystar.gov/productfinder/advanced)
+
+**Commercial dishwasher dataset:**
+[https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Dishwashers/pk8q-dim8](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Dishwashers/pk8q-dim8)
+
+**Lookup Inputs:**
+
+* Dishwasher requirements from the linked opportunity
+* Required machine type, sanitation method, application, and capacity
+
+**Value Needed:**
+
+* One selected compatible proposed dishwasher native-field record
+
+**Input Bindings:**
+
+* Dishwasher requirements from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity specifies dishwasher requirements but no exact product > Dishwasher Requirements`. Apply the exact bound Dishwasher requirements from the linked opportunity as a compatibility filter before Requirement-Based Proposed Dishwasher Native-Field Resolution emits One selected compatible proposed dishwasher native-field record.
+* Required machine type, sanitation method, application, and capacity ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Existing Dishwasher Machine Type and Sanitation Method`. Apply the exact bound Required machine type, sanitation method, application, and capacity as a compatibility filter before Requirement-Based Proposed Dishwasher Native-Field Resolution emits One selected compatible proposed dishwasher native-field record.
+
+**Output Bindings:**
+
+* One selected compatible proposed dishwasher native-field record → `proposed_dishwasher_record` (record set; RECORD_SET) at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity specifies dishwasher requirements but no exact product > Standard 1.3 - Requirement-Based Proposed Dishwasher Native-Field Resolution`.
+
+**How to Use:**
+
+1. Extract every mandatory machine-type, sanitation, application, capacity, and performance restriction from the linked opportunity.
+2. Filter rack and flight/conveyor records as separate populations.
+3. Preserve each eligible record's native gallons-per-rack or gallons-per-hour, active-energy, and idle-power fields.
+4. Use an official recommended or typical record when available, otherwise use a valid weighted median or the ordinary median of the eligible compatible population.
+5. Return one complete compatible record and retain the source version, filters, population, population size, selection rule, fields, native units, and limitations.
 
 **Automation:**
 
@@ -229,12 +269,12 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 * **Difficulty:** Medium
 
 **Validation:**
-The official commercial dishwasher dataset and access method were checked, and the retained schema fixture validates the fields required to filter machine type, sanitation method, water use, active energy, and idle power. A retained candidate population and category golden test have not yet been added, so the requirements path cannot claim an implemented selection.
+The retained ENERGY STAR schema fixture proves the native field families and filter fields. No retained eligible candidate population or category golden fixture proves the selected record, and the published schema does not prove flight active electricity per hour, so implementation remains pending.
 
-**■ Standard 1.4 — Commercial Dishwasher Activity Benchmark**
+**■ Standard 1.4 — Rack-Machine Activity Resolution**
 
 **Purpose:**
-Select one dishwasher activity value from recognizable business throughput when exact controls or operating records are unavailable.
+Resolve annual racks per equipment unit for one compatible rack-machine type and sanitation method.
 
 **Source:**
 U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
@@ -242,31 +282,145 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 **WaterSense at Work commercial-kitchen methods:**
 [https://www.epa.gov/watersense/best-management-practices](https://www.epa.gov/watersense/best-management-practices)
 
+**ENERGY STAR CFS Equipment Calculator:**
+[https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx](https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx)
+
 **Lookup Inputs:**
 
-* Dishwasher machine type
-* Business activity
-* Meals, trays, racks, seats, rooms, beds, or another normally tracked throughput
-* Operating days and hours
-* In-scope equipment count
+* Rack-machine type and sanitation method
+* Approximate racks per operating day, when known
+* Operating days per week
+* Active weeks per year
 
 **Value Needed:**
 
-* One annual rack count for rack machines, or one annual conveyor operating-hour and throughput value for flight machines
+* Annual racks per equipment unit
+
+**Input Bindings:**
+
+* Rack-machine type and sanitation method ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Rack-Machine Type and Sanitation Method`. Pass the exact bound Rack-machine type and sanitation method to Rack-Machine Activity Resolution when computing Annual racks per equipment unit; do not substitute a value from another tree path.
+* Approximate racks per operating day, when known ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Approximate Racks per Operating Day`. Pass the exact bound Approximate racks per operating day, when known to Rack-Machine Activity Resolution when computing Annual racks per equipment unit; do not substitute a value from another tree path.
+* Operating days per week ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Operating Days per Week`. Pass the exact bound Operating days per week to Rack-Machine Activity Resolution when computing Annual racks per equipment unit; do not substitute a value from another tree path.
+* Active weeks per year ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Active Weeks per Year`. Pass the exact bound Active weeks per year to Rack-Machine Activity Resolution when computing Annual racks per equipment unit; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* Annual racks per equipment unit → `annual_racks_per_unit` (racks/year; PER_EQUIPMENT_UNIT) at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Standard 1.4 - Rack-Machine Activity Resolution`.
 
 **How to Use:**
 
-1. Map the High-Efficiency Commercial Dishwasher inputs to the documented Commercial Dishwasher Activity Benchmark source fields or model inputs: Dishwasher machine type; Business activity; Meals, trays, racks, seats, rooms, beds, or another normally tracked throughput; Operating days and hours; In-scope equipment count.
-2. Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.
-3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
-4. Return one selected annual rack count for rack machines, or one annual conveyor operating-hour and throughput value for flight machines.
-5. Retain the Commercial Dishwasher Activity Benchmark source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
+1. Use exact project racks per operating day when available.
+2. Otherwise select the exact retained ENERGY STAR calculator default for the compatible rack-machine type and sanitation method.
+3. Calculate annual racks per equipment unit as selected racks per day multiplied by operating days per week and active weeks per year.
+4. Return the per-equipment-unit annual rack value and multiply by equipment quantity exactly once in the formula.
+5. Do not use this resolver for flight or conveyor machines and do not convert the result to operating hours.
 
 **Automation:**
 
-* **Selected Strategy:** Category-specific deterministic selection from the closest authoritative compatible population.
-* **Automation Method:** Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.
+* **Selected Strategy:** Category-specific deterministic selection from an explicitly implemented and evidenced compatible source population or equation.
+* **Automation Method:** Apply the category's documented source-version and compatibility filters, execute its exact numeric rule, and retain the selected output, unit, scope, fixture, and population or equation provenance. Report a limitation when that source-specific implementation is absent.
 * **Difficulty:** Medium
 
 **Validation:**
-The WaterSense commercial-kitchen method can support activity conversion only after its exact dishwasher fields and units are retained. That source fixture is not yet present. ENERGY STAR product data remains limited to exact product performance and is not used to infer activity.
+The retained ENERGY STAR calculator fixture proves explicit rack-machine daily defaults for supported types and the annualization equation. The category adapter and end-to-end golden fixture remain pending.
+
+**■ Standard 1.5 — Flight or Conveyor Activity Resolution**
+
+**Purpose:**
+Resolve annual operating hours per equipment unit for a flight or conveyor machine without translating rack activity.
+
+**Source:**
+U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
+
+**WaterSense at Work commercial-kitchen methods:**
+[https://www.epa.gov/watersense/best-management-practices](https://www.epa.gov/watersense/best-management-practices)
+
+**ENERGY STAR CFS Equipment Calculator:**
+[https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx](https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx)
+
+**Lookup Inputs:**
+
+* Exact annual operating hours per equipment unit from controls, an audit, or another Project Document
+
+**Value Needed:**
+
+* Annual flight or conveyor operating hours per equipment unit
+
+**Input Bindings:**
+
+* Exact annual operating hours per equipment unit from controls, an audit, or another Project Document ← Project Document at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Flight or Conveyor Machines Only > Exact Annual Operating Hours per Equipment Unit from Controls or Audit`. Pass the exact bound Exact annual operating hours per equipment unit from controls, an audit, or another Project Document to Flight or Conveyor Activity Resolution when computing Annual flight or conveyor operating hours per equipment unit; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* Annual flight or conveyor operating hours per equipment unit → `annual_operating_hours_per_unit` (hours/year; PER_EQUIPMENT_UNIT) at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Flight or Conveyor Machines Only > Standard 1.5 - Flight or Conveyor Activity Resolution`.
+
+**How to Use:**
+
+1. Require exact annual operating hours per equipment unit from controls, an operating record, or an audit.
+2. Validate that the hours apply to the same flight or conveyor machine and period as the native gallons-per-hour and active-electricity-per-hour fields.
+3. Return annual operating hours per equipment unit.
+4. Multiply by equipment quantity exactly once in the flight formula.
+5. When exact hours are unavailable, report the implementation limitation. The retained rack defaults are not a flight-machine fallback.
+
+**Automation:**
+
+* **Selected Strategy:** Category-specific deterministic selection from an explicitly implemented and evidenced compatible source population or equation.
+* **Automation Method:** Apply the category's documented source-version and compatibility filters, execute its exact numeric rule, and retain the selected output, unit, scope, fixture, and population or equation provenance. Report a limitation when that source-specific implementation is absent.
+* **Difficulty:** Medium
+
+**Validation:**
+The retained calculator fixture does not supply a defensible flight-machine annual-hours population. Only an exact project record is supported, and no category golden fixture exists, so implementation proof remains pending.
+
+**■ Standard 1.6 — Dishwasher Water-Heating Conversion**
+
+**Purpose:**
+Convert existing and proposed native water quantities to purchased building and booster heating resource in the selected machine's same rack or hourly activity unit.
+
+**Source:**
+U.S. Environmental Protection Agency - ENERGY STAR Commercial Food Service Equipment Calculator
+
+**ENERGY STAR Commercial Food Service Equipment Calculator:**
+[https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx](https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx)
+
+**Lookup Inputs:**
+
+* Rack or flight/conveyor machine type and sanitation method
+* Existing and proposed native water quantity from the connected product records
+* Incoming water temperature
+* Wash, rinse, or booster temperature or certified hot-water quantity
+* Water-heating resource type
+* Water-heater efficiency
+
+**Value Needed:**
+
+* One native-unit existing and proposed dishwasher water-heating result set
+
+**Input Bindings:**
+
+* Rack or flight/conveyor machine type and sanitation method ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Rack-Machine Type and Sanitation Method`. Pass the exact bound Rack or flight/conveyor machine type and sanitation method to Dishwasher Water-Heating Conversion when computing One native-unit existing and proposed dishwasher water-heating result set; do not substitute a value from another tree path.
+* Existing and proposed native water quantity from the connected product records ← Standard Output at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity specifies dishwasher requirements but no exact product > Standard 1.3 - Requirement-Based Proposed Dishwasher Native-Field Resolution`. Pass the exact bound Existing and proposed native water quantity from the connected product records to Dishwasher Water-Heating Conversion when computing One native-unit existing and proposed dishwasher water-heating result set; do not substitute a value from another tree path.
+* Incoming water temperature ← Project Document at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Incoming Water Temperature`. Pass the exact bound Incoming water temperature to Dishwasher Water-Heating Conversion when computing One native-unit existing and proposed dishwasher water-heating result set; do not substitute a value from another tree path.
+* Wash, rinse, or booster temperature or certified hot-water quantity ← Project Document at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Wash, Rinse, or Booster Temperature or Certified Hot-Water Quantity`. Pass the exact bound Wash, rinse, or booster temperature or certified hot-water quantity to Dishwasher Water-Heating Conversion when computing One native-unit existing and proposed dishwasher water-heating result set; do not substitute a value from another tree path.
+* Water-heating resource type ← User at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Water-Heating Resource Type`. Pass the exact bound Water-heating resource type to Dishwasher Water-Heating Conversion when computing One native-unit existing and proposed dishwasher water-heating result set; do not substitute a value from another tree path.
+* Water-heater efficiency ← Project Document at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Water-Heater Efficiency`. Pass the exact bound Water-heater efficiency to Dishwasher Water-Heating Conversion when computing One native-unit existing and proposed dishwasher water-heating result set; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* One native-unit existing and proposed dishwasher water-heating result set → `dishwasher_water_heating_result` (record set; RECORD_SET) at `Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Standard 1.6 - Dishwasher Water-Heating Conversion`.
+
+**How to Use:**
+
+1. Select the rack or flight/conveyor branch before calculating water heating.
+2. Use gallons per rack for the rack branch or gallons per operating hour for the flight branch.
+3. Resolve incoming and wash, rinse, or booster temperatures, purchased resource, and heater efficiency from complete project engineering inputs or the compatible retained ENERGY STAR calculator input set.
+4. Calculate purchased building and booster resource from water volume, water density, specific heat, temperature rise, resource conversion, and heater efficiency.
+5. Return existing and proposed resource per rack or per hour in the same native activity unit and retain the complete input set, equation, units, source version, and warnings.
+
+**Automation:**
+
+* **Selected Strategy:** Deterministic native-unit execution of the retained ENERGY STAR dishwasher building and booster water-heating equations.
+* **Automation Method:** Select the rack or flight branch, validate water quantities, temperatures, resource, and efficiency, and calculate purchased resource per rack or per operating hour without cross-converting activity units.
+* **Difficulty:** Medium
+
+**Validation:**
+The retained March 2024 ENERGY STAR calculator fixture proves the building and booster temperature-rise and efficiency equations. The category adapter and end-to-end golden fixture remain pending, and incompatible or incomplete project boundaries remain blocked.

@@ -94,6 +94,16 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 * One selected existing cooking equipment performance value with its exact unit and provenance
 
+**Input Bindings:**
+
+* Existing cooking equipment type or application ← User at `Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Existing Cooking Equipment > Existing Cooking Equipment Type or Application`. Pass the exact bound Existing cooking equipment type or application to Existing Cooking Equipment Rating Resolution when computing One selected existing cooking equipment performance value with its exact unit and provenance; do not substitute a value from another tree path.
+* Existing make and model, when available ← User at `Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Existing Cooking Equipment > Existing Make and Model, when available`. Pass the exact bound Existing make and model, when available to Existing Cooking Equipment Rating Resolution when computing One selected existing cooking equipment performance value with its exact unit and provenance; do not substitute a value from another tree path.
+* Existing capacity or size class ← User at `Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Existing Cooking Equipment > Existing Capacity or Size Class, when available`. Pass the exact bound Existing capacity or size class to Existing Cooking Equipment Rating Resolution when computing One selected existing cooking equipment performance value with its exact unit and provenance; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* One selected existing cooking equipment performance value with its exact unit and provenance → `active_input_per_test_unit` (energy/activity; PROJECT_TOTAL) at `Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Existing Cooking Equipment > Standard 1.1 - Existing Cooking Equipment Rating Resolution`.
+
 **How to Use:**
 
 1. Normalize the documented existing manufacturer and model for the high-efficiency commercial cooking equipment when it is available.
@@ -150,6 +160,16 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 * Proposed certified cooking equipment performance with its exact unit
 
+**Input Bindings:**
+
+* Exact proposed make and model from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Proposed Cooking Equipment > Linked Opportunity names an exact product > Exact Product Information`. Apply the exact bound Exact proposed make and model from the linked opportunity to resolve and validate the authoritative record before Exact Proposed Cooking Equipment Rating Lookup emits Proposed certified cooking equipment performance with its exact unit.
+* Product type and capacity ← Linked Opportunity at `Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Proposed Cooking Equipment > Linked Opportunity names an exact product > Exact Product Information`. Apply the exact bound Product type and capacity to resolve and validate the authoritative record before Exact Proposed Cooking Equipment Rating Lookup emits Proposed certified cooking equipment performance with its exact unit.
+* Applicable certified test method ← Linked Opportunity at `Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Proposed Cooking Equipment > Linked Opportunity names an exact product > Exact Product Information`. Apply the exact bound Applicable certified test method to resolve and validate the authoritative record before Exact Proposed Cooking Equipment Rating Lookup emits Proposed certified cooking equipment performance with its exact unit.
+
+**Output Bindings:**
+
+* Proposed certified cooking equipment performance with its exact unit → `active_input_per_test_unit` (energy/activity; RECORD_SET) at `Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Proposed Cooking Equipment > Linked Opportunity names an exact product > Standard 1.2 - Exact Proposed Cooking Equipment Rating Lookup`.
+
 **How to Use:**
 
 1. Read the exact manufacturer, model, and product configuration from the linked high-efficiency commercial cooking equipment opportunity.
@@ -205,6 +225,16 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 **Value Needed:**
 
 * One selected proposed cooking equipment native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally
+
+**Input Bindings:**
+
+* Product requirements from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Proposed Cooking Equipment > Linked Opportunity specifies requirements but no exact product > Product Requirements`. Apply the exact bound Product requirements from the linked opportunity as a compatibility filter before Requirement-Based Proposed Cooking Equipment Resolution emits One selected proposed cooking equipment native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally.
+* Required application and capacity ← Linked Opportunity at `Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Proposed Cooking Equipment > Linked Opportunity specifies requirements but no exact product > Product Requirements`. Apply the exact bound Required application and capacity as a compatibility filter before Requirement-Based Proposed Cooking Equipment Resolution emits One selected proposed cooking equipment native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally.
+* Applicable efficiency or resource-use criteria ← Linked Opportunity at `Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Proposed Cooking Equipment > Linked Opportunity specifies requirements but no exact product > Product Requirements`. Apply the exact bound Applicable efficiency or resource-use criteria as a compatibility filter before Requirement-Based Proposed Cooking Equipment Resolution emits One selected proposed cooking equipment native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally.
+
+**Output Bindings:**
+
+* One selected proposed cooking equipment native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally → `active_input_per_test_unit` (energy/activity; RECORD_SET) at `Annual Operational Savings > Annual commercial cooking resource reduction > Cooking Equipment Performance > Proposed Cooking Equipment > Linked Opportunity specifies requirements but no exact product > Standard 1.3 - Requirement-Based Proposed Cooking Equipment Resolution`.
 
 **How to Use:**
 

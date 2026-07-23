@@ -76,6 +76,16 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 
 * One existing input-watt value per fixture
 
+**Input Bindings:**
+
+* Existing fixture type or exterior application ← User at `Annual Operational Savings > Annual Electricity Reduction > Existing Fixture Watts > Existing Fixture Type or Application`. Pass the exact bound Existing fixture type or exterior application to Existing Fixture Wattage Benchmark when computing One existing input-watt value per fixture; do not substitute a value from another tree path.
+* Building and site context ← Profile at `Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Site Location`. Pass the exact bound Building and site context to Existing Fixture Wattage Benchmark when computing One existing input-watt value per fixture; do not substitute a value from another tree path.
+* Exact existing wattage from a Project Document, when available ← Project Document at `Annual Operational Savings > Annual Electricity Reduction > Existing Fixture Watts > Existing Nameplate, Photometric Report, or Field Measurement`. Pass the exact bound Exact existing wattage from a Project Document, when available to Existing Fixture Wattage Benchmark when computing One existing input-watt value per fixture; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* One existing input-watt value per fixture → `existing_kW` (kW/fixture; PER_FIXTURE) at `Annual Operational Savings > Annual Electricity Reduction > Existing Fixture Watts > Standard 1.1 - Existing Fixture Wattage Benchmark`.
+
 **How to Use:**
 
 1. Use the exact nameplate, photometric report, or field measurement when available.
@@ -86,8 +96,8 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 
 **Automation:**
 
-* **Selected Strategy:** Category-specific deterministic selection from the closest authoritative compatible population.
-* **Automation Method:** Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.
+* **Selected Strategy:** Category-specific deterministic selection from an explicitly implemented and evidenced compatible source population or equation.
+* **Automation Method:** Apply the category's documented source-version and compatibility filters, execute its exact numeric rule, and retain the selected output, unit, scope, fixture, and population or equation provenance. Report a limitation when that source-specific implementation is absent.
 * **Difficulty:** Medium
 
 **Validation:**
@@ -115,6 +125,15 @@ DesignLights Consortium - Solid-State Lighting Qualified Products List
 **Value Needed:**
 
 * Exact proposed input watts per fixture with product provenance
+
+**Input Bindings:**
+
+* Exact replacement product information from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual Electricity Reduction > New Fixture Watts > Linked Opportunity names an exact replacement product > Exact Product Information`. Apply the exact bound Exact replacement product information from the linked opportunity to resolve and validate the authoritative record before Exact New Fixture Wattage Lookup emits Exact proposed input watts per fixture with product provenance.
+* Exterior lighting application ← Linked Opportunity at `Annual Operational Savings > Annual Electricity Reduction > New Fixture Watts > Linked Opportunity names an exact replacement product > Exact Product Information`. Apply the exact bound Exterior lighting application to resolve and validate the authoritative record before Exact New Fixture Wattage Lookup emits Exact proposed input watts per fixture with product provenance.
+
+**Output Bindings:**
+
+* Exact proposed input watts per fixture with product provenance → `proposed_kW` (kW/fixture; RECORD_SET) at `Annual Operational Savings > Annual Electricity Reduction > New Fixture Watts > Linked Opportunity names an exact replacement product > Standard 1.2 - Exact New Fixture Wattage Lookup`.
 
 **How to Use:**
 
@@ -157,6 +176,16 @@ DesignLights Consortium - Solid-State Lighting Qualified Products List
 
 * One selected compatible QPL input-watt value, with the eligible population, filters, population size, and median rule retained internally
 
+**Input Bindings:**
+
+* Product requirements from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual Electricity Reduction > New Fixture Watts > Linked Opportunity specifies requirements but no exact product > Product Requirements`. Apply the exact bound Product requirements from the linked opportunity as a compatibility filter before Requirement-Based New Fixture Wattage Resolution emits One selected compatible QPL input-watt value, with the eligible population, filters, population size, and median rule retained internally.
+* Exterior lighting application ← Linked Opportunity at `Annual Operational Savings > Annual Electricity Reduction > New Fixture Watts > Linked Opportunity specifies requirements but no exact product > Product Requirements`. Apply the exact bound Exterior lighting application as a compatibility filter before Requirement-Based New Fixture Wattage Resolution emits One selected compatible QPL input-watt value, with the eligible population, filters, population size, and median rule retained internally.
+* Required light output or performance criteria ← Linked Opportunity at `Annual Operational Savings > Annual Electricity Reduction > New Fixture Watts > Linked Opportunity specifies requirements but no exact product > Product Requirements`. Apply the exact bound Required light output or performance criteria as a compatibility filter before Requirement-Based New Fixture Wattage Resolution emits One selected compatible QPL input-watt value, with the eligible population, filters, population size, and median rule retained internally.
+
+**Output Bindings:**
+
+* One selected compatible QPL input-watt value, with the eligible population, filters, population size, and median rule retained internally → `existing_kW` (kW/fixture; RECORD_SET) at `Annual Operational Savings > Annual Electricity Reduction > New Fixture Watts > Linked Opportunity specifies requirements but no exact product > Standard 1.3 - Requirement-Based New Fixture Wattage Resolution`.
+
 **How to Use:**
 
 1. Extract the application, capacity, certification, and performance limits from the linked exterior lighting replacement opportunity requirements.
@@ -195,11 +224,21 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 * Annual operating hours
 
+**Input Bindings:**
+
+* Lighting hours per operating day ← User at `Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting follows a fixed or business schedule > Lighting Hours per Operating Day`. Pass the exact bound Lighting hours per operating day to Fixed-Schedule Lighting Hours when computing Annual operating hours; do not substitute a value from another tree path.
+* Operating days per week ← User at `Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting follows a fixed or business schedule > Operating Days per Week`. Pass the exact bound Operating days per week to Fixed-Schedule Lighting Hours when computing Annual operating hours; do not substitute a value from another tree path.
+* Active weeks per year ← User at `Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting follows a fixed or business schedule > Active Weeks per Year`. Pass the exact bound Active weeks per year to Fixed-Schedule Lighting Hours when computing Annual operating hours; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* Annual operating hours → `annual_on_hours` (hours/year; PER_YEAR) at `Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting follows a fixed or business schedule > Standard 2.1 - Fixed-Schedule Lighting Hours`.
+
 **How to Use:**
 
 1. Map the Exterior Lighting Replacement inputs to the documented Fixed-Schedule Lighting Hours source fields or model inputs: Lighting hours per operating day; Operating days per week; Active weeks per year.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+3. When an exact value is unavailable, use only a source-specific retained population or equation with documented filters, numeric rule, unit, scope, and version; otherwise report the implementation limitation.
 4. Return one selected annual operating hours.
 5. Retain the Fixed-Schedule Lighting Hours source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
@@ -236,11 +275,21 @@ U.S. Naval Observatory - daylight definitions and data services
 
 * Annual daylight-based operating hours
 
+**Input Bindings:**
+
+* Control type and timing offset ← User at `Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Control Type and Timing Offset`. Pass the exact bound Control type and timing offset to Daylight-Based Lighting Hours when computing Annual daylight-based operating hours; do not substitute a value from another tree path.
+* Site location ← Profile at `Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Site Location`. Pass the exact bound Site location to Daylight-Based Lighting Hours when computing Annual daylight-based operating hours; do not substitute a value from another tree path.
+* Analysis year ← User at `Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting follows a fixed or business schedule > Active Weeks per Year`. Pass the exact bound Analysis year to Daylight-Based Lighting Hours when computing Annual daylight-based operating hours; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* Annual daylight-based operating hours → `annual_on_hours` (hours/year; PER_YEAR) at `Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Standard 2.2 - Daylight-Based Lighting Hours`.
+
 **How to Use:**
 
 1. Map the Exterior Lighting Replacement inputs to the documented Daylight-Based Lighting Hours source fields or model inputs: Control type and timing offset; Site location; Analysis year.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+3. When an exact value is unavailable, use only a source-specific retained population or equation with documented filters, numeric rule, unit, scope, and version; otherwise report the implementation limitation.
 4. Return one selected annual daylight-based operating hours.
 5. Retain the Daylight-Based Lighting Hours source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
@@ -289,6 +338,17 @@ DOE FEMP, DesignLights Consortium, DOE reference buildings, and U.S. Naval Obser
 **Value Needed:**
 
 * Annual electricity reduction in kilowatt-hours
+
+**Input Bindings:**
+
+* Replacement fixture count ← User at `Annual Operational Savings > Annual Electricity Reduction > Replacement Fixture Count`. Pass the exact bound Replacement fixture count to Lighting-Replacement Calculation when computing Annual electricity reduction in kilowatt-hours; do not substitute a value from another tree path.
+* Existing fixture watts ← Standard Output at `Annual Operational Savings > Annual Electricity Reduction > Existing Fixture Watts > Standard 1.1 - Existing Fixture Wattage Benchmark`. Pass the exact bound Existing fixture watts to Lighting-Replacement Calculation when computing Annual electricity reduction in kilowatt-hours; do not substitute a value from another tree path.
+* New fixture watts ← Standard Output at `Annual Operational Savings > Annual Electricity Reduction > New Fixture Watts > Linked Opportunity names an exact replacement product > Standard 1.2 - Exact New Fixture Wattage Lookup`. Pass the exact bound New fixture watts to Lighting-Replacement Calculation when computing Annual electricity reduction in kilowatt-hours; do not substitute a value from another tree path.
+* Annual operating hours ← Standard Output at `Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting follows a fixed or business schedule > Standard 2.1 - Fixed-Schedule Lighting Hours`. Pass the exact bound Annual operating hours to Lighting-Replacement Calculation when computing Annual electricity reduction in kilowatt-hours; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* Annual electricity reduction in kilowatt-hours → `existing_kW` (kW/fixture; PER_FIXTURE) at `Annual Operational Savings > Annual Electricity Reduction > Standard 3.1 - Lighting-Replacement Calculation`.
 
 **How to Use:**
 

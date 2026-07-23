@@ -96,7 +96,7 @@ Annual billed resource r
 Normalize only with explicit unit conversions, annualize only when at least 10 representative months are present, and retain the coverage fraction.
 Do not derive end-use energy from a whole-building bill without a documented Standard or user-confirmed allocation.
 
-**Used By:** ITC-01, ITC-03 through ITC-07, ITC-11, ITC-14, ITC-45, ITC-46, ITC-48, and ITC-49.
+**Used By:** ITC-01, ITC-03 through ITC-07, ITC-11, ITC-14, ITC-45, and ITC-46.
 
 ### BR-ANNUAL-OPERATING-HOURS - Resolved annual operating time
 
@@ -115,7 +115,8 @@ Annual operating hours
 
 Use the exact measured value when supplied.
 Otherwise calculate one annual-hours value from the stated pattern, operating days, shifts, active season, site daylight when relevant, and Profile context.
-When those facts are incomplete, select the closest authoritative schedule median and then the deterministic RetroFi schedule benchmark.
+When those facts are incomplete, report the missing schedule inputs and do not invent an annual-hours value.
+A source-derived fallback is allowed only through a category process that records the exact eligible population, filters, selected statistic, unit, source version, and retained fixture.
 
 **Standards:** STD-OPERATING-SCHEDULE.
 
@@ -129,15 +130,17 @@ When those facts are incomplete, select the closest authoritative schedule media
 
 ```text
 Chronological load and tariff
-├─ Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field {{lookup: chronological_load_and_tariff}} {{input: required}} (User)
-├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact {{lookup: chronological_load_and_tariff}} {{input: required}} (User)
-├─ utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred {{lookup: chronological_load_and_tariff}} (Bill)
+├─ Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field {{lookup: chronological_load_and_tariff, interval_energy_and_demand}} {{input: required}} (User)
+├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact {{lookup: chronological_load_and_tariff, interval_energy_and_demand}} {{input: required}} (User)
+├─ utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred {{lookup: chronological_load_and_tariff, utility_identity, rate_schedule_and_class}} (Bill)
+├─ Published tariff effective date covering the analysis period {{lookup: tariff_effective_date}} (Project Document)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
 All intervals must be continuous, aligned to the tariff calendar, and reconciled to billed monthly energy.
 Monthly peak values without timestamps are insufficient for dispatch, demand response, or time-of-use shifting.
-When exact interval or tariff information is incomplete, select one source-versioned screening tariff or load profile from the closest authoritative context and retain the fallback level.
+When a complete published tariff is unavailable, use only the explicit conservative screening path defined by `STD-INTERVAL-TARIFF` and retain its missing terms and scenario label.
+When a required chronological load profile is unavailable, block the chronological calculation rather than synthesize a load profile.
 
 **Used By:** ITC-16, ITC-17, ITC-19, ITC-23 through ITC-28, and ITC-31.
 
@@ -154,7 +157,7 @@ In-scope quantity
 
 Split a project into rows when equipment models, schedules, ratings, or operating conditions differ materially.
 
-**Used By:** ITC-10, ITC-12, ITC-13, ITC-27, ITC-29, ITC-30, ITC-32, ITC-33, ITC-37 through ITC-44, ITC-47, and ITC-50 through ITC-54.
+**Used By:** ITC-10, ITC-12, ITC-13, ITC-27, ITC-29, ITC-30, ITC-37 through ITC-44, ITC-47, and ITC-50 through ITC-54.
 
 ### BR-CERTIFIED-PRODUCT-RESOLUTION - Existing and proposed certified-product resolution
 
@@ -386,7 +389,8 @@ Annual dollar savings
 
 **Default Estimate:** UNVALIDATED
 
-**Notes:** When furnace fuel cannot be isolated from other gas end uses, select one context-matched furnace share from the closest authoritative building population.
+**Notes:** When furnace fuel cannot be isolated from other gas end uses, require a measured or user-confirmed allocation.
+Do not infer a furnace share until a source-specific population, compatibility filters, selected statistic, unit, source version, and retained fixture are implemented.
 The category remains DRAFT until a repeatable DOE database export path is approved.
 
 ### ITC-04 - Boiler control fractional fuel reduction
@@ -911,7 +915,7 @@ Annual bill reduction
 └─ Audited load template and REopt bill result (Standard)
 ```
 
-**Standards:** STD-REOPT-LOCAL-DISPATCH and STD-CONTEXT-BENCHMARKS.
+**Standards:** STD-INTERVAL-TARIFF, STD-REOPT-LOCAL-DISPATCH, and STD-CONTEXT-BENCHMARKS.
 
 **Default Estimate:** UNVALIDATED
 
@@ -960,7 +964,7 @@ Annual PV bill reduction
 └─ BR-INTERVAL-LOAD-AND-TARIFF
 ```
 
-**Standards:** STD-PVWATTS-V8.
+**Standards:** STD-PVWATTS-V8 and STD-INTERVAL-TARIFF.
 
 **Default Estimate:** UNVALIDATED
 
@@ -1038,7 +1042,7 @@ Annual wind bill reduction
 └─ BR-INTERVAL-LOAD-AND-TARIFF
 ```
 
-**Standards:** STD-WIND-SAM.
+**Standards:** STD-WIND-SAM and STD-INTERVAL-TARIFF.
 
 **Default Estimate:** UNVALIDATED
 
@@ -1227,7 +1231,7 @@ Annual battery bill reduction
 └─ REopt baseline and proposed bill result (Standard)
 ```
 
-**Standards:** STD-REOPT-LOCAL-DISPATCH and STD-CONTEXT-BENCHMARKS.
+**Standards:** STD-INTERVAL-TARIFF, STD-REOPT-LOCAL-DISPATCH, and STD-CONTEXT-BENCHMARKS.
 
 **Default Estimate:** UNVALIDATED
 
@@ -1276,7 +1280,7 @@ Annual solar-plus-storage bill reduction
 └─ REopt composite dispatch result (Standard)
 ```
 
-**Standards:** STD-PVWATTS-V8 and STD-REOPT-LOCAL-DISPATCH.
+**Standards:** STD-PVWATTS-V8, STD-INTERVAL-TARIFF, and STD-REOPT-LOCAL-DISPATCH.
 
 **Default Estimate:** UNVALIDATED
 
@@ -1317,7 +1321,7 @@ Annual thermal-storage bill reduction
 └─ REopt baseline and proposed bill result (Standard)
 ```
 
-**Standards:** STD-REOPT-LOCAL-DISPATCH.
+**Standards:** STD-INTERVAL-TARIFF and STD-REOPT-LOCAL-DISPATCH.
 
 **Default Estimate:** UNVALIDATED
 
@@ -1383,7 +1387,7 @@ Annual microgrid direct bill reduction
 └─ REopt composite dispatch result (Standard)
 ```
 
-**Standards:** STD-PVWATTS-V8, STD-WIND-SAM, STD-EPA-CHP-PERFORMANCE, and STD-REOPT-LOCAL-DISPATCH.
+**Standards:** STD-PVWATTS-V8, STD-WIND-SAM, STD-EPA-CHP-PERFORMANCE, STD-INTERVAL-TARIFF, and STD-REOPT-LOCAL-DISPATCH.
 
 **Default Estimate:** UNVALIDATED
 
@@ -1409,11 +1413,17 @@ Reliability and resilience value are excluded even when the physical system can 
 
 **Supporting Formula(s):**
 
-`proposed_load_t = baseline_load_t + quantity × (charging_input_kWh_t + standby_kWh_t)`
+`site_daily_delivered_kWh = min(selected_site_daily_delivered_kWh, quantity × rated_output_power_kW × public_operating_hours × capacity_cap_fraction)`
 
-`charging_input_kWh_t = delivered_kWh_t / active_efficiency`
+`delivered_kWh_t = site_daily_delivered_kWh × normalized_shape_t`
 
-`standby_kWh_t = standby_power_kW × noncharging_interval_hours_t`
+`charging_input_kWh_t = delivered_kWh_t + (ac_total_loss_W / 1000) × charging_interval_hours_t` for AC-output EVSE.
+
+`charging_input_kWh_t = delivered_kWh_t / dc_efficiency_fraction` for DC-output EVSE.
+
+`standby_kWh_t = quantity × standby_power_kW_per_port × noncharging_interval_hours_t`
+
+`proposed_load_t = baseline_load_t + charging_input_kWh_t + standby_kWh_t`
 
 **Information Tree:**
 
@@ -1421,23 +1431,32 @@ Reliability and resilience value are excluded even when the physical system can 
 Annual public-charging bill impact
 ├─ BR-INTERVAL-LOAD-AND-TARIFF
 ├─ BR-SCOPE-QUANTITY
-├─ Session-arrival distribution per charger {{lookup: reopt_category_constraints}} {{input: required}} (User)
-├─ Session-duration distribution per charger {{lookup: reopt_category_constraints}} {{input: required}} (User)
-├─ Delivered-kWh distribution per charger {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Public operating hours {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Selected site daily delivered energy from a charging study or contractor design {{lookup: exact_value_override, reopt_category_constraints}} {{input: required}} (Project Document)
+├─ Site daily delivered-energy resolution {{lookup: benchmark_context, exact_value_override, eligible_population}} (Standard)
+├─ Site location and charging scenario {{lookup: benchmark_context}} {{input: required}} (Profile)
+├─ Normalized weekday and weekend 15-minute charging shape {{lookup: benchmark_context, eligible_population}} (Standard)
 ├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 ├─ Charger Class or Intended Application {{lookup: energy_star_product_context}} {{input: required}} (User)
 ├─ Selected Charger Model, if known {{lookup: energy_star_exact_product}} {{input: optional}} (User)
-├─ Rated Power or Capacity {{lookup: energy_star_exact_product, reopt_category_constraints}} {{input: required}} (User)
-├─ Certified active efficiency and standby power (Standard)
+├─ Rated output power {{lookup: energy_star_exact_product, reopt_category_constraints}} {{input: required}} (User)
+├─ Capacity cap fraction {{lookup: reopt_category_constraints}} {{input: required}} (Project Document)
+├─ Certified AC total loss or DC efficiency fraction and standby power (Standard)
 ├─ EVSE interval load profile {{intermediate: formula}}
 └─ Audited session-load template and REopt bill result (Standard)
 ```
 
-**Standards:** STD-ENERGY-STAR-PRODUCT-DATA, STD-REOPT-LOCAL-DISPATCH, and STD-CONTEXT-BENCHMARKS.
+**Standards:** STD-ENERGY-STAR-PRODUCT-DATA, STD-INTERVAL-TARIFF, STD-REOPT-LOCAL-DISPATCH, and STD-CONTEXT-BENCHMARKS.
 
 **Default Estimate:** UNVALIDATED
 
 **Notes:** A charger creates load rather than operational savings unless paired with a separately modeled avoided transportation fuel or managed-charging measure.
+EVI-Pro Lite supplies a normalized time-of-day charging shape only.
+It does not supply the site's daily delivered energy or utilization.
+The site daily energy must come from a charging study or contractor design, and the category remains blocked when that exact project value is unavailable.
+AC-output charging input adds the applicable certified total-loss field to output power.
+DC-output charging input divides output energy by the certified efficiency fraction.
+Standby power applies only during non-charging intervals.
 The category remains DRAFT until the session-load template and tariff regression fixtures are approved.
 Charging revenue is excluded.
 
@@ -1486,7 +1505,7 @@ Annual fleet charging added cost
 └─ Audited fleet-load template and REopt bill result (Standard)
 ```
 
-**Standards:** STD-FUELECONOMY-VEHICLES, STD-ENERGY-STAR-PRODUCT-DATA, STD-REOPT-LOCAL-DISPATCH, and STD-CONTEXT-BENCHMARKS.
+**Standards:** STD-FUELECONOMY-VEHICLES, STD-ENERGY-STAR-PRODUCT-DATA, STD-INTERVAL-TARIFF, STD-REOPT-LOCAL-DISPATCH, and STD-CONTEXT-BENCHMARKS.
 
 **Default Estimate:** UNVALIDATED
 
@@ -1569,17 +1588,21 @@ Annual dollar savings
 ├─ Annual forklift resource switch
 │  ├─ BR-SCOPE-QUANTITY
 │  ├─ BR-ANNUAL-OPERATING-HOURS
-│  ├─ Existing fuel use per operating hour, if known {{input: optional}} (User)
-│  └─ Proposed charging kWh per operating hour, if known {{input: optional}} (User)
+│  ├─ Equipment class and rated capacity {{lookup: benchmark_context}} {{input: required}} (User)
+│  ├─ Comparable operating duty {{lookup: benchmark_context}} {{input: required}} (User)
+│  ├─ Exact existing fuel use per operating hour, if known {{lookup: exact_value_override}} {{input: optional}} (User)
+│  ├─ Exact proposed wall-electricity per operating hour, if known {{lookup: exact_value_override}} {{input: optional}} (User)
+│  └─ Material-handling resource-intensity resolver {{lookup: benchmark_context, exact_value_override, eligible_population}} (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
-**Standards:** None.
+**Standards:** STD-CONTEXT-BENCHMARKS.
 
 **Default Estimate:** UNVALIDATED
 
-**Notes:** BLOCKED because no authoritative public model-level cross-fuel performance dataset was validated.
-The formula is usable only with measured or contractually specified project values.
+**Notes:** The retained Argonne source supports one paired 5,000-pound electric and propane hourly comparison plus useful-work intensities.
+The category remains BLOCKED outside exact project values or a class, capacity, propulsion, and duty match to that source-supported record.
+Do not infer a battery, charger, shift schedule, annual hours, or another fuel from the paired record.
 
 ### ITC-31 - Managed fleet-charging interval shift
 
@@ -1614,7 +1637,7 @@ Annual managed-charging bill reduction
 └─ REopt interval dispatch result (Standard)
 ```
 
-**Standards:** STD-REOPT-LOCAL-DISPATCH.
+**Standards:** STD-INTERVAL-TARIFF and STD-REOPT-LOCAL-DISPATCH.
 
 **Default Estimate:** UNVALIDATED
 
@@ -1636,7 +1659,7 @@ Annual managed-charging bill reduction
 
 **Supporting Formula(s):**
 
-`avoided_water = quantity × uses_per_year × duration_minutes × (gpm_existing - gpm_proposed)`
+`avoided_water = total_annual_active_minutes × (gpm_existing - gpm_proposed)`
 
 `avoided_hot_water_input = to_billed_unit(avoided_water × hot_fraction × thermal_energy_per_gallon / heater_efficiency, heating_resource_unit)`
 
@@ -1645,11 +1668,10 @@ Annual managed-charging bill reduction
 ```text
 Annual dollar savings
 ├─ Annual water and heating-resource reduction
-│  ├─ BR-SCOPE-QUANTITY
-│  ├─ Recognizable Fixture Usage Pattern {{lookup: fixture_usage_pattern}} {{input: required}} (User)
-│  ├─ Annual uses per fixture {{lookup: fixture_usage_pattern}} {{input: required}} (User)
-│  ├─ Typical minutes per use {{lookup: fixture_usage_pattern}} {{input: required}} (User)
+│  ├─ Count of identical units in project scope {{lookup: benchmark_context}} {{input: required}} (User)
+│  ├─ Recognizable Fixture Usage Pattern {{lookup: fixture_usage_pattern, benchmark_context}} {{input: required}} (User)
 │  ├─ business.primaryActivityText usage context {{lookup: fixture_usage_pattern}} (Profile)
+│  ├─ Total annual active minutes across the in-scope fixture group {{lookup: benchmark_context, exact_value_override, eligible_population}} (Standard)
 │  ├─ Water-heating resource or cold-only selection {{input: required}} (User)
 │  ├─ Hot-water fraction when nonzero {{input: required}} (User)
 │  ├─ Hot-water temperature rise when nonzero {{input: required}} (User)
@@ -1660,7 +1682,9 @@ Annual dollar savings
 │  │  ├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 │  │  ├─ Proposed fixture type {{lookup: fixture_context}} {{input: required}} (User)
 │  │  └─ Proposed rated flow, if known {{lookup: fixture_exact_rating}} {{input: optional}} (User)
-│  └─ Rated flow and use-pattern values (Standard)
+│  ├─ Existing flow-rate resolution {{lookup: benchmark_context, exact_value_override, eligible_population}} (Standard)
+│  ├─ Water-heating input resolution {{lookup: benchmark_context, exact_value_override, eligible_population}} (Standard)
+│  └─ Proposed rated flow resolution (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
@@ -1670,6 +1694,8 @@ Annual dollar savings
 
 **Notes:** Use a legitimate zero hot-water component for a confirmed cold-only fixture rather than assuming a fraction.
 For a hot-water fixture with missing exact technical inputs, resolve one selected hot-water fraction, temperature rise, and heater-efficiency value through the commercial context benchmark.
+The activity resolver returns total annual active minutes for the complete fixture group.
+Do not multiply that group total by fixture count again.
 
 ### ITC-33 - Flush-fixture water reduction
 
@@ -1683,7 +1709,7 @@ For a hot-water fixture with missing exact technical inputs, resolve one selecte
 
 **Primary Formula:**
 
-`S = quantity × flushes_per_year × (gpf_existing - gpf_proposed) × p_water_sewer`
+`S = total_annual_flushes_group × (gpf_existing - gpf_proposed) × p_water_sewer`
 
 **Supporting Formula(s):**
 
@@ -1694,17 +1720,18 @@ No additional formula is required.
 ```text
 Annual dollar savings
 ├─ Annual water reduction
-│  ├─ BR-SCOPE-QUANTITY
-│  ├─ Recognizable Flush Usage Pattern {{lookup: fixture_usage_pattern}} {{input: required}} (User)
-│  ├─ Annual flushes per fixture {{lookup: fixture_usage_pattern}} {{input: required}} (User)
+│  ├─ Count of identical units in project scope {{lookup: benchmark_context}} {{input: required}} (User)
+│  ├─ Recognizable Flush Usage Pattern {{lookup: fixture_usage_pattern, benchmark_context}} {{input: required}} (User)
 │  ├─ business.primaryActivityText usage context {{lookup: fixture_usage_pattern}} (Profile)
+│  ├─ Total annual flushes across the in-scope fixture group {{lookup: benchmark_context, exact_value_override, eligible_population}} (Standard)
 │  ├─ Fixture selection
 │  │  ├─ Existing fixture type {{lookup: fixture_context}} {{input: required}} (User)
 │  │  ├─ Existing rated gallons per flush {{lookup: fixture_exact_rating}} {{input: required}} (User)
 │  │  ├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 │  │  ├─ Proposed fixture type {{lookup: fixture_context}} {{input: required}} (User)
 │  │  └─ Proposed rated gallons per flush, if known {{lookup: fixture_exact_rating}} {{input: optional}} (User)
-│  └─ Rated gallons per flush and use-pattern values (Standard)
+│  ├─ Existing flush-volume resolution {{lookup: benchmark_context, exact_value_override, eligible_population}} (Standard)
+│  └─ Proposed rated gallons-per-flush resolution (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
@@ -1714,6 +1741,8 @@ Annual dollar savings
 
 **Notes:** Toilets and urinals share the tree because fixture type selects a different record inside the same rating Standard.
 The retained EPA commercial activity method selects one annual flush count, and an exact label, audit, or installed-class benchmark resolves existing gallons per flush.
+Apply the retained female toilet, male toilet, and male urinal daily-use assumptions separately.
+The activity resolver returns a fixture-group total, so the savings formula must not multiply by fixture count again.
 
 ### ITC-34 - Landscape water-budget reduction
 
@@ -2318,35 +2347,34 @@ Annual dollar savings
 
 **Primary Formula:**
 
-`S = current_annual_cooking_fuel × p_fuel - proposed_annual_induction_kWh × p_electric`
+`S = Σ_r (annual_cooking_activity × (existing_resource_per_activity_r - proposed_resource_per_activity_r) × p_r)`
 
 **Supporting Formula(s):**
 
-`current_annual_cooking_fuel = annual_billed_fuel × confirmed_cooking_share`
-
-`proposed_annual_induction_kWh = annual_cooking_activity × proposed_tested_kWh_per_activity_unit`
+`annual_cooking_activity` must use the same batch, temperature rise, product, and tested-duty unit as both resource-intensity terms.
 
 **Information Tree:**
 
 ```text
 Annual dollar savings
-├─ Annual cooking resource switch
-│  ├─ BR-ANNUAL-BILL-RESOURCE
-│  ├─ Cooking share of billed fuel or direct equipment measurement, if known {{input: optional}} (User)
-│  ├─ Annual Cooking Activity in the Tested Duty Unit, if known {{input: optional}} (User)
-│  ├─ Proposed Induction kWh per Identical Tested Duty Unit, if known {{input: optional}} (User)
-│  ├─ Existing cooking-duty definition {{input: required}} (User)
-│  └─ Proposed duty-equivalence confirmation {{input: required}} (User)
+├─ Annual comparable-duty cooking resource difference
+│  ├─ Existing cooking equipment type and resource {{lookup: benchmark_context}} {{input: required}} (User)
+│  ├─ Proposed induction equipment requirements {{lookup: benchmark_context}} {{input: required}} (User)
+│  ├─ Identical tested cooking duty definition {{lookup: benchmark_context}} {{input: required}} (User)
+│  ├─ Annual activity in the identical tested duty unit {{lookup: benchmark_context}} {{input: required}} (User)
+│  ├─ Exact existing and proposed comparable test records, if known {{lookup: exact_value_override}} {{input: optional}} (User)
+│  └─ Comparable cooking-duty resolver {{lookup: benchmark_context, exact_value_override, eligible_population}} (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
-**Standards:** None.
+**Standards:** STD-CONTEXT-BENCHMARKS.
 
 **Default Estimate:** UNVALIDATED
 
-**Notes:** BLOCKED because no authoritative public commercial induction model-level dataset or standardized cross-fuel duty lookup was validated.
+**Notes:** The retained ENERGY STAR calculator supports only a comparable commercial electric-cooktop water-boil duty.
+It provides 1.03 kWh per conventional electric boil and 0.91 kWh per efficient electric boil for a 20-pound water load heated from 70 to 200 degrees Fahrenheit.
+Gas-to-electric and different-duty cases remain BLOCKED unless exact existing and proposed project tests use the same duty boundary.
 The broad ComStock electric-cooking scenario is not an induction-specific record and must not be used as one.
-The formula is usable only with a project-specific bill allocation or measurement and proposed performance tested for an identical cooking duty.
 
 ### ITC-49 - Walk-in refrigeration measured system delta
 
@@ -2364,26 +2392,30 @@ The formula is usable only with a project-specific bill allocation or measuremen
 
 **Supporting Formula(s):**
 
-`current_annual_refrigeration_kWh = annual_billed_kWh × confirmed_walk_in_share` unless direct submetering is available.
+`component_annual_kWh = panel_area × panel_kWh_per_ft2_year` for a class-matched panel row, or the class-matched annual kWh value for a door or refrigeration-system row.
 
 **Information Tree:**
 
 ```text
 Annual dollar savings
-├─ Annual walk-in refrigeration electricity reduction
-│  ├─ BR-ANNUAL-BILL-RESOURCE
-│  ├─ Walk-in share of billed electricity or direct measurement, if known {{input: optional}} (User)
-│  ├─ Proposed Annual System kWh for the Same Box Load and Duty, if known {{input: optional}} (User)
-│  └─ Existing and proposed duty-equivalence confirmation {{input: required}} (User)
+├─ Annual walk-in component electricity reduction
+│  ├─ Component type and DOE equipment class {{lookup: benchmark_context}} {{input: required}} (User)
+│  ├─ Temperature class and indoor or outdoor configuration {{lookup: benchmark_context}} {{input: required}} (User)
+│  ├─ Panel area when a panel intensity is selected {{lookup: benchmark_context}} {{input: conditional}} (User)
+│  ├─ Existing and proposed efficiency levels {{lookup: benchmark_context}} {{input: required}} (User)
+│  ├─ Exact existing or proposed annual component energy, if known {{lookup: exact_value_override}} {{input: optional}} (User)
+│  ├─ Existing and proposed duty-equivalence confirmation {{lookup: benchmark_context}} {{input: required}} (User)
+│  └─ Walk-in component energy benchmark {{lookup: benchmark_context, exact_value_override, eligible_population}} (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
-**Standards:** None.
+**Standards:** STD-CONTEXT-BENCHMARKS.
 
 **Default Estimate:** UNVALIDATED
 
-**Notes:** BLOCKED because certified walk-in component ratings do not by themselves resolve whole-system annual kWh for a specific box and load.
-The formula is usable only with a project-specific baseline allocation or measurement and a proposed whole-system result for the same duty.
+**Notes:** The retained DOE fixture provides class-specific panel intensity and annual door and refrigeration-system values from Tables IV.31, IV.32, and IV.33.
+The category remains BLOCKED when component boundary, class, configuration, panel area, or same-duty scope is unavailable.
+Do not treat one component row as whole-box energy or multiply an annual benchmark by annual operating hours.
 
 ### ITC-50 - Commercial cooking tested-duty and idle balance
 
@@ -2483,13 +2515,27 @@ Health, productivity, and indoor-air-quality benefits remain out of scope.
 
 **Primary Formula:**
 
-`S = avoided_water × p_water_sewer + Σ_r (avoided_water_heating_R_r × p_r) + avoided_idle_kWh × p_electric`
+For rack machines:
+
+`S = avoided_water_rack × p_water_sewer + avoided_active_kWh_rack × p_electric + Σ_r (avoided_water_heating_rack_R_r × p_r) + avoided_idle_kWh × p_electric`
+
+For flight/conveyor machines:
+
+`S = avoided_water_flight × p_water_sewer + avoided_active_kWh_flight × p_electric + Σ_r (avoided_water_heating_flight_R_r × p_r) + avoided_idle_kWh × p_electric`
 
 **Supporting Formula(s):**
 
-`avoided_water = quantity × annual_racks_per_unit × (water_per_rack_existing - water_per_rack_proposed)`
+`avoided_water_rack = quantity × annual_racks_per_unit × (water_per_rack_existing - water_per_rack_proposed)`
 
-`avoided_water_heating_R_r = quantity × annual_racks_per_unit × (water_heating_R_per_rack_existing - water_heating_R_per_rack_proposed)`
+`avoided_active_kWh_rack = quantity × annual_racks_per_unit × (active_kWh_per_rack_existing - active_kWh_per_rack_proposed)`
+
+`avoided_water_heating_rack_R_r = quantity × annual_racks_per_unit × (water_heating_R_per_rack_existing - water_heating_R_per_rack_proposed)`
+
+`avoided_water_flight = quantity × annual_operating_hours_per_unit × (water_per_hour_existing - water_per_hour_proposed)`
+
+`avoided_active_kWh_flight = quantity × annual_operating_hours_per_unit × (active_kWh_per_hour_existing - active_kWh_per_hour_proposed)`
+
+`avoided_water_heating_flight_R_r = quantity × annual_operating_hours_per_unit × (water_heating_R_per_hour_existing - water_heating_R_per_hour_proposed)`
 
 `avoided_idle_kWh = quantity × annual_idle_hours_per_unit × (idle_kW_existing - idle_kW_proposed)`
 
@@ -2502,24 +2548,38 @@ Annual dollar savings
 ├─ Annual commercial dishwasher resource reduction
 │  ├─ BR-SCOPE-QUANTITY
 │  ├─ BR-CERTIFIED-PRODUCT-RESOLUTION
-│  ├─ Recognizable Dishwasher Usage Pattern {{lookup: product_usage_pattern}} {{input: required}} (User)
-│  ├─ Annual Racks or Operating Hours in the Certified Test Unit {{lookup: product_usage_pattern}} {{input: required}} (User)
-│  ├─ Annual Idle Hours per Unit, if known {{lookup: product_usage_pattern}} {{input: optional}} (User)
-│  ├─ Water-heating resources represented by the per-rack inputs {{input: required}} (User)
-│  ├─ Existing purchased water-heating input per certified rack by resource {{input: required}} (User)
-│  ├─ Proposed purchased water-heating input per certified rack by resource {{input: required}} (User)
-│  └─ Certified water use and idle energy by model (Standard)
+│  ├─ Rack-machine activity
+│  │  ├─ Rack-machine type and sanitation method {{lookup: dishwasher_machine_type, benchmark_context}} {{input: required}} (User)
+│  │  ├─ Approximate racks per operating day, if known {{lookup: benchmark_context, exact_value_override}} {{input: optional}} (User)
+│  │  ├─ Operating days per week {{lookup: benchmark_context}} {{input: required}} (User)
+│  │  ├─ Active weeks per year {{lookup: benchmark_context}} {{input: required}} (User)
+│  │  └─ Annual racks per equipment unit {{lookup: benchmark_context, exact_value_override, eligible_population}} (Standard)
+│  ├─ Flight or conveyor activity
+│  │  ├─ Exact annual operating hours per equipment unit {{lookup: exact_value_override}} {{input: required}} (Project Document)
+│  │  └─ Annual flight or conveyor operating hours per equipment unit {{lookup: benchmark_context, exact_value_override}} (Standard)
+│  ├─ Annual energized and active-wash hours per equipment unit {{lookup: exact_value_override}} {{input: required}} (Project Document)
+│  ├─ Existing and proposed native water, active electricity, and idle power by model (Standard)
+│  ├─ Dishwasher water-heating conversion
+│  │  ├─ Incoming water temperature {{lookup: incoming_water_temperature}} {{input: required}} (Project Document)
+│  │  ├─ Wash, rinse, or booster temperature or certified hot-water quantity {{lookup: wash_rinse_or_booster_temperature}} {{input: required}} (Project Document)
+│  │  ├─ Water-heating resource type {{lookup: water_heating_resource}} {{input: required}} (User)
+│  │  ├─ Water-heater efficiency {{lookup: water_heater_efficiency}} {{input: required}} (Project Document)
+│  │  └─ Purchased water-heating resource per rack or per operating hour {{lookup: dishwasher_native_water_quantity}} (Standard)
+│  └─ Separate rack, flight, and idle resource results {{intermediate: formula}}
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
-**Standards:** STD-DOE-CCMS-RATINGS, STD-ENERGY-STAR-PRODUCT-DATA, and STD-CONTEXT-BENCHMARKS.
+**Standards:** STD-DOE-CCMS-RATINGS, STD-ENERGY-STAR-PRODUCT-DATA, STD-CONTEXT-BENCHMARKS, and STD-DISHWASHER-WATER-HEATING.
 
 **Default Estimate:** UNVALIDATED
 
-**Notes:** Flight-type machines use the certified hourly activity unit instead of racks and must not be converted with an assumed racks-per-hour value.
-Report only the modeled water, water-heating, and idle-energy components when the source does not separately report active-cycle machine electricity.
+**Notes:** Rack-machine activity is annual racks per equipment unit and is multiplied by equipment quantity exactly once.
+Flight-type machines use annual operating hours per equipment unit and native gallons and active electricity per hour.
+Do not convert racks to hours or gallons per rack to gallons per hour.
+The water-heating process returns purchased resource in the same native rack or hourly activity unit used by the selected machine branch.
+Report only the modeled water, water-heating, active-machine, and idle-energy components for which the source exposes separate compatible fields.
 The category remains DRAFT until the sanitation, booster-heater, water, and idle-energy adapter is fixture-tested.
-Do not infer water-heating input from total water per rack without a source-supported wash, rinse, booster, and resource boundary.
+Do not infer water-heating input from total water without a source-supported wash, rinse, booster, and resource boundary.
 
 ### ITC-53 - Commercial laundry cycle resource balance
 
@@ -2588,26 +2648,48 @@ Commercial dryers and combined washer-dryers require their own source-specific b
 
 **Primary Formula:**
 
-`S = -(annual_test_fuel × p_fuel + annual_standby_kWh × p_electric)`
+`S = -(selected_annual_test_fuel × p_fuel + selected_annual_standby_kWh × p_electric)`
 
 **Supporting Formula(s):**
 
-`annual_test_fuel = quantity × test_fuel_per_hour × annual_test_hours_per_unit`
+Exact path:
 
-`annual_standby_kWh = quantity × standby_kW_per_unit × annual_energized_hours_per_unit`
+`exact_annual_test_fuel = quantity × test_fuel_per_hour × annual_test_hours_per_unit`
+
+`exact_annual_standby_kWh = quantity × standby_kW_per_unit × annual_energized_hours_per_unit`
+
+Benchmark path:
+
+`benchmark_annual_test_fuel = quantity × benchmark_annual_test_fuel_per_unit`
+
+`benchmark_annual_standby_kWh = quantity × benchmark_annual_standby_kWh_per_unit`
+
+`selected_annual_test_fuel` is either `exact_annual_test_fuel` or `benchmark_annual_test_fuel`.
+
+`selected_annual_standby_kWh` is either `exact_annual_standby_kWh` or `benchmark_annual_standby_kWh`.
+
+For a documented full-load diesel-generator test only:
+
+`benchmark_annual_test_fuel_per_unit = full_load_diesel_coefficient × rated_capacity_kW × annual_test_hours_per_unit`
 
 **Information Tree:**
 
 ```text
 Annual routine backup-power resource cost
 ├─ BR-SCOPE-QUANTITY
-├─ Backup technology {{input: required}} (User)
-├─ Fuel type {{input: required}} (User)
-├─ Tested fuel use per operating hour per unit, if known {{input: optional}} (User)
-├─ Standby electric input kW per unit, if known {{input: optional}} (User)
-├─ Scheduled annual test operating hours per unit, if known {{input: optional}} (User)
-├─ Annual standby energized hours per unit, if known {{input: optional}} (User)
-├─ Technology-and-capacity routine-use benchmark {{lookup: benchmark_context, exact_value_override, eligible_population}} (Standard)
+├─ Backup technology and fuel type {{lookup: benchmark_context}} {{input: required}} (User)
+├─ Exact routine-use path
+│  ├─ Tested fuel use per operating hour per unit {{lookup: exact_value_override}} {{input: optional}} (Project Document)
+│  ├─ Scheduled annual test operating hours per unit {{lookup: exact_value_override}} {{input: optional}} (Project Document)
+│  ├─ Standby electric input kW per unit {{lookup: exact_value_override}} {{input: optional}} (Project Document)
+│  ├─ Annual standby energized hours per unit {{lookup: exact_value_override}} {{input: optional}} (Project Document)
+│  └─ Exact routine-use input set {{lookup: exact_value_override}} (Standard)
+├─ Full-load diesel routine-test benchmark path
+│  ├─ Diesel generator rated capacity kW {{lookup: benchmark_context, exact_value_override}} {{input: required}} (Project Document)
+│  ├─ Scheduled annual full-load test operating hours per unit {{lookup: benchmark_context, exact_value_override}} {{input: required}} (Project Document)
+│  └─ Annual full-load diesel test fuel per equipment unit {{lookup: benchmark_context, exact_value_override}} (Standard)
+├─ Annual standby benchmark per equipment unit unavailable because no defensible source is retained {{intermediate: limitation}}
+├─ Selected exact or benchmark annual routine-use result {{intermediate: formula}}
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
@@ -2615,8 +2697,14 @@ Annual routine backup-power resource cost
 
 **Default Estimate:** UNVALIDATED
 
-**Notes:** BLOCKED because the broad taxonomy type has no validated public model-level performance source across generator, battery, and hybrid systems.
+**Notes:** BLOCKED because the broad taxonomy type has no validated public model-level performance source across generator, battery, and hybrid systems and no defensible standby-electricity benchmark.
 The formula is usable with project-specific tested or contractual routine-use values.
+The retained FEMA formula supports only a documented full-load diesel-generator test and calculates `0.07 gallon/kWh × rated capacity kW`.
+The canonical `full_load_diesel_coefficient` is `0.07 gallon/kWh`.
+Annual test hours remain a project input.
+The source does not support part-load operation, non-diesel technologies, annual test hours, or standby electricity.
+The benchmark annual outputs replace the exact hourly path and are never multiplied by the exact hourly inputs.
+This pass does not complete an ITC-54 default screening estimate.
 Exclude unpredictable outage operation and all resilience, reliability, and avoided-loss value.
 
 ## Coverage contract

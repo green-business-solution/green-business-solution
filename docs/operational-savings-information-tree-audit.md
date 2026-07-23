@@ -2,11 +2,11 @@
 
 ## Executive result
 
-All 54 operational-savings categories, all 92 canonical retrofit mappings, and all 17 Standards were re-audited at five separate layers.
+All 54 operational-savings categories, all 92 canonical retrofit mappings, and all 19 Standards were re-audited at five separate layers.
 The required result is 54 categories, 92 unique retrofit mappings, zero missing IDs, and zero duplicate IDs.
 The audit now distinguishes structural completeness, semantic source support, formula correctness, default executability, and implementation readiness.
 ITC-15 and the exact-model scenario for ITC-29 are `RESEARCHED — READY FOR HUMAN REVIEW`.
-Forty-seven categories are `DRAFT`, five categories are `BLOCKED`, and all 17 Standards are `LIMITED`.
+Forty-seven categories are `DRAFT`, five categories are `BLOCKED`, and all 19 Standards are `LIMITED`.
 No Draft or Blocked category claims an executable golden fixture.
 
 Current documentation state:
@@ -14,37 +14,37 @@ Current documentation state:
 - Categories: 54.
 - Generated standalone category pages: 54.
 - Visible Information Cards: 54.
-- Visible category-local Standard processes: 104.
-- Visible direct source-link occurrences: 283.
-- Visible terminal User leaves: 139.
-- Explicit User-input realism decisions: 90 `USER_MEMORY` and 49 `USER_RECOGNIZABLE_ACTIVITY`.
-- Visible Project Document leaves: 148.
-- Visible Linked Opportunity leaves: 147.
+- Visible category-local Standard processes: 124.
+- Visible direct source-link occurrences: 317.
+- Visible terminal User leaves: 141.
+- Explicit User-input realism decisions: 93 `USER_MEMORY` and 48 `USER_RECOGNIZABLE_ACTIVITY`.
+- Visible Project Document leaves: 155.
+- Visible Linked Opportunity leaves: 149.
 - Information Card schema version: `operational-savings/information-card-v1`.
 - Canonical retrofit mappings: 92.
 - Missing mappings: 0.
 - Duplicate mappings: 0.
 - Shared branches: 6.
-- Canonical Standards: 17.
-- Standards with a selected automation strategy: 17.
+- Canonical Standards: 19.
+- Standards with a selected automation strategy: 19.
 - Expanded maximum atomic User inputs per category: 30.
 - Expanded Required Screening inputs: 366.
-- Expanded Conditional Calculation Gates: 5.
-- Expanded Optional Known Details: 93.
+- Expanded Conditional Calculation Gates: 6.
+- Expanded Optional Known Details: 86.
 - Maximum Required Screening inputs per category: 29.
-- Categories above four Required Screening inputs: ITC-08, ITC-09, ITC-16, ITC-17, ITC-18, ITC-19, ITC-20, ITC-21, ITC-22, ITC-23, ITC-24, ITC-25, ITC-26, ITC-27, ITC-28, ITC-29, ITC-31, ITC-32, ITC-33, ITC-34, ITC-36, ITC-37, ITC-38, ITC-39, ITC-40, ITC-41, ITC-42, ITC-43, ITC-44, ITC-45, ITC-46, ITC-47, ITC-50, ITC-51, ITC-52, ITC-53.
+- Categories above four Required Screening inputs: ITC-08, ITC-09, ITC-16, ITC-17, ITC-18, ITC-19, ITC-20, ITC-21, ITC-22, ITC-23, ITC-24, ITC-25, ITC-26, ITC-27, ITC-28, ITC-29, ITC-30, ITC-31, ITC-32, ITC-33, ITC-34, ITC-36, ITC-37, ITC-38, ITC-39, ITC-40, ITC-41, ITC-42, ITC-43, ITC-44, ITC-45, ITC-46, ITC-47, ITC-50, ITC-51, ITC-52, ITC-53.
 - Category statuses: 2 `RESEARCHED — READY FOR HUMAN REVIEW`, 47 `DRAFT`, and 5 `BLOCKED`.
-- Standard statuses: 17 `LIMITED`.
-- Machine-readable source-evidence records: 46.
-- Source-evidence statuses: LIMITED 1, UNSUPPORTED 7, UNVERIFIED 28, VERIFIED 10.
-- Atomic formula terms: 445.
+- Standard statuses: 19 `LIMITED`.
+- Machine-readable source-evidence records: 54.
+- Source-evidence statuses: LIMITED 3, UNSUPPORTED 7, UNVERIFIED 28, VERIFIED 16.
+- Atomic formula terms: 481.
 - Recorded category manual verdicts: 54.
-- Recorded Standard manual verdicts: 17.
+- Recorded Standard manual verdicts: 19.
 - Executable Ready-category golden fixtures: 2.
 
 The status change from 7 Ready, 42 Draft, and 5 Blocked to 2 Ready, 47 Draft, and 5 Blocked is intentional.
 The former Ready labels depended on source-role assumptions, unproved default inputs, or missing end-to-end fixtures.
-The Standard status change from 14 Ready and 2 Limited to 17 Limited is also intentional.
+The Standard status change from 14 Ready and 2 Limited to 19 Limited is also intentional.
 A relevant authoritative URL does not prove that its exact fields support every baseline, proposal, usage, tariff, or geography role assigned to it.
 
 ## Audit method
@@ -65,7 +65,7 @@ It also rejects double application of FuelEconomy charging losses and double ann
 
 ## Structural audit
 
-The structural audit passed for 54 contiguous category IDs, 92 unique retrofit mappings, six recursively expanded shared branches, and 17 embedded Standards.
+The structural audit passed for 54 contiguous category IDs, 92 unique retrofit mappings, six recursively expanded shared branches, and 19 embedded Standards.
 Every terminal source leaf is labeled User, Profile, Bill, Linked Opportunity, Project Document, Derived, or is a referenced category-local Standard process.
 Linked Opportunity and other derived project context are explicit internal intermediates and are no longer mislabeled as Profile fields.
 Every User leaf has exactly one Required Screening, Conditional Calculation Gate, or Optional Known Detail classification.
@@ -80,22 +80,24 @@ The pages omit audit status, readiness, evidence tables, input inventories, revi
 
 ### Semantic ownership cleanup
 
-The correction pass compared the 54 generated cards at starting commit `0e577d987e9e4e29eb67fc33f1c135724ef36942`.
-The regenerated cards reduce visible User leaves from 186 to 139.
-The Project Document label increases from 0 to 148 visible leaves.
-The Linked Opportunity label decreases from 244 to 147 visible leaves.
+The correction pass compared the 54 generated cards at starting commit `fc1e2e2faf409548f7ace7e63da3392da0b27629`.
+The regenerated cards now contain 141 visible User leaves.
+The Project Document label now appears on 155 visible leaves.
+The Linked Opportunity label now appears on 149 visible leaves.
 Nameplates, labels, measurements, audits, controls trends, engineering studies, commissioning records, maintenance plans, manufacturer documents, contractor quotes, contractor specifications, construction documents, and uploaded operating records now use Project Document.
 Linked Opportunity is limited to opportunity requirements, certifications, performance limits, prescribed equipment classes, exact products named by the opportunity, and opportunity-specific restrictions.
-Eleven category-specific context benchmark processes resolve technical or activity inputs that an ordinary business representative should not calculate.
+Category-specific resolvers handle technical or activity inputs that an ordinary business representative should not calculate.
 ITC-32 and ITC-33 use recognizable facility activity plus commercial fixture methods instead of asking for technical uses, duration, or flush frequency.
-ITC-27 and ITC-28 use Project Documents or context benchmarks for utilization and arrival or departure profiles.
+ITC-27 requires project-specific daily delivered energy, applies a physical capacity cap, and uses EVI-Pro only for a normalized time-of-day shape.
+ITC-28 uses Project Documents or a source-specific context process for arrival or departure profiles.
 ITC-39 uses Project Documents or an application benchmark for technical load bins.
-ITC-52 keeps rack and conveyor activity units separate and benchmarks recognizable throughput when records are unavailable.
-ITC-54 uses Project Documents or one technology-and-capacity routine-use benchmark.
-All 104 visible processes now have process-specific instructions, a single-value policy, explicit Lookup Input bindings, and an executable-proof or implementation-pending evidence state.
+ITC-52 keeps rack and flight or conveyor activity units separate, with distinct activity and water-heating processes.
+ITC-54 keeps exact annual routine use separate from the narrow FEMA full-load diesel test-fuel equation and blocks broader default inference.
+All 124 visible processes now have process-specific instructions, explicit input and output bindings, a cardinality policy, and an executable-proof or implementation-pending evidence state.
 The unsupported state is prohibited for a displayed tree resolver.
-Three new reviewed source fixtures were added.
-They cover DOE outdoor application wattage, EPA WaterSense commercial toilet and urinal activity, and separate ENERGY STAR AC-output and DC-output charger fields.
+Five new reviewed source fixtures were added.
+They cover Argonne forklift energy intensity, ENERGY STAR commercial cooktop and dishwasher calculations, DOE walk-in component energy, and FEMA full-load diesel generator fuel use.
+The ENERGY STAR EVSE fixture was also corrected to preserve DC efficiency as the fraction `0.95`.
 
 The semantic source audit uses six independent source roles:
 
@@ -111,7 +113,7 @@ Every declared Standard scenario must have compatible evidence that is not `UNSU
 Each evidence record declares every source role it supports and must appear under exactly those roles in its Standard summary.
 `VERIFIED` means that the exact reviewed contract is deeply bound to a validated source fixture through JSON pointers for source identity, version, artifact, checksum, coverage, fields, units, values when present, unsupported inferences, and substantive records.
 It does not mean that unrelated roles or project-specific inputs are supported.
-Link validation covered 50 unique direct registry URLs.
+Link validation covered 56 unique direct registry URLs.
 
 The ten verified records cover the reviewed ENERGY STAR commercial dishwasher and EVSE fields, FuelEconomy `comb08` and `combE`, PVWatts V8 input and output fields, WaterSense landscape design scope, EPA toilet and urinal activity, DOE outdoor application wattage, and the two reviewed FEMP exterior-lighting table scopes.
 Twenty-eight records remain unverified because an exact adapter, source export, module function, equation, or worked example has not been pinned.
@@ -137,7 +139,7 @@ The following claims were removed or converted to explicit exact-to-benchmark fa
 ## Formula audit
 
 Formula/tree corrections are now recorded in the canonical category contract rather than only in narrative notes.
-The category contract records 445 atomic formula terms.
+The category contract records 481 atomic formula terms.
 Each record has one name, dimension, canonical unit ID, display unit, quantity kind, source or resolver, exact paths, fallback behavior, Standard output evidence, formula use, and missing-data behavior.
 Every declared tree node must resolve to an exact node in the expanded category tree.
 Every identifier used by a canonical formula must have an atomic formula-term contract and a matching expanded-tree path.
@@ -173,7 +175,7 @@ Its golden fixture uses exact FuelEconomy.gov vehicle IDs 43764 and 44444, user-
 The Ready verdict applies only to the exact-model scenario.
 The vehicle-class fallback remains implementation-pending, and no second charging-efficiency factor is applied.
 
-Every other category retains a concrete implementation limitation without deleting its screening estimate.
+Every other category retains a concrete implementation limitation and only a source-specific fallback when its equation or eligible population is explicitly implemented.
 Typical limitations include an exact installed baseline, a project scope or design, an end-use allocation, a chronological load, a complete tariff, a category-specific Standard adapter, or an end-to-end fixture.
 Missing exact inputs continue through the shared fallback order and record the selected value and provenance.
 
@@ -365,11 +367,13 @@ The following Standard verdicts were recorded after reviewing every declared sou
 | `STD-WATERSENSE-CI-OPERATIONS` | LIMITED | Leak and cooling-tower equations still require exact page, equation, and worked-example fixtures. |
 | `STD-FEMP-EXTERIOR-LIGHTING` | LIMITED | Table 1 provides proposed efficacy requirements, while Table 2 is one narrow wall-mounted example and neither supplies a legacy-wattage distribution. |
 | `STD-OPERATING-SCHEDULE` | LIMITED | Explicit calendar and daylight calculations are defensible after all inputs are supplied, while a business label alone does not prove annual operating hours. |
+| `STD-INTERVAL-TARIFF` | LIMITED | Exact published tariffs require a utility-specific adapter and itemized bill reconciliation, while the conservative screen remains explicit and never substitutes a missing rate with zero. |
+| `STD-DISHWASHER-WATER-HEATING` | LIMITED | The retained calculator proves separate rack and flight water-heating equations, while category integration and incompatible boundary handling remain implementation-pending. |
 | `STD-CONTEXT-BENCHMARKS` | LIMITED | The shared exact-to-benchmark policy is deterministic, the DOE lighting and EPA flush-activity adapters have reviewed fixtures, and the remaining category adapters retain implementation-pending source limitations. |
 
 ## Focused manual inspection
 
-All eight canonical source fixtures were inspected after schema normalization.
+All thirteen canonical source fixtures were inspected after schema normalization.
 The ENERGY STAR fixture preserves native dishwasher field units and does not infer installed baselines or usage.
 The FEMP fixture keeps proposed efficacy rows separate from the narrow wall-mounted example.
 The FuelEconomy fixture retains exact record IDs, official response checksums, `comb08`, `combE`, compatibility facts, and the explicit service-equivalence boundary.
@@ -378,15 +382,20 @@ The WaterSense fixture labels its result as a modeled design allowance rather th
 The DOE lighting fixture preserves Table 4.29 outdoor application rows and the all-outdoor aggregate.
 The EPA commercial flush-activity fixture preserves separate toilet and urinal daily-use assumptions and annual equations.
 The ENERGY STAR EVSE fixture preserves separate AC-output total-loss fields and DC-output loading-adjusted-efficiency fields.
+The Argonne fixture preserves the narrow 5,000-pound forklift duty and separate hourly resource units.
+The cooktop fixture preserves the 20-pound water-boil duty and rejects cross-fuel extrapolation.
+The DOE walk-in fixture preserves panel intensity and annual door or refrigeration-component values without whole-box inference.
+The dishwasher calculator fixture preserves separate rack and flight activity units and water-heating equations.
+The FEMA fixture preserves only the `0.07 gallon/hour × generator kW` full-load diesel equation.
 
-All ten `VERIFIED` evidence records were inspected against their JSON Pointer bindings.
+All sixteen `VERIFIED` evidence records were inspected against their JSON Pointer bindings.
 The bound URL, version, artifact, checksum, coverage, fields, canonical units, exact values when present, unsupported inferences, and substantive records match their evidence metadata.
 No `LIMITED` evidence record is used by ITC-29.
 ITC-29 uses two `VERIFIED` evidence records and one `UNSUPPORTED` distribution record only to document why the class-based adapter remains implementation-pending.
 
 All 54 generated Information Cards were manually inspected for the required structure, readable formulas, source-labeled leaves, process placement, and absence of banned audit material.
-All 139 visible terminal User leaves have explicit reviewed decisions for ordinary-user knowledge, recognizable phrasing, formula necessity, selected-value method, missing-exact-value behavior, and connected-process behavior.
-All 104 visible processes were checked for distinct purpose, matching source, exact instructions, feasible automation boundary, single-value behavior, evidence-state wording, and tree and Validation agreement.
+All 141 visible terminal User leaves have explicit reviewed decisions for ordinary-user knowledge, recognizable phrasing, formula necessity, selected-value method, missing-exact-value behavior, and connected-process behavior.
+All 124 visible processes were checked for distinct purpose, matching source, exact instructions, feasible automation boundary, cardinality, input and output bindings, evidence-state wording, and tree and Validation agreement.
 The required deep-inspection sample was reviewed in full:
 
 - `ITC-02` uses Project Document for exact existing watts, selects one DOE application benchmark when exact watts are absent, separates exact-product and requirements-only DLC QPL paths, and leaves the electricity rate Bill-derived.
@@ -394,22 +403,22 @@ The required deep-inspection sample was reviewed in full:
 - `ITC-16` sources interval utility data and timezone metadata from Bill, sources audits and controls trends from Project Documents, applies all five event constraints, and selects one conservative context-matched event profile when exact behavior is absent.
 - `ITC-17` keeps PV design specifications on the Linked Opportunity path, sources interval utility data from Bill, and does not allow PVWatts to invent a system design.
 - `ITC-23` keeps opportunity-prescribed battery design values on the Linked Opportunity path, uses Project Document for contractor or engineering designs, sources interval utility data from Bill, and includes a terminal state-of-charge constraint.
-- `ITC-27` replaces ordinary-user charging distributions with a Project Document or one EVI-Pro context benchmark, separates exact and requirements-based charger resolution, and preserves separate AC-output and DC-output normalization formulas.
+- `ITC-27` requires project-specific site daily delivered energy, caps it by installed power and operating hours, uses EVI-Pro only for normalized time-of-day shape, and preserves separate AC-output and DC-output normalization formulas.
 - `ITC-28` uses recognizable fleet activity, Project Documents for fleet studies or contractor designs, one Fleet DNA context benchmark for schedules and class-matched vehicle intensity, and the same separate AC-output and DC-output normalization formulas.
 - `ITC-29` recomputes to 375 gallons and 3,360 kWh per vehicle-year, 750 gallons and 6,720 kWh per project-year, and 1,617 USD per year.
 - `ITC-32` replaces annual technical usage and water-heating questions with recognizable business activity, Project Document overrides, and one context-matched usage or heating input.
 - `ITC-33` replaces User-supplied flush frequency with recognizable facility activity, one EPA annual flush-count method, and Project Document overrides.
 - `ITC-39` uses Project Document for measured or audited load bins, selects one representative operating profile when exact bins are absent, and keeps distinct MEASUR Pumping System Assessment Tool and Fan System Assessment Tool paths with their own hydraulic or aerodynamic inputs.
 - `ITC-52` separates rack from flight or conveyor activity, prohibits gallons-per-rack to gallons-per-hour conversion, and removes unsupported water-heating-per-rack collection.
-- `ITC-54` remains Blocked for implementation readiness, uses Project Document for labels and operating records, and selects one conservative technology-and-capacity routine-use benchmark when exact routine fuel or standby input is absent.
+- `ITC-54` remains Blocked for implementation readiness, uses Project Documents for exact annual routine use, permits the retained FEMA full-load diesel equation only for its narrow test-fuel boundary, and does not infer standby use.
 
 The deep-inspection sample was also checked for direct source URLs, readable user-facing inputs, exact Standard numbering, and the absence of status, readiness, evidence, and review-decision sections.
 
 ## Unresolved blockers
 
 ITC-14 requires approved exact Scout semantic crosswalks and site-applicability rules.
-ITC-30 lacks an authoritative cross-fuel forklift performance dataset.
-ITC-48 lacks a validated commercial induction cross-fuel duty source.
+ITC-30 has one narrow Argonne 5,000-pound electric and propane pair but lacks a defensible source for other capacities, duties, or technologies.
+ITC-48 has one same-fuel 20-pound water-boil comparison but lacks a validated commercial cross-fuel or different-duty source.
 ITC-49 lacks a whole-system walk-in refrigeration annual-energy resolver for a specific box and duty.
 ITC-54 lacks one authoritative routine-use resolver across generator, battery, and hybrid backup technologies.
 

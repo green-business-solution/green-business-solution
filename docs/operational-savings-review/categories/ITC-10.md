@@ -77,6 +77,16 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 * One selected existing refrigeration equipment performance value with its exact unit and provenance
 
+**Input Bindings:**
+
+* Existing refrigeration equipment type or application ← User at `Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Existing Refrigeration Equipment > Existing Refrigeration Equipment Type or Application`. Pass the exact bound Existing refrigeration equipment type or application to Existing Refrigeration Equipment Rating Resolution when computing One selected existing refrigeration equipment performance value with its exact unit and provenance; do not substitute a value from another tree path.
+* Existing make and model, when available ← User at `Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Existing Refrigeration Equipment > Existing Make and Model, when available`. Pass the exact bound Existing make and model, when available to Existing Refrigeration Equipment Rating Resolution when computing One selected existing refrigeration equipment performance value with its exact unit and provenance; do not substitute a value from another tree path.
+* Existing capacity or size class ← User at `Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Existing Refrigeration Equipment > Existing Capacity or Size Class, when available`. Pass the exact bound Existing capacity or size class to Existing Refrigeration Equipment Rating Resolution when computing One selected existing refrigeration equipment performance value with its exact unit and provenance; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* One selected existing refrigeration equipment performance value with its exact unit and provenance → `existing_annual_kWh` (kWh/unit-year; PER_EQUIPMENT_UNIT) at `Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Existing Refrigeration Equipment > Standard 1.1 - Existing Refrigeration Equipment Rating Resolution`.
+
 **How to Use:**
 
 1. Normalize the documented existing manufacturer and model for the high-efficiency refrigeration equipment when it is available.
@@ -124,6 +134,16 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 * Proposed certified refrigeration equipment performance with its exact unit
 
+**Input Bindings:**
+
+* Exact proposed make and model from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Proposed Refrigeration Equipment > Linked Opportunity names an exact product > Exact Product Information`. Apply the exact bound Exact proposed make and model from the linked opportunity to resolve and validate the authoritative record before Exact Proposed Refrigeration Equipment Rating Lookup emits Proposed certified refrigeration equipment performance with its exact unit.
+* Product type and capacity ← Linked Opportunity at `Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Proposed Refrigeration Equipment > Linked Opportunity names an exact product > Exact Product Information`. Apply the exact bound Product type and capacity to resolve and validate the authoritative record before Exact Proposed Refrigeration Equipment Rating Lookup emits Proposed certified refrigeration equipment performance with its exact unit.
+* Applicable certified test method ← Linked Opportunity at `Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Proposed Refrigeration Equipment > Linked Opportunity names an exact product > Exact Product Information`. Apply the exact bound Applicable certified test method to resolve and validate the authoritative record before Exact Proposed Refrigeration Equipment Rating Lookup emits Proposed certified refrigeration equipment performance with its exact unit.
+
+**Output Bindings:**
+
+* Proposed certified refrigeration equipment performance with its exact unit → `existing_annual_kWh` (kWh/unit-year; RECORD_SET) at `Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Proposed Refrigeration Equipment > Linked Opportunity names an exact product > Standard 1.2 - Exact Proposed Refrigeration Equipment Rating Lookup`.
+
 **How to Use:**
 
 1. Read the exact manufacturer, model, and product configuration from the linked high-efficiency refrigeration equipment opportunity.
@@ -170,6 +190,16 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 **Value Needed:**
 
 * One selected proposed refrigeration equipment native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally
+
+**Input Bindings:**
+
+* Product requirements from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Proposed Refrigeration Equipment > Linked Opportunity specifies requirements but no exact product > Product Requirements`. Apply the exact bound Product requirements from the linked opportunity as a compatibility filter before Requirement-Based Proposed Refrigeration Equipment Resolution emits One selected proposed refrigeration equipment native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally.
+* Required application and capacity ← Linked Opportunity at `Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Proposed Refrigeration Equipment > Linked Opportunity specifies requirements but no exact product > Product Requirements`. Apply the exact bound Required application and capacity as a compatibility filter before Requirement-Based Proposed Refrigeration Equipment Resolution emits One selected proposed refrigeration equipment native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally.
+* Applicable efficiency or resource-use criteria ← Linked Opportunity at `Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Proposed Refrigeration Equipment > Linked Opportunity specifies requirements but no exact product > Product Requirements`. Apply the exact bound Applicable efficiency or resource-use criteria as a compatibility filter before Requirement-Based Proposed Refrigeration Equipment Resolution emits One selected proposed refrigeration equipment native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally.
+
+**Output Bindings:**
+
+* One selected proposed refrigeration equipment native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally → `existing_annual_kWh` (kWh/unit-year; RECORD_SET) at `Annual Operational Savings > Annual electricity reduction > Refrigeration Equipment Performance > Proposed Refrigeration Equipment > Linked Opportunity specifies requirements but no exact product > Standard 1.3 - Requirement-Based Proposed Refrigeration Equipment Resolution`.
 
 **How to Use:**
 

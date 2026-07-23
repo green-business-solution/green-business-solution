@@ -39,6 +39,7 @@
         "decision",
         "reason",
         "fallback_process_key",
+        "fallback_output",
         "selected_value_method",
         "missing_exact_value_behavior"
       ],
@@ -70,13 +71,20 @@
           "type": "string",
           "minLength": 1
         },
-        "fallback_process_key": {
+      "fallback_process_key": {
           "type": [
             "string",
             "null"
           ],
-          "pattern": "^[a-z0-9][a-z0-9_-]*$"
-        },
+        "pattern": "^[a-z0-9][a-z0-9_-]*$"
+      },
+      "fallback_output": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "minLength": 1
+      },
         "selected_value_method": {
           "type": "string",
           "minLength": 1

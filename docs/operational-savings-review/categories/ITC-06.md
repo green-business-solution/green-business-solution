@@ -90,6 +90,16 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 * One selected existing water heater performance value with its exact unit and provenance
 
+**Input Bindings:**
+
+* Existing water heater type or application ← User at `Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Existing Water Heater > Existing Water Heater Type or Application`. Pass the exact bound Existing water heater type or application to Existing Water Heater Rating Resolution when computing One selected existing water heater performance value with its exact unit and provenance; do not substitute a value from another tree path.
+* Existing make and model, when available ← User at `Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Existing Water Heater > Existing Make and Model, when available`. Pass the exact bound Existing make and model, when available to Existing Water Heater Rating Resolution when computing One selected existing water heater performance value with its exact unit and provenance; do not substitute a value from another tree path.
+* Existing capacity or size class ← User at `Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Existing Water Heater > Existing Capacity or Size Class, when available`. Pass the exact bound Existing capacity or size class to Existing Water Heater Rating Resolution when computing One selected existing water heater performance value with its exact unit and provenance; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* One selected existing water heater performance value with its exact unit and provenance → `annual_hot_water_load` (kWh-thermal/year; PER_YEAR) at `Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Existing Water Heater > Standard 1.1 - Existing Water Heater Rating Resolution`.
+
 **How to Use:**
 
 1. Normalize the documented existing manufacturer and model for the heat pump water heater when it is available.
@@ -137,6 +147,16 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 * Proposed certified water heater performance with its exact unit
 
+**Input Bindings:**
+
+* Exact proposed make and model from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Proposed Water Heater > Linked Opportunity names an exact product > Exact Product Information`. Apply the exact bound Exact proposed make and model from the linked opportunity to resolve and validate the authoritative record before Exact Proposed Water Heater Rating Lookup emits Proposed certified water heater performance with its exact unit.
+* Product type and capacity ← Linked Opportunity at `Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Proposed Water Heater > Linked Opportunity names an exact product > Exact Product Information`. Apply the exact bound Product type and capacity to resolve and validate the authoritative record before Exact Proposed Water Heater Rating Lookup emits Proposed certified water heater performance with its exact unit.
+* Applicable certified test method ← Linked Opportunity at `Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Proposed Water Heater > Linked Opportunity names an exact product > Exact Product Information`. Apply the exact bound Applicable certified test method to resolve and validate the authoritative record before Exact Proposed Water Heater Rating Lookup emits Proposed certified water heater performance with its exact unit.
+
+**Output Bindings:**
+
+* Proposed certified water heater performance with its exact unit → `annual_hot_water_load` (kWh-thermal/year; RECORD_SET) at `Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Proposed Water Heater > Linked Opportunity names an exact product > Standard 1.2 - Exact Proposed Water Heater Rating Lookup`.
+
 **How to Use:**
 
 1. Read the exact manufacturer, model, and product configuration from the linked heat pump water heater opportunity.
@@ -183,6 +203,16 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 **Value Needed:**
 
 * One selected proposed water heater native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally
+
+**Input Bindings:**
+
+* Product requirements from the linked opportunity ← Linked Opportunity at `Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Proposed Water Heater > Linked Opportunity specifies requirements but no exact product > Product Requirements`. Apply the exact bound Product requirements from the linked opportunity as a compatibility filter before Requirement-Based Proposed Water Heater Resolution emits One selected proposed water heater native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally.
+* Required application and capacity ← Linked Opportunity at `Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Proposed Water Heater > Linked Opportunity specifies requirements but no exact product > Product Requirements`. Apply the exact bound Required application and capacity as a compatibility filter before Requirement-Based Proposed Water Heater Resolution emits One selected proposed water heater native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally.
+* Applicable efficiency or resource-use criteria ← Linked Opportunity at `Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Proposed Water Heater > Linked Opportunity specifies requirements but no exact product > Product Requirements`. Apply the exact bound Applicable efficiency or resource-use criteria as a compatibility filter before Requirement-Based Proposed Water Heater Resolution emits One selected proposed water heater native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally.
+
+**Output Bindings:**
+
+* One selected proposed water heater native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally → `annual_hot_water_load` (kWh-thermal/year; RECORD_SET) at `Annual Operational Savings > Added heat-pump water-heater electricity > Water Heater Performance > Proposed Water Heater > Linked Opportunity specifies requirements but no exact product > Standard 1.3 - Requirement-Based Proposed Water Heater Resolution`.
 
 **How to Use:**
 

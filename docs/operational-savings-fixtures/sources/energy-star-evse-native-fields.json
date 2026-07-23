@@ -88,7 +88,7 @@
     },
     {
       "field": "dc.average_loading_adjusted_efficiency_ac_input",
-      "unit_id": "percent",
+      "unit_id": "fraction",
       "role": "DC active input normalization",
       "source_location": "ENERGY STAR DC product 2665585 field Average Loading-Adjusted Efficiency AC-Input"
     }
@@ -118,7 +118,7 @@
     },
     {
       "field": "dc.product_2665585.average_loading_adjusted_efficiency_native",
-      "unit_id": "percent",
+      "unit_id": "fraction",
       "role": "inspected DC native field example",
       "source_location": "ENERGY STAR DC product 2665585",
       "value": 0.95
@@ -152,6 +152,6 @@
   ],
   "provenance_notes": [
     "The product exports are retained as checksum-addressed evidence metadata and preserve the source's native field labels.",
-    "The native DC efficiency example is recorded exactly as displayed by the source and is not silently reinterpreted in this fixture."
+    "The native DC efficiency example is normalized to the fraction 0.95 for direct use in the calculation, not the percent value 95."
   ]
 }

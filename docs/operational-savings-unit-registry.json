@@ -215,6 +215,16 @@
         "time": -1
       }
     },
+    "flushes_year": {
+      "unit_id": "flushes_year",
+      "display_unit": "flushes/year",
+      "dimension": "activity_per_time",
+      "quantity_kind": "activity_rate",
+      "dimension_vector": {
+        "activity": 1,
+        "time": -1
+      }
+    },
     "fraction": {
       "unit_id": "fraction",
       "display_unit": "fraction",
@@ -273,6 +283,26 @@
       "dimension_vector": {
         "volume": 1,
         "time": -1
+      }
+    },
+    "gallon_per_kwh": {
+      "unit_id": "gallon_per_kwh",
+      "display_unit": "gallon/kWh",
+      "dimension": "volume_per_energy",
+      "quantity_kind": "resource_intensity",
+      "dimension_vector": {
+        "volume": 1,
+        "energy": -1
+      }
+    },
+    "gallon_per_kwh_work": {
+      "unit_id": "gallon_per_kwh_work",
+      "display_unit": "gallon/kWh-work",
+      "dimension": "volume_per_energy",
+      "quantity_kind": "resource_intensity",
+      "dimension_vector": {
+        "volume": 1,
+        "energy": -1
       }
     },
     "gallon_per_mile": {
@@ -388,6 +418,15 @@
         "time": 1
       }
     },
+    "hours_day": {
+      "unit_id": "hours_day",
+      "display_unit": "hours/day",
+      "dimension": "time",
+      "quantity_kind": "duration",
+      "dimension_vector": {
+        "time": 1
+      }
+    },
     "hours_interval": {
       "unit_id": "hours_interval",
       "display_unit": "hours/interval",
@@ -443,8 +482,8 @@
     "kilowatt_hour_ac_per_month": {
       "unit_id": "kilowatt_hour_ac_per_month",
       "display_unit": "kWh/month",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
       "dimension_vector": {
         "energy": 1,
         "time": -1
@@ -453,8 +492,8 @@
     "kilowatt_hour_ac_per_year": {
       "unit_id": "kilowatt_hour_ac_per_year",
       "display_unit": "kWh/year",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
       "dimension_vector": {
         "energy": 1,
         "time": -1
@@ -483,11 +522,11 @@
     "kilowatt_hour_per_rack": {
       "unit_id": "kilowatt_hour_per_rack",
       "display_unit": "kWh/rack",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "energy_per_activity",
+      "quantity_kind": "intensity",
       "dimension_vector": {
         "energy": 1,
-        "time": -1
+        "activity": -1
       }
     },
     "kilowatt_hour_per_vehicle_year": {
@@ -504,8 +543,8 @@
     "kilowatt_hour_per_year": {
       "unit_id": "kilowatt_hour_per_year",
       "display_unit": "kWh/year",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
       "dimension_vector": {
         "energy": 1,
         "time": -1
@@ -584,48 +623,47 @@
     "kwh": {
       "unit_id": "kwh",
       "display_unit": "kWh",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "energy",
+      "quantity_kind": "energy",
       "dimension_vector": {
-        "energy": 1,
-        "time": -1
+        "energy": 1
       }
     },
     "kwh_100_lb": {
       "unit_id": "kwh_100_lb",
       "display_unit": "kWh/100 lb",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "energy_per_mass",
+      "quantity_kind": "energy_intensity",
       "dimension_vector": {
         "energy": 1,
-        "time": -1
+        "mass": -1
       }
     },
     "kwh_activity": {
       "unit_id": "kwh_activity",
       "display_unit": "kWh/activity",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "energy_per_activity",
+      "quantity_kind": "energy_intensity",
       "dimension_vector": {
         "energy": 1,
-        "time": -1
+        "activity": -1
       }
     },
     "kwh_cycle": {
       "unit_id": "kwh_cycle",
       "display_unit": "kWh/cycle",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "energy_per_activity",
+      "quantity_kind": "energy_intensity",
       "dimension_vector": {
         "energy": 1,
-        "time": -1
+        "activity": -1
       }
     },
     "kwh_day": {
       "unit_id": "kwh_day",
       "display_unit": "kWh/day",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
       "dimension_vector": {
         "energy": 1,
         "time": -1
@@ -641,14 +679,24 @@
         "time": -1
       }
     },
+    "kwh_ft2_year": {
+      "unit_id": "kwh_ft2_year",
+      "display_unit": "kWh/ft2-year",
+      "dimension": "energy_per_area_time",
+      "quantity_kind": "energy_intensity",
+      "dimension_vector": {
+        "energy": 1,
+        "area": -1,
+        "time": -1
+      }
+    },
     "kwh_interval": {
       "unit_id": "kwh_interval",
       "display_unit": "kWh/interval",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "interval_energy",
+      "quantity_kind": "energy",
       "dimension_vector": {
-        "energy": 1,
-        "time": -1
+        "energy": 1
       }
     },
     "kwh_mile": {
@@ -664,8 +712,8 @@
     "kwh_period": {
       "unit_id": "kwh_period",
       "display_unit": "kWh/period",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
       "dimension_vector": {
         "energy": 1,
         "time": -1
@@ -674,8 +722,8 @@
     "kwh_thermal_year": {
       "unit_id": "kwh_thermal_year",
       "display_unit": "kWh-thermal/year",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
       "dimension_vector": {
         "energy": 1,
         "time": -1
@@ -684,18 +732,19 @@
     "kwh_unit_year": {
       "unit_id": "kwh_unit_year",
       "display_unit": "kWh/unit-year",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "energy_per_item_time",
+      "quantity_kind": "resource_rate",
       "dimension_vector": {
         "energy": 1,
+        "item": -1,
         "time": -1
       }
     },
     "kwh_year": {
       "unit_id": "kwh_year",
       "display_unit": "kWh/year",
-      "dimension": "power",
-      "quantity_kind": "power",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
       "dimension_vector": {
         "energy": 1,
         "time": -1
@@ -815,6 +864,16 @@
       "quantity_kind": "numeric",
       "dimension_vector": null
     },
+    "racks_day": {
+      "unit_id": "racks_day",
+      "display_unit": "racks/day",
+      "dimension": "activity_per_time",
+      "quantity_kind": "activity_rate",
+      "dimension_vector": {
+        "activity": 1,
+        "time": -1
+      }
+    },
     "racks_year": {
       "unit_id": "racks_year",
       "display_unit": "racks/year",
@@ -842,24 +901,32 @@
     "resource_certified_activity": {
       "unit_id": "resource_certified_activity",
       "display_unit": "resource/certified activity",
-      "dimension": "declared",
-      "quantity_kind": "numeric",
-      "dimension_vector": null
+      "dimension": "resource_per_activity",
+      "quantity_kind": "intensity",
+      "dimension_vector": {
+        "resource": 1,
+        "activity": -1
+      }
     },
     "resource_hour": {
       "unit_id": "resource_hour",
       "display_unit": "resource/hour",
-      "dimension": "declared",
-      "quantity_kind": "numeric",
-      "dimension_vector": null
+      "dimension": "resource_per_time",
+      "quantity_kind": "resource_rate",
+      "dimension_vector": {
+        "resource": 1,
+        "time": -1
+      }
     },
     "resource_unit_ft2_year": {
       "unit_id": "resource_unit_ft2_year",
       "display_unit": "resource-unit/ft2-year",
-      "dimension": "area",
-      "quantity_kind": "area",
+      "dimension": "resource_per_area_time",
+      "quantity_kind": "resource_intensity",
       "dimension_vector": {
-        "area": 1
+        "resource": 1,
+        "area": -1,
+        "time": -1
       }
     },
     "resource_unit_year": {

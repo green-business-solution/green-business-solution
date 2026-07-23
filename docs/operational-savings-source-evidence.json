@@ -256,6 +256,31 @@
       "manual_review_verdict": "The simulator requires an explicit turbine, power curve, hub height, losses, and resource selection. Those values cannot be supplied by the simulator itself."
     },
     {
+      "standard_id": "STD-INTERVAL-TARIFF",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "interval_tariff.input_set"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [],
+        "proposed_or_qualified_product": [],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-INTERVAL-TARIFF"
+        ],
+        "tariff_or_bill": [
+          "E-INTERVAL-TARIFF"
+        ],
+        "geographic_or_climate": []
+      },
+      "unsupported_roles": [
+        "generic_tariff_default",
+        "nearby_schedule_substitution",
+        "zero_missing_rate_placeholder"
+      ],
+      "manual_review_verdict": "The official database and matching contract are verified. Exact execution remains limited until a published utility tariff, normalized adapter, and monthly bill-reconciliation fixture are retained."
+    },
+    {
       "standard_id": "STD-REOPT-LOCAL-DISPATCH",
       "verdict": "LIMITED",
       "output_keys": [
@@ -483,20 +508,40 @@
       "output_keys": [
         "context.outdoor_lighting_application_wattage",
         "context.commercial_flush_activity",
-        "context.single_value_selection"
+        "context.single_value_selection",
+        "context.material_handling_intensity",
+        "context.commercial_cooktop_comparable_duty",
+        "context.walk_in_component_energy",
+        "context.public_charging_shape",
+        "context.dishwasher_rack_activity",
+        "context.diesel_generator_full_load_test_fuel"
       ],
       "source_roles": {
         "existing_equipment_baseline": [
-          "E-CONTEXT-LIGHTING-WATTAGE"
+          "E-CONTEXT-LIGHTING-WATTAGE",
+          "E-CONTEXT-FORKLIFT",
+          "E-CONTEXT-COOKTOP",
+          "E-CONTEXT-WALK-IN"
         ],
-        "proposed_or_qualified_product": [],
+        "proposed_or_qualified_product": [
+          "E-CONTEXT-FORKLIFT",
+          "E-CONTEXT-COOKTOP",
+          "E-CONTEXT-WALK-IN"
+        ],
         "usage_or_operating_schedule": [
           "E-CONTEXT-FLUSH-ACTIVITY",
-          "E-CONTEXT-SELECTION"
+          "E-CONTEXT-SELECTION",
+          "E-CONTEXT-COOKTOP",
+          "E-CONTEXT-EVI-SHAPE",
+          "E-CONTEXT-DISHWASHER-ACTIVITY"
         ],
         "physics_or_calculation_method": [
           "E-CONTEXT-FLUSH-ACTIVITY",
-          "E-CONTEXT-SELECTION"
+          "E-CONTEXT-SELECTION",
+          "E-CONTEXT-FORKLIFT",
+          "E-CONTEXT-COOKTOP",
+          "E-CONTEXT-WALK-IN",
+          "E-CONTEXT-FEMA-DIESEL-GENERATOR"
         ],
         "tariff_or_bill": [],
         "geographic_or_climate": [
@@ -508,7 +553,32 @@
         "future_contractor_product_selection",
         "cross_category_field_substitution"
       ],
-      "manual_review_verdict": "Reviewed fixtures prove the DOE outdoor application wattages and EPA commercial toilet and urinal activity method. The other named category adapters remain implementation-pending and must disclose their source and population limitations."
+      "manual_review_verdict": "Reviewed fixtures prove DOE outdoor lighting, EPA commercial flush activity, the narrow Argonne forklift pair, the ENERGY STAR electric-cooktop duty, DOE walk-in component rows, and the ENERGY STAR dishwasher rack-machine activity method. EVI-Pro Lite documentation supports only a normalized charging time-of-day shape, not site daily energy or utilization. Other category adapters remain implementation-pending and must disclose source and population limitations."
+    },
+    {
+      "standard_id": "STD-DISHWASHER-WATER-HEATING",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "dishwasher.water_heating_conversion"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [],
+        "proposed_or_qualified_product": [],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-DISHWASHER-WATER-HEATING"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": []
+      },
+      "unsupported_roles": [
+        "existing_equipment_baseline",
+        "proposed_or_qualified_product",
+        "usage_or_operating_schedule",
+        "tariff_or_bill",
+        "geographic_or_climate"
+      ],
+      "manual_review_verdict": "The retained March 2024 ENERGY STAR calculator fixture proves the building and booster water-heating equations and numeric inputs. The category adapter and end-to-end golden fixture remain implementation-pending."
     }
   ],
   "evidence_records": [
@@ -812,7 +882,7 @@
       "source_version": "Version 1.2",
       "exact_artifact": "ENERGY STAR EVSE Version 1.2 test and reporting requirements",
       "exact_field_table_page_equation_or_function": "Bound native fields: ac.maximum_output_power, ac.operation_mode_total_loss, ac.idle_mode_input_power, ac.no_vehicle_mode_input_power, dc.maximum_output_power, dc.idle_mode_input_power_ac_input, dc.no_vehicle_mode_input_power_ac_input, and dc.average_loading_adjusted_efficiency_ac_input.",
-      "units": "kW, Wac, and percent as reported by the source",
+      "units": "kW, Wac, and a dimensionless efficiency fraction normalized from the source field",
       "covered_product_or_method_scope": "Native certified AC-output and DC-output charger fields required to keep charger-type calculations separate.",
       "existing_or_proposed_coverage": "proposed-or-current",
       "supported_scenarios": [
@@ -838,7 +908,7 @@
       "unit_ids": [
         "kilowatt",
         "watt_ac",
-        "percent"
+        "fraction"
       ],
       "fixture_binding": {
         "fixture_path": "docs/operational-savings-fixtures/sources/energy-star-evse-native-fields.json",
@@ -1162,6 +1232,47 @@
         "Tariff value"
       ],
       "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-INTERVAL-TARIFF",
+      "standard_id": "STD-INTERVAL-TARIFF",
+      "output_key": "interval_tariff.input_set",
+      "source_roles": [
+        "physics_or_calculation_method",
+        "tariff_or_bill"
+      ],
+      "source_url": "https://developer.nlr.gov/docs/electricity/openei-utility-rates/",
+      "source_title": "OpenEI Utility Rates API documentation and Utility Rate Database",
+      "source_version": "Accessed 2026-07-23; exact utility tariff version remains project-specific",
+      "exact_artifact": "OpenEI Utility Rates API contract plus the controlling published utility tariff sheet for the matched account",
+      "exact_field_table_page_equation_or_function": "Match utility, schedule, customer class, and effective date; normalize energy periods, demand windows, ratchets, seasons, tiers, minimums, non-bypassable charges, and export rules; reconcile itemized monthly results",
+      "units": "record set containing native tariff units",
+      "covered_product_or_method_scope": "Electric interval, time-of-use, demand, and export tariff resolution",
+      "existing_or_proposed_coverage": "baseline-and-proposed-bill-input",
+      "supported_scenarios": [
+        "exact-published-tariff",
+        "itemized-bill-derived-screen",
+        "conservative-screening"
+      ],
+      "required_lookup_inputs": [
+        "utility_identity",
+        "rate_schedule_and_class",
+        "tariff_effective_date",
+        "interval_energy_and_demand",
+        "export_configuration"
+      ],
+      "extraction_or_calculation_method": "Resolve the exact published tariff first; otherwise use an itemized bill-derived screen; otherwise use a disclosed conservative screen with blended variable energy, effective demand when supported, and zero export credit only as a downside assumption",
+      "selected_value_basis": "One utility, schedule, customer class, and effective-date match, or one explicitly labeled screening input set",
+      "uncertainty_basis": "Exact tariff completeness and monthly bill-reconciliation residual",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No retained published tariff, normalized adapter fixture, or monthly bill-reconciliation golden case",
+      "unsupported_uses": [
+        "Generic tariff selection",
+        "Nearby schedule substitution",
+        "Zero as a missing energy or demand rate",
+        "Zero export credit represented as an inferred utility rule"
+      ],
+      "evidence_status": "LIMITED"
     },
     {
       "evidence_id": "E-REOPT-DISPATCH",
@@ -2680,16 +2791,15 @@
         "exact-measured-or-documented",
         "exact-product-or-project-specification",
         "exact-authoritative-database",
-        "context-matched-authoritative-benchmark",
-        "deterministic-retrofi-benchmark"
+        "context-matched-authoritative-benchmark"
       ],
       "required_lookup_inputs": [
         "benchmark_context",
         "exact_value_override",
         "eligible_population"
       ],
-      "extraction_or_calculation_method": "Use the highest available fallback level and retain one selected value, source version, context filters, eligible population, population size, selection rule, fallback level, and provenance.",
-      "selected_value_basis": "One selected value only; ranges are not calculation inputs.",
+      "extraction_or_calculation_method": "Use only an exact value or a category-specific authoritative population or equation whose source version, compatibility filters, numeric rule, unit, scope, and retained evidence are implemented. Report a limitation when no such path exists.",
+      "selected_value_basis": "One source-supported selected output only; ranges and unspecified future fallbacks are not calculation inputs.",
       "uncertainty_basis": "Source coverage and category-context fit determine screening quality and remain disclosed in the existing Validation paragraph.",
       "fixture_or_test_reference": null,
       "access_limitations": "Only the lighting and toilet or urinal adapters have new inspected source fixtures in this pass; other named category adapters remain implementation-pending.",
@@ -2699,6 +2809,660 @@
         "Zero as a missing-data placeholder"
       ],
       "evidence_status": "LIMITED"
+    },
+    {
+      "evidence_id": "E-CONTEXT-FORKLIFT",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.material_handling_intensity",
+      "source_roles": [
+        "existing_equipment_baseline",
+        "proposed_or_qualified_product",
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://www.energy.gov/sites/prod/files/2014/03/f11/forklift_anl_esd.pdf",
+      "source_title": "Argonne National Laboratory Full Fuel-Cycle Comparison of Forklift Propulsion Systems",
+      "source_version": "ANL/ESD/08-3, October 2008",
+      "exact_artifact": "Full Fuel-Cycle Comparison of Forklift Propulsion Systems",
+      "exact_field_table_page_equation_or_function": "Section 3.1 and Table 10 bound fields rated_capacity_class, operating_duty, electric_5000_lb_wall_energy_rate, propane_5000_lb_fuel_rate, grid_to_work_efficiency, propane_gallons_per_kwh_work, and compatible_resource_intensity_selection.",
+      "units": "kWh/hour, gallons/hour, fraction, and gallon/kWh-work",
+      "covered_product_or_method_scope": "Source-supported grid-to-work efficiency and one side-by-side 5,000-pound electric and propane forklift operating-intensity comparison.",
+      "existing_or_proposed_coverage": "paired-existing-and-proposed-screening-record",
+      "supported_scenarios": [
+        "exact-measured-or-documented",
+        "context-matched-authoritative-benchmark"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "exact_value_override",
+        "eligible_population"
+      ],
+      "extraction_or_calculation_method": "Use exact comparable project intensity first; otherwise require a 5,000-pound capacity and compatible duty match before selecting the paired 1.38 gallons/hour and 7.5 kWh/hour record.",
+      "selected_value_basis": "One exact project pair or the one retained compatible paired record; no cross-capacity statistical selection is enabled.",
+      "uncertainty_basis": "Capacity and duty compatibility plus the report documented scarcity of operating data.",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/argonne-forklift-energy-intensity.json",
+      "access_limitations": "The retained fixture supports only its explicit class, duty, fields, units, and source version.",
+      "unsupported_uses": [
+        "A universal forklift hourly resource intensity",
+        "Battery size, charger size, shift schedule, or annual hours",
+        "A 5,000-pound comparison applied to a different capacity or duty without a compatible authoritative population"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "record_set",
+        "kwh_hour",
+        "gallon_per_hour",
+        "fraction",
+        "gallon_per_kwh_work"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/argonne-forklift-energy-intensity.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/tables/0/field",
+          "/tables/1/field",
+          "/values/0/field",
+          "/values/1/field",
+          "/methods/0/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/tables/0/unit_id",
+          "/tables/1/unit_id",
+          "/values/0/unit_id",
+          "/values/1/unit_id",
+          "/methods/0/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/tables/0/value",
+            "expected": 7.5
+          },
+          {
+            "pointer": "/tables/1/value",
+            "expected": 1.38
+          },
+          {
+            "pointer": "/values/0/value",
+            "expected": 0.64
+          },
+          {
+            "pointer": "/values/1/value",
+            "expected": 0.19
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/2"
+        ],
+        "substantive_pointers": [
+          "/fields/0",
+          "/fields/1",
+          "/tables/0",
+          "/tables/1",
+          "/values/0",
+          "/values/1",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:cf26a69395287f5cdadc7125674632501def5033a8b37774c7a006d6ca5b9eed"
+    },
+    {
+      "evidence_id": "E-CONTEXT-COOKTOP",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.commercial_cooktop_comparable_duty",
+      "source_roles": [
+        "existing_equipment_baseline",
+        "proposed_or_qualified_product",
+        "usage_or_operating_schedule",
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx",
+      "source_title": "ENERGY STAR Commercial Food Service Equipment Calculator - Electric Cooktop Calculations",
+      "source_version": "Workbook published March 2024",
+      "exact_artifact": "Electric Cooktop Calcs worksheet",
+      "exact_field_table_page_equation_or_function": "Electric Cooktop Calcs bound fields tested_duty_definition, boil_cycles_per_hour, conventional_electric_cooking_efficiency, energy_star_cooking_efficiency, conventional_kwh_per_boil, energy_star_kwh_per_boil, and annual_cooktop_energy.",
+      "units": "record set, activity/year, fraction, kWh/activity, and kWh/year",
+      "covered_product_or_method_scope": "Comparable electric-cooktop boil duty, conventional and ENERGY STAR cooking efficiencies, energy per boil, and annualization equations.",
+      "existing_or_proposed_coverage": "paired-existing-and-proposed-electric-cooktop-duty",
+      "supported_scenarios": [
+        "context-matched-authoritative-benchmark"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "eligible_population"
+      ],
+      "extraction_or_calculation_method": "Require the identical commercial electric-cooktop 20-pound water-boil duty and multiply the retained 1.03 and 0.91 kWh/boil intensities by project activity in the same duty unit.",
+      "selected_value_basis": "The exact published duty pair; no gas or different-duty substitution.",
+      "uncertainty_basis": "Duty compatibility and project annual activity.",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/energy-star-commercial-cooktop-calculator.json",
+      "access_limitations": "The retained fixture supports only its explicit class, duty, fields, units, and source version.",
+      "unsupported_uses": [
+        "Gas-to-electric induction savings",
+        "A different cooking product, batch size, temperature rise, or food duty",
+        "Annual energy without a compatible activity input"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "record_set",
+        "activity_year",
+        "fraction",
+        "kwh_activity",
+        "kwh_year"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/energy-star-commercial-cooktop-calculator.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/values/3/field",
+          "/values/4/field",
+          "/values/5/field",
+          "/values/6/field",
+          "/methods/0/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/values/3/unit_id",
+          "/values/4/unit_id",
+          "/values/5/unit_id",
+          "/values/6/unit_id",
+          "/methods/0/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/values/3/value",
+            "expected": 0.7603
+          },
+          {
+            "pointer": "/values/4/value",
+            "expected": 0.8
+          },
+          {
+            "pointer": "/values/5/value",
+            "expected": 1.03
+          },
+          {
+            "pointer": "/values/6/value",
+            "expected": 0.91
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/3"
+        ],
+        "substantive_pointers": [
+          "/fields/0",
+          "/fields/1",
+          "/values/3",
+          "/values/4",
+          "/values/5",
+          "/values/6",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6"
+    },
+    {
+      "evidence_id": "E-CONTEXT-WALK-IN",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.walk_in_component_energy",
+      "source_roles": [
+        "existing_equipment_baseline",
+        "proposed_or_qualified_product",
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://www.energy.gov/sites/default/files/2023-08/Walk-In%20Coolers%20and%20Freezers%20ECS%20NOPR.pdf",
+      "source_title": "DOE Walk-In Coolers and Freezers Energy Conservation Standards NOPR",
+      "source_version": "August 2023 NOPR technical support document",
+      "exact_artifact": "Tables IV.31, IV.32, and IV.33",
+      "exact_field_table_page_equation_or_function": "Tables IV.31 through IV.33 bound fields equipment_class, efficiency_level, panel_pf_l_baseline, panel_pf_l_tsl3, door_dw_l_baseline, door_dw_l_tsl3, refrigeration_dc_l_i_baseline, refrigeration_dc_l_i_tsl3, and component_annual_energy_delta.",
+      "units": "record set, kWh/ft2-year, and kWh/year",
+      "covered_product_or_method_scope": "Class-specific baseline and efficiency-level annual energy values for walk-in panels, doors, and refrigeration systems.",
+      "existing_or_proposed_coverage": "paired-baseline-and-upgrade-screening",
+      "supported_scenarios": [
+        "context-matched-authoritative-benchmark"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "eligible_population"
+      ],
+      "extraction_or_calculation_method": "Select baseline and proposed values from the same exact component-class row, multiply panel intensity by panel area once, and sum only explicitly in-scope components.",
+      "selected_value_basis": "One class-matched baseline and proposed row pair with native units.",
+      "uncertainty_basis": "Component boundary, DOE class, configuration, panel area, and same-duty compatibility.",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/doe-walk-in-energy-benchmarks.json",
+      "access_limitations": "The retained fixture supports only its explicit class, duty, fields, units, and source version.",
+      "unsupported_uses": [
+        "Whole-box annual energy from a single unmatched component row",
+        "A class selected without temperature, component, indoor or outdoor, and configuration filters",
+        "Multiplying an already annual benchmark by annual operating hours"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "record_set",
+        "kwh_ft2_year",
+        "kwh_year"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/doe-walk-in-energy-benchmarks.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/tables/0/field",
+          "/tables/1/field",
+          "/tables/6/field",
+          "/tables/7/field",
+          "/tables/12/field",
+          "/tables/13/field",
+          "/methods/0/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/tables/0/unit_id",
+          "/tables/1/unit_id",
+          "/tables/6/unit_id",
+          "/tables/7/unit_id",
+          "/tables/12/unit_id",
+          "/tables/13/unit_id",
+          "/methods/0/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/tables/0/value",
+            "expected": 5.8
+          },
+          {
+            "pointer": "/tables/1/value",
+            "expected": 4
+          },
+          {
+            "pointer": "/tables/6/value",
+            "expected": 2698
+          },
+          {
+            "pointer": "/tables/7/value",
+            "expected": 2120
+          },
+          {
+            "pointer": "/tables/12/value",
+            "expected": 26420
+          },
+          {
+            "pointer": "/tables/13/value",
+            "expected": 25887
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/3"
+        ],
+        "substantive_pointers": [
+          "/fields/0",
+          "/fields/1",
+          "/tables/0",
+          "/tables/1",
+          "/tables/6",
+          "/tables/7",
+          "/tables/12",
+          "/tables/13",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:d46c285120da35349dfe1017b1d2739cfa20efe62f00261e89c8c225c6fd1bbc"
+    },
+    {
+      "evidence_id": "E-CONTEXT-DISHWASHER-ACTIVITY",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.dishwasher_rack_activity",
+      "source_roles": [
+        "usage_or_operating_schedule"
+      ],
+      "source_url": "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx",
+      "source_title": "ENERGY STAR Commercial Food Service Equipment Calculator - Dishwasher Calculations",
+      "source_version": "Workbook published March 2024",
+      "exact_artifact": "Dishwasher Calcs worksheet",
+      "exact_field_table_page_equation_or_function": "Dishwasher Calcs bound fields machine_type_and_sanitation, rack_machine_activity, low_temp_undercounter_default_racks_per_day, low_temp_door_default_racks_per_day, low_temp_single_tank_conveyor_default_racks_per_day, low_temp_multi_tank_conveyor_default_racks_per_day, and rack_machine_annual_activity.",
+      "units": "record set, racks/day, and racks/year",
+      "covered_product_or_method_scope": "Rack-machine activity defaults, native water and energy metrics, and explicit building and booster water-heating conversion equations.",
+      "existing_or_proposed_coverage": "activity-method",
+      "supported_scenarios": [
+        "context-matched-authoritative-benchmark"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "eligible_population"
+      ],
+      "extraction_or_calculation_method": "Select one compatible exact project or retained rack-machine daily activity and multiply it by operating days per week and active weeks per year",
+      "selected_value_basis": "One machine-type-compatible racks-per-day value and one annual racks-per-equipment-unit result",
+      "uncertainty_basis": "Machine type, sanitation method, and operating-calendar compatibility",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-calculator.json",
+      "access_limitations": "The retained fixture supports explicit rack-machine defaults only and does not supply flight-machine annual hours",
+      "unsupported_uses": [
+        "Flight-machine gallons per hour converted to racks without an exact throughput source",
+        "A project-specific activity value without matching context",
+        "Double application of equipment quantity to activity already expressed for the fixture group"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "record_set",
+        "racks_day",
+        "racks_year"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-calculator.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/tables/0/field",
+          "/tables/1/field",
+          "/tables/2/field",
+          "/tables/3/field",
+          "/methods/1/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/tables/0/unit_id",
+          "/tables/1/unit_id",
+          "/tables/2/unit_id",
+          "/tables/3/unit_id",
+          "/methods/1/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/tables/0/value",
+            "expected": 75
+          },
+          {
+            "pointer": "/tables/1/value",
+            "expected": 280
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/2",
+          "/unsupported_inferences/3"
+        ],
+        "substantive_pointers": [
+          "/fields/0",
+          "/fields/1",
+          "/tables/0",
+          "/tables/1",
+          "/tables/2",
+          "/tables/3",
+          "/methods/1"
+        ]
+      },
+      "source_checksum": "sha256:3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6"
+    },
+    {
+      "evidence_id": "E-DISHWASHER-WATER-HEATING",
+      "standard_id": "STD-DISHWASHER-WATER-HEATING",
+      "output_key": "dishwasher.water_heating_conversion",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx",
+      "source_title": "ENERGY STAR Commercial Food Service Equipment Calculator - Dishwasher Calculations",
+      "source_version": "Workbook published March 2024",
+      "exact_artifact": "Dishwasher Calcs worksheet",
+      "exact_field_table_page_equation_or_function": "Dishwasher Calcs building_water_heater_electric_efficiency, building_water_heater_gas_efficiency, building_water_temperature_increase_f, booster_water_temperature_increase_f, building_electric_kwh_per_gallon, booster_electric_kwh_per_gallon, and water_heating_input_per_gallon equations.",
+      "units": "fraction, degrees Fahrenheit, and energy/gallon converted to resource per rack or resource per hour",
+      "covered_product_or_method_scope": "Rack-machine activity defaults, native water and energy metrics, and explicit building and booster water-heating conversion equations.",
+      "existing_or_proposed_coverage": "existing-and-proposed-water-heating-method",
+      "supported_scenarios": [
+        "exact-input",
+        "class-or-context-estimate",
+        "linked-opportunity-constrained-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "dishwasher_machine_type",
+        "dishwasher_native_water_quantity",
+        "incoming_water_temperature",
+        "wash_rinse_or_booster_temperature",
+        "water_heating_resource",
+        "water_heater_efficiency"
+      ],
+      "extraction_or_calculation_method": "Calculate purchased resource from native water volume, water density, specific heat, temperature rise, resource conversion, and heater efficiency, preserving the selected rack or hourly activity unit",
+      "selected_value_basis": "One complete compatible project or retained calculator conversion input set",
+      "uncertainty_basis": "Water quantity, temperature, resource, efficiency, machine-type, and sanitation-method compatibility",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-calculator.json",
+      "access_limitations": "The retained fixture supports only its explicit building and booster equation boundaries",
+      "unsupported_uses": [
+        "Total water treated as hot water without a building and booster boundary",
+        "Flight-machine gallons per hour converted to racks without an exact throughput source"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "fraction",
+        "degree",
+        "energy_gallon"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-calculator.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/values/0/field",
+          "/values/1/field",
+          "/values/2/field",
+          "/values/3/field",
+          "/values/4/field",
+          "/values/5/field",
+          "/methods/0/field"
+        ],
+        "unit_pointers": [
+          "/values/0/unit_id",
+          "/values/1/unit_id",
+          "/values/2/unit_id",
+          "/values/3/unit_id",
+          "/values/4/unit_id",
+          "/values/5/unit_id",
+          "/methods/0/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/values/0/value",
+            "expected": 0.98
+          },
+          {
+            "pointer": "/values/1/value",
+            "expected": 0.8
+          },
+          {
+            "pointer": "/values/2/value",
+            "expected": 70
+          },
+          {
+            "pointer": "/values/3/value",
+            "expected": 40
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/0"
+        ],
+        "substantive_pointers": [
+          "/values/0",
+          "/values/1",
+          "/values/2",
+          "/values/3",
+          "/values/4",
+          "/values/5",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6"
+    },
+    {
+      "evidence_id": "E-CONTEXT-EVI-SHAPE",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.public_charging_shape",
+      "source_roles": [
+        "usage_or_operating_schedule"
+      ],
+      "source_url": "https://developer.nlr.gov/docs/transportation/evi-pro-lite-v1/",
+      "source_title": "National Laboratory of the Rockies EVI-Pro Lite API documentation",
+      "source_version": "Version 1 documentation accessed 2026-07-23",
+      "exact_artifact": "EVI-Pro Lite API response contract for weekday and weekend charging load profiles",
+      "exact_field_table_page_equation_or_function": "Normalized 24-hour weekday and weekend time-of-day charging profiles returned in 15-minute steps",
+      "units": "dimensionless normalized fraction by interval",
+      "covered_product_or_method_scope": "Time-of-day charging shape only",
+      "existing_or_proposed_coverage": "proposed-load-shape",
+      "supported_scenarios": [
+        "location-and-scenario-matched-normalized-shape"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "eligible_population"
+      ],
+      "extraction_or_calculation_method": "Select one compatible EVI-Pro Lite scenario response, retain weekday and weekend 15-minute values, and normalize each applicable daily shape to sum to one",
+      "selected_value_basis": "One complete compatible normalized profile",
+      "uncertainty_basis": "Scenario fit and lack of a retained request-response fixture",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No retained request-response fixture or RetroFi adapter golden case",
+      "unsupported_uses": [
+        "Site daily delivered energy",
+        "Sessions per day",
+        "Charging utilization",
+        "Site load magnitude"
+      ],
+      "evidence_status": "LIMITED"
+    },
+    {
+      "evidence_id": "E-CONTEXT-FEMA-DIESEL-GENERATOR",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.diesel_generator_full_load_test_fuel",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://emilms.fema.gov/IS0815/groups/90.html",
+      "source_title": "FEMA Operational Generator Fueling Requirements",
+      "source_version": "FEMA IS-815 page retrieved 2026-07-23",
+      "exact_artifact": "Operational generator fueling requirements lesson page",
+      "exact_field_table_page_equation_or_function": "generator_rated_capacity; full_load_diesel_fuel_coefficient; full_load_diesel_fuel_coefficient_value; full_load_diesel_fuel_rate; test_fuel_gallons_per_hour = 0.07 gallon/kWh × generator_rated_capacity_kW",
+      "units": "kW, gallon/kWh, and gallons/hour",
+      "covered_product_or_method_scope": "FEMA full-load diesel-generator fuel rule of thumb by rated generator kilowatts.",
+      "existing_or_proposed_coverage": "routine-test-fuel-method",
+      "supported_scenarios": [
+        "class-or-context-estimate"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "exact_value_override"
+      ],
+      "extraction_or_calculation_method": "For a confirmed full-load diesel-generator test, calculate gallons per hour as 0.07 gallon/kWh multiplied by rated generator kW, then multiply by separately documented annual test hours per equipment unit",
+      "selected_value_basis": "One transparent source-derived full-load diesel formula; no population median is used",
+      "uncertainty_basis": "Rule-of-thumb source, full-load-only boundary, rated-capacity accuracy, and separately documented annual test hours",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/fema-diesel-generator-full-load-fuel.json",
+      "access_limitations": "Diesel generators under full load only; no part-load curve, test-hour schedule, or standby-electricity population",
+      "unsupported_uses": [
+        "Part-load diesel fuel use",
+        "Natural-gas, propane, battery, fuel-cell, or hybrid backup-system fuel use",
+        "Annual routine-test hours",
+        "Standby electrical input or annual standby electricity",
+        "Outage operation or resilience value"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "kilowatt",
+        "gallon_per_kwh",
+        "gallon_per_hour"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/fema-diesel-generator-full-load-fuel.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/values/0/field",
+          "/methods/0/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/values/0/unit_id",
+          "/methods/0/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/values/0/value",
+            "expected": 0.07
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/2",
+          "/unsupported_inferences/3",
+          "/unsupported_inferences/4"
+        ],
+        "substantive_pointers": [
+          "/fields/0",
+          "/fields/1",
+          "/values/0",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:104fd7d8fe018001753d4700616f4f5a96bb27ae88440ea794e9d03a0bd32a0a"
     }
   ]
 }

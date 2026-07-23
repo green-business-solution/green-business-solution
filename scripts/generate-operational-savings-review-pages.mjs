@@ -92,7 +92,8 @@ export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
     unitRegistryText,
     profilePathFixtureText,
     informationCardSchemaText,
-    userInputRealismSchemaText
+    userInputRealismSchemaText,
+    userInputDecisionRegistryText
   ] = await Promise.all([
     readFile(join(root, "docs/operational-savings-information-trees.md"), "utf8"),
     readFile(join(root, "docs/operational-savings-standard-registry.md"), "utf8"),
@@ -104,7 +105,8 @@ export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
     readFile(join(root, "docs/operational-savings-unit-registry.json"), "utf8"),
     readFile(join(root, "docs/operational-savings-fixtures/profile/normalized-profile-paths.json"), "utf8"),
     readFile(join(root, "docs/operational-savings-information-card.schema.json"), "utf8"),
-    readFile(join(root, "docs/operational-savings-user-input-realism.schema.json"), "utf8")
+    readFile(join(root, "docs/operational-savings-user-input-realism.schema.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-user-input-decisions.json"), "utf8")
   ]);
   const goldenFixtureRoot = join(root, "docs/operational-savings-fixtures/categories");
   const sourceFixtureRoot = join(root, "docs/operational-savings-fixtures/sources");
@@ -145,6 +147,7 @@ export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
     actualProfilePathContract,
     informationCardSchema: JSON.parse(informationCardSchemaText),
     userInputRealismSchema: JSON.parse(userInputRealismSchemaText),
+    userInputDecisionRegistry: JSON.parse(userInputDecisionRegistryText),
     goldenFixtures,
     taxonomy: taxonomyModule.RETROFIT_TYPES
   };
@@ -411,7 +414,8 @@ export function buildOperationalSavingsReview(sources) {
     categoryReview.userInputRealism = buildUserInputRealismEntries(
       categoryReview.id,
       categoryReview.informationCard.tree,
-      categoryReview.informationCard.processes
+      categoryReview.informationCard.processes,
+      sources.userInputDecisionRegistry
     );
     validateInformationCardProjection(
       categoryReview.informationCard,
@@ -747,8 +751,16 @@ function validateConditionalGates(tree, ownerId, contract, errors) {
     if (!Array.isArray(gate.resolves_terms) || gate.resolves_terms.length === 0) {
       errors.push(`${ownerId} Conditional Calculation Gate ${node} resolves no formula terms`);
     }
-    if (gate.otherwise_use_single_value_fallback !== true) {
+    if (typeof gate.otherwise_use_single_value_fallback !== "boolean") {
       errors.push(`${ownerId} Conditional Calculation Gate ${node} lacks otherwise_use_single_value_fallback`);
+    }
+    if (
+      gate.otherwise_use_single_value_fallback === false &&
+      !String(gate.unresolved_behavior || "").trim()
+    ) {
+      errors.push(
+        `${ownerId} Conditional Calculation Gate ${node} lacks an explicit unresolved behavior`
+      );
     }
     if (typeof gate.future_verified_standard_could_remove !== "boolean") {
       errors.push(`${ownerId} Conditional Calculation Gate ${node} lacks future Standard-removal metadata`);
@@ -1459,7 +1471,9 @@ function validateCategoryContracts(categories, contractById, sources, evidenceBy
       }
       if (
         group.missing_data_behavior !== "RETURN_ZERO" &&
-        !/SINGLE_VALUE_BY_FALLBACK_POLICY/.test(group.missing_data_behavior || "")
+        !/(?:SINGLE_VALUE|ONE_(?:SCALAR|RECORD|PROFILE|INPUT_SET|RESULT_SET))_BY_FALLBACK_POLICY|REQUIRE_EXACT_INPUT|DERIVE_FROM_BOUND_INPUTS|REPORT_IMPLEMENTATION_LIMITATION/.test(
+          group.missing_data_behavior || ""
+        )
       ) {
         errors.push(
           `${category.id} formula term ${group.name} lacks single-value missing-data behavior`
@@ -2028,6 +2042,7 @@ function summarizeInputs(tree) {
     User: [],
     Profile: [],
     Bill: [],
+    "Project Document": [],
     Standard: []
   };
   walkTree(tree, (node, path) => {
@@ -2097,11 +2112,25 @@ function validateUserInputRealismContract(contract, schema, categories, errors) 
   }
 
   const expectedKeys = new Set();
-  const processKeysByCategory = new Map();
+  const processesByCategory = new Map();
+  const formulaTermsByCategory = new Map();
   for (const category of categories) {
-    processKeysByCategory.set(
+    processesByCategory.set(
       category.id,
-      new Set(category.informationCard.processes.map((process) => process.key))
+      new Map(
+        category.informationCard.processes.map((process) => [
+          process.key,
+          process
+        ])
+      )
+    );
+    formulaTermsByCategory.set(
+      category.id,
+      new Set(
+        (category.semanticContract?.formula_terms || []).map(
+          (term) => term.name
+        )
+      )
     );
     walkPresentationTree(category.informationCard.tree, (treeNode, path) => {
       if (
@@ -2152,18 +2181,51 @@ function validateUserInputRealismContract(contract, schema, categories, errors) 
       /business representative can ordinarily describe|recognizable selector/i.test(
         entry.reason || ""
       ) ||
-      !String(entry.reason || "").includes(
-        categories.find((category) => category.id === entry.category_id)
-          ?.informationCard.title || "\u0000"
+      !String(entry.reason || "").includes(entry.tree_path) ||
+      String(entry.reason || "").startsWith(
+        `For ${categories.find((category) => category.id === entry.category_id)
+          ?.informationCard.title || "\u0000"},`
       )
     ) {
       errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} lacks a category-specific reviewed reason`);
     }
-    if (
-      entry.fallback_process_key &&
-      !processKeysByCategory.get(entry.category_id)?.has(entry.fallback_process_key)
-    ) {
+    const fallbackProcess = entry.fallback_process_key
+      ? processesByCategory.get(entry.category_id)?.get(
+          entry.fallback_process_key
+        )
+      : null;
+    if (entry.fallback_process_key && !fallbackProcess) {
       errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} references an unknown process`);
+    } else if (fallbackProcess) {
+      if (
+        !fallbackProcess.inputBindings.some(
+          (binding) => binding.treePath === entry.tree_path
+        )
+      ) {
+        errors.push(
+          `User-input realism entry ${entry.category_id} ${entry.tree_path} selects a fallback without an exact input binding`
+        );
+      }
+      const outputBinding = fallbackProcess.outputBindings.find(
+        (binding) => binding.outputName === entry.fallback_output
+      );
+      if (!outputBinding) {
+        errors.push(
+          `User-input realism entry ${entry.category_id} ${entry.tree_path} references an unknown fallback output`
+        );
+      } else if (
+        !formulaTermsByCategory
+          .get(entry.category_id)
+          ?.has(outputBinding.formulaTerm)
+      ) {
+        errors.push(
+          `User-input realism entry ${entry.category_id} ${entry.tree_path} fallback output does not reach a formula term`
+        );
+      }
+    } else if (entry.fallback_output !== null) {
+      errors.push(
+        `User-input realism entry ${entry.category_id} ${entry.tree_path} has a fallback output without a process`
+      );
     }
     if (!String(entry.selected_value_method || "").trim()) {
       errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} lacks a selected-value method`);
@@ -2199,6 +2261,7 @@ const PROCESS_SOURCE_NAME_PATTERNS = {
   "STD-SAM-SOLAR-THERMAL": /System Advisor Model|National Laboratory of the Rockies/i,
   "STD-PVWATTS-V8": /PVWatts|National Laboratory of the Rockies/i,
   "STD-WIND-SAM": /WIND Toolkit|System Advisor Model|National Laboratory of the Rockies/i,
+  "STD-INTERVAL-TARIFF": /OpenEI|Utility Rate Database|published utility tariff/i,
   "STD-REOPT-LOCAL-DISPATCH": /REopt|National Laboratory of the Rockies/i,
   "STD-EPA-CHP-PERFORMANCE": /CHP|U\.S\. Environmental Protection Agency/i,
   "STD-FUELECONOMY-VEHICLES": /FuelEconomy|U\.S\. Department of Energy|U\.S\. Environmental Protection Agency/i,
@@ -2207,6 +2270,7 @@ const PROCESS_SOURCE_NAME_PATTERNS = {
   "STD-WATERSENSE-CI-OPERATIONS": /WaterSense|U\.S\. Environmental Protection Agency/i,
   "STD-FEMP-EXTERIOR-LIGHTING": /FEMP|DesignLights Consortium/i,
   "STD-OPERATING-SCHEDULE": /Commercial Reference|Naval Observatory|U\.S\. Department of Energy/i,
+  "STD-DISHWASHER-WATER-HEATING": /ENERGY STAR Commercial Food Service Equipment Calculator|U\.S\. Environmental Protection Agency/i,
   "STD-CONTEXT-BENCHMARKS": /U\.S\. DOE|U\.S\. EPA|National Laboratory of the Rockies|Lighting Market Characterization|Commercial Reference|ComStock|EVI-Pro|Fleet DNA|WaterSense|REopt|emergency-generator/i
 };
 
@@ -2240,7 +2304,7 @@ const PROJECT_DOCUMENT_TERMS =
 const TECHNICAL_USAGE_TERMS =
   /(?:flushes per day|uses per day per fixture|minutes per use|load-bin fraction|probability distribution|exact standby demand|technical annual usage|annual test fuel per unit|annual standby input per unit)/i;
 
-function validateInformationCardProjection(
+export function validateInformationCardProjection(
   card,
   category,
   standardById,
@@ -2275,6 +2339,13 @@ function validateInformationCardProjection(
     return;
   }
 
+  const treeBindingLocations = buildInformationCardBindingLocations(card);
+  const treeBindingLocationByPath = new Map(
+    treeBindingLocations.map((location) => [location.treePath, location])
+  );
+  const formulaTermByName = new Map(
+    (category.semanticContract?.formula_terms || []).map((term) => [term.name, term])
+  );
   const processByKey = new Map();
   const processNumbers = new Set();
   const processNames = new Set();
@@ -2373,6 +2444,45 @@ function validateInformationCardProjection(
           `${category.id} Information Card process ${process.name} does not document how Lookup Input ${lookupInput} is used`
         );
       }
+      const binding = bindings[0];
+      const location = treeBindingLocationByPath.get(binding?.treePath);
+      if (!location) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} binds ${lookupInput} to nonexistent tree path ${binding?.treePath || "missing"}`
+        );
+      } else if (binding.sourceLabel !== location.sourceLabel) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} binds ${lookupInput} with source ${binding.sourceLabel || "missing"} instead of ${location.sourceLabel}`
+        );
+      }
+      const proposedLookupTokens = new Set(
+        normalizeText(lookupInput)
+          .split(" ")
+          .filter((token) => token !== "proposed" && token.length > 3)
+      );
+      const hasCompatibleLinkedOpportunityPath =
+        proposedLookupTokens.size > 0 &&
+        treeBindingLocations.some((candidate) => {
+          if (candidate.sourceLabel !== "Linked Opportunity") return false;
+          const candidateTokens = new Set(
+            normalizeText(candidate.treePath).split(" ")
+          );
+          return [...proposedLookupTokens].filter((token) =>
+            candidateTokens.has(token)
+          ).length >= Math.min(2, proposedLookupTokens.size);
+        });
+      if (
+        /^Proposed\b/i.test(lookupInput) &&
+        hasCompatibleLinkedOpportunityPath &&
+        !/(?:Project Document|nameplate|measurement|measured|contractor|engineering|study|audit|specification|test record)/i.test(
+          lookupInput
+        ) &&
+        binding?.sourceLabel !== "Linked Opportunity"
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} binds proposed input ${lookupInput} to an unrelated ${binding?.sourceLabel || "missing"} branch`
+        );
+      }
     }
     for (const bindingInput of bindingInputs) {
       if (!process.lookupInputs.includes(bindingInput)) {
@@ -2390,7 +2500,7 @@ function validateInformationCardProjection(
             "Maximum event duration",
             "Rebound or recovery constraint",
             "Timestamped interval utility data",
-            "Authoritative tariff mapping"
+            "Resolved interval tariff input set"
           ]
         : category.id === "ITC-23" && process.key === "reopt_local_dispatch"
           ? ["Terminal state-of-charge constraint"]
@@ -2406,15 +2516,144 @@ function validateInformationCardProjection(
         );
       }
     }
+    const outputNames = (process.outputBindings || []).map(
+      (binding) => binding.outputName
+    );
     if (
-      process.selectionPolicy?.outputCardinality !== "ONE_SELECTED_VALUE" ||
-      JSON.stringify(process.selectionPolicy?.fallbackOrder) !==
-        JSON.stringify(REQUIRED_SINGLE_VALUE_FALLBACK_ORDER) ||
-      process.selectionPolicy?.multipleRecordRule !==
-        "OFFICIAL_RECOMMENDED_OR_TYPICAL_THEN_WEIGHTED_MEDIAN_THEN_MEDIAN"
+      outputNames.length !== process.valueNeeded.length ||
+      new Set(outputNames).size !== outputNames.length
     ) {
       errors.push(
-        `${category.id} Information Card process ${process.name} lacks the required single-value fallback policy`
+        `${category.id} Information Card process ${process.name} output bindings do not map one-to-one to Value Needed`
+      );
+    }
+    const processTreePaths = new Set(
+      treeBindingLocations
+        .filter((location) => location.processKey === process.key)
+        .map((location) => location.treePath)
+    );
+    for (const outputName of process.valueNeeded || []) {
+      const bindings = (process.outputBindings || []).filter(
+        (binding) => binding.outputName === outputName
+      );
+      if (bindings.length !== 1) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} omits or duplicates output ${outputName}`
+        );
+        continue;
+      }
+      const binding = bindings[0];
+      if (!processTreePaths.has(binding.treePath)) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} output ${outputName} is not bound to its exact tree location`
+        );
+      }
+      const formulaTerm = formulaTermByName.get(binding.formulaTerm);
+      if (!formulaTerm) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} output ${outputName} does not reach a formula term`
+        );
+      } else if (binding.outputUnit !== formulaTerm.display_unit) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} output ${outputName} unit ${binding.outputUnit} does not match ${binding.formulaTerm} unit ${formulaTerm.display_unit}`
+        );
+      }
+      if (
+        ![
+          "PER_FIXTURE",
+          "PER_EQUIPMENT_UNIT",
+          "PER_PORT",
+          "PER_EVENT",
+          "PER_HOUR",
+          "PER_YEAR",
+          "SITE_TOTAL",
+          "PROJECT_TOTAL",
+          "PROFILE",
+          "RECORD_SET"
+        ].includes(binding.outputScope)
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} output ${outputName} has invalid scope ${binding.outputScope}`
+        );
+      }
+      const formulaText = `${category.primaryFormula}\n${category.supportingFormulas}`;
+      const escapedTerm = binding.formulaTerm.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&"
+      );
+      if (
+        ["SITE_TOTAL", "PROJECT_TOTAL"].includes(binding.outputScope) &&
+        new RegExp(
+          `(?:\\bquantity\\b\\s*[×*]\\s*\\b${escapedTerm}\\b|\\b${escapedTerm}\\b\\s*[×*]\\s*\\bquantity\\b)`
+        ).test(formulaText)
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} multiplies total output ${outputName} by equipment count`
+        );
+      }
+      const outputSemantics =
+        `${binding.outputName} ${binding.formulaTerm} ${binding.outputUnit}`;
+      if (
+        ["SITE_TOTAL", "PROJECT_TOTAL"].includes(binding.outputScope) &&
+        /\bper (?:equipment )?unit\b|\/unit\b/i.test(outputSemantics)
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} passes per-unit output ${outputName} as a total`
+        );
+      }
+      if (
+        [
+          "PER_FIXTURE",
+          "PER_EQUIPMENT_UNIT",
+          "PER_PORT",
+          "PER_EVENT",
+          "PER_HOUR"
+        ].includes(binding.outputScope) &&
+        /\b(?:site|project|group)[_-]?total\b|\btotal annual\b/i.test(
+          outputSemantics
+        )
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} passes total output ${outputName} as ${binding.outputScope}`
+        );
+      }
+    }
+    const supportedCardinalities = new Set([
+      "ONE_SELECTED_SCALAR",
+      "ONE_SELECTED_RECORD",
+      "ONE_SELECTED_PROFILE",
+      "ONE_SELECTED_INPUT_SET",
+      "ONE_SELECTED_RESULT_SET"
+    ]);
+    const populationCardinality = new Set([
+      "ONE_SELECTED_SCALAR",
+      "ONE_SELECTED_RECORD"
+    ]);
+    const outputCardinality = process.selectionPolicy?.outputCardinality;
+    const allowedMultipleRecordRules = populationCardinality.has(outputCardinality)
+      ? new Set([
+          "OFFICIAL_RECOMMENDED_OR_TYPICAL_THEN_WEIGHTED_MEDIAN_THEN_MEDIAN",
+          "NOT_APPLICABLE_DETERMINISTIC_SELECTION"
+        ])
+      : new Set(["NOT_APPLICABLE_DETERMINISTIC_SELECTION"]);
+    if (
+      !supportedCardinalities.has(outputCardinality) ||
+      JSON.stringify(process.selectionPolicy?.fallbackOrder) !==
+        JSON.stringify(REQUIRED_SINGLE_VALUE_FALLBACK_ORDER) ||
+      !allowedMultipleRecordRules.has(process.selectionPolicy?.multipleRecordRule)
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} lacks the required selected-output fallback policy`
+      );
+    }
+    if (
+      !populationCardinality.has(outputCardinality) &&
+      /median/i.test(
+        `${process.selectionPolicy?.selectedValueMethod || ""} ${process.selectionPolicy?.missingExactValueBehavior || ""}`
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} applies a median rule to structured output cardinality ${outputCardinality}`
       );
     }
     if (
@@ -2452,6 +2691,15 @@ function validateInformationCardProjection(
     ) {
       errors.push(
         `${category.id} Information Card process ${process.name} exposes a range where one selected value is required`
+      );
+    }
+    if (
+      /(?:use (?:a|one) context benchmark|deterministic RetroFi benchmark|closest authoritative value)/i.test(
+        visibleProcessText
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} contains generic fallback wording without a source-specific formula, table, or population`
       );
     }
     if (/\breturn no estimate\b|\bno estimate until\b/i.test(visibleProcessText)) {
@@ -2587,13 +2835,12 @@ function validateInformationCardProjection(
     }
     if (
       category.id === "ITC-32" &&
-      process.key === "context_benchmarks" &&
-      !process.lookupInputs.some(
-        (input) =>
-          normalizeText(input) ===
-          normalizeText(
-            "Supported fixture type: bathroom faucet, showerhead, or pre-rinse spray valve"
-          )
+      process.key === "flow_fixture_activity" &&
+      (
+        !/supported bathroom faucet, showerhead, or pre-rinse spray-valve method/i.test(
+          process.howToUse.join(" ")
+        ) ||
+        /kitchen faucet/i.test(process.howToUse.join(" "))
       )
     ) {
       errors.push(
@@ -2898,6 +3145,43 @@ function walkPresentationTree(root, callback, path = []) {
   }
 }
 
+function buildInformationCardBindingLocations(card) {
+  const processByKey = new Map(
+    (card.processes || []).map((process) => [process.key, process])
+  );
+  const locations = [];
+  const visit = (treeNode, parentSegments) => {
+    const process = treeNode.processKey
+      ? processByKey.get(treeNode.processKey)
+      : null;
+    const sourceLabel = treeNode.processKey
+      ? "Standard Output"
+      : treeNode.text.match(
+          /\s+\((User|Profile|Bill|Linked Opportunity|Project Document|Derived)\)$/
+        )?.[1] || null;
+    const segment = treeNode.processKey
+      ? `Standard ${process?.displayNumber || "unassigned"} - ${process?.name || treeNode.processKey}`
+      : stripInformationCardSourceLabel(treeNode.text);
+    const segments = [...parentSegments, segment].filter(Boolean);
+    locations.push({
+      treePath: segments.join(" > "),
+      segments,
+      processKey: treeNode.processKey || null,
+      sourceLabel
+    });
+    for (const child of treeNode.children || []) visit(child, segments);
+  };
+  visit(card.tree, []);
+  return locations;
+}
+
+function stripInformationCardSourceLabel(value) {
+  return String(value || "")
+    .replace(/\s+\((?:User|Profile|Bill|Linked Opportunity|Project Document|Derived)\)$/, "")
+    .trim();
+}
+
+
 function renderCategoryPage(category) {
   const card = category.informationCard;
   const processByKey = new Map(card.processes.map((process) => [process.key, process]));
@@ -2959,6 +3243,24 @@ function renderInformationCardProcess(process, standardById) {
     "**Value Needed:**",
     "",
     process.valueNeeded.map((value) => `* ${value}`).join("\n"),
+    "",
+    "**Input Bindings:**",
+    "",
+    process.inputBindings
+      .map(
+        (binding) =>
+          `* ${binding.lookupInput} ← ${binding.sourceLabel} at \`${binding.treePath}\`. ${binding.use}`
+      )
+      .join("\n"),
+    "",
+    "**Output Bindings:**",
+    "",
+    process.outputBindings
+      .map(
+        (binding) =>
+          `* ${binding.outputName} → \`${binding.formulaTerm}\` (${binding.outputUnit}; ${binding.outputScope}) at \`${binding.treePath}\`.`
+      )
+      .join("\n"),
     "",
     "**How to Use:**",
     "",

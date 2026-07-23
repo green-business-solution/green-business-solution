@@ -94,6 +94,7 @@
         "validation",
         "evidenceState",
         "inputBindings",
+        "outputBindings",
         "selectionPolicy"
       ],
       "properties": {
@@ -206,6 +207,8 @@
             "additionalProperties": false,
             "required": [
               "lookupInput",
+              "treePath",
+              "sourceLabel",
               "use"
             ],
             "properties": {
@@ -213,9 +216,71 @@
                 "type": "string",
                 "minLength": 1
               },
+              "treePath": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceLabel": {
+                "enum": [
+                  "User",
+                  "Profile",
+                  "Bill",
+                  "Linked Opportunity",
+                  "Project Document",
+                  "Derived",
+                  "Standard Output"
+                ]
+              },
               "use": {
                 "type": "string",
                 "minLength": 1
+              }
+            }
+          }
+        },
+        "outputBindings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "outputName",
+              "treePath",
+              "formulaTerm",
+              "outputUnit",
+              "outputScope"
+            ],
+            "properties": {
+              "outputName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "treePath": {
+                "type": "string",
+                "minLength": 1
+              },
+              "formulaTerm": {
+                "type": "string",
+                "minLength": 1
+              },
+              "outputUnit": {
+                "type": "string",
+                "minLength": 1
+              },
+              "outputScope": {
+                "enum": [
+                  "PER_FIXTURE",
+                  "PER_EQUIPMENT_UNIT",
+                  "PER_PORT",
+                  "PER_EVENT",
+                  "PER_HOUR",
+                  "PER_YEAR",
+                  "SITE_TOTAL",
+                  "PROJECT_TOTAL",
+                  "PROFILE",
+                  "RECORD_SET"
+                ]
               }
             }
           }
@@ -233,7 +298,13 @@
           ],
           "properties": {
             "outputCardinality": {
-              "const": "ONE_SELECTED_VALUE"
+              "enum": [
+                "ONE_SELECTED_SCALAR",
+                "ONE_SELECTED_RECORD",
+                "ONE_SELECTED_PROFILE",
+                "ONE_SELECTED_INPUT_SET",
+                "ONE_SELECTED_RESULT_SET"
+              ]
             },
             "fallbackOrder": {
               "type": "array",
@@ -258,7 +329,10 @@
               ]
             },
             "multipleRecordRule": {
-              "const": "OFFICIAL_RECOMMENDED_OR_TYPICAL_THEN_WEIGHTED_MEDIAN_THEN_MEDIAN"
+              "enum": [
+                "OFFICIAL_RECOMMENDED_OR_TYPICAL_THEN_WEIGHTED_MEDIAN_THEN_MEDIAN",
+                "NOT_APPLICABLE_DETERMINISTIC_SELECTION"
+              ]
             },
             "selectedValueMethod": {
               "type": "string",

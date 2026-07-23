@@ -1,6 +1,6 @@
 {
-  "schema_version": "operational-savings/user-input-realism-v2",
-  "generated_from": "operational-savings Information Card presentation trees",
+  "schema_version": "operational-savings/user-input-decisions-v1",
+  "decision_key": "category_id + exact tree_path",
   "user_leaf_count": 141,
   "inputs": [
     {

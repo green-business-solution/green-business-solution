@@ -67,10 +67,20 @@ U.S. Department of Energy - MEASUR
 
 * Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings
 
+**Input Bindings:**
+
+* Boiler share of billed fuel ← Bill at `Annual Operational Savings > Annual fuel reduction > Annual boiler fuel > Annual Billed Resource Use > Annual Gas Use`. Pass the exact bound Boiler share of billed fuel to Boiler Controls and Burner Improvements Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
+* Existing control sequence ← Project Document at `Annual Operational Savings > Annual fuel reduction > Documented Existing control sequence from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Existing control sequence to Boiler Controls and Burner Improvements Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
+* Proposed control sequence ← Project Document at `Annual Operational Savings > Annual fuel reduction > Documented Proposed control sequence from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Proposed control sequence to Boiler Controls and Burner Improvements Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings → `baseline_annual_fuel` (therms/year; PER_YEAR) at `Annual Operational Savings > Annual fuel reduction > Standard 1.1 - Boiler Controls and Burner Improvements Engineering Calculation`.
+
 **How to Use:**
 
 1. Load the Boiler Controls and Burner Improvements project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Steam System Assessment Tool boiler and operating-state model.
-2. When an exact technical input is unavailable, use one context-matched value selected from the closest authoritative equipment or application population before running the Steam System Assessment Tool boiler and operating-state model; the simulator does not invent that input.
+2. When an exact technical input is unavailable, use only a source-specific retained equipment or application population with documented filters, numeric rule, unit, scope, and version before running the Steam System Assessment Tool boiler and operating-state model; otherwise report the implementation limitation.
 3. Run the pinned open-source Steam System Assessment Tool boiler and operating-state model baseline and proposed cases using the category formula boundary shown in this card.
 4. Return one selected existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
 5. Retain the MEASUR version, Steam System Assessment Tool boiler and operating-state model input object, exact and benchmark input provenance, context filters, eligible populations, selection rules, unit conversions, warnings, and baseline and proposed outputs.

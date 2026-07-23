@@ -1,0 +1,100 @@
+{
+  "fixture_type": "reviewed_source_fixture",
+  "fixture_schema_version": "1.0.0",
+  "reviewed_on": "2026-07-23",
+  "retrieved_on": "2026-07-23",
+  "source_title": "Argonne National Laboratory Full Fuel-Cycle Comparison of Forklift Propulsion Systems",
+  "source_urls": [
+    "https://www.energy.gov/sites/prod/files/2014/03/f11/forklift_anl_esd.pdf"
+  ],
+  "raw_artifacts": [
+    {
+      "artifact_identifier": "argonne-forklift-anl-esd",
+      "source_url": "https://www.energy.gov/sites/prod/files/2014/03/f11/forklift_anl_esd.pdf",
+      "source_version": "ANL/ESD/08-3, October 2008",
+      "exact_artifact": "Full Fuel-Cycle Comparison of Forklift Propulsion Systems",
+      "source_checksum": "sha256:cf26a69395287f5cdadc7125674632501def5033a8b37774c7a006d6ca5b9eed"
+    }
+  ],
+  "coverage": {
+    "summary": "Source-supported grid-to-work efficiency and one side-by-side 5,000-pound electric and propane forklift operating-intensity comparison.",
+    "source_roles": [
+      "existing_equipment_baseline",
+      "proposed_or_qualified_product",
+      "physics_or_calculation_method"
+    ],
+    "scenarios": [
+      "exact-measured-or-documented",
+      "context-matched-authoritative-benchmark"
+    ]
+  },
+  "fields": [
+    {
+      "field": "rated_capacity_class",
+      "unit_id": "record_set",
+      "role": "compatibility filter",
+      "source_location": "Section 3.1 side-by-side EPRI comparison"
+    },
+    {
+      "field": "operating_duty",
+      "unit_id": "record_set",
+      "role": "duty-equivalence filter",
+      "source_location": "Section 3.1 side-by-side EPRI comparison"
+    }
+  ],
+  "tables": [
+    {
+      "field": "electric_5000_lb_wall_energy_rate",
+      "unit_id": "kwh_hour",
+      "role": "proposed electric operating intensity",
+      "source_location": "Section 3.1, EPRI 5,000-pound forklift comparison",
+      "value": 7.5
+    },
+    {
+      "field": "propane_5000_lb_fuel_rate",
+      "unit_id": "gallon_per_hour",
+      "role": "existing propane operating intensity",
+      "source_location": "Section 3.1, EPRI 5,000-pound forklift comparison",
+      "value": 1.38
+    }
+  ],
+  "values": [
+    {
+      "field": "grid_to_work_efficiency",
+      "unit_id": "fraction",
+      "role": "electric forklift wall-to-work conversion",
+      "source_location": "Section 3.1",
+      "value": 0.64
+    },
+    {
+      "field": "propane_gallons_per_kwh_work",
+      "unit_id": "gallon_per_kwh_work",
+      "role": "Southwest Research Institute propane work intensity",
+      "source_location": "Section 3.1 and Table 10",
+      "value": 0.19
+    }
+  ],
+  "methods": [
+    {
+      "field": "compatible_resource_intensity_selection",
+      "unit_id": "record_set",
+      "role": "exact, population, and narrow class-duty resolution order",
+      "source_location": "Section 3.1 source comparison and source limitation discussion"
+    }
+  ],
+  "supported_uses": [
+    "Use exact measured or contractual hourly resource intensity when available",
+    "Use the paired 5,000-pound electric and propane hourly values only for a compatible capacity and operating duty",
+    "Use the grid-to-work and propane work-intensity values only when the useful-work boundary is explicitly modeled"
+  ],
+  "unsupported_inferences": [
+    "A universal forklift hourly resource intensity",
+    "Battery size, charger size, shift schedule, or annual hours",
+    "A 5,000-pound comparison applied to a different capacity or duty without a compatible authoritative population",
+    "Diesel, gasoline, or hydrogen performance inferred from the electric and propane pair"
+  ],
+  "provenance_notes": [
+    "The report states that forklift usage varies and that operating data are scarce.",
+    "The paired hourly record is therefore a narrow screening record, not a universal material-handling default."
+  ]
+}

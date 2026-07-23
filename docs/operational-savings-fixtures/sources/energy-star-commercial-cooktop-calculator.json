@@ -1,0 +1,120 @@
+{
+  "fixture_type": "reviewed_source_fixture",
+  "fixture_schema_version": "1.0.0",
+  "reviewed_on": "2026-07-23",
+  "retrieved_on": "2026-07-23",
+  "source_title": "ENERGY STAR Commercial Food Service Equipment Calculator - Electric Cooktop Calculations",
+  "source_urls": [
+    "https://www.energystar.gov/products/commercial_cooktops",
+    "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx"
+  ],
+  "raw_artifacts": [
+    {
+      "artifact_identifier": "energy-star-cfs-calculator-2024-03",
+      "source_url": "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx",
+      "source_version": "Workbook published March 2024",
+      "exact_artifact": "Electric Cooktop Calcs worksheet",
+      "source_checksum": "sha256:3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6"
+    }
+  ],
+  "coverage": {
+    "summary": "Comparable electric-cooktop boil duty, conventional and ENERGY STAR cooking efficiencies, energy per boil, and annualization equations.",
+    "source_roles": [
+      "existing_equipment_baseline",
+      "proposed_or_qualified_product",
+      "usage_or_operating_schedule",
+      "physics_or_calculation_method"
+    ],
+    "scenarios": [
+      "context-matched-authoritative-benchmark"
+    ]
+  },
+  "fields": [
+    {
+      "field": "tested_duty_definition",
+      "unit_id": "record_set",
+      "role": "comparable-duty filter",
+      "source_location": "Electric Cooktop Calcs worksheet notes"
+    },
+    {
+      "field": "boil_cycles_per_hour",
+      "unit_id": "activity_year",
+      "role": "editable activity assumption",
+      "source_location": "Electric Cooktop Calcs worksheet input cells"
+    }
+  ],
+  "tables": [],
+  "values": [
+    {
+      "field": "water_mass_per_boil_lb",
+      "unit_id": "record_set",
+      "role": "test-duty quantity",
+      "source_location": "Electric Cooktop Calcs worksheet notes",
+      "value": 20
+    },
+    {
+      "field": "initial_water_temperature_f",
+      "unit_id": "record_set",
+      "role": "test-duty initial condition",
+      "source_location": "Electric Cooktop Calcs worksheet notes",
+      "value": 70
+    },
+    {
+      "field": "final_water_temperature_f",
+      "unit_id": "record_set",
+      "role": "test-duty final condition",
+      "source_location": "Electric Cooktop Calcs worksheet notes",
+      "value": 200
+    },
+    {
+      "field": "conventional_electric_cooking_efficiency",
+      "unit_id": "fraction",
+      "role": "existing comparable-duty benchmark",
+      "source_location": "Electric Cooktop Calcs worksheet",
+      "value": 0.7603
+    },
+    {
+      "field": "energy_star_cooking_efficiency",
+      "unit_id": "fraction",
+      "role": "proposed comparable-duty benchmark",
+      "source_location": "Electric Cooktop Calcs worksheet",
+      "value": 0.8
+    },
+    {
+      "field": "conventional_kwh_per_boil",
+      "unit_id": "kwh_activity",
+      "role": "existing comparable-duty input energy",
+      "source_location": "Electric Cooktop Calcs worksheet",
+      "value": 1.03
+    },
+    {
+      "field": "energy_star_kwh_per_boil",
+      "unit_id": "kwh_activity",
+      "role": "proposed comparable-duty input energy",
+      "source_location": "Electric Cooktop Calcs worksheet",
+      "value": 0.91
+    }
+  ],
+  "methods": [
+    {
+      "field": "annual_cooktop_energy",
+      "unit_id": "kwh_year",
+      "role": "annualization equation",
+      "source_location": "Electric Cooktop Calcs worksheet: kWh/boil multiplied by operating hours/day, boil cycles/hour, days/year, and quantity"
+    }
+  ],
+  "supported_uses": [
+    "Compare conventional electric and qualifying efficient electric cooktops for the same 20-pound water-boil duty",
+    "Replace workbook activity assumptions with project activity expressed in the same tested duty unit"
+  ],
+  "unsupported_inferences": [
+    "Gas-to-electric induction savings",
+    "A different cooking product, batch size, temperature rise, or food duty",
+    "A universal induction model rating",
+    "Annual energy without a compatible activity input"
+  ],
+  "provenance_notes": [
+    "The source supports only a comparable electric cooktop boil duty.",
+    "A gas or different-duty project remains blocked unless exact comparable test inputs are supplied."
+  ]
+}

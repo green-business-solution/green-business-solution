@@ -1,0 +1,150 @@
+{
+  "fixture_type": "reviewed_source_fixture",
+  "fixture_schema_version": "1.0.0",
+  "reviewed_on": "2026-07-23",
+  "retrieved_on": "2026-07-23",
+  "source_title": "ENERGY STAR Commercial Food Service Equipment Calculator - Dishwasher Calculations",
+  "source_urls": [
+    "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx"
+  ],
+  "raw_artifacts": [
+    {
+      "artifact_identifier": "energy-star-cfs-calculator-dishwasher-2024-03",
+      "source_url": "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx",
+      "source_version": "Workbook published March 2024",
+      "exact_artifact": "Dishwasher Calcs worksheet",
+      "source_checksum": "sha256:3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6"
+    }
+  ],
+  "coverage": {
+    "summary": "Rack-machine activity defaults, native water and energy metrics, and explicit building and booster water-heating conversion equations.",
+    "source_roles": [
+      "usage_or_operating_schedule",
+      "physics_or_calculation_method"
+    ],
+    "scenarios": [
+      "exact-input",
+      "class-or-context-estimate",
+      "linked-opportunity-constrained-input",
+      "insufficient-data",
+      "context-matched-authoritative-benchmark"
+    ]
+  },
+  "fields": [
+    {
+      "field": "machine_type_and_sanitation",
+      "unit_id": "record_set",
+      "role": "mandatory activity and performance filter",
+      "source_location": "Dishwasher Calcs rows 5 through 15 and 25 through 35"
+    },
+    {
+      "field": "rack_machine_activity",
+      "unit_id": "racks_day",
+      "role": "rack-machine annualization input",
+      "source_location": "Dishwasher Calcs rows 4 through 15"
+    }
+  ],
+  "tables": [
+    {
+      "field": "low_temp_undercounter_default_racks_per_day",
+      "unit_id": "racks_day",
+      "role": "editable rack-machine activity default",
+      "source_location": "Dishwasher Calcs row 6",
+      "value": 75
+    },
+    {
+      "field": "low_temp_door_default_racks_per_day",
+      "unit_id": "racks_day",
+      "role": "editable rack-machine activity default",
+      "source_location": "Dishwasher Calcs row 7",
+      "value": 280
+    },
+    {
+      "field": "low_temp_single_tank_conveyor_default_racks_per_day",
+      "unit_id": "racks_day",
+      "role": "editable rack-machine activity default",
+      "source_location": "Dishwasher Calcs row 8",
+      "value": 400
+    },
+    {
+      "field": "low_temp_multi_tank_conveyor_default_racks_per_day",
+      "unit_id": "racks_day",
+      "role": "editable rack-machine activity default",
+      "source_location": "Dishwasher Calcs row 9",
+      "value": 600
+    }
+  ],
+  "values": [
+    {
+      "field": "building_water_heater_electric_efficiency",
+      "unit_id": "fraction",
+      "role": "water-heating conversion input",
+      "source_location": "Dishwasher Calcs row 20",
+      "value": 0.98
+    },
+    {
+      "field": "building_water_heater_gas_efficiency",
+      "unit_id": "fraction",
+      "role": "water-heating conversion input",
+      "source_location": "Dishwasher Calcs row 20",
+      "value": 0.8
+    },
+    {
+      "field": "building_water_temperature_increase_f",
+      "unit_id": "degree",
+      "role": "water-heating conversion input",
+      "source_location": "Dishwasher Calcs row 20",
+      "value": 70
+    },
+    {
+      "field": "booster_water_temperature_increase_f",
+      "unit_id": "degree",
+      "role": "water-heating conversion input",
+      "source_location": "Dishwasher Calcs row 21",
+      "value": 40
+    },
+    {
+      "field": "building_electric_kwh_per_gallon",
+      "unit_id": "energy_gallon",
+      "role": "purchased water-heating conversion",
+      "source_location": "Dishwasher Calcs row 39",
+      "value": 0.17179180757885015
+    },
+    {
+      "field": "booster_electric_kwh_per_gallon",
+      "unit_id": "energy_gallon",
+      "role": "purchased booster-heating conversion",
+      "source_location": "Dishwasher Calcs row 40",
+      "value": 0.09816674718791438
+    }
+  ],
+  "methods": [
+    {
+      "field": "water_heating_input_per_gallon",
+      "unit_id": "energy_gallon",
+      "role": "specific heat times density times temperature rise divided by equipment efficiency and native resource conversion",
+      "source_location": "Dishwasher Calcs rows 18 through 21 and formulas in rows 39 through 40"
+    },
+    {
+      "field": "rack_machine_annual_activity",
+      "unit_id": "racks_year",
+      "role": "racks per day multiplied by operating days",
+      "source_location": "Dishwasher Calcs input and annual calculation rows"
+    }
+  ],
+  "supported_uses": [
+    "Resolve one rack-machine activity value after machine type, sanitation, business context, and operating days are matched",
+    "Convert water volume to purchased building and booster water-heating input only with the explicit temperature-rise, efficiency, and resource boundary",
+    "Keep active washing energy and idle power separate"
+  ],
+  "unsupported_inferences": [
+    "Flight-machine gallons per hour converted to racks without an exact throughput source",
+    "Total water treated as hot water without a building and booster boundary",
+    "A project-specific activity value without matching context",
+    "Double application of equipment quantity to activity already expressed for the fixture group"
+  ],
+  "provenance_notes": [
+    "Rack and flight activity units remain separate.",
+    "The water-heating conversion is a formula path, not an unconnected derived leaf."
+  ]
+}

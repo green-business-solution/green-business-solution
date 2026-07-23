@@ -68,11 +68,22 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 * Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance
 
+**Input Bindings:**
+
+* Recognizable Business, Shift, Seasonal, or Usage Pattern ← User at `Annual Operational Savings > Annual compressor electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern`. Pass the exact bound Recognizable Business, Shift, Seasonal, or Usage Pattern to Efficient Air Compressor Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
+* Detailed Operating Days, Shifts, or Active Season, if known ← User at `Annual Operational Savings > Annual compressor electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known`. Pass the exact bound Detailed Operating Days, Shifts, or Active Season, if known to Efficient Air Compressor Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
+* Measured Annual Operating Hours, if known ← Project Document at `Annual Operational Savings > Annual compressor electricity reduction > Annual operating hours > Measured Annual Operating Hours, if known`. Pass the exact bound Measured Annual Operating Hours, if known to Efficient Air Compressor Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
+* Site Location and Business Activity ← Profile at `Annual Operational Savings > Annual compressor electricity reduction > Annual operating hours > Site Location and Business Activity`. Pass the exact bound Site Location and Business Activity to Efficient Air Compressor Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance → `annual_flow_hours` (flow-unit-hours/year; PER_YEAR) at `Annual Operational Savings > Annual compressor electricity reduction > Annual operating hours > Standard 1.1 - Efficient Air Compressor Annual Operating Hours`.
+
 **How to Use:**
 
 1. Map the Efficient Air Compressor inputs to the documented Efficient Air Compressor Annual Operating Hours source fields or model inputs: Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+3. When an exact value is unavailable, use only a source-specific retained population or equation with documented filters, numeric rule, unit, scope, and version; otherwise report the implementation limitation.
 4. Return one selected annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
 5. Retain the Efficient Air Compressor Annual Operating Hours source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
@@ -117,10 +128,25 @@ U.S. Department of Energy - MEASUR
 
 * Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings
 
+**Input Bindings:**
+
+* In-Scope Equipment Count ← User at `Annual Operational Savings > Annual compressor electricity reduction > In-Scope Equipment Count`. Pass the exact bound In-Scope Equipment Count to Efficient Air Compressor Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
+* Required pressure from a nameplate, measurement, audit, or contractor specification ← Project Document at `Annual Operational Savings > Annual compressor electricity reduction > Documented Required pressure from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Required pressure from a nameplate, measurement, audit, or contractor specification to Efficient Air Compressor Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
+* Mean flow from a nameplate, measurement, audit, or contractor specification ← Project Document at `Annual Operational Savings > Annual compressor electricity reduction > Documented Mean flow from Nameplate, Measurement, Audit, or Contractor Specification`. Pass the exact bound Mean flow from a nameplate, measurement, audit, or contractor specification to Efficient Air Compressor Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
+* Existing compressor type ← User at `Annual Operational Savings > Annual compressor electricity reduction > Existing compressor type`. Pass the exact bound Existing compressor type to Efficient Air Compressor Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
+* Existing Compressor Nameplate or Test Information ← Project Document at `Annual Operational Savings > Annual compressor electricity reduction > Existing Compressor Nameplate or Test Information`. Pass the exact bound Existing Compressor Nameplate or Test Information to Efficient Air Compressor Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
+* Proposed compressor type ← Linked Opportunity at `Annual Operational Savings > Annual compressor electricity reduction > Proposed compressor type`. Pass the exact bound Proposed compressor type to Efficient Air Compressor Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
+* Proposed Compressor Specifications ← Linked Opportunity at `Annual Operational Savings > Annual compressor electricity reduction > Proposed compressor specific power`. Pass the exact bound Proposed Compressor Specifications to Efficient Air Compressor Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
+* Annual operating hours from the connected schedule process ← Standard Output at `Annual Operational Savings > Annual compressor electricity reduction > Annual operating hours > Standard 1.1 - Efficient Air Compressor Annual Operating Hours`. Pass the exact bound Annual operating hours from the connected schedule process to Efficient Air Compressor Engineering Calculation when computing Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings → `specific_power_existing` (kW/flow-unit; PER_YEAR) at `Annual Operational Savings > Annual compressor electricity reduction > Standard 1.2 - Efficient Air Compressor Engineering Calculation`.
+
 **How to Use:**
 
 1. Load the Efficient Air Compressor project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Compressed Air Assessment.
-2. When an exact technical input is unavailable, use one context-matched value selected from the closest authoritative equipment or application population before running the Compressed Air Assessment; the simulator does not invent that input.
+2. When an exact technical input is unavailable, use only a source-specific retained equipment or application population with documented filters, numeric rule, unit, scope, and version before running the Compressed Air Assessment; otherwise report the implementation limitation.
 3. Run the pinned open-source Compressed Air Assessment baseline and proposed cases using the category formula boundary shown in this card.
 4. Return one selected existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
 5. Retain the MEASUR version, Compressed Air Assessment input object, exact and benchmark input provenance, context filters, eligible populations, selection rules, unit conversions, warnings, and baseline and proposed outputs.

@@ -77,11 +77,22 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 * Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance
 
+**Input Bindings:**
+
+* Recognizable Business, Shift, Seasonal, or Usage Pattern ← User at `Annual Operational Savings > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern`. Pass the exact bound Recognizable Business, Shift, Seasonal, or Usage Pattern to Fuel Cell Electricity Generation Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
+* Detailed Operating Days, Shifts, or Active Season, if known ← User at `Annual Operational Savings > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known`. Pass the exact bound Detailed Operating Days, Shifts, or Active Season, if known to Fuel Cell Electricity Generation Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
+* Measured Annual Operating Hours, if known ← Project Document at `Annual Operational Savings > Annual operating hours > Measured Annual Operating Hours, if known`. Pass the exact bound Measured Annual Operating Hours, if known to Fuel Cell Electricity Generation Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
+* Site Location and Business Activity ← Profile at `Annual Operational Savings > Annual operating hours > Site Location and Business Activity`. Pass the exact bound Site Location and Business Activity to Fuel Cell Electricity Generation Annual Operating Hours when computing Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* Annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance → `annual_generation` (kWh/year; PER_YEAR) at `Annual Operational Savings > Annual operating hours > Standard 1.1 - Fuel Cell Electricity Generation Annual Operating Hours`.
+
 **How to Use:**
 
 1. Map the Fuel Cell Electricity Generation inputs to the documented Fuel Cell Electricity Generation Annual Operating Hours source fields or model inputs: Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+3. When an exact value is unavailable, use only a source-specific retained population or equation with documented filters, numeric rule, unit, scope, and version; otherwise report the implementation limitation.
 4. Return one selected annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
 5. Retain the Fuel Cell Electricity Generation Annual Operating Hours source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
@@ -125,11 +136,25 @@ U.S. Environmental Protection Agency - CHP technologies and calculator
 
 * Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity
 
+**Input Bindings:**
+
+* Prime-mover type ← Linked Opportunity at `Annual Operational Savings > Prime-mover type`. Pass the exact bound Prime-mover type to Fuel Cell Electricity Generation Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
+* Input fuel ← Standard Output at `Annual Operational Savings > Annual operating hours > Standard 1.1 - Fuel Cell Electricity Generation Annual Operating Hours`. Pass the exact bound Input fuel to Fuel Cell Electricity Generation Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
+* Selected Unit Model, if known ← Linked Opportunity at `Annual Operational Savings > Selected Unit Model, if known`. Pass the exact bound Selected Unit Model, if known to Fuel Cell Electricity Generation Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
+* Total installed capacity ← Linked Opportunity at `Annual Operational Savings > Total installed capacity`. Pass the exact bound Total installed capacity to Fuel Cell Electricity Generation Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
+* Operating load fraction from an uploaded site study, controls trend, or engineering audit ← Project Document at `Annual Operational Savings > Documented Operating load fraction from Controls Trends or Engineering Audit`. Pass the exact bound Operating load fraction from an uploaded site study, controls trend, or engineering audit to Fuel Cell Electricity Generation Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
+* Coincident Onsite Electric Load, if known ← Project Document at `Annual Operational Savings > Documented Coincident Onsite Electric Load, if known from Submeter, Controls Trend, Audit, or Contractor Specification`. Pass the exact bound Coincident Onsite Electric Load, if known to Fuel Cell Electricity Generation Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
+* Annual operating hours from the connected schedule process ← Standard Output at `Annual Operational Savings > Annual operating hours > Standard 1.1 - Fuel Cell Electricity Generation Annual Operating Hours`. Pass the exact bound Annual operating hours from the connected schedule process to Fuel Cell Electricity Generation Performance Balance when computing Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* Annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity → `added_fuel` (fuel-unit/year; PER_YEAR) at `Annual Operational Savings > Standard 1.2 - Fuel Cell Electricity Generation Performance Balance`.
+
 **How to Use:**
 
 1. Map the Fuel Cell Electricity Generation inputs to the documented Fuel Cell Electricity Generation Performance Balance source fields or model inputs: Prime-mover type; Input fuel; Selected Unit Model, if known; Total installed capacity; Operating load fraction from an uploaded site study, controls trend, or engineering audit; Coincident Onsite Electric Load, if known; Annual operating hours from the connected schedule process.
 2. Select the compatible technology and capacity row, apply the explicit operating and coincidence constraints, calculate electricity, fuel, and useful heat, and cap outputs at site loads.
-3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+3. When an exact value is unavailable, use only a source-specific retained population or equation with documented filters, numeric rule, unit, scope, and version; otherwise report the implementation limitation.
 4. Return one selected annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity.
 5. Retain the Fuel Cell Electricity Generation Performance Balance source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 

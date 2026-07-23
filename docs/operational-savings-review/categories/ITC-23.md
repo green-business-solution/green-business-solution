@@ -27,8 +27,7 @@ Annual Operational Savings
 │  ├─ Timestamped Interval Utility Data (Bill)
 │  ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
 │  ├─ Rate Schedule and Customer Class (Bill)
-│  ├─ Published Utility Tariff and Effective-Date Mapping (Derived)
-│  ├─ One Selected Interval Tariff Value (Derived)
+│  ├─ Standard 1.1 — Interval Tariff Resolution
 │  └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
 ├─ Battery Design and Operating Constraints
 │  ├─ Opportunity-Prescribed Battery Design
@@ -41,11 +40,65 @@ Annual Operational Savings
 │  │  ├─ Dispatch-Availability Schedule (Linked Opportunity)
 │  │  └─ Reserve Constraint (Linked Opportunity)
 │  ├─ Contractor or Engineering Battery Design (Project Document)
-│  └─ Standard 1.1 — Battery Dispatch Boundary Benchmark
-└─ Standard 1.2 — Battery Storage Dispatch Interval Bill Calculation
+│  └─ Standard 1.2 — Battery Dispatch Boundary Benchmark
+└─ Standard 1.3 — Battery Storage Dispatch Interval Bill Calculation
 ```
 
-**■ Standard 1.1 — Battery Dispatch Boundary Benchmark**
+**■ Standard 1.1 — Interval Tariff Resolution**
+
+**Purpose:**
+Resolve one complete interval tariff input set before calculating time-of-use, demand, or export value.
+
+**Source:**
+U.S. Department of Energy OpenEI Utility Rate Database and exact published utility tariffs
+
+**Utility Rate Database:**
+[https://apps.openei.org/USURDB/](https://apps.openei.org/USURDB/)
+
+**Utility Rates API documentation:**
+[https://developer.nlr.gov/docs/electricity/openei-utility-rates/](https://developer.nlr.gov/docs/electricity/openei-utility-rates/)
+
+**Lookup Inputs:**
+
+* Serving electric utility from the bill
+* Published rate schedule and customer class from the bill
+* Tariff effective date covering the analysis period
+* Continuous interval energy and demand aligned to the tariff timezone
+
+**Value Needed:**
+
+* One complete tariff input set with exact or conservative-screening provenance
+
+**Input Bindings:**
+
+* Serving electric utility from the bill ← Bill at `Annual Operational Savings > Chronological Electricity Load and Tariff > Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact`. Pass the exact bound Serving electric utility from the bill to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
+* Published rate schedule and customer class from the bill ← Bill at `Annual Operational Savings > Chronological Electricity Load and Tariff > Rate Schedule and Customer Class`. Pass the exact bound Published rate schedule and customer class from the bill to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
+* Tariff effective date covering the analysis period ← Bill at `Annual Operational Savings > Chronological Electricity Load and Tariff > Rate Schedule and Customer Class`. Pass the exact bound Tariff effective date covering the analysis period to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
+* Continuous interval energy and demand aligned to the tariff timezone ← Bill at `Annual Operational Savings > Chronological Electricity Load and Tariff > Timestamped Interval Utility Data`. Pass the exact bound Continuous interval energy and demand aligned to the tariff timezone to Interval Tariff Resolution when computing One complete tariff input set with exact or conservative-screening provenance; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* One complete tariff input set with exact or conservative-screening provenance → `tariff_input_set` (record set; RECORD_SET) at `Annual Operational Savings > Chronological Electricity Load and Tariff > Standard 1.1 - Interval Tariff Resolution`.
+
+**How to Use:**
+
+1. Verify the serving utility, published schedule identifier, customer class, and analysis date against the source bill.
+2. Resolve the exact published tariff by matching the OpenEI record and controlling utility tariff sheet to the same utility, schedule, customer class, and effective date.
+3. Normalize energy periods, demand windows, ratchets, seasons, tiers, minimums, non-bypassable charges, and export rules into one versioned input set.
+4. Apply the tariff to the aligned interval series as itemized bill components and reconcile monthly energy, billed demand, and variable charges to source bills.
+5. If exact tariff execution is unavailable, use only the disclosed conservative screening path: a bill-derived blended variable energy rate, an effective demand rate when both demand charges and billed demand are present, and zero export credit only as an explicit downside assumption.
+6. Return the scenario label, complete fields, missing terms, source versions, exact tariff URL, reconciliation residuals, and warnings. Never substitute a fabricated rate schedule or use zero as a missing-rate placeholder.
+
+**Automation:**
+
+* **Selected Strategy:** Exact published-tariff adapter with itemized bill reconciliation and a separate conservative screening adapter.
+* **Automation Method:** Match utility identity and effective date, normalize typed tariff rules, execute the itemized bill kernel, reconcile monthly components, and emit one exact or explicitly conservative input set with full provenance.
+* **Difficulty:** Hard
+
+**Validation:**
+The official OpenEI Utility Rate Database and API documentation define structured utility-rate access. No retained utility tariff, parser fixture, or bill-reconciliation golden case currently proves this category adapter, so exact execution remains implementation-pending and the conservative screen must remain explicitly labeled.
+
+**■ Standard 1.2 — Battery Dispatch Boundary Benchmark**
 
 **Purpose:**
 Select one screening dispatch boundary for a missing terminal state-of-charge rule without inventing battery power or energy capacity.
@@ -66,6 +119,16 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 
 * One terminal state-of-charge constraint
 
+**Input Bindings:**
+
+* Initial state of charge ← Linked Opportunity at `Annual Operational Savings > Battery Design and Operating Constraints > Opportunity-Prescribed Battery Design > Initial State of Charge`. Pass the exact bound Initial state of charge to Battery Dispatch Boundary Benchmark when computing One terminal state-of-charge constraint; do not substitute a value from another tree path.
+* Dispatch horizon ← Standard Output at `Annual Operational Savings > Standard 1.3 - Battery Storage Dispatch Interval Bill Calculation`. Pass the exact bound Dispatch horizon to Battery Dispatch Boundary Benchmark when computing One terminal state-of-charge constraint; do not substitute a value from another tree path.
+* Opportunity or Project Document reserve requirement ← Linked Opportunity at `Annual Operational Savings > Battery Design and Operating Constraints > Opportunity-Prescribed Battery Design > Reserve Constraint`. Pass the exact bound Opportunity or Project Document reserve requirement to Battery Dispatch Boundary Benchmark when computing One terminal state-of-charge constraint; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* One terminal state-of-charge constraint → `charge_t` (kWh/interval; PROJECT_TOTAL) at `Annual Operational Savings > Battery Design and Operating Constraints > Standard 1.2 - Battery Dispatch Boundary Benchmark`.
+
 **How to Use:**
 
 1. Use the terminal state-of-charge constraint from the linked opportunity or Project Document when it is explicit.
@@ -76,14 +139,14 @@ U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
 
 **Automation:**
 
-* **Selected Strategy:** Category-specific deterministic selection from the closest authoritative compatible population.
-* **Automation Method:** Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.
+* **Selected Strategy:** Category-specific deterministic selection from an explicitly implemented and evidenced compatible source population or equation.
+* **Automation Method:** Apply the category's documented source-version and compatibility filters, execute its exact numeric rule, and retain the selected output, unit, scope, fixture, and population or equation provenance. Report a limitation when that source-specific implementation is absent.
 * **Difficulty:** Medium
 
 **Validation:**
 The REopt input reference confirms that storage state constraints are model inputs. Equality to the initial state is a deterministic RetroFi screening boundary, not a value supplied by REopt and not a substitute for missing battery design specifications. A retained category dispatch golden fixture has not yet been added.
 
-**■ Standard 1.2 — Battery Storage Dispatch Interval Bill Calculation**
+**■ Standard 1.3 — Battery Storage Dispatch Interval Bill Calculation**
 
 **Purpose:**
 Use National Laboratory of the Rockies - REopt V3 and REopt.jl to resolve baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance from the listed category inputs.
@@ -104,7 +167,7 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 
 * Timestamped interval utility data from the uploaded utility artifact
 * Time zone and daylight-saving metadata from the uploaded utility artifact
-* Authoritative tariff mapping, which is not yet verified
+* Resolved interval tariff input set from the connected tariff process
 * Power capacity
 * Usable-energy capacity
 * Charge efficiency from a nameplate, measurement, audit, or contractor specification
@@ -117,6 +180,24 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 **Value Needed:**
 
 * Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance
+
+**Input Bindings:**
+
+* Timestamped interval utility data from the uploaded utility artifact ← Bill at `Annual Operational Savings > Chronological Electricity Load and Tariff > Timestamped Interval Utility Data`. Pass the exact bound Timestamped interval utility data from the uploaded utility artifact to Battery Storage Dispatch Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
+* Time zone and daylight-saving metadata from the uploaded utility artifact ← Bill at `Annual Operational Savings > Chronological Electricity Load and Tariff > Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact`. Pass the exact bound Time zone and daylight-saving metadata from the uploaded utility artifact to Battery Storage Dispatch Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
+* Resolved interval tariff input set from the connected tariff process ← Standard Output at `Annual Operational Savings > Chronological Electricity Load and Tariff > Standard 1.1 - Interval Tariff Resolution`. Pass the exact bound Resolved interval tariff input set from the connected tariff process to Battery Storage Dispatch Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
+* Power capacity ← Linked Opportunity at `Annual Operational Savings > Battery Design and Operating Constraints > Opportunity-Prescribed Battery Design > Power Capacity`. Pass the exact bound Power capacity to Battery Storage Dispatch Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
+* Usable-energy capacity ← Linked Opportunity at `Annual Operational Savings > Battery Design and Operating Constraints > Opportunity-Prescribed Battery Design > Usable-Energy Capacity`. Pass the exact bound Usable-energy capacity to Battery Storage Dispatch Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
+* Charge efficiency from a nameplate, measurement, audit, or contractor specification ← Project Document at `Annual Operational Savings > Battery Design and Operating Constraints > Contractor or Engineering Battery Design`. Pass the exact bound Charge efficiency from a nameplate, measurement, audit, or contractor specification to Battery Storage Dispatch Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
+* Discharge efficiency from a nameplate, measurement, audit, or contractor specification ← Project Document at `Annual Operational Savings > Battery Design and Operating Constraints > Contractor or Engineering Battery Design`. Pass the exact bound Discharge efficiency from a nameplate, measurement, audit, or contractor specification to Battery Storage Dispatch Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
+* Initial state of charge ← Linked Opportunity at `Annual Operational Savings > Battery Design and Operating Constraints > Opportunity-Prescribed Battery Design > Initial State of Charge`. Pass the exact bound Initial state of charge to Battery Storage Dispatch Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
+* Terminal state-of-charge constraint from the linked opportunity, a Project Document, or the connected context benchmark ← Linked Opportunity at `Annual Operational Savings > Battery Design and Operating Constraints > Opportunity-Prescribed Battery Design > Terminal State-of-Charge Constraint`. Pass the exact bound Terminal state-of-charge constraint from the linked opportunity, a Project Document, or the connected context benchmark to Battery Storage Dispatch Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
+* Dispatch-availability schedule ← Linked Opportunity at `Annual Operational Savings > Battery Design and Operating Constraints > Opportunity-Prescribed Battery Design > Dispatch-Availability Schedule`. Pass the exact bound Dispatch-availability schedule to Battery Storage Dispatch Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
+* Reserve constraint ← Linked Opportunity at `Annual Operational Savings > Battery Design and Operating Constraints > Opportunity-Prescribed Battery Design > Reserve Constraint`. Pass the exact bound Reserve constraint to Battery Storage Dispatch Interval Bill Calculation when computing Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance; do not substitute a value from another tree path.
+
+**Output Bindings:**
+
+* Baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance → `baseline_annual_bill` (USD/year; RECORD_SET) at `Annual Operational Savings > Standard 1.3 - Battery Storage Dispatch Interval Bill Calculation`.
 
 **How to Use:**
 

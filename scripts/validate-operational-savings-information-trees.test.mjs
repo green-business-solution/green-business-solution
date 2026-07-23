@@ -107,8 +107,8 @@ describe("validate-operational-savings-information-trees", () => {
   it("rejects a formula and tree-root mismatch", async () => {
     const fixtureRoot = await createFixture();
     await mutateTree(fixtureRoot, (text) => text.replace(
-      "Annual dollar savings\n├─ Annual gas reduction\n│  ├─ Current annual water-heating gas",
-      "Annual gas reduction\n├─ Current annual water-heating gas"
+      "`S = current_annual_gas × (1 - η_existing / η_proposed) × p_gas`",
+      "`S = 0`"
     ));
 
     expect(() => runValidator(fixtureRoot)).toThrow(/ITC-07 formula\/tree root mismatch/);
@@ -160,8 +160,8 @@ describe("validate-operational-savings-information-trees", () => {
     await mutateFile(
       join(fixtureRoot, "docs/operational-savings-review/categories/ITC-23.md"),
       (text) => text.replace(
-        "Standard 1.2 — Battery Storage Dispatch Interval Bill Calculation",
-        "Standard 1.2 — Renamed Tree Process"
+        "Standard 1.3 — Battery Storage Dispatch Interval Bill Calculation",
+        "Standard 1.3 — Renamed Tree Process"
       )
     );
 
@@ -234,13 +234,13 @@ describe("validate-operational-savings-information-trees", () => {
 
   it("rejects a generated realism entry without an explicit reviewed decision", async () => {
     const fixtureRoot = await createFixture();
-    await mutateFile(
-      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
-      (text) => text.replace(
-        '["Public Operating Hours", ["USER_RECOGNIZABLE_ACTIVITY"',
-        '["Public Operating Hours Typo", ["USER_RECOGNIZABLE_ACTIVITY"'
-      )
-    );
+    await mutateDecisions(fixtureRoot, (registry) => {
+      registry.inputs.find(
+        (entry) =>
+          entry.category_id === "ITC-27" &&
+          entry.visible_label === "Public Operating Hours"
+      ).decision = "UNREVIEWED";
+    });
 
     expect(() => runValidator(fixtureRoot)).toThrow(
       /User-input realism entry .* has an invalid explicit User decision/
@@ -271,6 +271,12 @@ describe("validate-operational-savings-information-trees", () => {
         "Backup Equipment Nameplate, Commissioning Record, or Engineering Assessment (User)"
       )
     );
+    await addDecision(
+      fixtureRoot,
+      "ITC-08",
+      "Annual Operational Savings > Annual Backup-Resource Reduction > Backup Water-Heating System > Backup Equipment Nameplate, Commissioning Record, or Engineering Assessment",
+      "Backup Equipment Nameplate, Commissioning Record, or Engineering Assessment"
+    );
 
     expect(() => runValidator(fixtureRoot)).toThrow(
       /ITC-08 Information Card labels Project Document evidence as ordinary User input/
@@ -285,6 +291,12 @@ describe("validate-operational-savings-information-trees", () => {
         "Public Operating Hours (User)",
         "Flushes per Day per Fixture (User)"
       )
+    );
+    await renameDecisionLeaf(
+      fixtureRoot,
+      "ITC-27",
+      "Public Operating Hours",
+      "Flushes per Day per Fixture"
     );
 
     expect(() => runValidator(fixtureRoot)).toThrow(
@@ -301,6 +313,17 @@ describe("validate-operational-savings-information-trees", () => {
         '"Low, median, and high existing input-watt values per fixture"'
       )
     );
+    await mutateDecisions(fixtureRoot, (registry) => {
+      for (const entry of registry.inputs) {
+        if (
+          entry.category_id === "ITC-02" &&
+          entry.fallback_output === "One existing input-watt value per fixture"
+        ) {
+          entry.fallback_output =
+            "Low, median, and high existing input-watt values per fixture";
+        }
+      }
+    });
 
     expect(() => runValidator(fixtureRoot)).toThrow(
       /ITC-02 Information Card process Existing Fixture Wattage Benchmark exposes a range where one selected value is required/
@@ -342,7 +365,7 @@ describe("validate-operational-savings-information-trees", () => {
     await mutateFile(
       join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
       (text) => text.replace(
-        "return `${lookupInput} is used by ${CARD_COPY[category.id].title} to ${purpose}.`;",
+        "return `Pass the exact bound ${lookupInput} to ${process.name} when computing ${outputs}; do not substitute a value from another tree path.`;",
         'return "This input is listed but is not used.";'
       )
     );
@@ -387,8 +410,8 @@ describe("validate-operational-savings-information-trees", () => {
     await mutateFile(
       join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
       (text) => text.replace(
-        "Supported fixture type: bathroom faucet, showerhead, or pre-rinse spray valve",
-        "Supported fixture type: bathroom faucet, showerhead, pre-rinse spray valve, or kitchen faucet"
+        "Otherwise require a supported bathroom faucet, showerhead, or pre-rinse spray-valve method and its exact source-compatible activity driver.",
+        "Otherwise require a supported bathroom faucet, showerhead, pre-rinse spray-valve, or kitchen faucet method and its exact source-compatible activity driver."
       )
     );
 
@@ -421,6 +444,12 @@ describe("validate-operational-savings-information-trees", () => {
         "Session Arrival Probability Distribution (User)"
       )
     );
+    await renameDecisionLeaf(
+      fixtureRoot,
+      "ITC-27",
+      "Installed Charger Count",
+      "Session Arrival Probability Distribution"
+    );
 
     expect(() => runValidator(fixtureRoot)).toThrow(
       /ITC-27 Information Card assigns an unrealistic technical value to User/
@@ -436,6 +465,12 @@ describe("validate-operational-savings-information-trees", () => {
         "Complete Tariff Calendar and Ratchet Rules (User)"
       )
     );
+    await renameDecisionLeaf(
+      fixtureRoot,
+      "ITC-27",
+      "Public Operating Hours",
+      "Complete Tariff Calendar and Ratchet Rules"
+    );
 
     expect(() => runValidator(fixtureRoot)).toThrow(
       /ITC-27 Information Card assigns uploaded utility or tariff data to User/
@@ -450,6 +485,12 @@ describe("validate-operational-savings-information-trees", () => {
         "Public Operating Hours (User)",
         "Timestamped Interval Utility Data (User)"
       )
+    );
+    await renameDecisionLeaf(
+      fixtureRoot,
+      "ITC-27",
+      "Public Operating Hours",
+      "Timestamped Interval Utility Data"
     );
 
     expect(() => runValidator(fixtureRoot)).toThrow(
@@ -1346,6 +1387,7 @@ async function createFixture() {
     "docs/operational-savings-standard-registry.md",
     "docs/operational-savings-information-tree-audit.md",
     "docs/operational-savings-information-card.schema.json",
+    "docs/operational-savings-user-input-decisions.json",
     "docs/operational-savings-user-input-realism.schema.json",
     "docs/operational-savings-user-input-realism.json",
     "docs/operational-savings-source-evidence.json",
@@ -1388,6 +1430,53 @@ async function mutateEvidence(fixtureRoot, mutate) {
 
 async function mutateContract(fixtureRoot, mutate) {
   await mutateJson(join(fixtureRoot, "docs/operational-savings-category-contracts.json"), mutate);
+}
+
+async function mutateDecisions(fixtureRoot, mutate) {
+  await mutateJson(
+    join(fixtureRoot, "docs/operational-savings-user-input-decisions.json"),
+    mutate
+  );
+}
+
+async function renameDecisionLeaf(
+  fixtureRoot,
+  categoryId,
+  previousLabel,
+  nextLabel
+) {
+  await mutateDecisions(fixtureRoot, (registry) => {
+    const decision = registry.inputs.find(
+      (entry) =>
+        entry.category_id === categoryId &&
+        entry.visible_label === previousLabel
+    );
+    for (const field of [
+      "tree_path",
+      "visible_label",
+      "reason",
+      "selected_value_method",
+      "missing_exact_value_behavior"
+    ]) {
+      decision[field] = decision[field].replaceAll(previousLabel, nextLabel);
+    }
+  });
+}
+
+async function addDecision(fixtureRoot, categoryId, treePath, visibleLabel) {
+  await mutateDecisions(fixtureRoot, (registry) => {
+    registry.inputs.push({
+      category_id: categoryId,
+      tree_path: treePath,
+      visible_label: visibleLabel,
+      decision: "USER_MEMORY",
+      reason: `At ${treePath}, this mutation deliberately treats ${visibleLabel} as an ordinary user input so the semantic ownership validator can reject it.`,
+      fallback_process_key: null,
+      fallback_output: null,
+      selected_value_method: `Use the stated ${visibleLabel} only at ${treePath}.`,
+      missing_exact_value_behavior: `When ${visibleLabel} is unavailable at ${treePath}, report the unresolved input without inventing a value.`
+    });
+  });
 }
 
 async function mutateSourceFixture(fixtureRoot, file, mutate) {

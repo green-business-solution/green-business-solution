@@ -46,11 +46,12 @@ The reference PDF supplies the model, sampling, and applicability method.
 - **Selected Class or Candidate Set:** Use only the reviewed retrofit-to-measure allowlist and the matching geography, building type, and floor-area bin.
 - **Assumptions:** The source sample represents the screened site within the displayed applicability and distribution limits.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** When an exact crosswalk or source bin is unavailable, continue to the closest compatible authoritative aggregate and then the deterministic RetroFi benchmark while retaining the fallback level.
+- **Missing-Exact-Value Rule:** When an exact crosswalk or source bin is unavailable, use only a reviewed compatible ComStock aggregate whose release, filters, weights, output field, unit, and retained artifact are present.
+  Otherwise report the explicit implementation limitation.
 
 **How to Use:** Download `measure_name_crosswalk.csv`, `upgrades_lookup.json`, `data_dictionary.tsv`, `enumeration_dictionary.tsv`, and the individual-building `metadata_and_annual_results` files for `2025/comstock_amy2018_release_3` from OEDI.
 Map only taxonomy types listed for ITC-01 to an explicit universal measure ID documented on the upgrade-measure page.
-Reject the exact measure match when the linked opportunity's physical scope does not exactly match it, then continue to the closest compatible authoritative benchmark.
+Reject the exact measure match when the linked opportunity's physical scope does not exactly match it, then use only a reviewed compatible ComStock aggregate or report the explicit implementation limitation.
 Filter by geography, building type, and floor-area bin, then retain applicable baseline and upgrade pairs.
 For each resource `r`, calculate `delta_r = baseline_annual_r - upgrade_annual_r` and summarize the building-weighted distribution.
 Store one local versioned record keyed by release, measure ID, geography level, building type, and area bin with the selected value, applicability share, eligible population, weighting method, and sample count.
@@ -125,12 +126,13 @@ The repository supplies versioned definitions and processing code.
 - **Selected Class or Candidate Set:** Use an exact ECM definition, fuel, end use, climate, building type, and vintage match.
 - **Assumptions:** The selected Scout segment is applicable to the screened building and retrofit scope.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** When the exact definition or segment is unavailable, continue to a compatible authoritative aggregate and then the deterministic RetroFi benchmark without performing an unsupported interpolation.
+- **Missing-Exact-Value Rule:** When the exact definition or segment is unavailable, use only a reviewed compatible Scout segment with a pinned definition, filters, calculation, and retained artifact.
+  Otherwise report the explicit implementation limitation.
 
 **How to Use:** Pin a Scout release, inspect `ecm_definitions` for an exact measure definition, and reject semantic keyword matches.
 Extract performance, market, end use, fuel, climate, and vintage fields from the definition and compute the implied fractional reduction with the pinned Scout code.
 Store a local record keyed by Scout version, canonical retrofit ID, building type, climate zone, vintage class, end use, and fuel.
-When an exact definition, supported segment, or valid performance field is absent, continue to the closest compatible authoritative benchmark and deterministic RetroFi fallback.
+When an exact definition, supported segment, or valid performance field is absent, use only a reviewed compatible Scout segment or report the explicit implementation limitation.
 Do not import Scout costs, emissions, adoption, or national market totals.
 
 **Automation:**
@@ -236,7 +238,8 @@ The product pages define fields and certified-product scope.
 - **Selected Class or Candidate Set:** Filter proposed products by exact dataset fields for application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status. Preserve the sample size.
 - **Assumptions:** Candidate records are technically compatible after the declared filters, but no exact purchase is implied until a model is selected.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** When no exact certified record exists, use a compatible requirements-filtered population; if that is empty, continue to the closest authoritative class benchmark and deterministic RetroFi fallback.
+- **Missing-Exact-Value Rule:** When no exact certified record exists, use a compatible requirements-filtered population only when its source version, filters, eligible records, population size, native field, unit, and numeric selection rule are retained.
+  Otherwise report the explicit implementation limitation.
 
 **How to Use:** Download the category dataset rather than calling the API at calculation time.
 Keep the EPA field names in raw storage and normalize only fields used by a documented category adapter.
@@ -307,7 +310,8 @@ The calculator page identifies the supported lighting, motor, pump, fan, compres
 - **Selected Class or Candidate Set:** Select the calculator by category contract; no equipment class supplies a missing project input in the current evidence contract.
 - **Assumptions:** Units, operating point, schedule, and system boundaries match the selected calculator.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** A missing exact calculator input invokes the authoritative context benchmark and then deterministic RetroFi benchmark; the calculator itself never invents missing project inputs.
+- **Missing-Exact-Value Rule:** A missing exact calculator input may use only a category-specific retained source equation or compatible population with explicit fields, units, scope, and numeric rule.
+  Otherwise report the explicit implementation limitation because the calculator does not invent project inputs.
 
 **How to Use:** Pin a MEASUR release and invoke its local calculation modules or port a formula only when its source implementation and tests are retained as executable fixtures.
 Create one adapter per referenced calculator and reject incomplete required input sets.
@@ -356,7 +360,8 @@ Never substitute a calculator's typical default for a high-sensitivity project v
 - **Selected Class or Candidate Set:** Use only the supplied collector, storage, backup-resource, and load configuration for the declared application.
 - **Assumptions:** Typical weather and the supplied load shape are representative for screening.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** Missing exact design data invokes the authoritative context benchmark and deterministic RetroFi fallback; SAM does not supply or infer missing project design inputs.
+- **Missing-Exact-Value Rule:** Missing exact design data may use only a category-specific retained source equation or compatible population with explicit fields, units, scope, and numeric rule.
+  Otherwise report the explicit implementation limitation because SAM does not infer project design inputs.
 
 **How to Use:** Run the pinned SAM solar-water-heating compute module locally with a weather file selected by coordinates.
 Use the customer-confirmed system and hot-water-load inputs, convert useful thermal output to avoided backup resource with the confirmed backup efficiency, and cap displacement at the modeled delivered load.
@@ -404,7 +409,8 @@ SAM supplies the local PVWatts compute module.
 - **Selected Class or Candidate Set:** Use only the supplied project array configuration and any explicit Linked Opportunity constraints.
 - **Assumptions:** Typical weather is representative; detailed shading remains outside PVWatts unless reflected in the supplied loss input.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** Missing exact configuration data invokes the authoritative context benchmark and deterministic RetroFi fallback; PVWatts does not invent the missing project configuration.
+- **Missing-Exact-Value Rule:** Missing exact configuration data may use only a category-specific retained source equation or compatible population with explicit fields, units, scope, and numeric rule.
+  Otherwise report the explicit implementation limitation because PVWatts does not invent project configuration.
 
 **How to Use:** Execute the pinned PVWatts V8 compute module locally, using coordinates from the profile and customer-confirmed array configuration.
 Retain hourly output when tariff export, demand, storage, or coincidence is evaluated.
@@ -453,7 +459,8 @@ SAM supplies the turbine power-curve simulation.
 - **Selected Class or Candidate Set:** Use only the supplied compatible source-documented turbine curve and explicit opportunity restrictions.
 - **Assumptions:** The gridded wind resource represents the microsite within the stated uncertainty.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** Missing exact design data invokes the authoritative context benchmark and deterministic RetroFi fallback; SAM does not invent the missing turbine configuration.
+- **Missing-Exact-Value Rule:** Missing exact design data may use only a category-specific retained source equation or compatible population with explicit fields, units, scope, and numeric rule.
+  Otherwise report the explicit implementation limitation because SAM does not invent turbine configuration.
 
 **How to Use:** Ingest the needed WIND Toolkit points and heights at build time or on a controlled analyst job, cache the weather series, and run the pinned SAM wind module locally against the exact turbine curve.
 Reject estimates without a valid hub height and turbine curve.
@@ -471,6 +478,65 @@ Use hourly output for tariff coincidence and cap onsite offset at imported load 
 - **Access, Refresh, Versioning, and Maintenance Requirements:** API key and email are required for downloads; cache all source files, pin dataset and SAM versions, and refresh only when the resource dataset changes.
 
 **Used By:** ITC-19 and ITC-26.
+
+### ■ STD-INTERVAL-TARIFF - Interval tariff resolution and screening bill method
+
+**Status:** LIMITED
+
+**Purpose:** Resolve one complete electric tariff input set for interval, demand, time-of-use, and export calculations without substituting a fabricated rate schedule.
+
+**Source:** U.S. Department of Energy OpenEI, [Utility Rate Database](https://apps.openei.org/USURDB/), [Utility Rates API documentation](https://developer.nlr.gov/docs/electricity/openei-utility-rates/), and the exact published utility tariff sheet retained for the project.
+The OpenEI database provides structured rate records and the utility tariff sheet remains the controlling source for schedule eligibility and effective-date terms.
+
+**Lookup Inputs:**
+
+- `utility_identity` - [Required] Serving electric utility from the bill or verified service account.
+- `rate_schedule_and_class` - [Required] Published schedule identifier and customer class from the bill.
+- `tariff_effective_date` - [Required] Effective date that covers the analysis period.
+- `interval_energy_and_demand` - [Required] Continuous interval energy and demand data aligned to the tariff timezone.
+- `export_configuration` - [Conditional] Interconnection and export-credit treatment when the category can export electricity.
+
+**Value Needed:** One complete tariff input set with energy periods, demand definitions, ratchets, seasons, tiers, export rules, effective date, source version, exact tariff URL, and reconciliation status.
+
+**Resolution Contract:**
+
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-published-tariff; itemized-bill-derived-screen; conservative-screening.
+- **Scenario Output Behavior:** Return one complete tariff input set and its scenario label, or retain an explicit implementation limitation when no supported scenario can be constructed.
+- **Selected-Value Rule:** First match the exact published tariff by utility, schedule, customer class, and effective date.
+Then apply every itemized energy, demand, time-of-use, seasonal, tier, ratchet, and export rule to the aligned interval series.
+When the exact tariff cannot be completed, use only the explicit conservative screening hierarchy: a bill-derived blended variable energy rate, plus an effective demand rate when demand charges and billed demand are present, plus zero export credit only as a disclosed conservative assumption.
+- **Uncertainty Rule:** Exact published and reconciled tariffs have the lowest uncertainty.
+Itemized bill-derived screens retain each component and reconciliation residual.
+Conservative screens are high uncertainty and must never be described as exact.
+- **Exact Override:** An exact published tariff that passes utility identity, schedule, customer class, effective-date, and bill-reconciliation checks overrides any screening tariff.
+- **Source Version:** Retain the utility tariff publication date, effective date, OpenEI record version when used, source URL, adapter version, and checksum.
+- **Selected Class or Candidate Set:** Require an exact utility, schedule, customer class, and effective-date match.
+Do not select a nearby schedule because its name or rate appears similar.
+- **Assumptions:** Interval timestamps, service territory, schedule, and customer class are verified for the same account and analysis period.
+- **Editable:** Yes.
+Every tariff field and screening assumption remains visible and replaceable by a later verified tariff.
+- **Missing-Exact-Value Rule:** Do not substitute a fabricated rate schedule or use zero as a missing-rate placeholder.
+The conservative zero export credit is allowed only when explicitly labeled as a downside screening assumption and never as an inferred utility rule.
+
+**How to Use:** Verify the utility, schedule, customer class, and analysis date against the bill.
+Retrieve the matching OpenEI record and exact published tariff sheet.
+Normalize period calendars, seasons, tiers, demand windows, ratchets, minimums, non-bypassable charges, and export rules into one versioned tariff input set.
+Apply the tariff to the interval series and reconcile monthly energy, demand, and itemized variable charges to the source bills.
+If the exact tariff cannot be completed, calculate only the documented conservative screening case and retain the missing terms and reason.
+
+**Automation:**
+
+- **Selected Strategy:** Versioned exact-tariff adapter with bill reconciliation and a separate conservative screening adapter.
+- **Automation Method:** Match identity and effective date, parse or map the published tariff into typed rules, execute the itemized bill kernel, compare monthly results with bills, and emit the exact or screening scenario with full provenance.
+- **Difficulty:** Hard.
+- **Efficient Build-Time Estimate:** 8 to 12 developer days for the shared contract and the first utility adapters.
+- **Expected Accuracy or Uncertainty:** Low to moderate after exact tariff reconciliation and high for conservative screens.
+- **Basis:** Tariff identity and rule completeness dominate interval bill accuracy.
+- **Why This Is the Best Value-for-Time Strategy:** One validated tariff contract serves every interval category while preserving utility-specific rules and preventing hidden generic defaults.
+- **Access, Refresh, Versioning, and Maintenance Requirements:** Refresh on utility tariff changes, pin every publication and adapter version, retain source documents, and rerun reconciliation and mutation tests before release.
+
+**Used By:** ITC-16, ITC-17, ITC-19, ITC-23 through ITC-28, and ITC-31.
 
 ### ■ STD-REOPT-LOCAL-DISPATCH - REopt interval dispatch and bill optimization
 
@@ -501,7 +567,9 @@ REopt.jl is the local optimization engine used by the API.
 - **Selected Class or Candidate Set:** Use only the supplied technology design, fixed-load adapter, and any explicit Linked Opportunity constraints.
 - **Assumptions:** The analysis year, tariff calendar, interval load, and project-supplied constraints are aligned and future operations follow the declared case.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** Missing exact design or behavior constraints invoke authoritative context benchmarks and deterministic RetroFi fallbacks; an invalid solver result must use the last validated deterministic screening method rather than masquerade as an optimal result.
+- **Missing-Exact-Value Rule:** Missing exact design or behavior constraints may use only category-specific retained source equations or compatible populations with explicit fields, units, scopes, and numeric rules.
+  Otherwise report the explicit implementation limitation.
+  An invalid solver result is never represented as an optimal result.
 
 **How to Use:** Run a pinned REopt.jl release locally with an explicit baseline case and a proposed case that differ only by the modeled technology or fixed proposed load series.
 Use the same chronological load and full tariff in both cases.
@@ -559,7 +627,8 @@ The calculator provides a reviewable workbook implementation.
 - **Selected Class or Candidate Set:** Filter by prime mover, fuel, capacity or service requirement, heat-recovery need, and opportunity constraints.
 - **Assumptions:** Catalog-bin performance represents the proposed class and useful heat remains capped by the coincident load.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** Missing exact technology, fuel, capacity, or coincidence data invokes the closest authoritative class and deterministic RetroFi benchmark while retaining the selected class and fallback level.
+- **Missing-Exact-Value Rule:** Missing exact technology, fuel, capacity, or coincidence data may use only a retained compatible source class with explicit fields, calculation, unit, scope, and source version.
+  Otherwise report the explicit implementation limitation.
 
 **How to Use:** Extract only energy-performance values from the current catalog section or exact project equipment specification.
 Calculate input fuel from electric output and electric efficiency, cap useful recovered heat at the coincident thermal load, and convert that heat to displaced boiler fuel with the existing boiler efficiency.
@@ -611,7 +680,8 @@ The page defines the downloadable current vehicle table and the `comb08` and `co
 - **Selected Class or Candidate Set:** Exact records are selected by vehicle ID or unambiguous year, make, model, and option. A class candidate set is not yet approved.
 - **Assumptions:** Standardized combined ratings are suitable for screening the declared use and do not represent site-specific duty.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** Missing exact model data invokes the closest service-compatible vehicle population and then deterministic RetroFi benchmark without altering the ITC-29 exact-model golden path.
+- **Missing-Exact-Value Rule:** Missing exact model data may use only a retained service-compatible vehicle population with explicit class filters, records, sample size, selected field, unit, and numeric rule.
+  Otherwise report the explicit implementation limitation without altering the ITC-29 exact-model golden path.
 
 **How to Use:** Download the unzipped vehicle CSV periodically and select exact vehicle records through year, make, model, and option.
 For combustion vehicles use `gallons_per_mile = 1 / comb08`.
@@ -664,7 +734,8 @@ The guide contains fixture inventory methods, equations, and replacement-perform
 - **Selected Class or Candidate Set:** Filter proposed products by fixture application, service type, compatibility, certification or opportunity restrictions, and proposed scope. Record all filters and sample size before applying the deterministic selected-value rule.
 - **Assumptions:** Rated flow or flush volume represents the installed operating point for screening.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** Missing exact ratings invoke the closest separately validated authoritative fixture class and then the explicit deterministic RetroFi benchmark; never imply WaterSense coverage for unsupported fixture types.
+- **Missing-Exact-Value Rule:** Missing exact ratings may use only a separately validated fixture-class source with an explicit field, compatible population or equation, numeric rule, unit, scope, version, and retained fixture.
+  Otherwise report the explicit implementation limitation and never imply WaterSense coverage for unsupported fixture types.
 
 **How to Use:** Prefer the existing fixture's label or exact model rating.
 Use the WaterSense specification or current product data only for proposed performance.
@@ -676,7 +747,8 @@ When a Linked Opportunity names exact products, restrict candidates to those pro
 When it specifies a fixture class, certification, or maximum rating, filter compatible WaterSense criteria or candidates to those requirements.
 When it has no product restriction or no Linked Opportunity exists, a proposed criterion may be used only for a compatible documented fixture type.
 Exact ratings and measured use patterns override proposed criteria.
-Resolve missing existing performance and commercial usage separately through the closest validated authoritative benchmark and deterministic RetroFi fallback.
+Resolve missing existing performance and commercial usage separately only through source-specific retained equations or compatible populations with explicit fields, filters, numeric rules, units, scopes, and versions.
+Otherwise report the explicit implementation limitation.
 
 **Automation:**
 
@@ -720,7 +792,8 @@ Resolve missing existing performance and commercial usage separately through the
 - **Selected Class or Candidate Set:** Use the site ZIP climate record and only the declared hydrozones, plant classes, irrigation methods, and project scope.
 - **Assumptions:** The climate record and declared landscape composition represent the analysis year.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** Missing exact hydrozone data invokes the closest climate-, plant-, and irrigation-matched authoritative benchmark and then deterministic RetroFi fallback.
+- **Missing-Exact-Value Rule:** Missing exact hydrozone data may use only a retained climate-, plant-, and irrigation-matched source with explicit fields, filters, equation, unit, scope, and version.
+  Otherwise report the explicit implementation limitation.
 
 **How to Use:** Implement the equations and lookup data from the current Water Budget Tool workbook and data download.
 Select climate by ZIP, calculate each hydrozone, sum annual gallons, and compare the existing and proposed design under identical landscape area and climate.
@@ -766,7 +839,8 @@ Store workbook version and input hydrozones.
 - **Selected Class or Candidate Set:** Select only the leak or cooling-tower equation named by the category contract.
 - **Assumptions:** The measurement period and operating conditions represent the annualized period.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** Missing exact operating inputs invoke the closest authoritative commercial context benchmark and then deterministic RetroFi fallback.
+- **Missing-Exact-Value Rule:** Missing exact operating inputs may use only a retained commercial source equation or compatible population with explicit fields, filters, numeric rule, unit, scope, and version.
+  Otherwise report the explicit implementation limitation.
 
 **How to Use:** For a known leak, multiply measured flow by confirmed annual leak duration and stop at zero after the repair date.
 For a cooling tower, apply the WaterSense at Work water-balance equations to existing and proposed cycles of concentration and consistent heat-rejection conditions.
@@ -819,7 +893,8 @@ The DLC requirements define the QPL model, application, photometric, electrical,
 - **Selected Class or Candidate Set:** Match only a proposed application to a FEMP covered class. Any later DLC candidate set requires a separate schema fixture and documented light-output, distribution, mounting, controls, efficacy, and status filters.
 - **Assumptions:** Candidate products satisfy the same service and photometric application; a photometric design is still required before purchase.
 - **Editable:** Yes. Every class selection, candidate filter, and estimated wattage remains visible and can be replaced by a validated exact value.
-- **Missing-Exact-Value Rule:** Missing exact model data invokes the closest application benchmark, compatible proposed-product population, and deterministic RetroFi fallback while preserving the documented selection rule.
+- **Missing-Exact-Value Rule:** Missing exact model data may use only a retained application benchmark or compatible proposed-product population with explicit fields, filters, records, sample size, numeric rule, unit, scope, and version.
+  Otherwise report the explicit implementation limitation.
 
 **How to Use:** Resolve existing watts from a nameplate, measurement, or separately verified historical source.
 FEMP Table 1 supports only proposed application-specific efficacy requirements.
@@ -864,14 +939,16 @@ USNO defines and computes sunrise, sunset, and civil-twilight times for location
 - **Resolver Type:** Method resolver.
 - **Supported Scenarios:** measured-exact-input; explicit-calendar-calculation; daylight-control-calculation; insufficient-data.
 - **Scenario Output Behavior:** Return the exact validated schedule total when supplied; otherwise return one deterministic annual-hours value from recognizable schedule and context.
-- **Selected-Value Rule:** Calculate one value from visible hours-per-day, days-per-week, active weeks, shift, setback, or daylight assumptions; otherwise use the closest authoritative schedule median.
-- **Uncertainty Rule:** Retain whether the one selected value came from an exact schedule, a complete recognizable schedule, an authoritative context match, or the deterministic RetroFi fallback.
+- **Selected-Value Rule:** Calculate one value from visible hours-per-day, days-per-week, active weeks, shift, setback, or daylight assumptions.
+  A schedule population may be selected only when its exact source, context filters, records, sample size, unit, and median rule are retained.
+- **Uncertainty Rule:** Retain whether the one selected value came from an exact schedule, a complete recognizable schedule, or a retained authoritative population with explicit filters and a numeric rule.
 - **Exact Override:** A validated exact schedule or measured annual operating-hours value overrides the selected benchmark value.
 - **Source Version:** Calculation policy version, DOE schedule source version when used, USNO retrieval or algorithm version when used, analysis year, and timezone rules.
 - **Selected Class or Candidate Set:** Select only a declared business, shift, seasonal, continuous, intermittent, or exterior-control pattern supported by the supplied facts.
 - **Assumptions:** Operating days, active weeks, holidays, setbacks, and daylight or control offsets are visible and editable.
 - **Editable:** Yes. Every schedule component remains visible and can be replaced by a validated exact schedule.
-- **Missing-Exact-Value Rule:** Missing exact schedule details invoke the closest authoritative business- and building-matched schedule and then deterministic RetroFi fallback.
+- **Missing-Exact-Value Rule:** Missing exact schedule details may use only a retained business- and building-matched schedule population with explicit filters, records, sample size, selected field, unit, and numeric rule.
+  Otherwise report the explicit implementation limitation.
 
 **How to Use:** Use a validated exact schedule or measured annual hours when supplied.
 Otherwise calculate business-hours operation from hours per day, operating days per week, and active weeks per year.
@@ -894,13 +971,68 @@ Do not infer annual hours solely from an industry label when site operation can 
 
 **Used By:** ITC-02, ITC-09, ITC-12, ITC-20, ITC-30, ITC-37, ITC-38, ITC-40 through ITC-43, ITC-47, and ITC-51.
 
+### ■ STD-DISHWASHER-WATER-HEATING - Commercial dishwasher water-heating conversion
+
+**Status:** LIMITED
+
+**Purpose:** Convert existing and proposed dishwasher hot-water quantities to purchased building and booster heating resource in the same native rack or flight-machine activity unit.
+
+**Source:** U.S. Environmental Protection Agency, [ENERGY STAR Commercial Food Service Equipment Calculator](https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx), Dishwasher Calcs worksheet.
+The retained March 2024 workbook fixture records the building and booster temperature-rise, heater-efficiency, and purchased-energy-per-gallon equations.
+
+**Lookup Inputs:**
+
+- `dishwasher_machine_type` - [Required] Rack machine or flight/conveyor machine and sanitation method.
+- `dishwasher_native_water_quantity` - [Required] Existing and proposed gallons per rack or gallons per operating hour in the machine's native certified unit.
+- `incoming_water_temperature` - [Required] Project value or the exact retained calculator input when the calculator scenario is used.
+- `wash_rinse_or_booster_temperature` - [Required] Project value, certified hot-water quantity, or the exact retained calculator input when the calculator scenario is used.
+- `water_heating_resource` - [Required] Purchased building and booster heating resource.
+- `water_heater_efficiency` - [Required] Project efficiency or the exact retained calculator efficiency when its resource and scenario are compatible.
+
+**Value Needed:** Existing and proposed purchased water-heating resource per rack for rack machines, or per operating hour for flight/conveyor machines, with the complete input set and conversion trace.
+
+**Resolution Contract:**
+
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return one complete compatible conversion input set and resource result in the machine's native rack or hourly activity unit.
+- **Selected-Value Rule:** Use exact project water temperatures, hot-water quantities, resource, and efficiency when complete.
+  Otherwise use the exact retained ENERGY STAR calculator input set only when machine type, sanitation method, resource, and temperature boundaries are compatible.
+- **Uncertainty Rule:** Moderate for the exact retained calculator scenario and unresolved when the project boundary is incompatible or incomplete.
+- **Exact Override:** An exact complete project-engineering input set overrides the corresponding calculator values.
+- **Source Version:** ENERGY STAR Commercial Food Service Equipment Calculator published March 2024, retained by workbook checksum.
+- **Selected Class or Candidate Set:** One exact rack or flight/conveyor machine type and sanitation boundary.
+- **Assumptions:** Building and booster water quantities, temperature rises, resource types, and heater efficiencies represent the screened installation.
+- **Editable:** Yes.
+- **Missing-Exact-Value Rule:** If neither a complete project input set nor the compatible retained calculator input set exists, report the explicit implementation limitation.
+  Do not treat total machine water as hot water and do not convert rack units to hourly units.
+
+**How to Use:** Select the rack or flight/conveyor branch before any arithmetic.
+Retain existing and proposed native water quantities in gallons per rack or gallons per operating hour.
+For each building or booster heating boundary, calculate purchased resource from water volume, water density, specific heat, temperature rise, resource conversion, and heater efficiency.
+Return purchased resource per rack for the rack branch or per operating hour for the flight branch.
+Do not connect a rack result to a flight formula, do not infer a hot-water quantity from total water without the building and booster boundary, and do not overlap active machine electricity with water-heating input.
+
+**Automation:**
+
+- **Selected Strategy:** Deterministic execution of the retained ENERGY STAR dishwasher water-heating equations or a complete project-engineered equivalent.
+- **Automation Method:** Validate the complete native-unit input set, select the rack or hourly branch, execute the temperature-rise and efficiency equations, and retain all inputs, units, outputs, source version, and warnings.
+- **Difficulty:** Medium.
+- **Efficient Build-Time Estimate:** 1 developer day after the category adapter is implemented.
+- **Expected Accuracy or Uncertainty:** Moderate when the retained calculator scenario matches and unresolved otherwise.
+- **Basis:** The retained workbook fixture supplies explicit building and booster water-heating equations and numeric inputs.
+- **Why This Is the Best Value-for-Time Strategy:** It preserves the native activity unit and prevents total water from becoming unsupported purchased energy.
+- **Access, Refresh, Versioning, and Maintenance Requirements:** Public workbook, pinned publication date and checksum, with fixture review when ENERGY STAR publishes a new calculator.
+
+**Used By:** ITC-52.
+
 ### ■ STD-CONTEXT-BENCHMARKS - Context-matched authoritative benchmark selection
 
 **Status:** LIMITED
 
 **Purpose:** Select one technical, activity, schedule, or operating-profile value when an exact measured, documented, specified, or exact-database value is unavailable.
 
-**Source:** U.S. Department of Energy, [2015 U.S. Lighting Market Characterization](https://www.energy.gov/cmei/ssl/2015-us-lighting-market-characterization), U.S. Department of Energy, [Commercial Reference Buildings](https://www.energy.gov/cmei/buildings/commercial-reference-buildings), U.S. Department of Energy, [ComStock data lake and documentation](https://comstock.nrel.gov/), National Laboratory of the Rockies, [EVI-Pro Lite API and model documentation](https://developer.nlr.gov/docs/transportation/evi-pro-lite-v1/), National Laboratory of the Rockies, [Fleet DNA commercial fleet operating data](https://www.nlr.gov/transportation/fleettest-fleet-dna), U.S. Environmental Protection Agency, [WaterSense at Work fixture methods](https://www.epa.gov/watersense/best-management-practices), U.S. Environmental Protection Agency, [WaterSense at Work commercial-kitchen methods](https://www.epa.gov/watersense/best-management-practices), National Laboratory of the Rockies, [REopt.jl input reference](https://natlabrockies.github.io/REopt.jl/dev/reopt/inputs/), and U.S. Department of Energy, [Federal emergency-generator operations guidance](https://www.energy.gov/cmei/femp/equipment-operations-and-maintenance-summaries).
+**Source:** U.S. Department of Energy, [2015 U.S. Lighting Market Characterization](https://www.energy.gov/cmei/ssl/2015-us-lighting-market-characterization), U.S. Department of Energy, [Commercial Reference Buildings](https://www.energy.gov/cmei/buildings/commercial-reference-buildings), U.S. Department of Energy, [ComStock data lake and documentation](https://comstock.nrel.gov/), National Laboratory of the Rockies, [EVI-Pro Lite API and model documentation](https://developer.nlr.gov/docs/transportation/evi-pro-lite-v1/), National Laboratory of the Rockies, [Fleet DNA commercial fleet operating data](https://www.nlr.gov/transportation/fleettest-fleet-dna), Argonne National Laboratory, [Argonne forklift propulsion comparison](https://www.energy.gov/sites/prod/files/2014/03/f11/forklift_anl_esd.pdf), U.S. Environmental Protection Agency, [WaterSense at Work fixture methods](https://www.epa.gov/watersense/best-management-practices), U.S. Environmental Protection Agency, [WaterSense at Work commercial-kitchen methods](https://www.epa.gov/watersense/best-management-practices), U.S. Environmental Protection Agency, [ENERGY STAR CFS Equipment Calculator](https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx), U.S. Department of Energy, [DOE walk-in energy conservation standards NOPR](https://www.energy.gov/sites/default/files/2023-08/Walk-In%20Coolers%20and%20Freezers%20ECS%20NOPR.pdf), National Laboratory of the Rockies, [REopt.jl input reference](https://natlabrockies.github.io/REopt.jl/dev/reopt/inputs/), U.S. Department of Energy, [Federal emergency-generator operations guidance](https://www.energy.gov/cmei/femp/equipment-operations-and-maintenance-summaries), and Federal Emergency Management Agency, [FEMA full-load diesel generator fuel formula](https://emilms.fema.gov/IS0815/groups/90.html).
 These sources supply category-specific populations, methods, or context boundaries.
 They do not form one interchangeable cross-category dataset.
 
@@ -915,7 +1047,7 @@ They do not form one interchangeable cross-category dataset.
 **Resolution Contract:**
 
 - **Resolver Type:** Method context-benchmark resolver.
-- **Supported Scenarios:** exact-measured-or-documented; exact-product-or-project-specification; exact-authoritative-database; context-matched-authoritative-benchmark; deterministic-retrofi-benchmark.
+- **Supported Scenarios:** exact-measured-or-documented; exact-product-or-project-specification; exact-authoritative-database; context-matched-authoritative-benchmark.
 - **Scenario Output Behavior:** Return one selected value from the highest available fallback level and pass that value to the formula.
 - **Selected-Value Rule:** Use an official recommended or typical value when available; otherwise use the weighted median when valid weights exist, or the ordinary median of the eligible compatible population.
 Use an official recommended or typical value when the source provides one.
@@ -928,14 +1060,16 @@ Never combine incompatible product families, charger types, activity units, or o
 - **Assumptions:** The selected population is compatible with the available project context and the chosen value is a screening input rather than a contractor product selection.
 - **Editable:** Yes.
 Every selected benchmark remains replaceable by a later exact value.
-- **Missing-Exact-Value Rule:** Exact-data absence does not remove the estimate; continue through the documented fallback order and retain the selected fallback level.
-Continue through the fallback order and use zero only when the actual operational effect is legitimately zero.
+- **Missing-Exact-Value Rule:** Continue only to a category-specific adapter that identifies the inspected source, exact table, field, equation or population, compatibility filters, numeric rule, output unit and scope, source version, and retained fixture.
+If that implementation does not exist, report the category-specific limitation and leave the value unresolved.
+Use zero only when the actual operational effect is legitimately zero.
 
 **How to Use:** Start with an exact measured or documented value, then an exact product or project specification, then an exact authoritative database lookup.
-If none is available, filter the closest authoritative population using the available business, building, equipment, schedule, Bill, opportunity, climate, and geography context.
+If none is available, use only a category-specific authoritative population whose exact compatibility filters and selected output are documented and retained.
 Use the source's official recommended or typical value when available.
 Otherwise use a valid weighted median or ordinary median.
-If no authoritative population fully matches, derive one deterministic RetroFi benchmark from the closest inspected source without claiming that the source directly supplies the resulting project value.
+Use a RetroFi source-derived fallback only when the category process states the numeric equation or exact lookup and binds it to a retained inspected-source fixture.
+Otherwise report the explicit implementation limitation.
 Retain every filter, eligible record, population size, rule, selected value, unit, source version, and fallback level.
 
 **Automation:**
@@ -949,13 +1083,13 @@ Retain every filter, eligible record, population size, rule, selected value, uni
 - **Why This Is the Best Value-for-Time Strategy:** One shared policy avoids duplicating selection logic while category adapters preserve source-specific fields and units.
 - **Access, Refresh, Versioning, and Maintenance Requirements:** Pin every source and adapter version, retain reviewed fixtures, alert on schema changes, and rerun category golden and mutation tests before upgrades.
 
-**Used By:** ITC-02, ITC-08, ITC-16, ITC-23, ITC-27, ITC-28, ITC-32, ITC-33, ITC-39, ITC-52, and ITC-54.
+**Used By:** ITC-02, ITC-08, ITC-16, ITC-23, ITC-27, ITC-28, ITC-30, ITC-32, ITC-33, ITC-39, ITC-48, ITC-49, ITC-52, and ITC-54.
 
 ## Registry totals
 
-- Canonical Standards: 17.
-- Standards with one selected automation strategy: 17.
+- Canonical Standards: 19.
+- Standards with one selected automation strategy: 19.
 - `RESEARCHED — READY FOR HUMAN REVIEW`: 0.
-- `LIMITED`: 16.
+- `LIMITED`: 19.
 - `BLOCKED`: 0.
 - High-uncertainty Standards: STD-SCOUT-ECM-SCREEN, STD-WIND-SAM, and generic biomass or biogas use of STD-EPA-CHP-PERFORMANCE.
