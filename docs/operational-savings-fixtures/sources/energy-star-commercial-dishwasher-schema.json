@@ -1,29 +1,127 @@
 {
-  "fixture_type": "reviewed_source_schema",
+  "fixture_type": "reviewed_source_fixture",
+  "fixture_schema_version": "1.0.0",
   "reviewed_on": "2026-07-22",
-  "source_url": "https://data.energystar.gov/api/views/pk8q-dim8",
-  "dataset_id": "pk8q-dim8",
-  "dataset_title": "ENERGY STAR Certified Commercial Dishwashers",
-  "coverage": "Current active-specification proposed products",
+  "retrieved_on": "2026-07-22",
+  "source_title": "ENERGY STAR Certified Commercial Dishwashers",
+  "source_urls": [
+    "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Dishwashers/pk8q-dim8",
+    "https://data.energystar.gov/api/views/pk8q-dim8"
+  ],
+  "raw_artifacts": [
+    {
+      "artifact_identifier": "socrata-pk8q-dim8-metadata",
+      "source_url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Dishwashers/pk8q-dim8",
+      "source_version": "Socrata dataset pk8q-dim8 metadata inspected 2026-07-22",
+      "exact_artifact": "Socrata dataset metadata and column schema",
+      "source_checksum": "sha256:da7d9999977b3a5f4bf80d85b68e2a36ff45e7f2f95a35cf9c86e1ffcef9a73a"
+    }
+  ],
+  "coverage": {
+    "summary": "Current active-specification proposed commercial dishwasher products and their published certification fields.",
+    "source_roles": [
+      "proposed_or_qualified_product"
+    ],
+    "scenarios": [
+      "linked-opportunity-exact-product",
+      "linked-opportunity-product-class",
+      "no-product-restriction",
+      "no-linked-opportunity",
+      "exact-proposed-model",
+      "insufficient-data"
+    ]
+  },
   "fields": [
-    {"field": "pd_id", "unit": "identifier", "role": "record identity"},
-    {"field": "model_number", "unit": "identifier", "role": "exact product selection"},
-    {"field": "machine_type", "unit": "class", "role": "compatibility filter"},
-    {"field": "sanitation_method", "unit": "class", "role": "compatibility filter"},
-    {"field": "idle_energy_rate_for_low_temp_kw", "unit": "kW", "role": "low-temperature idle input"},
-    {"field": "idle_energy_rate_for_high_temp_kw", "unit": "kW", "role": "high-temperature idle input"},
-    {"field": "booster_heater_idle_energy_rate_for_high_temp_and_dual_sanitizing_machines_kw", "unit": "kW", "role": "separable booster-heater idle input"},
-    {"field": "water_use_gallons_per_rack_gpr", "unit": "gallons/rack", "role": "rack-machine water input"},
-    {"field": "water_use_gallons_per_hour_gph", "unit": "gallons/hour", "role": "flight-machine water input"},
-    {"field": "washing_energy_consumption_kwh_rack_for_low_temp_and_dual_sanitizing_machines", "unit": "kWh/rack", "role": "low-temperature active input"},
-    {"field": "washing_energy_consumption_kwh_rack_for_high_temp_and_dual_sanitizing_machines", "unit": "kWh/rack", "role": "high-temperature active input"},
-    {"field": "date_qualified", "unit": "date", "role": "certification provenance"}
+    {
+      "field": "pd_id",
+      "unit_id": "identifier",
+      "role": "record identity",
+      "source_location": "Socrata column pd_id"
+    },
+    {
+      "field": "model_number",
+      "unit_id": "identifier",
+      "role": "exact product selection",
+      "source_location": "Socrata column model_number"
+    },
+    {
+      "field": "machine_type",
+      "unit_id": "classification",
+      "role": "compatibility filter",
+      "source_location": "Socrata column machine_type"
+    },
+    {
+      "field": "sanitation_method",
+      "unit_id": "classification",
+      "role": "compatibility filter",
+      "source_location": "Socrata column sanitation_method"
+    },
+    {
+      "field": "idle_energy_rate_for_low_temp_kw",
+      "unit_id": "kilowatt",
+      "role": "low-temperature idle input",
+      "source_location": "Socrata column idle_energy_rate_for_low_temp_kw"
+    },
+    {
+      "field": "idle_energy_rate_for_high_temp_kw",
+      "unit_id": "kilowatt",
+      "role": "high-temperature idle input",
+      "source_location": "Socrata column idle_energy_rate_for_high_temp_kw"
+    },
+    {
+      "field": "booster_heater_idle_energy_rate_for_high_temp_and_dual_sanitizing_machines_kw",
+      "unit_id": "kilowatt",
+      "role": "separable booster-heater idle input",
+      "source_location": "Socrata column booster_heater_idle_energy_rate_for_high_temp_and_dual_sanitizing_machines_kw"
+    },
+    {
+      "field": "water_use_gallons_per_rack_gpr",
+      "unit_id": "gallon_per_rack",
+      "role": "rack-machine water input",
+      "source_location": "Socrata column water_use_gallons_per_rack_gpr"
+    },
+    {
+      "field": "water_use_gallons_per_hour_gph",
+      "unit_id": "gallon_per_hour",
+      "role": "flight-machine water input",
+      "source_location": "Socrata column water_use_gallons_per_hour_gph"
+    },
+    {
+      "field": "washing_energy_consumption_kwh_rack_for_low_temp_and_dual_sanitizing_machines",
+      "unit_id": "kilowatt_hour_per_rack",
+      "role": "low-temperature active input",
+      "source_location": "Socrata column washing_energy_consumption_kwh_rack_for_low_temp_and_dual_sanitizing_machines"
+    },
+    {
+      "field": "washing_energy_consumption_kwh_rack_for_high_temp_and_dual_sanitizing_machines",
+      "unit_id": "kilowatt_hour_per_rack",
+      "role": "high-temperature active input",
+      "source_location": "Socrata column washing_energy_consumption_kwh_rack_for_high_temp_and_dual_sanitizing_machines"
+    },
+    {
+      "field": "date_qualified",
+      "unit_id": "date",
+      "role": "certification provenance",
+      "source_location": "Socrata column date_qualified"
+    }
+  ],
+  "tables": [],
+  "values": [],
+  "methods": [],
+  "supported_uses": [
+    "Exact proposed commercial dishwasher record lookup",
+    "Machine-type and sanitation-method compatibility filtering",
+    "Use of published water, active-energy, and idle-energy fields in their native units"
   ],
   "unsupported_inferences": [
     "Existing installed-equipment baseline",
     "Annual racks or operating hours",
-    "Cross-conversion between gallons/rack and gallons/hour",
+    "Cross-conversion between gallons per rack and gallons per hour",
     "Water-heating resource or efficiency",
     "Sewer applicability"
+  ],
+  "provenance_notes": [
+    "The source checksum is for the official Socrata metadata response retrieved on the review date.",
+    "The fixture preserves native field units so machine types are not silently cross-converted."
   ]
 }

@@ -1,31 +1,147 @@
 {
-  "fixture_type": "reviewed_source_table",
+  "fixture_type": "reviewed_source_fixture",
+  "fixture_schema_version": "1.0.0",
   "reviewed_on": "2026-07-22",
-  "source_url": "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting",
-  "source_version": "Updated June 2023",
-  "table_1_proposed_ler_minimums_lm_per_w": {
-    "fuel_pump_canopy": 128,
-    "parking_garage": 123,
-    "outdoor_pole_arm_area_and_roadway": 136,
-    "outdoor_pole_arm_decorative": 112,
-    "outdoor_wall_mounted": 126,
-    "bollard": 100,
-    "floodlight": 118
-  },
-  "table_2_wall_mounted_example": {
-    "covered_lumen_range": "9,900-10,100 lumens",
-    "annual_operating_hours": 3600,
-    "columns": [
-      {"name": "best_available", "ler_lm_per_w": 139, "annual_energy_kwh": 257},
-      {"name": "required_model", "ler_lm_per_w": 126, "annual_energy_kwh": 286},
-      {"name": "less_efficient_example", "ler_lm_per_w": 65, "annual_energy_kwh": 565}
+  "retrieved_on": "2026-07-22",
+  "source_title": "FEMP Purchasing Energy-Efficient Exterior Lighting",
+  "source_urls": [
+    "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting"
+  ],
+  "raw_artifacts": [
+    {
+      "artifact_identifier": "femp-exterior-lighting-june-2023",
+      "source_url": "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting",
+      "source_version": "Updated June 2023",
+      "exact_artifact": "Table 1 - Efficiency Requirements for Exterior Lighting",
+      "source_checksum": "sha256:c9c3a975668e7b7b929556927bd181dbf99a8e37d45b155a060da1aa89685727"
+    },
+    {
+      "artifact_identifier": "femp-wall-mounted-example-june-2023",
+      "source_url": "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting",
+      "source_version": "Updated June 2023",
+      "exact_artifact": "Table 2 - Lifetime Savings for Efficient Wall-Mounted Luminaires and Performance Column assumptions",
+      "source_checksum": "sha256:c9c3a975668e7b7b929556927bd181dbf99a8e37d45b155a060da1aa89685727"
+    }
+  ],
+  "coverage": {
+    "summary": "Seven proposed exterior-lighting application efficacy minimums plus one wall-mounted example with three performance columns.",
+    "source_roles": [
+      "proposed_or_qualified_product",
+      "physics_or_calculation_method"
+    ],
+    "scenarios": [
+      "proposed-application-threshold",
+      "linked-opportunity-product-class",
+      "no-product-restriction",
+      "no-linked-opportunity",
+      "insufficient-data"
     ]
   },
+  "fields": [
+    {
+      "field": "application_category",
+      "unit_id": "classification",
+      "role": "Table 1 compatibility key",
+      "source_location": "Table 1 application row"
+    },
+    {
+      "field": "ler_minimum",
+      "unit_id": "lumen_per_watt",
+      "role": "Table 1 proposed efficacy",
+      "source_location": "Table 1 LER column"
+    },
+    {
+      "field": "annual_operating_hours",
+      "unit_id": "hour_per_year",
+      "role": "Table 2 example schedule",
+      "source_location": "Performance Column assumptions"
+    },
+    {
+      "field": "annual_energy",
+      "unit_id": "kilowatt_hour_per_year",
+      "role": "Table 2 example energy",
+      "source_location": "Table 2 Annual Energy Use column"
+    }
+  ],
+  "tables": [
+    {
+      "field": "table_1_proposed_ler_minimums",
+      "unit_id": "lumen_per_watt",
+      "role": "proposed exterior-lighting efficacy minimums",
+      "source_location": "Table 1",
+      "rows": {
+        "fuel_pump_canopy": 128,
+        "parking_garage": 123,
+        "outdoor_pole_arm_area_and_roadway": 136,
+        "outdoor_pole_arm_decorative": 112,
+        "outdoor_wall_mounted": 126,
+        "bollard": 100,
+        "floodlight": 118
+      }
+    },
+    {
+      "field": "table_2_wall_mounted_example",
+      "unit_id": "record_set",
+      "role": "wall-mounted comparison example",
+      "source_location": "Table 2",
+      "covered_lumen_range": "9,900 to 10,100 lumens",
+      "annual_operating_hours": 3600,
+      "columns": [
+        {
+          "name": "best_available",
+          "ler_lm_per_w": 139,
+          "annual_energy_kwh": 257
+        },
+        {
+          "name": "required_model",
+          "ler_lm_per_w": 126,
+          "annual_energy_kwh": 286
+        },
+        {
+          "name": "less_efficient_example",
+          "ler_lm_per_w": 65,
+          "annual_energy_kwh": 565
+        }
+      ]
+    }
+  ],
+  "values": [
+    {
+      "field": "wall_mounted.required_ler",
+      "unit_id": "lumen_per_watt",
+      "role": "proposed wall-mounted efficacy",
+      "source_location": "Table 1 outdoor wall-mounted row",
+      "value": 126
+    },
+    {
+      "field": "wall_mounted.less_efficient_example_ler",
+      "unit_id": "lumen_per_watt",
+      "role": "existing example efficacy",
+      "source_location": "Table 2 less-efficient column",
+      "value": 65
+    },
+    {
+      "field": "wall_mounted.annual_operating_hours",
+      "unit_id": "hour_per_year",
+      "role": "example schedule",
+      "source_location": "Performance Column assumptions",
+      "value": 3600
+    }
+  ],
+  "methods": [],
+  "supported_uses": [
+    "Application-specific proposed efficacy lookup",
+    "The published wall-mounted example within its documented lumen range and schedule"
+  ],
   "unsupported_inferences": [
     "General installed legacy-fixture wattage",
     "Existing fixture percentiles",
     "Input watts outside the wall-mounted example",
     "Exact proposed product input watts",
     "Profile or Bill product fallback"
+  ],
+  "provenance_notes": [
+    "Both evidence bindings use the same official page checksum but point to distinct artifacts and substantive records.",
+    "The wall-mounted example is not generalized to other applications."
   ]
 }

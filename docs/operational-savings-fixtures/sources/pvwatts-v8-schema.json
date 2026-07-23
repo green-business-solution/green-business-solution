@@ -1,25 +1,126 @@
 {
-  "fixture_type": "reviewed_source_schema",
+  "fixture_type": "reviewed_source_fixture",
+  "fixture_schema_version": "1.0.0",
   "reviewed_on": "2026-07-22",
-  "source_url": "https://developer.nrel.gov/docs/solar/pvwatts/v8/",
-  "api_version": "8.0.0",
-  "endpoint": "GET /api/pvwatts/v8",
-  "required_input_fields": [
-    {"field": "system_capacity", "unit": "kWdc"},
-    {"field": "module_type", "unit": "enumeration"},
-    {"field": "losses", "unit": "percent"},
-    {"field": "array_type", "unit": "enumeration"},
-    {"field": "tilt", "unit": "degrees"},
-    {"field": "azimuth", "unit": "degrees"},
-    {"field": "lat and lon or solar_resource_file", "unit": "degrees or identifier"}
+  "retrieved_on": "2026-07-22",
+  "source_title": "NREL PVWatts V8 API documentation",
+  "source_urls": [
+    "https://developer.nrel.gov/docs/solar/pvwatts/v8/"
   ],
-  "reviewed_output_fields": [
-    {"field": "outputs.ac", "unit": "Wac", "availability": "hourly timeframe"},
-    {"field": "outputs.ac_monthly", "unit": "kWhac/month"},
-    {"field": "outputs.ac_annual", "unit": "kWhac/year"},
-    {"field": "outputs.capacity_factor", "unit": "percent"},
-    {"field": "station_info.solar_resource_file", "unit": "identifier"},
-    {"field": "warnings", "unit": "text array"}
+  "raw_artifacts": [
+    {
+      "artifact_identifier": "pvwatts-v8-reviewed-schema-snapshot",
+      "source_url": "https://developer.nrel.gov/docs/solar/pvwatts/v8/",
+      "source_version": "8.0.0 documentation inspected 2026-07-22",
+      "exact_artifact": "Reviewed schema snapshot for GET /api/pvwatts/v8",
+      "source_checksum": "sha256:29d1ac02088e1cb5bbade030b48d9e024cd4ed59096878a0ea469c40e5adfae0"
+    }
+  ],
+  "coverage": {
+    "summary": "PVWatts V8 required request fields and reviewed production-response fields.",
+    "source_roles": [
+      "physics_or_calculation_method",
+      "geographic_or_climate"
+    ],
+    "scenarios": [
+      "exact-input",
+      "linked-opportunity-constrained-input",
+      "insufficient-data"
+    ]
+  },
+  "fields": [
+    {
+      "field": "system_capacity",
+      "unit_id": "kilowatt_dc",
+      "role": "required API input",
+      "source_location": "PVWatts V8 request parameters"
+    },
+    {
+      "field": "module_type",
+      "unit_id": "enumeration",
+      "role": "required API input",
+      "source_location": "PVWatts V8 request parameters"
+    },
+    {
+      "field": "losses",
+      "unit_id": "percent",
+      "role": "required API input",
+      "source_location": "PVWatts V8 request parameters"
+    },
+    {
+      "field": "array_type",
+      "unit_id": "enumeration",
+      "role": "required API input",
+      "source_location": "PVWatts V8 request parameters"
+    },
+    {
+      "field": "tilt",
+      "unit_id": "degree",
+      "role": "required API input",
+      "source_location": "PVWatts V8 request parameters"
+    },
+    {
+      "field": "azimuth",
+      "unit_id": "degree",
+      "role": "required API input",
+      "source_location": "PVWatts V8 request parameters"
+    },
+    {
+      "field": "location_or_solar_resource_file",
+      "unit_id": "location_selector",
+      "role": "required resource selector",
+      "source_location": "PVWatts V8 request parameters"
+    },
+    {
+      "field": "outputs.ac",
+      "unit_id": "watt_ac",
+      "role": "hourly AC production",
+      "source_location": "PVWatts V8 response outputs.ac"
+    },
+    {
+      "field": "outputs.ac_monthly",
+      "unit_id": "kilowatt_hour_ac_per_month",
+      "role": "monthly AC production",
+      "source_location": "PVWatts V8 response outputs.ac_monthly"
+    },
+    {
+      "field": "outputs.ac_annual",
+      "unit_id": "kilowatt_hour_ac_per_year",
+      "role": "annual AC production",
+      "source_location": "PVWatts V8 response outputs.ac_annual"
+    },
+    {
+      "field": "outputs.capacity_factor",
+      "unit_id": "percent",
+      "role": "capacity-factor output",
+      "source_location": "PVWatts V8 response outputs.capacity_factor"
+    },
+    {
+      "field": "station_info.solar_resource_file",
+      "unit_id": "identifier",
+      "role": "resource provenance",
+      "source_location": "PVWatts V8 response station_info.solar_resource_file"
+    },
+    {
+      "field": "warnings",
+      "unit_id": "text_array",
+      "role": "execution warnings",
+      "source_location": "PVWatts V8 response warnings"
+    }
+  ],
+  "tables": [],
+  "values": [],
+  "methods": [
+    {
+      "field": "pvwatts_v8_api_call",
+      "unit_id": "api_operation",
+      "role": "production estimate method",
+      "source_location": "GET /api/pvwatts/v8"
+    }
+  ],
+  "supported_uses": [
+    "PV production estimate after all required design and location inputs are resolved",
+    "Use of AC hourly, monthly, or annual outputs in their documented units"
   ],
   "unsupported_inferences": [
     "System capacity",
@@ -27,5 +128,9 @@
     "Array geometry",
     "Project loss assumptions",
     "Tariff or bill value"
+  ],
+  "provenance_notes": [
+    "The checksum identifies the reviewed pre-normalization schema snapshot because the official documentation host was unavailable during the final checksum refresh.",
+    "The source remains VERIFIED only for the fields represented in that reviewed snapshot."
   ]
 }

@@ -134,21 +134,23 @@ describe("validate-operational-savings-information-trees", () => {
   it("rejects an unclassified User input", async () => {
     const fixtureRoot = await createFixture();
     await mutateTree(fixtureRoot, (text) => text.replace(
-      "{{lookup: existing_fixture_model}} {{input: optional}} (User)",
-      "{{lookup: existing_fixture_model}} (User)"
+      "{{lookup: operating_schedule, operating_schedule_details, measured_annual_operating_hours}} {{input: optional}} (User)",
+      "{{lookup: operating_schedule, operating_schedule_details, measured_annual_operating_hours}} (User)"
     ));
 
-    expect(() => runValidator(fixtureRoot)).toThrow(/User input must have exactly one required or optional classification/);
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /User input must have exactly one required, conditional, or optional classification/
+    );
   });
 
   it("rejects an Optional Known Detail counted as required", async () => {
     const fixtureRoot = await createFixture();
     await mutateTree(fixtureRoot, (text) => text.replace(
-      "Existing Fixture Model, if known {{lookup: existing_fixture_model}} {{input: optional}} (User)",
-      "Existing Fixture Model, if known {{lookup: existing_fixture_model}} {{input: required}} (User)"
+      "Exact Schedule, if known {{lookup: operating_schedule, operating_schedule_details, measured_annual_operating_hours}} {{input: optional}} (User)",
+      "Exact Schedule, if known {{lookup: operating_schedule, operating_schedule_details, measured_annual_operating_hours}} {{input: required}} (User)"
     ));
 
-    expect(() => runValidator(fixtureRoot)).toThrow(/Required User Input cannot say "if known"/);
+    expect(() => runValidator(fixtureRoot)).toThrow(/Required Screening Input cannot say "if known"/);
   });
 
   it("rejects source evidence with a missing exact source location", async () => {
@@ -161,6 +163,112 @@ describe("validate-operational-savings-information-trees", () => {
     expect(() => runValidator(fixtureRoot)).toThrow(
       /E-FEMP-PROPOSED evidence record is missing exact_field_table_page_equation_or_function/
     );
+  });
+
+  it.each([
+    [
+      "source URL",
+      async (fixtureRoot) => mutateEvidence(fixtureRoot, (manifest) => {
+        manifest.evidence_records.find((record) => record.evidence_id === "E-FUELECONOMY-COMB08")
+          .source_url = "https://www.fueleconomy.gov/ws/rest/vehicle/99999";
+      }),
+      /E-FUELECONOMY-COMB08 fixture binding source URL does not match evidence metadata/
+    ],
+    [
+      "source version",
+      async (fixtureRoot) => mutateEvidence(fixtureRoot, (manifest) => {
+        manifest.evidence_records.find((record) => record.evidence_id === "E-FUELECONOMY-COMB08")
+          .source_version = "substituted version";
+      }),
+      /E-FUELECONOMY-COMB08 fixture binding source version does not match evidence metadata/
+    ],
+    [
+      "artifact",
+      async (fixtureRoot) => mutateEvidence(fixtureRoot, (manifest) => {
+        manifest.evidence_records.find((record) => record.evidence_id === "E-FUELECONOMY-COMB08")
+          .exact_artifact = "substituted artifact";
+      }),
+      /E-FUELECONOMY-COMB08 fixture binding artifact does not match evidence metadata/
+    ],
+    [
+      "field",
+      async (fixtureRoot) => mutateSourceFixture(
+        fixtureRoot,
+        "fueleconomy-vehicle-schema.json",
+        (fixture) => {
+          fixture.fields[8].field = "comb08_substituted";
+        }
+      ),
+      /E-FUELECONOMY-COMB08 bound field comb08_substituted is absent/
+    ],
+    [
+      "unit",
+      async (fixtureRoot) => mutateSourceFixture(
+        fixtureRoot,
+        "fueleconomy-vehicle-schema.json",
+        (fixture) => {
+          fixture.fields[8].unit_id = "kilowatt_hour_per_100_mile";
+        }
+      ),
+      /E-FUELECONOMY-COMB08 canonical unit mile_per_gallon is absent/
+    ],
+    [
+      "reviewed value",
+      async (fixtureRoot) => mutateSourceFixture(
+        fixtureRoot,
+        "fueleconomy-vehicle-schema.json",
+        (fixture) => {
+          fixture.values[4].value = 31;
+        }
+      ),
+      /E-FUELECONOMY-COMB08 fixture binding value does not match/
+    ],
+    [
+      "unsupported inference",
+      async (fixtureRoot) => mutateSourceFixture(
+        fixtureRoot,
+        "fueleconomy-vehicle-schema.json",
+        (fixture) => {
+          fixture.unsupported_inferences[0] = "Substituted annual activity claim";
+        }
+      ),
+      /E-FUELECONOMY-COMB08 unsupported-use binding does not match/
+    ],
+    [
+      "fixture type",
+      async (fixtureRoot) => mutateSourceFixture(
+        fixtureRoot,
+        "fueleconomy-vehicle-schema.json",
+        (fixture) => {
+          fixture.fixture_type = "reviewed_source_schema";
+        }
+      ),
+      /fueleconomy-vehicle-schema\.json source fixture has invalid fixture type/
+    ],
+    [
+      "free-text source title",
+      async (fixtureRoot) => mutateEvidence(fixtureRoot, (manifest) => {
+        manifest.evidence_records.find((record) => record.evidence_id === "E-FUELECONOMY-COMB08")
+          .source_title = "Substituted source title";
+      }),
+      /E-FUELECONOMY-COMB08 fixture binding source title does not match evidence metadata/
+    ],
+    [
+      "checksum",
+      async (fixtureRoot) => mutateSourceFixture(
+        fixtureRoot,
+        "fueleconomy-vehicle-schema.json",
+        (fixture) => {
+          fixture.raw_artifacts[0].source_checksum = `sha256:${"0".repeat(64)}`;
+        }
+      ),
+      /E-FUELECONOMY-COMB08 fixture binding checksum does not match evidence metadata/
+    ]
+  ])("rejects a substituted VERIFIED %s binding", async (_label, mutate, expected) => {
+    const fixtureRoot = await createFixture();
+    await mutate(fixtureRoot);
+
+    expect(() => runValidator(fixtureRoot)).toThrow(expected);
   });
 
   it("rejects evidence that names an undeclared Standard lookup input", async () => {
@@ -268,9 +376,10 @@ describe("validate-operational-savings-information-trees", () => {
   it("rejects a formula identifier without a formula-term contract", async () => {
     const fixtureRoot = await createFixture();
     await mutateContract(fixtureRoot, (contract) => {
-      const term = contract.categories.find((category) => category.category_id === "ITC-02")
-        .formula_terms.find((group) => group.names.includes("fixture_input_W"));
-      term.names = term.names.filter((name) => name !== "fixture_input_W");
+      const category = contract.categories.find((candidate) => candidate.category_id === "ITC-02");
+      category.formula_terms = category.formula_terms.filter(
+        (term) => term.name !== "fixture_input_W"
+      );
     });
 
     expect(() => runValidator(fixtureRoot)).toThrow(
@@ -296,8 +405,11 @@ describe("validate-operational-savings-information-trees", () => {
     const fixtureRoot = await createFixture();
     await mutateContract(fixtureRoot, (contract) => {
       contract.categories.find((category) => category.category_id === "ITC-15").formula_terms.push({
-        names: ["resource_unit_conversion"],
-        unit: "common-energy-unit/resource-unit",
+        name: "resource_unit_conversion",
+        dimension: "declared",
+        unit_id: "common_energy_unit_resource_unit",
+        display_unit: "common-energy-unit/resource-unit",
+        quantity_kind: "numeric",
         tree_nodes: ["Complete Fixture Count"],
         source_or_resolver: "UNIT-RESOURCE-ENERGY",
         exact_paths: ["unit_conversion:resource-energy"],
@@ -319,11 +431,95 @@ describe("validate-operational-savings-information-trees", () => {
     const fixtureRoot = await createFixture();
     await mutateContract(fixtureRoot, (contract) => {
       contract.categories.find((category) => category.category_id === "ITC-02")
-        .formula_terms[0].unit = "USD/year";
+        .formula_terms[0].unit_id = "usd_per_year";
     });
 
     expect(() => runValidator(fixtureRoot)).toThrow(
-      /ITC-02 formula term quantity has a unit mismatch/
+      /ITC-02 formula term quantity dimension count does not match unit usd_per_year/
+    );
+  });
+
+  it("rejects an unknown canonical unit ID", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      contract.categories.find((category) => category.category_id === "ITC-02")
+        .formula_terms[0].unit_id = "invented_unit";
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 formula term quantity references unknown unit_id invented_unit/
+    );
+  });
+
+  it("rejects a combined unit in one atomic formula term", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      contract.categories.find((category) => category.category_id === "ITC-29")
+        .formula_terms.find((term) => term.name === "p_fuel")
+        .display_unit = "USD/gallon and USD/kWh";
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-29 formula term p_fuel has ambiguous combined units/
+    );
+  });
+
+  it("rejects incompatible dimensional relationship metadata", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      contract.dimensional_relationships.find(
+        (relationship) => relationship.relationship_id === "ITC-29-added-electricity"
+      ).operands[1].exponent = -1;
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-29-added-electricity dimension mismatch/
+    );
+  });
+
+  it("rejects incomplete Conditional Calculation Gate metadata", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      delete contract.categories.find((category) => category.category_id === "ITC-02")
+        .conditional_gates[0].activation_condition;
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 Conditional Calculation Gate Existing Fixture Model or Documented Watts lacks activation_condition/
+    );
+  });
+
+  it("rejects Ready status when the named scenario is not executable", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      contract.categories.find((category) => category.category_id === "ITC-29")
+        .scenarios[0].readiness = "VERIFIED_NONEXECUTABLE";
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-29 ready_scenario_id is not VERIFIED_EXECUTABLE/
+    );
+  });
+
+  it("rejects a changed ITC-29 exact source value in the golden fixture", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateGoldenFixture(fixtureRoot, "ITC-29.golden.json", (fixture) => {
+      fixture.source_records.find((record) => record.field === "combE").value = 29;
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-29 golden fixture arithmetic mismatch/
+    );
+  });
+
+  it("rejects ITC-29 without explicit service-equivalence confirmation", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateGoldenFixture(fixtureRoot, "ITC-29.golden.json", (fixture) => {
+      fixture.minimum_default_path_inputs.user_confirmed_service_equivalence = false;
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-29 golden fixture lacks explicit user-confirmed service equivalence/
     );
   });
 
@@ -397,6 +593,40 @@ describe("validate-operational-savings-information-trees", () => {
 
     expect(() => runValidator(fixtureRoot)).toThrow(
       /ITC-02 references nonexistent Profile field site\.fake\.exteriorFixtureCount/
+    );
+  });
+
+  it("rejects a Profile path renamed in production normalization", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "apps/api/server/matching/normalizeUserProfile.mjs"),
+      (text) => text.replace("buildingTypes: unique(", "buildingCategories: unique(")
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /normalized Profile path fixture is stale: missing actual path site\.buildingCategories/
+    );
+  });
+
+  it("rejects the wrong object or array structure in the Profile path fixture", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateProfileFixture(fixtureRoot, (fixture) => {
+      fixture.paths.find((descriptor) => descriptor.path === "site.buildingTypes").kind = "object";
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /normalized Profile path fixture has wrong structure for site\.buildingTypes: object; expected array/
+    );
+  });
+
+  it("rejects a stale normalized Profile path fixture checksum", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateProfileFixture(fixtureRoot, (fixture) => {
+      fixture.contract_sha256 = `sha256:${"0".repeat(64)}`;
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /normalized Profile path fixture checksum is stale/
     );
   });
 
@@ -524,10 +754,12 @@ async function createFixture() {
     "docs/operational-savings-information-tree-audit.md",
     "docs/operational-savings-source-evidence.json",
     "docs/operational-savings-category-contracts.json",
+    "docs/operational-savings-unit-registry.json",
     "data/bill_field_dictionary.json",
     "scripts/generate-operational-savings-review-pages.mjs",
     "scripts/validate-operational-savings-information-trees.mjs",
     "apps/api/server/matching/retrofitTaxonomy.mjs",
+    "apps/api/server/matching/normalizeUserProfile.mjs",
     "apps/api/server/matching/ontologies.mjs"
   ]) {
     await cp(join(SOURCE_ROOT, file), join(fixtureRoot, file));
@@ -559,6 +791,30 @@ async function mutateEvidence(fixtureRoot, mutate) {
 
 async function mutateContract(fixtureRoot, mutate) {
   await mutateJson(join(fixtureRoot, "docs/operational-savings-category-contracts.json"), mutate);
+}
+
+async function mutateSourceFixture(fixtureRoot, file, mutate) {
+  await mutateJson(
+    join(fixtureRoot, "docs/operational-savings-fixtures/sources", file),
+    mutate
+  );
+}
+
+async function mutateProfileFixture(fixtureRoot, mutate) {
+  await mutateJson(
+    join(
+      fixtureRoot,
+      "docs/operational-savings-fixtures/profile/normalized-profile-paths.json"
+    ),
+    mutate
+  );
+}
+
+async function mutateGoldenFixture(fixtureRoot, file, mutate) {
+  await mutateJson(
+    join(fixtureRoot, "docs/operational-savings-fixtures/categories", file),
+    mutate
+  );
 }
 
 async function mutateFile(path, mutate) {

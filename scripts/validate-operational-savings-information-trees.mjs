@@ -33,6 +33,7 @@ const report = {
   sourceUrls: sourceUrls.length,
   maxAtomicUserInputs: review.report.maxAtomicUserInputs,
   requiredUserInputs: review.report.requiredUserInputs,
+  conditionalCalculationGates: review.report.conditionalCalculationGates,
   optionalKnownDetails: review.report.optionalKnownDetails,
   maxRequiredUserInputs: review.report.maxRequiredUserInputs,
   categoriesOverFourUserInputs: review.report.categoriesOverFourUserInputs,
@@ -41,15 +42,8 @@ const report = {
   standardStatuses: review.report.standardStatuses,
   sourceEvidenceRecords: sources.evidenceManifest.evidence_records.length,
   sourceEvidenceStatuses: countBy(sources.evidenceManifest.evidence_records, "evidence_status"),
-  formulaTermGroups: sources.categoryContracts.categories.reduce(
+  atomicFormulaTerms: sources.categoryContracts.categories.reduce(
     (total, category) => total + category.formula_terms.length,
-    0
-  ),
-  formulaTerms: sources.categoryContracts.categories.reduce(
-    (total, category) => total + category.formula_terms.reduce(
-      (categoryTotal, group) => categoryTotal + group.names.length,
-      0
-    ),
     0
   ),
   categoryManualVerdicts: sources.categoryContracts.categories.filter(
@@ -73,7 +67,9 @@ if (errors.length > 0) {
 
 async function validateGeneratedPages(result, validationErrors) {
   const requiredSections = [
+    "## Human Review Snapshot",
     "## Review Status",
+    "## Scenario Readiness",
     "## Retrofits",
     "## Primary Formula",
     "## Supporting Formula(s)",
@@ -122,23 +118,27 @@ async function validateGeneratedPages(result, validationErrors) {
     validateGeneratedTreeLabels(category, tree, validationErrors);
 
     const formulaEvidence = between(page, "## Formula-Term Evidence", "## Source-Role Evidence");
-    if (!formulaEvidence.includes("| Formula term | Unit | Source or resolver | Exact path |")) {
-      validationErrors.push(`${category.id} generated Formula-Term Evidence lacks the canonical matrix`);
+    if (/^\|/m.test(formulaEvidence)) {
+      validationErrors.push(`${category.id} generated Formula-Term Evidence must not use a wide table`);
     }
     for (const group of category.semanticContract.formula_terms) {
-      for (const name of group.names) {
-        if (!formulaEvidence.includes(`| ${name} |`)) {
-          validationErrors.push(`${category.id} generated Formula-Term Evidence is missing ${name}`);
-        }
+      if (!formulaEvidence.includes(`### Term: \`${group.name}\``)) {
+        validationErrors.push(`${category.id} generated Formula-Term Evidence is missing ${group.name}`);
       }
     }
     const sourceEvidence = between(page, "## Source-Role Evidence", "## Default-Path Proof");
+    if (/^\|/m.test(sourceEvidence)) {
+      validationErrors.push(`${category.id} generated Source-Role Evidence must not use a wide table`);
+    }
     for (const summary of category.sourceEvidence.standardSummaries) {
       if (!sourceEvidence.includes(`### ${summary.standard_id}`)) {
         validationErrors.push(`${category.id} generated Source-Role Evidence is missing ${summary.standard_id}`);
       }
     }
     const defaultProof = between(page, "## Default-Path Proof", "## Fully Expanded Information Tree");
+    if (/^\|/m.test(defaultProof)) {
+      validationErrors.push(`${category.id} generated Default-Path Proof must not use a wide table`);
+    }
     for (const field of [
       "Minimum required inputs",
       "Exact scenario",
@@ -154,17 +154,22 @@ async function validateGeneratedPages(result, validationErrors) {
       }
     }
 
-    const reviewStatus = between(page, "## Review Status", "## Retrofits");
-    const requiredCount = Number(reviewStatus.match(/\*\*Required User-input count:\*\* (\d+)/)?.[1]);
+    const reviewStatus = between(page, "## Review Status", "## Scenario Readiness");
+    const requiredCount = Number(reviewStatus.match(/\*\*Required Screening count:\*\* (\d+)/)?.[1]);
+    const conditionalCount = Number(reviewStatus.match(/\*\*Conditional Calculation Gate count:\*\* (\d+)/)?.[1]);
     const optionalCount = Number(reviewStatus.match(/\*\*Optional Known-Detail count:\*\* (\d+)/)?.[1]);
     if (requiredCount !== category.inputs.RequiredUser.length) {
-      validationErrors.push(`${category.id} generated Required User-input count is ${requiredCount}; expected ${category.inputs.RequiredUser.length}`);
+      validationErrors.push(`${category.id} generated Required Screening count is ${requiredCount}; expected ${category.inputs.RequiredUser.length}`);
+    }
+    if (conditionalCount !== category.inputs.ConditionalUser.length) {
+      validationErrors.push(`${category.id} generated Conditional Calculation Gate count is ${conditionalCount}; expected ${category.inputs.ConditionalUser.length}`);
     }
     if (optionalCount !== category.inputs.OptionalUser.length) {
       validationErrors.push(`${category.id} generated Optional Known-Detail count is ${optionalCount}; expected ${category.inputs.OptionalUser.length}`);
     }
     for (const subsection of [
-      "### Required User Inputs",
+      "### Required Screening Inputs",
+      "### Conditional Calculation Gates",
       "### Optional Known Details",
       "### Profile Inputs",
       "### Bill Inputs",
@@ -219,16 +224,19 @@ async function validateGeneratedPages(result, validationErrors) {
   for (const category of result.categoryReviews) {
     const expectedLink = `./categories/${category.id}.md`;
     if (!index.includes(expectedLink)) validationErrors.push(`review index is missing link for ${category.id}`);
-    const row = index.split("\n").find((line) => line.startsWith(`| [\`${category.id}\`]`));
+    const row = index.split("\n").find((line) => line.startsWith(`| \`${category.id}\` |`));
     if (!row) {
       validationErrors.push(`review index is missing row for ${category.id}`);
       continue;
     }
     const cells = row.split("|").slice(1, -1).map((cell) => cell.trim());
-    if (Number(cells[2]) !== category.inputs.RequiredUser.length) {
-      validationErrors.push(`review index has incorrect Required User-input count for ${category.id}`);
+    if (Number(cells[3]) !== category.inputs.RequiredUser.length) {
+      validationErrors.push(`review index has incorrect Required Screening count for ${category.id}`);
     }
-    if (Number(cells[3]) !== category.inputs.OptionalUser.length) {
+    if (Number(cells[4]) !== category.inputs.ConditionalUser.length) {
+      validationErrors.push(`review index has incorrect Conditional Calculation Gate count for ${category.id}`);
+    }
+    if (Number(cells[5]) !== category.inputs.OptionalUser.length) {
       validationErrors.push(`review index has incorrect Optional Known-Detail count for ${category.id}`);
     }
   }
@@ -303,15 +311,8 @@ function validateComStockAllowlist(result, validationErrors) {
 function validateNarrativeTotals(result, loadedSources, urls, validationErrors) {
   const report = result.report;
   const evidenceStatuses = countBy(loadedSources.evidenceManifest.evidence_records, "evidence_status");
-  const formulaTermGroups = loadedSources.categoryContracts.categories.reduce(
+  const atomicFormulaTerms = loadedSources.categoryContracts.categories.reduce(
     (total, category) => total + category.formula_terms.length,
-    0
-  );
-  const formulaTerms = loadedSources.categoryContracts.categories.reduce(
-    (total, category) => total + category.formula_terms.reduce(
-      (categoryTotal, group) => categoryTotal + group.names.length,
-      0
-    ),
     0
   );
   const expectedCoverage = `The required result is ${report.categories} categories, ${report.taxonomyRetrofits} unique retrofit mappings, zero missing IDs, and zero duplicate IDs.`;
@@ -327,14 +328,14 @@ function validateNarrativeTotals(result, loadedSources, urls, validationErrors) 
     `- Shared branches: ${report.sharedBranchesExpanded}.`,
     `- Canonical Standards: ${report.standardsEmbedded}.`,
     `- Expanded maximum atomic User inputs per category: ${report.maxAtomicUserInputs}.`,
-    `- Expanded Required User inputs: ${report.requiredUserInputs}.`,
+    `- Expanded Required Screening inputs: ${report.requiredUserInputs}.`,
+    `- Expanded Conditional Calculation Gates: ${report.conditionalCalculationGates}.`,
     `- Expanded Optional Known Details: ${report.optionalKnownDetails}.`,
-    `- Maximum Required User inputs per category: ${report.maxRequiredUserInputs}.`,
-    `- Categories above four Required User inputs: ${overFour}.`,
+    `- Maximum Required Screening inputs per category: ${report.maxRequiredUserInputs}.`,
+    `- Categories above four Required Screening inputs: ${overFour}.`,
     `- Machine-readable source-evidence records: ${loadedSources.evidenceManifest.evidence_records.length}.`,
     `- Source-evidence statuses: ${Object.entries(evidenceStatuses).map(([status, count]) => `${status} ${count}`).join(", ")}.`,
-    `- Formula-term groups: ${formulaTermGroups}.`,
-    `- Individual formula terms: ${formulaTerms}.`,
+    `- Atomic formula terms: ${atomicFormulaTerms}.`,
     `- Recorded category manual verdicts: ${loadedSources.categoryContracts.categories.length}.`,
     `- Recorded Standard manual verdicts: ${loadedSources.evidenceManifest.standards.length}.`,
     `- Executable Ready-category golden fixtures: ${loadedSources.goldenFixtures.size}.`

@@ -1,0 +1,113 @@
+{
+  "fixture_type": "ready_category_golden",
+  "category_id": "ITC-29",
+  "scenario": "exact-existing-model-and-exact-proposed-model",
+  "minimum_default_path_inputs": {
+    "quantity": 2,
+    "annual_miles_per_vehicle": 12000,
+    "existing_vehicle_id": 43764,
+    "proposed_vehicle_id": 44444,
+    "user_confirmed_service_equivalence": true,
+    "fuel_price_usd_per_gallon": 3.5,
+    "electric_price_usd_per_kwh": 0.15
+  },
+  "profile_fields": {},
+  "bill_fields": {
+    "average_cost_per_kwh": 0.15
+  },
+  "linked_opportunity_behavior": "The linked opportunity identifies the intended exact replacement but does not establish service equivalence.",
+  "source_records": [
+    {
+      "evidence_id": "E-FUELECONOMY-COMB08",
+      "fixture_path": "docs/operational-savings-fixtures/sources/fueleconomy-vehicle-schema.json",
+      "vehicle_id": 43764,
+      "field": "comb08",
+      "value": 32,
+      "unit_id": "mile_per_gallon"
+    },
+    {
+      "evidence_id": "E-FUELECONOMY-COMBE",
+      "fixture_path": "docs/operational-savings-fixtures/sources/fueleconomy-vehicle-schema.json",
+      "vehicle_id": 44444,
+      "field": "combE",
+      "value": 28,
+      "unit_id": "kilowatt_hour_per_100_mile"
+    }
+  ],
+  "resolved_values": {
+    "low": {
+      "value": 1617,
+      "unit": "USD/year"
+    },
+    "base": {
+      "value": 1617,
+      "unit": "USD/year"
+    },
+    "high": {
+      "value": 1617,
+      "unit": "USD/year"
+    }
+  },
+  "intermediate_calculations": [
+    {
+      "expression": "12000 miles/vehicle-year / 32 miles/gallon",
+      "result": 375,
+      "unit": "gallons/vehicle-year"
+    },
+    {
+      "expression": "12000 miles/vehicle-year × 28 kWh/100 miles / 100",
+      "result": 3360,
+      "unit": "kWh/vehicle-year"
+    },
+    {
+      "expression": "2 vehicles × 375 gallons/vehicle-year",
+      "result": 750,
+      "unit": "gallons/year"
+    },
+    {
+      "expression": "2 vehicles × 3360 kWh/vehicle-year",
+      "result": 6720,
+      "unit": "kWh/year"
+    },
+    {
+      "expression": "750 gallons/year × 3.50 USD/gallon",
+      "result": 2625,
+      "unit": "USD/year"
+    },
+    {
+      "expression": "6720 kWh/year × 0.15 USD/kWh",
+      "result": 1008,
+      "unit": "USD/year"
+    },
+    {
+      "expression": "2625 USD/year - 1008 USD/year",
+      "result": 1617,
+      "unit": "USD/year"
+    }
+  ],
+  "final_resource_delta": [
+    {
+      "resource": "vehicle-fuel",
+      "direction": "avoided",
+      "value": 750,
+      "unit": "gallons/year"
+    },
+    {
+      "resource": "electricity",
+      "direction": "added",
+      "value": 6720,
+      "unit": "kWh/year"
+    }
+  ],
+  "final_dollar_result": {
+    "value": 1617,
+    "unit": "USD/year"
+  },
+  "expected_uncertainty": "Exact arithmetic and reviewed source rows. Annual mileage, prices, and service equivalence remain explicit project inputs.",
+  "expected_missing_data_warnings": [
+    "Return no estimate if either exact vehicle ID, annual mileage, price, or explicit service-equivalence confirmation is missing.",
+    "Vehicle-class percentile estimates remain disabled.",
+    "Do not apply a second charging-efficiency factor to combE."
+  ],
+  "boundary": "Purchase price, maintenance, incentives, emissions, and charger electric-bill effects are outside this category."
+}

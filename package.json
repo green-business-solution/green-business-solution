@@ -51,6 +51,7 @@
     "matching:opportunity-data-targets": "node scripts/write-opportunity-data-research-targets.mjs",
     "matching:low-source-confidence-queue": "node scripts/write-low-source-confidence-opportunity-queue.mjs",
     "matching:sample": "node scripts/run-sample-matching.mjs",
+    "operational-savings:profile-fixture": "node scripts/write-normalized-profile-path-fixture.mjs",
     "matching:sample-opportunity-audit": "node scripts/audit-sample-matching-opportunity-data.mjs",
     "application-prep:first10": "node scripts/application-prep-first10.mjs",
     "matching:test-case-utility-prompt": "node scripts/write-sample-test-case-utility-data-prompt.mjs",

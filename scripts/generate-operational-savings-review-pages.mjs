@@ -1,4 +1,5 @@
 import { readdir, readFile, mkdir, rm, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { basename, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -9,7 +10,16 @@ const STANDARD_HEADING = /^### ■ (STD-[A-Z0-9-]+) - (.+)$/gm;
 const ALLOWED_LEAF_LABELS = ["(User)", "(Profile)", "(Bill)", "(Standard)"];
 const INTERMEDIATE_TAG = /\{\{intermediate:\s*([^}]+)\}\}/;
 const ALLOWED_RESOURCES = new Set(["electricity", "gas", "water-sewer", "liquid-fuel", "vehicle-fuel", "none"]);
-const USER_INPUT_TAG = /\{\{input:\s*(required|optional)\}\}/g;
+const USER_INPUT_TAG = /\{\{input:\s*(required|conditional|optional)\}\}/g;
+const ALLOWED_SCENARIO_READINESS = new Set([
+  "VERIFIED_EXECUTABLE",
+  "VERIFIED_NONEXECUTABLE",
+  "UNVERIFIED",
+  "UNSUPPORTED"
+]);
+const OPAQUE_PROFILE_OBJECT_PATHS = new Set([
+  "tax.siteTaxProfile"
+]);
 const ALLOWED_CATEGORY_STATUSES = new Set(["DRAFT", "RESEARCHED — READY FOR HUMAN REVIEW", "BLOCKED"]);
 const ALLOWED_STANDARD_STATUSES = new Set([...ALLOWED_CATEGORY_STATUSES, "LIMITED"]);
 const REQUIRED_CATEGORY_MARKERS = [
@@ -65,13 +75,26 @@ const GENERATED_NOTICE = [
 ].join("\n");
 
 export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
-  const [treeDocument, standardDocument, auditDocument, evidenceText, categoryContractText, billFieldDictionaryText] = await Promise.all([
+  const [
+    treeDocument,
+    standardDocument,
+    auditDocument,
+    evidenceText,
+    categoryContractText,
+    billFieldDictionaryText,
+    sourceFixtureSchemaText,
+    unitRegistryText,
+    profilePathFixtureText
+  ] = await Promise.all([
     readFile(join(root, "docs/operational-savings-information-trees.md"), "utf8"),
     readFile(join(root, "docs/operational-savings-standard-registry.md"), "utf8"),
     readFile(join(root, "docs/operational-savings-information-tree-audit.md"), "utf8"),
     readFile(join(root, "docs/operational-savings-source-evidence.json"), "utf8"),
     readFile(join(root, "docs/operational-savings-category-contracts.json"), "utf8"),
-    readFile(join(root, "data/bill_field_dictionary.json"), "utf8")
+    readFile(join(root, "data/bill_field_dictionary.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-fixtures/source-fixture.schema.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-unit-registry.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-fixtures/profile/normalized-profile-paths.json"), "utf8")
   ]);
   const goldenFixtureRoot = join(root, "docs/operational-savings-fixtures/categories");
   const sourceFixtureRoot = join(root, "docs/operational-savings-fixtures/sources");
@@ -81,13 +104,21 @@ export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
     const content = JSON.parse(await readFile(join(goldenFixtureRoot, file), "utf8"));
     goldenFixtures.set(content.category_id, { path: `docs/operational-savings-fixtures/categories/${file}`, content });
   }
-  const sourceFixturePaths = new Set(
-    (await readdir(sourceFixtureRoot).catch(() => []))
-      .filter((file) => file.endsWith(".json"))
-      .map((file) => `docs/operational-savings-fixtures/sources/${file}`)
-  );
+  const sourceFixtures = new Map();
+  for (const file of await readdir(sourceFixtureRoot).catch(() => [])) {
+    if (!file.endsWith(".json")) continue;
+    const path = `docs/operational-savings-fixtures/sources/${file}`;
+    sourceFixtures.set(path, JSON.parse(await readFile(join(root, path), "utf8")));
+  }
   const taxonomyModule = await import(
     `${pathToFileURL(join(root, "apps/api/server/matching/retrofitTaxonomy.mjs")).href}?review=${Date.now()}`
+  );
+  const profileModule = await import(
+    `${pathToFileURL(join(root, "apps/api/server/matching/normalizeUserProfile.mjs")).href}?review=${Date.now()}`
+  );
+  const actualProfilePathContract = deriveNormalizedProfilePathContract(
+    profileModule.normalizeUserProfile,
+    profileModule.USER_MATCH_PROFILE_SCHEMA_VERSION
   );
   return {
     root,
@@ -97,10 +128,103 @@ export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
     evidenceManifest: JSON.parse(evidenceText),
     categoryContracts: JSON.parse(categoryContractText),
     billFieldDictionary: JSON.parse(billFieldDictionaryText),
+    sourceFixtureSchema: JSON.parse(sourceFixtureSchemaText),
+    sourceFixtures,
+    unitRegistry: JSON.parse(unitRegistryText),
+    profilePathFixture: JSON.parse(profilePathFixtureText),
+    actualProfilePathContract,
     goldenFixtures,
-    sourceFixturePaths,
     taxonomy: taxonomyModule.RETROFIT_TYPES
   };
+}
+
+export function deriveNormalizedProfilePathContract(normalizeUserProfile, normalizerSchemaVersion) {
+  const normalized = normalizeUserProfile({
+    submissionId: "profile-contract-probe",
+    contact: {
+      email: "probe@example.com",
+      phone: "555-0100"
+    },
+    business: {
+      organizationType: "business",
+      primaryActivityText: "profile contract probe",
+      naicsCodes: ["000000"],
+      organizationSize: "probe"
+    },
+    site: {
+      address: "1 Probe Street, Sacramento, CA 95814",
+      buildingType: "office",
+      electricUtilityProvider: "SMUD",
+      squareFootage: "1000",
+      ownershipStatus: "owner",
+      geography: {
+        matchedAddress: "1 Probe Street, Sacramento, CA 95814",
+        stateCode: "CA",
+        zip5: "95814",
+        countyFips: "06067",
+        countyName: "Sacramento",
+        placeGeoid: "0664000",
+        placeName: "Sacramento",
+        censusTractGeoid: "06067000100",
+        censusBlockGeoid: "060670001001000",
+        coordinates: {
+          latitude: 38.5816,
+          longitude: -121.4944
+        },
+        status: "resolved",
+        provider: "profile-contract-probe"
+      }
+    },
+    project: {
+      stage: "planning"
+    },
+    siteTaxProfile: {
+      probe: true
+    },
+    uploadedTaxFiles: [{ id: "probe" }],
+    taxProfileFacts: [{ key: "probe" }],
+    taxExtractedValues: [{ key: "probe" }],
+    taxOpportunitySpecificInputs: [{ key: "probe" }],
+    taxMissingOrReviewInputs: [{ key: "probe" }],
+    grantProfileFacts: [{ key: "probe" }],
+    grantRetrofitProjectInputs: [{ key: "probe" }],
+    grantOpportunitySpecificInputs: [{ key: "probe" }],
+    grantMissingOrReviewInputs: [{ key: "probe" }],
+    grantDoNotForceQualificationReasons: ["probe"]
+  });
+  const paths = [];
+  collectProfilePathDescriptors(normalized, "", paths);
+  const contract = {
+    fixture_type: "normalized_profile_path_contract",
+    fixture_schema_version: "1.0.0",
+    normalizer_schema_version: normalizerSchemaVersion,
+    paths
+  };
+  return {
+    ...contract,
+    contract_sha256: `sha256:${createHash("sha256").update(JSON.stringify(contract)).digest("hex")}`
+  };
+}
+
+function collectProfilePathDescriptors(value, path, output) {
+  if (path) {
+    output.push({
+      path,
+      kind: Array.isArray(value) ? "array" : value === null ? "null" : typeof value
+    });
+  }
+  if (Array.isArray(value)) {
+    if (value.length > 0) {
+      output[output.length - 1].item_kind =
+        Array.isArray(value[0]) ? "array" : value[0] === null ? "null" : typeof value[0];
+    }
+    return;
+  }
+  if (!value || typeof value !== "object") return;
+  if (OPAQUE_PROFILE_OBJECT_PATHS.has(path)) return;
+  for (const key of Object.keys(value).sort()) {
+    collectProfilePathDescriptors(value[key], path ? `${path}.${key}` : key, output);
+  }
 }
 
 export function buildOperationalSavingsReview(sources) {
@@ -122,7 +246,9 @@ export function buildOperationalSavingsReview(sources) {
     errors
   );
   const taxonomyById = new Map(sources.taxonomy.map((retrofit) => [retrofit.retrofitTypeId, retrofit]));
-  const canonicalProfilePaths = new Set(sources.categoryContracts.canonical_profile_paths || []);
+  const canonicalProfilePaths = new Set(
+    sources.actualProfilePathContract.paths.map((descriptor) => descriptor.path)
+  );
   const canonicalBillFields = new Set(sources.billFieldDictionary.map((field) => field.id));
 
   assertContiguousCategoryIds(categories, errors);
@@ -133,10 +259,38 @@ export function buildOperationalSavingsReview(sources) {
   validateStatuses(categories, branches, standards, sources, errors);
   validateTaxonomyCoverage(categories, taxonomyById, errors);
   validateStandards(standards, errors);
+  validateProfilePathContract(sources.profilePathFixture, sources.actualProfilePathContract, errors);
+  validateUnitRegistry(sources.unitRegistry, errors);
+  validateSourceFixtures(
+    sources.sourceFixtureSchema,
+    sources.sourceFixtures,
+    sources.unitRegistry,
+    errors
+  );
   validateDirectInputPolicyDefinitions(sources.categoryContracts, standardById, errors);
-  validateEvidenceManifest(standards, standardById, sources.evidenceManifest, evidenceById, sources.sourceFixturePaths, errors);
+  validateEvidenceManifest(
+    standards,
+    standardById,
+    sources.evidenceManifest,
+    evidenceById,
+    sources.sourceFixtures,
+    errors
+  );
   validateRateComponentDefinitions(sources.categoryContracts, canonicalBillFields, errors);
-  validateCategoryContracts(categories, semanticContractById, sources, evidenceById, errors);
+  validateCategoryContracts(
+    categories,
+    semanticContractById,
+    sources,
+    evidenceById,
+    canonicalProfilePaths,
+    errors
+  );
+  validateDimensionalRelationships(
+    sources.categoryContracts,
+    semanticContractById,
+    sources.unitRegistry,
+    errors
+  );
 
   const branchUsage = new Map(branches.map((branch) => [branch.id, new Set()]));
   const standardUsage = new Map(standards.map((standard) => [standard.id, new Set()]));
@@ -178,6 +332,7 @@ export function buildOperationalSavingsReview(sources) {
       errors
     );
     validateUserInputClassifications(expandedTree, category.id, errors);
+    validateConditionalGates(expandedTree, category.id, semanticContract, errors);
     validateFormulaRoot(category, expandedTree, errors);
     validateFormulaTermTreeCoverage(category, expandedTree, semanticContract, errors);
 
@@ -214,7 +369,7 @@ export function buildOperationalSavingsReview(sources) {
     if (referencedStandards.length === 0 && inputs.Standard.length > 0) {
       errors.push(`${category.id} declares no Standards but has a Standard terminal leaf`);
     }
-    const decisions = deriveReviewDecisions(category);
+    const decisions = deriveReviewDecisions(category, semanticContract);
     const uncertainty = deriveUncertainty(category, tracedStandards);
     const automationReadiness = deriveAutomationReadiness(category, tracedStandards);
 
@@ -229,6 +384,7 @@ export function buildOperationalSavingsReview(sources) {
       uncertainty,
       automationReadiness,
       semanticContract,
+      goldenFixture: sources.goldenFixtures.get(category.id)?.content || null,
       rateComponentDefinitions: sources.categoryContracts.rate_component_definitions,
       unitConversionDefinitions: sources.categoryContracts.unit_conversion_definitions,
       sourceEvidence: buildCategoryEvidence(
@@ -505,16 +661,61 @@ function validateUserInputClassifications(tree, ownerId, errors) {
     if (node.children.length > 0 || path.length === 1 || !node.text.endsWith("(User)")) return;
     const classifications = [...node.text.matchAll(USER_INPUT_TAG)].map((match) => match[1]);
     if (classifications.length !== 1) {
-      errors.push(`${ownerId} User input must have exactly one required or optional classification: ${JSON.stringify(stripResolutionTags(node.text))}`);
+      errors.push(`${ownerId} User input must have exactly one required, conditional, or optional classification: ${JSON.stringify(stripResolutionTags(node.text))}`);
       return;
     }
     if (classifications[0] === "optional" && !/\bif known\b/i.test(node.text)) {
       errors.push(`${ownerId} Optional Known Detail must say "if known": ${JSON.stringify(stripResolutionTags(node.text))}`);
     }
     if (classifications[0] === "required" && /\bif known\b/i.test(node.text)) {
-      errors.push(`${ownerId} Required User Input cannot say "if known": ${JSON.stringify(stripResolutionTags(node.text))}`);
+      errors.push(`${ownerId} Required Screening Input cannot say "if known": ${JSON.stringify(stripResolutionTags(node.text))}`);
     }
   });
+}
+
+function validateConditionalGates(tree, ownerId, contract, errors) {
+  if (!contract) return;
+  const conditionalNodes = [];
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1 || !node.text.endsWith("(User)")) return;
+    const classification = [...node.text.matchAll(USER_INPUT_TAG)][0]?.[1];
+    if (classification === "conditional") conditionalNodes.push(cleanTreeText(node.text));
+  });
+  const gateByNode = new Map(
+    (contract.conditional_gates || []).map((gate) => [normalizeText(gate.tree_node), gate])
+  );
+  for (const node of conditionalNodes) {
+    const gate = gateByNode.get(normalizeText(node));
+    if (!gate) {
+      errors.push(`${ownerId} Conditional Calculation Gate lacks metadata: ${node}`);
+      continue;
+    }
+    for (const field of ["gate_id", "activation_condition"]) {
+      if (!String(gate[field] || "").trim()) {
+        errors.push(`${ownerId} Conditional Calculation Gate ${node} lacks ${field}`);
+      }
+    }
+    if (!Array.isArray(gate.resolves_terms) || gate.resolves_terms.length === 0) {
+      errors.push(`${ownerId} Conditional Calculation Gate ${node} resolves no formula terms`);
+    }
+    if (typeof gate.otherwise_no_estimate !== "boolean") {
+      errors.push(`${ownerId} Conditional Calculation Gate ${node} lacks otherwise_no_estimate`);
+    }
+    if (typeof gate.future_verified_standard_could_remove !== "boolean") {
+      errors.push(`${ownerId} Conditional Calculation Gate ${node} lacks future Standard-removal metadata`);
+    }
+    const termNames = new Set((contract.formula_terms || []).map((term) => term.name));
+    for (const termName of gate.resolves_terms || []) {
+      if (!termNames.has(termName)) {
+        errors.push(`${ownerId} Conditional Calculation Gate ${node} references unknown term ${termName}`);
+      }
+    }
+  }
+  for (const gate of contract.conditional_gates || []) {
+    if (!conditionalNodes.some((node) => normalizeText(node) === normalizeText(gate.tree_node))) {
+      errors.push(`${ownerId} declares unused Conditional Calculation Gate ${gate.tree_node}`);
+    }
+  }
 }
 
 function validateRequiredDirectInputs(tree, category, policies, errors) {
@@ -633,7 +834,190 @@ function validateDirectInputPolicyDefinitions(contractManifest, standardById, er
   }
 }
 
-function validateEvidenceManifest(standards, standardById, manifest, evidenceById, sourceFixturePaths, errors) {
+function validateProfilePathContract(fixture, actual, errors) {
+  if (fixture.fixture_type !== "normalized_profile_path_contract") {
+    errors.push("normalized Profile path fixture has an invalid fixture type");
+  }
+  if (fixture.normalizer_schema_version !== actual.normalizer_schema_version) {
+    errors.push(
+      `normalized Profile path fixture schema version ${fixture.normalizer_schema_version} does not match ${actual.normalizer_schema_version}`
+    );
+  }
+  const fixtureByPath = new Map((fixture.paths || []).map((descriptor) => [descriptor.path, descriptor]));
+  const actualByPath = new Map(actual.paths.map((descriptor) => [descriptor.path, descriptor]));
+  for (const [path, descriptor] of actualByPath) {
+    const stored = fixtureByPath.get(path);
+    if (!stored) {
+      errors.push(`normalized Profile path fixture is stale: missing actual path ${path}`);
+      continue;
+    }
+    if (stored.kind !== descriptor.kind) {
+      errors.push(
+        `normalized Profile path fixture has wrong structure for ${path}: ${stored.kind}; expected ${descriptor.kind}`
+      );
+    }
+    if ((stored.item_kind || null) !== (descriptor.item_kind || null)) {
+      errors.push(
+        `normalized Profile path fixture has wrong array item structure for ${path}: ${stored.item_kind || "unspecified"}; expected ${descriptor.item_kind || "unspecified"}`
+      );
+    }
+  }
+  for (const path of fixtureByPath.keys()) {
+    if (!actualByPath.has(path)) {
+      errors.push(`normalized Profile path fixture is stale: nonexistent path ${path}`);
+    }
+  }
+  if (fixture.contract_sha256 !== actual.contract_sha256) {
+    errors.push("normalized Profile path fixture checksum is stale");
+  }
+}
+
+function validateUnitRegistry(registry, errors) {
+  if (registry.registry_type !== "operational_savings_unit_registry" || registry.schema_version !== "1.0.0") {
+    errors.push("operational-savings unit registry has invalid identity metadata");
+  }
+  for (const [unitId, definition] of Object.entries(registry.units || {})) {
+    if (definition.unit_id !== unitId) {
+      errors.push(`unit registry key ${unitId} does not match embedded unit_id ${definition.unit_id}`);
+    }
+    for (const field of ["display_unit", "dimension", "quantity_kind"]) {
+      if (!String(definition[field] || "").trim()) {
+        errors.push(`unit ${unitId} lacks ${field}`);
+      }
+    }
+    if (/[,\n]|\s(?:and|or)\s/i.test(definition.display_unit || "")) {
+      errors.push(`unit ${unitId} has an ambiguous combined display unit ${definition.display_unit}`);
+    }
+    if (
+      definition.dimension_vector !== null &&
+      (typeof definition.dimension_vector !== "object" || Array.isArray(definition.dimension_vector))
+    ) {
+      errors.push(`unit ${unitId} has a malformed dimension vector`);
+    }
+    for (const [base, exponent] of Object.entries(definition.dimension_vector || {})) {
+      if (!base || !Number.isFinite(exponent)) {
+        errors.push(`unit ${unitId} has an invalid dimension exponent`);
+      }
+    }
+  }
+}
+
+function validateSourceFixtures(schema, sourceFixtures, unitRegistry, errors) {
+  if (
+    schema.$id !== "https://greenbusinesssolution.org/schemas/operational-savings/source-fixture-v1.json" ||
+    schema.additionalProperties !== false
+  ) {
+    errors.push("source fixture schema has invalid identity or openness");
+  }
+  const required = new Set(schema.required || []);
+  const allowed = new Set(Object.keys(schema.properties || {}));
+  const rawArtifactAllowed = new Set(
+    Object.keys(schema.properties?.raw_artifacts?.items?.properties || {})
+  );
+  const coverageAllowed = new Set(
+    Object.keys(schema.properties?.coverage?.properties || {})
+  );
+  for (const [path, fixture] of sourceFixtures) {
+    for (const field of required) {
+      if (!(field in fixture)) errors.push(`${path} source fixture is missing ${field}`);
+    }
+    for (const field of Object.keys(fixture)) {
+      if (!allowed.has(field)) errors.push(`${path} source fixture has unsupported field ${field}`);
+    }
+    if (fixture.fixture_type !== "reviewed_source_fixture") {
+      errors.push(`${path} source fixture has invalid fixture type ${fixture.fixture_type}`);
+    }
+    if (fixture.fixture_schema_version !== "1.0.0") {
+      errors.push(`${path} source fixture has unsupported schema version ${fixture.fixture_schema_version}`);
+    }
+    for (const dateField of ["reviewed_on", "retrieved_on"]) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(fixture[dateField] || "")) {
+        errors.push(`${path} source fixture has invalid ${dateField}`);
+      }
+    }
+    if (!String(fixture.source_title || "").trim()) {
+      errors.push(`${path} source fixture lacks a source title`);
+    }
+    if (!Array.isArray(fixture.source_urls) || fixture.source_urls.length === 0) {
+      errors.push(`${path} source fixture has no source URLs`);
+    } else {
+      for (const url of fixture.source_urls) {
+        if (!/^https:\/\//.test(url)) errors.push(`${path} source fixture URL must use https: ${url}`);
+      }
+    }
+    if (!Array.isArray(fixture.raw_artifacts) || fixture.raw_artifacts.length === 0) {
+      errors.push(`${path} source fixture has no raw artifact metadata`);
+    }
+    for (const [index, artifact] of (fixture.raw_artifacts || []).entries()) {
+      for (const field of Object.keys(artifact)) {
+        if (!rawArtifactAllowed.has(field)) {
+          errors.push(`${path} raw artifact ${index} has unsupported field ${field}`);
+        }
+      }
+      for (const field of [
+        "artifact_identifier",
+        "source_url",
+        "source_version",
+        "exact_artifact",
+        "source_checksum"
+      ]) {
+        if (!String(artifact[field] || "").trim()) {
+          errors.push(`${path} raw artifact ${index} lacks ${field}`);
+        }
+      }
+      if (!fixture.source_urls.includes(artifact.source_url)) {
+        errors.push(`${path} raw artifact ${index} URL is absent from source_urls`);
+      }
+      if (!/^sha256:[0-9a-f]{64}$/.test(artifact.source_checksum || "")) {
+        errors.push(`${path} raw artifact ${index} has invalid source checksum`);
+      }
+    }
+    if (
+      !String(fixture.coverage?.summary || "").trim() ||
+      !Array.isArray(fixture.coverage?.source_roles) ||
+      fixture.coverage.source_roles.length === 0 ||
+      !Array.isArray(fixture.coverage?.scenarios) ||
+      fixture.coverage.scenarios.length === 0
+    ) {
+      errors.push(`${path} source fixture has malformed coverage metadata`);
+    }
+    for (const field of Object.keys(fixture.coverage || {})) {
+      if (!coverageAllowed.has(field)) {
+        errors.push(`${path} source fixture coverage has unsupported field ${field}`);
+      }
+    }
+    let substantiveCount = 0;
+    for (const collection of ["fields", "tables", "values", "methods"]) {
+      if (!Array.isArray(fixture[collection])) {
+        errors.push(`${path} source fixture ${collection} must be an array`);
+        continue;
+      }
+      substantiveCount += fixture[collection].length;
+      for (const [index, item] of fixture[collection].entries()) {
+        for (const field of ["field", "unit_id", "role", "source_location"]) {
+          if (!String(item[field] || "").trim()) {
+            errors.push(`${path} ${collection}[${index}] lacks ${field}`);
+          }
+        }
+        if (!unitRegistry.units?.[item.unit_id]) {
+          errors.push(`${path} ${collection}[${index}] references unknown unit_id ${item.unit_id}`);
+        }
+      }
+    }
+    if (substantiveCount === 0) errors.push(`${path} source fixture has no substantive records`);
+    for (const collection of ["supported_uses", "unsupported_inferences", "provenance_notes"]) {
+      if (
+        !Array.isArray(fixture[collection]) ||
+        fixture[collection].length === 0 ||
+        fixture[collection].some((value) => !String(value || "").trim())
+      ) {
+        errors.push(`${path} source fixture has malformed ${collection}`);
+      }
+    }
+  }
+}
+
+function validateEvidenceManifest(standards, standardById, manifest, evidenceById, sourceFixtures, errors) {
   const allowedStatuses = new Set(["VERIFIED", "LIMITED", "UNVERIFIED", "UNSUPPORTED"]);
   const requiredFields = [
     "standard_id",
@@ -761,9 +1145,15 @@ function validateEvidenceManifest(standards, standardById, manifest, evidenceByI
     if (
       record.evidence_status === "VERIFIED" &&
       record.fixture_or_test_reference &&
-      !sourceFixturePaths.has(record.fixture_or_test_reference)
+      !sourceFixtures.has(record.fixture_or_test_reference)
     ) {
       errors.push(`${record.id} VERIFIED evidence references a missing source fixture ${record.fixture_or_test_reference}`);
+    }
+    if (record.evidence_status === "VERIFIED") {
+      if (!/^sha256:[0-9a-f]{64}$/.test(record.source_checksum || "")) {
+        errors.push(`${record.id} VERIFIED evidence lacks a canonical source checksum`);
+      }
+      validateVerifiedEvidenceBinding(record, sourceFixtures, errors);
     }
     if (
       record.source_roles?.includes("existing_equipment_baseline") &&
@@ -781,9 +1171,172 @@ function validateEvidenceManifest(standards, standardById, manifest, evidenceByI
   }
 }
 
-function validateCategoryContracts(categories, contractById, sources, evidenceById, errors) {
+function validateVerifiedEvidenceBinding(record, sourceFixtures, errors) {
+  const binding = record.fixture_binding;
+  if (!binding || typeof binding !== "object") {
+    errors.push(`${record.id} VERIFIED evidence lacks a deep fixture binding`);
+    return;
+  }
+  const fixture = sourceFixtures.get(binding.fixture_path);
+  if (!fixture) {
+    errors.push(`${record.id} fixture binding references missing fixture ${binding.fixture_path}`);
+    return;
+  }
+  if (binding.fixture_path !== record.fixture_or_test_reference) {
+    errors.push(`${record.id} fixture binding path does not match fixture_or_test_reference`);
+  }
+  const equalityBindings = [
+    ["fixture type", binding.fixture_type_pointer, "reviewed_source_fixture"],
+    ["source title", binding.source_title_pointer, record.source_title],
+    ["source URL", binding.source_url_pointer, record.source_url],
+    ["source version", binding.source_version_pointer, record.source_version],
+    ["artifact", binding.artifact_pointer, record.exact_artifact],
+    ["checksum", binding.checksum_pointer, record.source_checksum],
+    ["coverage", binding.coverage_pointer, record.covered_product_or_method_scope]
+  ];
+  for (const [label, pointer, expected] of equalityBindings) {
+    const resolved = resolveJsonPointer(fixture, pointer);
+    if (!resolved.found) {
+      errors.push(`${record.id} fixture binding has missing ${label} pointer ${pointer}`);
+    } else if (resolved.value !== expected) {
+      errors.push(`${record.id} fixture binding ${label} does not match evidence metadata`);
+    }
+  }
+  for (const [label, pointer, pattern] of [
+    ["artifact identifier", binding.artifact_identifier_pointer, /^.+$/],
+    ["checksum", binding.checksum_pointer, /^sha256:[0-9a-f]{64}$/]
+  ]) {
+    const resolved = resolveJsonPointer(fixture, pointer);
+    if (!resolved.found || !pattern.test(String(resolved.value || ""))) {
+      errors.push(`${record.id} fixture binding has invalid ${label} pointer ${pointer}`);
+    }
+  }
+  for (const [index, supporting] of (binding.supporting_artifacts || []).entries()) {
+    if (!String(supporting.role || "").trim()) {
+      errors.push(`${record.id} supporting artifact ${index} lacks a role`);
+    }
+    for (const [label, pointer, pattern] of [
+      ["source URL", supporting.source_url_pointer, /^https:\/\//],
+      ["source version", supporting.source_version_pointer, /^.+$/],
+      ["artifact", supporting.artifact_pointer, /^.+$/],
+      ["artifact identifier", supporting.artifact_identifier_pointer, /^.+$/],
+      ["checksum", supporting.checksum_pointer, /^sha256:[0-9a-f]{64}$/]
+    ]) {
+      const resolved = resolveJsonPointer(fixture, pointer);
+      if (!resolved.found || !pattern.test(String(resolved.value || ""))) {
+        errors.push(`${record.id} supporting artifact ${index} has invalid ${label} pointer ${pointer}`);
+      }
+    }
+  }
+  const sourceRoles = resolveJsonPointer(fixture, binding.source_roles_pointer);
+  if (!sourceRoles.found || !Array.isArray(sourceRoles.value)) {
+    errors.push(`${record.id} fixture binding has invalid source-role coverage pointer`);
+  } else {
+    for (const role of record.source_roles || []) {
+      if (!sourceRoles.value.includes(role)) {
+        errors.push(`${record.id} source role ${role} is absent from its fixture coverage`);
+      }
+    }
+  }
+  const fixtureScenarios = fixture.coverage?.scenarios || [];
+  for (const scenario of record.supported_scenarios || []) {
+    if (!fixtureScenarios.includes(scenario)) {
+      errors.push(`${record.id} scenario ${scenario} is absent from its fixture coverage`);
+    }
+  }
+  if (!Array.isArray(binding.field_pointers) || binding.field_pointers.length === 0) {
+    errors.push(`${record.id} fixture binding has no field pointers`);
+  }
+  const boundFields = [];
+  for (const pointer of binding.field_pointers || []) {
+    const resolved = resolveJsonPointer(fixture, pointer);
+    if (!resolved.found || !String(resolved.value || "").trim()) {
+      errors.push(`${record.id} fixture binding has invalid field pointer ${pointer}`);
+    } else {
+      boundFields.push(String(resolved.value));
+    }
+  }
+  const normalizedLocation = normalizeText(record.exact_field_table_page_equation_or_function);
+  for (const field of boundFields) {
+    if (!normalizedLocation.includes(normalizeText(field))) {
+      errors.push(`${record.id} bound field ${field} is absent from its exact source-location description`);
+    }
+  }
+  if (!Array.isArray(record.unit_ids) || record.unit_ids.length === 0) {
+    errors.push(`${record.id} VERIFIED evidence has no canonical unit_ids`);
+  }
+  const boundUnits = [];
+  for (const pointer of binding.unit_pointers || []) {
+    const resolved = resolveJsonPointer(fixture, pointer);
+    if (!resolved.found || !String(resolved.value || "").trim()) {
+      errors.push(`${record.id} fixture binding has invalid unit pointer ${pointer}`);
+    } else {
+      boundUnits.push(resolved.value);
+    }
+  }
+  for (const unitId of record.unit_ids || []) {
+    if (!boundUnits.includes(unitId)) {
+      errors.push(`${record.id} canonical unit ${unitId} is absent from bound fixture fields`);
+    }
+  }
+  if (!Array.isArray(binding.value_bindings)) {
+    errors.push(`${record.id} fixture binding value_bindings must be an array`);
+  }
+  for (const valueBinding of binding.value_bindings || []) {
+    const resolved = resolveJsonPointer(fixture, valueBinding.pointer);
+    if (!resolved.found) {
+      errors.push(`${record.id} fixture binding has missing value pointer ${valueBinding.pointer}`);
+    } else if (!Object.is(resolved.value, valueBinding.expected)) {
+      errors.push(`${record.id} fixture binding value does not match ${valueBinding.pointer}`);
+    }
+  }
+  if (
+    !Array.isArray(binding.unsupported_inference_pointers) ||
+    binding.unsupported_inference_pointers.length === 0
+  ) {
+    errors.push(`${record.id} fixture binding has no unsupported-inference pointers`);
+  }
+  for (const pointer of binding.unsupported_inference_pointers || []) {
+    const resolved = resolveJsonPointer(fixture, pointer);
+    if (!resolved.found || !(record.unsupported_uses || []).includes(resolved.value)) {
+      errors.push(`${record.id} unsupported-use binding does not match ${pointer}`);
+    }
+  }
+  if (!Array.isArray(binding.substantive_pointers) || binding.substantive_pointers.length === 0) {
+    errors.push(`${record.id} fixture binding has no substantive pointers`);
+  }
+  for (const pointer of binding.substantive_pointers || []) {
+    if (!/^\/(?:fields|tables|values|methods)\/\d+$/.test(pointer)) {
+      errors.push(`${record.id} substantive pointer is outside the canonical collections: ${pointer}`);
+      continue;
+    }
+    const resolved = resolveJsonPointer(fixture, pointer);
+    if (!resolved.found || !resolved.value || typeof resolved.value !== "object") {
+      errors.push(`${record.id} fixture binding has invalid substantive pointer ${pointer}`);
+    }
+  }
+}
+
+function resolveJsonPointer(value, pointer) {
+  if (pointer === "") return { found: true, value };
+  if (typeof pointer !== "string" || !pointer.startsWith("/")) return { found: false };
+  let current = value;
+  for (const rawSegment of pointer.slice(1).split("/")) {
+    const segment = rawSegment.replaceAll("~1", "/").replaceAll("~0", "~");
+    if (
+      current === null ||
+      typeof current !== "object" ||
+      !Object.prototype.hasOwnProperty.call(current, segment)
+    ) {
+      return { found: false };
+    }
+    current = current[segment];
+  }
+  return { found: true, value: current };
+}
+
+function validateCategoryContracts(categories, contractById, sources, evidenceById, allowedProfilePaths, errors) {
   const allowedComponents = new Set(Object.keys(sources.categoryContracts.rate_component_definitions || {}));
-  const allowedProfilePaths = new Set(sources.categoryContracts.canonical_profile_paths || []);
   const allowedBillFields = new Set(sources.billFieldDictionary.map((field) => field.id));
   const categoryById = new Map(categories.map((category) => [category.id, category]));
 
@@ -805,22 +1358,44 @@ function validateCategoryContracts(categories, contractById, sources, evidenceBy
     if (!String(contract.manual_review_verdict || "").trim()) {
       errors.push(`${category.id} semantic contract lacks a manual review verdict`);
     }
+    const termNames = new Set();
     for (const group of contract.formula_terms || []) {
       for (const field of sources.categoryContracts.formula_term_fields || []) {
-        if (!(field in group)) errors.push(`${category.id} formula-term group is missing ${field}`);
+        if (!(field in group)) errors.push(`${category.id} formula term is missing ${field}`);
       }
-      if (!Array.isArray(group.names) || group.names.length === 0) errors.push(`${category.id} formula-term group has no term names`);
-      if (!String(group.unit || "").trim() || /^mismatch|unknown$/i.test(group.unit || "")) {
-        errors.push(`${category.id} formula-term group has invalid units for ${(group.names || []).join(", ")}`);
+      if (!String(group.name || "").trim()) {
+        errors.push(`${category.id} formula term has no name`);
+      } else if (termNames.has(group.name)) {
+        errors.push(`${category.id} has duplicate atomic formula term ${group.name}`);
+      } else {
+        termNames.add(group.name);
+      }
+      if ("names" in group || "unit" in group) {
+        errors.push(`${category.id} formula term ${group.name || "unknown"} uses a legacy grouped-term field`);
+      }
+      const unit = sources.unitRegistry.units?.[group.unit_id];
+      if (!unit) {
+        errors.push(`${category.id} formula term ${group.name} references unknown unit_id ${group.unit_id}`);
+      } else {
+        for (const field of ["dimension", "display_unit", "quantity_kind"]) {
+          if (group[field] !== unit[field]) {
+            errors.push(
+              `${category.id} formula term ${group.name} ${field} ${group[field]} does not match unit ${group.unit_id}`
+            );
+          }
+        }
+      }
+      if (/[,\n]|\s(?:and|or)\s/i.test(group.display_unit || "")) {
+        errors.push(`${category.id} formula term ${group.name} has ambiguous combined units ${group.display_unit}`);
       }
       if (!Array.isArray(group.tree_nodes) || group.tree_nodes.length === 0) {
-        errors.push(`${category.id} formula term ${(group.names || []).join(", ")} has no tree resolution`);
+        errors.push(`${category.id} formula term ${group.name} has no tree resolution`);
       }
       if (!Array.isArray(group.exact_paths) || group.exact_paths.length === 0) {
-        errors.push(`${category.id} formula term ${(group.names || []).join(", ")} has no exact input path`);
+        errors.push(`${category.id} formula term ${group.name} has no exact input path`);
       }
       if (!String(group.formula_use || "").trim() || /\bunused\b/i.test(group.formula_use || "")) {
-        errors.push(`${category.id} formula term ${(group.names || []).join(", ")} is not used by the formula`);
+        errors.push(`${category.id} formula term ${group.name} is not used by the formula`);
       }
       for (const exactPath of group.exact_paths || []) {
         for (const match of exactPath.matchAll(/unit_conversion:([a-z0-9-]+)/g)) {
@@ -847,10 +1422,11 @@ function validateCategoryContracts(categories, contractById, sources, evidenceBy
         group.standard_output_key &&
         !(group.evidence_ids || []).some((evidenceId) => evidenceById.get(evidenceId)?.output_key === group.standard_output_key)
       ) {
-        errors.push(`${category.id} formula term ${group.names.join(", ")} has no evidence for Standard output ${group.standard_output_key}`);
+        errors.push(`${category.id} formula term ${group.name} has no evidence for Standard output ${group.standard_output_key}`);
       }
       validateTermUnitHeuristics(category.id, group, errors);
     }
+    validateScenarioReadiness(category, contract, evidenceById, sources.goldenFixtures, errors);
     for (const component of contract.rate_components || []) {
       if (!allowedComponents.has(component)) errors.push(`${category.id} has unknown rate component ${component}`);
     }
@@ -882,7 +1458,7 @@ function validateCategoryContracts(categories, contractById, sources, evidenceBy
     const declaredSourceFixture = contract.default_path?.source_fixture;
     if (
       declaredSourceFixture &&
-      !sources.sourceFixturePaths.has(declaredSourceFixture) &&
+      !sources.sourceFixtures.has(declaredSourceFixture) &&
       ![...sources.goldenFixtures.values()].some((candidate) => candidate.path === declaredSourceFixture)
     ) {
       errors.push(`${category.id} default path references a missing source fixture ${declaredSourceFixture}`);
@@ -909,6 +1485,144 @@ function validateCategoryContracts(categories, contractById, sources, evidenceBy
   for (const contract of contractById.values()) {
     if (!categoryById.has(contract.id)) errors.push(`semantic contract references unknown category ${contract.id}`);
   }
+}
+
+function validateScenarioReadiness(category, contract, evidenceById, goldenFixtures, errors) {
+  if (!Array.isArray(contract.scenarios) || contract.scenarios.length === 0) {
+    errors.push(`${category.id} has no scenario-level readiness records`);
+    return;
+  }
+  const scenarios = new Map();
+  for (const scenario of contract.scenarios) {
+    if (!String(scenario.scenario_id || "").trim()) {
+      errors.push(`${category.id} has a scenario without scenario_id`);
+      continue;
+    }
+    if (scenarios.has(scenario.scenario_id)) {
+      errors.push(`${category.id} has duplicate scenario ${scenario.scenario_id}`);
+    }
+    scenarios.set(scenario.scenario_id, scenario);
+    if (!ALLOWED_SCENARIO_READINESS.has(scenario.readiness)) {
+      errors.push(`${category.id} scenario ${scenario.scenario_id} has invalid readiness ${scenario.readiness}`);
+    }
+    if (!String(scenario.label || "").trim()) {
+      errors.push(`${category.id} scenario ${scenario.scenario_id} lacks a label`);
+    }
+    for (const evidenceId of scenario.evidence || []) {
+      if (!evidenceById.has(evidenceId)) {
+        errors.push(`${category.id} scenario ${scenario.scenario_id} references unknown evidence ${evidenceId}`);
+      }
+      if (
+        scenario.readiness.startsWith("VERIFIED") &&
+        evidenceById.get(evidenceId)?.evidence_status !== "VERIFIED"
+      ) {
+        errors.push(`${category.id} verified scenario ${scenario.scenario_id} uses insufficient evidence ${evidenceId}`);
+      }
+    }
+    if (scenario.readiness === "VERIFIED_EXECUTABLE" && !scenario.executable_fixture) {
+      errors.push(`${category.id} executable scenario ${scenario.scenario_id} lacks an executable fixture`);
+    }
+    if (scenario.readiness !== "VERIFIED_EXECUTABLE" && scenario.executable_fixture) {
+      errors.push(`${category.id} non-executable scenario ${scenario.scenario_id} claims an executable fixture`);
+    }
+  }
+  if (!scenarios.has(contract.default_path?.scenario)) {
+    errors.push(`${category.id} default path scenario has no scenario-level readiness record`);
+  }
+  const readyScenario = contract.ready_scenario_id
+    ? scenarios.get(contract.ready_scenario_id)
+    : null;
+  if (contract.ready_scenario_id && !readyScenario) {
+    errors.push(`${category.id} ready_scenario_id references unknown scenario ${contract.ready_scenario_id}`);
+  }
+  if (readyScenario && readyScenario.readiness !== "VERIFIED_EXECUTABLE") {
+    errors.push(`${category.id} ready_scenario_id is not VERIFIED_EXECUTABLE`);
+  }
+  const executableScenarios = [...scenarios.values()].filter(
+    (scenario) => scenario.readiness === "VERIFIED_EXECUTABLE"
+  );
+  if (category.status === "RESEARCHED — READY FOR HUMAN REVIEW") {
+    if (executableScenarios.length === 0 || !readyScenario) {
+      errors.push(`${category.id} Ready category has no named VERIFIED_EXECUTABLE scenario`);
+    }
+  } else if (executableScenarios.length > 0 || contract.ready_scenario_id) {
+    errors.push(`${category.id} non-Ready category claims a VERIFIED_EXECUTABLE scenario`);
+  }
+  const goldenFixture = goldenFixtures.get(category.id);
+  if (readyScenario && goldenFixture?.path !== readyScenario.executable_fixture) {
+    errors.push(`${category.id} ready scenario fixture does not match the category golden fixture`);
+  }
+}
+
+function validateDimensionalRelationships(manifest, contractById, unitRegistry, errors) {
+  const relationshipIds = new Set();
+  for (const relationship of manifest.dimensional_relationships || []) {
+    if (!String(relationship.relationship_id || "").trim()) {
+      errors.push("dimensional relationship lacks relationship_id");
+      continue;
+    }
+    if (relationshipIds.has(relationship.relationship_id)) {
+      errors.push(`duplicate dimensional relationship ${relationship.relationship_id}`);
+    }
+    relationshipIds.add(relationship.relationship_id);
+    const contract = contractById.get(relationship.category_id);
+    if (!contract) {
+      errors.push(`${relationship.relationship_id} references unknown category ${relationship.category_id}`);
+      continue;
+    }
+    const termByName = new Map(contract.formula_terms.map((term) => [term.name, term]));
+    const result = termByName.get(relationship.result_term);
+    if (!result) {
+      errors.push(`${relationship.relationship_id} references missing result term ${relationship.result_term}`);
+      continue;
+    }
+    const resultVector = unitRegistry.units?.[result.unit_id]?.dimension_vector;
+    if (resultVector === null || resultVector === undefined) {
+      errors.push(`${relationship.relationship_id} result term ${result.name} lacks a deterministic dimension vector`);
+      continue;
+    }
+    const calculated = {};
+    let valid = true;
+    for (const operand of relationship.operands || []) {
+      const term = termByName.get(operand.term);
+      if (!term) {
+        errors.push(`${relationship.relationship_id} references missing operand ${operand.term}`);
+        valid = false;
+        continue;
+      }
+      if (!Number.isInteger(operand.exponent) || operand.exponent === 0) {
+        errors.push(`${relationship.relationship_id} has invalid exponent for ${operand.term}`);
+        valid = false;
+        continue;
+      }
+      const vector = unitRegistry.units?.[term.unit_id]?.dimension_vector;
+      if (vector === null || vector === undefined) {
+        errors.push(`${relationship.relationship_id} operand ${operand.term} lacks a deterministic dimension vector`);
+        valid = false;
+        continue;
+      }
+      for (const [base, exponent] of Object.entries(vector)) {
+        calculated[base] = (calculated[base] || 0) + exponent * operand.exponent;
+      }
+    }
+    if (valid && !equalDimensionVectors(calculated, resultVector)) {
+      errors.push(
+        `${relationship.relationship_id} dimension mismatch: ${JSON.stringify(cleanDimensionVector(calculated))} does not equal ${JSON.stringify(cleanDimensionVector(resultVector))}`
+      );
+    }
+  }
+}
+
+function equalDimensionVectors(left, right) {
+  return JSON.stringify(cleanDimensionVector(left)) === JSON.stringify(cleanDimensionVector(right));
+}
+
+function cleanDimensionVector(vector) {
+  return Object.fromEntries(
+    Object.entries(vector || {})
+      .filter(([, exponent]) => exponent !== 0)
+      .sort(([left], [right]) => left.localeCompare(right))
+  );
 }
 
 function validateRateComponentDefinitions(contractManifest, allowedBillFields, errors) {
@@ -994,19 +1708,79 @@ function validateGoldenFixture(category, contract, fixture, errors) {
   if (!Array.isArray(fixture.expected_missing_data_warnings)) {
     errors.push(`${category.id} Ready golden fixture lacks expected missing-data warnings`);
   }
+  if (category.id === "ITC-29") {
+    validateVehicleGoldenFixture(fixture, errors);
+  }
+}
+
+function validateVehicleGoldenFixture(fixture, errors) {
+  const inputs = fixture.minimum_default_path_inputs || {};
+  const existing = (fixture.source_records || []).find((record) => record.field === "comb08");
+  const proposed = (fixture.source_records || []).find((record) => record.field === "combE");
+  if (
+    inputs.existing_vehicle_id !== 43764 ||
+    inputs.proposed_vehicle_id !== 44444 ||
+    existing?.vehicle_id !== inputs.existing_vehicle_id ||
+    proposed?.vehicle_id !== inputs.proposed_vehicle_id
+  ) {
+    errors.push("ITC-29 golden fixture does not use the reviewed exact FuelEconomy.gov vehicle IDs");
+    return;
+  }
+  if (inputs.user_confirmed_service_equivalence !== true) {
+    errors.push("ITC-29 golden fixture lacks explicit user-confirmed service equivalence");
+  }
+  for (const [label, value] of Object.entries({
+    quantity: inputs.quantity,
+    annual_miles_per_vehicle: inputs.annual_miles_per_vehicle,
+    existing_comb08: existing?.value,
+    proposed_combE: proposed?.value,
+    fuel_price: inputs.fuel_price_usd_per_gallon,
+    electric_price: inputs.electric_price_usd_per_kwh
+  })) {
+    if (!Number.isFinite(value) || value <= 0) {
+      errors.push(`ITC-29 golden fixture has invalid positive input ${label}`);
+    }
+  }
+  if (proposed?.unit_id !== "kilowatt_hour_per_100_mile") {
+    errors.push("ITC-29 golden fixture combE unit is not kWh/100 miles at the wall");
+  }
+  const avoidedGallonsPerVehicle = inputs.annual_miles_per_vehicle / existing?.value;
+  const addedKwhPerVehicle = inputs.annual_miles_per_vehicle * proposed?.value / 100;
+  const avoidedFuelValue =
+    inputs.quantity * avoidedGallonsPerVehicle * inputs.fuel_price_usd_per_gallon;
+  const addedElectricCost =
+    inputs.quantity * addedKwhPerVehicle * inputs.electric_price_usd_per_kwh;
+  const expected = avoidedFuelValue - addedElectricCost;
+  if (!approximatelyEqual(expected, 1617) || !approximatelyEqual(fixture.final_dollar_result?.value, expected)) {
+    errors.push(`ITC-29 golden fixture arithmetic mismatch: expected ${expected}`);
+  }
+  for (const bound of ["low", "base", "high"]) {
+    if (!approximatelyEqual(fixture.resolved_values?.[bound]?.value, expected)) {
+      errors.push(`ITC-29 golden fixture ${bound} result does not equal exact-model result`);
+    }
+  }
+  if (
+    !fixture.expected_missing_data_warnings.some((warning) => /class.*percentile.*disabled/i.test(warning)) ||
+    !fixture.expected_missing_data_warnings.some((warning) => /second charging-efficiency/i.test(warning))
+  ) {
+    errors.push("ITC-29 golden fixture lacks class-percentile and charging-efficiency guards");
+  }
+}
+
+function approximatelyEqual(left, right, tolerance = 1e-9) {
+  return Number.isFinite(left) && Number.isFinite(right) && Math.abs(left - right) <= tolerance;
 }
 
 function validateTermUnitHeuristics(categoryId, group, errors) {
-  for (const name of group.names || []) {
-    if (name === "quantity" && !/(unit|fixture|vehicle|machine|motor|pump|fan|system|port|trap|equipment)/i.test(group.unit)) {
-      errors.push(`${categoryId} formula term quantity has a unit mismatch: ${group.unit}`);
-    }
-    if (/^(?:p_|import_rate|export_credit)/.test(name) && !/USD/i.test(group.unit)) {
-      errors.push(`${categoryId} price term ${name} has a unit mismatch: ${group.unit}`);
-    }
-    if (/efficiency|fraction|^η/.test(name) && !/(fraction|ratio| and )/i.test(group.unit)) {
-      errors.push(`${categoryId} efficiency term ${name} has a unit mismatch: ${group.unit}`);
-    }
+  const name = group.name;
+  if (name === "quantity" && group.dimension !== "count") {
+    errors.push(`${categoryId} formula term quantity has a dimension mismatch: ${group.dimension}`);
+  }
+  if (/^(?:p_|import_rate|export_credit)/.test(name) && !/^currency_per_/.test(group.dimension)) {
+    errors.push(`${categoryId} price term ${name} has a dimension mismatch: ${group.dimension}`);
+  }
+  if (/efficiency|fraction|^η/.test(name) && group.dimension !== "dimensionless") {
+    errors.push(`${categoryId} efficiency term ${name} has a dimension mismatch: ${group.dimension}`);
   }
 }
 
@@ -1030,7 +1804,7 @@ function validateFormulaIdentifierCoverage(category, contract, errors) {
     [...codeSpans.matchAll(/[A-Za-zηΔ][A-Za-z0-9_ηΔ²³]*(?:,[A-Za-z0-9_]+)?/g)]
       .map((match) => match[0])
   )];
-  const contractNames = (contract.formula_terms || []).flatMap((group) => group.names || []);
+  const contractNames = (contract.formula_terms || []).map((group) => group.name);
   for (const identifier of identifiers) {
     if (ignored.has(identifier)) continue;
     const normalized = identifier.replace(/[²³]/g, "");
@@ -1076,7 +1850,7 @@ function validateFormulaTermTreeCoverage(category, tree, contract, errors) {
     });
     if (missingNodes.length > 0) {
       errors.push(
-        `${category.id} formula term ${(group.names || []).join(", ")} has unmatched tree nodes [${missingNodes.join("; ")}]`
+        `${category.id} formula term ${group.name} has unmatched tree nodes [${missingNodes.join("; ")}]`
       );
     }
   }
@@ -1090,6 +1864,9 @@ function validateTreeUserInputUsage(tree, category, contract, tracedStandards, e
   const formulaTreeNodes = (contract.formula_terms || [])
     .flatMap((group) => group.tree_nodes || [])
     .map((treeNode) => normalizeText(treeNode));
+  const conditionalGateNodes = new Set(
+    (contract.conditional_gates || []).map((gate) => normalizeText(gate.tree_node))
+  );
   const rateComponents = new Set(contract.rate_components || []);
   walkTree(tree, (node, path) => {
     if (node.children.length > 0 || path.length === 1 || !node.text.endsWith("(User)")) return;
@@ -1107,7 +1884,9 @@ function validateTreeUserInputUsage(tree, category, contract, tracedStandards, e
       const component = pathNode.text.match(/\{\{component:\s*([^}]+)\}\}/)?.[1]?.trim();
       return component && rateComponents.has(component);
     });
-    if (!usedByStandard && !usedByFormula && !usedByRate) {
+    const usedByConditionalGate =
+      conditionalGateNodes.has(normalizeText(cleanTreeText(node.text)));
+    if (!usedByStandard && !usedByFormula && !usedByRate && !usedByConditionalGate) {
       errors.push(
         `${category.id} tree User input is unused by the formula or a traced Standard: ${cleanTreeText(node.text)}`
       );
@@ -1167,7 +1946,15 @@ function buildResolutionIndex(tree) {
 }
 
 function summarizeInputs(tree) {
-  const summary = { RequiredUser: [], OptionalUser: [], User: [], Profile: [], Bill: [], Standard: [] };
+  const summary = {
+    RequiredUser: [],
+    ConditionalUser: [],
+    OptionalUser: [],
+    User: [],
+    Profile: [],
+    Bill: [],
+    Standard: []
+  };
   walkTree(tree, (node, path) => {
     if (node.children.length > 0 || path.length === 1) return;
     for (const label of ALLOWED_LEAF_LABELS) {
@@ -1179,6 +1966,7 @@ function summarizeInputs(tree) {
       if (type === "User") {
         const classification = [...node.text.matchAll(USER_INPUT_TAG)][0]?.[1];
         if (classification === "required") summary.RequiredUser.push(value);
+        if (classification === "conditional") summary.ConditionalUser.push(value);
         if (classification === "optional") summary.OptionalUser.push(value);
       }
     }
@@ -1195,16 +1983,29 @@ function renderCategoryPage(category) {
     ? category.tracedStandards.map(renderStandardCard).join("\n\n")
     : "No external Standard is used by this category.";
   return ensureFinalNewline([
-    `# ${category.id} — ${category.title}`,
+    `# ${category.id} - ${category.title}`,
     "",
     GENERATED_NOTICE,
+    "",
+    "## Human Review Snapshot",
+    "",
+    `- **What this category means:** ${renderCategoryMeaning(category)}`,
+    `- **What the formula calculates:** ${category.semanticContract.default_path.final_result_path}.`,
+    `- **What RetroFi asks during ordinary screening:** ${renderInlineInputSummary(category.inputs.RequiredUser)}`,
+    `- **What RetroFi resolves automatically:** ${renderAutomaticSummary(category)}`,
+    `- **Conditional Calculation Gates:** ${renderInlineGateSummary(category)}`,
+    `- **What remains unsupported:** ${renderUnsupportedSummary(category)}`,
+    `- **Why the status is ${renderStatusLabel(category.status)}:** ${renderStatusReason(category)}`,
+    `- **Decision requested:** ${category.decisions[0]}`,
     "",
     "## Review Status",
     "",
     `- **Category status:** ${category.status}`,
+    `- **Ready scenario:** ${category.semanticContract.ready_scenario_id || "None"}`,
     `- **Retrofit count:** ${category.retrofits.length}`,
     `- **Standards used:** ${standardsUsed}`,
-    `- **Required User-input count:** ${category.inputs.RequiredUser.length}`,
+    `- **Required Screening count:** ${category.inputs.RequiredUser.length}`,
+    `- **Conditional Calculation Gate count:** ${category.inputs.ConditionalUser.length}`,
     `- **Optional Known-Detail count:** ${category.inputs.OptionalUser.length}`,
     `- **Profile-input count:** ${category.inputs.Profile.length}`,
     `- **Bill-input count:** ${category.inputs.Bill.length}`,
@@ -1214,6 +2015,10 @@ function renderCategoryPage(category) {
     `- **Automation readiness:** ${category.automationReadiness}`,
     `- **Unresolved issue count:** ${category.decisions.length}`,
     `- **Expected uncertainty:** ${category.uncertainty.label}`,
+    "",
+    "## Scenario Readiness",
+    "",
+    renderScenarioReadiness(category),
     "",
     "## Retrofits",
     "",
@@ -1247,9 +2052,13 @@ function renderCategoryPage(category) {
     "",
     "## Input Workflow",
     "",
-    "### Required User Inputs",
+    "### Required Screening Inputs",
     "",
     renderInputList(category.inputs.RequiredUser),
+    "",
+    "### Conditional Calculation Gates",
+    "",
+    renderConditionalGates(category),
     "",
     "### Optional Known Details",
     "",
@@ -1289,34 +2098,119 @@ function renderCategoryPage(category) {
   ].join("\n"));
 }
 
+function renderCategoryMeaning(category) {
+  const names = category.retrofits.map((retrofit) => retrofit.name);
+  if (names.length === 1) return `Evaluate operational savings for ${names[0]}.`;
+  return `Evaluate operational savings for ${names.slice(0, 3).join(", ")}${names.length > 3 ? `, and ${names.length - 3} related retrofits` : ""}.`;
+}
+
+function renderInlineInputSummary(values) {
+  if (values.length === 0) return "No user answer is required for the ordinary screening path.";
+  const labels = values.map((value) => value.split(" > ").at(-1));
+  const remainder = labels.length - 3;
+  return `${labels.slice(0, 3).join("; ")}${remainder > 0 ? `; and ${remainder} more staged screening input(s)` : ""}.`;
+}
+
+function renderAutomaticSummary(category) {
+  const parts = [];
+  if (category.inputs.Profile.length > 0) parts.push(`${category.inputs.Profile.length} Profile value(s)`);
+  if (category.inputs.Bill.length > 0) parts.push(`${category.inputs.Bill.length} Bill value(s)`);
+  if (category.inputs.Standard.length > 0) parts.push(`${category.inputs.Standard.length} Standard result(s)`);
+  return parts.length > 0 ? `${parts.join(", ")}.` : "No automatic external value is needed.";
+}
+
+function renderInlineGateSummary(category) {
+  const gates = category.semanticContract.conditional_gates || [];
+  if (gates.length === 0) return "None.";
+  return `${gates.map((gate) => gate.tree_node).join("; ")}.`;
+}
+
+function renderUnsupportedSummary(category) {
+  const unsupported = (category.semanticContract.scenarios || [])
+    .filter((scenario) => scenario.readiness === "UNSUPPORTED")
+    .map((scenario) => scenario.label);
+  if (unsupported.length > 0) return `${unsupported.join("; ")}.`;
+  const gate = category.semanticContract.default_path.unresolved_gate;
+  return gate ? `${gate}` : "No additional scenario is claimed beyond those listed below.";
+}
+
+function renderStatusLabel(status) {
+  if (status === "RESEARCHED — READY FOR HUMAN REVIEW") return "Ready";
+  if (status === "DRAFT") return "Draft";
+  return "Blocked";
+}
+
+function renderStatusReason(category) {
+  const scenarios = category.semanticContract.scenarios || [];
+  if (category.status === "RESEARCHED — READY FOR HUMAN REVIEW") {
+    return `The named ${category.semanticContract.ready_scenario_id} scenario is VERIFIED_EXECUTABLE; other scenarios keep their own readiness.`;
+  }
+  if (category.status === "BLOCKED") {
+    return category.semanticContract.default_path.unresolved_gate || "No supported executable scenario exists.";
+  }
+  const verifiedNonExecutable = scenarios.find((scenario) => scenario.readiness === "VERIFIED_NONEXECUTABLE");
+  return verifiedNonExecutable
+    ? `${verifiedNonExecutable.label} is source-verified but not executable.`
+    : category.semanticContract.default_path.unresolved_gate || "The documented path remains unverified.";
+}
+
+function renderScenarioReadiness(category) {
+  return category.semanticContract.scenarios.map((scenario) => [
+    `### ${scenario.label}`,
+    "",
+    `- **Scenario ID:** \`${scenario.scenario_id}\``,
+    `- **Readiness:** ${scenario.readiness}`,
+    `- **Category Ready applies here:** ${scenario.scenario_id === category.semanticContract.ready_scenario_id ? "Yes" : "No"}`,
+    `- **Evidence:** ${scenario.evidence.length ? scenario.evidence.join(", ") : "None"}`,
+    `- **Executable fixture:** ${scenario.executable_fixture || "None"}`,
+    `- **Limitation:** ${scenario.limitation || "None"}`
+  ].join("\n")).join("\n\n");
+}
+
+function renderConditionalGates(category) {
+  const gates = category.semanticContract.conditional_gates || [];
+  if (gates.length === 0) return "No Conditional Calculation Gate applies.";
+  return gates.map((gate) => [
+    `#### ${gate.tree_node}`,
+    "",
+    `- **Ask when:** ${gate.activation_condition}`,
+    `- **Resolves:** ${gate.resolves_terms.join(", ")}`,
+    `- **If unanswered:** ${gate.otherwise_no_estimate ? "Return no estimate for the affected scenario." : "Continue with the documented fallback."}`,
+    `- **Could a future verified Standard remove this question:** ${gate.future_verified_standard_could_remove ? "Yes" : "No"}`
+  ].join("\n")).join("\n\n");
+}
+
 function renderFormulaTermEvidence(category) {
-  const rows = (category.semanticContract?.formula_terms || []).flatMap((group) =>
-    group.names.map((name) => [
-      name,
-      group.unit,
-      group.source_or_resolver,
-      expandFormulaTermPaths(category, group).join("<br>"),
-      group.fallback_path || "None",
-      group.evidence_ids.length
-        ? group.evidence_ids.map((id) => {
-            const record = category.sourceEvidence.records.find((candidate) => candidate.evidence_id === id);
-            return `${id}: ${record?.evidence_status || "MISSING"}`;
-          }).join("<br>")
-        : "Direct input or formula",
-      group.evidence_ids.length
-        ? group.evidence_ids.map((id) => {
-            const record = category.sourceEvidence.records.find((candidate) => candidate.evidence_id === id);
-            return record ? `${record.exact_artifact} - ${record.exact_field_table_page_equation_or_function}` : id;
-          }).join("<br>")
-        : group.tree_nodes.join("<br>"),
-      group.missing_data_behavior
-    ])
-  );
-  return [
-    "| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |",
-    "|---|---|---|---|---|---|---|---|",
-    ...rows.map((cells) => `| ${cells.map(escapeTableCell).join(" | ")} |`)
-  ].join("\n");
+  return (category.semanticContract?.formula_terms || []).map((group) => {
+    const evidence = group.evidence_ids.length
+      ? group.evidence_ids.map((id) => {
+          const record = category.sourceEvidence.records.find((candidate) => candidate.evidence_id === id);
+          return `${id} - ${record?.evidence_status || "MISSING"}`;
+        }).join("; ")
+      : "Direct input or deterministic formula";
+    const sourceLocations = group.evidence_ids.length
+      ? group.evidence_ids.map((id) => {
+          const record = category.sourceEvidence.records.find((candidate) => candidate.evidence_id === id);
+          return record
+            ? `${record.exact_artifact}: ${record.exact_field_table_page_equation_or_function}`
+            : id;
+        }).join("; ")
+      : group.tree_nodes.join("; ");
+    return [
+      `### Term: \`${group.name}\``,
+      "",
+      `- **Unit:** ${group.display_unit} (\`${group.unit_id}\`)`,
+      `- **Dimension:** ${group.dimension}`,
+      `- **Quantity kind:** ${group.quantity_kind}`,
+      `- **Formula role:** ${group.formula_use}`,
+      `- **Resolved by:** ${group.source_or_resolver}`,
+      `- **Exact path:** ${expandFormulaTermPaths(category, group).join("; ")}`,
+      `- **Fallback:** ${group.fallback_path || "None"}`,
+      `- **Evidence:** ${evidence}`,
+      `- **Source location:** ${sourceLocations}`,
+      `- **Missing behavior:** ${group.missing_data_behavior}`
+    ].join("\n");
+  }).join("\n\n");
 }
 
 function expandFormulaTermPaths(category, group) {
@@ -1346,20 +2240,22 @@ function renderSourceRoleEvidence(category) {
     return "No external Standard source role applies.";
   }
   return category.sourceEvidence.standardSummaries.map((summary) => {
-    const roleRows = Object.entries(summary.source_roles).map(([role, ids]) => {
+    const roleCards = Object.entries(summary.source_roles).map(([role, ids]) => {
       const records = ids.map((id) => category.sourceEvidence.records.find((record) => record.evidence_id === id))
         .filter(Boolean);
       const value = records.length
-        ? records.map((record) => `${record.evidence_id} (${record.evidence_status}, ${record.existing_or_proposed_coverage})`).join("<br>")
+        ? records.map((record) => `- ${record.evidence_id} - ${record.evidence_status}; ${record.existing_or_proposed_coverage}`).join("\n")
         : "None";
-      return `| ${role.replaceAll("_", " ")} | ${value} |`;
+      return [
+        `#### ${role.replaceAll("_", " ")}`,
+        "",
+        value
+      ].join("\n");
     });
     return [
       `### ${summary.standard_id}`,
       "",
-      "| Source role | Evidence |",
-      "|---|---|",
-      ...roleRows,
+      roleCards.join("\n\n"),
       "",
       `**Unsupported roles or uses:** ${summary.unsupported_roles.join(", ") || "None"}`,
       "",
@@ -1370,7 +2266,10 @@ function renderSourceRoleEvidence(category) {
 
 function renderDefaultPathProof(category) {
   const proof = category.semanticContract.default_path;
+  const goldenResult = category.goldenFixture?.final_dollar_result;
   return [
+    "### Default or Named Executable Path",
+    "",
     `- **Minimum required inputs:** ${proof.minimum_required_inputs.length ? proof.minimum_required_inputs.join("; ") : "None"}.`,
     `- **Exact scenario:** ${proof.scenario}.`,
     `- **Source fixture:** ${proof.source_fixture || "None"}.`,
@@ -1378,12 +2277,9 @@ function renderDefaultPathProof(category) {
     `- **Final result path:** ${proof.final_result_path}`,
     `- **Uncertainty:** ${proof.uncertainty}.`,
     `- **Executable golden fixture:** ${proof.executable_golden_fixture || "No"}.`,
-    `- **Remaining gate:** ${proof.unresolved_gate || "None"}`
+    `- **Remaining gate:** ${proof.unresolved_gate || "None"}`,
+    `- **Golden result:** ${goldenResult ? `${goldenResult.value.toLocaleString("en-US")} ${goldenResult.unit}` : "None"}`
   ].join("\n");
-}
-
-function escapeTableCell(value) {
-  return String(value ?? "").replaceAll("|", "\\|").replaceAll("\n", "<br>");
 }
 
 function renderDefaultEstimateBehavior(category) {
@@ -1467,14 +2363,8 @@ function renderReviewIndex(categories, standards) {
   const ready = categories.filter((category) => category.status === "RESEARCHED — READY FOR HUMAN REVIEW");
   const drafts = categories.filter((category) => category.status === "DRAFT");
   const blocked = categories.filter((category) => category.status === "BLOCKED");
-  const fiveInputs = categories.filter((category) => category.inputs.RequiredUser.length === 5);
-  const limitedStandardIds = new Set(standards.filter((standard) => standard.status === "LIMITED").map((standard) => standard.id));
-  const limited = categories.filter((category) => category.standardIds.some((id) => limitedStandardIds.has(id)));
-  const high = categories.filter((category) => category.uncertainty.label === "High");
   const rows = categories.map((category) => {
-    const retrofits = category.retrofits.map((retrofit) => retrofit.name).join("<br>");
-    const standardsUsed = category.standardIds.length ? category.standardIds.join("<br>") : "None";
-    return `| [\`${category.id}\`](./categories/${category.id}.md) ${category.title} | ${category.status} | ${category.inputs.RequiredUser.length} | ${category.inputs.OptionalUser.length} | ${category.inputs.Profile.length} | ${category.inputs.Bill.length} | ${category.inputs.Standard.length} | ${standardsUsed} | ${category.automationReadiness} | ${category.decisions.length} | [Full review](./categories/${category.id}.md) |`;
+    return `| \`${category.id}\` | ${category.title} | ${renderStatusLabel(category.status)} | ${category.inputs.RequiredUser.length} | ${category.inputs.ConditionalUser.length} | ${category.inputs.OptionalUser.length} | [Review](./categories/${category.id}.md) |`;
   }).join("\n");
   return ensureFinalNewline([
     "# Operational Savings Category Review Index",
@@ -1493,14 +2383,15 @@ function renderReviewIndex(categories, standards) {
     `- Blocked: ${blocked.length}.`,
     `- Shared branches expanded: ${new Set(categories.flatMap((category) => category.referencedBranches)).size}.`,
     `- Standards embedded: ${new Set(categories.flatMap((category) => category.standardIds)).size}.`,
-    `- Required User inputs: ${categories.reduce((sum, category) => sum + category.inputs.RequiredUser.length, 0)}.`,
+    `- Required Screening inputs: ${categories.reduce((sum, category) => sum + category.inputs.RequiredUser.length, 0)}.`,
+    `- Conditional Calculation Gates: ${categories.reduce((sum, category) => sum + category.inputs.ConditionalUser.length, 0)}.`,
     `- Optional Known Details: ${categories.reduce((sum, category) => sum + category.inputs.OptionalUser.length, 0)}.`,
-    `- Maximum Required User inputs in one category: ${Math.max(...categories.map((category) => category.inputs.RequiredUser.length))}.`,
+    `- Maximum Required Screening inputs in one category: ${Math.max(...categories.map((category) => category.inputs.RequiredUser.length))}.`,
     "",
     "## All Categories",
     "",
-    "| Category | Status | Required User | Optional Detail | Profile | Bill | Standard assumptions | Standards | Automation | Issues | Review |",
-    "|---|---|---:|---:|---:|---:|---:|---|---|---:|---|",
+    "| ID | Category | Status | Required Screening | Conditional Gates | Optional | Link |",
+    "|---|---|---|---:|---:|---:|---|",
     rows,
     "",
     renderFilterSection("Researched and Ready for Human Review", ready),
@@ -1509,11 +2400,7 @@ function renderReviewIndex(categories, standards) {
     "",
     renderFilterSection("Blocked", blocked),
     "",
-    renderFilterSection("Categories with Five Required User Inputs", fiveInputs),
-    "",
-    renderFilterSection("Categories with Limited Standards", limited),
-    "",
-    renderFilterSection("Categories with High Uncertainty", high)
+    `Standards in Limited status: ${standards.filter((standard) => standard.status === "LIMITED").length}.`
   ].join("\n"));
 }
 
@@ -1524,25 +2411,31 @@ function renderFilterSection(title, categories) {
   return `## ${title}\n\n${items}`;
 }
 
-function deriveReviewDecisions(category) {
-  if (category.defaultEstimate === "UNAVAILABLE") {
-    return ["Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied."];
+function deriveReviewDecisions(category, contract) {
+  if (category.id === "ITC-02") {
+    return [
+      "Decide whether RetroFi should require documented existing fixture watts until a verified legacy exterior-lighting baseline source is added."
+    ];
   }
-  if (category.defaultEstimate === "UNVALIDATED") {
-    return ["Fixture-test and approve the documented default path before promotion to ready status."];
+  if (category.id === "ITC-29") {
+    return [
+      "Approve the exact-model comparison path and decide whether a class-based replacement recommendation should be researched later."
+    ];
   }
-  const sentences = category.notes.match(/[^.!?]+[.!?]/g)?.map((sentence) => sentence.trim()) || [category.notes];
-  const issueSentences = sentences.filter((sentence) =>
-    category.status === "BLOCKED"
-      ? /BLOCKED|only with|requires|until|no authoritative/i.test(sentence)
-      : category.status === "DRAFT"
-        ? /DRAFT|until|approve|fixture|return no|requires/i.test(sentence)
-        : false
-  );
-  if (issueSentences.length > 0) {
-    return issueSentences.map((sentence) => `Resolve before approval: ${sentence}`);
+  if (category.id === "ITC-15") {
+    return [
+      "Approve the zero-direct-resource boundary so RetroFi does not duplicate physical savings that belong to another category."
+    ];
   }
-  return ["Approve the documented category boundary, inputs, Standard automation, missing-data behavior, uncertainty, and exclusions before implementation."];
+  const gate = contract?.default_path?.unresolved_gate;
+  if (gate) {
+    const action = category.defaultEstimate === "UNAVAILABLE"
+      ? `keep ${category.title} at no estimate`
+      : `keep ${category.title} in Draft`;
+    return [`Decide whether RetroFi should ${action} until this category-specific gate is resolved: ${gate}`];
+  }
+  const scenario = contract?.default_path?.scenario || "documented scenario";
+  return [`Approve the ${scenario} boundary for ${category.title} and its documented exclusions.`];
 }
 
 function deriveUncertainty(category, standards) {
@@ -1753,12 +2646,19 @@ function buildReport(categories, branches, standards, taxonomy) {
     standardsEmbedded: standards.length,
     maxAtomicUserInputs: Math.max(...userCounts),
     requiredUserInputs: requiredCounts.reduce((sum, value) => sum + value, 0),
+    conditionalCalculationGates: categories.reduce(
+      (sum, category) => sum + category.inputs.ConditionalUser.length,
+      0
+    ),
     optionalKnownDetails: categories.reduce((sum, category) => sum + category.inputs.OptionalUser.length, 0),
     maxRequiredUserInputs: Math.max(...requiredCounts),
     categoriesOverFourUserInputs: categories.filter((category) => category.inputs.RequiredUser.length > 4).map((category) => category.id),
     categoriesWithFiveUserInputs: categories.filter((category) => category.inputs.RequiredUser.length === 5).map((category) => category.id),
     atomicUserInputsByCategory: Object.fromEntries(categories.map((category) => [category.id, category.inputs.User.length])),
     requiredUserInputsByCategory: Object.fromEntries(categories.map((category) => [category.id, category.inputs.RequiredUser.length])),
+    conditionalCalculationGatesByCategory: Object.fromEntries(
+      categories.map((category) => [category.id, category.inputs.ConditionalUser.length])
+    ),
     optionalKnownDetailsByCategory: Object.fromEntries(categories.map((category) => [category.id, category.inputs.OptionalUser.length])),
     categoryStatuses: countBy(categories, (category) => category.status),
     standardStatuses: countBy(standards, (standard) => standard.status)

@@ -5,8 +5,8 @@
 All 54 operational-savings categories, all 92 canonical retrofit mappings, and all 16 Standards were re-audited at five separate layers.
 The required result is 54 categories, 92 unique retrofit mappings, zero missing IDs, and zero duplicate IDs.
 The audit now distinguishes structural completeness, semantic source support, formula correctness, default executability, and implementation readiness.
-Only ITC-15 is `RESEARCHED — READY FOR HUMAN REVIEW`.
-Forty-eight categories are `DRAFT`, five categories are `BLOCKED`, and all 16 Standards are `LIMITED`.
+ITC-15 and the exact-model scenario for ITC-29 are `RESEARCHED — READY FOR HUMAN REVIEW`.
+Forty-seven categories are `DRAFT`, five categories are `BLOCKED`, and all 16 Standards are `LIMITED`.
 No Draft or Blocked category claims an executable golden fixture.
 
 Current documentation state:
@@ -20,21 +20,21 @@ Current documentation state:
 - Canonical Standards: 16.
 - Standards with a selected automation strategy: 16.
 - Expanded maximum atomic User inputs per category: 30.
-- Expanded Required User inputs: 366.
-- Expanded Optional Known Details: 97.
-- Maximum Required User inputs per category: 29.
-- Categories above four Required User inputs: ITC-08, ITC-09, ITC-16, ITC-17, ITC-18, ITC-19, ITC-20, ITC-21, ITC-22, ITC-23, ITC-24, ITC-25, ITC-26, ITC-27, ITC-28, ITC-29, ITC-31, ITC-32, ITC-33, ITC-34, ITC-36, ITC-37, ITC-38, ITC-39, ITC-40, ITC-41, ITC-42, ITC-43, ITC-44, ITC-45, ITC-46, ITC-47, ITC-50, ITC-51, ITC-52, ITC-53.
-- Category statuses: 1 `RESEARCHED — READY FOR HUMAN REVIEW`, 48 `DRAFT`, and 5 `BLOCKED`.
+- Expanded Required Screening inputs: 366.
+- Expanded Conditional Calculation Gates: 5.
+- Expanded Optional Known Details: 93.
+- Maximum Required Screening inputs per category: 29.
+- Categories above four Required Screening inputs: ITC-08, ITC-09, ITC-16, ITC-17, ITC-18, ITC-19, ITC-20, ITC-21, ITC-22, ITC-23, ITC-24, ITC-25, ITC-26, ITC-27, ITC-28, ITC-29, ITC-31, ITC-32, ITC-33, ITC-34, ITC-36, ITC-37, ITC-38, ITC-39, ITC-40, ITC-41, ITC-42, ITC-43, ITC-44, ITC-45, ITC-46, ITC-47, ITC-50, ITC-51, ITC-52, ITC-53.
+- Category statuses: 2 `RESEARCHED — READY FOR HUMAN REVIEW`, 47 `DRAFT`, and 5 `BLOCKED`.
 - Standard statuses: 16 `LIMITED`.
 - Machine-readable source-evidence records: 42.
 - Source-evidence statuses: UNSUPPORTED 7, UNVERIFIED 28, VERIFIED 7.
-- Formula-term groups: 202.
-- Individual formula terms: 445.
+- Atomic formula terms: 445.
 - Recorded category manual verdicts: 54.
 - Recorded Standard manual verdicts: 16.
-- Executable Ready-category golden fixtures: 1.
+- Executable Ready-category golden fixtures: 2.
 
-The status change from 7 Ready, 42 Draft, and 5 Blocked to 1 Ready, 48 Draft, and 5 Blocked is intentional.
+The status change from 7 Ready, 42 Draft, and 5 Blocked to 2 Ready, 47 Draft, and 5 Blocked is intentional.
 The former Ready labels depended on source-role assumptions, unproved default inputs, or missing end-to-end fixtures.
 The Standard status change from 14 Ready and 2 Limited to 16 Limited is also intentional.
 A relevant authoritative URL does not prove that its exact fields support every baseline, proposal, usage, tariff, or geography role assigned to it.
@@ -48,8 +48,9 @@ The machine-readable category and formula contract is `docs/operational-savings-
 Small reviewed source fixtures are stored under `docs/operational-savings-fixtures/sources`.
 Ready-category executable fixtures are stored under `docs/operational-savings-fixtures/categories`.
 
+The validator imports the production `normalizeUserProfile` function, derives its path and structure contract, and rejects a stale checked Profile-path fixture.
 The validator regenerates all review artifacts and compares them byte for byte.
-It rejects missing or stale pages, nonexistent Profile or Bill fields, unsupported Standard scenarios, unresolved formula terms, unit mismatches, invalid rate components, and unsupported Ready status.
+It rejects missing or stale pages, nonexistent Profile or Bill fields, unsupported Standard scenarios, unresolved formula terms, unknown or combined units, dimensional mismatches, invalid rate components, and unsupported Ready status.
 It also rejects double application of FuelEconomy charging losses and double annualization of compressor output.
 
 ## Structural audit
@@ -57,8 +58,8 @@ It also rejects double application of FuelEconomy charging losses and double ann
 The structural audit passed for 54 contiguous category IDs, 92 unique retrofit mappings, six recursively expanded shared branches, and 16 embedded Standards.
 Every terminal source leaf is labeled User, Profile, Bill, or Standard.
 Linked Opportunity and other derived project context are explicit internal intermediates and are no longer mislabeled as Profile fields.
-Every User leaf has exactly one Required or Optional classification.
-Every generated page contains Review Status, Retrofits, formulas, Formula-Term Evidence, Source-Role Evidence, Default-Path Proof, a fully expanded tree, Input Workflow, Standards and Automation, missing-data behavior, and Human Review Decisions.
+Every User leaf has exactly one Required Screening, Conditional Calculation Gate, or Optional Known Detail classification.
+Every generated page contains a concise Human Review Snapshot, scenario readiness, Review Status, formulas, vertical Formula-Term Evidence, vertical Source-Role Evidence, vertical Default-Path Proof, a fully expanded tree, Input Workflow, Standards and Automation, missing-data behavior, and category-specific Human Review Decisions.
 
 ## Semantic source audit
 
@@ -74,7 +75,7 @@ The semantic source audit uses six independent source roles:
 Every Standard output key has at least one evidence record with an exact artifact and exact field, table, page, equation, or function location.
 Every declared Standard scenario must have compatible evidence that is not `UNSUPPORTED`.
 Each evidence record declares every source role it supports and must appear under exactly those roles in its Standard summary.
-`VERIFIED` means that the exact reviewed contract is represented by a local source fixture.
+`VERIFIED` means that the exact reviewed contract is deeply bound to a validated source fixture through JSON pointers for source identity, version, artifact, checksum, coverage, fields, units, values when present, unsupported inferences, and substantive records.
 It does not mean that unrelated roles or project-specific inputs are supported.
 Link validation covered 42 unique direct registry URLs.
 
@@ -102,12 +103,13 @@ The following claims were removed or converted to explicit no-estimate behavior:
 ## Formula audit
 
 Formula/tree corrections are now recorded in the canonical category contract rather than only in narrative notes.
-The category contract records 202 formula-term groups and 445 individual terms.
-Each row records units, a source or resolver, exact paths, fallback behavior, Standard output evidence, formula use, and missing-data behavior.
-Every tree node declared by a formula-term group must resolve to an exact node in the expanded category tree.
-Every identifier used by a displayed formula must have a formula-term contract and appear in the generated Formula-Term Evidence matrix.
+The category contract records 445 atomic formula terms.
+Each record has one name, dimension, canonical unit ID, display unit, quantity kind, source or resolver, exact paths, fallback behavior, Standard output evidence, formula use, and missing-data behavior.
+Every declared tree node must resolve to an exact node in the expanded category tree.
+Every identifier used by a displayed formula must have an atomic formula-term contract and appear in a vertical Formula-Term Evidence card.
 Thermal and cross-fuel formulas now call `to_energy` or `to_billed_unit` explicitly instead of multiplying a common energy quantity by a price in an unrelated billing unit.
-The shared conversion contract remains an implementation gate until a versioned and audited unit table is pinned.
+The versioned unit registry declares every category and source-fixture unit.
+Explicit dimensional relationships validate the ITC-02 watt conversion, ITC-29 fuel and electricity arithmetic, and ITC-42 flow annualization.
 
 Rate components are now declared per category and projected into shared branches.
 Demand value requires a complete interval load and tariff path.
@@ -124,12 +126,17 @@ ITC-26 uses one integrated microgrid result rather than summing overlapping comp
 ## Default executability audit
 
 Each category now has a Default-Path Proof with minimum required inputs, exact scenario, source fixture, low/base/high rule, final result path, uncertainty, executable fixture, and remaining gate.
-A category cannot be Ready unless its declared executable golden fixture exists and all referenced evidence is `VERIFIED`.
+A category cannot be Ready unless it names a `VERIFIED_EXECUTABLE` scenario, its declared executable golden fixture exists, and all referenced evidence is `VERIFIED`.
 A Draft or Blocked category cannot claim an executable golden fixture.
 
-ITC-15 is the only executable Ready path.
+ITC-15 is an executable Ready path.
 Its golden fixture proves `S = 0`, low = base = high = 0 USD/year, an empty direct resource delta, and the boundary that another category's physical savings must not be duplicated.
 The zero result is a category boundary, not an estimate of a linked physical measure.
+
+ITC-29 is the first nonzero executable Ready path.
+Its golden fixture uses exact FuelEconomy.gov vehicle IDs 43764 and 44444, user-confirmed service equivalence, synthetic project activity and prices, 32 miles per gallon, 28 kWh per 100 miles at the wall, 750 avoided gallons per year, 6,720 added kWh per year, and 1,617 USD per year of net savings.
+The Ready verdict applies only to the exact-model scenario.
+The vehicle-class percentile scenario remains `UNSUPPORTED`, and no second charging-efficiency factor is applied.
 
 Every other category retains a concrete gate.
 Typical gates include an exact installed baseline, a project scope or design, an end-use allocation, a chronological load, a complete tariff, a category-specific Standard adapter, or an end-to-end fixture.
@@ -139,7 +146,7 @@ Missing gates produce no estimate or a resource result without a dollar value as
 
 Implementation readiness is intentionally stricter than structural completeness.
 A complete tree and formula do not make an adapter production-ready.
-The 48 Draft categories require one or more source adapters, project-input contracts, tariff parsers, category fixtures, or product decisions.
+The 47 Draft categories require one or more source adapters, project-input contracts, tariff parsers, category fixtures, or product decisions.
 The five Blocked categories require a defensible source or semantic method that is not currently available.
 
 The highest-value implementation sequence is:
@@ -154,17 +161,19 @@ The highest-value implementation sequence is:
 
 The category registry, Standard registry, evidence manifest, and category contract are the maintained sources.
 The generator recursively expands shared branches, filters rate components, traces Standard lookup keys, and renders the three evidence sections.
-Formula-Term Evidence shows each formula input and its exact path.
+Formula-Term Evidence shows each independently dimensioned formula input and its exact path as a vertical card.
 Source-Role Evidence shows which evidence is verified, unverified, or unsupported for each role.
 Default-Path Proof shows whether the ordinary-user path reaches a deterministic low, base, and high result.
 Freshness validation compares every generated byte with a deterministic render.
 
 ## Atomic User-input review
 
-The Required input count increased because formerly implicit tariff artifacts, interval time handling, project designs, end-use allocations, and high-sensitivity simulator inputs are now visible.
-MEASUR, SAM, PVWatts, wind, REopt, EPA CHP, and WaterSense method inputs remain Required wherever the reviewed source does not actually supply a fallback.
+The Required Screening count reflects simple facts needed to attempt the ordinary path.
+Conditional Calculation Gates defer exact fixture records and exact vehicle records until the selected scenario needs them and no approved fallback exists.
+MEASUR, SAM, PVWatts, wind, REopt, EPA CHP, and WaterSense method inputs remain visible wherever the reviewed source does not actually supply a fallback.
 This is not a recommendation to ask all questions at once.
-Required inputs are the facts without which the category must return no estimate.
+Required Screening inputs are ordinary path facts.
+Conditional Calculation Gates are mandatory only after their activation conditions are met.
 Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component.
 Progressive disclosure should request only the inputs for the selected opportunity and scenario.
 
@@ -198,6 +207,13 @@ The focused test suite proves that the validator fails for:
 - A nonexistent Profile path or Bill field.
 - A Ready category without a golden fixture.
 - A Ready category that references unverified evidence.
+- A VERIFIED evidence binding with a substituted fixture type, source title, source URL, source version, artifact, field, unit, reviewed value, unsupported inference, checksum, or substantive pointer.
+- A normalized Profile path fixture with a missing path, renamed path, wrong object or array structure, or stale checksum.
+- A formula term with a missing or unknown unit ID, a combined unit, or unit metadata that disagrees with the versioned registry.
+- A dimensional relationship with an incompatible multiplication or division result.
+- A Conditional Calculation Gate without activation, term, no-estimate, or future-Standard metadata.
+- A Ready category that does not name a `VERIFIED_EXECUTABLE` scenario.
+- An ITC-29 golden fixture with a changed vehicle ID, `comb08`, `combE`, service-equivalence confirmation, charging-loss guard, or nonzero arithmetic result.
 
 ## Manual review record
 
@@ -233,7 +249,7 @@ The following category verdicts were recorded after reviewing the formula, sourc
 | `ITC-26` | DRAFT | No generic microgrid design fallback is defensible, and separate component savings must not be added. |
 | `ITC-27` | DRAFT | Demand is explicit from interval added load, and export is excluded. |
 | `ITC-28` | DRAFT | No class distribution or extra charging-efficiency adjustment is allowed. |
-| `ITC-29` | DRAFT | The `combE` double-efficiency error is corrected, and annual billed fuel and electricity quantities are not formula inputs. |
+| `ITC-29` | RESEARCHED — READY FOR HUMAN REVIEW | Ready only for the exact-model scenario backed by vehicle IDs 43764 and 44444, explicit service-equivalence confirmation, exact project activity and prices, and the nonzero golden fixture. The class-percentile scenario remains unsupported. |
 | `ITC-30` | BLOCKED | Only exact measured or contractual project inputs can unblock the category. |
 | `ITC-31` | DRAFT | Demand is explicit from interval charging, and export is excluded. |
 | `ITC-32` | DRAFT | Annual uses, minutes per use, existing rated flow, hot-water fraction, temperature rise, and heater efficiency are explicit. WaterSense supplies only compatible proposed performance. |
@@ -280,6 +296,34 @@ The following Standard verdicts were recorded after reviewing every declared sou
 | `STD-WATERSENSE-CI-OPERATIONS` | LIMITED | Leak and cooling-tower equations still require exact page, equation, and worked-example fixtures. |
 | `STD-FEMP-EXTERIOR-LIGHTING` | LIMITED | Table 1 provides proposed efficacy requirements, while Table 2 is one narrow wall-mounted example and neither supplies a legacy-wattage distribution. |
 | `STD-OPERATING-SCHEDULE` | LIMITED | Explicit calendar and daylight calculations are defensible after all inputs are supplied, while a business label alone does not prove annual operating hours. |
+
+## Focused manual inspection
+
+All five canonical source fixtures were inspected after schema normalization.
+The ENERGY STAR fixture preserves native dishwasher field units and does not infer installed baselines or usage.
+The FEMP fixture keeps proposed efficacy rows separate from the narrow wall-mounted example.
+The FuelEconomy fixture retains exact record IDs, official response checksums, `comb08`, `combE`, compatibility facts, and the explicit service-equivalence boundary.
+The PVWatts fixture records the reviewed schema snapshot and its checksum limitation.
+The WaterSense fixture labels its result as a modeled design allowance rather than measured consumption.
+
+All seven `VERIFIED` evidence records were inspected against their JSON Pointer bindings.
+The bound URL, version, artifact, checksum, coverage, fields, canonical units, exact values when present, unsupported inferences, and substantive records match their evidence metadata.
+No `LIMITED` evidence record is used by ITC-29.
+ITC-29 uses two `VERIFIED` evidence records and one `UNSUPPORTED` distribution record only to document why the class-percentile scenario stays disabled.
+
+The required category sample was manually inspected:
+
+- `ITC-02` now treats exact existing and proposed fixture watts as Conditional Calculation Gates and retains no-estimate behavior without a verified baseline or exact compatible proposal.
+- `ITC-15` still proves the zero-direct-resource boundary.
+- `ITC-29` recomputes to 375 gallons and 3,360 kWh per vehicle-year, 750 gallons and 6,720 kWh per project-year, and 1,617 USD per year.
+- `ITC-32` keeps water and water-heating resource terms separate and does not treat proposed WaterSense data as an existing baseline.
+- `ITC-34` remains a modeled landscape design allowance with no sewer default.
+- `ITC-39` keeps MEASUR bin output and annualization boundaries explicit.
+- `ITC-52` preserves gallons per rack, gallons per hour, idle kW, and active kWh per rack as separate quantities.
+- `ITC-23` and `ITC-27` retain chronological interval load and tariff requirements for demand calculations.
+- `ITC-54` remains Blocked because no authoritative cross-technology routine-use resolver exists.
+
+The generated review pages for these samples were inspected for snapshot clarity, scenario wording, vertical evidence cards, gate metadata, category-specific decisions, and absence of wide evidence tables.
 
 ## Unresolved blockers
 

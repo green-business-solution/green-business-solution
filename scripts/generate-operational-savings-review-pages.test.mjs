@@ -32,14 +32,16 @@ describe("generate-operational-savings-review-pages", () => {
     expect(page).not.toContain("UNRESOLVED");
   });
 
-  it("separates required and optional inputs and filters resources by category", async () => {
+  it("separates screening, conditional, and optional inputs and filters resources by category", async () => {
     const result = buildOperationalSavingsReview(await loadOperationalSavingsSources());
     const exterior = result.artifacts.get("docs/operational-savings-review/categories/ITC-02.md");
     const vehicle = result.artifacts.get("docs/operational-savings-review/categories/ITC-29.md");
 
-    expect(exterior).toContain("### Required User Inputs");
+    expect(exterior).toContain("### Required Screening Inputs");
+    expect(exterior).toContain("### Conditional Calculation Gates");
     expect(exterior).toContain("### Optional Known Details");
-    expect(exterior).toContain("Existing Fixture Model, if known");
+    expect(exterior).toContain("Existing Fixture Model or Documented Watts");
+    expect(exterior).toContain("**If unanswered:** Return no estimate for the affected scenario.");
     expect(exterior).toContain("Electric volumetric charge");
     expect(exterior).not.toContain("Gas volumetric charge");
     expect(exterior).not.toContain("Water volumetric charge");
@@ -69,9 +71,24 @@ describe("generate-operational-savings-review-pages", () => {
       expect(page).toContain("## Formula-Term Evidence");
       expect(page).toContain("## Source-Role Evidence");
       expect(page).toContain("## Default-Path Proof");
+      expect(page).toContain("## Human Review Snapshot");
+      expect(page).not.toContain("| Formula term |");
+      expect(page).not.toContain("| Source role |");
     }
     expect(result.artifacts.get("docs/operational-savings-review/categories/ITC-52.md"))
       .toContain("### STD-DOE-CCMS-RATINGS");
+  });
+
+  it("limits Ready status to named executable scenarios", async () => {
+    const result = buildOperationalSavingsReview(await loadOperationalSavingsSources());
+    const vehicle = result.artifacts.get("docs/operational-savings-review/categories/ITC-29.md");
+
+    expect(vehicle).toContain("**Readiness:** VERIFIED_EXECUTABLE");
+    expect(vehicle).toContain("**Category Ready applies here:** Yes");
+    expect(vehicle).toContain("Vehicle-class percentile estimate");
+    expect(vehicle).toContain("**Readiness:** UNSUPPORTED");
+    expect(vehicle).toContain("**Category Ready applies here:** No");
+    expect(vehicle).toContain("1,617 USD");
   });
 
   it("filters demand, export, water, and sewer components from the declared formula contract", async () => {

@@ -205,7 +205,7 @@ Do not infer an exact model when the source supports only a product class or can
 | `ITC-26` | [Microgrid composite interval dispatch](operational-savings-review/categories/ITC-26.md) | DRAFT | 1 |
 | `ITC-27` | [Public EVSE added-load bill impact](operational-savings-review/categories/ITC-27.md) | DRAFT | 3 |
 | `ITC-28` | [Fleet charging added-load bill impact](operational-savings-review/categories/ITC-28.md) | DRAFT | 1 |
-| `ITC-29` | [Light-duty vehicle resource switching](operational-savings-review/categories/ITC-29.md) | DRAFT | 1 |
+| `ITC-29` | [Light-duty vehicle resource switching](operational-savings-review/categories/ITC-29.md) | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
 | `ITC-30` | [Forklift resource switching](operational-savings-review/categories/ITC-30.md) | BLOCKED | 1 |
 | `ITC-31` | [Managed fleet-charging interval shift](operational-savings-review/categories/ITC-31.md) | DRAFT | 1 |
 | `ITC-32` | [Flow-fixture water and hot-water reduction](operational-savings-review/categories/ITC-32.md) | DRAFT | 1 |
@@ -316,13 +316,13 @@ Annual dollar savings
 ├─ Annual electricity reduction
 │  ├─ Replacement Fixture Count {{input: required}} (User)
 │  ├─ Existing fixture wattage
-│  │  ├─ Existing Fixture Model, if known {{lookup: existing_fixture_model}} {{input: optional}} (User)
+│  │  ├─ Existing Fixture Model or Documented Watts {{lookup: existing_fixture_model}} {{input: conditional}} (User)
 │  │  ├─ Existing Fixture Type or Application {{lookup: exterior_fixture_context}} {{input: required}} (User)
 │  │  ├─ site.buildingTypes and site.squareFootage.value {{lookup: exterior_fixture_context}} (Profile)
 │  │  └─ Existing Fixture Wattage Resolution {{lookup: exterior_fixture_resolution}} (Standard)
 │  ├─ Proposed fixture wattage
 │  │  ├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
-│  │  ├─ Selected Proposed Model, if known {{lookup: proposed_fixture_model}} {{input: optional}} (User)
+│  │  ├─ Selected Proposed Model or Documented Watts {{lookup: proposed_fixture_model}} {{input: conditional}} (User)
 │  │  ├─ Existing fixture type or resolved class {{lookup: exterior_fixture_context}} (Standard)
 │  │  ├─ site.buildingTypes and site.squareFootage.value {{lookup: exterior_fixture_context}} (Profile)
 │  │  └─ Proposed Product Resolution {{lookup: exterior_fixture_resolution}} (Standard)
@@ -1489,7 +1489,7 @@ For a combined fleet-electrification view, use this category's bill delta with I
 
 ### ITC-29 - Light-duty vehicle resource switching
 
-**Status:** DRAFT
+**Status:** RESEARCHED — READY FOR HUMAN REVIEW
 
 **Applicable Resources:** electricity, vehicle-fuel
 
@@ -1515,19 +1515,22 @@ Annual dollar savings
 │  ├─ BR-SCOPE-QUANTITY
 │  ├─ Annual miles for replaced vehicle {{input: required}} (User)
 │  ├─ Existing Vehicle Class and Fuel Type {{lookup: vehicle_context}} {{input: required}} (User)
-│  ├─ Existing Vehicle Model, if known {{lookup: vehicle_exact_model}} {{input: optional}} (User)
+│  ├─ Existing Vehicle Model and FuelEconomy.gov ID {{lookup: vehicle_exact_model}} {{input: conditional}} (User)
 │  ├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 │  ├─ Proposed Electric Vehicle Class or Service Need {{lookup: vehicle_context}} {{input: required}} (User)
-│  ├─ Selected Proposed Electric Vehicle Model, if known {{lookup: vehicle_exact_model}} {{input: optional}} (User)
+│  ├─ Selected Proposed Electric Vehicle Model and FuelEconomy.gov ID {{lookup: vehicle_exact_model}} {{input: conditional}} (User)
+│  ├─ User confirms the two exact models provide equivalent required service {{input: conditional}} (User)
 │  └─ Vehicle efficiency records (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
 **Standards:** STD-FUELECONOMY-VEHICLES.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** AVAILABLE
 
 **Notes:** Exclude purchase price, maintenance, incentives, and emissions.
+The Ready verdict applies only to the exact-model scenario backed by vehicle IDs 43764 and 44444, exact project activity and prices, and explicit user confirmation of service equivalence.
+Matching model line, class, model year, and drive support the human decision but do not establish service equivalence automatically.
 Exact vehicle models override source-backed vehicle-class distributions.
 Do not calculate class percentiles until an eligible model-year, vehicle-class, fuel, drive, and service-compatibility population has a fixture-backed sample count.
 FuelEconomy.gov `combE` is already measured at the wall and includes charging losses, so do not apply charging efficiency again.
