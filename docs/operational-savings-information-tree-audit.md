@@ -13,6 +13,10 @@ Current documentation state:
 
 - Categories: 54.
 - Generated standalone category pages: 54.
+- Visible Information Cards: 54.
+- Visible category-local Standard processes: 93.
+- Visible direct source-link occurrences: 273.
+- Information Card schema version: `operational-savings/information-card-v1`.
 - Canonical retrofit mappings: 92.
 - Missing mappings: 0.
 - Duplicate mappings: 0.
@@ -56,10 +60,12 @@ It also rejects double application of FuelEconomy charging losses and double ann
 ## Structural audit
 
 The structural audit passed for 54 contiguous category IDs, 92 unique retrofit mappings, six recursively expanded shared branches, and 16 embedded Standards.
-Every terminal source leaf is labeled User, Profile, Bill, or Standard.
+Every terminal source leaf is labeled User, Profile, Bill, Linked Opportunity, Derived, or is a referenced category-local Standard process.
 Linked Opportunity and other derived project context are explicit internal intermediates and are no longer mislabeled as Profile fields.
 Every User leaf has exactly one Required Screening, Conditional Calculation Gate, or Optional Known Detail classification.
-Every generated page contains a concise Human Review Snapshot, scenario readiness, Review Status, formulas, vertical Formula-Term Evidence, vertical Source-Role Evidence, vertical Default-Path Proof, a fully expanded tree, Input Workflow, Standards and Automation, missing-data behavior, and category-specific Human Review Decisions.
+Every generated page contains exactly one visible Information Card.
+The visible order is the title, mapped retrofits, overview, broader formula, expanded formula, readable information tree, and only the category-local Standard processes referenced by that tree.
+The pages omit audit status, readiness, evidence tables, input inventories, review decisions, and implementation gates while the canonical contracts, evidence manifest, fixtures, and validators retain those controls.
 
 ## Semantic source audit
 
@@ -106,7 +112,8 @@ Formula/tree corrections are now recorded in the canonical category contract rat
 The category contract records 445 atomic formula terms.
 Each record has one name, dimension, canonical unit ID, display unit, quantity kind, source or resolver, exact paths, fallback behavior, Standard output evidence, formula use, and missing-data behavior.
 Every declared tree node must resolve to an exact node in the expanded category tree.
-Every identifier used by a displayed formula must have an atomic formula-term contract and appear in a vertical Formula-Term Evidence card.
+Every identifier used by a canonical formula must have an atomic formula-term contract and a matching expanded-tree path.
+The Information Card renderer projects those identifiers into readable formula labels without changing the canonical contract.
 Thermal and cross-fuel formulas now call `to_energy` or `to_billed_unit` explicitly instead of multiplying a common energy quantity by a price in an unrelated billing unit.
 The versioned unit registry declares every category and source-fixture unit.
 Explicit dimensional relationships validate the ITC-02 watt conversion, ITC-29 fuel and electricity arithmetic, and ITC-42 flow annualization.
@@ -125,7 +132,7 @@ ITC-26 uses one integrated microgrid result rather than summing overlapping comp
 
 ## Default executability audit
 
-Each category now has a Default-Path Proof with minimum required inputs, exact scenario, source fixture, low/base/high rule, final result path, uncertainty, executable fixture, and remaining gate.
+Each category contract has a default-path proof with minimum required inputs, exact scenario, source fixture, low/base/high rule, final result path, uncertainty, executable fixture, and remaining gate.
 A category cannot be Ready unless it names a `VERIFIED_EXECUTABLE` scenario, its declared executable golden fixture exists, and all referenced evidence is `VERIFIED`.
 A Draft or Blocked category cannot claim an executable golden fixture.
 
@@ -157,13 +164,13 @@ The highest-value implementation sequence is:
 4. Add end-to-end fixtures only after the source role and formula contract is stable.
 5. Promote a category to Ready only after the validator proves its full default path.
 
-## Generated review workflow
+## Generated Information Card workflow
 
-The category registry, Standard registry, evidence manifest, and category contract are the maintained sources.
-The generator recursively expands shared branches, filters rate components, traces Standard lookup keys, and renders the three evidence sections.
-Formula-Term Evidence shows each independently dimensioned formula input and its exact path as a vertical card.
-Source-Role Evidence shows which evidence is verified, unverified, or unsupported for each role.
-Default-Path Proof shows whether the ordinary-user path reaches a deterministic low, base, and high result.
+The category registry, Standard registry, evidence manifest, category contract, Information Card registry, and closed Information Card schema are the maintained sources.
+The generator recursively expands shared branches, filters rate components, traces Standard lookup keys, projects recognizable Profile and Bill leaves, and renders one Information Card per category.
+Category-specific process definitions keep exact-product and requirements-only linked-opportunity paths distinct where a product resolver applies.
+Simple bill-derived rates remain Bill and Derived branches and never become Standards.
+Canonical formulas, evidence roles, readiness proofs, fixtures, and status controls remain outside the visible cards.
 Freshness validation compares every generated byte with a deterministic render.
 
 ## Atomic User-input review
@@ -182,6 +189,16 @@ Progressive disclosure should request only the inputs for the selected opportuni
 The focused test suite proves that the validator fails for:
 
 - A missing generated page or a stale generated page.
+- A generated page with a second top-level card, a banned audit heading, a missing required card component, or a changed component order.
+- An Information Card schema with an added field or a missing required field.
+- A tree process without exactly one matching process section, or a process section that is not referenced by the tree.
+- A duplicate visible Standard number or a Standard missing Purpose, Source, Lookup Inputs, Value Needed, How to Use, Automation, or Validation.
+- A Standard source without a direct visible URL.
+- A technical source identifier exposed as a User input.
+- A Profile leaf outside the production-backed presentation projection.
+- A simple Bill-derived rate rendered as a Standard.
+- A Linked Opportunity engineering value without an interpreting process.
+- A repeated result root, generic retrofit branch, unsupported generic route, generic Validation, or source-evidence contradiction.
 - An undefined or circular shared branch.
 - A missing embedded Standard or source link.
 - A missing exact evidence field.
@@ -311,19 +328,23 @@ The bound URL, version, artifact, checksum, coverage, fields, canonical units, e
 No `LIMITED` evidence record is used by ITC-29.
 ITC-29 uses two `VERIFIED` evidence records and one `UNSUPPORTED` distribution record only to document why the class-percentile scenario stays disabled.
 
-The required category sample was manually inspected:
+All 54 generated Information Cards were manually inspected for the required structure, readable formulas, source-labeled leaves, process placement, and absence of banned audit material.
+The required deep-inspection sample was reviewed in full:
 
-- `ITC-02` now treats exact existing and proposed fixture watts as Conditional Calculation Gates and retains no-estimate behavior without a verified baseline or exact compatible proposal.
+- `ITC-02` uses the approved exterior-lighting tree, separates exact-product and requirements-only proposal paths, and leaves the electricity rate Bill-derived.
+- `ITC-08` places collector design and project load requirements on the Linked Opportunity path and connects them to the SAM process.
 - `ITC-15` still proves the zero-direct-resource boundary.
+- `ITC-17` keeps PV design specifications on the Linked Opportunity path and does not invent a system design.
+- `ITC-23` keeps battery design specifications on the Linked Opportunity path and retains chronological interval load and tariff requirements.
+- `ITC-27` separates exact charger lookup from requirements-only charger resolution and treats the result as an operational cost impact.
 - `ITC-29` recomputes to 375 gallons and 3,360 kWh per vehicle-year, 750 gallons and 6,720 kWh per project-year, and 1,617 USD per year.
-- `ITC-32` keeps water and water-heating resource terms separate and does not treat proposed WaterSense data as an existing baseline.
-- `ITC-34` remains a modeled landscape design allowance with no sewer default.
+- `ITC-32` keeps water and water-heating resource terms separate and uses distinct exact-product and requirements-only WaterSense paths.
+- `ITC-34` keeps existing irrigation inputs separate from proposed Linked Opportunity specifications and retains a modeled landscape design allowance with no sewer default.
 - `ITC-39` keeps MEASUR bin output and annualization boundaries explicit.
 - `ITC-52` preserves gallons per rack, gallons per hour, idle kW, and active kWh per rack as separate quantities.
-- `ITC-23` and `ITC-27` retain chronological interval load and tariff requirements for demand calculations.
 - `ITC-54` remains Blocked because no authoritative cross-technology routine-use resolver exists.
 
-The generated review pages for these samples were inspected for snapshot clarity, scenario wording, vertical evidence cards, gate metadata, category-specific decisions, and absence of wide evidence tables.
+The deep-inspection sample was also checked for direct source URLs, readable user-facing inputs, exact Standard numbering, and the absence of status, readiness, evidence, and review-decision sections.
 
 ## Unresolved blockers
 

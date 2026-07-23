@@ -59,14 +59,19 @@ describe("validate-operational-savings-information-trees", () => {
     expect(() => runValidator(fixtureRoot)).toThrow(/circular shared-branch reference/);
   });
 
-  it("rejects a missing embedded Standard", async () => {
+  it("rejects a tree Standard reference without a matching process section", async () => {
     const fixtureRoot = await createFixture();
     await mutateFile(
       join(fixtureRoot, "docs/operational-savings-review/categories/ITC-01.md"),
-      (text) => text.replace("### ■ STD-COMSTOCK-ANNUAL-DELTA —", "### Removed Standard —")
+      (text) => text.replace(
+        "**■ Standard 1.1 — Commercial Building Upgrade Resource Model**",
+        "**Removed process section**"
+      )
     );
 
-    expect(() => runValidator(fixtureRoot)).toThrow(/ITC-01 generated page is missing embedded Standard STD-COMSTOCK-ANNUAL-DELTA/);
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-01 Information Card tree references and Standard sections do not match/
+    );
   });
 
   it("rejects a Standard without a source link", async () => {
@@ -109,14 +114,254 @@ describe("validate-operational-savings-information-trees", () => {
     expect(() => runValidator(fixtureRoot)).toThrow(/ITC-07 formula\/tree root mismatch/);
   });
 
-  it("rejects an incorrect Optional Known-Detail count", async () => {
+  it("rejects a banned visible heading in an Information Card", async () => {
     const fixtureRoot = await createFixture();
     await mutateFile(
       join(fixtureRoot, "docs/operational-savings-review/categories/ITC-07.md"),
-      (text) => text.replace("**Optional Known-Detail count:** 5", "**Optional Known-Detail count:** 4")
+      (text) => text.replace(
+        "**Broader Formula**",
+        "## Review Status\n\n**Broader Formula**"
+      )
     );
 
-    expect(() => runValidator(fixtureRoot)).toThrow(/ITC-07 generated Optional Known-Detail count is 4; expected 5/);
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-07 Information Card contains banned visible content Review Status/
+    );
+  });
+
+  it("rejects a card missing a required top-level component", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-08.md"),
+      (text) => text.replace("**Overview:**", "**Summary:**")
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-08 Information Card is missing \*\*Overview:\*\*/
+    );
+  });
+
+  it("rejects an Information Card schema whose required fields drift", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateJson(
+      join(fixtureRoot, "docs/operational-savings-information-card.schema.json"),
+      (schema) => {
+        schema.required = schema.required.filter((field) => field !== "overview");
+      }
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /Information Card schema required fields do not match the presentation registry/
+    );
+  });
+
+  it("rejects a process section that is not referenced by the tree", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-23.md"),
+      (text) => text.replace(
+        "Standard 1.1 — Battery Storage Dispatch Interval Bill Calculation",
+        "Standard 1.1 — Renamed Tree Process"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-23 Information Card tree references and Standard sections do not match/
+    );
+  });
+
+  it("rejects duplicate visible Standard numbers", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-02.md"),
+      (text) => text.replaceAll("Standard 1.2 — Exact New Fixture Wattage Lookup", "Standard 1.1 — Exact New Fixture Wattage Lookup")
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 Information Card has duplicate Standard numbers or names/
+    );
+  });
+
+  it.each([
+    "Purpose",
+    "Source",
+    "Lookup Inputs",
+    "Value Needed",
+    "How to Use",
+    "Automation",
+    "Validation"
+  ])("rejects a visible Standard missing %s", async (field) => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-29.md"),
+      (text) => text.replace(`**${field}:**`, `**Removed ${field}:**`)
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      new RegExp(`ITC-29 Standard 1\\.1 is missing ${field}`)
+    );
+  });
+
+  it("rejects a visible Standard source with no direct URL", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-29.md"),
+      (text) => text.replace(
+        "[https://www.fueleconomy.gov/feg/ws/index.shtml](https://www.fueleconomy.gov/feg/ws/index.shtml)",
+        "FuelEconomy.gov source link removed"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-29 Standard 1.1 lacks a visible direct source URL/
+    );
+  });
+
+  it("rejects a technical source field displayed as a User input", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-29.md"),
+      (text) => text.replace(
+        "Existing Vehicle Make and Model (User)",
+        "FuelEconomy.gov record ID (User)"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-29 Information Card exposes a technical identifier as a User input/
+    );
+  });
+
+  it("rejects a Profile leaf outside the production-backed presentation projection", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-02.md"),
+      (text) => text.replace("Site Location (Profile)", "Existing Fixture Model (Profile)")
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 Information Card Profile leaves do not match the production-backed presentation projection/
+    );
+  });
+
+  it("rejects a simple Bill-derived rate rendered as a Standard", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-02.md"),
+      (text) => text.replace(
+        "Avoidable Electricity Rate (Derived)",
+        "Standard 9.9 — Bill-Derived Electricity Rate"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 Information Card renders a simple Bill-derived rate as a Standard/
+    );
+  });
+
+  it("rejects a Linked Opportunity engineering value without an interpreting process", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-02.md"),
+      (text) => text.replace(
+        "Standard 1.2 — Exact New Fixture Wattage Lookup",
+        "Exact Fixture Watts (Linked Opportunity)"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 Linked Opportunity jumps directly to an engineering value without a Standard process/
+    );
+  });
+
+  it("rejects a tree that repeats its root result", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-15.md"),
+      (text) => text.replace(
+        "No direct purchased-resource reduction is assigned to this activity (Derived)",
+        "Annual Direct Operational Savings: $0"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-15 Information Card tree repeats its root output/
+    );
+  });
+
+  it("rejects a generic Retrofit selected branch", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-20.md"),
+      (text) => text.replace(
+        "Opportunity Equipment or Performance Requirements (Linked Opportunity)",
+        "Retrofit selected (Linked Opportunity)"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-20 Information Card contains a generic Retrofit selected branch/
+    );
+  });
+
+  it("rejects a generic unsupported routing branch", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-02.md"),
+      (text) => text.replace(
+        "Linked Opportunity specifies requirements but no exact product",
+        "Unknown or different"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 Information Card contains a generic unsupported routing branch/
+    );
+  });
+
+  it("rejects generic future-work wording as the complete Validation", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-29.md"),
+      (text) => text.replace(
+        /\*\*Validation:\*\*\n[\s\S]*$/,
+        "**Validation:**\nThis should work.\n"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-29 Standard 1.1 has generic or empty Validation/
+    );
+  });
+
+  it("rejects Validation that contradicts the source-evidence manifest", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "The reviewed FEMP tables validate proposed efficacy requirements and one narrow wall-mounted example. They do not supply a general installed legacy-wattage distribution or an exact product catalog, so those paths must return no value until separate sources are fixture-validated.",
+        "The source provides a general installed legacy-equipment distribution that supports an existing baseline."
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 Information Card process Existing Fixture Wattage Estimate Validation contradicts the source-evidence manifest/
+    );
+  });
+
+  it("rejects a leaked canonical identifier in an Information Card", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "docs/operational-savings-review/categories/ITC-34.md"),
+      (text) => text.replace(
+        "Standard 1.1 — Landscape Water Budget Calculation",
+        "Standard 1.1 — BR-AVOIDABLE-RESOURCE-RATE and E-WATERSENSE-LANDSCAPE-DESIGN"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-34 Information Card exposes internal technical identifiers/
+    );
   });
 
   it("rejects a high-sensitivity project input made optional without a supported resolver", async () => {
@@ -752,11 +997,13 @@ async function createFixture() {
     "docs/operational-savings-information-trees.md",
     "docs/operational-savings-standard-registry.md",
     "docs/operational-savings-information-tree-audit.md",
+    "docs/operational-savings-information-card.schema.json",
     "docs/operational-savings-source-evidence.json",
     "docs/operational-savings-category-contracts.json",
     "docs/operational-savings-unit-registry.json",
     "data/bill_field_dictionary.json",
     "scripts/generate-operational-savings-review-pages.mjs",
+    "scripts/operational-savings-information-card-registry.mjs",
     "scripts/validate-operational-savings-information-trees.mjs",
     "apps/api/server/matching/retrofitTaxonomy.mjs",
     "apps/api/server/matching/normalizeUserProfile.mjs",

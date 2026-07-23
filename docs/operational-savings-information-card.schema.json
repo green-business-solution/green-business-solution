@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://greenbusinesssolution.org/schemas/operational-savings/information-card-v1.json",
+  "title": "Operational Savings Information Card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "categoryId",
+    "title",
+    "retrofitNames",
+    "overview",
+    "broaderFormula",
+    "expandedFormula",
+    "tree",
+    "processes"
+  ],
+  "properties": {
+    "categoryId": {
+      "type": "string",
+      "pattern": "^ITC-[0-9]{2}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "retrofitNames": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "overview": {
+      "type": "string",
+      "minLength": 1
+    },
+    "broaderFormula": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expandedFormula": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tree": {
+      "$ref": "#/$defs/treeNode"
+    },
+    "processes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/process"
+      }
+    }
+  },
+  "$defs": {
+    "treeNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "children"
+      ],
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/treeNode"
+          }
+        },
+        "processKey": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]*$"
+        }
+      }
+    },
+    "process": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "displayNumber",
+        "name",
+        "canonicalStandardIds",
+        "sourceName",
+        "purpose",
+        "lookupInputs",
+        "valueNeeded",
+        "howToUse",
+        "automation",
+        "validation"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]*$"
+        },
+        "displayNumber": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*\\.[1-9][0-9]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonicalStandardIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^STD-[A-Z0-9-]+$"
+          }
+        },
+        "sourceName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceLinkLabels": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lookupInputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "valueNeeded": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "howToUse": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "automation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "selectedStrategy",
+            "automationMethod",
+            "difficulty"
+          ],
+          "properties": {
+            "selectedStrategy": {
+              "type": "string",
+              "minLength": 1
+            },
+            "automationMethod": {
+              "type": "string",
+              "minLength": 1
+            },
+            "difficulty": {
+              "enum": [
+                "Easy",
+                "Easy to Medium",
+                "Medium",
+                "Medium to Hard",
+                "Hard"
+              ]
+            }
+          }
+        },
+        "validation": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

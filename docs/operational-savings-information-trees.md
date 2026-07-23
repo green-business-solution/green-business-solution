@@ -9,8 +9,9 @@ It excludes project costs, incentives, taxes, financing, maintenance, repairs, d
 
 The canonical taxonomy is `RETROFIT_TYPES` in `apps/api/server/matching/retrofitTaxonomy.mjs`.
 The canonical external lookup specifications are in `docs/operational-savings-standard-registry.md`.
+The generated presentation projection is defined by `scripts/operational-savings-information-card-registry.mjs` and validated against `docs/operational-savings-information-card.schema.json`.
 The focused validation command is `node scripts/validate-operational-savings-information-trees.mjs`.
-The generated standalone review index is `docs/operational-savings-review/README.md`.
+The generated standalone Information Card index is `docs/operational-savings-review/README.md`.
 Regenerate it with `node scripts/generate-operational-savings-review-pages.mjs` and verify freshness with `node scripts/generate-operational-savings-review-pages.mjs --check`.
 
 ## Conventions
