@@ -160,8 +160,8 @@ describe("validate-operational-savings-information-trees", () => {
     await mutateFile(
       join(fixtureRoot, "docs/operational-savings-review/categories/ITC-23.md"),
       (text) => text.replace(
-        "Standard 1.1 — Battery Storage Dispatch Interval Bill Calculation",
-        "Standard 1.1 — Renamed Tree Process"
+        "Standard 1.2 — Battery Storage Dispatch Interval Bill Calculation",
+        "Standard 1.2 — Renamed Tree Process"
       )
     );
 
@@ -174,7 +174,7 @@ describe("validate-operational-savings-information-trees", () => {
     const fixtureRoot = await createFixture();
     await mutateFile(
       join(fixtureRoot, "docs/operational-savings-review/categories/ITC-02.md"),
-      (text) => text.replaceAll("Standard 1.2 — Requirement-Based New Fixture Wattage Resolution", "Standard 1.1 — Requirement-Based New Fixture Wattage Resolution")
+      (text) => text.replaceAll("Standard 1.3 — Requirement-Based New Fixture Wattage Resolution", "Standard 1.2 — Requirement-Based New Fixture Wattage Resolution")
     );
 
     expect(() => runValidator(fixtureRoot)).toThrow(
@@ -232,18 +232,183 @@ describe("validate-operational-savings-information-trees", () => {
     );
   });
 
-  it("rejects an unlikely ordinary-user input without a documented resolver", async () => {
+  it("rejects a generated realism entry without an explicit reviewed decision", async () => {
     const fixtureRoot = await createFixture();
     await mutateFile(
       join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
       (text) => text.replace(
-        'knowledge_likelihood: likelyKnown ? "LIKELY_KNOWN" : "MAY_KNOW"',
-        'knowledge_likelihood: likelyKnown ? "LIKELY_KNOWN" : "UNLIKELY_KNOWN"'
+        '["Public Operating Hours", ["USER_RECOGNIZABLE_ACTIVITY"',
+        '["Public Operating Hours Typo", ["USER_RECOGNIZABLE_ACTIVITY"'
       )
     );
 
     expect(() => runValidator(fixtureRoot)).toThrow(
-      /User-input realism entry .* exposes an unlikely ordinary-user value/
+      /User-input realism entry .* has an invalid explicit User decision/
+    );
+  });
+
+  it("rejects a Project Document mislabeled as Linked Opportunity", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "Existing Nameplate, Photometric Report, or Field Measurement (Project Document)",
+        "Existing Nameplate, Photometric Report, or Field Measurement (Linked Opportunity)"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 Information Card mislabels a Project Document as Linked Opportunity/
+    );
+  });
+
+  it("rejects a nameplate, audit, or measurement labeled as ordinary User", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "Backup Equipment Nameplate, Commissioning Record, or Engineering Assessment (Project Document)",
+        "Backup Equipment Nameplate, Commissioning Record, or Engineering Assessment (User)"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-08 Information Card labels Project Document evidence as ordinary User input/
+    );
+  });
+
+  it("rejects technical usage assigned directly to User without a benchmark resolver", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "Public Operating Hours (User)",
+        "Flushes per Day per Fixture (User)"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-27 Information Card assigns technical usage directly to User without a benchmark resolver/
+    );
+  });
+
+  it("rejects a visible multi-value output where one selected value is required", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        '"One existing input-watt value per fixture"',
+        '"Low, median, and high existing input-watt values per fixture"'
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 Information Card process Existing Fixture Wattage Benchmark exposes a range where one selected value is required/
+    );
+  });
+
+  it("rejects a requirements process without a deterministic selected-value rule", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "\"Use the source's official recommended or typical value when present; otherwise select the weighted median when valid weights exist, or the ordinary median of the eligible compatible population.\"",
+        '"Select any compatible product record."'
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /requirements-based process .* lacks a deterministic selected-value rule/
+    );
+  });
+
+  it("rejects a Standard that omits a technical tree input", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        '"Maximum event duration from a Project Document, the linked opportunity, or the connected context benchmark",',
+        '"Event notification from a Project Document",'
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-16 Information Card process Automated Demand Response Interval Bill Calculation omits required technical tree input Maximum event duration/
+    );
+  });
+
+  it("rejects a Standard input whose use is not documented", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "return `${lookupInput} is used by ${CARD_COPY[category.id].title} to ${purpose}.`;",
+        'return "This input is listed but is not used.";'
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /Information Card process .* does not document how Lookup Input .* is used/
+    );
+  });
+
+  it("rejects a solar-thermal simulator price input", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        'solarWaterHeating\n          ? [\n              "Site location",',
+        'solarWaterHeating\n          ? [\n              "Site location",\n              "Fuel price",'
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-08 Information Card simulator process Solar Thermal Production Simulation includes price before resolving the physical result/
+    );
+  });
+
+  it("rejects AC and DC charger fields without explicit normalization formulas", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "Normalize AC active input power as output power plus the applicable mode-specific total loss, with units converted consistently.",
+        "Use one generic active efficiency field for both AC and DC chargers."
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-27 Information Card process Exact Charger Rating Lookup conflates AC and DC charger fields or omits an explicit normalization formula/
+    );
+  });
+
+  it("rejects a WaterSense product claim outside supported fixture types", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "Supported fixture type: bathroom faucet, showerhead, or pre-rinse spray valve",
+        "Supported fixture type: bathroom faucet, showerhead, pre-rinse spray valve, or kitchen faucet"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-32 WaterSense usage process claims a fixture type outside the supported source scope/
+    );
+  });
+
+  it("rejects an unsupported source-field claim without an inspected artifact or pending limitation", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "The official DLC data-access guide documents tokenized SSL QPL CSV downloads, and the technical requirements define model, application, light-output, efficacy, input-power, status, and version fields. No authenticated QPL extract, retained exact-product fixture, or category adapter is present, so implementation execution is not yet proved.",
+        "The official DLC dataset provides the exact input-power source field."
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 Information Card process Exact New Fixture Wattage Lookup makes a source-field claim without inspected evidence or an implementation-pending limitation/
     );
   });
 
@@ -312,7 +477,7 @@ describe("validate-operational-savings-information-trees", () => {
     await mutateFile(
       join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
       (text) => text.replace(
-        "The official DLC data-access guide and SSL technical requirements establish a candidate-filtering method. No retained QPL population currently proves the application, light-output, distribution, mounting, controls, active-status, and version filters or the resulting low, median, and high wattage values.",
+        "The official DLC data-access guide and SSL technical requirements establish a candidate-filtering method. No retained QPL population currently proves the application, light-output, distribution, mounting, controls, active-status, and version filters or the resulting selected median wattage.",
         "The official DLC data-access guide documents tokenized SSL QPL CSV downloads, and the technical requirements define model, application, light-output, efficacy, input-power, status, and version fields. No authenticated QPL extract, retained exact-product fixture, or category adapter is present, so implementation execution is not yet proved."
       )
     );
@@ -341,9 +506,12 @@ describe("validate-operational-savings-information-trees", () => {
     const fixtureRoot = await createFixture();
     await mutateFile(
       join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
-      (text) => text.replace(
-        '"ITC-39": "Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans"',
-        '"ITC-39": "Generic MEASUR calculator"'
+      (text) => text.replaceAll(
+        "Pumping System Assessment Tool",
+        "Generic MEASUR calculator"
+      ).replaceAll(
+        "Fan System Assessment Tool",
+        "Generic MEASUR calculator"
       )
     );
 
@@ -372,8 +540,8 @@ describe("validate-operational-savings-information-trees", () => {
     await mutateFile(
       join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
       (text) => text.replace(
-        "`Return ${outputSummary} without substituting a current efficient-product distribution for the installed baseline.`,",
-        "`Use the current certified-product distribution as the unknown existing baseline for ${outputSummary}.`,"
+        "If an exact record is unavailable, select one context-matched existing-equipment benchmark from an authoritative historical or installed-stock source; never substitute the current efficient-product population for the installed baseline.",
+        "If an exact record is unavailable, use the current certified-product population as the unknown existing-equipment baseline."
       )
     );
 
@@ -444,7 +612,7 @@ describe("validate-operational-savings-information-trees", () => {
     await mutateFile(
       join(fixtureRoot, "docs/operational-savings-review/categories/ITC-02.md"),
       (text) => text.replace(
-        "Standard 1.1 — Exact New Fixture Wattage Lookup",
+        "Standard 1.2 — Exact New Fixture Wattage Lookup",
         "Exact Fixture Watts (Linked Opportunity)"
       )
     );
@@ -754,7 +922,7 @@ describe("validate-operational-savings-information-trees", () => {
     const fixtureRoot = await createFixture();
     await mutateEvidence(fixtureRoot, (manifest) => {
       manifest.evidence_records.find((record) => record.evidence_id === "E-COMSTOCK-DELTA")
-        .low_base_high_basis = "Use the 25th, 50th, and 75th percentiles.";
+        .selected_value_basis = "Use the 25th, 50th, and 75th percentiles.";
     });
 
     expect(() => runValidator(fixtureRoot)).toThrow(

@@ -27,8 +27,8 @@ Annual Operational Savings
 │  ├─ Timestamped Interval Utility Data (Bill)
 │  ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
 │  ├─ Rate Schedule and Customer Class (Bill)
-│  ├─ Authoritative Tariff Mapping Is Not Yet Verified (Derived)
-│  ├─ No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)
+│  ├─ Published Utility Tariff and Effective-Date Mapping (Derived)
+│  ├─ One Selected Interval Tariff Value (Derived)
 │  └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
 ├─ Included component types (User)
 ├─ Opportunity Equipment or Performance Requirements (Linked Opportunity)
@@ -53,7 +53,7 @@ Annual Operational Savings
 │  │  ├─ Selected Unit Model, if known (Linked Opportunity)
 │  │  ├─ Installed capacity (Linked Opportunity)
 │  │  ├─ Annual operating profile (Linked Opportunity)
-│  │  └─ Documented Coincident useful thermal-load constraint when heat recovery is included from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+│  │  └─ Documented Coincident useful thermal-load constraint when heat recovery is included from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
 │  └─ Storage configuration when storage is included
 │     ├─ Power capacity (Linked Opportunity)
 │     ├─ Usable-energy capacity (Linked Opportunity)
@@ -101,9 +101,9 @@ National Laboratory of the Rockies - PVWatts V8
 
 1. Map the Microgrid System inputs to the documented PVWatts Solar Production Calculation source fields or model inputs: DC capacity; Module Type; Array type; System losses; Tilt; Azimuth; Site Location when PV or wind is included.
 2. Validate site coordinates and array design, run the documented V8 field contract, check warnings, and return interval or annual AC generation with source provenance.
-3. Reject the Microgrid System path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return interval or annual AC electricity generation, with model inputs, warnings, units, and source version.
-5. Retain the PVWatts Solar Production Calculation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected interval or annual AC electricity generation, with model inputs, warnings, units, and source version.
+5. Retain the PVWatts Solar Production Calculation source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 
@@ -148,9 +148,9 @@ National Laboratory of the Rockies - WIND Toolkit and System Advisor Model
 
 1. Map the Microgrid System inputs to the documented Small Wind Production Simulation source fields or model inputs: Wind Turbine Class or Intended Application; Exact Turbine Model or Power Curve; Hub Height; Loss factor; Analysis Year; Site Location when PV or wind is included.
 2. Resolve site resource data at the selected height and year, validate the exact turbine power curve and losses, run the model, and return interval and annual AC generation.
-3. Reject the Microgrid System path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return interval and annual AC electricity generation, with wind resource, turbine, loss, unit, and source provenance.
-5. Retain the Small Wind Production Simulation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected interval and annual AC electricity generation, with wind resource, turbine, loss, unit, and source provenance.
+5. Retain the Small Wind Production Simulation source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 
@@ -194,9 +194,9 @@ U.S. Environmental Protection Agency - CHP technologies and calculator
 
 1. Map the Microgrid System inputs to the documented Microgrid System Performance Balance source fields or model inputs: Prime mover; Input fuel; Selected Unit Model, if known; Installed capacity; Coincident useful thermal-load constraint when heat recovery is included.
 2. Select the compatible technology and capacity row, apply the explicit operating and coincidence constraints, calculate electricity, fuel, and useful heat, and cap outputs at site loads.
-3. Reject the Microgrid System path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity.
-5. Retain the Microgrid System Performance Balance source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity.
+5. Retain the Microgrid System Performance Balance source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 
@@ -247,9 +247,9 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 
 1. Map the Microgrid System inputs to the documented Microgrid System Interval Bill Calculation source fields or model inputs: Timestamped interval utility data from the uploaded utility artifact; Time zone and daylight-saving metadata from the uploaded utility artifact; Authoritative tariff mapping, which is not yet verified; Included component types; Annual operating profile; Power capacity; Usable-energy capacity; Charge efficiency from a nameplate, measurement, audit, or contractor specification; Discharge efficiency from a nameplate, measurement, audit, or contractor specification; Initial state of charge; Reserve constraint; Interval generation and resource profiles from the connected PVWatts, wind, and onsite-generation processes.
 2. Align the interval load and tariff calendar, apply the category constraints, solve baseline and proposed cases, compare bill components, and retain solver and input provenance.
-3. Reject the Microgrid System path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance.
-5. Retain the Microgrid System Interval Bill Calculation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance.
+5. Retain the Microgrid System Interval Bill Calculation source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 

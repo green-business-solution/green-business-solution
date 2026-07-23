@@ -27,10 +27,13 @@ Regenerate it with `node scripts/generate-operational-savings-review-pages.mjs` 
 - Annual energy is not interval demand.
 - Categories without chronological load and tariff data value volumetric energy only and never claim demand-charge savings.
 - A utility-provider candidate is not a verified tariff or customer class.
-- User inputs are project facts that cannot be resolved safely from the profile, bills, or a Standard.
-- Every visible terminal User leaf must have one internal realism-contract entry that records knowledge likelihood, recognizable phrasing, importance, alternate source, connected process when applicable, and no-estimate behavior.
+- User inputs are recognizable facts or business activities that a normal business representative can provide without reading a technical specification or performing an engineering calculation.
+- Every visible terminal User leaf must have one explicit category-specific realism decision, selected-value method, and missing-exact-value behavior.
+- Equipment labels, measurements, audits, engineering studies, contractor specifications, commissioning records, maintenance plans, and uploaded operating records are Project Documents.
+- Linked Opportunities contain only incentive, rebate, grant, tax, or other opportunity requirements and explicitly named products.
 - Standard-derived generic values must remain visible and editable.
-- Missing high-sensitivity information produces no estimate for the affected component, never a silent default.
+- Every unresolved input follows the exact-to-benchmark fallback order and produces one selected value.
+- A missing exact value never produces a calculation range, removes the estimate, or becomes zero unless the actual operational effect is legitimately zero.
 
 Allowed category and branch statuses are `DRAFT`, `RESEARCHED — READY FOR HUMAN REVIEW`, and `BLOCKED`.
 Nothing in this document is finalized.
@@ -71,7 +74,7 @@ For electricity, preserve energy, demand, time-of-use, seasonal, export-credit, 
 For gas, water, sewer, liquid fuel, or waste, use the applicable variable block or service price.
 Exclude fixed customer charges unless usage elimination also removes the charge.
 If only a whole-bill blended rate exists, use it only for a single volumetric tariff and flag the result as estimated.
-Otherwise return no dollar value while retaining the resource result.
+Otherwise select one context-matched authoritative rate and then one deterministic RetroFi rate benchmark while retaining the physical resource result and fallback provenance.
 
 **Used By:** ITC-01 through ITC-14, ITC-16, ITC-17, and ITC-19 through ITC-54.
 
@@ -111,8 +114,8 @@ Annual operating hours
 ```
 
 Use the exact measured value when supplied.
-Otherwise calculate a low/base/high annual-hours range from the stated pattern, operating days, shifts, active season, site daylight when relevant, and Profile context.
-Return no estimate when those facts cannot support a defensible schedule.
+Otherwise calculate one annual-hours value from the stated pattern, operating days, shifts, active season, site daylight when relevant, and Profile context.
+When those facts are incomplete, select the closest authoritative schedule median and then the deterministic RetroFi schedule benchmark.
 
 **Standards:** STD-OPERATING-SCHEDULE.
 
@@ -134,7 +137,7 @@ Chronological load and tariff
 
 All intervals must be continuous, aligned to the tariff calendar, and reconciled to billed monthly energy.
 Monthly peak values without timestamps are insufficient for dispatch, demand response, or time-of-use shifting.
-When this branch is missing, the affected interval-value category returns no estimate.
+When exact interval or tariff information is incomplete, select one source-versioned screening tariff or load profile from the closest authoritative context and retain the fallback level.
 
 **Used By:** ITC-16, ITC-17, ITC-19, ITC-23 through ITC-28, and ITC-31.
 
@@ -287,12 +290,12 @@ Annual direct resource dollar savings
 
 **Standards:** STD-COMSTOCK-ANNUAL-DELTA.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Only the 13 explicitly crosswalked ComStock measures belong here.
-Return no estimate when the linked opportunity scope does not exactly match a documented ComStock upgrade-measure record.
+When the linked opportunity scope does not exactly match a documented ComStock upgrade-measure record, continue to the closest compatible authoritative aggregate and deterministic RetroFi fallback.
 Do not add separate measure results together.
-Show an interquartile range and applicability share only after the eligible population, filters, weights, and sample count are fixture-backed.
+Retain the eligible population, filters, weights, applicability share, and sample count internally while returning only one selected value.
 
 ### ITC-02 - Exterior lighting power and schedule
 
@@ -337,15 +340,16 @@ Annual dollar savings
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
-**Standards:** STD-FEMP-EXTERIOR-LIGHTING and STD-OPERATING-SCHEDULE.
+**Standards:** STD-FEMP-EXTERIOR-LIGHTING, STD-OPERATING-SCHEDULE, and STD-CONTEXT-BENCHMARKS.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** V1 covers one-for-one replacement or upgrade of existing exterior fixtures.
 Use separate rows when fixture types or schedules differ materially, and exclude entirely new fixture additions from the savings path.
-No default existing-wattage path is claimed because the reviewed FEMP artifact supplies proposed efficacy requirements and a narrow wall-mounted example, not a representative installed legacy-fixture population.
+The reviewed FEMP artifact supplies proposed efficacy requirements and a narrow wall-mounted example, not a representative installed legacy-fixture population.
+Unknown existing watts therefore use the separate reviewed DOE application benchmark.
 Exact models and exact schedules override estimates.
-Return no estimate until existing fixture watts are measured, read from a nameplate, or resolved from a separately verified installed-baseline source, and when the schedule cannot be resolved.
+When exact fixture watts or schedule data are unavailable, select one documented application wattage and one context-matched schedule value through the fallback policy.
 Use a project photometric design for scope suitability, but do not monetize lighting quality.
 
 ### ITC-03 - Fuel-fired equipment efficiency replacement
@@ -380,9 +384,9 @@ Annual dollar savings
 
 **Standards:** STD-DOE-CCMS-RATINGS.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
-**Notes:** Return no result when furnace fuel cannot be isolated from other gas end uses.
+**Notes:** When furnace fuel cannot be isolated from other gas end uses, select one context-matched furnace share from the closest authoritative building population.
 The category remains DRAFT until a repeatable DOE database export path is approved.
 
 ### ITC-04 - Boiler control fractional fuel reduction
@@ -419,7 +423,7 @@ Annual dollar savings
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** A generic controls percentage is not acceptable.
 The status remains DRAFT until the exact MEASUR adapter and minimum control inputs are fixture-tested.
@@ -462,9 +466,9 @@ Annual dollar savings
 
 **Standards:** STD-SCOUT-ECM-SCREEN.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
-**Notes:** Return no estimate until an exact supported Scout definition is approved or measured duct leakage is supplied.
+**Notes:** When an exact supported Scout definition or measured duct leakage is unavailable, select one compatible authoritative duct-condition benchmark and retain the fallback level.
 
 ### ITC-06 - Heat-pump water-heater resource switching
 
@@ -502,7 +506,7 @@ Annual dollar savings
 
 **Standards:** STD-DOE-CCMS-RATINGS and STD-ENERGY-STAR-PRODUCT-DATA.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Do not use ComStock for this category because its published commercial service-water-heating coverage is incomplete.
 The category remains DRAFT until a repeatable DOE database export path is approved for existing products that are not in current ENERGY STAR data.
@@ -539,7 +543,7 @@ Annual dollar savings
 
 **Standards:** STD-DOE-CCMS-RATINGS and STD-ENERGY-STAR-PRODUCT-DATA.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** The current end-use allocation must be confirmed rather than inferred from business type alone.
 The category remains DRAFT until a repeatable DOE database export path is approved.
@@ -584,9 +588,9 @@ Annual dollar savings
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
-**Standards:** STD-SAM-SOLAR-THERMAL.
+**Standards:** STD-SAM-SOLAR-THERMAL and STD-CONTEXT-BENCHMARKS.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Eight atomic project values are retained because load, collector geometry, storage, and backup-system performance are high-sensitivity facts.
 
@@ -630,7 +634,7 @@ Annual dollar savings
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Status remains DRAFT until the adapter pins its heat-loss boundary, required physical inputs, and a golden example.
 
@@ -710,7 +714,7 @@ Annual dollar savings
 
 **Standards:** STD-SCOUT-ECM-SCREEN.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** The category remains DRAFT until exact Scout records are crosswalked.
 No broad refrigeration percentage may be substituted.
@@ -748,7 +752,7 @@ Annual dollar savings
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Fan duty must be unchanged; a changed fan operating profile belongs in ITC-39 or ITC-41.
 
@@ -784,7 +788,7 @@ Annual dollar savings
 
 **Standards:** STD-DOE-CCMS-RATINGS and STD-ENERGY-STAR-PRODUCT-DATA.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Batch and continuous machines must match on certified equipment type and ice-duty assumptions.
 The category remains DRAFT until DOE database access and the exact-model adapter are fixture-tested.
@@ -829,7 +833,7 @@ Annual dollar savings
 
 **Standards:** STD-SCOUT-ECM-SCREEN.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** The category is BLOCKED pending human approval that each taxonomy type has an exact Scout definition and identical fallback behavior.
 If any mapping fails, that retrofit must split into a project-engineering category rather than accept a keyword match.
@@ -907,9 +911,9 @@ Annual bill reduction
 └─ Audited load template and REopt bill result (Standard)
 ```
 
-**Standards:** STD-REOPT-LOCAL-DISPATCH.
+**Standards:** STD-REOPT-LOCAL-DISPATCH and STD-CONTEXT-BENCHMARKS.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** REopt has no generic demand-response input object.
 The adapter must first construct a fixed proposed load series from the explicit shed and rebound constraints, then use REopt only for tariff valuation.
@@ -958,7 +962,7 @@ Annual PV bill reduction
 
 **Standards:** STD-PVWATTS-V8.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** The three siting types share a category because siting is a record-level array configuration inside the same PVWatts tree.
 Do not assume retail credit for exports.
@@ -1036,7 +1040,7 @@ Annual wind bill reduction
 
 **Standards:** STD-WIND-SAM.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Display High uncertainty until onsite wind-resource validation exists.
 
@@ -1080,7 +1084,7 @@ Annual resource value
 
 **Standards:** STD-EPA-CHP-PERFORMANCE.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Useful recovered heat is included only when the project is explicitly CHP and mapped to ITC-21.
 Export value is excluded from this category.
@@ -1130,7 +1134,7 @@ Annual CHP resource value
 
 **Standards:** STD-EPA-CHP-PERFORMANCE.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Cap electricity and useful heat at coincident site loads.
 Export value is excluded from this category.
@@ -1183,7 +1187,7 @@ Annual biomass or biogas resource value
 
 **Standards:** STD-EPA-CHP-PERFORMANCE.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Status is DRAFT and uncertainty is High because the federal biomass catalog is partly outdated and project fuel quality dominates performance.
 Do not monetize avoided disposal, renewable credits, or fuel that is not contractually available.
@@ -1223,9 +1227,9 @@ Annual battery bill reduction
 └─ REopt baseline and proposed bill result (Standard)
 ```
 
-**Standards:** STD-REOPT-LOCAL-DISPATCH.
+**Standards:** STD-REOPT-LOCAL-DISPATCH and STD-CONTEXT-BENCHMARKS.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Exclude resilience, outage, incentives, degradation economics, and capital costs.
 
@@ -1274,7 +1278,7 @@ Annual solar-plus-storage bill reduction
 
 **Standards:** STD-PVWATTS-V8 and STD-REOPT-LOCAL-DISPATCH.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Do not add standalone ITC-17 and ITC-23 savings because dispatch interactions would be double counted.
 
@@ -1315,7 +1319,7 @@ Annual thermal-storage bill reduction
 
 **Standards:** STD-REOPT-LOCAL-DISPATCH.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Whole-building interval load alone is insufficient unless the controllable HVAC component is identified.
 
@@ -1381,7 +1385,7 @@ Annual microgrid direct bill reduction
 
 **Standards:** STD-PVWATTS-V8, STD-WIND-SAM, STD-EPA-CHP-PERFORMANCE, and STD-REOPT-LOCAL-DISPATCH.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Every included component must pass its own category input gate before the composite may run.
 The category remains DRAFT until the conditional component schema and cross-category regression fixtures are approved.
@@ -1429,9 +1433,9 @@ Annual public-charging bill impact
 └─ Audited session-load template and REopt bill result (Standard)
 ```
 
-**Standards:** STD-ENERGY-STAR-PRODUCT-DATA and STD-REOPT-LOCAL-DISPATCH.
+**Standards:** STD-ENERGY-STAR-PRODUCT-DATA, STD-REOPT-LOCAL-DISPATCH, and STD-CONTEXT-BENCHMARKS.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** A charger creates load rather than operational savings unless paired with a separately modeled avoided transportation fuel or managed-charging measure.
 The category remains DRAFT until the session-load template and tariff regression fixtures are approved.
@@ -1482,7 +1486,7 @@ Annual fleet charging added cost
 └─ Audited fleet-load template and REopt bill result (Standard)
 ```
 
-**Standards:** STD-FUELECONOMY-VEHICLES, STD-ENERGY-STAR-PRODUCT-DATA, and STD-REOPT-LOCAL-DISPATCH.
+**Standards:** STD-FUELECONOMY-VEHICLES, STD-ENERGY-STAR-PRODUCT-DATA, STD-REOPT-LOCAL-DISPATCH, and STD-CONTEXT-BENCHMARKS.
 
 **Default Estimate:** UNVALIDATED
 
@@ -1572,7 +1576,7 @@ Annual dollar savings
 
 **Standards:** None.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** BLOCKED because no authoritative public model-level cross-fuel performance dataset was validated.
 The formula is usable only with measured or contractually specified project values.
@@ -1612,7 +1616,7 @@ Annual managed-charging bill reduction
 
 **Standards:** STD-REOPT-LOCAL-DISPATCH.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Status remains DRAFT until the fleet availability schema and unmanaged counterfactual are product-approved.
 
@@ -1660,12 +1664,12 @@ Annual dollar savings
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
-**Standards:** STD-WATERSENSE-FIXTURES.
+**Standards:** STD-WATERSENSE-FIXTURES and STD-CONTEXT-BENCHMARKS.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
-**Notes:** Omit hot-water value for cold-only fixtures rather than assuming a fraction.
-Return no hot-water estimate until the hot-water fraction, temperature rise, and heater efficiency are resolved by exact inputs or a verified commercial-usage method.
+**Notes:** Use a legitimate zero hot-water component for a confirmed cold-only fixture rather than assuming a fraction.
+For a hot-water fixture with missing exact technical inputs, resolve one selected hot-water fraction, temperature rise, and heater-efficiency value through the commercial context benchmark.
 
 ### ITC-33 - Flush-fixture water reduction
 
@@ -1704,12 +1708,12 @@ Annual dollar savings
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
-**Standards:** STD-WATERSENSE-FIXTURES.
+**Standards:** STD-WATERSENSE-FIXTURES and STD-CONTEXT-BENCHMARKS.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Toilets and urinals share the tree because fixture type selects a different record inside the same rating Standard.
-Return no default estimate until a commercial flush-frequency source and an installed existing gallons-per-flush baseline are fixture-tested.
+The retained EPA commercial activity method selects one annual flush count, and an exact label, audit, or installed-class benchmark resolves existing gallons per flush.
 
 ### ITC-34 - Landscape water-budget reduction
 
@@ -1755,7 +1759,7 @@ Annual dollar savings
 
 **Standards:** STD-WATERSENSE-LANDSCAPE.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** The two retrofits share a category because the existing and proposed method are record selections in the same water-budget tree.
 The Water Budget Tool is a design method and does not prove actual existing irrigation consumption.
@@ -1794,7 +1798,7 @@ Annual dollar savings
 
 **Standards:** STD-WATERSENSE-CI-OPERATIONS.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** A detection system alone has zero attributable direct savings until it identifies and causes repair of a measured leak.
 
@@ -1835,7 +1839,7 @@ Annual dollar savings
 
 **Standards:** STD-WATERSENSE-CI-OPERATIONS and STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Compute water and fan components independently and omit either component when its minimum inputs are absent.
 
@@ -1880,7 +1884,7 @@ Annual dollar savings
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** The cube law applies only within the validated system range and must not replace a measured fan curve when available.
 The category remains DRAFT until the makeup-air thermal calculation and weather adapter are source-mapped and fixture-tested.
@@ -1921,7 +1925,7 @@ Annual dollar savings
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Load fraction is retained because nameplate power alone materially overstates many motor loads.
 
@@ -1961,9 +1965,9 @@ Annual dollar savings
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
-**Standards:** STD-DOE-MEASUR.
+**Standards:** STD-DOE-MEASUR and STD-CONTEXT-BENCHMARKS.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** These retrofits share the tree because the control type changes the proposed record inside one load-bin calculation.
 
@@ -2004,7 +2008,7 @@ Annual dollar savings
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Flow and head are high-sensitivity project facts and cannot be replaced with a generic pump efficiency.
 
@@ -2046,10 +2050,10 @@ Annual dollar savings
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** The two taxonomy types share an identical fan-system boundary and calculation tree.
-Return no estimate when an efficient-ventilation opportunity changes heat recovery, outdoor-air quantity, or controls outside that fan-system boundary.
+When an efficient-ventilation opportunity changes heat recovery, outdoor-air quantity, or controls outside that fan-system boundary, use the closest compatible validated system method rather than misapplying the fan-only equation.
 
 ### ITC-42 - Air-compressor specific-power replacement
 
@@ -2088,7 +2092,7 @@ Annual dollar savings
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Preserve the delivered pressure and air requirement across cases.
 
@@ -2127,7 +2131,7 @@ Annual dollar savings
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** A generic leak percentage is not a substitute for a measured leak method.
 
@@ -2169,7 +2173,7 @@ Annual dollar savings
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Do not merge with leak repair because the inputs, physics, and missing-data behavior differ.
 
@@ -2211,7 +2215,7 @@ Annual waste-heat resource value
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Cap recovered heat at coincident useful demand and exclude revenue from exported heat or power.
 
@@ -2255,10 +2259,10 @@ Annual dollar savings
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** The two retrofit types share the tree because the proposed technology selects the applicable efficiency or COP record inside the same useful-heat balance.
-Return no estimate when process-electrification scope is not a thermal process that can use this balance.
+When the process-electrification scope is not a thermal process that can use this balance, route it to the closest compatible validated process method rather than misapplying this equation.
 
 ### ITC-47 - Steam-trap loss reduction
 
@@ -2298,7 +2302,7 @@ Annual dollar savings
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Use tested failed-trap condition, not the total installed trap count.
 
@@ -2338,7 +2342,7 @@ Annual dollar savings
 
 **Standards:** None.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** BLOCKED because no authoritative public commercial induction model-level dataset or standardized cross-fuel duty lookup was validated.
 The broad ComStock electric-cooking scenario is not an induction-specific record and must not be used as one.
@@ -2376,7 +2380,7 @@ Annual dollar savings
 
 **Standards:** None.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** BLOCKED because certified walk-in component ratings do not by themselves resolve whole-system annual kWh for a specific box and load.
 The formula is usable only with a project-specific baseline allocation or measurement and a proposed whole-system result for the same duty.
@@ -2462,7 +2466,7 @@ Annual dollar impact
 
 **Standards:** STD-DOE-MEASUR.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** Use zero existing input for a new standalone filtration load, which yields a negative direct operational value.
 Health, productivity, and indoor-air-quality benefits remain out of scope.
@@ -2508,7 +2512,7 @@ Annual dollar savings
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
-**Standards:** STD-DOE-CCMS-RATINGS and STD-ENERGY-STAR-PRODUCT-DATA.
+**Standards:** STD-DOE-CCMS-RATINGS, STD-ENERGY-STAR-PRODUCT-DATA, and STD-CONTEXT-BENCHMARKS.
 
 **Default Estimate:** UNVALIDATED
 
@@ -2569,8 +2573,8 @@ Annual dollar savings
 **Default Estimate:** UNVALIDATED
 
 **Notes:** Do not apply the standardized modified-energy-factor total directly to a site bill because it combines machine, water-heating, and remaining-moisture drying assumptions.
-Return no machine-electricity component unless it is separately reported or measured.
-Commercial dryers and combined washer-dryers return no estimate until a distinct source and tree are approved.
+When machine electricity is not separately reported or measured, select one compatible product-class benchmark and keep it distinct from water heating.
+Commercial dryers and combined washer-dryers require their own source-specific benchmark and calculation tree rather than reuse the washer method.
 
 ### ITC-54 - Backup-power routine resource use
 
@@ -2603,12 +2607,13 @@ Annual routine backup-power resource cost
 ├─ Standby electric input kW per unit, if known {{input: optional}} (User)
 ├─ Scheduled annual test operating hours per unit, if known {{input: optional}} (User)
 ├─ Annual standby energized hours per unit, if known {{input: optional}} (User)
+├─ Technology-and-capacity routine-use benchmark {{lookup: benchmark_context, exact_value_override, eligible_population}} (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
-**Standards:** None.
+**Standards:** STD-CONTEXT-BENCHMARKS.
 
-**Default Estimate:** UNAVAILABLE
+**Default Estimate:** UNVALIDATED
 
 **Notes:** BLOCKED because the broad taxonomy type has no validated public model-level performance source across generator, battery, and hybrid systems.
 The formula is usable with project-specific tested or contractual routine-use values.

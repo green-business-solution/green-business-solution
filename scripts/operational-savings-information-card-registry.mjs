@@ -366,7 +366,7 @@ const PROCESS_LIBRARY = {
     strategy: "Application-specific source lookup with explicit exact-product or requirement-based routing.",
     method: "Identify the lighting application, apply the opportunity restrictions, query an approved product source when available, reject incompatible candidates, and return documented fixture input power.",
     difficulty: "Medium",
-    validation: "The reviewed FEMP tables validate proposed efficacy requirements and one narrow wall-mounted example. They do not supply a general installed legacy-wattage distribution or an exact product catalog, so those paths must return no value until separate sources are fixture-validated."
+    validation: "The reviewed FEMP tables validate proposed efficacy requirements and one narrow wall-mounted example. They do not supply a general installed legacy-wattage distribution or an exact product catalog, so those inputs continue to the separate DOE application benchmark or requirements-filtered DLC process."
   },
   "STD-OPERATING-SCHEDULE": {
     name: "Annual Operating Hours Calculation",
@@ -377,6 +377,16 @@ const PROCESS_LIBRARY = {
     method: "Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.",
     difficulty: "Easy to Medium",
     validation: "The DOE schedule context and USNO daylight definitions and API were checked. Exact calendar arithmetic and daylight calculation are feasible when all inputs are supplied, but a business label alone is not a validated annual-hours value and no category golden fixture exists."
+  },
+  "STD-CONTEXT-BENCHMARKS": {
+    name: "Context-Matched Benchmark Selection",
+    sourceName: "U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources",
+    valueNeeded: "One selected technical or activity value in the formula's required unit, with the eligible population and selection rule retained internally",
+    match: /Context-Matched Benchmark|usage benchmark|operating-profile benchmark|routine-use benchmark|existing fixture wattage benchmark/i,
+    strategy: "Category-specific deterministic selection from the closest authoritative compatible population.",
+    method: "Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.",
+    difficulty: "Medium",
+    validation: "The authoritative source access paths and category boundaries are documented. Only fixture-backed source fields are implementation-proven; each remaining category adapter must retain an inspected artifact or clearly disclose that source-field execution is pending."
   }
 };
 
@@ -433,11 +443,40 @@ const MEASUR_CATEGORY_MODULES = {
   "ITC-51": "Fan System Assessment Tool"
 };
 
-const USER_LIKELY_KNOWN_PATTERN =
-  /(?:count|type or application|make and model|model year|business activity|business hours|hours per operating day|days per week|weeks per year|operating pattern|usage pattern|control type|fuel type|vehicle class|service need|same business service|landscape area|plant or landscape type|sessions per operating day|uses per operating day|flushes per operating day|racks per operating day|annual miles|fleet miles|annual cycles|operating days|backup technology)/i;
+const CONTEXT_BENCHMARK_LINK_SELECTIONS = {
+  "ITC-02": ["2015 U.S. Lighting Market Characterization"],
+  "ITC-08": ["Commercial Reference Buildings"],
+  "ITC-16": ["ComStock data lake and documentation", "Commercial Reference Buildings"],
+  "ITC-23": ["REopt.jl input reference"],
+  "ITC-27": ["EVI-Pro Lite API and model documentation"],
+  "ITC-28": ["Fleet DNA commercial fleet operating data"],
+  "ITC-32": ["WaterSense at Work fixture methods"],
+  "ITC-33": ["WaterSense at Work fixture methods"],
+  "ITC-39": ["ComStock data lake and documentation"],
+  "ITC-52": ["WaterSense at Work commercial-kitchen methods"],
+  "ITC-54": ["Federal emergency-generator operations guidance"]
+};
 
-const PROJECT_DOCUMENT_PATTERN =
-  /(?:nameplate|measurement|measured|documented|uploaded|audit|commissioning|controls trend|operating record|manufacturer|label|test information|if known)/i;
+const SINGLE_VALUE_FALLBACK_ORDER = [
+  "EXACT_MEASURED_OR_DOCUMENTED",
+  "EXACT_PRODUCT_OR_PROJECT_SPECIFICATION",
+  "EXACT_AUTHORITATIVE_DATABASE_LOOKUP",
+  "CONTEXT_MATCHED_AUTHORITATIVE_BENCHMARK",
+  "DETERMINISTIC_RETROFI_BENCHMARK"
+];
+
+const SINGLE_VALUE_RETAINED_METADATA = [
+  "selected_value",
+  "unit",
+  "source",
+  "source_version",
+  "context_filters",
+  "eligible_population",
+  "population_size",
+  "selection_rule",
+  "fallback_level",
+  "value_provenance"
+];
 
 const IDENTIFIER_LABELS = new Map([
   ["annual_energized_hours_per_unit", "Annual Energized Hours per Unit"],
@@ -723,6 +762,7 @@ export function renderPresentationTree(root, processByKey) {
 
 function buildProcessDefinitions(category) {
   if (category.id === "ITC-02") return buildExteriorLightingProcesses(category);
+  if (category.id === "ITC-39") return buildVariableSpeedProcesses(category);
   if (category.id === "ITC-29") {
     return [
       makeProcess(
@@ -747,10 +787,16 @@ function buildProcessDefinitions(category) {
       )
     ];
   }
-  if (PRODUCT_CATEGORY_LABELS[category.id]) return buildCertifiedProductProcesses(category);
+  if (PRODUCT_CATEGORY_LABELS[category.id]) {
+    return buildCertifiedProductProcesses(category);
+  }
 
   const processes = [];
   for (const standard of category.tracedStandards) {
+    if (standard.id === "STD-CONTEXT-BENCHMARKS") {
+      processes.push(buildContextBenchmarkProcess(category));
+      continue;
+    }
     if (
       standard.id === "STD-WATERSENSE-FIXTURES" &&
       ["ITC-32", "ITC-33"].includes(category.id)
@@ -760,21 +806,48 @@ function buildProcessDefinitions(category) {
       processes.push(
         makeProcess(category, standard.id, "exact-proposed-fixture-rating", `Exact Proposed ${fixtureLabel} Rating Lookup`, {
           sourceLinkLabels: category.id === "ITC-32"
-            ? ["WaterSense commercial-building resources", "WaterSense at Work best-management-practice guide"]
-            : undefined,
+            ? ["WaterSense Product Search and downloadable model list", "EPA pre-rinse spray valve archive"]
+            : ["WaterSense Product Search and downloadable model list", "WaterSense urinal criteria"],
           purpose: `Resolve the proposed ${ratedValue} when the linked opportunity names an exact fixture.`,
           lookupInputs: ["Exact proposed fixture make and model from the linked opportunity", "Fixture type and application"],
           valueNeeded: [`Proposed ${ratedValue} with units and product provenance`],
-          validation: `The official WaterSense commercial guidance and fixture criteria were checked. An exact product specification can supply proposed ${ratedValue}, but no retained exact-product fixture or category adapter currently proves the lookup. The source does not supply existing installed performance or usage frequency.`
+          howToUse: category.id === "ITC-32"
+            ? [
+                "Read the exact manufacturer, model, and fixture type from the linked opportunity.",
+                "For private lavatory faucets and showerheads, search the official WaterSense Product Search or download its complete model list.",
+                "For commercial pre-rinse spray valves, use the separate EPA archived model list because the WaterSense specification sunset in 2019; do not represent these as current WaterSense listings.",
+                "Require one exact compatible model and native gallons-per-minute field. Route any other fixture type to a separately validated authoritative product source or the explicit RetroFi benchmark.",
+                "Return one exact proposed rated flow with source version, record identity, product type, native units, and provenance."
+              ]
+            : [
+                "Read the exact manufacturer, model, and toilet or urinal type from the linked opportunity.",
+                "Search the official WaterSense Product Search or download its complete model list.",
+                "Require one exact compatible tank-type toilet, flushometer-valve toilet, or flushing-urinal record and its native gallons-per-flush field.",
+                "Route any other fixture type to a separately validated authoritative product source or the explicit RetroFi benchmark.",
+                "Return one exact proposed gallons-per-flush value with source version, record identity, fixture type, native units, and provenance."
+              ],
+          validation: category.id === "ITC-32"
+            ? `The official WaterSense Product Search exposes a downloadable complete model list for currently supported fixture categories, and EPA retains a separate pre-rinse spray valve archive. No retained product export or category adapter currently proves the exact ${ratedValue} lookup, so source access is verified while field-level execution remains pending. The product sources do not supply existing installed performance or usage frequency.`
+            : `The official WaterSense Product Search exposes a downloadable complete model list for supported toilet and urinal categories. No retained product export or category adapter currently proves the exact ${ratedValue} lookup, so source access is verified while field-level execution remains pending. The product source does not supply existing installed performance or usage frequency.`
         }),
         makeProcess(category, standard.id, "requirement-proposed-fixture-rating", `Requirement-Based Proposed ${fixtureLabel} Resolution`, {
           sourceLinkLabels: category.id === "ITC-32"
-            ? ["WaterSense commercial-building resources", "WaterSense at Work best-management-practice guide"]
-            : undefined,
+            ? ["WaterSense Product Search and downloadable model list", "EPA pre-rinse spray valve archive"]
+            : ["WaterSense Product Search and downloadable model list", "WaterSense urinal criteria"],
           purpose: `Interpret the linked opportunity requirements and determine whether they identify a compatible ${fixtureLabel.toLowerCase()} rating.`,
           lookupInputs: ["Fixture requirements from the linked opportunity", "Fixture type and application", "Required water-use criterion"],
-          valueNeeded: [`Eligible compatible proposed fixture population and a documented low, median, and high ${ratedValue}, or no value when no compatible fixture remains`],
-          validation: `The official WaterSense criteria define compatible proposed ${ratedValue} requirements. No retained qualified-product population currently proves the requirement filters, population size, or low, median, and high result, and the source does not supply existing ratings or usage frequency.`
+          valueNeeded: [`One selected proposed ${ratedValue}, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally`],
+          howToUse: [
+            "Extract fixture type, application, certification, and maximum water-use criteria from the linked opportunity.",
+            category.id === "ITC-32"
+              ? "Use current WaterSense Product Search records only for private lavatory faucets and showerheads, and use the separate EPA archived list for pre-rinse spray valves."
+              : "Use current WaterSense Product Search records only for compatible tank-type toilets, flushometer-valve toilets, and flushing urinals.",
+            "Filter the authoritative population by every mandatory requirement, active or archived source status as applicable, compatible native unit, and fixture-family boundary.",
+            "Use an official criterion or typical value when the source provides one; otherwise select the weighted median when valid weights exist or the ordinary median of the eligible compatible population.",
+            "Return one selected proposed rating and retain the source version, full eligible population, filters, population size, selection rule, selected value, native unit, and fallback level.",
+            "Route unsupported fixture types to a separately validated authoritative product source or the explicit RetroFi benchmark rather than implying WaterSense coverage."
+          ],
+          validation: `The official WaterSense criteria define compatible proposed ${ratedValue} requirements. The official product-search or downloadable-product adapter and retained compatible population are not yet implemented, so the source-supported filtering method is verified but execution proof for the selected median is pending. The source does not supply existing ratings or usage frequency.`
         })
       );
       continue;
@@ -786,23 +859,93 @@ function buildProcessDefinitions(category) {
       processes.push(
         makeProcess(category, standard.id, "exact-charger-rating", "Exact Charger Rating Lookup", {
           sourceLinkLabels: ENERGY_STAR_LINK_SELECTIONS[category.id],
-          purpose: "Resolve active charging efficiency, standby power, and rated capacity when the opportunity names an exact certified charger.",
-          lookupInputs: ["Exact charger make and model", "Rated charger power and application", "Opportunity product information"],
-          valueNeeded: ["Certified active efficiency, standby power, and rated capacity with units"],
-          validation: "The official ENERGY STAR EV charger criteria and Product Finder access path were checked. Exact active-model lookup is technically possible, but the category-specific adapter, retained EV charger record, and formula-level golden test have not yet been added."
+          purpose: "Resolve native AC-output or DC-output charging and low-power fields when the opportunity names an exact certified charger.",
+          lookupInputs: ["Exact charger make and model", "Charger product type: AC-output or DC-output", "Rated charger power and application", "Opportunity product information"],
+          valueNeeded: [
+            "For AC-output chargers: maximum output power, no-vehicle or idle power, and mode-specific total-loss fields",
+            "For DC-output chargers: maximum output power, no-vehicle or idle power, and loading-adjusted efficiency"
+          ],
+          howToUse: [
+            "Match the exact manufacturer and model, require active certification, and preserve whether the record is AC-output or DC-output.",
+            "For an AC-output charger, retain maximum output power, no-vehicle or idle input power, and the applicable current-specific operation-mode total-loss field.",
+            "Normalize AC active input power as output power plus the applicable mode-specific total loss, with units converted consistently.",
+            "For a DC-output charger, retain maximum output power, no-vehicle or idle AC input power, and average loading-adjusted efficiency.",
+            "Normalize DC active input power as output power divided by loading-adjusted efficiency, then apply native no-vehicle or idle input only to the corresponding non-charging duration.",
+            "Return one exact compatible native-field record and retain the product ID, source version, fields, units, and charger-type normalization path."
+          ],
+          validation: "The retained official ENERGY STAR fixture inspects separate AC-output and DC-output certified records and binds maximum output power, AC mode-specific total loss, native idle or no-vehicle input, and DC loading-adjusted efficiency fields. The category adapter and formula-level golden test have not yet been added, so source-field support is verified while category execution proof remains pending."
         }),
         makeProcess(category, standard.id, "requirement-charger-rating", "Requirement-Based Charger Resolution", {
           sourceLinkLabels: ENERGY_STAR_LINK_SELECTIONS[category.id],
-          purpose: "Interpret charger requirements from the opportunity and determine whether a compatible certified product record can supply the needed performance values.",
-          lookupInputs: ["Charger class and intended application", "Rated power requirement", "Opportunity performance requirements"],
-          valueNeeded: ["Eligible compatible certified charger population with documented low, median, and high performance, or no value when no compatible record remains"],
-          validation: "The official ENERGY STAR EV charger criteria and Product Finder access path were checked. No retained category export currently proves the requirement filters, eligible population, population size, or low, median, and high result."
+          purpose: "Interpret charger requirements from the opportunity, separate AC-output and DC-output products, and select one compatible certified record value for each required native field.",
+          lookupInputs: ["Charger product type: AC-output or DC-output", "Charger class and intended application", "Rated power requirement", "Opportunity performance requirements"],
+          valueNeeded: [
+            "One selected native-field performance record from the compatible AC-output or DC-output population",
+            "The eligible population, filters, population size, and median selection rule retained internally"
+          ],
+          howToUse: [
+            "Extract the charger type, application, rated-power requirement, certification requirement, and every mandatory performance limit from the opportunity.",
+            "Filter AC-output and DC-output records separately and preserve each source's native field family and unit.",
+            "Use an official recommended or typical compatible record when the source designates one; otherwise use a valid weighted median or the ordinary median of the eligible compatible population.",
+            "For AC-output records, calculate active input as output power plus the selected mode-specific total loss and keep idle or no-vehicle input separate.",
+            "For DC-output records, calculate active input as output power divided by loading-adjusted efficiency and keep idle or no-vehicle AC input separate.",
+            "Return one selected compatible native-field record without choosing a future contractor product, and retain the complete population and selection trace."
+          ],
+          validation: "The official ENERGY STAR EV charger criteria and Product Finder access path were checked. The source distinguishes AC-output total-loss fields from DC-output loading-adjusted efficiency. No retained category export currently proves the requirement filters, eligible population, population size, or selected median, so implementation proof remains pending."
         })
+      );
+      continue;
+    }
+    if (
+      category.id === "ITC-28" &&
+      standard.id === "STD-FUELECONOMY-VEHICLES"
+    ) {
+      processes.push(
+        makeProcess(
+          category,
+          standard.id,
+          "fueleconomy_vehicles",
+          "Vehicle Electricity-Intensity Resolution",
+          {
+            purpose: "Resolve one fleet-vehicle electricity intensity from a measured fleet study, an exact proposed model, or the connected class-matched benchmark.",
+            lookupInputs: [
+              "Measured kilowatt-hours per mile from a Project Document, when available",
+              "Exact proposed vehicle make, model, year, and drivetrain from the linked opportunity, when named",
+              "Vehicle class and service need",
+              "Class-matched electricity intensity from the connected Fleet DNA benchmark"
+            ],
+            valueNeeded: [
+              "One selected vehicle electricity intensity in kilowatt-hours per mile at the wall"
+            ],
+            howToUse: [
+              "Use measured kilowatt-hours per mile from a fleet study or contractor charging design when available.",
+              "Otherwise match an exact opportunity-named vehicle to the official FuelEconomy.gov record and convert its wall-energy field to kilowatt-hours per mile without applying charging efficiency twice.",
+              "When no exact model is named, use the one class- and vocation-matched electricity intensity selected by the connected Fleet DNA benchmark.",
+              "If the authoritative context population is unavailable, apply the deterministic RetroFi vehicle-class benchmark derived from the closest reviewed source.",
+              "Return one selected electricity-intensity value and retain its source version, exact record or eligible population, filters, population size, selection rule, native unit, conversion, and fallback level."
+            ],
+            selectedStrategy: "Measured fleet value, then exact FuelEconomy.gov model, then the connected class-matched authoritative benchmark.",
+            automationMethod: "Normalize measured or exact-model inputs first; otherwise consume the connected Fleet DNA class result and apply the deterministic single-value fallback.",
+            selectionPolicy: {
+              selectedValueMethod: "Use a measured Project Document value, then one exact compatible FuelEconomy.gov record, then the connected official typical, valid weighted median, or ordinary median benchmark."
+            },
+            validation: "The retained FuelEconomy.gov fixture proves the exact-record field and unit method. Fleet DNA documents class- and vocation-based operating populations, but the retained fleet population and category adapter are not yet present, so exact lookup is verified while benchmark execution remains pending."
+          }
+        )
       );
       continue;
     }
     const publicChargingDispatch =
       category.id === "ITC-27" &&
+      standard.id === "STD-REOPT-LOCAL-DISPATCH";
+    const solarWaterHeating =
+      category.id === "ITC-08" &&
+      standard.id === "STD-SAM-SOLAR-THERMAL";
+    const demandResponseDispatch =
+      category.id === "ITC-16" &&
+      standard.id === "STD-REOPT-LOCAL-DISPATCH";
+    const batteryDispatch =
+      category.id === "ITC-23" &&
       standard.id === "STD-REOPT-LOCAL-DISPATCH";
     processes.push(makeProcess(category, standard.id, processKeyForStandard(standard.id), processNameForCategory(category, standard.id), {
       sourceName: standard.id === "STD-OPERATING-SCHEDULE"
@@ -830,21 +973,78 @@ function buildProcessDefinitions(category) {
             "Authoritative tariff mapping, which is not yet verified",
             "Installed charger count",
             "Public operating hours",
-            "Expected sessions per operating day from a site study or opportunity design",
-            "Average delivered energy per session from a site study or opportunity design",
-            "Documented interval charging profile from the same site study or contractor design",
-            "Resolved charger efficiency, standby power, and rated capacity from the connected product process"
+            "Expected sessions per operating day from a project document, or one context-matched benchmark when unavailable",
+            "Average delivered energy per session from a project document, or one context-matched benchmark when unavailable",
+            "Interval charging profile from a project document, or one deterministic context-matched profile when unavailable",
+            "Resolved native AC-output or DC-output charger fields from the connected product process"
           ]
-        : undefined,
-      howToUse: publicChargingDispatch
+        : solarWaterHeating
+          ? [
+              "Site location",
+              "Collector and storage design from the linked opportunity or a Project Document",
+              "Annual hot-water load from a Project Document or the connected context benchmark",
+              "Backup fuel type",
+              "Backup-system efficiency from a Project Document or the connected context benchmark"
+            ]
+        : demandResponseDispatch
+          ? [
+              "Timestamped interval utility data from the uploaded utility artifact",
+              "Time zone and daylight-saving metadata from the uploaded utility artifact",
+              "Authoritative tariff mapping, which is not yet verified",
+              "Controllable-load definition from a Project Document or the connected context benchmark",
+              "Maximum shed from a Project Document, the linked opportunity, or the connected context benchmark",
+              "Event-availability schedule from a Project Document, the linked opportunity, or the connected context benchmark",
+              "Maximum event duration from a Project Document, the linked opportunity, or the connected context benchmark",
+              "Rebound or recovery constraint from a Project Document or the connected context benchmark"
+            ]
+        : batteryDispatch
+          ? [
+              "Timestamped interval utility data from the uploaded utility artifact",
+              "Time zone and daylight-saving metadata from the uploaded utility artifact",
+              "Authoritative tariff mapping, which is not yet verified",
+              "Power capacity",
+              "Usable-energy capacity",
+              "Charge efficiency from a nameplate, measurement, audit, or contractor specification",
+              "Discharge efficiency from a nameplate, measurement, audit, or contractor specification",
+              "Initial state of charge",
+              "Terminal state-of-charge constraint from the linked opportunity, a Project Document, or the connected context benchmark",
+              "Dispatch-availability schedule",
+              "Reserve constraint"
+            ]
+          : undefined,
+      howToUse: solarWaterHeating
         ? [
-            "Validate the timestamped utility load, timezone treatment, monthly reconciliation, and authoritative tariff mapping before any dollar calculation.",
-            "Require one site study or contractor design that states expected daily sessions, delivered energy per session, and a compatible interval charging profile; daily averages alone do not define interval demand.",
-            "Resolve charger active efficiency, standby power, and rated capacity through the exact-product or requirements-based charger process.",
-            "Apply charger-count and public-hours limits to the documented charging profile, add the resulting import load to the baseline, and run the pinned REopt.jl baseline and proposed bill cases.",
-            "Retain the utility artifact, tariff source, charging-study version, charger-rating records, solver version, warnings, and monthly bill reconciliation; otherwise return no interval dollar estimate."
+            "Resolve the collector and storage design from the linked opportunity when it prescribes the system, or from a contractor specification, proposed construction document, or engineering assessment.",
+            "Resolve annual hot-water load from an audit, measurement, operating record, or the connected context benchmark.",
+            "Resolve backup fuel and efficiency from the existing equipment nameplate, commissioning record, or the connected context benchmark.",
+            "Run the pinned SAM solar-water-heating module to calculate useful thermal production and displaced backup-resource quantity.",
+            "Apply the Bill-derived utility rate or documented non-utility fuel price only after SAM returns the displaced physical resource quantity, and retain all inputs, versions, and warnings."
           ]
-        : undefined,
+        : publicChargingDispatch
+          ? [
+              "Validate the timestamped utility load, timezone treatment, monthly reconciliation, and authoritative tariff mapping before any dollar calculation.",
+              "Use a charging or utilization study when available. Otherwise select one context-matched public-charging profile from an authoritative travel-and-charging model using location, charger type, public hours, business context, and installed count.",
+              "Resolve the charger through the exact-product or requirements-based process, preserving AC-output total-loss fields separately from DC-output loading-adjusted efficiency.",
+              "Apply charger-count and public-hours limits to the documented charging profile, add the resulting import load to the baseline, and run the pinned REopt.jl baseline and proposed bill cases.",
+              "Retain the utility artifact, tariff source, charging-study or benchmark version, context filters, selected profile, charger-rating records, solver version, warnings, and monthly bill reconciliation."
+            ]
+        : demandResponseDispatch
+          ? [
+              "Validate interval utility data, time-zone treatment, monthly reconciliation, and authoritative tariff mapping before the dollar calculation.",
+              "Resolve the controllable-load definition, maximum shed, event availability, maximum event duration, and rebound or recovery constraint from audits, controls trends, engineering studies, opportunity restrictions, or the connected benchmark.",
+              "Apply every resolved event constraint to one baseline and one proposed interval-load case.",
+              "Run the pinned local REopt.jl bill comparison and return one selected annual savings value.",
+              "Retain the exact or benchmark source for every constraint, tariff provenance, solver version, warnings, and monthly bill reconciliation."
+            ]
+        : batteryDispatch
+          ? [
+              "Validate interval utility data, time-zone treatment, monthly reconciliation, and authoritative tariff mapping.",
+              "Resolve power capacity, usable-energy capacity, charge and discharge efficiency, availability, and reserve constraints from the linked opportunity or Project Documents.",
+              "Resolve both initial and terminal state of charge; when no exact terminal rule exists, use the connected benchmark that sets terminal state of charge equal to initial state of charge for the screening horizon.",
+              "Run one deterministic baseline and proposed REopt.jl dispatch with every state and operating constraint applied.",
+              "Return one selected annual bill-savings value and retain all design sources, fallback levels, solver status, warnings, and reconciliation results."
+            ]
+          : undefined,
       validation: standard.id === "STD-OPERATING-SCHEDULE"
         ? "The DOE commercial reference-building schedule context was checked. Calendar arithmetic is deterministic when the operating pattern is complete, but a business label alone is not a validated annual-hours value and no category golden fixture exists."
         : undefined
@@ -853,9 +1053,68 @@ function buildProcessDefinitions(category) {
   return processes;
 }
 
+function buildVariableSpeedProcesses(category) {
+  const context = buildContextBenchmarkProcess(category);
+  const shared = {
+    sourceLinkLabels: ["MEASUR tool page", "Calculator list and descriptions", "ORNL MEASUR source repository"],
+    difficulty: "Medium to Hard"
+  };
+  return [
+    context,
+    makeProcess(category, "STD-DOE-MEASUR", "doe_measur_pump", "Pump Variable-Speed Engineering Calculation", {
+      ...shared,
+      purpose: "Calculate pump electricity for the documented baseline and variable-speed proposal with the MEASUR Pumping System Assessment Tool.",
+      lookupInputs: [
+        "In-scope pump count",
+        "Pump nameplate and measured input from a Project Document",
+        "Required flow and total dynamic head from a Project Document",
+        "Pump curve or documented operating points",
+        "Load or speed profile from a Project Document or the connected operating-profile benchmark",
+        "Proposed minimum speed and pump control rule from the linked opportunity"
+      ],
+      valueNeeded: ["One selected baseline and proposed annual pump-electricity result"],
+      howToUse: [
+        "Map documented pump flow, total dynamic head, pump curve or operating points, motor and drive data, and baseline schedule into the Pumping System Assessment Tool input schema.",
+        "Use the measured load or speed profile when available; otherwise use the one context-matched pump profile from the connected benchmark.",
+        "Apply the opportunity-prescribed minimum speed and pump control rule to the proposed case.",
+        "Run one pinned baseline and proposed Pumping System Assessment Tool case and return one annual electricity reduction.",
+        "Retain the MEASUR version, exact input object, unit conversions, benchmark provenance, warnings, and both annual results."
+      ],
+      selectedStrategy: "Pinned local execution of the MEASUR Pumping System Assessment Tool.",
+      automationMethod: "Validate the pump-specific hydraulic and operating inputs, resolve one profile, run the versioned pump module, and preserve the complete input and output trace.",
+      validation: "The official MEASUR calculator list identifies the Pumping System Assessment Tool and the open-source implementation is available. The exact input mapping and category golden example have not yet been pinned, so module-level execution proof remains pending."
+    }),
+    makeProcess(category, "STD-DOE-MEASUR", "doe_measur_fan", "Fan Variable-Speed Engineering Calculation", {
+      ...shared,
+      purpose: "Calculate fan electricity for the documented baseline and variable-speed proposal with the MEASUR Fan System Assessment Tool.",
+      lookupInputs: [
+        "In-scope fan count",
+        "Fan nameplate and measured input from a Project Document",
+        "Required airflow and pressure rise from a Project Document",
+        "Fan curve or documented operating points",
+        "Load or speed profile from a Project Document or the connected operating-profile benchmark",
+        "Proposed minimum speed and fan control rule from the linked opportunity"
+      ],
+      valueNeeded: ["One selected baseline and proposed annual fan-electricity result"],
+      howToUse: [
+        "Map documented fan airflow, pressure rise, fan curve or operating points, motor and drive data, and baseline schedule into the Fan System Assessment Tool input schema.",
+        "Use the measured load or speed profile when available; otherwise use the one context-matched fan profile from the connected benchmark.",
+        "Apply the opportunity-prescribed minimum speed and fan control rule to the proposed case.",
+        "Run one pinned baseline and proposed Fan System Assessment Tool case and return one annual electricity reduction.",
+        "Retain the MEASUR version, exact input object, unit conversions, benchmark provenance, warnings, and both annual results."
+      ],
+      selectedStrategy: "Pinned local execution of the MEASUR Fan System Assessment Tool.",
+      automationMethod: "Validate the fan-specific aerodynamic and operating inputs, resolve one profile, run the versioned fan module, and preserve the complete input and output trace.",
+      validation: "The official MEASUR calculator list identifies the Fan System Assessment Tool and the open-source implementation is available. The exact input mapping and category golden example have not yet been pinned, so module-level execution proof remains pending."
+    })
+  ];
+}
+
 function buildCertifiedProductProcesses(category) {
   const label = PRODUCT_CATEGORY_LABELS[category.id];
-  const canonicalStandardIds = category.tracedStandards.map((standard) => standard.id);
+  const canonicalStandardIds = category.tracedStandards
+    .map((standard) => standard.id)
+    .filter((standardId) => standardId !== "STD-CONTEXT-BENCHMARKS");
   const includesEnergyStar = canonicalStandardIds.includes("STD-ENERGY-STAR-PRODUCT-DATA");
   const combinedSourceOverrides = {
     sourceName: includesEnergyStar
@@ -868,13 +1127,13 @@ function buildCertifiedProductProcesses(category) {
         : [])
     ]
   };
-  return [
+  const processes = [
     makeCombinedProcess(category, canonicalStandardIds, "existing-product-rating", `Existing ${label} Rating Resolution`, {
       ...combinedSourceOverrides,
       purpose: `Resolve the existing ${label.toLowerCase()} performance only from a documented exact model or retained certification record.`,
       lookupInputs: [`Existing ${label.toLowerCase()} type or application`, "Existing make and model, when available", "Existing capacity or size class"],
-      valueNeeded: [`Existing certified ${label.toLowerCase()} performance with its exact unit, or no value when no exact record is supported`],
-      validation: `The official certification access paths and native product-family fields were checked. Current efficient-product records do not represent the installed baseline, so this process may use only one documented exact existing model. The category-specific exact-record adapter and golden test have not yet been added.`
+      valueNeeded: [`One selected existing ${label.toLowerCase()} performance value with its exact unit and provenance`],
+      validation: `The official certification access paths and native product-family fields were checked. Current efficient-product records do not represent the installed baseline. An exact documented existing model is preferred; when it is unavailable, a separately sourced context-matched installed-equipment benchmark is required. That benchmark adapter and the category golden test have not yet been added.`
     }),
     makeCombinedProcess(category, canonicalStandardIds, "exact-proposed-product-rating", `Exact Proposed ${label} Rating Lookup`, {
       ...combinedSourceOverrides,
@@ -892,16 +1151,233 @@ function buildCertifiedProductProcesses(category) {
       ...combinedSourceOverrides,
       purpose: `Interpret the linked opportunity requirements and determine whether they identify a compatible certified ${label.toLowerCase()} record.`,
       lookupInputs: ["Product requirements from the linked opportunity", "Required application and capacity", "Applicable efficiency or resource-use criteria"],
-      valueNeeded: [`Eligible compatible proposed ${label.toLowerCase()} population with documented low, median, and high native-unit performance, or no value when no compatible record remains`],
+      valueNeeded: [`One selected proposed ${label.toLowerCase()} native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally`],
       validation: category.id === "ITC-52"
         ? "The official commercial dishwasher dataset and access method were checked, and the retained schema fixture validates the fields required to filter machine type, sanitation method, water use, active energy, and idle power. A retained candidate population and category golden test have not yet been added, so the requirements path cannot claim an implemented selection."
-        : `The official certification access path and applicable ${label.toLowerCase()} product-family filters were checked. Candidate-set automation is technically possible, but no retained category export proves the eligible population, filters, population size, or low, median, and high result.`
+        : `The official certification access path and applicable ${label.toLowerCase()} product-family filters were checked. Candidate-set automation is technically possible, but no retained category export proves the eligible population, filters, population size, or selected median result.`
     })
   ];
+  if (
+    category.tracedStandards.some(
+      (standard) => standard.id === "STD-CONTEXT-BENCHMARKS"
+    )
+  ) {
+    processes.push(buildContextBenchmarkProcess(category));
+  }
+  return processes;
+}
+
+const CONTEXT_BENCHMARK_CONFIG = {
+  "ITC-02": {
+    name: "Existing Fixture Wattage Benchmark",
+    purpose: "Select one existing exterior-fixture wattage when a nameplate, photometric report, or field measurement is unavailable.",
+    lookupInputs: [
+      "Existing fixture type or exterior application",
+      "Building and site context",
+      "Exact existing wattage from a Project Document, when available"
+    ],
+    valueNeeded: [
+      "One existing input-watt value per fixture"
+    ],
+    howToUse: [
+      "Use the exact nameplate, photometric report, or field measurement when available.",
+      "Otherwise map the recognizable application to the reviewed DOE outdoor application classes, such as commercial building exterior, parking, roadway, billboard, or sports field.",
+      "Select the published application-average system wattage for that class; do not reuse FEMP's proposed-efficacy table as an existing-equipment baseline.",
+      "Return one wattage value and feed it to the displayed lighting replacement formula.",
+      "Retain the source version, application mapping, selected row, unit, and fallback level."
+    ],
+    validation: "DOE's 2015 U.S. Lighting Market Characterization Table 4.29 reports application-specific outdoor average system wattages. The retained source fixture records the reviewed rows and scope. The values are screening benchmarks, not project-specific nameplate values, and a category calculation golden fixture has not yet been added."
+  },
+  "ITC-08": {
+    name: "Solar Water-Heating Input Benchmark",
+    purpose: "Select one screening collector, hot-water-load, and backup-system input set when exact project documents are incomplete.",
+    lookupInputs: [
+      "Business activity and building type",
+      "Building area and operating schedule",
+      "Bill water-heating resource use",
+      "Collector requirements from the linked opportunity",
+      "Available collector, load, and backup-system Project Documents"
+    ],
+    valueNeeded: [
+      "One context-matched collector and storage configuration",
+      "One annual hot-water load",
+      "One backup-system efficiency"
+    ],
+    validation: "The DOE reference-building source supports context matching, while SAM supplies the simulation method only after inputs are selected. A retained category benchmark fixture is not yet present, so the selection adapter remains implementation-pending and must not be attributed to SAM."
+  },
+  "ITC-16": {
+    name: "Demand-Response Event Behavior Benchmark",
+    purpose: "Select one conservative shed, availability, duration, and rebound profile when a Project Document does not provide exact event behavior.",
+    lookupInputs: [
+      "Business activity and building type",
+      "Operating schedule",
+      "Interval utility data",
+      "Controllable equipment types",
+      "Opportunity event and maximum-shed restrictions"
+    ],
+    valueNeeded: [
+      "One maximum shed value",
+      "One event-availability schedule",
+      "One maximum event duration",
+      "One rebound or recovery profile"
+    ],
+    validation: "DOE building-load datasets can support context-matched controllable-load profiles after the exact end-use filters and retained population are implemented. No retained demand-response population currently proves those filters, so the benchmark method is defined but execution proof remains pending."
+  },
+  "ITC-23": {
+    name: "Battery Dispatch Boundary Benchmark",
+    purpose: "Select one screening dispatch boundary for a missing terminal state-of-charge rule without inventing battery power or energy capacity.",
+    lookupInputs: [
+      "Initial state of charge",
+      "Dispatch horizon",
+      "Opportunity or Project Document reserve requirement"
+    ],
+    valueNeeded: [
+      "One terminal state-of-charge constraint"
+    ],
+    howToUse: [
+      "Use the terminal state-of-charge constraint from the linked opportunity or Project Document when it is explicit.",
+      "Otherwise set terminal state of charge equal to initial state of charge for the annual screening horizon so the optimizer cannot create savings by ending with less stored energy.",
+      "Keep battery power, usable-energy capacity, efficiencies, availability, and reserve constraints separate and source them through the displayed project paths.",
+      "Return one terminal state-of-charge constraint to the dispatch process.",
+      "Retain the exact or benchmark source, horizon, initial value, terminal value, and fallback level."
+    ],
+    validation: "The REopt input reference confirms that storage state constraints are model inputs. Equality to the initial state is a deterministic RetroFi screening boundary, not a value supplied by REopt and not a substitute for missing battery design specifications. A retained category dispatch golden fixture has not yet been added."
+  },
+  "ITC-27": {
+    name: "Public Charging Utilization Benchmark",
+    purpose: "Select one public-charging utilization and interval load profile when a charging or utilization study is unavailable.",
+    lookupInputs: [
+      "Site location",
+      "Business and building context",
+      "Installed charger count",
+      "Public operating hours",
+      "AC-output or DC-output charger type and rated power"
+    ],
+    valueNeeded: [
+      "One daily charging utilization value",
+      "One normalized interval charging profile"
+    ],
+    validation: "The NLR EVI-Pro Lite API documents representative weekday and weekend 15-minute charging profiles for location and charging scenarios. A retained request and response fixture for RetroFi's public-site filters is not yet present, so the method is verified while category execution remains pending."
+  },
+  "ITC-28": {
+    name: "Fleet Charging Activity and Vehicle Benchmark",
+    purpose: "Select one fleet arrival, departure, charging profile, and class-matched vehicle electricity intensity when a fleet utilization study or exact proposed model is unavailable.",
+    lookupInputs: [
+      "Vehicle class and service need",
+      "Annual fleet miles",
+      "Business operating schedule",
+      "Fleet vocation",
+      "Installed port count"
+    ],
+    valueNeeded: [
+      "One representative arrival and departure schedule",
+      "One uncontrolled charging profile",
+      "One class-matched vehicle electricity intensity"
+    ],
+    validation: "NLR Fleet DNA provides real-world commercial duty-cycle populations by vocation and vehicle class. A retained eligible-population extract and fleet-charging adapter are not yet present, so the context filters are defined but the selected median schedule is implementation-pending."
+  },
+  "ITC-32": {
+    name: "Commercial Flow-Fixture Usage Benchmark",
+    purpose: "Select one commercial usage value from recognizable facility activity instead of asking for technical uses or minutes per fixture.",
+    lookupInputs: [
+      "Supported fixture type: bathroom faucet, showerhead, or pre-rinse spray valve",
+      "Business activity and building type",
+      "Occupants, employees, customers, rooms, beds, meals, or another normally tracked activity",
+      "In-scope fixture count",
+      "Operating days and hours"
+    ],
+    valueNeeded: [
+      "One annual use count or one annual active-use duration in the fixture's native method"
+    ],
+    validation: "EPA WaterSense at Work provides commercial fixture inventory and savings-calculation methods. The retained source material establishes the supported fixture types and calculation fields, but the flow-fixture activity adapter fixture has not yet been added. Unsupported fixture types require a separately validated source or an explicit RetroFi benchmark and must not be represented as WaterSense-covered."
+  },
+  "ITC-33": {
+    name: "Commercial Flush-Activity Benchmark",
+    purpose: "Select one annual toilet or urinal flush count from recognizable facility activity.",
+    lookupInputs: [
+      "Toilet or urinal type",
+      "Business activity and building type",
+      "Occupants or employees and customers or visitors",
+      "In-scope fixture count",
+      "Operating days"
+    ],
+    valueNeeded: [
+      "One selected annual flush count"
+    ],
+    validation: "EPA WaterSense at Work 2023 toilet and urinal methods provide fixture-specific daily-use assumptions and annual equations. The retained fixture records the reviewed assumptions, formulas, and scope, but a category formula golden fixture has not yet been added."
+  },
+  "ITC-39": {
+    name: "Pump or Fan Operating-Profile Benchmark",
+    purpose: "Select one representative operating profile when controls trends, measurements, or an engineering audit do not provide load bins.",
+    lookupInputs: [
+      "Pump or fan application",
+      "Business activity and building type",
+      "Equipment capacity class",
+      "Operating schedule",
+      "Climate and geography"
+    ],
+    valueNeeded: [
+      "One normalized load or speed profile",
+      "One annual-hours allocation across its bins"
+    ],
+    validation: "DOE building-load data can support application-specific operating-profile populations after equipment, building, schedule, climate, and geography filters are implemented. No retained eligible population currently proves those filters, so the benchmark adapter remains implementation-pending."
+  },
+  "ITC-52": {
+    name: "Commercial Dishwasher Activity Benchmark",
+    purpose: "Select one dishwasher activity value from recognizable business throughput when exact controls or operating records are unavailable.",
+    lookupInputs: [
+      "Dishwasher machine type",
+      "Business activity",
+      "Meals, trays, racks, seats, rooms, beds, or another normally tracked throughput",
+      "Operating days and hours",
+      "In-scope equipment count"
+    ],
+    valueNeeded: [
+      "One annual rack count for rack machines, or one annual conveyor operating-hour and throughput value for flight machines"
+    ],
+    validation: "The WaterSense commercial-kitchen method can support activity conversion only after its exact dishwasher fields and units are retained. That source fixture is not yet present. ENERGY STAR product data remains limited to exact product performance and is not used to infer activity."
+  },
+  "ITC-54": {
+    name: "Backup-Power Routine-Use Benchmark",
+    purpose: "Select one conservative routine test-fuel and standby-electricity value when maintenance and commissioning documents are unavailable.",
+    lookupInputs: [
+      "Backup technology and fuel type",
+      "Equipment capacity class",
+      "Applicable maintenance or testing regime",
+      "Operating environment"
+    ],
+    valueNeeded: [
+      "One annual routine-test fuel value",
+      "One annual standby-electricity value"
+    ],
+    validation: "Federal emergency-generator operations guidance can establish maintenance and testing context, but a retained technology-and-capacity performance population is not yet present. The benchmark selection is therefore implementation-pending and must not be presented as a manufacturer-specific value."
+  }
+};
+
+function buildContextBenchmarkProcess(category) {
+  const config = CONTEXT_BENCHMARK_CONFIG[category.id];
+  if (!config) {
+    throw new Error(`Missing context-benchmark configuration for ${category.id}`);
+  }
+  return makeProcess(
+    category,
+    "STD-CONTEXT-BENCHMARKS",
+    "context_benchmarks",
+    config.name,
+    {
+      sourceLinkLabels: CONTEXT_BENCHMARK_LINK_SELECTIONS[category.id],
+      purpose: config.purpose,
+      lookupInputs: config.lookupInputs,
+      valueNeeded: config.valueNeeded,
+      howToUse: config.howToUse,
+      validation: config.validation
+    }
+  );
 }
 
 function buildExteriorLightingProcesses(category) {
   return [
+    buildContextBenchmarkProcess(category),
     makeProcess(category, "STD-FEMP-EXTERIOR-LIGHTING", "exact-new-fixture-watts", "Exact New Fixture Wattage Lookup", {
       sourceName: "DesignLights Consortium - Solid-State Lighting Qualified Products List",
       sourceLinkLabels: [
@@ -921,8 +1397,8 @@ function buildExteriorLightingProcesses(category) {
       ],
       purpose: "Interpret performance requirements when the linked opportunity does not name an exact replacement product.",
       lookupInputs: ["Product requirements from the linked opportunity", "Exterior lighting application", "Required light output or performance criteria"],
-      valueNeeded: ["Eligible compatible QPL population with documented low, median, and high input watts, or no value when no compatible product remains"],
-      validation: "The official DLC data-access guide and SSL technical requirements establish a candidate-filtering method. No retained QPL population currently proves the application, light-output, distribution, mounting, controls, active-status, and version filters or the resulting low, median, and high wattage values."
+      valueNeeded: ["One selected compatible QPL input-watt value, with the eligible population, filters, population size, and median rule retained internally"],
+      validation: "The official DLC data-access guide and SSL technical requirements establish a candidate-filtering method. No retained QPL population currently proves the application, light-output, distribution, mounting, controls, active-status, and version filters or the resulting selected median wattage."
     }),
     makeProcess(category, "STD-OPERATING-SCHEDULE", "fixed-lighting-hours", "Fixed-Schedule Lighting Hours", {
       sourceName: "U.S. Department of Energy - Commercial Reference Buildings",
@@ -1004,10 +1480,48 @@ function makeCombinedProcess(category, standardIds, key, name, overrides = {}) {
       difficulty: overrides.difficulty || primary.difficulty
     },
     validation: overrides.validation || buildValidation(category, standardIds),
-    evidenceState: overrides.evidenceState || processSpecific.evidenceState
+    evidenceState: overrides.evidenceState || processSpecific.evidenceState,
+    inputBindings: overrides.inputBindings || lookupInputs.map((lookupInput) => ({
+      lookupInput,
+      use: describeLookupInputUse(category, key, lookupInput)
+    })),
+    selectionPolicy: buildSelectionPolicy(category, key, overrides.selectionPolicy)
   };
   if (overrides.sourceLinkLabels) process.sourceLinkLabels = overrides.sourceLinkLabels;
   return process;
+}
+
+function describeLookupInputUse(category, processKey, lookupInput) {
+  const purpose = /^requirement-/.test(processKey)
+    ? "filter the compatible authoritative product population before selecting one value"
+    : /^exact-/.test(processKey) || processKey === "fueleconomy_vehicles"
+      ? "resolve and validate one exact authoritative record"
+      : "filter the applicable authoritative benchmark or supply the displayed calculation";
+  return `${lookupInput} is used by ${CARD_COPY[category.id].title} to ${purpose}.`;
+}
+
+function buildSelectionPolicy(category, key, overrides = {}) {
+  const exactProduct = /^exact-/.test(key) || key === "fueleconomy_vehicles";
+  const requirementProduct = /^requirement-/.test(key);
+  const existingProduct = key === "existing-product-rating";
+  const selectedValueMethod = exactProduct
+    ? "Return the one exact compatible authoritative record after all category filters pass."
+    : requirementProduct
+      ? "Use the source's official recommended or typical value when present; otherwise select the weighted median when valid weights exist, or the ordinary median of the eligible compatible population."
+      : existingProduct
+        ? "Use an exact documented existing value when available; otherwise select one context-matched installed-equipment benchmark without treating the current efficient-product population as the existing baseline."
+        : "Use the highest available fallback level and return one deterministic value; when several compatible records remain, apply the official-value, weighted-median, then median rule.";
+  return {
+    outputCardinality: "ONE_SELECTED_VALUE",
+    fallbackOrder: [...SINGLE_VALUE_FALLBACK_ORDER],
+    multipleRecordRule:
+      "OFFICIAL_RECOMMENDED_OR_TYPICAL_THEN_WEIGHTED_MEDIAN_THEN_MEDIAN",
+    selectedValueMethod,
+    missingExactValueBehavior:
+      "Continue through the fallback order and return one context-matched value. Never return a range, omit the estimate solely because the exact value is unavailable, choose a future contractor product arbitrarily, or use zero as a missing-data placeholder.",
+    retainedMetadata: [...SINGLE_VALUE_RETAINED_METADATA],
+    ...overrides
+  };
 }
 
 function buildValidation(category, standardIds) {
@@ -1038,6 +1552,9 @@ function buildProcessSpecificContent(
 ) {
   const categoryName = CARD_COPY[category.id].title;
   const outputSummary = lowercaseFirst(valueNeeded.join("; ").replace(/\.$/, ""));
+  const singleValueSummary = outputSummary
+    .replace(/^one selected\s+/i, "")
+    .replace(/^one\s+/i, "");
   const inputSummary = lookupInputs.join("; ");
   const exactProduct = /^exact-|^fueleconomy_vehicles$/.test(key);
   const requirementProduct = /^requirement-/.test(key);
@@ -1049,14 +1566,14 @@ function buildProcessSpecificContent(
   if (existingProduct) {
     return {
       howToUse: [
-        `Normalize the documented existing manufacturer and model for the ${categoryName.toLowerCase()}; do not infer a rating from equipment type alone.`,
+        `Normalize the documented existing manufacturer and model for the ${categoryName.toLowerCase()} when it is available.`,
         `Search the applicable certification export for that exact model and filter by the displayed product type, capacity or size class, and native test procedure.`,
-        "Require one compatible record; return no existing rating when the model is absent, ambiguous, inactive, or from a different product family.",
-        `Return ${outputSummary} without substituting a current efficient-product distribution for the installed baseline.`,
-        "Retain the dataset version, record identity, native field names, units, model match, and rejection reason."
+        "If an exact record is unavailable, select one context-matched existing-equipment benchmark from an authoritative historical or installed-stock source; never substitute the current efficient-product population for the installed baseline.",
+        `Return one selected ${singleValueSummary}.`,
+        "Retain the dataset version, record identity or benchmark population, context filters, population size, selection rule, native fields, units, and fallback level."
       ],
-      selectedStrategy: `Exact-record lookup for documented existing ${categoryName.toLowerCase()} models only.`,
-      automationMethod: `Normalize the submitted model, query the applicable certification export, apply product-family and capacity filters, and accept only one native-unit record.`,
+      selectedStrategy: `Exact-record lookup followed by a context-matched installed-equipment benchmark for ${categoryName.toLowerCase()}.`,
+      automationMethod: `Normalize the submitted model, query the applicable certification export, and use one exact compatible native-unit record when available; otherwise apply reviewed installed-stock filters and select the official typical value, weighted median, or median.`,
       evidenceState: "METHOD_VERIFIED_IMPLEMENTATION_PENDING"
     };
   }
@@ -1083,12 +1600,12 @@ function buildProcessSpecificContent(
       howToUse: [
         `Extract the application, capacity, certification, and performance limits from the linked ${categoryName.toLowerCase()} opportunity requirements.`,
         "Filter the official current-product population by every mandatory requirement, product-family boundary, active specification, and native test unit.",
-        "Reject the path when no compatible record remains; when several records remain, keep the eligible population and calculate a documented low, median, and high value without selecting the contractor's future product.",
-        `Return ${outputSummary}.`,
-        "Retain the source version, complete filters, eligible record identities, population size, native units, summary rule, and no-result reason."
+        "Use the source's official recommended or typical value when it provides one; otherwise select the weighted median when valid weights exist, or the ordinary median of the eligible compatible population.",
+        `Return one selected ${singleValueSummary} without choosing a future contractor product arbitrarily.`,
+        "Retain the source version, complete filters, eligible record identities, population size, native units, selection rule, selected value, and fallback level."
       ],
       selectedStrategy: `Requirement-based candidate-set resolution from the official ${library.sourceName} population.`,
-      automationMethod: `Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and calculate deterministic low, median, and high native-unit results.`,
+      automationMethod: `Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and select one official typical value, weighted median, or median in native units.`,
       evidenceState: "METHOD_VERIFIED_IMPLEMENTATION_PENDING"
     };
   }
@@ -1097,13 +1614,13 @@ function buildProcessSpecificContent(
     return {
       howToUse: [
         `Load the ${categoryName} project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR ${measurModule}.`,
+        `When an exact technical input is unavailable, use one context-matched value selected from the closest authoritative equipment or application population before running the ${measurModule}; the simulator does not invent that input.`,
         `Run the pinned open-source ${measurModule} baseline and proposed cases using the category formula boundary shown in this card.`,
-        `Return no result when the ${measurModule} requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.`,
-        `Return ${outputSummary}.`,
-        `Retain the MEASUR version, ${measurModule} input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.`
+        `Return one selected ${singleValueSummary}.`,
+        `Retain the MEASUR version, ${measurModule} input object, exact and benchmark input provenance, context filters, eligible populations, selection rules, unit conversions, warnings, and baseline and proposed outputs.`
       ],
       selectedStrategy: `Pinned local execution of the MEASUR ${measurModule} for ${categoryName}.`,
-      automationMethod: `Map reviewed project evidence into the ${measurModule} input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.`,
+      automationMethod: `Map reviewed project evidence into the ${measurModule} input schema, fill unresolved inputs through the single-value authoritative benchmark policy, execute the versioned local module, and preserve its warnings and native outputs.`,
       evidenceState: "METHOD_VERIFIED_IMPLEMENTATION_PENDING"
     };
   }
@@ -1112,9 +1629,9 @@ function buildProcessSpecificContent(
     howToUse: [
       `Map the ${categoryName} inputs to the documented ${name} source fields or model inputs: ${inputSummary}.`,
       library.method,
-      `Reject the ${categoryName} path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.`,
-      `Return ${outputSummary}.`,
-      `Retain the ${name} source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.`
+      `When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.`,
+      `Return one selected ${singleValueSummary}.`,
+      `Retain the ${name} source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.`
     ],
     selectedStrategy: library.strategy,
     automationMethod: library.method,
@@ -1206,7 +1723,7 @@ function inferLookupInputs(category, standardIds) {
 }
 
 function semanticLookupInput(categoryId, input) {
-  const label = String(input || "").replace(/\s+\((?:User|Profile|Bill|Linked Opportunity)\)$/, "");
+  const label = String(input || "").replace(/\s+\((?:User|Profile|Bill|Linked Opportunity|Project Document)\)$/, "");
   if (/^Timestamped Interval Electricity Data$/i.test(label)) {
     return "Timestamped interval utility data from the uploaded utility artifact";
   }
@@ -1272,7 +1789,10 @@ function buildPresentationTree(category, processes) {
     ]);
   }
   if (category.id === "ITC-29") return buildVehicleTree();
+  if (category.id === "ITC-08") return buildSolarWaterHeatingTree(category);
+  if (category.id === "ITC-23") return buildBatteryStorageTree();
   if (category.id === "ITC-27") return buildPublicChargingTree();
+  if (category.id === "ITC-28") return buildFleetChargingTree();
   if (category.id === "ITC-32") return buildFlowFixtureTree();
   if (category.id === "ITC-33") return buildFlushFixtureTree();
   if (category.id === "ITC-39") return buildVariableSpeedTree();
@@ -1285,14 +1805,39 @@ function buildPresentationTree(category, processes) {
   return applySemanticOwnership(category.id, transformed);
 }
 
+function buildSolarWaterHeatingTree(category) {
+  return node("Annual Operational Savings", [
+    node("Annual Backup-Resource Reduction", [
+      node("Site Location (Profile)"),
+      node("Collector and Storage Design", [
+        node("Collector and Storage Requirements Prescribed by the Opportunity (Linked Opportunity)"),
+        node("Collector and Storage Design from Contractor Specification, Engineering Assessment, or Proposed Construction Document (Project Document)"),
+        processNode("context_benchmarks")
+      ]),
+      node("Annual Hot-Water Load", [
+        node("Hot-Water Load from Audit, Measurement, Engineering Assessment, or Operating Record (Project Document)"),
+        node("Business Activity and Building Type (Profile)"),
+        processNode("context_benchmarks")
+      ]),
+      node("Backup Water-Heating System", [
+        node("Backup Fuel Type (User)"),
+        node("Backup Equipment Nameplate, Commissioning Record, or Engineering Assessment (Project Document)"),
+        processNode("context_benchmarks")
+      ]),
+      processNode("sam_solar_thermal")
+    ]),
+    buildBillRateTreeForComponents(category.semanticContract.rate_components || [])
+  ]);
+}
+
 function buildExteriorLightingTree() {
   return node("Annual Operational Savings", [
     node("Annual Electricity Reduction", [
       node("Replacement Fixture Count (User)"),
       node("Existing Fixture Watts", [
         node("Existing Fixture Type or Application (User)"),
-        node("Existing Nameplate, Photometric Report, or Field Measurement (User)"),
-        node("No Existing Wattage Value Without Documentation or Measurement (Derived)")
+        node("Existing Nameplate, Photometric Report, or Field Measurement (Project Document)"),
+        processNode("context_benchmarks")
       ]),
       node("New Fixture Watts", [
         node("Linked Opportunity names an exact replacement product", [
@@ -1336,10 +1881,10 @@ function buildPublicChargingTree() {
     node("Installed Charger Count (User)"),
     node("Public Operating Hours (User)"),
     node("Expected Charging Activity", [
-      node("Expected Sessions per Operating Day from Site Study or Opportunity Design (Linked Opportunity)"),
-      node("Average Delivered Energy per Session from Site Study or Opportunity Design (Linked Opportunity)"),
-      node("Documented Interval Charging Profile from Site Study or Contractor Design (Linked Opportunity)"),
-      node("No Utilization Estimate Without a Site Study or Contractor Design (Derived)")
+      node("Expected Sessions per Operating Day from Charging or Utilization Study (Project Document)"),
+      node("Average Delivered Energy per Session from Charging or Utilization Study (Project Document)"),
+      node("Documented Interval Charging Profile from Site Study or Contractor Design (Project Document)"),
+      processNode("context_benchmarks")
     ]),
     node("Charger Performance", [
       node("Linked Opportunity names an exact charger", [
@@ -1356,27 +1901,82 @@ function buildPublicChargingTree() {
   ]);
 }
 
+function buildBatteryStorageTree() {
+  return node("Annual Operational Savings", [
+    buildIntervalLoadTree(),
+    node("Battery Design and Operating Constraints", [
+      node("Opportunity-Prescribed Battery Design", [
+        node("Power Capacity (Linked Opportunity)"),
+        node("Usable-Energy Capacity (Linked Opportunity)"),
+        node("Charge Efficiency (Linked Opportunity)"),
+        node("Discharge Efficiency (Linked Opportunity)"),
+        node("Initial State of Charge (Linked Opportunity)"),
+        node("Terminal State-of-Charge Constraint (Linked Opportunity)"),
+        node("Dispatch-Availability Schedule (Linked Opportunity)"),
+        node("Reserve Constraint (Linked Opportunity)")
+      ]),
+      node("Contractor or Engineering Battery Design (Project Document)"),
+      processNode("context_benchmarks")
+    ]),
+    processNode("reopt_local_dispatch")
+  ]);
+}
+
+function buildFleetChargingTree() {
+  return node("Annual Operational Cost Impact", [
+    buildIntervalLoadTree(),
+    node("Annual fleet miles (User)"),
+    node("Vehicle Class and Service Need (User)"),
+    node("Documented Depot Allocation Fraction from Fleet Study or Contractor Design (Project Document)"),
+    node("Vehicle Electricity Intensity", [
+      node("Measured Kilowatt-Hours per Mile from Fleet Study or Contractor Charging Design (Project Document)"),
+      node("Exact Proposed Vehicle Model, Year, and Drivetrain, when Named by the Opportunity (Linked Opportunity)"),
+      processNode("fueleconomy_vehicles")
+    ]),
+    node("Fleet Charging Activity", [
+      node("Vehicle-Arrival Schedule from Fleet Study or Contractor Charging Design (Project Document)"),
+      node("Vehicle-Departure Schedule from Fleet Study or Contractor Charging Design (Project Document)"),
+      node("Uncontrolled Charging Rule from Fleet Study or Contractor Charging Design (Project Document)"),
+      processNode("context_benchmarks")
+    ]),
+    node("Installed Port Count (Linked Opportunity)"),
+    node("Charger Performance", [
+      node("Linked Opportunity names an exact charger", [
+        node("Exact Charger Product Information (Linked Opportunity)"),
+        processNode("exact-charger-rating")
+      ]),
+      node("Linked Opportunity specifies charger requirements but no exact product", [
+        node("Charger Requirements (Linked Opportunity)"),
+        processNode("requirement-charger-rating")
+      ])
+    ]),
+    node("Electric Vehicle Supply Equipment Standby Energy (Derived)"),
+    processNode("reopt_local_dispatch")
+  ]);
+}
+
 function buildFlowFixtureTree() {
   return node("Annual Operational Savings", [
     node("Annual Water and Heating-Resource Reduction", [
       node("In-Scope Fixture Count (User)"),
-      node("Observed Fixture Activity", [
-        node("Approximate Uses per Operating Day (User)"),
+      node("Recognizable Facility Activity", [
+        node("Business Activity and Building Type (Profile)"),
+        node("Approximate Occupants, Employees, Customers, Rooms, Beds, or Meals (User)"),
         node("Operating Days per Week (User)"),
         node("Active Weeks per Year (User)"),
-        node("Typical Minutes per Use (User)"),
-        node("No Usage Estimate Without Observed or Documented Activity (Derived)")
+        node("Observed Fixture-Use Study or Audit, when available (Project Document)"),
+        processNode("context_benchmarks")
       ]),
       node("Existing Fixture", [
         node("Existing Fixture Type or Application (User)"),
-        node("Existing Rated Flow from Label, Specification, or Measurement (User)"),
-        node("No Existing Flow Value Without a Label, Specification, or Measurement (Derived)")
+        node("Existing Rated Flow from Label, Specification, or Measurement (Project Document)"),
+        processNode("context_benchmarks")
       ]),
       node("Water-Heating Service", [
         node("Fixture Uses Hot Water (User)"),
         node("Water-Heating Fuel Type (User)"),
-        node("Water-Heater Nameplate or Commissioning Information, if available (User)"),
-        node("No Heating-Resource Estimate Without Documented Temperature and Efficiency Inputs (Derived)")
+        node("Water-Heater Nameplate or Commissioning Information, if available (Project Document)"),
+        processNode("context_benchmarks")
       ]),
       node("Flow Fixture Performance", [
         node("Linked Opportunity names an exact flow fixture", [
@@ -1402,16 +2002,18 @@ function buildFlushFixtureTree() {
   return node("Annual Operational Savings", [
     node("Annual Water Reduction", [
       node("In-Scope Fixture Count (User)"),
-      node("Observed Flush Activity", [
-        node("Approximate Flushes per Operating Day (User)"),
+      node("Recognizable Facility Activity", [
+        node("Business Activity and Building Type (Profile)"),
+        node("Approximate Occupants or Employees and Customers or Visitors (User)"),
         node("Operating Days per Week (User)"),
         node("Active Weeks per Year (User)"),
-        node("No Usage Estimate Without Observed or Documented Activity (Derived)")
+        node("Observed Restroom Study or Audit, when available (Project Document)"),
+        processNode("context_benchmarks")
       ]),
       node("Existing Fixture", [
         node("Existing Toilet or Urinal Type (User)"),
-        node("Existing Gallons per Flush from Label, Specification, or Measurement (User)"),
-        node("No Existing Flush-Volume Value Without a Label, Specification, or Measurement (Derived)")
+        node("Existing Gallons per Flush from Label, Specification, or Measurement (Project Document)"),
+        processNode("context_benchmarks")
       ]),
       node("Flush Fixture Performance", [
         node("Linked Opportunity names an exact flush fixture", [
@@ -1432,14 +2034,24 @@ function buildVariableSpeedTree() {
   return node("Annual Operational Savings", [
     node("Annual Variable-Speed Electricity Reduction", [
       node("In-Scope Equipment Count (User)"),
-      node("Existing Equipment Nameplate and Load Information from Uploaded Audit or Measurement (Linked Opportunity)"),
+      node("Existing Equipment Nameplate and Load Information from Uploaded Audit or Measurement (Project Document)"),
       node("Measured Load-Bin Profile", [
-        node("Load or Speed Fractions from Controls Trends or Engineering Audit (Linked Opportunity)"),
-        node("Annual Hours by Bin from Controls Trends or Engineering Audit (Linked Opportunity)"),
-        node("No Load-Bin Estimate Without Measured or Audited Operating Data (Derived)")
+        node("Load or Speed Fractions from Controls Trends or Engineering Audit (Project Document)"),
+        node("Annual Hours by Bin from Controls Trends or Engineering Audit (Project Document)"),
+        processNode("context_benchmarks")
       ]),
-      node("Proposed Minimum Speed and Control Rule (Linked Opportunity)"),
-      processNode("doe_measur")
+      node("Equipment is a Pump", [
+        node("Required Flow and Total Dynamic Head from Engineering Assessment or Measurement (Project Document)"),
+        node("Pump Curve or Documented Operating Points (Project Document)"),
+        node("Proposed Minimum Speed and Pump Control Rule (Linked Opportunity)"),
+        processNode("doe_measur_pump")
+      ]),
+      node("Equipment is a Fan", [
+        node("Required Airflow and Pressure Rise from Engineering Assessment or Measurement (Project Document)"),
+        node("Fan Curve or Documented Operating Points (Project Document)"),
+        node("Proposed Minimum Speed and Fan Control Rule (Linked Opportunity)"),
+        processNode("doe_measur_fan")
+      ])
     ]),
     buildBillRateTreeForComponents(["electric-volumetric"])
   ]);
@@ -1457,17 +2069,19 @@ function buildDishwasherTree() {
           node("Active Weeks per Year (User)")
         ]),
         node("Flight or Conveyor Machines", [
-          node("Documented Conveyor Operating Hours and Throughput from Controls or Audit (Linked Opportunity)")
+          node("Documented Conveyor Operating Hours and Throughput from Controls or Audit (Project Document)")
         ]),
+        node("Recognizable Meals, Trays, Racks, Seats, Rooms, or Beds (User)"),
+        processNode("context_benchmarks"),
         node("Do Not Convert Gallons per Rack to Gallons per Hour (Derived)")
       ]),
       node("Idle Operation", [
-        node("Documented Energized and Active-Wash Hours from Controls or Operating Records (User)"),
+        node("Documented Energized and Active-Wash Hours from Controls or Operating Records (Project Document)"),
         node("Annual Idle Hours (Derived)")
       ]),
       node("Certified Native Performance Difference (Derived)"),
       node("Separate Water-Heating Resource Impact", [
-        node("No Estimate Without a Documented Engineering Conversion Outside the Product Dataset (Derived)")
+        node("One Selected Water-Heating Conversion from Project Documents or the Context Benchmark (Derived)")
       ])
     ]),
     buildBillRateTreeForComponents([
@@ -1484,16 +2098,16 @@ function buildBackupPowerTree() {
     node("In-Scope Equipment Count (User)"),
     node("Backup Technology and Fuel Type (User)"),
     node("Routine Test Fuel", [
-      node("Test Fuel Use from Product Label, Manufacturer Document, or Commissioning Record (Linked Opportunity)"),
-      node("Scheduled Test Hours from Maintenance Plan or Contractor Specification (Linked Opportunity)"),
-      node("No Routine Fuel Estimate Without Both Documented Values (Derived)")
+      node("Test Fuel Use from Product Label, Manufacturer Document, or Commissioning Record (Project Document)"),
+      node("Scheduled Test Hours from Maintenance Plan or Contractor Specification (Project Document)"),
+      processNode("context_benchmarks")
     ]),
     node("Standby Electricity", [
-      node("Standby Input from Product Label, Manufacturer Document, or Commissioning Record (Linked Opportunity)"),
-      node("Energized Hours from Controls Schedule or Commissioning Record (Linked Opportunity)"),
-      node("No Standby Electricity Estimate Without Both Documented Values (Derived)")
+      node("Standby Input from Product Label, Manufacturer Document, or Commissioning Record (Project Document)"),
+      node("Energized Hours from Controls Schedule or Commissioning Record (Project Document)"),
+      processNode("context_benchmarks")
     ]),
-    node("Blocked Until Routine-Use Documentation Is Available (Derived)"),
+    node("One Selected Routine-Use Estimate (Derived)"),
     buildBillRateTreeForComponents(["electric-volumetric", "gas-volumetric", "fuel-price"])
   ]);
 }
@@ -1681,8 +2295,8 @@ function buildBillRateTreeForComponents(rateComponents) {
   ) {
     children.push(node("Interval Tariff Value", [
       node("Rate Schedule and Customer Class (Bill)"),
-      node("Authoritative Tariff Mapping Is Not Yet Verified (Derived)"),
-      node("No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)")
+      node("Published Utility Tariff and Effective-Date Mapping (Derived)"),
+      node("One Selected Interval Tariff Value (Derived)")
     ]));
   }
   if (components.has("gas-volumetric")) {
@@ -1707,7 +2321,9 @@ function buildBillRateTreeForComponents(rateComponents) {
       node("Avoidable Sewer Rate (Derived)")
     ]));
   }
-  if (components.has("fuel-price")) children.push(node("Documented Current Fuel Price (User)"));
+  if (components.has("fuel-price")) {
+    children.push(node("Current Fuel Price from Receipt, Contract, or Operating Record (Project Document)"));
+  }
   return node("Applicable Resource Rates", children);
 }
 
@@ -1716,8 +2332,8 @@ function buildIntervalLoadTree() {
     node("Timestamped Interval Utility Data (Bill)"),
     node("Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)"),
     node("Rate Schedule and Customer Class (Bill)"),
-    node("Authoritative Tariff Mapping Is Not Yet Verified (Derived)"),
-    node("No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)"),
+    node("Published Utility Tariff and Effective-Date Mapping (Derived)"),
+    node("One Selected Interval Tariff Value (Derived)"),
     node("Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)")
   ]);
 }
@@ -1735,42 +2351,49 @@ function applySemanticOwnership(categoryId, treeNode) {
     return node("Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)", children);
   }
   if (/^(?:Complete Tariff Calendar and Billing Rules|Billing-Demand and Ratchet Rules)$/i.test(label)) {
-    return node("No Interval Dollar Estimate Until an Authoritative Tariff Mapping Is Verified (Derived)", children);
+    return node("Published Utility Tariff and Effective-Date Mapping (Derived)", children);
+  }
+  if (
+    /(?:nameplate|product label|field measurement|measured input|measured annual operating hours|measurement observations|leak-measurement method|uploaded audit|energy audit|water audit|engineering assessment|controls trend|control schedule|commissioning record|maintenance plan|manufacturer document|contractor quote|contractor specification|construction document|operating record|site study|existing fan input data|existing filtration input data|separately reported or measured machine electricity)/i.test(
+      label
+    )
+  ) {
+    return node(`${label} (Project Document)`, children);
   }
   if (
     /(?:session-(?:arrival|duration)|delivered-kWh) distribution|probability distribution/i.test(label)
   ) {
-    return node(`Documented ${label.replace(/ distribution/i, " profile")} from Site Study or Contractor Design (Linked Opportunity)`, children);
+    return node(`Documented ${label.replace(/ distribution/i, " profile")} from Site Study or Contractor Design (Project Document)`, children);
   }
   if (/(?:load or speed fraction|load fraction|annual hours for each bin|load-bin)/i.test(label)) {
-    return node(`Documented ${label} from Controls Trends or Engineering Audit (Linked Opportunity)`, children);
+    return node(`Documented ${label} from Controls Trends or Engineering Audit (Project Document)`, children);
   }
   if (
     /(?:specific power|pressure rise|total dynamic head|required pressure|required flow|required airflow|system pressure|steam pressure|mean flow|water-heater efficiency|temperature rise|hot-water fraction|purchased water-heating input per certified|certified resource input per|standby electric input|tested fuel use)/i.test(
       label
     )
   ) {
-    return node(`Documented ${label} from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)`, children);
+    return node(`Documented ${label} from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)`, children);
   }
   if (
     categoryId === "ITC-28" &&
     /^(?:Measured kWh per Mile|Vehicle-arrival schedule|Vehicle-departure schedule|Uncontrolled charging rule)$/i.test(label)
   ) {
-    return node(`${label} from Fleet Study or Contractor Charging Design (Linked Opportunity)`, children);
+    return node(`${label} from Fleet Study or Contractor Charging Design (Project Document)`, children);
   }
   if (
     /(?:\befficiency\b|\bCOP\b|\bpower\b|\bkW\b|\bkWh\b|\bflow\b|\bpressure\b|\btemperature\b|\bheat loss\b|\bload fraction\b|\bcapacity factor\b|\bheating value\b|\bcycles of concentration\b|\bevaporation\b|\bthermal-load constraint\b|\belectric-load constraint\b|\bcontrol sequence\b|\bcontrol profile\b|\bsite power limit\b|\bdepot allocation fraction\b|\brebound or recovery constraint\b|\bmaximum shed\b|\bmaximum event duration\b|\bevent-availability schedule\b|\bcontrollable-load definition\b)/i.test(
       label
     )
   ) {
-    return node(`Documented ${label} from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)`, children);
+    return node(`Documented ${label} from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)`, children);
   }
   if (
     /(?:share of billed|Affected-load share|Coincident (?:Onsite Electric|Useful-Heat) Load|Interval HVAC thermal load|Existing Design Airflow|Existing airflow schedule|Motor rated speed|Useful Process Load|(?:Certified Test|Tested Duty) Unit|Annual Idle Hours|Existing fuel use per operating hour|Required energy by departure|Managed charging template|Unmanaged charging template|Vehicle-(?:arrival|departure) schedule|Water-heating share)/i.test(
       label
     )
   ) {
-    return node(`Documented ${label} from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)`, children);
+    return node(`Documented ${label} from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)`, children);
   }
   return node(treeNode.text, children);
 }
@@ -1803,8 +2426,9 @@ function collectProcessReferences(root, ordered = [], seen = new Set()) {
 function assignProcessNumbers(categoryId, processes) {
   if (categoryId === "ITC-02") {
     return new Map([
-      ["exact-new-fixture-watts", "1.1"],
-      ["requirement-new-fixture-watts", "1.2"],
+      ["context_benchmarks", "1.1"],
+      ["exact-new-fixture-watts", "1.2"],
+      ["requirement-new-fixture-watts", "1.3"],
       ["fixed-lighting-hours", "2.1"],
       ["daylight-lighting-hours", "2.2"],
       ["lighting-replacement-calculation", "3.1"]
@@ -1938,7 +2562,7 @@ function rootLabelFor(category) {
 
 function friendlyTreeLabel(value, categoryId) {
   let text = stripInternalTreeText(value)
-    .replace(/\s*\((?:User|Profile|Bill|Standard)\)$/, "")
+    .replace(/\s*\((?:User|Profile|Bill|Project Document|Standard)\)$/, "")
     .replace(/\s*\[[A-Z0-9-]+\]\s*$/, "")
     .replace(/\bCanonical retrofit ID from linked-opportunity taxonomy match\b/i, "Applicable Upgrade Requirements")
     .replace(/\bLinked Opportunity\b/i, "Opportunity Equipment or Performance Requirements")
@@ -1978,6 +2602,8 @@ function friendlyTreeLabel(value, categoryId) {
     ? "Profile"
     : /\(Bill\)$/.test(value)
       ? "Bill"
+      : /\(Project Document\)$/.test(value)
+        ? "Project Document"
       : /\(User\)$/.test(value)
         ? proposedSpecificationSource(text, categoryId)
         : null;
@@ -2093,6 +2719,85 @@ function processNode(processKey) {
   return { text: "", children: [], processKey };
 }
 
+const REVIEWED_USER_INPUT_DECISIONS = new Map([
+  ["Replacement Fixture Count", ["USER_MEMORY", "the representative can count the exterior fixtures included in the project scope"]],
+  ["Existing Fixture Type or Application", ["USER_MEMORY", "the representative can recognize whether the fixture serves a wall, parking area, roadway, restroom, kitchen, or another familiar application"]],
+  ["Lighting Hours per Operating Day", ["USER_RECOGNIZABLE_ACTIVITY", "the representative can state the normal daily lighting schedule without calculating annual energy use"]],
+  ["Operating Days per Week", ["USER_RECOGNIZABLE_ACTIVITY", "the representative can state the normal weekly operating pattern"]],
+  ["Active Weeks per Year", ["USER_RECOGNIZABLE_ACTIVITY", "the representative can state the normal operating season or active weeks"]],
+  ["Control Type and Timing Offset", ["USER_MEMORY", "the representative can recognize a timer, photocell, dusk-to-dawn, or manual control and its familiar timing offset"]],
+  ["Existing Building Condition", ["USER_MEMORY", "the representative can recognize the existing envelope, equipment, or control condition being considered"]],
+  ["Existing building vintage class", ["USER_MEMORY", "the representative can provide an approximate construction or renovation period without reading an engineering specification"]],
+  ["Existing duct location and condition", ["USER_MEMORY", "the representative can recognize whether ducts are indoors, outdoors, concealed, damaged, or visibly uninsulated"]],
+  ["Existing condition or control", ["USER_MEMORY", "the representative can recognize the present control or physical condition"]],
+  ["In-Scope Equipment Count", ["USER_MEMORY", "the representative can count the equipment units included in the project scope"]],
+  ["In-Scope Fixture Count", ["USER_MEMORY", "the representative can count the plumbing fixtures included in the project scope"]],
+  ["Existing Furnace Type or Application", ["USER_MEMORY", "the representative can recognize the furnace type and the area or service it supports"]],
+  ["Existing Water Heater Type or Application", ["USER_MEMORY", "the representative can recognize the water-heater type and service"]],
+  ["Existing Gas Water Heater Type or Application", ["USER_MEMORY", "the representative can recognize the gas water-heater type and service"]],
+  ["Existing Refrigeration Equipment Type or Application", ["USER_MEMORY", "the representative can recognize the refrigeration equipment type and application"]],
+  ["Existing Ice Machine Type or Application", ["USER_MEMORY", "the representative can recognize the ice-machine type and service"]],
+  ["Existing Cooking Equipment Type or Application", ["USER_MEMORY", "the representative can recognize the cooking-equipment type and application"]],
+  ["Existing Commercial Dishwasher Type or Application", ["USER_MEMORY", "the representative can recognize whether the dishwasher is a rack, door, undercounter, flight, or conveyor machine"]],
+  ["Existing Commercial Washer Type or Application", ["USER_MEMORY", "the representative can recognize the commercial washer type and application"]],
+  ["Existing Make and Model, when available", ["USER_MEMORY", "the representative may know the familiar make and model, and the field remains optional because a label is not assumed"]],
+  ["Existing Capacity or Size Class, when available", ["USER_MEMORY", "the representative may recognize a familiar small, medium, large, rack, tonnage, or service-capacity class without supplying an engineering rating"]],
+  ["Backup Fuel Type", ["USER_MEMORY", "the representative can recognize whether the backup water heater uses electricity, gas, or another familiar fuel"]],
+  ["Recognizable Business, Shift, Seasonal, or Usage Pattern", ["USER_RECOGNIZABLE_ACTIVITY", "the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours"]],
+  ["Detailed Operating Days, Shifts, or Active Season, if known", ["USER_RECOGNIZABLE_ACTIVITY", "the representative can provide familiar schedule details when the business tracks them"]],
+  ["Measured Annual Operating Hours, if known", ["USER_MEMORY", "the representative may supply an already tracked annual total, but is not asked to calculate it"]],
+  ["Annual pounds of ice produced per machine", ["USER_RECOGNIZABLE_ACTIVITY", "an ice-producing business may use a normally tracked production total, while the connected benchmark remains the fallback"]],
+  ["Analysis Year", ["USER_MEMORY", "the representative can select the current or planned analysis year"]],
+  ["Recognizable Business, Shift, Seasonal, or Usage Pattern", ["USER_RECOGNIZABLE_ACTIVITY", "the representative can describe normal hours, shifts, seasons, or intermittent use without calculating technical annual hours"]],
+  ["Confirmed annual fuel availability, if known", ["USER_RECOGNIZABLE_ACTIVITY", "the representative may know a contracted or normally tracked annual fuel quantity without deriving its heating value"]],
+  ["Fuel unit", ["USER_MEMORY", "the representative can identify the familiar purchased or tracked fuel unit"]],
+  ["Operating schedule", ["USER_RECOGNIZABLE_ACTIVITY", "the representative can describe the normal operating days and hours"]],
+  ["Included component types", ["USER_MEMORY", "the representative can identify which familiar generation, storage, and control components are in scope"]],
+  ["Installed Charger Count", ["USER_MEMORY", "the representative can count the installed or planned charging ports"]],
+  ["Public Operating Hours", ["USER_RECOGNIZABLE_ACTIVITY", "the representative can state the hours when public charging is available"]],
+  ["Annual fleet miles", ["USER_RECOGNIZABLE_ACTIVITY", "fleet operators ordinarily track annual mileage or can provide a familiar approximate total"]],
+  ["Vehicle Class and Service Need", ["USER_MEMORY", "the representative can recognize vehicle class and the route or service the vehicles must perform"]],
+  ["Vehicles Replaced", ["USER_MEMORY", "the representative can count the vehicles included in the replacement"]],
+  ["Annual Miles per Vehicle", ["USER_RECOGNIZABLE_ACTIVITY", "vehicle mileage is a normally tracked business activity"]],
+  ["Existing Vehicle Make and Model", ["USER_MEMORY", "the representative can recognize the existing vehicle make and model"]],
+  ["Approximate Model Year", ["USER_MEMORY", "the representative can provide an approximate vehicle model year"]],
+  ["Additional Version or Drivetrain Details, only when the match is ambiguous", ["USER_MEMORY", "the representative may recognize a trim or drivetrain detail when the exact-record match requires it"]],
+  ["Current Gasoline Price", ["USER_MEMORY", "the representative can provide a familiar current price, which can be replaced by a receipt or fleet fuel record"]],
+  ["Equivalent Required Vehicle Service Confirmed", ["USER_MEMORY", "the representative can confirm that the proposed vehicle meets the same familiar passenger, cargo, range, and service need"]],
+  ["Approximate Occupants, Employees, Customers, Rooms, Beds, or Meals", ["USER_RECOGNIZABLE_ACTIVITY", "the business can provide a normally tracked activity driver instead of estimating technical fixture use"]],
+  ["Approximate Occupants or Employees and Customers or Visitors", ["USER_RECOGNIZABLE_ACTIVITY", "the business can provide familiar occupant and visitor activity instead of estimating flushes"]],
+  ["Fixture Uses Hot Water", ["USER_MEMORY", "the representative can recognize whether the fixture normally uses hot water"]],
+  ["Water-Heating Fuel Type", ["USER_MEMORY", "the representative can recognize the water-heating fuel"]],
+  ["Existing Toilet or Urinal Type", ["USER_MEMORY", "the representative can recognize whether the fixture is a toilet or urinal and its familiar fixture type"]],
+  ["Approximate Landscape Area for Each Hydrozone", ["USER_RECOGNIZABLE_ACTIVITY", "the representative can provide or approximate visible landscaped areas without calculating an irrigation demand"]],
+  ["Recognizable Plant or Landscape Type for Each Hydrozone", ["USER_MEMORY", "the representative can recognize turf, shrubs, trees, or another familiar landscape class"]],
+  ["Irrigation method", ["USER_MEMORY", "the representative can recognize spray, drip, bubbler, or another familiar irrigation method"]],
+  ["Controller treatment", ["USER_MEMORY", "the representative can recognize a timer, weather-based controller, or soil-moisture controller"]],
+  ["Confirmed leak start date", ["USER_MEMORY", "the representative can provide the observed or recorded start date for the confirmed leak"]],
+  ["Confirmed repair date", ["USER_MEMORY", "the representative can provide the observed or recorded repair date"]],
+  ["Makeup-air heating system", ["USER_MEMORY", "the representative can recognize the familiar heating system serving makeup air"]],
+  ["Makeup-air cooling system", ["USER_MEMORY", "the representative can recognize the familiar cooling system serving makeup air"]],
+  ["Existing motor class", ["USER_MEMORY", "the representative can recognize the motor application and approximate class without supplying engineering performance"]],
+  ["Existing compressor type", ["USER_MEMORY", "the representative can recognize the compressor technology and application"]],
+  ["Compressor type", ["USER_MEMORY", "the representative can recognize the compressor technology and application"]],
+  ["Existing control mode", ["USER_MEMORY", "the representative can recognize the current compressor control mode"]],
+  ["Failed-trap condition", ["USER_MEMORY", "the representative can identify the observed failed-open, leaking, or failed-closed condition"]],
+  ["Leak class", ["USER_MEMORY", "the representative can use the leak class already assigned by an inspection without calculating steam loss"]],
+  ["Condensate-return condition", ["USER_MEMORY", "the representative can recognize whether condensate is returned or discharged"]],
+  ["Existing Process or Fuel Type", ["USER_MEMORY", "the representative can recognize the existing process and its fuel"]],
+  ["Existing cooking-duty definition", ["USER_RECOGNIZABLE_ACTIVITY", "the representative can describe the familiar cooking service or product output being replaced"]],
+  ["Proposed duty-equivalence confirmation", ["USER_MEMORY", "the representative can confirm that the proposed equipment serves the same familiar cooking duty"]],
+  ["Existing and proposed duty-equivalence confirmation", ["USER_MEMORY", "the representative can confirm that both systems serve the same familiar refrigerated box load and operating duty"]],
+  ["Recognizable Cooking Usage Pattern", ["USER_RECOGNIZABLE_ACTIVITY", "the representative can describe meals, batches, operating periods, or another familiar cooking activity"]],
+  ["Recognizable Meals, Trays, Racks, Seats, Rooms, or Beds", ["USER_RECOGNIZABLE_ACTIVITY", "the business can provide a normally tracked throughput measure instead of calculating dishwasher technical activity"]],
+  ["Approximate Racks per Operating Day", ["USER_RECOGNIZABLE_ACTIVITY", "a rack-machine operator can provide the familiar daily rack throughput without converting it to a technical gallons-per-hour value"]],
+  ["Recognizable Laundry Usage Pattern", ["USER_RECOGNIZABLE_ACTIVITY", "the representative can describe rooms, beds, loads, operating periods, or another familiar laundry activity"]],
+  ["Annual Cycles per Unit", ["USER_RECOGNIZABLE_ACTIVITY", "a laundry operation may provide a normally tracked annual or daily cycle count without calculating resource intensity"]],
+  ["Water-heating resource", ["USER_MEMORY", "the representative can recognize the resource used to heat wash water"]],
+  ["Backup Technology and Fuel Type", ["USER_MEMORY", "the representative can recognize whether backup power is a generator, UPS, or another familiar technology and identify its fuel"]],
+  ["Waste-stream schedule", ["USER_RECOGNIZABLE_ACTIVITY", "the representative can describe when the familiar production process creates the recoverable waste stream without calculating a thermal profile"]]
+]);
+
 export function buildUserInputRealismEntries(categoryId, tree, processes) {
   const entries = [];
   const processByKey = new Map(processes.map((process) => [process.key, process]));
@@ -2106,56 +2811,30 @@ export function buildUserInputRealismEntries(categoryId, tree, processes) {
     ) {
       const visibleLabel = treeNode.text.replace(/\s+\(User\)$/, "");
       const connectedProcessKey = findConnectedProcessKey(nextPath, processByKey);
-      const documentedSource = PROJECT_DOCUMENT_PATTERN.test(visibleLabel);
-      const likelyKnown =
-        USER_LIKELY_KNOWN_PATTERN.test(visibleLabel) && !documentedSource;
-      const alternateSource = likelyKnown
-        ? "NONE"
-        : /(?:share of billed|current .* price)/i.test(visibleLabel)
-          ? "BILL"
-          : documentedSource
-            ? "PROJECT_DOCUMENT"
-            : connectedProcessKey
-              ? "STANDARD"
-              : "PROJECT_DOCUMENT";
-      const valueImportance = /(?:if known|if available|optional|additional version)/i.test(
-        visibleLabel
-      )
-        ? "MODERATE"
-        : /(?:count|hours|days|weeks|miles|activity|type|model|fuel|price|measurement|documented)/i.test(
-            visibleLabel
-          )
-          ? "HIGH"
-          : "MODERATE";
+      const reviewedDecision = REVIEWED_USER_INPUT_DECISIONS.get(visibleLabel);
+      const [decision, reason] = reviewedDecision || [
+        "UNREVIEWED",
+        "this visible User input has no explicit category-specific decision"
+      ];
+      const fallbackProcessKey = connectedProcessKey || null;
       const entry = {
         category_id: categoryId,
         tree_path: nextPath
           .filter((item) => !item.processKey)
-          .map((item) => item.text.replace(/\s+\((?:User|Profile|Bill|Linked Opportunity|Derived)\)$/, ""))
+          .map((item) => item.text.replace(/\s+\((?:User|Profile|Bill|Linked Opportunity|Project Document|Derived)\)$/, ""))
           .join(" > "),
         visible_label: visibleLabel,
-        knowledge_likelihood: likelyKnown ? "LIKELY_KNOWN" : "MAY_KNOW",
-        recognizable_to_ordinary_user: true,
-        reason_the_user_would_have_it: likelyKnown
-          ? "This is a recognizable project, equipment, vehicle, schedule, or operating fact that a business representative can ordinarily describe."
-          : alternateSource === "BILL"
-            ? "The user may recognize the value, but the preferred proof is a bill, invoice, or utility record."
-            : alternateSource === "STANDARD"
-              ? "The user may know the recognizable selector, while the connected process resolves the technical value."
-              : "The user may have access to a label, nameplate, measurement, operating record, uploaded audit, or contractor document that states the value.",
-        value_importance: valueImportance,
-        alternate_source: alternateSource,
-        missing_value_behavior: alternateSource === "NONE"
-          ? "Do not infer the fact. Follow the connected branch or return no estimate when the formula cannot proceed without it."
-          : alternateSource === "BILL"
-            ? "Use the documented bill, invoice, or utility value when present; otherwise return no dollar estimate for the affected component."
-            : alternateSource === "STANDARD"
-              ? "Use the connected Standard only within its supported source scope; otherwise return no value."
-              : "Require a label, measurement, uploaded project document, or contractor specification; otherwise return no value."
+        decision,
+        reason: `For ${CARD_COPY[categoryId].title}, ${reason}.`,
+        fallback_process_key: fallbackProcessKey,
+        selected_value_method:
+          decision === "USER_MEMORY"
+            ? "Use the stated recognizable fact after category-specific normalization."
+            : "Use the stated recognizable business activity and convert it through the connected formula or Standard.",
+        missing_exact_value_behavior: fallbackProcessKey
+          ? "Use the connected Standard's single-value fallback policy and retain the fallback level and selected-value provenance."
+          : "Resolve one value from available Profile, Bill, Linked Opportunity, or Project Document context, then apply the deterministic RetroFi benchmark fallback if needed. Do not use zero as a missing-data placeholder."
       };
-      if (connectedProcessKey && alternateSource === "STANDARD") {
-        entry.connected_process_key = connectedProcessKey;
-      }
       entries.push(entry);
     }
     for (const child of treeNode.children) visit(child, nextPath);
@@ -2199,6 +2878,8 @@ export const INFORMATION_CARD_REGISTRY_METADATA = {
     "howToUse",
     "automation",
     "validation",
-    "evidenceState"
+    "evidenceState",
+    "inputBindings",
+    "selectionPolicy"
   ]
 };

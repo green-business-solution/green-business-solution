@@ -28,9 +28,9 @@ Avoided Fan Electricity = In-Scope Equipment Count × Sum Across Billing Periods
 Annual Operational Savings
 ├─ Annual kitchen ventilation fan and makeup-air resource reduction
 │  ├─ In-Scope Equipment Count (User)
-│  ├─ Existing Fan Nameplate or Measured Input (User)
-│  ├─ Documented Existing Design Airflow from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
-│  ├─ Documented Existing airflow schedule from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
+│  ├─ Existing Fan Nameplate or Measured Input (Project Document)
+│  ├─ Documented Existing Design Airflow from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
+│  ├─ Documented Existing airflow schedule from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
 │  ├─ Proposed airflow schedule (Linked Opportunity)
 │  ├─ Makeup-air heating system (User)
 │  ├─ Makeup-air cooling system (User)
@@ -38,7 +38,7 @@ Annual Operational Savings
 │  ├─ Annual operating hours
 │  │  ├─ Recognizable Business, Shift, Seasonal, or Usage Pattern (User)
 │  │  ├─ Detailed Operating Days, Shifts, or Active Season, if known (User)
-│  │  ├─ Measured Annual Operating Hours, if known (User)
+│  │  ├─ Measured Annual Operating Hours, if known (Project Document)
 │  │  ├─ Site Location and Business Activity (Profile)
 │  │  └─ Standard 1.1 — Demand-Controlled Kitchen Ventilation Annual Operating Hours
 │  └─ Standard 1.2 — Demand-Controlled Kitchen Ventilation Engineering Calculation
@@ -84,9 +84,9 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 1. Map the Demand-Controlled Kitchen Ventilation inputs to the documented Demand-Controlled Kitchen Ventilation Annual Operating Hours source fields or model inputs: Existing airflow schedule from a nameplate, measurement, audit, or contractor specification; Proposed airflow schedule from a nameplate, measurement, audit, or contractor specification; Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location for outdoor conditions; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject the Demand-Controlled Kitchen Ventilation path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
-5. Retain the Demand-Controlled Kitchen Ventilation Annual Operating Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
+5. Retain the Demand-Controlled Kitchen Ventilation Annual Operating Hours source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 
@@ -130,15 +130,15 @@ U.S. Department of Energy - MEASUR
 **How to Use:**
 
 1. Load the Demand-Controlled Kitchen Ventilation project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Fan System Assessment Tool.
-2. Run the pinned open-source Fan System Assessment Tool baseline and proposed cases using the category formula boundary shown in this card.
-3. Return no result when the Fan System Assessment Tool requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
-4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Retain the MEASUR version, Fan System Assessment Tool input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
+2. When an exact technical input is unavailable, use one context-matched value selected from the closest authoritative equipment or application population before running the Fan System Assessment Tool; the simulator does not invent that input.
+3. Run the pinned open-source Fan System Assessment Tool baseline and proposed cases using the category formula boundary shown in this card.
+4. Return one selected existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
+5. Retain the MEASUR version, Fan System Assessment Tool input object, exact and benchmark input provenance, context filters, eligible populations, selection rules, unit conversions, warnings, and baseline and proposed outputs.
 
 **Automation:**
 
 * **Selected Strategy:** Pinned local execution of the MEASUR Fan System Assessment Tool for Demand-Controlled Kitchen Ventilation.
-* **Automation Method:** Map reviewed project evidence into the Fan System Assessment Tool input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
+* **Automation Method:** Map reviewed project evidence into the Fan System Assessment Tool input schema, fill unresolved inputs through the single-value authoritative benchmark policy, execute the versioned local module, and preserve its warnings and native outputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

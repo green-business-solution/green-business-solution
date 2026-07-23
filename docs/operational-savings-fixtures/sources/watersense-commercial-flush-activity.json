@@ -1,0 +1,109 @@
+{
+  "fixture_type": "reviewed_source_fixture",
+  "fixture_schema_version": "1.0.0",
+  "reviewed_on": "2026-07-23",
+  "retrieved_on": "2026-07-23",
+  "source_title": "WaterSense at Work 2023 - Toilets and Urinals",
+  "source_urls": [
+    "https://www.epa.gov/watersense/best-management-practices",
+    "https://nepis.epa.gov/Exe/ZyPDF.cgi/P1017K41.PDF?Dockey=P1017K41.PDF",
+    "https://nepis.epa.gov/Exe/ZyPDF.cgi/P1017K3R.PDF?Dockey=P1017K3R.PDF"
+  ],
+  "raw_artifacts": [
+    {
+      "artifact_identifier": "watersense-at-work-2023-toilets",
+      "source_url": "https://nepis.epa.gov/Exe/ZyPDF.cgi/P1017K41.PDF?Dockey=P1017K41.PDF",
+      "source_version": "WaterSense at Work 2023, Section 3.1",
+      "exact_artifact": "Toilet water-use estimation method and daily flush assumptions",
+      "source_checksum": "sha256:47ef36b3d505ef39be821ea1665b5bab62da961a529488d96d560b04021182b6"
+    },
+    {
+      "artifact_identifier": "watersense-at-work-2023-urinals",
+      "source_url": "https://nepis.epa.gov/Exe/ZyPDF.cgi/P1017K3R.PDF?Dockey=P1017K3R.PDF",
+      "source_version": "WaterSense at Work 2023, Section 3.2",
+      "exact_artifact": "Urinal water-use estimation method and daily flush assumption",
+      "source_checksum": "sha256:527a042f5037f5ff8629655c60d41310ce7404b1a5ca332f738f9e6ed4a2bcd1"
+    }
+  ],
+  "coverage": {
+    "summary": "Commercial toilet and urinal flush-frequency assumptions and equations that convert recognizable population and operating-day context into one annual flush count.",
+    "source_roles": [
+      "usage_or_operating_schedule",
+      "physics_or_calculation_method"
+    ],
+    "scenarios": [
+      "context-matched-authoritative-benchmark"
+    ]
+  },
+  "fields": [
+    {
+      "field": "female_toilet_flushes_per_person_per_day",
+      "unit_id": "count",
+      "role": "female toilet activity assumption",
+      "source_location": "WaterSense at Work 2023 Section 3.1 toilet calculation method"
+    },
+    {
+      "field": "male_toilet_flushes_per_person_per_day",
+      "unit_id": "count",
+      "role": "male toilet activity assumption",
+      "source_location": "WaterSense at Work 2023 Section 3.1 toilet calculation method"
+    },
+    {
+      "field": "male_urinal_flushes_per_person_per_day",
+      "unit_id": "count",
+      "role": "male urinal activity assumption",
+      "source_location": "WaterSense at Work 2023 Section 3.2 urinal calculation method"
+    },
+    {
+      "field": "facility_operating_days_per_year",
+      "unit_id": "count",
+      "role": "annualization input",
+      "source_location": "WaterSense at Work 2023 Sections 3.1 and 3.2 calculation equations"
+    }
+  ],
+  "tables": [],
+  "values": [
+    {
+      "field": "female_toilet_flushes_per_person_per_day",
+      "unit_id": "count",
+      "role": "official daily toilet-use assumption",
+      "source_location": "WaterSense at Work 2023 Section 3.1",
+      "value": 3
+    },
+    {
+      "field": "male_toilet_flushes_per_person_per_day",
+      "unit_id": "count",
+      "role": "official daily toilet-use assumption",
+      "source_location": "WaterSense at Work 2023 Section 3.1",
+      "value": 1
+    },
+    {
+      "field": "male_urinal_flushes_per_person_per_day",
+      "unit_id": "count",
+      "role": "official daily urinal-use assumption",
+      "source_location": "WaterSense at Work 2023 Section 3.2",
+      "value": 2
+    }
+  ],
+  "methods": [
+    {
+      "field": "annual_flush_count",
+      "unit_id": "flushes_fixture_year",
+      "role": "annual flush-count method",
+      "source_location": "WaterSense at Work 2023 Sections 3.1 and 3.2 equations"
+    }
+  ],
+  "supported_uses": [
+    "Select one annual toilet or urinal flush count from occupants, visitors, fixture type, fixture count, and operating days",
+    "Override the benchmark with an observed restroom study or audit"
+  ],
+  "unsupported_inferences": [
+    "Exact project usage without observed data",
+    "Fixture product gallons-per-flush ratings",
+    "Flow-fixture duration or commercial kitchen activity"
+  ],
+  "provenance_notes": [
+    "The source supplies distinct toilet and urinal activity assumptions, so the adapter does not combine fixture types.",
+    "The daily assumptions are annualized only with the project's selected operating days and eligible population."
+  ]
+}

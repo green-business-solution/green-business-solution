@@ -27,15 +27,15 @@ Annual Operational Savings
 │  ├─ Replacement Fixture Count (User)
 │  ├─ Existing Fixture Watts
 │  │  ├─ Existing Fixture Type or Application (User)
-│  │  ├─ Existing Nameplate, Photometric Report, or Field Measurement (User)
-│  │  └─ No Existing Wattage Value Without Documentation or Measurement (Derived)
+│  │  ├─ Existing Nameplate, Photometric Report, or Field Measurement (Project Document)
+│  │  └─ Standard 1.1 — Existing Fixture Wattage Benchmark
 │  ├─ New Fixture Watts
 │  │  ├─ Linked Opportunity names an exact replacement product
 │  │  │  ├─ Exact Product Information (Linked Opportunity)
-│  │  │  └─ Standard 1.1 — Exact New Fixture Wattage Lookup
+│  │  │  └─ Standard 1.2 — Exact New Fixture Wattage Lookup
 │  │  └─ Linked Opportunity specifies requirements but no exact product
 │  │     ├─ Product Requirements (Linked Opportunity)
-│  │     └─ Standard 1.2 — Requirement-Based New Fixture Wattage Resolution
+│  │     └─ Standard 1.3 — Requirement-Based New Fixture Wattage Resolution
 │  ├─ Annual Operating Hours
 │  │  └─ Exterior Lighting Operating Pattern (User)
 │  │     ├─ Lighting follows a fixed or business schedule
@@ -55,7 +55,45 @@ Annual Operational Savings
    └─ Avoidable Electricity Rate (Derived)
 ```
 
-**■ Standard 1.1 — Exact New Fixture Wattage Lookup**
+**■ Standard 1.1 — Existing Fixture Wattage Benchmark**
+
+**Purpose:**
+Select one existing exterior-fixture wattage when a nameplate, photometric report, or field measurement is unavailable.
+
+**Source:**
+U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
+
+**2015 U.S. Lighting Market Characterization:**
+[https://www.energy.gov/cmei/ssl/2015-us-lighting-market-characterization](https://www.energy.gov/cmei/ssl/2015-us-lighting-market-characterization)
+
+**Lookup Inputs:**
+
+* Existing fixture type or exterior application
+* Building and site context
+* Exact existing wattage from a Project Document, when available
+
+**Value Needed:**
+
+* One existing input-watt value per fixture
+
+**How to Use:**
+
+1. Use the exact nameplate, photometric report, or field measurement when available.
+2. Otherwise map the recognizable application to the reviewed DOE outdoor application classes, such as commercial building exterior, parking, roadway, billboard, or sports field.
+3. Select the published application-average system wattage for that class; do not reuse FEMP's proposed-efficacy table as an existing-equipment baseline.
+4. Return one wattage value and feed it to the displayed lighting replacement formula.
+5. Retain the source version, application mapping, selected row, unit, and fallback level.
+
+**Automation:**
+
+* **Selected Strategy:** Category-specific deterministic selection from the closest authoritative compatible population.
+* **Automation Method:** Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.
+* **Difficulty:** Medium
+
+**Validation:**
+DOE's 2015 U.S. Lighting Market Characterization Table 4.29 reports application-specific outdoor average system wattages. The retained source fixture records the reviewed rows and scope. The values are screening benchmarks, not project-specific nameplate values, and a category calculation golden fixture has not yet been added.
+
+**■ Standard 1.2 — Exact New Fixture Wattage Lookup**
 
 **Purpose:**
 Resolve input watts when the linked opportunity names an exact replacement luminaire.
@@ -95,7 +133,7 @@ DesignLights Consortium - Solid-State Lighting Qualified Products List
 **Validation:**
 The official DLC data-access guide documents tokenized SSL QPL CSV downloads, and the technical requirements define model, application, light-output, efficacy, input-power, status, and version fields. No authenticated QPL extract, retained exact-product fixture, or category adapter is present, so implementation execution is not yet proved.
 
-**■ Standard 1.2 — Requirement-Based New Fixture Wattage Resolution**
+**■ Standard 1.3 — Requirement-Based New Fixture Wattage Resolution**
 
 **Purpose:**
 Interpret performance requirements when the linked opportunity does not name an exact replacement product.
@@ -117,24 +155,24 @@ DesignLights Consortium - Solid-State Lighting Qualified Products List
 
 **Value Needed:**
 
-* Eligible compatible QPL population with documented low, median, and high input watts, or no value when no compatible product remains
+* One selected compatible QPL input-watt value, with the eligible population, filters, population size, and median rule retained internally
 
 **How to Use:**
 
 1. Extract the application, capacity, certification, and performance limits from the linked exterior lighting replacement opportunity requirements.
 2. Filter the official current-product population by every mandatory requirement, product-family boundary, active specification, and native test unit.
-3. Reject the path when no compatible record remains; when several records remain, keep the eligible population and calculate a documented low, median, and high value without selecting the contractor's future product.
-4. Return eligible compatible QPL population with documented low, median, and high input watts, or no value when no compatible product remains.
-5. Retain the source version, complete filters, eligible record identities, population size, native units, summary rule, and no-result reason.
+3. Use the source's official recommended or typical value when it provides one; otherwise select the weighted median when valid weights exist, or the ordinary median of the eligible compatible population.
+4. Return one selected compatible QPL input-watt value, with the eligible population, filters, population size, and median rule retained internally without choosing a future contractor product arbitrarily.
+5. Retain the source version, complete filters, eligible record identities, population size, native units, selection rule, selected value, and fallback level.
 
 **Automation:**
 
 * **Selected Strategy:** Requirement-based candidate-set resolution from the official U.S. Department of Energy FEMP and DesignLights Consortium population.
-* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and calculate deterministic low, median, and high native-unit results.
+* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and select one official typical value, weighted median, or median in native units.
 * **Difficulty:** Medium
 
 **Validation:**
-The official DLC data-access guide and SSL technical requirements establish a candidate-filtering method. No retained QPL population currently proves the application, light-output, distribution, mounting, controls, active-status, and version filters or the resulting low, median, and high wattage values.
+The official DLC data-access guide and SSL technical requirements establish a candidate-filtering method. No retained QPL population currently proves the application, light-output, distribution, mounting, controls, active-status, and version filters or the resulting selected median wattage.
 
 **■ Standard 2.1 — Fixed-Schedule Lighting Hours**
 
@@ -161,9 +199,9 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 1. Map the Exterior Lighting Replacement inputs to the documented Fixed-Schedule Lighting Hours source fields or model inputs: Lighting hours per operating day; Operating days per week; Active weeks per year.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject the Exterior Lighting Replacement path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return annual operating hours.
-5. Retain the Fixed-Schedule Lighting Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected annual operating hours.
+5. Retain the Fixed-Schedule Lighting Hours source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 
@@ -202,9 +240,9 @@ U.S. Naval Observatory - daylight definitions and data services
 
 1. Map the Exterior Lighting Replacement inputs to the documented Daylight-Based Lighting Hours source fields or model inputs: Control type and timing offset; Site location; Analysis year.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject the Exterior Lighting Replacement path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return annual daylight-based operating hours.
-5. Retain the Daylight-Based Lighting Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected annual daylight-based operating hours.
+5. Retain the Daylight-Based Lighting Hours source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 

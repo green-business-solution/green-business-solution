@@ -26,13 +26,21 @@ No standalone cube-law adjustment is approved without the exact shaft-power and 
 Annual Operational Savings
 ├─ Annual Variable-Speed Electricity Reduction
 │  ├─ In-Scope Equipment Count (User)
-│  ├─ Existing Equipment Nameplate and Load Information from Uploaded Audit or Measurement (Linked Opportunity)
+│  ├─ Existing Equipment Nameplate and Load Information from Uploaded Audit or Measurement (Project Document)
 │  ├─ Measured Load-Bin Profile
-│  │  ├─ Load or Speed Fractions from Controls Trends or Engineering Audit (Linked Opportunity)
-│  │  ├─ Annual Hours by Bin from Controls Trends or Engineering Audit (Linked Opportunity)
-│  │  └─ No Load-Bin Estimate Without Measured or Audited Operating Data (Derived)
-│  ├─ Proposed Minimum Speed and Control Rule (Linked Opportunity)
-│  └─ Standard 1.1 — Variable Frequency Drives and Pump or Fan Controls Engineering Calculation
+│  │  ├─ Load or Speed Fractions from Controls Trends or Engineering Audit (Project Document)
+│  │  ├─ Annual Hours by Bin from Controls Trends or Engineering Audit (Project Document)
+│  │  └─ Standard 1.1 — Pump or Fan Operating-Profile Benchmark
+│  ├─ Equipment is a Pump
+│  │  ├─ Required Flow and Total Dynamic Head from Engineering Assessment or Measurement (Project Document)
+│  │  ├─ Pump Curve or Documented Operating Points (Project Document)
+│  │  ├─ Proposed Minimum Speed and Pump Control Rule (Linked Opportunity)
+│  │  └─ Standard 1.2 — Pump Variable-Speed Engineering Calculation
+│  └─ Equipment is a Fan
+│     ├─ Required Airflow and Pressure Rise from Engineering Assessment or Measurement (Project Document)
+│     ├─ Fan Curve or Documented Operating Points (Project Document)
+│     ├─ Proposed Minimum Speed and Fan Control Rule (Linked Opportunity)
+│     └─ Standard 1.3 — Fan Variable-Speed Engineering Calculation
 └─ Applicable Resource Rates
    └─ Bill-Derived Electricity Rate
       ├─ Electricity Use (Bill)
@@ -41,16 +49,54 @@ Annual Operational Savings
       └─ Avoidable Electricity Rate (Derived)
 ```
 
-**■ Standard 1.1 — Variable Frequency Drives and Pump or Fan Controls Engineering Calculation**
+**■ Standard 1.1 — Pump or Fan Operating-Profile Benchmark**
 
 **Purpose:**
-Use U.S. Department of Energy - MEASUR to resolve existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings from the listed category inputs.
+Select one representative operating profile when controls trends, measurements, or an engineering audit do not provide load bins.
+
+**Source:**
+U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
+
+**ComStock data lake and documentation:**
+[https://comstock.nrel.gov/](https://comstock.nrel.gov/)
+
+**Lookup Inputs:**
+
+* Pump or fan application
+* Business activity and building type
+* Equipment capacity class
+* Operating schedule
+* Climate and geography
+
+**Value Needed:**
+
+* One normalized load or speed profile
+* One annual-hours allocation across its bins
+
+**How to Use:**
+
+1. Map the Variable Frequency Drives and Pump or Fan Controls inputs to the documented Pump or Fan Operating-Profile Benchmark source fields or model inputs: Pump or fan application; Business activity and building type; Equipment capacity class; Operating schedule; Climate and geography.
+2. Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected normalized load or speed profile; One annual-hours allocation across its bins.
+5. Retain the Pump or Fan Operating-Profile Benchmark source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
+
+**Automation:**
+
+* **Selected Strategy:** Category-specific deterministic selection from the closest authoritative compatible population.
+* **Automation Method:** Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.
+* **Difficulty:** Medium
+
+**Validation:**
+DOE building-load data can support application-specific operating-profile populations after equipment, building, schedule, climate, and geography filters are implemented. No retained eligible population currently proves those filters, so the benchmark adapter remains implementation-pending.
+
+**■ Standard 1.2 — Pump Variable-Speed Engineering Calculation**
+
+**Purpose:**
+Calculate pump electricity for the documented baseline and variable-speed proposal with the MEASUR Pumping System Assessment Tool.
 
 **Source:**
 U.S. Department of Energy - MEASUR
-
-**MEASUR tool and downloads:**
-[https://www.energy.gov/cmei/ito/measur](https://www.energy.gov/cmei/ito/measur)
 
 **Calculator list and descriptions:**
 [https://www.energy.gov/cmei/amo/measur-calculator-list-and-descriptions](https://www.energy.gov/cmei/amo/measur-calculator-list-and-descriptions)
@@ -60,30 +106,74 @@ U.S. Department of Energy - MEASUR
 
 **Lookup Inputs:**
 
-* In-Scope Equipment Count
-* Existing Equipment Nameplate and Load Information
-* Load or speed fraction for each bin from an uploaded site study, controls trend, or engineering audit
-* Annual hours for each bin from an uploaded site study, controls trend, or engineering audit
-* Proposed Minimum Speed
-* Proposed control rule
+* In-scope pump count
+* Pump nameplate and measured input from a Project Document
+* Required flow and total dynamic head from a Project Document
+* Pump curve or documented operating points
+* Load or speed profile from a Project Document or the connected operating-profile benchmark
+* Proposed minimum speed and pump control rule from the linked opportunity
 
 **Value Needed:**
 
-* Existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings
+* One selected baseline and proposed annual pump-electricity result
 
 **How to Use:**
 
-1. Load the Variable Frequency Drives and Pump or Fan Controls project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans.
-2. Run the pinned open-source Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans baseline and proposed cases using the category formula boundary shown in this card.
-3. Return no result when the Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
-4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Retain the MEASUR version, Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
+1. Map documented pump flow, total dynamic head, pump curve or operating points, motor and drive data, and baseline schedule into the Pumping System Assessment Tool input schema.
+2. Use the measured load or speed profile when available; otherwise use the one context-matched pump profile from the connected benchmark.
+3. Apply the opportunity-prescribed minimum speed and pump control rule to the proposed case.
+4. Run one pinned baseline and proposed Pumping System Assessment Tool case and return one annual electricity reduction.
+5. Retain the MEASUR version, exact input object, unit conversions, benchmark provenance, warnings, and both annual results.
 
 **Automation:**
 
-* **Selected Strategy:** Pinned local execution of the MEASUR Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans for Variable Frequency Drives and Pump or Fan Controls.
-* **Automation Method:** Map reviewed project evidence into the Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
+* **Selected Strategy:** Pinned local execution of the MEASUR Pumping System Assessment Tool.
+* **Automation Method:** Validate the pump-specific hydraulic and operating inputs, resolve one profile, run the versioned pump module, and preserve the complete input and output trace.
 * **Difficulty:** Medium to Hard
 
 **Validation:**
-The official MEASUR tool page, calculator descriptions, and open-source implementation were checked, so local automation is feasible. The exact category module, input and output mapping, and golden example have not yet been pinned, so this process must not imply executable validation.
+The official MEASUR calculator list identifies the Pumping System Assessment Tool and the open-source implementation is available. The exact input mapping and category golden example have not yet been pinned, so module-level execution proof remains pending.
+
+**■ Standard 1.3 — Fan Variable-Speed Engineering Calculation**
+
+**Purpose:**
+Calculate fan electricity for the documented baseline and variable-speed proposal with the MEASUR Fan System Assessment Tool.
+
+**Source:**
+U.S. Department of Energy - MEASUR
+
+**Calculator list and descriptions:**
+[https://www.energy.gov/cmei/amo/measur-calculator-list-and-descriptions](https://www.energy.gov/cmei/amo/measur-calculator-list-and-descriptions)
+
+**ORNL MEASUR source repository:**
+[https://github.com/ORNL-AMO/AMO-Tools-Desktop](https://github.com/ORNL-AMO/AMO-Tools-Desktop)
+
+**Lookup Inputs:**
+
+* In-scope fan count
+* Fan nameplate and measured input from a Project Document
+* Required airflow and pressure rise from a Project Document
+* Fan curve or documented operating points
+* Load or speed profile from a Project Document or the connected operating-profile benchmark
+* Proposed minimum speed and fan control rule from the linked opportunity
+
+**Value Needed:**
+
+* One selected baseline and proposed annual fan-electricity result
+
+**How to Use:**
+
+1. Map documented fan airflow, pressure rise, fan curve or operating points, motor and drive data, and baseline schedule into the Fan System Assessment Tool input schema.
+2. Use the measured load or speed profile when available; otherwise use the one context-matched fan profile from the connected benchmark.
+3. Apply the opportunity-prescribed minimum speed and fan control rule to the proposed case.
+4. Run one pinned baseline and proposed Fan System Assessment Tool case and return one annual electricity reduction.
+5. Retain the MEASUR version, exact input object, unit conversions, benchmark provenance, warnings, and both annual results.
+
+**Automation:**
+
+* **Selected Strategy:** Pinned local execution of the MEASUR Fan System Assessment Tool.
+* **Automation Method:** Validate the fan-specific aerodynamic and operating inputs, resolve one profile, run the versioned fan module, and preserve the complete input and output trace.
+* **Difficulty:** Medium to Hard
+
+**Validation:**
+The official MEASUR calculator list identifies the Fan System Assessment Tool and the open-source implementation is available. The exact input mapping and category golden example have not yet been pinned, so module-level execution proof remains pending.

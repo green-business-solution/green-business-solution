@@ -31,31 +31,72 @@ Annual Operational Cost Impact
 │  ├─ Timestamped Interval Utility Data (Bill)
 │  ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
 │  ├─ Rate Schedule and Customer Class (Bill)
-│  ├─ Authoritative Tariff Mapping Is Not Yet Verified (Derived)
-│  ├─ No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)
+│  ├─ Published Utility Tariff and Effective-Date Mapping (Derived)
+│  ├─ One Selected Interval Tariff Value (Derived)
 │  └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
 ├─ Installed Charger Count (User)
 ├─ Public Operating Hours (User)
 ├─ Expected Charging Activity
-│  ├─ Expected Sessions per Operating Day from Site Study or Opportunity Design (Linked Opportunity)
-│  ├─ Average Delivered Energy per Session from Site Study or Opportunity Design (Linked Opportunity)
-│  ├─ Documented Interval Charging Profile from Site Study or Contractor Design (Linked Opportunity)
-│  └─ No Utilization Estimate Without a Site Study or Contractor Design (Derived)
+│  ├─ Expected Sessions per Operating Day from Charging or Utilization Study (Project Document)
+│  ├─ Average Delivered Energy per Session from Charging or Utilization Study (Project Document)
+│  ├─ Documented Interval Charging Profile from Site Study or Contractor Design (Project Document)
+│  └─ Standard 1.1 — Public Charging Utilization Benchmark
 ├─ Charger Performance
 │  ├─ Linked Opportunity names an exact charger
 │  │  ├─ Exact Charger Product Information (Linked Opportunity)
-│  │  └─ Standard 1.1 — Exact Charger Rating Lookup
+│  │  └─ Standard 1.2 — Exact Charger Rating Lookup
 │  └─ Linked Opportunity specifies charger requirements but no exact product
 │     ├─ Charger Requirements (Linked Opportunity)
-│     └─ Standard 1.2 — Requirement-Based Charger Resolution
+│     └─ Standard 1.3 — Requirement-Based Charger Resolution
 ├─ Charging-Station Interval Load Profile (Derived)
-└─ Standard 1.3 — Public Electric Vehicle Charging Interval Bill Calculation
+└─ Standard 1.4 — Public Electric Vehicle Charging Interval Bill Calculation
 ```
 
-**■ Standard 1.1 — Exact Charger Rating Lookup**
+**■ Standard 1.1 — Public Charging Utilization Benchmark**
 
 **Purpose:**
-Resolve active charging efficiency, standby power, and rated capacity when the opportunity names an exact certified charger.
+Select one public-charging utilization and interval load profile when a charging or utilization study is unavailable.
+
+**Source:**
+U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
+
+**EVI-Pro Lite API and model documentation:**
+[https://developer.nlr.gov/docs/transportation/evi-pro-lite-v1/](https://developer.nlr.gov/docs/transportation/evi-pro-lite-v1/)
+
+**Lookup Inputs:**
+
+* Site location
+* Business and building context
+* Installed charger count
+* Public operating hours
+* AC-output or DC-output charger type and rated power
+
+**Value Needed:**
+
+* One daily charging utilization value
+* One normalized interval charging profile
+
+**How to Use:**
+
+1. Map the Public Electric Vehicle Charging inputs to the documented Public Charging Utilization Benchmark source fields or model inputs: Site location; Business and building context; Installed charger count; Public operating hours; AC-output or DC-output charger type and rated power.
+2. Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected daily charging utilization value; One normalized interval charging profile.
+5. Retain the Public Charging Utilization Benchmark source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
+
+**Automation:**
+
+* **Selected Strategy:** Category-specific deterministic selection from the closest authoritative compatible population.
+* **Automation Method:** Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.
+* **Difficulty:** Medium
+
+**Validation:**
+The NLR EVI-Pro Lite API documents representative weekday and weekend 15-minute charging profiles for location and charging scenarios. A retained request and response fixture for RetroFi's public-site filters is not yet present, so the method is verified while category execution remains pending.
+
+**■ Standard 1.2 — Exact Charger Rating Lookup**
+
+**Purpose:**
+Resolve native AC-output or DC-output charging and low-power fields when the opportunity names an exact certified charger.
 
 **Source:**
 U.S. Environmental Protection Agency - ENERGY STAR Product Finder
@@ -69,20 +110,23 @@ U.S. Environmental Protection Agency - ENERGY STAR Product Finder
 **Lookup Inputs:**
 
 * Exact charger make and model
+* Charger product type: AC-output or DC-output
 * Rated charger power and application
 * Opportunity product information
 
 **Value Needed:**
 
-* Certified active efficiency, standby power, and rated capacity with units
+* For AC-output chargers: maximum output power, no-vehicle or idle power, and mode-specific total-loss fields
+* For DC-output chargers: maximum output power, no-vehicle or idle power, and loading-adjusted efficiency
 
 **How to Use:**
 
-1. Read the exact manufacturer, model, and product configuration from the linked public electric vehicle charging opportunity.
-2. Query the official source for the exact model and filter by application, capacity, active specification, and the native certified fields required by this formula.
-3. Require one compatible record; reject partial model matches, inactive listings, incompatible configurations, and records whose native test unit does not match the formula.
-4. Return certified active efficiency, standby power, and rated capacity with units.
-5. Retain the source version, exact record identity, matched model text, returned native fields and units, and any ambiguity decision.
+1. Match the exact manufacturer and model, require active certification, and preserve whether the record is AC-output or DC-output.
+2. For an AC-output charger, retain maximum output power, no-vehicle or idle input power, and the applicable current-specific operation-mode total-loss field.
+3. Normalize AC active input power as output power plus the applicable mode-specific total loss, with units converted consistently.
+4. For a DC-output charger, retain maximum output power, no-vehicle or idle AC input power, and average loading-adjusted efficiency.
+5. Normalize DC active input power as output power divided by loading-adjusted efficiency, then apply native no-vehicle or idle input only to the corresponding non-charging duration.
+6. Return one exact compatible native-field record and retain the product ID, source version, fields, units, and charger-type normalization path.
 
 **Automation:**
 
@@ -91,12 +135,12 @@ U.S. Environmental Protection Agency - ENERGY STAR Product Finder
 * **Difficulty:** Easy to Medium
 
 **Validation:**
-The official ENERGY STAR EV charger criteria and Product Finder access path were checked. Exact active-model lookup is technically possible, but the category-specific adapter, retained EV charger record, and formula-level golden test have not yet been added.
+The retained official ENERGY STAR fixture inspects separate AC-output and DC-output certified records and binds maximum output power, AC mode-specific total loss, native idle or no-vehicle input, and DC loading-adjusted efficiency fields. The category adapter and formula-level golden test have not yet been added, so source-field support is verified while category execution proof remains pending.
 
-**■ Standard 1.2 — Requirement-Based Charger Resolution**
+**■ Standard 1.3 — Requirement-Based Charger Resolution**
 
 **Purpose:**
-Interpret charger requirements from the opportunity and determine whether a compatible certified product record can supply the needed performance values.
+Interpret charger requirements from the opportunity, separate AC-output and DC-output products, and select one compatible certified record value for each required native field.
 
 **Source:**
 U.S. Environmental Protection Agency - ENERGY STAR Product Finder
@@ -109,32 +153,35 @@ U.S. Environmental Protection Agency - ENERGY STAR Product Finder
 
 **Lookup Inputs:**
 
+* Charger product type: AC-output or DC-output
 * Charger class and intended application
 * Rated power requirement
 * Opportunity performance requirements
 
 **Value Needed:**
 
-* Eligible compatible certified charger population with documented low, median, and high performance, or no value when no compatible record remains
+* One selected native-field performance record from the compatible AC-output or DC-output population
+* The eligible population, filters, population size, and median selection rule retained internally
 
 **How to Use:**
 
-1. Extract the application, capacity, certification, and performance limits from the linked public electric vehicle charging opportunity requirements.
-2. Filter the official current-product population by every mandatory requirement, product-family boundary, active specification, and native test unit.
-3. Reject the path when no compatible record remains; when several records remain, keep the eligible population and calculate a documented low, median, and high value without selecting the contractor's future product.
-4. Return eligible compatible certified charger population with documented low, median, and high performance, or no value when no compatible record remains.
-5. Retain the source version, complete filters, eligible record identities, population size, native units, summary rule, and no-result reason.
+1. Extract the charger type, application, rated-power requirement, certification requirement, and every mandatory performance limit from the opportunity.
+2. Filter AC-output and DC-output records separately and preserve each source's native field family and unit.
+3. Use an official recommended or typical compatible record when the source designates one; otherwise use a valid weighted median or the ordinary median of the eligible compatible population.
+4. For AC-output records, calculate active input as output power plus the selected mode-specific total loss and keep idle or no-vehicle input separate.
+5. For DC-output records, calculate active input as output power divided by loading-adjusted efficiency and keep idle or no-vehicle AC input separate.
+6. Return one selected compatible native-field record without choosing a future contractor product, and retain the complete population and selection trace.
 
 **Automation:**
 
 * **Selected Strategy:** Requirement-based candidate-set resolution from the official U.S. Environmental Protection Agency - ENERGY STAR Product Finder population.
-* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and calculate deterministic low, median, and high native-unit results.
+* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and select one official typical value, weighted median, or median in native units.
 * **Difficulty:** Easy to Medium
 
 **Validation:**
-The official ENERGY STAR EV charger criteria and Product Finder access path were checked. No retained category export currently proves the requirement filters, eligible population, population size, or low, median, and high result.
+The official ENERGY STAR EV charger criteria and Product Finder access path were checked. The source distinguishes AC-output total-loss fields from DC-output loading-adjusted efficiency. No retained category export currently proves the requirement filters, eligible population, population size, or selected median, so implementation proof remains pending.
 
-**■ Standard 1.3 — Public Electric Vehicle Charging Interval Bill Calculation**
+**■ Standard 1.4 — Public Electric Vehicle Charging Interval Bill Calculation**
 
 **Purpose:**
 Use National Laboratory of the Rockies - REopt V3 and REopt.jl to resolve baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance from the listed category inputs.
@@ -158,10 +205,10 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 * Authoritative tariff mapping, which is not yet verified
 * Installed charger count
 * Public operating hours
-* Expected sessions per operating day from a site study or opportunity design
-* Average delivered energy per session from a site study or opportunity design
-* Documented interval charging profile from the same site study or contractor design
-* Resolved charger efficiency, standby power, and rated capacity from the connected product process
+* Expected sessions per operating day from a project document, or one context-matched benchmark when unavailable
+* Average delivered energy per session from a project document, or one context-matched benchmark when unavailable
+* Interval charging profile from a project document, or one deterministic context-matched profile when unavailable
+* Resolved native AC-output or DC-output charger fields from the connected product process
 
 **Value Needed:**
 
@@ -170,10 +217,10 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 **How to Use:**
 
 1. Validate the timestamped utility load, timezone treatment, monthly reconciliation, and authoritative tariff mapping before any dollar calculation.
-2. Require one site study or contractor design that states expected daily sessions, delivered energy per session, and a compatible interval charging profile; daily averages alone do not define interval demand.
-3. Resolve charger active efficiency, standby power, and rated capacity through the exact-product or requirements-based charger process.
+2. Use a charging or utilization study when available. Otherwise select one context-matched public-charging profile from an authoritative travel-and-charging model using location, charger type, public hours, business context, and installed count.
+3. Resolve the charger through the exact-product or requirements-based process, preserving AC-output total-loss fields separately from DC-output loading-adjusted efficiency.
 4. Apply charger-count and public-hours limits to the documented charging profile, add the resulting import load to the baseline, and run the pinned REopt.jl baseline and proposed bill cases.
-5. Retain the utility artifact, tariff source, charging-study version, charger-rating records, solver version, warnings, and monthly bill reconciliation; otherwise return no interval dollar estimate.
+5. Retain the utility artifact, tariff source, charging-study or benchmark version, context filters, selected profile, charger-rating records, solver version, warnings, and monthly bill reconciliation.
 
 **Automation:**
 

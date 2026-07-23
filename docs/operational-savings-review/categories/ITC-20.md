@@ -35,11 +35,11 @@ Annual Operational Savings
 ├─ Annual operating hours
 │  ├─ Recognizable Business, Shift, Seasonal, or Usage Pattern (User)
 │  ├─ Detailed Operating Days, Shifts, or Active Season, if known (User)
-│  ├─ Measured Annual Operating Hours, if known (User)
+│  ├─ Measured Annual Operating Hours, if known (Project Document)
 │  ├─ Site Location and Business Activity (Profile)
 │  └─ Standard 1.1 — Fuel Cell Electricity Generation Annual Operating Hours
-├─ Documented Operating load fraction from Controls Trends or Engineering Audit (Linked Opportunity)
-├─ Documented Coincident Onsite Electric Load, if known from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
+├─ Documented Operating load fraction from Controls Trends or Engineering Audit (Project Document)
+├─ Documented Coincident Onsite Electric Load, if known from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
 ├─ Standard 1.2 — Fuel Cell Electricity Generation Performance Balance
 └─ Applicable Resource Rates
    ├─ Bill-Derived Electricity Rate
@@ -52,7 +52,7 @@ Annual Operational Savings
    │  ├─ Variable Delivery Charges (Bill)
    │  ├─ Variable Procurement Charges (Bill)
    │  └─ Avoidable Gas Rate (Derived)
-   └─ Documented Current Fuel Price (User)
+   └─ Current Fuel Price from Receipt, Contract, or Operating Record (Project Document)
 ```
 
 **■ Standard 1.1 — Fuel Cell Electricity Generation Annual Operating Hours**
@@ -81,9 +81,9 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 1. Map the Fuel Cell Electricity Generation inputs to the documented Fuel Cell Electricity Generation Annual Operating Hours source fields or model inputs: Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject the Fuel Cell Electricity Generation path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
-5. Retain the Fuel Cell Electricity Generation Annual Operating Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
+5. Retain the Fuel Cell Electricity Generation Annual Operating Hours source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 
@@ -129,9 +129,9 @@ U.S. Environmental Protection Agency - CHP technologies and calculator
 
 1. Map the Fuel Cell Electricity Generation inputs to the documented Fuel Cell Electricity Generation Performance Balance source fields or model inputs: Prime-mover type; Input fuel; Selected Unit Model, if known; Total installed capacity; Operating load fraction from an uploaded site study, controls trend, or engineering audit; Coincident Onsite Electric Load, if known; Annual operating hours from the connected schedule process.
 2. Select the compatible technology and capacity row, apply the explicit operating and coincidence constraints, calculate electricity, fuel, and useful heat, and cap outputs at site loads.
-3. Reject the Fuel Cell Electricity Generation path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity.
-5. Retain the Fuel Cell Electricity Generation Performance Balance source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity.
+5. Retain the Fuel Cell Electricity Generation Performance Balance source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 

@@ -27,16 +27,16 @@ Annual Operational Savings
 │  ├─ Timestamped Interval Utility Data (Bill)
 │  ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
 │  ├─ Rate Schedule and Customer Class (Bill)
-│  ├─ Authoritative Tariff Mapping Is Not Yet Verified (Derived)
-│  ├─ No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)
+│  ├─ Published Utility Tariff and Effective-Date Mapping (Derived)
+│  ├─ One Selected Interval Tariff Value (Derived)
 │  └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
-├─ Documented Vehicle-arrival schedule from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
-├─ Documented Vehicle-departure schedule from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
-├─ Documented Required energy by departure from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
-├─ Documented Charger power limit from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
-├─ Documented Site power limit from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
-├─ Documented Managed charging template from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
-├─ Documented Unmanaged charging template from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
+├─ Documented Vehicle-arrival schedule from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
+├─ Documented Vehicle-departure schedule from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
+├─ Documented Required energy by departure from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
+├─ Documented Charger power limit from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
+├─ Documented Site power limit from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
+├─ Documented Managed charging template from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
+├─ Documented Unmanaged charging template from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
 └─ Standard 1.1 — Managed Fleet Charging Interval Bill Calculation
 ```
 
@@ -78,9 +78,9 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 
 1. Map the Managed Fleet Charging inputs to the documented Managed Fleet Charging Interval Bill Calculation source fields or model inputs: Timestamped interval utility data from the uploaded utility artifact; Time zone and daylight-saving metadata from the uploaded utility artifact; Authoritative tariff mapping, which is not yet verified; Vehicle-arrival schedule; Vehicle-departure schedule; Required energy by departure; Charger power limit; Site power limit; Managed charging template; Unmanaged charging template.
 2. Align the interval load and tariff calendar, apply the category constraints, solve baseline and proposed cases, compare bill components, and retain solver and input provenance.
-3. Reject the Managed Fleet Charging path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance.
-5. Retain the Managed Fleet Charging Interval Bill Calculation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance.
+5. Retain the Managed Fleet Charging Interval Bill Calculation source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 

@@ -25,12 +25,12 @@ Avoided Displaced Resource = Minimum of (Convert to Billed Resource Units (Usefu
 
 ```text
 Annual Operational Savings
-├─ Documented Waste-stream flow from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
-├─ Documented Waste-stream temperature from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+├─ Documented Waste-stream flow from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
+├─ Documented Waste-stream temperature from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
 ├─ Waste-stream schedule (User)
-├─ Documented Coincident Useful-Heat Load from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
+├─ Documented Coincident Useful-Heat Load from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
 ├─ Recovery-equipment efficiency (Linked Opportunity)
-├─ Documented Displaced heating-system efficiency from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+├─ Documented Displaced heating-system efficiency from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
 ├─ Recovery auxiliary power (Linked Opportunity)
 ├─ Annual Billed Resource Use
 │  ├─ Annual Electricity Use (Bill)
@@ -48,7 +48,7 @@ Annual Operational Savings
    │  ├─ Variable Delivery Charges (Bill)
    │  ├─ Variable Procurement Charges (Bill)
    │  └─ Avoidable Gas Rate (Derived)
-   └─ Documented Current Fuel Price (User)
+   └─ Current Fuel Price from Receipt, Contract, or Operating Record (Project Document)
 ```
 
 **■ Standard 1.1 — Waste Heat Recovery Engineering Calculation**
@@ -85,15 +85,15 @@ U.S. Department of Energy - MEASUR
 **How to Use:**
 
 1. Load the Waste Heat Recovery project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Process Heating Assessment waste-heat calculation.
-2. Run the pinned open-source Process Heating Assessment waste-heat calculation baseline and proposed cases using the category formula boundary shown in this card.
-3. Return no result when the Process Heating Assessment waste-heat calculation requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
-4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Retain the MEASUR version, Process Heating Assessment waste-heat calculation input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
+2. When an exact technical input is unavailable, use one context-matched value selected from the closest authoritative equipment or application population before running the Process Heating Assessment waste-heat calculation; the simulator does not invent that input.
+3. Run the pinned open-source Process Heating Assessment waste-heat calculation baseline and proposed cases using the category formula boundary shown in this card.
+4. Return one selected existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
+5. Retain the MEASUR version, Process Heating Assessment waste-heat calculation input object, exact and benchmark input provenance, context filters, eligible populations, selection rules, unit conversions, warnings, and baseline and proposed outputs.
 
 **Automation:**
 
 * **Selected Strategy:** Pinned local execution of the MEASUR Process Heating Assessment waste-heat calculation for Waste Heat Recovery.
-* **Automation Method:** Map reviewed project evidence into the Process Heating Assessment waste-heat calculation input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
+* **Automation Method:** Map reviewed project evidence into the Process Heating Assessment waste-heat calculation input schema, fill unresolved inputs through the single-value authoritative benchmark policy, execute the versioned local module, and preserve its warnings and native outputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

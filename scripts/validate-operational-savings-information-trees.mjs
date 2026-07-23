@@ -278,6 +278,7 @@ function validateInformationCardTree(category, tree, validationErrors) {
         "(Profile)",
         "(Bill)",
         "(Linked Opportunity)",
+        "(Project Document)",
         "(Derived)"
       ].some((label) => node.text.endsWith(label));
       if (!isProcess && !hasSource) {
@@ -346,10 +347,10 @@ function validateInformationCardTree(category, tree, validationErrors) {
     for (const required of [
       "Linked Opportunity names an exact replacement product",
       "Linked Opportunity specifies requirements but no exact product",
-      "Existing Nameplate, Photometric Report, or Field Measurement (User)",
-      "No Existing Wattage Value Without Documentation or Measurement (Derived)",
-      "Standard 1.1 — Exact New Fixture Wattage Lookup",
-      "Standard 1.2 — Requirement-Based New Fixture Wattage Resolution",
+      "Existing Nameplate, Photometric Report, or Field Measurement (Project Document)",
+      "Standard 1.1 — Existing Fixture Wattage Benchmark",
+      "Standard 1.2 — Exact New Fixture Wattage Lookup",
+      "Standard 1.3 — Requirement-Based New Fixture Wattage Resolution",
       "Bill-Derived Electricity Rate"
     ]) {
       if (!tree.includes(required)) {
@@ -465,6 +466,9 @@ function validateNarrativeTotals(result, loadedSources, urls, validationErrors) 
     `- Visible Information Cards: ${report.categoryPages}.`,
     `- Visible category-local Standard processes: ${report.visibleStandardProcesses}.`,
     `- Visible direct source-link occurrences: ${report.sourceLinksRendered}.`,
+    `- Visible terminal User leaves: ${report.visibleUserLeaves}.`,
+    `- Visible Project Document leaves: ${report.visibleProjectDocumentLeaves}.`,
+    `- Visible Linked Opportunity leaves: ${report.visibleLinkedOpportunityLeaves}.`,
     `- Canonical retrofit mappings: ${report.mappedRetrofits}.`,
     `- Missing mappings: 0.`,
     `- Duplicate mappings: 0.`,

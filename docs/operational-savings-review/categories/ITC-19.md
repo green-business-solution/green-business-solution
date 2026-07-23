@@ -37,8 +37,8 @@ Annual Operational Savings
    ├─ Timestamped Interval Utility Data (Bill)
    ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
    ├─ Rate Schedule and Customer Class (Bill)
-   ├─ Authoritative Tariff Mapping Is Not Yet Verified (Derived)
-   ├─ No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)
+   ├─ Published Utility Tariff and Effective-Date Mapping (Derived)
+   ├─ One Selected Interval Tariff Value (Derived)
    └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
 ```
 
@@ -76,9 +76,9 @@ National Laboratory of the Rockies - WIND Toolkit and System Advisor Model
 
 1. Map the Small Wind Generation inputs to the documented Small Wind Production Simulation source fields or model inputs: Wind Turbine Class or Intended Application; Exact Turbine Model or Power Curve; Hub Height; Loss factor; Analysis Year; Site Location.
 2. Resolve site resource data at the selected height and year, validate the exact turbine power curve and losses, run the model, and return interval and annual AC generation.
-3. Reject the Small Wind Generation path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return interval and annual AC electricity generation, with wind resource, turbine, loss, unit, and source provenance.
-5. Retain the Small Wind Production Simulation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected interval and annual AC electricity generation, with wind resource, turbine, loss, unit, and source provenance.
+5. Retain the Small Wind Production Simulation source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 

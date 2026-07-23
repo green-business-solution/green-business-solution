@@ -50,14 +50,16 @@ Annual Operational Savings
 │  │  │  ├─ Operating Days per Week (User)
 │  │  │  └─ Active Weeks per Year (User)
 │  │  ├─ Flight or Conveyor Machines
-│  │  │  └─ Documented Conveyor Operating Hours and Throughput from Controls or Audit (Linked Opportunity)
+│  │  │  └─ Documented Conveyor Operating Hours and Throughput from Controls or Audit (Project Document)
+│  │  ├─ Recognizable Meals, Trays, Racks, Seats, Rooms, or Beds (User)
+│  │  ├─ Standard 1.4 — Commercial Dishwasher Activity Benchmark
 │  │  └─ Do Not Convert Gallons per Rack to Gallons per Hour (Derived)
 │  ├─ Idle Operation
-│  │  ├─ Documented Energized and Active-Wash Hours from Controls or Operating Records (User)
+│  │  ├─ Documented Energized and Active-Wash Hours from Controls or Operating Records (Project Document)
 │  │  └─ Annual Idle Hours (Derived)
 │  ├─ Certified Native Performance Difference (Derived)
 │  └─ Separate Water-Heating Resource Impact
-│     └─ No Estimate Without a Documented Engineering Conversion Outside the Product Dataset (Derived)
+│     └─ One Selected Water-Heating Conversion from Project Documents or the Context Benchmark (Derived)
 └─ Applicable Resource Rates
    ├─ Bill-Derived Electricity Rate
    │  ├─ Electricity Use (Bill)
@@ -110,24 +112,24 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 **Value Needed:**
 
-* Existing certified commercial dishwasher performance with its exact unit, or no value when no exact record is supported
+* One selected existing commercial dishwasher performance value with its exact unit and provenance
 
 **How to Use:**
 
-1. Normalize the documented existing manufacturer and model for the high-efficiency commercial dishwasher; do not infer a rating from equipment type alone.
+1. Normalize the documented existing manufacturer and model for the high-efficiency commercial dishwasher when it is available.
 2. Search the applicable certification export for that exact model and filter by the displayed product type, capacity or size class, and native test procedure.
-3. Require one compatible record; return no existing rating when the model is absent, ambiguous, inactive, or from a different product family.
-4. Return existing certified commercial dishwasher performance with its exact unit, or no value when no exact record is supported without substituting a current efficient-product distribution for the installed baseline.
-5. Retain the dataset version, record identity, native field names, units, model match, and rejection reason.
+3. If an exact record is unavailable, select one context-matched existing-equipment benchmark from an authoritative historical or installed-stock source; never substitute the current efficient-product population for the installed baseline.
+4. Return one selected existing commercial dishwasher performance value with its exact unit and provenance.
+5. Retain the dataset version, record identity or benchmark population, context filters, population size, selection rule, native fields, units, and fallback level.
 
 **Automation:**
 
-* **Selected Strategy:** Exact-record lookup for documented existing high-efficiency commercial dishwasher models only.
-* **Automation Method:** Normalize the submitted model, query the applicable certification export, apply product-family and capacity filters, and accept only one native-unit record.
+* **Selected Strategy:** Exact-record lookup followed by a context-matched installed-equipment benchmark for high-efficiency commercial dishwasher.
+* **Automation Method:** Normalize the submitted model, query the applicable certification export, and use one exact compatible native-unit record when available; otherwise apply reviewed installed-stock filters and select the official typical value, weighted median, or median.
 * **Difficulty:** Medium
 
 **Validation:**
-The official certification access paths and native product-family fields were checked. Current efficient-product records do not represent the installed baseline, so this process may use only one documented exact existing model. The category-specific exact-record adapter and golden test have not yet been added.
+The official certification access paths and native product-family fields were checked. Current efficient-product records do not represent the installed baseline. An exact documented existing model is preferred; when it is unavailable, a separately sourced context-matched installed-equipment benchmark is required. That benchmark adapter and the category golden test have not yet been added.
 
 **■ Standard 1.2 — Exact Proposed Commercial Dishwasher Rating Lookup**
 
@@ -210,21 +212,61 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 **Value Needed:**
 
-* Eligible compatible proposed commercial dishwasher population with documented low, median, and high native-unit performance, or no value when no compatible record remains
+* One selected proposed commercial dishwasher native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally
 
 **How to Use:**
 
 1. Extract the application, capacity, certification, and performance limits from the linked high-efficiency commercial dishwasher opportunity requirements.
 2. Filter the official current-product population by every mandatory requirement, product-family boundary, active specification, and native test unit.
-3. Reject the path when no compatible record remains; when several records remain, keep the eligible population and calculate a documented low, median, and high value without selecting the contractor's future product.
-4. Return eligible compatible proposed commercial dishwasher population with documented low, median, and high native-unit performance, or no value when no compatible record remains.
-5. Retain the source version, complete filters, eligible record identities, population size, native units, summary rule, and no-result reason.
+3. Use the source's official recommended or typical value when it provides one; otherwise select the weighted median when valid weights exist, or the ordinary median of the eligible compatible population.
+4. Return one selected proposed commercial dishwasher native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally without choosing a future contractor product arbitrarily.
+5. Retain the source version, complete filters, eligible record identities, population size, native units, selection rule, selected value, and fallback level.
 
 **Automation:**
 
 * **Selected Strategy:** Requirement-based candidate-set resolution from the official U.S. Department of Energy - Compliance Certification Database population.
-* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and calculate deterministic low, median, and high native-unit results.
+* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and select one official typical value, weighted median, or median in native units.
 * **Difficulty:** Medium
 
 **Validation:**
 The official commercial dishwasher dataset and access method were checked, and the retained schema fixture validates the fields required to filter machine type, sanitation method, water use, active energy, and idle power. A retained candidate population and category golden test have not yet been added, so the requirements path cannot claim an implemented selection.
+
+**■ Standard 1.4 — Commercial Dishwasher Activity Benchmark**
+
+**Purpose:**
+Select one dishwasher activity value from recognizable business throughput when exact controls or operating records are unavailable.
+
+**Source:**
+U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
+
+**WaterSense at Work commercial-kitchen methods:**
+[https://www.epa.gov/watersense/best-management-practices](https://www.epa.gov/watersense/best-management-practices)
+
+**Lookup Inputs:**
+
+* Dishwasher machine type
+* Business activity
+* Meals, trays, racks, seats, rooms, beds, or another normally tracked throughput
+* Operating days and hours
+* In-scope equipment count
+
+**Value Needed:**
+
+* One annual rack count for rack machines, or one annual conveyor operating-hour and throughput value for flight machines
+
+**How to Use:**
+
+1. Map the High-Efficiency Commercial Dishwasher inputs to the documented Commercial Dishwasher Activity Benchmark source fields or model inputs: Dishwasher machine type; Business activity; Meals, trays, racks, seats, rooms, beds, or another normally tracked throughput; Operating days and hours; In-scope equipment count.
+2. Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected annual rack count for rack machines, or one annual conveyor operating-hour and throughput value for flight machines.
+5. Retain the Commercial Dishwasher Activity Benchmark source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
+
+**Automation:**
+
+* **Selected Strategy:** Category-specific deterministic selection from the closest authoritative compatible population.
+* **Automation Method:** Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.
+* **Difficulty:** Medium
+
+**Validation:**
+The WaterSense commercial-kitchen method can support activity conversion only after its exact dishwasher fields and units are retained. That source fixture is not yet present. ENERGY STAR product data remains limited to exact product performance and is not used to infer activity.

@@ -2,11 +2,11 @@
 
 ## Executive result
 
-All 54 operational-savings categories, all 92 canonical retrofit mappings, and all 16 Standards were re-audited at five separate layers.
+All 54 operational-savings categories, all 92 canonical retrofit mappings, and all 17 Standards were re-audited at five separate layers.
 The required result is 54 categories, 92 unique retrofit mappings, zero missing IDs, and zero duplicate IDs.
 The audit now distinguishes structural completeness, semantic source support, formula correctness, default executability, and implementation readiness.
 ITC-15 and the exact-model scenario for ITC-29 are `RESEARCHED — READY FOR HUMAN REVIEW`.
-Forty-seven categories are `DRAFT`, five categories are `BLOCKED`, and all 16 Standards are `LIMITED`.
+Forty-seven categories are `DRAFT`, five categories are `BLOCKED`, and all 17 Standards are `LIMITED`.
 No Draft or Blocked category claims an executable golden fixture.
 
 Current documentation state:
@@ -14,17 +14,19 @@ Current documentation state:
 - Categories: 54.
 - Generated standalone category pages: 54.
 - Visible Information Cards: 54.
-- Visible category-local Standard processes: 92.
-- Visible direct source-link occurrences: 272.
-- Visible terminal User leaves: 186.
-- User-input realism classifications: 78 `LIKELY_KNOWN`, 108 `MAY_KNOW`, and 0 `UNLIKELY_KNOWN`.
+- Visible category-local Standard processes: 104.
+- Visible direct source-link occurrences: 283.
+- Visible terminal User leaves: 139.
+- Explicit User-input realism decisions: 90 `USER_MEMORY` and 49 `USER_RECOGNIZABLE_ACTIVITY`.
+- Visible Project Document leaves: 148.
+- Visible Linked Opportunity leaves: 147.
 - Information Card schema version: `operational-savings/information-card-v1`.
 - Canonical retrofit mappings: 92.
 - Missing mappings: 0.
 - Duplicate mappings: 0.
 - Shared branches: 6.
-- Canonical Standards: 16.
-- Standards with a selected automation strategy: 16.
+- Canonical Standards: 17.
+- Standards with a selected automation strategy: 17.
 - Expanded maximum atomic User inputs per category: 30.
 - Expanded Required Screening inputs: 366.
 - Expanded Conditional Calculation Gates: 5.
@@ -32,17 +34,17 @@ Current documentation state:
 - Maximum Required Screening inputs per category: 29.
 - Categories above four Required Screening inputs: ITC-08, ITC-09, ITC-16, ITC-17, ITC-18, ITC-19, ITC-20, ITC-21, ITC-22, ITC-23, ITC-24, ITC-25, ITC-26, ITC-27, ITC-28, ITC-29, ITC-31, ITC-32, ITC-33, ITC-34, ITC-36, ITC-37, ITC-38, ITC-39, ITC-40, ITC-41, ITC-42, ITC-43, ITC-44, ITC-45, ITC-46, ITC-47, ITC-50, ITC-51, ITC-52, ITC-53.
 - Category statuses: 2 `RESEARCHED — READY FOR HUMAN REVIEW`, 47 `DRAFT`, and 5 `BLOCKED`.
-- Standard statuses: 16 `LIMITED`.
-- Machine-readable source-evidence records: 42.
-- Source-evidence statuses: UNSUPPORTED 7, UNVERIFIED 28, VERIFIED 7.
+- Standard statuses: 17 `LIMITED`.
+- Machine-readable source-evidence records: 46.
+- Source-evidence statuses: LIMITED 1, UNSUPPORTED 7, UNVERIFIED 28, VERIFIED 10.
 - Atomic formula terms: 445.
 - Recorded category manual verdicts: 54.
-- Recorded Standard manual verdicts: 16.
+- Recorded Standard manual verdicts: 17.
 - Executable Ready-category golden fixtures: 2.
 
 The status change from 7 Ready, 42 Draft, and 5 Blocked to 2 Ready, 47 Draft, and 5 Blocked is intentional.
 The former Ready labels depended on source-role assumptions, unproved default inputs, or missing end-to-end fixtures.
-The Standard status change from 14 Ready and 2 Limited to 16 Limited is also intentional.
+The Standard status change from 14 Ready and 2 Limited to 17 Limited is also intentional.
 A relevant authoritative URL does not prove that its exact fields support every baseline, proposal, usage, tariff, or geography role assigned to it.
 
 ## Audit method
@@ -63,13 +65,13 @@ It also rejects double application of FuelEconomy charging losses and double ann
 
 ## Structural audit
 
-The structural audit passed for 54 contiguous category IDs, 92 unique retrofit mappings, six recursively expanded shared branches, and 16 embedded Standards.
-Every terminal source leaf is labeled User, Profile, Bill, Linked Opportunity, Derived, or is a referenced category-local Standard process.
+The structural audit passed for 54 contiguous category IDs, 92 unique retrofit mappings, six recursively expanded shared branches, and 17 embedded Standards.
+Every terminal source leaf is labeled User, Profile, Bill, Linked Opportunity, Project Document, Derived, or is a referenced category-local Standard process.
 Linked Opportunity and other derived project context are explicit internal intermediates and are no longer mislabeled as Profile fields.
 Every User leaf has exactly one Required Screening, Conditional Calculation Gate, or Optional Known Detail classification.
 Every visible terminal User leaf also has exactly one realism-contract entry.
-The contract records whether the user is likely or may know the value, whether the wording is recognizable, why the user may have it, its importance, the preferred alternate source, the connected process when applicable, and the missing-value behavior.
-No visible terminal User leaf is classified `UNLIKELY_KNOWN`.
+The contract records an explicit category-specific `USER_MEMORY` or `USER_RECOGNIZABLE_ACTIVITY` decision, why the user can provide the fact, the connected fallback process when applicable, the selected-value method, and missing-exact-value behavior.
+An unreviewed label remains `UNREVIEWED` and fails generation, so a regular expression cannot mark it reviewed automatically.
 Every generated page contains exactly one visible Information Card.
 The visible order is the title, mapped retrofits, overview, broader formula, expanded formula, readable information tree, and only the category-local Standard processes referenced by that tree.
 The pages omit audit status, readiness, evidence tables, input inventories, review decisions, and implementation gates while the canonical contracts, evidence manifest, fixtures, and validators retain those controls.
@@ -78,21 +80,22 @@ The pages omit audit status, readiness, evidence tables, input inventories, revi
 
 ### Semantic ownership cleanup
 
-The cleanup reviewed all 307 terminal User leaves visible at commit `31539d44aee0635b92bc4cfa3000725e76dbe6c9`.
-The regenerated cards retain 186 terminal User leaves, a net reduction of 121.
-Thirty uploaded interval-data, timezone, and rate-schedule leaves were reassigned to Bill ownership.
-No leaf was reassigned to Profile because no new production Profile field supports these values.
-Ninety-three technical leaves were moved to Linked Opportunity as explicit project-document, site-study, controls-trend, nameplate, measurement, audit, commissioning, maintenance-plan, manufacturer, or contractor inputs.
-No leaf was assigned directly to Standard ownership merely to satisfy a formula.
-Instead, 29 remaining recognizable User selectors identify a connected Standard as their alternate resolver.
-Four net technical leaf requirements were removed from visible User collection and replaced by explicit no-estimate behavior.
-ITC-32 consolidates three separate hot-water engineering fields behind one documented water-heater-information input, and ITC-52 removes two unsupported water-heating-per-test-unit inputs.
-Fifty-two category cards changed materially.
-The one explicit tree and Validation contradiction in ITC-02 was removed by deleting the unsupported existing-wattage resolver and requiring a nameplate, photometric report, or field measurement.
-All 92 remaining visible processes now have process-specific instructions and an explicit executable-proof, implementation-pending, or unsupported evidence state.
+The correction pass compared the 54 generated cards at starting commit `0e577d987e9e4e29eb67fc33f1c135724ef36942`.
+The regenerated cards reduce visible User leaves from 186 to 139.
+The Project Document label increases from 0 to 148 visible leaves.
+The Linked Opportunity label decreases from 244 to 147 visible leaves.
+Nameplates, labels, measurements, audits, controls trends, engineering studies, commissioning records, maintenance plans, manufacturer documents, contractor quotes, contractor specifications, construction documents, and uploaded operating records now use Project Document.
+Linked Opportunity is limited to opportunity requirements, certifications, performance limits, prescribed equipment classes, exact products named by the opportunity, and opportunity-specific restrictions.
+Eleven category-specific context benchmark processes resolve technical or activity inputs that an ordinary business representative should not calculate.
+ITC-32 and ITC-33 use recognizable facility activity plus commercial fixture methods instead of asking for technical uses, duration, or flush frequency.
+ITC-27 and ITC-28 use Project Documents or context benchmarks for utilization and arrival or departure profiles.
+ITC-39 uses Project Documents or an application benchmark for technical load bins.
+ITC-52 keeps rack and conveyor activity units separate and benchmarks recognizable throughput when records are unavailable.
+ITC-54 uses Project Documents or one technology-and-capacity routine-use benchmark.
+All 104 visible processes now have process-specific instructions, a single-value policy, explicit Lookup Input bindings, and an executable-proof or implementation-pending evidence state.
 The unsupported state is prohibited for a displayed tree resolver.
-One new authoritative source was added: the official DLC API and data-download guide for tokenized SSL QPL CSV access.
-No new source fixture was added because no authenticated QPL extract was retained.
+Three new reviewed source fixtures were added.
+They cover DOE outdoor application wattage, EPA WaterSense commercial toilet and urinal activity, and separate ENERGY STAR AC-output and DC-output charger fields.
 
 The semantic source audit uses six independent source roles:
 
@@ -108,9 +111,9 @@ Every declared Standard scenario must have compatible evidence that is not `UNSU
 Each evidence record declares every source role it supports and must appear under exactly those roles in its Standard summary.
 `VERIFIED` means that the exact reviewed contract is deeply bound to a validated source fixture through JSON pointers for source identity, version, artifact, checksum, coverage, fields, units, values when present, unsupported inferences, and substantive records.
 It does not mean that unrelated roles or project-specific inputs are supported.
-Link validation covered 43 unique direct registry URLs.
+Link validation covered 50 unique direct registry URLs.
 
-The seven verified records cover the reviewed ENERGY STAR commercial dishwasher fields, FuelEconomy `comb08` and `combE`, PVWatts V8 input and output fields, WaterSense landscape design scope, and the two reviewed FEMP exterior-lighting table scopes.
+The ten verified records cover the reviewed ENERGY STAR commercial dishwasher and EVSE fields, FuelEconomy `comb08` and `combE`, PVWatts V8 input and output fields, WaterSense landscape design scope, EPA toilet and urinal activity, DOE outdoor application wattage, and the two reviewed FEMP exterior-lighting table scopes.
 Twenty-eight records remain unverified because an exact adapter, source export, module function, equation, or worked example has not been pinned.
 Seven records explicitly mark unsupported existing-baseline or distribution uses.
 Certification and product datasets resolve compatible equipment ratings only.
@@ -119,16 +122,16 @@ WaterSense fixture criteria resolve compatible proposed rated flow or flush volu
 
 ## Unsupported claims removed
 
-The following claims were removed or converted to explicit no-estimate behavior:
+The following claims were removed or converted to explicit exact-to-benchmark fallback behavior:
 
 - Current certified-product datasets are not representative installed existing-equipment distributions.
 - FEMP Table 1 is a proposed efficacy table, not an existing legacy-wattage distribution.
-- FEMP Table 2 is a narrow wall-mounted example, not a general percentile population.
+- FEMP Table 2 is a narrow wall-mounted example, not a general installed-equipment population.
 - FuelEconomy `combE` already represents wall electricity and must not receive another charging-efficiency divisor.
 - WaterSense Water Budget Tool output is a design comparison, not measured actual landscape consumption or an irrigation schedule.
 - A simulator is not a source for missing project capacity, flow, pressure, equipment size, operating schedule, load, tariff, or fuel availability.
 - A Profile or Bill fallback is not allowed merely because a source URL exists.
-- A generic percentile is disabled until the eligible population, filters, weights when applicable, sample size, and reviewed fixture are recorded.
+- Requirements-based product resolution uses an official typical value, valid weighted median, or ordinary median only after the eligible population, filters, weights when applicable, sample size, and reviewed fixture are recorded.
 - A whole-site bill quantity is not an end-use allocation unless the allocation is explicitly measured or confirmed.
 
 ## Formula audit
@@ -157,22 +160,22 @@ ITC-26 uses one integrated microgrid result rather than summing overlapping comp
 
 ## Default executability audit
 
-Each category contract has a default-path proof with minimum required inputs, exact scenario, source fixture, low/base/high rule, final result path, uncertainty, executable fixture, and remaining gate.
+Each category contract has a default-path proof with minimum required inputs, exact scenario, source fixture, one selected-value rule, final result path, uncertainty, executable fixture, and remaining implementation limitation.
 A category cannot be Ready unless it names a `VERIFIED_EXECUTABLE` scenario, its declared executable golden fixture exists, and all referenced evidence is `VERIFIED`.
 A Draft or Blocked category cannot claim an executable golden fixture.
 
 ITC-15 is an executable Ready path.
-Its golden fixture proves `S = 0`, low = base = high = 0 USD/year, an empty direct resource delta, and the boundary that another category's physical savings must not be duplicated.
+Its golden fixture proves the one legitimate selected result `S = 0` USD/year, an empty direct resource delta, and the boundary that another category's physical savings must not be duplicated.
 The zero result is a category boundary, not an estimate of a linked physical measure.
 
 ITC-29 is the first nonzero executable Ready path.
 Its golden fixture uses exact FuelEconomy.gov vehicle IDs 43764 and 44444, user-confirmed service equivalence, synthetic project activity and prices, 32 miles per gallon, 28 kWh per 100 miles at the wall, 750 avoided gallons per year, 6,720 added kWh per year, and 1,617 USD per year of net savings.
 The Ready verdict applies only to the exact-model scenario.
-The vehicle-class percentile scenario remains `UNSUPPORTED`, and no second charging-efficiency factor is applied.
+The vehicle-class fallback remains implementation-pending, and no second charging-efficiency factor is applied.
 
-Every other category retains a concrete gate.
-Typical gates include an exact installed baseline, a project scope or design, an end-use allocation, a chronological load, a complete tariff, a category-specific Standard adapter, or an end-to-end fixture.
-Missing gates produce no estimate or a resource result without a dollar value as explicitly documented.
+Every other category retains a concrete implementation limitation without deleting its screening estimate.
+Typical limitations include an exact installed baseline, a project scope or design, an end-use allocation, a chronological load, a complete tariff, a category-specific Standard adapter, or an end-to-end fixture.
+Missing exact inputs continue through the shared fallback order and record the selected value and provenance.
 
 ## Implementation readiness audit
 
@@ -202,7 +205,8 @@ Freshness validation compares every generated byte with a deterministic render.
 
 The Required Screening count reflects simple facts needed to attempt the ordinary path.
 Conditional Calculation Gates defer exact fixture records and exact vehicle records until the selected scenario needs them and no approved fallback exists.
-MEASUR, SAM, PVWatts, wind, REopt, EPA CHP, and WaterSense method inputs remain visible wherever the reviewed source does not actually supply a fallback.
+MEASUR, SAM, PVWatts, wind, REopt, EPA CHP, and WaterSense do not invent missing project inputs.
+Each unresolved input instead follows the connected exact-to-benchmark process, while the visible Validation text distinguishes source support from pending adapter proof.
 This is not a recommendation to ask all questions at once.
 Required Screening inputs are ordinary path facts.
 Conditional Calculation Gates are mandatory only after their activation conditions are met.
@@ -213,6 +217,18 @@ Progressive disclosure should request only the inputs for the selected opportuni
 
 The focused test suite proves that the validator fails for:
 
+- A Project Document mislabeled as Linked Opportunity.
+- A nameplate, audit, measurement, controls trend, commissioning record, maintenance plan, or contractor specification labeled as ordinary User.
+- A technical usage value assigned directly to User without a benchmark resolver.
+- A visible multi-value range where a formula requires one selected value.
+- A requirements-based product process without the official-value, weighted-median, then median selection rule.
+- A Standard process that omits a displayed technical Lookup Input.
+- A Standard process that contains a Lookup Input with no documented use.
+- A simulator process that consumes price before producing the physical resource result.
+- AC-output and DC-output charger fields treated as interchangeable or normalized without separate formulas.
+- A generated realism entry with no explicit category-specific decision.
+- A WaterSense usage claim outside bathroom faucets, showerheads, and pre-rinse spray valves.
+- A source-field claim with neither inspected evidence nor an implementation-pending limitation.
 - A missing generated page or a stale generated page.
 - A generated page with a second top-level card, a banned audit heading, a missing required card component, or a changed component order.
 - An Information Card schema with an added field or a missing required field.
@@ -243,7 +259,7 @@ The focused test suite proves that the validator fails for:
 - An unsupported Profile or Bill equipment fallback.
 - An evidence record that names an undeclared Standard lookup input.
 - A forced unsupported Standard scenario.
-- A percentile without eligible-population filters, sample size, and a fixture.
+- A requirements-based selected value without eligible-population filters, sample size, and a deterministic selection rule.
 - A formula term without a tree node.
 - A formula term marked unused.
 - A tree User input unused by the formula or a traced Standard.
@@ -264,7 +280,7 @@ The focused test suite proves that the validator fails for:
 - A normalized Profile path fixture with a missing path, renamed path, wrong object or array structure, or stale checksum.
 - A formula term with a missing or unknown unit ID, a combined unit, or unit metadata that disagrees with the versioned registry.
 - A dimensional relationship with an incompatible multiplication or division result.
-- A Conditional Calculation Gate without activation, term, no-estimate, or future-Standard metadata.
+- A Conditional Calculation Gate without activation, term, single-value fallback, or future-Standard metadata.
 - A Ready category that does not name a `VERIFIED_EXECUTABLE` scenario.
 - An ITC-29 golden fixture with a changed vehicle ID, `comb08`, `combE`, service-equivalence confirmation, charging-loss guard, or nonzero arithmetic result.
 
@@ -274,8 +290,8 @@ The following category verdicts were recorded after reviewing the formula, sourc
 
 | Category | Verdict | Recorded manual verdict |
 |---|---|---|
-| `ITC-01` | DRAFT | Formula is coherent, but the current allowlist and quartile claims are not proved by local source fixtures. |
-| `ITC-02` | DRAFT | FEMP does not support the former legacy-wattage percentile or Profile/Bill fallback. |
+| `ITC-01` | DRAFT | Formula is coherent, but the current allowlist and selected-value population are not proved by local source fixtures. |
+| `ITC-02` | DRAFT | FEMP does not support the former legacy-wattage claim or Profile/Bill fallback, so DOE application wattage is now the existing-equipment screening source. |
 | `ITC-03` | DRAFT | No class-based existing baseline or default fuel allocation is supported. |
 | `ITC-04` | DRAFT | The formula is reasonable, but the MEASUR umbrella claim is not an executable adapter. |
 | `ITC-05` | DRAFT | No exact Scout definition or measured duct leakage is yet available. |
@@ -302,11 +318,11 @@ The following category verdicts were recorded after reviewing the formula, sourc
 | `ITC-26` | DRAFT | No generic microgrid design fallback is defensible, and separate component savings must not be added. |
 | `ITC-27` | DRAFT | Demand is explicit from interval added load, and export is excluded. |
 | `ITC-28` | DRAFT | No class distribution or extra charging-efficiency adjustment is allowed. |
-| `ITC-29` | RESEARCHED — READY FOR HUMAN REVIEW | Ready only for the exact-model scenario backed by vehicle IDs 43764 and 44444, explicit service-equivalence confirmation, exact project activity and prices, and the nonzero golden fixture. The class-percentile scenario remains unsupported. |
+| `ITC-29` | RESEARCHED — READY FOR HUMAN REVIEW | Ready only for the exact-model scenario backed by vehicle IDs 43764 and 44444, explicit service-equivalence confirmation, exact project activity and prices, and the nonzero golden fixture. The vehicle-class benchmark remains implementation-pending. |
 | `ITC-30` | BLOCKED | Only exact measured or contractual project inputs can unblock the category. |
 | `ITC-31` | DRAFT | Demand is explicit from interval charging, and export is excluded. |
-| `ITC-32` | DRAFT | Annual uses, minutes per use, existing rated flow, hot-water fraction, temperature rise, and heater efficiency are explicit. WaterSense supplies only compatible proposed performance. |
-| `ITC-33` | DRAFT | Annual flushes and existing rated flush volume are explicit. WaterSense supplies only compatible proposed performance. |
+| `ITC-32` | DRAFT | Recognizable facility activity feeds one commercial flow-fixture usage benchmark, Project Documents override usage and existing ratings, and the exact-product path distinguishes current WaterSense listings from the archived pre-rinse source. |
+| `ITC-33` | DRAFT | Recognizable occupant and visitor activity feeds one EPA-based annual flush-count method, Project Documents override observed use and existing ratings, and exact products use the official WaterSense search or download path. |
 | `ITC-34` | DRAFT | The bill cap and sewer default are removed, and the result is not labeled measured operational savings. |
 | `ITC-35` | DRAFT | No unmeasured leak rate or duration default is allowed. |
 | `ITC-36` | DRAFT | Water and fan components are separate, and sewer applicability cannot be assumed. |
@@ -337,50 +353,55 @@ The following Standard verdicts were recorded after reviewing every declared sou
 | `STD-SCOUT-ECM-SCREEN` | LIMITED | Scout is a segment-level ECM method, and exact category crosswalks and performance fields still need reviewed fixtures. |
 | `STD-DOE-CCMS-RATINGS` | LIMITED | Current certification records can support an exact current product after a product-specific export is reviewed, but they do not supply an installed-equipment population. |
 | `STD-ENERGY-STAR-PRODUCT-DATA` | LIMITED | The dishwasher schema proves several proposed-product fields, while other product families and all existing-equipment or usage claims remain unverified or unsupported. |
-| `STD-DOE-MEASUR` | LIMITED | Every category remains at no estimate until its exact module, inputs, units, outputs, function, and golden example are pinned. |
+| `STD-DOE-MEASUR` | LIMITED | Every category still requires its exact module, inputs, units, outputs, function, and golden example before the implementation can claim executable proof. |
 | `STD-SAM-SOLAR-THERMAL` | LIMITED | SAM can calculate performance after design, weather, load, and backup inputs are supplied, but it is not a source for those project inputs. |
-| `STD-PVWATTS-V8` | LIMITED | The API field contract is verified, but required system-design inputs are project facts and no default design range is supported. |
+| `STD-PVWATTS-V8` | LIMITED | The API field contract is verified, but required system-design inputs must resolve before one deterministic simulation is run. |
 | `STD-WIND-SAM` | LIMITED | The simulator requires an explicit turbine, power curve, hub height, losses, and resource selection. |
 | `STD-REOPT-LOCAL-DISPATCH` | LIMITED | REopt can calculate dispatch only after a complete chronological load, tariff, technology, and operating-constraint set is provided. |
 | `STD-EPA-CHP-PERFORMANCE` | LIMITED | EPA rows can support proposed screening classes and a transparent energy balance, but they do not identify exact equipment or supply site design and coincidence inputs. |
 | `STD-FUELECONOMY-VEHICLES` | LIMITED | Exact vehicle records and units are verified, while class distributions are disabled until compatibility filters and sample-size fixtures are reviewed. |
-| `STD-WATERSENSE-FIXTURES` | LIMITED | WaterSense criteria support proposed performance, while existing installed ratings and commercial usage frequency remain unresolved. |
+| `STD-WATERSENSE-FIXTURES` | LIMITED | WaterSense criteria and product downloads support compatible proposed performance; existing installed ratings and commercial usage resolve through separate exact-or-benchmark paths. |
 | `STD-WATERSENSE-LANDSCAPE` | LIMITED | Version 2.0 compares designed landscape water use with typical standard new construction, not actual consumption or irrigation scheduling. |
 | `STD-WATERSENSE-CI-OPERATIONS` | LIMITED | Leak and cooling-tower equations still require exact page, equation, and worked-example fixtures. |
 | `STD-FEMP-EXTERIOR-LIGHTING` | LIMITED | Table 1 provides proposed efficacy requirements, while Table 2 is one narrow wall-mounted example and neither supplies a legacy-wattage distribution. |
 | `STD-OPERATING-SCHEDULE` | LIMITED | Explicit calendar and daylight calculations are defensible after all inputs are supplied, while a business label alone does not prove annual operating hours. |
+| `STD-CONTEXT-BENCHMARKS` | LIMITED | The shared exact-to-benchmark policy is deterministic, the DOE lighting and EPA flush-activity adapters have reviewed fixtures, and the remaining category adapters retain implementation-pending source limitations. |
 
 ## Focused manual inspection
 
-All five canonical source fixtures were inspected after schema normalization.
+All eight canonical source fixtures were inspected after schema normalization.
 The ENERGY STAR fixture preserves native dishwasher field units and does not infer installed baselines or usage.
 The FEMP fixture keeps proposed efficacy rows separate from the narrow wall-mounted example.
 The FuelEconomy fixture retains exact record IDs, official response checksums, `comb08`, `combE`, compatibility facts, and the explicit service-equivalence boundary.
 The PVWatts fixture records the reviewed schema snapshot and its checksum limitation.
 The WaterSense fixture labels its result as a modeled design allowance rather than measured consumption.
+The DOE lighting fixture preserves Table 4.29 outdoor application rows and the all-outdoor aggregate.
+The EPA commercial flush-activity fixture preserves separate toilet and urinal daily-use assumptions and annual equations.
+The ENERGY STAR EVSE fixture preserves separate AC-output total-loss fields and DC-output loading-adjusted-efficiency fields.
 
-All seven `VERIFIED` evidence records were inspected against their JSON Pointer bindings.
+All ten `VERIFIED` evidence records were inspected against their JSON Pointer bindings.
 The bound URL, version, artifact, checksum, coverage, fields, canonical units, exact values when present, unsupported inferences, and substantive records match their evidence metadata.
 No `LIMITED` evidence record is used by ITC-29.
-ITC-29 uses two `VERIFIED` evidence records and one `UNSUPPORTED` distribution record only to document why the class-percentile scenario stays disabled.
+ITC-29 uses two `VERIFIED` evidence records and one `UNSUPPORTED` distribution record only to document why the class-based adapter remains implementation-pending.
 
 All 54 generated Information Cards were manually inspected for the required structure, readable formulas, source-labeled leaves, process placement, and absence of banned audit material.
-All 186 visible terminal User leaves were checked for ordinary-user knowledge, recognizable phrasing, formula necessity, preferred Bill, Profile, Linked Opportunity, Standard, project-document, contractor, or no-estimate ownership, and connected-process behavior.
-All 92 visible processes were checked for distinct purpose, matching source, exact instructions, feasible automation boundary, evidence-state wording, and tree and Validation agreement.
+All 139 visible terminal User leaves have explicit reviewed decisions for ordinary-user knowledge, recognizable phrasing, formula necessity, selected-value method, missing-exact-value behavior, and connected-process behavior.
+All 104 visible processes were checked for distinct purpose, matching source, exact instructions, feasible automation boundary, single-value behavior, evidence-state wording, and tree and Validation agreement.
 The required deep-inspection sample was reviewed in full:
 
-- `ITC-02` removes the unsupported existing-wattage resolver, requires documented or measured existing watts, separates exact-product and requirements-only DLC QPL paths, and leaves the electricity rate Bill-derived.
-- `ITC-08` places collector design and project load requirements on the Linked Opportunity path and connects them to the SAM process.
-- `ITC-16` sources interval utility data and timezone metadata from Bill, sources event constraints from project evidence, and returns no interval dollar estimate until tariff mapping is verified.
+- `ITC-02` uses Project Document for exact existing watts, selects one DOE application benchmark when exact watts are absent, separates exact-product and requirements-only DLC QPL paths, and leaves the electricity rate Bill-derived.
+- `ITC-08` keeps opportunity-prescribed design requirements on Linked Opportunity, uses Project Document for contractor design, load, and backup equipment information, removes price from SAM inputs, and applies price after the displaced physical resource is calculated.
+- `ITC-16` sources interval utility data and timezone metadata from Bill, sources audits and controls trends from Project Documents, applies all five event constraints, and selects one conservative context-matched event profile when exact behavior is absent.
 - `ITC-17` keeps PV design specifications on the Linked Opportunity path, sources interval utility data from Bill, and does not allow PVWatts to invent a system design.
-- `ITC-23` keeps battery design specifications on the Linked Opportunity path, sources interval utility data from Bill, and retains no-estimate behavior for an unresolved tariff.
-- `ITC-27` replaces ordinary-user charging distributions with a documented site-study or contractor charging profile, separates exact and requirements-based charger resolution, and refuses an interval dollar estimate without that profile and a verified tariff.
+- `ITC-23` keeps opportunity-prescribed battery design values on the Linked Opportunity path, uses Project Document for contractor or engineering designs, sources interval utility data from Bill, and includes a terminal state-of-charge constraint.
+- `ITC-27` replaces ordinary-user charging distributions with a Project Document or one EVI-Pro context benchmark, separates exact and requirements-based charger resolution, and preserves separate AC-output and DC-output normalization formulas.
+- `ITC-28` uses recognizable fleet activity, Project Documents for fleet studies or contractor designs, one Fleet DNA context benchmark for schedules and class-matched vehicle intensity, and the same separate AC-output and DC-output normalization formulas.
 - `ITC-29` recomputes to 375 gallons and 3,360 kWh per vehicle-year, 750 gallons and 6,720 kWh per project-year, and 1,617 USD per year.
-- `ITC-32` replaces annual technical usage and water-heating questions with recognizable daily activity, label or measurement inputs, and explicit no-estimate behavior for undocumented heating inputs.
-- `ITC-33` replaces annual flush and undocumented existing-rating questions with recognizable daily activity and label, specification, or measurement inputs.
-- `ITC-39` requires a measured or audited load-bin profile and names the MEASUR Pumping System Assessment Tool or Fan System Assessment Tool explicitly.
+- `ITC-32` replaces annual technical usage and water-heating questions with recognizable business activity, Project Document overrides, and one context-matched usage or heating input.
+- `ITC-33` replaces User-supplied flush frequency with recognizable facility activity, one EPA annual flush-count method, and Project Document overrides.
+- `ITC-39` uses Project Document for measured or audited load bins, selects one representative operating profile when exact bins are absent, and keeps distinct MEASUR Pumping System Assessment Tool and Fan System Assessment Tool paths with their own hydraulic or aerodynamic inputs.
 - `ITC-52` separates rack from flight or conveyor activity, prohibits gallons-per-rack to gallons-per-hour conversion, and removes unsupported water-heating-per-rack collection.
-- `ITC-54` remains Blocked and requires labels, manufacturer documents, commissioning records, maintenance plans, controls schedules, or contractor specifications for routine fuel and standby inputs.
+- `ITC-54` remains Blocked for implementation readiness, uses Project Document for labels and operating records, and selects one conservative technology-and-capacity routine-use benchmark when exact routine fuel or standby input is absent.
 
 The deep-inspection sample was also checked for direct source URLs, readable user-facing inputs, exact Standard numbering, and the absence of status, readiness, evidence, and review-decision sections.
 

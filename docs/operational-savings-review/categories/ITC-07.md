@@ -26,7 +26,7 @@ Annual Operational Savings
 │  │  ├─ Annual Billed Resource Use
 │  │  │  ├─ Annual Gas Use (Bill)
 │  │  │  └─ Billing Period Coverage (Bill)
-│  │  └─ Documented Water-heating share, if known from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
+│  │  └─ Documented Water-heating share, if known from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
 │  └─ Gas Water Heater Performance
 │     ├─ Existing Gas Water Heater
 │     │  ├─ Existing Gas Water Heater Type or Application (User)
@@ -76,24 +76,24 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 **Value Needed:**
 
-* Existing certified gas water heater performance with its exact unit, or no value when no exact record is supported
+* One selected existing gas water heater performance value with its exact unit and provenance
 
 **How to Use:**
 
-1. Normalize the documented existing manufacturer and model for the high-efficiency gas water heater; do not infer a rating from equipment type alone.
+1. Normalize the documented existing manufacturer and model for the high-efficiency gas water heater when it is available.
 2. Search the applicable certification export for that exact model and filter by the displayed product type, capacity or size class, and native test procedure.
-3. Require one compatible record; return no existing rating when the model is absent, ambiguous, inactive, or from a different product family.
-4. Return existing certified gas water heater performance with its exact unit, or no value when no exact record is supported without substituting a current efficient-product distribution for the installed baseline.
-5. Retain the dataset version, record identity, native field names, units, model match, and rejection reason.
+3. If an exact record is unavailable, select one context-matched existing-equipment benchmark from an authoritative historical or installed-stock source; never substitute the current efficient-product population for the installed baseline.
+4. Return one selected existing gas water heater performance value with its exact unit and provenance.
+5. Retain the dataset version, record identity or benchmark population, context filters, population size, selection rule, native fields, units, and fallback level.
 
 **Automation:**
 
-* **Selected Strategy:** Exact-record lookup for documented existing high-efficiency gas water heater models only.
-* **Automation Method:** Normalize the submitted model, query the applicable certification export, apply product-family and capacity filters, and accept only one native-unit record.
+* **Selected Strategy:** Exact-record lookup followed by a context-matched installed-equipment benchmark for high-efficiency gas water heater.
+* **Automation Method:** Normalize the submitted model, query the applicable certification export, and use one exact compatible native-unit record when available; otherwise apply reviewed installed-stock filters and select the official typical value, weighted median, or median.
 * **Difficulty:** Medium
 
 **Validation:**
-The official certification access paths and native product-family fields were checked. Current efficient-product records do not represent the installed baseline, so this process may use only one documented exact existing model. The category-specific exact-record adapter and golden test have not yet been added.
+The official certification access paths and native product-family fields were checked. Current efficient-product records do not represent the installed baseline. An exact documented existing model is preferred; when it is unavailable, a separately sourced context-matched installed-equipment benchmark is required. That benchmark adapter and the category golden test have not yet been added.
 
 **■ Standard 1.2 — Exact Proposed Gas Water Heater Rating Lookup**
 
@@ -170,21 +170,21 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 **Value Needed:**
 
-* Eligible compatible proposed gas water heater population with documented low, median, and high native-unit performance, or no value when no compatible record remains
+* One selected proposed gas water heater native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally
 
 **How to Use:**
 
 1. Extract the application, capacity, certification, and performance limits from the linked high-efficiency gas water heater opportunity requirements.
 2. Filter the official current-product population by every mandatory requirement, product-family boundary, active specification, and native test unit.
-3. Reject the path when no compatible record remains; when several records remain, keep the eligible population and calculate a documented low, median, and high value without selecting the contractor's future product.
-4. Return eligible compatible proposed gas water heater population with documented low, median, and high native-unit performance, or no value when no compatible record remains.
-5. Retain the source version, complete filters, eligible record identities, population size, native units, summary rule, and no-result reason.
+3. Use the source's official recommended or typical value when it provides one; otherwise select the weighted median when valid weights exist, or the ordinary median of the eligible compatible population.
+4. Return one selected proposed gas water heater native-unit performance value, with the compatible population, filters, population size, and selection rule retained internally without choosing a future contractor product arbitrarily.
+5. Retain the source version, complete filters, eligible record identities, population size, native units, selection rule, selected value, and fallback level.
 
 **Automation:**
 
 * **Selected Strategy:** Requirement-based candidate-set resolution from the official U.S. Department of Energy - Compliance Certification Database population.
-* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and calculate deterministic low, median, and high native-unit results.
+* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and select one official typical value, weighted median, or median in native units.
 * **Difficulty:** Medium
 
 **Validation:**
-The official certification access path and applicable gas water heater product-family filters were checked. Candidate-set automation is technically possible, but no retained category export proves the eligible population, filters, population size, or low, median, and high result.
+The official certification access path and applicable gas water heater product-family filters were checked. Candidate-set automation is technically possible, but no retained category export proves the eligible population, filters, population size, or selected median result.

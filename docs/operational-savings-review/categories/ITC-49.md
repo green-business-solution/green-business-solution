@@ -27,8 +27,8 @@ Annual Operational Savings
 │  ├─ Annual Billed Resource Use
 │  │  ├─ Annual Electricity Use (Bill)
 │  │  └─ Billing Period Coverage (Bill)
-│  ├─ Documented Walk-in share of billed electricity or direct measurement, if known from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
-│  ├─ Documented Proposed Annual System kWh for the Same Box Load and Duty, if known from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+│  ├─ Documented Walk-in share of billed electricity or direct measurement, if known from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
+│  ├─ Documented Proposed Annual System kWh for the Same Box Load and Duty, if known from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
 │  └─ Existing and proposed duty-equivalence confirmation (User)
 └─ Applicable Resource Rates
    └─ Bill-Derived Electricity Rate

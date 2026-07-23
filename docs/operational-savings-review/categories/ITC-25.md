@@ -27,10 +27,10 @@ Annual Operational Savings
 │  ├─ Timestamped Interval Utility Data (Bill)
 │  ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
 │  ├─ Rate Schedule and Customer Class (Bill)
-│  ├─ Authoritative Tariff Mapping Is Not Yet Verified (Derived)
-│  ├─ No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)
+│  ├─ Published Utility Tariff and Effective-Date Mapping (Derived)
+│  ├─ One Selected Interval Tariff Value (Derived)
 │  └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
-├─ Documented Interval HVAC thermal load or validated electric proxy from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
+├─ Documented Interval HVAC thermal load or validated electric proxy from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
 ├─ Thermal capacity (Linked Opportunity)
 ├─ Charge limit (Linked Opportunity)
 ├─ Discharge limit (Linked Opportunity)
@@ -81,9 +81,9 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 
 1. Map the Thermal Energy Storage inputs to the documented Thermal Energy Storage Interval Bill Calculation source fields or model inputs: Timestamped interval utility data from the uploaded utility artifact; Time zone and daylight-saving metadata from the uploaded utility artifact; Authoritative tariff mapping, which is not yet verified; Thermal capacity; Charge limit; Discharge limit; Charge efficiency from a nameplate, measurement, audit, or contractor specification; Discharge efficiency from a nameplate, measurement, audit, or contractor specification; Standing loss; Initial Thermal State; Terminal thermal-state constraint.
 2. Align the interval load and tariff calendar, apply the category constraints, solve baseline and proposed cases, compare bill components, and retain solver and input provenance.
-3. Reject the Thermal Energy Storage path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance.
-5. Retain the Thermal Energy Storage Interval Bill Calculation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance.
+5. Retain the Thermal Energy Storage Interval Bill Calculation source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 

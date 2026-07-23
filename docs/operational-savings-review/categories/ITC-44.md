@@ -26,13 +26,13 @@ Annual Operational Savings
 ├─ Annual compressed-air control electricity reduction
 │  ├─ In-Scope Equipment Count (User)
 │  ├─ Compressor type (User)
-│  ├─ Documented Rated input power from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
-│  ├─ Documented Rated flow from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+│  ├─ Documented Rated input power from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
+│  ├─ Documented Rated flow from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
 │  ├─ Existing control mode (User)
 │  ├─ Proposed control mode (Linked Opportunity)
 │  ├─ Repeatable annual load profile
-│  │  ├─ Documented Load fraction for each bin from Controls Trends or Engineering Audit (Linked Opportunity)
-│  │  └─ Documented Annual hours for each bin from Controls Trends or Engineering Audit (Linked Opportunity)
+│  │  ├─ Documented Load fraction for each bin from Controls Trends or Engineering Audit (Project Document)
+│  │  └─ Documented Annual hours for each bin from Controls Trends or Engineering Audit (Project Document)
 │  └─ Standard 1.1 — Compressed Air Controls Engineering Calculation
 └─ Applicable Resource Rates
    └─ Bill-Derived Electricity Rate
@@ -77,15 +77,15 @@ U.S. Department of Energy - MEASUR
 **How to Use:**
 
 1. Load the Compressed Air Controls project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Compressed Air Assessment control-profile calculation.
-2. Run the pinned open-source Compressed Air Assessment control-profile calculation baseline and proposed cases using the category formula boundary shown in this card.
-3. Return no result when the Compressed Air Assessment control-profile calculation requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
-4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Retain the MEASUR version, Compressed Air Assessment control-profile calculation input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
+2. When an exact technical input is unavailable, use one context-matched value selected from the closest authoritative equipment or application population before running the Compressed Air Assessment control-profile calculation; the simulator does not invent that input.
+3. Run the pinned open-source Compressed Air Assessment control-profile calculation baseline and proposed cases using the category formula boundary shown in this card.
+4. Return one selected existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
+5. Retain the MEASUR version, Compressed Air Assessment control-profile calculation input object, exact and benchmark input provenance, context filters, eligible populations, selection rules, unit conversions, warnings, and baseline and proposed outputs.
 
 **Automation:**
 
 * **Selected Strategy:** Pinned local execution of the MEASUR Compressed Air Assessment control-profile calculation for Compressed Air Controls.
-* **Automation Method:** Map reviewed project evidence into the Compressed Air Assessment control-profile calculation input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
+* **Automation Method:** Map reviewed project evidence into the Compressed Air Assessment control-profile calculation input schema, fill unresolved inputs through the single-value authoritative benchmark policy, execute the versioned local module, and preserve its warnings and native outputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

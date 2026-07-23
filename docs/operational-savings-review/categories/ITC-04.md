@@ -28,9 +28,9 @@ Annual Operational Savings
 │  │  ├─ Annual Billed Resource Use
 │  │  │  ├─ Annual Gas Use (Bill)
 │  │  │  └─ Billing Period Coverage (Bill)
-│  │  └─ Documented Boiler share of billed fuel from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
-│  ├─ Documented Existing control sequence from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
-│  ├─ Documented Proposed control sequence from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+│  │  └─ Documented Boiler share of billed fuel from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
+│  ├─ Documented Existing control sequence from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
+│  ├─ Documented Proposed control sequence from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
 │  └─ Standard 1.1 — Boiler Controls and Burner Improvements Engineering Calculation
 └─ Applicable Resource Rates
    └─ Bill-Derived Gas Rate
@@ -70,15 +70,15 @@ U.S. Department of Energy - MEASUR
 **How to Use:**
 
 1. Load the Boiler Controls and Burner Improvements project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Steam System Assessment Tool boiler and operating-state model.
-2. Run the pinned open-source Steam System Assessment Tool boiler and operating-state model baseline and proposed cases using the category formula boundary shown in this card.
-3. Return no result when the Steam System Assessment Tool boiler and operating-state model requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
-4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Retain the MEASUR version, Steam System Assessment Tool boiler and operating-state model input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
+2. When an exact technical input is unavailable, use one context-matched value selected from the closest authoritative equipment or application population before running the Steam System Assessment Tool boiler and operating-state model; the simulator does not invent that input.
+3. Run the pinned open-source Steam System Assessment Tool boiler and operating-state model baseline and proposed cases using the category formula boundary shown in this card.
+4. Return one selected existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
+5. Retain the MEASUR version, Steam System Assessment Tool boiler and operating-state model input object, exact and benchmark input provenance, context filters, eligible populations, selection rules, unit conversions, warnings, and baseline and proposed outputs.
 
 **Automation:**
 
 * **Selected Strategy:** Pinned local execution of the MEASUR Steam System Assessment Tool boiler and operating-state model for Boiler Controls and Burner Improvements.
-* **Automation Method:** Map reviewed project evidence into the Steam System Assessment Tool boiler and operating-state model input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
+* **Automation Method:** Map reviewed project evidence into the Steam System Assessment Tool boiler and operating-state model input schema, fill unresolved inputs through the single-value authoritative benchmark policy, execute the versioned local module, and preserve its warnings and native outputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

@@ -22,7 +22,7 @@ Annual Operational Savings = Measured Leak Flow × Confirmed Annual Leak Duratio
 ```text
 Annual Operational Savings
 ├─ Annual measured leak water reduction
-│  ├─ Documented Measured leak flow from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+│  ├─ Documented Measured leak flow from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
 │  ├─ Confirmed leak start date (User)
 │  ├─ Confirmed repair date (User)
 │  └─ Standard 1.1 — WaterSense Commercial Operations Calculation
@@ -64,9 +64,9 @@ U.S. Environmental Protection Agency - WaterSense at Work
 
 1. Map the Measured Water Leak Repair inputs to the documented WaterSense Commercial Operations Calculation source fields or model inputs: Measured leak flow from a nameplate, measurement, audit, or contractor specification; Confirmed leak start date.
 2. Validate measured project inputs, apply the selected equation with explicit units and dates, reject missing physical observations, and return annual avoidable water.
-3. Reject the Measured Water Leak Repair path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates.
-5. Retain the WaterSense Commercial Operations Calculation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates.
+5. Retain the WaterSense Commercial Operations Calculation source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 

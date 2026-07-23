@@ -30,9 +30,9 @@ Annual Operational Savings
 │  │  ├─ Annual Electricity Use (Bill)
 │  │  ├─ Annual Gas Use (Bill)
 │  │  └─ Billing Period Coverage (Bill)
-│  ├─ Documented Cooking share of billed fuel or direct equipment measurement, if known from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
-│  ├─ Documented Annual Cooking Activity in the Tested Duty Unit, if known from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
-│  ├─ Documented Proposed Induction kWh per Identical Tested Duty Unit, if known from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+│  ├─ Documented Cooking share of billed fuel or direct equipment measurement, if known from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
+│  ├─ Documented Annual Cooking Activity in the Tested Duty Unit, if known from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
+│  ├─ Documented Proposed Induction kWh per Identical Tested Duty Unit, if known from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
 │  ├─ Existing cooking-duty definition (User)
 │  └─ Proposed duty-equivalence confirmation (User)
 └─ Applicable Resource Rates
@@ -46,5 +46,5 @@ Annual Operational Savings
    │  ├─ Variable Delivery Charges (Bill)
    │  ├─ Variable Procurement Charges (Bill)
    │  └─ Avoidable Gas Rate (Derived)
-   └─ Documented Current Fuel Price (User)
+   └─ Current Fuel Price from Receipt, Contract, or Operating Record (Project Document)
 ```

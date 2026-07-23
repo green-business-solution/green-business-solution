@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://greenbusinesssolution.org/schemas/operational-savings/user-input-realism-v1.json",
+  "$id": "https://greenbusinesssolution.org/schemas/operational-savings/user-input-realism-v2.json",
   "title": "Operational Savings Visible User Input Realism Contract",
   "type": "object",
   "additionalProperties": false,
@@ -12,7 +12,7 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "operational-savings/user-input-realism-v1"
+      "const": "operational-savings/user-input-realism-v2"
     },
     "generated_from": {
       "const": "operational-savings Information Card presentation trees"
@@ -36,12 +36,11 @@
         "category_id",
         "tree_path",
         "visible_label",
-        "knowledge_likelihood",
-        "recognizable_to_ordinary_user",
-        "reason_the_user_would_have_it",
-        "value_importance",
-        "alternate_source",
-        "missing_value_behavior"
+        "decision",
+        "reason",
+        "fallback_process_key",
+        "selected_value_method",
+        "missing_exact_value_behavior"
       ],
       "properties": {
         "category_id": {
@@ -56,43 +55,33 @@
           "type": "string",
           "minLength": 1
         },
-        "knowledge_likelihood": {
+        "decision": {
           "enum": [
-            "LIKELY_KNOWN",
-            "MAY_KNOW",
-            "UNLIKELY_KNOWN"
-          ]
-        },
-        "recognizable_to_ordinary_user": {
-          "type": "boolean"
-        },
-        "reason_the_user_would_have_it": {
-          "type": "string",
-          "minLength": 1
-        },
-        "value_importance": {
-          "enum": [
-            "LOW",
-            "MODERATE",
-            "HIGH"
-          ]
-        },
-        "alternate_source": {
-          "enum": [
+            "USER_MEMORY",
+            "USER_RECOGNIZABLE_ACTIVITY",
             "PROFILE",
             "BILL",
             "LINKED_OPPORTUNITY",
-            "STANDARD",
             "PROJECT_DOCUMENT",
-            "CONTRACTOR_SPECIFICATION",
-            "NONE"
+            "STANDARD_BENCHMARK"
           ]
         },
-        "connected_process_key": {
+        "reason": {
           "type": "string",
+          "minLength": 1
+        },
+        "fallback_process_key": {
+          "type": [
+            "string",
+            "null"
+          ],
           "pattern": "^[a-z0-9][a-z0-9_-]*$"
         },
-        "missing_value_behavior": {
+        "selected_value_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "missing_exact_value_behavior": {
           "type": "string",
           "minLength": 1
         }

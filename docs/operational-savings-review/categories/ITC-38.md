@@ -23,15 +23,15 @@ Annual Operational Savings = In-Scope Equipment Count × Shaft Power × Operatin
 Annual Operational Savings
 ├─ Annual motor electricity reduction
 │  ├─ In-Scope Equipment Count (User)
-│  ├─ Documented Motor rated shaft power from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
-│  ├─ Documented Motor rated speed from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
-│  ├─ Documented Operating load fraction from Controls Trends or Engineering Audit (Linked Opportunity)
+│  ├─ Documented Motor rated shaft power from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
+│  ├─ Documented Motor rated speed from Submeter, Controls Trend, Audit, or Contractor Specification (Project Document)
+│  ├─ Documented Operating load fraction from Controls Trends or Engineering Audit (Project Document)
 │  ├─ Existing motor class (User)
 │  ├─ Proposed motor class (Linked Opportunity)
 │  ├─ Annual operating hours
 │  │  ├─ Recognizable Business, Shift, Seasonal, or Usage Pattern (User)
 │  │  ├─ Detailed Operating Days, Shifts, or Active Season, if known (User)
-│  │  ├─ Measured Annual Operating Hours, if known (User)
+│  │  ├─ Measured Annual Operating Hours, if known (Project Document)
 │  │  ├─ Site Location and Business Activity (Profile)
 │  │  └─ Standard 1.1 — Motor Replacement Annual Operating Hours
 │  └─ Standard 1.2 — Motor Replacement Engineering Calculation
@@ -69,9 +69,9 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 1. Map the High-Efficiency Motor Replacement inputs to the documented Motor Replacement Annual Operating Hours source fields or model inputs: Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject the High-Efficiency Motor Replacement path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
-5. Retain the Motor Replacement Annual Operating Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
+5. Retain the Motor Replacement Annual Operating Hours source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 
@@ -116,15 +116,15 @@ U.S. Department of Energy - MEASUR
 **How to Use:**
 
 1. Load the High-Efficiency Motor Replacement project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Motor Inventory and Motor Performance calculators.
-2. Run the pinned open-source Motor Inventory and Motor Performance calculators baseline and proposed cases using the category formula boundary shown in this card.
-3. Return no result when the Motor Inventory and Motor Performance calculators requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
-4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Retain the MEASUR version, Motor Inventory and Motor Performance calculators input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
+2. When an exact technical input is unavailable, use one context-matched value selected from the closest authoritative equipment or application population before running the Motor Inventory and Motor Performance calculators; the simulator does not invent that input.
+3. Run the pinned open-source Motor Inventory and Motor Performance calculators baseline and proposed cases using the category formula boundary shown in this card.
+4. Return one selected existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
+5. Retain the MEASUR version, Motor Inventory and Motor Performance calculators input object, exact and benchmark input provenance, context filters, eligible populations, selection rules, unit conversions, warnings, and baseline and proposed outputs.
 
 **Automation:**
 
 * **Selected Strategy:** Pinned local execution of the MEASUR Motor Inventory and Motor Performance calculators for High-Efficiency Motor Replacement.
-* **Automation Method:** Map reviewed project evidence into the Motor Inventory and Motor Performance calculators input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
+* **Automation Method:** Map reviewed project evidence into the Motor Inventory and Motor Performance calculators input schema, fill unresolved inputs through the single-value authoritative benchmark policy, execute the versioned local module, and preserve its warnings and native outputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

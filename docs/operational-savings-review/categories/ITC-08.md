@@ -25,19 +25,21 @@ Avoided Backup Resource = Convert to Billed Resource Units (Useful Solar Thermal
 
 ```text
 Annual Operational Savings
-├─ Annual backup-resource reduction
+├─ Annual Backup-Resource Reduction
 │  ├─ Site Location (Profile)
-│  ├─ Collector configuration
-│  │  ├─ Collector type (Linked Opportunity)
-│  │  ├─ Collector area (Linked Opportunity)
-│  │  ├─ Tilt (Linked Opportunity)
-│  │  ├─ Azimuth (Linked Opportunity)
-│  │  └─ Storage volume (Linked Opportunity)
-│  ├─ Hot-Water Load from Project Design or Measurement (Linked Opportunity)
-│  ├─ Backup resource
-│  │  ├─ Backup fuel (User)
-│  │  └─ Backup-System Nameplate or Test Information (User)
-│  └─ Standard 1.1 — Solar Thermal Production Simulation
+│  ├─ Collector and Storage Design
+│  │  ├─ Collector and Storage Requirements Prescribed by the Opportunity (Linked Opportunity)
+│  │  ├─ Collector and Storage Design from Contractor Specification, Engineering Assessment, or Proposed Construction Document (Project Document)
+│  │  └─ Standard 1.1 — Solar Water-Heating Input Benchmark
+│  ├─ Annual Hot-Water Load
+│  │  ├─ Hot-Water Load from Audit, Measurement, Engineering Assessment, or Operating Record (Project Document)
+│  │  ├─ Business Activity and Building Type (Profile)
+│  │  └─ Standard 1.1 — Solar Water-Heating Input Benchmark
+│  ├─ Backup Water-Heating System
+│  │  ├─ Backup Fuel Type (User)
+│  │  ├─ Backup Equipment Nameplate, Commissioning Record, or Engineering Assessment (Project Document)
+│  │  └─ Standard 1.1 — Solar Water-Heating Input Benchmark
+│  └─ Standard 1.2 — Solar Thermal Production Simulation
 └─ Applicable Resource Rates
    ├─ Bill-Derived Electricity Rate
    │  ├─ Electricity Use (Bill)
@@ -49,10 +51,52 @@ Annual Operational Savings
    │  ├─ Variable Delivery Charges (Bill)
    │  ├─ Variable Procurement Charges (Bill)
    │  └─ Avoidable Gas Rate (Derived)
-   └─ Documented Current Fuel Price (User)
+   └─ Current Fuel Price from Receipt, Contract, or Operating Record (Project Document)
 ```
 
-**■ Standard 1.1 — Solar Thermal Production Simulation**
+**■ Standard 1.1 — Solar Water-Heating Input Benchmark**
+
+**Purpose:**
+Select one screening collector, hot-water-load, and backup-system input set when exact project documents are incomplete.
+
+**Source:**
+U.S. DOE, U.S. EPA, and National Laboratory of the Rockies benchmark sources
+
+**Commercial Reference Buildings:**
+[https://www.energy.gov/cmei/buildings/commercial-reference-buildings](https://www.energy.gov/cmei/buildings/commercial-reference-buildings)
+
+**Lookup Inputs:**
+
+* Business activity and building type
+* Building area and operating schedule
+* Bill water-heating resource use
+* Collector requirements from the linked opportunity
+* Available collector, load, and backup-system Project Documents
+
+**Value Needed:**
+
+* One context-matched collector and storage configuration
+* One annual hot-water load
+* One backup-system efficiency
+
+**How to Use:**
+
+1. Map the Solar Water Heating inputs to the documented Solar Water-Heating Input Benchmark source fields or model inputs: Business activity and building type; Building area and operating schedule; Bill water-heating resource use; Collector requirements from the linked opportunity; Available collector, load, and backup-system Project Documents.
+2. Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected context-matched collector and storage configuration; One annual hot-water load; One backup-system efficiency.
+5. Retain the Solar Water-Heating Input Benchmark source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
+
+**Automation:**
+
+* **Selected Strategy:** Category-specific deterministic selection from the closest authoritative compatible population.
+* **Automation Method:** Apply the category's reviewed context fields and source-version filters, use an official recommended or typical value when available, otherwise use a valid weighted median or ordinary median, and retain the selected value plus population provenance.
+* **Difficulty:** Medium
+
+**Validation:**
+The DOE reference-building source supports context matching, while SAM supplies the simulation method only after inputs are selected. A retained category benchmark fixture is not yet present, so the selection adapter remains implementation-pending and must not be attributed to SAM.
+
+**■ Standard 1.2 — Solar Thermal Production Simulation**
 
 **Purpose:**
 Use National Laboratory of the Rockies - System Advisor Model to resolve annual useful solar thermal output and displaced backup resource, with simulation inputs, units, and source version from the listed category inputs.
@@ -68,16 +112,11 @@ National Laboratory of the Rockies - System Advisor Model
 
 **Lookup Inputs:**
 
-* Collector type
-* Collector area
-* Tilt
-* Azimuth
-* Storage volume
-* Hot-Water Load from Project Design or Measurement
-* Backup fuel
-* Backup-System Nameplate or Test Information
-* Documented current project fuel price for the matching fuel and geography
-* Site Location
+* Site location
+* Collector and storage design from the linked opportunity or a Project Document
+* Annual hot-water load from a Project Document or the connected context benchmark
+* Backup fuel type
+* Backup-system efficiency from a Project Document or the connected context benchmark
 
 **Value Needed:**
 
@@ -85,11 +124,11 @@ National Laboratory of the Rockies - System Advisor Model
 
 **How to Use:**
 
-1. Map the Solar Water Heating inputs to the documented Solar Thermal Production Simulation source fields or model inputs: Collector type; Collector area; Tilt; Azimuth; Storage volume; Hot-Water Load from Project Design or Measurement; Backup fuel; Backup-System Nameplate or Test Information; Documented current project fuel price for the matching fuel and geography; Site Location.
-2. Validate the project configuration, select the site weather data, run the solar water-heating model, cap useful output at the delivered load, and convert displaced backup energy to its billed unit.
-3. Reject the Solar Water Heating path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return annual useful solar thermal output and displaced backup resource, with simulation inputs, units, and source version.
-5. Retain the Solar Thermal Production Simulation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+1. Resolve the collector and storage design from the linked opportunity when it prescribes the system, or from a contractor specification, proposed construction document, or engineering assessment.
+2. Resolve annual hot-water load from an audit, measurement, operating record, or the connected context benchmark.
+3. Resolve backup fuel and efficiency from the existing equipment nameplate, commissioning record, or the connected context benchmark.
+4. Run the pinned SAM solar-water-heating module to calculate useful thermal production and displaced backup-resource quantity.
+5. Apply the Bill-derived utility rate or documented non-utility fuel price only after SAM returns the displaced physical resource quantity, and retain all inputs, versions, and warnings.
 
 **Automation:**
 

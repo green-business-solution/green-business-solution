@@ -14,7 +14,13 @@ const SCRIPT_ROOT = fileURLToPath(new URL("..", import.meta.url));
 const CATEGORY_HEADING = /^### (ITC-\d{2}) - (.+)$/gm;
 const BRANCH_HEADING = /^### (BR-[A-Z0-9-]+) - (.+)$/gm;
 const STANDARD_HEADING = /^### ■ (STD-[A-Z0-9-]+) - (.+)$/gm;
-const ALLOWED_LEAF_LABELS = ["(User)", "(Profile)", "(Bill)", "(Standard)"];
+const ALLOWED_LEAF_LABELS = [
+  "(User)",
+  "(Profile)",
+  "(Bill)",
+  "(Project Document)",
+  "(Standard)"
+];
 const INTERMEDIATE_TAG = /\{\{intermediate:\s*([^}]+)\}\}/;
 const ALLOWED_RESOURCES = new Set(["electricity", "gas", "water-sewer", "liquid-fuel", "vehicle-fuel", "none"]);
 const USER_INPUT_TAG = /\{\{input:\s*(required|conditional|optional)\}\}/g;
@@ -55,14 +61,14 @@ const RESOLUTION_CONTRACT_FIELDS = [
   "**Resolver Type:**",
   "**Supported Scenarios:**",
   "**Scenario Output Behavior:**",
-  "**Low/Base/High Rule:**",
+  "**Selected-Value Rule:**",
   "**Uncertainty Rule:**",
   "**Exact Override:**",
   "**Source Version:**",
   "**Selected Class or Candidate Set:**",
   "**Assumptions:**",
   "**Editable:**",
-  "**No-Estimate Rule:**"
+  "**Missing-Exact-Value Rule:**"
 ];
 const AUTOMATION_FIELDS = [
   "**Selected Strategy:**",
@@ -422,7 +428,7 @@ export function buildOperationalSavingsReview(sources) {
   validateUsageDeclarations(standards, standardUsage, categoryById, errors);
 
   const userInputRealismContract = {
-    schema_version: "operational-savings/user-input-realism-v1",
+    schema_version: "operational-savings/user-input-realism-v2",
     generated_from: "operational-savings Information Card presentation trees",
     user_leaf_count: categoryReviews.reduce(
       (sum, category) => sum + category.userInputRealism.length,
@@ -741,8 +747,8 @@ function validateConditionalGates(tree, ownerId, contract, errors) {
     if (!Array.isArray(gate.resolves_terms) || gate.resolves_terms.length === 0) {
       errors.push(`${ownerId} Conditional Calculation Gate ${node} resolves no formula terms`);
     }
-    if (typeof gate.otherwise_no_estimate !== "boolean") {
-      errors.push(`${ownerId} Conditional Calculation Gate ${node} lacks otherwise_no_estimate`);
+    if (gate.otherwise_use_single_value_fallback !== true) {
+      errors.push(`${ownerId} Conditional Calculation Gate ${node} lacks otherwise_use_single_value_fallback`);
     }
     if (typeof gate.future_verified_standard_could_remove !== "boolean") {
       errors.push(`${ownerId} Conditional Calculation Gate ${node} lacks future Standard-removal metadata`);
@@ -1077,7 +1083,7 @@ function validateEvidenceManifest(standards, standardById, manifest, evidenceByI
     "supported_scenarios",
     "required_lookup_inputs",
     "extraction_or_calculation_method",
-    "low_base_high_basis",
+    "selected_value_basis",
     "uncertainty_basis",
     "fixture_or_test_reference",
     "access_limitations",
@@ -1206,7 +1212,7 @@ function validateEvidenceManifest(standards, standardById, manifest, evidenceByI
       errors.push(`${record.id} proposed-product evidence is incorrectly used as an existing baseline`);
     }
     if (
-      claimsEnabledPercentile(`${record.extraction_or_calculation_method}\n${record.low_base_high_basis}`) &&
+      claimsEnabledPercentile(`${record.extraction_or_calculation_method}\n${record.selected_value_basis}`) &&
       !hasPopulationEvidence(record)
     ) {
       errors.push(`${record.id} enables a percentile without eligible-population filters, sample size, and a fixture`);
@@ -1383,6 +1389,11 @@ function validateCategoryContracts(categories, contractById, sources, evidenceBy
   const allowedBillFields = new Set(sources.billFieldDictionary.map((field) => field.id));
   const categoryById = new Map(categories.map((category) => [category.id, category]));
 
+  if (sources.categoryContracts.schema_version !== "2.1.0") {
+    errors.push(
+      `category semantic contract has unsupported schema version ${sources.categoryContracts.schema_version}`
+    );
+  }
   if (contractById.size !== categories.length) {
     errors.push(`category semantic contract has ${contractById.size} records; expected ${categories.length}`);
   }
@@ -1400,6 +1411,12 @@ function validateCategoryContracts(categories, contractById, sources, evidenceBy
     }
     if (!String(contract.manual_review_verdict || "").trim()) {
       errors.push(`${category.id} semantic contract lacks a manual review verdict`);
+    }
+    if (
+      !String(contract.default_path?.selected_value_calculation || "").trim() ||
+      "low_base_high_calculation" in (contract.default_path || {})
+    ) {
+      errors.push(`${category.id} default path lacks a single selected-value calculation`);
     }
     const termNames = new Set();
     for (const group of contract.formula_terms || []) {
@@ -1439,6 +1456,17 @@ function validateCategoryContracts(categories, contractById, sources, evidenceBy
       }
       if (!String(group.formula_use || "").trim() || /\bunused\b/i.test(group.formula_use || "")) {
         errors.push(`${category.id} formula term ${group.name} is not used by the formula`);
+      }
+      if (
+        group.missing_data_behavior !== "RETURN_ZERO" &&
+        !/SINGLE_VALUE_BY_FALLBACK_POLICY/.test(group.missing_data_behavior || "")
+      ) {
+        errors.push(
+          `${category.id} formula term ${group.name} lacks single-value missing-data behavior`
+        );
+      }
+      if (category.id !== "ITC-15" && !String(group.fallback_path || "").trim()) {
+        errors.push(`${category.id} formula term ${group.name} lacks a fallback path`);
       }
       for (const exactPath of group.exact_paths || []) {
         for (const match of exactPath.matchAll(/unit_conversion:([a-z0-9-]+)/g)) {
@@ -1716,7 +1744,7 @@ function hasPopulationEvidence(record) {
     record.exact_field_table_page_equation_or_function,
     record.required_lookup_inputs?.join(" "),
     record.extraction_or_calculation_method,
-    record.low_base_high_basis
+    record.selected_value_basis
   ].join(" ");
   return /population/i.test(text) &&
     /filter/i.test(text) &&
@@ -1962,7 +1990,11 @@ function parseScenarioList(value) {
 function traceStandardInputs(category, standard, resolutionIndex, errors) {
   const tracedInputs = standard.lookupInputs.map((input) => {
     const resolutions = resolutionIndex.get(input.key) || [];
-    if (resolutions.length === 0 && !input.conditional) {
+    if (
+      resolutions.length === 0 &&
+      !input.conditional &&
+      standard.id !== "STD-CONTEXT-BENCHMARKS"
+    ) {
       errors.push(`${category.id} has untraceable Standard Lookup Input ${standard.id}:${input.key}`);
     }
     return { ...input, resolutions };
@@ -2050,7 +2082,7 @@ function validateInformationCardSchema(schema, errors) {
 function validateUserInputRealismContract(contract, schema, categories, errors) {
   if (
     schema.$id !==
-      "https://greenbusinesssolution.org/schemas/operational-savings/user-input-realism-v1.json" ||
+      "https://greenbusinesssolution.org/schemas/operational-savings/user-input-realism-v2.json" ||
     schema.additionalProperties !== false ||
     schema.$defs?.userInput?.additionalProperties !== false
   ) {
@@ -2083,7 +2115,7 @@ function validateUserInputRealismContract(contract, schema, categories, errors) 
         .filter((item) => !item.processKey)
         .map((item) =>
           item.text.replace(
-            /\s+\((?:User|Profile|Bill|Linked Opportunity|Derived)\)$/,
+            /\s+\((?:User|Profile|Bill|Linked Opportunity|Project Document|Derived)\)$/,
             ""
           )
         )
@@ -2113,33 +2145,40 @@ function validateUserInputRealismContract(contract, schema, categories, errors) 
         errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} has unsupported field ${field}`);
       }
     }
+    if (!["USER_MEMORY", "USER_RECOGNIZABLE_ACTIVITY"].includes(entry.decision)) {
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} has an invalid explicit User decision`);
+    }
     if (
-      !["LIKELY_KNOWN", "MAY_KNOW", "UNLIKELY_KNOWN"].includes(
-        entry.knowledge_likelihood
+      /business representative can ordinarily describe|recognizable selector/i.test(
+        entry.reason || ""
+      ) ||
+      !String(entry.reason || "").includes(
+        categories.find((category) => category.id === entry.category_id)
+          ?.informationCard.title || "\u0000"
       )
     ) {
-      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} has invalid knowledge likelihood`);
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} lacks a category-specific reviewed reason`);
     }
     if (
-      entry.knowledge_likelihood === "MAY_KNOW" &&
-      entry.alternate_source === "NONE"
-    ) {
-      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} lacks an alternate resolution source`);
-    }
-    if (
-      entry.knowledge_likelihood === "UNLIKELY_KNOWN" &&
-      !PROJECT_DOCUMENT_INPUT_PATTERN.test(entry.visible_label)
-    ) {
-      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} exposes an unlikely ordinary-user value`);
-    }
-    if (entry.recognizable_to_ordinary_user !== true) {
-      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} is not recognizable`);
-    }
-    if (
-      entry.connected_process_key &&
-      !processKeysByCategory.get(entry.category_id)?.has(entry.connected_process_key)
+      entry.fallback_process_key &&
+      !processKeysByCategory.get(entry.category_id)?.has(entry.fallback_process_key)
     ) {
       errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} references an unknown process`);
+    }
+    if (!String(entry.selected_value_method || "").trim()) {
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} lacks a selected-value method`);
+    }
+    if (
+      !String(entry.missing_exact_value_behavior || "").trim() ||
+      /(?:return|produce|show)\s+(?:a\s+)?(?:range|no estimate)/i.test(
+        entry.missing_exact_value_behavior || ""
+      ) ||
+      (
+        /use zero as a missing/i.test(entry.missing_exact_value_behavior || "") &&
+        !/do not use zero as a missing/i.test(entry.missing_exact_value_behavior || "")
+      )
+    ) {
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} has invalid missing-exact-value behavior`);
     }
   }
 
@@ -2150,9 +2189,6 @@ function validateUserInputRealismContract(contract, schema, categories, errors) 
     if (!expectedKeys.has(key)) errors.push(`User-input realism contract has stale entry ${key.replace("\u0000", " ")}`);
   }
 }
-
-const PROJECT_DOCUMENT_INPUT_PATTERN =
-  /(?:nameplate|measurement|measured|documented|uploaded|audit|commissioning|controls trend|operating record|manufacturer|label|contractor)/i;
 
 const PROCESS_SOURCE_NAME_PATTERNS = {
   "STD-COMSTOCK-ANNUAL-DELTA": /ComStock|National Laboratory of the Rockies/i,
@@ -2170,7 +2206,8 @@ const PROCESS_SOURCE_NAME_PATTERNS = {
   "STD-WATERSENSE-LANDSCAPE": /WaterSense|U\.S\. Environmental Protection Agency/i,
   "STD-WATERSENSE-CI-OPERATIONS": /WaterSense|U\.S\. Environmental Protection Agency/i,
   "STD-FEMP-EXTERIOR-LIGHTING": /FEMP|DesignLights Consortium/i,
-  "STD-OPERATING-SCHEDULE": /Commercial Reference|Naval Observatory|U\.S\. Department of Energy/i
+  "STD-OPERATING-SCHEDULE": /Commercial Reference|Naval Observatory|U\.S\. Department of Energy/i,
+  "STD-CONTEXT-BENCHMARKS": /U\.S\. DOE|U\.S\. EPA|National Laboratory of the Rockies|Lighting Market Characterization|Commercial Reference|ComStock|EVI-Pro|Fleet DNA|WaterSense|REopt|emergency-generator/i
 };
 
 const SIMULATOR_STANDARD_IDS = new Set([
@@ -2179,6 +2216,29 @@ const SIMULATOR_STANDARD_IDS = new Set([
   "STD-WIND-SAM",
   "STD-REOPT-LOCAL-DISPATCH"
 ]);
+const REQUIRED_SINGLE_VALUE_FALLBACK_ORDER = [
+  "EXACT_MEASURED_OR_DOCUMENTED",
+  "EXACT_PRODUCT_OR_PROJECT_SPECIFICATION",
+  "EXACT_AUTHORITATIVE_DATABASE_LOOKUP",
+  "CONTEXT_MATCHED_AUTHORITATIVE_BENCHMARK",
+  "DETERMINISTIC_RETROFI_BENCHMARK"
+];
+const REQUIRED_SELECTED_VALUE_METADATA = [
+  "selected_value",
+  "unit",
+  "source",
+  "source_version",
+  "context_filters",
+  "eligible_population",
+  "population_size",
+  "selection_rule",
+  "fallback_level",
+  "value_provenance"
+];
+const PROJECT_DOCUMENT_TERMS =
+  /(?:nameplate|product label|measurement|measured input|site study|energy audit|water audit|engineering assessment|controls trend|commissioning record|maintenance plan|manufacturer document|contractor quote|contractor specification|construction document|uploaded operating record)/i;
+const TECHNICAL_USAGE_TERMS =
+  /(?:flushes per day|uses per day per fixture|minutes per use|load-bin fraction|probability distribution|exact standby demand|technical annual usage|annual test fuel per unit|annual standby input per unit)/i;
 
 function validateInformationCardProjection(
   card,
@@ -2286,6 +2346,119 @@ function validateInformationCardProjection(
     if (!String(process.validation || "").trim()) {
       errors.push(`${category.id} Information Card process ${process.name} has no Validation`);
     }
+    const bindingInputs = (process.inputBindings || []).map(
+      (binding) => binding.lookupInput
+    );
+    if (
+      bindingInputs.length !== process.lookupInputs.length ||
+      new Set(bindingInputs).size !== bindingInputs.length
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} input bindings do not map one-to-one to Lookup Inputs`
+      );
+    }
+    for (const lookupInput of process.lookupInputs || []) {
+      const bindings = (process.inputBindings || []).filter(
+        (binding) => binding.lookupInput === lookupInput
+      );
+      if (bindings.length !== 1) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} omits or duplicates Lookup Input ${lookupInput}`
+        );
+      } else if (
+        !String(bindings[0].use || "").trim() ||
+        !normalizeText(bindings[0].use).includes(normalizeText(lookupInput))
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} does not document how Lookup Input ${lookupInput} is used`
+        );
+      }
+    }
+    for (const bindingInput of bindingInputs) {
+      if (!process.lookupInputs.includes(bindingInput)) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} contains an input binding it does not use: ${bindingInput}`
+        );
+      }
+    }
+    const requiredCategoryLookupInputs =
+      category.id === "ITC-16" && process.key === "reopt_local_dispatch"
+        ? [
+            "Controllable-load definition",
+            "Maximum shed",
+            "Event-availability schedule",
+            "Maximum event duration",
+            "Rebound or recovery constraint",
+            "Timestamped interval utility data",
+            "Authoritative tariff mapping"
+          ]
+        : category.id === "ITC-23" && process.key === "reopt_local_dispatch"
+          ? ["Terminal state-of-charge constraint"]
+          : [];
+    for (const requiredInput of requiredCategoryLookupInputs) {
+      if (
+        !process.lookupInputs.some((lookupInput) =>
+          normalizeText(lookupInput).includes(normalizeText(requiredInput))
+        )
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} omits required technical tree input ${requiredInput}`
+        );
+      }
+    }
+    if (
+      process.selectionPolicy?.outputCardinality !== "ONE_SELECTED_VALUE" ||
+      JSON.stringify(process.selectionPolicy?.fallbackOrder) !==
+        JSON.stringify(REQUIRED_SINGLE_VALUE_FALLBACK_ORDER) ||
+      process.selectionPolicy?.multipleRecordRule !==
+        "OFFICIAL_RECOMMENDED_OR_TYPICAL_THEN_WEIGHTED_MEDIAN_THEN_MEDIAN"
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} lacks the required single-value fallback policy`
+      );
+    }
+    if (
+      JSON.stringify([...(process.selectionPolicy?.retainedMetadata || [])].sort()) !==
+      JSON.stringify([...REQUIRED_SELECTED_VALUE_METADATA].sort())
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} does not retain the complete selected-value trace`
+      );
+    }
+    if (
+      /^requirement-/.test(process.key) &&
+      !/official recommended or typical[\s\S]*weighted median[\s\S]*ordinary median/i.test(
+        process.selectionPolicy?.selectedValueMethod || ""
+      )
+    ) {
+      errors.push(
+        `${category.id} requirements-based process ${process.name} lacks a deterministic selected-value rule`
+      );
+    }
+    const visibleProcessText = [
+      process.name,
+      process.purpose,
+      ...(process.lookupInputs || []),
+      ...(process.valueNeeded || []),
+      ...(process.howToUse || []),
+      process.automation?.selectedStrategy,
+      process.automation?.automationMethod,
+      process.validation
+    ].join("\n");
+    if (
+      /(?:low\s*\/\s*base\s*\/\s*high|low,\s*base,\s*and\s*high|low,\s*median,\s*and\s*high|return (?:a )?(?:visible )?range|range output)/i.test(
+        visibleProcessText
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} exposes a range where one selected value is required`
+      );
+    }
+    if (/\breturn no estimate\b|\bno estimate until\b/i.test(visibleProcessText)) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} removes the estimate when exact data is unavailable`
+      );
+    }
     if (
       ![
         "EXECUTABLE_PROOF_PRESENT",
@@ -2377,6 +2550,15 @@ function validateInformationCardProjection(
       process.automation?.automationMethod
     ].join(" ");
     if (
+      category.id === "ITC-08" &&
+      process.canonicalStandardIds.includes("STD-SAM-SOLAR-THERMAL") &&
+      process.lookupInputs.some((input) => /(?:price|rate|cost)/i.test(input))
+    ) {
+      errors.push(
+        `${category.id} Information Card simulator process ${process.name} includes price before resolving the physical result`
+      );
+    }
+    if (
       process.canonicalStandardIds.some((standardId) =>
         SIMULATOR_STANDARD_IDS.has(standardId)
       ) &&
@@ -2386,6 +2568,62 @@ function validateInformationCardProjection(
     ) {
       errors.push(
         `${category.id} Information Card simulator process ${process.name} treats missing project design inputs as model outputs`
+      );
+    }
+    if (
+      ["ITC-27", "ITC-28"].includes(category.id) &&
+      process.canonicalStandardIds.includes("STD-ENERGY-STAR-PRODUCT-DATA")
+    ) {
+      if (
+        !/AC-output[\s\S]*mode-specific total loss/i.test(processInstructions) ||
+        !/DC-output[\s\S]*loading-adjusted efficiency/i.test(processInstructions) ||
+        !/output power plus[\s\S]*total loss/i.test(processInstructions) ||
+        !/output power divided by[\s\S]*efficiency/i.test(processInstructions)
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} conflates AC and DC charger fields or omits an explicit normalization formula`
+        );
+      }
+    }
+    if (
+      category.id === "ITC-32" &&
+      process.key === "context_benchmarks" &&
+      !process.lookupInputs.some(
+        (input) =>
+          normalizeText(input) ===
+          normalizeText(
+            "Supported fixture type: bathroom faucet, showerhead, or pre-rinse spray valve"
+          )
+      )
+    ) {
+      errors.push(
+        `${category.id} WaterSense usage process claims a fixture type outside the supported source scope`
+      );
+    }
+    const verifiedStandardEvidence = (evidenceManifest.evidence_records || []).some(
+      (record) =>
+        process.canonicalStandardIds.includes(record.standard_id) &&
+        record.evidence_status === "VERIFIED"
+    );
+    const claimsSpecificSourceField =
+      /(?:source|dataset|table|product finder).{0,100}(?:field|column|row|assumption|equation)/i.test(
+        `${process.purpose} ${process.valueNeeded.join(" ")} ${process.validation}`
+      );
+    const disclosesPendingFieldProof =
+      /(?:not yet|pending|no retained|has not yet|have not yet|remain unverified|still absent)/i.test(
+        process.validation || ""
+      );
+    const tiesClaimToInspectedArtifact =
+      /(?:retained|inspected|fixture|documented (?:source )?schema)/i.test(
+        process.validation || ""
+      );
+    if (
+      claimsSpecificSourceField &&
+      !(verifiedStandardEvidence && tiesClaimToInspectedArtifact) &&
+      !disclosesPendingFieldProof
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} makes a source-field claim without inspected evidence or an implementation-pending limitation`
       );
     }
     if (
@@ -2459,7 +2697,7 @@ function validateInformationCardProjection(
     visibleTexts.push(node.text);
     if (node.children.length === 0 && path.length > 1) {
       if (
-        !["(User)", "(Profile)", "(Bill)", "(Linked Opportunity)", "(Derived)"].some(
+        !["(User)", "(Profile)", "(Bill)", "(Linked Opportunity)", "(Project Document)", "(Derived)"].some(
           (label) => node.text.endsWith(label)
         )
       ) {
@@ -2499,7 +2737,22 @@ function validateInformationCardProjection(
           `${category.id} Information Card assigns uploaded utility or tariff data to User: ${node.text}`
         );
       }
+      if (node.text.endsWith("(User)") && PROJECT_DOCUMENT_TERMS.test(node.text)) {
+        errors.push(
+          `${category.id} Information Card labels Project Document evidence as ordinary User input: ${node.text}`
+        );
+      }
+      if (node.text.endsWith("(User)") && TECHNICAL_USAGE_TERMS.test(node.text)) {
+        errors.push(
+          `${category.id} Information Card assigns technical usage directly to User without a benchmark resolver: ${node.text}`
+        );
+      }
       if (node.text.endsWith("(Linked Opportunity)")) {
+        if (PROJECT_DOCUMENT_TERMS.test(node.text)) {
+          errors.push(
+            `${category.id} Information Card mislabels a Project Document as Linked Opportunity: ${node.text}`
+          );
+        }
         const ancestors = path.slice(0, -1);
         const explicitOpportunityBranch = [...ancestors]
           .reverse()
@@ -2761,7 +3014,7 @@ function renderReviewIndex(categories) {
 function deriveReviewDecisions(category, contract) {
   if (category.id === "ITC-02") {
     return [
-      "Decide whether RetroFi should require documented existing fixture watts until a verified legacy exterior-lighting baseline source is added."
+      "Approve the DOE application-matched exterior-lighting wattage benchmark for cases without documented existing fixture watts."
     ];
   }
   if (category.id === "ITC-29") {
@@ -2776,10 +3029,9 @@ function deriveReviewDecisions(category, contract) {
   }
   const gate = contract?.default_path?.unresolved_gate;
   if (gate) {
-    const action = category.defaultEstimate === "UNAVAILABLE"
-      ? `keep ${category.title} at no estimate`
-      : `keep ${category.title} in Draft`;
-    return [`Decide whether RetroFi should ${action} until this category-specific gate is resolved: ${gate}`];
+    return [
+      `Keep ${category.title} in Draft while the category-specific execution gate is resolved, and continue to return one value through the documented fallback policy: ${gate}`
+    ];
   }
   const scenario = contract?.default_path?.scenario || "documented scenario";
   return [`Approve the ${scenario} boundary for ${category.title} and its documented exclusions.`];
@@ -2985,6 +3237,16 @@ function buildReport(categories, branches, standards, taxonomy) {
   const userInputRealismEntries = categories.flatMap(
     (category) => category.userInputRealism || []
   );
+  const terminalLeavesBySource = {};
+  for (const category of categories) {
+    walkPresentationTree(category.informationCard.tree, (treeNode) => {
+      if (treeNode.processKey || treeNode.children.length > 0) return;
+      const source = treeNode.text.match(
+        /\((User|Profile|Bill|Linked Opportunity|Project Document|Derived)\)$/
+      )?.[1];
+      if (source) terminalLeavesBySource[source] = (terminalLeavesBySource[source] || 0) + 1;
+    });
+  }
   return {
     categoryPages: categories.length,
     categories: categories.length,
@@ -2995,16 +3257,15 @@ function buildReport(categories, branches, standards, taxonomy) {
     visibleStandardProcesses,
     sourceLinksRendered,
     visibleUserLeaves: userInputRealismEntries.length,
-    likelyKnownUserLeaves: userInputRealismEntries.filter(
-      (entry) => entry.knowledge_likelihood === "LIKELY_KNOWN"
-    ).length,
-    mayKnowUserLeaves: userInputRealismEntries.filter(
-      (entry) => entry.knowledge_likelihood === "MAY_KNOW"
-    ).length,
-    userLeavesByAlternateSource: countBy(
+    visibleProjectDocumentLeaves: terminalLeavesBySource["Project Document"] || 0,
+    visibleLinkedOpportunityLeaves: terminalLeavesBySource["Linked Opportunity"] || 0,
+    userLeavesByDecision: countBy(
       userInputRealismEntries,
-      (entry) => entry.alternate_source
+      (entry) => entry.decision
     ),
+    userLeavesWithStandardFallback: userInputRealismEntries.filter(
+      (entry) => entry.fallback_process_key
+    ).length,
     maxAtomicUserInputs: Math.max(...userCounts),
     requiredUserInputs: requiredCounts.reduce((sum, value) => sum + value, 0),
     conditionalCalculationGates: categories.reduce(

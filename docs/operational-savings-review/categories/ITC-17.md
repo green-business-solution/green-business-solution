@@ -39,8 +39,8 @@ Annual Operational Savings
    ├─ Timestamped Interval Utility Data (Bill)
    ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
    ├─ Rate Schedule and Customer Class (Bill)
-   ├─ Authoritative Tariff Mapping Is Not Yet Verified (Derived)
-   ├─ No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)
+   ├─ Published Utility Tariff and Effective-Date Mapping (Derived)
+   ├─ One Selected Interval Tariff Value (Derived)
    └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
 ```
 
@@ -76,9 +76,9 @@ National Laboratory of the Rockies - PVWatts V8
 
 1. Map the Solar Photovoltaic Generation inputs to the documented PVWatts Solar Production Calculation source fields or model inputs: DC capacity; Module Type; Array type; System losses; Tilt; Azimuth; Site Location.
 2. Validate site coordinates and array design, run the documented V8 field contract, check warnings, and return interval or annual AC generation with source provenance.
-3. Reject the Solar Photovoltaic Generation path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return interval or annual AC electricity generation, with model inputs, warnings, units, and source version.
-5. Retain the PVWatts Solar Production Calculation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected interval or annual AC electricity generation, with model inputs, warnings, units, and source version.
+5. Retain the PVWatts Solar Production Calculation source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 

@@ -83,9 +83,9 @@ National Laboratory of the Rockies - ComStock 2025 Release 3
 
 1. Map the Commercial Building Upgrade Resource Savings inputs to the documented Commercial Building Upgrade Resource Model source fields or model inputs: Existing Building Condition; Proposed Upgrade Option; Building Type; Site State or County; Building Area, approximate unless subsequently verified.
 2. Download the documented ComStock release, apply the reviewed building and measure filters, and calculate the eligible weighted resource delta locally.
-3. Reject the Commercial Building Upgrade Resource Savings path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return annual electricity and fuel-use change per square foot for the approved measure and building segment, with source version and units.
-5. Retain the Commercial Building Upgrade Resource Model source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected annual electricity and fuel-use change per square foot for the approved measure and building segment, with source version and units.
+5. Retain the Commercial Building Upgrade Resource Model source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 

@@ -25,16 +25,16 @@ Input kW = Hydraulic Power kW / (Pump Efficiency × Motor Efficiency)
 Annual Operational Savings
 ├─ Annual pump electricity reduction
 │  ├─ In-Scope Equipment Count (User)
-│  ├─ Documented Required flow from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
-│  ├─ Documented Total dynamic head from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
-│  ├─ Existing Pump Nameplate or Test Information (User)
-│  ├─ Existing Motor Nameplate or Test Information (User)
+│  ├─ Documented Required flow from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
+│  ├─ Documented Total dynamic head from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
+│  ├─ Existing Pump Nameplate or Test Information (Project Document)
+│  ├─ Existing Motor Nameplate or Test Information (Project Document)
 │  ├─ Proposed pump efficiency (Linked Opportunity)
 │  ├─ Proposed motor efficiency (Linked Opportunity)
 │  ├─ Annual operating hours
 │  │  ├─ Recognizable Business, Shift, Seasonal, or Usage Pattern (User)
 │  │  ├─ Detailed Operating Days, Shifts, or Active Season, if known (User)
-│  │  ├─ Measured Annual Operating Hours, if known (User)
+│  │  ├─ Measured Annual Operating Hours, if known (Project Document)
 │  │  ├─ Site Location and Business Activity (Profile)
 │  │  └─ Standard 1.1 — Efficient Pump Replacement Annual Operating Hours
 │  └─ Standard 1.2 — Efficient Pump Replacement Engineering Calculation
@@ -72,9 +72,9 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 1. Map the Efficient Pump Replacement inputs to the documented Efficient Pump Replacement Annual Operating Hours source fields or model inputs: Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject the Efficient Pump Replacement path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
-5. Retain the Efficient Pump Replacement Annual Operating Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
+5. Retain the Efficient Pump Replacement Annual Operating Hours source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 
@@ -120,15 +120,15 @@ U.S. Department of Energy - MEASUR
 **How to Use:**
 
 1. Load the Efficient Pump Replacement project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Pumping System Assessment Tool.
-2. Run the pinned open-source Pumping System Assessment Tool baseline and proposed cases using the category formula boundary shown in this card.
-3. Return no result when the Pumping System Assessment Tool requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
-4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Retain the MEASUR version, Pumping System Assessment Tool input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
+2. When an exact technical input is unavailable, use one context-matched value selected from the closest authoritative equipment or application population before running the Pumping System Assessment Tool; the simulator does not invent that input.
+3. Run the pinned open-source Pumping System Assessment Tool baseline and proposed cases using the category formula boundary shown in this card.
+4. Return one selected existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
+5. Retain the MEASUR version, Pumping System Assessment Tool input object, exact and benchmark input provenance, context filters, eligible populations, selection rules, unit conversions, warnings, and baseline and proposed outputs.
 
 **Automation:**
 
 * **Selected Strategy:** Pinned local execution of the MEASUR Pumping System Assessment Tool for Efficient Pump Replacement.
-* **Automation Method:** Map reviewed project evidence into the Pumping System Assessment Tool input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
+* **Automation Method:** Map reviewed project evidence into the Pumping System Assessment Tool input schema, fill unresolved inputs through the single-value authoritative benchmark policy, execute the versioned local module, and preserve its warnings and native outputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

@@ -1,0 +1,157 @@
+{
+  "fixture_type": "reviewed_source_fixture",
+  "fixture_schema_version": "1.0.0",
+  "reviewed_on": "2026-07-23",
+  "retrieved_on": "2026-07-23",
+  "source_title": "ENERGY STAR Certified Electric Vehicle Chargers - AC and DC Native Fields",
+  "source_urls": [
+    "https://www.energystar.gov/sites/default/files/asset/document/ENERGY%20STAR%20Version%201.2%20EVSE%20Final%20Specification.pdf",
+    "https://www.energystar.gov/productfinder/product/certified-evse-ac-output/details/2440463/export/pdf/download",
+    "https://www.energystar.gov/productfinder/product/certified-evse-dc-output/details/2665585/export/pdf/download"
+  ],
+  "raw_artifacts": [
+    {
+      "artifact_identifier": "energy-star-evse-v1-2-final-specification",
+      "source_url": "https://www.energystar.gov/sites/default/files/asset/document/ENERGY%20STAR%20Version%201.2%20EVSE%20Final%20Specification.pdf",
+      "source_version": "Version 1.2",
+      "exact_artifact": "ENERGY STAR EVSE Version 1.2 test and reporting requirements",
+      "source_checksum": "sha256:a8e5da603d0f4d99f75dbb56b1ef8a050646982e9c0b850152cdaef7a4c8cf2d"
+    },
+    {
+      "artifact_identifier": "energy-star-ac-evse-product-2440463",
+      "source_url": "https://www.energystar.gov/productfinder/product/certified-evse-ac-output/details/2440463/export/pdf/download",
+      "source_version": "AC Version 1.1 certified product export retrieved 2026-07-23",
+      "exact_artifact": "ENERGY STAR product 2440463 certified AC-output field export",
+      "source_checksum": "sha256:0993e2fdf6616abb74defc9cb705c949db11b9769df8c3b167df56a1a486deee"
+    },
+    {
+      "artifact_identifier": "energy-star-dc-evse-product-2665585",
+      "source_url": "https://www.energystar.gov/productfinder/product/certified-evse-dc-output/details/2665585/export/pdf/download",
+      "source_version": "DC Version 1.2 certified product export retrieved 2026-07-23",
+      "exact_artifact": "ENERGY STAR product 2665585 certified DC-output field export",
+      "source_checksum": "sha256:6b14fa2e7cc33b3571cf0b6cc46f1dcebe1833d33c7ba8c57027183d80a9bc27"
+    }
+  ],
+  "coverage": {
+    "summary": "Native certified AC-output and DC-output charger fields required to keep charger-type calculations separate.",
+    "source_roles": [
+      "proposed_or_qualified_product"
+    ],
+    "scenarios": [
+      "exact-proposed-model",
+      "linked-opportunity-exact-product",
+      "linked-opportunity-product-class"
+    ]
+  },
+  "fields": [
+    {
+      "field": "ac.maximum_output_power",
+      "unit_id": "kilowatt",
+      "role": "AC active charging capacity",
+      "source_location": "ENERGY STAR AC product 2440463 field Maximum Output Power"
+    },
+    {
+      "field": "ac.operation_mode_total_loss",
+      "unit_id": "watt_ac",
+      "role": "AC mode-specific charging loss",
+      "source_location": "ENERGY STAR AC product 2440463 operation-mode total-loss fields"
+    },
+    {
+      "field": "ac.idle_mode_input_power",
+      "unit_id": "watt_ac",
+      "role": "AC idle input",
+      "source_location": "ENERGY STAR AC product 2440463 field Idle Mode Input Power"
+    },
+    {
+      "field": "ac.no_vehicle_mode_input_power",
+      "unit_id": "watt_ac",
+      "role": "AC no-vehicle input",
+      "source_location": "ENERGY STAR AC product 2440463 field No Vehicle Mode Input Power"
+    },
+    {
+      "field": "dc.maximum_output_power",
+      "unit_id": "kilowatt",
+      "role": "DC active charging capacity",
+      "source_location": "ENERGY STAR DC product 2665585 field Maximum Output Power"
+    },
+    {
+      "field": "dc.idle_mode_input_power_ac_input",
+      "unit_id": "watt_ac",
+      "role": "DC idle AC input",
+      "source_location": "ENERGY STAR DC product 2665585 field Idle Mode Input Power AC-Input"
+    },
+    {
+      "field": "dc.no_vehicle_mode_input_power_ac_input",
+      "unit_id": "watt_ac",
+      "role": "DC no-vehicle AC input",
+      "source_location": "ENERGY STAR DC product 2665585 field No Vehicle Mode Input Power AC-Input"
+    },
+    {
+      "field": "dc.average_loading_adjusted_efficiency_ac_input",
+      "unit_id": "percent",
+      "role": "DC active input normalization",
+      "source_location": "ENERGY STAR DC product 2665585 field Average Loading-Adjusted Efficiency AC-Input"
+    }
+  ],
+  "tables": [],
+  "values": [
+    {
+      "field": "ac.product_2440463.maximum_output_power",
+      "unit_id": "kilowatt",
+      "role": "inspected AC field example",
+      "source_location": "ENERGY STAR AC product 2440463",
+      "value": 11.52
+    },
+    {
+      "field": "ac.product_2440463.full_current_total_loss",
+      "unit_id": "watt_ac",
+      "role": "inspected AC field example",
+      "source_location": "ENERGY STAR AC product 2440463",
+      "value": 10
+    },
+    {
+      "field": "dc.product_2665585.maximum_output_power",
+      "unit_id": "kilowatt",
+      "role": "inspected DC field example",
+      "source_location": "ENERGY STAR DC product 2665585",
+      "value": 100
+    },
+    {
+      "field": "dc.product_2665585.average_loading_adjusted_efficiency_native",
+      "unit_id": "percent",
+      "role": "inspected DC native field example",
+      "source_location": "ENERGY STAR DC product 2665585",
+      "value": 0.95
+    }
+  ],
+  "methods": [
+    {
+      "field": "ac_input_power_from_output_and_total_loss",
+      "unit_id": "watt_ac",
+      "role": "AC normalization formula",
+      "source_location": "RetroFi normalization over native ENERGY STAR AC output-power and operation-mode total-loss fields"
+    },
+    {
+      "field": "dc_input_power_from_output_and_loading_adjusted_efficiency",
+      "unit_id": "watt_ac",
+      "role": "DC normalization formula",
+      "source_location": "RetroFi normalization over native ENERGY STAR DC output-power and loading-adjusted-efficiency fields"
+    }
+  ],
+  "supported_uses": [
+    "Keep AC and DC certified field families separate",
+    "Normalize AC charging input from output power plus the applicable mode-specific total loss",
+    "Normalize DC charging input from output power divided by loading-adjusted efficiency",
+    "Add native idle or no-vehicle input only for the applicable non-charging duration"
+  ],
+  "unsupported_inferences": [
+    "Charging utilization or operating schedule",
+    "Existing installed-equipment baseline",
+    "Interchangeability of AC total-loss fields and DC loading-adjusted efficiency",
+    "Arbitrary selection of a future contractor product"
+  ],
+  "provenance_notes": [
+    "The product exports are retained as checksum-addressed evidence metadata and preserve the source's native field labels.",
+    "The native DC efficiency example is recorded exactly as displayed by the source and is not silently reinterpreted in this fixture."
+  ]
+}

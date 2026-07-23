@@ -92,7 +92,9 @@
         "howToUse",
         "automation",
         "validation",
-        "evidenceState"
+        "evidenceState",
+        "inputBindings",
+        "selectionPolicy"
       ],
       "properties": {
         "key": {
@@ -195,6 +197,98 @@
             "METHOD_VERIFIED_IMPLEMENTATION_PENDING",
             "SOURCE_UNSUPPORTED"
           ]
+        },
+        "inputBindings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lookupInput",
+              "use"
+            ],
+            "properties": {
+              "lookupInput": {
+                "type": "string",
+                "minLength": 1
+              },
+              "use": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "selectionPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "outputCardinality",
+            "fallbackOrder",
+            "multipleRecordRule",
+            "selectedValueMethod",
+            "missingExactValueBehavior",
+            "retainedMetadata"
+          ],
+          "properties": {
+            "outputCardinality": {
+              "const": "ONE_SELECTED_VALUE"
+            },
+            "fallbackOrder": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {
+                  "const": "EXACT_MEASURED_OR_DOCUMENTED"
+                },
+                {
+                  "const": "EXACT_PRODUCT_OR_PROJECT_SPECIFICATION"
+                },
+                {
+                  "const": "EXACT_AUTHORITATIVE_DATABASE_LOOKUP"
+                },
+                {
+                  "const": "CONTEXT_MATCHED_AUTHORITATIVE_BENCHMARK"
+                },
+                {
+                  "const": "DETERMINISTIC_RETROFI_BENCHMARK"
+                }
+              ]
+            },
+            "multipleRecordRule": {
+              "const": "OFFICIAL_RECOMMENDED_OR_TYPICAL_THEN_WEIGHTED_MEDIAN_THEN_MEDIAN"
+            },
+            "selectedValueMethod": {
+              "type": "string",
+              "minLength": 1
+            },
+            "missingExactValueBehavior": {
+              "type": "string",
+              "minLength": 1
+            },
+            "retainedMetadata": {
+              "type": "array",
+              "minItems": 10,
+              "maxItems": 10,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "selected_value",
+                  "unit",
+                  "source",
+                  "source_version",
+                  "context_filters",
+                  "eligible_population",
+                  "population_size",
+                  "selection_rule",
+                  "fallback_level",
+                  "value_provenance"
+                ]
+              }
+            }
+          }
         }
       }
     }

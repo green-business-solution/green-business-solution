@@ -26,10 +26,10 @@ Blowdown Water = Evaporation Water / (Cycles Of Concentration - 1) when Drift Wa
 ```text
 Annual Operational Savings
 ├─ Annual cooling-tower water and fan-electricity reduction
-│  ├─ Documented Existing cycles of concentration from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+│  ├─ Documented Existing cycles of concentration from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
 │  ├─ Proposed cycles of concentration (Linked Opportunity)
-│  ├─ Documented Annual evaporation or equivalent heat rejection from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
-│  ├─ Documented Existing fan control profile from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+│  ├─ Documented Annual evaporation or equivalent heat rejection from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
+│  ├─ Documented Existing fan control profile from Nameplate, Measurement, Audit, or Contractor Specification (Project Document)
 │  ├─ Proposed fan control profile (Linked Opportunity)
 │  ├─ Standard 1.1 — WaterSense Commercial Operations Calculation
 │  └─ Standard 1.2 — Cooling Tower Optimization Engineering Calculation
@@ -77,9 +77,9 @@ U.S. Environmental Protection Agency - WaterSense at Work
 
 1. Map the Cooling Tower Optimization inputs to the documented WaterSense Commercial Operations Calculation source fields or model inputs: Existing cycles of concentration; Proposed cycles of concentration; Annual evaporation or equivalent heat rejection.
 2. Validate measured project inputs, apply the selected equation with explicit units and dates, reject missing physical observations, and return annual avoidable water.
-3. Reject the Cooling Tower Optimization path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
-4. Return annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates.
-5. Retain the WaterSense Commercial Operations Calculation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
+3. When an exact value is unavailable, select one context-matched authoritative benchmark and then one deterministic RetroFi benchmark if needed; do not insert an unexplained cross-category default.
+4. Return one selected annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates.
+5. Retain the WaterSense Commercial Operations Calculation source version, exact fields or model inputs, native units, eligible population, population size, selected-value rule, fallback level, selected record, and warnings.
 
 **Automation:**
 
@@ -122,15 +122,15 @@ U.S. Department of Energy - MEASUR
 **How to Use:**
 
 1. Load the Cooling Tower Optimization project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Cooling Tower Water Assessment.
-2. Run the pinned open-source Cooling Tower Water Assessment baseline and proposed cases using the category formula boundary shown in this card.
-3. Return no result when the Cooling Tower Water Assessment requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
-4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Retain the MEASUR version, Cooling Tower Water Assessment input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
+2. When an exact technical input is unavailable, use one context-matched value selected from the closest authoritative equipment or application population before running the Cooling Tower Water Assessment; the simulator does not invent that input.
+3. Run the pinned open-source Cooling Tower Water Assessment baseline and proposed cases using the category formula boundary shown in this card.
+4. Return one selected existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
+5. Retain the MEASUR version, Cooling Tower Water Assessment input object, exact and benchmark input provenance, context filters, eligible populations, selection rules, unit conversions, warnings, and baseline and proposed outputs.
 
 **Automation:**
 
 * **Selected Strategy:** Pinned local execution of the MEASUR Cooling Tower Water Assessment for Cooling Tower Optimization.
-* **Automation Method:** Map reviewed project evidence into the Cooling Tower Water Assessment input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
+* **Automation Method:** Map reviewed project evidence into the Cooling Tower Water Assessment input schema, fill unresolved inputs through the single-value authoritative benchmark policy, execute the versioned local module, and preserve its warnings and native outputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**
