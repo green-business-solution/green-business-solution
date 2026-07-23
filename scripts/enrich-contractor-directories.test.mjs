@@ -13,6 +13,7 @@ import {
 import {
   ENRICHMENT_REPORT_SCHEMA_VERSION,
   buildExactIndices,
+  forEachConcurrent,
   matchExact,
   planConsolidation,
   runContractorDirectoryConsolidation,
@@ -396,5 +397,51 @@ describe("deterministic contractor matching and consolidation", () => {
     } finally {
       await fs.rm(outputDirectory, { recursive: true, force: true });
     }
+  });
+});
+
+describe("bounded write execution", () => {
+  it("applies every value without exceeding the configured concurrency", async () => {
+    let active = 0;
+    let maximumActive = 0;
+    const completed = [];
+    const progress = vi.fn();
+
+    await forEachConcurrent({
+      concurrency: 3,
+      onProgress: progress,
+      values: Array.from({ length: 12 }, (_, index) => index),
+      worker: async (value) => {
+        active += 1;
+        maximumActive = Math.max(maximumActive, active);
+        await new Promise((resolve) => setTimeout(resolve, 2));
+        completed.push(value);
+        active -= 1;
+      },
+    });
+
+    expect(completed.sort((left, right) => left - right)).toEqual(
+      Array.from({ length: 12 }, (_, index) => index),
+    );
+    expect(maximumActive).toBe(3);
+    expect(progress).toHaveBeenLastCalledWith(12, 12);
+  });
+
+  it("stops scheduling new values after a worker failure", async () => {
+    const started = [];
+
+    await expect(
+      forEachConcurrent({
+        concurrency: 2,
+        values: Array.from({ length: 20 }, (_, index) => index),
+        worker: async (value) => {
+          started.push(value);
+          if (value === 2) throw new Error("conditional write failed");
+          await new Promise((resolve) => setTimeout(resolve, 2));
+        },
+      }),
+    ).rejects.toThrow("conditional write failed");
+
+    expect(started.length).toBeLessThan(20);
   });
 });

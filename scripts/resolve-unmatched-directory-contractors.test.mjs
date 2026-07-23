@@ -8,6 +8,7 @@ import {
   parseCslbLicenseDetail,
 } from "./cslb-live-license-resolution.mjs";
 import {
+  assertAppliedSourceReportTransition,
   buildCandidateIndices,
   buildResolutionQueue,
   prepareIdempotentReplay,
@@ -401,6 +402,51 @@ describe("directory resolution", () => {
 });
 
 describe("guarded idempotent write replay", () => {
+  it("accepts only an exact successful Pass 2 write transition", () => {
+    const reviewedReport = {
+      sourceDryRunArtifact: {
+        runId: "directory-enrichment-reviewed",
+        proposalHash: "approved-proposal",
+      },
+    };
+    const report = {
+      schemaVersion: "contractor-directory-enrichment-report.v1",
+      runId: "directory-enrichment-reviewed",
+      mode: "write",
+      proposalHash: "approved-proposal",
+      dryRunConfirmedZeroAwsWrites: false,
+      combinedTotals: {
+        proposedCslbPatchUpdates: 207_903,
+        proposedNewContractors: 0,
+      },
+      writeSummary: {
+        awsWriteCount: 207_920,
+        insertedContractorCount: 0,
+        updatedContractorCount: 207_903,
+      },
+      awsWriteCount: 207_920,
+    };
+
+    expect(() =>
+      assertAppliedSourceReportTransition({
+        report,
+        reviewedReport,
+      }),
+    ).not.toThrow();
+    expect(() =>
+      assertAppliedSourceReportTransition({
+        report: {
+          ...report,
+          writeSummary: {
+            ...report.writeSummary,
+            updatedContractorCount: 207_902,
+          },
+        },
+        reviewedReport,
+      }),
+    ).toThrow(/not an exact successful application/);
+  });
+
   it("skips exact prior inserts and exact prior updates", () => {
     const existing = {
       contractorId: "CA_CSLB_1113528",
@@ -426,6 +472,108 @@ describe("guarded idempotent write replay", () => {
     ]);
     expect(replay.newItemsToInsert).toHaveLength(0);
     expect(replay.updatesToApply).toHaveLength(0);
+  });
+
+  it("preserves Pass 2 values while applying approved additive deltas", () => {
+    const pass2Evidence = {
+      field: "email",
+      matchMethod: "license",
+      sourceId: "pass2",
+      sourceName: "Pass 2 Directory",
+      sourceUrl: "https://example.com/pass2",
+      sourceValue: "pass2@example.com",
+      verificationDate: "2026-07-23",
+    };
+    const resolutionEmailEvidence = {
+      ...pass2Evidence,
+      sourceId: "resolution",
+      sourceName: "Resolution Directory",
+      sourceUrl: "https://example.com/resolution",
+      sourceValue: "resolution@example.com",
+    };
+    const resolutionProgramEvidence = {
+      ...resolutionEmailEvidence,
+      field: "programMemberships",
+      sourceValue: "resolution_program",
+    };
+    const replay = prepareIdempotentReplay({
+      existingContractors: [
+        {
+          contractorId: "CA_CSLB_1113528",
+          email: "pass2@example.com",
+          enrichmentEvidence: [pass2Evidence],
+          programMemberships: ["pass2_program"],
+        },
+      ],
+      newItems: [],
+      updates: [
+        {
+          contractorId: "CA_CSLB_1113528",
+          expected: {},
+          set: {
+            email: "resolution@example.com",
+            enrichmentEvidence: [
+              resolutionEmailEvidence,
+              resolutionProgramEvidence,
+            ],
+            programMemberships: ["resolution_program"],
+          },
+        },
+      ],
+    });
+
+    expect(replay.fieldConflicts).toEqual([
+      {
+        contractorId: "CA_CSLB_1113528",
+        field: "email",
+      },
+    ]);
+    expect(replay.updatesToApply).toHaveLength(1);
+    expect(replay.updatesToApply[0].set).not.toHaveProperty("email");
+    expect(
+      replay.updatesToApply[0].set.programMemberships,
+    ).toEqual(["pass2_program", "resolution_program"]);
+    expect(
+      replay.updatesToApply[0].set.enrichmentEvidence,
+    ).toEqual([pass2Evidence, resolutionProgramEvidence]);
+  });
+
+  it("deduplicates evidence by the canonical repository key", () => {
+    const pass2Evidence = {
+      field: "programMemberships",
+      matchMethod: "name_zip",
+      sourceId: "shared_source",
+      sourceName: "Shared Directory",
+      sourceUrl: "https://example.com/shared",
+      sourceValue: "shared_program",
+      verificationDate: "2026-07-23",
+    };
+    const approvedEvidence = {
+      ...pass2Evidence,
+      matchMethod: "official_cslb_name_search_and_detail",
+    };
+    const replay = prepareIdempotentReplay({
+      existingContractors: [
+        {
+          contractorId: "CA_CSLB_1113528",
+          enrichmentEvidence: [pass2Evidence],
+        },
+      ],
+      newItems: [],
+      updates: [
+        {
+          contractorId: "CA_CSLB_1113528",
+          expected: {},
+          set: {
+            enrichmentEvidence: [approvedEvidence],
+          },
+        },
+      ],
+    });
+
+    expect(
+      replay.updatesToApply[0].set.enrichmentEvidence,
+    ).toEqual([approvedEvidence]);
   });
 
   it("refuses to overwrite a conflicting contractor ID", () => {

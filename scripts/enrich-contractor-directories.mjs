@@ -223,6 +223,8 @@ export async function runContractorDirectoryConsolidation(
         plan,
         report,
         sourceCollection,
+        updateConcurrency: options.writeConcurrency,
+        quiet: options.quiet,
       });
       report.writeSummary = writeResult;
       report.awsWriteCount = writeResult.awsWriteCount;
@@ -1036,8 +1038,10 @@ async function applyPlan({
   aws,
   outputDirectory,
   plan,
+  quiet,
   report,
   sourceCollection,
+  updateConcurrency = 24,
 }) {
   let awsWriteCount = 0;
   let updatedContractorCount = 0;
@@ -1061,11 +1065,22 @@ async function applyPlan({
     });
     if (uploaded) awsWriteCount += 1;
   }
-  for (const update of plan.updates) {
-    await aws.updateContractor(update);
-    awsWriteCount += 1;
-    updatedContractorCount += 1;
-  }
+  await forEachConcurrent({
+    concurrency: updateConcurrency,
+    onProgress: (completed, total) => {
+      if (!quiet && (completed % 5_000 === 0 || completed === total)) {
+        console.log(
+          `Applied ${completed} of ${total} conditional contractor updates.`,
+        );
+      }
+    },
+    values: plan.updates,
+    worker: async (update) => {
+      await aws.updateContractor(update);
+      awsWriteCount += 1;
+      updatedContractorCount += 1;
+    },
+  });
   for (const item of plan.newItems) {
     await aws.putContractor(item);
     awsWriteCount += 1;
@@ -1075,8 +1090,44 @@ async function applyPlan({
     awsWriteCount,
     insertedContractorCount,
     snapshotUploadCount: sourceCollection.snapshots.length,
+    updateConcurrency,
     updatedContractorCount,
   };
+}
+
+export async function forEachConcurrent({
+  concurrency,
+  onProgress = () => {},
+  values,
+  worker,
+}) {
+  const boundedConcurrency = Math.max(
+    1,
+    Math.min(Number(concurrency) || 1, values.length || 1),
+  );
+  let nextIndex = 0;
+  let completed = 0;
+  let failure;
+
+  async function runWorker() {
+    while (!failure) {
+      const index = nextIndex;
+      nextIndex += 1;
+      if (index >= values.length) return;
+      try {
+        await worker(values[index], index);
+        completed += 1;
+        onProgress(completed, values.length);
+      } catch (error) {
+        failure = error;
+      }
+    }
+  }
+
+  await Promise.all(
+    Array.from({ length: boundedConcurrency }, () => runWorker()),
+  );
+  if (failure) throw failure;
 }
 
 export function createAwsAdapter({
@@ -1090,6 +1141,7 @@ export function createAwsAdapter({
   const s3 = new S3Client({ credentials, region: s3Region });
   const dynamodbClient = new DynamoDBClient({
     credentials,
+    maxAttempts: 10,
     region: tableRegion,
   });
   const db = DynamoDBDocumentClient.from(dynamodbClient, {
@@ -1578,6 +1630,7 @@ function parseArgs(argv) {
     profile: "",
     quiet: false,
     reviewedReport: "",
+    writeConcurrency: 24,
     write: false,
   };
   let explicitMode = "";
@@ -1606,6 +1659,11 @@ function parseArgs(argv) {
       options.outputDirectory = requiredArg(argv, ++index, arg);
     } else if (arg === "--profile") {
       options.profile = requiredArg(argv, ++index, arg);
+    } else if (arg === "--write-concurrency") {
+      options.writeConcurrency = parsePositiveInteger(
+        requiredArg(argv, ++index, arg),
+        arg,
+      );
     } else if (arg === "--quiet") {
       options.quiet = true;
     } else {
@@ -1613,6 +1671,14 @@ function parseArgs(argv) {
     }
   }
   return options;
+}
+
+function parsePositiveInteger(value, flag) {
+  const parsed = Number.parseInt(value, 10);
+  if (!Number.isInteger(parsed) || parsed < 1 || parsed > 100) {
+    throw new Error(`${flag} must be an integer from 1 through 100.`);
+  }
+  return parsed;
 }
 
 function requiredArg(argv, index, flag) {
@@ -1638,6 +1704,7 @@ Options:
   --mapping <path>         Classification mapping path.
   --output-dir <path>      Local report and raw snapshot directory.
   --profile <name>         AWS profile. Must be ${EXPECTED_AWS_PROFILE}.
+  --write-concurrency <n>  Concurrent conditional updates. Default: 24.
   --quiet                  Suppress progress output.
   --help                   Show this help.`);
 }

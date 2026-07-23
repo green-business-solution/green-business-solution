@@ -67,7 +67,7 @@ The deleted `gbs-runtime-state` table was split into the four domain runtime tab
 | `gbs-retrofi-org-runtime-cache-059310317821` | `us-east-1` | Generated runtime cache payloads under `runtime-cache/` |
 | `gbs-retrofi-test-fixtures-059310317821-us-east-1` | `us-east-1` | Generated fixtures and synthetic test data under `generated-test-fixtures/` |
 | `gbs-retrofi-dev-work-059310317821-us-east-1` | `us-east-1` | Raw GPT Pro prompt/output archives under `gpt-pro-work/` |
-| `gbs-retrofi-contractor-source-data-059310317821-us-east-1` | `us-east-1` | Unchanged CSLB source, reviewed official-directory and live-license snapshots, import manifests, and aggregate reports |
+| `gbs-retrofi-contractor-source-data-059310317821-us-east-1` | `us-east-1` | Unchanged CSLB source, reviewed official-directory and live-license snapshots, import manifests, write reports, and aggregate verification reports |
 
 ## Deployment Commands
 

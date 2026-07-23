@@ -99,8 +99,7 @@ The `verified_new_contractor` and `lookup_error` example arrays are empty becaus
 
 ## Guarded Write Mode
 
-Write mode is implemented but was not executed.
-It requires the reviewed run ID, the exact reviewed report hash, and the exact proposal artifact hash:
+Write mode requires the reviewed run ID, the exact reviewed report hash, the exact proposal artifact hash, and the completed source-write report hash:
 
 ```sh
 npm run contractors:resolve:directories -- \
@@ -109,7 +108,8 @@ npm run contractors:resolve:directories -- \
   --reviewed-report "<resolution-report-path>" \
   --approval "directory-resolution-20260723T185235786Z" \
   --approved-report-sha256 "af1b2579d5c9646bf489b32c447484a258bf1fa8d70768703acad91552218e25" \
-  --approved-proposal-sha256 "eb74e7b6b6dd70388d8de208f1a1168ba2c21007a45b66e4110d017280ff44f9"
+  --approved-proposal-sha256 "eb74e7b6b6dd70388d8de208f1a1168ba2c21007a45b66e4110d017280ff44f9" \
+  --approved-source-write-report-sha256 "183ca802b0efe50dc842cbe56f59a5c1b089c4650818ba20a29f724b00b3259a"
 ```
 
 Before mutation, write mode verifies the Pass 2 report and snapshots, mapping file, retained CSLB source, resolution proposal, and every live lookup snapshot.
@@ -118,5 +118,6 @@ It uses conditional `UpdateItem` operations only when all reviewed field values 
 It uses conditional `PutItem` with `attribute_not_exists(contractorId)` for a genuinely new contractor.
 An exact prior application is skipped idempotently, while a conflicting existing contractor ID is rejected.
 
-Production write mode requires separate explicit approval.
-This dry-run task did not authorize or perform any deployment or AWS write.
+The reviewed production write was completed on July 23, 2026.
+See [Contractor Directory Production Write Execution](./contractor-directory-production-write-execution.md) for the write results, conflict handling, report hashes, sanitized verification samples, and S3 report keys.
+No infrastructure or application deployment was performed.

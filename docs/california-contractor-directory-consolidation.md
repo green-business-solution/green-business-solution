@@ -109,6 +109,8 @@ New rows use conditional `PutItem` operations with `attribute_not_exists(contrac
 The update planner asserts that `supportedRetrofitIds` is absent from every existing-row update.
 The exact source snapshots are retained under `raw/enrichment/<source-id>/<date>/`, and the final report is retained under `imports/enrichment/<run-id>/`.
 
-This task does not authorize write mode or any deployment.
+The reviewed production write was completed on July 23, 2026.
+See [Contractor Directory Production Write Execution](./contractor-directory-production-write-execution.md) for the approved hashes, write counts, S3 report keys, and final verification.
+No infrastructure or application deployment was performed.
 
 The unmatched and ambiguous follow-up workflow is documented in [Unmatched Directory Contractor Resolution](./unmatched-directory-contractor-resolution.md).

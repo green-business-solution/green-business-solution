@@ -262,6 +262,8 @@ async function runWriteMode(options, dependencies) {
     throw new Error("The reviewed proposal is incompatible with the report.");
   }
   const reviewedArtifacts = await verifyReviewedArtifacts({
+    approvedSourceWriteReportSha256:
+      options.approvedSourceWriteReportSha256,
     proposal,
     reportDirectory,
     reviewedReport,
@@ -369,15 +371,33 @@ async function runWriteMode(options, dependencies) {
     approvedArtifacts: {
       proposalSha256,
       reportSha256: reviewedReportSha256,
+      sourceWriteReportSha256:
+        reviewedArtifacts.sourceReportSha256,
     },
     invariants: {
       ...reviewedReport.invariants,
       dryRunConfirmedZeroAwsWrites: false,
     },
     writeSummary: {
+      approvedExistingContractorUpdates: proposal.updates.length,
       alreadyAppliedNewContractors: replay.alreadyAppliedNewItems.length,
       alreadyAppliedUpdates: replay.alreadyAppliedUpdates.length,
+      alreadyAppliedFields: replay.alreadyAppliedFieldCount,
+      conflictingContractors: new Set(
+        replay.fieldConflicts.map(
+          (conflict) => conflict.contractorId,
+        ),
+      ).size,
+      conflictingFields: replay.fieldConflicts.length,
+      conflictExamples: replay.fieldConflicts
+        .slice(0, 20)
+        .map((conflict) => ({
+          contractorIdToken: token(conflict.contractorId),
+          field: conflict.field,
+        })),
       insertedContractors: replay.newItemsToInsert.length,
+      mergedFields: replay.mergedFieldCount,
+      skippedContractorUpdates: replay.skippedUpdates.length,
       updatedContractors: replay.updatesToApply.length,
       directorySnapshotCount:
         reviewedArtifacts.sourceCollection.snapshots.length,
@@ -994,8 +1014,12 @@ export function prepareIdempotentReplay({
   );
   const alreadyAppliedNewItems = [];
   const alreadyAppliedUpdates = [];
+  const fieldConflicts = [];
   const newItemsToInsert = [];
+  const skippedUpdates = [];
   const updatesToApply = [];
+  let alreadyAppliedFieldCount = 0;
+  let mergedFieldCount = 0;
 
   for (const item of newItems) {
     const existing = existingById.get(item.contractorId);
@@ -1018,35 +1042,194 @@ export function prepareIdempotentReplay({
         `Cannot update missing contractor ${update.contractorId}.`,
       );
     }
-    const fields = Object.keys(update.set);
-    if (
-      fields.every(
-        (field) =>
-          stableStringify(existing[field]) ===
-          stableStringify(update.set[field]),
-      )
-    ) {
-      alreadyAppliedUpdates.push(update.contractorId);
+    const rebased = rebaseApprovedUpdate({ existing, update });
+    alreadyAppliedFieldCount += rebased.alreadyAppliedFieldCount;
+    mergedFieldCount += rebased.mergedFieldCount;
+    fieldConflicts.push(...rebased.fieldConflicts);
+    if (!Object.keys(rebased.update.set).length) {
+      if (rebased.fieldConflicts.length) {
+        skippedUpdates.push(update.contractorId);
+      } else {
+        alreadyAppliedUpdates.push(update.contractorId);
+      }
       continue;
     }
-    for (const field of fields) {
-      if (
-        stableStringify(existing[field]) !==
-        stableStringify(update.expected[field])
-      ) {
-        throw new Error(
-          `Contractor ${update.contractorId} changed in field ${field} after the dry run.`,
-        );
-      }
-    }
-    updatesToApply.push(update);
+    updatesToApply.push(rebased.update);
   }
   return {
+    alreadyAppliedFieldCount,
     alreadyAppliedNewItems,
     alreadyAppliedUpdates,
+    fieldConflicts,
+    mergedFieldCount,
     newItemsToInsert,
+    skippedUpdates,
     updatesToApply,
   };
+}
+
+function rebaseApprovedUpdate({ existing, update }) {
+  const alreadyAppliedFields = [];
+  const fieldConflicts = [];
+  const mergedFields = [];
+  const expected = {};
+  const set = {};
+  const fields = Object.keys(update.set).filter(
+    (field) => field !== "enrichmentEvidence",
+  );
+
+  for (const field of fields) {
+    const currentValue = existing[field];
+    const expectedValue = update.expected[field];
+    const approvedValue = update.set[field];
+    if (
+      stableStringify(currentValue) ===
+      stableStringify(approvedValue)
+    ) {
+      alreadyAppliedFields.push(field);
+      continue;
+    }
+    if (
+      stableStringify(currentValue) ===
+      stableStringify(expectedValue)
+    ) {
+      expected[field] = expectedValue;
+      set[field] = approvedValue;
+      continue;
+    }
+    if (isAdditiveField(field)) {
+      const merged = mergeApprovedArrayDelta({
+        approvedValue,
+        currentValue,
+        expectedValue,
+        field,
+      });
+      if (
+        stableStringify(merged) === stableStringify(currentValue)
+      ) {
+        alreadyAppliedFields.push(field);
+      } else {
+        expected[field] = currentValue;
+        set[field] = merged;
+        mergedFields.push(field);
+      }
+      continue;
+    }
+    fieldConflicts.push({
+      contractorId: update.contractorId,
+      field,
+    });
+  }
+
+  const evidenceField = "enrichmentEvidence";
+  if (Object.hasOwn(update.set, evidenceField)) {
+    const conflictingFields = new Set(
+      fieldConflicts.map((conflict) => conflict.field),
+    );
+    const approvedEvidence = (update.set[evidenceField] || []).filter(
+      (evidence) => !conflictingFields.has(evidence.field),
+    );
+    const mergedEvidence = mergeApprovedArrayDelta({
+      approvedValue: approvedEvidence,
+      currentValue: existing[evidenceField],
+      expectedValue: update.expected[evidenceField],
+      field: evidenceField,
+    });
+    if (
+      stableStringify(mergedEvidence) ===
+      stableStringify(existing[evidenceField])
+    ) {
+      alreadyAppliedFields.push(evidenceField);
+    } else {
+      expected[evidenceField] = existing[evidenceField];
+      set[evidenceField] = mergedEvidence;
+      if (
+        stableStringify(existing[evidenceField]) !==
+        stableStringify(update.expected[evidenceField])
+      ) {
+        mergedFields.push(evidenceField);
+      }
+    }
+  }
+
+  return {
+    alreadyAppliedFieldCount: alreadyAppliedFields.length,
+    fieldConflicts,
+    mergedFieldCount: mergedFields.length,
+    update: {
+      contractorId: update.contractorId,
+      expected,
+      reasons: update.reasons,
+      set,
+    },
+  };
+}
+
+function isAdditiveField(field) {
+  return [
+    "certifications",
+    "programMemberships",
+    "serviceAreas",
+  ].includes(field);
+}
+
+function mergeApprovedArrayDelta({
+  approvedValue,
+  currentValue,
+  expectedValue,
+  field,
+}) {
+  const current = Array.isArray(currentValue) ? currentValue : [];
+  const expectedKeys = new Set(
+    (Array.isArray(expectedValue) ? expectedValue : []).map(
+      stableStringify,
+    ),
+  );
+  const additions = (Array.isArray(approvedValue)
+    ? approvedValue
+    : []
+  ).filter((value) => !expectedKeys.has(stableStringify(value)));
+  const mergeKey = (value) => {
+    if (field === "certifications") {
+      return `${clean(value?.issuer).toUpperCase()}|${clean(
+        value?.name,
+      ).toUpperCase()}`;
+    }
+    if (field === "enrichmentEvidence") {
+      return [
+        value?.field,
+        value?.sourceId,
+        value?.sourceUrl,
+        value?.sourceValue,
+        value?.verificationDate,
+      ].join("|");
+    }
+    return clean(value);
+  };
+  const merged = [
+    ...new Map(
+      [...current, ...additions].map((value) => [
+        mergeKey(value),
+        value,
+      ]),
+    ).values(),
+  ];
+  if (field === "certifications") {
+    return merged.sort(
+      (left, right) =>
+        compareStrings(left.issuer, right.issuer) ||
+        compareStrings(left.name, right.name),
+    );
+  }
+  if (field === "enrichmentEvidence") {
+    return merged.sort(
+      (left, right) =>
+        compareStrings(left.field, right.field) ||
+        compareStrings(left.sourceId, right.sourceId) ||
+        compareStrings(left.sourceValue, right.sourceValue),
+    );
+  }
+  return merged.sort(compareStrings);
 }
 
 function assertResolutionPlan({ newItems, updates }) {
@@ -1475,6 +1658,7 @@ function sanitizeOutcome(outcome) {
 }
 
 async function verifyReviewedArtifacts({
+  approvedSourceWriteReportSha256,
   proposal,
   reportDirectory,
   reviewedReport,
@@ -1482,14 +1666,27 @@ async function verifyReviewedArtifacts({
   const sourceReportPath = path.resolve(
     reviewedReport.sourceDryRunArtifact.path,
   );
+  const sourceReportSha256 = await sha256File(sourceReportPath);
+  const sourceReport = await readJsonFile(sourceReportPath);
   if (
-    (await sha256File(sourceReportPath)) !==
+    sourceReportSha256 ===
     reviewedReport.sourceDryRunArtifact.sha256
   ) {
-    throw new Error("The Pass 2 dry-run report hash changed.");
+    assertSourceReport(sourceReport);
+  } else {
+    if (
+      !approvedSourceWriteReportSha256 ||
+      sourceReportSha256 !== approvedSourceWriteReportSha256
+    ) {
+      throw new Error(
+        "The Pass 2 report is neither the approved dry run nor the explicitly approved final write report.",
+      );
+    }
+    assertAppliedSourceReportTransition({
+      report: sourceReport,
+      reviewedReport,
+    });
   }
-  const sourceReport = await readJsonFile(sourceReportPath);
-  assertSourceReport(sourceReport);
   if (
     proposal.sourceReportSha256 !==
       reviewedReport.sourceDryRunArtifact.sha256 ||
@@ -1523,7 +1720,31 @@ async function verifyReviewedArtifacts({
   return {
     sourceCollection,
     sourceReport,
+    sourceReportSha256,
   };
+}
+
+export function assertAppliedSourceReportTransition({
+  report,
+  reviewedReport,
+}) {
+  if (
+    report.schemaVersion !== ENRICHMENT_REPORT_SCHEMA_VERSION ||
+    report.mode !== "write" ||
+    report.runId !== reviewedReport.sourceDryRunArtifact.runId ||
+    report.proposalHash !==
+      reviewedReport.sourceDryRunArtifact.proposalHash ||
+    report.dryRunConfirmedZeroAwsWrites ||
+    report.combinedTotals?.proposedNewContractors !== 0 ||
+    report.writeSummary?.insertedContractorCount !== 0 ||
+    report.writeSummary?.updatedContractorCount !==
+      report.combinedTotals?.proposedCslbPatchUpdates ||
+    report.awsWriteCount !== report.writeSummary?.awsWriteCount
+  ) {
+    throw new Error(
+      "The Pass 2 write report is not an exact successful application of the approved proposal.",
+    );
+  }
 }
 
 function assertSourceReport(report) {
@@ -1725,6 +1946,7 @@ function parseArgs(argv) {
     approval: "",
     approvedProposalSha256: "",
     approvedReportSha256: "",
+    approvedSourceWriteReportSha256: "",
     mappingPath: "",
     minimumIntervalMs: 150,
     outputDirectory: "",
@@ -1760,6 +1982,12 @@ function parseArgs(argv) {
       options.approvedReportSha256 = requiredArg(argv, ++index, arg);
     } else if (arg === "--approved-proposal-sha256") {
       options.approvedProposalSha256 = requiredArg(argv, ++index, arg);
+    } else if (arg === "--approved-source-write-report-sha256") {
+      options.approvedSourceWriteReportSha256 = requiredArg(
+        argv,
+        ++index,
+        arg,
+      );
     } else if (arg === "--mapping") {
       options.mappingPath = requiredArg(argv, ++index, arg);
     } else if (arg === "--output-dir") {
@@ -1825,6 +2053,8 @@ Options:
   --approval <run-id>               Exact reviewed run ID required for write mode.
   --approved-report-sha256 <hash>   Exact reviewed report hash required for write mode.
   --approved-proposal-sha256 <hash> Exact reviewed proposal hash required for write mode.
+  --approved-source-write-report-sha256 <hash>
+                                      Exact successful Pass 2 write-report hash when Pass 2 was applied first.
   --mapping <path>                  CSLB classification mapping path.
   --output-dir <path>               Local artifact directory.
   --profile <name>                  AWS profile. Must be ${EXPECTED_AWS_PROFILE}.
