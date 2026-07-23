@@ -38,7 +38,27 @@ const report = {
   categoriesOverFourUserInputs: review.report.categoriesOverFourUserInputs,
   categoriesWithFiveUserInputs: review.report.categoriesWithFiveUserInputs,
   categoryStatuses: review.report.categoryStatuses,
-  standardStatuses: review.report.standardStatuses
+  standardStatuses: review.report.standardStatuses,
+  sourceEvidenceRecords: sources.evidenceManifest.evidence_records.length,
+  sourceEvidenceStatuses: countBy(sources.evidenceManifest.evidence_records, "evidence_status"),
+  formulaTermGroups: sources.categoryContracts.categories.reduce(
+    (total, category) => total + category.formula_terms.length,
+    0
+  ),
+  formulaTerms: sources.categoryContracts.categories.reduce(
+    (total, category) => total + category.formula_terms.reduce(
+      (categoryTotal, group) => categoryTotal + group.names.length,
+      0
+    ),
+    0
+  ),
+  categoryManualVerdicts: sources.categoryContracts.categories.filter(
+    (category) => String(category.manual_review_verdict || "").trim()
+  ).length,
+  standardManualVerdicts: sources.evidenceManifest.standards.filter(
+    (standard) => String(standard.manual_review_verdict || "").trim()
+  ).length,
+  readyGoldenFixtures: sources.goldenFixtures.size
 };
 
 if (errors.length > 0) {
@@ -57,6 +77,9 @@ async function validateGeneratedPages(result, validationErrors) {
     "## Retrofits",
     "## Primary Formula",
     "## Supporting Formula(s)",
+    "## Formula-Term Evidence",
+    "## Source-Role Evidence",
+    "## Default-Path Proof",
     "## Fully Expanded Information Tree",
     "## Input Workflow",
     "## Standards and Automation",
@@ -93,10 +116,43 @@ async function validateGeneratedPages(result, validationErrors) {
     if (/^[│ ]*[├└]─ BR-[A-Z0-9-]+\s*$/m.test(tree)) {
       validationErrors.push(`${category.id} generated tree contains an unresolved bare shared-branch reference`);
     }
-    if (/\{\{(?:lookup|constant|output|input|resource):/.test(tree)) {
+    if (/\{\{(?:lookup|constant|output|input|resource|component|intermediate):/.test(tree)) {
       validationErrors.push(`${category.id} generated tree exposes internal trace annotations`);
     }
-    validateGeneratedTreeLabels(category.id, tree, validationErrors);
+    validateGeneratedTreeLabels(category, tree, validationErrors);
+
+    const formulaEvidence = between(page, "## Formula-Term Evidence", "## Source-Role Evidence");
+    if (!formulaEvidence.includes("| Formula term | Unit | Source or resolver | Exact path |")) {
+      validationErrors.push(`${category.id} generated Formula-Term Evidence lacks the canonical matrix`);
+    }
+    for (const group of category.semanticContract.formula_terms) {
+      for (const name of group.names) {
+        if (!formulaEvidence.includes(`| ${name} |`)) {
+          validationErrors.push(`${category.id} generated Formula-Term Evidence is missing ${name}`);
+        }
+      }
+    }
+    const sourceEvidence = between(page, "## Source-Role Evidence", "## Default-Path Proof");
+    for (const summary of category.sourceEvidence.standardSummaries) {
+      if (!sourceEvidence.includes(`### ${summary.standard_id}`)) {
+        validationErrors.push(`${category.id} generated Source-Role Evidence is missing ${summary.standard_id}`);
+      }
+    }
+    const defaultProof = between(page, "## Default-Path Proof", "## Fully Expanded Information Tree");
+    for (const field of [
+      "Minimum required inputs",
+      "Exact scenario",
+      "Source fixture",
+      "Low/base/high calculation",
+      "Final result path",
+      "Uncertainty",
+      "Executable golden fixture",
+      "Remaining gate"
+    ]) {
+      if (!defaultProof.includes(`**${field}:**`)) {
+        validationErrors.push(`${category.id} generated Default-Path Proof is missing ${field}`);
+      }
+    }
 
     const reviewStatus = between(page, "## Review Status", "## Retrofits");
     const requiredCount = Number(reviewStatus.match(/\*\*Required User-input count:\*\* (\d+)/)?.[1]);
@@ -178,7 +234,8 @@ async function validateGeneratedPages(result, validationErrors) {
   }
 }
 
-function validateGeneratedTreeLabels(categoryId, block, validationErrors) {
+function validateGeneratedTreeLabels(category, block, validationErrors) {
+  const categoryId = category.id;
   const code = block.match(/```text\n([\s\S]*?)\n```/)?.[1];
   if (!code) {
     validationErrors.push(`${categoryId} generated page has no expanded text tree`);
@@ -186,14 +243,27 @@ function validateGeneratedTreeLabels(categoryId, block, validationErrors) {
   }
   const lines = code.split("\n").filter(Boolean);
   const nodes = lines.map((line) => ({ depth: treeDepth(line), text: stripTreePrefix(line) }));
+  const intermediateLabels = collectIntermediateLabels(category.expandedTree);
   for (let index = 1; index < nodes.length; index += 1) {
     const node = nodes[index];
     const next = nodes[index + 1];
     const terminal = !next || next.depth <= node.depth;
-    if (terminal && !["(User)", "(Profile)", "(Bill)", "(Standard)"].some((label) => node.text.endsWith(label))) {
+    if (
+      terminal &&
+      !intermediateLabels.has(node.text) &&
+      !["(User)", "(Profile)", "(Bill)", "(Standard)"].some((label) => node.text.endsWith(label))
+    ) {
       validationErrors.push(`${categoryId} generated terminal leaf lacks an allowed source label: ${JSON.stringify(node.text)}`);
     }
   }
+}
+
+function collectIntermediateLabels(root, labels = new Set()) {
+  if (/\{\{intermediate:\s*[^}]+\}\}/.test(root.text)) {
+    labels.add(stripInternalTags(root.text));
+  }
+  for (const child of root.children) collectIntermediateLabels(child, labels);
+  return labels;
 }
 
 function validateCanonicalIndex(result, treeDocument, validationErrors) {
@@ -232,6 +302,18 @@ function validateComStockAllowlist(result, validationErrors) {
 
 function validateNarrativeTotals(result, loadedSources, urls, validationErrors) {
   const report = result.report;
+  const evidenceStatuses = countBy(loadedSources.evidenceManifest.evidence_records, "evidence_status");
+  const formulaTermGroups = loadedSources.categoryContracts.categories.reduce(
+    (total, category) => total + category.formula_terms.length,
+    0
+  );
+  const formulaTerms = loadedSources.categoryContracts.categories.reduce(
+    (total, category) => total + category.formula_terms.reduce(
+      (categoryTotal, group) => categoryTotal + group.names.length,
+      0
+    ),
+    0
+  );
   const expectedCoverage = `The required result is ${report.categories} categories, ${report.taxonomyRetrofits} unique retrofit mappings, zero missing IDs, and zero duplicate IDs.`;
   if (!loadedSources.treeDocument.includes(expectedCoverage)) validationErrors.push("Coverage contract totals do not match the parsed documents and taxonomy");
 
@@ -248,7 +330,14 @@ function validateNarrativeTotals(result, loadedSources, urls, validationErrors) 
     `- Expanded Required User inputs: ${report.requiredUserInputs}.`,
     `- Expanded Optional Known Details: ${report.optionalKnownDetails}.`,
     `- Maximum Required User inputs per category: ${report.maxRequiredUserInputs}.`,
-    `- Categories above four Required User inputs: ${overFour}.`
+    `- Categories above four Required User inputs: ${overFour}.`,
+    `- Machine-readable source-evidence records: ${loadedSources.evidenceManifest.evidence_records.length}.`,
+    `- Source-evidence statuses: ${Object.entries(evidenceStatuses).map(([status, count]) => `${status} ${count}`).join(", ")}.`,
+    `- Formula-term groups: ${formulaTermGroups}.`,
+    `- Individual formula terms: ${formulaTerms}.`,
+    `- Recorded category manual verdicts: ${loadedSources.categoryContracts.categories.length}.`,
+    `- Recorded Standard manual verdicts: ${loadedSources.evidenceManifest.standards.length}.`,
+    `- Executable Ready-category golden fixtures: ${loadedSources.goldenFixtures.size}.`
   ]) {
     if (!loadedSources.auditDocument.includes(line)) validationErrors.push(`audit summary is stale or missing: ${line}`);
   }
@@ -257,7 +346,17 @@ function validateNarrativeTotals(result, loadedSources, urls, validationErrors) 
   }
   for (const topic of [
     "generated review workflow",
+    "source-role evidence",
+    "formula-term evidence",
+    "default-path proof",
     "formula/tree corrections",
+    "semantic source audit",
+    "formula audit",
+    "default executability audit",
+    "implementation readiness audit",
+    "mutation tests",
+    "unsupported claims removed",
+    "manual review record",
     "atomic User-input review",
     "unresolved blockers",
     "High-uncertainty Standards",
@@ -306,4 +405,19 @@ function stripTreePrefix(line) {
 
 function countErrors(values, pattern) {
   return values.filter((value) => pattern.test(value)).length;
+}
+
+function countBy(values, field) {
+  return Object.fromEntries(
+    [...new Set(values.map((value) => value[field]))]
+      .sort()
+      .map((key) => [key, values.filter((value) => value[field] === key).length])
+  );
+}
+
+function stripInternalTags(text) {
+  return text.replace(
+    /\s*\{\{(?:lookup|constant|output|input|resource|component|intermediate):\s*[^}]+\}\}/g,
+    ""
+  ).trim();
 }

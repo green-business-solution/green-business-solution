@@ -7,6 +7,7 @@ const CATEGORY_HEADING = /^### (ITC-\d{2}) - (.+)$/gm;
 const BRANCH_HEADING = /^### (BR-[A-Z0-9-]+) - (.+)$/gm;
 const STANDARD_HEADING = /^### ■ (STD-[A-Z0-9-]+) - (.+)$/gm;
 const ALLOWED_LEAF_LABELS = ["(User)", "(Profile)", "(Bill)", "(Standard)"];
+const INTERMEDIATE_TAG = /\{\{intermediate:\s*([^}]+)\}\}/;
 const ALLOWED_RESOURCES = new Set(["electricity", "gas", "water-sewer", "liquid-fuel", "vehicle-fuel", "none"]);
 const USER_INPUT_TAG = /\{\{input:\s*(required|optional)\}\}/g;
 const ALLOWED_CATEGORY_STATUSES = new Set(["DRAFT", "RESEARCHED — READY FOR HUMAN REVIEW", "BLOCKED"]);
@@ -46,16 +47,6 @@ const RESOLUTION_CONTRACT_FIELDS = [
   "**Editable:**",
   "**No-Estimate Rule:**"
 ];
-const EQUIPMENT_SCENARIOS = [
-  "exact-existing-model",
-  "existing-type-or-application",
-  "profile-or-bill-fallback",
-  "linked-opportunity-exact-product",
-  "linked-opportunity-product-class",
-  "no-product-restriction",
-  "no-linked-opportunity",
-  "exact-proposed-model"
-];
 const AUTOMATION_FIELDS = [
   "**Selected Strategy:**",
   "**Automation Method:**",
@@ -74,11 +65,27 @@ const GENERATED_NOTICE = [
 ].join("\n");
 
 export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
-  const [treeDocument, standardDocument, auditDocument] = await Promise.all([
+  const [treeDocument, standardDocument, auditDocument, evidenceText, categoryContractText, billFieldDictionaryText] = await Promise.all([
     readFile(join(root, "docs/operational-savings-information-trees.md"), "utf8"),
     readFile(join(root, "docs/operational-savings-standard-registry.md"), "utf8"),
-    readFile(join(root, "docs/operational-savings-information-tree-audit.md"), "utf8")
+    readFile(join(root, "docs/operational-savings-information-tree-audit.md"), "utf8"),
+    readFile(join(root, "docs/operational-savings-source-evidence.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-category-contracts.json"), "utf8"),
+    readFile(join(root, "data/bill_field_dictionary.json"), "utf8")
   ]);
+  const goldenFixtureRoot = join(root, "docs/operational-savings-fixtures/categories");
+  const sourceFixtureRoot = join(root, "docs/operational-savings-fixtures/sources");
+  const goldenFixtures = new Map();
+  for (const file of await readdir(goldenFixtureRoot).catch(() => [])) {
+    if (!/^ITC-\d{2}\.golden\.json$/.test(file)) continue;
+    const content = JSON.parse(await readFile(join(goldenFixtureRoot, file), "utf8"));
+    goldenFixtures.set(content.category_id, { path: `docs/operational-savings-fixtures/categories/${file}`, content });
+  }
+  const sourceFixturePaths = new Set(
+    (await readdir(sourceFixtureRoot).catch(() => []))
+      .filter((file) => file.endsWith(".json"))
+      .map((file) => `docs/operational-savings-fixtures/sources/${file}`)
+  );
   const taxonomyModule = await import(
     `${pathToFileURL(join(root, "apps/api/server/matching/retrofitTaxonomy.mjs")).href}?review=${Date.now()}`
   );
@@ -87,6 +94,11 @@ export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
     treeDocument,
     standardDocument,
     auditDocument,
+    evidenceManifest: JSON.parse(evidenceText),
+    categoryContracts: JSON.parse(categoryContractText),
+    billFieldDictionary: JSON.parse(billFieldDictionaryText),
+    goldenFixtures,
+    sourceFixturePaths,
     taxonomy: taxonomyModule.RETROFIT_TYPES
   };
 }
@@ -99,7 +111,19 @@ export function buildOperationalSavingsReview(sources) {
   const categoryById = uniqueMap(categories, "category", errors);
   const branchById = uniqueMap(branches, "shared branch", errors);
   const standardById = uniqueMap(standards, "Standard", errors);
+  const semanticContractById = uniqueMap(
+    sources.categoryContracts.categories.map((contract) => ({ ...contract, id: contract.category_id })),
+    "category semantic contract",
+    errors
+  );
+  const evidenceById = uniqueMap(
+    sources.evidenceManifest.evidence_records.map((record) => ({ ...record, id: record.evidence_id })),
+    "evidence record",
+    errors
+  );
   const taxonomyById = new Map(sources.taxonomy.map((retrofit) => [retrofit.retrofitTypeId, retrofit]));
+  const canonicalProfilePaths = new Set(sources.categoryContracts.canonical_profile_paths || []);
+  const canonicalBillFields = new Set(sources.billFieldDictionary.map((field) => field.id));
 
   assertContiguousCategoryIds(categories, errors);
   validateCanonicalMarkers(categories, REQUIRED_CATEGORY_MARKERS, errors);
@@ -109,20 +133,53 @@ export function buildOperationalSavingsReview(sources) {
   validateStatuses(categories, branches, standards, sources, errors);
   validateTaxonomyCoverage(categories, taxonomyById, errors);
   validateStandards(standards, errors);
+  validateDirectInputPolicyDefinitions(sources.categoryContracts, standardById, errors);
+  validateEvidenceManifest(standards, standardById, sources.evidenceManifest, evidenceById, sources.sourceFixturePaths, errors);
+  validateRateComponentDefinitions(sources.categoryContracts, canonicalBillFields, errors);
+  validateCategoryContracts(categories, semanticContractById, sources, evidenceById, errors);
 
   const branchUsage = new Map(branches.map((branch) => [branch.id, new Set()]));
   const standardUsage = new Map(standards.map((standard) => [standard.id, new Set()]));
   const categoryReviews = [];
 
   for (const category of categories) {
+    const semanticContract = semanticContractById.get(category.id);
     const tree = parseTree(category.treeBlock, category.id, errors);
     const referencedBranches = new Set();
-    const expandedTree = expandTree(tree, branchById, referencedBranches, errors, [], category.resources);
+    const expandedTree = expandTree(
+      tree,
+      branchById,
+      referencedBranches,
+      errors,
+      [],
+      category.resources,
+      semanticContract?.rate_components || []
+    );
     for (const branchId of referencedBranches) branchUsage.get(branchId)?.add(category.id);
 
     validateTerminalLabels(expandedTree, category.id, errors);
+    validateCanonicalSourceLeaves(
+      expandedTree,
+      category.id,
+      canonicalProfilePaths,
+      canonicalBillFields,
+      errors
+    );
+    validateRequiredDirectInputs(
+      expandedTree,
+      category,
+      sources.categoryContracts.required_direct_input_policies || [],
+      errors
+    );
+    validateDeclaredCanonicalPaths(
+      expandedTree,
+      category.id,
+      semanticContract,
+      errors
+    );
     validateUserInputClassifications(expandedTree, category.id, errors);
     validateFormulaRoot(category, expandedTree, errors);
+    validateFormulaTermTreeCoverage(category, expandedTree, semanticContract, errors);
 
     const inheritedStandardIds = [...referencedBranches]
       .flatMap((branchId) => branchById.get(branchId)?.standardIds || []);
@@ -143,8 +200,14 @@ export function buildOperationalSavingsReview(sources) {
       .map((standardId) => standardById.get(standardId))
       .filter(Boolean)
       .map((standard) => traceStandardInputs(category, standard, resolutionIndex, errors));
+    validateTreeUserInputUsage(
+      expandedTree,
+      category,
+      semanticContract,
+      tracedStandards,
+      errors
+    );
     const inputs = summarizeInputs(expandedTree);
-    validateRequiredTechnicalInputs(inputs, category, errors);
     if (referencedStandards.length > 0 && inputs.Standard.length === 0) {
       errors.push(`${category.id} references Standards but has no Standard terminal leaf`);
     }
@@ -164,7 +227,16 @@ export function buildOperationalSavingsReview(sources) {
       inputs,
       decisions,
       uncertainty,
-      automationReadiness
+      automationReadiness,
+      semanticContract,
+      rateComponentDefinitions: sources.categoryContracts.rate_component_definitions,
+      unitConversionDefinitions: sources.categoryContracts.unit_conversion_definitions,
+      sourceEvidence: buildCategoryEvidence(
+        semanticContract,
+        sources.evidenceManifest,
+        evidenceById,
+        tracedStandards
+      )
     });
   }
 
@@ -341,7 +413,7 @@ function parseTree(block, ownerId, errors) {
   return root;
 }
 
-function expandTree(tree, branchById, referencedBranches, errors, stack, resources) {
+function expandTree(tree, branchById, referencedBranches, errors, stack, resources, rateComponents) {
   const branchId = /^BR-[A-Z0-9-]+$/.test(tree.text) ? tree.text : null;
   if (branchId) {
     referencedBranches.add(branchId);
@@ -355,31 +427,77 @@ function expandTree(tree, branchById, referencedBranches, errors, stack, resourc
       return { text: `Circular shared branch [${branchId}]`, children: [] };
     }
     const branchTree = parseTree(branch.treeBlock, branchId, errors);
-    const expanded = expandTree(branchTree, branchById, referencedBranches, errors, [...stack, branchId], resources);
+    const expanded = expandTree(branchTree, branchById, referencedBranches, errors, [...stack, branchId], resources, rateComponents);
     return { ...expanded, text: `${expanded.text} [${branchId}]` };
   }
   return {
     ...tree,
     children: tree.children
-      .filter((child) => nodeAppliesToResources(child, resources))
-      .map((child) => expandTree(child, branchById, referencedBranches, errors, stack, resources))
+      .filter((child) => nodeAppliesToCategory(child, resources, rateComponents))
+      .map((child) => expandTree(child, branchById, referencedBranches, errors, stack, resources, rateComponents))
   };
 }
 
-function nodeAppliesToResources(node, resources) {
+function nodeAppliesToCategory(node, resources, rateComponents) {
   const declaration = node.text.match(/\{\{resource:\s*([^}]+)\}\}/)?.[1];
-  if (!declaration) return true;
-  const allowed = declaration.split(",").map((resource) => resource.trim());
-  return allowed.some((resource) => resources.includes(resource));
+  if (declaration) {
+    const allowed = declaration.split(",").map((resource) => resource.trim());
+    if (!allowed.some((resource) => resources.includes(resource))) return false;
+  }
+  const component = node.text.match(/\{\{component:\s*([^}]+)\}\}/)?.[1]?.trim();
+  return !component || rateComponents.includes(component);
 }
 
 function validateTerminalLabels(tree, ownerId, errors) {
   walkTree(tree, (node, path) => {
     if (node.children.length > 0 || path.length === 1) return;
+    if (INTERMEDIATE_TAG.test(node.text)) return;
     if (!ALLOWED_LEAF_LABELS.some((label) => node.text.endsWith(label))) {
       errors.push(`${ownerId} terminal leaf lacks an allowed source label: ${JSON.stringify(stripResolutionTags(node.text))}`);
     }
   });
+}
+
+function validateCanonicalSourceLeaves(tree, ownerId, profilePaths, billFields, errors) {
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1) return;
+    const text = stripResolutionTags(node.text);
+    if (text.endsWith("(Profile)") && ![...profilePaths].some((profilePath) => mentionsCanonicalPath(text, profilePath))) {
+      errors.push(`${ownerId} Profile leaf has no real canonical path: ${JSON.stringify(text)}`);
+    }
+    if (text.endsWith("(Bill)") && ![...billFields].some((fieldId) => text.includes(fieldId))) {
+      errors.push(`${ownerId} Bill leaf has no real canonical field: ${JSON.stringify(text)}`);
+    }
+  });
+}
+
+function validateDeclaredCanonicalPaths(tree, ownerId, contract, errors) {
+  if (!contract) return;
+  const profileLeaves = [];
+  const billLeaves = [];
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1) return;
+    const text = stripResolutionTags(node.text);
+    if (text.endsWith("(Profile)")) profileLeaves.push(text);
+    if (text.endsWith("(Bill)")) billLeaves.push(text);
+  });
+  for (const profilePath of contract.profile_paths || []) {
+    if (!profileLeaves.some((leaf) => mentionsCanonicalPath(leaf, profilePath))) {
+      errors.push(`${ownerId} declares unused Profile field ${profilePath}`);
+    }
+  }
+  for (const fieldId of contract.bill_field_ids || []) {
+    if (!billLeaves.some((leaf) => leaf.includes(fieldId))) {
+      errors.push(`${ownerId} declares unused Bill field ${fieldId}`);
+    }
+  }
+}
+
+function mentionsCanonicalPath(text, canonicalPath) {
+  const escapedSegments = canonicalPath.split(".").map((segment) =>
+    segment.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  );
+  return new RegExp(escapedSegments.join("[.\\s_-]+"), "i").test(text);
 }
 
 function validateUserInputClassifications(tree, ownerId, errors) {
@@ -395,6 +513,28 @@ function validateUserInputClassifications(tree, ownerId, errors) {
     }
     if (classifications[0] === "required" && /\bif known\b/i.test(node.text)) {
       errors.push(`${ownerId} Required User Input cannot say "if known": ${JSON.stringify(stripResolutionTags(node.text))}`);
+    }
+  });
+}
+
+function validateRequiredDirectInputs(tree, category, policies, errors) {
+  const applicablePolicies = policies.filter((policy) => category.standardIds.includes(policy.standard_id));
+  if (applicablePolicies.length === 0) return;
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1 || !node.text.endsWith("(User)")) return;
+    const classification = [...node.text.matchAll(USER_INPUT_TAG)][0]?.[1];
+    if (classification !== "optional") return;
+    const lookupKeys = new Set(
+      [...node.text.matchAll(/\{\{lookup:\s*([^}]+)\}\}/g)]
+        .flatMap((match) => match[1].split(","))
+        .map((key) => key.trim())
+        .filter(Boolean)
+    );
+    const label = cleanTreeText(node.text);
+    for (const policy of applicablePolicies) {
+      if (!(policy.lookup_keys || []).some((lookupKey) => lookupKeys.has(lookupKey))) continue;
+      if ((policy.optional_leaf_exceptions || []).includes(label)) continue;
+      errors.push(`${category.id} unresolved direct input must be required for ${policy.standard_id}: ${label}`);
     }
   });
 }
@@ -449,11 +589,10 @@ function validateStandards(standards, errors) {
     if (!/^(Equipment|Method)\b/.test(resolverType || "")) {
       errors.push(`${standard.id} Resolver Type must start with Equipment or Method`);
     }
-    if (/^Equipment\b/.test(resolverType || "")) {
-      const scenarios = extractContractField(contract, "Supported Scenarios") || "";
-      for (const scenario of EQUIPMENT_SCENARIOS) {
-        if (!scenarios.includes(scenario)) errors.push(`${standard.id} equipment resolver is missing scenario ${scenario}`);
-      }
+    const scenarios = parseScenarioList(extractContractField(contract, "Supported Scenarios"));
+    if (scenarios.length === 0) errors.push(`${standard.id} must declare at least one supported scenario`);
+    if (/^Equipment\b/.test(resolverType || "") && scenarios.includes("profile-or-bill-fallback")) {
+      errors.push(`${standard.id} equipment resolver must not claim profile-or-bill-fallback without field-level evidence`);
     }
     if (!/^Yes\b/i.test(extractContractField(contract, "Editable") || "")) {
       errors.push(`${standard.id} Standard assumption must be editable`);
@@ -466,6 +605,536 @@ function validateStandards(standards, errors) {
       if (!automation.includes(field)) errors.push(`${standard.id} Standard missing Automation field ${field}`);
     }
   }
+}
+
+function validateDirectInputPolicyDefinitions(contractManifest, standardById, errors) {
+  for (const policy of contractManifest.required_direct_input_policies || []) {
+    const standard = standardById.get(policy.standard_id);
+    if (!standard) {
+      errors.push(`required direct-input policy references unknown Standard ${policy.standard_id}`);
+      continue;
+    }
+    if (!Array.isArray(policy.lookup_keys) || policy.lookup_keys.length === 0) {
+      errors.push(`${policy.standard_id} required direct-input policy has no lookup keys`);
+      continue;
+    }
+    const declaredLookupKeys = new Set(standard.lookupInputs.map((input) => input.key));
+    for (const lookupKey of policy.lookup_keys) {
+      if (!declaredLookupKeys.has(lookupKey)) {
+        errors.push(`${policy.standard_id} required direct-input policy references undeclared lookup key ${lookupKey}`);
+      }
+    }
+    if (!Array.isArray(policy.optional_leaf_exceptions)) {
+      errors.push(`${policy.standard_id} required direct-input policy has malformed optional exceptions`);
+    }
+    if (!String(policy.reason || "").trim()) {
+      errors.push(`${policy.standard_id} required direct-input policy lacks a reason`);
+    }
+  }
+}
+
+function validateEvidenceManifest(standards, standardById, manifest, evidenceById, sourceFixturePaths, errors) {
+  const allowedStatuses = new Set(["VERIFIED", "LIMITED", "UNVERIFIED", "UNSUPPORTED"]);
+  const requiredFields = [
+    "standard_id",
+    "output_key",
+    "source_roles",
+    "source_url",
+    "source_title",
+    "source_version",
+    "exact_artifact",
+    "exact_field_table_page_equation_or_function",
+    "units",
+    "covered_product_or_method_scope",
+    "existing_or_proposed_coverage",
+    "supported_scenarios",
+    "required_lookup_inputs",
+    "extraction_or_calculation_method",
+    "low_base_high_basis",
+    "uncertainty_basis",
+    "fixture_or_test_reference",
+    "access_limitations",
+    "unsupported_uses",
+    "evidence_status"
+  ];
+  const allowedRoles = new Set(manifest.source_roles || []);
+  const manifestStandardById = new Map((manifest.standards || []).map((standard) => [standard.standard_id, standard]));
+
+  if (manifestStandardById.size !== standards.length) {
+    errors.push(`source-evidence manifest has ${manifestStandardById.size} Standard summaries; expected ${standards.length}`);
+  }
+  for (const standard of standards) {
+    const summary = manifestStandardById.get(standard.id);
+    if (!summary) {
+      errors.push(`${standard.id} is missing a source-evidence Standard summary`);
+      continue;
+    }
+    if (summary.verdict !== standard.status) {
+      errors.push(`${standard.id} evidence verdict ${summary.verdict} does not match registry status ${standard.status}`);
+    }
+    const summaryEvidenceRoles = new Map();
+    for (const role of allowedRoles) {
+      if (!Array.isArray(summary.source_roles?.[role])) {
+        errors.push(`${standard.id} source-role summary is missing ${role}`);
+        continue;
+      }
+      for (const evidenceId of summary.source_roles[role]) {
+        const evidence = evidenceById.get(evidenceId);
+        if (!evidence) {
+          errors.push(`${standard.id} source-role summary references unknown evidence ${evidenceId}`);
+        } else if (evidence.standard_id !== standard.id) {
+          errors.push(`${standard.id} source-role summary references cross-Standard evidence ${evidenceId}`);
+        }
+        if (!summaryEvidenceRoles.has(evidenceId)) summaryEvidenceRoles.set(evidenceId, new Set());
+        summaryEvidenceRoles.get(evidenceId).add(role);
+      }
+    }
+    if (!String(summary.manual_review_verdict || "").trim()) {
+      errors.push(`${standard.id} source-evidence summary lacks a manual review verdict`);
+    }
+    for (const outputKey of summary.output_keys || []) {
+      if (![...evidenceById.values()].some((record) => record.standard_id === standard.id && record.output_key === outputKey)) {
+        errors.push(`${standard.id} output ${outputKey} has no evidence record`);
+      }
+    }
+    const declaredScenarios = parseScenarioList(
+      extractContractField(standard.fields["**Resolution Contract:**"], "Supported Scenarios")
+    );
+    const records = [...evidenceById.values()].filter((record) => record.standard_id === standard.id);
+    for (const record of records) {
+      const listedRoles = summaryEvidenceRoles.get(record.id) || new Set();
+      if (listedRoles.size === 0) {
+        errors.push(`${record.id} is absent from the ${standard.id} source-role summary`);
+      }
+      for (const role of record.source_roles || []) {
+        if (!listedRoles.has(role)) {
+          errors.push(`${record.id} declares source role ${role} but is not listed there`);
+        }
+      }
+      for (const role of listedRoles) {
+        if (!(record.source_roles || []).includes(role)) {
+          errors.push(`${record.id} is listed under undeclared source role ${role}`);
+        }
+      }
+      if (!(summary.output_keys || []).includes(record.output_key)) {
+        errors.push(`${record.id} output ${record.output_key} is absent from the ${standard.id} output summary`);
+      }
+    }
+    for (const scenario of declaredScenarios) {
+      if (!records.some((record) => record.evidence_status !== "UNSUPPORTED" && record.supported_scenarios.includes(scenario))) {
+        errors.push(`${standard.id} scenario ${scenario} has no compatible evidence record`);
+      }
+    }
+    const declaredLookupKeys = new Set(standard.lookupInputs.map((input) => input.key));
+    for (const record of records) {
+      for (const lookupKey of record.required_lookup_inputs || []) {
+        if (!declaredLookupKeys.has(lookupKey)) {
+          errors.push(`${record.id} evidence references undeclared Standard lookup input ${lookupKey}`);
+        }
+      }
+    }
+  }
+
+  for (const record of evidenceById.values()) {
+    for (const field of requiredFields) {
+      if (!(field in record)) errors.push(`${record.id} evidence record is missing ${field}`);
+    }
+    if (!standardById.has(record.standard_id)) errors.push(`${record.id} references unknown Standard ${record.standard_id}`);
+    if (!allowedStatuses.has(record.evidence_status)) errors.push(`${record.id} has invalid evidence status ${record.evidence_status}`);
+    if (!Array.isArray(record.source_roles) || record.source_roles.length === 0) {
+      errors.push(`${record.id} evidence record has no source roles`);
+    } else {
+      for (const role of record.source_roles) {
+        if (!allowedRoles.has(role)) errors.push(`${record.id} has invalid source role ${role}`);
+      }
+    }
+    if (!/^https:\/\//.test(record.source_url || "")) errors.push(`${record.id} evidence source URL must use https`);
+    if (!String(record.exact_artifact || "").trim() || !String(record.exact_field_table_page_equation_or_function || "").trim()) {
+      errors.push(`${record.id} lacks an exact artifact or exact source location`);
+    }
+    if (!Array.isArray(record.supported_scenarios) || !Array.isArray(record.required_lookup_inputs) || !Array.isArray(record.unsupported_uses)) {
+      errors.push(`${record.id} evidence arrays are malformed`);
+    }
+    if (record.evidence_status === "VERIFIED" && !record.fixture_or_test_reference) {
+      errors.push(`${record.id} VERIFIED evidence lacks a fixture or test reference`);
+    }
+    if (
+      record.evidence_status === "VERIFIED" &&
+      record.fixture_or_test_reference &&
+      !sourceFixturePaths.has(record.fixture_or_test_reference)
+    ) {
+      errors.push(`${record.id} VERIFIED evidence references a missing source fixture ${record.fixture_or_test_reference}`);
+    }
+    if (
+      record.source_roles?.includes("existing_equipment_baseline") &&
+      /proposed-or-current|proposed$/i.test(record.existing_or_proposed_coverage || "") &&
+      record.evidence_status !== "UNSUPPORTED"
+    ) {
+      errors.push(`${record.id} proposed-product evidence is incorrectly used as an existing baseline`);
+    }
+    if (
+      claimsEnabledPercentile(`${record.extraction_or_calculation_method}\n${record.low_base_high_basis}`) &&
+      !hasPopulationEvidence(record)
+    ) {
+      errors.push(`${record.id} enables a percentile without eligible-population filters, sample size, and a fixture`);
+    }
+  }
+}
+
+function validateCategoryContracts(categories, contractById, sources, evidenceById, errors) {
+  const allowedComponents = new Set(Object.keys(sources.categoryContracts.rate_component_definitions || {}));
+  const allowedProfilePaths = new Set(sources.categoryContracts.canonical_profile_paths || []);
+  const allowedBillFields = new Set(sources.billFieldDictionary.map((field) => field.id));
+  const categoryById = new Map(categories.map((category) => [category.id, category]));
+
+  if (contractById.size !== categories.length) {
+    errors.push(`category semantic contract has ${contractById.size} records; expected ${categories.length}`);
+  }
+  for (const category of categories) {
+    const contract = contractById.get(category.id);
+    if (!contract) {
+      errors.push(`${category.id} is missing a formula-term semantic contract`);
+      continue;
+    }
+    if (contract.verdict !== category.status) {
+      errors.push(`${category.id} semantic verdict ${contract.verdict} does not match category status ${category.status}`);
+    }
+    if (!Array.isArray(contract.formula_terms) || contract.formula_terms.length === 0) {
+      errors.push(`${category.id} has no formula-term evidence`);
+    }
+    if (!String(contract.manual_review_verdict || "").trim()) {
+      errors.push(`${category.id} semantic contract lacks a manual review verdict`);
+    }
+    for (const group of contract.formula_terms || []) {
+      for (const field of sources.categoryContracts.formula_term_fields || []) {
+        if (!(field in group)) errors.push(`${category.id} formula-term group is missing ${field}`);
+      }
+      if (!Array.isArray(group.names) || group.names.length === 0) errors.push(`${category.id} formula-term group has no term names`);
+      if (!String(group.unit || "").trim() || /^mismatch|unknown$/i.test(group.unit || "")) {
+        errors.push(`${category.id} formula-term group has invalid units for ${(group.names || []).join(", ")}`);
+      }
+      if (!Array.isArray(group.tree_nodes) || group.tree_nodes.length === 0) {
+        errors.push(`${category.id} formula term ${(group.names || []).join(", ")} has no tree resolution`);
+      }
+      if (!Array.isArray(group.exact_paths) || group.exact_paths.length === 0) {
+        errors.push(`${category.id} formula term ${(group.names || []).join(", ")} has no exact input path`);
+      }
+      if (!String(group.formula_use || "").trim() || /\bunused\b/i.test(group.formula_use || "")) {
+        errors.push(`${category.id} formula term ${(group.names || []).join(", ")} is not used by the formula`);
+      }
+      for (const exactPath of group.exact_paths || []) {
+        for (const match of exactPath.matchAll(/unit_conversion:([a-z0-9-]+)/g)) {
+          if (!sources.categoryContracts.unit_conversion_definitions?.[match[1]]) {
+            errors.push(`${category.id} formula term references unknown unit conversion ${match[1]}`);
+          }
+        }
+        for (const match of exactPath.matchAll(/\bprofile\.([A-Za-z0-9_.]+)/g)) {
+          if (!allowedProfilePaths.has(match[1])) {
+            errors.push(`${category.id} formula term references nonexistent Profile field ${match[1]}`);
+          }
+        }
+        for (const match of exactPath.matchAll(/utilityExtractedValues\[\]\.fieldId=([a-z0-9_]+)/g)) {
+          if (!allowedBillFields.has(match[1])) {
+            errors.push(`${category.id} formula term references nonexistent Bill field ${match[1]}`);
+          }
+        }
+      }
+      for (const evidenceId of group.evidence_ids || []) {
+        const evidence = evidenceById.get(evidenceId);
+        if (!evidence) errors.push(`${category.id} formula term references unknown evidence ${evidenceId}`);
+      }
+      if (
+        group.standard_output_key &&
+        !(group.evidence_ids || []).some((evidenceId) => evidenceById.get(evidenceId)?.output_key === group.standard_output_key)
+      ) {
+        errors.push(`${category.id} formula term ${group.names.join(", ")} has no evidence for Standard output ${group.standard_output_key}`);
+      }
+      validateTermUnitHeuristics(category.id, group, errors);
+    }
+    for (const component of contract.rate_components || []) {
+      if (!allowedComponents.has(component)) errors.push(`${category.id} has unknown rate component ${component}`);
+    }
+    if ((contract.rate_components || []).includes("electric-demand") && !/BR-INTERVAL-LOAD-AND-TARIFF/.test(category.treeBlock)) {
+      errors.push(`${category.id} declares demand value without an interval load and tariff formula path`);
+    }
+    if (
+      ((contract.rate_components || []).includes("electric-export") ||
+        (contract.rate_components || []).includes("electric-export-non-bypassable")) &&
+      !/export|REopt interval dispatch result|Composite microgrid dispatch result/i.test(
+        `${category.primaryFormula}\n${category.supportingFormulas}\n${category.treeBlock}`
+      )
+    ) {
+      errors.push(`${category.id} declares export treatment without an export formula or traced dispatch output`);
+    }
+    if (category.id === "ITC-34" && (contract.rate_components || []).includes("sewer-volumetric")) {
+      errors.push("ITC-34 must not include sewer on the irrigation design path");
+    }
+    if ((contract.rate_components || []).includes("sewer-volumetric") && !contract.sewer_applicability) {
+      errors.push(`${category.id} declares sewer value without an applicability rule`);
+    }
+    for (const profilePath of contract.profile_paths || []) {
+      if (!allowedProfilePaths.has(profilePath)) errors.push(`${category.id} references nonexistent Profile field ${profilePath}`);
+    }
+    for (const fieldId of contract.bill_field_ids || []) {
+      if (!allowedBillFields.has(fieldId)) errors.push(`${category.id} references nonexistent Bill field ${fieldId}`);
+    }
+    const fixture = sources.goldenFixtures.get(category.id);
+    const declaredSourceFixture = contract.default_path?.source_fixture;
+    if (
+      declaredSourceFixture &&
+      !sources.sourceFixturePaths.has(declaredSourceFixture) &&
+      ![...sources.goldenFixtures.values()].some((candidate) => candidate.path === declaredSourceFixture)
+    ) {
+      errors.push(`${category.id} default path references a missing source fixture ${declaredSourceFixture}`);
+    }
+    if (category.status === "RESEARCHED — READY FOR HUMAN REVIEW") {
+      if (!fixture || contract.default_path?.executable_golden_fixture !== fixture.path) {
+        errors.push(`${category.id} Ready category lacks its declared executable golden fixture`);
+      }
+      for (const group of contract.formula_terms || []) {
+        for (const evidenceId of group.evidence_ids || []) {
+          if (evidenceById.get(evidenceId)?.evidence_status !== "VERIFIED") {
+            errors.push(`${category.id} Ready category uses insufficient evidence ${evidenceId}`);
+          }
+        }
+      }
+      validateGoldenFixture(category, contract, fixture?.content, errors);
+    }
+    if (category.status !== "RESEARCHED — READY FOR HUMAN REVIEW" && contract.default_path?.executable_golden_fixture) {
+      errors.push(`${category.id} non-Ready category must not claim an executable golden fixture`);
+    }
+    validateFormulaIdentifierCoverage(category, contract, errors);
+    validateFormulaGuards(category, contract, errors);
+  }
+  for (const contract of contractById.values()) {
+    if (!categoryById.has(contract.id)) errors.push(`semantic contract references unknown category ${contract.id}`);
+  }
+}
+
+function validateRateComponentDefinitions(contractManifest, allowedBillFields, errors) {
+  for (const [componentId, definition] of Object.entries(contractManifest.rate_component_definitions || {})) {
+    if (!String(definition.unit || "").trim()) {
+      errors.push(`rate component ${componentId} lacks units`);
+    }
+    if (!Array.isArray(definition.exact_paths) || definition.exact_paths.length === 0) {
+      errors.push(`rate component ${componentId} lacks exact acquisition paths`);
+      continue;
+    }
+    for (const exactPath of definition.exact_paths) {
+      for (const match of exactPath.matchAll(/utilityExtractedValues\[\]\.fieldId=([a-z0-9_]+)/g)) {
+        if (!allowedBillFields.has(match[1])) {
+          errors.push(`rate component ${componentId} references nonexistent Bill field ${match[1]}`);
+        }
+      }
+    }
+    if (!String(definition.condition || "").trim()) {
+      errors.push(`rate component ${componentId} lacks an applicability condition`);
+    }
+  }
+  for (const [conversionId, definition] of Object.entries(contractManifest.unit_conversion_definitions || {})) {
+    if (!Array.isArray(definition.functions) || definition.functions.length === 0) {
+      errors.push(`unit conversion ${conversionId} lacks declared functions`);
+    }
+    if (!Array.isArray(definition.exact_paths) || definition.exact_paths.length === 0) {
+      errors.push(`unit conversion ${conversionId} lacks an exact acquisition path`);
+    }
+    if (!String(definition.condition || "").trim()) {
+      errors.push(`unit conversion ${conversionId} lacks an applicability condition`);
+    }
+  }
+}
+
+function claimsEnabledPercentile(value) {
+  const text = String(value || "");
+  if (!/(percentile|quartile)/i.test(text)) return false;
+  if (/(?:disabled|prohibited|unsupported|do not|not enabled|not approved|no percentile|not percentiles)/i.test(text)) {
+    return false;
+  }
+  return /\b(?:use|uses|calculate|calculates|derive|derives|return|returns|weighted)\b/i.test(text);
+}
+
+function hasPopulationEvidence(record) {
+  const text = [
+    record.exact_artifact,
+    record.exact_field_table_page_equation_or_function,
+    record.required_lookup_inputs?.join(" "),
+    record.extraction_or_calculation_method,
+    record.low_base_high_basis
+  ].join(" ");
+  return /population/i.test(text) &&
+    /filter/i.test(text) &&
+    /sample (?:count|size)/i.test(text) &&
+    Boolean(record.fixture_or_test_reference);
+}
+
+function validateGoldenFixture(category, contract, fixture, errors) {
+  if (!fixture) return;
+  if (fixture.fixture_type !== "ready_category_golden" || fixture.category_id !== category.id) {
+    errors.push(`${category.id} Ready golden fixture has invalid identity metadata`);
+  }
+  if (fixture.scenario !== contract.default_path?.scenario) {
+    errors.push(`${category.id} Ready golden fixture scenario does not match its default path`);
+  }
+  for (const bound of ["low", "base", "high"]) {
+    const result = fixture.resolved_values?.[bound];
+    if (!result || !Number.isFinite(result.value) || !String(result.unit || "").trim()) {
+      errors.push(`${category.id} Ready golden fixture lacks a numeric ${bound} result with units`);
+    }
+  }
+  if (
+    !fixture.final_dollar_result ||
+    !Number.isFinite(fixture.final_dollar_result.value) ||
+    fixture.final_dollar_result.unit !== "USD/year"
+  ) {
+    errors.push(`${category.id} Ready golden fixture lacks a final USD/year result`);
+  }
+  if (!Array.isArray(fixture.intermediate_calculations) || fixture.intermediate_calculations.length === 0) {
+    errors.push(`${category.id} Ready golden fixture lacks intermediate calculations`);
+  }
+  if (!Array.isArray(fixture.expected_missing_data_warnings)) {
+    errors.push(`${category.id} Ready golden fixture lacks expected missing-data warnings`);
+  }
+}
+
+function validateTermUnitHeuristics(categoryId, group, errors) {
+  for (const name of group.names || []) {
+    if (name === "quantity" && !/(unit|fixture|vehicle|machine|motor|pump|fan|system|port|trap|equipment)/i.test(group.unit)) {
+      errors.push(`${categoryId} formula term quantity has a unit mismatch: ${group.unit}`);
+    }
+    if (/^(?:p_|import_rate|export_credit)/.test(name) && !/USD/i.test(group.unit)) {
+      errors.push(`${categoryId} price term ${name} has a unit mismatch: ${group.unit}`);
+    }
+    if (/efficiency|fraction|^η/.test(name) && !/(fraction|ratio| and )/i.test(group.unit)) {
+      errors.push(`${categoryId} efficiency term ${name} has a unit mismatch: ${group.unit}`);
+    }
+  }
+}
+
+function validateFormulaIdentifierCoverage(category, contract, errors) {
+  const codeSpans = [...`${category.primaryFormula}\n${category.supportingFormulas}`.matchAll(/`([^`]+)`/g)]
+    .map((match) => match[1])
+    .join("\n");
+  const ignored = new Set([
+    "S",
+    "r",
+    "t",
+    "i",
+    "period",
+    "bins",
+    "max",
+    "min",
+    "to_energy",
+    "to_billed_unit"
+  ]);
+  const identifiers = [...new Set(
+    [...codeSpans.matchAll(/[A-Za-zηΔ][A-Za-z0-9_ηΔ²³]*(?:,[A-Za-z0-9_]+)?/g)]
+      .map((match) => match[0])
+  )];
+  const contractNames = (contract.formula_terms || []).flatMap((group) => group.names || []);
+  for (const identifier of identifiers) {
+    if (ignored.has(identifier)) continue;
+    const normalized = identifier.replace(/[²³]/g, "");
+    const covered = contractNames.some((name) => {
+      const normalizedName = name.replace(/[²³]/g, "");
+      return normalizedName === normalized ||
+        (normalized.endsWith("_") && normalizedName.startsWith(normalized));
+    });
+    if (!covered) {
+      errors.push(`${category.id} formula identifier ${identifier} has no formula-term contract`);
+    }
+  }
+}
+
+function validateFormulaGuards(category, contract, errors) {
+  const formulas = `${category.primaryFormula}\n${category.supportingFormulas}`;
+  const usesResourceConversion = /\b(?:to_energy|to_billed_unit)\s*\(/.test(formulas);
+  const declaresResourceConversion = (contract.formula_terms || []).some(
+    (group) => (group.exact_paths || []).includes("unit_conversion:resource-energy")
+  );
+  if (usesResourceConversion && !declaresResourceConversion) {
+    errors.push(`${category.id} uses a resource-energy conversion without a formula-term contract`);
+  }
+  if (!usesResourceConversion && declaresResourceConversion) {
+    errors.push(`${category.id} declares an unused resource-energy conversion`);
+  }
+  if (category.id === "ITC-29" && /charging_efficiency/.test(formulas)) {
+    errors.push("ITC-29 applies vehicle charging efficiency twice even though combE includes wall-to-vehicle losses");
+  }
+  if (category.id === "ITC-42" && /annual_flow_hours[^`\n]*annual_hours[^`\n]*p_electric/.test(category.primaryFormula)) {
+    errors.push("ITC-42 multiplies an annual quantity by annual hours twice");
+  }
+}
+
+function validateFormulaTermTreeCoverage(category, tree, contract, errors) {
+  if (!contract) return;
+  const nodeTexts = [];
+  walkTree(tree, (node) => nodeTexts.push(normalizeText(cleanTreeText(node.text))));
+  for (const group of contract.formula_terms || []) {
+    const missingNodes = (group.tree_nodes || []).filter((treeNode) => {
+      const expected = normalizeText(treeNode);
+      return !nodeTexts.some((nodeText) => nodeText.includes(expected) || expected.includes(nodeText));
+    });
+    if (missingNodes.length > 0) {
+      errors.push(
+        `${category.id} formula term ${(group.names || []).join(", ")} has unmatched tree nodes [${missingNodes.join("; ")}]`
+      );
+    }
+  }
+}
+
+function validateTreeUserInputUsage(tree, category, contract, tracedStandards, errors) {
+  if (!contract) return;
+  const standardLookupKeys = new Set(
+    tracedStandards.flatMap((standard) => standard.lookupInputs.map((input) => input.key))
+  );
+  const formulaTreeNodes = (contract.formula_terms || [])
+    .flatMap((group) => group.tree_nodes || [])
+    .map((treeNode) => normalizeText(treeNode));
+  const rateComponents = new Set(contract.rate_components || []);
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1 || !node.text.endsWith("(User)")) return;
+    const lookupKeys = [...node.text.matchAll(/\{\{lookup:\s*([^}]+)\}\}/g)]
+      .flatMap((match) => match[1].split(","))
+      .map((key) => key.trim())
+      .filter(Boolean);
+    const usedByStandard = lookupKeys.some((lookupKey) => standardLookupKeys.has(lookupKey));
+    const formulaPath = path.length > 2 ? path.slice(-2) : path.slice(-1);
+    const normalizedPath = formulaPath.map((pathNode) => normalizeText(cleanTreeText(pathNode.text)));
+    const usedByFormula = formulaTreeNodes.some((formulaNode) =>
+      normalizedPath.some((pathNode) => pathNode.includes(formulaNode) || formulaNode.includes(pathNode))
+    );
+    const usedByRate = path.some((pathNode) => {
+      const component = pathNode.text.match(/\{\{component:\s*([^}]+)\}\}/)?.[1]?.trim();
+      return component && rateComponents.has(component);
+    });
+    if (!usedByStandard && !usedByFormula && !usedByRate) {
+      errors.push(
+        `${category.id} tree User input is unused by the formula or a traced Standard: ${cleanTreeText(node.text)}`
+      );
+    }
+  });
+}
+
+function buildCategoryEvidence(contract, manifest, evidenceById, tracedStandards) {
+  const evidenceIds = new Set((contract?.formula_terms || []).flatMap((group) => group.evidence_ids || []));
+  const seedRecords = [...evidenceIds].map((id) => evidenceById.get(id)).filter(Boolean);
+  const standardIds = new Set([
+    ...seedRecords.map((record) => record.standard_id),
+    ...tracedStandards.map((standard) => standard.id)
+  ]);
+  const records = [...evidenceById.values()].filter((record) => standardIds.has(record.standard_id));
+  return {
+    records,
+    standardSummaries: (manifest.standards || []).filter((summary) => standardIds.has(summary.standard_id))
+  };
+}
+
+function parseScenarioList(value) {
+  return String(value || "")
+    .replace(/\.$/, "")
+    .split(";")
+    .map((scenario) => scenario.trim())
+    .filter(Boolean);
 }
 
 function traceStandardInputs(category, standard, resolutionIndex, errors) {
@@ -517,15 +1186,6 @@ function summarizeInputs(tree) {
   return summary;
 }
 
-function validateRequiredTechnicalInputs(inputs, category, errors) {
-  if (category.standardIds.length === 0) return;
-  const technical = /\b(?:watt(?:age)?|input kW|rated power|exact efficiency|measured annual operating hours|specific power|total dynamic head|pressure rise|temperature rise)\b/i;
-  for (const input of inputs.RequiredUser) {
-    const leaf = input.split(" > ").at(-1);
-    if (technical.test(leaf)) errors.push(`${category.id} technical engineering value is mandatory despite a Standard path: ${input}`);
-  }
-}
-
 function renderCategoryPage(category) {
   const standardsUsed = category.tracedStandards.length
     ? category.tracedStandards.map((standard) => `\`${standard.id}\``).join(", ")
@@ -567,6 +1227,18 @@ function renderCategoryPage(category) {
     "",
     category.supportingFormulas,
     "",
+    "## Formula-Term Evidence",
+    "",
+    renderFormulaTermEvidence(category),
+    "",
+    "## Source-Role Evidence",
+    "",
+    renderSourceRoleEvidence(category),
+    "",
+    "## Default-Path Proof",
+    "",
+    renderDefaultPathProof(category),
+    "",
     "## Fully Expanded Information Tree",
     "",
     "```text",
@@ -584,7 +1256,7 @@ function renderCategoryPage(category) {
     renderInputList(category.inputs.OptionalUser),
     "",
     category.inputs.OptionalUser.length
-      ? "Optional Known Details replace the corresponding Standard estimate when supplied and validated."
+      ? "Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated."
       : "No optional exact-value override applies to this category.",
     "",
     "### Profile Inputs",
@@ -615,6 +1287,103 @@ function renderCategoryPage(category) {
     "",
     category.decisions.map((decision) => `- ${decision}`).join("\n")
   ].join("\n"));
+}
+
+function renderFormulaTermEvidence(category) {
+  const rows = (category.semanticContract?.formula_terms || []).flatMap((group) =>
+    group.names.map((name) => [
+      name,
+      group.unit,
+      group.source_or_resolver,
+      expandFormulaTermPaths(category, group).join("<br>"),
+      group.fallback_path || "None",
+      group.evidence_ids.length
+        ? group.evidence_ids.map((id) => {
+            const record = category.sourceEvidence.records.find((candidate) => candidate.evidence_id === id);
+            return `${id}: ${record?.evidence_status || "MISSING"}`;
+          }).join("<br>")
+        : "Direct input or formula",
+      group.evidence_ids.length
+        ? group.evidence_ids.map((id) => {
+            const record = category.sourceEvidence.records.find((candidate) => candidate.evidence_id === id);
+            return record ? `${record.exact_artifact} - ${record.exact_field_table_page_equation_or_function}` : id;
+          }).join("<br>")
+        : group.tree_nodes.join("<br>"),
+      group.missing_data_behavior
+    ])
+  );
+  return [
+    "| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |",
+    "|---|---|---|---|---|---|---|---|",
+    ...rows.map((cells) => `| ${cells.map(escapeTableCell).join(" | ")} |`)
+  ].join("\n");
+}
+
+function expandFormulaTermPaths(category, group) {
+  return group.exact_paths.flatMap((path) => {
+    if (path.startsWith("unit_conversion:")) {
+      const conversionId = path.slice("unit_conversion:".length);
+      const definition = category.unitConversionDefinitions[conversionId];
+      if (!definition) return [`${conversionId}: MISSING UNIT-CONVERSION DEFINITION`];
+      return definition.exact_paths.map((exactPath) => `${conversionId}: ${exactPath}`);
+    }
+    const componentIds = path === "rate_components"
+      ? category.semanticContract.rate_components
+      : path.startsWith("rate_component:")
+        ? [path.slice("rate_component:".length)]
+        : null;
+    if (!componentIds) return [path];
+    return componentIds.flatMap((componentId) => {
+      const definition = category.rateComponentDefinitions[componentId];
+      if (!definition) return [`${componentId}: MISSING COMPONENT DEFINITION`];
+      return definition.exact_paths.map((exactPath) => `${componentId}: ${exactPath}`);
+    });
+  });
+}
+
+function renderSourceRoleEvidence(category) {
+  if (category.sourceEvidence.standardSummaries.length === 0) {
+    return "No external Standard source role applies.";
+  }
+  return category.sourceEvidence.standardSummaries.map((summary) => {
+    const roleRows = Object.entries(summary.source_roles).map(([role, ids]) => {
+      const records = ids.map((id) => category.sourceEvidence.records.find((record) => record.evidence_id === id))
+        .filter(Boolean);
+      const value = records.length
+        ? records.map((record) => `${record.evidence_id} (${record.evidence_status}, ${record.existing_or_proposed_coverage})`).join("<br>")
+        : "None";
+      return `| ${role.replaceAll("_", " ")} | ${value} |`;
+    });
+    return [
+      `### ${summary.standard_id}`,
+      "",
+      "| Source role | Evidence |",
+      "|---|---|",
+      ...roleRows,
+      "",
+      `**Unsupported roles or uses:** ${summary.unsupported_roles.join(", ") || "None"}`,
+      "",
+      `**Manual verdict:** ${summary.manual_review_verdict}`
+    ].join("\n");
+  }).join("\n\n");
+}
+
+function renderDefaultPathProof(category) {
+  const proof = category.semanticContract.default_path;
+  return [
+    `- **Minimum required inputs:** ${proof.minimum_required_inputs.length ? proof.minimum_required_inputs.join("; ") : "None"}.`,
+    `- **Exact scenario:** ${proof.scenario}.`,
+    `- **Source fixture:** ${proof.source_fixture || "None"}.`,
+    `- **Low/base/high calculation:** ${proof.low_base_high_calculation}`,
+    `- **Final result path:** ${proof.final_result_path}`,
+    `- **Uncertainty:** ${proof.uncertainty}.`,
+    `- **Executable golden fixture:** ${proof.executable_golden_fixture || "No"}.`,
+    `- **Remaining gate:** ${proof.unresolved_gate || "None"}`
+  ].join("\n");
+}
+
+function escapeTableCell(value) {
+  return String(value ?? "").replaceAll("|", "\\|").replaceAll("\n", "<br>");
 }
 
 function renderDefaultEstimateBehavior(category) {
@@ -919,7 +1688,7 @@ function walkTree(root, callback, path = []) {
 }
 
 function stripResolutionTags(text) {
-  return text.replace(/\s*\{\{(?:lookup|constant|output|input|resource):\s*[^}]+\}\}/g, "").trim();
+  return text.replace(/\s*\{\{(?:lookup|constant|output|input|resource|component|intermediate):\s*[^}]+\}\}/g, "").trim();
 }
 
 function cleanTreeText(text) {

@@ -119,14 +119,16 @@ describe("validate-operational-savings-information-trees", () => {
     expect(() => runValidator(fixtureRoot)).toThrow(/ITC-07 generated Optional Known-Detail count is 4; expected 5/);
   });
 
-  it("rejects technical wattage made mandatory despite a Standard path", async () => {
+  it("rejects a high-sensitivity project input made optional without a supported resolver", async () => {
     const fixtureRoot = await createFixture();
     await mutateTree(fixtureRoot, (text) => text.replace(
-      "Existing Fixture Model, if known {{lookup: existing_fixture_model}} {{input: optional}} (User)",
-      "Existing Fixture Wattage {{lookup: existing_fixture_model}} {{input: required}} (User)"
+      "Existing full-load input kW {{lookup: measur_calculator_inputs}} {{input: required}} (User)",
+      "Existing full-load input kW, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)"
     ));
 
-    expect(() => runValidator(fixtureRoot)).toThrow(/technical engineering value is mandatory despite a Standard path/);
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-39 unresolved direct input must be required for STD-DOE-MEASUR/
+    );
   });
 
   it("rejects an unclassified User input", async () => {
@@ -149,25 +151,293 @@ describe("validate-operational-savings-information-trees", () => {
     expect(() => runValidator(fixtureRoot)).toThrow(/Required User Input cannot say "if known"/);
   });
 
-  it("rejects an equipment resolver without an exact proposed-model path", async () => {
+  it("rejects source evidence with a missing exact source location", async () => {
     const fixtureRoot = await createFixture();
-    await mutateStandard(fixtureRoot, (text) => text.replace("; exact-proposed-model.", "."));
+    await mutateEvidence(fixtureRoot, (manifest) => {
+      delete manifest.evidence_records.find((record) => record.evidence_id === "E-FEMP-PROPOSED")
+        .exact_field_table_page_equation_or_function;
+    });
 
-    expect(() => runValidator(fixtureRoot)).toThrow(/equipment resolver is missing scenario exact-proposed-model/);
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /E-FEMP-PROPOSED evidence record is missing exact_field_table_page_equation_or_function/
+    );
   });
 
-  it("rejects an equipment resolver without a type-based fallback", async () => {
+  it("rejects evidence that names an undeclared Standard lookup input", async () => {
     const fixtureRoot = await createFixture();
-    await mutateStandard(fixtureRoot, (text) => text.replace("existing-type-or-application; ", ""));
+    await mutateEvidence(fixtureRoot, (manifest) => {
+      manifest.evidence_records.find((record) => record.evidence_id === "E-PVWATTS-V8")
+        .required_lookup_inputs.push("invented_pv_design_input");
+    });
 
-    expect(() => runValidator(fixtureRoot)).toThrow(/equipment resolver is missing scenario existing-type-or-application/);
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /E-PVWATTS-V8 evidence references undeclared Standard lookup input invented_pv_design_input/
+    );
   });
 
-  it("rejects an equipment resolver without a no-opportunity path", async () => {
+  it("rejects evidence omitted from its declared source role", async () => {
     const fixtureRoot = await createFixture();
-    await mutateStandard(fixtureRoot, (text) => text.replace("no-linked-opportunity; ", ""));
+    await mutateEvidence(fixtureRoot, (manifest) => {
+      const standard = manifest.standards.find(
+        (candidate) => candidate.standard_id === "STD-COMSTOCK-ANNUAL-DELTA"
+      );
+      standard.source_roles.physics_or_calculation_method =
+        standard.source_roles.physics_or_calculation_method.filter(
+          (evidenceId) => evidenceId !== "E-COMSTOCK-TAXONOMY"
+        );
+    });
 
-    expect(() => runValidator(fixtureRoot)).toThrow(/equipment resolver is missing scenario no-linked-opportunity/);
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /E-COMSTOCK-TAXONOMY is absent from the STD-COMSTOCK-ANNUAL-DELTA source-role summary/
+    );
+  });
+
+  it("rejects proposed-product evidence used as an existing baseline", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateEvidence(fixtureRoot, (manifest) => {
+      const record = manifest.evidence_records.find((candidate) => candidate.evidence_id === "E-FEMP-PROPOSED");
+      record.source_roles.push("existing_equipment_baseline");
+      record.existing_or_proposed_coverage = "proposed";
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /E-FEMP-PROPOSED proposed-product evidence is incorrectly used as an existing baseline/
+    );
+  });
+
+  it("rejects an unsupported Profile or Bill equipment fallback", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateStandard(fixtureRoot, (text) => text.replace(
+      "- **Supported Scenarios:** linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.",
+      "- **Supported Scenarios:** linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data; profile-or-bill-fallback."
+    ));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /STD-ENERGY-STAR-PRODUCT-DATA equipment resolver must not claim profile-or-bill-fallback/
+    );
+  });
+
+  it("rejects an enabled percentile without population, filters, sample size, and a fixture", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateEvidence(fixtureRoot, (manifest) => {
+      manifest.evidence_records.find((record) => record.evidence_id === "E-COMSTOCK-DELTA")
+        .low_base_high_basis = "Use the 25th, 50th, and 75th percentiles.";
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /E-COMSTOCK-DELTA enables a percentile without eligible-population filters, sample size, and a fixture/
+    );
+  });
+
+  it("rejects a formula term without a matching tree node", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      contract.categories.find((category) => category.category_id === "ITC-02")
+        .formula_terms[0].tree_nodes = ["Invented replacement scope"];
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 formula term quantity has unmatched tree nodes/
+    );
+  });
+
+  it("rejects a formula term marked unused", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      contract.categories.find((category) => category.category_id === "ITC-02")
+        .formula_terms[0].formula_use = "unused";
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 formula term quantity is not used by the formula/
+    );
+  });
+
+  it("rejects a tree User input unused by the formula or a traced Standard", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateTree(fixtureRoot, (text) => text.replace(
+      "Annual direct operational-resource savings equals zero\n└─ Linked Opportunity {{intermediate: project-opportunity}}",
+      "Annual direct operational-resource savings equals zero\n├─ Unused customer color {{input: required}} (User)\n└─ Linked Opportunity {{intermediate: project-opportunity}}"
+    ));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-15 tree User input is unused by the formula or a traced Standard/
+    );
+  });
+
+  it("rejects a formula identifier without a formula-term contract", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      const term = contract.categories.find((category) => category.category_id === "ITC-02")
+        .formula_terms.find((group) => group.names.includes("fixture_input_W"));
+      term.names = term.names.filter((name) => name !== "fixture_input_W");
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 formula identifier fixture_input_W has no formula-term contract/
+    );
+  });
+
+  it("rejects a resource conversion without a formula-term contract", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      const category = contract.categories.find((candidate) => candidate.category_id === "ITC-08");
+      category.formula_terms = category.formula_terms.filter(
+        (group) => !(group.exact_paths || []).includes("unit_conversion:resource-energy")
+      );
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-08 uses a resource-energy conversion without a formula-term contract/
+    );
+  });
+
+  it("rejects an unused resource-conversion contract", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      contract.categories.find((category) => category.category_id === "ITC-15").formula_terms.push({
+        names: ["resource_unit_conversion"],
+        unit: "common-energy-unit/resource-unit",
+        tree_nodes: ["Complete Fixture Count"],
+        source_or_resolver: "UNIT-RESOURCE-ENERGY",
+        exact_paths: ["unit_conversion:resource-energy"],
+        fallback_path: null,
+        standard_output_key: null,
+        evidence_ids: [],
+        formula_use: "Mutation-only unused conversion",
+        default_path_resolved: false,
+        missing_data_behavior: "NO_ESTIMATE"
+      });
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-15 declares an unused resource-energy conversion/
+    );
+  });
+
+  it("rejects a formula-term unit mismatch", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      contract.categories.find((category) => category.category_id === "ITC-02")
+        .formula_terms[0].unit = "USD/year";
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 formula term quantity has a unit mismatch/
+    );
+  });
+
+  it("rejects a second charging-efficiency adjustment for FuelEconomy combE", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateTree(fixtureRoot, (text) => text.replace(
+      "`added_kWh = annual_miles × proposed_combE / 100`",
+      "`added_kWh = annual_miles × proposed_combE / 100 / charging_efficiency`"
+    ));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-29 applies vehicle charging efficiency twice/
+    );
+  });
+
+  it("rejects multiplication of an annual quantity by annual hours twice", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateTree(fixtureRoot, (text) => text.replace(
+      "`S = quantity × annual_flow_hours × (specific_power_existing - specific_power_proposed) × p_electric`",
+      "`S = quantity × annual_flow_hours × annual_hours × (specific_power_existing - specific_power_proposed) × p_electric`"
+    ));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-42 multiplies an annual quantity by annual hours twice/
+    );
+  });
+
+  it("rejects demand valuation without an interval load path", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      contract.categories.find((category) => category.category_id === "ITC-02")
+        .rate_components.push("electric-demand");
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 declares demand value without an interval load and tariff formula path/
+    );
+  });
+
+  it("rejects export valuation without an export formula or traced dispatch", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      contract.categories.find((category) => category.category_id === "ITC-02")
+        .rate_components.push("electric-export");
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 declares export treatment without an export formula or traced dispatch output/
+    );
+  });
+
+  it("rejects sewer valuation on the irrigation design path", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      const category = contract.categories.find((candidate) => candidate.category_id === "ITC-34");
+      category.rate_components.push("sewer-volumetric");
+      category.sewer_applicability = "Always";
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-34 must not include sewer on the irrigation design path/
+    );
+  });
+
+  it("rejects a nonexistent canonical Profile path", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      contract.categories.find((category) => category.category_id === "ITC-02")
+        .profile_paths.push("site.fake.exteriorFixtureCount");
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 references nonexistent Profile field site\.fake\.exteriorFixtureCount/
+    );
+  });
+
+  it("rejects a nonexistent canonical Bill field", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateContract(fixtureRoot, (contract) => {
+      contract.categories.find((category) => category.category_id === "ITC-02")
+        .bill_field_ids.push("invented_tariff_field");
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 references nonexistent Bill field invented_tariff_field/
+    );
+  });
+
+  it("rejects a Ready category without its declared golden fixture", async () => {
+    const fixtureRoot = await createFixture();
+    await rm(join(fixtureRoot, "docs/operational-savings-fixtures/categories/ITC-15.golden.json"));
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-15 Ready category lacks its declared executable golden fixture/
+    );
+  });
+
+  it("rejects a Ready category backed by unverified source evidence", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateTree(fixtureRoot, (text) => text.replace(
+      "### ITC-01 - ComStock archetype annual resource delta\n\n**Status:** DRAFT",
+      "### ITC-01 - ComStock archetype annual resource delta\n\n**Status:** RESEARCHED — READY FOR HUMAN REVIEW"
+    ).replace(
+      "Show an interquartile range and applicability share only after the eligible population, filters, weights, and sample count are fixture-backed.",
+      "Show an interquartile range and applicability share only after the eligible population, filters, weights, and sample count are fixture-backed.\n\nReady mutation marker."
+    ));
+    await mutateContract(fixtureRoot, (contract) => {
+      contract.categories.find((category) => category.category_id === "ITC-01").verdict =
+        "RESEARCHED — READY FOR HUMAN REVIEW";
+    });
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-01 Ready category uses insufficient evidence E-COMSTOCK-DELTA/
+    );
   });
 
   it("rejects a Standard scenario without output behavior", async () => {
@@ -245,13 +515,16 @@ describe("validate-operational-savings-information-trees", () => {
 async function createFixture() {
   const fixtureRoot = await mkdtemp(join(tmpdir(), "gbs-operational-savings-validator-"));
   fixtureRoots.push(fixtureRoot);
-  for (const directory of ["docs", "scripts", "apps/api/server/matching"]) {
+  for (const directory of ["docs", "scripts", "data", "apps/api/server/matching"]) {
     await mkdir(join(fixtureRoot, directory), { recursive: true });
   }
   for (const file of [
     "docs/operational-savings-information-trees.md",
     "docs/operational-savings-standard-registry.md",
     "docs/operational-savings-information-tree-audit.md",
+    "docs/operational-savings-source-evidence.json",
+    "docs/operational-savings-category-contracts.json",
+    "data/bill_field_dictionary.json",
     "scripts/generate-operational-savings-review-pages.mjs",
     "scripts/validate-operational-savings-information-trees.mjs",
     "apps/api/server/matching/retrofitTaxonomy.mjs",
@@ -262,6 +535,11 @@ async function createFixture() {
   await cp(
     join(SOURCE_ROOT, "docs/operational-savings-review"),
     join(fixtureRoot, "docs/operational-savings-review"),
+    { recursive: true }
+  );
+  await cp(
+    join(SOURCE_ROOT, "docs/operational-savings-fixtures"),
+    join(fixtureRoot, "docs/operational-savings-fixtures"),
     { recursive: true }
   );
   return fixtureRoot;
@@ -275,11 +553,25 @@ async function mutateStandard(fixtureRoot, mutate) {
   await mutateFile(join(fixtureRoot, "docs/operational-savings-standard-registry.md"), mutate);
 }
 
+async function mutateEvidence(fixtureRoot, mutate) {
+  await mutateJson(join(fixtureRoot, "docs/operational-savings-source-evidence.json"), mutate);
+}
+
+async function mutateContract(fixtureRoot, mutate) {
+  await mutateJson(join(fixtureRoot, "docs/operational-savings-category-contracts.json"), mutate);
+}
+
 async function mutateFile(path, mutate) {
   const original = await readFile(path, "utf8");
   const changed = mutate(original);
   if (changed === original) throw new Error(`Mutation did not change ${path}`);
   await writeFile(path, changed, "utf8");
+}
+
+async function mutateJson(path, mutate) {
+  const original = JSON.parse(await readFile(path, "utf8"));
+  mutate(original);
+  await writeFile(path, `${JSON.stringify(original, null, 2)}\n`, "utf8");
 }
 
 function runValidator(fixtureRoot) {

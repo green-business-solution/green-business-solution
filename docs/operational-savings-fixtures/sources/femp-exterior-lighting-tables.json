@@ -1,0 +1,31 @@
+{
+  "fixture_type": "reviewed_source_table",
+  "reviewed_on": "2026-07-22",
+  "source_url": "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting",
+  "source_version": "Updated June 2023",
+  "table_1_proposed_ler_minimums_lm_per_w": {
+    "fuel_pump_canopy": 128,
+    "parking_garage": 123,
+    "outdoor_pole_arm_area_and_roadway": 136,
+    "outdoor_pole_arm_decorative": 112,
+    "outdoor_wall_mounted": 126,
+    "bollard": 100,
+    "floodlight": 118
+  },
+  "table_2_wall_mounted_example": {
+    "covered_lumen_range": "9,900-10,100 lumens",
+    "annual_operating_hours": 3600,
+    "columns": [
+      {"name": "best_available", "ler_lm_per_w": 139, "annual_energy_kwh": 257},
+      {"name": "required_model", "ler_lm_per_w": 126, "annual_energy_kwh": 286},
+      {"name": "less_efficient_example", "ler_lm_per_w": 65, "annual_energy_kwh": 565}
+    ]
+  },
+  "unsupported_inferences": [
+    "General installed legacy-fixture wattage",
+    "Existing fixture percentiles",
+    "Input watts outside the wall-mounted example",
+    "Exact proposed product input watts",
+    "Profile or Bill product fallback"
+  ]
+}

@@ -7,17 +7,17 @@
 
 ## Review Status
 
-- **Category status:** RESEARCHED — READY FOR HUMAN REVIEW
+- **Category status:** DRAFT
 - **Retrofit count:** 2
 - **Standards used:** `STD-WATERSENSE-LANDSCAPE`
 - **Required User-input count:** 6
 - **Optional Known-Detail count:** 2
 - **Profile-input count:** 1
-- **Bill-input count:** 4
+- **Bill-input count:** 1
 - **Standard-assumption count:** 1
 - **Applicable resources:** water-sewer
-- **Default estimate:** AVAILABLE
-- **Automation readiness:** Ready for implementation
+- **Default estimate:** UNAVAILABLE
+- **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
 
@@ -28,13 +28,49 @@
 
 ## Primary Formula
 
-`S = (baseline_landscape_gallons - proposed_landscape_gallons) × p_water_sewer`
+`S = (baseline_design_allowance_gallons - proposed_design_allowance_gallons) × p_water`
 
 ## Supporting Formula(s)
 
 Use the WaterSense Water Budget Tool equations with constant climate and landscape area across cases.
 
-`avoided_water = min(max(baseline_landscape_gallons - proposed_landscape_gallons, 0), annual_billed_water)`
+The result is a modeled design-allowance comparison, not measured existing operational consumption.
+
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| baseline_design_allowance_gallons | gallons/year | WaterSense Water Budget Tool Version 2.0 | evidence:E-WATERSENSE-LANDSCAPE-DESIGN | None | E-WATERSENSE-LANDSCAPE-DESIGN: VERIFIED | Water Budget Tool Version 2.0 and downloadable climate data - EPA page states the tool compares estimated designed-landscape water use with typical standard new construction using local climate data and user entries | NO_ESTIMATE |
+| proposed_design_allowance_gallons | gallons/year | WaterSense Water Budget Tool Version 2.0 | evidence:E-WATERSENSE-LANDSCAPE-DESIGN | None | E-WATERSENSE-LANDSCAPE-DESIGN: VERIFIED | Water Budget Tool Version 2.0 and downloadable climate data - EPA page states the tool compares estimated designed-landscape water use with typical standard new construction using local climate data and user entries | NO_ESTIMATE |
+| p_water | USD/gallon | Bill water component only | water-volumetric: utilityExtractedValues[].fieldId=annual_water_cost<br>water-volumetric: utilityExtractedValues[].fieldId=annual_water_use<br>water-volumetric: utilityExtractedValues[].fieldId=water_unit | None | Direct input or formula | Water volumetric charge | RETURN_MODELED_GALLONS_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+### STD-WATERSENSE-LANDSCAPE
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | E-WATERSENSE-LANDSCAPE-ACTUAL-UNSUPPORTED (UNSUPPORTED, none) |
+| proposed or qualified product | None |
+| usage or operating schedule | E-WATERSENSE-LANDSCAPE-ACTUAL-UNSUPPORTED (UNSUPPORTED, none) |
+| physics or calculation method | E-WATERSENSE-LANDSCAPE-DESIGN (VERIFIED, modeled-design-comparison) |
+| tariff or bill | None |
+| geographic or climate | E-WATERSENSE-LANDSCAPE-DESIGN (VERIFIED, modeled-design-comparison) |
+
+**Unsupported roles or uses:** actual_existing_consumption, irrigation_schedule, tariff_or_bill
+
+**Manual verdict:** Version 2.0 compares designed landscape water use with typical standard new construction. It does not measure actual consumption or determine irrigation scheduling.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** ZIP Code; hydrozone areas; plant types; existing and proposed irrigation configurations.
+- **Exact scenario:** modeled-design-comparison.
+- **Source fixture:** docs/operational-savings-fixtures/sources/watersense-landscape-scope.json.
+- **Low/base/high calculation:** Explicit plant-factor and irrigation-efficiency sensitivities only.
+- **Final result path:** design allowance difference -> water rate
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** Exact Version 2.0 equation and data fixture plus product decision on presenting modeled allowance value.
 
 ## Fully Expanded Information Tree
 
@@ -53,14 +89,10 @@ Annual dollar savings
 │  │  ├─ Irrigation method (User)
 │  │  ├─ Irrigation efficiency, if known (User)
 │  │  └─ Controller treatment (User)
-│  ├─ Climate data and Water Budget equations (Standard)
-│  └─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-│     ├─ annual_water_use with water_unit for water and sewer (Bill)
-│     ├─ billing_period_start (Bill)
-│     └─ billing_period_end (Bill)
+│  └─ Climate data and Water Budget equations (Standard)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   └─ Water and sewer variable charge
-      └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
+   └─ Water volumetric charge
+      └─ annual_water_cost divided by annual_water_use after explicit water_unit normalization (Bill)
 ```
 
 ## Input Workflow
@@ -79,7 +111,7 @@ Annual dollar savings
 - Annual irrigation water reduction > Existing irrigation configuration > Irrigation efficiency, if known
 - Annual irrigation water reduction > Proposed irrigation configuration > Irrigation efficiency, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
@@ -87,10 +119,7 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### Bill Inputs
 
-- Annual irrigation water reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_water_use with water_unit for water and sewer
-- Annual irrigation water reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
-- Annual irrigation water reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water volumetric charge > annual_water_cost divided by annual_water_use after explicit water_unit normalization
 
 ### Standard-Derived Assumptions
 
@@ -111,7 +140,7 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### ■ STD-WATERSENSE-LANDSCAPE — WaterSense landscape water budget
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve baseline and proposed landscape water requirements from climate, area, plant, and irrigation method.
@@ -173,11 +202,14 @@ Store workbook version and input hydrozones.
 ## Category Notes and Missing-Data Behavior
 
 The two retrofits share a category because the existing and proposed method are record selections in the same water-budget tree.
+The Water Budget Tool is a design method and does not prove actual existing irrigation consumption.
+Use only the water charge for irrigation unless a verified account rule proves the avoided irrigation use is sewer-billed.
+Do not cap the modeled allowance difference against an unrelated whole-site annual water bill.
 
-Default-estimate behavior: Use the documented minimum-input path and replace estimates with validated Optional Known Details when supplied.
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
 
 Expected uncertainty: STD-WATERSENSE-LANDSCAPE: Moderate uncertainty.
 
 ## Human Review Decisions
 
-- Approve the documented category boundary, inputs, Standard automation, missing-data behavior, uncertainty, and exclusions before implementation.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

@@ -10,10 +10,10 @@
 - **Category status:** BLOCKED
 - **Retrofit count:** 1
 - **Standards used:** None
-- **Required User-input count:** 4
-- **Optional Known-Detail count:** 4
+- **Required User-input count:** 1
+- **Optional Known-Detail count:** 2
 - **Profile-input count:** 0
-- **Bill-input count:** 7
+- **Bill-input count:** 5
 - **Standard-assumption count:** 0
 - **Applicable resources:** electricity
 - **Default estimate:** UNAVAILABLE
@@ -33,6 +33,32 @@
 
 `current_annual_refrigeration_kWh = annual_billed_kWh × confirmed_walk_in_share` unless direct submetering is available.
 
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| annual_billed_kWh | kWh/year, fraction, kWh/year | Bill plus confirmed end-use allocation | utilityExtractedValues[].fieldId=annual_kwh plus User walk-in share | None | Direct input or formula | BR-ANNUAL-BILL-RESOURCE<br>Walk-in share of billed electricity or direct measurement, if known (User) | NO_ESTIMATE |
+| confirmed_walk_in_share | kWh/year, fraction, kWh/year | Bill plus confirmed end-use allocation | utilityExtractedValues[].fieldId=annual_kwh plus User walk-in share | None | Direct input or formula | BR-ANNUAL-BILL-RESOURCE<br>Walk-in share of billed electricity or direct measurement, if known (User) | NO_ESTIMATE |
+| current_annual_refrigeration_kWh | kWh/year, fraction, kWh/year | Bill plus confirmed end-use allocation | utilityExtractedValues[].fieldId=annual_kwh plus User walk-in share | None | Direct input or formula | BR-ANNUAL-BILL-RESOURCE<br>Walk-in share of billed electricity or direct measurement, if known (User) | NO_ESTIMATE |
+| proposed_annual_refrigeration_kWh | kWh/year | Project-specific whole-system engineering result | User or engineer proposed annual kWh | None | Direct input or formula | Proposed Annual System kWh for the Same Box Load and Duty, if known (User) | NO_ESTIMATE |
+| duty_equivalence_confirmed | boolean | User-confirmed project comparison boundary | User duty-equivalence confirmation | None | Direct input or formula | Existing and proposed duty-equivalence confirmation (User) | NO_ESTIMATE |
+| p_electric | USD/kWh | Bill | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges | None | Direct input or formula | Electric volumetric charge | RETURN_KWH_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+No external Standard source role applies.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** confirmed walk-in allocation; proposed whole-system annual kWh; electric rate.
+- **Exact scenario:** exact-project-inputs-only.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Exact project inputs only.
+- **Final result path:** whole-system annual kWh difference -> rate
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** No public component dataset resolves whole-system annual performance.
+
 ## Fully Expanded Information Tree
 
 ```text
@@ -44,37 +70,25 @@ Annual dollar savings
 │  │  └─ billing_period_end (Bill)
 │  ├─ Walk-in share of billed electricity or direct measurement, if known (User)
 │  ├─ Proposed Annual System kWh for the Same Box Load and Duty, if known (User)
-│  ├─ Approximate Box Length (User)
-│  ├─ Approximate Box Width (User)
-│  ├─ Approximate Box Height (User)
-│  ├─ Indoor Design Temperature, if known (User)
-│  ├─ Outdoor Design Temperature, if known (User)
 │  └─ Existing and proposed duty-equivalence confirmation (User)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   └─ Electric variable charge
-      ├─ rate_schedule and customer_class, verified against the service account (Bill)
-      ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-      ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-      └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
+   └─ Electric volumetric charge
+      ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+      └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
 ```
 
 ## Input Workflow
 
 ### Required User Inputs
 
-- Annual walk-in refrigeration electricity reduction > Approximate Box Length
-- Annual walk-in refrigeration electricity reduction > Approximate Box Width
-- Annual walk-in refrigeration electricity reduction > Approximate Box Height
 - Annual walk-in refrigeration electricity reduction > Existing and proposed duty-equivalence confirmation
 
 ### Optional Known Details
 
 - Annual walk-in refrigeration electricity reduction > Walk-in share of billed electricity or direct measurement, if known
 - Annual walk-in refrigeration electricity reduction > Proposed Annual System kWh for the Same Box Load and Duty, if known
-- Annual walk-in refrigeration electricity reduction > Indoor Design Temperature, if known
-- Annual walk-in refrigeration electricity reduction > Outdoor Design Temperature, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
@@ -85,10 +99,8 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 - Annual walk-in refrigeration electricity reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh for electricity
 - Annual walk-in refrigeration electricity reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
 - Annual walk-in refrigeration electricity reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
 
 ### Standard-Derived Assumptions
 

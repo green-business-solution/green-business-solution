@@ -13,7 +13,7 @@
 - **Required User-input count:** 2
 - **Optional Known-Detail count:** 3
 - **Profile-input count:** 0
-- **Bill-input count:** 10
+- **Bill-input count:** 7
 - **Standard-assumption count:** 0
 - **Applicable resources:** electricity, gas
 - **Default estimate:** UNAVAILABLE
@@ -35,6 +35,36 @@
 
 `proposed_annual_induction_kWh = annual_cooking_activity × proposed_tested_kWh_per_activity_unit`
 
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| annual_billed_fuel | fuel-unit/year, fraction, fuel-unit/year | Bill plus confirmed end-use allocation | annual_therms or exact fuel record plus User cooking share | None | Direct input or formula | BR-ANNUAL-BILL-RESOURCE<br>Cooking share of billed fuel or direct equipment measurement, if known (User) | NO_ESTIMATE |
+| confirmed_cooking_share | fuel-unit/year, fraction, fuel-unit/year | Bill plus confirmed end-use allocation | annual_therms or exact fuel record plus User cooking share | None | Direct input or formula | BR-ANNUAL-BILL-RESOURCE<br>Cooking share of billed fuel or direct equipment measurement, if known (User) | NO_ESTIMATE |
+| current_annual_cooking_fuel | fuel-unit/year, fraction, fuel-unit/year | Bill plus confirmed end-use allocation | annual_therms or exact fuel record plus User cooking share | None | Direct input or formula | BR-ANNUAL-BILL-RESOURCE<br>Cooking share of billed fuel or direct equipment measurement, if known (User) | NO_ESTIMATE |
+| annual_cooking_activity | activity/year, kWh/activity, kWh/year | Measured activity and exact proposed test result | User exact project inputs | None | Direct input or formula | Annual Cooking Activity in the Tested Duty Unit, if known (User)<br>Proposed Induction kWh per Identical Tested Duty Unit, if known (User) | NO_ESTIMATE |
+| proposed_tested_kWh_per_activity_unit | activity/year, kWh/activity, kWh/year | Measured activity and exact proposed test result | User exact project inputs | None | Direct input or formula | Annual Cooking Activity in the Tested Duty Unit, if known (User)<br>Proposed Induction kWh per Identical Tested Duty Unit, if known (User) | NO_ESTIMATE |
+| proposed_annual_induction_kWh | activity/year, kWh/activity, kWh/year | Measured activity and exact proposed test result | User exact project inputs | None | Direct input or formula | Annual Cooking Activity in the Tested Duty Unit, if known (User)<br>Proposed Induction kWh per Identical Tested Duty Unit, if known (User) | NO_ESTIMATE |
+| existing_duty_definition | tested-duty definition and boolean | User-confirmed project test boundary | User exact project inputs | None | Direct input or formula | Existing cooking-duty definition (User)<br>Proposed duty-equivalence confirmation (User) | NO_ESTIMATE |
+| proposed_duty_equivalence_confirmed | tested-duty definition and boolean | User-confirmed project test boundary | User exact project inputs | None | Direct input or formula | Existing cooking-duty definition (User)<br>Proposed duty-equivalence confirmation (User) | NO_ESTIMATE |
+| p_fuel | USD/resource-unit | Bill or documented fuel price | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+| p_electric | USD/resource-unit | Bill or documented fuel price | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+No external Standard source role applies.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** confirmed cooking fuel allocation; cooking activity; proposed tested kWh/activity; prices.
+- **Exact scenario:** exact-project-inputs-only.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Exact project inputs only.
+- **Final result path:** fuel avoided minus induction electricity -> rates
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** No validated cross-fuel commercial cooking method.
+
 ## Fully Expanded Information Tree
 
 ```text
@@ -51,14 +81,11 @@ Annual dollar savings
 │  ├─ Existing cooking-duty definition (User)
 │  └─ Proposed duty-equivalence confirmation (User)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   ├─ Electric variable charge
-   │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
-   │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-   │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-   │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   └─ Gas variable charge
-      ├─ gas_rate_schedule, verified against the service account (Bill)
-      └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
+   ├─ Electric volumetric charge
+   │  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+   │  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+   └─ Gas volumetric charge
+      └─ utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms (Bill)
 ```
 
 ## Input Workflow
@@ -74,7 +101,7 @@ Annual dollar savings
 - Annual cooking resource switch > Annual Cooking Activity in the Tested Duty Unit, if known
 - Annual cooking resource switch > Proposed Induction kWh per Identical Tested Duty Unit, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
@@ -86,12 +113,9 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 - Annual cooking resource switch > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_therms for gas
 - Annual cooking resource switch > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
 - Annual cooking resource switch > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas volumetric charge > utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms
 
 ### Standard-Derived Assumptions
 

@@ -10,10 +10,10 @@
 - **Category status:** BLOCKED
 - **Retrofit count:** 1
 - **Standards used:** None
-- **Required User-input count:** 3
+- **Required User-input count:** 4
 - **Optional Known-Detail count:** 4
 - **Profile-input count:** 0
-- **Bill-input count:** 7
+- **Bill-input count:** 3
 - **Standard-assumption count:** 0
 - **Applicable resources:** electricity, gas, liquid-fuel
 - **Default estimate:** UNAVAILABLE
@@ -35,6 +35,37 @@
 
 `annual_standby_kWh = quantity × standby_kW_per_unit × annual_energized_hours_per_unit`
 
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| backup_technology | technology and fuel enumerations | User-confirmed project configuration | User project inputs | None | Direct input or formula | Backup technology (User)<br>Fuel type (User) | NO_ESTIMATE |
+| fuel_type | technology and fuel enumerations | User-confirmed project configuration | User project inputs | None | Direct input or formula | Backup technology (User)<br>Fuel type (User) | NO_ESTIMATE |
+| quantity | units, fuel-unit/hour, hours/year, fuel-unit/year | Exact tested or contractual project inputs | User project inputs | None | Direct input or formula | In-scope quantity<br>Tested fuel use per operating hour<br>Scheduled annual test operating hours | NO_ESTIMATE |
+| test_fuel_per_hour | units, fuel-unit/hour, hours/year, fuel-unit/year | Exact tested or contractual project inputs | User project inputs | None | Direct input or formula | In-scope quantity<br>Tested fuel use per operating hour<br>Scheduled annual test operating hours | NO_ESTIMATE |
+| annual_test_hours_per_unit | units, fuel-unit/hour, hours/year, fuel-unit/year | Exact tested or contractual project inputs | User project inputs | None | Direct input or formula | In-scope quantity<br>Tested fuel use per operating hour<br>Scheduled annual test operating hours | NO_ESTIMATE |
+| annual_test_fuel | units, fuel-unit/hour, hours/year, fuel-unit/year | Exact tested or contractual project inputs | User project inputs | None | Direct input or formula | In-scope quantity<br>Tested fuel use per operating hour<br>Scheduled annual test operating hours | NO_ESTIMATE |
+| standby_kW_per_unit | kW/unit, hours/year, kWh/year | Exact tested or contractual project inputs | User project inputs | None | Direct input or formula | Standby electric input<br>Annual standby energized hours | OMIT_STANDBY_COMPONENT_OR_NO_ESTIMATE |
+| annual_energized_hours_per_unit | kW/unit, hours/year, kWh/year | Exact tested or contractual project inputs | User project inputs | None | Direct input or formula | Standby electric input<br>Annual standby energized hours | OMIT_STANDBY_COMPONENT_OR_NO_ESTIMATE |
+| annual_standby_kWh | kW/unit, hours/year, kWh/year | Exact tested or contractual project inputs | User project inputs | None | Direct input or formula | Standby electric input<br>Annual standby energized hours | OMIT_STANDBY_COMPONENT_OR_NO_ESTIMATE |
+| p_fuel | USD/resource-unit | Bill or documented project fuel price | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+| p_electric | USD/resource-unit | Bill or documented project fuel price | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+No external Standard source role applies.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** technology; quantity; test fuel/hour; test hours; standby kW and energized hours when applicable; prices.
+- **Exact scenario:** exact-project-inputs-only.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Exact project inputs only.
+- **Final result path:** negative routine fuel and standby electricity value
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** No validated source across generator, battery, and hybrid backup technologies.
+
 ## Fully Expanded Information Tree
 
 ```text
@@ -48,16 +79,13 @@ Annual routine backup-power resource cost
 ├─ Scheduled annual test operating hours per unit, if known (User)
 ├─ Annual standby energized hours per unit, if known (User)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   ├─ Electric variable charge
-   │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
-   │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-   │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-   │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   ├─ Gas variable charge
-   │  ├─ gas_rate_schedule, verified against the service account (Bill)
-   │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   └─ Liquid or vehicle-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   ├─ Electric volumetric charge
+   │  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+   │  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+   ├─ Gas volumetric charge
+   │  └─ utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms (Bill)
+   └─ Liquid or vehicle-fuel price
+      └─ Documented current project fuel price for the matching fuel and geography (User)
 ```
 
 ## Input Workflow
@@ -67,6 +95,7 @@ Annual routine backup-power resource cost
 - In-scope quantity [BR-SCOPE-QUANTITY] > Count of identical units in project scope
 - Backup technology
 - Fuel type
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid or vehicle-fuel price > Documented current project fuel price for the matching fuel and geography
 
 ### Optional Known Details
 
@@ -75,7 +104,7 @@ Annual routine backup-power resource cost
 - Scheduled annual test operating hours per unit, if known
 - Annual standby energized hours per unit, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
@@ -83,13 +112,9 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### Bill Inputs
 
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid or vehicle-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas volumetric charge > utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms
 
 ### Standard-Derived Assumptions
 

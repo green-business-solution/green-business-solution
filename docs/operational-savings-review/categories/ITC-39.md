@@ -10,10 +10,10 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 2
 - **Standards used:** `STD-DOE-MEASUR`
-- **Required User-input count:** 2
-- **Optional Known-Detail count:** 4
+- **Required User-input count:** 6
+- **Optional Known-Detail count:** 0
 - **Profile-input count:** 0
-- **Bill-input count:** 4
+- **Bill-input count:** 2
 - **Standard-assumption count:** 1
 - **Applicable resources:** electricity
 - **Default estimate:** UNAVAILABLE
@@ -32,7 +32,46 @@
 
 ## Supporting Formula(s)
 
-For a validated centrifugal system, `proposed_power_fraction_i = speed_fraction_i³ / drive_efficiency_i`.
+MEASUR must return existing and proposed input kW for every bin from a pinned calculator and complete project inputs.
+No standalone cube-law adjustment is approved without the exact shaft-power and drive-efficiency boundary.
+
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| quantity | systems and hours/bin | User measured load bins | User quantity and bin hours | None | Direct input or formula | In-scope quantity<br>Load-bin profile | NO_ESTIMATE |
+| hours_i | systems and hours/bin | User measured load bins | User quantity and bin hours | None | Direct input or formula | In-scope quantity<br>Load-bin profile | NO_ESTIMATE |
+| existing_kW_i | kW/bin | Exact measured bins and pinned MEASUR adapter | evidence:E-MEASUR-ITC39 | None | E-MEASUR-ITC39: UNVERIFIED | ITC-39 variable-speed load-bin adapter not selected - Calculator ID, inputs, units, output, function, and golden example missing | NO_ESTIMATE |
+| proposed_kW_i | kW/bin | Exact measured bins and pinned MEASUR adapter | evidence:E-MEASUR-ITC39 | None | E-MEASUR-ITC39: UNVERIFIED | ITC-39 variable-speed load-bin adapter not selected - Calculator ID, inputs, units, output, function, and golden example missing | NO_ESTIMATE |
+| p_electric | USD/kWh | Bill | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges | None | Direct input or formula | Electric volumetric charge | RETURN_KWH_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+### STD-DOE-MEASUR
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | None |
+| physics or calculation method | E-MEASUR-ITC04 (UNVERIFIED, method)<br>E-MEASUR-ITC09 (UNVERIFIED, method)<br>E-MEASUR-ITC12 (UNVERIFIED, method)<br>E-MEASUR-ITC36 (UNVERIFIED, method)<br>E-MEASUR-ITC37 (UNVERIFIED, method)<br>E-MEASUR-ITC38 (UNVERIFIED, method)<br>E-MEASUR-ITC39 (UNVERIFIED, method)<br>E-MEASUR-ITC40 (UNVERIFIED, method)<br>E-MEASUR-ITC41 (UNVERIFIED, method)<br>E-MEASUR-ITC42 (UNVERIFIED, method)<br>E-MEASUR-ITC43 (UNVERIFIED, method)<br>E-MEASUR-ITC44 (UNVERIFIED, method)<br>E-MEASUR-ITC45 (UNVERIFIED, method)<br>E-MEASUR-ITC46 (UNVERIFIED, method)<br>E-MEASUR-ITC47 (UNVERIFIED, method)<br>E-MEASUR-ITC51 (UNVERIFIED, method) |
+| tariff or bill | None |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** generic_default_inputs, tariff_or_bill
+
+**Manual verdict:** The umbrella MEASUR claim is insufficient. Every category is held at no estimate until its exact module, inputs, units, outputs, code function, and golden example are pinned.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** quantity; load-bin hours; speed fractions; existing power; proposed minimum speed and control rule.
+- **Exact scenario:** insufficient-data.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Explicit bins only.
+- **Final result path:** bin kWh difference -> electric rate
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** Exact MEASUR load-bin adapter, electrical-input boundary, and golden fixture.
 
 ## Fully Expanded Information Tree
 
@@ -41,19 +80,17 @@ Annual dollar savings
 ├─ Annual variable-speed electricity reduction
 │  ├─ In-scope quantity [BR-SCOPE-QUANTITY]
 │  │  └─ Count of identical units in project scope (User)
-│  ├─ Existing full-load input kW, if known (User)
+│  ├─ Existing full-load input kW (User)
 │  ├─ Repeatable load-bin profile
-│  │  ├─ Load or speed fraction for each bin, if known (User)
-│  │  └─ Annual hours for each bin, if known (User)
-│  ├─ Proposed Minimum Speed, if known (User)
+│  │  ├─ Load or speed fraction for each bin (User)
+│  │  └─ Annual hours for each bin (User)
+│  ├─ Proposed Minimum Speed (User)
 │  ├─ Proposed control rule (User)
 │  └─ MEASUR load-bin result (Standard)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   └─ Electric variable charge
-      ├─ rate_schedule and customer_class, verified against the service account (Bill)
-      ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-      ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-      └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
+   └─ Electric volumetric charge
+      ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+      └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
 ```
 
 ## Input Workflow
@@ -61,16 +98,17 @@ Annual dollar savings
 ### Required User Inputs
 
 - Annual variable-speed electricity reduction > In-scope quantity [BR-SCOPE-QUANTITY] > Count of identical units in project scope
+- Annual variable-speed electricity reduction > Existing full-load input kW
+- Annual variable-speed electricity reduction > Repeatable load-bin profile > Load or speed fraction for each bin
+- Annual variable-speed electricity reduction > Repeatable load-bin profile > Annual hours for each bin
+- Annual variable-speed electricity reduction > Proposed Minimum Speed
 - Annual variable-speed electricity reduction > Proposed control rule
 
 ### Optional Known Details
 
-- Annual variable-speed electricity reduction > Existing full-load input kW, if known
-- Annual variable-speed electricity reduction > Repeatable load-bin profile > Load or speed fraction for each bin, if known
-- Annual variable-speed electricity reduction > Repeatable load-bin profile > Annual hours for each bin, if known
-- Annual variable-speed electricity reduction > Proposed Minimum Speed, if known
+- None.
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+No optional exact-value override applies to this category.
 
 ### Profile Inputs
 
@@ -78,23 +116,21 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### Bill Inputs
 
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
 
 ### Standard-Derived Assumptions
 
 #### STD-DOE-MEASUR
 
 - **Value produced:** Existing and proposed annual resource use or avoided resource use, with the calculator version, input units, and warnings.
-- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Low/base/high behavior:** Run the calculator at each documented low, base, and high input set; never create ranges from unsupported generic defaults.
-- **Exact versus estimated:** Return exact calculator output for complete measured inputs; return a low/base/high engineering range only when the calculator and an authoritative class rule support missing values; otherwise return no estimate.
-- **Uncertainty:** Low with complete measured inputs, moderate with source-supported class inputs, and high when the result is sensitive to unresolved operating conditions.
+- **Resolution scenario:** exact-input; insufficient-data.
+- **Low/base/high behavior:** Run the calculator independently for explicit low, base, and high input sets supplied for the project; never create ranges from generic defaults.
+- **Exact versus estimated:** Return calculator output only for a complete measured or user-confirmed input set; otherwise return no estimate.
+- **Uncertainty:** Low to moderate with complete measured inputs and no estimate when a required operating condition is unresolved.
 - **Source:** U.S. Department of Energy, [MEASUR tool and downloads](https://www.energy.gov/cmei/ito/measur), [calculator list and descriptions](https://www.energy.gov/cmei/amo/measur-calculator-list-and-descriptions), and [ORNL MEASUR source repository](https://github.com/ORNL-AMO/AMO-Tools-Desktop). The tool page identifies the open-source assessment modules. The calculator page identifies the supported lighting, motor, pump, fan, compressed-air, process-heating, and steam calculations.
 - **Source version:** Pinned MEASUR release, calculator identifier, source commit, and adapter version.
-- **Selected class or candidate set:** Select the calculator by category contract and select any equipment class only from an authoritative source identified by that contract.
+- **Selected class or candidate set:** Select the calculator by category contract; no equipment class supplies a missing project input in the current evidence contract.
 - **Assumptions:** Units, operating point, schedule, and system boundaries match the selected calculator.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
@@ -102,7 +138,7 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### ■ STD-DOE-MEASUR — DOE MEASUR engineering calculators
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Calculate equipment and industrial-system resource use from the minimum measured or confirmed operating inputs.
@@ -116,10 +152,10 @@ The calculator page identifies the supported lighting, motor, pump, fan, compres
 - `measur_calculator_inputs` - **Required:** Every calculator-specific equipment, operating-point, schedule, and resource input shown as an atomic leaf in the applicable category tree; the category contract deterministically selects the calculator ID.
   - **Resolved by:**
     - **User:** Annual dollar savings > Annual variable-speed electricity reduction > In-scope quantity [BR-SCOPE-QUANTITY] > Count of identical units in project scope
-    - **User:** Annual dollar savings > Annual variable-speed electricity reduction > Existing full-load input kW, if known
-    - **User:** Annual dollar savings > Annual variable-speed electricity reduction > Repeatable load-bin profile > Load or speed fraction for each bin, if known
-    - **User:** Annual dollar savings > Annual variable-speed electricity reduction > Repeatable load-bin profile > Annual hours for each bin, if known
-    - **User:** Annual dollar savings > Annual variable-speed electricity reduction > Proposed Minimum Speed, if known
+    - **User:** Annual dollar savings > Annual variable-speed electricity reduction > Existing full-load input kW
+    - **User:** Annual dollar savings > Annual variable-speed electricity reduction > Repeatable load-bin profile > Load or speed fraction for each bin
+    - **User:** Annual dollar savings > Annual variable-speed electricity reduction > Repeatable load-bin profile > Annual hours for each bin
+    - **User:** Annual dollar savings > Annual variable-speed electricity reduction > Proposed Minimum Speed
     - **User:** Annual dollar savings > Annual variable-speed electricity reduction > Proposed control rule
 
 **Value Needed:**
@@ -127,16 +163,16 @@ Existing and proposed annual resource use or avoided resource use, with the calc
 
 **Resolution Contract:**
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Scenario Output Behavior:** Return exact calculator output for complete measured inputs; return a low/base/high engineering range only when the calculator and an authoritative class rule support missing values; otherwise return no estimate.
-- **Low/Base/High Rule:** Run the calculator at each documented low, base, and high input set; never create ranges from unsupported generic defaults.
-- **Uncertainty Rule:** Low with complete measured inputs, moderate with source-supported class inputs, and high when the result is sensitive to unresolved operating conditions.
+- **Supported Scenarios:** exact-input; insufficient-data.
+- **Scenario Output Behavior:** Return calculator output only for a complete measured or user-confirmed input set; otherwise return no estimate.
+- **Low/Base/High Rule:** Run the calculator independently for explicit low, base, and high input sets supplied for the project; never create ranges from generic defaults.
+- **Uncertainty Rule:** Low to moderate with complete measured inputs and no estimate when a required operating condition is unresolved.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Pinned MEASUR release, calculator identifier, source commit, and adapter version.
-- **Selected Class or Candidate Set:** Select the calculator by category contract and select any equipment class only from an authoritative source identified by that contract.
+- **Selected Class or Candidate Set:** Select the calculator by category contract; no equipment class supplies a missing project input in the current evidence contract.
 - **Assumptions:** Units, operating point, schedule, and system boundaries match the selected calculator.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **No-Estimate Rule:** Return no estimate when a high-sensitivity calculator input has neither an exact value nor a documented class-based resolver.
+- **No-Estimate Rule:** Return no estimate when any calculator input required by the category contract is missing.
 
 **How to Use:**
 Pin a MEASUR release and invoke its local calculation modules or port a formula only when its source implementation and tests are retained as executable fixtures.

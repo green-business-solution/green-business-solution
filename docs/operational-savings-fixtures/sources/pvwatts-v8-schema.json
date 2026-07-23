@@ -1,0 +1,31 @@
+{
+  "fixture_type": "reviewed_source_schema",
+  "reviewed_on": "2026-07-22",
+  "source_url": "https://developer.nrel.gov/docs/solar/pvwatts/v8/",
+  "api_version": "8.0.0",
+  "endpoint": "GET /api/pvwatts/v8",
+  "required_input_fields": [
+    {"field": "system_capacity", "unit": "kWdc"},
+    {"field": "module_type", "unit": "enumeration"},
+    {"field": "losses", "unit": "percent"},
+    {"field": "array_type", "unit": "enumeration"},
+    {"field": "tilt", "unit": "degrees"},
+    {"field": "azimuth", "unit": "degrees"},
+    {"field": "lat and lon or solar_resource_file", "unit": "degrees or identifier"}
+  ],
+  "reviewed_output_fields": [
+    {"field": "outputs.ac", "unit": "Wac", "availability": "hourly timeframe"},
+    {"field": "outputs.ac_monthly", "unit": "kWhac/month"},
+    {"field": "outputs.ac_annual", "unit": "kWhac/year"},
+    {"field": "outputs.capacity_factor", "unit": "percent"},
+    {"field": "station_info.solar_resource_file", "unit": "identifier"},
+    {"field": "warnings", "unit": "text array"}
+  ],
+  "unsupported_inferences": [
+    "System capacity",
+    "Module selection",
+    "Array geometry",
+    "Project loss assumptions",
+    "Tariff or bill value"
+  ]
+}

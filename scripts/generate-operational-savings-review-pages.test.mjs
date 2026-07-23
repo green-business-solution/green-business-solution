@@ -40,11 +40,11 @@ describe("generate-operational-savings-review-pages", () => {
     expect(exterior).toContain("### Required User Inputs");
     expect(exterior).toContain("### Optional Known Details");
     expect(exterior).toContain("Existing Fixture Model, if known");
-    expect(exterior).toContain("Electric variable charge");
-    expect(exterior).not.toContain("Gas variable charge");
-    expect(exterior).not.toContain("Water and sewer variable charge");
-    expect(vehicle).toContain("Liquid or vehicle-fuel variable charge");
-    expect(vehicle).not.toContain("Water and sewer variable charge");
+    expect(exterior).toContain("Electric volumetric charge");
+    expect(exterior).not.toContain("Gas volumetric charge");
+    expect(exterior).not.toContain("Water volumetric charge");
+    expect(vehicle).toContain("Liquid or vehicle-fuel price");
+    expect(vehicle).not.toContain("Water volumetric charge");
   });
 
   it("keeps recognizable resolver context required and exact equipment details optional", async () => {
@@ -59,5 +59,41 @@ describe("generate-operational-savings-review-pages", () => {
     expect(fixture).toContain("`fixture_exact_rating` - **Optional:**");
     expect(chp).toContain("`chp_exact_model` - **Optional:**");
     expect(chp).toContain("Linked Opportunity");
+  });
+
+  it("renders formula, source-role, and default-path evidence on every category page", async () => {
+    const result = buildOperationalSavingsReview(await loadOperationalSavingsSources());
+
+    for (const [path, page] of result.artifacts) {
+      if (!path.includes("/categories/")) continue;
+      expect(page).toContain("## Formula-Term Evidence");
+      expect(page).toContain("## Source-Role Evidence");
+      expect(page).toContain("## Default-Path Proof");
+    }
+    expect(result.artifacts.get("docs/operational-savings-review/categories/ITC-52.md"))
+      .toContain("### STD-DOE-CCMS-RATINGS");
+  });
+
+  it("filters demand, export, water, and sewer components from the declared formula contract", async () => {
+    const result = buildOperationalSavingsReview(await loadOperationalSavingsSources());
+    const exterior = result.artifacts.get("docs/operational-savings-review/categories/ITC-02.md");
+    const pv = result.artifacts.get("docs/operational-savings-review/categories/ITC-17.md");
+    const landscape = result.artifacts.get("docs/operational-savings-review/categories/ITC-34.md");
+
+    expect(exterior).not.toContain("Electric demand charge");
+    expect(exterior).not.toContain("Electric export credit");
+    expect(pv).toContain("Electric export credit");
+    expect(landscape).toContain("Water volumetric charge");
+    expect(landscape).not.toContain("Sewer volumetric charge");
+  });
+
+  it("keeps linked opportunities as internal intermediates rather than fake Profile fields", async () => {
+    const result = buildOperationalSavingsReview(await loadOperationalSavingsSources());
+
+    for (const [path, page] of result.artifacts) {
+      if (!path.includes("/categories/")) continue;
+      expect(page).not.toMatch(/Linked Opportunity[^\n]*\\(Profile\\)/);
+      expect(page).not.toContain("{{intermediate:");
+    }
   });
 });

@@ -10,10 +10,10 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-DOE-MEASUR`
-- **Required User-input count:** 1
-- **Optional Known-Detail count:** 5
+- **Required User-input count:** 7
+- **Optional Known-Detail count:** 0
 - **Profile-input count:** 0
-- **Bill-input count:** 10
+- **Bill-input count:** 7
 - **Standard-assumption count:** 1
 - **Applicable resources:** electricity, gas
 - **Default estimate:** UNAVAILABLE
@@ -33,18 +33,64 @@
 
 `useful_recovered_heat = min(available_waste_heat × recovery_efficiency, coincident_useful_heat_load)`
 
-`avoided_displaced_resource = min(useful_recovered_heat / displaced_system_efficiency, billed_displaced_resource)`
+`avoided_displaced_resource = min(to_billed_unit(useful_recovered_heat / displaced_system_efficiency, displaced_resource_unit), billed_displaced_resource)`
+
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| available_waste_heat | energy/year and fraction | Measured process inputs and exact MEASUR adapter | User measured inputs<br>evidence:E-MEASUR-ITC45 | None | E-MEASUR-ITC45: UNVERIFIED | ITC-45 waste-heat adapter not selected - Calculator ID, inputs, units, output, function, and golden example missing | NO_ESTIMATE |
+| recovery_efficiency | energy/year and fraction | Measured process inputs and exact MEASUR adapter | User measured inputs<br>evidence:E-MEASUR-ITC45 | None | E-MEASUR-ITC45: UNVERIFIED | ITC-45 waste-heat adapter not selected - Calculator ID, inputs, units, output, function, and golden example missing | NO_ESTIMATE |
+| coincident_useful_heat_load | energy/year and fraction | Measured process inputs and exact MEASUR adapter | User measured inputs<br>evidence:E-MEASUR-ITC45 | None | E-MEASUR-ITC45: UNVERIFIED | ITC-45 waste-heat adapter not selected - Calculator ID, inputs, units, output, function, and golden example missing | NO_ESTIMATE |
+| useful_recovered_heat | energy/year and fraction | Measured process inputs and exact MEASUR adapter | User measured inputs<br>evidence:E-MEASUR-ITC45 | None | E-MEASUR-ITC45: UNVERIFIED | ITC-45 waste-heat adapter not selected - Calculator ID, inputs, units, output, function, and golden example missing | NO_ESTIMATE |
+| displaced_system_efficiency | fraction and resource-unit/year | Exact system efficiency and matching bill allocation | User efficiency<br>annual_kwh or annual_therms plus allocation | None | Direct input or formula | Displaced heating-system efficiency, if known (User)<br>Annual billed resource r | NO_ESTIMATE |
+| billed_displaced_resource | fraction and resource-unit/year | Exact system efficiency and matching bill allocation | User efficiency<br>annual_kwh or annual_therms plus allocation | None | Direct input or formula | Displaced heating-system efficiency, if known (User)<br>Annual billed resource r | NO_ESTIMATE |
+| avoided_displaced_resource | fraction and resource-unit/year | Exact system efficiency and matching bill allocation | User efficiency<br>annual_kwh or annual_therms plus allocation | None | Direct input or formula | Displaced heating-system efficiency, if known (User)<br>Annual billed resource r | NO_ESTIMATE |
+| resource_unit_conversion | common-energy-unit/resource-unit and reciprocal | UNIT-RESOURCE-ENERGY | resource-energy: Required versioned and audited conversion table keyed by the selected resource unit | None | Direct input or formula | Avoidable marginal resource price | NO_ESTIMATE |
+| displaced_resource_unit | common-energy-unit/resource-unit and reciprocal | UNIT-RESOURCE-ENERGY | resource-energy: Required versioned and audited conversion table keyed by the selected resource unit | None | Direct input or formula | Avoidable marginal resource price | NO_ESTIMATE |
+| added_auxiliary_kWh | kWh/year and USD/resource-unit | Exact auxiliary load and component rates | User auxiliary load<br>electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Recovery auxiliary power, if known (User)<br>Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+| p_displaced_resource | kWh/year and USD/resource-unit | Exact auxiliary load and component rates | User auxiliary load<br>electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Recovery auxiliary power, if known (User)<br>Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+| p_electric | kWh/year and USD/resource-unit | Exact auxiliary load and component rates | User auxiliary load<br>electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Recovery auxiliary power, if known (User)<br>Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+### STD-DOE-MEASUR
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | None |
+| physics or calculation method | E-MEASUR-ITC04 (UNVERIFIED, method)<br>E-MEASUR-ITC09 (UNVERIFIED, method)<br>E-MEASUR-ITC12 (UNVERIFIED, method)<br>E-MEASUR-ITC36 (UNVERIFIED, method)<br>E-MEASUR-ITC37 (UNVERIFIED, method)<br>E-MEASUR-ITC38 (UNVERIFIED, method)<br>E-MEASUR-ITC39 (UNVERIFIED, method)<br>E-MEASUR-ITC40 (UNVERIFIED, method)<br>E-MEASUR-ITC41 (UNVERIFIED, method)<br>E-MEASUR-ITC42 (UNVERIFIED, method)<br>E-MEASUR-ITC43 (UNVERIFIED, method)<br>E-MEASUR-ITC44 (UNVERIFIED, method)<br>E-MEASUR-ITC45 (UNVERIFIED, method)<br>E-MEASUR-ITC46 (UNVERIFIED, method)<br>E-MEASUR-ITC47 (UNVERIFIED, method)<br>E-MEASUR-ITC51 (UNVERIFIED, method) |
+| tariff or bill | None |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** generic_default_inputs, tariff_or_bill
+
+**Manual verdict:** The umbrella MEASUR claim is insufficient. Every category is held at no estimate until its exact module, inputs, units, outputs, code function, and golden example are pinned.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** available heat; recovery efficiency; coincident load; displaced-system efficiency; auxiliary load.
+- **Exact scenario:** insufficient-data.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Explicit measured sensitivities only.
+- **Final result path:** useful heat -> displaced resource less auxiliary electricity -> rates
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** Exact MEASUR waste-heat adapter and coincidence fixture.
 
 ## Fully Expanded Information Tree
 
 ```text
 Annual waste-heat resource value
-├─ Waste-stream flow, if known (User)
-├─ Waste-stream temperature, if known (User)
+├─ Waste-stream flow (User)
+├─ Waste-stream temperature (User)
 ├─ Waste-stream schedule (User)
-├─ Coincident Useful-Heat Load, if known (User)
-├─ Recovery-equipment efficiency, if known (User)
-├─ Recovery auxiliary power, if known (User)
+├─ Coincident Useful-Heat Load (User)
+├─ Recovery-equipment efficiency (User)
+├─ Displaced heating-system efficiency (User)
+├─ Recovery auxiliary power (User)
 ├─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
 │  ├─ annual_kwh for electricity (Bill)
 │  ├─ annual_therms for gas (Bill)
@@ -52,31 +98,30 @@ Annual waste-heat resource value
 │  └─ billing_period_end (Bill)
 ├─ MEASUR process-heat result (Standard)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   ├─ Electric variable charge
-   │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
-   │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-   │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-   │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   └─ Gas variable charge
-      ├─ gas_rate_schedule, verified against the service account (Bill)
-      └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
+   ├─ Electric volumetric charge
+   │  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+   │  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+   └─ Gas volumetric charge
+      └─ utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms (Bill)
 ```
 
 ## Input Workflow
 
 ### Required User Inputs
 
+- Waste-stream flow
+- Waste-stream temperature
 - Waste-stream schedule
+- Coincident Useful-Heat Load
+- Recovery-equipment efficiency
+- Displaced heating-system efficiency
+- Recovery auxiliary power
 
 ### Optional Known Details
 
-- Waste-stream flow, if known
-- Waste-stream temperature, if known
-- Coincident Useful-Heat Load, if known
-- Recovery-equipment efficiency, if known
-- Recovery auxiliary power, if known
+- None.
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+No optional exact-value override applies to this category.
 
 ### Profile Inputs
 
@@ -88,25 +133,22 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 - Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_therms for gas
 - Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
 - Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas volumetric charge > utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms
 
 ### Standard-Derived Assumptions
 
 #### STD-DOE-MEASUR
 
 - **Value produced:** Existing and proposed annual resource use or avoided resource use, with the calculator version, input units, and warnings.
-- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Low/base/high behavior:** Run the calculator at each documented low, base, and high input set; never create ranges from unsupported generic defaults.
-- **Exact versus estimated:** Return exact calculator output for complete measured inputs; return a low/base/high engineering range only when the calculator and an authoritative class rule support missing values; otherwise return no estimate.
-- **Uncertainty:** Low with complete measured inputs, moderate with source-supported class inputs, and high when the result is sensitive to unresolved operating conditions.
+- **Resolution scenario:** exact-input; insufficient-data.
+- **Low/base/high behavior:** Run the calculator independently for explicit low, base, and high input sets supplied for the project; never create ranges from generic defaults.
+- **Exact versus estimated:** Return calculator output only for a complete measured or user-confirmed input set; otherwise return no estimate.
+- **Uncertainty:** Low to moderate with complete measured inputs and no estimate when a required operating condition is unresolved.
 - **Source:** U.S. Department of Energy, [MEASUR tool and downloads](https://www.energy.gov/cmei/ito/measur), [calculator list and descriptions](https://www.energy.gov/cmei/amo/measur-calculator-list-and-descriptions), and [ORNL MEASUR source repository](https://github.com/ORNL-AMO/AMO-Tools-Desktop). The tool page identifies the open-source assessment modules. The calculator page identifies the supported lighting, motor, pump, fan, compressed-air, process-heating, and steam calculations.
 - **Source version:** Pinned MEASUR release, calculator identifier, source commit, and adapter version.
-- **Selected class or candidate set:** Select the calculator by category contract and select any equipment class only from an authoritative source identified by that contract.
+- **Selected class or candidate set:** Select the calculator by category contract; no equipment class supplies a missing project input in the current evidence contract.
 - **Assumptions:** Units, operating point, schedule, and system boundaries match the selected calculator.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
@@ -114,7 +156,7 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### ■ STD-DOE-MEASUR — DOE MEASUR engineering calculators
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Calculate equipment and industrial-system resource use from the minimum measured or confirmed operating inputs.
@@ -127,28 +169,29 @@ The calculator page identifies the supported lighting, motor, pump, fan, compres
 **Lookup Inputs:**
 - `measur_calculator_inputs` - **Required:** Every calculator-specific equipment, operating-point, schedule, and resource input shown as an atomic leaf in the applicable category tree; the category contract deterministically selects the calculator ID.
   - **Resolved by:**
-    - **User:** Annual waste-heat resource value > Waste-stream flow, if known
-    - **User:** Annual waste-heat resource value > Waste-stream temperature, if known
+    - **User:** Annual waste-heat resource value > Waste-stream flow
+    - **User:** Annual waste-heat resource value > Waste-stream temperature
     - **User:** Annual waste-heat resource value > Waste-stream schedule
-    - **User:** Annual waste-heat resource value > Coincident Useful-Heat Load, if known
-    - **User:** Annual waste-heat resource value > Recovery-equipment efficiency, if known
-    - **User:** Annual waste-heat resource value > Recovery auxiliary power, if known
+    - **User:** Annual waste-heat resource value > Coincident Useful-Heat Load
+    - **User:** Annual waste-heat resource value > Recovery-equipment efficiency
+    - **User:** Annual waste-heat resource value > Displaced heating-system efficiency
+    - **User:** Annual waste-heat resource value > Recovery auxiliary power
 
 **Value Needed:**
 Existing and proposed annual resource use or avoided resource use, with the calculator version, input units, and warnings.
 
 **Resolution Contract:**
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Scenario Output Behavior:** Return exact calculator output for complete measured inputs; return a low/base/high engineering range only when the calculator and an authoritative class rule support missing values; otherwise return no estimate.
-- **Low/Base/High Rule:** Run the calculator at each documented low, base, and high input set; never create ranges from unsupported generic defaults.
-- **Uncertainty Rule:** Low with complete measured inputs, moderate with source-supported class inputs, and high when the result is sensitive to unresolved operating conditions.
+- **Supported Scenarios:** exact-input; insufficient-data.
+- **Scenario Output Behavior:** Return calculator output only for a complete measured or user-confirmed input set; otherwise return no estimate.
+- **Low/Base/High Rule:** Run the calculator independently for explicit low, base, and high input sets supplied for the project; never create ranges from generic defaults.
+- **Uncertainty Rule:** Low to moderate with complete measured inputs and no estimate when a required operating condition is unresolved.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Pinned MEASUR release, calculator identifier, source commit, and adapter version.
-- **Selected Class or Candidate Set:** Select the calculator by category contract and select any equipment class only from an authoritative source identified by that contract.
+- **Selected Class or Candidate Set:** Select the calculator by category contract; no equipment class supplies a missing project input in the current evidence contract.
 - **Assumptions:** Units, operating point, schedule, and system boundaries match the selected calculator.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **No-Estimate Rule:** Return no estimate when a high-sensitivity calculator input has neither an exact value nor a documented class-based resolver.
+- **No-Estimate Rule:** Return no estimate when any calculator input required by the category contract is missing.
 
 **How to Use:**
 Pin a MEASUR release and invoke its local calculation modules or port a formula only when its source implementation and tests are retained as executable fixtures.

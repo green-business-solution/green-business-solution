@@ -1,0 +1,21 @@
+{
+  "fixture_type": "reviewed_source_scope",
+  "reviewed_on": "2026-07-22",
+  "source_url": "https://www.epa.gov/watersense/water-budget-tool",
+  "tool_version": "2.0",
+  "supported_scope": "Compare estimated water use for a designed residential or commercial landscape and irrigation system with practices typical of standard new construction using local climate data and user entries.",
+  "unsupported_scope": [
+    "Measured actual existing irrigation consumption",
+    "Irrigation scheduling",
+    "Whole-site water-bill end-use allocation",
+    "Sewer applicability"
+  ],
+  "required_user_entries": [
+    "U.S. ZIP Code",
+    "Landscape area by hydrozone",
+    "Plant or landscape type by hydrozone",
+    "Irrigation method",
+    "Irrigation efficiency when used by the tool"
+  ],
+  "result_label": "modeled design-allowance difference"
+}

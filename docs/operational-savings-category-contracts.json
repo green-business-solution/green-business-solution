@@ -1,0 +1,1008 @@
+{
+  "schema_version": "1.0.0",
+  "reviewed_on": "2026-07-22",
+  "formula_term_fields": [
+    "names",
+    "unit",
+    "tree_nodes",
+    "source_or_resolver",
+    "exact_paths",
+    "fallback_path",
+    "standard_output_key",
+    "evidence_ids",
+    "formula_use",
+    "default_path_resolved",
+    "missing_data_behavior"
+  ],
+  "rate_component_definitions": {
+    "electric-volumetric": {
+      "unit": "USD/kWh",
+      "exact_paths": ["utilityExtractedValues[].fieldId=average_cost_per_kwh", "utilityExtractedValues[].fieldId=delivery_charges", "utilityExtractedValues[].fieldId=generation_charges"],
+      "condition": "Use a blended field only for a verified single volumetric tariff. Otherwise derive matched variable delivery and generation rates."
+    },
+    "electric-time-of-use": {
+      "unit": "USD/kWh by interval",
+      "exact_paths": ["User-supplied verified tariff artifact"],
+      "condition": "Requires interval import energy and a verified tariff calendar."
+    },
+    "electric-demand": {
+      "unit": "USD/kW by billing period",
+      "exact_paths": ["utilityExtractedValues[].fieldId=demand_charge_rate", "User-supplied verified billing-demand and ratchet rules"],
+      "condition": "Requires interval kW and explicit billing-demand logic."
+    },
+    "electric-export": {
+      "unit": "USD/kWh exported",
+      "exact_paths": ["User-supplied verified export-credit rule"],
+      "condition": "Requires modeled interval exports."
+    },
+    "electric-export-non-bypassable": {
+      "unit": "USD/kWh exported",
+      "exact_paths": ["User-supplied verified non-bypassable tariff rule"],
+      "condition": "Requires modeled interval exports and an explicit non-bypassable rule."
+    },
+    "gas-volumetric": {
+      "unit": "USD/therm",
+      "exact_paths": ["utilityExtractedValues[].fieldId=average_cost_per_therm", "utilityExtractedValues[].fieldId=gas_delivery_charges", "utilityExtractedValues[].fieldId=gas_procurement_charges"],
+      "condition": "Use only matched variable gas charges and therms."
+    },
+    "water-volumetric": {
+      "unit": "USD/gallon after unit conversion",
+      "exact_paths": ["utilityExtractedValues[].fieldId=annual_water_cost", "utilityExtractedValues[].fieldId=annual_water_use", "utilityExtractedValues[].fieldId=water_unit"],
+      "condition": "Normalize the billed water unit explicitly."
+    },
+    "sewer-volumetric": {
+      "unit": "USD/gallon of sewer-billed water",
+      "exact_paths": ["utilityExtractedValues[].fieldId=annual_sewer_cost", "utilityExtractedValues[].fieldId=annual_water_use", "utilityExtractedValues[].fieldId=water_unit"],
+      "condition": "Use only when the avoided water is sewer-billed."
+    },
+    "fuel-price": {
+      "unit": "USD per matching fuel unit",
+      "exact_paths": ["Required documented project fuel-price input"],
+      "condition": "The current utility bill parser has no canonical vehicle-fuel or liquid-fuel price path."
+    },
+    "contract-credit": {
+      "unit": "USD by contract period",
+      "exact_paths": ["Required community-solar contract terms and statement credits"],
+      "condition": "Use the contract credit and subscription charge directly, not a utility marginal-rate branch."
+    }
+  },
+  "unit_conversion_definitions": {
+    "resource-energy": {
+      "functions": ["to_energy(resource_quantity, resource_unit)", "to_billed_unit(energy, resource_unit)"],
+      "exact_paths": ["Required versioned and audited conversion table keyed by the selected resource unit"],
+      "condition": "Apply exactly once when the physical formula energy unit differs from the unit priced by the selected rate component. Return no estimate when the units or conversion record are unresolved."
+    }
+  },
+  "required_direct_input_policies": [
+    {
+      "standard_id": "STD-DOE-MEASUR",
+      "lookup_keys": ["measur_calculator_inputs"],
+      "optional_leaf_exceptions": ["Measured Annual Operating Hours, if known"],
+      "reason": "MEASUR calculates from project inputs and no reviewed generic defaults or category adapters currently resolve missing calculator inputs."
+    },
+    {
+      "standard_id": "STD-SAM-SOLAR-THERMAL",
+      "lookup_keys": ["solar_thermal_configuration", "hot_water_load", "backup_resource"],
+      "optional_leaf_exceptions": [],
+      "reason": "SAM does not supply missing collector design, hot-water load, backup resource, or backup efficiency."
+    },
+    {
+      "standard_id": "STD-PVWATTS-V8",
+      "lookup_keys": ["pv_array_configuration"],
+      "optional_leaf_exceptions": [],
+      "reason": "PVWatts requires an explicit array configuration and does not supply a project design."
+    },
+    {
+      "standard_id": "STD-WIND-SAM",
+      "lookup_keys": ["wind_system_configuration", "analysis_year"],
+      "optional_leaf_exceptions": [],
+      "reason": "The wind method requires an explicit compatible power curve, hub height, losses, and analysis period."
+    },
+    {
+      "standard_id": "STD-REOPT-LOCAL-DISPATCH",
+      "lookup_keys": ["reopt_category_constraints"],
+      "optional_leaf_exceptions": [],
+      "reason": "REopt does not supply missing load, tariff, technology design, operating, or dispatch constraints."
+    },
+    {
+      "standard_id": "STD-EPA-CHP-PERFORMANCE",
+      "lookup_keys": ["generation_capacity", "operating_profile", "thermal_load_coincidence"],
+      "optional_leaf_exceptions": ["Measured Annual Operating Hours, if known"],
+      "reason": "EPA performance tables do not supply project capacity, operation, or thermal coincidence."
+    },
+    {
+      "standard_id": "STD-WATERSENSE-CI-OPERATIONS",
+      "lookup_keys": ["watersense_method_inputs"],
+      "optional_leaf_exceptions": [],
+      "reason": "The WaterSense equations require measured leak or cooling-tower operating inputs and do not supply generic defaults."
+    }
+  ],
+  "canonical_profile_paths": [
+    "business.organizationTypes",
+    "business.primaryActivityText",
+    "business.naicsCodes",
+    "business.organizationSize",
+    "site.addressStructured.raw",
+    "site.addressStructured.matched",
+    "site.addressStructured.stateCode",
+    "site.addressStructured.zip5",
+    "site.geo.stateCode",
+    "site.geo.zip5",
+    "site.geo.countyFips",
+    "site.geo.countyName",
+    "site.geo.placeGeoid",
+    "site.geo.placeName",
+    "site.geo.censusTractGeoid",
+    "site.geo.censusBlockGeoid",
+    "site.geo.coordinates",
+    "site.geo.resolutionStatus",
+    "site.geo.resolutionProvider",
+    "site.geo.designations",
+    "site.utility.electric.selfReportedName",
+    "site.utility.electric.distributionUtilityId",
+    "site.utility.electric.territoryCandidates",
+    "site.utility.electric.verificationStatus",
+    "site.utility.electric.customerClass",
+    "site.ownershipRelationship",
+    "site.buildingTypes",
+    "site.squareFootage.value",
+    "site.squareFootage.raw",
+    "site.squareFootage.parsingStatus",
+    "project.stage",
+    "project.alreadyPurchasedEquipment",
+    "project.targetStartDate"
+  ],
+  "canonical_bill_field_source": "data/bill_field_dictionary.json",
+  "categories": [
+    {
+      "category_id": "ITC-01",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["floor_area"],"unit":"ft2","tree_nodes":["site.squareFootage.value"],"source_or_resolver":"Profile","exact_paths":["profile.site.squareFootage.value"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Scales the per-area resource delta","default_path_resolved":true,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["median_ComStock_delta_r_per_ft²","ΔR_r","valued_R_r"],"unit":"resource-unit/ft2-year and resource-unit/year","tree_nodes":["ComStock per-area delta distribution","Annual resource delta by resource"],"source_or_resolver":"STD-COMSTOCK-ANNUAL-DELTA and formula","exact_paths":["evidence:E-COMSTOCK-DELTA"],"fallback_path":null,"standard_output_key":"comstock.annual_resource_delta_per_ft2","evidence_ids":["E-COMSTOCK-DELTA","E-COMSTOCK-TAXONOMY"],"formula_use":"Resolves, scales, and caps only positive modeled resource deltas","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["billed_R_r"],"unit":"resource-unit/year","tree_nodes":["Annual billed resource r"],"source_or_resolver":"Bill","exact_paths":["utilityExtractedValues[].fieldId=annual_kwh","utilityExtractedValues[].fieldId=annual_therms"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Caps only the positive avoided-resource result for the matching resource","default_path_resolved":false,"missing_data_behavior":"RETURN_UNCAPPED_RESOURCE_DELTA_WITHOUT_DOLLAR_VALUE"},
+        {"names":["p_r"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Component-filtered bill rate","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values each modeled resource delta","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULT_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric"],
+      "profile_paths":["site.buildingTypes","site.geo.stateCode","site.geo.countyFips","site.squareFootage.value"],
+      "bill_field_ids":["annual_kwh","annual_therms","billing_period_start","billing_period_end","average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"class-or-context-estimate","minimum_required_inputs":["Linked Opportunity canonical retrofit","existing condition","proposed option","building type","geography","floor area"],"source_fixture":null,"low_base_high_calculation":"Blocked until a ComStock eligible-population aggregate fixture records weights and sample size.","final_result_path":"ComStock resource delta -> matched volumetric rate -> USD/year","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Reviewed release artifacts, crosswalk rows, aggregate population, sample count, and golden category fixture."},
+      "manual_review_verdict":"Formula is coherent, but the current allowlist and quartile claims are not proved by local source fixtures."
+    },
+    {
+      "category_id": "ITC-02",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity"],"unit":"replacement fixtures","tree_nodes":["Replacement Fixture Count"],"source_or_resolver":"User","exact_paths":["Information Tree > Annual electricity reduction > Replacement Fixture Count"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Scopes one-for-one replacements","default_path_resolved":true,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["fixture_input_kW","fixture_input_W"],"unit":"kW/fixture and W/fixture","tree_nodes":["Existing fixture wattage","Proposed fixture wattage"],"source_or_resolver":"Deterministic unit conversion","exact_paths":["fixture_input_kW = fixture_input_W / 1000"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Converts each documented fixture input wattage to kW exactly once","default_path_resolved":true,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["existing_kW"],"unit":"kW/fixture","tree_nodes":["Existing fixture wattage"],"source_or_resolver":"Nameplate, measurement, or verified historical source","exact_paths":["User Existing Fixture Model or documented watts"],"fallback_path":null,"standard_output_key":"femp.existing_fixture_watts","evidence_ids":["E-FEMP-EXISTING-UNSUPPORTED"],"formula_use":"Existing input-power term","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["proposed_kW"],"unit":"kW/fixture","tree_nodes":["Proposed fixture wattage"],"source_or_resolver":"Exact selected product","exact_paths":["User Selected Proposed Model or documented watts"],"fallback_path":"FEMP proposed efficacy threshold is not enough without compatible lumens","standard_output_key":"femp.proposed_exterior_efficacy","evidence_ids":["E-FEMP-PROPOSED","E-FEMP-WALL-EXAMPLE"],"formula_use":"Proposed input-power term","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["annual_on_hours"],"unit":"hours/year","tree_nodes":["Annual operating hours"],"source_or_resolver":"STD-OPERATING-SCHEDULE","exact_paths":["Measured schedule or explicit calendar inputs"],"fallback_path":"Explicit daylight-control calculation only","standard_output_key":"schedule.explicit_calendar_hours","evidence_ids":["E-SCHEDULE-EXPLICIT"],"formula_use":"Annualizes input-power difference","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric"],"unit":"USD/kWh","tree_nodes":["Electric volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values annual kWh","default_path_resolved":false,"missing_data_behavior":"RETURN_KWH_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric"],
+      "profile_paths":["site.buildingTypes","site.squareFootage.value","site.geo.coordinates"],
+      "bill_field_ids":["average_cost_per_kwh","delivery_charges","generation_charges"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["replacement fixture count","existing fixture application","control pattern"],"source_fixture":"docs/operational-savings-fixtures/sources/femp-exterior-lighting-tables.json","low_base_high_calculation":"No percentile calculation is allowed.","final_result_path":"existing and proposed kW -> annual kWh -> electric volumetric rate","uncertainty":"Unresolved","executable_golden_fixture":null,"unresolved_gate":"Existing fixture watts, proposed product watts, schedule fixture, and end-to-end golden fixture."},
+      "manual_review_verdict":"FEMP does not support the former legacy-wattage percentile or Profile/Bill fallback."
+    },
+    {
+      "category_id": "ITC-03",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["current_annual_fuel","measured_equipment_fuel"],"unit":"therms/year","tree_nodes":["Current annual furnace fuel"],"source_or_resolver":"Measured end use or user-confirmed bill allocation","exact_paths":["utilityExtractedValues[].fieldId=annual_therms plus User furnace share"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Existing annual fuel input","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["η_existing"],"unit":"fraction","tree_nodes":["Certified existing and proposed product resolution"],"source_or_resolver":"Exact existing nameplate or retained certification record","exact_paths":["User Existing Model"],"fallback_path":null,"standard_output_key":"ccms.existing_installed_baseline","evidence_ids":["E-CCMS-EXISTING-UNSUPPORTED"],"formula_use":"Existing efficiency denominator ratio","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["η_proposed"],"unit":"fraction","tree_nodes":["Certified existing and proposed product resolution"],"source_or_resolver":"Exact current certified proposed model","exact_paths":["User Selected Proposed Model"],"fallback_path":null,"standard_output_key":"ccms.current_certified_product_rating","evidence_ids":["E-CCMS-CURRENT"],"formula_use":"Proposed efficiency denominator","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_fuel"],"unit":"USD/therm","tree_nodes":["Gas volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:gas-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided gas","default_path_resolved":false,"missing_data_behavior":"RETURN_THERMS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["gas-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["annual_therms","average_cost_per_therm","billing_period_start","billing_period_end"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["equipment fuel allocation","existing efficiency","proposed efficiency"],"source_fixture":null,"low_base_high_calculation":"Exact inputs only.","final_result_path":"efficiency ratio -> therms avoided -> gas rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Existing-product and proposed-product export fixtures plus end-use allocation."},
+      "manual_review_verdict":"No class-based existing baseline or default fuel allocation is supported."
+    },
+    {
+      "category_id": "ITC-04",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["annual_boiler_fuel"],"unit":"therms/year","tree_nodes":["Annual boiler fuel"],"source_or_resolver":"Measured end use or user-confirmed bill allocation","exact_paths":["utilityExtractedValues[].fieldId=annual_therms plus User boiler share"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Annual fuel basis","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["baseline_annual_fuel","proposed_annual_fuel","control_reduction_fraction"],"unit":"therms/year, therms/year, fraction","tree_nodes":["MEASUR baseline and proposed fuel result"],"source_or_resolver":"Exact MEASUR category adapter","exact_paths":["evidence:E-MEASUR-ITC04"],"fallback_path":null,"standard_output_key":"measur.itc04","evidence_ids":["E-MEASUR-ITC04"],"formula_use":"Calculates the control reduction fraction","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_fuel"],"unit":"USD/therm","tree_nodes":["Gas volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:gas-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided gas","default_path_resolved":false,"missing_data_behavior":"RETURN_THERMS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["gas-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["annual_therms","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["existing control sequence","proposed control sequence","annual boiler fuel"],"source_fixture":null,"low_base_high_calculation":"No generic control percentage.","final_result_path":"MEASUR fraction -> therms avoided -> gas rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR module and golden example."},
+      "manual_review_verdict":"The formula is reasonable, but the MEASUR umbrella claim is not an executable adapter."
+    },
+    {
+      "category_id": "ITC-05",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["annual_HVAC_R_r"],"unit":"resource-unit/year","tree_nodes":["Annual HVAC resource by end use and fuel"],"source_or_resolver":"Measured end use or user-confirmed bill allocation","exact_paths":["annual_kwh or annual_therms plus User HVAC share"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Affected annual resource basis","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["existing_duct_loss_fraction","proposed_duct_loss_fraction","duct_loss_reduction_fraction"],"unit":"fraction","tree_nodes":["Applicable duct-loss performance factor"],"source_or_resolver":"STD-SCOUT-ECM-SCREEN or measurement","exact_paths":["evidence:E-SCOUT-ECM"],"fallback_path":null,"standard_output_key":"scout.ecm_resource_reduction_factor","evidence_ids":["E-SCOUT-ECM"],"formula_use":"Calculates the avoided loss fraction","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_r"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Bill","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided resource","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULT_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric"],
+      "profile_paths":["site.buildingTypes","site.geo.coordinates","site.geo.countyFips"],
+      "bill_field_ids":["annual_kwh","annual_therms","average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["existing duct condition","proposed scope","affected HVAC resource"],"source_fixture":null,"low_base_high_calculation":"Only source-explicit cases.","final_result_path":"duct-loss fraction -> resource avoided -> rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Approved Scout ECM definition and source fixture."},
+      "manual_review_verdict":"No exact Scout definition or measured duct leakage is yet available."
+    },
+    {
+      "category_id": "ITC-06",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["current_annual_input","avoided_existing_resource"],"unit":"resource-unit/year","tree_nodes":["Avoided existing water-heating resource"],"source_or_resolver":"Measured end use or user-confirmed bill allocation","exact_paths":["annual_kwh or annual_therms plus User water-heating share"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Existing input removed by complete replacement","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["η_existing","annual_hot_water_load"],"unit":"fraction and kWh-thermal/year","tree_nodes":["Certified existing and proposed product resolution"],"source_or_resolver":"Exact existing product or measurement plus formula","exact_paths":["User Existing Model or measured efficiency"],"fallback_path":null,"standard_output_key":"ccms.existing_installed_baseline","evidence_ids":["E-CCMS-EXISTING-UNSUPPORTED"],"formula_use":"Converts existing input to delivered hot-water load","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["UEF_or_COP_proposed","added_kWh"],"unit":"ratio and kWh/year","tree_nodes":["Certified existing and proposed product resolution"],"source_or_resolver":"Exact proposed product plus formula","exact_paths":["User Selected Proposed Model"],"fallback_path":null,"standard_output_key":"ccms.current_certified_product_rating","evidence_ids":["E-CCMS-CURRENT","E-ENERGY-STAR-OTHER"],"formula_use":"Calculates proposed electricity","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["resource_unit_conversion","existing_resource_unit"],"unit":"common-energy-unit/resource-unit and reciprocal","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"UNIT-RESOURCE-ENERGY","exact_paths":["unit_conversion:resource-energy"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Executes to_energy exactly once before applying existing efficiency","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_existing","p_electric"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Bill","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided existing resource and added electricity","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["annual_kwh","annual_therms","average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["allocated water-heating input","existing efficiency","proposed UEF or COP","existing resource"],"source_fixture":null,"low_base_high_calculation":"Exact values only.","final_result_path":"thermal load -> resource switch -> matched rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Existing and proposed exact-product fixtures and deterministic resource selection."},
+      "manual_review_verdict":"Current efficient-product data cannot resolve unknown existing equipment."
+    },
+    {
+      "category_id": "ITC-07",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["current_annual_gas"],"unit":"therms/year","tree_nodes":["Current annual water-heating gas"],"source_or_resolver":"Measured end use or user-confirmed bill allocation","exact_paths":["utilityExtractedValues[].fieldId=annual_therms plus User water-heating share"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Existing annual gas input","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["η_existing"],"unit":"fraction","tree_nodes":["Certified existing and proposed product resolution"],"source_or_resolver":"Exact existing product or measurement","exact_paths":["User Existing Model"],"fallback_path":null,"standard_output_key":"ccms.existing_installed_baseline","evidence_ids":["E-CCMS-EXISTING-UNSUPPORTED"],"formula_use":"Existing efficiency","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["η_proposed"],"unit":"fraction","tree_nodes":["Certified existing and proposed product resolution"],"source_or_resolver":"Exact proposed product","exact_paths":["User Selected Proposed Model"],"fallback_path":null,"standard_output_key":"ccms.current_certified_product_rating","evidence_ids":["E-CCMS-CURRENT","E-ENERGY-STAR-OTHER"],"formula_use":"Proposed efficiency","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_gas"],"unit":"USD/therm","tree_nodes":["Gas volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:gas-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided gas","default_path_resolved":false,"missing_data_behavior":"RETURN_THERMS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["gas-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["annual_therms","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["water-heating gas allocation","existing efficiency","proposed efficiency"],"source_fixture":null,"low_base_high_calculation":"Exact values only.","final_result_path":"efficiency ratio -> therms avoided -> gas rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Existing-product fixture and end-use allocation."},
+      "manual_review_verdict":"No source-supported existing equipment class or Profile/Bill model inference exists."
+    },
+    {
+      "category_id": "ITC-08",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["SAM_output","useful_solar_thermal_output"],"unit":"kWh-thermal/year","tree_nodes":["SAM solar-thermal output (Standard)"],"source_or_resolver":"STD-SAM-SOLAR-THERMAL","exact_paths":["evidence:E-SAM-SOLAR-THERMAL"],"fallback_path":null,"standard_output_key":"sam.solar_thermal_useful_energy","evidence_ids":["E-SAM-SOLAR-THERMAL"],"formula_use":"Models and caps useful solar heat","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["annual_delivered_hot_water_load"],"unit":"kWh-thermal/year","tree_nodes":["Annual delivered hot-water thermal load, if known (User)"],"source_or_resolver":"Measured or project-engineered load","exact_paths":["User annual delivered hot-water load"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Caps useful output","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["backup_efficiency","avoided_backup_resource"],"unit":"fraction and resource-unit/year","tree_nodes":["Backup resource"],"source_or_resolver":"Exact backup system input plus formula","exact_paths":["User backup efficiency"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Converts useful heat to avoided purchased resource","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["resource_unit_conversion","backup_resource_unit"],"unit":"common-energy-unit/resource-unit and reciprocal","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"UNIT-RESOURCE-ENERGY","exact_paths":["unit_conversion:resource-energy"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Executes to_billed_unit exactly once before pricing backup-resource savings","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_backup_resource"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Bill or required project fuel price","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided backup resource","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULT_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric","fuel-price"],
+      "profile_paths":["site.geo.coordinates"],
+      "bill_field_ids":["average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["collector design","solar resource","hot-water load","backup resource and efficiency"],"source_fixture":null,"low_base_high_calculation":"Explicit deterministic sensitivities only.","final_result_path":"SAM useful heat -> backup resource avoided -> rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Pinned SAM module, schema, and golden example."},
+      "manual_review_verdict":"The simulator cannot supply missing capacity, configuration, load, or backup inputs."
+    },
+    {
+      "category_id": "ITC-09",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["existing_distribution_heat","proposed_distribution_heat","avoided_distribution_heat","avoided_thermal_input"],"unit":"kWh-thermal/year and resource-unit/year","tree_nodes":["Existing annual distribution heat loss (User)","Proposed annual distribution heat loss (User)","MEASUR thermal and pump result"],"source_or_resolver":"Exact project heat-loss inputs and MEASUR adapter plus formula","exact_paths":["User existing and proposed annual distribution heat loss","evidence:E-MEASUR-ITC09"],"fallback_path":null,"standard_output_key":"measur.itc09","evidence_ids":["E-MEASUR-ITC09"],"formula_use":"Calculates avoided distribution heat and purchased thermal-input reduction","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["heater_efficiency"],"unit":"fraction","tree_nodes":["Existing water-heating system efficiency, if known (User)"],"source_or_resolver":"Exact project input","exact_paths":["User heater efficiency"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Converts avoided heat to purchased input","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["pump_kW","avoided_run_hours","avoided_pump_kWh"],"unit":"kW, hours/year, kWh/year","tree_nodes":["MEASUR thermal and pump result","Annual operating hours"],"source_or_resolver":"Exact pump input and explicit schedule","exact_paths":["User pump kW","schedule.explicit_calendar_hours"],"fallback_path":null,"standard_output_key":"schedule.explicit_calendar_hours","evidence_ids":["E-SCHEDULE-EXPLICIT"],"formula_use":"Calculates avoided pump energy","default_path_resolved":false,"missing_data_behavior":"OMIT_PUMP_COMPONENT_OR_NO_ESTIMATE"},
+        {"names":["resource_unit_conversion","heating_resource_unit"],"unit":"common-energy-unit/resource-unit and reciprocal","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"UNIT-RESOURCE-ENERGY","exact_paths":["unit_conversion:resource-energy"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Executes to_billed_unit exactly once before pricing avoided thermal input","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_heating_resource","p_electric"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Bill","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values thermal and pump savings","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric"],
+      "profile_paths":["site.geo.coordinates","business.primaryActivityText"],
+      "bill_field_ids":["average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["existing and proposed annual distribution heat loss","heater efficiency","pump input","operating schedule"],"source_fixture":null,"low_base_high_calculation":"Explicit sensitivities only.","final_result_path":"avoided heat and pump kWh -> matched rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR heat-loss adapter, physical-input boundary, and schedule fixture."},
+      "manual_review_verdict":"Annual useful-heat savings are bounded by explicit existing and proposed distribution losses. No bill branch or generic MEASUR default substitutes for those inputs."
+    },
+    {
+      "category_id": "ITC-10",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity"],"unit":"units","tree_nodes":["In-scope quantity"],"source_or_resolver":"User","exact_paths":["Information Tree > In-scope quantity"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Scopes equipment count","default_path_resolved":true,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["annual_kWh","daily_kWh"],"unit":"kWh/year and kWh/day","tree_nodes":["Certified existing and proposed product resolution"],"source_or_resolver":"Deterministic annualization for daily certification fields only","exact_paths":["annual_kWh = daily_kWh × 365"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Annualizes a daily energy field exactly once when the source field is daily","default_path_resolved":true,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["existing_annual_kWh"],"unit":"kWh/unit-year","tree_nodes":["Certified existing and proposed product resolution"],"source_or_resolver":"Exact existing record or measurement","exact_paths":["User Existing Model"],"fallback_path":null,"standard_output_key":"energy_star.existing_installed_baseline","evidence_ids":["E-ENERGY-STAR-EXISTING-UNSUPPORTED","E-CCMS-EXISTING-UNSUPPORTED"],"formula_use":"Existing annual energy","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["proposed_annual_kWh"],"unit":"kWh/unit-year","tree_nodes":["Certified existing and proposed product resolution"],"source_or_resolver":"Exact proposed record","exact_paths":["User Selected Proposed Model"],"fallback_path":null,"standard_output_key":"energy_star.other_current_product_fields","evidence_ids":["E-ENERGY-STAR-OTHER","E-CCMS-CURRENT"],"formula_use":"Proposed annual energy","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric"],"unit":"USD/kWh","tree_nodes":["Electric volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided kWh","default_path_resolved":false,"missing_data_behavior":"RETURN_KWH_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","exact existing performance","exact proposed performance"],"source_fixture":null,"low_base_high_calculation":"Exact records only.","final_result_path":"annual kWh difference -> electric rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Product-family schema fixtures and existing-equipment source."},
+      "manual_review_verdict":"Current certified products cannot serve as the existing refrigeration baseline."
+    },
+    {
+      "category_id": "ITC-11",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["annual_affected_refrigeration_kWh"],"unit":"kWh/year","tree_nodes":["Affected refrigeration annual kWh"],"source_or_resolver":"Measurement or user-confirmed bill allocation","exact_paths":["utilityExtractedValues[].fieldId=annual_kwh plus User refrigeration share"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Affected energy basis","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["baseline_annual_kWh","proposed_annual_kWh","reduction_fraction"],"unit":"kWh/year, kWh/year, fraction","tree_nodes":["Exact refrigeration ECM factor (Standard)"],"source_or_resolver":"STD-SCOUT-ECM-SCREEN","exact_paths":["evidence:E-SCOUT-ECM"],"fallback_path":null,"standard_output_key":"scout.ecm_resource_reduction_factor","evidence_ids":["E-SCOUT-ECM"],"formula_use":"Calculates fractional reduction","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric"],"unit":"USD/kWh","tree_nodes":["Electric volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided kWh","default_path_resolved":false,"missing_data_behavior":"RETURN_KWH_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric"],
+      "profile_paths":["site.buildingTypes","site.geo.coordinates","site.geo.countyFips"],
+      "bill_field_ids":["annual_kwh","average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["affected refrigeration kWh","exact control scope"],"source_fixture":null,"low_base_high_calculation":"Only source-explicit cases.","final_result_path":"Scout fraction -> kWh avoided -> electric rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Approved Scout definition and refrigeration allocation."},
+      "manual_review_verdict":"The source and end-use allocation are not executable."
+    },
+    {
+      "category_id": "ITC-12",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity"],"unit":"motors","tree_nodes":["In-scope quantity"],"source_or_resolver":"User","exact_paths":["Information Tree > In-scope quantity"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Scopes motor count","default_path_resolved":true,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["existing_input_kW","proposed_input_kW","input_kW","shaft_kW","motor_efficiency"],"unit":"kW and fraction","tree_nodes":["Motor performance calculation (Standard)"],"source_or_resolver":"Exact MEASUR adapter or measured input","exact_paths":["evidence:E-MEASUR-ITC12"],"fallback_path":null,"standard_output_key":"measur.itc12","evidence_ids":["E-MEASUR-ITC12"],"formula_use":"Resolves existing and proposed input power once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["annual_hours"],"unit":"hours/year","tree_nodes":["Annual operating hours"],"source_or_resolver":"Explicit schedule","exact_paths":["schedule.explicit_calendar_hours"],"fallback_path":null,"standard_output_key":"schedule.explicit_calendar_hours","evidence_ids":["E-SCHEDULE-EXPLICIT"],"formula_use":"Annualizes power difference","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric"],"unit":"USD/kWh","tree_nodes":["Electric volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided kWh","default_path_resolved":false,"missing_data_behavior":"RETURN_KWH_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric"],
+      "profile_paths":["site.geo.coordinates","business.primaryActivityText"],
+      "bill_field_ids":["average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","shaft or input power","existing and proposed efficiency","schedule"],"source_fixture":null,"low_base_high_calculation":"Explicit sensitivities only.","final_result_path":"input kW difference -> kWh -> electric rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR motor adapter and schedule fixture."},
+      "manual_review_verdict":"Motor efficiency must be applied once; no generic adapter is approved."
+    },
+    {
+      "category_id": "ITC-13",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity"],"unit":"machines","tree_nodes":["In-scope quantity"],"source_or_resolver":"User","exact_paths":["Information Tree > In-scope quantity"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Scopes machine count","default_path_resolved":true,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["annual_ice_production_lb_per_machine","annual_ice_100lb_units_per_machine"],"unit":"lb/year and 100-lb units/year","tree_nodes":["Annual pounds of ice produced per machine, if known (User)"],"source_or_resolver":"Measured or project input plus division by 100","exact_paths":["User annual ice production"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Activity basis and single unit conversion","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["kWh_per_100lb_existing","water_gallons_per_100lb_existing"],"unit":"kWh/100 lb and gallons/100 lb","tree_nodes":["Certified existing and proposed product resolution"],"source_or_resolver":"Exact existing record or measurement","exact_paths":["User Existing Model"],"fallback_path":null,"standard_output_key":"energy_star.existing_installed_baseline","evidence_ids":["E-ENERGY-STAR-EXISTING-UNSUPPORTED"],"formula_use":"Existing resource intensity","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["kWh_per_100lb_proposed","water_gallons_per_100lb_proposed"],"unit":"kWh/100 lb and gallons/100 lb","tree_nodes":["Certified kWh and potable gallons per 100 pounds of ice (Standard)"],"source_or_resolver":"Exact proposed record","exact_paths":["User Selected Proposed Model"],"fallback_path":null,"standard_output_key":"energy_star.other_current_product_fields","evidence_ids":["E-ENERGY-STAR-OTHER","E-CCMS-CURRENT"],"formula_use":"Proposed resource intensity","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric","p_water_sewer"],"unit":"USD/kWh and USD/gallon","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Bill component rates","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values energy and water components","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","water-volumetric","sewer-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["average_cost_per_kwh","annual_water_cost","annual_water_use","annual_sewer_cost","water_unit"],
+      "sewer_applicability":"Include sewer only when ice-machine water use is sewer-billed.",
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","annual ice production","existing intensity","proposed intensity"],"source_fixture":null,"low_base_high_calculation":"Exact records only.","final_result_path":"100-lb activity units -> energy and water deltas -> component rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Ice-machine schema fixture, existing baseline, usage proof, and sewer rule."},
+      "manual_review_verdict":"Usage-unit conversion is explicit, but source adapters are incomplete."
+    },
+    {
+      "category_id": "ITC-14",
+      "verdict": "BLOCKED",
+      "formula_terms": [
+        {"names":["annual_billed_R_r"],"unit":"resource-unit/year","tree_nodes":["Annual billed resource r"],"source_or_resolver":"Bill","exact_paths":["annual_kwh or annual_therms"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Whole-resource basis","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["Scout_reduction_fraction_r"],"unit":"fraction","tree_nodes":["Exact Scout ECM reduction factor (Standard)"],"source_or_resolver":"STD-SCOUT-ECM-SCREEN","exact_paths":["evidence:E-SCOUT-ECM"],"fallback_path":null,"standard_output_key":"scout.ecm_resource_reduction_factor","evidence_ids":["E-SCOUT-ECM"],"formula_use":"Resource reduction factor","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_r"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Bill","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided resource","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULT_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric"],
+      "profile_paths":["site.buildingTypes","site.geo.coordinates","site.geo.countyFips"],
+      "bill_field_ids":["annual_kwh","annual_therms","average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["exact ECM definition and affected-resource baseline"],"source_fixture":null,"low_base_high_calculation":"Not available.","final_result_path":"No executable path","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"No defensible approved method for the five broad taxonomy items."},
+      "manual_review_verdict":"Blocked because semantic crosswalks and site applicability are not defensible."
+    },
+    {
+      "category_id": "ITC-15",
+      "verdict": "RESEARCHED — READY FOR HUMAN REVIEW",
+      "formula_terms": [
+        {"names":["S"],"unit":"USD/year","tree_nodes":["Annual direct operational-resource savings equals zero"],"source_or_resolver":"Category boundary constant","exact_paths":["formula:S=0"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Final result","default_path_resolved":true,"missing_data_behavior":"RETURN_ZERO"}
+      ],
+      "rate_components":[],
+      "profile_paths":[],
+      "bill_field_ids":[],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"zero-direct-operational-resource-boundary","minimum_required_inputs":[],"source_fixture":"docs/operational-savings-fixtures/categories/ITC-15.golden.json","low_base_high_calculation":"low = base = high = 0 USD/year","final_result_path":"S = 0","uncertainty":"None for the category boundary","executable_golden_fixture":"docs/operational-savings-fixtures/categories/ITC-15.golden.json","unresolved_gate":null},
+      "manual_review_verdict":"Ready. The category intentionally returns zero and prevents duplicate physical savings."
+    },
+    {
+      "category_id": "ITC-16",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["baseline_load_t"],"unit":"kW or kWh/interval","tree_nodes":["Chronological load and tariff"],"source_or_resolver":"Required uploaded interval artifact","exact_paths":["User Green Button interval artifact"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Baseline chronological load","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["shed_t","rebound_t","proposed_load_t"],"unit":"kW or kWh/interval","tree_nodes":["Maximum shed kW, if known (User)","Rebound or recovery constraint, if known (User)"],"source_or_resolver":"User event constraints and formula","exact_paths":["User shed and rebound profile"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Constructs proposed interval load","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["baseline_annual_bill","proposed_annual_bill"],"unit":"USD/year","tree_nodes":["Audited load template and REopt bill result (Standard)"],"source_or_resolver":"STD-REOPT-LOCAL-DISPATCH","exact_paths":["evidence:E-REOPT-DISPATCH"],"fallback_path":null,"standard_output_key":"reopt.interval_dispatch_bill","evidence_ids":["E-REOPT-DISPATCH"],"formula_use":"Final bill difference","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"}
+      ],
+      "rate_components":["electric-volumetric","electric-time-of-use","electric-demand"],
+      "profile_paths":[],
+      "bill_field_ids":["rate_schedule","customer_class","demand_charge_rate"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["complete interval load","verified tariff","event schedule","shed and rebound constraints"],"source_fixture":null,"low_base_high_calculation":"Explicit scenarios only.","final_result_path":"baseline and proposed interval bills -> USD/year","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Pinned REopt schema, demand-response counterfactual, and golden fixture."},
+      "manual_review_verdict":"Demand value is allowed because interval kW and billing-demand rules are explicit. Export is excluded."
+    },
+    {
+      "category_id": "ITC-17",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["PV_AC_kWh_t"],"unit":"kWh/interval","tree_nodes":["PVWatts interval AC generation (Standard)"],"source_or_resolver":"STD-PVWATTS-V8","exact_paths":["evidence:E-PVWATTS-V8"],"fallback_path":null,"standard_output_key":"pvwatts.v8_ac_energy","evidence_ids":["E-PVWATTS-V8"],"formula_use":"Interval PV generation","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["baseline_import_kWh_t","onsite_offset_kWh_t","export_kWh_t"],"unit":"kWh/interval","tree_nodes":["Chronological load and tariff","Interval onsite-offset and export calculation"],"source_or_resolver":"Uploaded interval load and formulas","exact_paths":["User Green Button interval artifact"],"fallback_path":null,"standard_output_key":"reopt.interval_dispatch_bill","evidence_ids":["E-REOPT-DISPATCH"],"formula_use":"Separates onsite offset from export once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["import_rate_t","export_credit_t"],"unit":"USD/kWh by interval","tree_nodes":["Chronological load and tariff"],"source_or_resolver":"Verified tariff artifact","exact_paths":["rate_component:electric-time-of-use","rate_component:electric-export","rate_component:electric-export-non-bypassable"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values onsite energy and exports","default_path_resolved":false,"missing_data_behavior":"RETURN_GENERATION_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","electric-time-of-use","electric-export","electric-export-non-bypassable"],
+      "profile_paths":["site.geo.coordinates"],
+      "bill_field_ids":["rate_schedule","customer_class"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["PV design","solar resource","complete interval load","verified import and export tariff"],"source_fixture":"docs/operational-savings-fixtures/sources/pvwatts-v8-schema.json","low_base_high_calculation":"Explicit system and loss sensitivities only.","final_result_path":"PV interval generation -> onsite/export split -> tariff bill result","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Project PV design, interval/tariff parser, REopt fixture, and end-to-end golden fixture."},
+      "manual_review_verdict":"PVWatts fields are verified, but no system design default or executable bill path exists."
+    },
+    {
+      "category_id": "ITC-18",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["credited_kWh_period","contract_credit_rate_period","annual_bill_credits"],"unit":"kWh/period, USD/kWh, USD/year","tree_nodes":["Allocated or credited kWh by period from the executed contract or statement (User)","Credit rate by period from the executed contract or statement (User)"],"source_or_resolver":"Exact contract and statement","exact_paths":["User community-solar contract artifact","User statement credit lines"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Calculates contract credits","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["annual_subscription_charges"],"unit":"USD/year","tree_nodes":["Subscription charge by period from the executed contract or statement (User)"],"source_or_resolver":"Exact contract and statement","exact_paths":["User community-solar contract artifact"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Subtracts subscription charges","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["contract_escalation_rule","contract_term_rule"],"unit":"contract rule and date range","tree_nodes":["Contract escalation rule (User)","Contract term rule (User)"],"source_or_resolver":"Executed contract","exact_paths":["User community-solar contract artifact"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Constrains which period credits and charges are annualized and applies escalation exactly once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"}
+      ],
+      "rate_components":["contract-credit"],
+      "profile_paths":[],
+      "bill_field_ids":[],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"exact-contract-input","minimum_required_inputs":["credited kWh by period","credit rate by period","subscription charges"],"source_fixture":null,"low_base_high_calculation":"Exact contract case only.","final_result_path":"statement credits minus contract charges","uncertainty":"Moderate","executable_golden_fixture":null,"unresolved_gate":"Normalized contract and statement-credit schema with fixture."},
+      "manual_review_verdict":"The formula is contract-based and must not inherit utility marginal-rate, demand, or export branches."
+    },
+    {
+      "category_id": "ITC-19",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["wind_kWh_t"],"unit":"kWh/interval","tree_nodes":["WIND Toolkit resource and SAM generation (Standard)"],"source_or_resolver":"STD-WIND-SAM","exact_paths":["evidence:E-WIND-SAM"],"fallback_path":null,"standard_output_key":"wind_sam.ac_energy","evidence_ids":["E-WIND-SAM"],"formula_use":"Interval wind generation","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["baseline_import_kWh_t","onsite_offset_kWh_t","export_kWh_t"],"unit":"kWh/interval","tree_nodes":["Chronological load and tariff","Interval onsite-offset and export calculation"],"source_or_resolver":"Uploaded interval load and formulas","exact_paths":["User Green Button interval artifact"],"fallback_path":null,"standard_output_key":"reopt.interval_dispatch_bill","evidence_ids":["E-REOPT-DISPATCH"],"formula_use":"Separates onsite offset from export","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["import_rate_t","export_credit_t"],"unit":"USD/kWh by interval","tree_nodes":["Chronological load and tariff"],"source_or_resolver":"Verified tariff artifact","exact_paths":["rate_component:electric-time-of-use","rate_component:electric-export","rate_component:electric-export-non-bypassable"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values onsite energy and exports","default_path_resolved":false,"missing_data_behavior":"RETURN_GENERATION_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","electric-time-of-use","electric-export","electric-export-non-bypassable"],
+      "profile_paths":["site.geo.coordinates"],
+      "bill_field_ids":["rate_schedule","customer_class"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["turbine and power curve","hub height and losses","wind resource","complete interval load and tariff"],"source_fixture":null,"low_base_high_calculation":"Explicit design sensitivities only.","final_result_path":"wind interval generation -> onsite/export split -> tariff bill result","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Pinned wind module, design inputs, source fixture, and bill fixture."},
+      "manual_review_verdict":"The simulator is not a source for missing turbine design. Export is included only because the explicit interval formula models it."
+    },
+    {
+      "category_id": "ITC-20",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["capacity_kW","annual_operating_hours","load_fraction","annual_generation"],"unit":"kW, hours/year, fraction, kWh/year","tree_nodes":["Total installed capacity, if known (User)","Annual operating hours","Operating load fraction, if known (User)","Electric efficiency by technology and capacity (Standard)"],"source_or_resolver":"Exact project design, schedule, and EPA method","exact_paths":["User capacity","schedule.explicit_calendar_hours","evidence:E-EPA-CHP"],"fallback_path":null,"standard_output_key":"epa_chp.performance_balance","evidence_ids":["E-EPA-CHP","E-SCHEDULE-EXPLICIT"],"formula_use":"Calculates annual generation once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["electric_efficiency","added_fuel"],"unit":"fraction and fuel-unit/year","tree_nodes":["Electric efficiency by technology and capacity (Standard)"],"source_or_resolver":"Exact project value or documented EPA class","exact_paths":["evidence:E-EPA-CHP"],"fallback_path":null,"standard_output_key":"epa_chp.performance_balance","evidence_ids":["E-EPA-CHP"],"formula_use":"Calculates input fuel once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["coincident_onsite_electric_load","avoided_grid_kWh"],"unit":"kWh/year","tree_nodes":["Coincident onsite electric load"],"source_or_resolver":"Measured chronological load and formula","exact_paths":["User interval load artifact"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Caps grid offset at coincident load","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["resource_unit_conversion","fuel_unit"],"unit":"common-energy-unit/resource-unit and reciprocal","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"UNIT-RESOURCE-ENERGY","exact_paths":["unit_conversion:resource-energy"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Executes to_billed_unit exactly once before pricing added fuel","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric","p_fuel"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Bill or documented project fuel price","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values grid offset and added fuel","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric","fuel-price"],
+      "profile_paths":[],
+      "bill_field_ids":["average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["capacity","operating profile","electric efficiency","fuel","coincident electric load"],"source_fixture":null,"low_base_high_calculation":"EPA table bounds only after an exact row is pinned.","final_result_path":"generation and fuel balance -> component rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"EPA row/workbook fixture and site-specific capacity, operation, and coincidence."},
+      "manual_review_verdict":"EPA can support a proposed technology class, not missing project capacity or operation."
+    },
+    {
+      "category_id": "ITC-21",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["total_capacity_kW","annual_capacity_factor","generation"],"unit":"kW, fraction, kWh/year","tree_nodes":["Total installed capacity, if known (User)","Annual capacity factor, if known (User)"],"source_or_resolver":"Exact project design and EPA method","exact_paths":["User capacity and capacity factor","evidence:E-EPA-CHP"],"fallback_path":null,"standard_output_key":"epa_chp.performance_balance","evidence_ids":["E-EPA-CHP"],"formula_use":"Calculates annual generation once using 8760 hours/year","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["electric_efficiency","CHP_input_fuel"],"unit":"fraction and fuel-unit/year","tree_nodes":["CHP performance by technology and capacity (Standard)"],"source_or_resolver":"Exact input or documented EPA row","exact_paths":["evidence:E-EPA-CHP"],"fallback_path":null,"standard_output_key":"epa_chp.performance_balance","evidence_ids":["E-EPA-CHP"],"formula_use":"Calculates CHP input fuel","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["recoverable_heat_ratio","coincident_thermal_load","useful_heat","existing_boiler_efficiency","avoided_boiler_fuel"],"unit":"ratio, energy/year, energy/year, fraction, fuel-unit/year","tree_nodes":["Coincident useful thermal-load constraint, if known (User)","Existing boiler efficiency, if known (User)","CHP performance by technology and capacity (Standard)"],"source_or_resolver":"EPA method plus exact site inputs","exact_paths":["evidence:E-EPA-CHP","User thermal load and boiler efficiency"],"fallback_path":null,"standard_output_key":"epa_chp.performance_balance","evidence_ids":["E-EPA-CHP"],"formula_use":"Caps useful heat and converts it to displaced boiler fuel once","default_path_resolved":false,"missing_data_behavior":"OMIT_THERMAL_COMPONENT_OR_NO_ESTIMATE"},
+        {"names":["resource_unit_conversion","CHP_fuel_unit","boiler_fuel_unit"],"unit":"common-energy-unit/resource-unit and reciprocal","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"UNIT-RESOURCE-ENERGY","exact_paths":["unit_conversion:resource-energy"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Executes each CHP and displaced-boiler fuel conversion exactly once before pricing","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["coincident_onsite_electric_load","avoided_grid_kWh","p_electric","p_fuel","p_CHP_fuel"],"unit":"kWh/year and USD/resource-unit","tree_nodes":["Annual CHP resource value","Coincident onsite electric-load constraint, if known (User)","Avoidable marginal resource price"],"source_or_resolver":"Formula and component rates","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Caps and values electric offset, boiler fuel, and CHP fuel","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric","fuel-price"],
+      "profile_paths":[],
+      "bill_field_ids":["average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["capacity","capacity factor","efficiency","thermal coincidence","boiler efficiency","fuel prices"],"source_fixture":null,"low_base_high_calculation":"Documented table bounds only.","final_result_path":"electric and useful-heat balance -> matched rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"EPA row/workbook fixture and project-specific design and coincidence."},
+      "manual_review_verdict":"The heat and fuel terms are separated, but the default design path is unsupported."
+    },
+    {
+      "category_id": "ITC-22",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["annual_available_fuel","scheduled_input_fuel","input_biomass_or_biogas"],"unit":"fuel-unit/year","tree_nodes":["Confirmed annual fuel availability, if known (User)","Operating schedule (User)","Scheduled input fuel"],"source_or_resolver":"Measured or contracted project fuel supply","exact_paths":["User fuel availability and schedule"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Caps annual input fuel","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["lower_heating_value","electric_efficiency","generation"],"unit":"energy/fuel-unit, fraction, kWh/year","tree_nodes":["Fuel lower heating value, if known (User)","Performance by technology and fuel (Standard)"],"source_or_resolver":"Exact fuel assay and EPA or project performance","exact_paths":["User heating value","evidence:E-EPA-CHP"],"fallback_path":null,"standard_output_key":"epa_chp.performance_balance","evidence_ids":["E-EPA-CHP"],"formula_use":"Calculates electricity generation once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["recoverable_heat_fraction","coincident_thermal_load","useful_heat","existing_boiler_efficiency","avoided_boiler_fuel"],"unit":"fraction, energy/year, energy/year, fraction, fuel-unit/year","tree_nodes":["Coincident useful thermal-load constraint, if known (User)","Existing boiler efficiency, if known (User)","Performance by technology and fuel (Standard)"],"source_or_resolver":"EPA method plus exact site inputs","exact_paths":["evidence:E-EPA-CHP","User thermal load and boiler efficiency"],"fallback_path":null,"standard_output_key":"epa_chp.performance_balance","evidence_ids":["E-EPA-CHP"],"formula_use":"Caps heat and converts to displaced fuel","default_path_resolved":false,"missing_data_behavior":"OMIT_THERMAL_COMPONENT_OR_NO_ESTIMATE"},
+        {"names":["resource_unit_conversion","boiler_fuel_unit"],"unit":"common-energy-unit/resource-unit and reciprocal","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"UNIT-RESOURCE-ENERGY","exact_paths":["unit_conversion:resource-energy"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Executes the displaced-boiler fuel conversion exactly once before pricing","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["coincident_onsite_electric_load","avoided_grid_kWh","p_electric","p_fuel","p_input_fuel"],"unit":"kWh/year and USD/resource-unit","tree_nodes":["Annual biomass or biogas resource value","Coincident onsite electric-load constraint, if known (User)","Avoidable marginal resource price"],"source_or_resolver":"Formula and component rates","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Caps and values electricity, displaced boiler fuel, and input fuel","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric","fuel-price"],
+      "profile_paths":[],
+      "bill_field_ids":["average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["fuel availability","fuel heating value","generation performance","thermal coincidence","prices"],"source_fixture":null,"low_base_high_calculation":"Explicit inputs and documented EPA bounds only.","final_result_path":"fuel-to-power-and-heat balance -> component rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Confirmed fuel supply and EPA performance fixture."},
+      "manual_review_verdict":"Organization type cannot be used to infer fuel availability or heating value."
+    },
+    {
+      "category_id": "ITC-23",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["state_of_charge_t","state_of_charge_(t-1)","charge_t","discharge_t","η_charge","η_discharge"],"unit":"kWh, kWh, kWh/interval, kWh/interval, fraction, fraction","tree_nodes":["Usable-energy capacity, if known (User)","Charge efficiency, if known (User)","Discharge efficiency, if known (User)","Initial state of charge, if known (User)"],"source_or_resolver":"Exact battery design and REopt dispatch","exact_paths":["User battery design","evidence:E-REOPT-DISPATCH"],"fallback_path":null,"standard_output_key":"reopt.interval_dispatch_bill","evidence_ids":["E-REOPT-DISPATCH"],"formula_use":"State-of-charge balance with each efficiency applied once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["baseline_annual_bill","proposed_annual_bill"],"unit":"USD/year","tree_nodes":["REopt baseline and proposed bill result (Standard)"],"source_or_resolver":"STD-REOPT-LOCAL-DISPATCH","exact_paths":["evidence:E-REOPT-DISPATCH"],"fallback_path":null,"standard_output_key":"reopt.interval_dispatch_bill","evidence_ids":["E-REOPT-DISPATCH"],"formula_use":"Final bill difference","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"}
+      ],
+      "rate_components":["electric-volumetric","electric-time-of-use","electric-demand"],
+      "profile_paths":[],
+      "bill_field_ids":["rate_schedule","customer_class","demand_charge_rate"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["complete interval load and tariff","battery capacity and power","charge and discharge efficiencies","dispatch constraints"],"source_fixture":null,"low_base_high_calculation":"Explicit design sensitivities only.","final_result_path":"baseline and battery-dispatch bills -> USD/year","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Pinned REopt schema and battery golden fixture."},
+      "manual_review_verdict":"Demand is modeled from interval kW. Export is excluded from the declared formula contract."
+    },
+    {
+      "category_id": "ITC-24",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["PV_AC_kWh_t"],"unit":"kWh/interval","tree_nodes":["PVWatts interval generation (Standard)"],"source_or_resolver":"STD-PVWATTS-V8","exact_paths":["evidence:E-PVWATTS-V8"],"fallback_path":null,"standard_output_key":"pvwatts.v8_ac_energy","evidence_ids":["E-PVWATTS-V8"],"formula_use":"Proposed PV generation input to dispatch","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["baseline_annual_bill","proposed_annual_bill"],"unit":"USD/year","tree_nodes":["REopt composite dispatch result (Standard)"],"source_or_resolver":"STD-REOPT-LOCAL-DISPATCH","exact_paths":["evidence:E-REOPT-DISPATCH"],"fallback_path":null,"standard_output_key":"reopt.interval_dispatch_bill","evidence_ids":["E-REOPT-DISPATCH"],"formula_use":"Final combined PV and storage bill difference","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"}
+      ],
+      "rate_components":["electric-volumetric","electric-time-of-use","electric-demand"],
+      "profile_paths":["site.geo.coordinates"],
+      "bill_field_ids":["rate_schedule","customer_class","demand_charge_rate"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["PV design","battery design","complete interval load","verified import tariff","explicit no-export constraint"],"source_fixture":"docs/operational-savings-fixtures/sources/pvwatts-v8-schema.json","low_base_high_calculation":"Explicit design sensitivities only.","final_result_path":"PV production -> storage dispatch -> baseline/proposed bills","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Project designs, pinned REopt schema, and end-to-end golden fixture."},
+      "manual_review_verdict":"PV and storage must be modeled together to avoid double counting."
+    },
+    {
+      "category_id": "ITC-25",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["thermal_state_t","thermal_state_(t-1)","charge_t","discharge_t","η_charge","η_discharge","standing_loss_t"],"unit":"thermal-energy and fraction","tree_nodes":["Thermal capacity, if known (User)","Charge efficiency, if known (User)","Discharge efficiency, if known (User)","Standing loss, if known (User)","Initial Thermal State, if known (User)"],"source_or_resolver":"Exact project design and REopt-compatible dispatch method","exact_paths":["User thermal-storage design","evidence:E-REOPT-DISPATCH"],"fallback_path":null,"standard_output_key":"reopt.interval_dispatch_bill","evidence_ids":["E-REOPT-DISPATCH"],"formula_use":"Thermal state balance with efficiencies and loss applied once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["baseline_annual_bill","proposed_annual_bill"],"unit":"USD/year","tree_nodes":["REopt baseline and proposed bill result (Standard)"],"source_or_resolver":"STD-REOPT-LOCAL-DISPATCH","exact_paths":["evidence:E-REOPT-DISPATCH"],"fallback_path":null,"standard_output_key":"reopt.interval_dispatch_bill","evidence_ids":["E-REOPT-DISPATCH"],"formula_use":"Final bill difference","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"}
+      ],
+      "rate_components":["electric-volumetric","electric-time-of-use","electric-demand"],
+      "profile_paths":[],
+      "bill_field_ids":["rate_schedule","customer_class","demand_charge_rate"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["complete interval load and tariff","thermal capacity","charge/discharge performance","standing loss","load coupling"],"source_fixture":null,"low_base_high_calculation":"Explicit design sensitivities only.","final_result_path":"thermal dispatch -> baseline/proposed bills","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Thermal-storage schema and pinned dispatch fixture."},
+      "manual_review_verdict":"Export is excluded because the category does not model generation."
+    },
+    {
+      "category_id": "ITC-26",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["baseline_grid_and_fuel_bill","proposed_grid_and_fuel_bill"],"unit":"USD/year","tree_nodes":["REopt composite dispatch result (Standard)"],"source_or_resolver":"Pinned REopt dispatch with PV, wind, CHP, storage, load, tariff, and fuel inputs","exact_paths":["evidence:E-REOPT-DISPATCH","evidence:E-PVWATTS-V8","evidence:E-WIND-SAM","evidence:E-EPA-CHP"],"fallback_path":null,"standard_output_key":"reopt.interval_dispatch_bill","evidence_ids":["E-REOPT-DISPATCH","E-PVWATTS-V8","E-WIND-SAM","E-EPA-CHP"],"formula_use":"Final composite bill difference without summing separate category results","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"}
+      ],
+      "rate_components":["electric-volumetric","electric-time-of-use","electric-demand","gas-volumetric","fuel-price"],
+      "profile_paths":["site.geo.coordinates"],
+      "bill_field_ids":["rate_schedule","customer_class","demand_charge_rate","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["complete load and tariffs","all technology designs","fuel contracts","operating constraints"],"source_fixture":null,"low_base_high_calculation":"Explicit integrated scenarios only.","final_result_path":"integrated dispatch -> grid and fuel bill difference","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"All component adapters plus integrated golden fixture."},
+      "manual_review_verdict":"No generic microgrid design fallback is defensible. Separate component savings must not be added."
+    },
+    {
+      "category_id": "ITC-27",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity"],"unit":"ports","tree_nodes":["In-scope quantity"],"source_or_resolver":"User","exact_paths":["Information Tree > In-scope quantity"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Scopes installed ports","default_path_resolved":true,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["delivered_kWh_t","baseline_load_t"],"unit":"kWh/interval","tree_nodes":["Delivered-kWh distribution per charger (User)","Chronological load and tariff"],"source_or_resolver":"Exact project interval inputs","exact_paths":["User delivered-kWh distribution","Uploaded interval load artifact"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Supplies delivered charging energy and baseline interval load without a product-data usage assumption","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["active_efficiency","standby_power_kW"],"unit":"fraction and kW/port","tree_nodes":["Certified active efficiency and standby power (Standard)"],"source_or_resolver":"Exact proposed EVSE rating","exact_paths":["energy_star.other_current_product_fields"],"fallback_path":null,"standard_output_key":"energy_star.other_current_product_fields","evidence_ids":["E-ENERGY-STAR-OTHER"],"formula_use":"Supplies product efficiency and standby power only","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["charging_input_kWh_t","noncharging_interval_hours_t","standby_kWh_t","proposed_load_t"],"unit":"kWh/interval, hours/interval, kWh/interval, kWh/interval","tree_nodes":["Session-arrival distribution per charger (User)","Session-duration distribution per charger (User)","EVSE interval load profile"],"source_or_resolver":"Formula using exact session and interval inputs","exact_paths":["User session distributions","Formula"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Builds charging and standby interval load with efficiency applied once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["baseline_annual_bill","proposed_annual_bill"],"unit":"USD/year","tree_nodes":["Audited session-load template and REopt bill result (Standard)"],"source_or_resolver":"STD-REOPT-LOCAL-DISPATCH","exact_paths":["evidence:E-REOPT-DISPATCH"],"fallback_path":null,"standard_output_key":"reopt.interval_dispatch_bill","evidence_ids":["E-REOPT-DISPATCH"],"formula_use":"Calculates added-load bill impact","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"}
+      ],
+      "rate_components":["electric-volumetric","electric-time-of-use","electric-demand"],
+      "profile_paths":[],
+      "bill_field_ids":["rate_schedule","customer_class","demand_charge_rate"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["port count","delivered-energy profile","EVSE efficiency and standby","complete interval load and tariff"],"source_fixture":null,"low_base_high_calculation":"Explicit usage and equipment sensitivities only.","final_result_path":"added interval load -> proposed bill minus baseline bill","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"EVSE schema fixture, usage profile, and REopt golden fixture."},
+      "manual_review_verdict":"Demand is explicit from interval added load. Export is excluded."
+    },
+    {
+      "category_id": "ITC-28",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["fleet_annual_miles"],"unit":"miles/year","tree_nodes":["Annual fleet miles (User)"],"source_or_resolver":"Exact fleet activity input","exact_paths":["User fleet annual miles"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Annual vehicle activity basis","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["proposed_combE","vehicle_kWh_per_mile"],"unit":"kWh/100 miles and kWh/mile","tree_nodes":["Measured kWh per Mile (User)","Vehicle and charger efficiency (Standard)"],"source_or_resolver":"Exact measured intensity or exact FuelEconomy vehicle record","exact_paths":["User measured kWh per mile","fueleconomy.combE"],"fallback_path":null,"standard_output_key":"fueleconomy.combE","evidence_ids":["E-FUELECONOMY-COMBE"],"formula_use":"Uses the direct measured intensity or converts combE from kWh/100 miles exactly once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["annual_vehicle_kWh"],"unit":"kWh/year","tree_nodes":["Annual fleet miles (User)","Vehicle and charger efficiency (Standard)"],"source_or_resolver":"Formula","exact_paths":["fleet annual miles × vehicle kWh per mile"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Calculates annual charging energy once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["installed_ports","noncharging_hours"],"unit":"ports and hours/year","tree_nodes":["Installed port count (User)","Vehicle-arrival schedule (User)","Vehicle-departure schedule (User)"],"source_or_resolver":"Exact project port count and schedule","exact_paths":["User port count and schedule"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Scopes standby operation without a product-data usage assumption","default_path_resolved":false,"missing_data_behavior":"OMIT_STANDBY_COMPONENT_OR_NO_ESTIMATE"},
+        {"names":["standby_kW_per_port"],"unit":"kW/port","tree_nodes":["Vehicle and charger efficiency (Standard)"],"source_or_resolver":"Exact proposed EVSE rating","exact_paths":["energy_star.other_current_product_fields"],"fallback_path":null,"standard_output_key":"energy_star.other_current_product_fields","evidence_ids":["E-ENERGY-STAR-OTHER"],"formula_use":"Supplies product standby power only","default_path_resolved":false,"missing_data_behavior":"OMIT_STANDBY_COMPONENT_OR_NO_ESTIMATE"},
+        {"names":["standby_kWh"],"unit":"kWh/year","tree_nodes":["EVSE standby energy"],"source_or_resolver":"Formula","exact_paths":["installed ports × standby kW/port × noncharging hours"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Calculates standby energy once","default_path_resolved":false,"missing_data_behavior":"OMIT_STANDBY_COMPONENT_OR_NO_ESTIMATE"},
+        {"names":["baseline_annual_bill","proposed_unmanaged_charging_bill"],"unit":"USD/year","tree_nodes":["Audited fleet-load template and REopt bill result (Standard)"],"source_or_resolver":"STD-REOPT-LOCAL-DISPATCH","exact_paths":["evidence:E-REOPT-DISPATCH"],"fallback_path":null,"standard_output_key":"reopt.interval_dispatch_bill","evidence_ids":["E-REOPT-DISPATCH"],"formula_use":"Calculates unmanaged charging bill impact","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"}
+      ],
+      "rate_components":["electric-volumetric","electric-time-of-use","electric-demand"],
+      "profile_paths":[],
+      "bill_field_ids":["rate_schedule","customer_class","demand_charge_rate"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["fleet miles","exact compatible vehicle efficiency","charging schedule","EVSE standby","complete interval load and tariff"],"source_fixture":"docs/operational-savings-fixtures/sources/fueleconomy-vehicle-schema.json","low_base_high_calculation":"Exact vehicle records and explicit schedules only.","final_result_path":"fleet charging interval load -> unmanaged charging bill","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Fleet compatibility, EVSE schema, load template, and REopt fixture."},
+      "manual_review_verdict":"No class distribution or extra charging-efficiency adjustment is allowed."
+    },
+    {
+      "category_id": "ITC-29",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity"],"unit":"vehicles","tree_nodes":["In-scope quantity"],"source_or_resolver":"User","exact_paths":["Information Tree > In-scope quantity"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Scopes replaced vehicles","default_path_resolved":true,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["annual_miles"],"unit":"miles/vehicle-year","tree_nodes":["Annual miles for replaced vehicle"],"source_or_resolver":"User or measured fleet data","exact_paths":["User annual miles"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Annual activity","default_path_resolved":true,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["existing_combined_mpg","avoided_gallons","avoided_fuel_units"],"unit":"miles/gallon and gallons/year","tree_nodes":["Vehicle efficiency records"],"source_or_resolver":"Exact FuelEconomy.gov vehicle record and formula","exact_paths":["fueleconomy.comb08"],"fallback_path":null,"standard_output_key":"fueleconomy.comb08","evidence_ids":["E-FUELECONOMY-COMB08"],"formula_use":"Calculates avoided fuel","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["proposed_combE","added_kWh"],"unit":"kWh/100 miles and kWh/year","tree_nodes":["Vehicle efficiency records"],"source_or_resolver":"Exact FuelEconomy.gov EV record and formula","exact_paths":["fueleconomy.combE"],"fallback_path":null,"standard_output_key":"fueleconomy.combE","evidence_ids":["E-FUELECONOMY-COMBE"],"formula_use":"Calculates wall electricity without a second charging-loss factor","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_fuel","p_electric"],"unit":"USD/gallon and USD/kWh","tree_nodes":["Liquid or vehicle-fuel price","Electric volumetric charge"],"source_or_resolver":"Required documented project fuel price and Bill","exact_paths":["rate_component:fuel-price","rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided fuel and added electricity","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","fuel-price"],
+      "profile_paths":[],
+      "bill_field_ids":["average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"exact-existing-model-and-exact-proposed-model","minimum_required_inputs":["quantity","annual miles","exact existing vehicle","exact proposed EV","documented fuel price","electric rate"],"source_fixture":"docs/operational-savings-fixtures/sources/fueleconomy-vehicle-schema.json","low_base_high_calculation":"Exact records use one value. Class percentiles are disabled.","final_result_path":"gallons avoided and wall kWh added -> matched prices","uncertainty":"Moderate to high","executable_golden_fixture":null,"unresolved_gate":"Product decision for class compatibility, fuel-price intake, and end-to-end golden fixture."},
+      "manual_review_verdict":"The combE double-efficiency error is corrected. Annual billed fuel and electricity quantities are not formula inputs."
+    },
+    {
+      "category_id": "ITC-30",
+      "verdict": "BLOCKED",
+      "formula_terms": [
+        {"names":["quantity","annual_hours"],"unit":"units and hours/year","tree_nodes":["In-scope quantity","Annual operating hours"],"source_or_resolver":"User and explicit schedule","exact_paths":["User quantity","schedule.explicit_calendar_hours"],"fallback_path":null,"standard_output_key":"schedule.explicit_calendar_hours","evidence_ids":["E-SCHEDULE-EXPLICIT"],"formula_use":"Scopes and annualizes operation","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["existing_fuel_per_hour","proposed_kWh_per_hour"],"unit":"fuel-unit/hour and kWh/hour","tree_nodes":["Existing fuel use per operating hour","Proposed charging kWh per operating hour"],"source_or_resolver":"Measured or contractual project inputs","exact_paths":["User exact performance inputs"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Cross-fuel performance terms","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_fuel","p_electric"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Documented project fuel price and Bill","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values cross-fuel balance","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","fuel-price"],
+      "profile_paths":["site.geo.coordinates","business.primaryActivityText"],
+      "bill_field_ids":["average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"exact-project-inputs-only","minimum_required_inputs":["quantity","hours","existing fuel/hour","proposed kWh/hour","prices"],"source_fixture":null,"low_base_high_calculation":"Exact project inputs only.","final_result_path":"cross-fuel hourly balance -> annual value","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"No authoritative cross-fuel model dataset."},
+      "manual_review_verdict":"Blocked except for exact measured or contractual project inputs."
+    },
+    {
+      "category_id": "ITC-31",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["available_intervals","delivered_kWh_t","required_departure_energy"],"unit":"interval set, kWh/interval, and kWh","tree_nodes":["Required energy by departure","Managed charging template"],"source_or_resolver":"Exact fleet availability and energy requirements","exact_paths":["User arrival, departure, and required energy"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Departure-energy constraint","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["unmanaged_annual_bill","managed_annual_bill"],"unit":"USD/year","tree_nodes":["REopt interval dispatch result"],"source_or_resolver":"STD-REOPT-LOCAL-DISPATCH","exact_paths":["evidence:E-REOPT-DISPATCH"],"fallback_path":null,"standard_output_key":"reopt.interval_dispatch_bill","evidence_ids":["E-REOPT-DISPATCH"],"formula_use":"Final managed-charging bill difference","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"}
+      ],
+      "rate_components":["electric-volumetric","electric-time-of-use","electric-demand"],
+      "profile_paths":[],
+      "bill_field_ids":["rate_schedule","customer_class","demand_charge_rate"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["complete interval load and tariff","arrival/departure schedule","required energy","charger and site limits","unmanaged counterfactual"],"source_fixture":null,"low_base_high_calculation":"Explicit fleet-availability scenarios only.","final_result_path":"unmanaged and managed dispatch bills -> USD/year","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Fleet availability schema, counterfactual decision, and REopt fixture."},
+      "manual_review_verdict":"Demand is explicit from interval charging. Export is excluded."
+    },
+    {
+      "category_id": "ITC-32",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","uses_per_year","duration_minutes"],"unit":"fixtures, uses/fixture-year, minutes/use","tree_nodes":["In-scope quantity","Recognizable Fixture Usage Pattern","Typical Minutes per Use"],"source_or_resolver":"User or separately verified commercial usage method","exact_paths":["User usage inputs"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Annual activity basis without a WaterSense usage assumption","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["gpm_existing"],"unit":"gallons/minute","tree_nodes":["Existing rated flow"],"source_or_resolver":"Exact existing rating or measurement","exact_paths":["User Existing rated flow"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Existing water intensity from a direct project input","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["gpm_proposed"],"unit":"gallons/minute","tree_nodes":["Proposed rated flow"],"source_or_resolver":"Exact proposed rating or WaterSense criterion","exact_paths":["User Proposed rated flow","evidence:E-WATERSENSE-PROPOSED"],"fallback_path":null,"standard_output_key":"watersense.proposed_fixture_criteria","evidence_ids":["E-WATERSENSE-PROPOSED"],"formula_use":"Proposed water intensity","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["avoided_water"],"unit":"gallons/year","tree_nodes":["Annual water and heating-resource reduction"],"source_or_resolver":"Formula","exact_paths":["quantity × uses/year × minutes/use × flow difference"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Annual water reduction","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["hot_fraction","thermal_energy_per_gallon","heater_efficiency","avoided_hot_water_input"],"unit":"fraction, energy/gallon, fraction, resource-unit/year","tree_nodes":["Hot-water fraction","Hot-water temperature rise","Water-heating resource or cold-only selection"],"source_or_resolver":"Exact project inputs and deterministic thermodynamics","exact_paths":["User hot fraction, temperature rise, resource, and efficiency"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Optional non-cold-only hot-water input","default_path_resolved":false,"missing_data_behavior":"OMIT_HOT_WATER_COMPONENT_FOR_COLD_ONLY_OTHERWISE_NO_ESTIMATE"},
+        {"names":["resource_unit_conversion","heating_resource_unit"],"unit":"common-energy-unit/resource-unit and reciprocal","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"UNIT-RESOURCE-ENERGY","exact_paths":["unit_conversion:resource-energy"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Executes to_billed_unit exactly once for the non-cold-only water-heating component","default_path_resolved":false,"missing_data_behavior":"OMIT_FOR_COLD_ONLY_OTHERWISE_NO_ESTIMATE"},
+        {"names":["p_water_sewer","p_heating_resource"],"unit":"USD/gallon and USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Separate water, sewer, and heating-resource components","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values water and heating-resource reductions","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["water-volumetric","sewer-volumetric","electric-volumetric","gas-volumetric"],
+      "profile_paths":["business.primaryActivityText"],
+      "bill_field_ids":["annual_water_cost","annual_water_use","annual_sewer_cost","water_unit","average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":"Include sewer only when the avoided fixture water is sewer-billed.",
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","commercial use pattern","existing and proposed flow","cold-only or heating resource","hot-water inputs when nonzero"],"source_fixture":null,"low_base_high_calculation":"Exact values or source-explicit sensitivities only.","final_result_path":"water reduction plus optional heating-resource reduction -> separate rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Commercial usage source, existing baseline, proposed fixture fixture, and hot-water method."},
+      "manual_review_verdict":"Annual uses, minutes per use, existing rated flow, hot-water fraction, temperature rise, and heater efficiency are explicit. WaterSense supplies only compatible proposed performance."
+    },
+    {
+      "category_id": "ITC-33",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","flushes_per_year"],"unit":"fixtures and flushes/fixture-year","tree_nodes":["In-scope quantity","Recognizable Flush Usage Pattern","Annual flushes per fixture (User)"],"source_or_resolver":"User exact commercial usage input","exact_paths":["User quantity and flush frequency"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Annual activity basis without a WaterSense usage assumption","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["gpf_existing"],"unit":"gallons/flush","tree_nodes":["Existing rated gallons per flush"],"source_or_resolver":"Exact existing rating or measurement","exact_paths":["User Existing rated gallons per flush"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Existing water intensity from a direct project input","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["gpf_proposed"],"unit":"gallons/flush","tree_nodes":["Proposed rated gallons per flush"],"source_or_resolver":"Exact proposed rating or WaterSense criterion","exact_paths":["User Proposed rated gallons per flush","evidence:E-WATERSENSE-PROPOSED"],"fallback_path":null,"standard_output_key":"watersense.proposed_fixture_criteria","evidence_ids":["E-WATERSENSE-PROPOSED"],"formula_use":"Proposed water intensity","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_water_sewer"],"unit":"USD/gallon","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Separate water and sewer components","exact_paths":["rate_component:water-volumetric","rate_component:sewer-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided water","default_path_resolved":false,"missing_data_behavior":"RETURN_GALLONS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["water-volumetric","sewer-volumetric"],
+      "profile_paths":["business.primaryActivityText"],
+      "bill_field_ids":["annual_water_cost","annual_water_use","annual_sewer_cost","water_unit"],
+      "sewer_applicability":"Include sewer only when the avoided flush water is sewer-billed.",
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","commercial flush frequency","existing gpf","proposed gpf"],"source_fixture":null,"low_base_high_calculation":"No household-derived commercial default.","final_result_path":"annual gallons avoided -> separate water and sewer rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Commercial flush-frequency source and existing baseline fixture."},
+      "manual_review_verdict":"Annual flushes and existing rated flush volume are explicit. WaterSense supplies only compatible proposed performance."
+    },
+    {
+      "category_id": "ITC-34",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["baseline_design_allowance_gallons","proposed_design_allowance_gallons"],"unit":"gallons/year","tree_nodes":["Climate data and Water Budget equations"],"source_or_resolver":"WaterSense Water Budget Tool Version 2.0","exact_paths":["evidence:E-WATERSENSE-LANDSCAPE-DESIGN"],"fallback_path":null,"standard_output_key":"watersense.landscape_design_allowance","evidence_ids":["E-WATERSENSE-LANDSCAPE-DESIGN"],"formula_use":"Compares two modeled design allowances, not measured use","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_water"],"unit":"USD/gallon","tree_nodes":["Water volumetric charge"],"source_or_resolver":"Bill water component only","exact_paths":["rate_component:water-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values modeled water difference","default_path_resolved":false,"missing_data_behavior":"RETURN_MODELED_GALLONS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["water-volumetric"],
+      "profile_paths":["site.addressStructured.zip5"],
+      "bill_field_ids":["annual_water_cost","annual_water_use","water_unit"],
+      "sewer_applicability":"Sewer is excluded unless a future explicit account rule proves irrigation is sewer-billed.",
+      "default_path":{"scenario":"modeled-design-comparison","minimum_required_inputs":["ZIP Code","hydrozone areas","plant types","existing and proposed irrigation configurations"],"source_fixture":"docs/operational-savings-fixtures/sources/watersense-landscape-scope.json","low_base_high_calculation":"Explicit plant-factor and irrigation-efficiency sensitivities only.","final_result_path":"design allowance difference -> water rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact Version 2.0 equation and data fixture plus product decision on presenting modeled allowance value."},
+      "manual_review_verdict":"The bill cap and sewer default are removed. The result is not labeled measured operational savings."
+    },
+    {
+      "category_id": "ITC-35",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["measured_leak_gpm","confirmed_leak_minutes_per_year"],"unit":"gallons/minute and minutes/year","tree_nodes":["Measured leak flow, if known (User)","Confirmed leak start date (User)","Confirmed repair date (User)"],"source_or_resolver":"Measured project inputs","exact_paths":["User measured leak flow and duration"],"fallback_path":null,"standard_output_key":"watersense.ci_operation_equation","evidence_ids":["E-WATERSENSE-CI"],"formula_use":"Calculates annual avoided gallons","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_water_sewer"],"unit":"USD/gallon","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Separate water and sewer components","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided leak water","default_path_resolved":false,"missing_data_behavior":"RETURN_GALLONS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["water-volumetric","sewer-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["annual_water_cost","annual_water_use","annual_sewer_cost","water_unit"],
+      "sewer_applicability":"Include sewer only when leaked water is sewer-billed.",
+      "default_path":{"scenario":"exact-measurement","minimum_required_inputs":["measured leak gpm","confirmed leak duration","applicable water and sewer rates"],"source_fixture":null,"low_base_high_calculation":"Measurement uncertainty only.","final_result_path":"flow × duration -> gallons -> applicable rates","uncertainty":"Moderate","executable_golden_fixture":null,"unresolved_gate":"WaterSense equation page and worked-example fixture."},
+      "manual_review_verdict":"No unmeasured leak rate or duration default is allowed."
+    },
+    {
+      "category_id": "ITC-36",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["evaporation","cycles_of_concentration","blowdown","drift","makeup","avoided_makeup_gallons"],"unit":"gallons/year and ratio","tree_nodes":["Existing cycles of concentration, if known (User)","Proposed cycles of concentration, if known (User)","Annual evaporation or equivalent heat rejection, if known (User)","WaterSense water balance (Standard)"],"source_or_resolver":"Measured tower inputs and exact MEASUR/WaterSense method","exact_paths":["evidence:E-MEASUR-ITC36","evidence:E-WATERSENSE-CI"],"fallback_path":null,"standard_output_key":"measur.itc36","evidence_ids":["E-MEASUR-ITC36","E-WATERSENSE-CI"],"formula_use":"Water balance with evaporation counted once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["avoided_fan_kWh"],"unit":"kWh/year","tree_nodes":["MEASUR fan-energy result (Standard)"],"source_or_resolver":"Measured fan profile or exact MEASUR adapter","exact_paths":["evidence:E-MEASUR-ITC36"],"fallback_path":null,"standard_output_key":"measur.itc36","evidence_ids":["E-MEASUR-ITC36"],"formula_use":"Electricity component","default_path_resolved":false,"missing_data_behavior":"OMIT_FAN_COMPONENT_OR_NO_ESTIMATE"},
+        {"names":["p_water_sewer","p_electric"],"unit":"USD/gallon and USD/kWh","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Separate rate components","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values water and fan energy","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["water-volumetric","sewer-volumetric","electric-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["annual_water_use","annual_water_cost","annual_sewer_cost","water_unit","average_cost_per_kwh"],
+      "sewer_applicability":"Include sewer only for avoided blowdown or other water that would have been sewer-billed.",
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["tower heat rejection or evaporation","cycles","drift","fan profile","rate applicability"],"source_fixture":null,"low_base_high_calculation":"Explicit operating sensitivities only.","final_result_path":"water balance and fan kWh -> separate rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR and WaterSense contracts with golden examples."},
+      "manual_review_verdict":"Water and fan components are separate. Sewer applicability cannot be assumed."
+    },
+    {
+      "category_id": "ITC-37",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","hours_period"],"unit":"systems and hours/period","tree_nodes":["In-scope quantity","Annual operating hours"],"source_or_resolver":"User and explicit schedule","exact_paths":["User quantity","schedule.explicit_calendar_hours"],"fallback_path":null,"standard_output_key":"schedule.explicit_calendar_hours","evidence_ids":["E-SCHEDULE-EXPLICIT"],"formula_use":"Scopes and weights operating periods","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["airflow_fraction","fan_shaft_power_fraction","existing_fan_kW_period","proposed_fan_kW_period","avoided_fan_kWh"],"unit":"fraction, fraction, kW, kW, kWh/year","tree_nodes":["Existing fan input power, if known (User)","Existing Design Airflow, if known (User)","Existing airflow schedule (User)","Proposed airflow schedule (User)","MEASUR fan and thermal result (Standard)"],"source_or_resolver":"Exact fan inputs and MEASUR adapter","exact_paths":["evidence:E-MEASUR-ITC37"],"fallback_path":null,"standard_output_key":"measur.itc37","evidence_ids":["E-MEASUR-ITC37"],"formula_use":"Applies the cubic law only to shaft power and converts to electrical input with explicit efficiencies","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["avoided_makeup_air_R_r"],"unit":"resource-unit/year","tree_nodes":["Makeup-air heating system (User)","Makeup-air cooling system (User)","MEASUR fan and thermal result (Standard)"],"source_or_resolver":"Exact HVAC method and climate/load inputs","exact_paths":["evidence:E-MEASUR-ITC37"],"fallback_path":null,"standard_output_key":"measur.itc37","evidence_ids":["E-MEASUR-ITC37"],"formula_use":"Thermal makeup-air component","default_path_resolved":false,"missing_data_behavior":"OMIT_THERMAL_COMPONENT_OR_NO_ESTIMATE"},
+        {"names":["p_electric","p_r"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Bill component rates","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values fan and thermal resources","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric"],
+      "profile_paths":["site.geo.coordinates"],
+      "bill_field_ids":["average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","airflow/load bins","fan input","makeup-air conditions","schedule"],"source_fixture":null,"low_base_high_calculation":"Explicit bins and sensitivities only.","final_result_path":"fan and makeup-air deltas -> matched rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR fan/HVAC adapter and golden fixture."},
+      "manual_review_verdict":"The cubic affinity law applies to shaft-power fraction only. The pinned MEASUR adapter must convert shaft power to electrical input without applying efficiency twice."
+    },
+    {
+      "category_id": "ITC-38",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","shaft_kW","load_fraction","annual_hours"],"unit":"motors, kW, fraction, hours/year","tree_nodes":["In-scope quantity","Motor rated shaft power, if known (User)","Operating load fraction, if known (User)","Annual operating hours"],"source_or_resolver":"Exact project inputs and explicit schedule","exact_paths":["User inputs","schedule.explicit_calendar_hours"],"fallback_path":null,"standard_output_key":"schedule.explicit_calendar_hours","evidence_ids":["E-SCHEDULE-EXPLICIT"],"formula_use":"Scopes and annualizes shaft load","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["η_existing","η_proposed"],"unit":"fraction","tree_nodes":["Existing motor class (User)","Proposed motor class (User)","MEASUR motor efficiencies (Standard)"],"source_or_resolver":"Exact ratings or MEASUR motor adapter","exact_paths":["evidence:E-MEASUR-ITC38"],"fallback_path":null,"standard_output_key":"measur.itc38","evidence_ids":["E-MEASUR-ITC38"],"formula_use":"Converts shaft power to input power once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric"],"unit":"USD/kWh","tree_nodes":["Electric volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values annual kWh","default_path_resolved":false,"missing_data_behavior":"RETURN_KWH_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric"],
+      "profile_paths":["site.geo.coordinates","business.primaryActivityText"],
+      "bill_field_ids":["average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","shaft kW","load fraction","existing/proposed efficiency","hours"],"source_fixture":null,"low_base_high_calculation":"Explicit inputs only.","final_result_path":"input-power difference -> annual kWh -> rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR motor adapter and schedule fixture."},
+      "manual_review_verdict":"Efficiency is applied once through reciprocal input-power terms."
+    },
+    {
+      "category_id": "ITC-39",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","hours_i"],"unit":"systems and hours/bin","tree_nodes":["In-scope quantity","Load-bin profile"],"source_or_resolver":"User measured load bins","exact_paths":["User quantity and bin hours"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Scopes and weights bins","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["existing_kW_i","proposed_kW_i"],"unit":"kW/bin","tree_nodes":["MEASUR load-bin result"],"source_or_resolver":"Exact measured bins and pinned MEASUR adapter","exact_paths":["evidence:E-MEASUR-ITC39"],"fallback_path":null,"standard_output_key":"measur.itc39","evidence_ids":["E-MEASUR-ITC39"],"formula_use":"Returns comparable existing and proposed electrical input power for each bin","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric"],"unit":"USD/kWh","tree_nodes":["Electric volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values annual kWh","default_path_resolved":false,"missing_data_behavior":"RETURN_KWH_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","load-bin hours","speed fractions","existing power","proposed minimum speed and control rule"],"source_fixture":null,"low_base_high_calculation":"Explicit bins only.","final_result_path":"bin kWh difference -> electric rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR load-bin adapter, electrical-input boundary, and golden fixture."},
+      "manual_review_verdict":"Pinned MEASUR bin outputs must provide electrical input directly. No standalone cube-law input-power adjustment or second annual-hours factor is allowed."
+    },
+    {
+      "category_id": "ITC-40",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","annual_hours"],"unit":"pumps and hours/year","tree_nodes":["In-scope quantity","Annual operating hours"],"source_or_resolver":"User and explicit schedule","exact_paths":["User quantity","schedule.explicit_calendar_hours"],"fallback_path":null,"standard_output_key":"schedule.explicit_calendar_hours","evidence_ids":["E-SCHEDULE-EXPLICIT"],"formula_use":"Scopes and annualizes power","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["hydraulic_power_kW","pump_efficiency","motor_efficiency","input_kW","existing_input_kW","proposed_input_kW"],"unit":"kW and fraction","tree_nodes":["Required flow, if known (User)","Total dynamic head, if known (User)","Existing pump efficiency, if known (User)","Existing motor efficiency, if known (User)","Proposed pump efficiency, if known (User)","Proposed motor efficiency, if known (User)","MEASUR pump assessment result (Standard)"],"source_or_resolver":"Exact pump inputs and MEASUR adapter","exact_paths":["evidence:E-MEASUR-ITC40"],"fallback_path":null,"standard_output_key":"measur.itc40","evidence_ids":["E-MEASUR-ITC40"],"formula_use":"Calculates wire-to-water input power with each efficiency applied once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric"],"unit":"USD/kWh","tree_nodes":["Electric volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values annual kWh","default_path_resolved":false,"missing_data_behavior":"RETURN_KWH_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric"],
+      "profile_paths":["site.geo.coordinates","business.primaryActivityText"],
+      "bill_field_ids":["average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","flow/head or hydraulic power","pump and motor efficiencies","hours"],"source_fixture":null,"low_base_high_calculation":"Explicit inputs only.","final_result_path":"input kW difference -> annual kWh -> rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR pump adapter and schedule fixture."},
+      "manual_review_verdict":"The simulator does not supply flow, head, or geometry."
+    },
+    {
+      "category_id": "ITC-41",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","annual_hours"],"unit":"fans and hours/year","tree_nodes":["In-scope quantity","Annual operating hours"],"source_or_resolver":"User and explicit schedule","exact_paths":["User quantity","schedule.explicit_calendar_hours"],"fallback_path":null,"standard_output_key":"schedule.explicit_calendar_hours","evidence_ids":["E-SCHEDULE-EXPLICIT"],"formula_use":"Scopes and annualizes power","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["air_power_kW","fan_efficiency","motor_efficiency","input_kW","existing_input_kW","proposed_input_kW"],"unit":"kW and fraction","tree_nodes":["Required airflow, if known (User)","Required pressure rise, if known (User)","Existing fan efficiency, if known (User)","Existing motor efficiency, if known (User)","Proposed fan efficiency, if known (User)","Proposed motor efficiency, if known (User)","MEASUR fan assessment result (Standard)"],"source_or_resolver":"Exact fan inputs and MEASUR adapter","exact_paths":["evidence:E-MEASUR-ITC41"],"fallback_path":null,"standard_output_key":"measur.itc41","evidence_ids":["E-MEASUR-ITC41"],"formula_use":"Calculates fan input power with each efficiency applied once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric"],"unit":"USD/kWh","tree_nodes":["Electric volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values annual kWh","default_path_resolved":false,"missing_data_behavior":"RETURN_KWH_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric"],
+      "profile_paths":["site.geo.coordinates","business.primaryActivityText"],
+      "bill_field_ids":["average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","airflow and pressure","fan and motor efficiencies","hours"],"source_fixture":null,"low_base_high_calculation":"Explicit inputs only.","final_result_path":"input kW difference -> annual kWh -> rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR fan adapter and schedule fixture."},
+      "manual_review_verdict":"No generic airflow, pressure, or fan curve is allowed."
+    },
+    {
+      "category_id": "ITC-42",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","mean_flow","annual_hours","annual_flow_hours"],"unit":"compressors, flow-unit, hours/year, flow-unit-hours/year","tree_nodes":["In-scope quantity","Mean flow, if known (User)","Annual operating hours","Annual compressor electricity reduction"],"source_or_resolver":"Measured project inputs and explicit schedule","exact_paths":["User inputs","schedule.explicit_calendar_hours"],"fallback_path":null,"standard_output_key":"schedule.explicit_calendar_hours","evidence_ids":["E-SCHEDULE-EXPLICIT"],"formula_use":"Calculates annual flow-hours once before applying specific power","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["specific_power_existing","specific_power_proposed"],"unit":"kW/flow-unit","tree_nodes":["Existing compressor specific power, if known (User)","Proposed compressor specific power, if known (User)","MEASUR compressed-air assessment result (Standard)"],"source_or_resolver":"Measured values or exact MEASUR adapter","exact_paths":["evidence:E-MEASUR-ITC42"],"fallback_path":null,"standard_output_key":"measur.itc42","evidence_ids":["E-MEASUR-ITC42"],"formula_use":"Existing and proposed power intensity","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric"],"unit":"USD/kWh","tree_nodes":["Electric volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values annual kWh","default_path_resolved":false,"missing_data_behavior":"RETURN_KWH_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric"],
+      "profile_paths":["site.geo.coordinates","business.primaryActivityText"],
+      "bill_field_ids":["average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","mean flow","hours","existing/proposed specific power"],"source_fixture":null,"low_base_high_calculation":"Explicit inputs only.","final_result_path":"annual output × specific-power difference -> kWh -> rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR compressed-air adapter and schedule fixture."},
+      "manual_review_verdict":"The integration basis is flow-unit-hours per year, so annual flow-hours cannot be multiplied by another annual-hours term."
+    },
+    {
+      "category_id": "ITC-43",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","leak_flow","compressor_specific_power","annual_pressurized_hours"],"unit":"leaks, flow/leak, kW/flow-unit, hours/year","tree_nodes":["In-scope quantity","Measurement Observations, if known (User)","Compressor specific power, if known (User)","Annual operating hours","MEASUR leak-flow result (Standard)"],"source_or_resolver":"Measured inputs and explicit schedule","exact_paths":["User measurements","schedule.explicit_calendar_hours","evidence:E-MEASUR-ITC43"],"fallback_path":null,"standard_output_key":"measur.itc43","evidence_ids":["E-MEASUR-ITC43","E-SCHEDULE-EXPLICIT"],"formula_use":"Calculates leak energy once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric"],"unit":"USD/kWh","tree_nodes":["Electric volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values leak energy","default_path_resolved":false,"missing_data_behavior":"RETURN_KWH_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric"],
+      "profile_paths":["site.geo.coordinates","business.primaryActivityText"],
+      "bill_field_ids":["average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["leak count","measured leak flow","compressor specific power","pressurized hours"],"source_fixture":null,"low_base_high_calculation":"Measurement sensitivity only.","final_result_path":"leak flow × specific power × hours -> kWh -> rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR leak adapter and measurement fixture."},
+      "manual_review_verdict":"Leak flow has no safe generic default."
+    },
+    {
+      "category_id": "ITC-44",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","hours_i","existing_kW_i","proposed_kW_i"],"unit":"systems, hours/bin, kW, kW","tree_nodes":["In-scope quantity","Repeatable annual load profile","Annual hours for each bin, if known (User)","MEASUR control-profile result (Standard)"],"source_or_resolver":"Measured bins and exact MEASUR adapter","exact_paths":["User bin inputs","evidence:E-MEASUR-ITC44"],"fallback_path":null,"standard_output_key":"measur.itc44","evidence_ids":["E-MEASUR-ITC44"],"formula_use":"Calculates annual bin energy difference once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric"],"unit":"USD/kWh","tree_nodes":["Electric volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values annual kWh","default_path_resolved":false,"missing_data_behavior":"RETURN_KWH_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","load-bin hours","existing and proposed bin power"],"source_fixture":null,"low_base_high_calculation":"Explicit bins only.","final_result_path":"bin kWh difference -> electric rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR control-profile adapter and golden fixture."},
+      "manual_review_verdict":"Bin hours are the annualization basis and cannot be multiplied by another annual-hours term."
+    },
+    {
+      "category_id": "ITC-45",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["available_waste_heat","recovery_efficiency","coincident_useful_heat_load","useful_recovered_heat"],"unit":"energy/year and fraction","tree_nodes":["Waste-stream flow, if known (User)","Waste-stream temperature, if known (User)","Waste-stream schedule (User)","Coincident Useful-Heat Load, if known (User)","Recovery-equipment efficiency, if known (User)","MEASUR process-heat result (Standard)"],"source_or_resolver":"Measured process inputs and exact MEASUR adapter","exact_paths":["User measured inputs","evidence:E-MEASUR-ITC45"],"fallback_path":null,"standard_output_key":"measur.itc45","evidence_ids":["E-MEASUR-ITC45"],"formula_use":"Caps recovered heat once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["displaced_system_efficiency","billed_displaced_resource","avoided_displaced_resource"],"unit":"fraction and resource-unit/year","tree_nodes":["Displaced heating-system efficiency, if known (User)","Annual billed resource r"],"source_or_resolver":"Exact system efficiency and matching bill allocation","exact_paths":["User efficiency","annual_kwh or annual_therms plus allocation"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Converts and caps displaced purchased resource","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["resource_unit_conversion","displaced_resource_unit"],"unit":"common-energy-unit/resource-unit and reciprocal","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"UNIT-RESOURCE-ENERGY","exact_paths":["unit_conversion:resource-energy"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Executes to_billed_unit exactly once before the displaced-resource cap and pricing","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["added_auxiliary_kWh","p_displaced_resource","p_electric"],"unit":"kWh/year and USD/resource-unit","tree_nodes":["Recovery auxiliary power, if known (User)","Avoidable marginal resource price"],"source_or_resolver":"Exact auxiliary load and component rates","exact_paths":["User auxiliary load","rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Subtracts auxiliary electricity from displaced-resource value","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric","fuel-price"],
+      "profile_paths":[],
+      "bill_field_ids":["annual_kwh","annual_therms","average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["available heat","recovery efficiency","coincident load","displaced-system efficiency","auxiliary load"],"source_fixture":null,"low_base_high_calculation":"Explicit measured sensitivities only.","final_result_path":"useful heat -> displaced resource less auxiliary electricity -> rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR waste-heat adapter and coincidence fixture."},
+      "manual_review_verdict":"Whole-bill resource caps require a matching end-use allocation, not an unrelated bill."
+    },
+    {
+      "category_id": "ITC-46",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["current_fuel_input","current_efficiency","useful_process_heat"],"unit":"fuel-unit/year, fraction, energy/year","tree_nodes":["Process share of billed fuel, if known (User)","Useful Process Load, if known (User)","Existing process efficiency, if known (User)"],"source_or_resolver":"Measured process inputs","exact_paths":["User or measured process values"],"fallback_path":null,"standard_output_key":"measur.itc46","evidence_ids":["E-MEASUR-ITC46"],"formula_use":"Calculates useful process heat once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["proposed_COP_or_efficiency","proposed_electric_input"],"unit":"ratio and kWh/year","tree_nodes":["Proposed technology (User)","Proposed COP or efficiency, if known (User)","MEASUR process-heating balance (Standard)"],"source_or_resolver":"Exact proposed specification and MEASUR adapter","exact_paths":["User proposed performance","evidence:E-MEASUR-ITC46"],"fallback_path":null,"standard_output_key":"measur.itc46","evidence_ids":["E-MEASUR-ITC46"],"formula_use":"Calculates proposed electricity once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["resource_unit_conversion","current_fuel_unit","electricity_unit"],"unit":"common-energy-unit/resource-unit and reciprocal","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"UNIT-RESOURCE-ENERGY","exact_paths":["unit_conversion:resource-energy"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Executes one fuel-to-energy and one energy-to-electricity conversion","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_fuel","p_electric"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Documented project fuel price or Bill","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values resource switch","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric","fuel-price"],
+      "profile_paths":[],
+      "bill_field_ids":["annual_therms","average_cost_per_therm","average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["current process fuel and efficiency","proposed COP or efficiency","matching prices"],"source_fixture":null,"low_base_high_calculation":"Explicit process sensitivities only.","final_result_path":"useful heat -> current fuel versus proposed electricity -> rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact process-specific MEASUR adapter and proposed-equipment proof."},
+      "manual_review_verdict":"Broad process labels cannot supply temperatures, loads, or proposed performance."
+    },
+    {
+      "category_id": "ITC-47",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","steam_loss_rate","annual_pressurized_hours","avoided_steam_loss"],"unit":"traps, mass/hour, hours/year, mass/year","tree_nodes":["In-scope quantity","Failed-trap condition (User)","Leak class (User)","Annual operating hours","MEASUR steam-loss result (Standard)"],"source_or_resolver":"Measured inputs and explicit schedule","exact_paths":["User inputs","schedule.explicit_calendar_hours","evidence:E-MEASUR-ITC47"],"fallback_path":null,"standard_output_key":"measur.itc47","evidence_ids":["E-MEASUR-ITC47","E-SCHEDULE-EXPLICIT"],"formula_use":"Calculates annual steam loss once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["steam_enthalpy_rise","boiler_efficiency","boiler_fuel_per_steam_unit"],"unit":"energy/mass, fraction, fuel-unit/mass","tree_nodes":["Steam Pressure, if known (User)","Condensate-return condition (User)","Boiler efficiency, if known (User)","MEASUR steam-loss result (Standard)"],"source_or_resolver":"Exact steam conditions and boiler input","exact_paths":["User steam pressure, feedwater condition, and boiler efficiency"],"fallback_path":null,"standard_output_key":"measur.itc47","evidence_ids":["E-MEASUR-ITC47"],"formula_use":"Converts lost steam to boiler fuel once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["resource_unit_conversion","boiler_fuel_unit"],"unit":"common-energy-unit/resource-unit and reciprocal","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"UNIT-RESOURCE-ENERGY","exact_paths":["unit_conversion:resource-energy"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Executes to_billed_unit exactly once for boiler fuel per steam unit","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_fuel"],"unit":"USD/fuel-unit","tree_nodes":["Gas volumetric charge"],"source_or_resolver":"Bill or documented project fuel price","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values avoided fuel","default_path_resolved":false,"missing_data_behavior":"RETURN_FUEL_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["gas-volumetric","fuel-price"],
+      "profile_paths":["site.geo.coordinates","business.primaryActivityText"],
+      "bill_field_ids":["average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","steam loss rate","steam conditions","pressurized hours","boiler efficiency"],"source_fixture":null,"low_base_high_calculation":"Explicit measurement sensitivities only.","final_result_path":"steam loss -> boiler fuel -> rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR steam adapter and golden fixture."},
+      "manual_review_verdict":"No generic trap loss or pressurized-hours default is allowed."
+    },
+    {
+      "category_id": "ITC-48",
+      "verdict": "BLOCKED",
+      "formula_terms": [
+        {"names":["annual_billed_fuel","confirmed_cooking_share","current_annual_cooking_fuel"],"unit":"fuel-unit/year, fraction, fuel-unit/year","tree_nodes":["BR-ANNUAL-BILL-RESOURCE","Cooking share of billed fuel or direct equipment measurement, if known (User)"],"source_or_resolver":"Bill plus confirmed end-use allocation","exact_paths":["annual_therms or exact fuel record plus User cooking share"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Existing cooking fuel basis","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["annual_cooking_activity","proposed_tested_kWh_per_activity_unit","proposed_annual_induction_kWh"],"unit":"activity/year, kWh/activity, kWh/year","tree_nodes":["Annual Cooking Activity in the Tested Duty Unit, if known (User)","Proposed Induction kWh per Identical Tested Duty Unit, if known (User)"],"source_or_resolver":"Measured activity and exact proposed test result","exact_paths":["User exact project inputs"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Proposed electricity once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["existing_duty_definition","proposed_duty_equivalence_confirmed"],"unit":"tested-duty definition and boolean","tree_nodes":["Existing cooking-duty definition (User)","Proposed duty-equivalence confirmation (User)"],"source_or_resolver":"User-confirmed project test boundary","exact_paths":["User exact project inputs"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Guards against comparing unlike cooking duties","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_fuel","p_electric"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Bill or documented fuel price","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values resource switch","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric","fuel-price"],
+      "profile_paths":[],
+      "bill_field_ids":["annual_therms","average_cost_per_therm","average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"exact-project-inputs-only","minimum_required_inputs":["confirmed cooking fuel allocation","cooking activity","proposed tested kWh/activity","prices"],"source_fixture":null,"low_base_high_calculation":"Exact project inputs only.","final_result_path":"fuel avoided minus induction electricity -> rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"No validated cross-fuel commercial cooking method."},
+      "manual_review_verdict":"Blocked except for a measured project-specific comparison."
+    },
+    {
+      "category_id": "ITC-49",
+      "verdict": "BLOCKED",
+      "formula_terms": [
+        {"names":["annual_billed_kWh","confirmed_walk_in_share","current_annual_refrigeration_kWh"],"unit":"kWh/year, fraction, kWh/year","tree_nodes":["BR-ANNUAL-BILL-RESOURCE","Walk-in share of billed electricity or direct measurement, if known (User)"],"source_or_resolver":"Bill plus confirmed end-use allocation","exact_paths":["utilityExtractedValues[].fieldId=annual_kwh plus User walk-in share"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Existing system energy basis","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["proposed_annual_refrigeration_kWh"],"unit":"kWh/year","tree_nodes":["Proposed Annual System kWh for the Same Box Load and Duty, if known (User)"],"source_or_resolver":"Project-specific whole-system engineering result","exact_paths":["User or engineer proposed annual kWh"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Proposed system energy","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["duty_equivalence_confirmed"],"unit":"boolean","tree_nodes":["Existing and proposed duty-equivalence confirmation (User)"],"source_or_resolver":"User-confirmed project comparison boundary","exact_paths":["User duty-equivalence confirmation"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Guards against comparing annual kWh for unlike box loads or duties","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric"],"unit":"USD/kWh","tree_nodes":["Electric volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values annual kWh difference","default_path_resolved":false,"missing_data_behavior":"RETURN_KWH_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["annual_kwh","average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"exact-project-inputs-only","minimum_required_inputs":["confirmed walk-in allocation","proposed whole-system annual kWh","electric rate"],"source_fixture":null,"low_base_high_calculation":"Exact project inputs only.","final_result_path":"whole-system annual kWh difference -> rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"No public component dataset resolves whole-system annual performance."},
+      "manual_review_verdict":"Blocked because component ratings cannot be promoted to a whole-box annual result."
+    },
+    {
+      "category_id": "ITC-50",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","annual_activity_per_unit","annual_idle_hours"],"unit":"units, certified activity-unit/year, hours/year","tree_nodes":["In-scope quantity","Recognizable Cooking Usage Pattern","Annual Activity per Unit in the Certified Test Unit (User)","Annual Idle Hours per Unit (User)"],"source_or_resolver":"User exact commercial usage inputs","exact_paths":["User usage inputs"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Annual activity and idle bases without a product-data usage assumption","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["active_intensity_existing,r","idle_rate_existing,r"],"unit":"resource/certified activity and resource/hour","tree_nodes":["Certified existing and proposed product resolution"],"source_or_resolver":"Exact existing rating or measurement","exact_paths":["User Existing Model"],"fallback_path":null,"standard_output_key":"energy_star.existing_installed_baseline","evidence_ids":["E-ENERGY-STAR-EXISTING-UNSUPPORTED","E-CCMS-EXISTING-UNSUPPORTED"],"formula_use":"Existing active and idle intensity","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["active_intensity_proposed,r","idle_rate_proposed,r","tested_cooking_efficiency","useful_test_load_per_unit","active_input_per_test_unit"],"unit":"resource/certified activity, resource/hour, fraction, energy/activity, energy/activity","tree_nodes":["Certified cooking efficiency and idle energy rate"],"source_or_resolver":"Exact proposed certified fields and one conversion when needed","exact_paths":["energy_star.other_current_product_fields"],"fallback_path":null,"standard_output_key":"energy_star.other_current_product_fields","evidence_ids":["E-ENERGY-STAR-OTHER","E-CCMS-CURRENT"],"formula_use":"Proposed active and idle intensity with efficiency applied once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["resource_unit_conversion","resource_unit"],"unit":"common-energy-unit/resource-unit and reciprocal","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"UNIT-RESOURCE-ENERGY","exact_paths":["unit_conversion:resource-energy"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Executes to_billed_unit exactly once when the efficiency path is used instead of direct input intensity","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE_WHEN_EFFICIENCY_PATH_IS_USED"},
+        {"names":["p_r"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Bill","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values resource-specific active and idle deltas","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","product-specific certified activity","idle hours","existing and proposed ratings"],"source_fixture":null,"low_base_high_calculation":"Exact records only until each product-family population is fixture-tested.","final_result_path":"active plus idle resource deltas -> matched rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Fryer, oven, and steamer schema fixtures plus existing baselines and usage units."},
+      "manual_review_verdict":"Each product family must preserve its test unit. Usage or activity remains a required project input, and no cross-family usage conversion is allowed."
+    },
+    {
+      "category_id": "ITC-51",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","annual_hours"],"unit":"systems and hours/year","tree_nodes":["In-scope quantity","Annual operating hours"],"source_or_resolver":"User and explicit schedule","exact_paths":["User quantity","schedule.explicit_calendar_hours"],"fallback_path":null,"standard_output_key":"schedule.explicit_calendar_hours","evidence_ids":["E-SCHEDULE-EXPLICIT"],"formula_use":"Scopes and annualizes fan power","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["airflow","pressure_rise","air_power_conversion_factor","fan_efficiency","motor_efficiency","existing_input_kW","proposed_input_kW","fan_input_kW"],"unit":"flow, pressure, kW/(flow-unit × pressure-unit), fraction, fraction, kW, kW, kW","tree_nodes":["MEASUR fan-power result"],"source_or_resolver":"Measured filtration/fan inputs and exact MEASUR adapter","exact_paths":["evidence:E-MEASUR-ITC51"],"fallback_path":null,"standard_output_key":"measur.itc51","evidence_ids":["E-MEASUR-ITC51"],"formula_use":"Converts flow-pressure power to kW once and applies each efficiency once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["p_electric"],"unit":"USD/kWh","tree_nodes":["Electric volumetric charge"],"source_or_resolver":"Bill","exact_paths":["rate_component:electric-volumetric"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values annual fan energy change","default_path_resolved":false,"missing_data_behavior":"RETURN_KWH_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric"],
+      "profile_paths":["site.geo.coordinates","business.primaryActivityText"],
+      "bill_field_ids":["average_cost_per_kwh"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","airflow","clean and loaded pressure","fan/motor efficiencies","hours"],"source_fixture":null,"low_base_high_calculation":"Explicit filtration sensitivities only.","final_result_path":"fan input difference -> annual kWh -> rate","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Exact MEASUR filtration fan adapter and golden fixture."},
+      "manual_review_verdict":"Health value is out of scope, fan physics inputs remain project-specific, and the flow-pressure product is converted to kW exactly once."
+    },
+    {
+      "category_id": "ITC-52",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","annual_racks_per_unit","annual_idle_hours_per_unit","annual_energized_hours_per_unit","annual_active_wash_hours_per_unit"],"unit":"machines, racks/year, hours/year, hours/year, hours/year","tree_nodes":["In-scope quantity","Recognizable Dishwasher Usage Pattern","Annual Idle Hours per Unit"],"source_or_resolver":"Exact operating inputs","exact_paths":["User dishwasher activity and hours"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Annual activity and idle bases with idle hours derived once when needed","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["water_per_rack_existing","idle_kW_existing"],"unit":"gallons/rack and kW","tree_nodes":["Certified existing and proposed product resolution"],"source_or_resolver":"Exact existing record or measurement","exact_paths":["User Existing Model"],"fallback_path":null,"standard_output_key":"energy_star.existing_installed_baseline","evidence_ids":["E-ENERGY-STAR-EXISTING-UNSUPPORTED"],"formula_use":"Existing water and idle intensity","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["water_per_rack_proposed","idle_kW_proposed"],"unit":"gallons/rack and kW","tree_nodes":["Certified water use and idle energy by model"],"source_or_resolver":"Exact proposed ENERGY STAR record","exact_paths":["energy_star.commercial_dishwasher_fields"],"fallback_path":null,"standard_output_key":"energy_star.commercial_dishwasher_fields","evidence_ids":["E-ENERGY-STAR-DISHWASHER"],"formula_use":"Proposed water and idle intensity","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["avoided_water"],"unit":"gallons/year","tree_nodes":["Annual commercial dishwasher resource reduction"],"source_or_resolver":"Formula","exact_paths":["quantity × racks/year × water-per-rack difference"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Calculates annual avoided water once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["water_heating_R_per_rack_existing","water_heating_R_per_rack_proposed","avoided_water_heating_R_r"],"unit":"resource-unit/rack and resource-unit/year","tree_nodes":["Water-heating resources represented by the per-rack inputs (User)","Existing purchased water-heating input per certified rack by resource (User)","Proposed purchased water-heating input per certified rack by resource (User)"],"source_or_resolver":"Exact project-engineered purchased-input boundary by resource","exact_paths":["User existing and proposed purchased water-heating input per certified rack by resource"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Calculates each purchased water-heating resource delta without inferring wash or booster boundaries from total water","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["avoided_idle_kWh"],"unit":"kWh/year","tree_nodes":["Certified water use and idle energy by model"],"source_or_resolver":"Formula","exact_paths":["quantity × idle hours × idle-kW difference"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Idle-energy reduction","default_path_resolved":false,"missing_data_behavior":"OMIT_IDLE_COMPONENT_OR_NO_ESTIMATE"},
+        {"names":["p_water_sewer","p_r","p_electric"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Separate bill components","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values water, resource-specific water heating, and idle energy","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["water-volumetric","sewer-volumetric","electric-volumetric","gas-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["annual_water_cost","annual_water_use","annual_sewer_cost","water_unit","average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":"Include sewer only when dishwasher water is sewer-billed.",
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["machine type","quantity","certified activity unit","activity and idle hours","existing and proposed records","purchased water-heating input per activity unit by resource"],"source_fixture":"docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-schema.json","low_base_high_calculation":"Exact records and explicit usage sensitivities only.","final_result_path":"water, resource-specific water-heating, and idle-energy deltas -> separate rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Existing baseline, usage adapter, wash/rinse/booster purchased-input boundary, and end-to-end fixture."},
+      "manual_review_verdict":"Flight-type gallons/hour and rack-machine gallons/rack remain separate, and total water is not promoted to purchased water-heating input without a wash, rinse, booster, and resource boundary."
+    },
+    {
+      "category_id": "ITC-53",
+      "verdict": "DRAFT",
+      "formula_terms": [
+        {"names":["quantity","annual_cycles_per_unit"],"unit":"machines and cycles/year","tree_nodes":["In-scope quantity","Recognizable Laundry Usage Pattern"],"source_or_resolver":"Exact operating inputs","exact_paths":["User quantity and cycles"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Annual activity basis","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["certified_tub_volume","certified_integrated_water_factor","water_per_cycle","water_per_cycle_existing","water_per_cycle_proposed"],"unit":"ft3, gallons/ft3-cycle, gallons/cycle","tree_nodes":["Certified tub volume and water or energy factors"],"source_or_resolver":"Exact existing and proposed records plus formula","exact_paths":["energy_star.other_current_product_fields"],"fallback_path":null,"standard_output_key":"energy_star.other_current_product_fields","evidence_ids":["E-ENERGY-STAR-OTHER","E-ENERGY-STAR-EXISTING-UNSUPPORTED"],"formula_use":"Calculates water per cycle once for each case","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["avoided_water","water_per_cycle_case","hot_fraction_case","hot_water_per_cycle_case","hot_water_per_cycle_existing","hot_water_per_cycle_proposed","avoided_hot_water","thermal_energy_per_gallon","heater_efficiency","avoided_water_heating_input"],"unit":"gallons/year, gallons/cycle, fraction, gallons/cycle, gallons/year, energy/gallon, fraction, resource-unit/year","tree_nodes":["Annual commercial laundry resource reduction","Existing hot-water fraction (User)","Proposed hot-water fraction (User)","Hot-water temperature rise (User)","Water-heating resource (User)","Water-heater efficiency (User)"],"source_or_resolver":"Formula plus exact hot-water and heater inputs","exact_paths":["User existing and proposed hot-water fractions, temperature rise, resource, and efficiency"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Separates total-water and hot-water deltas, then calculates purchased water-heating input once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["resource_unit_conversion","heating_resource_unit"],"unit":"common-energy-unit/resource-unit and reciprocal","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"UNIT-RESOURCE-ENERGY","exact_paths":["unit_conversion:resource-energy"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Executes to_billed_unit exactly once for laundry water heating","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["machine_kWh_per_cycle_existing","machine_kWh_per_cycle_proposed","avoided_machine_kWh"],"unit":"kWh/cycle and kWh/year","tree_nodes":["Existing and proposed separately reported or measured machine electricity per cycle, if known (User)"],"source_or_resolver":"Separately reported exact fields or measurements","exact_paths":["User existing and proposed machine electricity per cycle"],"fallback_path":null,"standard_output_key":"energy_star.other_current_product_fields","evidence_ids":["E-ENERGY-STAR-OTHER"],"formula_use":"Calculates the optional machine-only electricity delta without standardized water-heating or drying energy","default_path_resolved":false,"missing_data_behavior":"OMIT_MACHINE_ELECTRICITY_COMPONENT"},
+        {"names":["p_water_sewer","p_electric","p_heating_resource"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Separate bill components","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values water, machine electricity, and heating resource","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["water-volumetric","sewer-volumetric","electric-volumetric","gas-volumetric"],
+      "profile_paths":[],
+      "bill_field_ids":["annual_water_cost","annual_water_use","annual_sewer_cost","water_unit","average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":"Include sewer only when washer water is sewer-billed.",
+      "default_path":{"scenario":"insufficient-data","minimum_required_inputs":["quantity","cycles","existing and proposed product fields","hot-water inputs","separate machine electricity when claimed"],"source_fixture":null,"low_base_high_calculation":"Exact records and explicit usage sensitivities only.","final_result_path":"water, machine electricity, and water-heating deltas -> separate rates","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"Clothes-washer schema fixture, existing baseline, usage adapter, and end-to-end fixture."},
+      "manual_review_verdict":"Hot-water savings and optional machine-only electricity are computed as separate existing and proposed deltas. The modified-energy-factor total is not applied directly."
+    },
+    {
+      "category_id": "ITC-54",
+      "verdict": "BLOCKED",
+      "formula_terms": [
+        {"names":["backup_technology","fuel_type"],"unit":"technology and fuel enumerations","tree_nodes":["Backup technology (User)","Fuel type (User)"],"source_or_resolver":"User-confirmed project configuration","exact_paths":["User project inputs"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Selects the applicable routine fuel-use term and matching price unit","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["quantity","test_fuel_per_hour","annual_test_hours_per_unit","annual_test_fuel"],"unit":"units, fuel-unit/hour, hours/year, fuel-unit/year","tree_nodes":["In-scope quantity","Tested fuel use per operating hour","Scheduled annual test operating hours"],"source_or_resolver":"Exact tested or contractual project inputs","exact_paths":["User project inputs"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Calculates routine test fuel once","default_path_resolved":false,"missing_data_behavior":"NO_ESTIMATE"},
+        {"names":["standby_kW_per_unit","annual_energized_hours_per_unit","annual_standby_kWh"],"unit":"kW/unit, hours/year, kWh/year","tree_nodes":["Standby electric input","Annual standby energized hours"],"source_or_resolver":"Exact tested or contractual project inputs","exact_paths":["User project inputs"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Calculates standby electricity once","default_path_resolved":false,"missing_data_behavior":"OMIT_STANDBY_COMPONENT_OR_NO_ESTIMATE"},
+        {"names":["p_fuel","p_electric"],"unit":"USD/resource-unit","tree_nodes":["Avoidable marginal resource price"],"source_or_resolver":"Bill or documented project fuel price","exact_paths":["rate_components"],"fallback_path":null,"standard_output_key":null,"evidence_ids":[],"formula_use":"Values negative routine resource use","default_path_resolved":false,"missing_data_behavior":"RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE"}
+      ],
+      "rate_components":["electric-volumetric","gas-volumetric","fuel-price"],
+      "profile_paths":[],
+      "bill_field_ids":["average_cost_per_kwh","average_cost_per_therm"],
+      "sewer_applicability":null,
+      "default_path":{"scenario":"exact-project-inputs-only","minimum_required_inputs":["technology","quantity","test fuel/hour","test hours","standby kW and energized hours when applicable","prices"],"source_fixture":null,"low_base_high_calculation":"Exact project inputs only.","final_result_path":"negative routine fuel and standby electricity value","uncertainty":"High","executable_golden_fixture":null,"unresolved_gate":"No validated source across generator, battery, and hybrid backup technologies."},
+      "manual_review_verdict":"Blocked for defaults. Outage operation and resilience value remain excluded."
+    }
+  ]
+}

@@ -7,17 +7,17 @@
 
 ## Review Status
 
-- **Category status:** RESEARCHED — READY FOR HUMAN REVIEW
+- **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-FUELECONOMY-VEHICLES`
-- **Required User-input count:** 4
+- **Required User-input count:** 5
 - **Optional Known-Detail count:** 2
-- **Profile-input count:** 1
-- **Bill-input count:** 9
+- **Profile-input count:** 0
+- **Bill-input count:** 2
 - **Standard-assumption count:** 1
 - **Applicable resources:** electricity, vehicle-fuel
-- **Default estimate:** AVAILABLE
-- **Automation readiness:** Ready for implementation
+- **Default estimate:** UNAVAILABLE
+- **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
 
@@ -33,7 +33,49 @@
 
 `avoided_gallons = annual_miles / existing_combined_mpg`
 
-`added_kWh = annual_miles × proposed_combE / 100 / charging_efficiency`
+`added_kWh = annual_miles × proposed_combE / 100`
+
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| quantity | vehicles | User | Information Tree > In-scope quantity | None | Direct input or formula | In-scope quantity | NO_ESTIMATE |
+| annual_miles | miles/vehicle-year | User or measured fleet data | User annual miles | None | Direct input or formula | Annual miles for replaced vehicle | NO_ESTIMATE |
+| existing_combined_mpg | miles/gallon and gallons/year | Exact FuelEconomy.gov vehicle record and formula | fueleconomy.comb08 | None | E-FUELECONOMY-COMB08: VERIFIED | vehicles.csv and field documentation - comb08 - combined MPG for fuelType1; id, year, make, model, VClass, drive, fuelType1 | NO_ESTIMATE |
+| avoided_gallons | miles/gallon and gallons/year | Exact FuelEconomy.gov vehicle record and formula | fueleconomy.comb08 | None | E-FUELECONOMY-COMB08: VERIFIED | vehicles.csv and field documentation - comb08 - combined MPG for fuelType1; id, year, make, model, VClass, drive, fuelType1 | NO_ESTIMATE |
+| avoided_fuel_units | miles/gallon and gallons/year | Exact FuelEconomy.gov vehicle record and formula | fueleconomy.comb08 | None | E-FUELECONOMY-COMB08: VERIFIED | vehicles.csv and field documentation - comb08 - combined MPG for fuelType1; id, year, make, model, VClass, drive, fuelType1 | NO_ESTIMATE |
+| proposed_combE | kWh/100 miles and kWh/year | Exact FuelEconomy.gov EV record and formula | fueleconomy.combE | None | E-FUELECONOMY-COMBE: VERIFIED | FuelEconomy.gov vehicles.csv field combE plus EPA testing method - combE - combined electricity consumption in kWh/100 miles; EPA states MPGe values account for EVSE and on-board charger losses and represent electricity from the wall | NO_ESTIMATE |
+| added_kWh | kWh/100 miles and kWh/year | Exact FuelEconomy.gov EV record and formula | fueleconomy.combE | None | E-FUELECONOMY-COMBE: VERIFIED | FuelEconomy.gov vehicles.csv field combE plus EPA testing method - combE - combined electricity consumption in kWh/100 miles; EPA states MPGe values account for EVSE and on-board charger losses and represent electricity from the wall | NO_ESTIMATE |
+| p_fuel | USD/gallon and USD/kWh | Required documented project fuel price and Bill | fuel-price: Required documented project fuel-price input<br>electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges | None | Direct input or formula | Liquid or vehicle-fuel price<br>Electric volumetric charge | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+| p_electric | USD/gallon and USD/kWh | Required documented project fuel price and Bill | fuel-price: Required documented project fuel-price input<br>electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges | None | Direct input or formula | Liquid or vehicle-fuel price<br>Electric volumetric charge | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+### STD-FUELECONOMY-VEHICLES
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | E-FUELECONOMY-COMB08 (VERIFIED, existing-and-proposed-exact-model)<br>E-FUELECONOMY-COMBE (VERIFIED, existing-and-proposed-exact-model)<br>E-FUELECONOMY-DISTRIBUTION-UNSUPPORTED (UNSUPPORTED, none) |
+| proposed or qualified product | E-FUELECONOMY-COMB08 (VERIFIED, existing-and-proposed-exact-model)<br>E-FUELECONOMY-COMBE (VERIFIED, existing-and-proposed-exact-model) |
+| usage or operating schedule | None |
+| physics or calculation method | E-FUELECONOMY-COMB08 (VERIFIED, existing-and-proposed-exact-model)<br>E-FUELECONOMY-COMBE (VERIFIED, existing-and-proposed-exact-model) |
+| tariff or bill | None |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** vehicle_fuel_price, annual_mileage, service_compatibility_default
+
+**Manual verdict:** Exact vehicle records and units are verified. Class distributions are disabled until compatibility filters and sample-size fixtures are reviewed.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** quantity; annual miles; exact existing vehicle; exact proposed EV; documented fuel price; electric rate.
+- **Exact scenario:** exact-existing-model-and-exact-proposed-model.
+- **Source fixture:** docs/operational-savings-fixtures/sources/fueleconomy-vehicle-schema.json.
+- **Low/base/high calculation:** Exact records use one value. Class percentiles are disabled.
+- **Final result path:** gallons avoided and wall kWh added -> matched prices
+- **Uncertainty:** Moderate to high.
+- **Executable golden fixture:** No.
+- **Remaining gate:** Product decision for class compatibility, fuel-price intake, and end-to-end golden fixture.
 
 ## Fully Expanded Information Tree
 
@@ -45,23 +87,16 @@ Annual dollar savings
 │  ├─ Annual miles for replaced vehicle (User)
 │  ├─ Existing Vehicle Class and Fuel Type (User)
 │  ├─ Existing Vehicle Model, if known (User)
-│  ├─ Linked Opportunity (Profile)
+│  ├─ Linked Opportunity
 │  ├─ Proposed Electric Vehicle Class or Service Need (User)
 │  ├─ Selected Proposed Electric Vehicle Model, if known (User)
 │  └─ Vehicle efficiency records (Standard)
-├─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-│  ├─ annual_kwh for electricity (Bill)
-│  ├─ annual_gallons with the matching fuel type for liquid or vehicle fuel (Bill)
-│  ├─ billing_period_start (Bill)
-│  └─ billing_period_end (Bill)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   ├─ Electric variable charge
-   │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
-   │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-   │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-   │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   └─ Liquid or vehicle-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   ├─ Electric volumetric charge
+   │  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+   │  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+   └─ Liquid or vehicle-fuel price
+      └─ Documented current project fuel price for the matching fuel and geography (User)
 ```
 
 ## Input Workflow
@@ -72,42 +107,36 @@ Annual dollar savings
 - Annual vehicle resource switch > Annual miles for replaced vehicle
 - Annual vehicle resource switch > Existing Vehicle Class and Fuel Type
 - Annual vehicle resource switch > Proposed Electric Vehicle Class or Service Need
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid or vehicle-fuel price > Documented current project fuel price for the matching fuel and geography
 
 ### Optional Known Details
 
 - Annual vehicle resource switch > Existing Vehicle Model, if known
 - Annual vehicle resource switch > Selected Proposed Electric Vehicle Model, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
-- Annual vehicle resource switch > Linked Opportunity
+- None.
 
 ### Bill Inputs
 
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh for electricity
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_gallons with the matching fuel type for liquid or vehicle fuel
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid or vehicle-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
 
 ### Standard-Derived Assumptions
 
 #### STD-FUELECONOMY-VEHICLES
 
 - **Value produced:** Combined gallons per mile or kWh per mile, vehicle record ID, model year, and update date.
-- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Low/base/high behavior:** For exact matches use one rated value; otherwise use the 25th percentile, median, and 75th percentile of compatible records for the same class, model-year band, drive, and fuel.
-- **Exact versus estimated:** Return exact rated consumption for an unambiguous vehicle record; otherwise return a compatible vehicle-class distribution and never a predicted exact model.
+- **Resolution scenario:** exact-existing-model; exact-proposed-model; insufficient-data.
+- **Low/base/high behavior:** For an exact match use one rated value. Do not calculate percentiles without declared vehicle-class, model-year, drive, fuel, and service-compatibility filters plus sample size.
+- **Exact versus estimated:** Return rated consumption only for an unambiguous vehicle record. Class distributions remain unsupported until compatibility rules and a fixture-backed eligible population are approved.
 - **Uncertainty:** Moderate for rated exact models and high for class estimates because duty, payload, weather, and charging losses vary.
 - **Source:** U.S. Department of Energy and U.S. Environmental Protection Agency, [FuelEconomy.gov web services and bulk downloads](https://www.fueleconomy.gov/feg/ws/index.shtml). The page defines the downloadable current vehicle table and the `comb08` and `combE` fields used here.
 - **Source version:** FuelEconomy.gov bulk-file update date, vehicle record identifiers, and file checksum.
-- **Selected class or candidate set:** Filter by vehicle class, service need, fuel or drive, model-year band, opportunity requirements, and any selected exact record.
+- **Selected class or candidate set:** Exact records are selected by vehicle ID or unambiguous year, make, model, and option. A class candidate set is not yet approved.
 - **Assumptions:** Standardized combined ratings are suitable for screening the declared use and do not represent site-specific duty.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
@@ -115,7 +144,7 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### ■ STD-FUELECONOMY-VEHICLES — FuelEconomy.gov vehicle efficiency data
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve comparable existing and electric light-duty vehicle fuel or electricity consumption per mile.
@@ -135,20 +164,20 @@ The page defines the downloadable current vehicle table and the `comb08` and `co
     - **User:** Annual dollar savings > Annual vehicle resource switch > Selected Proposed Electric Vehicle Model, if known
 - `linked_opportunity` - **Conditional:** Vehicle, class, drive, certification, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
   - **Resolved by:**
-    - **Profile:** Annual dollar savings > Annual vehicle resource switch > Linked Opportunity
+    - **Derived:** Annual dollar savings > Annual vehicle resource switch > Linked Opportunity
 
 **Value Needed:**
 Combined gallons per mile or kWh per mile, vehicle record ID, model year, and update date.
 
 **Resolution Contract:**
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return exact rated consumption for an unambiguous vehicle record; otherwise return a compatible vehicle-class distribution and never a predicted exact model.
-- **Low/Base/High Rule:** For exact matches use one rated value; otherwise use the 25th percentile, median, and 75th percentile of compatible records for the same class, model-year band, drive, and fuel.
+- **Supported Scenarios:** exact-existing-model; exact-proposed-model; insufficient-data.
+- **Scenario Output Behavior:** Return rated consumption only for an unambiguous vehicle record. Class distributions remain unsupported until compatibility rules and a fixture-backed eligible population are approved.
+- **Low/Base/High Rule:** For an exact match use one rated value. Do not calculate percentiles without declared vehicle-class, model-year, drive, fuel, and service-compatibility filters plus sample size.
 - **Uncertainty Rule:** Moderate for rated exact models and high for class estimates because duty, payload, weather, and charging losses vary.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** FuelEconomy.gov bulk-file update date, vehicle record identifiers, and file checksum.
-- **Selected Class or Candidate Set:** Filter by vehicle class, service need, fuel or drive, model-year band, opportunity requirements, and any selected exact record.
+- **Selected Class or Candidate Set:** Exact records are selected by vehicle ID or unambiguous year, make, model, and option. A class candidate set is not yet approved.
 - **Assumptions:** Standardized combined ratings are suitable for screening the declared use and do not represent site-specific duty.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate when vehicle class or service compatibility cannot be established.
@@ -159,12 +188,9 @@ For combustion vehicles use `gallons_per_mile = 1 / comb08`.
 For electric vehicles use `kwh_per_mile = combE / 100`.
 Do not use the dataset's annual cost fields because they embed generic mileage and prices.
 For an exact existing vehicle, use the unambiguous source record and assign the rating uncertainty documented in the Resolution Contract.
-When only vehicle class or service need is known, return a compatible record distribution rather than a predicted model.
-Use Profile or Bill context only when it establishes a defensible vehicle class, and otherwise return no estimate.
-When a Linked Opportunity names exact vehicles, restrict the candidate set to those records.
-When it specifies a vehicle class, drive, certification, or minimum performance, filter compatible records to those requirements.
-When no product restriction or no Linked Opportunity exists, build a compatible candidate set from class and service need without claiming an exact vehicle.
-An exact proposed vehicle overrides the distribution after class and service compatibility validation.
+`combE` is reported in kWh per 100 miles and the EPA label methodology includes wall-to-vehicle charging losses.
+Do not divide by an additional charging-efficiency factor.
+Vehicle-class, service-need, Profile, Bill, and Linked Opportunity fallbacks remain unsupported until exact dataset filters and an eligible population fixture are approved.
 
 **Automation:**
 - **Selected Strategy:** Periodic bulk CSV ingestion.
@@ -180,13 +206,15 @@ An exact proposed vehicle overrides the distribution after class and service com
 
 Exclude purchase price, maintenance, incentives, and emissions.
 Exact vehicle models override source-backed vehicle-class distributions.
-When no Linked Opportunity product restriction exists, use compatible records for the stated vehicle class and service need without claiming an exact model.
+Do not calculate class percentiles until an eligible model-year, vehicle-class, fuel, drive, and service-compatibility population has a fixture-backed sample count.
+FuelEconomy.gov `combE` is already measured at the wall and includes charging losses, so do not apply charging efficiency again.
+The vehicle-fuel price is a required documented project input because the utility bill parser does not provide a canonical vehicle-fuel price path.
 Do not add this category's electricity term to ITC-28.
 
-Default-estimate behavior: Use the documented minimum-input path and replace estimates with validated Optional Known Details when supplied.
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
 
 Expected uncertainty: STD-FUELECONOMY-VEHICLES: Moderate uncertainty.
 
 ## Human Review Decisions
 
-- Approve the documented category boundary, inputs, Standard automation, missing-data behavior, uncertainty, and exclusions before implementation.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

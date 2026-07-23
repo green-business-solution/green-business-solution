@@ -10,10 +10,10 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-REOPT-LOCAL-DISPATCH`
-- **Required User-input count:** 2
-- **Optional Known-Detail count:** 3
+- **Required User-input count:** 9
+- **Optional Known-Detail count:** 0
 - **Profile-input count:** 0
-- **Bill-input count:** 6
+- **Bill-input count:** 4
 - **Standard-assumption count:** 1
 - **Applicable resources:** electricity
 - **Default estimate:** UNAVAILABLE
@@ -33,22 +33,67 @@
 
 `proposed_load_t = baseline_load_t - shed_t + rebound_t`
 
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| baseline_load_t | kW or kWh/interval | Required uploaded interval artifact | User Green Button interval artifact | None | Direct input or formula | Chronological load and tariff | NO_ESTIMATE |
+| shed_t | kW or kWh/interval | User event constraints and formula | User shed and rebound profile | None | Direct input or formula | Maximum shed kW, if known (User)<br>Rebound or recovery constraint, if known (User) | NO_ESTIMATE |
+| rebound_t | kW or kWh/interval | User event constraints and formula | User shed and rebound profile | None | Direct input or formula | Maximum shed kW, if known (User)<br>Rebound or recovery constraint, if known (User) | NO_ESTIMATE |
+| proposed_load_t | kW or kWh/interval | User event constraints and formula | User shed and rebound profile | None | Direct input or formula | Maximum shed kW, if known (User)<br>Rebound or recovery constraint, if known (User) | NO_ESTIMATE |
+| baseline_annual_bill | USD/year | STD-REOPT-LOCAL-DISPATCH | evidence:E-REOPT-DISPATCH | None | E-REOPT-DISPATCH: UNVERIFIED | Versioned REopt input schema, solver, and result schema - Exact version, fields, and golden result are not pinned | NO_ESTIMATE |
+| proposed_annual_bill | USD/year | STD-REOPT-LOCAL-DISPATCH | evidence:E-REOPT-DISPATCH | None | E-REOPT-DISPATCH: UNVERIFIED | Versioned REopt input schema, solver, and result schema - Exact version, fields, and golden result are not pinned | NO_ESTIMATE |
+
+## Source-Role Evidence
+
+### STD-REOPT-LOCAL-DISPATCH
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | None |
+| physics or calculation method | E-REOPT-DISPATCH (UNVERIFIED, baseline-and-proposed-method) |
+| tariff or bill | E-REOPT-DISPATCH (UNVERIFIED, baseline-and-proposed-method) |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** load_profile_default, tariff_default, technology_design_default
+
+**Manual verdict:** REopt can calculate dispatch only after a complete chronological load, tariff, technology, and operating constraint set is provided.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** complete interval load; verified tariff; event schedule; shed and rebound constraints.
+- **Exact scenario:** insufficient-data.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Explicit scenarios only.
+- **Final result path:** baseline and proposed interval bills -> USD/year
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** Pinned REopt schema, demand-response counterfactual, and golden fixture.
+
 ## Fully Expanded Information Tree
 
 ```text
 Annual bill reduction
 ├─ Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF]
-│  ├─ Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field (Bill)
-│  ├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact (Bill)
-│  ├─ rate_schedule and customer_class, verified rather than provider-inferred (Bill)
-│  ├─ demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact (Bill)
-│  ├─ time_of_use_periods and seasonal calendar from a verified tariff artifact (Bill)
-│  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
+│  ├─ Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field (User)
+│  ├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact (User)
+│  ├─ utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred (Bill)
+│  └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
+│     ├─ Electric volumetric charge
+│     │  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+│     │  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+│     ├─ Electric time-of-use energy charge
+│     │  └─ Verified tariff calendar for the modeled interval import energy; the current bill parser has no complete canonical tariff artifact (User)
+│     └─ Electric demand charge
+│        ├─ utilityExtractedValues demand_charge_rate, when parsed (Bill)
+│        └─ Verified billing-demand and ratchet rules applied to interval kW (User)
 ├─ Controllable-load definition (User)
-├─ Maximum shed kW, if known (User)
+├─ Maximum shed kW (User)
 ├─ Event-availability schedule (User)
-├─ Maximum event duration, if known (User)
-├─ Rebound or recovery constraint, if known (User)
+├─ Maximum event duration (User)
+├─ Rebound or recovery constraint (User)
 └─ Audited load template and REopt bill result (Standard)
 ```
 
@@ -56,16 +101,21 @@ Annual bill reduction
 
 ### Required User Inputs
 
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric time-of-use energy charge > Verified tariff calendar for the modeled interval import energy; the current bill parser has no complete canonical tariff artifact
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric demand charge > Verified billing-demand and ratchet rules applied to interval kW
 - Controllable-load definition
+- Maximum shed kW
 - Event-availability schedule
+- Maximum event duration
+- Rebound or recovery constraint
 
 ### Optional Known Details
 
-- Maximum shed kW, if known
-- Maximum event duration, if known
-- Rebound or recovery constraint, if known
+- None.
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+No optional exact-value override applies to this category.
 
 ### Profile Inputs
 
@@ -73,33 +123,31 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### Bill Inputs
 
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > rate_schedule and customer_class, verified rather than provider-inferred
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > time_of_use_periods and seasonal calendar from a verified tariff artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric demand charge > utilityExtractedValues demand_charge_rate, when parsed
 
 ### Standard-Derived Assumptions
 
 #### STD-REOPT-LOCAL-DISPATCH
 
 - **Value produced:** Baseline and proposed annual bill components, interval dispatch, imported and exported energy, monthly peaks, and solver status.
-- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Low/base/high behavior:** Run declared low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
+- **Resolution scenario:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Run only explicit project-supplied low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
 - **Exact versus estimated:** Return baseline and proposed bill components only for an optimal deterministic run with complete chronological load and tariff inputs.
-- **Uncertainty:** Moderate with complete interval and tariff data and high when any allowed category constraint is estimated.
+- **Uncertainty:** Moderate with complete interval, tariff, technology, and operating inputs and no estimate when a required constraint is missing.
 - **Source:** National Laboratory of the Rockies, [REopt API V3 documentation](https://developer.nlr.gov/docs/energy-optimization/reopt/v3/), [REopt.jl input reference](https://natlabrockies.github.io/REopt.jl/dev/reopt/inputs/), and [REopt.jl open-source package](https://github.com/NatLabRockies/REopt.jl). The API documentation defines stable V3 inputs and outputs. REopt.jl is the local optimization engine used by the API.
 - **Source version:** Pinned REopt.jl release, solver version, tariff version, and category-adapter version.
-- **Selected class or candidate set:** Use only the technology and fixed-load adapter declared by the category and any Linked Opportunity constraints.
-- **Assumptions:** The analysis year, tariff calendar, and interval load are aligned and future operations follow the declared case.
+- **Selected class or candidate set:** Use only the supplied technology design, fixed-load adapter, and any explicit Linked Opportunity constraints.
+- **Assumptions:** The analysis year, tariff calendar, interval load, and project-supplied constraints are aligned and future operations follow the declared case.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
 ### ■ STD-REOPT-LOCAL-DISPATCH — REopt interval dispatch and bill optimization
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve direct bill change from storage, demand flexibility, managed charging, and composite distributed-energy dispatch.
@@ -112,33 +160,30 @@ REopt.jl is the local optimization engine used by the API.
 **Lookup Inputs:**
 - `chronological_load_and_tariff` - **Required:** Chronological site load, complete tariff, timezone, and analysis-year calendar.
   - **Resolved by:**
-    - **Bill:** Annual bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field
-    - **Bill:** Annual bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
-    - **Bill:** Annual bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > rate_schedule and customer_class, verified rather than provider-inferred
-    - **Bill:** Annual bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact
-    - **Bill:** Annual bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > time_of_use_periods and seasonal calendar from a verified tariff artifact
-    - **Bill:** Annual bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
+    - **User:** Annual bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field
+    - **User:** Annual bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
+    - **Bill:** Annual bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred
 - `reopt_category_constraints` - **Required:** Applicable technology power, energy, efficiency, state, availability, event, or fixed-load-template constraints shown as atomic leaves in the category tree.
   - **Resolved by:**
     - **User:** Annual bill reduction > Controllable-load definition
-    - **User:** Annual bill reduction > Maximum shed kW, if known
+    - **User:** Annual bill reduction > Maximum shed kW
     - **User:** Annual bill reduction > Event-availability schedule
-    - **User:** Annual bill reduction > Maximum event duration, if known
-    - **User:** Annual bill reduction > Rebound or recovery constraint, if known
+    - **User:** Annual bill reduction > Maximum event duration
+    - **User:** Annual bill reduction > Rebound or recovery constraint
 
 **Value Needed:**
 Baseline and proposed annual bill components, interval dispatch, imported and exported energy, monthly peaks, and solver status.
 
 **Resolution Contract:**
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Supported Scenarios:** exact-input; linked-opportunity-constrained-input; insufficient-data.
 - **Scenario Output Behavior:** Return baseline and proposed bill components only for an optimal deterministic run with complete chronological load and tariff inputs.
-- **Low/Base/High Rule:** Run declared low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
-- **Uncertainty Rule:** Moderate with complete interval and tariff data and high when any allowed category constraint is estimated.
+- **Low/Base/High Rule:** Run only explicit project-supplied low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
+- **Uncertainty Rule:** Moderate with complete interval, tariff, technology, and operating inputs and no estimate when a required constraint is missing.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Pinned REopt.jl release, solver version, tariff version, and category-adapter version.
-- **Selected Class or Candidate Set:** Use only the technology and fixed-load adapter declared by the category and any Linked Opportunity constraints.
-- **Assumptions:** The analysis year, tariff calendar, and interval load are aligned and future operations follow the declared case.
+- **Selected Class or Candidate Set:** Use only the supplied technology design, fixed-load adapter, and any explicit Linked Opportunity constraints.
+- **Assumptions:** The analysis year, tariff calendar, interval load, and project-supplied constraints are aligned and future operations follow the declared case.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate without continuous interval data, a verified complete tariff, required constraints, or optimal solver status.
 

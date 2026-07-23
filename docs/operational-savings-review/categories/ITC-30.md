@@ -10,10 +10,10 @@
 - **Category status:** BLOCKED
 - **Retrofit count:** 1
 - **Standards used:** `STD-OPERATING-SCHEDULE`
-- **Required User-input count:** 2
+- **Required User-input count:** 3
 - **Optional Known-Detail count:** 4
 - **Profile-input count:** 1
-- **Bill-input count:** 5
+- **Bill-input count:** 2
 - **Standard-assumption count:** 1
 - **Applicable resources:** electricity, vehicle-fuel
 - **Default estimate:** UNAVAILABLE
@@ -33,6 +33,45 @@
 
 No additional formula is required.
 
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| quantity | units and hours/year | User and explicit schedule | User quantity<br>schedule.explicit_calendar_hours | None | E-SCHEDULE-EXPLICIT: UNVERIFIED | Calendar arithmetic and USNO daylight definitions - annual hours from explicit hours/day, days/week, active weeks, holidays, timezone, and declared daylight control | NO_ESTIMATE |
+| annual_hours | units and hours/year | User and explicit schedule | User quantity<br>schedule.explicit_calendar_hours | None | E-SCHEDULE-EXPLICIT: UNVERIFIED | Calendar arithmetic and USNO daylight definitions - annual hours from explicit hours/day, days/week, active weeks, holidays, timezone, and declared daylight control | NO_ESTIMATE |
+| existing_fuel_per_hour | fuel-unit/hour and kWh/hour | Measured or contractual project inputs | User exact performance inputs | None | Direct input or formula | Existing fuel use per operating hour<br>Proposed charging kWh per operating hour | NO_ESTIMATE |
+| proposed_kWh_per_hour | fuel-unit/hour and kWh/hour | Measured or contractual project inputs | User exact performance inputs | None | Direct input or formula | Existing fuel use per operating hour<br>Proposed charging kWh per operating hour | NO_ESTIMATE |
+| p_fuel | USD/resource-unit | Documented project fuel price and Bill | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+| p_electric | USD/resource-unit | Documented project fuel price and Bill | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+### STD-OPERATING-SCHEDULE
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | E-SCHEDULE-EXPLICIT (UNVERIFIED, usage-method)<br>E-SCHEDULE-CONTEXT-UNSUPPORTED (UNSUPPORTED, none) |
+| physics or calculation method | E-SCHEDULE-EXPLICIT (UNVERIFIED, usage-method) |
+| tariff or bill | None |
+| geographic or climate | E-SCHEDULE-EXPLICIT (UNVERIFIED, usage-method) |
+
+**Unsupported roles or uses:** industry_label_only_default, tariff_or_bill
+
+**Manual verdict:** Explicit calendar arithmetic and daylight calculations are defensible after all inputs are supplied. A business label alone does not prove annual operating hours.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** quantity; hours; existing fuel/hour; proposed kWh/hour; prices.
+- **Exact scenario:** exact-project-inputs-only.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Exact project inputs only.
+- **Final result path:** cross-fuel hourly balance -> annual value
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** No authoritative cross-fuel model dataset.
+
 ## Fully Expanded Information Tree
 
 ```text
@@ -44,18 +83,16 @@ Annual dollar savings
 │  │  ├─ Recognizable Business, Shift, Seasonal, or Usage Pattern (User)
 │  │  ├─ Detailed Operating Days, Shifts, or Active Season, if known (User)
 │  │  ├─ Measured Annual Operating Hours, if known (User)
-│  │  ├─ site.geo coordinates and business schedule context (Profile)
+│  │  ├─ site.geo.coordinates and business.primaryActivityText (Profile)
 │  │  └─ Deterministic annual operating-hours resolution (Standard)
 │  ├─ Existing fuel use per operating hour, if known (User)
 │  └─ Proposed charging kWh per operating hour, if known (User)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   ├─ Electric variable charge
-   │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
-   │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-   │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-   │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   └─ Liquid or vehicle-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   ├─ Electric volumetric charge
+   │  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+   │  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+   └─ Liquid or vehicle-fuel price
+      └─ Documented current project fuel price for the matching fuel and geography (User)
 ```
 
 ## Input Workflow
@@ -64,6 +101,7 @@ Annual dollar savings
 
 - Annual forklift resource switch > In-scope quantity [BR-SCOPE-QUANTITY] > Count of identical units in project scope
 - Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Recognizable Business, Shift, Seasonal, or Usage Pattern
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid or vehicle-fuel price > Documented current project fuel price for the matching fuel and geography
 
 ### Optional Known Details
 
@@ -72,26 +110,23 @@ Annual dollar savings
 - Annual forklift resource switch > Existing fuel use per operating hour, if known
 - Annual forklift resource switch > Proposed charging kWh per operating hour, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
-- Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > site.geo coordinates and business schedule context
+- Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > site.geo.coordinates and business.primaryActivityText
 
 ### Bill Inputs
 
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid or vehicle-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
 
 ### Standard-Derived Assumptions
 
 #### STD-OPERATING-SCHEDULE
 
 - **Value produced:** Low, base, and high annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
-- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Resolution scenario:** measured-exact-input; explicit-calendar-calculation; daylight-control-calculation; insufficient-data.
 - **Low/base/high behavior:** Calculate each value from visible hours-per-day, days-per-week, active-weeks, shift, setback, or daylight assumptions; never apply an unexplained annual-hours constant.
 - **Exact versus estimated:** Return the exact validated schedule total when supplied; otherwise return a deterministic low/base/high range from the recognizable schedule and context.
 - **Uncertainty:** Low for an exact validated schedule, moderate for a complete recognizable schedule, and high for a broad context-derived range.
@@ -105,7 +140,7 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### ■ STD-OPERATING-SCHEDULE — Recognizable schedule to annual operating hours
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve annual operating hours from recognizable business, shift, seasonal, or exterior-lighting control patterns, with an exact schedule or measurement as an optional override.
@@ -120,7 +155,7 @@ USNO defines and computes sunrise, sunset, and civil-twilight times for location
   - **Resolved by:**
     - **User:** Annual dollar savings > Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Recognizable Business, Shift, Seasonal, or Usage Pattern
     - **User:** Annual dollar savings > Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Measured Annual Operating Hours, if known
-    - **Profile:** Annual dollar savings > Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > site.geo coordinates and business schedule context
+    - **Profile:** Annual dollar savings > Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > site.geo.coordinates and business.primaryActivityText
     - **Standard:** Annual dollar savings > Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Deterministic annual operating-hours resolution
 - `operating_schedule_details` - **Optional:** Detailed operating days, shifts, or active season when known.
   - **Resolved by:**
@@ -134,7 +169,7 @@ Low, base, and high annual operating hours, exact or estimated status, schedule 
 
 **Resolution Contract:**
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Supported Scenarios:** measured-exact-input; explicit-calendar-calculation; daylight-control-calculation; insufficient-data.
 - **Scenario Output Behavior:** Return the exact validated schedule total when supplied; otherwise return a deterministic low/base/high range from the recognizable schedule and context.
 - **Low/Base/High Rule:** Calculate each value from visible hours-per-day, days-per-week, active-weeks, shift, setback, or daylight assumptions; never apply an unexplained annual-hours constant.
 - **Uncertainty Rule:** Low for an exact validated schedule, moderate for a complete recognizable schedule, and high for a broad context-derived range.

@@ -10,10 +10,10 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 3
 - **Standards used:** `STD-DOE-CCMS-RATINGS`, `STD-ENERGY-STAR-PRODUCT-DATA`
-- **Required User-input count:** 4
-- **Optional Known-Detail count:** 6
-- **Profile-input count:** 1
-- **Bill-input count:** 6
+- **Required User-input count:** 6
+- **Optional Known-Detail count:** 4
+- **Profile-input count:** 0
+- **Bill-input count:** 3
 - **Standard-assumption count:** 2
 - **Applicable resources:** electricity, gas
 - **Default estimate:** UNVALIDATED
@@ -33,7 +33,68 @@
 
 ## Supporting Formula(s)
 
-`active_input_per_test_unit = useful_test_load_per_unit / tested_cooking_efficiency` when the certification reports efficiency rather than direct input intensity.
+`active_input_per_test_unit = to_billed_unit(useful_test_load_per_unit / tested_cooking_efficiency, resource_unit)` when the certification reports efficiency rather than direct input intensity.
+
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| quantity | units, certified activity-unit/year, hours/year | User exact commercial usage inputs | User usage inputs | None | Direct input or formula | In-scope quantity<br>Recognizable Cooking Usage Pattern<br>Annual Activity per Unit in the Certified Test Unit (User)<br>Annual Idle Hours per Unit (User) | NO_ESTIMATE |
+| annual_activity_per_unit | units, certified activity-unit/year, hours/year | User exact commercial usage inputs | User usage inputs | None | Direct input or formula | In-scope quantity<br>Recognizable Cooking Usage Pattern<br>Annual Activity per Unit in the Certified Test Unit (User)<br>Annual Idle Hours per Unit (User) | NO_ESTIMATE |
+| annual_idle_hours | units, certified activity-unit/year, hours/year | User exact commercial usage inputs | User usage inputs | None | Direct input or formula | In-scope quantity<br>Recognizable Cooking Usage Pattern<br>Annual Activity per Unit in the Certified Test Unit (User)<br>Annual Idle Hours per Unit (User) | NO_ESTIMATE |
+| active_intensity_existing,r | resource/certified activity and resource/hour | Exact existing rating or measurement | User Existing Model | None | E-ENERGY-STAR-EXISTING-UNSUPPORTED: UNSUPPORTED<br>E-CCMS-EXISTING-UNSUPPORTED: UNSUPPORTED | Current qualified-product datasets - No installed-population artifact<br>No reviewed retained historical export - No installed-population table or historical-retention proof | NO_ESTIMATE |
+| idle_rate_existing,r | resource/certified activity and resource/hour | Exact existing rating or measurement | User Existing Model | None | E-ENERGY-STAR-EXISTING-UNSUPPORTED: UNSUPPORTED<br>E-CCMS-EXISTING-UNSUPPORTED: UNSUPPORTED | Current qualified-product datasets - No installed-population artifact<br>No reviewed retained historical export - No installed-population table or historical-retention proof | NO_ESTIMATE |
+| active_intensity_proposed,r | resource/certified activity, resource/hour, fraction, energy/activity, energy/activity | Exact proposed certified fields and one conversion when needed | energy_star.other_current_product_fields | None | E-ENERGY-STAR-OTHER: UNVERIFIED<br>E-CCMS-CURRENT: UNVERIFIED | Commercial clothes washer, ice machine, cooking, and EVSE datasets - Product-specific field schemas are listed in the registry but have not all been captured as fixtures<br>Product-specific analyst export and DOE test-result template - Product-specific fields are not pinned until an export and template fixture are reviewed | NO_ESTIMATE |
+| idle_rate_proposed,r | resource/certified activity, resource/hour, fraction, energy/activity, energy/activity | Exact proposed certified fields and one conversion when needed | energy_star.other_current_product_fields | None | E-ENERGY-STAR-OTHER: UNVERIFIED<br>E-CCMS-CURRENT: UNVERIFIED | Commercial clothes washer, ice machine, cooking, and EVSE datasets - Product-specific field schemas are listed in the registry but have not all been captured as fixtures<br>Product-specific analyst export and DOE test-result template - Product-specific fields are not pinned until an export and template fixture are reviewed | NO_ESTIMATE |
+| tested_cooking_efficiency | resource/certified activity, resource/hour, fraction, energy/activity, energy/activity | Exact proposed certified fields and one conversion when needed | energy_star.other_current_product_fields | None | E-ENERGY-STAR-OTHER: UNVERIFIED<br>E-CCMS-CURRENT: UNVERIFIED | Commercial clothes washer, ice machine, cooking, and EVSE datasets - Product-specific field schemas are listed in the registry but have not all been captured as fixtures<br>Product-specific analyst export and DOE test-result template - Product-specific fields are not pinned until an export and template fixture are reviewed | NO_ESTIMATE |
+| useful_test_load_per_unit | resource/certified activity, resource/hour, fraction, energy/activity, energy/activity | Exact proposed certified fields and one conversion when needed | energy_star.other_current_product_fields | None | E-ENERGY-STAR-OTHER: UNVERIFIED<br>E-CCMS-CURRENT: UNVERIFIED | Commercial clothes washer, ice machine, cooking, and EVSE datasets - Product-specific field schemas are listed in the registry but have not all been captured as fixtures<br>Product-specific analyst export and DOE test-result template - Product-specific fields are not pinned until an export and template fixture are reviewed | NO_ESTIMATE |
+| active_input_per_test_unit | resource/certified activity, resource/hour, fraction, energy/activity, energy/activity | Exact proposed certified fields and one conversion when needed | energy_star.other_current_product_fields | None | E-ENERGY-STAR-OTHER: UNVERIFIED<br>E-CCMS-CURRENT: UNVERIFIED | Commercial clothes washer, ice machine, cooking, and EVSE datasets - Product-specific field schemas are listed in the registry but have not all been captured as fixtures<br>Product-specific analyst export and DOE test-result template - Product-specific fields are not pinned until an export and template fixture are reviewed | NO_ESTIMATE |
+| resource_unit_conversion | common-energy-unit/resource-unit and reciprocal | UNIT-RESOURCE-ENERGY | resource-energy: Required versioned and audited conversion table keyed by the selected resource unit | None | Direct input or formula | Avoidable marginal resource price | NO_ESTIMATE_WHEN_EFFICIENCY_PATH_IS_USED |
+| resource_unit | common-energy-unit/resource-unit and reciprocal | UNIT-RESOURCE-ENERGY | resource-energy: Required versioned and audited conversion table keyed by the selected resource unit | None | Direct input or formula | Avoidable marginal resource price | NO_ESTIMATE_WHEN_EFFICIENCY_PATH_IS_USED |
+| p_r | USD/resource-unit | Bill | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges | None | Direct input or formula | Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+### STD-DOE-CCMS-RATINGS
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | E-CCMS-EXISTING-UNSUPPORTED (UNSUPPORTED, none) |
+| proposed or qualified product | E-CCMS-CURRENT (UNVERIFIED, proposed-or-current) |
+| usage or operating schedule | None |
+| physics or calculation method | None |
+| tariff or bill | None |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** usage_or_operating_schedule, tariff_or_bill, geographic_or_climate
+
+**Manual verdict:** Current certification records can support an exact current product after a product-specific export is reviewed. They do not supply a representative installed existing-equipment population.
+
+### STD-ENERGY-STAR-PRODUCT-DATA
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | E-ENERGY-STAR-EXISTING-UNSUPPORTED (UNSUPPORTED, none) |
+| proposed or qualified product | E-ENERGY-STAR-DISHWASHER (VERIFIED, proposed-or-current)<br>E-ENERGY-STAR-OTHER (UNVERIFIED, proposed-or-current) |
+| usage or operating schedule | None |
+| physics or calculation method | None |
+| tariff or bill | None |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** usage_or_operating_schedule, tariff_or_bill, geographic_or_climate
+
+**Manual verdict:** The commercial dishwasher schema proves several proposed-product fields. Other product families and all existing-equipment or usage claims remain unverified or unsupported.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** quantity; product-specific certified activity; idle hours; existing and proposed ratings.
+- **Exact scenario:** insufficient-data.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Exact records only until each product-family population is fixture-tested.
+- **Final result path:** active plus idle resource deltas -> matched rates
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** Fryer, oven, and steamer schema fixtures plus existing baselines and usage units.
 
 ## Fully Expanded Information Tree
 
@@ -46,24 +107,21 @@ Annual dollar savings
 │  │  ├─ Existing Recognizable Equipment Type or Application (User)
 │  │  ├─ Existing Model, if known (User)
 │  │  ├─ Existing Capacity or Size Class, if known (User)
-│  │  ├─ Linked Opportunity (Profile)
+│  │  ├─ Linked Opportunity
 │  │  ├─ Proposed Product Class or Intended Scope (User)
 │  │  ├─ Selected Proposed Model, if known (User)
 │  │  ├─ Proposed Capacity or Size Class, if known (User)
 │  │  └─ Certified engineering-value resolution (Standard)
 │  ├─ Recognizable Cooking Usage Pattern (User)
-│  ├─ Annual Activity per Unit in the Certified Test Unit, if known (User)
-│  ├─ Annual Idle Hours per Unit, if known (User)
+│  ├─ Annual Activity per Unit in the Certified Test Unit (User)
+│  ├─ Annual Idle Hours per Unit (User)
 │  └─ Certified cooking efficiency and idle energy rate by resource (Standard)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   ├─ Electric variable charge
-   │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
-   │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-   │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-   │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   └─ Gas variable charge
-      ├─ gas_rate_schedule, verified against the service account (Bill)
-      └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
+   ├─ Electric volumetric charge
+   │  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+   │  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+   └─ Gas volumetric charge
+      └─ utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms (Bill)
 ```
 
 ## Input Workflow
@@ -74,6 +132,8 @@ Annual dollar savings
 - Annual commercial cooking resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Existing Recognizable Equipment Type or Application
 - Annual commercial cooking resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Proposed Product Class or Intended Scope
 - Annual commercial cooking resource reduction > Recognizable Cooking Usage Pattern
+- Annual commercial cooking resource reduction > Annual Activity per Unit in the Certified Test Unit
+- Annual commercial cooking resource reduction > Annual Idle Hours per Unit
 
 ### Optional Known Details
 
@@ -81,49 +141,44 @@ Annual dollar savings
 - Annual commercial cooking resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Existing Capacity or Size Class, if known
 - Annual commercial cooking resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Selected Proposed Model, if known
 - Annual commercial cooking resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Proposed Capacity or Size Class, if known
-- Annual commercial cooking resource reduction > Annual Activity per Unit in the Certified Test Unit, if known
-- Annual commercial cooking resource reduction > Annual Idle Hours per Unit, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
-- Annual commercial cooking resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Linked Opportunity
+- None.
 
 ### Bill Inputs
 
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas volumetric charge > utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms
 
 ### Standard-Derived Assumptions
 
 #### STD-DOE-CCMS-RATINGS
 
 - **Value produced:** The certified efficiency, capacity, annual or daily resource use, test-procedure identifier, units, certification date, and active-record status required by the category.
-- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Low/base/high behavior:** For exact matches set low, base, and high to the certified value; otherwise use the 25th percentile, median, and 75th percentile of compatible active records.
-- **Exact versus estimated:** Return exact certified values for an unambiguous active model match; return an eligible class distribution for class-based scenarios; return no estimate when compatibility cannot be established.
-- **Uncertainty:** Low for exact active records, moderate for a compatible class distribution, and high for a context-only fallback.
+- **Resolution scenario:** exact-current-model; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.
+- **Low/base/high behavior:** For an exact reviewed record set low, base, and high to the certified value. No generic percentile is supported until a product-specific eligible population, filters, and sample size have a reviewed fixture.
+- **Exact versus estimated:** Return an exact certified value only for an unambiguous model present in a reviewed snapshot; apply proposed-product restrictions only to compatible current records; otherwise return no estimate.
+- **Uncertainty:** Low for the certified value of an exact active record, moderate for a verified compatible proposed class, and unresolved for an unknown existing model.
 - **Source:** U.S. Department of Energy, [Compliance Certification Database](https://www.regulations.doe.gov/certification-data/), [CCMS and database description](https://www.energy.gov/cmei/buildings/implementation-certification-and-enforcement), and [product-specific certification and test-result templates](https://www.energy.gov/cmei/buildings/standardized-templates-recording-test-results). The database is the public source of manufacturer certification reports. The templates define product-specific fields and units.
 - **Source version:** Export date, product group, certification record identifiers, test procedure, and export checksum.
-- **Selected class or candidate set:** Filter active records by application, equipment class, capacity or service requirement, opportunity restrictions, and compatibility before calculating the distribution.
+- **Selected class or candidate set:** Filter active records by product-specific fields, equipment class, capacity or service requirement, opportunity restrictions, and compatibility. Record filters and sample size before any distribution is enabled.
 - **Assumptions:** Certified test values are comparable only inside the same product group, test procedure, and compatible service class.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 #### STD-ENERGY-STAR-PRODUCT-DATA
 
 - **Value produced:** Category-specific certified energy, water, capacity, efficiency, and low-power-state fields with units and certification dates.
-- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Low/base/high behavior:** For exact matches use the certified value in all three positions; otherwise use the 25th percentile, median, and 75th percentile after eligibility and compatibility filters.
-- **Exact versus estimated:** Return exact certified values for a selected matching model; otherwise return a distribution from compatible currently certified candidates; return no estimate when the source does not cover the application.
-- **Uncertainty:** Low for an exact certified match, moderate for a matched product class, and high for a context-only class selection.
+- **Resolution scenario:** linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.
+- **Low/base/high behavior:** For an exact proposed model use the certified value in all three positions. A proposed-product distribution remains disabled until the adapter records the eligible population, filters, sample size, and fixture.
+- **Exact versus estimated:** Return current certified fields for an exact proposed model or a compatible proposed-product set; never use the current certified set as an existing installed baseline.
+- **Uncertainty:** Low for a certified field from an exact proposed model, moderate for a fixture-backed compatible proposed class, and unresolved for existing equipment or site usage.
 - **Source:** U.S. Environmental Protection Agency, [ENERGY STAR Product Finder datasets and API](https://www.energystar.gov/productfinder/advanced), [EV charger product criteria and finder](https://www.energystar.gov/products/ev_chargers), [commercial clothes washer dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Clothes-Washers/9g6r-cpdt), [commercial ice machine dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Ice-Machines/nak5-fsjf), [commercial dishwasher dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Dishwashers/pk8q-dim8), [commercial fryer dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Fryers/edi8-b5vk), [commercial oven dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Ovens/c8av-ccf7), and [commercial steam cooker dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Steam-Cookers/vtsv-aq9u). The advanced page exposes downloadable datasets that are updated daily. The product pages define fields and certified-product scope.
 - **Source version:** Dataset update date, certification identifier, category schema version, and downloaded-file checksum.
-- **Selected class or candidate set:** Filter by application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status.
+- **Selected class or candidate set:** Filter proposed products by exact dataset fields for application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status. Preserve the sample size.
 - **Assumptions:** Candidate records are technically compatible after the declared filters, but no exact purchase is implied until a model is selected.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
@@ -154,25 +209,20 @@ The templates define product-specific fields and units.
     - **User:** Annual dollar savings > Annual commercial cooking resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Proposed Capacity or Size Class, if known
 - `linked_opportunity` - **Conditional:** Product, certification, class, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
   - **Resolved by:**
-    - **Profile:** Annual dollar savings > Annual commercial cooking resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Linked Opportunity
-- `product_usage_pattern` - **Conditional:** Recognizable operating pattern and exact activity or idle values when the category formula uses certified active and idle ratings. Applies only in the documented scenario.
-  - **Resolved by:**
-    - **User:** Annual dollar savings > Annual commercial cooking resource reduction > Recognizable Cooking Usage Pattern
-    - **User:** Annual dollar savings > Annual commercial cooking resource reduction > Annual Activity per Unit in the Certified Test Unit, if known
-    - **User:** Annual dollar savings > Annual commercial cooking resource reduction > Annual Idle Hours per Unit, if known
+    - **Derived:** Annual dollar savings > Annual commercial cooking resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Linked Opportunity
 
 **Value Needed:**
 The certified efficiency, capacity, annual or daily resource use, test-procedure identifier, units, certification date, and active-record status required by the category.
 
 **Resolution Contract:**
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return exact certified values for an unambiguous active model match; return an eligible class distribution for class-based scenarios; return no estimate when compatibility cannot be established.
-- **Low/Base/High Rule:** For exact matches set low, base, and high to the certified value; otherwise use the 25th percentile, median, and 75th percentile of compatible active records.
-- **Uncertainty Rule:** Low for exact active records, moderate for a compatible class distribution, and high for a context-only fallback.
+- **Supported Scenarios:** exact-current-model; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.
+- **Scenario Output Behavior:** Return an exact certified value only for an unambiguous model present in a reviewed snapshot; apply proposed-product restrictions only to compatible current records; otherwise return no estimate.
+- **Low/Base/High Rule:** For an exact reviewed record set low, base, and high to the certified value. No generic percentile is supported until a product-specific eligible population, filters, and sample size have a reviewed fixture.
+- **Uncertainty Rule:** Low for the certified value of an exact active record, moderate for a verified compatible proposed class, and unresolved for an unknown existing model.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Export date, product group, certification record identifiers, test procedure, and export checksum.
-- **Selected Class or Candidate Set:** Filter active records by application, equipment class, capacity or service requirement, opportunity restrictions, and compatibility before calculating the distribution.
+- **Selected Class or Candidate Set:** Filter active records by product-specific fields, equipment class, capacity or service requirement, opportunity restrictions, and compatibility. Record filters and sample size before any distribution is enabled.
 - **Assumptions:** Certified test values are comparable only inside the same product group, test procedure, and compatible service class.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate when no compatible active record or defensible equipment class remains after filtering.
@@ -183,14 +233,14 @@ Select an exact normalized manufacturer and basic-model match, then disambiguate
 Read only fields defined in the current product-specific template and preserve the reported units and test-procedure version.
 Store a local slowly changing dimension keyed by product group, manufacturer, basic model, class, and certification effective date.
 Return no model rating on ambiguous or withdrawn matches.
-For an exact existing model, return the source-documented engineering value with low uncertainty.
-When only type or application is known, select compatible records and return the declared class distribution.
-When neither model nor type is known, use relevant Profile or Bill context only when it supports a source-defined class, and otherwise return no estimate.
+An existing model may use this Standard only when that exact model is present in a retained reviewed snapshot.
+Current efficient records must not be used as an installed existing-equipment distribution.
+Type-only, Profile, and Bill fallbacks are unsupported until a separate installed-baseline source and mapping are reviewed.
 When a Linked Opportunity names exact products, restrict the candidate set to those products.
 When it specifies a class, certification, or minimum performance, filter active compatible records to those requirements.
 When it has no product restriction or no Linked Opportunity exists, build the compatible candidate set from application, service need, site context, and source data without claiming an exact model.
-An exact proposed model overrides the candidate distribution after compatibility validation.
-Resolve recognizable product usage patterns to visible low/base/high activity assumptions only when the category and source support that conversion.
+An exact proposed model overrides a proposed candidate set after compatibility validation.
+Usage and operating schedules require separate evidence and must not be inferred from certification records.
 Return no estimate when product compatibility or a required usage basis cannot be established.
 
 **Automation:**
@@ -205,7 +255,7 @@ Return no estimate when product compatibility or a required usage basis cannot b
 
 ### ■ STD-ENERGY-STAR-PRODUCT-DATA — ENERGY STAR product datasets
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve current certified high-efficiency product performance and EVSE standby or charging efficiency.
@@ -228,25 +278,20 @@ The product pages define fields and certified-product scope.
     - **User:** Annual dollar savings > Annual commercial cooking resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Proposed Capacity or Size Class, if known
 - `linked_opportunity` - **Conditional:** Product, certification, class, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
   - **Resolved by:**
-    - **Profile:** Annual dollar savings > Annual commercial cooking resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Linked Opportunity
-- `product_usage_pattern` - **Conditional:** Recognizable operating pattern and exact activity or idle values when the category formula uses certified active and idle ratings. Applies only in the documented scenario.
-  - **Resolved by:**
-    - **User:** Annual dollar savings > Annual commercial cooking resource reduction > Recognizable Cooking Usage Pattern
-    - **User:** Annual dollar savings > Annual commercial cooking resource reduction > Annual Activity per Unit in the Certified Test Unit, if known
-    - **User:** Annual dollar savings > Annual commercial cooking resource reduction > Annual Idle Hours per Unit, if known
+    - **Derived:** Annual dollar savings > Annual commercial cooking resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Linked Opportunity
 
 **Value Needed:**
 Category-specific certified energy, water, capacity, efficiency, and low-power-state fields with units and certification dates.
 
 **Resolution Contract:**
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return exact certified values for a selected matching model; otherwise return a distribution from compatible currently certified candidates; return no estimate when the source does not cover the application.
-- **Low/Base/High Rule:** For exact matches use the certified value in all three positions; otherwise use the 25th percentile, median, and 75th percentile after eligibility and compatibility filters.
-- **Uncertainty Rule:** Low for an exact certified match, moderate for a matched product class, and high for a context-only class selection.
+- **Supported Scenarios:** linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.
+- **Scenario Output Behavior:** Return current certified fields for an exact proposed model or a compatible proposed-product set; never use the current certified set as an existing installed baseline.
+- **Low/Base/High Rule:** For an exact proposed model use the certified value in all three positions. A proposed-product distribution remains disabled until the adapter records the eligible population, filters, sample size, and fixture.
+- **Uncertainty Rule:** Low for a certified field from an exact proposed model, moderate for a fixture-backed compatible proposed class, and unresolved for existing equipment or site usage.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Dataset update date, certification identifier, category schema version, and downloaded-file checksum.
-- **Selected Class or Candidate Set:** Filter by application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status.
+- **Selected Class or Candidate Set:** Filter proposed products by exact dataset fields for application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status. Preserve the sample size.
 - **Assumptions:** Candidate records are technically compatible after the declared filters, but no exact purchase is implied until a model is selected.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate when no compatible candidate set exists or the required performance field is absent.
@@ -255,7 +300,7 @@ Category-specific certified energy, water, capacity, efficiency, and low-power-s
 Download the category dataset rather than calling the API at calculation time.
 Keep the EPA field names in raw storage and normalize only fields used by a documented category adapter.
 Select exact manufacturer and model matches, then validate subtype and capacity.
-For a proposed generic selection, return the median and quartiles of currently certified products within the exact subtype and capacity bin, not the best model.
+Do not return a proposed generic median or quartiles until the exact subtype and capacity filters, eligible population, sample size, and representative source rows are fixture-tested.
 Store dataset publication date, specification version, and product status.
 
 The adapter contracts use these source-reported field families:
@@ -269,14 +314,14 @@ The adapter contracts use these source-reported field families:
 | `ITC-52` commercial dishwashers | Machine type, sanitation method, water per rack or hour, machine idle rate, and booster-heater idle rate |
 
 Do not infer a missing source-reported field from another product family.
-For an exact existing model, return the certified value with low uncertainty.
-When only type or application is known, select compatible certified records and return the declared class distribution.
-When neither model nor type is known, use relevant Profile or Bill context only when it supports a source-defined class, and otherwise return no estimate.
+Do not use the active certified dataset as an existing-equipment source.
+Existing ratings require an exact retained historical record, nameplate, measurement, or a separate installed-baseline source.
+Profile and Bill fallbacks are unsupported because the current canonical schemas do not identify a product model or source-defined product class.
 When a Linked Opportunity names exact products, restrict the candidate set to those products.
 When it specifies a class, certification, or minimum performance, filter compatible current records to those requirements.
 When it has no product restriction or no Linked Opportunity exists, build the candidate set from application, service need, site context, and current certified data without claiming an exact model.
-An exact proposed model overrides the candidate distribution after compatibility validation.
-Resolve recognizable product usage patterns to visible low/base/high activity assumptions only when the category and source support that conversion.
+An exact proposed model overrides a proposed candidate set after compatibility validation.
+Usage and operating schedules require separate evidence and must not be inferred from product records.
 Return no estimate when product compatibility or a required usage basis cannot be established.
 
 **Automation:**

@@ -10,10 +10,10 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-EPA-CHP-PERFORMANCE`, `STD-OPERATING-SCHEDULE`
-- **Required User-input count:** 3
-- **Optional Known-Detail count:** 6
-- **Profile-input count:** 2
-- **Bill-input count:** 11
+- **Required User-input count:** 5
+- **Optional Known-Detail count:** 4
+- **Profile-input count:** 1
+- **Bill-input count:** 3
 - **Standard-assumption count:** 2
 - **Applicable resources:** electricity, gas
 - **Default estimate:** UNAVAILABLE
@@ -33,9 +33,69 @@
 
 `annual_generation = capacity_kW × annual_operating_hours × load_fraction`
 
-`added_fuel = annual_generation / electric_efficiency`
+`added_fuel = to_billed_unit(annual_generation / electric_efficiency, fuel_unit)`
 
-`avoided_grid_kWh = min(annual_generation, coincident_onsite_electric_load)` unless an explicit export rule exists.
+`avoided_grid_kWh = min(annual_generation, coincident_onsite_electric_load)`
+
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| capacity_kW | kW, hours/year, fraction, kWh/year | Exact project design, schedule, and EPA method | User capacity<br>schedule.explicit_calendar_hours<br>evidence:E-EPA-CHP | None | E-EPA-CHP: UNVERIFIED<br>E-SCHEDULE-EXPLICIT: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured<br>Calendar arithmetic and USNO daylight definitions - annual hours from explicit hours/day, days/week, active weeks, holidays, timezone, and declared daylight control | NO_ESTIMATE |
+| annual_operating_hours | kW, hours/year, fraction, kWh/year | Exact project design, schedule, and EPA method | User capacity<br>schedule.explicit_calendar_hours<br>evidence:E-EPA-CHP | None | E-EPA-CHP: UNVERIFIED<br>E-SCHEDULE-EXPLICIT: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured<br>Calendar arithmetic and USNO daylight definitions - annual hours from explicit hours/day, days/week, active weeks, holidays, timezone, and declared daylight control | NO_ESTIMATE |
+| load_fraction | kW, hours/year, fraction, kWh/year | Exact project design, schedule, and EPA method | User capacity<br>schedule.explicit_calendar_hours<br>evidence:E-EPA-CHP | None | E-EPA-CHP: UNVERIFIED<br>E-SCHEDULE-EXPLICIT: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured<br>Calendar arithmetic and USNO daylight definitions - annual hours from explicit hours/day, days/week, active weeks, holidays, timezone, and declared daylight control | NO_ESTIMATE |
+| annual_generation | kW, hours/year, fraction, kWh/year | Exact project design, schedule, and EPA method | User capacity<br>schedule.explicit_calendar_hours<br>evidence:E-EPA-CHP | None | E-EPA-CHP: UNVERIFIED<br>E-SCHEDULE-EXPLICIT: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured<br>Calendar arithmetic and USNO daylight definitions - annual hours from explicit hours/day, days/week, active weeks, holidays, timezone, and declared daylight control | NO_ESTIMATE |
+| electric_efficiency | fraction and fuel-unit/year | Exact project value or documented EPA class | evidence:E-EPA-CHP | None | E-EPA-CHP: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured | NO_ESTIMATE |
+| added_fuel | fraction and fuel-unit/year | Exact project value or documented EPA class | evidence:E-EPA-CHP | None | E-EPA-CHP: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured | NO_ESTIMATE |
+| coincident_onsite_electric_load | kWh/year | Measured chronological load and formula | User interval load artifact | None | Direct input or formula | Coincident onsite electric load | NO_ESTIMATE |
+| avoided_grid_kWh | kWh/year | Measured chronological load and formula | User interval load artifact | None | Direct input or formula | Coincident onsite electric load | NO_ESTIMATE |
+| resource_unit_conversion | common-energy-unit/resource-unit and reciprocal | UNIT-RESOURCE-ENERGY | resource-energy: Required versioned and audited conversion table keyed by the selected resource unit | None | Direct input or formula | Avoidable marginal resource price | NO_ESTIMATE |
+| fuel_unit | common-energy-unit/resource-unit and reciprocal | UNIT-RESOURCE-ENERGY | resource-energy: Required versioned and audited conversion table keyed by the selected resource unit | None | Direct input or formula | Avoidable marginal resource price | NO_ESTIMATE |
+| p_electric | USD/resource-unit | Bill or documented project fuel price | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+| p_fuel | USD/resource-unit | Bill or documented project fuel price | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+### STD-EPA-CHP-PERFORMANCE
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | E-EPA-CHP (UNVERIFIED, proposed-class-method) |
+| usage or operating schedule | None |
+| physics or calculation method | E-EPA-CHP (UNVERIFIED, proposed-class-method) |
+| tariff or bill | None |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** exact_product_catalog, capacity_default, operating_profile_default, thermal_coincidence_default
+
+**Manual verdict:** EPA technology and capacity rows can support proposed screening classes and a transparent energy balance. They do not identify exact equipment or supply site design and coincidence inputs.
+
+### STD-OPERATING-SCHEDULE
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | E-SCHEDULE-EXPLICIT (UNVERIFIED, usage-method)<br>E-SCHEDULE-CONTEXT-UNSUPPORTED (UNSUPPORTED, none) |
+| physics or calculation method | E-SCHEDULE-EXPLICIT (UNVERIFIED, usage-method) |
+| tariff or bill | None |
+| geographic or climate | E-SCHEDULE-EXPLICIT (UNVERIFIED, usage-method) |
+
+**Unsupported roles or uses:** industry_label_only_default, tariff_or_bill
+
+**Manual verdict:** Explicit calendar arithmetic and daylight calculations are defensible after all inputs are supplied. A business label alone does not prove annual operating hours.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** capacity; operating profile; electric efficiency; fuel; coincident electric load.
+- **Exact scenario:** insufficient-data.
+- **Source fixture:** None.
+- **Low/base/high calculation:** EPA table bounds only after an exact row is pinned.
+- **Final result path:** generation and fuel balance -> component rates
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** EPA row/workbook fixture and site-specific capacity, operation, and coincidence.
 
 ## Fully Expanded Information Tree
 
@@ -44,32 +104,23 @@ Annual resource value
 ├─ Prime-mover type (User)
 ├─ Input fuel (User)
 ├─ Selected Unit Model, if known (User)
-├─ Total installed capacity, if known (User)
-├─ Linked Opportunity (Profile)
+├─ Total installed capacity (User)
+├─ Linked Opportunity
 ├─ Annual operating hours [BR-ANNUAL-OPERATING-HOURS]
 │  ├─ Recognizable Business, Shift, Seasonal, or Usage Pattern (User)
 │  ├─ Detailed Operating Days, Shifts, or Active Season, if known (User)
 │  ├─ Measured Annual Operating Hours, if known (User)
-│  ├─ site.geo coordinates and business schedule context (Profile)
+│  ├─ site.geo.coordinates and business.primaryActivityText (Profile)
 │  └─ Deterministic annual operating-hours resolution (Standard)
-├─ Operating load fraction, if known (User)
+├─ Operating load fraction (User)
 ├─ Coincident Onsite Electric Load, if known (User)
-├─ Export rule from the verified tariff artifact when export is permitted (Bill)
 ├─ Electric efficiency by technology and capacity (Standard)
-├─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-│  ├─ annual_kwh for electricity (Bill)
-│  ├─ annual_therms for gas (Bill)
-│  ├─ billing_period_start (Bill)
-│  └─ billing_period_end (Bill)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   ├─ Electric variable charge
-   │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
-   │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-   │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-   │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   └─ Gas variable charge
-      ├─ gas_rate_schedule, verified against the service account (Bill)
-      └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
+   ├─ Electric volumetric charge
+   │  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+   │  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+   └─ Gas volumetric charge
+      └─ utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms (Bill)
 ```
 
 ## Input Workflow
@@ -78,46 +129,37 @@ Annual resource value
 
 - Prime-mover type
 - Input fuel
+- Total installed capacity
 - Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Recognizable Business, Shift, Seasonal, or Usage Pattern
+- Operating load fraction
 
 ### Optional Known Details
 
 - Selected Unit Model, if known
-- Total installed capacity, if known
 - Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Detailed Operating Days, Shifts, or Active Season, if known
 - Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Measured Annual Operating Hours, if known
-- Operating load fraction, if known
 - Coincident Onsite Electric Load, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
-- Linked Opportunity
-- Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > site.geo coordinates and business schedule context
+- Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > site.geo.coordinates and business.primaryActivityText
 
 ### Bill Inputs
 
-- Export rule from the verified tariff artifact when export is permitted
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh for electricity
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_therms for gas
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas volumetric charge > utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms
 
 ### Standard-Derived Assumptions
 
 #### STD-EPA-CHP-PERFORMANCE
 
 - **Value produced:** Annual electricity generation, annual input fuel, useful recovered heat, displaced boiler fuel, and source table or workbook version.
-- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
+- **Resolution scenario:** exact-input; source-table-technology-and-capacity-class; linked-opportunity-constrained-input; insufficient-data.
 - **Low/base/high behavior:** Use the documented range bounds and representative midpoint for the matched technology and capacity bin; exact specifications use one value in all positions.
-- **Exact versus estimated:** Return exact documented performance for a selected compatible unit; otherwise return a technology-and-capacity-bin distribution without claiming an exact model.
+- **Exact versus estimated:** Calculate from exact project inputs or use only a documented EPA technology and capacity row as a proposed screening class; return no estimate when capacity, fuel, or heat coincidence is unresolved.
 - **Uncertainty:** Low for exact specifications, moderate for a matched catalog bin, and high for generic biomass or biogas screening.
 - **Source:** U.S. Environmental Protection Agency, [CHP technologies and current catalog links](https://www.epa.gov/chp/chp-technologies), [CHP efficiency method and resources](https://www.epa.gov/chp/chp-resources), and [current CHP calculator download](https://www.epa.gov/chp/download-chp-energy-and-emissions-savings-calculator). The technology page supplies prime-mover and fuel-cell performance characteristics. The methodology supplies the separate heat-and-power energy balance. The calculator provides a reviewable workbook implementation.
 - **Source version:** EPA catalog or workbook publication date, table or worksheet identifier, and local table version.
@@ -128,7 +170,7 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 #### STD-OPERATING-SCHEDULE
 
 - **Value produced:** Low, base, and high annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
-- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Resolution scenario:** measured-exact-input; explicit-calendar-calculation; daylight-control-calculation; insufficient-data.
 - **Low/base/high behavior:** Calculate each value from visible hours-per-day, days-per-week, active-weeks, shift, setback, or daylight assumptions; never apply an unexplained annual-hours constant.
 - **Exact versus estimated:** Return the exact validated schedule total when supplied; otherwise return a deterministic low/base/high range from the recognizable schedule and context.
 - **Uncertainty:** Low for an exact validated schedule, moderate for a complete recognizable schedule, and high for a broad context-derived range.
@@ -142,7 +184,7 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### ■ STD-EPA-CHP-PERFORMANCE — EPA CHP and fuel-cell performance
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve electric efficiency, useful-heat ratio, and representative operating limits for onsite fuel generation.
@@ -163,24 +205,24 @@ The calculator provides a reviewable workbook implementation.
     - **User:** Annual resource value > Selected Unit Model, if known
 - `generation_capacity` - **Optional:** Exact total installed capacity when known; otherwise use only a defensible source-supported service or capacity class.
   - **Resolved by:**
-    - **User:** Annual resource value > Total installed capacity, if known
+    - **User:** Annual resource value > Total installed capacity
 - `operating_profile` - **Conditional:** Recognizable operating pattern or exact capacity factor used when the category formula requires annual operation. Applies only in the documented scenario.
   - **Resolved by:**
     - **User:** Annual resource value > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Measured Annual Operating Hours, if known
-    - **User:** Annual resource value > Operating load fraction, if known
+    - **User:** Annual resource value > Operating load fraction
 - `thermal_load_coincidence` - **Conditional:** Coincident useful thermal-load limit when recovered heat is modeled. Applies only in the documented scenario.
   - **Resolved by:** Not applicable under this category contract.
 - `linked_opportunity` - **Conditional:** Product, technology, fuel, capacity, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
   - **Resolved by:**
-    - **Profile:** Annual resource value > Linked Opportunity
+    - **Derived:** Annual resource value > Linked Opportunity
 
 **Value Needed:**
 Annual electricity generation, annual input fuel, useful recovered heat, displaced boiler fuel, and source table or workbook version.
 
 **Resolution Contract:**
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return exact documented performance for a selected compatible unit; otherwise return a technology-and-capacity-bin distribution without claiming an exact model.
+- **Supported Scenarios:** exact-input; source-table-technology-and-capacity-class; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Calculate from exact project inputs or use only a documented EPA technology and capacity row as a proposed screening class; return no estimate when capacity, fuel, or heat coincidence is unresolved.
 - **Low/Base/High Rule:** Use the documented range bounds and representative midpoint for the matched technology and capacity bin; exact specifications use one value in all positions.
 - **Uncertainty Rule:** Low for exact specifications, moderate for a matched catalog bin, and high for generic biomass or biogas screening.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
@@ -195,13 +237,9 @@ Extract only energy-performance values from the current catalog section or exact
 Calculate input fuel from electric output and electric efficiency, cap useful recovered heat at the coincident thermal load, and convert that heat to displaced boiler fuel with the existing boiler efficiency.
 For biomass or biogas, require confirmed annual available fuel quantity and heating value and never infer it from organization type.
 Exclude emissions and all cost assumptions in EPA tools.
-For an exact existing unit, use its documented performance and assign low uncertainty.
-When only prime-mover type or application is known, use the compatible technology and capacity-bin distribution.
-Use Profile or Bill context only when it establishes a source-supported service and capacity class, and otherwise return no estimate.
-When a Linked Opportunity names exact products, restrict the candidate set to those products.
-When it specifies a technology class or minimum performance, filter the EPA-compatible candidates to those requirements.
-When no product restriction or no Linked Opportunity exists, build a compatible technology-and-capacity candidate set without claiming an exact model.
-An exact proposed unit overrides the class distribution after fuel, service, capacity, and heat-recovery compatibility validation.
+An exact existing or proposed unit requires project documentation because the EPA catalog is a representative technology table, not a model catalog.
+Profile and Bill context do not supply generation capacity, operating profile, or thermal coincidence.
+A Linked Opportunity may constrain a documented technology class only when the EPA row and all calculation inputs remain compatible.
 
 **Automation:**
 - **Selected Strategy:** Versioned local performance table plus a transparent energy-balance function.
@@ -215,7 +253,7 @@ An exact proposed unit overrides the class distribution after fuel, service, cap
 
 ### ■ STD-OPERATING-SCHEDULE — Recognizable schedule to annual operating hours
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve annual operating hours from recognizable business, shift, seasonal, or exterior-lighting control patterns, with an exact schedule or measurement as an optional override.
@@ -230,7 +268,7 @@ USNO defines and computes sunrise, sunset, and civil-twilight times for location
   - **Resolved by:**
     - **User:** Annual resource value > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Recognizable Business, Shift, Seasonal, or Usage Pattern
     - **User:** Annual resource value > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Measured Annual Operating Hours, if known
-    - **Profile:** Annual resource value > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > site.geo coordinates and business schedule context
+    - **Profile:** Annual resource value > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > site.geo.coordinates and business.primaryActivityText
     - **Standard:** Annual resource value > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Deterministic annual operating-hours resolution
 - `operating_schedule_details` - **Optional:** Detailed operating days, shifts, or active season when known.
   - **Resolved by:**
@@ -244,7 +282,7 @@ Low, base, and high annual operating hours, exact or estimated status, schedule 
 
 **Resolution Contract:**
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Supported Scenarios:** measured-exact-input; explicit-calendar-calculation; daylight-control-calculation; insufficient-data.
 - **Scenario Output Behavior:** Return the exact validated schedule total when supplied; otherwise return a deterministic low/base/high range from the recognizable schedule and context.
 - **Low/Base/High Rule:** Calculate each value from visible hours-per-day, days-per-week, active-weeks, shift, setback, or daylight assumptions; never apply an unexplained annual-hours constant.
 - **Uncertainty Rule:** Low for an exact validated schedule, moderate for a complete recognizable schedule, and high for a broad context-derived range.
@@ -277,6 +315,7 @@ Do not infer annual hours solely from an industry label when site operation can 
 ## Category Notes and Missing-Data Behavior
 
 Useful recovered heat is included only when the project is explicitly CHP and mapped to ITC-21.
+Export value is excluded from this category.
 
 Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
 

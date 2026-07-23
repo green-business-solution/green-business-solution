@@ -14,7 +14,7 @@ No Standard is finalized by this document.
 
 ### ■ STD-COMSTOCK-ANNUAL-DELTA - ComStock annual upgrade resource delta
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Return annual electricity and fuel deltas for a documented commercial-building upgrade scenario matched to a Stage 1 building archetype.
 
@@ -38,8 +38,8 @@ The reference PDF supplies the model, sampling, and applicability method.
 
 - **Resolver Type:** Method resolver.
 - **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Scenario Output Behavior:** Return the documented matched distribution when the retrofit and archetype crosswalk succeeds; otherwise return no estimate.
-- **Low/Base/High Rule:** Use the source weighted 25th percentile, median, and 75th percentile for low, base, and high.
+- **Scenario Output Behavior:** Return no estimate until the exact release crosswalk and eligible baseline-upgrade population are materialized in a reviewed aggregate fixture.
+- **Low/Base/High Rule:** The intended weighted 25th percentile, median, and 75th percentile remain disabled until the eligible population, filters, weights, and sample count are captured in that fixture.
 - **Uncertainty Rule:** Low for an exact documented archetype match with strong applicability, moderate for broader bins, and high when applicability is sparse.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Pinned ComStock release ID, upgrade ID, and source-file checksum.
@@ -117,8 +117,8 @@ The repository supplies versioned definitions and processing code.
 
 - **Resolver Type:** Method resolver.
 - **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Scenario Output Behavior:** Return a source-defined ECM performance distribution only after exact semantic and market-segment matching; otherwise return no estimate.
-- **Low/Base/High Rule:** Use documented low, typical, and high performance when present; otherwise use supported scenario bounds and label the base selection rule.
+- **Scenario Output Behavior:** Return no estimate until an exact ECM definition, performance field, and market segment are captured in a reviewed fixture.
+- **Low/Base/High Rule:** Use only source-explicit low, typical, and high cases after the exact definition is pinned. Do not calculate an inferred distribution.
 - **Uncertainty Rule:** High unless the ECM definition and market segment match exactly.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Pinned Scout release, ECM definition identifier, and source checksum.
@@ -161,20 +161,19 @@ The templates define product-specific fields and units.
 - `ccms_product_context` - [Required] Recognizable product group or application and proposed scope needed to select a compatible equipment class.
 - `ccms_exact_product` - [Optional] Exact manufacturer, basic model number, certified rating, and capacity or size when known.
 - `linked_opportunity` - [Conditional] Product, certification, class, or minimum-performance restriction when a Linked Opportunity supplies one.
-- `product_usage_pattern` - [Conditional] Recognizable operating pattern and exact activity or idle values when the category formula uses certified active and idle ratings.
 
 **Value Needed:** The certified efficiency, capacity, annual or daily resource use, test-procedure identifier, units, certification date, and active-record status required by the category.
 
 **Resolution Contract:**
 
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return exact certified values for an unambiguous active model match; return an eligible class distribution for class-based scenarios; return no estimate when compatibility cannot be established.
-- **Low/Base/High Rule:** For exact matches set low, base, and high to the certified value; otherwise use the 25th percentile, median, and 75th percentile of compatible active records.
-- **Uncertainty Rule:** Low for exact active records, moderate for a compatible class distribution, and high for a context-only fallback.
+- **Supported Scenarios:** exact-current-model; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.
+- **Scenario Output Behavior:** Return an exact certified value only for an unambiguous model present in a reviewed snapshot; apply proposed-product restrictions only to compatible current records; otherwise return no estimate.
+- **Low/Base/High Rule:** For an exact reviewed record set low, base, and high to the certified value. No generic percentile is supported until a product-specific eligible population, filters, and sample size have a reviewed fixture.
+- **Uncertainty Rule:** Low for the certified value of an exact active record, moderate for a verified compatible proposed class, and unresolved for an unknown existing model.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Export date, product group, certification record identifiers, test procedure, and export checksum.
-- **Selected Class or Candidate Set:** Filter active records by application, equipment class, capacity or service requirement, opportunity restrictions, and compatibility before calculating the distribution.
+- **Selected Class or Candidate Set:** Filter active records by product-specific fields, equipment class, capacity or service requirement, opportunity restrictions, and compatibility. Record filters and sample size before any distribution is enabled.
 - **Assumptions:** Certified test values are comparable only inside the same product group, test procedure, and compatible service class.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate when no compatible active record or defensible equipment class remains after filtering.
@@ -184,14 +183,14 @@ Select an exact normalized manufacturer and basic-model match, then disambiguate
 Read only fields defined in the current product-specific template and preserve the reported units and test-procedure version.
 Store a local slowly changing dimension keyed by product group, manufacturer, basic model, class, and certification effective date.
 Return no model rating on ambiguous or withdrawn matches.
-For an exact existing model, return the source-documented engineering value with low uncertainty.
-When only type or application is known, select compatible records and return the declared class distribution.
-When neither model nor type is known, use relevant Profile or Bill context only when it supports a source-defined class, and otherwise return no estimate.
+An existing model may use this Standard only when that exact model is present in a retained reviewed snapshot.
+Current efficient records must not be used as an installed existing-equipment distribution.
+Type-only, Profile, and Bill fallbacks are unsupported until a separate installed-baseline source and mapping are reviewed.
 When a Linked Opportunity names exact products, restrict the candidate set to those products.
 When it specifies a class, certification, or minimum performance, filter active compatible records to those requirements.
 When it has no product restriction or no Linked Opportunity exists, build the compatible candidate set from application, service need, site context, and source data without claiming an exact model.
-An exact proposed model overrides the candidate distribution after compatibility validation.
-Resolve recognizable product usage patterns to visible low/base/high activity assumptions only when the category and source support that conversion.
+An exact proposed model overrides a proposed candidate set after compatibility validation.
+Usage and operating schedules require separate evidence and must not be inferred from certification records.
 Return no estimate when product compatibility or a required usage basis cannot be established.
 
 **Automation:**
@@ -209,7 +208,7 @@ Return no estimate when product compatibility or a required usage basis cannot b
 
 ### ■ STD-ENERGY-STAR-PRODUCT-DATA - ENERGY STAR product datasets
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Resolve current certified high-efficiency product performance and EVSE standby or charging efficiency.
 
@@ -222,20 +221,19 @@ The product pages define fields and certified-product scope.
 - `energy_star_product_context` - [Required] Recognizable product category or application and proposed scope needed to select a compatible certified class.
 - `energy_star_exact_product` - [Optional] Exact manufacturer, model, certified rating, and capacity or size when known.
 - `linked_opportunity` - [Conditional] Product, certification, class, or minimum-performance restriction when a Linked Opportunity supplies one.
-- `product_usage_pattern` - [Conditional] Recognizable operating pattern and exact activity or idle values when the category formula uses certified active and idle ratings.
 
 **Value Needed:** Category-specific certified energy, water, capacity, efficiency, and low-power-state fields with units and certification dates.
 
 **Resolution Contract:**
 
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return exact certified values for a selected matching model; otherwise return a distribution from compatible currently certified candidates; return no estimate when the source does not cover the application.
-- **Low/Base/High Rule:** For exact matches use the certified value in all three positions; otherwise use the 25th percentile, median, and 75th percentile after eligibility and compatibility filters.
-- **Uncertainty Rule:** Low for an exact certified match, moderate for a matched product class, and high for a context-only class selection.
+- **Supported Scenarios:** linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.
+- **Scenario Output Behavior:** Return current certified fields for an exact proposed model or a compatible proposed-product set; never use the current certified set as an existing installed baseline.
+- **Low/Base/High Rule:** For an exact proposed model use the certified value in all three positions. A proposed-product distribution remains disabled until the adapter records the eligible population, filters, sample size, and fixture.
+- **Uncertainty Rule:** Low for a certified field from an exact proposed model, moderate for a fixture-backed compatible proposed class, and unresolved for existing equipment or site usage.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Dataset update date, certification identifier, category schema version, and downloaded-file checksum.
-- **Selected Class or Candidate Set:** Filter by application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status.
+- **Selected Class or Candidate Set:** Filter proposed products by exact dataset fields for application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status. Preserve the sample size.
 - **Assumptions:** Candidate records are technically compatible after the declared filters, but no exact purchase is implied until a model is selected.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate when no compatible candidate set exists or the required performance field is absent.
@@ -243,7 +241,7 @@ The product pages define fields and certified-product scope.
 **How to Use:** Download the category dataset rather than calling the API at calculation time.
 Keep the EPA field names in raw storage and normalize only fields used by a documented category adapter.
 Select exact manufacturer and model matches, then validate subtype and capacity.
-For a proposed generic selection, return the median and quartiles of currently certified products within the exact subtype and capacity bin, not the best model.
+Do not return a proposed generic median or quartiles until the exact subtype and capacity filters, eligible population, sample size, and representative source rows are fixture-tested.
 Store dataset publication date, specification version, and product status.
 
 The adapter contracts use these source-reported field families:
@@ -257,14 +255,14 @@ The adapter contracts use these source-reported field families:
 | `ITC-52` commercial dishwashers | Machine type, sanitation method, water per rack or hour, machine idle rate, and booster-heater idle rate |
 
 Do not infer a missing source-reported field from another product family.
-For an exact existing model, return the certified value with low uncertainty.
-When only type or application is known, select compatible certified records and return the declared class distribution.
-When neither model nor type is known, use relevant Profile or Bill context only when it supports a source-defined class, and otherwise return no estimate.
+Do not use the active certified dataset as an existing-equipment source.
+Existing ratings require an exact retained historical record, nameplate, measurement, or a separate installed-baseline source.
+Profile and Bill fallbacks are unsupported because the current canonical schemas do not identify a product model or source-defined product class.
 When a Linked Opportunity names exact products, restrict the candidate set to those products.
 When it specifies a class, certification, or minimum performance, filter compatible current records to those requirements.
 When it has no product restriction or no Linked Opportunity exists, build the candidate set from application, service need, site context, and current certified data without claiming an exact model.
-An exact proposed model overrides the candidate distribution after compatibility validation.
-Resolve recognizable product usage patterns to visible low/base/high activity assumptions only when the category and source support that conversion.
+An exact proposed model overrides a proposed candidate set after compatibility validation.
+Usage and operating schedules require separate evidence and must not be inferred from product records.
 Return no estimate when product compatibility or a required usage basis cannot be established.
 
 **Automation:**
@@ -282,7 +280,7 @@ Return no estimate when product compatibility or a required usage basis cannot b
 
 ### ■ STD-DOE-MEASUR - DOE MEASUR engineering calculators
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Calculate equipment and industrial-system resource use from the minimum measured or confirmed operating inputs.
 
@@ -299,16 +297,16 @@ The calculator page identifies the supported lighting, motor, pump, fan, compres
 **Resolution Contract:**
 
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Scenario Output Behavior:** Return exact calculator output for complete measured inputs; return a low/base/high engineering range only when the calculator and an authoritative class rule support missing values; otherwise return no estimate.
-- **Low/Base/High Rule:** Run the calculator at each documented low, base, and high input set; never create ranges from unsupported generic defaults.
-- **Uncertainty Rule:** Low with complete measured inputs, moderate with source-supported class inputs, and high when the result is sensitive to unresolved operating conditions.
+- **Supported Scenarios:** exact-input; insufficient-data.
+- **Scenario Output Behavior:** Return calculator output only for a complete measured or user-confirmed input set; otherwise return no estimate.
+- **Low/Base/High Rule:** Run the calculator independently for explicit low, base, and high input sets supplied for the project; never create ranges from generic defaults.
+- **Uncertainty Rule:** Low to moderate with complete measured inputs and no estimate when a required operating condition is unresolved.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Pinned MEASUR release, calculator identifier, source commit, and adapter version.
-- **Selected Class or Candidate Set:** Select the calculator by category contract and select any equipment class only from an authoritative source identified by that contract.
+- **Selected Class or Candidate Set:** Select the calculator by category contract; no equipment class supplies a missing project input in the current evidence contract.
 - **Assumptions:** Units, operating point, schedule, and system boundaries match the selected calculator.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **No-Estimate Rule:** Return no estimate when a high-sensitivity calculator input has neither an exact value nor a documented class-based resolver.
+- **No-Estimate Rule:** Return no estimate when any calculator input required by the category contract is missing.
 
 **How to Use:** Pin a MEASUR release and invoke its local calculation modules or port a formula only when its source implementation and tests are retained as executable fixtures.
 Create one adapter per referenced calculator and reject incomplete required input sets.
@@ -330,7 +328,7 @@ Never substitute a calculator's typical default for a high-sensitivity project v
 
 ### ■ STD-SAM-SOLAR-THERMAL - SAM solar water-heating simulation
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Return annual solar-thermal output and backup-resource displacement for a specified solar water-heating system.
 
@@ -348,16 +346,16 @@ Never substitute a calculator's typical default for a high-sensitivity project v
 **Resolution Contract:**
 
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Scenario Output Behavior:** Return exact configured simulation output when all configuration inputs are supplied; otherwise return a documented configuration range only where source-supported defaults exist.
-- **Low/Base/High Rule:** Run low, base, and high configurations independently and report the corresponding useful thermal output.
-- **Uncertainty Rule:** Moderate with a specified configuration and high when load or system geometry is estimated.
+- **Supported Scenarios:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return configured simulation output only when the complete collector design, load, backup system, and site inputs are supplied; otherwise return no estimate.
+- **Low/Base/High Rule:** Run only explicit project-supplied low, base, and high configurations independently.
+- **Uncertainty Rule:** Moderate with a specified configuration and no estimate when load or system geometry is unresolved.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Pinned SAM and SSC versions, weather-file identifier, and weather-file checksum.
-- **Selected Class or Candidate Set:** Use compatible collector, storage, backup-resource, and load configurations for the declared application.
-- **Assumptions:** Typical weather and the supplied or estimated load shape are representative for screening.
+- **Selected Class or Candidate Set:** Use only the supplied collector, storage, backup-resource, and load configuration for the declared application.
+- **Assumptions:** Typical weather and the supplied load shape are representative for screening.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **No-Estimate Rule:** Return no estimate when collector scope, usable area, backup resource, or hot-water load cannot be resolved defensibly.
+- **No-Estimate Rule:** Return no estimate when any required collector, storage, backup-resource, hot-water-load, or site input is missing.
 
 **How to Use:** Run the pinned SAM solar-water-heating compute module locally with a weather file selected by coordinates.
 Use the customer-confirmed system and hot-water-load inputs, convert useful thermal output to avoided backup resource with the confirmed backup efficiency, and cap displacement at the modeled delivered load.
@@ -378,7 +376,7 @@ Store SAM version, weather-file identifier, full inputs, annual output, and warn
 
 ### ■ STD-PVWATTS-V8 - PVWatts photovoltaic production
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Resolve hourly and annual AC generation for a specified grid-connected PV array.
 
@@ -396,16 +394,16 @@ SAM supplies the local PVWatts compute module.
 **Resolution Contract:**
 
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Scenario Output Behavior:** Return configured PVWatts output for a supplied design; otherwise return a documented low/base/high array configuration derived from usable area and project scope.
-- **Low/Base/High Rule:** Run PVWatts for each low, base, and high configuration, with losses and geometry visible in every case.
-- **Uncertainty Rule:** Moderate for screening and high when shading, usable area, or orientation is unresolved.
+- **Supported Scenarios:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return configured PVWatts output only for a complete supplied array design and site; otherwise return no estimate.
+- **Low/Base/High Rule:** Run PVWatts only for explicit project-supplied low, base, and high configurations, with losses and geometry visible in every case.
+- **Uncertainty Rule:** Moderate for screening with a complete design and no estimate when capacity, losses, geometry, or location is unresolved.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** PVWatts V8 module version, SAM or SSC version, and weather-file identifier and checksum.
-- **Selected Class or Candidate Set:** Use project scope, usable site area, array mounting class, and opportunity constraints without selecting a fictitious exact product.
-- **Assumptions:** Typical weather and visible configuration assumptions are representative; detailed shading and design losses are not known.
+- **Selected Class or Candidate Set:** Use only the supplied project array configuration and any explicit Linked Opportunity constraints.
+- **Assumptions:** Typical weather is representative; detailed shading remains outside PVWatts unless reflected in the supplied loss input.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **No-Estimate Rule:** Return no estimate when usable array scope or location cannot be resolved.
+- **No-Estimate Rule:** Return no estimate when any required PVWatts configuration or location input is missing.
 
 **How to Use:** Execute the pinned PVWatts V8 compute module locally, using coordinates from the profile and customer-confirmed array configuration.
 Retain hourly output when tariff export, demand, storage, or coincidence is evaluated.
@@ -426,7 +424,7 @@ For annual energy-only value, cap same-period onsite consumption offset at impor
 
 ### ■ STD-WIND-SAM - Wind Toolkit and SAM small-wind production
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Resolve annual generation for a specified small wind turbine at a specified hub height.
 
@@ -438,23 +436,23 @@ SAM supplies the turbine power-curve simulation.
 
 - `site_coordinates` - [Required] Resolved site latitude and longitude.
 - `wind_system_configuration` - [Required] Hub height, exact turbine model or power curve, and losses.
-- `analysis_year` - [Optional] Analysis year used to select the wind-resource series.
+- `analysis_year` - [Required] Analysis year used to select the wind-resource series.
 
 **Value Needed:** Hourly and annual AC kWh, capacity factor, resource dataset version, and warnings.
 
 **Resolution Contract:**
 
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Scenario Output Behavior:** Return exact-curve simulation output when a compatible turbine curve is supplied; otherwise return no estimate unless an approved application-class curve set exists.
-- **Low/Base/High Rule:** Simulate each approved compatible curve and report the minimum, median, and maximum annual output after identical resource and loss treatment.
+- **Supported Scenarios:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return exact-curve simulation output only when the compatible turbine curve, hub height, losses, analysis year, and site are supplied; otherwise return no estimate.
+- **Low/Base/High Rule:** Simulate only explicit project-supplied low, base, and high curve or loss cases after identical resource treatment.
 - **Uncertainty Rule:** High without onsite resource validation and moderate only with a confirmed curve and representative resource point.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** WIND Toolkit dataset version, resource point and height, SAM version, and turbine-curve identifier.
-- **Selected Class or Candidate Set:** Use only compatible source-documented turbine curves and opportunity restrictions; never predict an exact turbine model.
+- **Selected Class or Candidate Set:** Use only the supplied compatible source-documented turbine curve and explicit opportunity restrictions.
 - **Assumptions:** The gridded wind resource represents the microsite within the stated uncertainty.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **No-Estimate Rule:** Return no estimate without a valid height and compatible documented power curve or approved curve set.
+- **No-Estimate Rule:** Return no estimate without a supplied valid height, compatible documented power curve, loss factor, and analysis year.
 
 **How to Use:** Ingest the needed WIND Toolkit points and heights at build time or on a controlled analyst job, cache the weather series, and run the pinned SAM wind module locally against the exact turbine curve.
 Reject estimates without a valid hub height and turbine curve.
@@ -475,7 +473,7 @@ Use hourly output for tariff coincidence and cap onsite offset at imported load 
 
 ### ■ STD-REOPT-LOCAL-DISPATCH - REopt interval dispatch and bill optimization
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Resolve direct bill change from storage, demand flexibility, managed charging, and composite distributed-energy dispatch.
 
@@ -493,14 +491,14 @@ REopt.jl is the local optimization engine used by the API.
 **Resolution Contract:**
 
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Supported Scenarios:** exact-input; linked-opportunity-constrained-input; insufficient-data.
 - **Scenario Output Behavior:** Return baseline and proposed bill components only for an optimal deterministic run with complete chronological load and tariff inputs.
-- **Low/Base/High Rule:** Run declared low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
-- **Uncertainty Rule:** Moderate with complete interval and tariff data and high when any allowed category constraint is estimated.
+- **Low/Base/High Rule:** Run only explicit project-supplied low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
+- **Uncertainty Rule:** Moderate with complete interval, tariff, technology, and operating inputs and no estimate when a required constraint is missing.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Pinned REopt.jl release, solver version, tariff version, and category-adapter version.
-- **Selected Class or Candidate Set:** Use only the technology and fixed-load adapter declared by the category and any Linked Opportunity constraints.
-- **Assumptions:** The analysis year, tariff calendar, and interval load are aligned and future operations follow the declared case.
+- **Selected Class or Candidate Set:** Use only the supplied technology design, fixed-load adapter, and any explicit Linked Opportunity constraints.
+- **Assumptions:** The analysis year, tariff calendar, interval load, and project-supplied constraints are aligned and future operations follow the declared case.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate without continuous interval data, a verified complete tariff, required constraints, or optimal solver status.
 
@@ -528,7 +526,7 @@ Do not produce demand or time-of-use value from annual or monthly energy totals.
 
 ### ■ STD-EPA-CHP-PERFORMANCE - EPA CHP and fuel-cell performance
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Resolve electric efficiency, useful-heat ratio, and representative operating limits for onsite fuel generation.
 
@@ -551,8 +549,8 @@ The calculator provides a reviewable workbook implementation.
 **Resolution Contract:**
 
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return exact documented performance for a selected compatible unit; otherwise return a technology-and-capacity-bin distribution without claiming an exact model.
+- **Supported Scenarios:** exact-input; source-table-technology-and-capacity-class; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Calculate from exact project inputs or use only a documented EPA technology and capacity row as a proposed screening class; return no estimate when capacity, fuel, or heat coincidence is unresolved.
 - **Low/Base/High Rule:** Use the documented range bounds and representative midpoint for the matched technology and capacity bin; exact specifications use one value in all positions.
 - **Uncertainty Rule:** Low for exact specifications, moderate for a matched catalog bin, and high for generic biomass or biogas screening.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
@@ -566,13 +564,9 @@ The calculator provides a reviewable workbook implementation.
 Calculate input fuel from electric output and electric efficiency, cap useful recovered heat at the coincident thermal load, and convert that heat to displaced boiler fuel with the existing boiler efficiency.
 For biomass or biogas, require confirmed annual available fuel quantity and heating value and never infer it from organization type.
 Exclude emissions and all cost assumptions in EPA tools.
-For an exact existing unit, use its documented performance and assign low uncertainty.
-When only prime-mover type or application is known, use the compatible technology and capacity-bin distribution.
-Use Profile or Bill context only when it establishes a source-supported service and capacity class, and otherwise return no estimate.
-When a Linked Opportunity names exact products, restrict the candidate set to those products.
-When it specifies a technology class or minimum performance, filter the EPA-compatible candidates to those requirements.
-When no product restriction or no Linked Opportunity exists, build a compatible technology-and-capacity candidate set without claiming an exact model.
-An exact proposed unit overrides the class distribution after fuel, service, capacity, and heat-recovery compatibility validation.
+An exact existing or proposed unit requires project documentation because the EPA catalog is a representative technology table, not a model catalog.
+Profile and Bill context do not supply generation capacity, operating profile, or thermal coincidence.
+A Linked Opportunity may constrain a documented technology class only when the EPA row and all calculation inputs remain compatible.
 
 **Automation:**
 
@@ -589,7 +583,7 @@ An exact proposed unit overrides the class distribution after fuel, service, cap
 
 ### ■ STD-FUELECONOMY-VEHICLES - FuelEconomy.gov vehicle efficiency data
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Resolve comparable existing and electric light-duty vehicle fuel or electricity consumption per mile.
 
@@ -607,13 +601,13 @@ The page defines the downloadable current vehicle table and the `comb08` and `co
 **Resolution Contract:**
 
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return exact rated consumption for an unambiguous vehicle record; otherwise return a compatible vehicle-class distribution and never a predicted exact model.
-- **Low/Base/High Rule:** For exact matches use one rated value; otherwise use the 25th percentile, median, and 75th percentile of compatible records for the same class, model-year band, drive, and fuel.
+- **Supported Scenarios:** exact-existing-model; exact-proposed-model; insufficient-data.
+- **Scenario Output Behavior:** Return rated consumption only for an unambiguous vehicle record. Class distributions remain unsupported until compatibility rules and a fixture-backed eligible population are approved.
+- **Low/Base/High Rule:** For an exact match use one rated value. Do not calculate percentiles without declared vehicle-class, model-year, drive, fuel, and service-compatibility filters plus sample size.
 - **Uncertainty Rule:** Moderate for rated exact models and high for class estimates because duty, payload, weather, and charging losses vary.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** FuelEconomy.gov bulk-file update date, vehicle record identifiers, and file checksum.
-- **Selected Class or Candidate Set:** Filter by vehicle class, service need, fuel or drive, model-year band, opportunity requirements, and any selected exact record.
+- **Selected Class or Candidate Set:** Exact records are selected by vehicle ID or unambiguous year, make, model, and option. A class candidate set is not yet approved.
 - **Assumptions:** Standardized combined ratings are suitable for screening the declared use and do not represent site-specific duty.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate when vehicle class or service compatibility cannot be established.
@@ -623,12 +617,9 @@ For combustion vehicles use `gallons_per_mile = 1 / comb08`.
 For electric vehicles use `kwh_per_mile = combE / 100`.
 Do not use the dataset's annual cost fields because they embed generic mileage and prices.
 For an exact existing vehicle, use the unambiguous source record and assign the rating uncertainty documented in the Resolution Contract.
-When only vehicle class or service need is known, return a compatible record distribution rather than a predicted model.
-Use Profile or Bill context only when it establishes a defensible vehicle class, and otherwise return no estimate.
-When a Linked Opportunity names exact vehicles, restrict the candidate set to those records.
-When it specifies a vehicle class, drive, certification, or minimum performance, filter compatible records to those requirements.
-When no product restriction or no Linked Opportunity exists, build a compatible candidate set from class and service need without claiming an exact vehicle.
-An exact proposed vehicle overrides the distribution after class and service compatibility validation.
+`combE` is reported in kWh per 100 miles and the EPA label methodology includes wall-to-vehicle charging losses.
+Do not divide by an additional charging-efficiency factor.
+Vehicle-class, service-need, Profile, Bill, and Linked Opportunity fallbacks remain unsupported until exact dataset filters and an eligible population fixture are approved.
 
 **Automation:**
 
@@ -645,9 +636,9 @@ An exact proposed vehicle overrides the distribution after class and service com
 
 ### ■ STD-WATERSENSE-FIXTURES - WaterSense fixture performance
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
-**Purpose:** Resolve rated flow or flush volume for existing and proposed plumbing fixtures.
+**Purpose:** Resolve proposed rated flow or flush volume for compatible plumbing fixtures.
 
 **Source:** U.S. Environmental Protection Agency, [WaterSense commercial-building resources](https://www.epa.gov/watersense/commercial-buildings), [WaterSense at Work best-management-practice guide](https://www.epa.gov/watersense/best-management-practices), and [WaterSense urinal criteria](https://www.epa.gov/watersense/urinals).
 The guide contains fixture inventory methods, equations, and replacement-performance values.
@@ -656,36 +647,35 @@ The guide contains fixture inventory methods, equations, and replacement-perform
 
 - `fixture_context` - [Required] Recognizable existing and proposed fixture types and applications needed to select compatible rating classes.
 - `fixture_exact_rating` - [Optional] Exact existing or proposed model, rated flow, or flush volume when known.
-- `fixture_usage_pattern` - [Required] Recognizable application and usage pattern plus available business context.
 - `linked_opportunity` - [Conditional] Product, certification, or minimum-performance restrictions when a Linked Opportunity supplies them.
 
-**Value Needed:** Gallons per minute or gallons per flush plus annual uses or use-duration assumptions with units, low/base/high values, specification, and source location.
+**Value Needed:** Proposed gallons per minute or gallons per flush with units, specification, and source location.
 
 **Resolution Contract:**
 
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return an exact labeled or certified rating when known; otherwise return a fixture-type distribution or source-defined criterion without selecting an exact model.
-- **Low/Base/High Rule:** Use the source-supported existing-class bounds and base value; use eligible proposed-product 25th percentile, median, and 75th percentile when a product set is available.
+- **Supported Scenarios:** linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.
+- **Scenario Output Behavior:** Return a proposed WaterSense criterion or current certified proposed-product rating. Existing fixture ratings and commercial usage require exact inputs or separate evidence.
+- **Low/Base/High Rule:** Use one value for an exact proposed rating. No existing-class range, usage range, or proposed-product percentile is supported without a reviewed population fixture.
 - **Uncertainty Rule:** Low for exact ratings, moderate for a matched fixture type, and high when context alone selects the class.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** WaterSense specification or guide version, source section, product-list update date when used, and local criteria-table version.
-- **Selected Class or Candidate Set:** Filter by fixture application, service type, compatibility, certification or opportunity restrictions, and proposed scope.
+- **Selected Class or Candidate Set:** Filter proposed products by fixture application, service type, compatibility, certification or opportunity restrictions, and proposed scope. Record all filters and sample size before enabling a distribution.
 - **Assumptions:** Rated flow or flush volume represents the installed operating point for screening.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate when neither an exact rating nor a defensible fixture application class is available.
 
 **How to Use:** Prefer the existing fixture's label or exact model rating.
-Use the WaterSense at Work plumbing sections and current product specification for a proposed generic value.
+Use the WaterSense specification or current product data only for proposed performance.
 Store fixture type, unit, rating, source section, and specification version.
 Never substitute a flush frequency for a rated flush volume.
-Resolve annual usage from the recognizable application and documented WaterSense commercial inventory or usage guidance, with business context used only when it selects a supported application.
+Commercial use frequency and duration remain separate unresolved terms until an exact source section and fixture are approved.
 Keep usage frequency and duration assumptions separate from rated flow or flush volume.
 When a Linked Opportunity names exact products, restrict candidates to those products and use the selected exact rating.
 When it specifies a fixture class, certification, or maximum rating, filter compatible WaterSense criteria or candidates to those requirements.
-When it has no product restriction or no Linked Opportunity exists, build a compatible candidate set from application and service need without claiming an exact model.
-Exact ratings and measured use patterns override class estimates.
-Return no estimate when neither the application nor an exact measurement supports a defensible usage pattern.
+When it has no product restriction or no Linked Opportunity exists, a proposed criterion may be used only for a compatible documented fixture type.
+Exact ratings and measured use patterns override proposed criteria.
+Return no estimate when existing performance or the commercial usage pattern is unresolved.
 
 **Automation:**
 
@@ -702,7 +692,7 @@ Return no estimate when neither the application nor an exact measurement support
 
 ### ■ STD-WATERSENSE-LANDSCAPE - WaterSense landscape water budget
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Resolve baseline and proposed landscape water requirements from climate, area, plant, and irrigation method.
 
@@ -751,7 +741,7 @@ Store workbook version and input hydrozones.
 
 ### ■ STD-WATERSENSE-CI-OPERATIONS - WaterSense commercial operations methods
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Resolve cooling-tower makeup and leak-avoidance water with WaterSense commercial facility equations.
 
@@ -766,10 +756,10 @@ Store workbook version and input hydrozones.
 **Resolution Contract:**
 
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Scenario Output Behavior:** Return the direct equation result for complete measured inputs; otherwise return no estimate unless the WaterSense method supplies a documented range.
-- **Low/Base/High Rule:** Use identical exact values when measured; where the source supplies bounds, calculate the low, base, and high equation cases explicitly.
-- **Uncertainty Rule:** Moderate with measured inputs and high without them.
+- **Supported Scenarios:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return the direct equation result for complete measured inputs; otherwise return no estimate.
+- **Low/Base/High Rule:** Use identical values when inputs are measured, or run explicit project-supplied sensitivity inputs independently.
+- **Uncertainty Rule:** Moderate with measured inputs and no estimate without them.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** WaterSense at Work publication version, worksheet or equation identifier, and local adapter version.
 - **Selected Class or Candidate Set:** Select only the leak or cooling-tower equation named by the category contract.
@@ -796,7 +786,7 @@ Return no estimate for a detection system without a measured leak or for a cooli
 
 ### ■ STD-FEMP-EXTERIOR-LIGHTING - Exterior fixture wattage and proposed-product resolution
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Resolve existing and proposed exterior luminaire input watts from an exact model, recognizable application, site context, Linked Opportunity restrictions, or a compatible qualified-product candidate set.
 
@@ -816,24 +806,22 @@ The DLC requirements underpin the qualified-products list and its verified photo
 **Resolution Contract:**
 
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return documented input watts for an exact unambiguous model; otherwise return an application-compatible low/base/high wattage distribution without claiming an exact model.
-- **Low/Base/High Rule:** For exact matches use one documented value; otherwise use the 25th percentile, median, and 75th percentile after application, light-output, efficacy, control, opportunity, and compatibility filters.
+- **Supported Scenarios:** proposed-application-threshold; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; insufficient-data.
+- **Scenario Output Behavior:** Return the FEMP proposed efficacy threshold for a covered application or the narrow documented wall-mounted example. Return no existing fixture watts and no generic proposed input watts.
+- **Low/Base/High Rule:** No percentile distribution is supported. The FEMP threshold or narrow example is a single documented value with its exact application limits.
 - **Uncertainty Rule:** Low for exact documented models, moderate for a recognizable application and compatible candidate set, and high for a context-only application selection.
 - **Exact Override:** A validated exact existing or proposed model or documented input-watt measurement overrides the corresponding estimate and records the exact source.
 - **Source Version:** FEMP exterior-lighting guidance updated June 2023, DLC SSL V6.0 and LUNA V2.0 release, QPL extract date, record identifiers, and source checksum.
-- **Selected Class or Candidate Set:** Match the existing application to a FEMP covered class; filter proposed records to compatible light output, distribution, mounting, controls, FEMP efficacy, DLC status, and Linked Opportunity restrictions.
+- **Selected Class or Candidate Set:** Match only a proposed application to a FEMP covered class. Any later DLC candidate set requires a separate schema fixture and documented light-output, distribution, mounting, controls, efficacy, and status filters.
 - **Assumptions:** Candidate products satisfy the same service and photometric application; a photometric design is still required before purchase.
 - **Editable:** Yes. Every class selection, candidate filter, and estimated wattage remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate when model, application, and site context cannot establish a defensible existing class, or when no compatible proposed candidate set remains.
 
-**How to Use:** First try an exact existing-model match in source-backed product or manufacturer documentation.
-When only the existing fixture type or application is known, select the matching FEMP application class and calculate a distribution from compatible source records.
-Use Profile context only to select a source-supported application and widen uncertainty; do not infer an exact model.
-For an exact-product Linked Opportunity, restrict the candidate set to its approved products and use the selected exact value.
-For a class, certification, or minimum-performance Linked Opportunity, filter the qualified-product candidates before calculating the distribution.
-When the opportunity has no product restriction or no Linked Opportunity exists, use the existing application, site context, required service, FEMP criteria, and DLC data to define the compatible candidate set.
-An exact selected proposed model overrides the candidate distribution after compatibility validation.
+**How to Use:** Resolve existing watts from a nameplate, measurement, or separately verified historical source.
+FEMP Table 1 supports only proposed application-specific efficacy requirements.
+FEMP Table 2 is a narrow wall-mounted 9,900 to 10,100 lumen example and must not be generalized into an installed-baseline distribution.
+A Linked Opportunity may constrain the proposed application class, but the current evidence does not resolve an exact product or input wattage.
+Profile and Bill fallbacks are unsupported.
 Do not add savings for entirely new fixtures, and do not treat lighting quality as a monetary benefit.
 
 **Automation:**
@@ -851,7 +839,7 @@ Do not add savings for entirely new fixtures, and do not treat lighting quality 
 
 ### ■ STD-OPERATING-SCHEDULE - Recognizable schedule to annual operating hours
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:** Resolve annual operating hours from recognizable business, shift, seasonal, or exterior-lighting control patterns, with an exact schedule or measurement as an optional override.
 
@@ -870,7 +858,7 @@ USNO defines and computes sunrise, sunset, and civil-twilight times for location
 **Resolution Contract:**
 
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Supported Scenarios:** measured-exact-input; explicit-calendar-calculation; daylight-control-calculation; insufficient-data.
 - **Scenario Output Behavior:** Return the exact validated schedule total when supplied; otherwise return a deterministic low/base/high range from the recognizable schedule and context.
 - **Low/Base/High Rule:** Calculate each value from visible hours-per-day, days-per-week, active-weeks, shift, setback, or daylight assumptions; never apply an unexplained annual-hours constant.
 - **Uncertainty Rule:** Low for an exact validated schedule, moderate for a complete recognizable schedule, and high for a broad context-derived range.
@@ -906,7 +894,7 @@ Do not infer annual hours solely from an industry label when site operation can 
 
 - Canonical Standards: 16.
 - Standards with one selected automation strategy: 16.
-- `RESEARCHED — READY FOR HUMAN REVIEW`: 14.
-- `LIMITED`: 2.
+- `RESEARCHED — READY FOR HUMAN REVIEW`: 0.
+- `LIMITED`: 16.
 - `BLOCKED`: 0.
 - High-uncertainty Standards: STD-SCOUT-ECM-SCREEN, STD-WIND-SAM, and generic biomass or biogas use of STD-EPA-CHP-PERFORMANCE.

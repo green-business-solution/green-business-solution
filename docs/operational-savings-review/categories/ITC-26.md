@@ -10,10 +10,10 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-PVWATTS-V8`, `STD-WIND-SAM`, `STD-EPA-CHP-PERFORMANCE`, `STD-REOPT-LOCAL-DISPATCH`
-- **Required User-input count:** 6
-- **Optional Known-Detail count:** 19
-- **Profile-input count:** 2
-- **Bill-input count:** 6
+- **Required User-input count:** 29
+- **Optional Known-Detail count:** 1
+- **Profile-input count:** 1
+- **Bill-input count:** 5
 - **Standard-assumption count:** 3
 - **Applicable resources:** electricity, gas, liquid-fuel
 - **Default estimate:** UNAVAILABLE
@@ -33,49 +33,139 @@
 
 Apply the ITC-17, ITC-20 or ITC-21, and ITC-23 resource balances inside one optimization.
 
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| baseline_grid_and_fuel_bill | USD/year | Pinned REopt dispatch with PV, wind, CHP, storage, load, tariff, and fuel inputs | evidence:E-REOPT-DISPATCH<br>evidence:E-PVWATTS-V8<br>evidence:E-WIND-SAM<br>evidence:E-EPA-CHP | None | E-REOPT-DISPATCH: UNVERIFIED<br>E-PVWATTS-V8: VERIFIED<br>E-WIND-SAM: UNVERIFIED<br>E-EPA-CHP: UNVERIFIED | Versioned REopt input schema, solver, and result schema - Exact version, fields, and golden result are not pinned<br>GET /api/pvwatts/v8 - Required inputs system_capacity, module_type, losses, array_type, tilt, azimuth and location or solar_resource_file; outputs ac, ac_monthly, ac_annual, capacity_factor, station_info.solar_resource_file, warnings<br>SAM wind compute module and Wind Toolkit resource - Exact module variables and resource-field contract are not pinned<br>Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured | NO_ESTIMATE |
+| proposed_grid_and_fuel_bill | USD/year | Pinned REopt dispatch with PV, wind, CHP, storage, load, tariff, and fuel inputs | evidence:E-REOPT-DISPATCH<br>evidence:E-PVWATTS-V8<br>evidence:E-WIND-SAM<br>evidence:E-EPA-CHP | None | E-REOPT-DISPATCH: UNVERIFIED<br>E-PVWATTS-V8: VERIFIED<br>E-WIND-SAM: UNVERIFIED<br>E-EPA-CHP: UNVERIFIED | Versioned REopt input schema, solver, and result schema - Exact version, fields, and golden result are not pinned<br>GET /api/pvwatts/v8 - Required inputs system_capacity, module_type, losses, array_type, tilt, azimuth and location or solar_resource_file; outputs ac, ac_monthly, ac_annual, capacity_factor, station_info.solar_resource_file, warnings<br>SAM wind compute module and Wind Toolkit resource - Exact module variables and resource-field contract are not pinned<br>Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured | NO_ESTIMATE |
+
+## Source-Role Evidence
+
+### STD-PVWATTS-V8
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | None |
+| physics or calculation method | E-PVWATTS-V8 (VERIFIED, proposed-system-method) |
+| tariff or bill | None |
+| geographic or climate | E-PVWATTS-V8 (VERIFIED, proposed-system-method) |
+
+**Unsupported roles or uses:** system_capacity_default, array_configuration_default, tariff_or_bill
+
+**Manual verdict:** The API field contract is verified, but required system design inputs are project facts and no default design range is supported.
+
+### STD-WIND-SAM
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | None |
+| physics or calculation method | E-WIND-SAM (UNVERIFIED, proposed-system-method) |
+| tariff or bill | None |
+| geographic or climate | E-WIND-SAM (UNVERIFIED, proposed-system-method) |
+
+**Unsupported roles or uses:** turbine_capacity_default, power_curve_default, hub_height_default, tariff_or_bill
+
+**Manual verdict:** The simulator requires an explicit turbine, power curve, hub height, losses, and resource selection. Those values cannot be supplied by the simulator itself.
+
+### STD-REOPT-LOCAL-DISPATCH
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | None |
+| physics or calculation method | E-REOPT-DISPATCH (UNVERIFIED, baseline-and-proposed-method) |
+| tariff or bill | E-REOPT-DISPATCH (UNVERIFIED, baseline-and-proposed-method) |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** load_profile_default, tariff_default, technology_design_default
+
+**Manual verdict:** REopt can calculate dispatch only after a complete chronological load, tariff, technology, and operating constraint set is provided.
+
+### STD-EPA-CHP-PERFORMANCE
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | E-EPA-CHP (UNVERIFIED, proposed-class-method) |
+| usage or operating schedule | None |
+| physics or calculation method | E-EPA-CHP (UNVERIFIED, proposed-class-method) |
+| tariff or bill | None |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** exact_product_catalog, capacity_default, operating_profile_default, thermal_coincidence_default
+
+**Manual verdict:** EPA technology and capacity rows can support proposed screening classes and a transparent energy balance. They do not identify exact equipment or supply site design and coincidence inputs.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** complete load and tariffs; all technology designs; fuel contracts; operating constraints.
+- **Exact scenario:** insufficient-data.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Explicit integrated scenarios only.
+- **Final result path:** integrated dispatch -> grid and fuel bill difference
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** All component adapters plus integrated golden fixture.
+
 ## Fully Expanded Information Tree
 
 ```text
 Annual microgrid direct bill reduction
 ├─ Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF]
-│  ├─ Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field (Bill)
-│  ├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact (Bill)
-│  ├─ rate_schedule and customer_class, verified rather than provider-inferred (Bill)
-│  ├─ demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact (Bill)
-│  ├─ time_of_use_periods and seasonal calendar from a verified tariff artifact (Bill)
-│  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
+│  ├─ Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field (User)
+│  ├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact (User)
+│  ├─ utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred (Bill)
+│  └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
+│     ├─ Electric volumetric charge
+│     │  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+│     │  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+│     ├─ Electric time-of-use energy charge
+│     │  └─ Verified tariff calendar for the modeled interval import energy; the current bill parser has no complete canonical tariff artifact (User)
+│     ├─ Electric demand charge
+│     │  ├─ utilityExtractedValues demand_charge_rate, when parsed (Bill)
+│     │  └─ Verified billing-demand and ratchet rules applied to interval kW (User)
+│     ├─ Gas volumetric charge
+│     │  └─ utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms (Bill)
+│     └─ Liquid or vehicle-fuel price
+│        └─ Documented current project fuel price for the matching fuel and geography (User)
 ├─ Included component types (User)
-├─ Linked Opportunity (Profile)
+├─ Linked Opportunity
 ├─ Component site and operating inputs
 │  ├─ site.geo.coordinates when PV or wind is included (Profile)
 │  ├─ PV array configuration when PV is included
-│  │  ├─ DC capacity, if known (User)
-│  │  ├─ Module Type, if known (User)
+│  │  ├─ DC capacity (User)
+│  │  ├─ Module Type (User)
 │  │  ├─ Array type (User)
-│  │  ├─ System losses, if known (User)
-│  │  ├─ Tilt, if known (User)
-│  │  └─ Azimuth, if known (User)
+│  │  ├─ System losses (User)
+│  │  ├─ Tilt (User)
+│  │  └─ Azimuth (User)
 │  ├─ Wind configuration when wind is included
 │  │  ├─ Wind Turbine Class or Intended Application (User)
-│  │  ├─ Exact Turbine Model or Power Curve, if known (User)
-│  │  ├─ Hub Height, if known (User)
-│  │  ├─ Loss factor, if known (User)
-│  │  └─ Analysis Year, if known (User)
+│  │  ├─ Exact Turbine Model or Power Curve (User)
+│  │  ├─ Hub Height (User)
+│  │  ├─ Loss factor (User)
+│  │  └─ Analysis Year (User)
 │  ├─ Fuel-cell or CHP configuration when fuel generation is included
 │  │  ├─ Prime mover (User)
 │  │  ├─ Input fuel (User)
 │  │  ├─ Selected Unit Model, if known (User)
-│  │  ├─ Installed capacity, if known (User)
+│  │  ├─ Installed capacity (User)
 │  │  ├─ Annual operating profile (User)
-│  │  └─ Coincident useful thermal-load constraint when heat recovery is included, if known (User)
+│  │  └─ Coincident useful thermal-load constraint when heat recovery is included (User)
 │  └─ Storage configuration when storage is included
-│     ├─ Power capacity, if known (User)
-│     ├─ Usable-energy capacity, if known (User)
-│     ├─ Charge efficiency, if known (User)
-│     ├─ Discharge efficiency, if known (User)
-│     ├─ Initial state of charge, if known (User)
-│     ├─ Terminal state-of-charge constraint, if known (User)
-│     └─ Reserve constraint, if known (User)
+│     ├─ Power capacity (User)
+│     ├─ Usable-energy capacity (User)
+│     ├─ Charge efficiency (User)
+│     ├─ Discharge efficiency (User)
+│     ├─ Initial state of charge (User)
+│     ├─ Terminal state-of-charge constraint (User)
+│     └─ Reserve constraint (User)
 ├─ PV or wind interval generation when included (Standard)
 ├─ Fuel-cell or CHP performance when included (Standard)
 └─ REopt composite dispatch result (Standard)
@@ -85,85 +175,88 @@ Annual microgrid direct bill reduction
 
 ### Required User Inputs
 
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric time-of-use energy charge > Verified tariff calendar for the modeled interval import energy; the current bill parser has no complete canonical tariff artifact
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric demand charge > Verified billing-demand and ratchet rules applied to interval kW
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid or vehicle-fuel price > Documented current project fuel price for the matching fuel and geography
 - Included component types
+- Component site and operating inputs > PV array configuration when PV is included > DC capacity
+- Component site and operating inputs > PV array configuration when PV is included > Module Type
 - Component site and operating inputs > PV array configuration when PV is included > Array type
+- Component site and operating inputs > PV array configuration when PV is included > System losses
+- Component site and operating inputs > PV array configuration when PV is included > Tilt
+- Component site and operating inputs > PV array configuration when PV is included > Azimuth
 - Component site and operating inputs > Wind configuration when wind is included > Wind Turbine Class or Intended Application
+- Component site and operating inputs > Wind configuration when wind is included > Exact Turbine Model or Power Curve
+- Component site and operating inputs > Wind configuration when wind is included > Hub Height
+- Component site and operating inputs > Wind configuration when wind is included > Loss factor
+- Component site and operating inputs > Wind configuration when wind is included > Analysis Year
 - Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Prime mover
 - Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Input fuel
+- Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Installed capacity
 - Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Annual operating profile
+- Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Coincident useful thermal-load constraint when heat recovery is included
+- Component site and operating inputs > Storage configuration when storage is included > Power capacity
+- Component site and operating inputs > Storage configuration when storage is included > Usable-energy capacity
+- Component site and operating inputs > Storage configuration when storage is included > Charge efficiency
+- Component site and operating inputs > Storage configuration when storage is included > Discharge efficiency
+- Component site and operating inputs > Storage configuration when storage is included > Initial state of charge
+- Component site and operating inputs > Storage configuration when storage is included > Terminal state-of-charge constraint
+- Component site and operating inputs > Storage configuration when storage is included > Reserve constraint
 
 ### Optional Known Details
 
-- Component site and operating inputs > PV array configuration when PV is included > DC capacity, if known
-- Component site and operating inputs > PV array configuration when PV is included > Module Type, if known
-- Component site and operating inputs > PV array configuration when PV is included > System losses, if known
-- Component site and operating inputs > PV array configuration when PV is included > Tilt, if known
-- Component site and operating inputs > PV array configuration when PV is included > Azimuth, if known
-- Component site and operating inputs > Wind configuration when wind is included > Exact Turbine Model or Power Curve, if known
-- Component site and operating inputs > Wind configuration when wind is included > Hub Height, if known
-- Component site and operating inputs > Wind configuration when wind is included > Loss factor, if known
-- Component site and operating inputs > Wind configuration when wind is included > Analysis Year, if known
 - Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Selected Unit Model, if known
-- Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Installed capacity, if known
-- Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Coincident useful thermal-load constraint when heat recovery is included, if known
-- Component site and operating inputs > Storage configuration when storage is included > Power capacity, if known
-- Component site and operating inputs > Storage configuration when storage is included > Usable-energy capacity, if known
-- Component site and operating inputs > Storage configuration when storage is included > Charge efficiency, if known
-- Component site and operating inputs > Storage configuration when storage is included > Discharge efficiency, if known
-- Component site and operating inputs > Storage configuration when storage is included > Initial state of charge, if known
-- Component site and operating inputs > Storage configuration when storage is included > Terminal state-of-charge constraint, if known
-- Component site and operating inputs > Storage configuration when storage is included > Reserve constraint, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
-- Linked Opportunity
 - Component site and operating inputs > site.geo.coordinates when PV or wind is included
 
 ### Bill Inputs
 
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > rate_schedule and customer_class, verified rather than provider-inferred
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > time_of_use_periods and seasonal calendar from a verified tariff artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric demand charge > utilityExtractedValues demand_charge_rate, when parsed
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas volumetric charge > utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms
 
 ### Standard-Derived Assumptions
 
 #### STD-PVWATTS-V8
 
 - **Value produced:** Hourly or monthly AC kWh, annual AC kWh, capacity factor, weather-file identifier, and warnings.
-- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Low/base/high behavior:** Run PVWatts for each low, base, and high configuration, with losses and geometry visible in every case.
-- **Exact versus estimated:** Return configured PVWatts output for a supplied design; otherwise return a documented low/base/high array configuration derived from usable area and project scope.
-- **Uncertainty:** Moderate for screening and high when shading, usable area, or orientation is unresolved.
+- **Resolution scenario:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Run PVWatts only for explicit project-supplied low, base, and high configurations, with losses and geometry visible in every case.
+- **Exact versus estimated:** Return configured PVWatts output only for a complete supplied array design and site; otherwise return no estimate.
+- **Uncertainty:** Moderate for screening with a complete design and no estimate when capacity, losses, geometry, or location is unresolved.
 - **Source:** National Laboratory of the Rockies, [PVWatts V8 API documentation](https://developer.nlr.gov/docs/solar/pvwatts/v8/) and [System Advisor Model repository](https://github.com/NatLabRockies/SAM). PVWatts documents the required inputs and outputs. SAM supplies the local PVWatts compute module.
 - **Source version:** PVWatts V8 module version, SAM or SSC version, and weather-file identifier and checksum.
-- **Selected class or candidate set:** Use project scope, usable site area, array mounting class, and opportunity constraints without selecting a fictitious exact product.
-- **Assumptions:** Typical weather and visible configuration assumptions are representative; detailed shading and design losses are not known.
+- **Selected class or candidate set:** Use only the supplied project array configuration and any explicit Linked Opportunity constraints.
+- **Assumptions:** Typical weather is representative; detailed shading remains outside PVWatts unless reflected in the supplied loss input.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 #### STD-WIND-SAM
 
 - **Value produced:** Hourly and annual AC kWh, capacity factor, resource dataset version, and warnings.
-- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Low/base/high behavior:** Simulate each approved compatible curve and report the minimum, median, and maximum annual output after identical resource and loss treatment.
-- **Exact versus estimated:** Return exact-curve simulation output when a compatible turbine curve is supplied; otherwise return no estimate unless an approved application-class curve set exists.
+- **Resolution scenario:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Simulate only explicit project-supplied low, base, and high curve or loss cases after identical resource treatment.
+- **Exact versus estimated:** Return exact-curve simulation output only when the compatible turbine curve, hub height, losses, analysis year, and site are supplied; otherwise return no estimate.
 - **Uncertainty:** High without onsite resource validation and moderate only with a confirmed curve and representative resource point.
 - **Source:** National Laboratory of the Rockies, [WIND Toolkit](https://www.nlr.gov/grid/wind-toolkit), [WIND Toolkit download API](https://developer.nlr.gov/docs/wind/wind-toolkit/wtk-download/), and [System Advisor Model repository](https://github.com/NatLabRockies/SAM). The Toolkit supplies location and height resource data. SAM supplies the turbine power-curve simulation.
 - **Source version:** WIND Toolkit dataset version, resource point and height, SAM version, and turbine-curve identifier.
-- **Selected class or candidate set:** Use only compatible source-documented turbine curves and opportunity restrictions; never predict an exact turbine model.
+- **Selected class or candidate set:** Use only the supplied compatible source-documented turbine curve and explicit opportunity restrictions.
 - **Assumptions:** The gridded wind resource represents the microsite within the stated uncertainty.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 #### STD-EPA-CHP-PERFORMANCE
 
 - **Value produced:** Annual electricity generation, annual input fuel, useful recovered heat, displaced boiler fuel, and source table or workbook version.
-- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
+- **Resolution scenario:** exact-input; source-table-technology-and-capacity-class; linked-opportunity-constrained-input; insufficient-data.
 - **Low/base/high behavior:** Use the documented range bounds and representative midpoint for the matched technology and capacity bin; exact specifications use one value in all positions.
-- **Exact versus estimated:** Return exact documented performance for a selected compatible unit; otherwise return a technology-and-capacity-bin distribution without claiming an exact model.
+- **Exact versus estimated:** Calculate from exact project inputs or use only a documented EPA technology and capacity row as a proposed screening class; return no estimate when capacity, fuel, or heat coincidence is unresolved.
 - **Uncertainty:** Low for exact specifications, moderate for a matched catalog bin, and high for generic biomass or biogas screening.
 - **Source:** U.S. Environmental Protection Agency, [CHP technologies and current catalog links](https://www.epa.gov/chp/chp-technologies), [CHP efficiency method and resources](https://www.epa.gov/chp/chp-resources), and [current CHP calculator download](https://www.epa.gov/chp/download-chp-energy-and-emissions-savings-calculator). The technology page supplies prime-mover and fuel-cell performance characteristics. The methodology supplies the separate heat-and-power energy balance. The calculator provides a reviewable workbook implementation.
 - **Source version:** EPA catalog or workbook publication date, table or worksheet identifier, and local table version.
@@ -174,21 +267,21 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 #### STD-REOPT-LOCAL-DISPATCH
 
 - **Value produced:** Baseline and proposed annual bill components, interval dispatch, imported and exported energy, monthly peaks, and solver status.
-- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Low/base/high behavior:** Run declared low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
+- **Resolution scenario:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Run only explicit project-supplied low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
 - **Exact versus estimated:** Return baseline and proposed bill components only for an optimal deterministic run with complete chronological load and tariff inputs.
-- **Uncertainty:** Moderate with complete interval and tariff data and high when any allowed category constraint is estimated.
+- **Uncertainty:** Moderate with complete interval, tariff, technology, and operating inputs and no estimate when a required constraint is missing.
 - **Source:** National Laboratory of the Rockies, [REopt API V3 documentation](https://developer.nlr.gov/docs/energy-optimization/reopt/v3/), [REopt.jl input reference](https://natlabrockies.github.io/REopt.jl/dev/reopt/inputs/), and [REopt.jl open-source package](https://github.com/NatLabRockies/REopt.jl). The API documentation defines stable V3 inputs and outputs. REopt.jl is the local optimization engine used by the API.
 - **Source version:** Pinned REopt.jl release, solver version, tariff version, and category-adapter version.
-- **Selected class or candidate set:** Use only the technology and fixed-load adapter declared by the category and any Linked Opportunity constraints.
-- **Assumptions:** The analysis year, tariff calendar, and interval load are aligned and future operations follow the declared case.
+- **Selected class or candidate set:** Use only the supplied technology design, fixed-load adapter, and any explicit Linked Opportunity constraints.
+- **Assumptions:** The analysis year, tariff calendar, interval load, and project-supplied constraints are aligned and future operations follow the declared case.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
 ### ■ STD-PVWATTS-V8 — PVWatts photovoltaic production
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve hourly and annual AC generation for a specified grid-connected PV array.
@@ -204,28 +297,28 @@ SAM supplies the local PVWatts compute module.
     - **Profile:** Annual microgrid direct bill reduction > Component site and operating inputs > site.geo.coordinates when PV or wind is included
 - `pv_array_configuration` - **Required:** DC capacity, module type, array type, losses, tilt, and azimuth.
   - **Resolved by:**
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > PV array configuration when PV is included > DC capacity, if known
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > PV array configuration when PV is included > Module Type, if known
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > PV array configuration when PV is included > DC capacity
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > PV array configuration when PV is included > Module Type
     - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > PV array configuration when PV is included > Array type
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > PV array configuration when PV is included > System losses, if known
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > PV array configuration when PV is included > Tilt, if known
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > PV array configuration when PV is included > Azimuth, if known
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > PV array configuration when PV is included > System losses
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > PV array configuration when PV is included > Tilt
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > PV array configuration when PV is included > Azimuth
 
 **Value Needed:**
 Hourly or monthly AC kWh, annual AC kWh, capacity factor, weather-file identifier, and warnings.
 
 **Resolution Contract:**
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Scenario Output Behavior:** Return configured PVWatts output for a supplied design; otherwise return a documented low/base/high array configuration derived from usable area and project scope.
-- **Low/Base/High Rule:** Run PVWatts for each low, base, and high configuration, with losses and geometry visible in every case.
-- **Uncertainty Rule:** Moderate for screening and high when shading, usable area, or orientation is unresolved.
+- **Supported Scenarios:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return configured PVWatts output only for a complete supplied array design and site; otherwise return no estimate.
+- **Low/Base/High Rule:** Run PVWatts only for explicit project-supplied low, base, and high configurations, with losses and geometry visible in every case.
+- **Uncertainty Rule:** Moderate for screening with a complete design and no estimate when capacity, losses, geometry, or location is unresolved.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** PVWatts V8 module version, SAM or SSC version, and weather-file identifier and checksum.
-- **Selected Class or Candidate Set:** Use project scope, usable site area, array mounting class, and opportunity constraints without selecting a fictitious exact product.
-- **Assumptions:** Typical weather and visible configuration assumptions are representative; detailed shading and design losses are not known.
+- **Selected Class or Candidate Set:** Use only the supplied project array configuration and any explicit Linked Opportunity constraints.
+- **Assumptions:** Typical weather is representative; detailed shading remains outside PVWatts unless reflected in the supplied loss input.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **No-Estimate Rule:** Return no estimate when usable array scope or location cannot be resolved.
+- **No-Estimate Rule:** Return no estimate when any required PVWatts configuration or location input is missing.
 
 **How to Use:**
 Execute the pinned PVWatts V8 compute module locally, using coordinates from the profile and customer-confirmed array configuration.
@@ -244,7 +337,7 @@ For annual energy-only value, cap same-period onsite consumption offset at impor
 
 ### ■ STD-WIND-SAM — Wind Toolkit and SAM small-wind production
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve annual generation for a specified small wind turbine at a specified hub height.
@@ -261,28 +354,28 @@ SAM supplies the turbine power-curve simulation.
 - `wind_system_configuration` - **Required:** Hub height, exact turbine model or power curve, and losses.
   - **Resolved by:**
     - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Wind configuration when wind is included > Wind Turbine Class or Intended Application
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Wind configuration when wind is included > Exact Turbine Model or Power Curve, if known
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Wind configuration when wind is included > Hub Height, if known
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Wind configuration when wind is included > Loss factor, if known
-- `analysis_year` - **Optional:** Analysis year used to select the wind-resource series.
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Wind configuration when wind is included > Exact Turbine Model or Power Curve
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Wind configuration when wind is included > Hub Height
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Wind configuration when wind is included > Loss factor
+- `analysis_year` - **Required:** Analysis year used to select the wind-resource series.
   - **Resolved by:**
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Wind configuration when wind is included > Analysis Year, if known
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Wind configuration when wind is included > Analysis Year
 
 **Value Needed:**
 Hourly and annual AC kWh, capacity factor, resource dataset version, and warnings.
 
 **Resolution Contract:**
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Scenario Output Behavior:** Return exact-curve simulation output when a compatible turbine curve is supplied; otherwise return no estimate unless an approved application-class curve set exists.
-- **Low/Base/High Rule:** Simulate each approved compatible curve and report the minimum, median, and maximum annual output after identical resource and loss treatment.
+- **Supported Scenarios:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return exact-curve simulation output only when the compatible turbine curve, hub height, losses, analysis year, and site are supplied; otherwise return no estimate.
+- **Low/Base/High Rule:** Simulate only explicit project-supplied low, base, and high curve or loss cases after identical resource treatment.
 - **Uncertainty Rule:** High without onsite resource validation and moderate only with a confirmed curve and representative resource point.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** WIND Toolkit dataset version, resource point and height, SAM version, and turbine-curve identifier.
-- **Selected Class or Candidate Set:** Use only compatible source-documented turbine curves and opportunity restrictions; never predict an exact turbine model.
+- **Selected Class or Candidate Set:** Use only the supplied compatible source-documented turbine curve and explicit opportunity restrictions.
 - **Assumptions:** The gridded wind resource represents the microsite within the stated uncertainty.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **No-Estimate Rule:** Return no estimate without a valid height and compatible documented power curve or approved curve set.
+- **No-Estimate Rule:** Return no estimate without a supplied valid height, compatible documented power curve, loss factor, and analysis year.
 
 **How to Use:**
 Ingest the needed WIND Toolkit points and heights at build time or on a controlled analyst job, cache the weather series, and run the pinned SAM wind module locally against the exact turbine curve.
@@ -301,7 +394,7 @@ Use hourly output for tariff coincidence and cap onsite offset at imported load 
 
 ### ■ STD-EPA-CHP-PERFORMANCE — EPA CHP and fuel-cell performance
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve electric efficiency, useful-heat ratio, and representative operating limits for onsite fuel generation.
@@ -322,24 +415,24 @@ The calculator provides a reviewable workbook implementation.
     - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Selected Unit Model, if known
 - `generation_capacity` - **Optional:** Exact total installed capacity when known; otherwise use only a defensible source-supported service or capacity class.
   - **Resolved by:**
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Installed capacity, if known
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Installed capacity
 - `operating_profile` - **Conditional:** Recognizable operating pattern or exact capacity factor used when the category formula requires annual operation. Applies only in the documented scenario.
   - **Resolved by:**
     - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Annual operating profile
 - `thermal_load_coincidence` - **Conditional:** Coincident useful thermal-load limit when recovered heat is modeled. Applies only in the documented scenario.
   - **Resolved by:**
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Coincident useful thermal-load constraint when heat recovery is included, if known
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Coincident useful thermal-load constraint when heat recovery is included
 - `linked_opportunity` - **Conditional:** Product, technology, fuel, capacity, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
   - **Resolved by:**
-    - **Profile:** Annual microgrid direct bill reduction > Linked Opportunity
+    - **Derived:** Annual microgrid direct bill reduction > Linked Opportunity
 
 **Value Needed:**
 Annual electricity generation, annual input fuel, useful recovered heat, displaced boiler fuel, and source table or workbook version.
 
 **Resolution Contract:**
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return exact documented performance for a selected compatible unit; otherwise return a technology-and-capacity-bin distribution without claiming an exact model.
+- **Supported Scenarios:** exact-input; source-table-technology-and-capacity-class; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Calculate from exact project inputs or use only a documented EPA technology and capacity row as a proposed screening class; return no estimate when capacity, fuel, or heat coincidence is unresolved.
 - **Low/Base/High Rule:** Use the documented range bounds and representative midpoint for the matched technology and capacity bin; exact specifications use one value in all positions.
 - **Uncertainty Rule:** Low for exact specifications, moderate for a matched catalog bin, and high for generic biomass or biogas screening.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
@@ -354,13 +447,9 @@ Extract only energy-performance values from the current catalog section or exact
 Calculate input fuel from electric output and electric efficiency, cap useful recovered heat at the coincident thermal load, and convert that heat to displaced boiler fuel with the existing boiler efficiency.
 For biomass or biogas, require confirmed annual available fuel quantity and heating value and never infer it from organization type.
 Exclude emissions and all cost assumptions in EPA tools.
-For an exact existing unit, use its documented performance and assign low uncertainty.
-When only prime-mover type or application is known, use the compatible technology and capacity-bin distribution.
-Use Profile or Bill context only when it establishes a source-supported service and capacity class, and otherwise return no estimate.
-When a Linked Opportunity names exact products, restrict the candidate set to those products.
-When it specifies a technology class or minimum performance, filter the EPA-compatible candidates to those requirements.
-When no product restriction or no Linked Opportunity exists, build a compatible technology-and-capacity candidate set without claiming an exact model.
-An exact proposed unit overrides the class distribution after fuel, service, capacity, and heat-recovery compatibility validation.
+An exact existing or proposed unit requires project documentation because the EPA catalog is a representative technology table, not a model catalog.
+Profile and Bill context do not supply generation capacity, operating profile, or thermal coincidence.
+A Linked Opportunity may constrain a documented technology class only when the EPA row and all calculation inputs remain compatible.
 
 **Automation:**
 - **Selected Strategy:** Versioned local performance table plus a transparent energy-balance function.
@@ -374,7 +463,7 @@ An exact proposed unit overrides the class distribution after fuel, service, cap
 
 ### ■ STD-REOPT-LOCAL-DISPATCH — REopt interval dispatch and bill optimization
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve direct bill change from storage, demand flexibility, managed charging, and composite distributed-energy dispatch.
@@ -387,40 +476,37 @@ REopt.jl is the local optimization engine used by the API.
 **Lookup Inputs:**
 - `chronological_load_and_tariff` - **Required:** Chronological site load, complete tariff, timezone, and analysis-year calendar.
   - **Resolved by:**
-    - **Bill:** Annual microgrid direct bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field
-    - **Bill:** Annual microgrid direct bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
-    - **Bill:** Annual microgrid direct bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > rate_schedule and customer_class, verified rather than provider-inferred
-    - **Bill:** Annual microgrid direct bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact
-    - **Bill:** Annual microgrid direct bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > time_of_use_periods and seasonal calendar from a verified tariff artifact
-    - **Bill:** Annual microgrid direct bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
+    - **User:** Annual microgrid direct bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field
+    - **User:** Annual microgrid direct bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
+    - **Bill:** Annual microgrid direct bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred
 - `reopt_category_constraints` - **Required:** Applicable technology power, energy, efficiency, state, availability, event, or fixed-load-template constraints shown as atomic leaves in the category tree.
   - **Resolved by:**
     - **User:** Annual microgrid direct bill reduction > Included component types
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > PV array configuration when PV is included > DC capacity, if known
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > PV array configuration when PV is included > DC capacity
     - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Wind configuration when wind is included > Wind Turbine Class or Intended Application
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Wind configuration when wind is included > Exact Turbine Model or Power Curve, if known
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Wind configuration when wind is included > Exact Turbine Model or Power Curve
     - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Fuel-cell or CHP configuration when fuel generation is included > Prime mover
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Power capacity, if known
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Usable-energy capacity, if known
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Charge efficiency, if known
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Discharge efficiency, if known
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Initial state of charge, if known
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Terminal state-of-charge constraint, if known
-    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Reserve constraint, if known
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Power capacity
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Usable-energy capacity
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Charge efficiency
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Discharge efficiency
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Initial state of charge
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Terminal state-of-charge constraint
+    - **User:** Annual microgrid direct bill reduction > Component site and operating inputs > Storage configuration when storage is included > Reserve constraint
 
 **Value Needed:**
 Baseline and proposed annual bill components, interval dispatch, imported and exported energy, monthly peaks, and solver status.
 
 **Resolution Contract:**
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Supported Scenarios:** exact-input; linked-opportunity-constrained-input; insufficient-data.
 - **Scenario Output Behavior:** Return baseline and proposed bill components only for an optimal deterministic run with complete chronological load and tariff inputs.
-- **Low/Base/High Rule:** Run declared low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
-- **Uncertainty Rule:** Moderate with complete interval and tariff data and high when any allowed category constraint is estimated.
+- **Low/Base/High Rule:** Run only explicit project-supplied low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
+- **Uncertainty Rule:** Moderate with complete interval, tariff, technology, and operating inputs and no estimate when a required constraint is missing.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Pinned REopt.jl release, solver version, tariff version, and category-adapter version.
-- **Selected Class or Candidate Set:** Use only the technology and fixed-load adapter declared by the category and any Linked Opportunity constraints.
-- **Assumptions:** The analysis year, tariff calendar, and interval load are aligned and future operations follow the declared case.
+- **Selected Class or Candidate Set:** Use only the supplied technology design, fixed-load adapter, and any explicit Linked Opportunity constraints.
+- **Assumptions:** The analysis year, tariff calendar, interval load, and project-supplied constraints are aligned and future operations follow the declared case.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate without continuous interval data, a verified complete tariff, required constraints, or optimal solver status.
 

@@ -10,10 +10,10 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-WIND-SAM`
-- **Required User-input count:** 1
-- **Optional Known-Detail count:** 4
+- **Required User-input count:** 10
+- **Optional Known-Detail count:** 0
 - **Profile-input count:** 1
-- **Bill-input count:** 6
+- **Bill-input count:** 3
 - **Standard-assumption count:** 1
 - **Applicable resources:** electricity
 - **Default estimate:** UNAVAILABLE
@@ -31,7 +31,63 @@
 
 ## Supporting Formula(s)
 
-`onsite_offset_t = min(wind_kWh_t, baseline_import_kWh_t)`
+`onsite_offset_kWh_t = min(wind_kWh_t, baseline_import_kWh_t)`
+
+`export_kWh_t = max(wind_kWh_t - baseline_import_kWh_t, 0)`
+
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| wind_kWh_t | kWh/interval | STD-WIND-SAM | evidence:E-WIND-SAM | None | E-WIND-SAM: UNVERIFIED | SAM wind compute module and Wind Toolkit resource - Exact module variables and resource-field contract are not pinned | NO_ESTIMATE |
+| baseline_import_kWh_t | kWh/interval | Uploaded interval load and formulas | User Green Button interval artifact | None | E-REOPT-DISPATCH: UNVERIFIED | Versioned REopt input schema, solver, and result schema - Exact version, fields, and golden result are not pinned | NO_ESTIMATE |
+| onsite_offset_kWh_t | kWh/interval | Uploaded interval load and formulas | User Green Button interval artifact | None | E-REOPT-DISPATCH: UNVERIFIED | Versioned REopt input schema, solver, and result schema - Exact version, fields, and golden result are not pinned | NO_ESTIMATE |
+| export_kWh_t | kWh/interval | Uploaded interval load and formulas | User Green Button interval artifact | None | E-REOPT-DISPATCH: UNVERIFIED | Versioned REopt input schema, solver, and result schema - Exact version, fields, and golden result are not pinned | NO_ESTIMATE |
+| import_rate_t | USD/kWh by interval | Verified tariff artifact | electric-time-of-use: User-supplied verified tariff artifact<br>electric-export: User-supplied verified export-credit rule<br>electric-export-non-bypassable: User-supplied verified non-bypassable tariff rule | None | Direct input or formula | Chronological load and tariff | RETURN_GENERATION_WITHOUT_DOLLAR_VALUE |
+| export_credit_t | USD/kWh by interval | Verified tariff artifact | electric-time-of-use: User-supplied verified tariff artifact<br>electric-export: User-supplied verified export-credit rule<br>electric-export-non-bypassable: User-supplied verified non-bypassable tariff rule | None | Direct input or formula | Chronological load and tariff | RETURN_GENERATION_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+### STD-WIND-SAM
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | None |
+| physics or calculation method | E-WIND-SAM (UNVERIFIED, proposed-system-method) |
+| tariff or bill | None |
+| geographic or climate | E-WIND-SAM (UNVERIFIED, proposed-system-method) |
+
+**Unsupported roles or uses:** turbine_capacity_default, power_curve_default, hub_height_default, tariff_or_bill
+
+**Manual verdict:** The simulator requires an explicit turbine, power curve, hub height, losses, and resource selection. Those values cannot be supplied by the simulator itself.
+
+### STD-REOPT-LOCAL-DISPATCH
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | None |
+| physics or calculation method | E-REOPT-DISPATCH (UNVERIFIED, baseline-and-proposed-method) |
+| tariff or bill | E-REOPT-DISPATCH (UNVERIFIED, baseline-and-proposed-method) |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** load_profile_default, tariff_default, technology_design_default
+
+**Manual verdict:** REopt can calculate dispatch only after a complete chronological load, tariff, technology, and operating constraint set is provided.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** turbine and power curve; hub height and losses; wind resource; complete interval load and tariff.
+- **Exact scenario:** insufficient-data.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Explicit design sensitivities only.
+- **Final result path:** wind interval generation -> onsite/export split -> tariff bill result
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** Pinned wind module, design inputs, source fixture, and bill fixture.
 
 ## Fully Expanded Information Tree
 
@@ -39,18 +95,26 @@
 Annual wind bill reduction
 ├─ site.geo.coordinates, verified rather than address-only (Profile)
 ├─ Wind Turbine Class or Intended Application (User)
-├─ Exact Turbine Model or Power Curve, if known (User)
-├─ Hub Height, if known (User)
-├─ Loss factor, if known (User)
-├─ Analysis Year, if known (User)
+├─ Exact Turbine Model or Power Curve (User)
+├─ Hub Height (User)
+├─ Loss factor (User)
+├─ Analysis Year (User)
 ├─ WIND Toolkit resource and SAM generation (Standard)
+├─ Interval onsite-offset and export calculation
 └─ Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF]
-   ├─ Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field (Bill)
-   ├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact (Bill)
-   ├─ rate_schedule and customer_class, verified rather than provider-inferred (Bill)
-   ├─ demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact (Bill)
-   ├─ time_of_use_periods and seasonal calendar from a verified tariff artifact (Bill)
-   └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
+   ├─ Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field (User)
+   ├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact (User)
+   ├─ utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred (Bill)
+   └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
+      ├─ Electric volumetric charge
+      │  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+      │  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+      ├─ Electric time-of-use energy charge
+      │  └─ Verified tariff calendar for the modeled interval import energy; the current bill parser has no complete canonical tariff artifact (User)
+      ├─ Electric export credit
+      │  └─ Verified export-credit rule applied to interval exports; no current canonical bill field (User)
+      └─ Electric non-bypassable export treatment
+         └─ Verified non-bypassable tariff rule applied to interval exports; no current canonical bill field (User)
 ```
 
 ## Input Workflow
@@ -58,15 +122,21 @@ Annual wind bill reduction
 ### Required User Inputs
 
 - Wind Turbine Class or Intended Application
+- Exact Turbine Model or Power Curve
+- Hub Height
+- Loss factor
+- Analysis Year
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric time-of-use energy charge > Verified tariff calendar for the modeled interval import energy; the current bill parser has no complete canonical tariff artifact
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric export credit > Verified export-credit rule applied to interval exports; no current canonical bill field
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric non-bypassable export treatment > Verified non-bypassable tariff rule applied to interval exports; no current canonical bill field
 
 ### Optional Known Details
 
-- Exact Turbine Model or Power Curve, if known
-- Hub Height, if known
-- Loss factor, if known
-- Analysis Year, if known
+- None.
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+No optional exact-value override applies to this category.
 
 ### Profile Inputs
 
@@ -74,25 +144,22 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### Bill Inputs
 
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > rate_schedule and customer_class, verified rather than provider-inferred
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > time_of_use_periods and seasonal calendar from a verified tariff artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
 
 ### Standard-Derived Assumptions
 
 #### STD-WIND-SAM
 
 - **Value produced:** Hourly and annual AC kWh, capacity factor, resource dataset version, and warnings.
-- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Low/base/high behavior:** Simulate each approved compatible curve and report the minimum, median, and maximum annual output after identical resource and loss treatment.
-- **Exact versus estimated:** Return exact-curve simulation output when a compatible turbine curve is supplied; otherwise return no estimate unless an approved application-class curve set exists.
+- **Resolution scenario:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Simulate only explicit project-supplied low, base, and high curve or loss cases after identical resource treatment.
+- **Exact versus estimated:** Return exact-curve simulation output only when the compatible turbine curve, hub height, losses, analysis year, and site are supplied; otherwise return no estimate.
 - **Uncertainty:** High without onsite resource validation and moderate only with a confirmed curve and representative resource point.
 - **Source:** National Laboratory of the Rockies, [WIND Toolkit](https://www.nlr.gov/grid/wind-toolkit), [WIND Toolkit download API](https://developer.nlr.gov/docs/wind/wind-toolkit/wtk-download/), and [System Advisor Model repository](https://github.com/NatLabRockies/SAM). The Toolkit supplies location and height resource data. SAM supplies the turbine power-curve simulation.
 - **Source version:** WIND Toolkit dataset version, resource point and height, SAM version, and turbine-curve identifier.
-- **Selected class or candidate set:** Use only compatible source-documented turbine curves and opportunity restrictions; never predict an exact turbine model.
+- **Selected class or candidate set:** Use only the supplied compatible source-documented turbine curve and explicit opportunity restrictions.
 - **Assumptions:** The gridded wind resource represents the microsite within the stated uncertainty.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
@@ -100,7 +167,7 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### ■ STD-WIND-SAM — Wind Toolkit and SAM small-wind production
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve annual generation for a specified small wind turbine at a specified hub height.
@@ -117,28 +184,28 @@ SAM supplies the turbine power-curve simulation.
 - `wind_system_configuration` - **Required:** Hub height, exact turbine model or power curve, and losses.
   - **Resolved by:**
     - **User:** Annual wind bill reduction > Wind Turbine Class or Intended Application
-    - **User:** Annual wind bill reduction > Exact Turbine Model or Power Curve, if known
-    - **User:** Annual wind bill reduction > Hub Height, if known
-    - **User:** Annual wind bill reduction > Loss factor, if known
-- `analysis_year` - **Optional:** Analysis year used to select the wind-resource series.
+    - **User:** Annual wind bill reduction > Exact Turbine Model or Power Curve
+    - **User:** Annual wind bill reduction > Hub Height
+    - **User:** Annual wind bill reduction > Loss factor
+- `analysis_year` - **Required:** Analysis year used to select the wind-resource series.
   - **Resolved by:**
-    - **User:** Annual wind bill reduction > Analysis Year, if known
+    - **User:** Annual wind bill reduction > Analysis Year
 
 **Value Needed:**
 Hourly and annual AC kWh, capacity factor, resource dataset version, and warnings.
 
 **Resolution Contract:**
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Scenario Output Behavior:** Return exact-curve simulation output when a compatible turbine curve is supplied; otherwise return no estimate unless an approved application-class curve set exists.
-- **Low/Base/High Rule:** Simulate each approved compatible curve and report the minimum, median, and maximum annual output after identical resource and loss treatment.
+- **Supported Scenarios:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return exact-curve simulation output only when the compatible turbine curve, hub height, losses, analysis year, and site are supplied; otherwise return no estimate.
+- **Low/Base/High Rule:** Simulate only explicit project-supplied low, base, and high curve or loss cases after identical resource treatment.
 - **Uncertainty Rule:** High without onsite resource validation and moderate only with a confirmed curve and representative resource point.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** WIND Toolkit dataset version, resource point and height, SAM version, and turbine-curve identifier.
-- **Selected Class or Candidate Set:** Use only compatible source-documented turbine curves and opportunity restrictions; never predict an exact turbine model.
+- **Selected Class or Candidate Set:** Use only the supplied compatible source-documented turbine curve and explicit opportunity restrictions.
 - **Assumptions:** The gridded wind resource represents the microsite within the stated uncertainty.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **No-Estimate Rule:** Return no estimate without a valid height and compatible documented power curve or approved curve set.
+- **No-Estimate Rule:** Return no estimate without a supplied valid height, compatible documented power curve, loss factor, and analysis year.
 
 **How to Use:**
 Ingest the needed WIND Toolkit points and heights at build time or on a controlled analyst job, cache the weather series, and run the pinned SAM wind module locally against the exact turbine curve.

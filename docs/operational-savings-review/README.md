@@ -12,86 +12,82 @@ The canonical definitions remain in the category, Shared Branch, and Standard re
 
 - Categories: 54.
 - Retrofit mappings: 92.
-- Ready for human review: 7.
-- Draft: 42.
+- Ready for human review: 1.
+- Draft: 48.
 - Blocked: 5.
 - Shared branches expanded: 6.
 - Standards embedded: 16.
-- Required User inputs: 156.
-- Optional Known Details: 253.
-- Maximum Required User inputs in one category: 8.
+- Required User inputs: 366.
+- Optional Known Details: 97.
+- Maximum Required User inputs in one category: 29.
 
 ## All Categories
 
 | Category | Status | Required User | Optional Detail | Profile | Bill | Standard assumptions | Standards | Automation | Issues | Review |
 |---|---|---:|---:|---:|---:|---:|---|---|---:|---|
-| [`ITC-01`](./categories/ITC-01.md) ComStock archetype annual resource delta | RESEARCHED — READY FOR HUMAN REVIEW | 2 | 0 | 4 | 10 | 1 | STD-COMSTOCK-ANNUAL-DELTA | Ready for implementation | 1 | [Full review](./categories/ITC-01.md) |
-| [`ITC-02`](./categories/ITC-02.md) Exterior lighting power and schedule | RESEARCHED — READY FOR HUMAN REVIEW | 3 | 3 | 4 | 4 | 4 | STD-FEMP-EXTERIOR-LIGHTING<br>STD-OPERATING-SCHEDULE | Ready for implementation | 1 | [Full review](./categories/ITC-02.md) |
-| [`ITC-03`](./categories/ITC-03.md) Fuel-fired equipment efficiency replacement | DRAFT | 2 | 5 | 1 | 5 | 1 | STD-DOE-CCMS-RATINGS | Draft adapter or decision required | 1 | [Full review](./categories/ITC-03.md) |
-| [`ITC-04`](./categories/ITC-04.md) Boiler control fractional fuel reduction | DRAFT | 2 | 1 | 0 | 5 | 1 | STD-DOE-MEASUR | Draft adapter or decision required | 1 | [Full review](./categories/ITC-04.md) |
-| [`ITC-05`](./categories/ITC-05.md) Duct loss reduction | DRAFT | 3 | 1 | 3 | 10 | 1 | STD-SCOUT-ECM-SCREEN | Draft adapter or decision required | 1 | [Full review](./categories/ITC-05.md) |
-| [`ITC-06`](./categories/ITC-06.md) Heat-pump water-heater resource switching | DRAFT | 2 | 5 | 1 | 10 | 1 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-06.md) |
-| [`ITC-07`](./categories/ITC-07.md) Gas water-heater efficiency replacement | DRAFT | 2 | 5 | 1 | 5 | 1 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-07.md) |
-| [`ITC-08`](./categories/ITC-08.md) Solar thermal backup-resource displacement | DRAFT | 2 | 6 | 1 | 7 | 1 | STD-SAM-SOLAR-THERMAL | Draft adapter or decision required | 1 | [Full review](./categories/ITC-08.md) |
-| [`ITC-09`](./categories/ITC-09.md) Water-heating recirculation loss reduction | DRAFT | 3 | 4 | 1 | 10 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-09.md) |
-| [`ITC-10`](./categories/ITC-10.md) Refrigeration certified-rating replacement | DRAFT | 3 | 4 | 1 | 4 | 2 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-10.md) |
-| [`ITC-11`](./categories/ITC-11.md) Refrigeration control fractional reduction | DRAFT | 3 | 1 | 3 | 7 | 1 | STD-SCOUT-ECM-SCREEN | Draft adapter or decision required | 1 | [Full review](./categories/ITC-11.md) |
-| [`ITC-12`](./categories/ITC-12.md) Refrigeration EC-motor power reduction | DRAFT | 2 | 4 | 1 | 4 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-12.md) |
-| [`ITC-13`](./categories/ITC-13.md) Ice-machine production resource intensity | DRAFT | 3 | 5 | 1 | 5 | 2 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-13.md) |
-| [`ITC-14`](./categories/ITC-14.md) Scout ECM fractional resource screen | BLOCKED | 3 | 0 | 3 | 10 | 1 | STD-SCOUT-ECM-SCREEN | Blocked | 1 | [Full review](./categories/ITC-14.md) |
-| [`ITC-15`](./categories/ITC-15.md) No direct operational-resource calculation | RESEARCHED — READY FOR HUMAN REVIEW | 0 | 0 | 1 | 0 | 0 | None | Not applicable | 1 | [Full review](./categories/ITC-15.md) |
-| [`ITC-16`](./categories/ITC-16.md) Demand-response interval bill delta | DRAFT | 2 | 3 | 0 | 6 | 1 | STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-16.md) |
-| [`ITC-17`](./categories/ITC-17.md) PV interval generation and bill offset | DRAFT | 1 | 5 | 1 | 6 | 1 | STD-PVWATTS-V8 | Draft adapter or decision required | 1 | [Full review](./categories/ITC-17.md) |
-| [`ITC-18`](./categories/ITC-18.md) Community-solar contract bill delta | DRAFT | 2 | 0 | 0 | 6 | 0 | None | Draft adapter or decision required | 1 | [Full review](./categories/ITC-18.md) |
-| [`ITC-19`](./categories/ITC-19.md) Wind interval generation and bill offset | DRAFT | 1 | 4 | 1 | 6 | 1 | STD-WIND-SAM | Draft adapter or decision required | 1 | [Full review](./categories/ITC-19.md) |
-| [`ITC-20`](./categories/ITC-20.md) Fuel-cell electricity and fuel balance | DRAFT | 3 | 6 | 2 | 11 | 2 | STD-EPA-CHP-PERFORMANCE<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-20.md) |
-| [`ITC-21`](./categories/ITC-21.md) CHP electric and useful-heat balance | DRAFT | 2 | 6 | 1 | 10 | 1 | STD-EPA-CHP-PERFORMANCE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-21.md) |
-| [`ITC-22`](./categories/ITC-22.md) Biomass or biogas resource balance | DRAFT | 3 | 6 | 1 | 12 | 1 | STD-EPA-CHP-PERFORMANCE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-22.md) |
-| [`ITC-23`](./categories/ITC-23.md) Battery interval dispatch | DRAFT | 1 | 7 | 0 | 6 | 1 | STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-23.md) |
-| [`ITC-24`](./categories/ITC-24.md) Solar-plus-storage interval dispatch | DRAFT | 1 | 12 | 1 | 6 | 2 | STD-PVWATTS-V8<br>STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-24.md) |
-| [`ITC-25`](./categories/ITC-25.md) Thermal-storage interval dispatch | DRAFT | 0 | 9 | 0 | 6 | 1 | STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-25.md) |
-| [`ITC-26`](./categories/ITC-26.md) Microgrid composite interval dispatch | DRAFT | 6 | 19 | 2 | 6 | 3 | STD-PVWATTS-V8<br>STD-WIND-SAM<br>STD-EPA-CHP-PERFORMANCE<br>STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-26.md) |
-| [`ITC-27`](./categories/ITC-27.md) Public EVSE added-load bill impact | DRAFT | 4 | 3 | 1 | 6 | 2 | STD-ENERGY-STAR-PRODUCT-DATA<br>STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-27.md) |
-| [`ITC-28`](./categories/ITC-28.md) Fleet charging added-load bill impact | DRAFT | 8 | 4 | 1 | 6 | 2 | STD-FUELECONOMY-VEHICLES<br>STD-ENERGY-STAR-PRODUCT-DATA<br>STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-28.md) |
-| [`ITC-29`](./categories/ITC-29.md) Light-duty vehicle resource switching | RESEARCHED — READY FOR HUMAN REVIEW | 4 | 2 | 1 | 9 | 1 | STD-FUELECONOMY-VEHICLES | Ready for implementation | 1 | [Full review](./categories/ITC-29.md) |
-| [`ITC-30`](./categories/ITC-30.md) Forklift resource switching | BLOCKED | 2 | 4 | 1 | 5 | 1 | STD-OPERATING-SCHEDULE | Blocked | 1 | [Full review](./categories/ITC-30.md) |
-| [`ITC-31`](./categories/ITC-31.md) Managed fleet-charging interval shift | DRAFT | 4 | 3 | 0 | 6 | 1 | STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-31.md) |
-| [`ITC-32`](./categories/ITC-32.md) Flow-fixture water and hot-water reduction | RESEARCHED — READY FOR HUMAN REVIEW | 4 | 5 | 2 | 7 | 1 | STD-WATERSENSE-FIXTURES | Ready for implementation | 1 | [Full review](./categories/ITC-32.md) |
-| [`ITC-33`](./categories/ITC-33.md) Flush-fixture water reduction | RESEARCHED — READY FOR HUMAN REVIEW | 4 | 2 | 2 | 1 | 1 | STD-WATERSENSE-FIXTURES | Ready for implementation | 1 | [Full review](./categories/ITC-33.md) |
-| [`ITC-34`](./categories/ITC-34.md) Landscape water-budget reduction | RESEARCHED — READY FOR HUMAN REVIEW | 6 | 2 | 1 | 4 | 1 | STD-WATERSENSE-LANDSCAPE | Ready for implementation | 1 | [Full review](./categories/ITC-34.md) |
-| [`ITC-35`](./categories/ITC-35.md) Measured leak avoidance | DRAFT | 2 | 1 | 0 | 1 | 1 | STD-WATERSENSE-CI-OPERATIONS | Draft adapter or decision required | 1 | [Full review](./categories/ITC-35.md) |
-| [`ITC-36`](./categories/ITC-36.md) Cooling-tower water and fan optimization | DRAFT | 2 | 3 | 0 | 9 | 2 | STD-WATERSENSE-CI-OPERATIONS<br>STD-DOE-MEASUR | Draft adapter or decision required | 1 | [Full review](./categories/ITC-36.md) |
-| [`ITC-37`](./categories/ITC-37.md) Demand-controlled kitchen ventilation | DRAFT | 6 | 4 | 2 | 6 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-37.md) |
-| [`ITC-38`](./categories/ITC-38.md) Motor input-power efficiency replacement | DRAFT | 4 | 5 | 1 | 4 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-38.md) |
-| [`ITC-39`](./categories/ITC-39.md) Variable-speed load-bin reduction | DRAFT | 2 | 4 | 0 | 4 | 1 | STD-DOE-MEASUR | Draft adapter or decision required | 1 | [Full review](./categories/ITC-39.md) |
-| [`ITC-40`](./categories/ITC-40.md) Pump wire-to-water replacement | DRAFT | 2 | 8 | 1 | 4 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-40.md) |
-| [`ITC-41`](./categories/ITC-41.md) Fan or ventilation system replacement | DRAFT | 2 | 8 | 1 | 4 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-41.md) |
-| [`ITC-42`](./categories/ITC-42.md) Air-compressor specific-power replacement | DRAFT | 4 | 6 | 1 | 4 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-42.md) |
-| [`ITC-43`](./categories/ITC-43.md) Compressed-air leak loss | DRAFT | 3 | 5 | 1 | 4 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-43.md) |
-| [`ITC-44`](./categories/ITC-44.md) Compressed-air control profile reduction | DRAFT | 4 | 4 | 0 | 4 | 1 | STD-DOE-MEASUR | Draft adapter or decision required | 1 | [Full review](./categories/ITC-44.md) |
-| [`ITC-45`](./categories/ITC-45.md) Waste-heat useful-energy recovery | DRAFT | 1 | 5 | 0 | 10 | 1 | STD-DOE-MEASUR | Draft adapter or decision required | 1 | [Full review](./categories/ITC-45.md) |
-| [`ITC-46`](./categories/ITC-46.md) Industrial process electrification balance | DRAFT | 2 | 5 | 0 | 10 | 1 | STD-DOE-MEASUR | Draft adapter or decision required | 1 | [Full review](./categories/ITC-46.md) |
-| [`ITC-47`](./categories/ITC-47.md) Steam-trap loss reduction | DRAFT | 5 | 4 | 1 | 2 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-47.md) |
-| [`ITC-48`](./categories/ITC-48.md) Induction-cooking measured resource switch | BLOCKED | 2 | 3 | 0 | 10 | 0 | None | Blocked | 1 | [Full review](./categories/ITC-48.md) |
-| [`ITC-49`](./categories/ITC-49.md) Walk-in refrigeration measured system delta | BLOCKED | 4 | 4 | 0 | 7 | 0 | None | Blocked | 1 | [Full review](./categories/ITC-49.md) |
-| [`ITC-50`](./categories/ITC-50.md) Commercial cooking tested-duty and idle balance | DRAFT | 4 | 6 | 1 | 6 | 2 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-50.md) |
-| [`ITC-51`](./categories/ITC-51.md) Air-filtration fan-power delta | DRAFT | 2 | 9 | 1 | 4 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-51.md) |
-| [`ITC-52`](./categories/ITC-52.md) Commercial dishwasher water, heat, and idle balance | DRAFT | 4 | 9 | 1 | 7 | 2 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-52.md) |
-| [`ITC-53`](./categories/ITC-53.md) Commercial laundry cycle resource balance | DRAFT | 5 | 10 | 1 | 7 | 2 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-53.md) |
-| [`ITC-54`](./categories/ITC-54.md) Backup-power routine resource use | BLOCKED | 3 | 4 | 0 | 7 | 0 | None | Blocked | 1 | [Full review](./categories/ITC-54.md) |
+| [`ITC-01`](./categories/ITC-01.md) ComStock archetype annual resource delta | DRAFT | 2 | 0 | 3 | 7 | 1 | STD-COMSTOCK-ANNUAL-DELTA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-01.md) |
+| [`ITC-02`](./categories/ITC-02.md) Exterior lighting power and schedule | DRAFT | 3 | 3 | 3 | 2 | 4 | STD-FEMP-EXTERIOR-LIGHTING<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-02.md) |
+| [`ITC-03`](./categories/ITC-03.md) Fuel-fired equipment efficiency replacement | DRAFT | 2 | 5 | 0 | 4 | 1 | STD-DOE-CCMS-RATINGS | Draft adapter or decision required | 1 | [Full review](./categories/ITC-03.md) |
+| [`ITC-04`](./categories/ITC-04.md) Boiler control fractional fuel reduction | DRAFT | 3 | 0 | 0 | 4 | 1 | STD-DOE-MEASUR | Draft adapter or decision required | 1 | [Full review](./categories/ITC-04.md) |
+| [`ITC-05`](./categories/ITC-05.md) Duct loss reduction | DRAFT | 3 | 1 | 2 | 7 | 1 | STD-SCOUT-ECM-SCREEN | Draft adapter or decision required | 1 | [Full review](./categories/ITC-05.md) |
+| [`ITC-06`](./categories/ITC-06.md) Heat-pump water-heater resource switching | DRAFT | 2 | 5 | 0 | 7 | 1 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-06.md) |
+| [`ITC-07`](./categories/ITC-07.md) Gas water-heater efficiency replacement | DRAFT | 2 | 5 | 0 | 4 | 1 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-07.md) |
+| [`ITC-08`](./categories/ITC-08.md) Solar thermal backup-resource displacement | DRAFT | 9 | 0 | 1 | 3 | 1 | STD-SAM-SOLAR-THERMAL | Draft adapter or decision required | 1 | [Full review](./categories/ITC-08.md) |
+| [`ITC-09`](./categories/ITC-09.md) Water-heating recirculation loss reduction | DRAFT | 7 | 2 | 1 | 3 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-09.md) |
+| [`ITC-10`](./categories/ITC-10.md) Refrigeration certified-rating replacement | DRAFT | 3 | 4 | 0 | 2 | 2 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-10.md) |
+| [`ITC-11`](./categories/ITC-11.md) Refrigeration control fractional reduction | DRAFT | 3 | 1 | 2 | 5 | 1 | STD-SCOUT-ECM-SCREEN | Draft adapter or decision required | 1 | [Full review](./categories/ITC-11.md) |
+| [`ITC-12`](./categories/ITC-12.md) Refrigeration EC-motor power reduction | DRAFT | 4 | 2 | 1 | 2 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-12.md) |
+| [`ITC-13`](./categories/ITC-13.md) Ice-machine production resource intensity | DRAFT | 4 | 4 | 0 | 4 | 2 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-13.md) |
+| [`ITC-14`](./categories/ITC-14.md) Scout ECM fractional resource screen | BLOCKED | 3 | 0 | 2 | 7 | 1 | STD-SCOUT-ECM-SCREEN | Blocked | 1 | [Full review](./categories/ITC-14.md) |
+| [`ITC-15`](./categories/ITC-15.md) No direct operational-resource calculation | RESEARCHED — READY FOR HUMAN REVIEW | 0 | 0 | 0 | 0 | 0 | None | Not applicable | 1 | [Full review](./categories/ITC-15.md) |
+| [`ITC-16`](./categories/ITC-16.md) Demand-response interval bill delta | DRAFT | 9 | 0 | 0 | 4 | 1 | STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-16.md) |
+| [`ITC-17`](./categories/ITC-17.md) PV interval generation and bill offset | DRAFT | 11 | 0 | 1 | 3 | 1 | STD-PVWATTS-V8 | Draft adapter or decision required | 1 | [Full review](./categories/ITC-17.md) |
+| [`ITC-18`](./categories/ITC-18.md) Community-solar contract bill delta | DRAFT | 5 | 0 | 0 | 0 | 0 | None | Draft adapter or decision required | 1 | [Full review](./categories/ITC-18.md) |
+| [`ITC-19`](./categories/ITC-19.md) Wind interval generation and bill offset | DRAFT | 10 | 0 | 1 | 3 | 1 | STD-WIND-SAM | Draft adapter or decision required | 1 | [Full review](./categories/ITC-19.md) |
+| [`ITC-20`](./categories/ITC-20.md) Fuel-cell electricity and fuel balance | DRAFT | 5 | 4 | 1 | 3 | 2 | STD-EPA-CHP-PERFORMANCE<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-20.md) |
+| [`ITC-21`](./categories/ITC-21.md) CHP electric and useful-heat balance | DRAFT | 5 | 3 | 0 | 3 | 1 | STD-EPA-CHP-PERFORMANCE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-21.md) |
+| [`ITC-22`](./categories/ITC-22.md) Biomass or biogas resource balance | DRAFT | 6 | 5 | 0 | 3 | 1 | STD-EPA-CHP-PERFORMANCE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-22.md) |
+| [`ITC-23`](./categories/ITC-23.md) Battery interval dispatch | DRAFT | 12 | 0 | 0 | 4 | 1 | STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-23.md) |
+| [`ITC-24`](./categories/ITC-24.md) Solar-plus-storage interval dispatch | DRAFT | 17 | 0 | 1 | 4 | 2 | STD-PVWATTS-V8<br>STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-24.md) |
+| [`ITC-25`](./categories/ITC-25.md) Thermal-storage interval dispatch | DRAFT | 13 | 0 | 0 | 4 | 1 | STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-25.md) |
+| [`ITC-26`](./categories/ITC-26.md) Microgrid composite interval dispatch | DRAFT | 29 | 1 | 1 | 5 | 3 | STD-PVWATTS-V8<br>STD-WIND-SAM<br>STD-EPA-CHP-PERFORMANCE<br>STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-26.md) |
+| [`ITC-27`](./categories/ITC-27.md) Public EVSE added-load bill impact | DRAFT | 10 | 1 | 0 | 4 | 2 | STD-ENERGY-STAR-PRODUCT-DATA<br>STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-27.md) |
+| [`ITC-28`](./categories/ITC-28.md) Fleet charging added-load bill impact | DRAFT | 14 | 2 | 0 | 4 | 2 | STD-FUELECONOMY-VEHICLES<br>STD-ENERGY-STAR-PRODUCT-DATA<br>STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-28.md) |
+| [`ITC-29`](./categories/ITC-29.md) Light-duty vehicle resource switching | DRAFT | 5 | 2 | 0 | 2 | 1 | STD-FUELECONOMY-VEHICLES | Draft adapter or decision required | 1 | [Full review](./categories/ITC-29.md) |
+| [`ITC-30`](./categories/ITC-30.md) Forklift resource switching | BLOCKED | 3 | 4 | 1 | 2 | 1 | STD-OPERATING-SCHEDULE | Blocked | 1 | [Full review](./categories/ITC-30.md) |
+| [`ITC-31`](./categories/ITC-31.md) Managed fleet-charging interval shift | DRAFT | 11 | 0 | 0 | 4 | 1 | STD-REOPT-LOCAL-DISPATCH | Draft adapter or decision required | 1 | [Full review](./categories/ITC-31.md) |
+| [`ITC-32`](./categories/ITC-32.md) Flow-fixture water and hot-water reduction | DRAFT | 11 | 1 | 1 | 5 | 1 | STD-WATERSENSE-FIXTURES | Draft adapter or decision required | 1 | [Full review](./categories/ITC-32.md) |
+| [`ITC-33`](./categories/ITC-33.md) Flush-fixture water reduction | DRAFT | 6 | 1 | 1 | 2 | 1 | STD-WATERSENSE-FIXTURES | Draft adapter or decision required | 1 | [Full review](./categories/ITC-33.md) |
+| [`ITC-34`](./categories/ITC-34.md) Landscape water-budget reduction | DRAFT | 6 | 2 | 1 | 1 | 1 | STD-WATERSENSE-LANDSCAPE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-34.md) |
+| [`ITC-35`](./categories/ITC-35.md) Measured leak avoidance | DRAFT | 3 | 0 | 0 | 2 | 1 | STD-WATERSENSE-CI-OPERATIONS | Draft adapter or decision required | 1 | [Full review](./categories/ITC-35.md) |
+| [`ITC-36`](./categories/ITC-36.md) Cooling-tower water and fan optimization | DRAFT | 5 | 0 | 0 | 4 | 2 | STD-WATERSENSE-CI-OPERATIONS<br>STD-DOE-MEASUR | Draft adapter or decision required | 1 | [Full review](./categories/ITC-36.md) |
+| [`ITC-37`](./categories/ITC-37.md) Demand-controlled kitchen ventilation | DRAFT | 8 | 2 | 2 | 3 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-37.md) |
+| [`ITC-38`](./categories/ITC-38.md) Motor input-power efficiency replacement | DRAFT | 7 | 2 | 1 | 2 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-38.md) |
+| [`ITC-39`](./categories/ITC-39.md) Variable-speed load-bin reduction | DRAFT | 6 | 0 | 0 | 2 | 1 | STD-DOE-MEASUR | Draft adapter or decision required | 1 | [Full review](./categories/ITC-39.md) |
+| [`ITC-40`](./categories/ITC-40.md) Pump wire-to-water replacement | DRAFT | 8 | 2 | 1 | 2 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-40.md) |
+| [`ITC-41`](./categories/ITC-41.md) Fan or ventilation system replacement | DRAFT | 8 | 2 | 1 | 2 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-41.md) |
+| [`ITC-42`](./categories/ITC-42.md) Air-compressor specific-power replacement | DRAFT | 8 | 2 | 1 | 2 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-42.md) |
+| [`ITC-43`](./categories/ITC-43.md) Compressed-air leak loss | DRAFT | 6 | 2 | 1 | 2 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-43.md) |
+| [`ITC-44`](./categories/ITC-44.md) Compressed-air control profile reduction | DRAFT | 8 | 0 | 0 | 2 | 1 | STD-DOE-MEASUR | Draft adapter or decision required | 1 | [Full review](./categories/ITC-44.md) |
+| [`ITC-45`](./categories/ITC-45.md) Waste-heat useful-energy recovery | DRAFT | 7 | 0 | 0 | 7 | 1 | STD-DOE-MEASUR | Draft adapter or decision required | 1 | [Full review](./categories/ITC-45.md) |
+| [`ITC-46`](./categories/ITC-46.md) Industrial process electrification balance | DRAFT | 7 | 0 | 0 | 7 | 1 | STD-DOE-MEASUR | Draft adapter or decision required | 1 | [Full review](./categories/ITC-46.md) |
+| [`ITC-47`](./categories/ITC-47.md) Steam-trap loss reduction | DRAFT | 7 | 2 | 1 | 1 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-47.md) |
+| [`ITC-48`](./categories/ITC-48.md) Induction-cooking measured resource switch | BLOCKED | 2 | 3 | 0 | 7 | 0 | None | Blocked | 1 | [Full review](./categories/ITC-48.md) |
+| [`ITC-49`](./categories/ITC-49.md) Walk-in refrigeration measured system delta | BLOCKED | 1 | 2 | 0 | 5 | 0 | None | Blocked | 1 | [Full review](./categories/ITC-49.md) |
+| [`ITC-50`](./categories/ITC-50.md) Commercial cooking tested-duty and idle balance | DRAFT | 6 | 4 | 0 | 3 | 2 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-50.md) |
+| [`ITC-51`](./categories/ITC-51.md) Air-filtration fan-power delta | DRAFT | 9 | 2 | 1 | 2 | 2 | STD-DOE-MEASUR<br>STD-OPERATING-SCHEDULE | Draft adapter or decision required | 1 | [Full review](./categories/ITC-51.md) |
+| [`ITC-52`](./categories/ITC-52.md) Commercial dishwasher water, heat, and idle balance | DRAFT | 8 | 5 | 0 | 5 | 2 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-52.md) |
+| [`ITC-53`](./categories/ITC-53.md) Commercial laundry cycle resource balance | DRAFT | 10 | 5 | 0 | 5 | 2 | STD-DOE-CCMS-RATINGS<br>STD-ENERGY-STAR-PRODUCT-DATA | Draft adapter or decision required | 1 | [Full review](./categories/ITC-53.md) |
+| [`ITC-54`](./categories/ITC-54.md) Backup-power routine resource use | BLOCKED | 4 | 4 | 0 | 3 | 0 | None | Blocked | 1 | [Full review](./categories/ITC-54.md) |
 
 ## Researched and Ready for Human Review
 
-- [`ITC-01` - ComStock archetype annual resource delta](./categories/ITC-01.md)
-- [`ITC-02` - Exterior lighting power and schedule](./categories/ITC-02.md)
 - [`ITC-15` - No direct operational-resource calculation](./categories/ITC-15.md)
-- [`ITC-29` - Light-duty vehicle resource switching](./categories/ITC-29.md)
-- [`ITC-32` - Flow-fixture water and hot-water reduction](./categories/ITC-32.md)
-- [`ITC-33` - Flush-fixture water reduction](./categories/ITC-33.md)
-- [`ITC-34` - Landscape water-budget reduction](./categories/ITC-34.md)
 
 ## Draft
 
+- [`ITC-01` - ComStock archetype annual resource delta](./categories/ITC-01.md)
+- [`ITC-02` - Exterior lighting power and schedule](./categories/ITC-02.md)
 - [`ITC-03` - Fuel-fired equipment efficiency replacement](./categories/ITC-03.md)
 - [`ITC-04` - Boiler control fractional fuel reduction](./categories/ITC-04.md)
 - [`ITC-05` - Duct loss reduction](./categories/ITC-05.md)
@@ -116,7 +112,11 @@ The canonical definitions remain in the category, Shared Branch, and Standard re
 - [`ITC-26` - Microgrid composite interval dispatch](./categories/ITC-26.md)
 - [`ITC-27` - Public EVSE added-load bill impact](./categories/ITC-27.md)
 - [`ITC-28` - Fleet charging added-load bill impact](./categories/ITC-28.md)
+- [`ITC-29` - Light-duty vehicle resource switching](./categories/ITC-29.md)
 - [`ITC-31` - Managed fleet-charging interval shift](./categories/ITC-31.md)
+- [`ITC-32` - Flow-fixture water and hot-water reduction](./categories/ITC-32.md)
+- [`ITC-33` - Flush-fixture water reduction](./categories/ITC-33.md)
+- [`ITC-34` - Landscape water-budget reduction](./categories/ITC-34.md)
 - [`ITC-35` - Measured leak avoidance](./categories/ITC-35.md)
 - [`ITC-36` - Cooling-tower water and fan optimization](./categories/ITC-36.md)
 - [`ITC-37` - Demand-controlled kitchen ventilation](./categories/ITC-37.md)
@@ -145,20 +145,61 @@ The canonical definitions remain in the category, Shared Branch, and Standard re
 
 ## Categories with Five Required User Inputs
 
-- [`ITC-47` - Steam-trap loss reduction](./categories/ITC-47.md)
-- [`ITC-53` - Commercial laundry cycle resource balance](./categories/ITC-53.md)
+- [`ITC-18` - Community-solar contract bill delta](./categories/ITC-18.md)
+- [`ITC-20` - Fuel-cell electricity and fuel balance](./categories/ITC-20.md)
+- [`ITC-21` - CHP electric and useful-heat balance](./categories/ITC-21.md)
+- [`ITC-29` - Light-duty vehicle resource switching](./categories/ITC-29.md)
+- [`ITC-36` - Cooling-tower water and fan optimization](./categories/ITC-36.md)
 
 ## Categories with Limited Standards
 
+- [`ITC-01` - ComStock archetype annual resource delta](./categories/ITC-01.md)
+- [`ITC-02` - Exterior lighting power and schedule](./categories/ITC-02.md)
 - [`ITC-03` - Fuel-fired equipment efficiency replacement](./categories/ITC-03.md)
+- [`ITC-04` - Boiler control fractional fuel reduction](./categories/ITC-04.md)
 - [`ITC-05` - Duct loss reduction](./categories/ITC-05.md)
 - [`ITC-06` - Heat-pump water-heater resource switching](./categories/ITC-06.md)
 - [`ITC-07` - Gas water-heater efficiency replacement](./categories/ITC-07.md)
+- [`ITC-08` - Solar thermal backup-resource displacement](./categories/ITC-08.md)
+- [`ITC-09` - Water-heating recirculation loss reduction](./categories/ITC-09.md)
 - [`ITC-10` - Refrigeration certified-rating replacement](./categories/ITC-10.md)
 - [`ITC-11` - Refrigeration control fractional reduction](./categories/ITC-11.md)
+- [`ITC-12` - Refrigeration EC-motor power reduction](./categories/ITC-12.md)
 - [`ITC-13` - Ice-machine production resource intensity](./categories/ITC-13.md)
 - [`ITC-14` - Scout ECM fractional resource screen](./categories/ITC-14.md)
+- [`ITC-16` - Demand-response interval bill delta](./categories/ITC-16.md)
+- [`ITC-17` - PV interval generation and bill offset](./categories/ITC-17.md)
+- [`ITC-19` - Wind interval generation and bill offset](./categories/ITC-19.md)
+- [`ITC-20` - Fuel-cell electricity and fuel balance](./categories/ITC-20.md)
+- [`ITC-21` - CHP electric and useful-heat balance](./categories/ITC-21.md)
+- [`ITC-22` - Biomass or biogas resource balance](./categories/ITC-22.md)
+- [`ITC-23` - Battery interval dispatch](./categories/ITC-23.md)
+- [`ITC-24` - Solar-plus-storage interval dispatch](./categories/ITC-24.md)
+- [`ITC-25` - Thermal-storage interval dispatch](./categories/ITC-25.md)
+- [`ITC-26` - Microgrid composite interval dispatch](./categories/ITC-26.md)
+- [`ITC-27` - Public EVSE added-load bill impact](./categories/ITC-27.md)
+- [`ITC-28` - Fleet charging added-load bill impact](./categories/ITC-28.md)
+- [`ITC-29` - Light-duty vehicle resource switching](./categories/ITC-29.md)
+- [`ITC-30` - Forklift resource switching](./categories/ITC-30.md)
+- [`ITC-31` - Managed fleet-charging interval shift](./categories/ITC-31.md)
+- [`ITC-32` - Flow-fixture water and hot-water reduction](./categories/ITC-32.md)
+- [`ITC-33` - Flush-fixture water reduction](./categories/ITC-33.md)
+- [`ITC-34` - Landscape water-budget reduction](./categories/ITC-34.md)
+- [`ITC-35` - Measured leak avoidance](./categories/ITC-35.md)
+- [`ITC-36` - Cooling-tower water and fan optimization](./categories/ITC-36.md)
+- [`ITC-37` - Demand-controlled kitchen ventilation](./categories/ITC-37.md)
+- [`ITC-38` - Motor input-power efficiency replacement](./categories/ITC-38.md)
+- [`ITC-39` - Variable-speed load-bin reduction](./categories/ITC-39.md)
+- [`ITC-40` - Pump wire-to-water replacement](./categories/ITC-40.md)
+- [`ITC-41` - Fan or ventilation system replacement](./categories/ITC-41.md)
+- [`ITC-42` - Air-compressor specific-power replacement](./categories/ITC-42.md)
+- [`ITC-43` - Compressed-air leak loss](./categories/ITC-43.md)
+- [`ITC-44` - Compressed-air control profile reduction](./categories/ITC-44.md)
+- [`ITC-45` - Waste-heat useful-energy recovery](./categories/ITC-45.md)
+- [`ITC-46` - Industrial process electrification balance](./categories/ITC-46.md)
+- [`ITC-47` - Steam-trap loss reduction](./categories/ITC-47.md)
 - [`ITC-50` - Commercial cooking tested-duty and idle balance](./categories/ITC-50.md)
+- [`ITC-51` - Air-filtration fan-power delta](./categories/ITC-51.md)
 - [`ITC-52` - Commercial dishwasher water, heat, and idle balance](./categories/ITC-52.md)
 - [`ITC-53` - Commercial laundry cycle resource balance](./categories/ITC-53.md)
 

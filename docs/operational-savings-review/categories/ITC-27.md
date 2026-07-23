@@ -10,10 +10,10 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 3
 - **Standards used:** `STD-ENERGY-STAR-PRODUCT-DATA`, `STD-REOPT-LOCAL-DISPATCH`
-- **Required User-input count:** 4
-- **Optional Known-Detail count:** 3
-- **Profile-input count:** 1
-- **Bill-input count:** 6
+- **Required User-input count:** 10
+- **Optional Known-Detail count:** 1
+- **Profile-input count:** 0
+- **Bill-input count:** 4
 - **Standard-assumption count:** 2
 - **Applicable resources:** electricity
 - **Default estimate:** UNAVAILABLE
@@ -37,27 +37,95 @@
 
 `charging_input_kWh_t = delivered_kWh_t / active_efficiency`
 
+`standby_kWh_t = standby_power_kW × noncharging_interval_hours_t`
+
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| quantity | ports | User | Information Tree > In-scope quantity | None | Direct input or formula | In-scope quantity | NO_ESTIMATE |
+| delivered_kWh_t | kWh/interval | Exact project interval inputs | User delivered-kWh distribution<br>Uploaded interval load artifact | None | Direct input or formula | Delivered-kWh distribution per charger (User)<br>Chronological load and tariff | NO_ESTIMATE |
+| baseline_load_t | kWh/interval | Exact project interval inputs | User delivered-kWh distribution<br>Uploaded interval load artifact | None | Direct input or formula | Delivered-kWh distribution per charger (User)<br>Chronological load and tariff | NO_ESTIMATE |
+| active_efficiency | fraction and kW/port | Exact proposed EVSE rating | energy_star.other_current_product_fields | None | E-ENERGY-STAR-OTHER: UNVERIFIED | Commercial clothes washer, ice machine, cooking, and EVSE datasets - Product-specific field schemas are listed in the registry but have not all been captured as fixtures | NO_ESTIMATE |
+| standby_power_kW | fraction and kW/port | Exact proposed EVSE rating | energy_star.other_current_product_fields | None | E-ENERGY-STAR-OTHER: UNVERIFIED | Commercial clothes washer, ice machine, cooking, and EVSE datasets - Product-specific field schemas are listed in the registry but have not all been captured as fixtures | NO_ESTIMATE |
+| charging_input_kWh_t | kWh/interval, hours/interval, kWh/interval, kWh/interval | Formula using exact session and interval inputs | User session distributions<br>Formula | None | Direct input or formula | Session-arrival distribution per charger (User)<br>Session-duration distribution per charger (User)<br>EVSE interval load profile | NO_ESTIMATE |
+| noncharging_interval_hours_t | kWh/interval, hours/interval, kWh/interval, kWh/interval | Formula using exact session and interval inputs | User session distributions<br>Formula | None | Direct input or formula | Session-arrival distribution per charger (User)<br>Session-duration distribution per charger (User)<br>EVSE interval load profile | NO_ESTIMATE |
+| standby_kWh_t | kWh/interval, hours/interval, kWh/interval, kWh/interval | Formula using exact session and interval inputs | User session distributions<br>Formula | None | Direct input or formula | Session-arrival distribution per charger (User)<br>Session-duration distribution per charger (User)<br>EVSE interval load profile | NO_ESTIMATE |
+| proposed_load_t | kWh/interval, hours/interval, kWh/interval, kWh/interval | Formula using exact session and interval inputs | User session distributions<br>Formula | None | Direct input or formula | Session-arrival distribution per charger (User)<br>Session-duration distribution per charger (User)<br>EVSE interval load profile | NO_ESTIMATE |
+| baseline_annual_bill | USD/year | STD-REOPT-LOCAL-DISPATCH | evidence:E-REOPT-DISPATCH | None | E-REOPT-DISPATCH: UNVERIFIED | Versioned REopt input schema, solver, and result schema - Exact version, fields, and golden result are not pinned | NO_ESTIMATE |
+| proposed_annual_bill | USD/year | STD-REOPT-LOCAL-DISPATCH | evidence:E-REOPT-DISPATCH | None | E-REOPT-DISPATCH: UNVERIFIED | Versioned REopt input schema, solver, and result schema - Exact version, fields, and golden result are not pinned | NO_ESTIMATE |
+
+## Source-Role Evidence
+
+### STD-ENERGY-STAR-PRODUCT-DATA
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | E-ENERGY-STAR-EXISTING-UNSUPPORTED (UNSUPPORTED, none) |
+| proposed or qualified product | E-ENERGY-STAR-DISHWASHER (VERIFIED, proposed-or-current)<br>E-ENERGY-STAR-OTHER (UNVERIFIED, proposed-or-current) |
+| usage or operating schedule | None |
+| physics or calculation method | None |
+| tariff or bill | None |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** usage_or_operating_schedule, tariff_or_bill, geographic_or_climate
+
+**Manual verdict:** The commercial dishwasher schema proves several proposed-product fields. Other product families and all existing-equipment or usage claims remain unverified or unsupported.
+
+### STD-REOPT-LOCAL-DISPATCH
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | None |
+| physics or calculation method | E-REOPT-DISPATCH (UNVERIFIED, baseline-and-proposed-method) |
+| tariff or bill | E-REOPT-DISPATCH (UNVERIFIED, baseline-and-proposed-method) |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** load_profile_default, tariff_default, technology_design_default
+
+**Manual verdict:** REopt can calculate dispatch only after a complete chronological load, tariff, technology, and operating constraint set is provided.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** port count; delivered-energy profile; EVSE efficiency and standby; complete interval load and tariff.
+- **Exact scenario:** insufficient-data.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Explicit usage and equipment sensitivities only.
+- **Final result path:** added interval load -> proposed bill minus baseline bill
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** EVSE schema fixture, usage profile, and REopt golden fixture.
+
 ## Fully Expanded Information Tree
 
 ```text
 Annual public-charging bill impact
 ├─ Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF]
-│  ├─ Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field (Bill)
-│  ├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact (Bill)
-│  ├─ rate_schedule and customer_class, verified rather than provider-inferred (Bill)
-│  ├─ demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact (Bill)
-│  ├─ time_of_use_periods and seasonal calendar from a verified tariff artifact (Bill)
-│  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
+│  ├─ Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field (User)
+│  ├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact (User)
+│  ├─ utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred (Bill)
+│  └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
+│     ├─ Electric volumetric charge
+│     │  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+│     │  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+│     ├─ Electric time-of-use energy charge
+│     │  └─ Verified tariff calendar for the modeled interval import energy; the current bill parser has no complete canonical tariff artifact (User)
+│     └─ Electric demand charge
+│        ├─ utilityExtractedValues demand_charge_rate, when parsed (Bill)
+│        └─ Verified billing-demand and ratchet rules applied to interval kW (User)
 ├─ In-scope quantity [BR-SCOPE-QUANTITY]
 │  └─ Count of identical units in project scope (User)
 ├─ Session-arrival distribution per charger (User)
 ├─ Session-duration distribution per charger (User)
-├─ Delivered-kWh distribution per charger, if known (User)
-├─ Linked Opportunity (Profile)
+├─ Delivered-kWh distribution per charger (User)
+├─ Linked Opportunity
 ├─ Charger Class or Intended Application (User)
 ├─ Selected Charger Model, if known (User)
-├─ Rated Power or Capacity, if known (User)
+├─ Rated Power or Capacity (User)
 ├─ Certified active efficiency and standby power (Standard)
+├─ EVSE interval load profile
 └─ Audited session-load template and REopt bill result (Standard)
 ```
 
@@ -65,65 +133,67 @@ Annual public-charging bill impact
 
 ### Required User Inputs
 
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric time-of-use energy charge > Verified tariff calendar for the modeled interval import energy; the current bill parser has no complete canonical tariff artifact
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric demand charge > Verified billing-demand and ratchet rules applied to interval kW
 - In-scope quantity [BR-SCOPE-QUANTITY] > Count of identical units in project scope
 - Session-arrival distribution per charger
 - Session-duration distribution per charger
+- Delivered-kWh distribution per charger
 - Charger Class or Intended Application
+- Rated Power or Capacity
 
 ### Optional Known Details
 
-- Delivered-kWh distribution per charger, if known
 - Selected Charger Model, if known
-- Rated Power or Capacity, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
-- Linked Opportunity
+- None.
 
 ### Bill Inputs
 
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > rate_schedule and customer_class, verified rather than provider-inferred
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > time_of_use_periods and seasonal calendar from a verified tariff artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric demand charge > utilityExtractedValues demand_charge_rate, when parsed
 
 ### Standard-Derived Assumptions
 
 #### STD-ENERGY-STAR-PRODUCT-DATA
 
 - **Value produced:** Category-specific certified energy, water, capacity, efficiency, and low-power-state fields with units and certification dates.
-- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Low/base/high behavior:** For exact matches use the certified value in all three positions; otherwise use the 25th percentile, median, and 75th percentile after eligibility and compatibility filters.
-- **Exact versus estimated:** Return exact certified values for a selected matching model; otherwise return a distribution from compatible currently certified candidates; return no estimate when the source does not cover the application.
-- **Uncertainty:** Low for an exact certified match, moderate for a matched product class, and high for a context-only class selection.
+- **Resolution scenario:** linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.
+- **Low/base/high behavior:** For an exact proposed model use the certified value in all three positions. A proposed-product distribution remains disabled until the adapter records the eligible population, filters, sample size, and fixture.
+- **Exact versus estimated:** Return current certified fields for an exact proposed model or a compatible proposed-product set; never use the current certified set as an existing installed baseline.
+- **Uncertainty:** Low for a certified field from an exact proposed model, moderate for a fixture-backed compatible proposed class, and unresolved for existing equipment or site usage.
 - **Source:** U.S. Environmental Protection Agency, [ENERGY STAR Product Finder datasets and API](https://www.energystar.gov/productfinder/advanced), [EV charger product criteria and finder](https://www.energystar.gov/products/ev_chargers), [commercial clothes washer dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Clothes-Washers/9g6r-cpdt), [commercial ice machine dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Ice-Machines/nak5-fsjf), [commercial dishwasher dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Dishwashers/pk8q-dim8), [commercial fryer dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Fryers/edi8-b5vk), [commercial oven dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Ovens/c8av-ccf7), and [commercial steam cooker dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Steam-Cookers/vtsv-aq9u). The advanced page exposes downloadable datasets that are updated daily. The product pages define fields and certified-product scope.
 - **Source version:** Dataset update date, certification identifier, category schema version, and downloaded-file checksum.
-- **Selected class or candidate set:** Filter by application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status.
+- **Selected class or candidate set:** Filter proposed products by exact dataset fields for application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status. Preserve the sample size.
 - **Assumptions:** Candidate records are technically compatible after the declared filters, but no exact purchase is implied until a model is selected.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 #### STD-REOPT-LOCAL-DISPATCH
 
 - **Value produced:** Baseline and proposed annual bill components, interval dispatch, imported and exported energy, monthly peaks, and solver status.
-- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Low/base/high behavior:** Run declared low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
+- **Resolution scenario:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Run only explicit project-supplied low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
 - **Exact versus estimated:** Return baseline and proposed bill components only for an optimal deterministic run with complete chronological load and tariff inputs.
-- **Uncertainty:** Moderate with complete interval and tariff data and high when any allowed category constraint is estimated.
+- **Uncertainty:** Moderate with complete interval, tariff, technology, and operating inputs and no estimate when a required constraint is missing.
 - **Source:** National Laboratory of the Rockies, [REopt API V3 documentation](https://developer.nlr.gov/docs/energy-optimization/reopt/v3/), [REopt.jl input reference](https://natlabrockies.github.io/REopt.jl/dev/reopt/inputs/), and [REopt.jl open-source package](https://github.com/NatLabRockies/REopt.jl). The API documentation defines stable V3 inputs and outputs. REopt.jl is the local optimization engine used by the API.
 - **Source version:** Pinned REopt.jl release, solver version, tariff version, and category-adapter version.
-- **Selected class or candidate set:** Use only the technology and fixed-load adapter declared by the category and any Linked Opportunity constraints.
-- **Assumptions:** The analysis year, tariff calendar, and interval load are aligned and future operations follow the declared case.
+- **Selected class or candidate set:** Use only the supplied technology design, fixed-load adapter, and any explicit Linked Opportunity constraints.
+- **Assumptions:** The analysis year, tariff calendar, interval load, and project-supplied constraints are aligned and future operations follow the declared case.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
 ### ■ STD-ENERGY-STAR-PRODUCT-DATA — ENERGY STAR product datasets
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve current certified high-efficiency product performance and EVSE standby or charging efficiency.
@@ -140,25 +210,23 @@ The product pages define fields and certified-product scope.
 - `energy_star_exact_product` - **Optional:** Exact manufacturer, model, certified rating, and capacity or size when known.
   - **Resolved by:**
     - **User:** Annual public-charging bill impact > Selected Charger Model, if known
-    - **User:** Annual public-charging bill impact > Rated Power or Capacity, if known
+    - **User:** Annual public-charging bill impact > Rated Power or Capacity
 - `linked_opportunity` - **Conditional:** Product, certification, class, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
   - **Resolved by:**
-    - **Profile:** Annual public-charging bill impact > Linked Opportunity
-- `product_usage_pattern` - **Conditional:** Recognizable operating pattern and exact activity or idle values when the category formula uses certified active and idle ratings. Applies only in the documented scenario.
-  - **Resolved by:** Not applicable under this category contract.
+    - **Derived:** Annual public-charging bill impact > Linked Opportunity
 
 **Value Needed:**
 Category-specific certified energy, water, capacity, efficiency, and low-power-state fields with units and certification dates.
 
 **Resolution Contract:**
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return exact certified values for a selected matching model; otherwise return a distribution from compatible currently certified candidates; return no estimate when the source does not cover the application.
-- **Low/Base/High Rule:** For exact matches use the certified value in all three positions; otherwise use the 25th percentile, median, and 75th percentile after eligibility and compatibility filters.
-- **Uncertainty Rule:** Low for an exact certified match, moderate for a matched product class, and high for a context-only class selection.
+- **Supported Scenarios:** linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.
+- **Scenario Output Behavior:** Return current certified fields for an exact proposed model or a compatible proposed-product set; never use the current certified set as an existing installed baseline.
+- **Low/Base/High Rule:** For an exact proposed model use the certified value in all three positions. A proposed-product distribution remains disabled until the adapter records the eligible population, filters, sample size, and fixture.
+- **Uncertainty Rule:** Low for a certified field from an exact proposed model, moderate for a fixture-backed compatible proposed class, and unresolved for existing equipment or site usage.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Dataset update date, certification identifier, category schema version, and downloaded-file checksum.
-- **Selected Class or Candidate Set:** Filter by application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status.
+- **Selected Class or Candidate Set:** Filter proposed products by exact dataset fields for application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status. Preserve the sample size.
 - **Assumptions:** Candidate records are technically compatible after the declared filters, but no exact purchase is implied until a model is selected.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate when no compatible candidate set exists or the required performance field is absent.
@@ -167,7 +235,7 @@ Category-specific certified energy, water, capacity, efficiency, and low-power-s
 Download the category dataset rather than calling the API at calculation time.
 Keep the EPA field names in raw storage and normalize only fields used by a documented category adapter.
 Select exact manufacturer and model matches, then validate subtype and capacity.
-For a proposed generic selection, return the median and quartiles of currently certified products within the exact subtype and capacity bin, not the best model.
+Do not return a proposed generic median or quartiles until the exact subtype and capacity filters, eligible population, sample size, and representative source rows are fixture-tested.
 Store dataset publication date, specification version, and product status.
 
 The adapter contracts use these source-reported field families:
@@ -181,14 +249,14 @@ The adapter contracts use these source-reported field families:
 | `ITC-52` commercial dishwashers | Machine type, sanitation method, water per rack or hour, machine idle rate, and booster-heater idle rate |
 
 Do not infer a missing source-reported field from another product family.
-For an exact existing model, return the certified value with low uncertainty.
-When only type or application is known, select compatible certified records and return the declared class distribution.
-When neither model nor type is known, use relevant Profile or Bill context only when it supports a source-defined class, and otherwise return no estimate.
+Do not use the active certified dataset as an existing-equipment source.
+Existing ratings require an exact retained historical record, nameplate, measurement, or a separate installed-baseline source.
+Profile and Bill fallbacks are unsupported because the current canonical schemas do not identify a product model or source-defined product class.
 When a Linked Opportunity names exact products, restrict the candidate set to those products.
 When it specifies a class, certification, or minimum performance, filter compatible current records to those requirements.
 When it has no product restriction or no Linked Opportunity exists, build the candidate set from application, service need, site context, and current certified data without claiming an exact model.
-An exact proposed model overrides the candidate distribution after compatibility validation.
-Resolve recognizable product usage patterns to visible low/base/high activity assumptions only when the category and source support that conversion.
+An exact proposed model overrides a proposed candidate set after compatibility validation.
+Usage and operating schedules require separate evidence and must not be inferred from product records.
 Return no estimate when product compatibility or a required usage basis cannot be established.
 
 **Automation:**
@@ -203,7 +271,7 @@ Return no estimate when product compatibility or a required usage basis cannot b
 
 ### ■ STD-REOPT-LOCAL-DISPATCH — REopt interval dispatch and bill optimization
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve direct bill change from storage, demand flexibility, managed charging, and composite distributed-energy dispatch.
@@ -216,32 +284,29 @@ REopt.jl is the local optimization engine used by the API.
 **Lookup Inputs:**
 - `chronological_load_and_tariff` - **Required:** Chronological site load, complete tariff, timezone, and analysis-year calendar.
   - **Resolved by:**
-    - **Bill:** Annual public-charging bill impact > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field
-    - **Bill:** Annual public-charging bill impact > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
-    - **Bill:** Annual public-charging bill impact > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > rate_schedule and customer_class, verified rather than provider-inferred
-    - **Bill:** Annual public-charging bill impact > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact
-    - **Bill:** Annual public-charging bill impact > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > time_of_use_periods and seasonal calendar from a verified tariff artifact
-    - **Bill:** Annual public-charging bill impact > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
+    - **User:** Annual public-charging bill impact > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field
+    - **User:** Annual public-charging bill impact > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
+    - **Bill:** Annual public-charging bill impact > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred
 - `reopt_category_constraints` - **Required:** Applicable technology power, energy, efficiency, state, availability, event, or fixed-load-template constraints shown as atomic leaves in the category tree.
   - **Resolved by:**
     - **User:** Annual public-charging bill impact > Session-arrival distribution per charger
     - **User:** Annual public-charging bill impact > Session-duration distribution per charger
-    - **User:** Annual public-charging bill impact > Delivered-kWh distribution per charger, if known
-    - **User:** Annual public-charging bill impact > Rated Power or Capacity, if known
+    - **User:** Annual public-charging bill impact > Delivered-kWh distribution per charger
+    - **User:** Annual public-charging bill impact > Rated Power or Capacity
 
 **Value Needed:**
 Baseline and proposed annual bill components, interval dispatch, imported and exported energy, monthly peaks, and solver status.
 
 **Resolution Contract:**
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Supported Scenarios:** exact-input; linked-opportunity-constrained-input; insufficient-data.
 - **Scenario Output Behavior:** Return baseline and proposed bill components only for an optimal deterministic run with complete chronological load and tariff inputs.
-- **Low/Base/High Rule:** Run declared low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
-- **Uncertainty Rule:** Moderate with complete interval and tariff data and high when any allowed category constraint is estimated.
+- **Low/Base/High Rule:** Run only explicit project-supplied low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
+- **Uncertainty Rule:** Moderate with complete interval, tariff, technology, and operating inputs and no estimate when a required constraint is missing.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Pinned REopt.jl release, solver version, tariff version, and category-adapter version.
-- **Selected Class or Candidate Set:** Use only the technology and fixed-load adapter declared by the category and any Linked Opportunity constraints.
-- **Assumptions:** The analysis year, tariff calendar, and interval load are aligned and future operations follow the declared case.
+- **Selected Class or Candidate Set:** Use only the supplied technology design, fixed-load adapter, and any explicit Linked Opportunity constraints.
+- **Assumptions:** The analysis year, tariff calendar, interval load, and project-supplied constraints are aligned and future operations follow the declared case.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate without continuous interval data, a verified complete tariff, required constraints, or optimal solver status.
 

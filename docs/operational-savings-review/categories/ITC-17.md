@@ -10,10 +10,10 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 3
 - **Standards used:** `STD-PVWATTS-V8`
-- **Required User-input count:** 1
-- **Optional Known-Detail count:** 5
+- **Required User-input count:** 11
+- **Optional Known-Detail count:** 0
 - **Profile-input count:** 1
-- **Bill-input count:** 6
+- **Bill-input count:** 3
 - **Standard-assumption count:** 1
 - **Applicable resources:** electricity
 - **Default estimate:** UNAVAILABLE
@@ -33,9 +33,63 @@
 
 ## Supporting Formula(s)
 
-`onsite_offset_t = min(PV_AC_kWh_t, baseline_import_kWh_t)`
+`onsite_offset_kWh_t = min(PV_AC_kWh_t, baseline_import_kWh_t)`
 
-`export_t = max(PV_AC_kWh_t - baseline_import_kWh_t, 0)`
+`export_kWh_t = max(PV_AC_kWh_t - baseline_import_kWh_t, 0)`
+
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| PV_AC_kWh_t | kWh/interval | STD-PVWATTS-V8 | evidence:E-PVWATTS-V8 | None | E-PVWATTS-V8: VERIFIED | GET /api/pvwatts/v8 - Required inputs system_capacity, module_type, losses, array_type, tilt, azimuth and location or solar_resource_file; outputs ac, ac_monthly, ac_annual, capacity_factor, station_info.solar_resource_file, warnings | NO_ESTIMATE |
+| baseline_import_kWh_t | kWh/interval | Uploaded interval load and formulas | User Green Button interval artifact | None | E-REOPT-DISPATCH: UNVERIFIED | Versioned REopt input schema, solver, and result schema - Exact version, fields, and golden result are not pinned | NO_ESTIMATE |
+| onsite_offset_kWh_t | kWh/interval | Uploaded interval load and formulas | User Green Button interval artifact | None | E-REOPT-DISPATCH: UNVERIFIED | Versioned REopt input schema, solver, and result schema - Exact version, fields, and golden result are not pinned | NO_ESTIMATE |
+| export_kWh_t | kWh/interval | Uploaded interval load and formulas | User Green Button interval artifact | None | E-REOPT-DISPATCH: UNVERIFIED | Versioned REopt input schema, solver, and result schema - Exact version, fields, and golden result are not pinned | NO_ESTIMATE |
+| import_rate_t | USD/kWh by interval | Verified tariff artifact | electric-time-of-use: User-supplied verified tariff artifact<br>electric-export: User-supplied verified export-credit rule<br>electric-export-non-bypassable: User-supplied verified non-bypassable tariff rule | None | Direct input or formula | Chronological load and tariff | RETURN_GENERATION_WITHOUT_DOLLAR_VALUE |
+| export_credit_t | USD/kWh by interval | Verified tariff artifact | electric-time-of-use: User-supplied verified tariff artifact<br>electric-export: User-supplied verified export-credit rule<br>electric-export-non-bypassable: User-supplied verified non-bypassable tariff rule | None | Direct input or formula | Chronological load and tariff | RETURN_GENERATION_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+### STD-PVWATTS-V8
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | None |
+| physics or calculation method | E-PVWATTS-V8 (VERIFIED, proposed-system-method) |
+| tariff or bill | None |
+| geographic or climate | E-PVWATTS-V8 (VERIFIED, proposed-system-method) |
+
+**Unsupported roles or uses:** system_capacity_default, array_configuration_default, tariff_or_bill
+
+**Manual verdict:** The API field contract is verified, but required system design inputs are project facts and no default design range is supported.
+
+### STD-REOPT-LOCAL-DISPATCH
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | None |
+| physics or calculation method | E-REOPT-DISPATCH (UNVERIFIED, baseline-and-proposed-method) |
+| tariff or bill | E-REOPT-DISPATCH (UNVERIFIED, baseline-and-proposed-method) |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** load_profile_default, tariff_default, technology_design_default
+
+**Manual verdict:** REopt can calculate dispatch only after a complete chronological load, tariff, technology, and operating constraint set is provided.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** PV design; solar resource; complete interval load; verified import and export tariff.
+- **Exact scenario:** insufficient-data.
+- **Source fixture:** docs/operational-savings-fixtures/sources/pvwatts-v8-schema.json.
+- **Low/base/high calculation:** Explicit system and loss sensitivities only.
+- **Final result path:** PV interval generation -> onsite/export split -> tariff bill result
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** Project PV design, interval/tariff parser, REopt fixture, and end-to-end golden fixture.
 
 ## Fully Expanded Information Tree
 
@@ -43,37 +97,51 @@
 Annual PV bill reduction
 ├─ site.geo.coordinates, verified rather than address-only (Profile)
 ├─ PV array configuration
-│  ├─ DC capacity, if known (User)
-│  ├─ Module Type, if known (User)
+│  ├─ DC capacity (User)
+│  ├─ Module Type (User)
 │  ├─ Array type (User)
-│  ├─ System losses, if known (User)
-│  ├─ Tilt, if known (User)
-│  └─ Azimuth, if known (User)
+│  ├─ System losses (User)
+│  ├─ Tilt (User)
+│  └─ Azimuth (User)
 ├─ PVWatts interval AC generation (Standard)
+├─ Interval onsite-offset and export calculation
 └─ Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF]
-   ├─ Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field (Bill)
-   ├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact (Bill)
-   ├─ rate_schedule and customer_class, verified rather than provider-inferred (Bill)
-   ├─ demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact (Bill)
-   ├─ time_of_use_periods and seasonal calendar from a verified tariff artifact (Bill)
-   └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
+   ├─ Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field (User)
+   ├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact (User)
+   ├─ utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred (Bill)
+   └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
+      ├─ Electric volumetric charge
+      │  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+      │  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+      ├─ Electric time-of-use energy charge
+      │  └─ Verified tariff calendar for the modeled interval import energy; the current bill parser has no complete canonical tariff artifact (User)
+      ├─ Electric export credit
+      │  └─ Verified export-credit rule applied to interval exports; no current canonical bill field (User)
+      └─ Electric non-bypassable export treatment
+         └─ Verified non-bypassable tariff rule applied to interval exports; no current canonical bill field (User)
 ```
 
 ## Input Workflow
 
 ### Required User Inputs
 
+- PV array configuration > DC capacity
+- PV array configuration > Module Type
 - PV array configuration > Array type
+- PV array configuration > System losses
+- PV array configuration > Tilt
+- PV array configuration > Azimuth
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric time-of-use energy charge > Verified tariff calendar for the modeled interval import energy; the current bill parser has no complete canonical tariff artifact
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric export credit > Verified export-credit rule applied to interval exports; no current canonical bill field
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric non-bypassable export treatment > Verified non-bypassable tariff rule applied to interval exports; no current canonical bill field
 
 ### Optional Known Details
 
-- PV array configuration > DC capacity, if known
-- PV array configuration > Module Type, if known
-- PV array configuration > System losses, if known
-- PV array configuration > Tilt, if known
-- PV array configuration > Azimuth, if known
+- None.
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+No optional exact-value override applies to this category.
 
 ### Profile Inputs
 
@@ -81,33 +149,30 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### Bill Inputs
 
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > rate_schedule and customer_class, verified rather than provider-inferred
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > time_of_use_periods and seasonal calendar from a verified tariff artifact
-- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
 
 ### Standard-Derived Assumptions
 
 #### STD-PVWATTS-V8
 
 - **Value produced:** Hourly or monthly AC kWh, annual AC kWh, capacity factor, weather-file identifier, and warnings.
-- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Low/base/high behavior:** Run PVWatts for each low, base, and high configuration, with losses and geometry visible in every case.
-- **Exact versus estimated:** Return configured PVWatts output for a supplied design; otherwise return a documented low/base/high array configuration derived from usable area and project scope.
-- **Uncertainty:** Moderate for screening and high when shading, usable area, or orientation is unresolved.
+- **Resolution scenario:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Run PVWatts only for explicit project-supplied low, base, and high configurations, with losses and geometry visible in every case.
+- **Exact versus estimated:** Return configured PVWatts output only for a complete supplied array design and site; otherwise return no estimate.
+- **Uncertainty:** Moderate for screening with a complete design and no estimate when capacity, losses, geometry, or location is unresolved.
 - **Source:** National Laboratory of the Rockies, [PVWatts V8 API documentation](https://developer.nlr.gov/docs/solar/pvwatts/v8/) and [System Advisor Model repository](https://github.com/NatLabRockies/SAM). PVWatts documents the required inputs and outputs. SAM supplies the local PVWatts compute module.
 - **Source version:** PVWatts V8 module version, SAM or SSC version, and weather-file identifier and checksum.
-- **Selected class or candidate set:** Use project scope, usable site area, array mounting class, and opportunity constraints without selecting a fictitious exact product.
-- **Assumptions:** Typical weather and visible configuration assumptions are representative; detailed shading and design losses are not known.
+- **Selected class or candidate set:** Use only the supplied project array configuration and any explicit Linked Opportunity constraints.
+- **Assumptions:** Typical weather is representative; detailed shading remains outside PVWatts unless reflected in the supplied loss input.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
 ### ■ STD-PVWATTS-V8 — PVWatts photovoltaic production
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve hourly and annual AC generation for a specified grid-connected PV array.
@@ -123,28 +188,28 @@ SAM supplies the local PVWatts compute module.
     - **Profile:** Annual PV bill reduction > site.geo.coordinates, verified rather than address-only
 - `pv_array_configuration` - **Required:** DC capacity, module type, array type, losses, tilt, and azimuth.
   - **Resolved by:**
-    - **User:** Annual PV bill reduction > PV array configuration > DC capacity, if known
-    - **User:** Annual PV bill reduction > PV array configuration > Module Type, if known
+    - **User:** Annual PV bill reduction > PV array configuration > DC capacity
+    - **User:** Annual PV bill reduction > PV array configuration > Module Type
     - **User:** Annual PV bill reduction > PV array configuration > Array type
-    - **User:** Annual PV bill reduction > PV array configuration > System losses, if known
-    - **User:** Annual PV bill reduction > PV array configuration > Tilt, if known
-    - **User:** Annual PV bill reduction > PV array configuration > Azimuth, if known
+    - **User:** Annual PV bill reduction > PV array configuration > System losses
+    - **User:** Annual PV bill reduction > PV array configuration > Tilt
+    - **User:** Annual PV bill reduction > PV array configuration > Azimuth
 
 **Value Needed:**
 Hourly or monthly AC kWh, annual AC kWh, capacity factor, weather-file identifier, and warnings.
 
 **Resolution Contract:**
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
-- **Scenario Output Behavior:** Return configured PVWatts output for a supplied design; otherwise return a documented low/base/high array configuration derived from usable area and project scope.
-- **Low/Base/High Rule:** Run PVWatts for each low, base, and high configuration, with losses and geometry visible in every case.
-- **Uncertainty Rule:** Moderate for screening and high when shading, usable area, or orientation is unresolved.
+- **Supported Scenarios:** exact-input; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return configured PVWatts output only for a complete supplied array design and site; otherwise return no estimate.
+- **Low/Base/High Rule:** Run PVWatts only for explicit project-supplied low, base, and high configurations, with losses and geometry visible in every case.
+- **Uncertainty Rule:** Moderate for screening with a complete design and no estimate when capacity, losses, geometry, or location is unresolved.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** PVWatts V8 module version, SAM or SSC version, and weather-file identifier and checksum.
-- **Selected Class or Candidate Set:** Use project scope, usable site area, array mounting class, and opportunity constraints without selecting a fictitious exact product.
-- **Assumptions:** Typical weather and visible configuration assumptions are representative; detailed shading and design losses are not known.
+- **Selected Class or Candidate Set:** Use only the supplied project array configuration and any explicit Linked Opportunity constraints.
+- **Assumptions:** Typical weather is representative; detailed shading remains outside PVWatts unless reflected in the supplied loss input.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
-- **No-Estimate Rule:** Return no estimate when usable array scope or location cannot be resolved.
+- **No-Estimate Rule:** Return no estimate when any required PVWatts configuration or location input is missing.
 
 **How to Use:**
 Execute the pinned PVWatts V8 compute module locally, using coordinates from the profile and customer-confirmed array configuration.

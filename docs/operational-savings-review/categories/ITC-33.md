@@ -7,19 +7,19 @@
 
 ## Review Status
 
-- **Category status:** RESEARCHED — READY FOR HUMAN REVIEW
+- **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-WATERSENSE-FIXTURES`
-- **Required User-input count:** 4
-- **Optional Known-Detail count:** 2
-- **Profile-input count:** 2
-- **Bill-input count:** 1
+- **Required User-input count:** 6
+- **Optional Known-Detail count:** 1
+- **Profile-input count:** 1
+- **Bill-input count:** 2
 - **Standard-assumption count:** 1
 - **Applicable resources:** water-sewer
-- **Default estimate:** AVAILABLE
-- **Automation readiness:** Ready for implementation
+- **Default estimate:** UNAVAILABLE
+- **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
-- **Expected uncertainty:** Low
+- **Expected uncertainty:** Moderate
 
 ## Retrofits
 
@@ -33,6 +33,44 @@
 
 No additional formula is required.
 
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| quantity | fixtures and flushes/fixture-year | User exact commercial usage input | User quantity and flush frequency | None | Direct input or formula | In-scope quantity<br>Recognizable Flush Usage Pattern<br>Annual flushes per fixture (User) | NO_ESTIMATE |
+| flushes_per_year | fixtures and flushes/fixture-year | User exact commercial usage input | User quantity and flush frequency | None | Direct input or formula | In-scope quantity<br>Recognizable Flush Usage Pattern<br>Annual flushes per fixture (User) | NO_ESTIMATE |
+| gpf_existing | gallons/flush | Exact existing rating or measurement | User Existing rated gallons per flush | None | Direct input or formula | Existing rated gallons per flush | NO_ESTIMATE |
+| gpf_proposed | gallons/flush | Exact proposed rating or WaterSense criterion | User Proposed rated gallons per flush<br>evidence:E-WATERSENSE-PROPOSED | None | E-WATERSENSE-PROPOSED: UNVERIFIED | WaterSense at Work plumbing sections and product specifications - Exact page, criterion, and product schema fixture not yet captured | NO_ESTIMATE |
+| p_water_sewer | USD/gallon | Separate water and sewer components | water-volumetric: utilityExtractedValues[].fieldId=annual_water_cost<br>water-volumetric: utilityExtractedValues[].fieldId=annual_water_use<br>water-volumetric: utilityExtractedValues[].fieldId=water_unit<br>sewer-volumetric: utilityExtractedValues[].fieldId=annual_sewer_cost<br>sewer-volumetric: utilityExtractedValues[].fieldId=annual_water_use<br>sewer-volumetric: utilityExtractedValues[].fieldId=water_unit | None | Direct input or formula | Avoidable marginal resource price | RETURN_GALLONS_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+### STD-WATERSENSE-FIXTURES
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | E-WATERSENSE-EXISTING-UNSUPPORTED (UNSUPPORTED, none) |
+| proposed or qualified product | E-WATERSENSE-PROPOSED (UNVERIFIED, proposed) |
+| usage or operating schedule | E-WATERSENSE-EXISTING-UNSUPPORTED (UNSUPPORTED, none) |
+| physics or calculation method | None |
+| tariff or bill | None |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** tariff_or_bill, commercial_usage_default
+
+**Manual verdict:** WaterSense criteria support proposed performance. Existing installed ratings and commercial usage frequency remain separate unresolved inputs.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** quantity; commercial flush frequency; existing gpf; proposed gpf.
+- **Exact scenario:** insufficient-data.
+- **Source fixture:** None.
+- **Low/base/high calculation:** No household-derived commercial default.
+- **Final result path:** annual gallons avoided -> separate water and sewer rates
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** Commercial flush-frequency source and existing baseline fixture.
+
 ## Fully Expanded Information Tree
 
 ```text
@@ -41,17 +79,20 @@ Annual dollar savings
 │  ├─ In-scope quantity [BR-SCOPE-QUANTITY]
 │  │  └─ Count of identical units in project scope (User)
 │  ├─ Recognizable Flush Usage Pattern (User)
+│  ├─ Annual flushes per fixture (User)
 │  ├─ business.primaryActivityText usage context (Profile)
 │  ├─ Fixture selection
 │  │  ├─ Existing fixture type (User)
-│  │  ├─ Existing rated gallons per flush, if known (User)
-│  │  ├─ Linked Opportunity (Profile)
+│  │  ├─ Existing rated gallons per flush (User)
+│  │  ├─ Linked Opportunity
 │  │  ├─ Proposed fixture type (User)
 │  │  └─ Proposed rated gallons per flush, if known (User)
 │  └─ Rated gallons per flush and use-pattern values (Standard)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   └─ Water and sewer variable charge
-      └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
+   ├─ Water volumetric charge
+   │  └─ annual_water_cost divided by annual_water_use after explicit water_unit normalization (Bill)
+   └─ Sewer volumetric charge
+      └─ annual_sewer_cost divided by applicable annual_water_use after explicit water_unit normalization, only when the avoided use is sewer-billed (Bill)
 ```
 
 ## Input Workflow
@@ -60,37 +101,38 @@ Annual dollar savings
 
 - Annual water reduction > In-scope quantity [BR-SCOPE-QUANTITY] > Count of identical units in project scope
 - Annual water reduction > Recognizable Flush Usage Pattern
+- Annual water reduction > Annual flushes per fixture
 - Annual water reduction > Fixture selection > Existing fixture type
+- Annual water reduction > Fixture selection > Existing rated gallons per flush
 - Annual water reduction > Fixture selection > Proposed fixture type
 
 ### Optional Known Details
 
-- Annual water reduction > Fixture selection > Existing rated gallons per flush, if known
 - Annual water reduction > Fixture selection > Proposed rated gallons per flush, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
 - Annual water reduction > business.primaryActivityText usage context
-- Annual water reduction > Fixture selection > Linked Opportunity
 
 ### Bill Inputs
 
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water volumetric charge > annual_water_cost divided by annual_water_use after explicit water_unit normalization
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Sewer volumetric charge > annual_sewer_cost divided by applicable annual_water_use after explicit water_unit normalization, only when the avoided use is sewer-billed
 
 ### Standard-Derived Assumptions
 
 #### STD-WATERSENSE-FIXTURES
 
-- **Value produced:** Gallons per minute or gallons per flush plus annual uses or use-duration assumptions with units, low/base/high values, specification, and source location.
-- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Low/base/high behavior:** Use the source-supported existing-class bounds and base value; use eligible proposed-product 25th percentile, median, and 75th percentile when a product set is available.
-- **Exact versus estimated:** Return an exact labeled or certified rating when known; otherwise return a fixture-type distribution or source-defined criterion without selecting an exact model.
+- **Value produced:** Proposed gallons per minute or gallons per flush with units, specification, and source location.
+- **Resolution scenario:** linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.
+- **Low/base/high behavior:** Use one value for an exact proposed rating. No existing-class range, usage range, or proposed-product percentile is supported without a reviewed population fixture.
+- **Exact versus estimated:** Return a proposed WaterSense criterion or current certified proposed-product rating. Existing fixture ratings and commercial usage require exact inputs or separate evidence.
 - **Uncertainty:** Low for exact ratings, moderate for a matched fixture type, and high when context alone selects the class.
 - **Source:** U.S. Environmental Protection Agency, [WaterSense commercial-building resources](https://www.epa.gov/watersense/commercial-buildings), [WaterSense at Work best-management-practice guide](https://www.epa.gov/watersense/best-management-practices), and [WaterSense urinal criteria](https://www.epa.gov/watersense/urinals). The guide contains fixture inventory methods, equations, and replacement-performance values.
 - **Source version:** WaterSense specification or guide version, source section, product-list update date when used, and local criteria-table version.
-- **Selected class or candidate set:** Filter by fixture application, service type, compatibility, certification or opportunity restrictions, and proposed scope.
+- **Selected class or candidate set:** Filter proposed products by fixture application, service type, compatibility, certification or opportunity restrictions, and proposed scope. Record all filters and sample size before enabling a distribution.
 - **Assumptions:** Rated flow or flush volume represents the installed operating point for screening.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
@@ -98,10 +140,10 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### ■ STD-WATERSENSE-FIXTURES — WaterSense fixture performance
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
-Resolve rated flow or flush volume for existing and proposed plumbing fixtures.
+Resolve proposed rated flow or flush volume for compatible plumbing fixtures.
 
 **Source:**
 U.S. Environmental Protection Agency, [WaterSense commercial-building resources](https://www.epa.gov/watersense/commercial-buildings), [WaterSense at Work best-management-practice guide](https://www.epa.gov/watersense/best-management-practices), and [WaterSense urinal criteria](https://www.epa.gov/watersense/urinals).
@@ -114,44 +156,40 @@ The guide contains fixture inventory methods, equations, and replacement-perform
     - **User:** Annual dollar savings > Annual water reduction > Fixture selection > Proposed fixture type
 - `fixture_exact_rating` - **Optional:** Exact existing or proposed model, rated flow, or flush volume when known.
   - **Resolved by:**
-    - **User:** Annual dollar savings > Annual water reduction > Fixture selection > Existing rated gallons per flush, if known
+    - **User:** Annual dollar savings > Annual water reduction > Fixture selection > Existing rated gallons per flush
     - **User:** Annual dollar savings > Annual water reduction > Fixture selection > Proposed rated gallons per flush, if known
-- `fixture_usage_pattern` - **Required:** Recognizable application and usage pattern plus available business context.
-  - **Resolved by:**
-    - **User:** Annual dollar savings > Annual water reduction > Recognizable Flush Usage Pattern
-    - **Profile:** Annual dollar savings > Annual water reduction > business.primaryActivityText usage context
 - `linked_opportunity` - **Conditional:** Product, certification, or minimum-performance restrictions when a Linked Opportunity supplies them. Applies only in the documented scenario.
   - **Resolved by:**
-    - **Profile:** Annual dollar savings > Annual water reduction > Fixture selection > Linked Opportunity
+    - **Derived:** Annual dollar savings > Annual water reduction > Fixture selection > Linked Opportunity
 
 **Value Needed:**
-Gallons per minute or gallons per flush plus annual uses or use-duration assumptions with units, low/base/high values, specification, and source location.
+Proposed gallons per minute or gallons per flush with units, specification, and source location.
 
 **Resolution Contract:**
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return an exact labeled or certified rating when known; otherwise return a fixture-type distribution or source-defined criterion without selecting an exact model.
-- **Low/Base/High Rule:** Use the source-supported existing-class bounds and base value; use eligible proposed-product 25th percentile, median, and 75th percentile when a product set is available.
+- **Supported Scenarios:** linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.
+- **Scenario Output Behavior:** Return a proposed WaterSense criterion or current certified proposed-product rating. Existing fixture ratings and commercial usage require exact inputs or separate evidence.
+- **Low/Base/High Rule:** Use one value for an exact proposed rating. No existing-class range, usage range, or proposed-product percentile is supported without a reviewed population fixture.
 - **Uncertainty Rule:** Low for exact ratings, moderate for a matched fixture type, and high when context alone selects the class.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** WaterSense specification or guide version, source section, product-list update date when used, and local criteria-table version.
-- **Selected Class or Candidate Set:** Filter by fixture application, service type, compatibility, certification or opportunity restrictions, and proposed scope.
+- **Selected Class or Candidate Set:** Filter proposed products by fixture application, service type, compatibility, certification or opportunity restrictions, and proposed scope. Record all filters and sample size before enabling a distribution.
 - **Assumptions:** Rated flow or flush volume represents the installed operating point for screening.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate when neither an exact rating nor a defensible fixture application class is available.
 
 **How to Use:**
 Prefer the existing fixture's label or exact model rating.
-Use the WaterSense at Work plumbing sections and current product specification for a proposed generic value.
+Use the WaterSense specification or current product data only for proposed performance.
 Store fixture type, unit, rating, source section, and specification version.
 Never substitute a flush frequency for a rated flush volume.
-Resolve annual usage from the recognizable application and documented WaterSense commercial inventory or usage guidance, with business context used only when it selects a supported application.
+Commercial use frequency and duration remain separate unresolved terms until an exact source section and fixture are approved.
 Keep usage frequency and duration assumptions separate from rated flow or flush volume.
 When a Linked Opportunity names exact products, restrict candidates to those products and use the selected exact rating.
 When it specifies a fixture class, certification, or maximum rating, filter compatible WaterSense criteria or candidates to those requirements.
-When it has no product restriction or no Linked Opportunity exists, build a compatible candidate set from application and service need without claiming an exact model.
-Exact ratings and measured use patterns override class estimates.
-Return no estimate when neither the application nor an exact measurement supports a defensible usage pattern.
+When it has no product restriction or no Linked Opportunity exists, a proposed criterion may be used only for a compatible documented fixture type.
+Exact ratings and measured use patterns override proposed criteria.
+Return no estimate when existing performance or the commercial usage pattern is unresolved.
 
 **Automation:**
 - **Selected Strategy:** Small manually reviewed local criteria table, with exact models overriding it.
@@ -166,11 +204,12 @@ Return no estimate when neither the application nor an exact measurement support
 ## Category Notes and Missing-Data Behavior
 
 Toilets and urinals share the tree because fixture type selects a different record inside the same rating Standard.
+Return no default estimate until a commercial flush-frequency source and an installed existing gallons-per-flush baseline are fixture-tested.
 
-Default-estimate behavior: Use the documented minimum-input path and replace estimates with validated Optional Known Details when supplied.
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
 
 Expected uncertainty: STD-WATERSENSE-FIXTURES: Low for rated flow and moderate for actual use.
 
 ## Human Review Decisions
 
-- Approve the documented category boundary, inputs, Standard automation, missing-data behavior, uncertainty, and exclusions before implementation.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

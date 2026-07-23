@@ -1,0 +1,29 @@
+{
+  "fixture_type": "reviewed_source_schema",
+  "reviewed_on": "2026-07-22",
+  "source_url": "https://data.energystar.gov/api/views/pk8q-dim8",
+  "dataset_id": "pk8q-dim8",
+  "dataset_title": "ENERGY STAR Certified Commercial Dishwashers",
+  "coverage": "Current active-specification proposed products",
+  "fields": [
+    {"field": "pd_id", "unit": "identifier", "role": "record identity"},
+    {"field": "model_number", "unit": "identifier", "role": "exact product selection"},
+    {"field": "machine_type", "unit": "class", "role": "compatibility filter"},
+    {"field": "sanitation_method", "unit": "class", "role": "compatibility filter"},
+    {"field": "idle_energy_rate_for_low_temp_kw", "unit": "kW", "role": "low-temperature idle input"},
+    {"field": "idle_energy_rate_for_high_temp_kw", "unit": "kW", "role": "high-temperature idle input"},
+    {"field": "booster_heater_idle_energy_rate_for_high_temp_and_dual_sanitizing_machines_kw", "unit": "kW", "role": "separable booster-heater idle input"},
+    {"field": "water_use_gallons_per_rack_gpr", "unit": "gallons/rack", "role": "rack-machine water input"},
+    {"field": "water_use_gallons_per_hour_gph", "unit": "gallons/hour", "role": "flight-machine water input"},
+    {"field": "washing_energy_consumption_kwh_rack_for_low_temp_and_dual_sanitizing_machines", "unit": "kWh/rack", "role": "low-temperature active input"},
+    {"field": "washing_energy_consumption_kwh_rack_for_high_temp_and_dual_sanitizing_machines", "unit": "kWh/rack", "role": "high-temperature active input"},
+    {"field": "date_qualified", "unit": "date", "role": "certification provenance"}
+  ],
+  "unsupported_inferences": [
+    "Existing installed-equipment baseline",
+    "Annual racks or operating hours",
+    "Cross-conversion between gallons/rack and gallons/hour",
+    "Water-heating resource or efficiency",
+    "Sewer applicability"
+  ]
+}

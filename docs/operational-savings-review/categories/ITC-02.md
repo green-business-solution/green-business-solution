@@ -7,17 +7,17 @@
 
 ## Review Status
 
-- **Category status:** RESEARCHED — READY FOR HUMAN REVIEW
+- **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-FEMP-EXTERIOR-LIGHTING`, `STD-OPERATING-SCHEDULE`
 - **Required User-input count:** 3
 - **Optional Known-Detail count:** 3
-- **Profile-input count:** 4
-- **Bill-input count:** 4
+- **Profile-input count:** 3
+- **Bill-input count:** 2
 - **Standard-assumption count:** 4
 - **Applicable resources:** electricity
-- **Default estimate:** AVAILABLE
-- **Automation readiness:** Ready for implementation
+- **Default estimate:** UNAVAILABLE
+- **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
 
@@ -33,23 +33,77 @@
 
 `fixture_input_kW = fixture_input_W / 1000`
 
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| quantity | replacement fixtures | User | Information Tree > Annual electricity reduction > Replacement Fixture Count | None | Direct input or formula | Replacement Fixture Count | NO_ESTIMATE |
+| fixture_input_kW | kW/fixture and W/fixture | Deterministic unit conversion | fixture_input_kW = fixture_input_W / 1000 | None | Direct input or formula | Existing fixture wattage<br>Proposed fixture wattage | NO_ESTIMATE |
+| fixture_input_W | kW/fixture and W/fixture | Deterministic unit conversion | fixture_input_kW = fixture_input_W / 1000 | None | Direct input or formula | Existing fixture wattage<br>Proposed fixture wattage | NO_ESTIMATE |
+| existing_kW | kW/fixture | Nameplate, measurement, or verified historical source | User Existing Fixture Model or documented watts | None | E-FEMP-EXISTING-UNSUPPORTED: UNSUPPORTED | Tables 1 and 2 - No general installed legacy input-watt table or candidate population | NO_ESTIMATE |
+| proposed_kW | kW/fixture | Exact selected product | User Selected Proposed Model or documented watts | FEMP proposed efficacy threshold is not enough without compatible lumens | E-FEMP-PROPOSED: VERIFIED<br>E-FEMP-WALL-EXAMPLE: VERIFIED | Table 1 - Efficiency Requirements for Exterior Lighting - LER minimums by seven covered exterior application categories<br>Table 2 - Lifetime Savings for Efficient Wall-Mounted Luminaires and Performance Column assumptions - LER 139, 126, and 65; annual energy 257, 286, and 565 kWh; 9,900 to 10,100 lumen output; 3,600 annual operating hours | NO_ESTIMATE |
+| annual_on_hours | hours/year | STD-OPERATING-SCHEDULE | Measured schedule or explicit calendar inputs | Explicit daylight-control calculation only | E-SCHEDULE-EXPLICIT: UNVERIFIED | Calendar arithmetic and USNO daylight definitions - annual hours from explicit hours/day, days/week, active weeks, holidays, timezone, and declared daylight control | NO_ESTIMATE |
+| p_electric | USD/kWh | Bill | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges | None | Direct input or formula | Electric volumetric charge | RETURN_KWH_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+### STD-FEMP-EXTERIOR-LIGHTING
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | E-FEMP-EXISTING-UNSUPPORTED (UNSUPPORTED, none) |
+| proposed or qualified product | E-FEMP-PROPOSED (VERIFIED, proposed)<br>E-FEMP-WALL-EXAMPLE (VERIFIED, narrow-comparison-example) |
+| usage or operating schedule | None |
+| physics or calculation method | E-FEMP-WALL-EXAMPLE (VERIFIED, narrow-comparison-example) |
+| tariff or bill | None |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** existing_installed_distribution, profile_fallback, bill_fallback, exact_product_catalog
+
+**Manual verdict:** Table 1 provides proposed efficacy requirements. Table 2 is one narrow wall-mounted example. Neither supplies a general existing legacy-wattage distribution.
+
+### STD-OPERATING-SCHEDULE
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | None |
+| usage or operating schedule | E-SCHEDULE-EXPLICIT (UNVERIFIED, usage-method)<br>E-SCHEDULE-CONTEXT-UNSUPPORTED (UNSUPPORTED, none) |
+| physics or calculation method | E-SCHEDULE-EXPLICIT (UNVERIFIED, usage-method) |
+| tariff or bill | None |
+| geographic or climate | E-SCHEDULE-EXPLICIT (UNVERIFIED, usage-method) |
+
+**Unsupported roles or uses:** industry_label_only_default, tariff_or_bill
+
+**Manual verdict:** Explicit calendar arithmetic and daylight calculations are defensible after all inputs are supplied. A business label alone does not prove annual operating hours.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** replacement fixture count; existing fixture application; control pattern.
+- **Exact scenario:** insufficient-data.
+- **Source fixture:** docs/operational-savings-fixtures/sources/femp-exterior-lighting-tables.json.
+- **Low/base/high calculation:** No percentile calculation is allowed.
+- **Final result path:** existing and proposed kW -> annual kWh -> electric volumetric rate
+- **Uncertainty:** Unresolved.
+- **Executable golden fixture:** No.
+- **Remaining gate:** Existing fixture watts, proposed product watts, schedule fixture, and end-to-end golden fixture.
+
 ## Fully Expanded Information Tree
 
 ```text
 Annual dollar savings
 ├─ Annual electricity reduction
-│  ├─ In-scope quantity [BR-SCOPE-QUANTITY]
-│  │  └─ Count of identical units in project scope (User)
+│  ├─ Replacement Fixture Count (User)
 │  ├─ Existing fixture wattage
 │  │  ├─ Existing Fixture Model, if known (User)
 │  │  ├─ Existing Fixture Type or Application (User)
-│  │  ├─ site.buildingTypes and site.squareFootage context (Profile)
+│  │  ├─ site.buildingTypes and site.squareFootage.value (Profile)
 │  │  └─ Existing Fixture Wattage Resolution (Standard)
 │  ├─ Proposed fixture wattage
-│  │  ├─ Linked Opportunity (Profile)
+│  │  ├─ Linked Opportunity
 │  │  ├─ Selected Proposed Model, if known (User)
 │  │  ├─ Existing fixture type or resolved class (Standard)
-│  │  ├─ site.buildingTypes and project application context (Profile)
+│  │  ├─ site.buildingTypes and site.squareFootage.value (Profile)
 │  │  └─ Proposed Product Resolution (Standard)
 │  └─ Annual operating hours
 │     ├─ site.geo coordinates (Profile)
@@ -57,18 +111,16 @@ Annual dollar savings
 │     ├─ Exact Schedule, if known (User)
 │     └─ Exterior Lighting Schedule Resolution (Standard)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   └─ Electric variable charge
-      ├─ rate_schedule and customer_class, verified against the service account (Bill)
-      ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-      ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-      └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
+   └─ Electric volumetric charge
+      ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+      └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
 ```
 
 ## Input Workflow
 
 ### Required User Inputs
 
-- Annual electricity reduction > In-scope quantity [BR-SCOPE-QUANTITY] > Count of identical units in project scope
+- Annual electricity reduction > Replacement Fixture Count
 - Annual electricity reduction > Existing fixture wattage > Existing Fixture Type or Application
 - Annual electricity reduction > Annual operating hours > Exterior Lighting Control Pattern
 
@@ -78,41 +130,38 @@ Annual dollar savings
 - Annual electricity reduction > Proposed fixture wattage > Selected Proposed Model, if known
 - Annual electricity reduction > Annual operating hours > Exact Schedule, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
-- Annual electricity reduction > Existing fixture wattage > site.buildingTypes and site.squareFootage context
-- Annual electricity reduction > Proposed fixture wattage > Linked Opportunity
-- Annual electricity reduction > Proposed fixture wattage > site.buildingTypes and project application context
+- Annual electricity reduction > Existing fixture wattage > site.buildingTypes and site.squareFootage.value
+- Annual electricity reduction > Proposed fixture wattage > site.buildingTypes and site.squareFootage.value
 - Annual electricity reduction > Annual operating hours > site.geo coordinates
 
 ### Bill Inputs
 
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
 
 ### Standard-Derived Assumptions
 
 #### STD-FEMP-EXTERIOR-LIGHTING
 
 - **Value produced:** Existing and proposed fixture input watts, application class, low/base/high values, match status, candidate criteria, uncertainty, and source provenance.
-- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Low/base/high behavior:** For exact matches use one documented value; otherwise use the 25th percentile, median, and 75th percentile after application, light-output, efficacy, control, opportunity, and compatibility filters.
-- **Exact versus estimated:** Return documented input watts for an exact unambiguous model; otherwise return an application-compatible low/base/high wattage distribution without claiming an exact model.
+- **Resolution scenario:** proposed-application-threshold; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; insufficient-data.
+- **Low/base/high behavior:** No percentile distribution is supported. The FEMP threshold or narrow example is a single documented value with its exact application limits.
+- **Exact versus estimated:** Return the FEMP proposed efficacy threshold for a covered application or the narrow documented wall-mounted example. Return no existing fixture watts and no generic proposed input watts.
 - **Uncertainty:** Low for exact documented models, moderate for a recognizable application and compatible candidate set, and high for a context-only application selection.
 - **Source:** U.S. Department of Energy FEMP, [Purchasing Energy-Efficient Exterior Lighting](https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting), and DesignLights Consortium, [SSL V6.0 and LUNA V2.0 Technical Requirements](https://designlights.org/wp-content/uploads/2025/11/SSL-V6-LUNA-V2-TR_final_12082025.pdf). FEMP defines covered exterior applications and application-specific efficacy requirements. The DLC requirements underpin the qualified-products list and its verified photometric and electrical fields.
 - **Source version:** FEMP exterior-lighting guidance updated June 2023, DLC SSL V6.0 and LUNA V2.0 release, QPL extract date, record identifiers, and source checksum.
-- **Selected class or candidate set:** Match the existing application to a FEMP covered class; filter proposed records to compatible light output, distribution, mounting, controls, FEMP efficacy, DLC status, and Linked Opportunity restrictions.
+- **Selected class or candidate set:** Match only a proposed application to a FEMP covered class. Any later DLC candidate set requires a separate schema fixture and documented light-output, distribution, mounting, controls, efficacy, and status filters.
 - **Assumptions:** Candidate products satisfy the same service and photometric application; a photometric design is still required before purchase.
 - **Editable:** Yes. Every class selection, candidate filter, and estimated wattage remains visible and can be replaced by a validated exact value.
 
 #### STD-OPERATING-SCHEDULE
 
 - **Value produced:** Low, base, and high annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
-- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Resolution scenario:** measured-exact-input; explicit-calendar-calculation; daylight-control-calculation; insufficient-data.
 - **Low/base/high behavior:** Calculate each value from visible hours-per-day, days-per-week, active-weeks, shift, setback, or daylight assumptions; never apply an unexplained annual-hours constant.
 - **Exact versus estimated:** Return the exact validated schedule total when supplied; otherwise return a deterministic low/base/high range from the recognizable schedule and context.
 - **Uncertainty:** Low for an exact validated schedule, moderate for a complete recognizable schedule, and high for a broad context-derived range.
@@ -126,7 +175,7 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### ■ STD-FEMP-EXTERIOR-LIGHTING — Exterior fixture wattage and proposed-product resolution
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve existing and proposed exterior luminaire input watts from an exact model, recognizable application, site context, Linked Opportunity restrictions, or a compatible qualified-product candidate set.
@@ -140,15 +189,15 @@ The DLC requirements underpin the qualified-products list and its verified photo
 - `exterior_fixture_context` - **Required:** Recognizable existing fixture application plus relevant building and project context.
   - **Resolved by:**
     - **User:** Annual dollar savings > Annual electricity reduction > Existing fixture wattage > Existing Fixture Type or Application
-    - **Profile:** Annual dollar savings > Annual electricity reduction > Existing fixture wattage > site.buildingTypes and site.squareFootage context
+    - **Profile:** Annual dollar savings > Annual electricity reduction > Existing fixture wattage > site.buildingTypes and site.squareFootage.value
     - **Standard:** Annual dollar savings > Annual electricity reduction > Proposed fixture wattage > Existing fixture type or resolved class
-    - **Profile:** Annual dollar savings > Annual electricity reduction > Proposed fixture wattage > site.buildingTypes and project application context
+    - **Profile:** Annual dollar savings > Annual electricity reduction > Proposed fixture wattage > site.buildingTypes and site.squareFootage.value
 - `existing_fixture_model` - **Optional:** Exact existing fixture model or documented input watts when known.
   - **Resolved by:**
     - **User:** Annual dollar savings > Annual electricity reduction > Existing fixture wattage > Existing Fixture Model, if known
 - `linked_opportunity` - **Conditional:** Product, certification, class, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
   - **Resolved by:**
-    - **Profile:** Annual dollar savings > Annual electricity reduction > Proposed fixture wattage > Linked Opportunity
+    - **Derived:** Annual dollar savings > Annual electricity reduction > Proposed fixture wattage > Linked Opportunity
 - `proposed_fixture_model` - **Optional:** Exact selected proposed model when known.
   - **Resolved by:**
     - **User:** Annual dollar savings > Annual electricity reduction > Proposed fixture wattage > Selected Proposed Model, if known
@@ -158,25 +207,23 @@ Existing and proposed fixture input watts, application class, low/base/high valu
 
 **Resolution Contract:**
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return documented input watts for an exact unambiguous model; otherwise return an application-compatible low/base/high wattage distribution without claiming an exact model.
-- **Low/Base/High Rule:** For exact matches use one documented value; otherwise use the 25th percentile, median, and 75th percentile after application, light-output, efficacy, control, opportunity, and compatibility filters.
+- **Supported Scenarios:** proposed-application-threshold; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; insufficient-data.
+- **Scenario Output Behavior:** Return the FEMP proposed efficacy threshold for a covered application or the narrow documented wall-mounted example. Return no existing fixture watts and no generic proposed input watts.
+- **Low/Base/High Rule:** No percentile distribution is supported. The FEMP threshold or narrow example is a single documented value with its exact application limits.
 - **Uncertainty Rule:** Low for exact documented models, moderate for a recognizable application and compatible candidate set, and high for a context-only application selection.
 - **Exact Override:** A validated exact existing or proposed model or documented input-watt measurement overrides the corresponding estimate and records the exact source.
 - **Source Version:** FEMP exterior-lighting guidance updated June 2023, DLC SSL V6.0 and LUNA V2.0 release, QPL extract date, record identifiers, and source checksum.
-- **Selected Class or Candidate Set:** Match the existing application to a FEMP covered class; filter proposed records to compatible light output, distribution, mounting, controls, FEMP efficacy, DLC status, and Linked Opportunity restrictions.
+- **Selected Class or Candidate Set:** Match only a proposed application to a FEMP covered class. Any later DLC candidate set requires a separate schema fixture and documented light-output, distribution, mounting, controls, efficacy, and status filters.
 - **Assumptions:** Candidate products satisfy the same service and photometric application; a photometric design is still required before purchase.
 - **Editable:** Yes. Every class selection, candidate filter, and estimated wattage remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate when model, application, and site context cannot establish a defensible existing class, or when no compatible proposed candidate set remains.
 
 **How to Use:**
-First try an exact existing-model match in source-backed product or manufacturer documentation.
-When only the existing fixture type or application is known, select the matching FEMP application class and calculate a distribution from compatible source records.
-Use Profile context only to select a source-supported application and widen uncertainty; do not infer an exact model.
-For an exact-product Linked Opportunity, restrict the candidate set to its approved products and use the selected exact value.
-For a class, certification, or minimum-performance Linked Opportunity, filter the qualified-product candidates before calculating the distribution.
-When the opportunity has no product restriction or no Linked Opportunity exists, use the existing application, site context, required service, FEMP criteria, and DLC data to define the compatible candidate set.
-An exact selected proposed model overrides the candidate distribution after compatibility validation.
+Resolve existing watts from a nameplate, measurement, or separately verified historical source.
+FEMP Table 1 supports only proposed application-specific efficacy requirements.
+FEMP Table 2 is a narrow wall-mounted 9,900 to 10,100 lumen example and must not be generalized into an installed-baseline distribution.
+A Linked Opportunity may constrain the proposed application class, but the current evidence does not resolve an exact product or input wattage.
+Profile and Bill fallbacks are unsupported.
 Do not add savings for entirely new fixtures, and do not treat lighting quality as a monetary benefit.
 
 **Automation:**
@@ -191,7 +238,7 @@ Do not add savings for entirely new fixtures, and do not treat lighting quality 
 
 ### ■ STD-OPERATING-SCHEDULE — Recognizable schedule to annual operating hours
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve annual operating hours from recognizable business, shift, seasonal, or exterior-lighting control patterns, with an exact schedule or measurement as an optional override.
@@ -220,7 +267,7 @@ Low, base, and high annual operating hours, exact or estimated status, schedule 
 
 **Resolution Contract:**
 - **Resolver Type:** Method resolver.
-- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Supported Scenarios:** measured-exact-input; explicit-calendar-calculation; daylight-control-calculation; insufficient-data.
 - **Scenario Output Behavior:** Return the exact validated schedule total when supplied; otherwise return a deterministic low/base/high range from the recognizable schedule and context.
 - **Low/Base/High Rule:** Calculate each value from visible hours-per-day, days-per-week, active-weeks, shift, setback, or daylight assumptions; never apply an unexplained annual-hours constant.
 - **Uncertainty Rule:** Low for an exact validated schedule, moderate for a complete recognizable schedule, and high for a broad context-derived range.
@@ -254,15 +301,15 @@ Do not infer annual hours solely from an industry label when site operation can 
 
 V1 covers one-for-one replacement or upgrade of existing exterior fixtures.
 Use separate rows when fixture types or schedules differ materially, and exclude entirely new fixture additions from the savings path.
-The default path uses recognizable fixture application, site context, Linked Opportunity restrictions when present, and an authoritative low/base/high wattage distribution.
+No default existing-wattage path is claimed because the reviewed FEMP artifact supplies proposed efficacy requirements and a narrow wall-mounted example, not a representative installed legacy-fixture population.
 Exact models and exact schedules override estimates.
-Return no estimate when neither model, fixture application, nor site context supports a defensible class, or when the schedule cannot be resolved.
+Return no estimate until existing fixture watts are measured, read from a nameplate, or resolved from a separately verified installed-baseline source, and when the schedule cannot be resolved.
 Use a project photometric design for scope suitability, but do not monetize lighting quality.
 
-Default-estimate behavior: Use the documented minimum-input path and replace estimates with validated Optional Known Details when supplied.
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
 
 Expected uncertainty: STD-FEMP-EXTERIOR-LIGHTING: Moderate for class-based screening and low for exact documented matches. STD-OPERATING-SCHEDULE: Low with an exact schedule and moderate to high for context-derived schedules.
 
 ## Human Review Decisions
 
-- Approve the documented category boundary, inputs, Standard automation, missing-data behavior, uncertainty, and exclusions before implementation.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

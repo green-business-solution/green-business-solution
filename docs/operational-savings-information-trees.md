@@ -18,6 +18,8 @@ Regenerate it with `node scripts/generate-operational-savings-review-pages.mjs` 
 - `S` is annual direct operational-resource savings in dollars.
 - `ΔR_r` is annual avoided resource `r` in the bill's native unit and may be negative when a retrofit adds resource use.
 - `p_r` is the avoidable marginal price for resource `r` from BR-AVOIDABLE-RESOURCE-RATE.
+- `to_energy(resource_quantity, resource_unit)` and `to_billed_unit(energy, resource_unit)` are explicit deterministic conversions between a bill's native resource unit and the common energy unit used by a formula.
+- Every thermal formula must perform this conversion before multiplying a resource quantity by a price, even when the conversion is an identity for electricity.
 - Fixed charges are excluded unless the proposed case demonstrably removes the charge.
 - A whole-bill average is not a marginal rate.
 - Annual energy is not interval demand.
@@ -34,24 +36,32 @@ Nothing in this document is finalized.
 
 ### BR-AVOIDABLE-RESOURCE-RATE - Avoidable marginal resource price
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Value:** `p_r`, the price avoided or incurred by the next unit of resource `r` during the modeled periods.
 
 ```text
 Avoidable marginal resource price
-├─ Electric variable charge {{resource: electricity}}
-│  ├─ rate_schedule and customer_class, verified against the service account (Bill)
-│  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-│  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-│  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-├─ Gas variable charge {{resource: gas}}
-│  ├─ gas_rate_schedule, verified against the service account (Bill)
-│  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-├─ Water and sewer variable charge {{resource: water-sewer}}
-│  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-└─ Liquid or vehicle-fuel variable charge {{resource: liquid-fuel, vehicle-fuel}}
-   └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+├─ Electric volumetric charge {{resource: electricity}} {{component: electric-volumetric}}
+│  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+│  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+├─ Electric time-of-use energy charge {{resource: electricity}} {{component: electric-time-of-use}}
+│  └─ Verified tariff calendar for the modeled interval import energy; the current bill parser has no complete canonical tariff artifact {{input: required}} (User)
+├─ Electric demand charge {{resource: electricity}} {{component: electric-demand}}
+│  ├─ utilityExtractedValues demand_charge_rate, when parsed (Bill)
+│  └─ Verified billing-demand and ratchet rules applied to interval kW {{input: required}} (User)
+├─ Electric export credit {{resource: electricity}} {{component: electric-export}}
+│  └─ Verified export-credit rule applied to interval exports; no current canonical bill field {{input: required}} (User)
+├─ Electric non-bypassable export treatment {{resource: electricity}} {{component: electric-export-non-bypassable}}
+│  └─ Verified non-bypassable tariff rule applied to interval exports; no current canonical bill field {{input: required}} (User)
+├─ Gas volumetric charge {{resource: gas}} {{component: gas-volumetric}}
+│  └─ utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms (Bill)
+├─ Water volumetric charge {{resource: water-sewer}} {{component: water-volumetric}}
+│  └─ annual_water_cost divided by annual_water_use after explicit water_unit normalization (Bill)
+├─ Sewer volumetric charge {{resource: water-sewer}} {{component: sewer-volumetric}}
+│  └─ annual_sewer_cost divided by applicable annual_water_use after explicit water_unit normalization, only when the avoided use is sewer-billed (Bill)
+└─ Liquid or vehicle-fuel price {{resource: liquid-fuel, vehicle-fuel}} {{component: fuel-price}}
+   └─ Documented current project fuel price for the matching fuel and geography {{input: required}} (User)
 ```
 
 For electricity, preserve energy, demand, time-of-use, seasonal, export-credit, and non-bypassable components separately.
@@ -60,11 +70,11 @@ Exclude fixed customer charges unless usage elimination also removes the charge.
 If only a whole-bill blended rate exists, use it only for a single volumetric tariff and flag the result as estimated.
 Otherwise return no dollar value while retaining the resource result.
 
-**Used By:** ITC-01 through ITC-14, ITC-20 through ITC-22, ITC-29, ITC-30, and ITC-32 through ITC-54.
+**Used By:** ITC-01 through ITC-14, ITC-16, ITC-17, and ITC-19 through ITC-54.
 
 ### BR-ANNUAL-BILL-RESOURCE - Annual billed resource baseline
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Value:** Annual imported quantity for the requested resource and service period.
 
@@ -73,7 +83,6 @@ Annual billed resource r
 ├─ annual_kwh for electricity {{resource: electricity}} (Bill)
 ├─ annual_therms for gas {{resource: gas}} (Bill)
 ├─ annual_water_use with water_unit for water and sewer {{resource: water-sewer}} (Bill)
-├─ annual_gallons with the matching fuel type for liquid or vehicle fuel {{resource: liquid-fuel, vehicle-fuel}} (Bill)
 ├─ billing_period_start (Bill)
 └─ billing_period_end (Bill)
 ```
@@ -81,11 +90,11 @@ Annual billed resource r
 Normalize only with explicit unit conversions, annualize only when at least 10 representative months are present, and retain the coverage fraction.
 Do not derive end-use energy from a whole-building bill without a documented Standard or user-confirmed allocation.
 
-**Used By:** ITC-01, ITC-03 through ITC-07, ITC-09, ITC-11, ITC-14, ITC-18, ITC-20 through ITC-22, ITC-29, ITC-34, ITC-36, ITC-45, ITC-46, ITC-48, and ITC-49.
+**Used By:** ITC-01, ITC-03 through ITC-07, ITC-11, ITC-14, ITC-45, ITC-46, ITC-48, and ITC-49.
 
 ### BR-ANNUAL-OPERATING-HOURS - Resolved annual operating time
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Value:** Annual operating hours resolved from a recognizable schedule, with a measured exact override when supplied.
 
@@ -94,7 +103,7 @@ Annual operating hours
 ├─ Recognizable Business, Shift, Seasonal, or Usage Pattern {{lookup: operating_schedule}} {{input: required}} (User)
 ├─ Detailed Operating Days, Shifts, or Active Season, if known {{lookup: operating_schedule_details}} {{input: optional}} (User)
 ├─ Measured Annual Operating Hours, if known {{lookup: operating_schedule, measured_annual_operating_hours, measur_calculator_inputs, operating_profile}} {{input: optional}} (User)
-├─ site.geo coordinates and business schedule context {{lookup: operating_schedule}} (Profile)
+├─ site.geo.coordinates and business.primaryActivityText {{lookup: operating_schedule}} (Profile)
 └─ Deterministic annual operating-hours resolution {{lookup: operating_schedule}} (Standard)
 ```
 
@@ -108,18 +117,16 @@ Return no estimate when those facts cannot support a defensible schedule.
 
 ### BR-INTERVAL-LOAD-AND-TARIFF - Chronological electric load and complete tariff
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Value:** Aligned interval import load and tariff rules for one analysis year.
 
 ```text
 Chronological load and tariff
-├─ Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field {{lookup: chronological_load_and_tariff}} (Bill)
-├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact {{lookup: chronological_load_and_tariff}} (Bill)
-├─ rate_schedule and customer_class, verified rather than provider-inferred {{lookup: chronological_load_and_tariff}} (Bill)
-├─ demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact {{lookup: chronological_load_and_tariff}} (Bill)
-├─ time_of_use_periods and seasonal calendar from a verified tariff artifact {{lookup: chronological_load_and_tariff}} (Bill)
-└─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field {{lookup: chronological_load_and_tariff}} (Bill)
+├─ Timestamped Green Button interval kW or kWh artifact; no current canonical bill-dictionary field {{lookup: chronological_load_and_tariff}} {{input: required}} (User)
+├─ Interval timezone and daylight-saving treatment from the uploaded interval artifact {{lookup: chronological_load_and_tariff}} {{input: required}} (User)
+├─ utilityExtractedValues rate_schedule and customer_class, verified rather than provider-inferred {{lookup: chronological_load_and_tariff}} (Bill)
+└─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
 All intervals must be continuous, aligned to the tariff calendar, and reconciled to billed monthly energy.
@@ -130,7 +137,7 @@ When this branch is missing, the affected interval-value category returns no est
 
 ### BR-SCOPE-QUANTITY - In-scope equipment quantity
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Value:** Count of identical in-scope units represented by one calculation row.
 
@@ -141,11 +148,11 @@ In-scope quantity
 
 Split a project into rows when equipment models, schedules, ratings, or operating conditions differ materially.
 
-**Used By:** ITC-02, ITC-10, ITC-12, ITC-13, ITC-27, ITC-29, ITC-30, ITC-32, ITC-33, ITC-37 through ITC-44, ITC-47, and ITC-50 through ITC-54.
+**Used By:** ITC-10, ITC-12, ITC-13, ITC-27, ITC-29, ITC-30, ITC-32, ITC-33, ITC-37 through ITC-44, ITC-47, and ITC-50 through ITC-54.
 
 ### BR-CERTIFIED-PRODUCT-RESOLUTION - Existing and proposed certified-product resolution
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Value:** Existing and proposed engineering values resolved from recognizable product classes, exact optional models, Linked Opportunity constraints, and authoritative certified-product records.
 
@@ -154,14 +161,14 @@ Certified existing and proposed product resolution
 ├─ Existing Recognizable Equipment Type or Application {{lookup: ccms_product_context, energy_star_product_context}} {{input: required}} (User)
 ├─ Existing Model, if known {{lookup: ccms_exact_product, energy_star_exact_product}} {{input: optional}} (User)
 ├─ Existing Capacity or Size Class, if known {{lookup: ccms_exact_product, energy_star_exact_product}} {{input: optional}} (User)
-├─ Linked Opportunity {{lookup: linked_opportunity}} (Profile)
+├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 ├─ Proposed Product Class or Intended Scope {{lookup: ccms_product_context, energy_star_product_context}} {{input: required}} (User)
 ├─ Selected Proposed Model, if known {{lookup: ccms_exact_product, energy_star_exact_product}} {{input: optional}} (User)
 ├─ Proposed Capacity or Size Class, if known {{lookup: ccms_exact_product, energy_star_exact_product}} {{input: optional}} (User)
 └─ Certified engineering-value resolution (Standard)
 ```
 
-The applicable product Standard defines exact-model, type/class, Profile or Bill fallback, Linked Opportunity, no-opportunity, candidate-distribution, exact-override, uncertainty, and no-estimate behavior.
+The applicable product Standard defines only the scenarios its evidence records support, including any Linked Opportunity restriction, exact override, uncertainty, and no-estimate behavior.
 Do not infer an exact model when the source supports only a product class or candidate distribution.
 
 **Used By:** ITC-03, ITC-06, ITC-07, ITC-10, ITC-13, ITC-50, ITC-52, and ITC-53.
@@ -170,8 +177,8 @@ Do not infer an exact model when the source supports only a product class or can
 
 | Category | Information-tree identity | Status | Retrofit count |
 |---|---|---|---:|
-| `ITC-01` | [ComStock archetype annual resource delta](operational-savings-review/categories/ITC-01.md) | RESEARCHED — READY FOR HUMAN REVIEW | 13 |
-| `ITC-02` | [Exterior lighting power and schedule](operational-savings-review/categories/ITC-02.md) | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
+| `ITC-01` | [ComStock archetype annual resource delta](operational-savings-review/categories/ITC-01.md) | DRAFT | 13 |
+| `ITC-02` | [Exterior lighting power and schedule](operational-savings-review/categories/ITC-02.md) | DRAFT | 1 |
 | `ITC-03` | [Fuel-fired equipment efficiency replacement](operational-savings-review/categories/ITC-03.md) | DRAFT | 1 |
 | `ITC-04` | [Boiler control fractional fuel reduction](operational-savings-review/categories/ITC-04.md) | DRAFT | 1 |
 | `ITC-05` | [Duct loss reduction](operational-savings-review/categories/ITC-05.md) | DRAFT | 1 |
@@ -198,12 +205,12 @@ Do not infer an exact model when the source supports only a product class or can
 | `ITC-26` | [Microgrid composite interval dispatch](operational-savings-review/categories/ITC-26.md) | DRAFT | 1 |
 | `ITC-27` | [Public EVSE added-load bill impact](operational-savings-review/categories/ITC-27.md) | DRAFT | 3 |
 | `ITC-28` | [Fleet charging added-load bill impact](operational-savings-review/categories/ITC-28.md) | DRAFT | 1 |
-| `ITC-29` | [Light-duty vehicle resource switching](operational-savings-review/categories/ITC-29.md) | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
+| `ITC-29` | [Light-duty vehicle resource switching](operational-savings-review/categories/ITC-29.md) | DRAFT | 1 |
 | `ITC-30` | [Forklift resource switching](operational-savings-review/categories/ITC-30.md) | BLOCKED | 1 |
 | `ITC-31` | [Managed fleet-charging interval shift](operational-savings-review/categories/ITC-31.md) | DRAFT | 1 |
-| `ITC-32` | [Flow-fixture water and hot-water reduction](operational-savings-review/categories/ITC-32.md) | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
-| `ITC-33` | [Flush-fixture water reduction](operational-savings-review/categories/ITC-33.md) | RESEARCHED — READY FOR HUMAN REVIEW | 1 |
-| `ITC-34` | [Landscape water-budget reduction](operational-savings-review/categories/ITC-34.md) | RESEARCHED — READY FOR HUMAN REVIEW | 2 |
+| `ITC-32` | [Flow-fixture water and hot-water reduction](operational-savings-review/categories/ITC-32.md) | DRAFT | 1 |
+| `ITC-33` | [Flush-fixture water reduction](operational-savings-review/categories/ITC-33.md) | DRAFT | 1 |
+| `ITC-34` | [Landscape water-budget reduction](operational-savings-review/categories/ITC-34.md) | DRAFT | 2 |
 | `ITC-35` | [Measured leak avoidance](operational-savings-review/categories/ITC-35.md) | DRAFT | 1 |
 | `ITC-36` | [Cooling-tower water and fan optimization](operational-savings-review/categories/ITC-36.md) | DRAFT | 1 |
 | `ITC-37` | [Demand-controlled kitchen ventilation](operational-savings-review/categories/ITC-37.md) | DRAFT | 1 |
@@ -229,7 +236,7 @@ Do not infer an exact model when the source supports only a product class or can
 
 ### ITC-01 - ComStock archetype annual resource delta
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Applicable Resources:** electricity, gas
 
@@ -251,20 +258,20 @@ Do not infer an exact model when the source supports only a product class or can
 
 **Primary Formula:**
 
-`S = Σ_r (ΔR_r × p_r)`
+`S = Σ_r (valued_R_r × p_r)`
 
 **Supporting Formula(s):**
 
 `ΔR_r = floor_area × median_ComStock_delta_r_per_ft²`
 
-`avoided_R_r = min(max(ΔR_r, 0), billed_R_r)` while negative `ΔR_r` remains added resource use.
+`valued_R_r = min(ΔR_r, billed_R_r)` when `ΔR_r ≥ 0`; otherwise `valued_R_r = ΔR_r`.
 
 **Information Tree:**
 
 ```text
 Annual direct resource dollar savings
 ├─ Annual resource delta by resource
-│  ├─ Linked Opportunity {{lookup: canonical_retrofit}} (Profile)
+│  ├─ Linked Opportunity {{lookup: canonical_retrofit}} {{intermediate: project-opportunity}}
 │  ├─ Existing-condition selector {{lookup: existing_condition}} {{input: required}} (User)
 │  ├─ Proposed-option selector {{lookup: proposed_option}} {{input: required}} (User)
 │  ├─ site.buildingTypes canonical building type {{lookup: building_type}} (Profile)
@@ -277,16 +284,16 @@ Annual direct resource dollar savings
 
 **Standards:** STD-COMSTOCK-ANNUAL-DELTA.
 
-**Default Estimate:** AVAILABLE
+**Default Estimate:** UNAVAILABLE
 
 **Notes:** Only the 13 explicitly crosswalked ComStock measures belong here.
 Return no estimate when the linked opportunity scope does not exactly match a documented ComStock upgrade-measure record.
 Do not add separate measure results together.
-Show the interquartile range and applicability share beside the screening estimate.
+Show an interquartile range and applicability share only after the eligible population, filters, weights, and sample count are fixture-backed.
 
 ### ITC-02 - Exterior lighting power and schedule
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Applicable Resources:** electricity
 
@@ -307,17 +314,17 @@ Show the interquartile range and applicability share beside the screening estima
 ```text
 Annual dollar savings
 ├─ Annual electricity reduction
-│  ├─ BR-SCOPE-QUANTITY
+│  ├─ Replacement Fixture Count {{input: required}} (User)
 │  ├─ Existing fixture wattage
 │  │  ├─ Existing Fixture Model, if known {{lookup: existing_fixture_model}} {{input: optional}} (User)
 │  │  ├─ Existing Fixture Type or Application {{lookup: exterior_fixture_context}} {{input: required}} (User)
-│  │  ├─ site.buildingTypes and site.squareFootage context {{lookup: exterior_fixture_context}} (Profile)
+│  │  ├─ site.buildingTypes and site.squareFootage.value {{lookup: exterior_fixture_context}} (Profile)
 │  │  └─ Existing Fixture Wattage Resolution {{lookup: exterior_fixture_resolution}} (Standard)
 │  ├─ Proposed fixture wattage
-│  │  ├─ Linked Opportunity {{lookup: linked_opportunity}} (Profile)
+│  │  ├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 │  │  ├─ Selected Proposed Model, if known {{lookup: proposed_fixture_model}} {{input: optional}} (User)
 │  │  ├─ Existing fixture type or resolved class {{lookup: exterior_fixture_context}} (Standard)
-│  │  ├─ site.buildingTypes and project application context {{lookup: exterior_fixture_context}} (Profile)
+│  │  ├─ site.buildingTypes and site.squareFootage.value {{lookup: exterior_fixture_context}} (Profile)
 │  │  └─ Proposed Product Resolution {{lookup: exterior_fixture_resolution}} (Standard)
 │  └─ Annual operating hours
 │     ├─ site.geo coordinates {{lookup: operating_schedule}} (Profile)
@@ -329,13 +336,13 @@ Annual dollar savings
 
 **Standards:** STD-FEMP-EXTERIOR-LIGHTING and STD-OPERATING-SCHEDULE.
 
-**Default Estimate:** AVAILABLE
+**Default Estimate:** UNAVAILABLE
 
 **Notes:** V1 covers one-for-one replacement or upgrade of existing exterior fixtures.
 Use separate rows when fixture types or schedules differ materially, and exclude entirely new fixture additions from the savings path.
-The default path uses recognizable fixture application, site context, Linked Opportunity restrictions when present, and an authoritative low/base/high wattage distribution.
+No default existing-wattage path is claimed because the reviewed FEMP artifact supplies proposed efficacy requirements and a narrow wall-mounted example, not a representative installed legacy-fixture population.
 Exact models and exact schedules override estimates.
-Return no estimate when neither model, fixture application, nor site context supports a defensible class, or when the schedule cannot be resolved.
+Return no estimate until existing fixture watts are measured, read from a nameplate, or resolved from a separately verified installed-baseline source, and when the schedule cannot be resolved.
 Use a project photometric design for scope suitability, but do not monetize lighting quality.
 
 ### ITC-03 - Fuel-fired equipment efficiency replacement
@@ -400,7 +407,7 @@ Annual dollar savings
 ├─ Annual fuel reduction
 │  ├─ Annual boiler fuel
 │  │  ├─ BR-ANNUAL-BILL-RESOURCE
-│  │  └─ Boiler share of billed fuel, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  │  └─ Boiler share of billed fuel {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Existing control sequence {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Proposed control sequence {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  └─ MEASUR baseline and proposed fuel result (Standard)
@@ -440,9 +447,9 @@ Annual dollar savings
 │  ├─ Annual HVAC resource by end use and fuel {{lookup: end_use_and_fuel}}
 │  │  ├─ BR-ANNUAL-BILL-RESOURCE
 │  │  └─ HVAC share of billed resource, if known {{input: optional}} (User)
-│  ├─ Canonical retrofit ID from linked-opportunity taxonomy match {{lookup: canonical_retrofit}} (Profile)
+│  ├─ Canonical retrofit ID from linked-opportunity taxonomy match {{lookup: canonical_retrofit}} {{intermediate: project-opportunity}}
 │  ├─ site.buildingTypes commercial building type {{lookup: building_type}} (Profile)
-│  ├─ Climate zone resolved from site.geo coordinates or county {{lookup: climate_zone}} (Profile)
+│  ├─ Climate zone resolved from site.geo.coordinates or site.geo.countyFips {{lookup: climate_zone}} (Profile)
 │  ├─ Existing building vintage class {{lookup: building_vintage}} {{input: required}} (User)
 │  ├─ Existing duct location and condition {{lookup: existing_condition}} {{input: required}} (User)
 │  ├─ Proposed sealing and insulation scope {{lookup: proposed_option}} {{input: required}} (User)
@@ -472,7 +479,7 @@ Annual dollar savings
 
 **Supporting Formula(s):**
 
-`annual_hot_water_load = current_annual_input × η_existing`
+`annual_hot_water_load = to_energy(current_annual_input, existing_resource_unit) × η_existing`
 
 `avoided_existing_resource = current_annual_input` for a complete replacement of the allocated load.
 
@@ -546,11 +553,13 @@ The category remains DRAFT until a repeatable DOE database export path is approv
 
 **Primary Formula:**
 
-`S = useful_solar_thermal_output / backup_efficiency × p_backup_resource`
+`S = avoided_backup_resource × p_backup_resource`
 
 **Supporting Formula(s):**
 
 `useful_solar_thermal_output = min(SAM_output, annual_delivered_hot_water_load)`
+
+`avoided_backup_resource = to_billed_unit(useful_solar_thermal_output / backup_efficiency, backup_resource_unit)`
 
 **Information Tree:**
 
@@ -560,14 +569,14 @@ Annual dollar savings
 │  ├─ site.geo.coordinates, verified rather than address-only {{lookup: site_coordinates}} (Profile)
 │  ├─ Collector configuration
 │  │  ├─ Collector type {{lookup: solar_thermal_configuration}} {{input: required}} (User)
-│  │  ├─ Collector area, if known {{lookup: solar_thermal_configuration}} {{input: optional}} (User)
-│  │  ├─ Tilt, if known {{lookup: solar_thermal_configuration}} {{input: optional}} (User)
-│  │  ├─ Azimuth, if known {{lookup: solar_thermal_configuration}} {{input: optional}} (User)
-│  │  └─ Storage volume, if known {{lookup: solar_thermal_configuration}} {{input: optional}} (User)
-│  ├─ Annual delivered hot-water thermal load, if known {{lookup: hot_water_load}} {{input: optional}} (User)
+│  │  ├─ Collector area {{lookup: solar_thermal_configuration}} {{input: required}} (User)
+│  │  ├─ Tilt {{lookup: solar_thermal_configuration}} {{input: required}} (User)
+│  │  ├─ Azimuth {{lookup: solar_thermal_configuration}} {{input: required}} (User)
+│  │  └─ Storage volume {{lookup: solar_thermal_configuration}} {{input: required}} (User)
+│  ├─ Annual delivered hot-water thermal load {{lookup: hot_water_load}} {{input: required}} (User)
 │  ├─ Backup resource
 │  │  ├─ Backup fuel {{lookup: backup_resource}} {{input: required}} (User)
-│  │  └─ Backup efficiency, if known {{lookup: backup_resource}} {{input: optional}} (User)
+│  │  └─ Backup efficiency {{lookup: backup_resource}} {{input: required}} (User)
 │  └─ SAM solar-thermal output (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
@@ -594,7 +603,9 @@ Annual dollar savings
 
 **Supporting Formula(s):**
 
-`avoided_thermal_input = avoided_distribution_heat / heater_efficiency`
+`avoided_distribution_heat = existing_distribution_heat - proposed_distribution_heat`
+
+`avoided_thermal_input = to_billed_unit(avoided_distribution_heat / heater_efficiency, heating_resource_unit)`
 
 `avoided_pump_kWh = pump_kW × avoided_run_hours`
 
@@ -603,11 +614,12 @@ Annual dollar savings
 ```text
 Annual dollar savings
 ├─ Annual thermal-input and pump-electricity reduction
-│  ├─ BR-ANNUAL-BILL-RESOURCE
-│  ├─ Recirculation share of water-heating resource, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Existing annual distribution heat loss {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Proposed annual distribution heat loss {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Existing water-heating system efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Existing control schedule {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Proposed control schedule {{lookup: measur_calculator_inputs}} {{input: required}} (User)
-│  ├─ Pump input kW, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Pump input kW {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ BR-ANNUAL-OPERATING-HOURS
 │  └─ MEASUR thermal and pump result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -617,7 +629,7 @@ Annual dollar savings
 
 **Default Estimate:** UNAVAILABLE
 
-**Notes:** Status remains DRAFT until the adapter demonstrates a minimum-input heat-loss calculation without assumed pipe geometry.
+**Notes:** Status remains DRAFT until the adapter pins its heat-loss boundary, required physical inputs, and a golden example.
 
 ### ITC-10 - Refrigeration certified-rating replacement
 
@@ -683,9 +695,9 @@ Annual dollar savings
 │  ├─ Affected refrigeration annual kWh {{lookup: end_use_and_fuel}}
 │  │  ├─ BR-ANNUAL-BILL-RESOURCE
 │  │  └─ Affected-load share, if known {{input: optional}} (User)
-│  ├─ Canonical retrofit ID from linked-opportunity taxonomy match {{lookup: canonical_retrofit}} (Profile)
+│  ├─ Canonical retrofit ID from linked-opportunity taxonomy match {{lookup: canonical_retrofit}} {{intermediate: project-opportunity}}
 │  ├─ site.buildingTypes commercial building type {{lookup: building_type}} (Profile)
-│  ├─ Climate zone resolved from site.geo coordinates or county {{lookup: climate_zone}} (Profile)
+│  ├─ Climate zone resolved from site.geo.coordinates or site.geo.countyFips {{lookup: climate_zone}} (Profile)
 │  ├─ Existing building vintage class {{lookup: building_vintage}} {{input: required}} (User)
 │  ├─ Existing condition or control {{lookup: existing_condition}} {{input: required}} (User)
 │  ├─ Proposed scope or sequence {{lookup: proposed_option}} {{input: required}} (User)
@@ -724,8 +736,8 @@ No broad refrigeration percentage may be substituted.
 Annual dollar savings
 ├─ Annual electricity reduction
 │  ├─ BR-SCOPE-QUANTITY
-│  ├─ Existing motor input or shaft rating, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Proposed motor input or shaft rating, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Existing motor input or shaft rating {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Proposed motor input or shaft rating {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ BR-ANNUAL-OPERATING-HOURS
 │  └─ Motor performance calculation (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -762,7 +774,7 @@ Annual dollar savings
 ├─ Annual ice-machine electricity and water reduction
 │  ├─ BR-SCOPE-QUANTITY
 │  ├─ BR-CERTIFIED-PRODUCT-RESOLUTION
-│  ├─ Annual pounds of ice produced per machine, if known {{input: optional}} (User)
+│  ├─ Annual pounds of ice produced per machine {{input: required}} (User)
 │  └─ Certified kWh and potable gallons per 100 pounds of ice (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
@@ -802,11 +814,11 @@ No additional formula is required.
 Annual dollar savings
 ├─ Annual direct resource reduction by end use and fuel {{lookup: end_use_and_fuel}}
 │  ├─ BR-ANNUAL-BILL-RESOURCE
-│  ├─ Canonical retrofit ID from linked-opportunity taxonomy match {{lookup: canonical_retrofit}} (Profile)
+│  ├─ Canonical retrofit ID from linked-opportunity taxonomy match {{lookup: canonical_retrofit}} {{intermediate: project-opportunity}}
 │  ├─ Existing-condition selector {{lookup: existing_condition}} {{input: required}} (User)
 │  ├─ Proposed-option selector {{lookup: proposed_option}} {{input: required}} (User)
 │  ├─ site.buildingTypes commercial building type {{lookup: building_type}} (Profile)
-│  ├─ Climate zone resolved from site.geo coordinates or county {{lookup: climate_zone}} (Profile)
+│  ├─ Climate zone resolved from site.geo.coordinates or site.geo.countyFips {{lookup: climate_zone}} (Profile)
 │  ├─ Existing building vintage class {{lookup: building_vintage}} {{input: required}} (User)
 │  └─ Exact Scout ECM reduction factor (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -851,7 +863,7 @@ No supporting formula is required.
 
 ```text
 Annual direct operational-resource savings equals zero
-└─ Linked Opportunity (Profile)
+└─ Linked Opportunity {{intermediate: project-opportunity}}
 ```
 
 **Standards:** None.
@@ -885,10 +897,10 @@ Calculate a linked physical measure only in its own category.
 Annual bill reduction
 ├─ BR-INTERVAL-LOAD-AND-TARIFF
 ├─ Controllable-load definition {{lookup: reopt_category_constraints}} {{input: required}} (User)
-├─ Maximum shed kW, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
+├─ Maximum shed kW {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ Event-availability schedule {{lookup: reopt_category_constraints}} {{input: required}} (User)
-├─ Maximum event duration, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Rebound or recovery constraint, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
+├─ Maximum event duration {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Rebound or recovery constraint {{lookup: reopt_category_constraints}} {{input: required}} (User)
 └─ Audited load template and REopt bill result (Standard)
 ```
 
@@ -920,9 +932,9 @@ Only avoided utility bill charges are included.
 
 **Supporting Formula(s):**
 
-`onsite_offset_t = min(PV_AC_kWh_t, baseline_import_kWh_t)`
+`onsite_offset_kWh_t = min(PV_AC_kWh_t, baseline_import_kWh_t)`
 
-`export_t = max(PV_AC_kWh_t - baseline_import_kWh_t, 0)`
+`export_kWh_t = max(PV_AC_kWh_t - baseline_import_kWh_t, 0)`
 
 **Information Tree:**
 
@@ -930,13 +942,14 @@ Only avoided utility bill charges are included.
 Annual PV bill reduction
 ├─ site.geo.coordinates, verified rather than address-only {{lookup: site_coordinates}} (Profile)
 ├─ PV array configuration
-│  ├─ DC capacity, if known {{lookup: pv_array_configuration}} {{input: optional}} (User)
-│  ├─ Module Type, if known {{lookup: pv_array_configuration}} {{input: optional}} (User)
+│  ├─ DC capacity {{lookup: pv_array_configuration}} {{input: required}} (User)
+│  ├─ Module Type {{lookup: pv_array_configuration}} {{input: required}} (User)
 │  ├─ Array type {{lookup: pv_array_configuration}} {{input: required}} (User)
-│  ├─ System losses, if known {{lookup: pv_array_configuration}} {{input: optional}} (User)
-│  ├─ Tilt, if known {{lookup: pv_array_configuration}} {{input: optional}} (User)
-│  └─ Azimuth, if known {{lookup: pv_array_configuration}} {{input: optional}} (User)
+│  ├─ System losses {{lookup: pv_array_configuration}} {{input: required}} (User)
+│  ├─ Tilt {{lookup: pv_array_configuration}} {{input: required}} (User)
+│  └─ Azimuth {{lookup: pv_array_configuration}} {{input: required}} (User)
 ├─ PVWatts interval AC generation (Standard)
+├─ Interval onsite-offset and export calculation {{intermediate: formula}}
 └─ BR-INTERVAL-LOAD-AND-TARIFF
 ```
 
@@ -969,12 +982,11 @@ Do not assume retail credit for exports.
 
 ```text
 Annual contract bill reduction
-├─ Allocated or credited kWh by period from the executed contract and bill; no current canonical bill field (Bill)
-├─ Credit rate by period from the executed contract and bill; no current canonical bill field (Bill)
-├─ Subscription charge by period from the executed contract and bill; no current canonical bill field (Bill)
+├─ Allocated or credited kWh by period from the executed contract or statement {{input: required}} (User)
+├─ Credit rate by period from the executed contract or statement {{input: required}} (User)
+├─ Subscription charge by period from the executed contract or statement {{input: required}} (User)
 ├─ Contract escalation rule {{input: required}} (User)
-├─ Contract term rule {{input: required}} (User)
-└─ BR-ANNUAL-BILL-RESOURCE
+└─ Contract term rule {{input: required}} (User)
 ```
 
 **Standards:** None.
@@ -1000,7 +1012,9 @@ Renewable attributes, emissions, incentives, and resale value are excluded.
 
 **Supporting Formula(s):**
 
-`onsite_offset_t = min(wind_kWh_t, baseline_import_kWh_t)`
+`onsite_offset_kWh_t = min(wind_kWh_t, baseline_import_kWh_t)`
+
+`export_kWh_t = max(wind_kWh_t - baseline_import_kWh_t, 0)`
 
 **Information Tree:**
 
@@ -1008,11 +1022,12 @@ Renewable attributes, emissions, incentives, and resale value are excluded.
 Annual wind bill reduction
 ├─ site.geo.coordinates, verified rather than address-only {{lookup: site_coordinates}} (Profile)
 ├─ Wind Turbine Class or Intended Application {{lookup: wind_system_configuration}} {{input: required}} (User)
-├─ Exact Turbine Model or Power Curve, if known {{lookup: wind_system_configuration}} {{input: optional}} (User)
-├─ Hub Height, if known {{lookup: wind_system_configuration}} {{input: optional}} (User)
-├─ Loss factor, if known {{lookup: wind_system_configuration}} {{input: optional}} (User)
-├─ Analysis Year, if known {{lookup: analysis_year}} {{input: optional}} (User)
+├─ Exact Turbine Model or Power Curve {{lookup: wind_system_configuration}} {{input: required}} (User)
+├─ Hub Height {{lookup: wind_system_configuration}} {{input: required}} (User)
+├─ Loss factor {{lookup: wind_system_configuration}} {{input: required}} (User)
+├─ Analysis Year {{lookup: analysis_year}} {{input: required}} (User)
 ├─ WIND Toolkit resource and SAM generation (Standard)
+├─ Interval onsite-offset and export calculation {{intermediate: formula}}
 └─ BR-INTERVAL-LOAD-AND-TARIFF
 ```
 
@@ -1040,9 +1055,9 @@ Annual wind bill reduction
 
 `annual_generation = capacity_kW × annual_operating_hours × load_fraction`
 
-`added_fuel = annual_generation / electric_efficiency`
+`added_fuel = to_billed_unit(annual_generation / electric_efficiency, fuel_unit)`
 
-`avoided_grid_kWh = min(annual_generation, coincident_onsite_electric_load)` unless an explicit export rule exists.
+`avoided_grid_kWh = min(annual_generation, coincident_onsite_electric_load)`
 
 **Information Tree:**
 
@@ -1051,14 +1066,12 @@ Annual resource value
 ├─ Prime-mover type {{lookup: prime_mover_and_fuel}} {{input: required}} (User)
 ├─ Input fuel {{lookup: prime_mover_and_fuel}} {{input: required}} (User)
 ├─ Selected Unit Model, if known {{lookup: chp_exact_model}} {{input: optional}} (User)
-├─ Total installed capacity, if known {{lookup: generation_capacity}} {{input: optional}} (User)
-├─ Linked Opportunity {{lookup: linked_opportunity}} (Profile)
+├─ Total installed capacity {{lookup: generation_capacity}} {{input: required}} (User)
+├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 ├─ BR-ANNUAL-OPERATING-HOURS
-├─ Operating load fraction, if known {{lookup: operating_profile}} {{input: optional}} (User)
+├─ Operating load fraction {{lookup: operating_profile}} {{input: required}} (User)
 ├─ Coincident Onsite Electric Load, if known {{input: optional}} (User)
-├─ Export rule from the verified tariff artifact when export is permitted (Bill)
 ├─ Electric efficiency by technology and capacity (Standard)
-├─ BR-ANNUAL-BILL-RESOURCE
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
@@ -1067,6 +1080,7 @@ Annual resource value
 **Default Estimate:** UNAVAILABLE
 
 **Notes:** Useful recovered heat is included only when the project is explicitly CHP and mapped to ITC-21.
+Export value is excluded from this category.
 
 ### ITC-21 - CHP electric and useful-heat balance
 
@@ -1086,11 +1100,13 @@ Annual resource value
 
 `useful_heat = min(generation × recoverable_heat_ratio, coincident_thermal_load)`
 
-`avoided_boiler_fuel = useful_heat / existing_boiler_efficiency`
+`avoided_boiler_fuel = to_billed_unit(useful_heat / existing_boiler_efficiency, boiler_fuel_unit)`
 
 `generation = total_capacity_kW × 8760 × annual_capacity_factor`
 
-`CHP_input_fuel = generation / electric_efficiency`
+`CHP_input_fuel = to_billed_unit(generation / electric_efficiency, CHP_fuel_unit)`
+
+`avoided_grid_kWh = min(generation, coincident_onsite_electric_load)`
 
 **Information Tree:**
 
@@ -1099,14 +1115,13 @@ Annual CHP resource value
 ├─ Prime mover {{lookup: prime_mover_and_fuel}} {{input: required}} (User)
 ├─ Input fuel {{lookup: prime_mover_and_fuel}} {{input: required}} (User)
 ├─ Selected Unit Model, if known {{lookup: chp_exact_model}} {{input: optional}} (User)
-├─ Total installed capacity, if known {{lookup: generation_capacity}} {{input: optional}} (User)
-├─ Linked Opportunity {{lookup: linked_opportunity}} (Profile)
-├─ Annual capacity factor, if known {{lookup: operating_profile}} {{input: optional}} (User)
+├─ Total installed capacity {{lookup: generation_capacity}} {{input: required}} (User)
+├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
+├─ Annual capacity factor {{lookup: operating_profile}} {{input: required}} (User)
 ├─ Coincident onsite electric-load constraint, if known {{input: optional}} (User)
-├─ Coincident useful thermal-load constraint, if known {{lookup: thermal_load_coincidence}} {{input: optional}} (User)
+├─ Coincident useful thermal-load constraint {{lookup: thermal_load_coincidence}} {{input: required}} (User)
 ├─ Existing boiler efficiency, if known {{input: optional}} (User)
 ├─ CHP performance by technology and capacity (Standard)
-├─ BR-ANNUAL-BILL-RESOURCE
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
@@ -1114,7 +1129,8 @@ Annual CHP resource value
 
 **Default Estimate:** UNAVAILABLE
 
-**Notes:** Cap electricity and useful heat at coincident site loads unless an explicit export rule exists.
+**Notes:** Cap electricity and useful heat at coincident site loads.
+Export value is excluded from this category.
 
 ### ITC-22 - Biomass or biogas resource balance
 
@@ -1138,7 +1154,9 @@ Annual CHP resource value
 
 `useful_heat = min(input_biomass_or_biogas × lower_heating_value × recoverable_heat_fraction, coincident_thermal_load)`
 
-`avoided_boiler_fuel = useful_heat / existing_boiler_efficiency`
+`avoided_boiler_fuel = to_billed_unit(useful_heat / existing_boiler_efficiency, boiler_fuel_unit)`
+
+`avoided_grid_kWh = min(generation, coincident_onsite_electric_load)`
 
 **Information Tree:**
 
@@ -1149,13 +1167,14 @@ Annual biomass or biogas resource value
 ├─ Fuel lower heating value, if known {{input: optional}} (User)
 ├─ Conversion technology {{lookup: prime_mover_and_fuel}} {{input: required}} (User)
 ├─ Selected Unit Model, if known {{lookup: chp_exact_model}} {{input: optional}} (User)
-├─ Installed capacity, if known {{lookup: generation_capacity}} {{input: optional}} (User)
-├─ Linked Opportunity {{lookup: linked_opportunity}} (Profile)
+├─ Installed capacity {{lookup: generation_capacity}} {{input: required}} (User)
+├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 ├─ Operating schedule {{lookup: operating_profile}} {{input: required}} (User)
 ├─ Coincident onsite electric-load constraint, if known {{input: optional}} (User)
-├─ Coincident useful thermal-load constraint, if known {{lookup: thermal_load_coincidence}} {{input: optional}} (User)
+├─ Coincident useful thermal-load constraint {{lookup: thermal_load_coincidence}} {{input: required}} (User)
+├─ Existing boiler efficiency, if known {{input: optional}} (User)
+├─ Scheduled input fuel {{intermediate: formula}}
 ├─ Performance by technology and fuel (Standard)
-├─ BR-ANNUAL-BILL-RESOURCE
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
@@ -1165,6 +1184,7 @@ Annual biomass or biogas resource value
 
 **Notes:** Status is DRAFT and uncertainty is High because the federal biomass catalog is partly outdated and project fuel quality dominates performance.
 Do not monetize avoided disposal, renewable credits, or fuel that is not contractually available.
+Export value is excluded from this category.
 
 ### ITC-23 - Battery interval dispatch
 
@@ -1189,14 +1209,14 @@ Do not monetize avoided disposal, renewable credits, or fuel that is not contrac
 ```text
 Annual battery bill reduction
 ├─ BR-INTERVAL-LOAD-AND-TARIFF
-├─ Power capacity, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Usable-energy capacity, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Charge efficiency, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Discharge efficiency, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Initial state of charge, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Terminal state-of-charge constraint, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
+├─ Power capacity {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Usable-energy capacity {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Charge efficiency {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Discharge efficiency {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Initial state of charge {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Terminal state-of-charge constraint {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ Dispatch-availability schedule {{lookup: reopt_category_constraints}} {{input: required}} (User)
-├─ Reserve constraint, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
+├─ Reserve constraint {{lookup: reopt_category_constraints}} {{input: required}} (User)
 └─ REopt baseline and proposed bill result (Standard)
 ```
 
@@ -1230,20 +1250,20 @@ PV generation follows ITC-17 and storage state follows ITC-23 inside one dispatc
 Annual solar-plus-storage bill reduction
 ├─ site.geo.coordinates, verified rather than address-only {{lookup: site_coordinates}} (Profile)
 ├─ PV array configuration
-│  ├─ DC capacity, if known {{lookup: pv_array_configuration, reopt_category_constraints}} {{input: optional}} (User)
-│  ├─ Module Type, if known {{lookup: pv_array_configuration}} {{input: optional}} (User)
+│  ├─ DC capacity {{lookup: pv_array_configuration, reopt_category_constraints}} {{input: required}} (User)
+│  ├─ Module Type {{lookup: pv_array_configuration}} {{input: required}} (User)
 │  ├─ Array type {{lookup: pv_array_configuration}} {{input: required}} (User)
-│  ├─ System losses, if known {{lookup: pv_array_configuration}} {{input: optional}} (User)
-│  ├─ Tilt, if known {{lookup: pv_array_configuration}} {{input: optional}} (User)
-│  └─ Azimuth, if known {{lookup: pv_array_configuration}} {{input: optional}} (User)
+│  ├─ System losses {{lookup: pv_array_configuration}} {{input: required}} (User)
+│  ├─ Tilt {{lookup: pv_array_configuration}} {{input: required}} (User)
+│  └─ Azimuth {{lookup: pv_array_configuration}} {{input: required}} (User)
 ├─ Battery configuration
-│  ├─ Power capacity, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-│  ├─ Usable-energy capacity, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-│  ├─ Charge efficiency, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-│  ├─ Discharge efficiency, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-│  ├─ Initial state of charge, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-│  ├─ Terminal state-of-charge constraint, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-│  └─ Reserve constraint, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
+│  ├─ Power capacity {{lookup: reopt_category_constraints}} {{input: required}} (User)
+│  ├─ Usable-energy capacity {{lookup: reopt_category_constraints}} {{input: required}} (User)
+│  ├─ Charge efficiency {{lookup: reopt_category_constraints}} {{input: required}} (User)
+│  ├─ Discharge efficiency {{lookup: reopt_category_constraints}} {{input: required}} (User)
+│  ├─ Initial state of charge {{lookup: reopt_category_constraints}} {{input: required}} (User)
+│  ├─ Terminal state-of-charge constraint {{lookup: reopt_category_constraints}} {{input: required}} (User)
+│  └─ Reserve constraint {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ PVWatts interval generation (Standard)
 ├─ BR-INTERVAL-LOAD-AND-TARIFF
 └─ REopt composite dispatch result (Standard)
@@ -1278,15 +1298,15 @@ Annual solar-plus-storage bill reduction
 ```text
 Annual thermal-storage bill reduction
 ├─ BR-INTERVAL-LOAD-AND-TARIFF
-├─ Interval HVAC thermal load or validated electric proxy, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Thermal capacity, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Charge limit, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Discharge limit, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Charge efficiency, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Discharge efficiency, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Standing loss, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Initial Thermal State, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Terminal thermal-state constraint, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
+├─ Interval HVAC thermal load or validated electric proxy {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Thermal capacity {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Charge limit {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Discharge limit {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Charge efficiency {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Discharge efficiency {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Standing loss {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Initial Thermal State {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Terminal thermal-state constraint {{lookup: reopt_category_constraints}} {{input: required}} (User)
 └─ REopt baseline and proposed bill result (Standard)
 ```
 
@@ -1320,37 +1340,37 @@ Apply the ITC-17, ITC-20 or ITC-21, and ITC-23 resource balances inside one opti
 Annual microgrid direct bill reduction
 ├─ BR-INTERVAL-LOAD-AND-TARIFF
 ├─ Included component types {{lookup: reopt_category_constraints}} {{input: required}} (User)
-├─ Linked Opportunity {{lookup: linked_opportunity}} (Profile)
+├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 ├─ Component site and operating inputs
 │  ├─ site.geo.coordinates when PV or wind is included {{lookup: site_coordinates}} (Profile)
 │  ├─ PV array configuration when PV is included
-│  │  ├─ DC capacity, if known {{lookup: pv_array_configuration, reopt_category_constraints}} {{input: optional}} (User)
-│  │  ├─ Module Type, if known {{lookup: pv_array_configuration}} {{input: optional}} (User)
+│  │  ├─ DC capacity {{lookup: pv_array_configuration, reopt_category_constraints}} {{input: required}} (User)
+│  │  ├─ Module Type {{lookup: pv_array_configuration}} {{input: required}} (User)
 │  │  ├─ Array type {{lookup: pv_array_configuration}} {{input: required}} (User)
-│  │  ├─ System losses, if known {{lookup: pv_array_configuration}} {{input: optional}} (User)
-│  │  ├─ Tilt, if known {{lookup: pv_array_configuration}} {{input: optional}} (User)
-│  │  └─ Azimuth, if known {{lookup: pv_array_configuration}} {{input: optional}} (User)
+│  │  ├─ System losses {{lookup: pv_array_configuration}} {{input: required}} (User)
+│  │  ├─ Tilt {{lookup: pv_array_configuration}} {{input: required}} (User)
+│  │  └─ Azimuth {{lookup: pv_array_configuration}} {{input: required}} (User)
 │  ├─ Wind configuration when wind is included
 │  │  ├─ Wind Turbine Class or Intended Application {{lookup: wind_system_configuration, reopt_category_constraints}} {{input: required}} (User)
-│  │  ├─ Exact Turbine Model or Power Curve, if known {{lookup: wind_system_configuration, reopt_category_constraints}} {{input: optional}} (User)
-│  │  ├─ Hub Height, if known {{lookup: wind_system_configuration}} {{input: optional}} (User)
-│  │  ├─ Loss factor, if known {{lookup: wind_system_configuration}} {{input: optional}} (User)
-│  │  └─ Analysis Year, if known {{lookup: analysis_year}} {{input: optional}} (User)
+│  │  ├─ Exact Turbine Model or Power Curve {{lookup: wind_system_configuration, reopt_category_constraints}} {{input: required}} (User)
+│  │  ├─ Hub Height {{lookup: wind_system_configuration}} {{input: required}} (User)
+│  │  ├─ Loss factor {{lookup: wind_system_configuration}} {{input: required}} (User)
+│  │  └─ Analysis Year {{lookup: analysis_year}} {{input: required}} (User)
 │  ├─ Fuel-cell or CHP configuration when fuel generation is included
 │  │  ├─ Prime mover {{lookup: prime_mover_and_fuel, reopt_category_constraints}} {{input: required}} (User)
 │  │  ├─ Input fuel {{lookup: prime_mover_and_fuel}} {{input: required}} (User)
 │  │  ├─ Selected Unit Model, if known {{lookup: chp_exact_model}} {{input: optional}} (User)
-│  │  ├─ Installed capacity, if known {{lookup: generation_capacity}} {{input: optional}} (User)
+│  │  ├─ Installed capacity {{lookup: generation_capacity}} {{input: required}} (User)
 │  │  ├─ Annual operating profile {{lookup: operating_profile}} {{input: required}} (User)
-│  │  └─ Coincident useful thermal-load constraint when heat recovery is included, if known {{lookup: thermal_load_coincidence}} {{input: optional}} (User)
+│  │  └─ Coincident useful thermal-load constraint when heat recovery is included {{lookup: thermal_load_coincidence}} {{input: required}} (User)
 │  └─ Storage configuration when storage is included
-│     ├─ Power capacity, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-│     ├─ Usable-energy capacity, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-│     ├─ Charge efficiency, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-│     ├─ Discharge efficiency, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-│     ├─ Initial state of charge, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-│     ├─ Terminal state-of-charge constraint, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-│     └─ Reserve constraint, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
+│     ├─ Power capacity {{lookup: reopt_category_constraints}} {{input: required}} (User)
+│     ├─ Usable-energy capacity {{lookup: reopt_category_constraints}} {{input: required}} (User)
+│     ├─ Charge efficiency {{lookup: reopt_category_constraints}} {{input: required}} (User)
+│     ├─ Discharge efficiency {{lookup: reopt_category_constraints}} {{input: required}} (User)
+│     ├─ Initial state of charge {{lookup: reopt_category_constraints}} {{input: required}} (User)
+│     ├─ Terminal state-of-charge constraint {{lookup: reopt_category_constraints}} {{input: required}} (User)
+│     └─ Reserve constraint {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ PV or wind interval generation when included (Standard)
 ├─ Fuel-cell or CHP performance when included (Standard)
 └─ REopt composite dispatch result (Standard)
@@ -1386,6 +1406,8 @@ Reliability and resilience value are excluded even when the physical system can 
 
 `charging_input_kWh_t = delivered_kWh_t / active_efficiency`
 
+`standby_kWh_t = standby_power_kW × noncharging_interval_hours_t`
+
 **Information Tree:**
 
 ```text
@@ -1394,12 +1416,13 @@ Annual public-charging bill impact
 ├─ BR-SCOPE-QUANTITY
 ├─ Session-arrival distribution per charger {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ Session-duration distribution per charger {{lookup: reopt_category_constraints}} {{input: required}} (User)
-├─ Delivered-kWh distribution per charger, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Linked Opportunity {{lookup: linked_opportunity}} (Profile)
+├─ Delivered-kWh distribution per charger {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 ├─ Charger Class or Intended Application {{lookup: energy_star_product_context}} {{input: required}} (User)
 ├─ Selected Charger Model, if known {{lookup: energy_star_exact_product}} {{input: optional}} (User)
-├─ Rated Power or Capacity, if known {{lookup: energy_star_exact_product, reopt_category_constraints}} {{input: optional}} (User)
+├─ Rated Power or Capacity {{lookup: energy_star_exact_product, reopt_category_constraints}} {{input: required}} (User)
 ├─ Certified active efficiency and standby power (Standard)
+├─ EVSE interval load profile {{intermediate: formula}}
 └─ Audited session-load template and REopt bill result (Standard)
 ```
 
@@ -1427,6 +1450,8 @@ Charging revenue is excluded.
 
 **Supporting Formula(s):**
 
+`vehicle_kWh_per_mile = proposed_combE / 100` when an exact FuelEconomy record is used.
+
 `annual_vehicle_kWh = fleet_annual_miles × vehicle_kWh_per_mile`
 
 `standby_kWh = installed_ports × standby_kW_per_port × noncharging_hours`
@@ -1440,16 +1465,17 @@ Annual fleet charging added cost
 ├─ Depot allocation fraction {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ Vehicle Class and Service Need {{lookup: vehicle_context}} {{input: required}} (User)
 ├─ Selected Vehicle Model, if known {{lookup: vehicle_exact_model}} {{input: optional}} (User)
-├─ Measured kWh per Mile, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
+├─ Measured kWh per Mile {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ Vehicle-arrival schedule {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ Vehicle-departure schedule {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ Uncontrolled charging rule {{lookup: reopt_category_constraints}} {{input: required}} (User)
-├─ Linked Opportunity {{lookup: linked_opportunity}} (Profile)
+├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 ├─ Charger Class or Intended Application {{lookup: energy_star_product_context}} {{input: required}} (User)
 ├─ Selected Charger Model, if known {{lookup: energy_star_exact_product}} {{input: optional}} (User)
-├─ Rated Charger Power or Capacity, if known {{lookup: energy_star_exact_product, reopt_category_constraints}} {{input: optional}} (User)
+├─ Rated Charger Power or Capacity {{lookup: energy_star_exact_product, reopt_category_constraints}} {{input: required}} (User)
 ├─ Installed port count {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ Vehicle and charger efficiency (Standard)
+├─ EVSE standby energy {{intermediate: formula}}
 └─ Audited fleet-load template and REopt bill result (Standard)
 ```
 
@@ -1463,7 +1489,7 @@ For a combined fleet-electrification view, use this category's bill delta with I
 
 ### ITC-29 - Light-duty vehicle resource switching
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Applicable Resources:** electricity, vehicle-fuel
 
@@ -1479,7 +1505,7 @@ For a combined fleet-electrification view, use this category's bill delta with I
 
 `avoided_gallons = annual_miles / existing_combined_mpg`
 
-`added_kWh = annual_miles × proposed_combE / 100 / charging_efficiency`
+`added_kWh = annual_miles × proposed_combE / 100`
 
 **Information Tree:**
 
@@ -1490,21 +1516,22 @@ Annual dollar savings
 │  ├─ Annual miles for replaced vehicle {{input: required}} (User)
 │  ├─ Existing Vehicle Class and Fuel Type {{lookup: vehicle_context}} {{input: required}} (User)
 │  ├─ Existing Vehicle Model, if known {{lookup: vehicle_exact_model}} {{input: optional}} (User)
-│  ├─ Linked Opportunity {{lookup: linked_opportunity}} (Profile)
+│  ├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 │  ├─ Proposed Electric Vehicle Class or Service Need {{lookup: vehicle_context}} {{input: required}} (User)
 │  ├─ Selected Proposed Electric Vehicle Model, if known {{lookup: vehicle_exact_model}} {{input: optional}} (User)
 │  └─ Vehicle efficiency records (Standard)
-├─ BR-ANNUAL-BILL-RESOURCE
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
 **Standards:** STD-FUELECONOMY-VEHICLES.
 
-**Default Estimate:** AVAILABLE
+**Default Estimate:** UNAVAILABLE
 
 **Notes:** Exclude purchase price, maintenance, incentives, and emissions.
 Exact vehicle models override source-backed vehicle-class distributions.
-When no Linked Opportunity product restriction exists, use compatible records for the stated vehicle class and service need without claiming an exact model.
+Do not calculate class percentiles until an eligible model-year, vehicle-class, fuel, drive, and service-compatibility population has a fixture-backed sample count.
+FuelEconomy.gov `combE` is already measured at the wall and includes charging losses, so do not apply charging efficiency again.
+The vehicle-fuel price is a required documented project input because the utility bill parser does not provide a canonical vehicle-fuel price path.
 Do not add this category's electricity term to ITC-28.
 
 ### ITC-30 - Forklift resource switching
@@ -1569,9 +1596,9 @@ Annual managed-charging bill reduction
 ├─ BR-INTERVAL-LOAD-AND-TARIFF
 ├─ Vehicle-arrival schedule {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ Vehicle-departure schedule {{lookup: reopt_category_constraints}} {{input: required}} (User)
-├─ Required energy by departure, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Charger power limit, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
-├─ Site power limit, if known {{lookup: reopt_category_constraints}} {{input: optional}} (User)
+├─ Required energy by departure {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Charger power limit {{lookup: reopt_category_constraints}} {{input: required}} (User)
+├─ Site power limit {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ Managed charging template {{lookup: reopt_category_constraints}} {{input: required}} (User)
 ├─ Unmanaged charging template {{lookup: reopt_category_constraints}} {{input: required}} (User)
 └─ REopt interval dispatch result (Standard)
@@ -1585,7 +1612,7 @@ Annual managed-charging bill reduction
 
 ### ITC-32 - Flow-fixture water and hot-water reduction
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Applicable Resources:** electricity, gas, water-sewer
 
@@ -1601,7 +1628,7 @@ Annual managed-charging bill reduction
 
 `avoided_water = quantity × uses_per_year × duration_minutes × (gpm_existing - gpm_proposed)`
 
-`avoided_hot_water_input = avoided_water × hot_fraction × thermal_energy_per_gallon / heater_efficiency`
+`avoided_hot_water_input = to_billed_unit(avoided_water × hot_fraction × thermal_energy_per_gallon / heater_efficiency, heating_resource_unit)`
 
 **Information Tree:**
 
@@ -1610,14 +1637,17 @@ Annual dollar savings
 ├─ Annual water and heating-resource reduction
 │  ├─ BR-SCOPE-QUANTITY
 │  ├─ Recognizable Fixture Usage Pattern {{lookup: fixture_usage_pattern}} {{input: required}} (User)
-│  ├─ Typical Minutes per Use, if known {{lookup: fixture_usage_pattern}} {{input: optional}} (User)
+│  ├─ Annual uses per fixture {{lookup: fixture_usage_pattern}} {{input: required}} (User)
+│  ├─ Typical minutes per use {{lookup: fixture_usage_pattern}} {{input: required}} (User)
 │  ├─ business.primaryActivityText usage context {{lookup: fixture_usage_pattern}} (Profile)
-│  ├─ Hot-water fraction when nonzero, if known {{input: optional}} (User)
-│  ├─ Hot-water temperature rise when nonzero, if known {{input: optional}} (User)
+│  ├─ Water-heating resource or cold-only selection {{input: required}} (User)
+│  ├─ Hot-water fraction when nonzero {{input: required}} (User)
+│  ├─ Hot-water temperature rise when nonzero {{input: required}} (User)
+│  ├─ Water-heater efficiency when nonzero {{input: required}} (User)
 │  ├─ Fixture selection
 │  │  ├─ Existing fixture type {{lookup: fixture_context}} {{input: required}} (User)
-│  │  ├─ Existing rated flow, if known {{lookup: fixture_exact_rating}} {{input: optional}} (User)
-│  │  ├─ Linked Opportunity {{lookup: linked_opportunity}} (Profile)
+│  │  ├─ Existing rated flow {{lookup: fixture_exact_rating}} {{input: required}} (User)
+│  │  ├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 │  │  ├─ Proposed fixture type {{lookup: fixture_context}} {{input: required}} (User)
 │  │  └─ Proposed rated flow, if known {{lookup: fixture_exact_rating}} {{input: optional}} (User)
 │  └─ Rated flow and use-pattern values (Standard)
@@ -1626,13 +1656,14 @@ Annual dollar savings
 
 **Standards:** STD-WATERSENSE-FIXTURES.
 
-**Default Estimate:** AVAILABLE
+**Default Estimate:** UNAVAILABLE
 
 **Notes:** Omit hot-water value for cold-only fixtures rather than assuming a fraction.
+Return no hot-water estimate until the hot-water fraction, temperature rise, and heater efficiency are resolved by exact inputs or a verified commercial-usage method.
 
 ### ITC-33 - Flush-fixture water reduction
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Applicable Resources:** water-sewer
 
@@ -1655,11 +1686,12 @@ Annual dollar savings
 ├─ Annual water reduction
 │  ├─ BR-SCOPE-QUANTITY
 │  ├─ Recognizable Flush Usage Pattern {{lookup: fixture_usage_pattern}} {{input: required}} (User)
+│  ├─ Annual flushes per fixture {{lookup: fixture_usage_pattern}} {{input: required}} (User)
 │  ├─ business.primaryActivityText usage context {{lookup: fixture_usage_pattern}} (Profile)
 │  ├─ Fixture selection
 │  │  ├─ Existing fixture type {{lookup: fixture_context}} {{input: required}} (User)
-│  │  ├─ Existing rated gallons per flush, if known {{lookup: fixture_exact_rating}} {{input: optional}} (User)
-│  │  ├─ Linked Opportunity {{lookup: linked_opportunity}} (Profile)
+│  │  ├─ Existing rated gallons per flush {{lookup: fixture_exact_rating}} {{input: required}} (User)
+│  │  ├─ Linked Opportunity {{lookup: linked_opportunity}} {{intermediate: project-opportunity}}
 │  │  ├─ Proposed fixture type {{lookup: fixture_context}} {{input: required}} (User)
 │  │  └─ Proposed rated gallons per flush, if known {{lookup: fixture_exact_rating}} {{input: optional}} (User)
 │  └─ Rated gallons per flush and use-pattern values (Standard)
@@ -1668,13 +1700,14 @@ Annual dollar savings
 
 **Standards:** STD-WATERSENSE-FIXTURES.
 
-**Default Estimate:** AVAILABLE
+**Default Estimate:** UNAVAILABLE
 
 **Notes:** Toilets and urinals share the tree because fixture type selects a different record inside the same rating Standard.
+Return no default estimate until a commercial flush-frequency source and an installed existing gallons-per-flush baseline are fixture-tested.
 
 ### ITC-34 - Landscape water-budget reduction
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** DRAFT
 
 **Applicable Resources:** water-sewer
 
@@ -1685,13 +1718,13 @@ Annual dollar savings
 
 **Primary Formula:**
 
-`S = (baseline_landscape_gallons - proposed_landscape_gallons) × p_water_sewer`
+`S = (baseline_design_allowance_gallons - proposed_design_allowance_gallons) × p_water`
 
 **Supporting Formula(s):**
 
 Use the WaterSense Water Budget Tool equations with constant climate and landscape area across cases.
 
-`avoided_water = min(max(baseline_landscape_gallons - proposed_landscape_gallons, 0), annual_billed_water)`
+The result is a modeled design-allowance comparison, not measured existing operational consumption.
 
 **Information Tree:**
 
@@ -1710,16 +1743,18 @@ Annual dollar savings
 │  │  ├─ Irrigation method {{lookup: irrigation_configuration}} {{input: required}} (User)
 │  │  ├─ Irrigation efficiency, if known {{lookup: irrigation_efficiency}} {{input: optional}} (User)
 │  │  └─ Controller treatment {{lookup: irrigation_configuration}} {{input: required}} (User)
-│  ├─ Climate data and Water Budget equations (Standard)
-│  └─ BR-ANNUAL-BILL-RESOURCE
+│  └─ Climate data and Water Budget equations (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
 
 **Standards:** STD-WATERSENSE-LANDSCAPE.
 
-**Default Estimate:** AVAILABLE
+**Default Estimate:** UNAVAILABLE
 
 **Notes:** The two retrofits share a category because the existing and proposed method are record selections in the same water-budget tree.
+The Water Budget Tool is a design method and does not prove actual existing irrigation consumption.
+Use only the water charge for irrigation unless a verified account rule proves the avoided irrigation use is sewer-billed.
+Do not cap the modeled allowance difference against an unrelated whole-site annual water bill.
 
 ### ITC-35 - Measured leak avoidance
 
@@ -1744,7 +1779,7 @@ No additional formula is required.
 ```text
 Annual dollar savings
 ├─ Annual measured leak water reduction
-│  ├─ Measured leak flow, if known {{lookup: watersense_method_inputs}} {{input: optional}} (User)
+│  ├─ Measured leak flow {{lookup: watersense_method_inputs}} {{input: required}} (User)
 │  ├─ Confirmed leak start date {{lookup: watersense_method_inputs}} {{input: required}} (User)
 │  ├─ Confirmed repair date {{lookup: watersense_method_inputs}} {{input: required}} (User)
 │  └─ WaterSense measured-leak calculation method (Standard)
@@ -1782,10 +1817,9 @@ Annual dollar savings
 ```text
 Annual dollar savings
 ├─ Annual cooling-tower water and fan-electricity reduction
-│  ├─ BR-ANNUAL-BILL-RESOURCE
-│  ├─ Existing cycles of concentration, if known {{lookup: watersense_method_inputs}} {{input: optional}} (User)
-│  ├─ Proposed cycles of concentration, if known {{lookup: watersense_method_inputs}} {{input: optional}} (User)
-│  ├─ Annual evaporation or equivalent heat rejection, if known {{lookup: watersense_method_inputs, measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Existing cycles of concentration {{lookup: watersense_method_inputs}} {{input: required}} (User)
+│  ├─ Proposed cycles of concentration {{lookup: watersense_method_inputs}} {{input: required}} (User)
+│  ├─ Annual evaporation or equivalent heat rejection {{lookup: watersense_method_inputs, measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Existing fan control profile {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Proposed fan control profile {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ WaterSense water balance (Standard)
@@ -1815,7 +1849,8 @@ Annual dollar savings
 
 **Supporting Formula(s):**
 
-`fan_kW_fraction = airflow_fraction³` for applicable variable-speed fan systems.
+`fan_shaft_power_fraction = airflow_fraction³` for applicable variable-speed fan systems.
+MEASUR must convert shaft power to electrical input with the applicable fan, motor, and drive efficiencies.
 
 `avoided_fan_kWh = quantity × Σ_period hours_period × (existing_fan_kW_period - proposed_fan_kW_period)`
 
@@ -1825,8 +1860,8 @@ Annual dollar savings
 Annual dollar savings
 ├─ Annual kitchen ventilation fan and makeup-air resource reduction
 │  ├─ BR-SCOPE-QUANTITY
-│  ├─ Existing fan input power, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Existing Design Airflow, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Existing fan input power {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Existing Design Airflow {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Existing airflow schedule {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Proposed airflow schedule {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Makeup-air heating system {{lookup: measur_calculator_inputs}} {{input: required}} (User)
@@ -1868,9 +1903,9 @@ No additional formula is required.
 Annual dollar savings
 ├─ Annual motor electricity reduction
 │  ├─ BR-SCOPE-QUANTITY
-│  ├─ Motor rated shaft power, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Motor rated speed, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Operating load fraction, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Motor rated shaft power {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Motor rated speed {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Operating load fraction {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Existing motor class {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Proposed motor class {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ BR-ANNUAL-OPERATING-HOURS
@@ -1901,7 +1936,8 @@ Annual dollar savings
 
 **Supporting Formula(s):**
 
-For a validated centrifugal system, `proposed_power_fraction_i = speed_fraction_i³ / drive_efficiency_i`.
+MEASUR must return existing and proposed input kW for every bin from a pinned calculator and complete project inputs.
+No standalone cube-law adjustment is approved without the exact shaft-power and drive-efficiency boundary.
 
 **Information Tree:**
 
@@ -1909,11 +1945,11 @@ For a validated centrifugal system, `proposed_power_fraction_i = speed_fraction_
 Annual dollar savings
 ├─ Annual variable-speed electricity reduction
 │  ├─ BR-SCOPE-QUANTITY
-│  ├─ Existing full-load input kW, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Existing full-load input kW {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Repeatable load-bin profile
-│  │  ├─ Load or speed fraction for each bin, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  │  └─ Annual hours for each bin, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Proposed Minimum Speed, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  │  ├─ Load or speed fraction for each bin {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  │  └─ Annual hours for each bin {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Proposed Minimum Speed {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Proposed control rule {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  └─ MEASUR load-bin result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -1949,12 +1985,12 @@ Annual dollar savings
 Annual dollar savings
 ├─ Annual pump electricity reduction
 │  ├─ BR-SCOPE-QUANTITY
-│  ├─ Required flow, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Total dynamic head, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Existing pump efficiency, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Existing motor efficiency, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Proposed pump efficiency, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Proposed motor efficiency, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Required flow {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Total dynamic head {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Existing pump efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Existing motor efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Proposed pump efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Proposed motor efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ BR-ANNUAL-OPERATING-HOURS
 │  └─ MEASUR pump assessment result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -1991,12 +2027,12 @@ Annual dollar savings
 Annual dollar savings
 ├─ Annual fan-system electricity reduction
 │  ├─ BR-SCOPE-QUANTITY
-│  ├─ Required airflow, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Required pressure rise, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Existing fan efficiency, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Existing motor efficiency, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Proposed fan efficiency, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Proposed motor efficiency, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Required airflow {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Required pressure rise {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Existing fan efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Existing motor efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Proposed fan efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Proposed motor efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ BR-ANNUAL-OPERATING-HOURS
 │  └─ MEASUR fan assessment result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -2021,11 +2057,11 @@ Return no estimate when an efficient-ventilation opportunity changes heat recove
 
 **Primary Formula:**
 
-`S = quantity × annual_output_flow × (specific_power_existing - specific_power_proposed) × p_electric`
+`S = quantity × annual_flow_hours × (specific_power_existing - specific_power_proposed) × p_electric`
 
 **Supporting Formula(s):**
 
-`annual_output_flow = mean_flow × annual_hours` with consistent flow units.
+`annual_flow_hours = mean_flow × annual_hours` with the same flow unit used by specific power.
 
 **Information Tree:**
 
@@ -2033,12 +2069,12 @@ Return no estimate when an efficient-ventilation opportunity changes heat recove
 Annual dollar savings
 ├─ Annual compressor electricity reduction
 │  ├─ BR-SCOPE-QUANTITY
-│  ├─ Required pressure, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Mean flow, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Required pressure {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Mean flow {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Existing compressor type {{lookup: measur_calculator_inputs}} {{input: required}} (User)
-│  ├─ Existing compressor specific power, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Existing compressor specific power {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Proposed compressor type {{lookup: measur_calculator_inputs}} {{input: required}} (User)
-│  ├─ Proposed compressor specific power, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Proposed compressor specific power {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ BR-ANNUAL-OPERATING-HOURS
 │  └─ MEASUR compressed-air assessment result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -2075,9 +2111,9 @@ Annual dollar savings
 ├─ Annual compressed-air leak electricity reduction
 │  ├─ BR-SCOPE-QUANTITY
 │  ├─ Selected leak-measurement method {{lookup: measur_calculator_inputs}} {{input: required}} (User)
-│  ├─ Measurement Observations, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ System Pressure, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Compressor specific power, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Measurement Observations {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ System Pressure {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Compressor specific power {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ BR-ANNUAL-OPERATING-HOURS
 │  └─ MEASUR leak-flow result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -2114,13 +2150,13 @@ Annual dollar savings
 ├─ Annual compressed-air control electricity reduction
 │  ├─ BR-SCOPE-QUANTITY
 │  ├─ Compressor type {{lookup: measur_calculator_inputs}} {{input: required}} (User)
-│  ├─ Rated input power, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Rated flow, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Rated input power {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Rated flow {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Existing control mode {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Proposed control mode {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Repeatable annual load profile
-│  │  ├─ Load fraction for each bin, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  │  └─ Annual hours for each bin, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  │  ├─ Load fraction for each bin {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  │  └─ Annual hours for each bin {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  └─ MEASUR control-profile result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
@@ -2149,18 +2185,19 @@ Annual dollar savings
 
 `useful_recovered_heat = min(available_waste_heat × recovery_efficiency, coincident_useful_heat_load)`
 
-`avoided_displaced_resource = min(useful_recovered_heat / displaced_system_efficiency, billed_displaced_resource)`
+`avoided_displaced_resource = min(to_billed_unit(useful_recovered_heat / displaced_system_efficiency, displaced_resource_unit), billed_displaced_resource)`
 
 **Information Tree:**
 
 ```text
 Annual waste-heat resource value
-├─ Waste-stream flow, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-├─ Waste-stream temperature, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+├─ Waste-stream flow {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+├─ Waste-stream temperature {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 ├─ Waste-stream schedule {{lookup: measur_calculator_inputs}} {{input: required}} (User)
-├─ Coincident Useful-Heat Load, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-├─ Recovery-equipment efficiency, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-├─ Recovery auxiliary power, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+├─ Coincident Useful-Heat Load {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+├─ Recovery-equipment efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+├─ Displaced heating-system efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+├─ Recovery auxiliary power {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 ├─ BR-ANNUAL-BILL-RESOURCE
 ├─ MEASUR process-heat result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -2189,9 +2226,9 @@ Annual waste-heat resource value
 
 **Supporting Formula(s):**
 
-`useful_process_heat = current_fuel_input × current_efficiency`
+`useful_process_heat = to_energy(current_fuel_input, current_fuel_unit) × current_efficiency`
 
-`proposed_electric_input = useful_process_heat / proposed_COP_or_efficiency`
+`proposed_electric_input = to_billed_unit(useful_process_heat / proposed_COP_or_efficiency, electricity_unit)`
 
 **Information Tree:**
 
@@ -2199,13 +2236,13 @@ Annual waste-heat resource value
 Annual dollar savings
 ├─ Annual process resource switch
 │  ├─ BR-ANNUAL-BILL-RESOURCE
-│  ├─ Process share of billed fuel, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Process share of billed fuel {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Existing Process or Fuel Type {{lookup: measur_calculator_inputs}} {{input: required}} (User)
-│  ├─ Required Process Temperature, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Useful Process Load, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Existing process efficiency, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Required Process Temperature {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Useful Process Load {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Existing process efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Proposed technology {{lookup: measur_calculator_inputs}} {{input: required}} (User)
-│  ├─ Proposed COP or efficiency, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Proposed COP or efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  └─ MEASUR process-heating balance (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
@@ -2233,7 +2270,7 @@ Return no estimate when process-electrification scope is not a thermal process t
 
 **Supporting Formula(s):**
 
-`boiler_fuel_per_steam_unit = steam_enthalpy_rise / boiler_efficiency`
+`boiler_fuel_per_steam_unit = to_billed_unit(steam_enthalpy_rise / boiler_efficiency, boiler_fuel_unit)`
 
 `avoided_steam_loss = steam_loss_rate × annual_pressurized_hours`
 
@@ -2245,10 +2282,10 @@ Annual dollar savings
 │  ├─ BR-SCOPE-QUANTITY
 │  ├─ Failed-trap condition {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Leak class {{lookup: measur_calculator_inputs}} {{input: required}} (User)
-│  ├─ Steam Pressure, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Steam Pressure {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ Condensate-return condition {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ BR-ANNUAL-OPERATING-HOURS
-│  ├─ Boiler efficiency, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Boiler efficiency {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  └─ MEASUR steam-loss result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
@@ -2327,11 +2364,6 @@ Annual dollar savings
 │  ├─ BR-ANNUAL-BILL-RESOURCE
 │  ├─ Walk-in share of billed electricity or direct measurement, if known {{input: optional}} (User)
 │  ├─ Proposed Annual System kWh for the Same Box Load and Duty, if known {{input: optional}} (User)
-│  ├─ Approximate Box Length {{input: required}} (User)
-│  ├─ Approximate Box Width {{input: required}} (User)
-│  ├─ Approximate Box Height {{input: required}} (User)
-│  ├─ Indoor Design Temperature, if known {{input: optional}} (User)
-│  ├─ Outdoor Design Temperature, if known {{input: optional}} (User)
 │  └─ Existing and proposed duty-equivalence confirmation {{input: required}} (User)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
@@ -2361,7 +2393,7 @@ The formula is usable only with a project-specific baseline allocation or measur
 
 **Supporting Formula(s):**
 
-`active_input_per_test_unit = useful_test_load_per_unit / tested_cooking_efficiency` when the certification reports efficiency rather than direct input intensity.
+`active_input_per_test_unit = to_billed_unit(useful_test_load_per_unit / tested_cooking_efficiency, resource_unit)` when the certification reports efficiency rather than direct input intensity.
 
 **Information Tree:**
 
@@ -2371,8 +2403,8 @@ Annual dollar savings
 │  ├─ BR-SCOPE-QUANTITY
 │  ├─ BR-CERTIFIED-PRODUCT-RESOLUTION
 │  ├─ Recognizable Cooking Usage Pattern {{lookup: product_usage_pattern}} {{input: required}} (User)
-│  ├─ Annual Activity per Unit in the Certified Test Unit, if known {{lookup: product_usage_pattern}} {{input: optional}} (User)
-│  ├─ Annual Idle Hours per Unit, if known {{lookup: product_usage_pattern}} {{input: optional}} (User)
+│  ├─ Annual Activity per Unit in the Certified Test Unit {{lookup: product_usage_pattern}} {{input: required}} (User)
+│  ├─ Annual Idle Hours per Unit {{lookup: product_usage_pattern}} {{input: required}} (User)
 │  └─ Certified cooking efficiency and idle energy rate by resource (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
@@ -2400,7 +2432,9 @@ The category remains DRAFT until DOE database access and all three product adapt
 
 **Supporting Formula(s):**
 
-`fan_input_kW = airflow × pressure_rise / (fan_efficiency × motor_efficiency)` with consistent units.
+`fan_input_kW = airflow × pressure_rise × air_power_conversion_factor / (fan_efficiency × motor_efficiency)`
+
+`air_power_conversion_factor` must convert the declared flow and pressure units to kW exactly once.
 
 **Information Tree:**
 
@@ -2408,13 +2442,13 @@ The category remains DRAFT until DOE database access and all three product adapt
 Annual dollar impact
 ├─ Annual filtration fan electricity change
 │  ├─ BR-SCOPE-QUANTITY
-│  ├─ Required airflow, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Clean-filter pressure rise, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Loaded-filter pressure rise, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Existing fan input data, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Existing filtration input data, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Proposed fan input data, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
-│  ├─ Proposed filtration input data, if known {{lookup: measur_calculator_inputs}} {{input: optional}} (User)
+│  ├─ Required airflow {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Clean-filter pressure rise {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Loaded-filter pressure rise {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Existing fan input data {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Existing filtration input data {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Proposed fan input data {{lookup: measur_calculator_inputs}} {{input: required}} (User)
+│  ├─ Proposed filtration input data {{lookup: measur_calculator_inputs}} {{input: required}} (User)
 │  ├─ BR-ANNUAL-OPERATING-HOURS
 │  └─ MEASUR fan-power result (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
@@ -2439,13 +2473,13 @@ Health, productivity, and indoor-air-quality benefits remain out of scope.
 
 **Primary Formula:**
 
-`S = avoided_water × p_water_sewer + avoided_water_heating_input × p_heating_resource + avoided_idle_kWh × p_electric`
+`S = avoided_water × p_water_sewer + Σ_r (avoided_water_heating_R_r × p_r) + avoided_idle_kWh × p_electric`
 
 **Supporting Formula(s):**
 
 `avoided_water = quantity × annual_racks_per_unit × (water_per_rack_existing - water_per_rack_proposed)`
 
-`water_heating_input = quantity × annual_racks_per_unit × water_per_rack × thermal_energy_per_gallon / heater_efficiency`
+`avoided_water_heating_R_r = quantity × annual_racks_per_unit × (water_heating_R_per_rack_existing - water_heating_R_per_rack_proposed)`
 
 `avoided_idle_kWh = quantity × annual_idle_hours_per_unit × (idle_kW_existing - idle_kW_proposed)`
 
@@ -2459,11 +2493,11 @@ Annual dollar savings
 │  ├─ BR-SCOPE-QUANTITY
 │  ├─ BR-CERTIFIED-PRODUCT-RESOLUTION
 │  ├─ Recognizable Dishwasher Usage Pattern {{lookup: product_usage_pattern}} {{input: required}} (User)
-│  ├─ Annual Racks or Operating Hours in the Certified Test Unit, if known {{lookup: product_usage_pattern}} {{input: optional}} (User)
+│  ├─ Annual Racks or Operating Hours in the Certified Test Unit {{lookup: product_usage_pattern}} {{input: required}} (User)
 │  ├─ Annual Idle Hours per Unit, if known {{lookup: product_usage_pattern}} {{input: optional}} (User)
-│  ├─ Supply-water temperature rise, if known {{input: optional}} (User)
-│  ├─ Sanitation temperature rise, if known {{input: optional}} (User)
-│  ├─ Water-heater efficiency, if known {{input: optional}} (User)
+│  ├─ Water-heating resources represented by the per-rack inputs {{input: required}} (User)
+│  ├─ Existing purchased water-heating input per certified rack by resource {{input: required}} (User)
+│  ├─ Proposed purchased water-heating input per certified rack by resource {{input: required}} (User)
 │  └─ Certified water use and idle energy by model (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```
@@ -2475,6 +2509,7 @@ Annual dollar savings
 **Notes:** Flight-type machines use the certified hourly activity unit instead of racks and must not be converted with an assumed racks-per-hour value.
 Report only the modeled water, water-heating, and idle-energy components when the source does not separately report active-cycle machine electricity.
 The category remains DRAFT until the sanitation, booster-heater, water, and idle-energy adapter is fixture-tested.
+Do not infer water-heating input from total water per rack without a source-supported wash, rinse, booster, and resource boundary.
 
 ### ITC-53 - Commercial laundry cycle resource balance
 
@@ -2496,7 +2531,13 @@ The category remains DRAFT until the sanitation, booster-heater, water, and idle
 
 `avoided_water = quantity × annual_cycles_per_unit × (water_per_cycle_existing - water_per_cycle_proposed)`
 
-`water_heating_input = quantity × annual_cycles_per_unit × hot_water_per_cycle × thermal_energy_per_gallon / heater_efficiency`
+`hot_water_per_cycle_case = water_per_cycle_case × hot_fraction_case`
+
+`avoided_hot_water = quantity × annual_cycles_per_unit × (hot_water_per_cycle_existing - hot_water_per_cycle_proposed)`
+
+`avoided_water_heating_input = to_billed_unit(avoided_hot_water × thermal_energy_per_gallon / heater_efficiency, heating_resource_unit)`
+
+`avoided_machine_kWh = quantity × annual_cycles_per_unit × (machine_kWh_per_cycle_existing - machine_kWh_per_cycle_proposed)`
 
 **Information Tree:**
 
@@ -2506,13 +2547,13 @@ Annual dollar savings
 │  ├─ BR-SCOPE-QUANTITY
 │  ├─ BR-CERTIFIED-PRODUCT-RESOLUTION
 │  ├─ Recognizable Laundry Usage Pattern {{lookup: product_usage_pattern}} {{input: required}} (User)
-│  ├─ Annual Cycles per Unit, if known {{lookup: product_usage_pattern}} {{input: optional}} (User)
-│  ├─ Representative Load per Cycle, if known {{lookup: product_usage_pattern}} {{input: optional}} (User)
-│  ├─ Hot-Water Fraction, if known {{lookup: product_usage_pattern}} {{input: optional}} (User)
-│  ├─ Hot-water temperature rise, if known {{input: optional}} (User)
+│  ├─ Annual Cycles per Unit {{lookup: product_usage_pattern}} {{input: required}} (User)
+│  ├─ Existing hot-water fraction {{lookup: product_usage_pattern}} {{input: required}} (User)
+│  ├─ Proposed hot-water fraction {{lookup: product_usage_pattern}} {{input: required}} (User)
+│  ├─ Hot-water temperature rise {{input: required}} (User)
 │  ├─ Water-heating resource {{input: required}} (User)
-│  ├─ Water-heater efficiency, if known {{input: optional}} (User)
-│  ├─ Separately reported or measured machine electricity per cycle, if known {{input: optional}} (User)
+│  ├─ Water-heater efficiency {{input: required}} (User)
+│  ├─ Existing and proposed separately reported or measured machine electricity per cycle, if known {{input: optional}} (User)
 │  └─ Certified tub volume and water or energy factors (Standard)
 └─ BR-AVOIDABLE-RESOURCE-RATE
 ```

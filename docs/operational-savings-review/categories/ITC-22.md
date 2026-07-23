@@ -10,10 +10,10 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-EPA-CHP-PERFORMANCE`
-- **Required User-input count:** 3
-- **Optional Known-Detail count:** 6
-- **Profile-input count:** 1
-- **Bill-input count:** 12
+- **Required User-input count:** 6
+- **Optional Known-Detail count:** 5
+- **Profile-input count:** 0
+- **Bill-input count:** 3
 - **Standard-assumption count:** 1
 - **Applicable resources:** electricity, gas, liquid-fuel
 - **Default estimate:** UNAVAILABLE
@@ -37,7 +37,60 @@
 
 `useful_heat = min(input_biomass_or_biogas × lower_heating_value × recoverable_heat_fraction, coincident_thermal_load)`
 
-`avoided_boiler_fuel = useful_heat / existing_boiler_efficiency`
+`avoided_boiler_fuel = to_billed_unit(useful_heat / existing_boiler_efficiency, boiler_fuel_unit)`
+
+`avoided_grid_kWh = min(generation, coincident_onsite_electric_load)`
+
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| annual_available_fuel | fuel-unit/year | Measured or contracted project fuel supply | User fuel availability and schedule | None | Direct input or formula | Confirmed annual fuel availability, if known (User)<br>Operating schedule (User)<br>Scheduled input fuel | NO_ESTIMATE |
+| scheduled_input_fuel | fuel-unit/year | Measured or contracted project fuel supply | User fuel availability and schedule | None | Direct input or formula | Confirmed annual fuel availability, if known (User)<br>Operating schedule (User)<br>Scheduled input fuel | NO_ESTIMATE |
+| input_biomass_or_biogas | fuel-unit/year | Measured or contracted project fuel supply | User fuel availability and schedule | None | Direct input or formula | Confirmed annual fuel availability, if known (User)<br>Operating schedule (User)<br>Scheduled input fuel | NO_ESTIMATE |
+| lower_heating_value | energy/fuel-unit, fraction, kWh/year | Exact fuel assay and EPA or project performance | User heating value<br>evidence:E-EPA-CHP | None | E-EPA-CHP: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured | NO_ESTIMATE |
+| electric_efficiency | energy/fuel-unit, fraction, kWh/year | Exact fuel assay and EPA or project performance | User heating value<br>evidence:E-EPA-CHP | None | E-EPA-CHP: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured | NO_ESTIMATE |
+| generation | energy/fuel-unit, fraction, kWh/year | Exact fuel assay and EPA or project performance | User heating value<br>evidence:E-EPA-CHP | None | E-EPA-CHP: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured | NO_ESTIMATE |
+| recoverable_heat_fraction | fraction, energy/year, energy/year, fraction, fuel-unit/year | EPA method plus exact site inputs | evidence:E-EPA-CHP<br>User thermal load and boiler efficiency | None | E-EPA-CHP: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured | OMIT_THERMAL_COMPONENT_OR_NO_ESTIMATE |
+| coincident_thermal_load | fraction, energy/year, energy/year, fraction, fuel-unit/year | EPA method plus exact site inputs | evidence:E-EPA-CHP<br>User thermal load and boiler efficiency | None | E-EPA-CHP: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured | OMIT_THERMAL_COMPONENT_OR_NO_ESTIMATE |
+| useful_heat | fraction, energy/year, energy/year, fraction, fuel-unit/year | EPA method plus exact site inputs | evidence:E-EPA-CHP<br>User thermal load and boiler efficiency | None | E-EPA-CHP: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured | OMIT_THERMAL_COMPONENT_OR_NO_ESTIMATE |
+| existing_boiler_efficiency | fraction, energy/year, energy/year, fraction, fuel-unit/year | EPA method plus exact site inputs | evidence:E-EPA-CHP<br>User thermal load and boiler efficiency | None | E-EPA-CHP: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured | OMIT_THERMAL_COMPONENT_OR_NO_ESTIMATE |
+| avoided_boiler_fuel | fraction, energy/year, energy/year, fraction, fuel-unit/year | EPA method plus exact site inputs | evidence:E-EPA-CHP<br>User thermal load and boiler efficiency | None | E-EPA-CHP: UNVERIFIED | Technology and capacity performance tables plus CHP savings calculator workbook - Exact row and workbook cell contract not yet captured | OMIT_THERMAL_COMPONENT_OR_NO_ESTIMATE |
+| resource_unit_conversion | common-energy-unit/resource-unit and reciprocal | UNIT-RESOURCE-ENERGY | resource-energy: Required versioned and audited conversion table keyed by the selected resource unit | None | Direct input or formula | Avoidable marginal resource price | NO_ESTIMATE |
+| boiler_fuel_unit | common-energy-unit/resource-unit and reciprocal | UNIT-RESOURCE-ENERGY | resource-energy: Required versioned and audited conversion table keyed by the selected resource unit | None | Direct input or formula | Avoidable marginal resource price | NO_ESTIMATE |
+| coincident_onsite_electric_load | kWh/year and USD/resource-unit | Formula and component rates | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Annual biomass or biogas resource value<br>Coincident onsite electric-load constraint, if known (User)<br>Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+| avoided_grid_kWh | kWh/year and USD/resource-unit | Formula and component rates | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Annual biomass or biogas resource value<br>Coincident onsite electric-load constraint, if known (User)<br>Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+| p_electric | kWh/year and USD/resource-unit | Formula and component rates | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Annual biomass or biogas resource value<br>Coincident onsite electric-load constraint, if known (User)<br>Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+| p_fuel | kWh/year and USD/resource-unit | Formula and component rates | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Annual biomass or biogas resource value<br>Coincident onsite electric-load constraint, if known (User)<br>Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+| p_input_fuel | kWh/year and USD/resource-unit | Formula and component rates | electric-volumetric: utilityExtractedValues[].fieldId=average_cost_per_kwh<br>electric-volumetric: utilityExtractedValues[].fieldId=delivery_charges<br>electric-volumetric: utilityExtractedValues[].fieldId=generation_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges<br>fuel-price: Required documented project fuel-price input | None | Direct input or formula | Annual biomass or biogas resource value<br>Coincident onsite electric-load constraint, if known (User)<br>Avoidable marginal resource price | RETURN_RESOURCE_RESULTS_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+### STD-EPA-CHP-PERFORMANCE
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | None |
+| proposed or qualified product | E-EPA-CHP (UNVERIFIED, proposed-class-method) |
+| usage or operating schedule | None |
+| physics or calculation method | E-EPA-CHP (UNVERIFIED, proposed-class-method) |
+| tariff or bill | None |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** exact_product_catalog, capacity_default, operating_profile_default, thermal_coincidence_default
+
+**Manual verdict:** EPA technology and capacity rows can support proposed screening classes and a transparent energy balance. They do not identify exact equipment or supply site design and coincidence inputs.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** fuel availability; fuel heating value; generation performance; thermal coincidence; prices.
+- **Exact scenario:** insufficient-data.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Explicit inputs and documented EPA bounds only.
+- **Final result path:** fuel-to-power-and-heat balance -> component rates
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** Confirmed fuel supply and EPA performance fixture.
 
 ## Fully Expanded Information Tree
 
@@ -48,29 +101,22 @@ Annual biomass or biogas resource value
 ├─ Fuel lower heating value, if known (User)
 ├─ Conversion technology (User)
 ├─ Selected Unit Model, if known (User)
-├─ Installed capacity, if known (User)
-├─ Linked Opportunity (Profile)
+├─ Installed capacity (User)
+├─ Linked Opportunity
 ├─ Operating schedule (User)
 ├─ Coincident onsite electric-load constraint, if known (User)
-├─ Coincident useful thermal-load constraint, if known (User)
+├─ Coincident useful thermal-load constraint (User)
+├─ Existing boiler efficiency, if known (User)
+├─ Scheduled input fuel
 ├─ Performance by technology and fuel (Standard)
-├─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-│  ├─ annual_kwh for electricity (Bill)
-│  ├─ annual_therms for gas (Bill)
-│  ├─ annual_gallons with the matching fuel type for liquid or vehicle fuel (Bill)
-│  ├─ billing_period_start (Bill)
-│  └─ billing_period_end (Bill)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   ├─ Electric variable charge
-   │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
-   │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-   │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-   │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   ├─ Gas variable charge
-   │  ├─ gas_rate_schedule, verified against the service account (Bill)
-   │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   └─ Liquid or vehicle-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   ├─ Electric volumetric charge
+   │  ├─ utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff (Bill)
+   │  └─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh (Bill)
+   ├─ Gas volumetric charge
+   │  └─ utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms (Bill)
+   └─ Liquid or vehicle-fuel price
+      └─ Documented current project fuel price for the matching fuel and geography (User)
 ```
 
 ## Input Workflow
@@ -79,46 +125,39 @@ Annual biomass or biogas resource value
 
 - Fuel unit
 - Conversion technology
+- Installed capacity
 - Operating schedule
+- Coincident useful thermal-load constraint
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid or vehicle-fuel price > Documented current project fuel price for the matching fuel and geography
 
 ### Optional Known Details
 
 - Confirmed annual fuel availability, if known
 - Fuel lower heating value, if known
 - Selected Unit Model, if known
-- Installed capacity, if known
 - Coincident onsite electric-load constraint, if known
-- Coincident useful thermal-load constraint, if known
+- Existing boiler efficiency, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
-- Linked Opportunity
+- None.
 
 ### Bill Inputs
 
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh for electricity
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_therms for gas
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_gallons with the matching fuel type for liquid or vehicle fuel
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid or vehicle-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > utilityExtractedValues average_cost_per_kwh for a verified single volumetric tariff
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric volumetric charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched kWh
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas volumetric charge > utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms
 
 ### Standard-Derived Assumptions
 
 #### STD-EPA-CHP-PERFORMANCE
 
 - **Value produced:** Annual electricity generation, annual input fuel, useful recovered heat, displaced boiler fuel, and source table or workbook version.
-- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
+- **Resolution scenario:** exact-input; source-table-technology-and-capacity-class; linked-opportunity-constrained-input; insufficient-data.
 - **Low/base/high behavior:** Use the documented range bounds and representative midpoint for the matched technology and capacity bin; exact specifications use one value in all positions.
-- **Exact versus estimated:** Return exact documented performance for a selected compatible unit; otherwise return a technology-and-capacity-bin distribution without claiming an exact model.
+- **Exact versus estimated:** Calculate from exact project inputs or use only a documented EPA technology and capacity row as a proposed screening class; return no estimate when capacity, fuel, or heat coincidence is unresolved.
 - **Uncertainty:** Low for exact specifications, moderate for a matched catalog bin, and high for generic biomass or biogas screening.
 - **Source:** U.S. Environmental Protection Agency, [CHP technologies and current catalog links](https://www.epa.gov/chp/chp-technologies), [CHP efficiency method and resources](https://www.epa.gov/chp/chp-resources), and [current CHP calculator download](https://www.epa.gov/chp/download-chp-energy-and-emissions-savings-calculator). The technology page supplies prime-mover and fuel-cell performance characteristics. The methodology supplies the separate heat-and-power energy balance. The calculator provides a reviewable workbook implementation.
 - **Source version:** EPA catalog or workbook publication date, table or worksheet identifier, and local table version.
@@ -130,7 +169,7 @@ Optional Known Details replace the corresponding Standard estimate when supplied
 
 ### ■ STD-EPA-CHP-PERFORMANCE — EPA CHP and fuel-cell performance
 
-**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+**Status:** LIMITED
 
 **Purpose:**
 Resolve electric efficiency, useful-heat ratio, and representative operating limits for onsite fuel generation.
@@ -152,24 +191,24 @@ The calculator provides a reviewable workbook implementation.
     - **User:** Annual biomass or biogas resource value > Selected Unit Model, if known
 - `generation_capacity` - **Optional:** Exact total installed capacity when known; otherwise use only a defensible source-supported service or capacity class.
   - **Resolved by:**
-    - **User:** Annual biomass or biogas resource value > Installed capacity, if known
+    - **User:** Annual biomass or biogas resource value > Installed capacity
 - `operating_profile` - **Conditional:** Recognizable operating pattern or exact capacity factor used when the category formula requires annual operation. Applies only in the documented scenario.
   - **Resolved by:**
     - **User:** Annual biomass or biogas resource value > Operating schedule
 - `thermal_load_coincidence` - **Conditional:** Coincident useful thermal-load limit when recovered heat is modeled. Applies only in the documented scenario.
   - **Resolved by:**
-    - **User:** Annual biomass or biogas resource value > Coincident useful thermal-load constraint, if known
+    - **User:** Annual biomass or biogas resource value > Coincident useful thermal-load constraint
 - `linked_opportunity` - **Conditional:** Product, technology, fuel, capacity, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
   - **Resolved by:**
-    - **Profile:** Annual biomass or biogas resource value > Linked Opportunity
+    - **Derived:** Annual biomass or biogas resource value > Linked Opportunity
 
 **Value Needed:**
 Annual electricity generation, annual input fuel, useful recovered heat, displaced boiler fuel, and source table or workbook version.
 
 **Resolution Contract:**
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return exact documented performance for a selected compatible unit; otherwise return a technology-and-capacity-bin distribution without claiming an exact model.
+- **Supported Scenarios:** exact-input; source-table-technology-and-capacity-class; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Calculate from exact project inputs or use only a documented EPA technology and capacity row as a proposed screening class; return no estimate when capacity, fuel, or heat coincidence is unresolved.
 - **Low/Base/High Rule:** Use the documented range bounds and representative midpoint for the matched technology and capacity bin; exact specifications use one value in all positions.
 - **Uncertainty Rule:** Low for exact specifications, moderate for a matched catalog bin, and high for generic biomass or biogas screening.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
@@ -184,13 +223,9 @@ Extract only energy-performance values from the current catalog section or exact
 Calculate input fuel from electric output and electric efficiency, cap useful recovered heat at the coincident thermal load, and convert that heat to displaced boiler fuel with the existing boiler efficiency.
 For biomass or biogas, require confirmed annual available fuel quantity and heating value and never infer it from organization type.
 Exclude emissions and all cost assumptions in EPA tools.
-For an exact existing unit, use its documented performance and assign low uncertainty.
-When only prime-mover type or application is known, use the compatible technology and capacity-bin distribution.
-Use Profile or Bill context only when it establishes a source-supported service and capacity class, and otherwise return no estimate.
-When a Linked Opportunity names exact products, restrict the candidate set to those products.
-When it specifies a technology class or minimum performance, filter the EPA-compatible candidates to those requirements.
-When no product restriction or no Linked Opportunity exists, build a compatible technology-and-capacity candidate set without claiming an exact model.
-An exact proposed unit overrides the class distribution after fuel, service, capacity, and heat-recovery compatibility validation.
+An exact existing or proposed unit requires project documentation because the EPA catalog is a representative technology table, not a model catalog.
+Profile and Bill context do not supply generation capacity, operating profile, or thermal coincidence.
+A Linked Opportunity may constrain a documented technology class only when the EPA row and all calculation inputs remain compatible.
 
 **Automation:**
 - **Selected Strategy:** Versioned local performance table plus a transparent energy-balance function.
@@ -206,6 +241,7 @@ An exact proposed unit overrides the class distribution after fuel, service, cap
 
 Status is DRAFT and uncertainty is High because the federal biomass catalog is partly outdated and project fuel quality dominates performance.
 Do not monetize avoided disposal, renewable credits, or fuel that is not contractually available.
+Export value is excluded from this category.
 
 Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
 

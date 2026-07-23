@@ -12,8 +12,8 @@
 - **Standards used:** `STD-DOE-CCMS-RATINGS`
 - **Required User-input count:** 2
 - **Optional Known-Detail count:** 5
-- **Profile-input count:** 1
-- **Bill-input count:** 5
+- **Profile-input count:** 0
+- **Bill-input count:** 4
 - **Standard-assumption count:** 1
 - **Applicable resources:** gas
 - **Default estimate:** UNAVAILABLE
@@ -33,6 +33,44 @@
 
 `current_annual_fuel = measured_equipment_fuel` or a user-confirmed allocation of BR-ANNUAL-BILL-RESOURCE.
 
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| current_annual_fuel | therms/year | Measured end use or user-confirmed bill allocation | utilityExtractedValues[].fieldId=annual_therms plus User furnace share | None | Direct input or formula | Current annual furnace fuel | NO_ESTIMATE |
+| measured_equipment_fuel | therms/year | Measured end use or user-confirmed bill allocation | utilityExtractedValues[].fieldId=annual_therms plus User furnace share | None | Direct input or formula | Current annual furnace fuel | NO_ESTIMATE |
+| η_existing | fraction | Exact existing nameplate or retained certification record | User Existing Model | None | E-CCMS-EXISTING-UNSUPPORTED: UNSUPPORTED | No reviewed retained historical export - No installed-population table or historical-retention proof | NO_ESTIMATE |
+| η_proposed | fraction | Exact current certified proposed model | User Selected Proposed Model | None | E-CCMS-CURRENT: UNVERIFIED | Product-specific analyst export and DOE test-result template - Product-specific fields are not pinned until an export and template fixture are reviewed | NO_ESTIMATE |
+| p_fuel | USD/therm | Bill | gas-volumetric: utilityExtractedValues[].fieldId=average_cost_per_therm<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_delivery_charges<br>gas-volumetric: utilityExtractedValues[].fieldId=gas_procurement_charges | None | Direct input or formula | Gas volumetric charge | RETURN_THERMS_WITHOUT_DOLLAR_VALUE |
+
+## Source-Role Evidence
+
+### STD-DOE-CCMS-RATINGS
+
+| Source role | Evidence |
+|---|---|
+| existing equipment baseline | E-CCMS-EXISTING-UNSUPPORTED (UNSUPPORTED, none) |
+| proposed or qualified product | E-CCMS-CURRENT (UNVERIFIED, proposed-or-current) |
+| usage or operating schedule | None |
+| physics or calculation method | None |
+| tariff or bill | None |
+| geographic or climate | None |
+
+**Unsupported roles or uses:** usage_or_operating_schedule, tariff_or_bill, geographic_or_climate
+
+**Manual verdict:** Current certification records can support an exact current product after a product-specific export is reviewed. They do not supply a representative installed existing-equipment population.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** equipment fuel allocation; existing efficiency; proposed efficiency.
+- **Exact scenario:** insufficient-data.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Exact inputs only.
+- **Final result path:** efficiency ratio -> therms avoided -> gas rate
+- **Uncertainty:** High.
+- **Executable golden fixture:** No.
+- **Remaining gate:** Existing-product and proposed-product export fixtures plus end-use allocation.
+
 ## Fully Expanded Information Tree
 
 ```text
@@ -48,15 +86,14 @@ Annual dollar savings
 │     ├─ Existing Recognizable Equipment Type or Application (User)
 │     ├─ Existing Model, if known (User)
 │     ├─ Existing Capacity or Size Class, if known (User)
-│     ├─ Linked Opportunity (Profile)
+│     ├─ Linked Opportunity
 │     ├─ Proposed Product Class or Intended Scope (User)
 │     ├─ Selected Proposed Model, if known (User)
 │     ├─ Proposed Capacity or Size Class, if known (User)
 │     └─ Certified engineering-value resolution (Standard)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   └─ Gas variable charge
-      ├─ gas_rate_schedule, verified against the service account (Bill)
-      └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
+   └─ Gas volumetric charge
+      └─ utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms (Bill)
 ```
 
 ## Input Workflow
@@ -74,32 +111,31 @@ Annual dollar savings
 - Annual fuel reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Selected Proposed Model, if known
 - Annual fuel reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Proposed Capacity or Size Class, if known
 
-Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+Optional Known Details replace a corresponding assumption, select an exact path, or enable an explicitly optional component when supplied and validated.
 
 ### Profile Inputs
 
-- Annual fuel reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Linked Opportunity
+- None.
 
 ### Bill Inputs
 
 - Annual fuel reduction > Current annual furnace fuel > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_therms for gas
 - Annual fuel reduction > Current annual furnace fuel > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
 - Annual fuel reduction > Current annual furnace fuel > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas volumetric charge > utilityExtractedValues average_cost_per_therm for a verified single volumetric tariff, or gas_delivery_charges and gas_procurement_charges divided by matched therms
 
 ### Standard-Derived Assumptions
 
 #### STD-DOE-CCMS-RATINGS
 
 - **Value produced:** The certified efficiency, capacity, annual or daily resource use, test-procedure identifier, units, certification date, and active-record status required by the category.
-- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Low/base/high behavior:** For exact matches set low, base, and high to the certified value; otherwise use the 25th percentile, median, and 75th percentile of compatible active records.
-- **Exact versus estimated:** Return exact certified values for an unambiguous active model match; return an eligible class distribution for class-based scenarios; return no estimate when compatibility cannot be established.
-- **Uncertainty:** Low for exact active records, moderate for a compatible class distribution, and high for a context-only fallback.
+- **Resolution scenario:** exact-current-model; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.
+- **Low/base/high behavior:** For an exact reviewed record set low, base, and high to the certified value. No generic percentile is supported until a product-specific eligible population, filters, and sample size have a reviewed fixture.
+- **Exact versus estimated:** Return an exact certified value only for an unambiguous model present in a reviewed snapshot; apply proposed-product restrictions only to compatible current records; otherwise return no estimate.
+- **Uncertainty:** Low for the certified value of an exact active record, moderate for a verified compatible proposed class, and unresolved for an unknown existing model.
 - **Source:** U.S. Department of Energy, [Compliance Certification Database](https://www.regulations.doe.gov/certification-data/), [CCMS and database description](https://www.energy.gov/cmei/buildings/implementation-certification-and-enforcement), and [product-specific certification and test-result templates](https://www.energy.gov/cmei/buildings/standardized-templates-recording-test-results). The database is the public source of manufacturer certification reports. The templates define product-specific fields and units.
 - **Source version:** Export date, product group, certification record identifiers, test procedure, and export checksum.
-- **Selected class or candidate set:** Filter active records by application, equipment class, capacity or service requirement, opportunity restrictions, and compatibility before calculating the distribution.
+- **Selected class or candidate set:** Filter active records by product-specific fields, equipment class, capacity or service requirement, opportunity restrictions, and compatibility. Record filters and sample size before any distribution is enabled.
 - **Assumptions:** Certified test values are comparable only inside the same product group, test procedure, and compatible service class.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
@@ -130,22 +166,20 @@ The templates define product-specific fields and units.
     - **User:** Annual dollar savings > Annual fuel reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Proposed Capacity or Size Class, if known
 - `linked_opportunity` - **Conditional:** Product, certification, class, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
   - **Resolved by:**
-    - **Profile:** Annual dollar savings > Annual fuel reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Linked Opportunity
-- `product_usage_pattern` - **Conditional:** Recognizable operating pattern and exact activity or idle values when the category formula uses certified active and idle ratings. Applies only in the documented scenario.
-  - **Resolved by:** Not applicable under this category contract.
+    - **Derived:** Annual dollar savings > Annual fuel reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Linked Opportunity
 
 **Value Needed:**
 The certified efficiency, capacity, annual or daily resource use, test-procedure identifier, units, certification date, and active-record status required by the category.
 
 **Resolution Contract:**
 - **Resolver Type:** Equipment resolver.
-- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
-- **Scenario Output Behavior:** Return exact certified values for an unambiguous active model match; return an eligible class distribution for class-based scenarios; return no estimate when compatibility cannot be established.
-- **Low/Base/High Rule:** For exact matches set low, base, and high to the certified value; otherwise use the 25th percentile, median, and 75th percentile of compatible active records.
-- **Uncertainty Rule:** Low for exact active records, moderate for a compatible class distribution, and high for a context-only fallback.
+- **Supported Scenarios:** exact-current-model; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model; insufficient-data.
+- **Scenario Output Behavior:** Return an exact certified value only for an unambiguous model present in a reviewed snapshot; apply proposed-product restrictions only to compatible current records; otherwise return no estimate.
+- **Low/Base/High Rule:** For an exact reviewed record set low, base, and high to the certified value. No generic percentile is supported until a product-specific eligible population, filters, and sample size have a reviewed fixture.
+- **Uncertainty Rule:** Low for the certified value of an exact active record, moderate for a verified compatible proposed class, and unresolved for an unknown existing model.
 - **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
 - **Source Version:** Export date, product group, certification record identifiers, test procedure, and export checksum.
-- **Selected Class or Candidate Set:** Filter active records by application, equipment class, capacity or service requirement, opportunity restrictions, and compatibility before calculating the distribution.
+- **Selected Class or Candidate Set:** Filter active records by product-specific fields, equipment class, capacity or service requirement, opportunity restrictions, and compatibility. Record filters and sample size before any distribution is enabled.
 - **Assumptions:** Certified test values are comparable only inside the same product group, test procedure, and compatible service class.
 - **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 - **No-Estimate Rule:** Return no estimate when no compatible active record or defensible equipment class remains after filtering.
@@ -156,14 +190,14 @@ Select an exact normalized manufacturer and basic-model match, then disambiguate
 Read only fields defined in the current product-specific template and preserve the reported units and test-procedure version.
 Store a local slowly changing dimension keyed by product group, manufacturer, basic model, class, and certification effective date.
 Return no model rating on ambiguous or withdrawn matches.
-For an exact existing model, return the source-documented engineering value with low uncertainty.
-When only type or application is known, select compatible records and return the declared class distribution.
-When neither model nor type is known, use relevant Profile or Bill context only when it supports a source-defined class, and otherwise return no estimate.
+An existing model may use this Standard only when that exact model is present in a retained reviewed snapshot.
+Current efficient records must not be used as an installed existing-equipment distribution.
+Type-only, Profile, and Bill fallbacks are unsupported until a separate installed-baseline source and mapping are reviewed.
 When a Linked Opportunity names exact products, restrict the candidate set to those products.
 When it specifies a class, certification, or minimum performance, filter active compatible records to those requirements.
 When it has no product restriction or no Linked Opportunity exists, build the compatible candidate set from application, service need, site context, and source data without claiming an exact model.
-An exact proposed model overrides the candidate distribution after compatibility validation.
-Resolve recognizable product usage patterns to visible low/base/high activity assumptions only when the category and source support that conversion.
+An exact proposed model overrides a proposed candidate set after compatibility validation.
+Usage and operating schedules require separate evidence and must not be inferred from certification records.
 Return no estimate when product compatibility or a required usage basis cannot be established.
 
 **Automation:**

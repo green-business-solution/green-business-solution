@@ -10,10 +10,10 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** None
-- **Required User-input count:** 2
+- **Required User-input count:** 5
 - **Optional Known-Detail count:** 0
 - **Profile-input count:** 0
-- **Bill-input count:** 6
+- **Bill-input count:** 0
 - **Standard-assumption count:** 0
 - **Applicable resources:** electricity
 - **Default estimate:** UNVALIDATED
@@ -33,25 +33,50 @@
 
 `annual_bill_credits = Σ_period credited_kWh_period × contract_credit_rate_period`
 
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| credited_kWh_period | kWh/period, USD/kWh, USD/year | Exact contract and statement | User community-solar contract artifact<br>User statement credit lines | None | Direct input or formula | Allocated or credited kWh by period from the executed contract or statement (User)<br>Credit rate by period from the executed contract or statement (User) | NO_ESTIMATE |
+| contract_credit_rate_period | kWh/period, USD/kWh, USD/year | Exact contract and statement | User community-solar contract artifact<br>User statement credit lines | None | Direct input or formula | Allocated or credited kWh by period from the executed contract or statement (User)<br>Credit rate by period from the executed contract or statement (User) | NO_ESTIMATE |
+| annual_bill_credits | kWh/period, USD/kWh, USD/year | Exact contract and statement | User community-solar contract artifact<br>User statement credit lines | None | Direct input or formula | Allocated or credited kWh by period from the executed contract or statement (User)<br>Credit rate by period from the executed contract or statement (User) | NO_ESTIMATE |
+| annual_subscription_charges | USD/year | Exact contract and statement | User community-solar contract artifact | None | Direct input or formula | Subscription charge by period from the executed contract or statement (User) | NO_ESTIMATE |
+| contract_escalation_rule | contract rule and date range | Executed contract | User community-solar contract artifact | None | Direct input or formula | Contract escalation rule (User)<br>Contract term rule (User) | NO_ESTIMATE |
+| contract_term_rule | contract rule and date range | Executed contract | User community-solar contract artifact | None | Direct input or formula | Contract escalation rule (User)<br>Contract term rule (User) | NO_ESTIMATE |
+
+## Source-Role Evidence
+
+No external Standard source role applies.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** credited kWh by period; credit rate by period; subscription charges.
+- **Exact scenario:** exact-contract-input.
+- **Source fixture:** None.
+- **Low/base/high calculation:** Exact contract case only.
+- **Final result path:** statement credits minus contract charges
+- **Uncertainty:** Moderate.
+- **Executable golden fixture:** No.
+- **Remaining gate:** Normalized contract and statement-credit schema with fixture.
+
 ## Fully Expanded Information Tree
 
 ```text
 Annual contract bill reduction
-├─ Allocated or credited kWh by period from the executed contract and bill; no current canonical bill field (Bill)
-├─ Credit rate by period from the executed contract and bill; no current canonical bill field (Bill)
-├─ Subscription charge by period from the executed contract and bill; no current canonical bill field (Bill)
+├─ Allocated or credited kWh by period from the executed contract or statement (User)
+├─ Credit rate by period from the executed contract or statement (User)
+├─ Subscription charge by period from the executed contract or statement (User)
 ├─ Contract escalation rule (User)
-├─ Contract term rule (User)
-└─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-   ├─ annual_kwh for electricity (Bill)
-   ├─ billing_period_start (Bill)
-   └─ billing_period_end (Bill)
+└─ Contract term rule (User)
 ```
 
 ## Input Workflow
 
 ### Required User Inputs
 
+- Allocated or credited kWh by period from the executed contract or statement
+- Credit rate by period from the executed contract or statement
+- Subscription charge by period from the executed contract or statement
 - Contract escalation rule
 - Contract term rule
 
@@ -67,12 +92,7 @@ No optional exact-value override applies to this category.
 
 ### Bill Inputs
 
-- Allocated or credited kWh by period from the executed contract and bill; no current canonical bill field
-- Credit rate by period from the executed contract and bill; no current canonical bill field
-- Subscription charge by period from the executed contract and bill; no current canonical bill field
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh for electricity
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
+- None.
 
 ### Standard-Derived Assumptions
 

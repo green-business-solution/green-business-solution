@@ -12,7 +12,7 @@
 - **Standards used:** None
 - **Required User-input count:** 0
 - **Optional Known-Detail count:** 0
-- **Profile-input count:** 1
+- **Profile-input count:** 0
 - **Bill-input count:** 0
 - **Standard-assumption count:** 0
 - **Applicable resources:** none
@@ -43,11 +43,32 @@
 
 No supporting formula is required.
 
+## Formula-Term Evidence
+
+| Formula term | Unit | Source or resolver | Exact path | Fallback | Evidence status | Source location | Missing behavior |
+|---|---|---|---|---|---|---|---|
+| S | USD/year | Category boundary constant | formula:S=0 | None | Direct input or formula | Annual direct operational-resource savings equals zero | RETURN_ZERO |
+
+## Source-Role Evidence
+
+No external Standard source role applies.
+
+## Default-Path Proof
+
+- **Minimum required inputs:** None.
+- **Exact scenario:** zero-direct-operational-resource-boundary.
+- **Source fixture:** docs/operational-savings-fixtures/categories/ITC-15.golden.json.
+- **Low/base/high calculation:** low = base = high = 0 USD/year
+- **Final result path:** S = 0
+- **Uncertainty:** None for the category boundary.
+- **Executable golden fixture:** docs/operational-savings-fixtures/categories/ITC-15.golden.json.
+- **Remaining gate:** None
+
 ## Fully Expanded Information Tree
 
 ```text
 Annual direct operational-resource savings equals zero
-└─ Linked Opportunity (Profile)
+└─ Linked Opportunity
 ```
 
 ## Input Workflow
@@ -64,7 +85,7 @@ No optional exact-value override applies to this category.
 
 ### Profile Inputs
 
-- Linked Opportunity
+- None.
 
 ### Bill Inputs
 
