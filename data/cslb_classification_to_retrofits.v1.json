@@ -1,5 +1,6 @@
 {
   "schemaVersion": "cslb-classification-to-retrofits.v1",
+  "mappingSemantics": "A mapping identifies a contractor classification as a possible first-pass candidate for all or a material part of the retrofit. It is not proof of project-specific legal authorization or confirmation that a contractor actually offers the service.",
   "classifications": [
     {
       "classificationCode": "A",
@@ -139,6 +140,7 @@
         "pump_fan_controls_retrofit",
         "compressed_air_controls",
         "process_electrification_equipment",
+        "induction_cooking_equipment",
         "demand_controlled_ventilation"
       ]
     },
@@ -186,6 +188,13 @@
       "retrofitIds": [
         "smart_irrigation_controller",
         "efficient_irrigation_retrofit"
+      ]
+    },
+    {
+      "classificationCode": "C-28",
+      "classificationName": "Lock and Security Equipment Contractor",
+      "retrofitIds": [
+        "exterior_door_replacement"
       ]
     },
     {
@@ -287,6 +296,13 @@
       "classificationName": "Awnings Contractor",
       "retrofitIds": [
         "window_film_shading_retrofit"
+      ]
+    },
+    {
+      "classificationCode": "C-61/D-12",
+      "classificationName": "Synthetic Products Contractor",
+      "retrofitIds": [
+        "efficient_irrigation_retrofit"
       ]
     },
     {
