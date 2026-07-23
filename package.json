@@ -109,7 +109,7 @@
     "@vitejs/plugin-react": "^5.0.0",
     "concurrently": "^10.0.3",
     "express": "^5.2.1",
-    "fast-xml-parser": "^5.9.3",
+    "fast-xml-parser": "^5.10.1",
     "pdf-parse": "^1.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
