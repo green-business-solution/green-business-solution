@@ -77,6 +77,11 @@ NAME-TP-2
 | `LicenseNo` | `contractorId` | Prefix the normalized license number with `CA_CSLB_`. |
 | `BusinessName` | `businessName` | Collapse whitespace and preserve the CSLB business name. |
 | `PrimaryStatus`, `SecondaryStatus` | `licenseStatus` | Preserve both nonempty status values in source order, separated by ` | `. |
+| `PrimaryStatus` | `primaryStatus` | Preserve the separate primary status for deterministic filtering and later patching. |
+| `SecondaryStatus` | `secondaryStatus` | Preserve the separate secondary status when present. |
+| `PendingSuspension` | `pendingSuspension` | Preserve the source value when present. |
+| `PendingClassRemoval` | `pendingClassRemoval` | Preserve the source value when present. |
+| `PendingClassReplace` | `pendingClassReplace` | Preserve the source value when present. |
 | `IssueDate` | `licenseIssueDate` | Convert a valid `MM/DD/YYYY` value to `YYYY-MM-DD`. |
 | `ExpirationDate` | `licenseExpirationDate` | Convert a valid `MM/DD/YYYY` value to `YYYY-MM-DD`. |
 | `Classifications(s)` | `licenseClassifications` | Split on `|`, normalize official classification codes, deduplicate, and sort. |
@@ -85,6 +90,7 @@ NAME-TP-2
 | `MailingAddress` | `businessAddress.line1` | Preserve the complete source address line because the file has no separate line 2 field. |
 | `City` | `businessAddress.city` | Collapse whitespace. |
 | `State` | `businessAddress.state` | Collapse whitespace. |
+| `County` | `businessAddress.county` | Collapse whitespace without interpreting the county as a service area. |
 | `ZIPCode` | `businessAddress.postalCode` | Preserve as a string. |
 | `BusinessPhone` | `phone` | Collapse whitespace without inventing a new phone format. |
 | Attached-file metadata | `source.sourceReceivedAt` | Use the source file modification timestamp recorded by the attachment environment. |
@@ -95,6 +101,9 @@ The mailing address is not interpreted as a service area.
 `BUS-NAME-2` and `FullBusinessName` are not substituted for `BusinessName` because every inspected source row supplies the canonical `BusinessName` column.
 Bond, workers' compensation, personnel, discipline, asbestos, and hazardous-substance credential data are not imported.
 The `ASB` and `HAZ` tokens found in the classification cell are counted as ignored credentials rather than stored as license classifications.
+
+Pass 2 can backfill the separate CSLB status, pending, and county fields on rows created before those fields were added.
+See [California Contractor Directory Consolidation](./california-contractor-directory-consolidation.md) for that missing-only patch and official-directory enrichment workflow.
 
 ## Classification Handling
 

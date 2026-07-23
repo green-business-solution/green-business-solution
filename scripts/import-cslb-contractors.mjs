@@ -105,6 +105,11 @@ const sourceUnavailableFields = [
 const conflictFields = [
   "businessName",
   "licenseStatus",
+  "primaryStatus",
+  "secondaryStatus",
+  "pendingSuspension",
+  "pendingClassRemoval",
+  "pendingClassReplace",
   "licenseIssueDate",
   "licenseExpirationDate",
   "businessAddress",
@@ -538,7 +543,12 @@ export function buildContractorItem(record, mapping, context) {
     licenseIssueDate: record.licenseIssueDate || null,
     licenseNumber: record.licenseNumber,
     licenseStatus: record.licenseStatus,
+    pendingClassRemoval: record.pendingClassRemoval || null,
+    pendingClassReplace: record.pendingClassReplace || null,
+    pendingSuspension: record.pendingSuspension || null,
     phone: record.phone || null,
+    primaryStatus: record.primaryStatus || null,
+    secondaryStatus: record.secondaryStatus || null,
     sourceRowHashes: [...record.sourceRowHashes].sort(compareStrings),
   };
   const sourceRecordHash = sha256Text(stableStringify(canonicalSourceRecord));
@@ -549,6 +559,11 @@ export function buildContractorItem(record, mapping, context) {
     licenseNumber: record.licenseNumber,
     businessName: record.businessName,
     licenseStatus: record.licenseStatus,
+    primaryStatus: record.primaryStatus || undefined,
+    secondaryStatus: record.secondaryStatus || undefined,
+    pendingSuspension: record.pendingSuspension || undefined,
+    pendingClassRemoval: record.pendingClassRemoval || undefined,
+    pendingClassReplace: record.pendingClassReplace || undefined,
     licenseIssueDate: record.licenseIssueDate || undefined,
     licenseExpirationDate: record.licenseExpirationDate || undefined,
     licenseClassifications: [...record.licenseClassifications].sort(
@@ -713,12 +728,21 @@ function standardizeSourceRow(row, result) {
     line1: normalizeWhitespace(row.MailingAddress) || undefined,
     city: normalizeWhitespace(row.City) || undefined,
     state: normalizeWhitespace(row.State) || undefined,
+    county: normalizeWhitespace(row.County) || undefined,
     postalCode: normalizeWhitespace(row.ZIPCode) || undefined,
   });
   const record = {
     licenseNumber,
     businessName,
     licenseStatus,
+    primaryStatus: primaryStatus || undefined,
+    secondaryStatus: secondaryStatus || undefined,
+    pendingSuspension:
+      normalizeWhitespace(row.PendingSuspension) || undefined,
+    pendingClassRemoval:
+      normalizeWhitespace(row.PendingClassRemoval) || undefined,
+    pendingClassReplace:
+      normalizeWhitespace(row.PendingClassReplace) || undefined,
     licenseIssueDate: licenseIssueDate || undefined,
     licenseExpirationDate: licenseExpirationDate || undefined,
     licenseClassifications:
@@ -773,6 +797,11 @@ function mergeContractorRecords(existing, incoming, result) {
     licenseNumber: existing.licenseNumber,
     businessName: preferred.businessName,
     licenseStatus: preferred.licenseStatus,
+    primaryStatus: preferred.primaryStatus,
+    secondaryStatus: preferred.secondaryStatus,
+    pendingSuspension: preferred.pendingSuspension,
+    pendingClassRemoval: preferred.pendingClassRemoval,
+    pendingClassReplace: preferred.pendingClassReplace,
     licenseIssueDate: preferred.licenseIssueDate,
     licenseExpirationDate: preferred.licenseExpirationDate,
     businessAddress: preferred.businessAddress,

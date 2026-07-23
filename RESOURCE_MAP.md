@@ -100,8 +100,8 @@ Common local profiles:
 | prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-application-profiles` | api/data | `infra/runtime-data.yaml` | Application source/profile registry |
 | prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-api-runtime-state` | api/data | `infra/runtime-data.yaml` | Operational state such as Geocodio quota counters |
 | prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-firstmate-tasks` | api/data | `infra/runtime-data.yaml`, `infra/api-hosting.yaml`, `scripts/sync-firstmate-tasks-to-dynamodb.mjs` | Sanitized versioned Codex task and bounded report snapshots. Lambda reads only. The optional ingestion role writes only this table from an explicit publisher principal. |
-| prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-contractors` | data | `infra/runtime-data.yaml`, `scripts/import-cslb-contractors.mjs` | One-time standardized CSLB contractor records keyed by `contractorId`. |
-| prod | RetroFi Production | `059310317821` | `us-east-1` | `gbs-retrofi-contractor-source-data-059310317821-us-east-1` | data | `infra/runtime-buckets.yaml`, `scripts/import-cslb-contractors.mjs` | Unchanged CSLB source attachment plus its import manifest and aggregate report. |
+| prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-contractors` | data | `infra/runtime-data.yaml`, `scripts/import-cslb-contractors.mjs`, `scripts/enrich-contractor-directories.mjs` | One-time standardized CSLB contractor records plus guarded missing-field and official-directory enrichment keyed by `contractorId`. |
+| prod | RetroFi Production | `059310317821` | `us-east-1` | `gbs-retrofi-contractor-source-data-059310317821-us-east-1` | data | `infra/runtime-buckets.yaml`, `scripts/import-cslb-contractors.mjs`, `scripts/enrich-contractor-directories.mjs` | Unchanged CSLB source, reviewed official-directory snapshots, import manifests, and aggregate reports. |
 | legacy | green-business-solution | `448016109714` | mixed | legacy hosted zone and copied resources | rollback/data-copy | docs/runbooks | Keep only where documented for rollback or migration history |
 
 ## Routing Rules

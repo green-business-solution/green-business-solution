@@ -59,6 +59,8 @@ describe("CSLB contractor import", () => {
       "C-20",
       "C-61/D-12",
     ]);
+    expect(merged.primaryStatus).toBe("CLEAR");
+    expect(merged.businessAddress.county).toBe("Alameda");
   });
 
   it("derives relevant Retrofit IDs deterministically and omits empty fields", async () => {
@@ -87,6 +89,8 @@ describe("CSLB contractor import", () => {
     expect(first).not.toHaveProperty("phone");
     expect(first).not.toHaveProperty("licenseIssueDate");
     expect(first.businessAddress).not.toHaveProperty("line1");
+    expect(first.businessAddress.county).toBe("Los Angeles");
+    expect(first.primaryStatus).toBe("CLEAR");
     expect(JSON.stringify(first)).not.toContain("null");
 
     const mergedItem = buildContractorItem(
