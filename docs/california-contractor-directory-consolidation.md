@@ -110,3 +110,5 @@ The update planner asserts that `supportedRetrofitIds` is absent from every exis
 The exact source snapshots are retained under `raw/enrichment/<source-id>/<date>/`, and the final report is retained under `imports/enrichment/<run-id>/`.
 
 This task does not authorize write mode or any deployment.
+
+The unmatched and ambiguous follow-up workflow is documented in [Unmatched Directory Contractor Resolution](./unmatched-directory-contractor-resolution.md).

@@ -444,6 +444,84 @@ export function planConsolidation({
   };
 }
 
+export function classifyDirectoryEntriesForResolution({
+  cslbRecords,
+  directoryRecords,
+  existingContractors,
+  mapping,
+}) {
+  const existingIndices = buildExactIndices(existingContractors);
+  const rawIndices = buildExactIndices(cslbRecords);
+  return directoryRecords.map((directoryRecord) => {
+    const existingMatch = matchExact(directoryRecord, existingIndices);
+    if (existingMatch.status === "matched") {
+      return decision(directoryRecord, "existing_match", {
+        contractorId: existingMatch.record.contractorId,
+        matchMethod: existingMatch.method,
+      });
+    }
+    if (existingMatch.status === "ambiguous") {
+      return decision(directoryRecord, "ambiguous_existing_match", {
+        matchMethod: existingMatch.method,
+      });
+    }
+
+    const rawMatch = matchExact(directoryRecord, rawIndices);
+    if (rawMatch.status === "ambiguous") {
+      return decision(directoryRecord, "ambiguous_cslb_match", {
+        matchMethod: rawMatch.method,
+      });
+    }
+    if (rawMatch.status !== "matched") {
+      return decision(directoryRecord, "unmatched");
+    }
+    if (looksNonContractor(directoryRecord)) {
+      return decision(directoryRecord, "noncontractor", {
+        matchMethod: rawMatch.method,
+      });
+    }
+    if (
+      directoryRecord.licenseNumber &&
+      !namesCompatible(
+        directoryRecord.businessName,
+        rawMatch.record.businessName,
+      )
+    ) {
+      return decision(directoryRecord, "identity_conflict", {
+        matchMethod: rawMatch.method,
+      });
+    }
+    if (normalizeStatus(rawMatch.record.primaryStatus) !== "CLEAR") {
+      return decision(
+        directoryRecord,
+        "inactive_or_unusable_license",
+        {
+          matchMethod: rawMatch.method,
+        },
+      );
+    }
+    const mappedCodes = rawMatch.record.licenseClassifications.filter(
+      (code) => mapping.has(code),
+    );
+    const mappedRetrofits = new Set(
+      mappedCodes.flatMap(
+        (code) => mapping.get(code)?.retrofitIds || [],
+      ),
+    );
+    if (!mappedCodes.length || !mappedRetrofits.size) {
+      return decision(directoryRecord, "unmapped_classification", {
+        matchMethod: rawMatch.method,
+      });
+    }
+    return decision(directoryRecord, "new_contractor_proposed", {
+      contractorId: `CA_CSLB_${normalizeLicense(
+        rawMatch.record.licenseNumber,
+      )}`,
+      matchMethod: rawMatch.method,
+    });
+  });
+}
+
 export function buildExactIndices(records) {
   const indices = {
     license: new Map(),
@@ -581,7 +659,7 @@ function planMissingScalar({
   }
 }
 
-function planDirectoryEnrichment({
+export function planDirectoryEnrichment({
   conflicts,
   directoryRecord,
   existing,
@@ -1001,7 +1079,7 @@ async function applyPlan({
   };
 }
 
-function createAwsAdapter({
+export function createAwsAdapter({
   bucketName,
   profile,
   s3Region,
@@ -1260,7 +1338,7 @@ async function findCslbManifest(s3, bucket, sourceKey) {
   return null;
 }
 
-async function loadClassificationMapping(mappingPath) {
+export async function loadClassificationMapping(mappingPath) {
   const payload = JSON.parse(await fsPromises.readFile(mappingPath, "utf8"));
   return new Map(
     payload.classifications.map((classification) => [
@@ -1325,7 +1403,7 @@ function sanitizeDecision(entry) {
   };
 }
 
-function looksNonContractor(record) {
+export function looksNonContractor(record) {
   const text = `${record.businessName} ${record.description} ${record.sourceText}`;
   const nonContractor =
     /\bmanufacturer\b|\bdistributor\b|\bwholesaler\b|\bconsulting\b|\barchitect(?:ure)?\b|\bengineering services\b/i.test(
