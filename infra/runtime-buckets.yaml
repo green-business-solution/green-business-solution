@@ -8,6 +8,9 @@ Parameters:
   TestFixturesBucketName:
     Type: String
     Description: Private S3 bucket for generated test fixtures and synthetic data.
+  ContractorSourceBucketName:
+    Type: String
+    Description: Private S3 bucket for original contractor source files and import reports.
   ManageDevWorkBucket:
     Type: String
     Default: "false"
@@ -93,6 +96,33 @@ Resources:
             AbortIncompleteMultipartUpload:
               DaysAfterInitiation: 7
 
+  ContractorSourceBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Ref ContractorSourceBucketName
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: abort-incomplete-uploads
+            Status: Enabled
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 7
+
   DevWorkBucket:
     Type: AWS::S3::Bucket
     Condition: ShouldManageDevWorkBucket
@@ -126,6 +156,8 @@ Outputs:
     Value: !Ref RuntimeCacheBucketName
   TestFixturesBucketName:
     Value: !Ref TestFixturesBucketName
+  ContractorSourceBucketName:
+    Value: !Ref ContractorSourceBucketName
   DevWorkBucketName:
     Condition: ShouldManageDevWorkBucket
     Value: !Ref DevWorkBucketName

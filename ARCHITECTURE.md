@@ -22,7 +22,7 @@ The backend is a Node/Express API under `apps/api` that can run locally or as an
 Production runs at `https://retrofi.org`.
 Normal browser traffic enters CloudFront and serves static frontend assets from S3.
 Requests under `/api/*` route through CloudFront to API Gateway, then to the Lambda-wrapped Express app.
-The backend owns privileged access to DynamoDB, S3, Google OAuth flows, Geocodio usage tracking, retrofit recommendations, application profiles, generated runtime cache data, sanitized Codex task snapshots, and private GPT Pro development-work artifacts.
+The backend and privileged operational scripts own access to DynamoDB, S3, Google OAuth flows, Geocodio usage tracking, retrofit recommendations, application profiles, generated runtime cache data, sanitized Codex task snapshots, contractor import data, and private GPT Pro development-work artifacts.
 
 ## Runtime Surfaces
 
@@ -82,6 +82,8 @@ The `gbs-firstmate-tasks` DynamoDB table is a sanitized admin read model for Cod
 Firstmate remains authoritative, a separate least-privilege publisher writes versioned snapshots, and the RetroFi Lambda role only reads the table.
 Snapshots keep completed and archived task records inactive and include only bounded sanitized report payloads for admin report viewing.
 Closed inactive tasks are hidden by default unless a report is still awaiting admin review.
+The `gbs-contractors` DynamoDB table stores the standardized one-time CSLB contractor import.
+The private contractor-source bucket stores the unchanged source attachment and the import manifest and aggregate report.
 
 Committed `data/` files are source-controlled runtime inputs, normalized research artifacts, reports, or fixtures that code and tests need.
 Committed data in `data/`, `public/`, and `test-fixtures/` includes source repair artifacts, generated review reports, public opportunity indexes, sample matching cases, and test fixtures.
@@ -102,7 +104,7 @@ The current stack split is:
 
 - `infra/github-actions-deploy-role.yaml` for GitHub OIDC deploy access.
 - `infra/runtime-data.yaml` for runtime DynamoDB tables.
-- `infra/runtime-buckets.yaml` for runtime cache, generated fixture, and development-work buckets.
+- `infra/runtime-buckets.yaml` for runtime cache, generated fixture, contractor-source, and development-work buckets.
 - `infra/api-hosting.yaml` for Lambda, API Gateway, IAM role, and logs.
 - `infra/production-hosting.yaml` for frontend S3, CloudFront, ACM, and Route 53 aliases.
 

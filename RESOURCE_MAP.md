@@ -18,7 +18,7 @@ AWS is the source of truth for runtime data, customer uploads, runtime cache pay
 | `apps/api/server/matching/`, `apps/api/server/savings/`, `apps/api/server/applicationSources/` | API logic | API tests, targeted fixture checks, affected script tests | `api` | Matching, savings, tax, grant, and application-profile behavior |
 | `data/` runtime JSON used by API, including `data/opportunity_availability_dispositions.v1.json` and `data/opportunity_award_audit_overlay.v1.json`, `public/sample_matching_test_cases.json`, `test-fixtures/` | Runtime data | targeted validation scripts, `npx vitest run apps/api scripts` | `api` or `data` | Bundled data and generated artifacts used by runtime code |
 | `infra/github-actions-deploy-role.yaml` | CI identity | script checks and CloudFormation review | `ci` | GitHub OIDC provider and deploy role |
-| `infra/runtime-data.yaml`, `infra/runtime-buckets.yaml` | Data infrastructure | script checks and CloudFormation review | `data` | DynamoDB tables and runtime/test fixture buckets |
+| `infra/runtime-data.yaml`, `infra/runtime-buckets.yaml` | Data infrastructure | script checks and CloudFormation review | `data` | DynamoDB tables and runtime, source, and test fixture buckets |
 | `infra/api-hosting.yaml` | API infrastructure | API checks and CloudFormation review | `api` or `infra` | Lambda, HTTP API Gateway, execution role, logs |
 | `infra/production-hosting.yaml` | Edge/frontend infrastructure | frontend checks and CloudFormation review | `infra` or `frontend` | CloudFront, S3 frontend hosting, DNS, ACM |
 | `scripts/` | Tooling | `npx vitest run scripts`, targeted dry runs | selected by script purpose | Deploy, routing, migration, repair, fixture, and maintenance scripts |
@@ -100,6 +100,8 @@ Common local profiles:
 | prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-application-profiles` | api/data | `infra/runtime-data.yaml` | Application source/profile registry |
 | prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-api-runtime-state` | api/data | `infra/runtime-data.yaml` | Operational state such as Geocodio quota counters |
 | prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-firstmate-tasks` | api/data | `infra/runtime-data.yaml`, `infra/api-hosting.yaml`, `scripts/sync-firstmate-tasks-to-dynamodb.mjs` | Sanitized versioned Codex task and bounded report snapshots. Lambda reads only. The optional ingestion role writes only this table from an explicit publisher principal. |
+| prod | RetroFi Production | `059310317821` | `us-east-2` | `gbs-contractors` | data | `infra/runtime-data.yaml`, `scripts/import-cslb-contractors.mjs` | One-time standardized CSLB contractor records keyed by `contractorId`. |
+| prod | RetroFi Production | `059310317821` | `us-east-1` | `gbs-retrofi-contractor-source-data-059310317821-us-east-1` | data | `infra/runtime-buckets.yaml`, `scripts/import-cslb-contractors.mjs` | Unchanged CSLB source attachment plus its import manifest and aggregate report. |
 | legacy | green-business-solution | `448016109714` | mixed | legacy hosted zone and copied resources | rollback/data-copy | docs/runbooks | Keep only where documented for rollback or migration history |
 
 ## Routing Rules

@@ -33,6 +33,9 @@ Parameters:
   FirstmateTasksTable:
     Type: String
     Default: gbs-firstmate-tasks
+  ContractorsTable:
+    Type: String
+    Default: gbs-contractors
   FirstmateTasksIngestionRoleName:
     Type: String
     Default: gbs-firstmate-task-ingestion
@@ -201,6 +204,22 @@ Resources:
       PointInTimeRecoverySpecification:
         PointInTimeRecoveryEnabled: true
 
+  ContractorsDynamoTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: !Ref ContractorsTable
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: contractorId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: contractorId
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+
   FirstmateTasksIngestionRole:
     Type: AWS::IAM::Role
     Condition: ShouldCreateFirstmateTasksIngestionRole
@@ -245,6 +264,8 @@ Outputs:
     Value: !Ref ApiRuntimeStateTable
   FirstmateTasksTableName:
     Value: !Ref FirstmateTasksTable
+  ContractorsTableName:
+    Value: !Ref ContractorsTable
   FirstmateTasksIngestionRoleArn:
     Condition: ShouldCreateFirstmateTasksIngestionRole
     Value: !GetAtt FirstmateTasksIngestionRole.Arn

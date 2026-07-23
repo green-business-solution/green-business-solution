@@ -31,9 +31,11 @@ The runtime stacks create:
 - `gbs-application-profiles` for application source/profile registry records.
 - `gbs-api-runtime-state` for operational state such as Geocodio quota usage and retrofit portfolio event, snapshot, read model, outbox, and idempotency rows.
 - `gbs-firstmate-tasks` for production-safe Codex task snapshots and bounded admin report records.
+- `gbs-contractors` for the one-time standardized CSLB contractor import.
 - `gbs-retrofi-org-runtime-cache-...` for generated recommendation cache payloads.
 - `gbs-retrofi-test-fixtures-...` for generated fixtures and synthetic test data.
 - `gbs-retrofi-dev-work-...` for private GPT Pro work artifacts under `gpt-pro-work/`.
+- `gbs-retrofi-contractor-source-data-...` for the unchanged CSLB source attachment and import artifacts.
 
 Set `GBS_FIRSTMATE_TASKS_INGESTION_PRINCIPAL_ARN` before deploying runtime data to create an optional least-privilege ingestion role for publishing task snapshots with
 `scripts/sync-firstmate-tasks-to-dynamodb.mjs`.
@@ -50,6 +52,7 @@ The production API uses separate AWS regions for:
 - DynamoDB data access via `GBS_AWS_REGION` (`us-east-2`)
 - The energy-data and runtime-cache S3 buckets via `GBS_ENERGY_DATA_BUCKET_REGION` (`us-east-1`)
 - The GPT Pro development-work bucket via `GBS_DEV_WORK_BUCKET` and `GBS_GPT_PRO_WORK_PREFIX` (`us-east-1`)
+- The one-time CSLB importer writes directly to the contractor source bucket in `us-east-1` and the contractor table in `us-east-2`.
 
 Retrofit portfolio routes are fail-closed in production unless `RETROFI_PORTFOLIO_WRITE_ENABLED=1` is explicitly set in the API runtime environment.
 
@@ -103,6 +106,10 @@ npm run deploy:production:data
 - `api`: packages and uploads a new Lambda zip, then deploys the API stack with that Lambda artifact.
 - `infra`: deploys the API and edge/frontend CloudFormation templates while reusing the existing Lambda zip.
 - `data`: ensures runtime prerequisites only.
+
+The data target accepts `GBS_CONTRACTORS_TABLE` and `GBS_CONTRACTOR_SOURCE_BUCKET` overrides.
+Their production defaults are `gbs-contractors` and `gbs-retrofi-contractor-source-data-059310317821-us-east-1`.
+After the data stack is deployed, follow [CSLB Contractor Initial Import](./cslb-contractor-import.md) for the guarded one-time dry-run and write commands.
 
 The deploy script force-refreshes generated fixtures, rebuilds the admin test-case savings payloads from those fixtures, and then packages the API.
 That keeps `public/sample_matching_test_cases.json` aligned with the generated fixture archive instead of reusing a stale local copy.

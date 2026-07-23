@@ -38,7 +38,8 @@ describe("deploy-production runtime-data overrides", () => {
     expect(overrides).toEqual(
       expect.arrayContaining([
         "ManageCoreRuntimeTables=false",
-        "FirstmateTasksTable=gbs-firstmate-tasks"
+        "FirstmateTasksTable=gbs-firstmate-tasks",
+        "ContractorsTable=gbs-contractors"
       ])
     );
     expect(overrides).not.toContain("FirstmateTasksIngestionPrincipalArn=");
@@ -62,6 +63,27 @@ describe("deploy-production runtime-data overrides", () => {
 
     expect(overrides).toContain(
       "FirstmateTasksIngestionPrincipalArn=arn:aws:iam::059310317821:role/firstmate-task-publisher"
+    );
+  });
+});
+
+describe("deploy-production contractor import resources", () => {
+  const scriptSource = fs.readFileSync(scriptPath, "utf8");
+
+  it("passes the contractor source bucket to the runtime bucket stack", () => {
+    expect(scriptSource).toContain(
+      '"ContractorSourceBucketName=${CONTRACTOR_SOURCE_BUCKET}"',
+    );
+  });
+
+  it("allows explicit contractor resource overrides", () => {
+    const overrides = runRuntimeDataOverrides({
+      GBS_CONTRACTORS_TABLE: "example-contractors",
+    });
+
+    expect(overrides).toContain("ContractorsTable=example-contractors");
+    expect(scriptSource).toContain(
+      'CONTRACTOR_SOURCE_BUCKET="${GBS_CONTRACTOR_SOURCE_BUCKET:-gbs-retrofi-contractor-source-data-059310317821-us-east-1}"',
     );
   });
 });
