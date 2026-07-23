@@ -28,19 +28,20 @@ Annual Standby Electricity = Installed Charging Ports × Standby Power per Port 
 ```text
 Annual Operational Cost Impact
 ├─ Chronological Electricity Load and Tariff
-│  ├─ Timestamped Interval Electricity Data (User)
-│  ├─ Time Zone and Daylight-Saving Treatment from the Uploaded Data (User)
+│  ├─ Timestamped Interval Utility Data (Bill)
+│  ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
 │  ├─ Rate Schedule and Customer Class (Bill)
-│  ├─ Complete Tariff Calendar and Billing Rules (User)
-│  └─ Monthly Bill Reconciliation (Derived)
+│  ├─ Authoritative Tariff Mapping Is Not Yet Verified (Derived)
+│  ├─ No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)
+│  └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
 ├─ Annual fleet miles (User)
-├─ Depot allocation fraction (User)
+├─ Documented Depot allocation fraction from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 ├─ Vehicle Class and Service Need (User)
 ├─ Selected Vehicle Model, if known (Linked Opportunity)
-├─ Measured kWh per Mile (User)
-├─ Vehicle-arrival schedule (User)
-├─ Vehicle-departure schedule (User)
-├─ Uncontrolled charging rule (User)
+├─ Measured kWh per Mile from Fleet Study or Contractor Charging Design (Linked Opportunity)
+├─ Vehicle-arrival schedule from Fleet Study or Contractor Charging Design (Linked Opportunity)
+├─ Vehicle-departure schedule from Fleet Study or Contractor Charging Design (Linked Opportunity)
+├─ Uncontrolled charging rule from Fleet Study or Contractor Charging Design (Linked Opportunity)
 ├─ Installed port count (Linked Opportunity)
 ├─ Charger Performance
 │  ├─ Standard 1.1 — Exact Vehicle Efficiency Lookup
@@ -67,14 +68,9 @@ U.S. Department of Energy and U.S. Environmental Protection Agency - FuelEconomy
 
 **Lookup Inputs:**
 
-* Timestamped Interval Electricity Data
-* Time Zone and Daylight-Saving Treatment from Uploaded Interval Data
-* Complete Tariff Calendar and Billing Rules
-* Billing-Demand and Ratchet Rules
-* Annual fleet miles
-* Depot allocation fraction
 * Vehicle Class and Service Need
 * Selected Vehicle Model, if known
+* Measured kWh per Mile from the fleet study or contractor charging design
 
 **Value Needed:**
 
@@ -82,20 +78,20 @@ U.S. Department of Energy and U.S. Environmental Protection Agency - FuelEconomy
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Timestamped Interval Electricity Data; Time Zone and Daylight-Saving Treatment from Uploaded Interval Data; Complete Tariff Calendar and Billing Rules.
-2. Normalize make, model, approximate year, and needed drivetrain details, require one compatible existing and proposed record, convert the returned efficiencies to per-mile use, and store the matched record provenance.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Read the exact manufacturer, model, and product configuration from the linked fleet charging infrastructure opportunity.
+2. Query the official source for the exact model and filter by application, capacity, active specification, and the native certified fields required by this formula.
+3. Require one compatible record; reject partial model matches, inactive listings, incompatible configurations, and records whose native test unit does not match the formula.
 4. Return exact-record fuel economy or electricity use per distance, with units and vehicle-record provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the source version, exact record identity, matched model text, returned native fields and units, and any ambiguity decision.
 
 **Automation:**
 
-* **Selected Strategy:** Local exact-record lookup from the official downloadable vehicle table.
-* **Automation Method:** Normalize make, model, approximate year, and needed drivetrain details, require one compatible existing and proposed record, convert the returned efficiencies to per-mile use, and store the matched record provenance.
+* **Selected Strategy:** Exact linked-opportunity product match against the official U.S. Department of Energy and U.S. Environmental Protection Agency - FuelEconomy.gov records.
+* **Automation Method:** Normalize the opportunity model identifiers, perform an exact active-record lookup, apply category compatibility filters, and return only the required native source fields.
 * **Difficulty:** Easy to Medium
 
 **Validation:**
-The official downloadable schema and exact records were checked. The retained fixture validates record identity, efficiency fields, units, source version, and the golden calculation. Class-based estimates remain disabled because no compatible population and sample-size fixture has been reviewed.
+The official downloadable vehicle schema and exact-record method were checked, and the retained source fixture validates the technical fields and units. The fleet-charging category adapter and formula-level golden test have not yet been added, and class-based estimates remain disabled.
 
 **■ Standard 1.2 — Exact Charger Rating Lookup**
 
@@ -123,20 +119,20 @@ U.S. Environmental Protection Agency - ENERGY STAR Product Finder
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Exact charger make and model; Rated charger power and application; Opportunity product information.
-2. Use the official download or API, normalize product identifiers, filter to the applicable active specification, reject ambiguous matches, and return the required certified fields.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Read the exact manufacturer, model, and product configuration from the linked fleet charging infrastructure opportunity.
+2. Query the official source for the exact model and filter by application, capacity, active specification, and the native certified fields required by this formula.
+3. Require one compatible record; reject partial model matches, inactive listings, incompatible configurations, and records whose native test unit does not match the formula.
 4. Return certified active efficiency, standby power, and rated capacity with units.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the source version, exact record identity, matched model text, returned native fields and units, and any ambiguity decision.
 
 **Automation:**
 
-* **Selected Strategy:** Product-family dataset lookup with exact model and specification filters.
-* **Automation Method:** Use the official download or API, normalize product identifiers, filter to the applicable active specification, reject ambiguous matches, and return the required certified fields.
+* **Selected Strategy:** Exact linked-opportunity product match against the official U.S. Environmental Protection Agency - ENERGY STAR Product Finder records.
+* **Automation Method:** Normalize the opportunity model identifiers, perform an exact active-record lookup, apply category compatibility filters, and return only the required native source fields.
 * **Difficulty:** Easy to Medium
 
 **Validation:**
-The official Product Finder access path and applicable product-family datasets were checked. The category adapter and generic existing-equipment baseline remain unverified, so only a later exact compatible product-record path can be supported.
+The official ENERGY STAR EV charger criteria and Product Finder access path were checked. Exact active-model lookup is technically possible, but the category-specific adapter, retained EV charger record, and formula-level golden test have not yet been added.
 
 **■ Standard 1.3 — Requirement-Based Charger Resolution**
 
@@ -160,24 +156,24 @@ U.S. Environmental Protection Agency - ENERGY STAR Product Finder
 
 **Value Needed:**
 
-* One compatible certified product result, or no value when the requirements do not identify a supported record
+* Eligible compatible certified charger population with documented low, median, and high performance, or no value when no compatible record remains
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Charger class and intended application; Rated power requirement; Opportunity performance requirements.
-2. Use the official download or API, normalize product identifiers, filter to the applicable active specification, reject ambiguous matches, and return the required certified fields.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
-4. Return one compatible certified product result, or no value when the requirements do not identify a supported record.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+1. Extract the application, capacity, certification, and performance limits from the linked fleet charging infrastructure opportunity requirements.
+2. Filter the official current-product population by every mandatory requirement, product-family boundary, active specification, and native test unit.
+3. Reject the path when no compatible record remains; when several records remain, keep the eligible population and calculate a documented low, median, and high value without selecting the contractor's future product.
+4. Return eligible compatible certified charger population with documented low, median, and high performance, or no value when no compatible record remains.
+5. Retain the source version, complete filters, eligible record identities, population size, native units, summary rule, and no-result reason.
 
 **Automation:**
 
-* **Selected Strategy:** Product-family dataset lookup with exact model and specification filters.
-* **Automation Method:** Use the official download or API, normalize product identifiers, filter to the applicable active specification, reject ambiguous matches, and return the required certified fields.
+* **Selected Strategy:** Requirement-based candidate-set resolution from the official U.S. Environmental Protection Agency - ENERGY STAR Product Finder population.
+* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and calculate deterministic low, median, and high native-unit results.
 * **Difficulty:** Easy to Medium
 
 **Validation:**
-The official Product Finder access path and applicable product-family datasets were checked. The category adapter and generic existing-equipment baseline remain unverified, so only a later exact compatible product-record path can be supported.
+The official ENERGY STAR EV charger criteria and Product Finder access path were checked. No retained category export currently proves the requirement filters, eligible population, population size, or low, median, and high result.
 
 **■ Standard 1.4 — Fleet Charging Infrastructure Interval Bill Calculation**
 
@@ -198,14 +194,20 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 
 **Lookup Inputs:**
 
-* Timestamped Interval Electricity Data
-* Time Zone and Daylight-Saving Treatment from Uploaded Interval Data
-* Complete Tariff Calendar and Billing Rules
-* Billing-Demand and Ratchet Rules
+* Timestamped interval utility data from the uploaded utility artifact
+* Time zone and daylight-saving metadata from the uploaded utility artifact
+* Authoritative tariff mapping, which is not yet verified
 * Annual fleet miles
 * Depot allocation fraction
 * Vehicle Class and Service Need
-* Selected Vehicle Model, if known
+* Measured kWh per Mile from the fleet study or contractor charging design
+* Vehicle-arrival schedule from the fleet study or contractor charging design
+* Vehicle-departure schedule from the fleet study or contractor charging design
+* Uncontrolled charging rule from the fleet study or contractor charging design
+* Rated Charger Power or Capacity
+* Installed port count
+* Resolved vehicle electricity intensity from the connected vehicle process
+* Resolved charger efficiency, standby power, and rated capacity from the connected product process
 
 **Value Needed:**
 
@@ -213,11 +215,11 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Timestamped Interval Electricity Data; Time Zone and Daylight-Saving Treatment from Uploaded Interval Data; Complete Tariff Calendar and Billing Rules.
+1. Map the Fleet Charging Infrastructure inputs to the documented Fleet Charging Infrastructure Interval Bill Calculation source fields or model inputs: Timestamped interval utility data from the uploaded utility artifact; Time zone and daylight-saving metadata from the uploaded utility artifact; Authoritative tariff mapping, which is not yet verified; Annual fleet miles; Depot allocation fraction; Vehicle Class and Service Need; Measured kWh per Mile from the fleet study or contractor charging design; Vehicle-arrival schedule from the fleet study or contractor charging design; Vehicle-departure schedule from the fleet study or contractor charging design; Uncontrolled charging rule from the fleet study or contractor charging design; Rated Charger Power or Capacity; Installed port count; Resolved vehicle electricity intensity from the connected vehicle process; Resolved charger efficiency, standby power, and rated capacity from the connected product process.
 2. Align the interval load and tariff calendar, apply the category constraints, solve baseline and proposed cases, compare bill components, and retain solver and input provenance.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Fleet Charging Infrastructure path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Fleet Charging Infrastructure Interval Bill Calculation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 

@@ -73,16 +73,16 @@ U.S. Department of Energy and U.S. Environmental Protection Agency - FuelEconomy
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Existing vehicle make and model; Proposed vehicle make and model; Approximate model years.
-2. Normalize make, model, approximate year, and needed drivetrain details, require one compatible existing and proposed record, convert the returned efficiencies to per-mile use, and store the matched record provenance.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Read the exact manufacturer, model, and product configuration from the linked electric vehicle purchase opportunity.
+2. Query the official source for the exact model and filter by application, capacity, active specification, and the native certified fields required by this formula.
+3. Require one compatible record; reject partial model matches, inactive listings, incompatible configurations, and records whose native test unit does not match the formula.
 4. Return existing combined fuel economy in miles per gallon; Proposed electricity use in kilowatt-hours per 100 miles at the wall.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the source version, exact record identity, matched model text, returned native fields and units, and any ambiguity decision.
 
 **Automation:**
 
-* **Selected Strategy:** Local exact-record lookup from the official downloadable vehicle table.
-* **Automation Method:** Normalize make, model, approximate year, and needed drivetrain details, require one compatible existing and proposed record, convert the returned efficiencies to per-mile use, and store the matched record provenance.
+* **Selected Strategy:** Exact linked-opportunity product match against the official U.S. Department of Energy and U.S. Environmental Protection Agency - FuelEconomy.gov records.
+* **Automation Method:** Normalize the opportunity model identifiers, perform an exact active-record lookup, apply category compatibility filters, and return only the required native source fields.
 * **Difficulty:** Easy to Medium
 
 **Validation:**

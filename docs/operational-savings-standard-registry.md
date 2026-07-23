@@ -788,11 +788,13 @@ Return no estimate for a detection system without a measured leak or for a cooli
 
 **Status:** LIMITED
 
-**Purpose:** Resolve existing and proposed exterior luminaire input watts from an exact model, recognizable application, site context, Linked Opportunity restrictions, or a compatible qualified-product candidate set.
+**Purpose:** Resolve proposed exterior luminaire input watts from an exact model or compatible qualified-product candidate set.
+Existing input watts require a nameplate, measurement, photometric report, or a separately validated historical source.
 
-**Source:** U.S. Department of Energy FEMP, [Purchasing Energy-Efficient Exterior Lighting](https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting), and DesignLights Consortium, [SSL V6.0 and LUNA V2.0 Technical Requirements](https://designlights.org/wp-content/uploads/2025/11/SSL-V6-LUNA-V2-TR_final_12082025.pdf).
+**Source:** U.S. Department of Energy FEMP, [Purchasing Energy-Efficient Exterior Lighting](https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting), and DesignLights Consortium, [DLC API and data download user guide](https://designlights.org/wp-content/uploads/2021/08/DLC_API-and-Data-Access-User-Guide_FINAL_08022021.pdf) and [SSL V6.0 and LUNA V2.0 Technical Requirements](https://designlights.org/wp-content/uploads/2025/11/SSL-V6-LUNA-V2-TR_final_12082025.pdf).
 FEMP defines covered exterior applications and application-specific efficacy requirements.
-The DLC requirements underpin the qualified-products list and its verified photometric and electrical fields.
+The DLC access guide documents tokenized QPL CSV downloads.
+The DLC requirements define the QPL model, application, photometric, electrical, listing-status, and technical-version fields needed for exact and requirement-based filtering.
 
 **Lookup Inputs:**
 
@@ -826,8 +828,8 @@ Do not add savings for entirely new fixtures, and do not treat lighting quality 
 
 **Automation:**
 
-- **Selected Strategy:** Versioned FEMP criteria plus controlled DLC qualified-product ingestion.
-- **Automation Method:** Encode the small FEMP application table, ingest reviewed DLC records with stable field mappings, and calculate deterministic compatible-record distributions.
+- **Selected Strategy:** Controlled DLC SSL QPL ingestion for proposed products plus documented existing nameplate or measured input power.
+- **Automation Method:** Download a versioned SSL QPL CSV through the documented coded URL and bearer-token method, map model, application, light-output, efficacy, input-power, listing-status, and technical-version fields, and calculate a deterministic compatible candidate population.
 - **Difficulty:** Medium.
 - **Efficient Build-Time Estimate:** 2 to 3 developer days.
 - **Expected Accuracy or Uncertainty:** Moderate for class-based screening and low for exact documented matches.

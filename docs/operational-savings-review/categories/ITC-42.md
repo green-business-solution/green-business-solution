@@ -25,8 +25,8 @@ Annual Delivered-Air Volume = Mean Airflow × Annual Operating Hours with the sa
 Annual Operational Savings
 ├─ Annual compressor electricity reduction
 │  ├─ In-Scope Equipment Count (User)
-│  ├─ Required pressure (User)
-│  ├─ Mean flow (User)
+│  ├─ Documented Required pressure from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+│  ├─ Documented Mean flow from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 │  ├─ Existing compressor type (User)
 │  ├─ Existing Compressor Nameplate or Test Information (User)
 │  ├─ Proposed compressor type (Linked Opportunity)
@@ -59,14 +59,10 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **Lookup Inputs:**
 
-* In-Scope Equipment Count
-* Required pressure
-* Mean flow
-* Existing compressor type
-* Existing Compressor Nameplate or Test Information
-* Proposed compressor type
-* Proposed Compressor Specifications
 * Recognizable Business, Shift, Seasonal, or Usage Pattern
+* Detailed Operating Days, Shifts, or Active Season, if known
+* Measured Annual Operating Hours, if known
+* Site Location and Business Activity
 
 **Value Needed:**
 
@@ -74,11 +70,11 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: In-Scope Equipment Count; Required pressure; Mean flow.
+1. Map the Efficient Air Compressor inputs to the documented Efficient Air Compressor Annual Operating Hours source fields or model inputs: Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Efficient Air Compressor path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Efficient Air Compressor Annual Operating Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 
@@ -109,13 +105,13 @@ U.S. Department of Energy - MEASUR
 **Lookup Inputs:**
 
 * In-Scope Equipment Count
-* Required pressure
-* Mean flow
+* Required pressure from a nameplate, measurement, audit, or contractor specification
+* Mean flow from a nameplate, measurement, audit, or contractor specification
 * Existing compressor type
 * Existing Compressor Nameplate or Test Information
 * Proposed compressor type
 * Proposed Compressor Specifications
-* Recognizable Business, Shift, Seasonal, or Usage Pattern
+* Annual operating hours from the connected schedule process
 
 **Value Needed:**
 
@@ -123,16 +119,16 @@ U.S. Department of Energy - MEASUR
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: In-Scope Equipment Count; Required pressure; Mean flow.
-2. Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Load the Efficient Air Compressor project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Compressed Air Assessment.
+2. Run the pinned open-source Compressed Air Assessment baseline and proposed cases using the category formula boundary shown in this card.
+3. Return no result when the Compressed Air Assessment requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
 4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the MEASUR version, Compressed Air Assessment input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
 
 **Automation:**
 
-* **Selected Strategy:** Pinned local execution of the exact MEASUR calculator for this category.
-* **Automation Method:** Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
+* **Selected Strategy:** Pinned local execution of the MEASUR Compressed Air Assessment for Efficient Air Compressor.
+* **Automation Method:** Map reviewed project evidence into the Compressed Air Assessment input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

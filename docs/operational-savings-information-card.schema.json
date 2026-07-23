@@ -91,7 +91,8 @@
         "valueNeeded",
         "howToUse",
         "automation",
-        "validation"
+        "validation",
+        "evidenceState"
       ],
       "properties": {
         "key": {
@@ -187,6 +188,13 @@
         "validation": {
           "type": "string",
           "minLength": 1
+        },
+        "evidenceState": {
+          "enum": [
+            "EXECUTABLE_PROOF_PRESENT",
+            "METHOD_VERIFIED_IMPLEMENTATION_PENDING",
+            "SOURCE_UNSUPPORTED"
+          ]
         }
       }
     }

@@ -22,7 +22,7 @@ Annual Operational Savings = Measured Leak Flow × Confirmed Annual Leak Duratio
 ```text
 Annual Operational Savings
 ├─ Annual measured leak water reduction
-│  ├─ Measured leak flow (User)
+│  ├─ Documented Measured leak flow from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 │  ├─ Confirmed leak start date (User)
 │  ├─ Confirmed repair date (User)
 │  └─ Standard 1.1 — WaterSense Commercial Operations Calculation
@@ -53,9 +53,8 @@ U.S. Environmental Protection Agency - WaterSense at Work
 
 **Lookup Inputs:**
 
-* Measured leak flow
+* Measured leak flow from a nameplate, measurement, audit, or contractor specification
 * Confirmed leak start date
-* Confirmed repair date
 
 **Value Needed:**
 
@@ -63,11 +62,11 @@ U.S. Environmental Protection Agency - WaterSense at Work
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Measured leak flow; Confirmed leak start date; Confirmed repair date.
+1. Map the Measured Water Leak Repair inputs to the documented WaterSense Commercial Operations Calculation source fields or model inputs: Measured leak flow from a nameplate, measurement, audit, or contractor specification; Confirmed leak start date.
 2. Validate measured project inputs, apply the selected equation with explicit units and dates, reject missing physical observations, and return annual avoidable water.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Measured Water Leak Repair path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return annual avoidable water for the selected commercial-facility equation, with measured inputs, units, and dates.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the WaterSense Commercial Operations Calculation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 

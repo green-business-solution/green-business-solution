@@ -174,7 +174,7 @@ describe("validate-operational-savings-information-trees", () => {
     const fixtureRoot = await createFixture();
     await mutateFile(
       join(fixtureRoot, "docs/operational-savings-review/categories/ITC-02.md"),
-      (text) => text.replaceAll("Standard 1.2 — Exact New Fixture Wattage Lookup", "Standard 1.1 — Exact New Fixture Wattage Lookup")
+      (text) => text.replaceAll("Standard 1.2 — Requirement-Based New Fixture Wattage Resolution", "Standard 1.1 — Requirement-Based New Fixture Wattage Resolution")
     );
 
     expect(() => runValidator(fixtureRoot)).toThrow(
@@ -232,6 +232,186 @@ describe("validate-operational-savings-information-trees", () => {
     );
   });
 
+  it("rejects an unlikely ordinary-user input without a documented resolver", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        'knowledge_likelihood: likelyKnown ? "LIKELY_KNOWN" : "MAY_KNOW"',
+        'knowledge_likelihood: likelyKnown ? "LIKELY_KNOWN" : "UNLIKELY_KNOWN"'
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /User-input realism entry .* exposes an unlikely ordinary-user value/
+    );
+  });
+
+  it("rejects a technical probability distribution assigned to User", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "Installed Charger Count (User)",
+        "Session Arrival Probability Distribution (User)"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-27 Information Card assigns an unrealistic technical value to User/
+    );
+  });
+
+  it("rejects complete tariff rules assigned to User", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "Public Operating Hours (User)",
+        "Complete Tariff Calendar and Ratchet Rules (User)"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-27 Information Card assigns uploaded utility or tariff data to User/
+    );
+  });
+
+  it("rejects uploaded interval utility data assigned to User", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "Public Operating Hours (User)",
+        "Timestamped Interval Utility Data (User)"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-27 Information Card assigns uploaded utility or tariff data to User/
+    );
+  });
+
+  it("rejects a source-unsupported process displayed as a value resolver", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        'purpose: "Resolve input watts when the linked opportunity names an exact replacement luminaire.",',
+        'purpose: "Resolve input watts when the linked opportunity names an exact replacement luminaire.",\n      evidenceState: "SOURCE_UNSUPPORTED",'
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 Information Card displays source-unsupported process Exact New Fixture Wattage Lookup as a tree resolver/
+    );
+  });
+
+  it("rejects identical exact-product and requirements-based Validation", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "The official DLC data-access guide and SSL technical requirements establish a candidate-filtering method. No retained QPL population currently proves the application, light-output, distribution, mounting, controls, active-status, and version filters or the resulting low, median, and high wattage values.",
+        "The official DLC data-access guide documents tokenized SSL QPL CSV downloads, and the technical requirements define model, application, light-output, efficacy, input-power, status, and version fields. No authenticated QPL extract, retained exact-product fixture, or category adapter is present, so implementation execution is not yet proved."
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-02 exact-product and requirement-based processes have identical Validation/
+    );
+  });
+
+  it("rejects generic process How to Use boilerplate", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "`Map the ${categoryName} inputs to the documented ${name} source fields or model inputs: ${inputSummary}.`,",
+        '"Validate these inputs before the calculation.",'
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /contains generic How to Use boilerplate/
+    );
+  });
+
+  it("rejects a MEASUR process without an exact calculator or module", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        '"ITC-39": "Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans"',
+        '"ITC-39": "Generic MEASUR calculator"'
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /ITC-39 Information Card process .* does not identify its exact MEASUR calculator or module/
+    );
+  });
+
+  it("rejects a simulator that supplies missing project design inputs", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "Validate site coordinates and array design, run the documented V8 field contract, check warnings, and return interval or annual AC generation with source provenance.",
+        "Use the PVWatts simulator to supply missing project design capacity as a model output."
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /simulator process PVWatts Solar Production Calculation treats missing project design inputs as model outputs/
+    );
+  });
+
+  it("rejects a current certified-product population used as an unknown existing baseline", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        "`Return ${outputSummary} without substituting a current efficient-product distribution for the installed baseline.`,",
+        "`Use the current certified-product distribution as the unknown existing baseline for ${outputSummary}.`,"
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /uses current products as the unknown existing-equipment baseline/
+    );
+  });
+
+  it("rejects a product process that resolves an operating schedule", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        'lookupInputs: ["Exact proposed make and model from the linked opportunity", "Product type and capacity", "Applicable certified test method"],',
+        'lookupInputs: ["Exact proposed make and model from the linked opportunity", "Product type and capacity", "Operating schedule"],'
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /Information Card product process .* incorrectly resolves usage or an operating schedule/
+    );
+  });
+
+  it("rejects a process source that does not correspond to its canonical Standard", async () => {
+    const fixtureRoot = await createFixture();
+    await mutateFile(
+      join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
+      (text) => text.replace(
+        'sourceName: "U.S. Environmental Protection Agency - ENERGY STAR Product Finder",',
+        'sourceName: "National Laboratory of the Rockies - PVWatts V8",'
+      )
+    );
+
+    expect(() => runValidator(fixtureRoot)).toThrow(
+      /names a source that does not correspond to STD-ENERGY-STAR-PRODUCT-DATA/
+    );
+  });
+
   it("rejects a Profile leaf outside the production-backed presentation projection", async () => {
     const fixtureRoot = await createFixture();
     await mutateFile(
@@ -264,7 +444,7 @@ describe("validate-operational-savings-information-trees", () => {
     await mutateFile(
       join(fixtureRoot, "docs/operational-savings-review/categories/ITC-02.md"),
       (text) => text.replace(
-        "Standard 1.2 — Exact New Fixture Wattage Lookup",
+        "Standard 1.1 — Exact New Fixture Wattage Lookup",
         "Exact Fixture Watts (Linked Opportunity)"
       )
     );
@@ -339,13 +519,13 @@ describe("validate-operational-savings-information-trees", () => {
     await mutateFile(
       join(fixtureRoot, "scripts/operational-savings-information-card-registry.mjs"),
       (text) => text.replace(
-        "The reviewed FEMP tables validate proposed efficacy requirements and one narrow wall-mounted example. They do not supply a general installed legacy-wattage distribution or an exact product catalog, so those paths must return no value until separate sources are fixture-validated.",
-        "The source provides a general installed legacy-equipment distribution that supports an existing baseline."
+        "The official DLC data-access guide documents tokenized SSL QPL CSV downloads, and the technical requirements define model, application, light-output, efficacy, input-power, status, and version fields. No authenticated QPL extract, retained exact-product fixture, or category adapter is present, so implementation execution is not yet proved.",
+        "The official DLC source provides a general installed legacy-equipment distribution that supports an existing baseline."
       )
     );
 
     expect(() => runValidator(fixtureRoot)).toThrow(
-      /ITC-02 Information Card process Existing Fixture Wattage Estimate Validation contradicts the source-evidence manifest/
+      /ITC-02 Information Card process Exact New Fixture Wattage Lookup Validation contradicts the source-evidence manifest/
     );
   });
 
@@ -998,6 +1178,8 @@ async function createFixture() {
     "docs/operational-savings-standard-registry.md",
     "docs/operational-savings-information-tree-audit.md",
     "docs/operational-savings-information-card.schema.json",
+    "docs/operational-savings-user-input-realism.schema.json",
+    "docs/operational-savings-user-input-realism.json",
     "docs/operational-savings-source-evidence.json",
     "docs/operational-savings-category-contracts.json",
     "docs/operational-savings-unit-registry.json",

@@ -28,15 +28,19 @@ Standby Electricity in Each Interval = Standby Power × Noncharging Hours in Eac
 ```text
 Annual Operational Cost Impact
 ├─ Chronological Electricity Load and Tariff
-│  ├─ Timestamped Interval Electricity Data (User)
-│  ├─ Time Zone and Daylight-Saving Treatment from the Uploaded Data (User)
+│  ├─ Timestamped Interval Utility Data (Bill)
+│  ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
 │  ├─ Rate Schedule and Customer Class (Bill)
-│  ├─ Complete Tariff Calendar and Billing Rules (User)
-│  └─ Monthly Bill Reconciliation (Derived)
-├─ In-Scope Equipment Count (User)
-├─ Session-arrival distribution per charger (User)
-├─ Session-duration distribution per charger (User)
-├─ Delivered-kWh distribution per charger (User)
+│  ├─ Authoritative Tariff Mapping Is Not Yet Verified (Derived)
+│  ├─ No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)
+│  └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
+├─ Installed Charger Count (User)
+├─ Public Operating Hours (User)
+├─ Expected Charging Activity
+│  ├─ Expected Sessions per Operating Day from Site Study or Opportunity Design (Linked Opportunity)
+│  ├─ Average Delivered Energy per Session from Site Study or Opportunity Design (Linked Opportunity)
+│  ├─ Documented Interval Charging Profile from Site Study or Contractor Design (Linked Opportunity)
+│  └─ No Utilization Estimate Without a Site Study or Contractor Design (Derived)
 ├─ Charger Performance
 │  ├─ Linked Opportunity names an exact charger
 │  │  ├─ Exact Charger Product Information (Linked Opportunity)
@@ -74,20 +78,20 @@ U.S. Environmental Protection Agency - ENERGY STAR Product Finder
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Exact charger make and model; Rated charger power and application; Opportunity product information.
-2. Use the official download or API, normalize product identifiers, filter to the applicable active specification, reject ambiguous matches, and return the required certified fields.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Read the exact manufacturer, model, and product configuration from the linked public electric vehicle charging opportunity.
+2. Query the official source for the exact model and filter by application, capacity, active specification, and the native certified fields required by this formula.
+3. Require one compatible record; reject partial model matches, inactive listings, incompatible configurations, and records whose native test unit does not match the formula.
 4. Return certified active efficiency, standby power, and rated capacity with units.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the source version, exact record identity, matched model text, returned native fields and units, and any ambiguity decision.
 
 **Automation:**
 
-* **Selected Strategy:** Product-family dataset lookup with exact model and specification filters.
-* **Automation Method:** Use the official download or API, normalize product identifiers, filter to the applicable active specification, reject ambiguous matches, and return the required certified fields.
+* **Selected Strategy:** Exact linked-opportunity product match against the official U.S. Environmental Protection Agency - ENERGY STAR Product Finder records.
+* **Automation Method:** Normalize the opportunity model identifiers, perform an exact active-record lookup, apply category compatibility filters, and return only the required native source fields.
 * **Difficulty:** Easy to Medium
 
 **Validation:**
-The official Product Finder access path and applicable product-family datasets were checked. The category adapter and generic existing-equipment baseline remain unverified, so only a later exact compatible product-record path can be supported.
+The official ENERGY STAR EV charger criteria and Product Finder access path were checked. Exact active-model lookup is technically possible, but the category-specific adapter, retained EV charger record, and formula-level golden test have not yet been added.
 
 **■ Standard 1.2 — Requirement-Based Charger Resolution**
 
@@ -111,24 +115,24 @@ U.S. Environmental Protection Agency - ENERGY STAR Product Finder
 
 **Value Needed:**
 
-* One compatible certified product result, or no value when the requirements do not identify a supported record
+* Eligible compatible certified charger population with documented low, median, and high performance, or no value when no compatible record remains
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Charger class and intended application; Rated power requirement; Opportunity performance requirements.
-2. Use the official download or API, normalize product identifiers, filter to the applicable active specification, reject ambiguous matches, and return the required certified fields.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
-4. Return one compatible certified product result, or no value when the requirements do not identify a supported record.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+1. Extract the application, capacity, certification, and performance limits from the linked public electric vehicle charging opportunity requirements.
+2. Filter the official current-product population by every mandatory requirement, product-family boundary, active specification, and native test unit.
+3. Reject the path when no compatible record remains; when several records remain, keep the eligible population and calculate a documented low, median, and high value without selecting the contractor's future product.
+4. Return eligible compatible certified charger population with documented low, median, and high performance, or no value when no compatible record remains.
+5. Retain the source version, complete filters, eligible record identities, population size, native units, summary rule, and no-result reason.
 
 **Automation:**
 
-* **Selected Strategy:** Product-family dataset lookup with exact model and specification filters.
-* **Automation Method:** Use the official download or API, normalize product identifiers, filter to the applicable active specification, reject ambiguous matches, and return the required certified fields.
+* **Selected Strategy:** Requirement-based candidate-set resolution from the official U.S. Environmental Protection Agency - ENERGY STAR Product Finder population.
+* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and calculate deterministic low, median, and high native-unit results.
 * **Difficulty:** Easy to Medium
 
 **Validation:**
-The official Product Finder access path and applicable product-family datasets were checked. The category adapter and generic existing-equipment baseline remain unverified, so only a later exact compatible product-record path can be supported.
+The official ENERGY STAR EV charger criteria and Product Finder access path were checked. No retained category export currently proves the requirement filters, eligible population, population size, or low, median, and high result.
 
 **■ Standard 1.3 — Public Electric Vehicle Charging Interval Bill Calculation**
 
@@ -149,14 +153,15 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 
 **Lookup Inputs:**
 
-* Timestamped Interval Electricity Data
-* Time Zone and Daylight-Saving Treatment from Uploaded Interval Data
-* Complete Tariff Calendar and Billing Rules
-* Billing-Demand and Ratchet Rules
-* In-Scope Equipment Count
-* Session-arrival distribution per charger
-* Session-duration distribution per charger
-* Delivered-kWh distribution per charger
+* Timestamped interval utility data from the uploaded utility artifact
+* Time zone and daylight-saving metadata from the uploaded utility artifact
+* Authoritative tariff mapping, which is not yet verified
+* Installed charger count
+* Public operating hours
+* Expected sessions per operating day from a site study or opportunity design
+* Average delivered energy per session from a site study or opportunity design
+* Documented interval charging profile from the same site study or contractor design
+* Resolved charger efficiency, standby power, and rated capacity from the connected product process
 
 **Value Needed:**
 
@@ -164,16 +169,16 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Timestamped Interval Electricity Data; Time Zone and Daylight-Saving Treatment from Uploaded Interval Data; Complete Tariff Calendar and Billing Rules.
-2. Align the interval load and tariff calendar, apply the category constraints, solve baseline and proposed cases, compare bill components, and retain solver and input provenance.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
-4. Return baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+1. Validate the timestamped utility load, timezone treatment, monthly reconciliation, and authoritative tariff mapping before any dollar calculation.
+2. Require one site study or contractor design that states expected daily sessions, delivered energy per session, and a compatible interval charging profile; daily averages alone do not define interval demand.
+3. Resolve charger active efficiency, standby power, and rated capacity through the exact-product or requirements-based charger process.
+4. Apply charger-count and public-hours limits to the documented charging profile, add the resulting import load to the baseline, and run the pinned REopt.jl baseline and proposed bill cases.
+5. Retain the utility artifact, tariff source, charging-study version, charger-rating records, solver version, warnings, and monthly bill reconciliation; otherwise return no interval dollar estimate.
 
 **Automation:**
 
-* **Selected Strategy:** Pinned local REopt.jl optimization after complete chronological load, tariff, and technology inputs pass validation.
-* **Automation Method:** Align the interval load and tariff calendar, apply the category constraints, solve baseline and proposed cases, compare bill components, and retain solver and input provenance.
+* **Selected Strategy:** Pinned local REopt.jl bill comparison using a documented site-study or contractor charging profile.
+* **Automation Method:** Validate the uploaded interval load, verified tariff mapping, documented charging profile, and resolved charger ratings; add the charging profile to baseline load and compare the versioned REopt.jl bill cases.
 * **Difficulty:** Hard
 
 **Validation:**

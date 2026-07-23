@@ -55,9 +55,6 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **Lookup Inputs:**
 
-* In-Scope Equipment Count
-* Existing Motor Nameplate or Measurement
-* Proposed motor input or shaft rating
 * Recognizable Business, Shift, Seasonal, or Usage Pattern
 * Detailed Operating Days, Shifts, or Active Season, if known
 * Measured Annual Operating Hours, if known
@@ -69,11 +66,11 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: In-Scope Equipment Count; Existing Motor Nameplate or Measurement; Proposed motor input or shaft rating.
+1. Map the Refrigeration EC Motor Replacement inputs to the documented Refrigeration EC Motor Replacement Annual Operating Hours source fields or model inputs: Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Refrigeration EC Motor Replacement path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Refrigeration EC Motor Replacement Annual Operating Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 
@@ -106,10 +103,7 @@ U.S. Department of Energy - MEASUR
 * In-Scope Equipment Count
 * Existing Motor Nameplate or Measurement
 * Proposed motor input or shaft rating
-* Recognizable Business, Shift, Seasonal, or Usage Pattern
-* Detailed Operating Days, Shifts, or Active Season, if known
-* Measured Annual Operating Hours, if known
-* Site Location and Business Activity
+* Annual operating hours from the connected schedule process
 
 **Value Needed:**
 
@@ -117,16 +111,16 @@ U.S. Department of Energy - MEASUR
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: In-Scope Equipment Count; Existing Motor Nameplate or Measurement; Proposed motor input or shaft rating.
-2. Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Load the Refrigeration EC Motor Replacement project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Motor Inventory and Motor Performance calculators.
+2. Run the pinned open-source Motor Inventory and Motor Performance calculators baseline and proposed cases using the category formula boundary shown in this card.
+3. Return no result when the Motor Inventory and Motor Performance calculators requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
 4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the MEASUR version, Motor Inventory and Motor Performance calculators input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
 
 **Automation:**
 
-* **Selected Strategy:** Pinned local execution of the exact MEASUR calculator for this category.
-* **Automation Method:** Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
+* **Selected Strategy:** Pinned local execution of the MEASUR Motor Inventory and Motor Performance calculators for Refrigeration EC Motor Replacement.
+* **Automation Method:** Map reviewed project evidence into the Motor Inventory and Motor Performance calculators input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

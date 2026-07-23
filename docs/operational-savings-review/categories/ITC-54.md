@@ -26,12 +26,16 @@ Annual Standby Electricity = In-Scope Equipment Count × Standby Power per Unit 
 ```text
 Annual Routine Backup-Power Resource Cost
 ├─ In-Scope Equipment Count (User)
-├─ Backup technology (User)
-├─ Fuel type (User)
-├─ Tested fuel use per operating hour per unit, if known (User)
-├─ Standby electric input kW per unit, if known (User)
-├─ Scheduled annual test operating hours per unit, if known (User)
-├─ Annual standby energized hours per unit, if known (User)
+├─ Backup Technology and Fuel Type (User)
+├─ Routine Test Fuel
+│  ├─ Test Fuel Use from Product Label, Manufacturer Document, or Commissioning Record (Linked Opportunity)
+│  ├─ Scheduled Test Hours from Maintenance Plan or Contractor Specification (Linked Opportunity)
+│  └─ No Routine Fuel Estimate Without Both Documented Values (Derived)
+├─ Standby Electricity
+│  ├─ Standby Input from Product Label, Manufacturer Document, or Commissioning Record (Linked Opportunity)
+│  ├─ Energized Hours from Controls Schedule or Commissioning Record (Linked Opportunity)
+│  └─ No Standby Electricity Estimate Without Both Documented Values (Derived)
+├─ Blocked Until Routine-Use Documentation Is Available (Derived)
 └─ Applicable Resource Rates
    ├─ Bill-Derived Electricity Rate
    │  ├─ Electricity Use (Bill)

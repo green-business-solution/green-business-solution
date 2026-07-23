@@ -25,12 +25,12 @@ Avoided Displaced Resource = Minimum of (Convert to Billed Resource Units (Usefu
 
 ```text
 Annual Operational Savings
-├─ Waste-stream flow (User)
-├─ Waste-stream temperature (User)
+├─ Documented Waste-stream flow from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+├─ Documented Waste-stream temperature from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 ├─ Waste-stream schedule (User)
-├─ Coincident Useful-Heat Load (User)
+├─ Documented Coincident Useful-Heat Load from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
 ├─ Recovery-equipment efficiency (Linked Opportunity)
-├─ Displaced heating-system efficiency (User)
+├─ Documented Displaced heating-system efficiency from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 ├─ Recovery auxiliary power (Linked Opportunity)
 ├─ Annual Billed Resource Use
 │  ├─ Annual Electricity Use (Bill)
@@ -70,12 +70,12 @@ U.S. Department of Energy - MEASUR
 
 **Lookup Inputs:**
 
-* Waste-stream flow
-* Waste-stream temperature
+* Waste-stream flow from a nameplate, measurement, audit, or contractor specification
+* Waste-stream temperature from a nameplate, measurement, audit, or contractor specification
 * Waste-stream schedule
 * Coincident Useful-Heat Load
-* Recovery-equipment efficiency
-* Displaced heating-system efficiency
+* Recovery-equipment efficiency from a nameplate, measurement, audit, or contractor specification
+* Displaced heating-system efficiency from a nameplate, measurement, audit, or contractor specification
 * Recovery auxiliary power
 
 **Value Needed:**
@@ -84,16 +84,16 @@ U.S. Department of Energy - MEASUR
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Waste-stream flow; Waste-stream temperature; Waste-stream schedule.
-2. Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Load the Waste Heat Recovery project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Process Heating Assessment waste-heat calculation.
+2. Run the pinned open-source Process Heating Assessment waste-heat calculation baseline and proposed cases using the category formula boundary shown in this card.
+3. Return no result when the Process Heating Assessment waste-heat calculation requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
 4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the MEASUR version, Process Heating Assessment waste-heat calculation input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
 
 **Automation:**
 
-* **Selected Strategy:** Pinned local execution of the exact MEASUR calculator for this category.
-* **Automation Method:** Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
+* **Selected Strategy:** Pinned local execution of the MEASUR Process Heating Assessment waste-heat calculation for Waste Heat Recovery.
+* **Automation Method:** Map reviewed project evidence into the Process Heating Assessment waste-heat calculation input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

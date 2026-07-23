@@ -14,9 +14,10 @@ describe("generate-operational-savings-review-pages", () => {
     expect(first.errors).toEqual([]);
     expect(first.report.categoryPages).toBe(54);
     expect(first.report.mappedRetrofits).toBe(92);
-    expect(first.report.visibleStandardProcesses).toBe(93);
-    expect(first.report.sourceLinksRendered).toBe(273);
-    expect(first.artifacts.size).toBe(55);
+    expect(first.report.visibleStandardProcesses).toBe(92);
+    expect(first.report.sourceLinksRendered).toBe(272);
+    expect(first.report.visibleUserLeaves).toBe(186);
+    expect(first.artifacts.size).toBe(56);
     expect([...first.artifacts]).toEqual([...second.artifacts]);
   });
 
@@ -53,11 +54,13 @@ describe("generate-operational-savings-review-pages", () => {
     const result = buildOperationalSavingsReview(await loadOperationalSavingsSources());
     const page = result.artifacts.get("docs/operational-savings-review/categories/ITC-02.md");
 
-    expect(page).toContain("Standard 1.1 — Existing Fixture Wattage Estimate");
+    expect(page).not.toContain("Existing Fixture Wattage Estimate");
+    expect(page).toContain("Existing Nameplate, Photometric Report, or Field Measurement (User)");
+    expect(page).toContain("No Existing Wattage Value Without Documentation or Measurement (Derived)");
     expect(page).toContain("Linked Opportunity names an exact replacement product");
-    expect(page).toContain("Standard 1.2 — Exact New Fixture Wattage Lookup");
+    expect(page).toContain("Standard 1.1 — Exact New Fixture Wattage Lookup");
     expect(page).toContain("Linked Opportunity specifies requirements but no exact product");
-    expect(page).toContain("Standard 1.3 — Requirement-Based New Fixture Wattage Resolution");
+    expect(page).toContain("Standard 1.2 — Requirement-Based New Fixture Wattage Resolution");
     expect(page).toContain("Standard 2.1 — Fixed-Schedule Lighting Hours");
     expect(page).toContain("Standard 2.2 — Daylight-Based Lighting Hours");
     expect(page).toContain("Standard 3.1 — Lighting-Replacement Calculation");
@@ -106,6 +109,120 @@ describe("generate-operational-savings-review-pages", () => {
     expect(storage).toContain("Standard 1.1 — Battery Storage Dispatch Interval Bill Calculation");
     expect(irrigation).toContain("Irrigation efficiency, if known (Linked Opportunity)");
     expect(irrigation).toContain("Standard 1.1 — Landscape Water Budget Calculation");
+  });
+
+  it("covers every visible terminal User leaf with the closed realism contract", async () => {
+    const result = buildOperationalSavingsReview(await loadOperationalSavingsSources());
+    const contract = JSON.parse(
+      result.artifacts.get("docs/operational-savings-user-input-realism.json")
+    );
+
+    expect(contract.user_leaf_count).toBe(186);
+    expect(contract.inputs).toHaveLength(result.report.visibleUserLeaves);
+    expect(contract.inputs.filter((entry) => entry.knowledge_likelihood === "UNLIKELY_KNOWN")).toEqual([]);
+    expect(
+      contract.inputs
+        .filter((entry) => entry.knowledge_likelihood === "MAY_KNOW")
+        .every((entry) => entry.alternate_source !== "NONE")
+    ).toBe(true);
+    expect(contract.inputs.every((entry) => entry.recognizable_to_ordinary_user)).toBe(true);
+  });
+
+  it("keeps interval utility artifacts and tariff rules out of ordinary User ownership", async () => {
+    const result = buildOperationalSavingsReview(await loadOperationalSavingsSources());
+    for (const id of ["16", "17", "19", "23", "24", "25", "26", "27", "28", "31"]) {
+      const page = result.artifacts.get(`docs/operational-savings-review/categories/ITC-${id}.md`);
+      expect(page).not.toMatch(/(?:Interval Utility Data|Tariff Calendar|Ratchet Rules) \(User\)/i);
+      if (page.includes("Timestamped Interval Utility Data")) {
+        expect(page).toContain("Timestamped Interval Utility Data (Bill)");
+        expect(page).toContain("No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)");
+      }
+    }
+  });
+
+  it("uses realistic ownership and honest no-estimate behavior in the targeted cards", async () => {
+    const result = buildOperationalSavingsReview(await loadOperationalSavingsSources());
+    const charging = result.artifacts.get("docs/operational-savings-review/categories/ITC-27.md");
+    const flow = result.artifacts.get("docs/operational-savings-review/categories/ITC-32.md");
+    const flush = result.artifacts.get("docs/operational-savings-review/categories/ITC-33.md");
+    const variableSpeed = result.artifacts.get("docs/operational-savings-review/categories/ITC-39.md");
+    const dishwasher = result.artifacts.get("docs/operational-savings-review/categories/ITC-52.md");
+    const backup = result.artifacts.get("docs/operational-savings-review/categories/ITC-54.md");
+
+    expect(charging).not.toMatch(/distribution \(User\)/i);
+    expect(charging).not.toMatch(/Session-(?:arrival|duration) distribution/i);
+    expect(charging).toContain("Documented Interval Charging Profile from Site Study or Contractor Design (Linked Opportunity)");
+    expect(charging).toContain("No Utilization Estimate Without a Site Study or Contractor Design (Derived)");
+    expect(flow).not.toMatch(/Annual Uses per Fixture \(User\)|Hot-Water Fraction \(User\)|Water-Heater Efficiency \(User\)/i);
+    expect(flow).toContain("Existing Rated Flow from Label, Specification, or Measurement (User)");
+    expect(flush).not.toMatch(/Annual Flushes per Fixture \(User\)|Existing Rated Flush Volume \(User\)/i);
+    expect(flush).toContain("Existing Gallons per Flush from Label, Specification, or Measurement (User)");
+    expect(variableSpeed).not.toMatch(/Load-Bin .* \(User\)|Annual Hours by Bin \(User\)/i);
+    expect(variableSpeed).toContain("Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans");
+    expect(dishwasher).not.toMatch(/Purchased Water-Heating Input per Certified Rack \(User\)/i);
+    expect(dishwasher).toContain("Do Not Convert Gallons per Rack to Gallons per Hour (Derived)");
+    expect(backup).not.toMatch(/Test Fuel Use .* \(User\)|Standby Input .* \(User\)/i);
+    expect(backup).toContain("Blocked Until Routine-Use Documentation Is Available (Derived)");
+  });
+
+  it("makes process content source-specific and exact-product routing distinct", async () => {
+    const result = buildOperationalSavingsReview(await loadOperationalSavingsSources());
+
+    for (const category of result.categoryReviews) {
+      for (const process of category.informationCard.processes) {
+        expect(process.evidenceState).toMatch(
+          /^(?:EXECUTABLE_PROOF_PRESENT|METHOD_VERIFIED_IMPLEMENTATION_PENDING)$/
+        );
+        expect(process.howToUse.join(" ")).not.toMatch(
+          /^(?:Validate these inputs|Reject missing, ambiguous|Return the value|Store provenance)/i
+        );
+      }
+      const exact = category.informationCard.processes.find((process) => /^exact-/.test(process.key));
+      const requirement = category.informationCard.processes.find((process) => /^requirement-/.test(process.key));
+      if (!exact || !requirement) continue;
+      expect(requirement.howToUse).not.toEqual(exact.howToUse);
+      expect(requirement.automation.automationMethod).not.toEqual(exact.automation.automationMethod);
+      expect(requirement.validation).not.toEqual(exact.validation);
+    }
+  });
+
+  it("keeps each multi-Standard process limited to its own inputs and connected outputs", async () => {
+    const result = buildOperationalSavingsReview(await loadOperationalSavingsSources());
+    const solarStorage = result.categoryReviews.find((category) => category.id === "ITC-24");
+    const microgrid = result.categoryReviews.find((category) => category.id === "ITC-26");
+    const fleet = result.categoryReviews.find((category) => category.id === "ITC-28");
+    const recirculation = result.categoryReviews.find((category) => category.id === "ITC-09");
+
+    const pv = solarStorage.informationCard.processes.find((process) => process.canonicalStandardIds.includes("STD-PVWATTS-V8"));
+    const storageDispatch = solarStorage.informationCard.processes.find((process) => process.canonicalStandardIds.includes("STD-REOPT-LOCAL-DISPATCH"));
+    expect(pv.lookupInputs).toContain("DC capacity");
+    expect(pv.lookupInputs).not.toContain("Power capacity");
+    expect(storageDispatch.lookupInputs).toContain("Timestamped interval utility data from the uploaded utility artifact");
+    expect(storageDispatch.lookupInputs).toContain("Interval solar generation from the connected PVWatts process");
+
+    const microgridInputSets = microgrid.informationCard.processes.map((process) => process.lookupInputs);
+    expect(new Set(microgridInputSets.map((inputs) => JSON.stringify(inputs))).size).toBe(
+      microgridInputSets.length
+    );
+    expect(
+      microgrid.informationCard.processes
+        .find((process) => process.canonicalStandardIds.includes("STD-REOPT-LOCAL-DISPATCH"))
+        .lookupInputs
+    ).toContain(
+      "Interval generation and resource profiles from the connected PVWatts, wind, and onsite-generation processes"
+    );
+
+    const vehicle = fleet.informationCard.processes.find((process) => process.canonicalStandardIds.includes("STD-FUELECONOMY-VEHICLES"));
+    const fleetDispatch = fleet.informationCard.processes.find((process) => process.canonicalStandardIds.includes("STD-REOPT-LOCAL-DISPATCH"));
+    expect(vehicle.lookupInputs).not.toContain("Annual fleet miles");
+    expect(fleetDispatch.lookupInputs).toContain("Vehicle-arrival schedule from the fleet study or contractor charging design");
+    expect(fleetDispatch.lookupInputs).toContain("Resolved vehicle electricity intensity from the connected vehicle process");
+
+    const schedule = recirculation.informationCard.processes.find((process) => process.canonicalStandardIds.includes("STD-OPERATING-SCHEDULE"));
+    const measur = recirculation.informationCard.processes.find((process) => process.canonicalStandardIds.includes("STD-DOE-MEASUR"));
+    expect(schedule.lookupInputs).toContain("Recognizable Business, Shift, Seasonal, or Usage Pattern");
+    expect(schedule.lookupInputs).not.toContain("Pump Nameplate or Measured Input");
+    expect(measur.lookupInputs).toContain("Annual operating hours from the connected schedule process");
   });
 
   it("matches every visible tree process to exactly one complete section", async () => {

@@ -25,19 +25,23 @@ Avoided Water-Heating Input = Convert to Billed Resource Units (Avoided Water ×
 
 ```text
 Annual Operational Savings
-├─ Annual water and heating-resource reduction
-│  ├─ In-Scope Equipment Count (User)
-│  ├─ Recognizable Fixture Usage Pattern (User)
-│  ├─ Annual uses per fixture (User)
-│  ├─ Typical minutes per use (User)
-│  ├─ Business Activity (Profile)
-│  ├─ Water-heating resource or cold-only selection (User)
-│  ├─ Hot-water fraction when nonzero (User)
-│  ├─ Hot-water temperature rise when nonzero (User)
-│  ├─ Water-heater efficiency when nonzero (User)
-│  ├─ Fixture selection
-│  │  ├─ Existing fixture type (User)
-│  │  └─ Existing rated flow (User)
+├─ Annual Water and Heating-Resource Reduction
+│  ├─ In-Scope Fixture Count (User)
+│  ├─ Observed Fixture Activity
+│  │  ├─ Approximate Uses per Operating Day (User)
+│  │  ├─ Operating Days per Week (User)
+│  │  ├─ Active Weeks per Year (User)
+│  │  ├─ Typical Minutes per Use (User)
+│  │  └─ No Usage Estimate Without Observed or Documented Activity (Derived)
+│  ├─ Existing Fixture
+│  │  ├─ Existing Fixture Type or Application (User)
+│  │  ├─ Existing Rated Flow from Label, Specification, or Measurement (User)
+│  │  └─ No Existing Flow Value Without a Label, Specification, or Measurement (Derived)
+│  ├─ Water-Heating Service
+│  │  ├─ Fixture Uses Hot Water (User)
+│  │  ├─ Water-Heating Fuel Type (User)
+│  │  ├─ Water-Heater Nameplate or Commissioning Information, if available (User)
+│  │  └─ No Heating-Resource Estimate Without Documented Temperature and Efficiency Inputs (Derived)
 │  └─ Flow Fixture Performance
 │     ├─ Linked Opportunity names an exact flow fixture
 │     │  ├─ Exact Flow Fixture Product Information (Linked Opportunity)
@@ -91,20 +95,20 @@ U.S. Environmental Protection Agency - WaterSense
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Exact proposed fixture make and model from the linked opportunity; Fixture type and application.
-2. Identify the fixture type and application, validate an exact model or requirement set, return the applicable rated flow or flush volume, and retain the specification and source location.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Read the exact manufacturer, model, and product configuration from the linked low-flow plumbing fixtures opportunity.
+2. Query the official source for the exact model and filter by application, capacity, active specification, and the native certified fields required by this formula.
+3. Require one compatible record; reject partial model matches, inactive listings, incompatible configurations, and records whose native test unit does not match the formula.
 4. Return proposed rated flow with units and product provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the source version, exact record identity, matched model text, returned native fields and units, and any ambiguity decision.
 
 **Automation:**
 
-* **Selected Strategy:** Specification lookup for an exact proposed fixture or a compatible WaterSense requirement.
-* **Automation Method:** Identify the fixture type and application, validate an exact model or requirement set, return the applicable rated flow or flush volume, and retain the specification and source location.
+* **Selected Strategy:** Exact linked-opportunity product match against the official U.S. Environmental Protection Agency - WaterSense records.
+* **Automation Method:** Normalize the opportunity model identifiers, perform an exact active-record lookup, apply category compatibility filters, and return only the required native source fields.
 * **Difficulty:** Easy to Medium
 
 **Validation:**
-The official WaterSense commercial resources, best-practice guide, and fixture criteria were checked. Proposed performance can be supported after an exact specification match, but existing installed ratings and commercial usage frequency remain separate unresolved inputs.
+The official WaterSense commercial guidance and fixture criteria were checked. An exact product specification can supply proposed rated flow, but no retained exact-product fixture or category adapter currently proves the lookup. The source does not supply existing installed performance or usage frequency.
 
 **■ Standard 1.2 — Requirement-Based Proposed Flow Fixture Resolution**
 
@@ -128,21 +132,21 @@ U.S. Environmental Protection Agency - WaterSense
 
 **Value Needed:**
 
-* One compatible proposed rated flow, or no value when the requirements do not identify a supported product
+* Eligible compatible proposed fixture population and a documented low, median, and high rated flow, or no value when no compatible fixture remains
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Fixture requirements from the linked opportunity; Fixture type and application; Required water-use criterion.
-2. Identify the fixture type and application, validate an exact model or requirement set, return the applicable rated flow or flush volume, and retain the specification and source location.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
-4. Return one compatible proposed rated flow, or no value when the requirements do not identify a supported product.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+1. Extract the application, capacity, certification, and performance limits from the linked low-flow plumbing fixtures opportunity requirements.
+2. Filter the official current-product population by every mandatory requirement, product-family boundary, active specification, and native test unit.
+3. Reject the path when no compatible record remains; when several records remain, keep the eligible population and calculate a documented low, median, and high value without selecting the contractor's future product.
+4. Return eligible compatible proposed fixture population and a documented low, median, and high rated flow, or no value when no compatible fixture remains.
+5. Retain the source version, complete filters, eligible record identities, population size, native units, summary rule, and no-result reason.
 
 **Automation:**
 
-* **Selected Strategy:** Specification lookup for an exact proposed fixture or a compatible WaterSense requirement.
-* **Automation Method:** Identify the fixture type and application, validate an exact model or requirement set, return the applicable rated flow or flush volume, and retain the specification and source location.
+* **Selected Strategy:** Requirement-based candidate-set resolution from the official U.S. Environmental Protection Agency - WaterSense population.
+* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and calculate deterministic low, median, and high native-unit results.
 * **Difficulty:** Easy to Medium
 
 **Validation:**
-The official WaterSense commercial resources, best-practice guide, and fixture criteria were checked. Proposed performance can be supported after an exact specification match, but existing installed ratings and commercial usage frequency remain separate unresolved inputs.
+The official WaterSense criteria define compatible proposed rated flow requirements. No retained qualified-product population currently proves the requirement filters, population size, or low, median, and high result, and the source does not supply existing ratings or usage frequency.

@@ -77,11 +77,11 @@ U.S. Department of Energy - Scout
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Existing Building Condition; Proposed Upgrade Option; Existing building vintage class.
+1. Map the Building Envelope and Control Upgrade Screening inputs to the documented Building Measure Performance Screen source fields or model inputs: Existing Building Condition; Proposed Upgrade Option; Existing building vintage class; Building Type; Site Climate Zone.
 2. Load the pinned Scout definitions, apply the reviewed retrofit crosswalk and segment filters, and return the documented resource-reduction factor.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Building Envelope and Control Upgrade Screening path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return documented resource-reduction factor for the approved measure and market segment, with source version and units.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Building Measure Performance Screen source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 

@@ -27,14 +27,15 @@ Annual Operational Savings
 │  ├─ Replacement Fixture Count (User)
 │  ├─ Existing Fixture Watts
 │  │  ├─ Existing Fixture Type or Application (User)
-│  │  └─ Standard 1.1 — Existing Fixture Wattage Estimate
+│  │  ├─ Existing Nameplate, Photometric Report, or Field Measurement (User)
+│  │  └─ No Existing Wattage Value Without Documentation or Measurement (Derived)
 │  ├─ New Fixture Watts
 │  │  ├─ Linked Opportunity names an exact replacement product
 │  │  │  ├─ Exact Product Information (Linked Opportunity)
-│  │  │  └─ Standard 1.2 — Exact New Fixture Wattage Lookup
+│  │  │  └─ Standard 1.1 — Exact New Fixture Wattage Lookup
 │  │  └─ Linked Opportunity specifies requirements but no exact product
 │  │     ├─ Product Requirements (Linked Opportunity)
-│  │     └─ Standard 1.3 — Requirement-Based New Fixture Wattage Resolution
+│  │     └─ Standard 1.2 — Requirement-Based New Fixture Wattage Resolution
 │  ├─ Annual Operating Hours
 │  │  └─ Exterior Lighting Operating Pattern (User)
 │  │     ├─ Lighting follows a fixed or business schedule
@@ -54,56 +55,16 @@ Annual Operational Savings
    └─ Avoidable Electricity Rate (Derived)
 ```
 
-**■ Standard 1.1 — Existing Fixture Wattage Estimate**
-
-**Purpose:**
-Determine whether recognizable existing fixture information is sufficient to resolve installed input watts.
-
-**Source:**
-U.S. Department of Energy FEMP and DesignLights Consortium
-
-**Purchasing Energy-Efficient Exterior Lighting:**
-[https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting](https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting)
-
-**SSL V6.0 and LUNA V2.0 Technical Requirements:**
-[https://designlights.org/wp-content/uploads/2025/11/SSL-V6-LUNA-V2-TR_final_12082025.pdf](https://designlights.org/wp-content/uploads/2025/11/SSL-V6-LUNA-V2-TR_final_12082025.pdf)
-
-**Lookup Inputs:**
-
-* Existing fixture type or application
-* Existing nameplate or measured watts, when available
-
-**Value Needed:**
-
-* Existing input watts per fixture, or no value when no supported installed-baseline source applies
-
-**How to Use:**
-
-1. Validate these inputs and preserve the source of each supplied value: Existing fixture type or application; Existing nameplate or measured watts, when available.
-2. Identify the lighting application, apply the opportunity restrictions, query an approved product source when available, reject incompatible candidates, and return documented fixture input power.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
-4. Return existing input watts per fixture, or no value when no supported installed-baseline source applies.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
-
-**Automation:**
-
-* **Selected Strategy:** Application-specific source lookup with explicit exact-product or requirement-based routing.
-* **Automation Method:** Identify the lighting application, apply the opportunity restrictions, query an approved product source when available, reject incompatible candidates, and return documented fixture input power.
-* **Difficulty:** Medium
-
-**Validation:**
-The reviewed FEMP tables validate proposed efficacy requirements and one narrow wall-mounted example. They do not supply a general installed legacy-wattage distribution or an exact product catalog, so those paths must return no value until separate sources are fixture-validated.
-
-**■ Standard 1.2 — Exact New Fixture Wattage Lookup**
+**■ Standard 1.1 — Exact New Fixture Wattage Lookup**
 
 **Purpose:**
 Resolve input watts when the linked opportunity names an exact replacement luminaire.
 
 **Source:**
-U.S. Department of Energy FEMP and DesignLights Consortium
+DesignLights Consortium - Solid-State Lighting Qualified Products List
 
-**Purchasing Energy-Efficient Exterior Lighting:**
-[https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting](https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting)
+**DLC API and data download user guide:**
+[https://designlights.org/wp-content/uploads/2021/08/DLC_API-and-Data-Access-User-Guide_FINAL_08022021.pdf](https://designlights.org/wp-content/uploads/2021/08/DLC_API-and-Data-Access-User-Guide_FINAL_08022021.pdf)
 
 **SSL V6.0 and LUNA V2.0 Technical Requirements:**
 [https://designlights.org/wp-content/uploads/2025/11/SSL-V6-LUNA-V2-TR_final_12082025.pdf](https://designlights.org/wp-content/uploads/2025/11/SSL-V6-LUNA-V2-TR_final_12082025.pdf)
@@ -119,31 +80,31 @@ U.S. Department of Energy FEMP and DesignLights Consortium
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Exact replacement product information from the linked opportunity; Exterior lighting application.
-2. Identify the lighting application, apply the opportunity restrictions, query an approved product source when available, reject incompatible candidates, and return documented fixture input power.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Read the exact manufacturer, model, and product configuration from the linked exterior lighting replacement opportunity.
+2. Query the official source for the exact model and filter by application, capacity, active specification, and the native certified fields required by this formula.
+3. Require one compatible record; reject partial model matches, inactive listings, incompatible configurations, and records whose native test unit does not match the formula.
 4. Return exact proposed input watts per fixture with product provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the source version, exact record identity, matched model text, returned native fields and units, and any ambiguity decision.
 
 **Automation:**
 
-* **Selected Strategy:** Application-specific source lookup with explicit exact-product or requirement-based routing.
-* **Automation Method:** Identify the lighting application, apply the opportunity restrictions, query an approved product source when available, reject incompatible candidates, and return documented fixture input power.
+* **Selected Strategy:** Exact linked-opportunity product match against the official U.S. Department of Energy FEMP and DesignLights Consortium records.
+* **Automation Method:** Normalize the opportunity model identifiers, perform an exact active-record lookup, apply category compatibility filters, and return only the required native source fields.
 * **Difficulty:** Medium
 
 **Validation:**
-The reviewed FEMP tables validate proposed efficacy requirements and one narrow wall-mounted example. They do not supply a general installed legacy-wattage distribution or an exact product catalog, so those paths must return no value until separate sources are fixture-validated.
+The official DLC data-access guide documents tokenized SSL QPL CSV downloads, and the technical requirements define model, application, light-output, efficacy, input-power, status, and version fields. No authenticated QPL extract, retained exact-product fixture, or category adapter is present, so implementation execution is not yet proved.
 
-**■ Standard 1.3 — Requirement-Based New Fixture Wattage Resolution**
+**■ Standard 1.2 — Requirement-Based New Fixture Wattage Resolution**
 
 **Purpose:**
 Interpret performance requirements when the linked opportunity does not name an exact replacement product.
 
 **Source:**
-U.S. Department of Energy FEMP and DesignLights Consortium
+DesignLights Consortium - Solid-State Lighting Qualified Products List
 
-**Purchasing Energy-Efficient Exterior Lighting:**
-[https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting](https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting)
+**DLC API and data download user guide:**
+[https://designlights.org/wp-content/uploads/2021/08/DLC_API-and-Data-Access-User-Guide_FINAL_08022021.pdf](https://designlights.org/wp-content/uploads/2021/08/DLC_API-and-Data-Access-User-Guide_FINAL_08022021.pdf)
 
 **SSL V6.0 and LUNA V2.0 Technical Requirements:**
 [https://designlights.org/wp-content/uploads/2025/11/SSL-V6-LUNA-V2-TR_final_12082025.pdf](https://designlights.org/wp-content/uploads/2025/11/SSL-V6-LUNA-V2-TR_final_12082025.pdf)
@@ -156,24 +117,24 @@ U.S. Department of Energy FEMP and DesignLights Consortium
 
 **Value Needed:**
 
-* Compatible proposed input watts, or no value when the requirements do not identify a supported product
+* Eligible compatible QPL population with documented low, median, and high input watts, or no value when no compatible product remains
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Product requirements from the linked opportunity; Exterior lighting application; Required light output or performance criteria.
-2. Identify the lighting application, apply the opportunity restrictions, query an approved product source when available, reject incompatible candidates, and return documented fixture input power.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
-4. Return compatible proposed input watts, or no value when the requirements do not identify a supported product.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+1. Extract the application, capacity, certification, and performance limits from the linked exterior lighting replacement opportunity requirements.
+2. Filter the official current-product population by every mandatory requirement, product-family boundary, active specification, and native test unit.
+3. Reject the path when no compatible record remains; when several records remain, keep the eligible population and calculate a documented low, median, and high value without selecting the contractor's future product.
+4. Return eligible compatible QPL population with documented low, median, and high input watts, or no value when no compatible product remains.
+5. Retain the source version, complete filters, eligible record identities, population size, native units, summary rule, and no-result reason.
 
 **Automation:**
 
-* **Selected Strategy:** Application-specific source lookup with explicit exact-product or requirement-based routing.
-* **Automation Method:** Identify the lighting application, apply the opportunity restrictions, query an approved product source when available, reject incompatible candidates, and return documented fixture input power.
+* **Selected Strategy:** Requirement-based candidate-set resolution from the official U.S. Department of Energy FEMP and DesignLights Consortium population.
+* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and calculate deterministic low, median, and high native-unit results.
 * **Difficulty:** Medium
 
 **Validation:**
-The reviewed FEMP tables validate proposed efficacy requirements and one narrow wall-mounted example. They do not supply a general installed legacy-wattage distribution or an exact product catalog, so those paths must return no value until separate sources are fixture-validated.
+The official DLC data-access guide and SSL technical requirements establish a candidate-filtering method. No retained QPL population currently proves the application, light-output, distribution, mounting, controls, active-status, and version filters or the resulting low, median, and high wattage values.
 
 **■ Standard 2.1 — Fixed-Schedule Lighting Hours**
 
@@ -198,11 +159,11 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Lighting hours per operating day; Operating days per week; Active weeks per year.
+1. Map the Exterior Lighting Replacement inputs to the documented Fixed-Schedule Lighting Hours source fields or model inputs: Lighting hours per operating day; Operating days per week; Active weeks per year.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Exterior Lighting Replacement path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return annual operating hours.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Fixed-Schedule Lighting Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 
@@ -239,11 +200,11 @@ U.S. Naval Observatory - daylight definitions and data services
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Control type and timing offset; Site location; Analysis year.
+1. Map the Exterior Lighting Replacement inputs to the documented Daylight-Based Lighting Hours source fields or model inputs: Control type and timing offset; Site location; Analysis year.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Exterior Lighting Replacement path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return annual daylight-based operating hours.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Daylight-Based Lighting Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 
@@ -264,6 +225,9 @@ DOE FEMP, DesignLights Consortium, DOE reference buildings, and U.S. Naval Obser
 
 **Purchasing Energy-Efficient Exterior Lighting:**
 [https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting](https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting)
+
+**DLC API and data download user guide:**
+[https://designlights.org/wp-content/uploads/2021/08/DLC_API-and-Data-Access-User-Guide_FINAL_08022021.pdf](https://designlights.org/wp-content/uploads/2021/08/DLC_API-and-Data-Access-User-Guide_FINAL_08022021.pdf)
 
 **SSL V6.0 and LUNA V2.0 Technical Requirements:**
 [https://designlights.org/wp-content/uploads/2025/11/SSL-V6-LUNA-V2-TR_final_12082025.pdf](https://designlights.org/wp-content/uploads/2025/11/SSL-V6-LUNA-V2-TR_final_12082025.pdf)
@@ -303,4 +267,4 @@ DOE FEMP, DesignLights Consortium, DOE reference buildings, and U.S. Naval Obser
 * **Difficulty:** Easy
 
 **Validation:**
-The arithmetic and unit conversion are deterministic and correspond to the displayed formula. The result is executable only when fixture count, existing watts, proposed watts, and annual operating hours have all been resolved; the reviewed source gaps for those inputs remain visible in the connected processes.
+The arithmetic and unit conversion are deterministic and correspond to the displayed formula. The result is executable only when fixture count, existing watts, proposed watts, and annual operating hours have all been resolved. A category-level golden test has not yet been added, and the reviewed source gaps for those inputs remain visible in the connected processes.

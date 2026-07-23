@@ -27,8 +27,8 @@ Annual Operational Savings
 │  ├─ In-Scope Equipment Count (User)
 │  ├─ Selected leak-measurement method (User)
 │  ├─ Measurement Observations (User)
-│  ├─ System Pressure (User)
-│  ├─ Compressor specific power (User)
+│  ├─ Documented System Pressure from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+│  ├─ Documented Compressor specific power from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 │  ├─ Annual operating hours
 │  │  ├─ Recognizable Business, Shift, Seasonal, or Usage Pattern (User)
 │  │  ├─ Detailed Operating Days, Shifts, or Active Season, if known (User)
@@ -57,14 +57,10 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **Lookup Inputs:**
 
-* In-Scope Equipment Count
-* Selected leak-measurement method
-* Measurement Observations
-* System Pressure
-* Compressor specific power
 * Recognizable Business, Shift, Seasonal, or Usage Pattern
 * Detailed Operating Days, Shifts, or Active Season, if known
 * Measured Annual Operating Hours, if known
+* Site Location and Business Activity
 
 **Value Needed:**
 
@@ -72,11 +68,11 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: In-Scope Equipment Count; Selected leak-measurement method; Measurement Observations.
+1. Map the Compressed Air Leak Repair inputs to the documented Compressed Air Leak Repair Annual Operating Hours source fields or model inputs: Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Compressed Air Leak Repair path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Compressed Air Leak Repair Annual Operating Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 
@@ -109,11 +105,9 @@ U.S. Department of Energy - MEASUR
 * In-Scope Equipment Count
 * Selected leak-measurement method
 * Measurement Observations
-* System Pressure
-* Compressor specific power
-* Recognizable Business, Shift, Seasonal, or Usage Pattern
-* Detailed Operating Days, Shifts, or Active Season, if known
-* Measured Annual Operating Hours, if known
+* System Pressure from a nameplate, measurement, audit, or contractor specification
+* Compressor specific power from a nameplate, measurement, audit, or contractor specification
+* Annual operating hours from the connected schedule process
 
 **Value Needed:**
 
@@ -121,16 +115,16 @@ U.S. Department of Energy - MEASUR
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: In-Scope Equipment Count; Selected leak-measurement method; Measurement Observations.
-2. Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Load the Compressed Air Leak Repair project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Compressed Air Assessment leak-loss calculation.
+2. Run the pinned open-source Compressed Air Assessment leak-loss calculation baseline and proposed cases using the category formula boundary shown in this card.
+3. Return no result when the Compressed Air Assessment leak-loss calculation requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
 4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the MEASUR version, Compressed Air Assessment leak-loss calculation input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
 
 **Automation:**
 
-* **Selected Strategy:** Pinned local execution of the exact MEASUR calculator for this category.
-* **Automation Method:** Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
+* **Selected Strategy:** Pinned local execution of the MEASUR Compressed Air Assessment leak-loss calculation for Compressed Air Leak Repair.
+* **Automation Method:** Map reviewed project evidence into the Compressed Air Assessment leak-loss calculation input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

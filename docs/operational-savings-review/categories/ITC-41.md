@@ -25,8 +25,8 @@ Input kW = Air Power kW / (Fan Efficiency × Motor Efficiency)
 Annual Operational Savings
 ├─ Annual fan-system electricity reduction
 │  ├─ In-Scope Equipment Count (User)
-│  ├─ Required airflow (User)
-│  ├─ Required pressure rise (User)
+│  ├─ Documented Required airflow from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+│  ├─ Documented Required pressure rise from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 │  ├─ Existing Fan Nameplate or Test Information (User)
 │  ├─ Existing Motor Nameplate or Test Information (User)
 │  ├─ Proposed fan efficiency (Linked Opportunity)
@@ -59,14 +59,10 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **Lookup Inputs:**
 
-* In-Scope Equipment Count
-* Required airflow
-* Required pressure rise
-* Existing Fan Nameplate or Test Information
-* Existing Motor Nameplate or Test Information
-* Proposed Fan Specifications
-* Proposed Motor Specifications
 * Recognizable Business, Shift, Seasonal, or Usage Pattern
+* Detailed Operating Days, Shifts, or Active Season, if known
+* Measured Annual Operating Hours, if known
+* Site Location and Business Activity
 
 **Value Needed:**
 
@@ -74,11 +70,11 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: In-Scope Equipment Count; Required airflow; Required pressure rise.
+1. Map the Efficient Fan or Ventilation System inputs to the documented Efficient Fan or Ventilation System Annual Operating Hours source fields or model inputs: Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Efficient Fan or Ventilation System path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Efficient Fan or Ventilation System Annual Operating Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 
@@ -109,13 +105,13 @@ U.S. Department of Energy - MEASUR
 **Lookup Inputs:**
 
 * In-Scope Equipment Count
-* Required airflow
-* Required pressure rise
+* Required airflow from a nameplate, measurement, audit, or contractor specification
+* Required pressure rise from a nameplate, measurement, audit, or contractor specification
 * Existing Fan Nameplate or Test Information
 * Existing Motor Nameplate or Test Information
 * Proposed Fan Specifications
 * Proposed Motor Specifications
-* Recognizable Business, Shift, Seasonal, or Usage Pattern
+* Annual operating hours from the connected schedule process
 
 **Value Needed:**
 
@@ -123,16 +119,16 @@ U.S. Department of Energy - MEASUR
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: In-Scope Equipment Count; Required airflow; Required pressure rise.
-2. Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Load the Efficient Fan or Ventilation System project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Fan System Assessment Tool.
+2. Run the pinned open-source Fan System Assessment Tool baseline and proposed cases using the category formula boundary shown in this card.
+3. Return no result when the Fan System Assessment Tool requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
 4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the MEASUR version, Fan System Assessment Tool input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
 
 **Automation:**
 
-* **Selected Strategy:** Pinned local execution of the exact MEASUR calculator for this category.
-* **Automation Method:** Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
+* **Selected Strategy:** Pinned local execution of the MEASUR Fan System Assessment Tool for Efficient Fan or Ventilation System.
+* **Automation Method:** Map reviewed project evidence into the Fan System Assessment Tool input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

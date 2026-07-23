@@ -5,6 +5,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 import {
   buildInformationCardProjection,
+  buildUserInputRealismEntries,
   INFORMATION_CARD_REGISTRY_METADATA,
   renderPresentationTree
 } from "./operational-savings-information-card-registry.mjs";
@@ -84,7 +85,8 @@ export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
     sourceFixtureSchemaText,
     unitRegistryText,
     profilePathFixtureText,
-    informationCardSchemaText
+    informationCardSchemaText,
+    userInputRealismSchemaText
   ] = await Promise.all([
     readFile(join(root, "docs/operational-savings-information-trees.md"), "utf8"),
     readFile(join(root, "docs/operational-savings-standard-registry.md"), "utf8"),
@@ -95,7 +97,8 @@ export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
     readFile(join(root, "docs/operational-savings-fixtures/source-fixture.schema.json"), "utf8"),
     readFile(join(root, "docs/operational-savings-unit-registry.json"), "utf8"),
     readFile(join(root, "docs/operational-savings-fixtures/profile/normalized-profile-paths.json"), "utf8"),
-    readFile(join(root, "docs/operational-savings-information-card.schema.json"), "utf8")
+    readFile(join(root, "docs/operational-savings-information-card.schema.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-user-input-realism.schema.json"), "utf8")
   ]);
   const goldenFixtureRoot = join(root, "docs/operational-savings-fixtures/categories");
   const sourceFixtureRoot = join(root, "docs/operational-savings-fixtures/sources");
@@ -135,6 +138,7 @@ export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
     profilePathFixture: JSON.parse(profilePathFixtureText),
     actualProfilePathContract,
     informationCardSchema: JSON.parse(informationCardSchemaText),
+    userInputRealismSchema: JSON.parse(userInputRealismSchemaText),
     goldenFixtures,
     taxonomy: taxonomyModule.RETROFIT_TYPES
   };
@@ -398,6 +402,11 @@ export function buildOperationalSavingsReview(sources) {
       )
     };
     categoryReview.informationCard = buildInformationCardProjection(categoryReview);
+    categoryReview.userInputRealism = buildUserInputRealismEntries(
+      categoryReview.id,
+      categoryReview.informationCard.tree,
+      categoryReview.informationCard.processes
+    );
     validateInformationCardProjection(
       categoryReview.informationCard,
       categoryReview,
@@ -412,6 +421,22 @@ export function buildOperationalSavingsReview(sources) {
   validateUsageDeclarations(branches, branchUsage, categoryById, errors);
   validateUsageDeclarations(standards, standardUsage, categoryById, errors);
 
+  const userInputRealismContract = {
+    schema_version: "operational-savings/user-input-realism-v1",
+    generated_from: "operational-savings Information Card presentation trees",
+    user_leaf_count: categoryReviews.reduce(
+      (sum, category) => sum + category.userInputRealism.length,
+      0
+    ),
+    inputs: categoryReviews.flatMap((category) => category.userInputRealism)
+  };
+  validateUserInputRealismContract(
+    userInputRealismContract,
+    sources.userInputRealismSchema,
+    categoryReviews,
+    errors
+  );
+
   const artifacts = new Map();
   for (const category of categoryReviews) {
     const outputPath = `docs/operational-savings-review/categories/${category.id}.md`;
@@ -421,6 +446,10 @@ export function buildOperationalSavingsReview(sources) {
   const indexPath = "docs/operational-savings-review/README.md";
   if (artifacts.has(indexPath)) errors.push(`duplicate output path: ${indexPath}`);
   artifacts.set(indexPath, renderReviewIndex(categoryReviews, standards));
+  artifacts.set(
+    "docs/operational-savings-user-input-realism.json",
+    `${JSON.stringify(userInputRealismContract, null, 2)}\n`
+  );
 
   return {
     errors,
@@ -428,6 +457,7 @@ export function buildOperationalSavingsReview(sources) {
     branches,
     standards,
     categoryReviews,
+    userInputRealismContract,
     artifacts,
     report: buildReport(categoryReviews, branches, standards, sources.taxonomy)
   };
@@ -2017,6 +2047,139 @@ function validateInformationCardSchema(schema, errors) {
   }
 }
 
+function validateUserInputRealismContract(contract, schema, categories, errors) {
+  if (
+    schema.$id !==
+      "https://greenbusinesssolution.org/schemas/operational-savings/user-input-realism-v1.json" ||
+    schema.additionalProperties !== false ||
+    schema.$defs?.userInput?.additionalProperties !== false
+  ) {
+    errors.push("User-input realism schema has invalid identity or openness");
+  }
+  const requiredTopLevel = ["schema_version", "generated_from", "user_leaf_count", "inputs"];
+  if (JSON.stringify(schema.required || []) !== JSON.stringify(requiredTopLevel)) {
+    errors.push("User-input realism schema has unexpected required fields");
+  }
+  if (contract.user_leaf_count !== contract.inputs.length) {
+    errors.push("User-input realism contract count does not match its entries");
+  }
+
+  const expectedKeys = new Set();
+  const processKeysByCategory = new Map();
+  for (const category of categories) {
+    processKeysByCategory.set(
+      category.id,
+      new Set(category.informationCard.processes.map((process) => process.key))
+    );
+    walkPresentationTree(category.informationCard.tree, (treeNode, path) => {
+      if (
+        treeNode.processKey ||
+        treeNode.children.length > 0 ||
+        !treeNode.text.endsWith("(User)")
+      ) {
+        return;
+      }
+      const treePath = path
+        .filter((item) => !item.processKey)
+        .map((item) =>
+          item.text.replace(
+            /\s+\((?:User|Profile|Bill|Linked Opportunity|Derived)\)$/,
+            ""
+          )
+        )
+        .join(" > ");
+      expectedKeys.add(`${category.id}\u0000${treePath}`);
+    });
+  }
+
+  const actualKeys = new Set();
+  const allowedFields = new Set(
+    Object.keys(schema.$defs?.userInput?.properties || {})
+  );
+  const requiredFields = schema.$defs?.userInput?.required || [];
+  for (const entry of contract.inputs) {
+    const key = `${entry.category_id}\u0000${entry.tree_path}`;
+    if (actualKeys.has(key)) {
+      errors.push(`User-input realism contract duplicates ${entry.category_id} ${entry.tree_path}`);
+    }
+    actualKeys.add(key);
+    for (const field of requiredFields) {
+      if (!(field in entry)) {
+        errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} is missing ${field}`);
+      }
+    }
+    for (const field of Object.keys(entry)) {
+      if (!allowedFields.has(field)) {
+        errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} has unsupported field ${field}`);
+      }
+    }
+    if (
+      !["LIKELY_KNOWN", "MAY_KNOW", "UNLIKELY_KNOWN"].includes(
+        entry.knowledge_likelihood
+      )
+    ) {
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} has invalid knowledge likelihood`);
+    }
+    if (
+      entry.knowledge_likelihood === "MAY_KNOW" &&
+      entry.alternate_source === "NONE"
+    ) {
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} lacks an alternate resolution source`);
+    }
+    if (
+      entry.knowledge_likelihood === "UNLIKELY_KNOWN" &&
+      !PROJECT_DOCUMENT_INPUT_PATTERN.test(entry.visible_label)
+    ) {
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} exposes an unlikely ordinary-user value`);
+    }
+    if (entry.recognizable_to_ordinary_user !== true) {
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} is not recognizable`);
+    }
+    if (
+      entry.connected_process_key &&
+      !processKeysByCategory.get(entry.category_id)?.has(entry.connected_process_key)
+    ) {
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} references an unknown process`);
+    }
+  }
+
+  for (const key of expectedKeys) {
+    if (!actualKeys.has(key)) errors.push(`User-input realism contract is missing ${key.replace("\u0000", " ")}`);
+  }
+  for (const key of actualKeys) {
+    if (!expectedKeys.has(key)) errors.push(`User-input realism contract has stale entry ${key.replace("\u0000", " ")}`);
+  }
+}
+
+const PROJECT_DOCUMENT_INPUT_PATTERN =
+  /(?:nameplate|measurement|measured|documented|uploaded|audit|commissioning|controls trend|operating record|manufacturer|label|contractor)/i;
+
+const PROCESS_SOURCE_NAME_PATTERNS = {
+  "STD-COMSTOCK-ANNUAL-DELTA": /ComStock|National Laboratory of the Rockies/i,
+  "STD-SCOUT-ECM-SCREEN": /Scout|U\.S\. Department of Energy/i,
+  "STD-DOE-CCMS-RATINGS": /Compliance Certification|CCMS|U\.S\. Department of Energy/i,
+  "STD-ENERGY-STAR-PRODUCT-DATA": /ENERGY STAR|U\.S\. Environmental Protection Agency/i,
+  "STD-DOE-MEASUR": /MEASUR|U\.S\. Department of Energy/i,
+  "STD-SAM-SOLAR-THERMAL": /System Advisor Model|National Laboratory of the Rockies/i,
+  "STD-PVWATTS-V8": /PVWatts|National Laboratory of the Rockies/i,
+  "STD-WIND-SAM": /WIND Toolkit|System Advisor Model|National Laboratory of the Rockies/i,
+  "STD-REOPT-LOCAL-DISPATCH": /REopt|National Laboratory of the Rockies/i,
+  "STD-EPA-CHP-PERFORMANCE": /CHP|U\.S\. Environmental Protection Agency/i,
+  "STD-FUELECONOMY-VEHICLES": /FuelEconomy|U\.S\. Department of Energy|U\.S\. Environmental Protection Agency/i,
+  "STD-WATERSENSE-FIXTURES": /WaterSense|U\.S\. Environmental Protection Agency/i,
+  "STD-WATERSENSE-LANDSCAPE": /WaterSense|U\.S\. Environmental Protection Agency/i,
+  "STD-WATERSENSE-CI-OPERATIONS": /WaterSense|U\.S\. Environmental Protection Agency/i,
+  "STD-FEMP-EXTERIOR-LIGHTING": /FEMP|DesignLights Consortium/i,
+  "STD-OPERATING-SCHEDULE": /Commercial Reference|Naval Observatory|U\.S\. Department of Energy/i
+};
+
+const SIMULATOR_STANDARD_IDS = new Set([
+  "STD-SAM-SOLAR-THERMAL",
+  "STD-PVWATTS-V8",
+  "STD-WIND-SAM",
+  "STD-REOPT-LOCAL-DISPATCH"
+]);
+
 function validateInformationCardProjection(
   card,
   category,
@@ -2124,6 +2287,40 @@ function validateInformationCardProjection(
       errors.push(`${category.id} Information Card process ${process.name} has no Validation`);
     }
     if (
+      ![
+        "EXECUTABLE_PROOF_PRESENT",
+        "METHOD_VERIFIED_IMPLEMENTATION_PENDING",
+        "SOURCE_UNSUPPORTED"
+      ].includes(process.evidenceState)
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} has invalid evidenceState ${process.evidenceState}`
+      );
+    }
+    if (process.evidenceState === "SOURCE_UNSUPPORTED") {
+      errors.push(
+        `${category.id} Information Card displays source-unsupported process ${process.name} as a tree resolver`
+      );
+    }
+    if (
+      process.evidenceState === "METHOD_VERIFIED_IMPLEMENTATION_PENDING" &&
+      !/(?:not yet|pending|have not yet|has not yet|no retained|no category|not currently|remain unverified|still absent)/i.test(
+        process.validation
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} does not disclose pending implementation proof`
+      );
+    }
+    if (
+      process.evidenceState === "EXECUTABLE_PROOF_PRESENT" &&
+      !/(?:retained fixture|golden)/i.test(process.validation)
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} claims executable proof without fixture or golden evidence`
+      );
+    }
+    if (
       /(?:should work|will need to be validated|seems appropriate|implementation may be possible)/i.test(
         process.validation || ""
       )
@@ -2139,10 +2336,99 @@ function validateInformationCardProjection(
         `${category.id} Information Card process ${process.name} lacks a visible direct source URL`
       );
     }
+    for (const standardId of process.canonicalStandardIds || []) {
+      const expectedSourceName = PROCESS_SOURCE_NAME_PATTERNS[standardId];
+      if (expectedSourceName && !expectedSourceName.test(process.sourceName)) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} names a source that does not correspond to ${standardId}`
+        );
+      }
+    }
     if (/bill-derived .*rate/i.test(process.name)) {
       errors.push(
         `${category.id} Information Card incorrectly renders a simple Bill-derived rate as a Standard`
       );
+    }
+    if (
+      (process.howToUse || []).some((step) =>
+        /^(?:Validate these inputs|Reject missing, ambiguous|Return the value|Store provenance)/i.test(
+          step
+        )
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} contains generic How to Use boilerplate`
+      );
+    }
+    if (
+      process.canonicalStandardIds.includes("STD-DOE-MEASUR") &&
+      !/(?:Steam System Assessment Tool|Pumping System Assessment Tool|Motor Inventory|Motor Performance|Cooling Tower Water Assessment|Fan System Assessment Tool|Compressed Air Assessment|Process Heating Assessment)/i.test(
+        `${process.purpose} ${process.howToUse.join(" ")} ${process.automation.automationMethod}`
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} does not identify its exact MEASUR calculator or module`
+      );
+    }
+    const processInstructions = [
+      process.purpose,
+      ...(process.howToUse || []),
+      process.automation?.selectedStrategy,
+      process.automation?.automationMethod
+    ].join(" ");
+    if (
+      process.canonicalStandardIds.some((standardId) =>
+        SIMULATOR_STANDARD_IDS.has(standardId)
+      ) &&
+      /(?:simulator|simulation|model|SAM|PVWatts|REopt).{0,100}(?:supply|infer|derive|choose|fill|default|estimate).{0,40}(?:missing|unknown).{0,40}(?:project|design)|(?:supply|infer|derive|choose|fill|default|estimate).{0,40}(?:missing|unknown).{0,40}(?:project|design).{0,100}(?:simulator|simulation|model|SAM|PVWatts|REopt)/i.test(
+        processInstructions
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card simulator process ${process.name} treats missing project design inputs as model outputs`
+      );
+    }
+    if (
+      /^existing-product-rating$/.test(process.key) &&
+      /(?:use|treat|apply).{0,80}(?:current|efficient|certified|qualified).{0,60}(?:product|dataset|population|distribution).{0,80}(?:unknown existing|existing baseline|installed baseline)/i.test(
+        processInstructions
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card product process ${process.name} uses current products as the unknown existing-equipment baseline`
+      );
+    }
+    if (
+      process.canonicalStandardIds.some((standardId) =>
+        ["STD-DOE-CCMS-RATINGS", "STD-ENERGY-STAR-PRODUCT-DATA"].includes(standardId)
+      ) &&
+      process.lookupInputs.some((input) => /(?:usage|operating schedule|annual activity)/i.test(input))
+    ) {
+      errors.push(
+        `${category.id} Information Card product process ${process.name} incorrectly resolves usage or an operating schedule`
+      );
+    }
+  }
+
+  const exactProcesses = (card.processes || []).filter((process) => /^exact-/.test(process.key));
+  const requirementProcesses = (card.processes || []).filter((process) => /^requirement-/.test(process.key));
+  for (const exact of exactProcesses) {
+    const requirement = requirementProcesses.find((candidate) =>
+      candidate.canonicalStandardIds.some((standardId) =>
+        exact.canonicalStandardIds.includes(standardId)
+      )
+    );
+    if (!requirement) continue;
+    for (const [label, exactValue, requirementValue] of [
+      ["How to Use", exact.howToUse, requirement.howToUse],
+      ["Automation Method", exact.automation.automationMethod, requirement.automation.automationMethod],
+      ["Validation", exact.validation, requirement.validation]
+    ]) {
+      if (JSON.stringify(exactValue) === JSON.stringify(requirementValue)) {
+        errors.push(
+          `${category.id} exact-product and requirement-based processes have identical ${label}`
+        );
+      }
     }
   }
 
@@ -2193,6 +2479,26 @@ function validateInformationCardProjection(
           `${category.id} Information Card exposes a technical identifier as a User input: ${node.text}`
         );
       }
+      if (
+        node.text.endsWith("(User)") &&
+        /(?:distribution|probability|specific power|\bCOP\b|pressure rise|load bin|ratchet rule|tariff calendar|certified resource input per test unit|purchased water-heating input per certified rack)/i.test(
+          node.text
+        )
+      ) {
+        errors.push(
+          `${category.id} Information Card assigns an unrealistic technical value to User: ${node.text}`
+        );
+      }
+      if (
+        node.text.endsWith("(User)") &&
+        /(?:Timestamped Interval Utility Data|Uploaded Utility Artifact|Complete .*Tariff|Billing-Demand)/i.test(
+          node.text
+        )
+      ) {
+        errors.push(
+          `${category.id} Information Card assigns uploaded utility or tariff data to User: ${node.text}`
+        );
+      }
       if (node.text.endsWith("(Linked Opportunity)")) {
         const ancestors = path.slice(0, -1);
         const explicitOpportunityBranch = [...ancestors]
@@ -2206,7 +2512,10 @@ function validateInformationCardProjection(
         );
         if (
           !hasInterpretingProcess &&
-          /(?:watts|efficiency|power|capacity|rating|flow|consumption)/i.test(node.text)
+          /(?:watts|efficiency|power|capacity|rating|flow|consumption)/i.test(node.text) &&
+          !/(?:Nameplate|Measurement|Audit|Contractor|Manufacturer|Commissioning|Controls Trend|Site Study|Fleet Study|Operating Record)/i.test(
+            node.text
+          )
         ) {
           errors.push(
             `${category.id} Linked Opportunity jumps directly to an engineering value without a Standard process: ${node.text}`
@@ -2673,6 +2982,9 @@ function buildReport(categories, branches, standards, taxonomy) {
       0
     );
   }, 0);
+  const userInputRealismEntries = categories.flatMap(
+    (category) => category.userInputRealism || []
+  );
   return {
     categoryPages: categories.length,
     categories: categories.length,
@@ -2682,6 +2994,17 @@ function buildReport(categories, branches, standards, taxonomy) {
     standardsEmbedded: standards.length,
     visibleStandardProcesses,
     sourceLinksRendered,
+    visibleUserLeaves: userInputRealismEntries.length,
+    likelyKnownUserLeaves: userInputRealismEntries.filter(
+      (entry) => entry.knowledge_likelihood === "LIKELY_KNOWN"
+    ).length,
+    mayKnowUserLeaves: userInputRealismEntries.filter(
+      (entry) => entry.knowledge_likelihood === "MAY_KNOW"
+    ).length,
+    userLeavesByAlternateSource: countBy(
+      userInputRealismEntries,
+      (entry) => entry.alternate_source
+    ),
     maxAtomicUserInputs: Math.max(...userCounts),
     requiredUserInputs: requiredCounts.reduce((sum, value) => sum + value, 0),
     conditionalCalculationGates: categories.reduce(

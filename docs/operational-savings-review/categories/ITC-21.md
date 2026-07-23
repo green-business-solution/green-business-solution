@@ -37,8 +37,8 @@ Annual Operational Savings
 ├─ Total installed capacity (Linked Opportunity)
 ├─ Opportunity Equipment or Performance Requirements (Linked Opportunity)
 ├─ Annual capacity factor (Linked Opportunity)
-├─ Coincident onsite electric-load constraint, if known (User)
-├─ Coincident useful thermal-load constraint (User)
+├─ Documented Coincident onsite electric-load constraint, if known from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+├─ Documented Coincident useful thermal-load constraint from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 ├─ Existing Boiler Nameplate or Combustion-Test Information, if known (User)
 ├─ Standard 1.1 — Combined Heat and Power Performance Balance
 └─ Applicable Resource Rates
@@ -89,11 +89,11 @@ U.S. Environmental Protection Agency - CHP technologies and calculator
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Prime mover; Input fuel; Selected Unit Model, if known.
+1. Map the Combined Heat and Power inputs to the documented Combined Heat and Power Performance Balance source fields or model inputs: Prime mover; Input fuel; Selected Unit Model, if known; Total installed capacity; Annual capacity factor; Coincident onsite electric-load constraint, if known; Coincident useful thermal-load constraint; Existing Boiler Nameplate or Combustion-Test Information, if known.
 2. Select the compatible technology and capacity row, apply the explicit operating and coincidence constraints, calculate electricity, fuel, and useful heat, and cap outputs at site loads.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Combined Heat and Power path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Combined Heat and Power Performance Balance source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 

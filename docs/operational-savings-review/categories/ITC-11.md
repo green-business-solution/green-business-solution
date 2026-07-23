@@ -28,7 +28,7 @@ Annual Operational Savings
 │  │  ├─ Annual Billed Resource Use
 │  │  │  ├─ Annual Electricity Use (Bill)
 │  │  │  └─ Billing Period Coverage (Bill)
-│  │  └─ Affected-load share, if known (User)
+│  │  └─ Documented Affected-load share, if known from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
 │  ├─ Opportunity Equipment or Performance Requirements (Linked Opportunity)
 │  ├─ Building Type (Profile)
 │  ├─ Site Climate Zone (Profile)
@@ -76,11 +76,11 @@ U.S. Department of Energy - Scout
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Affected-load share, if known; Existing building vintage class; Existing condition or control.
+1. Map the Refrigeration Controls and Heat-Loss Reduction inputs to the documented Building Measure Performance Screen source fields or model inputs: Affected-load share, if known; Existing building vintage class; Existing condition or control; Proposed scope or sequence; Building Type; Site Climate Zone.
 2. Load the pinned Scout definitions, apply the reviewed retrofit crosswalk and segment filters, and return the documented resource-reduction factor.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Refrigeration Controls and Heat-Loss Reduction path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return documented resource-reduction factor for the approved measure and market segment, with source version and units.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Building Measure Performance Screen source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 

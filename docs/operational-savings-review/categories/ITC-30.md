@@ -29,8 +29,8 @@ Annual Operational Savings
 │  │  ├─ Measured Annual Operating Hours, if known (User)
 │  │  ├─ Site Location and Business Activity (Profile)
 │  │  └─ Standard 1.1 — Electric Forklift or Material Handling Equipment Annual Operating Hours
-│  ├─ Existing fuel use per operating hour, if known (User)
-│  └─ Proposed charging kWh per operating hour, if known (User)
+│  ├─ Documented Existing fuel use per operating hour, if known from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
+│  └─ Documented Proposed charging kWh per operating hour, if known from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 └─ Applicable Resource Rates
    ├─ Bill-Derived Electricity Rate
    │  ├─ Electricity Use (Bill)
@@ -53,13 +53,9 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **Lookup Inputs:**
 
-* In-Scope Equipment Count
 * Recognizable Business, Shift, Seasonal, or Usage Pattern
 * Detailed Operating Days, Shifts, or Active Season, if known
 * Measured Annual Operating Hours, if known
-* Existing fuel use per operating hour, if known
-* Proposed charging kWh per operating hour, if known
-* Documented current project fuel price for the matching fuel and geography
 * Site Location and Business Activity
 
 **Value Needed:**
@@ -68,11 +64,11 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: In-Scope Equipment Count; Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known.
+1. Map the Electric Forklift or Material Handling Equipment inputs to the documented Electric Forklift or Material Handling Equipment Annual Operating Hours source fields or model inputs: Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Electric Forklift or Material Handling Equipment path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Electric Forklift or Material Handling Equipment Annual Operating Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 

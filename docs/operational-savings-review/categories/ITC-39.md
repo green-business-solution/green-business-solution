@@ -24,14 +24,14 @@ No standalone cube-law adjustment is approved without the exact shaft-power and 
 
 ```text
 Annual Operational Savings
-├─ Annual variable-speed electricity reduction
+├─ Annual Variable-Speed Electricity Reduction
 │  ├─ In-Scope Equipment Count (User)
-│  ├─ Existing Equipment Nameplate and Load Information (User)
-│  ├─ Repeatable load-bin profile
-│  │  ├─ Load or speed fraction for each bin (User)
-│  │  └─ Annual hours for each bin (User)
-│  ├─ Proposed Minimum Speed (Linked Opportunity)
-│  ├─ Proposed control rule (Linked Opportunity)
+│  ├─ Existing Equipment Nameplate and Load Information from Uploaded Audit or Measurement (Linked Opportunity)
+│  ├─ Measured Load-Bin Profile
+│  │  ├─ Load or Speed Fractions from Controls Trends or Engineering Audit (Linked Opportunity)
+│  │  ├─ Annual Hours by Bin from Controls Trends or Engineering Audit (Linked Opportunity)
+│  │  └─ No Load-Bin Estimate Without Measured or Audited Operating Data (Derived)
+│  ├─ Proposed Minimum Speed and Control Rule (Linked Opportunity)
 │  └─ Standard 1.1 — Variable Frequency Drives and Pump or Fan Controls Engineering Calculation
 └─ Applicable Resource Rates
    └─ Bill-Derived Electricity Rate
@@ -62,8 +62,8 @@ U.S. Department of Energy - MEASUR
 
 * In-Scope Equipment Count
 * Existing Equipment Nameplate and Load Information
-* Load or speed fraction for each bin
-* Annual hours for each bin
+* Load or speed fraction for each bin from an uploaded site study, controls trend, or engineering audit
+* Annual hours for each bin from an uploaded site study, controls trend, or engineering audit
 * Proposed Minimum Speed
 * Proposed control rule
 
@@ -73,16 +73,16 @@ U.S. Department of Energy - MEASUR
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: In-Scope Equipment Count; Existing Equipment Nameplate and Load Information; Load or speed fraction for each bin.
-2. Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Load the Variable Frequency Drives and Pump or Fan Controls project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans.
+2. Run the pinned open-source Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans baseline and proposed cases using the category formula boundary shown in this card.
+3. Return no result when the Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
 4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the MEASUR version, Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
 
 **Automation:**
 
-* **Selected Strategy:** Pinned local execution of the exact MEASUR calculator for this category.
-* **Automation Method:** Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
+* **Selected Strategy:** Pinned local execution of the MEASUR Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans for Variable Frequency Drives and Pump or Fan Controls.
+* **Automation Method:** Map reviewed project evidence into the Pumping System Assessment Tool for pumps or Fan System Assessment Tool for fans input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

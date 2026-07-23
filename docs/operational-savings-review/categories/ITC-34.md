@@ -32,7 +32,7 @@ Annual Operational Savings
 │  │  └─ Recognizable Plant or Landscape Type for Each Hydrozone (User)
 │  ├─ Existing irrigation configuration
 │  │  ├─ Irrigation method (User)
-│  │  ├─ Irrigation efficiency, if known (User)
+│  │  ├─ Documented Irrigation efficiency, if known from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 │  │  └─ Controller treatment (User)
 │  ├─ Proposed irrigation configuration
 │  │  ├─ Irrigation method (Linked Opportunity)
@@ -65,7 +65,7 @@ U.S. Environmental Protection Agency - WaterSense Water Budget Tool
 * Approximate Landscape Area for Each Hydrozone
 * Recognizable Plant or Landscape Type for Each Hydrozone
 * Irrigation method
-* Irrigation efficiency, if known
+* Irrigation efficiency, if known from a nameplate, measurement, audit, or contractor specification
 * Controller treatment
 * Site ZIP Code
 
@@ -75,11 +75,11 @@ U.S. Environmental Protection Agency - WaterSense Water Budget Tool
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Approximate Landscape Area for Each Hydrozone; Recognizable Plant or Landscape Type for Each Hydrozone; Irrigation method.
+1. Map the Efficient Irrigation and Smart Controls inputs to the documented Landscape Water Budget Calculation source fields or model inputs: Approximate Landscape Area for Each Hydrozone; Recognizable Plant or Landscape Type for Each Hydrozone; Irrigation method; Irrigation efficiency, if known from a nameplate, measurement, audit, or contractor specification; Controller treatment; Site ZIP Code.
 2. Resolve climate data, validate hydrozone areas and plant factors, apply existing and proposed irrigation efficiencies, and compare the two annual design allowances.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Efficient Irrigation and Smart Controls path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return baseline and proposed annual design water allowances, with climate, hydrozone, efficiency, unit, and method provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Landscape Water Budget Calculation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 
@@ -88,4 +88,4 @@ U.S. Environmental Protection Agency - WaterSense Water Budget Tool
 * **Difficulty:** Medium
 
 **Validation:**
-The official Version 2.0 scope and equations were checked, and the retained fixture validates the design-method boundary. The tool compares designed allowances and does not prove actual existing consumption, irrigation scheduling, or whole-site bill allocation.
+The official Version 2.0 scope and equations were checked, and the retained fixture validates the design-method boundary. The tool compares designed allowances and does not prove actual existing consumption, irrigation scheduling, or whole-site bill allocation. The category adapter and formula-level golden test have not yet been added.

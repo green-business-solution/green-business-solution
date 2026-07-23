@@ -24,16 +24,17 @@ Proposed Load in Each Interval = Baseline Load in Each Interval - Shed Load in E
 ```text
 Annual Operational Savings
 ├─ Chronological Electricity Load and Tariff
-│  ├─ Timestamped Interval Electricity Data (User)
-│  ├─ Time Zone and Daylight-Saving Treatment from the Uploaded Data (User)
+│  ├─ Timestamped Interval Utility Data (Bill)
+│  ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
 │  ├─ Rate Schedule and Customer Class (Bill)
-│  ├─ Complete Tariff Calendar and Billing Rules (User)
-│  └─ Monthly Bill Reconciliation (Derived)
-├─ Controllable-load definition (User)
-├─ Maximum shed kW (User)
-├─ Event-availability schedule (User)
-├─ Maximum event duration (User)
-├─ Rebound or recovery constraint (User)
+│  ├─ Authoritative Tariff Mapping Is Not Yet Verified (Derived)
+│  ├─ No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)
+│  └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
+├─ Documented Controllable-load definition from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+├─ Documented Maximum shed kW from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+├─ Documented Event-availability schedule from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+├─ Documented Maximum event duration from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+├─ Documented Rebound or recovery constraint from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 └─ Standard 1.1 — Automated Demand Response Interval Bill Calculation
 ```
 
@@ -56,14 +57,10 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 
 **Lookup Inputs:**
 
-* Timestamped Interval Electricity Data
-* Time Zone and Daylight-Saving Treatment from Uploaded Interval Data
-* Complete Tariff Calendar and Billing Rules
-* Billing-Demand and Ratchet Rules
-* Controllable-load definition
-* Maximum shed kW
+* Timestamped interval utility data from the uploaded utility artifact
+* Time zone and daylight-saving metadata from the uploaded utility artifact
+* Authoritative tariff mapping, which is not yet verified
 * Event-availability schedule
-* Maximum event duration
 
 **Value Needed:**
 
@@ -71,11 +68,11 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Timestamped Interval Electricity Data; Time Zone and Daylight-Saving Treatment from Uploaded Interval Data; Complete Tariff Calendar and Billing Rules.
+1. Map the Automated Demand Response inputs to the documented Automated Demand Response Interval Bill Calculation source fields or model inputs: Timestamped interval utility data from the uploaded utility artifact; Time zone and daylight-saving metadata from the uploaded utility artifact; Authoritative tariff mapping, which is not yet verified; Event-availability schedule.
 2. Align the interval load and tariff calendar, apply the category constraints, solve baseline and proposed cases, compare bill components, and retain solver and input provenance.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Automated Demand Response path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Automated Demand Response Interval Bill Calculation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 

@@ -29,7 +29,7 @@ Annual Idle Hours per Unit may be confirmed directly or derived as Annual Energi
 
 ```text
 Annual Operational Savings
-├─ Annual commercial dishwasher resource reduction
+├─ Annual Commercial Dishwasher Resource Reduction
 │  ├─ In-Scope Equipment Count (User)
 │  ├─ Commercial Dishwasher Performance
 │  │  ├─ Existing Commercial Dishwasher
@@ -44,13 +44,20 @@ Annual Operational Savings
 │  │     └─ Linked Opportunity specifies requirements but no exact product
 │  │        ├─ Product Requirements (Linked Opportunity)
 │  │        └─ Standard 1.3 — Requirement-Based Proposed Commercial Dishwasher Resolution
-│  ├─ Recognizable Dishwasher Usage Pattern (User)
-│  ├─ Annual Racks or Operating Hours in the Certified Test Unit (User)
-│  ├─ Annual Idle Hours per Unit, if known (User)
-│  ├─ Water-heating resources represented by the per-rack inputs (User)
-│  ├─ Existing purchased water-heating input per certified rack by resource (User)
-│  ├─ Proposed purchased water-heating input per certified rack by resource (Linked Opportunity)
-│  └─ Certified Performance Difference (Derived)
+│  ├─ Certified Activity Basis
+│  │  ├─ Rack Machines
+│  │  │  ├─ Approximate Racks per Operating Day (User)
+│  │  │  ├─ Operating Days per Week (User)
+│  │  │  └─ Active Weeks per Year (User)
+│  │  ├─ Flight or Conveyor Machines
+│  │  │  └─ Documented Conveyor Operating Hours and Throughput from Controls or Audit (Linked Opportunity)
+│  │  └─ Do Not Convert Gallons per Rack to Gallons per Hour (Derived)
+│  ├─ Idle Operation
+│  │  ├─ Documented Energized and Active-Wash Hours from Controls or Operating Records (User)
+│  │  └─ Annual Idle Hours (Derived)
+│  ├─ Certified Native Performance Difference (Derived)
+│  └─ Separate Water-Heating Resource Impact
+│     └─ No Estimate Without a Documented Engineering Conversion Outside the Product Dataset (Derived)
 └─ Applicable Resource Rates
    ├─ Bill-Derived Electricity Rate
    │  ├─ Electricity Use (Bill)
@@ -107,20 +114,20 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Existing commercial dishwasher type or application; Existing make and model, when available; Existing capacity or size class.
-2. Download the applicable product export, normalize manufacturer and model details, require one active compatible record, and return only the certified fields for that product family.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
-4. Return existing certified commercial dishwasher performance with its exact unit, or no value when no exact record is supported.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+1. Normalize the documented existing manufacturer and model for the high-efficiency commercial dishwasher; do not infer a rating from equipment type alone.
+2. Search the applicable certification export for that exact model and filter by the displayed product type, capacity or size class, and native test procedure.
+3. Require one compatible record; return no existing rating when the model is absent, ambiguous, inactive, or from a different product family.
+4. Return existing certified commercial dishwasher performance with its exact unit, or no value when no exact record is supported without substituting a current efficient-product distribution for the installed baseline.
+5. Retain the dataset version, record identity, native field names, units, model match, and rejection reason.
 
 **Automation:**
 
-* **Selected Strategy:** Product-family lookup across the applicable DOE certification export and ENERGY STAR dataset, matched to an exact model or explicit requirement set.
-* **Automation Method:** Query the applicable CCMS and ENERGY STAR product-family datasets, normalize manufacturer and model identifiers, apply the active specification and required capacity filters, reject ambiguous matches, and return only compatible certified fields.
+* **Selected Strategy:** Exact-record lookup for documented existing high-efficiency commercial dishwasher models only.
+* **Automation Method:** Normalize the submitted model, query the applicable certification export, apply product-family and capacity filters, and accept only one native-unit record.
 * **Difficulty:** Medium
 
 **Validation:**
-The public certification database and product-specific templates were checked. A retained product export and category adapter are not yet present, and the source does not provide a representative installed-equipment baseline, so only a later exact-record path can be supported. The official commercial dishwasher dataset was checked, and the retained fixture validates its source schema, units, source version, water-per-cycle field, and idle-energy fields. Existing installed-equipment baselines, annual rack activity, and the complete category adapter remain unverified.
+The official certification access paths and native product-family fields were checked. Current efficient-product records do not represent the installed baseline, so this process may use only one documented exact existing model. The category-specific exact-record adapter and golden test have not yet been added.
 
 **■ Standard 1.2 — Exact Proposed Commercial Dishwasher Rating Lookup**
 
@@ -157,20 +164,20 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Exact proposed make and model from the linked opportunity; Product type and capacity; Applicable certified test method.
-2. Download the applicable product export, normalize manufacturer and model details, require one active compatible record, and return only the certified fields for that product family.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Read the exact manufacturer, model, and product configuration from the linked high-efficiency commercial dishwasher opportunity.
+2. Query the official source for the exact model and filter by application, capacity, active specification, and the native certified fields required by this formula.
+3. Require one compatible record; reject partial model matches, inactive listings, incompatible configurations, and records whose native test unit does not match the formula.
 4. Return proposed certified commercial dishwasher performance with its exact unit.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the source version, exact record identity, matched model text, returned native fields and units, and any ambiguity decision.
 
 **Automation:**
 
-* **Selected Strategy:** Product-family lookup across the applicable DOE certification export and ENERGY STAR dataset, matched to an exact model or explicit requirement set.
-* **Automation Method:** Query the applicable CCMS and ENERGY STAR product-family datasets, normalize manufacturer and model identifiers, apply the active specification and required capacity filters, reject ambiguous matches, and return only compatible certified fields.
+* **Selected Strategy:** Exact linked-opportunity product match against the official U.S. Department of Energy - Compliance Certification Database records.
+* **Automation Method:** Normalize the opportunity model identifiers, perform an exact active-record lookup, apply category compatibility filters, and return only the required native source fields.
 * **Difficulty:** Medium
 
 **Validation:**
-The public certification database and product-specific templates were checked. A retained product export and category adapter are not yet present, and the source does not provide a representative installed-equipment baseline, so only a later exact-record path can be supported. The official commercial dishwasher dataset was checked, and the retained fixture validates its source schema, units, source version, water-per-cycle field, and idle-energy fields. Existing installed-equipment baselines, annual rack activity, and the complete category adapter remain unverified.
+The official commercial dishwasher dataset and access method were checked. The retained fixture validates model, machine-type, sanitation, water-use, active-energy, idle-power, date, unit, version, and checksum fields. The exact-product adapter and formula-level golden test have not yet been added, and rack and flight-machine units must remain separate.
 
 **■ Standard 1.3 — Requirement-Based Proposed Commercial Dishwasher Resolution**
 
@@ -203,21 +210,21 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 **Value Needed:**
 
-* One compatible proposed commercial dishwasher result, or no value when the requirements do not identify a supported record
+* Eligible compatible proposed commercial dishwasher population with documented low, median, and high native-unit performance, or no value when no compatible record remains
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Product requirements from the linked opportunity; Required application and capacity; Applicable efficiency or resource-use criteria.
-2. Download the applicable product export, normalize manufacturer and model details, require one active compatible record, and return only the certified fields for that product family.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
-4. Return one compatible proposed commercial dishwasher result, or no value when the requirements do not identify a supported record.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+1. Extract the application, capacity, certification, and performance limits from the linked high-efficiency commercial dishwasher opportunity requirements.
+2. Filter the official current-product population by every mandatory requirement, product-family boundary, active specification, and native test unit.
+3. Reject the path when no compatible record remains; when several records remain, keep the eligible population and calculate a documented low, median, and high value without selecting the contractor's future product.
+4. Return eligible compatible proposed commercial dishwasher population with documented low, median, and high native-unit performance, or no value when no compatible record remains.
+5. Retain the source version, complete filters, eligible record identities, population size, native units, summary rule, and no-result reason.
 
 **Automation:**
 
-* **Selected Strategy:** Product-family lookup across the applicable DOE certification export and ENERGY STAR dataset, matched to an exact model or explicit requirement set.
-* **Automation Method:** Query the applicable CCMS and ENERGY STAR product-family datasets, normalize manufacturer and model identifiers, apply the active specification and required capacity filters, reject ambiguous matches, and return only compatible certified fields.
+* **Selected Strategy:** Requirement-based candidate-set resolution from the official U.S. Department of Energy - Compliance Certification Database population.
+* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and calculate deterministic low, median, and high native-unit results.
 * **Difficulty:** Medium
 
 **Validation:**
-The public certification database and product-specific templates were checked. A retained product export and category adapter are not yet present, and the source does not provide a representative installed-equipment baseline, so only a later exact-record path can be supported. The official commercial dishwasher dataset was checked, and the retained fixture validates its source schema, units, source version, water-per-cycle field, and idle-energy fields. Existing installed-equipment baselines, annual rack activity, and the complete category adapter remain unverified.
+The official commercial dishwasher dataset and access method were checked, and the retained schema fixture validates the fields required to filter machine type, sanitation method, water use, active energy, and idle power. A retained candidate population and category golden test have not yet been added, so the requirements path cannot claim an implemented selection.

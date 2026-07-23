@@ -24,11 +24,12 @@ Battery State of Charge in Each Interval = Battery State of Charge in the Prior 
 ```text
 Annual Operational Savings
 ├─ Chronological Electricity Load and Tariff
-│  ├─ Timestamped Interval Electricity Data (User)
-│  ├─ Time Zone and Daylight-Saving Treatment from the Uploaded Data (User)
+│  ├─ Timestamped Interval Utility Data (Bill)
+│  ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
 │  ├─ Rate Schedule and Customer Class (Bill)
-│  ├─ Complete Tariff Calendar and Billing Rules (User)
-│  └─ Monthly Bill Reconciliation (Derived)
+│  ├─ Authoritative Tariff Mapping Is Not Yet Verified (Derived)
+│  ├─ No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)
+│  └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
 ├─ Power capacity (Linked Opportunity)
 ├─ Usable-energy capacity (Linked Opportunity)
 ├─ Charge efficiency (Linked Opportunity)
@@ -59,14 +60,16 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 
 **Lookup Inputs:**
 
-* Timestamped Interval Electricity Data
-* Time Zone and Daylight-Saving Treatment from Uploaded Interval Data
-* Complete Tariff Calendar and Billing Rules
-* Billing-Demand and Ratchet Rules
+* Timestamped interval utility data from the uploaded utility artifact
+* Time zone and daylight-saving metadata from the uploaded utility artifact
+* Authoritative tariff mapping, which is not yet verified
 * Power capacity
 * Usable-energy capacity
-* Charge efficiency
-* Discharge efficiency
+* Charge efficiency from a nameplate, measurement, audit, or contractor specification
+* Discharge efficiency from a nameplate, measurement, audit, or contractor specification
+* Initial state of charge
+* Dispatch-availability schedule
+* Reserve constraint
 
 **Value Needed:**
 
@@ -74,11 +77,11 @@ National Laboratory of the Rockies - REopt V3 and REopt.jl
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Timestamped Interval Electricity Data; Time Zone and Daylight-Saving Treatment from Uploaded Interval Data; Complete Tariff Calendar and Billing Rules.
+1. Map the Battery Storage Dispatch inputs to the documented Battery Storage Dispatch Interval Bill Calculation source fields or model inputs: Timestamped interval utility data from the uploaded utility artifact; Time zone and daylight-saving metadata from the uploaded utility artifact; Authoritative tariff mapping, which is not yet verified; Power capacity; Usable-energy capacity; Charge efficiency from a nameplate, measurement, audit, or contractor specification; Discharge efficiency from a nameplate, measurement, audit, or contractor specification; Initial state of charge; Dispatch-availability schedule; Reserve constraint.
 2. Align the interval load and tariff calendar, apply the category constraints, solve baseline and proposed cases, compare bill components, and retain solver and input provenance.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Battery Storage Dispatch path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return baseline and proposed annual bills and interval dispatch results, with tariff, solver, input, and unit provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Battery Storage Dispatch Interval Bill Calculation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 

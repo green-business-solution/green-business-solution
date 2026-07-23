@@ -28,8 +28,8 @@ Avoided Pump Electricity = Pump Input Power × Avoided Pump Run Hours
 ```text
 Annual Operational Savings
 ├─ Annual thermal-input and pump-electricity reduction
-│  ├─ Existing annual distribution heat loss (User)
-│  ├─ Proposed annual distribution heat loss (User)
+│  ├─ Documented Existing annual distribution heat loss from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+│  ├─ Documented Proposed annual distribution heat loss from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 │  ├─ Existing Water-Heater Nameplate or Test Information (User)
 │  ├─ Existing control schedule (User)
 │  ├─ Proposed control schedule (Linked Opportunity)
@@ -67,14 +67,12 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **Lookup Inputs:**
 
-* Existing annual distribution heat loss
-* Proposed annual distribution heat loss
-* Existing Water-Heater Nameplate or Test Information
 * Existing control schedule
 * Proposed control schedule
-* Pump Nameplate or Measured Input
 * Recognizable Business, Shift, Seasonal, or Usage Pattern
 * Detailed Operating Days, Shifts, or Active Season, if known
+* Measured Annual Operating Hours, if known
+* Site Location and Business Activity
 
 **Value Needed:**
 
@@ -82,11 +80,11 @@ U.S. Department of Energy - Commercial Reference Buildings
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Existing annual distribution heat loss; Proposed annual distribution heat loss; Existing Water-Heater Nameplate or Test Information.
+1. Map the Water-Heating Recirculation Controls inputs to the documented Water-Heating Recirculation Controls Annual Operating Hours source fields or model inputs: Existing control schedule; Proposed control schedule; Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location and Business Activity.
 2. Route the stated pattern to a fixed-schedule or daylight method, apply all supplied days and seasonal details, validate the annual-hour result, and retain the method and analysis year.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Water-Heating Recirculation Controls path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Water-Heating Recirculation Controls Annual Operating Hours source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 
@@ -116,14 +114,11 @@ U.S. Department of Energy - MEASUR
 
 **Lookup Inputs:**
 
-* Existing annual distribution heat loss
-* Proposed annual distribution heat loss
+* Existing annual distribution heat loss from an uploaded site study, controls trend, or engineering audit
+* Proposed annual distribution heat loss from an uploaded site study, controls trend, or engineering audit
 * Existing Water-Heater Nameplate or Test Information
-* Existing control schedule
-* Proposed control schedule
 * Pump Nameplate or Measured Input
-* Recognizable Business, Shift, Seasonal, or Usage Pattern
-* Detailed Operating Days, Shifts, or Active Season, if known
+* Annual operating hours from the connected schedule process
 
 **Value Needed:**
 
@@ -131,16 +126,16 @@ U.S. Department of Energy - MEASUR
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Existing annual distribution heat loss; Proposed annual distribution heat loss; Existing Water-Heater Nameplate or Test Information.
-2. Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Load the Water-Heating Recirculation Controls project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Pumping System Assessment Tool for pump electricity plus the displayed local thermal-loss calculation.
+2. Run the pinned open-source Pumping System Assessment Tool for pump electricity plus the displayed local thermal-loss calculation baseline and proposed cases using the category formula boundary shown in this card.
+3. Return no result when the Pumping System Assessment Tool for pump electricity plus the displayed local thermal-loss calculation requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
 4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the MEASUR version, Pumping System Assessment Tool for pump electricity plus the displayed local thermal-loss calculation input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
 
 **Automation:**
 
-* **Selected Strategy:** Pinned local execution of the exact MEASUR calculator for this category.
-* **Automation Method:** Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
+* **Selected Strategy:** Pinned local execution of the MEASUR Pumping System Assessment Tool for pump electricity plus the displayed local thermal-loss calculation for Water-Heating Recirculation Controls.
+* **Automation Method:** Map reviewed project evidence into the Pumping System Assessment Tool for pump electricity plus the displayed local thermal-loss calculation input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

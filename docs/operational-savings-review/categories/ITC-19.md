@@ -34,11 +34,12 @@ Annual Operational Savings
 ├─ Standard 1.1 — Small Wind Production Simulation
 ├─ Interval onsite-offset and export calculation (Derived)
 └─ Chronological Electricity Load and Tariff
-   ├─ Timestamped Interval Electricity Data (User)
-   ├─ Time Zone and Daylight-Saving Treatment from the Uploaded Data (User)
+   ├─ Timestamped Interval Utility Data (Bill)
+   ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
    ├─ Rate Schedule and Customer Class (Bill)
-   ├─ Complete Tariff Calendar and Billing Rules (User)
-   └─ Monthly Bill Reconciliation (Derived)
+   ├─ Authoritative Tariff Mapping Is Not Yet Verified (Derived)
+   ├─ No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)
+   └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
 ```
 
 **■ Standard 1.1 — Small Wind Production Simulation**
@@ -65,9 +66,7 @@ National Laboratory of the Rockies - WIND Toolkit and System Advisor Model
 * Hub Height
 * Loss factor
 * Analysis Year
-* Timestamped Interval Electricity Data
-* Time Zone and Daylight-Saving Treatment from Uploaded Interval Data
-* Complete Tariff Calendar and Billing Rules
+* Site Location
 
 **Value Needed:**
 
@@ -75,11 +74,11 @@ National Laboratory of the Rockies - WIND Toolkit and System Advisor Model
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Wind Turbine Class or Intended Application; Exact Turbine Model or Power Curve; Hub Height.
+1. Map the Small Wind Generation inputs to the documented Small Wind Production Simulation source fields or model inputs: Wind Turbine Class or Intended Application; Exact Turbine Model or Power Curve; Hub Height; Loss factor; Analysis Year; Site Location.
 2. Resolve site resource data at the selected height and year, validate the exact turbine power curve and losses, run the model, and return interval and annual AC generation.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Small Wind Generation path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return interval and annual AC electricity generation, with wind resource, turbine, loss, unit, and source provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Small Wind Production Simulation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 

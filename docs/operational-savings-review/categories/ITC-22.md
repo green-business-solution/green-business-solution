@@ -33,14 +33,14 @@ Avoided Grid Electricity = Minimum of (Annual Onsite Generation, Coincident Onsi
 Annual Operational Savings
 ├─ Confirmed annual fuel availability, if known (User)
 ├─ Fuel unit (User)
-├─ Fuel lower heating value, if known (User)
+├─ Documented Fuel lower heating value, if known from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 ├─ Conversion technology (Linked Opportunity)
 ├─ Selected Unit Model, if known (Linked Opportunity)
 ├─ Installed capacity (Linked Opportunity)
 ├─ Opportunity Equipment or Performance Requirements (Linked Opportunity)
 ├─ Operating schedule (User)
-├─ Coincident onsite electric-load constraint, if known (User)
-├─ Coincident useful thermal-load constraint (User)
+├─ Documented Coincident onsite electric-load constraint, if known from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+├─ Documented Coincident useful thermal-load constraint from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
 ├─ Existing Boiler Nameplate or Combustion-Test Information, if known (User)
 ├─ Scheduled input fuel (Derived)
 ├─ Standard 1.1 — Biomass or Biogas Energy System Performance Balance
@@ -79,12 +79,13 @@ U.S. Environmental Protection Agency - CHP technologies and calculator
 
 * Confirmed annual fuel availability, if known
 * Fuel unit
-* Fuel lower heating value, if known
+* Fuel lower heating value, if known from a nameplate, measurement, audit, or contractor specification
 * Conversion technology
 * Selected Unit Model, if known
 * Installed capacity
-* Operating schedule
 * Coincident onsite electric-load constraint, if known
+* Coincident useful thermal-load constraint
+* Existing Boiler Nameplate or Combustion-Test Information, if known
 
 **Value Needed:**
 
@@ -92,11 +93,11 @@ U.S. Environmental Protection Agency - CHP technologies and calculator
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Confirmed annual fuel availability, if known; Fuel unit; Fuel lower heating value, if known.
+1. Map the Biomass or Biogas Energy System inputs to the documented Biomass or Biogas Energy System Performance Balance source fields or model inputs: Confirmed annual fuel availability, if known; Fuel unit; Fuel lower heating value, if known from a nameplate, measurement, audit, or contractor specification; Conversion technology; Selected Unit Model, if known; Installed capacity; Coincident onsite electric-load constraint, if known; Coincident useful thermal-load constraint; Existing Boiler Nameplate or Combustion-Test Information, if known.
 2. Select the compatible technology and capacity row, apply the explicit operating and coincidence constraints, calculate electricity, fuel, and useful heat, and cap outputs at site loads.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Biomass or Biogas Energy System path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return annual electricity generation, input fuel, and useful recovered heat for the selected technology and capacity.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Biomass or Biogas Energy System Performance Balance source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 

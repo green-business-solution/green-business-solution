@@ -299,6 +299,7 @@ function validateInformationCardTree(category, tree, validationErrors) {
     if (
       node.text.endsWith("(Linked Opportunity)") &&
       /(?:watts|efficiency|power|capacity|rating|flow|consumption)/i.test(node.text) &&
+      !isDocumentedDirectProjectField(node.text) &&
       !hasInterpretingProcessInAncestry(node)
     ) {
       validationErrors.push(
@@ -345,8 +346,10 @@ function validateInformationCardTree(category, tree, validationErrors) {
     for (const required of [
       "Linked Opportunity names an exact replacement product",
       "Linked Opportunity specifies requirements but no exact product",
-      "Standard 1.2 — Exact New Fixture Wattage Lookup",
-      "Standard 1.3 — Requirement-Based New Fixture Wattage Resolution",
+      "Existing Nameplate, Photometric Report, or Field Measurement (User)",
+      "No Existing Wattage Value Without Documentation or Measurement (Derived)",
+      "Standard 1.1 — Exact New Fixture Wattage Lookup",
+      "Standard 1.2 — Requirement-Based New Fixture Wattage Resolution",
       "Bill-Derived Electricity Rate"
     ]) {
       if (!tree.includes(required)) {
@@ -354,6 +357,15 @@ function validateInformationCardTree(category, tree, validationErrors) {
       }
     }
   }
+}
+
+function isDocumentedDirectProjectField(text) {
+  return (
+    /^Documented\b/i.test(text) &&
+    /\b(?:nameplate|measurement|submeter|controls?|audit|operating records?|contractor specification)\b/i.test(
+      text
+    )
+  );
 }
 
 function hasInterpretingProcessInAncestry(node) {

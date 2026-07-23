@@ -21,14 +21,17 @@ Annual Operational Savings = In-Scope Equipment Count × Annual Flushes per Fixt
 
 ```text
 Annual Operational Savings
-├─ Annual water reduction
-│  ├─ In-Scope Equipment Count (User)
-│  ├─ Recognizable Flush Usage Pattern (User)
-│  ├─ Annual flushes per fixture (User)
-│  ├─ Business Activity (Profile)
-│  ├─ Fixture selection
-│  │  ├─ Existing fixture type (User)
-│  │  └─ Existing rated gallons per flush (User)
+├─ Annual Water Reduction
+│  ├─ In-Scope Fixture Count (User)
+│  ├─ Observed Flush Activity
+│  │  ├─ Approximate Flushes per Operating Day (User)
+│  │  ├─ Operating Days per Week (User)
+│  │  ├─ Active Weeks per Year (User)
+│  │  └─ No Usage Estimate Without Observed or Documented Activity (Derived)
+│  ├─ Existing Fixture
+│  │  ├─ Existing Toilet or Urinal Type (User)
+│  │  ├─ Existing Gallons per Flush from Label, Specification, or Measurement (User)
+│  │  └─ No Existing Flush-Volume Value Without a Label, Specification, or Measurement (Derived)
 │  └─ Flush Fixture Performance
 │     ├─ Linked Opportunity names an exact flush fixture
 │     │  ├─ Exact Flush Fixture Product Information (Linked Opportunity)
@@ -75,20 +78,20 @@ U.S. Environmental Protection Agency - WaterSense
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Exact proposed fixture make and model from the linked opportunity; Fixture type and application.
-2. Identify the fixture type and application, validate an exact model or requirement set, return the applicable rated flow or flush volume, and retain the specification and source location.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Read the exact manufacturer, model, and product configuration from the linked high-efficiency toilets and urinals opportunity.
+2. Query the official source for the exact model and filter by application, capacity, active specification, and the native certified fields required by this formula.
+3. Require one compatible record; reject partial model matches, inactive listings, incompatible configurations, and records whose native test unit does not match the formula.
 4. Return proposed rated gallons per flush with units and product provenance.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the source version, exact record identity, matched model text, returned native fields and units, and any ambiguity decision.
 
 **Automation:**
 
-* **Selected Strategy:** Specification lookup for an exact proposed fixture or a compatible WaterSense requirement.
-* **Automation Method:** Identify the fixture type and application, validate an exact model or requirement set, return the applicable rated flow or flush volume, and retain the specification and source location.
+* **Selected Strategy:** Exact linked-opportunity product match against the official U.S. Environmental Protection Agency - WaterSense records.
+* **Automation Method:** Normalize the opportunity model identifiers, perform an exact active-record lookup, apply category compatibility filters, and return only the required native source fields.
 * **Difficulty:** Easy to Medium
 
 **Validation:**
-The official WaterSense commercial resources, best-practice guide, and fixture criteria were checked. Proposed performance can be supported after an exact specification match, but existing installed ratings and commercial usage frequency remain separate unresolved inputs.
+The official WaterSense commercial guidance and fixture criteria were checked. An exact product specification can supply proposed rated gallons per flush, but no retained exact-product fixture or category adapter currently proves the lookup. The source does not supply existing installed performance or usage frequency.
 
 **■ Standard 1.2 — Requirement-Based Proposed Flush Fixture Resolution**
 
@@ -115,21 +118,21 @@ U.S. Environmental Protection Agency - WaterSense
 
 **Value Needed:**
 
-* One compatible proposed rated gallons per flush, or no value when the requirements do not identify a supported product
+* Eligible compatible proposed fixture population and a documented low, median, and high rated gallons per flush, or no value when no compatible fixture remains
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Fixture requirements from the linked opportunity; Fixture type and application; Required water-use criterion.
-2. Identify the fixture type and application, validate an exact model or requirement set, return the applicable rated flow or flush volume, and retain the specification and source location.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
-4. Return one compatible proposed rated gallons per flush, or no value when the requirements do not identify a supported product.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+1. Extract the application, capacity, certification, and performance limits from the linked high-efficiency toilets and urinals opportunity requirements.
+2. Filter the official current-product population by every mandatory requirement, product-family boundary, active specification, and native test unit.
+3. Reject the path when no compatible record remains; when several records remain, keep the eligible population and calculate a documented low, median, and high value without selecting the contractor's future product.
+4. Return eligible compatible proposed fixture population and a documented low, median, and high rated gallons per flush, or no value when no compatible fixture remains.
+5. Retain the source version, complete filters, eligible record identities, population size, native units, summary rule, and no-result reason.
 
 **Automation:**
 
-* **Selected Strategy:** Specification lookup for an exact proposed fixture or a compatible WaterSense requirement.
-* **Automation Method:** Identify the fixture type and application, validate an exact model or requirement set, return the applicable rated flow or flush volume, and retain the specification and source location.
+* **Selected Strategy:** Requirement-based candidate-set resolution from the official U.S. Environmental Protection Agency - WaterSense population.
+* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and calculate deterministic low, median, and high native-unit results.
 * **Difficulty:** Easy to Medium
 
 **Validation:**
-The official WaterSense commercial resources, best-practice guide, and fixture criteria were checked. Proposed performance can be supported after an exact specification match, but existing installed ratings and commercial usage frequency remain separate unresolved inputs.
+The official WaterSense criteria define compatible proposed rated gallons per flush requirements. No retained qualified-product population currently proves the requirement filters, population size, or low, median, and high result, and the source does not supply existing ratings or usage frequency.

@@ -14,8 +14,10 @@ Current documentation state:
 - Categories: 54.
 - Generated standalone category pages: 54.
 - Visible Information Cards: 54.
-- Visible category-local Standard processes: 93.
-- Visible direct source-link occurrences: 273.
+- Visible category-local Standard processes: 92.
+- Visible direct source-link occurrences: 272.
+- Visible terminal User leaves: 186.
+- User-input realism classifications: 78 `LIKELY_KNOWN`, 108 `MAY_KNOW`, and 0 `UNLIKELY_KNOWN`.
 - Information Card schema version: `operational-savings/information-card-v1`.
 - Canonical retrofit mappings: 92.
 - Missing mappings: 0.
@@ -49,6 +51,8 @@ The audit started from `RETROFIT_TYPES`, the real normalized Profile schema, and
 It then reviewed every category formula, every expanded tree leaf, every rate component, every Standard output, and every default-estimate path.
 The machine-readable evidence manifest is `docs/operational-savings-source-evidence.json`.
 The machine-readable category and formula contract is `docs/operational-savings-category-contracts.json`.
+The generated machine-readable User-input realism contract is `docs/operational-savings-user-input-realism.json`.
+Its closed schema is `docs/operational-savings-user-input-realism.schema.json`.
 Small reviewed source fixtures are stored under `docs/operational-savings-fixtures/sources`.
 Ready-category executable fixtures are stored under `docs/operational-savings-fixtures/categories`.
 
@@ -63,11 +67,32 @@ The structural audit passed for 54 contiguous category IDs, 92 unique retrofit m
 Every terminal source leaf is labeled User, Profile, Bill, Linked Opportunity, Derived, or is a referenced category-local Standard process.
 Linked Opportunity and other derived project context are explicit internal intermediates and are no longer mislabeled as Profile fields.
 Every User leaf has exactly one Required Screening, Conditional Calculation Gate, or Optional Known Detail classification.
+Every visible terminal User leaf also has exactly one realism-contract entry.
+The contract records whether the user is likely or may know the value, whether the wording is recognizable, why the user may have it, its importance, the preferred alternate source, the connected process when applicable, and the missing-value behavior.
+No visible terminal User leaf is classified `UNLIKELY_KNOWN`.
 Every generated page contains exactly one visible Information Card.
 The visible order is the title, mapped retrofits, overview, broader formula, expanded formula, readable information tree, and only the category-local Standard processes referenced by that tree.
 The pages omit audit status, readiness, evidence tables, input inventories, review decisions, and implementation gates while the canonical contracts, evidence manifest, fixtures, and validators retain those controls.
 
 ## Semantic source audit
+
+### Semantic ownership cleanup
+
+The cleanup reviewed all 307 terminal User leaves visible at commit `31539d44aee0635b92bc4cfa3000725e76dbe6c9`.
+The regenerated cards retain 186 terminal User leaves, a net reduction of 121.
+Thirty uploaded interval-data, timezone, and rate-schedule leaves were reassigned to Bill ownership.
+No leaf was reassigned to Profile because no new production Profile field supports these values.
+Ninety-three technical leaves were moved to Linked Opportunity as explicit project-document, site-study, controls-trend, nameplate, measurement, audit, commissioning, maintenance-plan, manufacturer, or contractor inputs.
+No leaf was assigned directly to Standard ownership merely to satisfy a formula.
+Instead, 29 remaining recognizable User selectors identify a connected Standard as their alternate resolver.
+Four net technical leaf requirements were removed from visible User collection and replaced by explicit no-estimate behavior.
+ITC-32 consolidates three separate hot-water engineering fields behind one documented water-heater-information input, and ITC-52 removes two unsupported water-heating-per-test-unit inputs.
+Fifty-two category cards changed materially.
+The one explicit tree and Validation contradiction in ITC-02 was removed by deleting the unsupported existing-wattage resolver and requiring a nameplate, photometric report, or field measurement.
+All 92 remaining visible processes now have process-specific instructions and an explicit executable-proof, implementation-pending, or unsupported evidence state.
+The unsupported state is prohibited for a displayed tree resolver.
+One new authoritative source was added: the official DLC API and data-download guide for tokenized SSL QPL CSV access.
+No new source fixture was added because no authenticated QPL extract was retained.
 
 The semantic source audit uses six independent source roles:
 
@@ -83,7 +108,7 @@ Every declared Standard scenario must have compatible evidence that is not `UNSU
 Each evidence record declares every source role it supports and must appear under exactly those roles in its Standard summary.
 `VERIFIED` means that the exact reviewed contract is deeply bound to a validated source fixture through JSON pointers for source identity, version, artifact, checksum, coverage, fields, units, values when present, unsupported inferences, and substantive records.
 It does not mean that unrelated roles or project-specific inputs are supported.
-Link validation covered 42 unique direct registry URLs.
+Link validation covered 43 unique direct registry URLs.
 
 The seven verified records cover the reviewed ENERGY STAR commercial dishwasher fields, FuelEconomy `comb08` and `combE`, PVWatts V8 input and output fields, WaterSense landscape design scope, and the two reviewed FEMP exterior-lighting table scopes.
 Twenty-eight records remain unverified because an exact adapter, source export, module function, equation, or worked example has not been pinned.
@@ -195,6 +220,17 @@ The focused test suite proves that the validator fails for:
 - A duplicate visible Standard number or a Standard missing Purpose, Source, Lookup Inputs, Value Needed, How to Use, Automation, or Validation.
 - A Standard source without a direct visible URL.
 - A technical source identifier exposed as a User input.
+- An unlikely ordinary-user input without a documented measurement, label, uploaded document, or alternate resolver.
+- A probability distribution, specific power, COP, pressure rise, load bin, ratchet rule, tariff calendar, or certified per-test-unit resource input assigned to User.
+- Complete tariff rules or uploaded interval utility data assigned to User.
+- A source-unsupported process displayed as a value resolver.
+- Exact-product and requirements-based processes with identical instructions, automation, or Validation.
+- Generic process instructions that do not name actual source fields, filters, calculations, models, or modules.
+- A MEASUR process without its category-specific calculator or module.
+- A simulator that supplies missing project design inputs.
+- A current certified-product population used as an unknown existing baseline.
+- A product process that also resolves usage or an operating schedule.
+- A process whose named source does not correspond to its canonical Standard.
 - A Profile leaf outside the production-backed presentation projection.
 - A simple Bill-derived rate rendered as a Standard.
 - A Linked Opportunity engineering value without an interpreting process.
@@ -329,20 +365,22 @@ No `LIMITED` evidence record is used by ITC-29.
 ITC-29 uses two `VERIFIED` evidence records and one `UNSUPPORTED` distribution record only to document why the class-percentile scenario stays disabled.
 
 All 54 generated Information Cards were manually inspected for the required structure, readable formulas, source-labeled leaves, process placement, and absence of banned audit material.
+All 186 visible terminal User leaves were checked for ordinary-user knowledge, recognizable phrasing, formula necessity, preferred Bill, Profile, Linked Opportunity, Standard, project-document, contractor, or no-estimate ownership, and connected-process behavior.
+All 92 visible processes were checked for distinct purpose, matching source, exact instructions, feasible automation boundary, evidence-state wording, and tree and Validation agreement.
 The required deep-inspection sample was reviewed in full:
 
-- `ITC-02` uses the approved exterior-lighting tree, separates exact-product and requirements-only proposal paths, and leaves the electricity rate Bill-derived.
+- `ITC-02` removes the unsupported existing-wattage resolver, requires documented or measured existing watts, separates exact-product and requirements-only DLC QPL paths, and leaves the electricity rate Bill-derived.
 - `ITC-08` places collector design and project load requirements on the Linked Opportunity path and connects them to the SAM process.
-- `ITC-15` still proves the zero-direct-resource boundary.
-- `ITC-17` keeps PV design specifications on the Linked Opportunity path and does not invent a system design.
-- `ITC-23` keeps battery design specifications on the Linked Opportunity path and retains chronological interval load and tariff requirements.
-- `ITC-27` separates exact charger lookup from requirements-only charger resolution and treats the result as an operational cost impact.
+- `ITC-16` sources interval utility data and timezone metadata from Bill, sources event constraints from project evidence, and returns no interval dollar estimate until tariff mapping is verified.
+- `ITC-17` keeps PV design specifications on the Linked Opportunity path, sources interval utility data from Bill, and does not allow PVWatts to invent a system design.
+- `ITC-23` keeps battery design specifications on the Linked Opportunity path, sources interval utility data from Bill, and retains no-estimate behavior for an unresolved tariff.
+- `ITC-27` replaces ordinary-user charging distributions with a documented site-study or contractor charging profile, separates exact and requirements-based charger resolution, and refuses an interval dollar estimate without that profile and a verified tariff.
 - `ITC-29` recomputes to 375 gallons and 3,360 kWh per vehicle-year, 750 gallons and 6,720 kWh per project-year, and 1,617 USD per year.
-- `ITC-32` keeps water and water-heating resource terms separate and uses distinct exact-product and requirements-only WaterSense paths.
-- `ITC-34` keeps existing irrigation inputs separate from proposed Linked Opportunity specifications and retains a modeled landscape design allowance with no sewer default.
-- `ITC-39` keeps MEASUR bin output and annualization boundaries explicit.
-- `ITC-52` preserves gallons per rack, gallons per hour, idle kW, and active kWh per rack as separate quantities.
-- `ITC-54` remains Blocked because no authoritative cross-technology routine-use resolver exists.
+- `ITC-32` replaces annual technical usage and water-heating questions with recognizable daily activity, label or measurement inputs, and explicit no-estimate behavior for undocumented heating inputs.
+- `ITC-33` replaces annual flush and undocumented existing-rating questions with recognizable daily activity and label, specification, or measurement inputs.
+- `ITC-39` requires a measured or audited load-bin profile and names the MEASUR Pumping System Assessment Tool or Fan System Assessment Tool explicitly.
+- `ITC-52` separates rack from flight or conveyor activity, prohibits gallons-per-rack to gallons-per-hour conversion, and removes unsupported water-heating-per-rack collection.
+- `ITC-54` remains Blocked and requires labels, manufacturer documents, commissioning records, maintenance plans, controls schedules, or contractor specifications for routine fuel and standby inputs.
 
 The deep-inspection sample was also checked for direct source URLs, readable user-facing inputs, exact Standard numbering, and the absence of status, readiness, evidence, and review-decision sections.
 

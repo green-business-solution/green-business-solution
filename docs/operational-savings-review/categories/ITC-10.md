@@ -79,20 +79,20 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Existing refrigeration equipment type or application; Existing make and model, when available; Existing capacity or size class.
-2. Download the applicable product export, normalize manufacturer and model details, require one active compatible record, and return only the certified fields for that product family.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
-4. Return existing certified refrigeration equipment performance with its exact unit, or no value when no exact record is supported.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+1. Normalize the documented existing manufacturer and model for the high-efficiency refrigeration equipment; do not infer a rating from equipment type alone.
+2. Search the applicable certification export for that exact model and filter by the displayed product type, capacity or size class, and native test procedure.
+3. Require one compatible record; return no existing rating when the model is absent, ambiguous, inactive, or from a different product family.
+4. Return existing certified refrigeration equipment performance with its exact unit, or no value when no exact record is supported without substituting a current efficient-product distribution for the installed baseline.
+5. Retain the dataset version, record identity, native field names, units, model match, and rejection reason.
 
 **Automation:**
 
-* **Selected Strategy:** Product-family lookup across the applicable DOE certification export and ENERGY STAR dataset, matched to an exact model or explicit requirement set.
-* **Automation Method:** Query the applicable CCMS and ENERGY STAR product-family datasets, normalize manufacturer and model identifiers, apply the active specification and required capacity filters, reject ambiguous matches, and return only compatible certified fields.
+* **Selected Strategy:** Exact-record lookup for documented existing high-efficiency refrigeration equipment models only.
+* **Automation Method:** Normalize the submitted model, query the applicable certification export, apply product-family and capacity filters, and accept only one native-unit record.
 * **Difficulty:** Medium
 
 **Validation:**
-The public certification database and product-specific templates were checked. A retained product export and category adapter are not yet present, and the source does not provide a representative installed-equipment baseline, so only a later exact-record path can be supported. The official Product Finder access path and applicable product-family datasets were checked. The category adapter and generic existing-equipment baseline remain unverified, so only a later exact compatible product-record path can be supported.
+The official certification access paths and native product-family fields were checked. Current efficient-product records do not represent the installed baseline, so this process may use only one documented exact existing model. The category-specific exact-record adapter and golden test have not yet been added.
 
 **■ Standard 1.2 — Exact Proposed Refrigeration Equipment Rating Lookup**
 
@@ -126,20 +126,20 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Exact proposed make and model from the linked opportunity; Product type and capacity; Applicable certified test method.
-2. Download the applicable product export, normalize manufacturer and model details, require one active compatible record, and return only the certified fields for that product family.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Read the exact manufacturer, model, and product configuration from the linked high-efficiency refrigeration equipment opportunity.
+2. Query the official source for the exact model and filter by application, capacity, active specification, and the native certified fields required by this formula.
+3. Require one compatible record; reject partial model matches, inactive listings, incompatible configurations, and records whose native test unit does not match the formula.
 4. Return proposed certified refrigeration equipment performance with its exact unit.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the source version, exact record identity, matched model text, returned native fields and units, and any ambiguity decision.
 
 **Automation:**
 
-* **Selected Strategy:** Product-family lookup across the applicable DOE certification export and ENERGY STAR dataset, matched to an exact model or explicit requirement set.
-* **Automation Method:** Query the applicable CCMS and ENERGY STAR product-family datasets, normalize manufacturer and model identifiers, apply the active specification and required capacity filters, reject ambiguous matches, and return only compatible certified fields.
+* **Selected Strategy:** Exact linked-opportunity product match against the official U.S. Department of Energy - Compliance Certification Database records.
+* **Automation Method:** Normalize the opportunity model identifiers, perform an exact active-record lookup, apply category compatibility filters, and return only the required native source fields.
 * **Difficulty:** Medium
 
 **Validation:**
-The public certification database and product-specific templates were checked. A retained product export and category adapter are not yet present, and the source does not provide a representative installed-equipment baseline, so only a later exact-record path can be supported. The official Product Finder access path and applicable product-family datasets were checked. The category adapter and generic existing-equipment baseline remain unverified, so only a later exact compatible product-record path can be supported.
+The official certification access path and applicable refrigeration equipment product-family fields were checked. Exact active-model matching is technically possible, but the category-specific adapter, retained product fixture, and golden test have not yet been added.
 
 **■ Standard 1.3 — Requirement-Based Proposed Refrigeration Equipment Resolution**
 
@@ -169,21 +169,21 @@ U.S. Department of Energy CCMS and U.S. Environmental Protection Agency ENERGY S
 
 **Value Needed:**
 
-* One compatible proposed refrigeration equipment result, or no value when the requirements do not identify a supported record
+* Eligible compatible proposed refrigeration equipment population with documented low, median, and high native-unit performance, or no value when no compatible record remains
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Product requirements from the linked opportunity; Required application and capacity; Applicable efficiency or resource-use criteria.
-2. Download the applicable product export, normalize manufacturer and model details, require one active compatible record, and return only the certified fields for that product family.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
-4. Return one compatible proposed refrigeration equipment result, or no value when the requirements do not identify a supported record.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+1. Extract the application, capacity, certification, and performance limits from the linked high-efficiency refrigeration equipment opportunity requirements.
+2. Filter the official current-product population by every mandatory requirement, product-family boundary, active specification, and native test unit.
+3. Reject the path when no compatible record remains; when several records remain, keep the eligible population and calculate a documented low, median, and high value without selecting the contractor's future product.
+4. Return eligible compatible proposed refrigeration equipment population with documented low, median, and high native-unit performance, or no value when no compatible record remains.
+5. Retain the source version, complete filters, eligible record identities, population size, native units, summary rule, and no-result reason.
 
 **Automation:**
 
-* **Selected Strategy:** Product-family lookup across the applicable DOE certification export and ENERGY STAR dataset, matched to an exact model or explicit requirement set.
-* **Automation Method:** Query the applicable CCMS and ENERGY STAR product-family datasets, normalize manufacturer and model identifiers, apply the active specification and required capacity filters, reject ambiguous matches, and return only compatible certified fields.
+* **Selected Strategy:** Requirement-based candidate-set resolution from the official U.S. Department of Energy - Compliance Certification Database population.
+* **Automation Method:** Parse the opportunity requirements, apply exact product-family and performance filters, preserve the eligible population, and calculate deterministic low, median, and high native-unit results.
 * **Difficulty:** Medium
 
 **Validation:**
-The public certification database and product-specific templates were checked. A retained product export and category adapter are not yet present, and the source does not provide a representative installed-equipment baseline, so only a later exact-record path can be supported. The official Product Finder access path and applicable product-family datasets were checked. The category adapter and generic existing-equipment baseline remain unverified, so only a later exact compatible product-record path can be supported.
+The official certification access path and applicable refrigeration equipment product-family filters were checked. Candidate-set automation is technically possible, but no retained category export proves the eligible population, filters, population size, or low, median, and high result.

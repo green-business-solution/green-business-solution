@@ -76,6 +76,8 @@ National Laboratory of the Rockies - System Advisor Model
 * Hot-Water Load from Project Design or Measurement
 * Backup fuel
 * Backup-System Nameplate or Test Information
+* Documented current project fuel price for the matching fuel and geography
+* Site Location
 
 **Value Needed:**
 
@@ -83,11 +85,11 @@ National Laboratory of the Rockies - System Advisor Model
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Collector type; Collector area; Tilt.
+1. Map the Solar Water Heating inputs to the documented Solar Thermal Production Simulation source fields or model inputs: Collector type; Collector area; Tilt; Azimuth; Storage volume; Hot-Water Load from Project Design or Measurement; Backup fuel; Backup-System Nameplate or Test Information; Documented current project fuel price for the matching fuel and geography; Site Location.
 2. Validate the project configuration, select the site weather data, run the solar water-heating model, cap useful output at the delivered load, and convert displaced backup energy to its billed unit.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Solar Water Heating path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return annual useful solar thermal output and displaced backup resource, with simulation inputs, units, and source version.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the Solar Thermal Production Simulation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 

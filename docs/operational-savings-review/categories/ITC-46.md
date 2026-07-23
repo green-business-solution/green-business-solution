@@ -30,10 +30,10 @@ Annual Operational Savings
 │  │  ├─ Annual Electricity Use (Bill)
 │  │  ├─ Annual Gas Use (Bill)
 │  │  └─ Billing Period Coverage (Bill)
-│  ├─ Process share of billed fuel (User)
+│  ├─ Documented Process share of billed fuel from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
 │  ├─ Existing Process or Fuel Type (User)
-│  ├─ Required Process Temperature (User)
-│  ├─ Useful Process Load (User)
+│  ├─ Documented Required Process Temperature from Nameplate, Measurement, Audit, or Contractor Specification (Linked Opportunity)
+│  ├─ Documented Useful Process Load from Submeter, Controls Trend, Audit, or Contractor Specification (Linked Opportunity)
 │  ├─ Existing Process Nameplate or Test Information (User)
 │  ├─ Proposed technology (Linked Opportunity)
 │  ├─ Proposed COP or efficiency (Linked Opportunity)
@@ -73,11 +73,11 @@ U.S. Department of Energy - MEASUR
 
 * Process share of billed fuel
 * Existing Process or Fuel Type
-* Required Process Temperature
+* Required Process Temperature from a nameplate, measurement, audit, or contractor specification
 * Useful Process Load
 * Existing Process Nameplate or Test Information
 * Proposed technology
-* Proposed COP or efficiency
+* Proposed COP or efficiency from a nameplate, measurement, audit, or contractor specification
 
 **Value Needed:**
 
@@ -85,16 +85,16 @@ U.S. Department of Energy - MEASUR
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: Process share of billed fuel; Existing Process or Fuel Type; Required Process Temperature.
-2. Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+1. Load the Industrial Process Electrification project facts from documented nameplates, measurements, controls trends, or contractor specifications and map their units to the MEASUR Process Heating Assessment.
+2. Run the pinned open-source Process Heating Assessment baseline and proposed cases using the category formula boundary shown in this card.
+3. Return no result when the Process Heating Assessment requires a flow, pressure, load profile, duty point, efficiency, or schedule that is absent from the project evidence.
 4. Return existing and proposed annual resource use or avoided resource use, with calculator version, input units, and warnings.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the MEASUR version, Process Heating Assessment input object, unit conversions, warnings, baseline and proposed outputs, and project-document provenance.
 
 **Automation:**
 
-* **Selected Strategy:** Pinned local execution of the exact MEASUR calculator for this category.
-* **Automation Method:** Map the supplied project facts and units to the named calculator, run the versioned open-source calculation locally, reject incomplete or incompatible inputs, and return its existing and proposed resource results.
+* **Selected Strategy:** Pinned local execution of the MEASUR Process Heating Assessment for Industrial Process Electrification.
+* **Automation Method:** Map reviewed project evidence into the Process Heating Assessment input schema, execute the versioned local module, and preserve its warnings and native outputs without supplying missing design inputs.
 * **Difficulty:** Medium to Hard
 
 **Validation:**

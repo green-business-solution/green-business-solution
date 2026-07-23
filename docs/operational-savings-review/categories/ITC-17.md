@@ -36,11 +36,12 @@ Annual Operational Savings
 ├─ Standard 1.1 — PVWatts Solar Production Calculation
 ├─ Interval onsite-offset and export calculation (Derived)
 └─ Chronological Electricity Load and Tariff
-   ├─ Timestamped Interval Electricity Data (User)
-   ├─ Time Zone and Daylight-Saving Treatment from the Uploaded Data (User)
+   ├─ Timestamped Interval Utility Data (Bill)
+   ├─ Time Zone and Daylight-Saving Metadata from the Uploaded Utility Artifact (Bill)
    ├─ Rate Schedule and Customer Class (Bill)
-   ├─ Complete Tariff Calendar and Billing Rules (User)
-   └─ Monthly Bill Reconciliation (Derived)
+   ├─ Authoritative Tariff Mapping Is Not Yet Verified (Derived)
+   ├─ No Interval Dollar Estimate Until Tariff Rules Are Resolved (Derived)
+   └─ Monthly Bill Reconciliation When Tariff Mapping Exists (Derived)
 ```
 
 **■ Standard 1.1 — PVWatts Solar Production Calculation**
@@ -65,8 +66,7 @@ National Laboratory of the Rockies - PVWatts V8
 * System losses
 * Tilt
 * Azimuth
-* Timestamped Interval Electricity Data
-* Time Zone and Daylight-Saving Treatment from Uploaded Interval Data
+* Site Location
 
 **Value Needed:**
 
@@ -74,11 +74,11 @@ National Laboratory of the Rockies - PVWatts V8
 
 **How to Use:**
 
-1. Validate these inputs and preserve the source of each supplied value: DC capacity; Module Type; Array type.
+1. Map the Solar Photovoltaic Generation inputs to the documented PVWatts Solar Production Calculation source fields or model inputs: DC capacity; Module Type; Array type; System losses; Tilt; Azimuth; Site Location.
 2. Validate site coordinates and array design, run the documented V8 field contract, check warnings, and return interval or annual AC generation with source provenance.
-3. Reject missing, ambiguous, incompatible, or out-of-scope records instead of inserting a generic default.
+3. Reject the Solar Photovoltaic Generation path when a required source field, project design input, compatible record, or native unit is absent; do not insert a cross-category default.
 4. Return interval or annual AC electricity generation, with model inputs, warnings, units, and source version.
-5. Store the source version, selected record or method, input units, and any warnings with the result.
+5. Retain the PVWatts Solar Production Calculation source version, exact fields or model inputs, native units, selected records, warnings, and category-specific rejection reason.
 
 **Automation:**
 
@@ -87,4 +87,4 @@ National Laboratory of the Rockies - PVWatts V8
 * **Difficulty:** Medium
 
 **Validation:**
-The official V8 field contract was checked and the retained fixture validates required fields, units, source version, and unsupported defaults. The source can calculate generation but cannot choose system capacity or array configuration for the project.
+The official V8 field contract was checked and the retained fixture validates required fields, units, source version, and unsupported defaults. The source can calculate generation but cannot choose system capacity or array configuration for the project. The category adapter and formula-level golden test have not yet been added.
