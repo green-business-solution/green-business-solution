@@ -276,13 +276,6 @@
       ]
     },
     {
-      "classificationCode": "C-53",
-      "classificationName": "Swimming Pool Contractor",
-      "retrofitIds": [
-        "solar_water_heating_system"
-      ]
-    },
-    {
       "classificationCode": "C-57",
       "classificationName": "Well Drilling Contractor",
       "retrofitIds": [
@@ -367,8 +360,7 @@
       "classificationName": "Weatherization and Energy Conservation Contractor",
       "retrofitIds": [
         "air_sealing_weatherization",
-        "window_film_shading_retrofit",
-        "low_flow_fixture_retrofit"
+        "window_film_shading_retrofit"
       ]
     }
   ]
