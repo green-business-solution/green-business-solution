@@ -10,7 +10,13 @@
 - **Category status:** RESEARCHED — READY FOR HUMAN REVIEW
 - **Retrofit count:** 2
 - **Standards used:** `STD-WATERSENSE-LANDSCAPE`
-- **Expanded User-input count:** 8
+- **Required User-input count:** 6
+- **Optional Known-Detail count:** 2
+- **Profile-input count:** 1
+- **Bill-input count:** 4
+- **Standard-assumption count:** 1
+- **Applicable resources:** water-sewer
+- **Default estimate:** AVAILABLE
 - **Automation readiness:** Ready for implementation
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
@@ -37,70 +43,69 @@ Annual dollar savings
 ├─ Annual irrigation water reduction
 │  ├─ site.addressStructured.zip5, approximate only when parsed from an unmatched raw address (Profile)
 │  ├─ Repeatable hydrozone definition
-│  │  ├─ Landscape area for each hydrozone (User)
-│  │  └─ Plant factor for each hydrozone (User)
+│  │  ├─ Approximate Landscape Area for Each Hydrozone (User)
+│  │  └─ Recognizable Plant or Landscape Type for Each Hydrozone (User)
 │  ├─ Existing irrigation configuration
 │  │  ├─ Irrigation method (User)
-│  │  ├─ Irrigation efficiency (User)
+│  │  ├─ Irrigation efficiency, if known (User)
 │  │  └─ Controller treatment (User)
 │  ├─ Proposed irrigation configuration
 │  │  ├─ Irrigation method (User)
-│  │  ├─ Irrigation efficiency (User)
+│  │  ├─ Irrigation efficiency, if known (User)
 │  │  └─ Controller treatment (User)
 │  ├─ Climate data and Water Budget equations (Standard)
 │  └─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-│     ├─ annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r (Bill)
+│     ├─ annual_water_use with water_unit for water and sewer (Bill)
 │     ├─ billing_period_start (Bill)
 │     └─ billing_period_end (Bill)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   ├─ Electric variable charge
-   │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
-   │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-   │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-   │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   ├─ Gas variable charge
-   │  ├─ gas_rate_schedule, verified against the service account (Bill)
-   │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   └─ Water and sewer variable charge
+      └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
-- Annual irrigation water reduction > Repeatable hydrozone definition > Landscape area for each hydrozone
-- Annual irrigation water reduction > Repeatable hydrozone definition > Plant factor for each hydrozone
+- Annual irrigation water reduction > Repeatable hydrozone definition > Approximate Landscape Area for Each Hydrozone
+- Annual irrigation water reduction > Repeatable hydrozone definition > Recognizable Plant or Landscape Type for Each Hydrozone
 - Annual irrigation water reduction > Existing irrigation configuration > Irrigation method
-- Annual irrigation water reduction > Existing irrigation configuration > Irrigation efficiency
 - Annual irrigation water reduction > Existing irrigation configuration > Controller treatment
 - Annual irrigation water reduction > Proposed irrigation configuration > Irrigation method
-- Annual irrigation water reduction > Proposed irrigation configuration > Irrigation efficiency
 - Annual irrigation water reduction > Proposed irrigation configuration > Controller treatment
 
-### Profile
+### Optional Known Details
+
+- Annual irrigation water reduction > Existing irrigation configuration > Irrigation efficiency, if known
+- Annual irrigation water reduction > Proposed irrigation configuration > Irrigation efficiency, if known
+
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
 
 - Annual irrigation water reduction > site.addressStructured.zip5, approximate only when parsed from an unmatched raw address
 
-### Bill
+### Bill Inputs
 
-- Annual irrigation water reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r
+- Annual irrigation water reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_water_use with water_unit for water and sewer
 - Annual irrigation water reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
 - Annual irrigation water reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- Annual irrigation water reduction > Climate data and Water Budget equations
+#### STD-WATERSENSE-LANDSCAPE
+
+- **Value produced:** Annual baseline and proposed landscape water allowance in gallons, with climate-data and tool version.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Calculate each low, base, and high case from the declared plant factor and irrigation-efficiency bounds.
+- **Exact versus estimated:** Return baseline and proposed water budgets for complete hydrozone inputs; use visible ranges only for source-supported plant or irrigation classes.
+- **Uncertainty:** Moderate with mapped hydrozones and high when plant mix or irrigation condition is estimated.
+- **Source:** U.S. Environmental Protection Agency, [Water Budget Tool and data download](https://www.epa.gov/watersense/water-budget-tool) and [commercial outdoor-water tools](https://www.epa.gov/watersense/tools-ci-facilities).
+- **Source version:** Water Budget Tool workbook version, climate-data version, and downloaded-file checksum.
+- **Selected class or candidate set:** Use the site ZIP climate record and only the declared hydrozones, plant classes, irrigation methods, and project scope.
+- **Assumptions:** The climate record and declared landscape composition represent the analysis year.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
@@ -115,24 +120,39 @@ Resolve baseline and proposed landscape water requirements from climate, area, p
 U.S. Environmental Protection Agency, [Water Budget Tool and data download](https://www.epa.gov/watersense/water-budget-tool) and [commercial outdoor-water tools](https://www.epa.gov/watersense/tools-ci-facilities).
 
 **Lookup Inputs:**
-- `site_zip` - Site ZIP code used for the climate lookup.
+- `site_zip` - **Required:** Site ZIP code used for the climate lookup.
   - **Resolved by:**
     - **Profile:** Annual dollar savings > Annual irrigation water reduction > site.addressStructured.zip5, approximate only when parsed from an unmatched raw address
-- `hydrozone_definition` - Landscape area and plant factor for each hydrozone.
+- `hydrozone_definition` - **Required:** Approximate landscape area and recognizable plant or landscape type for each hydrozone.
   - **Resolved by:**
-    - **User:** Annual dollar savings > Annual irrigation water reduction > Repeatable hydrozone definition > Landscape area for each hydrozone
-    - **User:** Annual dollar savings > Annual irrigation water reduction > Repeatable hydrozone definition > Plant factor for each hydrozone
-- `irrigation_configuration` - Existing and proposed irrigation method, efficiency, and controller treatment.
+    - **User:** Annual dollar savings > Annual irrigation water reduction > Repeatable hydrozone definition > Approximate Landscape Area for Each Hydrozone
+    - **User:** Annual dollar savings > Annual irrigation water reduction > Repeatable hydrozone definition > Recognizable Plant or Landscape Type for Each Hydrozone
+- `irrigation_configuration` - **Required:** Existing and proposed irrigation methods and controller treatment.
   - **Resolved by:**
     - **User:** Annual dollar savings > Annual irrigation water reduction > Existing irrigation configuration > Irrigation method
-    - **User:** Annual dollar savings > Annual irrigation water reduction > Existing irrigation configuration > Irrigation efficiency
     - **User:** Annual dollar savings > Annual irrigation water reduction > Existing irrigation configuration > Controller treatment
     - **User:** Annual dollar savings > Annual irrigation water reduction > Proposed irrigation configuration > Irrigation method
-    - **User:** Annual dollar savings > Annual irrigation water reduction > Proposed irrigation configuration > Irrigation efficiency
     - **User:** Annual dollar savings > Annual irrigation water reduction > Proposed irrigation configuration > Controller treatment
+- `irrigation_efficiency` - **Optional:** Exact existing or proposed irrigation efficiency when known.
+  - **Resolved by:**
+    - **User:** Annual dollar savings > Annual irrigation water reduction > Existing irrigation configuration > Irrigation efficiency, if known
+    - **User:** Annual dollar savings > Annual irrigation water reduction > Proposed irrigation configuration > Irrigation efficiency, if known
 
 **Value Needed:**
 Annual baseline and proposed landscape water allowance in gallons, with climate-data and tool version.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return baseline and proposed water budgets for complete hydrozone inputs; use visible ranges only for source-supported plant or irrigation classes.
+- **Low/Base/High Rule:** Calculate each low, base, and high case from the declared plant factor and irrigation-efficiency bounds.
+- **Uncertainty Rule:** Moderate with mapped hydrozones and high when plant mix or irrigation condition is estimated.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** Water Budget Tool workbook version, climate-data version, and downloaded-file checksum.
+- **Selected Class or Candidate Set:** Use the site ZIP climate record and only the declared hydrozones, plant classes, irrigation methods, and project scope.
+- **Assumptions:** The climate record and declared landscape composition represent the analysis year.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate without defensible irrigated area, plant class, irrigation method, and site climate.
 
 **How to Use:**
 Implement the equations and lookup data from the current Water Budget Tool workbook and data download.
@@ -154,7 +174,7 @@ Store workbook version and input hydrozones.
 
 The two retrofits share a category because the existing and proposed method are record selections in the same water-budget tree.
 
-Input workflow: This contract exposes 8 independent User values because each is required by the formula or a traced Standard lookup. Collect them in a measure-specific multi-step form or a later detailed-estimate stage instead of recombining them into opaque fields.
+Default-estimate behavior: Use the documented minimum-input path and replace estimates with validated Optional Known Details when supplied.
 
 Expected uncertainty: STD-WATERSENSE-LANDSCAPE: Moderate uncertainty.
 

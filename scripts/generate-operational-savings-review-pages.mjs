@@ -7,15 +7,19 @@ const CATEGORY_HEADING = /^### (ITC-\d{2}) - (.+)$/gm;
 const BRANCH_HEADING = /^### (BR-[A-Z0-9-]+) - (.+)$/gm;
 const STANDARD_HEADING = /^### ■ (STD-[A-Z0-9-]+) - (.+)$/gm;
 const ALLOWED_LEAF_LABELS = ["(User)", "(Profile)", "(Bill)", "(Standard)"];
+const ALLOWED_RESOURCES = new Set(["electricity", "gas", "water-sewer", "liquid-fuel", "vehicle-fuel", "none"]);
+const USER_INPUT_TAG = /\{\{input:\s*(required|optional)\}\}/g;
 const ALLOWED_CATEGORY_STATUSES = new Set(["DRAFT", "RESEARCHED — READY FOR HUMAN REVIEW", "BLOCKED"]);
 const ALLOWED_STANDARD_STATUSES = new Set([...ALLOWED_CATEGORY_STATUSES, "LIMITED"]);
 const REQUIRED_CATEGORY_MARKERS = [
   "**Status:**",
+  "**Applicable Resources:**",
   "**Retrofits:**",
   "**Primary Formula:**",
   "**Supporting Formula(s):**",
   "**Information Tree:**",
   "**Standards:**",
+  "**Default Estimate:**",
   "**Notes:**"
 ];
 const REQUIRED_STANDARD_MARKERS = [
@@ -24,9 +28,33 @@ const REQUIRED_STANDARD_MARKERS = [
   "**Source:**",
   "**Lookup Inputs:**",
   "**Value Needed:**",
+  "**Resolution Contract:**",
   "**How to Use:**",
   "**Automation:**",
   "**Used By:**"
+];
+const RESOLUTION_CONTRACT_FIELDS = [
+  "**Resolver Type:**",
+  "**Supported Scenarios:**",
+  "**Scenario Output Behavior:**",
+  "**Low/Base/High Rule:**",
+  "**Uncertainty Rule:**",
+  "**Exact Override:**",
+  "**Source Version:**",
+  "**Selected Class or Candidate Set:**",
+  "**Assumptions:**",
+  "**Editable:**",
+  "**No-Estimate Rule:**"
+];
+const EQUIPMENT_SCENARIOS = [
+  "exact-existing-model",
+  "existing-type-or-application",
+  "profile-or-bill-fallback",
+  "linked-opportunity-exact-product",
+  "linked-opportunity-product-class",
+  "no-product-restriction",
+  "no-linked-opportunity",
+  "exact-proposed-model"
 ];
 const AUTOMATION_FIELDS = [
   "**Selected Strategy:**",
@@ -77,6 +105,7 @@ export function buildOperationalSavingsReview(sources) {
   validateCanonicalMarkers(categories, REQUIRED_CATEGORY_MARKERS, errors);
   validateCanonicalMarkers(branches, ["**Status:**", "**Value:**", "**Used By:**"], errors);
   validateCanonicalMarkers(standards, REQUIRED_STANDARD_MARKERS, errors);
+  validateCategoryResources(categories, errors);
   validateStatuses(categories, branches, standards, sources, errors);
   validateTaxonomyCoverage(categories, taxonomyById, errors);
   validateStandards(standards, errors);
@@ -88,13 +117,16 @@ export function buildOperationalSavingsReview(sources) {
   for (const category of categories) {
     const tree = parseTree(category.treeBlock, category.id, errors);
     const referencedBranches = new Set();
-    const expandedTree = expandTree(tree, branchById, referencedBranches, errors, []);
+    const expandedTree = expandTree(tree, branchById, referencedBranches, errors, [], category.resources);
     for (const branchId of referencedBranches) branchUsage.get(branchId)?.add(category.id);
 
     validateTerminalLabels(expandedTree, category.id, errors);
+    validateUserInputClassifications(expandedTree, category.id, errors);
     validateFormulaRoot(category, expandedTree, errors);
 
-    const referencedStandards = category.standardIds;
+    const inheritedStandardIds = [...referencedBranches]
+      .flatMap((branchId) => branchById.get(branchId)?.standardIds || []);
+    const referencedStandards = [...new Set([...category.standardIds, ...inheritedStandardIds])];
     for (const standardId of referencedStandards) {
       if (!standardById.has(standardId)) {
         errors.push(`${category.id} references undefined Standard ${standardId}`);
@@ -112,6 +144,7 @@ export function buildOperationalSavingsReview(sources) {
       .filter(Boolean)
       .map((standard) => traceStandardInputs(category, standard, resolutionIndex, errors));
     const inputs = summarizeInputs(expandedTree);
+    validateRequiredTechnicalInputs(inputs, category, errors);
     if (referencedStandards.length > 0 && inputs.Standard.length === 0) {
       errors.push(`${category.id} references Standards but has no Standard terminal leaf`);
     }
@@ -124,6 +157,7 @@ export function buildOperationalSavingsReview(sources) {
 
     categoryReviews.push({
       ...category,
+      standardIds: referencedStandards,
       expandedTree,
       referencedBranches: [...referencedBranches],
       tracedStandards,
@@ -212,21 +246,30 @@ function parseCategory(section) {
   return {
     ...section,
     status: matchField(section.body, "Status"),
+    resources: parseResources(matchField(section.body, "Applicable Resources"), section.id),
     retrofits: retrofitMatches.map((match) => ({ id: match[1], name: match[2].trim() })),
     primaryFormula: sliceBetween(section.body, "**Primary Formula:**", "**Supporting Formula(s):**").trim(),
     supportingFormulas: sliceBetween(section.body, "**Supporting Formula(s):**", "**Information Tree:**").trim(),
     treeBlock: sliceBetween(section.body, "**Information Tree:**", "**Standards:**"),
     standardsLine,
     standardIds: standardsLine.match(/\bSTD-[A-Z0-9-]+\b/g) || [],
+    defaultEstimate: matchField(section.body, "Default Estimate"),
     notes: section.body.slice(section.body.indexOf("**Notes:**") + "**Notes:**".length).trim()
   };
 }
 
+function parseResources(value) {
+  return String(value || "").split(",").map((resource) => resource.trim()).filter(Boolean);
+}
+
 function parseBranch(section) {
+  const standardsLine = matchField(section.body, "Standards") || "";
   return {
     ...section,
     status: matchField(section.body, "Status"),
     treeBlock: sliceBetween(section.body, "**Value:**", "**Used By:**"),
+    standardsLine,
+    standardIds: standardsLine.match(/\bSTD-[A-Z0-9-]+\b/g) || [],
     usedByLine: matchField(section.body, "Used By") || ""
   };
 }
@@ -239,10 +282,11 @@ function parseStandard(section) {
     fields[start] = sliceBetween(section.body, start, end).trim();
   }
   fields["**Used By:**"] = section.body.slice(section.body.indexOf("**Used By:**") + "**Used By:**".length).trim();
-  const lookupInputs = [...fields["**Lookup Inputs:**"].matchAll(/^- `([a-z0-9_]+)` - (.+)$/gm)].map((match) => ({
+  const lookupInputs = [...fields["**Lookup Inputs:**"].matchAll(/^- `([a-z0-9_]+)` - \[(Required|Optional|Conditional)\] (.+)$/gm)].map((match) => ({
     key: match[1],
-    description: match[2].replace(/^\[Conditional\]\s*/, "").trim(),
-    conditional: /^\[Conditional\]\s*/.test(match[2])
+    classification: match[2],
+    description: match[3].trim(),
+    conditional: match[2] === "Conditional"
   }));
   return {
     ...section,
@@ -297,7 +341,7 @@ function parseTree(block, ownerId, errors) {
   return root;
 }
 
-function expandTree(tree, branchById, referencedBranches, errors, stack) {
+function expandTree(tree, branchById, referencedBranches, errors, stack, resources) {
   const branchId = /^BR-[A-Z0-9-]+$/.test(tree.text) ? tree.text : null;
   if (branchId) {
     referencedBranches.add(branchId);
@@ -311,13 +355,22 @@ function expandTree(tree, branchById, referencedBranches, errors, stack) {
       return { text: `Circular shared branch [${branchId}]`, children: [] };
     }
     const branchTree = parseTree(branch.treeBlock, branchId, errors);
-    const expanded = expandTree(branchTree, branchById, referencedBranches, errors, [...stack, branchId]);
+    const expanded = expandTree(branchTree, branchById, referencedBranches, errors, [...stack, branchId], resources);
     return { ...expanded, text: `${expanded.text} [${branchId}]` };
   }
   return {
     ...tree,
-    children: tree.children.map((child) => expandTree(child, branchById, referencedBranches, errors, stack))
+    children: tree.children
+      .filter((child) => nodeAppliesToResources(child, resources))
+      .map((child) => expandTree(child, branchById, referencedBranches, errors, stack, resources))
   };
+}
+
+function nodeAppliesToResources(node, resources) {
+  const declaration = node.text.match(/\{\{resource:\s*([^}]+)\}\}/)?.[1];
+  if (!declaration) return true;
+  const allowed = declaration.split(",").map((resource) => resource.trim());
+  return allowed.some((resource) => resources.includes(resource));
 }
 
 function validateTerminalLabels(tree, ownerId, errors) {
@@ -325,6 +378,23 @@ function validateTerminalLabels(tree, ownerId, errors) {
     if (node.children.length > 0 || path.length === 1) return;
     if (!ALLOWED_LEAF_LABELS.some((label) => node.text.endsWith(label))) {
       errors.push(`${ownerId} terminal leaf lacks an allowed source label: ${JSON.stringify(stripResolutionTags(node.text))}`);
+    }
+  });
+}
+
+function validateUserInputClassifications(tree, ownerId, errors) {
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1 || !node.text.endsWith("(User)")) return;
+    const classifications = [...node.text.matchAll(USER_INPUT_TAG)].map((match) => match[1]);
+    if (classifications.length !== 1) {
+      errors.push(`${ownerId} User input must have exactly one required or optional classification: ${JSON.stringify(stripResolutionTags(node.text))}`);
+      return;
+    }
+    if (classifications[0] === "optional" && !/\bif known\b/i.test(node.text)) {
+      errors.push(`${ownerId} Optional Known Detail must say "if known": ${JSON.stringify(stripResolutionTags(node.text))}`);
+    }
+    if (classifications[0] === "required" && /\bif known\b/i.test(node.text)) {
+      errors.push(`${ownerId} Required User Input cannot say "if known": ${JSON.stringify(stripResolutionTags(node.text))}`);
     }
   });
 }
@@ -343,13 +413,53 @@ function validateFormulaRoot(category, tree, errors) {
   }
 }
 
+function validateCategoryResources(categories, errors) {
+  for (const category of categories) {
+    if (category.resources.length === 0) errors.push(`${category.id} must declare at least one applicable resource`);
+    for (const resource of category.resources) {
+      if (!ALLOWED_RESOURCES.has(resource)) errors.push(`${category.id} declares invalid applicable resource ${resource}`);
+    }
+    if (category.resources.includes("none") && category.resources.length !== 1) {
+      errors.push(`${category.id} applicable resource none cannot be combined with another resource`);
+    }
+    if (!["AVAILABLE", "UNVALIDATED", "UNAVAILABLE", "NOT APPLICABLE"].includes(category.defaultEstimate)) {
+      errors.push(`${category.id} has invalid Default Estimate ${JSON.stringify(category.defaultEstimate)}`);
+    }
+    if (category.status === "RESEARCHED — READY FOR HUMAN REVIEW" && !["AVAILABLE", "NOT APPLICABLE"].includes(category.defaultEstimate)) {
+      errors.push(`${category.id} cannot be ready while its Default Estimate is ${category.defaultEstimate}`);
+    }
+  }
+}
+
 function validateStandards(standards, errors) {
   for (const standard of standards) {
     if (!/https:\/\//.test(standard.fields["**Source:**"] || "")) {
       errors.push(`${standard.id} Standard missing source link`);
     }
     if (standard.lookupInputs.length === 0) {
-      errors.push(`${standard.id} has no atomic keyed Lookup Inputs`);
+      errors.push(`${standard.id} has no classified atomic keyed Lookup Inputs`);
+    }
+    const rawLookupLines = standard.fields["**Lookup Inputs:**"].match(/^- `/gm)?.length || 0;
+    if (rawLookupLines !== standard.lookupInputs.length) errors.push(`${standard.id} has an unclassified Lookup Input`);
+    const contract = standard.fields["**Resolution Contract:**"] || "";
+    for (const field of RESOLUTION_CONTRACT_FIELDS) {
+      if (!contract.includes(field)) errors.push(`${standard.id} Standard missing Resolution Contract field ${field}`);
+    }
+    const resolverType = extractContractField(contract, "Resolver Type");
+    if (!/^(Equipment|Method)\b/.test(resolverType || "")) {
+      errors.push(`${standard.id} Resolver Type must start with Equipment or Method`);
+    }
+    if (/^Equipment\b/.test(resolverType || "")) {
+      const scenarios = extractContractField(contract, "Supported Scenarios") || "";
+      for (const scenario of EQUIPMENT_SCENARIOS) {
+        if (!scenarios.includes(scenario)) errors.push(`${standard.id} equipment resolver is missing scenario ${scenario}`);
+      }
+    }
+    if (!/^Yes\b/i.test(extractContractField(contract, "Editable") || "")) {
+      errors.push(`${standard.id} Standard assumption must be editable`);
+    }
+    if (!/exact.+override|override.+exact/i.test(extractContractField(contract, "Exact Override") || "")) {
+      errors.push(`${standard.id} Standard is missing exact-value override behavior`);
     }
     const automation = standard.fields["**Automation:**"] || "";
     for (const field of AUTOMATION_FIELDS) {
@@ -388,17 +498,32 @@ function buildResolutionIndex(tree) {
 }
 
 function summarizeInputs(tree) {
-  const summary = { User: [], Profile: [], Bill: [], Standard: [] };
+  const summary = { RequiredUser: [], OptionalUser: [], User: [], Profile: [], Bill: [], Standard: [] };
   walkTree(tree, (node, path) => {
     if (node.children.length > 0 || path.length === 1) return;
     for (const label of ALLOWED_LEAF_LABELS) {
       if (!node.text.endsWith(label)) continue;
       const type = label.slice(1, -1);
       const cleanPath = path.slice(1).map((item) => cleanTreeText(item.text));
-      summary[type].push(cleanPath.join(" > "));
+      const value = cleanPath.join(" > ");
+      summary[type].push(value);
+      if (type === "User") {
+        const classification = [...node.text.matchAll(USER_INPUT_TAG)][0]?.[1];
+        if (classification === "required") summary.RequiredUser.push(value);
+        if (classification === "optional") summary.OptionalUser.push(value);
+      }
     }
   });
   return summary;
+}
+
+function validateRequiredTechnicalInputs(inputs, category, errors) {
+  if (category.standardIds.length === 0) return;
+  const technical = /\b(?:watt(?:age)?|input kW|rated power|exact efficiency|measured annual operating hours|specific power|total dynamic head|pressure rise|temperature rise)\b/i;
+  for (const input of inputs.RequiredUser) {
+    const leaf = input.split(" > ").at(-1);
+    if (technical.test(leaf)) errors.push(`${category.id} technical engineering value is mandatory despite a Standard path: ${input}`);
+  }
 }
 
 function renderCategoryPage(category) {
@@ -409,9 +534,6 @@ function renderCategoryPage(category) {
   const standardCards = category.tracedStandards.length
     ? category.tracedStandards.map(renderStandardCard).join("\n\n")
     : "No external Standard is used by this category.";
-  const atomicInputWorkflow = category.inputs.User.length > 5
-    ? `Input workflow: This contract exposes ${category.inputs.User.length} independent User values because each is required by the formula or a traced Standard lookup. Collect them in a measure-specific multi-step form or a later detailed-estimate stage instead of recombining them into opaque fields.`
-    : null;
   return ensureFinalNewline([
     `# ${category.id} — ${category.title}`,
     "",
@@ -422,7 +544,13 @@ function renderCategoryPage(category) {
     `- **Category status:** ${category.status}`,
     `- **Retrofit count:** ${category.retrofits.length}`,
     `- **Standards used:** ${standardsUsed}`,
-    `- **Expanded User-input count:** ${category.inputs.User.length}`,
+    `- **Required User-input count:** ${category.inputs.RequiredUser.length}`,
+    `- **Optional Known-Detail count:** ${category.inputs.OptionalUser.length}`,
+    `- **Profile-input count:** ${category.inputs.Profile.length}`,
+    `- **Bill-input count:** ${category.inputs.Bill.length}`,
+    `- **Standard-assumption count:** ${category.inputs.Standard.length}`,
+    `- **Applicable resources:** ${category.resources.join(", ")}`,
+    `- **Default estimate:** ${category.defaultEstimate}`,
     `- **Automation readiness:** ${category.automationReadiness}`,
     `- **Unresolved issue count:** ${category.decisions.length}`,
     `- **Expected uncertainty:** ${category.uncertainty.label}`,
@@ -445,9 +573,31 @@ function renderCategoryPage(category) {
     renderTree(category.expandedTree, { stripTags: true }),
     "```",
     "",
-    "## Input Summary",
+    "## Input Workflow",
     "",
-    renderInputSummary(category.inputs),
+    "### Required User Inputs",
+    "",
+    renderInputList(category.inputs.RequiredUser),
+    "",
+    "### Optional Known Details",
+    "",
+    renderInputList(category.inputs.OptionalUser),
+    "",
+    category.inputs.OptionalUser.length
+      ? "Optional Known Details replace the corresponding Standard estimate when supplied and validated."
+      : "No optional exact-value override applies to this category.",
+    "",
+    "### Profile Inputs",
+    "",
+    renderInputList(category.inputs.Profile),
+    "",
+    "### Bill Inputs",
+    "",
+    renderInputList(category.inputs.Bill),
+    "",
+    "### Standard-Derived Assumptions",
+    "",
+    renderStandardAssumptions(category),
     "",
     "## Standards and Automation",
     "",
@@ -456,7 +606,8 @@ function renderCategoryPage(category) {
     "## Category Notes and Missing-Data Behavior",
     "",
     category.notes,
-    ...(atomicInputWorkflow ? ["", atomicInputWorkflow] : []),
+    "",
+    renderDefaultEstimateBehavior(category),
     "",
     `Expected uncertainty: ${category.uncertainty.detail}`,
     "",
@@ -466,16 +617,29 @@ function renderCategoryPage(category) {
   ].join("\n"));
 }
 
+function renderDefaultEstimateBehavior(category) {
+  if (category.defaultEstimate === "AVAILABLE") {
+    return "Default-estimate behavior: Use the documented minimum-input path and replace estimates with validated Optional Known Details when supplied.";
+  }
+  if (category.defaultEstimate === "UNVALIDATED") {
+    return "Default-estimate behavior: The logical path is documented but remains unavailable until its adapter or category behavior is validated.";
+  }
+  if (category.defaultEstimate === "UNAVAILABLE") {
+    return "Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.";
+  }
+  return "Default-estimate behavior: No direct operational-resource estimate applies to this category.";
+}
+
 function renderStandardCard(standard) {
   const tracedInputs = standard.tracedInputs.map((input) => {
-    const conditional = input.conditional ? " Conditional." : "";
+    const conditional = input.conditional ? " Applies only in the documented scenario." : "";
     const resolutions = input.resolutions.length
       ? [
           "  - **Resolved by:**",
           ...input.resolutions.map((item) => `    - **${item.source}:** ${item.path}`)
         ].join("\n")
       : `  - **Resolved by:** ${input.conditional ? "Not applicable under this category contract." : "UNRESOLVED"}`;
-    return `- \`${input.key}\` - ${input.description}${conditional}\n${resolutions}`;
+    return `- \`${input.key}\` - **${input.classification}:** ${input.description}${conditional}\n${resolutions}`;
   }).join("\n");
   return [
     `### ■ ${standard.id} — ${standard.title}`,
@@ -494,6 +658,9 @@ function renderStandardCard(standard) {
     "**Value Needed:**",
     standard.fields["**Value Needed:**"],
     "",
+    "**Resolution Contract:**",
+    standard.fields["**Resolution Contract:**"],
+    "",
     "**How to Use:**",
     standard.fields["**How to Use:**"],
     "",
@@ -502,10 +669,28 @@ function renderStandardCard(standard) {
   ].join("\n");
 }
 
-function renderInputSummary(inputs) {
-  return ["User", "Profile", "Bill", "Standard"].map((type) => {
-    const values = inputs[type].length ? inputs[type].map((value) => `- ${value}`).join("\n") : "- None.";
-    return `### ${type}\n\n${values}`;
+function renderInputList(values) {
+  return values.length ? values.map((value) => `- ${value}`).join("\n") : "- None.";
+}
+
+function renderStandardAssumptions(category) {
+  if (category.tracedStandards.length === 0) return "No Standard-derived assumption is used by this category.";
+  return category.tracedStandards.map((standard) => {
+    const contract = standard.fields["**Resolution Contract:**"];
+    return [
+      `#### ${standard.id}`,
+      "",
+      `- **Value produced:** ${standard.fields["**Value Needed:**"]}`,
+      `- **Resolution scenario:** ${extractContractField(contract, "Supported Scenarios")}`,
+      `- **Low/base/high behavior:** ${extractContractField(contract, "Low/Base/High Rule")}`,
+      `- **Exact versus estimated:** ${extractContractField(contract, "Scenario Output Behavior")}`,
+      `- **Uncertainty:** ${extractContractField(contract, "Uncertainty Rule")}`,
+      `- **Source:** ${inlineMarkdown(standard.fields["**Source:**"])}`,
+      `- **Source version:** ${extractContractField(contract, "Source Version")}`,
+      `- **Selected class or candidate set:** ${extractContractField(contract, "Selected Class or Candidate Set")}`,
+      `- **Assumptions:** ${extractContractField(contract, "Assumptions")}`,
+      `- **Editable:** ${extractContractField(contract, "Editable")}`
+    ].join("\n");
   }).join("\n\n");
 }
 
@@ -513,14 +698,14 @@ function renderReviewIndex(categories, standards) {
   const ready = categories.filter((category) => category.status === "RESEARCHED — READY FOR HUMAN REVIEW");
   const drafts = categories.filter((category) => category.status === "DRAFT");
   const blocked = categories.filter((category) => category.status === "BLOCKED");
-  const fiveInputs = categories.filter((category) => category.inputs.User.length === 5);
+  const fiveInputs = categories.filter((category) => category.inputs.RequiredUser.length === 5);
   const limitedStandardIds = new Set(standards.filter((standard) => standard.status === "LIMITED").map((standard) => standard.id));
   const limited = categories.filter((category) => category.standardIds.some((id) => limitedStandardIds.has(id)));
   const high = categories.filter((category) => category.uncertainty.label === "High");
   const rows = categories.map((category) => {
     const retrofits = category.retrofits.map((retrofit) => retrofit.name).join("<br>");
     const standardsUsed = category.standardIds.length ? category.standardIds.join("<br>") : "None";
-    return `| [\`${category.id}\`](./categories/${category.id}.md) ${category.title} | ${category.status} | ${category.retrofits.length} | ${retrofits} | ${category.inputs.User.length} | ${standardsUsed} | ${category.automationReadiness} | ${category.decisions.length} | [Full review](./categories/${category.id}.md) |`;
+    return `| [\`${category.id}\`](./categories/${category.id}.md) ${category.title} | ${category.status} | ${category.inputs.RequiredUser.length} | ${category.inputs.OptionalUser.length} | ${category.inputs.Profile.length} | ${category.inputs.Bill.length} | ${category.inputs.Standard.length} | ${standardsUsed} | ${category.automationReadiness} | ${category.decisions.length} | [Full review](./categories/${category.id}.md) |`;
   }).join("\n");
   return ensureFinalNewline([
     "# Operational Savings Category Review Index",
@@ -539,12 +724,14 @@ function renderReviewIndex(categories, standards) {
     `- Blocked: ${blocked.length}.`,
     `- Shared branches expanded: ${new Set(categories.flatMap((category) => category.referencedBranches)).size}.`,
     `- Standards embedded: ${new Set(categories.flatMap((category) => category.standardIds)).size}.`,
-    `- Maximum atomic User inputs: ${Math.max(...categories.map((category) => category.inputs.User.length))}.`,
+    `- Required User inputs: ${categories.reduce((sum, category) => sum + category.inputs.RequiredUser.length, 0)}.`,
+    `- Optional Known Details: ${categories.reduce((sum, category) => sum + category.inputs.OptionalUser.length, 0)}.`,
+    `- Maximum Required User inputs in one category: ${Math.max(...categories.map((category) => category.inputs.RequiredUser.length))}.`,
     "",
     "## All Categories",
     "",
-    "| Category | Status | Retrofits | Retrofit display names | User inputs | Standards | Automation | Issues | Review |",
-    "|---|---|---:|---|---:|---|---|---:|---|",
+    "| Category | Status | Required User | Optional Detail | Profile | Bill | Standard assumptions | Standards | Automation | Issues | Review |",
+    "|---|---|---:|---:|---:|---:|---:|---|---|---:|---|",
     rows,
     "",
     renderFilterSection("Researched and Ready for Human Review", ready),
@@ -553,7 +740,7 @@ function renderReviewIndex(categories, standards) {
     "",
     renderFilterSection("Blocked", blocked),
     "",
-    renderFilterSection("Categories with Five User Inputs", fiveInputs),
+    renderFilterSection("Categories with Five Required User Inputs", fiveInputs),
     "",
     renderFilterSection("Categories with Limited Standards", limited),
     "",
@@ -569,6 +756,12 @@ function renderFilterSection(title, categories) {
 }
 
 function deriveReviewDecisions(category) {
+  if (category.defaultEstimate === "UNAVAILABLE") {
+    return ["Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied."];
+  }
+  if (category.defaultEstimate === "UNVALIDATED") {
+    return ["Fixture-test and approve the documented default path before promotion to ready status."];
+  }
   const sentences = category.notes.match(/[^.!?]+[.!?]/g)?.map((sentence) => sentence.trim()) || [category.notes];
   const issueSentences = sentences.filter((sentence) =>
     category.status === "BLOCKED"
@@ -584,6 +777,9 @@ function deriveReviewDecisions(category) {
 }
 
 function deriveUncertainty(category, standards) {
+  if (category.defaultEstimate === "NOT APPLICABLE") {
+    return { label: "Low", detail: "No direct operational-resource estimate applies, so model uncertainty is not applicable." };
+  }
   const detailParts = [];
   const standardLevels = [];
   for (const standard of standards) {
@@ -595,7 +791,11 @@ function deriveUncertainty(category, standards) {
   }
   const noteUncertainty = category.notes.match(/[^.]*\b(?:low|moderate|high) uncertainty[^.]*\./i)?.[0]?.trim();
   if (noteUncertainty) detailParts.unshift(noteUncertainty);
-  const detail = detailParts.length ? detailParts.join(" ") : "No external model uncertainty applies; project-input and bill-data quality still control the result.";
+  const detail = detailParts.length
+    ? detailParts.join(" ")
+    : category.defaultEstimate === "UNAVAILABLE"
+      ? "No default estimate is available; validated project inputs govern any bounded result."
+      : "No external model uncertainty applies; project-input and bill-data quality still control the result.";
   const label = /\bhigh uncertainty\b/i.test(noteUncertainty || "") || category.status === "BLOCKED" || standardLevels.includes("high")
     ? "High"
     : standardLevels.includes("moderate") || category.status === "DRAFT"
@@ -719,7 +919,7 @@ function walkTree(root, callback, path = []) {
 }
 
 function stripResolutionTags(text) {
-  return text.replace(/\s*\{\{(?:lookup|constant|output):\s*[^}]+\}\}/g, "").trim();
+  return text.replace(/\s*\{\{(?:lookup|constant|output|input|resource):\s*[^}]+\}\}/g, "").trim();
 }
 
 function cleanTreeText(text) {
@@ -752,6 +952,10 @@ function extractAutomationField(automation, label) {
   return automation.match(new RegExp(`^- \\*\\*${escapeRegExp(label)}:\\*\\* (.+)$`, "m"))?.[1]?.trim() || null;
 }
 
+function extractContractField(contract, label) {
+  return contract.match(new RegExp(`^- \\*\\*${escapeRegExp(label)}:\\*\\* (.+)$`, "m"))?.[1]?.trim() || null;
+}
+
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -760,12 +964,17 @@ function normalizeText(value) {
   return String(value || "").replace(/[`*_]/g, "").replace(/\s+/g, " ").trim().toLowerCase();
 }
 
+function inlineMarkdown(value) {
+  return String(value || "").replace(/\s+/g, " ").trim();
+}
+
 function ensureFinalNewline(value) {
   return `${value.trimEnd()}\n`;
 }
 
 function buildReport(categories, branches, standards, taxonomy) {
   const userCounts = categories.map((category) => category.inputs.User.length);
+  const requiredCounts = categories.map((category) => category.inputs.RequiredUser.length);
   return {
     categoryPages: categories.length,
     categories: categories.length,
@@ -774,9 +983,14 @@ function buildReport(categories, branches, standards, taxonomy) {
     sharedBranchesExpanded: branches.length,
     standardsEmbedded: standards.length,
     maxAtomicUserInputs: Math.max(...userCounts),
-    categoriesOverFourUserInputs: categories.filter((category) => category.inputs.User.length > 4).map((category) => category.id),
-    categoriesWithFiveUserInputs: categories.filter((category) => category.inputs.User.length === 5).map((category) => category.id),
+    requiredUserInputs: requiredCounts.reduce((sum, value) => sum + value, 0),
+    optionalKnownDetails: categories.reduce((sum, category) => sum + category.inputs.OptionalUser.length, 0),
+    maxRequiredUserInputs: Math.max(...requiredCounts),
+    categoriesOverFourUserInputs: categories.filter((category) => category.inputs.RequiredUser.length > 4).map((category) => category.id),
+    categoriesWithFiveUserInputs: categories.filter((category) => category.inputs.RequiredUser.length === 5).map((category) => category.id),
     atomicUserInputsByCategory: Object.fromEntries(categories.map((category) => [category.id, category.inputs.User.length])),
+    requiredUserInputsByCategory: Object.fromEntries(categories.map((category) => [category.id, category.inputs.RequiredUser.length])),
+    optionalKnownDetailsByCategory: Object.fromEntries(categories.map((category) => [category.id, category.inputs.OptionalUser.length])),
     categoryStatuses: countBy(categories, (category) => category.status),
     standardStatuses: countBy(standards, (standard) => standard.status)
   };

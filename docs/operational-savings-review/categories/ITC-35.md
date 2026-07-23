@@ -10,7 +10,13 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-WATERSENSE-CI-OPERATIONS`
-- **Expanded User-input count:** 3
+- **Required User-input count:** 2
+- **Optional Known-Detail count:** 1
+- **Profile-input count:** 0
+- **Bill-input count:** 1
+- **Standard-assumption count:** 1
+- **Applicable resources:** water-sewer
+- **Default estimate:** UNAVAILABLE
 - **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
@@ -32,51 +38,50 @@ No additional formula is required.
 ```text
 Annual dollar savings
 ├─ Annual measured leak water reduction
-│  ├─ Measured leak flow (User)
+│  ├─ Measured leak flow, if known (User)
 │  ├─ Confirmed leak start date (User)
 │  ├─ Confirmed repair date (User)
 │  └─ WaterSense measured-leak calculation method (Standard)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   ├─ Electric variable charge
-   │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
-   │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-   │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-   │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   ├─ Gas variable charge
-   │  ├─ gas_rate_schedule, verified against the service account (Bill)
-   │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   └─ Water and sewer variable charge
+      └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
-- Annual measured leak water reduction > Measured leak flow
 - Annual measured leak water reduction > Confirmed leak start date
 - Annual measured leak water reduction > Confirmed repair date
 
-### Profile
+### Optional Known Details
+
+- Annual measured leak water reduction > Measured leak flow, if known
+
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
 
 - None.
 
-### Bill
+### Bill Inputs
 
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- Annual measured leak water reduction > WaterSense measured-leak calculation method
+#### STD-WATERSENSE-CI-OPERATIONS
+
+- **Value produced:** Annual avoidable gallons and the exact WaterSense equation or worksheet version.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Use identical exact values when measured; where the source supplies bounds, calculate the low, base, and high equation cases explicitly.
+- **Exact versus estimated:** Return the direct equation result for complete measured inputs; otherwise return no estimate unless the WaterSense method supplies a documented range.
+- **Uncertainty:** Moderate with measured inputs and high without them.
+- **Source:** U.S. Environmental Protection Agency, [WaterSense at Work best-management practices](https://www.epa.gov/watersense/best-management-practices) and [tools for commercial and institutional facilities](https://www.epa.gov/watersense/tools-ci-facilities).
+- **Source version:** WaterSense at Work publication version, worksheet or equation identifier, and local adapter version.
+- **Selected class or candidate set:** Select only the leak or cooling-tower equation named by the category contract.
+- **Assumptions:** The measurement period and operating conditions represent the annualized period.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
@@ -91,14 +96,27 @@ Resolve cooling-tower makeup and leak-avoidance water with WaterSense commercial
 U.S. Environmental Protection Agency, [WaterSense at Work best-management practices](https://www.epa.gov/watersense/best-management-practices) and [tools for commercial and institutional facilities](https://www.epa.gov/watersense/tools-ci-facilities).
 
 **Lookup Inputs:**
-- `watersense_method_inputs` - Measured leak flow and duration, or cooling-tower evaporation, cycles of concentration, blowdown, and drift inputs required by the method selected by the category contract.
+- `watersense_method_inputs` - **Required:** Measured leak flow and duration, or cooling-tower evaporation, cycles of concentration, blowdown, and drift inputs required by the method selected by the category contract.
   - **Resolved by:**
-    - **User:** Annual dollar savings > Annual measured leak water reduction > Measured leak flow
+    - **User:** Annual dollar savings > Annual measured leak water reduction > Measured leak flow, if known
     - **User:** Annual dollar savings > Annual measured leak water reduction > Confirmed leak start date
     - **User:** Annual dollar savings > Annual measured leak water reduction > Confirmed repair date
 
 **Value Needed:**
 Annual avoidable gallons and the exact WaterSense equation or worksheet version.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return the direct equation result for complete measured inputs; otherwise return no estimate unless the WaterSense method supplies a documented range.
+- **Low/Base/High Rule:** Use identical exact values when measured; where the source supplies bounds, calculate the low, base, and high equation cases explicitly.
+- **Uncertainty Rule:** Moderate with measured inputs and high without them.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** WaterSense at Work publication version, worksheet or equation identifier, and local adapter version.
+- **Selected Class or Candidate Set:** Select only the leak or cooling-tower equation named by the category contract.
+- **Assumptions:** The measurement period and operating conditions represent the annualized period.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate when the selected equation's minimum measured operating inputs are missing.
 
 **How to Use:**
 For a known leak, multiply measured flow by confirmed annual leak duration and stop at zero after the repair date.
@@ -119,8 +137,10 @@ Return no estimate for a detection system without a measured leak or for a cooli
 
 A detection system alone has zero attributable direct savings until it identifies and causes repair of a measured leak.
 
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
+
 Expected uncertainty: STD-WATERSENSE-CI-OPERATIONS: Moderate with measured inputs and high without them.
 
 ## Human Review Decisions
 
-- Resolve before approval: A detection system alone has zero attributable direct savings until it identifies and causes repair of a measured leak.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

@@ -10,7 +10,13 @@
 - **Category status:** RESEARCHED — READY FOR HUMAN REVIEW
 - **Retrofit count:** 13
 - **Standards used:** `STD-COMSTOCK-ANNUAL-DELTA`
-- **Expanded User-input count:** 2
+- **Required User-input count:** 2
+- **Optional Known-Detail count:** 0
+- **Profile-input count:** 4
+- **Bill-input count:** 10
+- **Standard-assumption count:** 1
+- **Applicable resources:** electricity, gas
+- **Default estimate:** AVAILABLE
 - **Automation readiness:** Ready for implementation
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
@@ -46,8 +52,7 @@
 ```text
 Annual direct resource dollar savings
 ├─ Annual resource delta by resource
-│  ├─ Canonical retrofit and linked opportunity
-│  │  └─ Canonical retrofit ID from linked-opportunity taxonomy match (Profile)
+│  ├─ Linked Opportunity (Profile)
 │  ├─ Existing-condition selector (User)
 │  ├─ Proposed-option selector (User)
 │  ├─ site.buildingTypes canonical building type (Profile)
@@ -55,7 +60,8 @@ Annual direct resource dollar savings
 │  ├─ site.squareFootage.value, approximate unless subsequently verified (Profile)
 │  └─ ComStock per-area delta distribution (Standard)
 ├─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-│  ├─ annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r (Bill)
+│  ├─ annual_kwh for electricity (Bill)
+│  ├─ annual_therms for gas (Bill)
 │  ├─ billing_period_start (Bill)
 │  └─ billing_period_end (Bill)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
@@ -64,32 +70,35 @@ Annual direct resource dollar savings
    │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
    │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
    │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   ├─ Gas variable charge
-   │  ├─ gas_rate_schedule, verified against the service account (Bill)
-   │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   └─ Gas variable charge
+      ├─ gas_rate_schedule, verified against the service account (Bill)
+      └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
 - Annual resource delta by resource > Existing-condition selector
 - Annual resource delta by resource > Proposed-option selector
 
-### Profile
+### Optional Known Details
 
-- Annual resource delta by resource > Canonical retrofit and linked opportunity > Canonical retrofit ID from linked-opportunity taxonomy match
+- None.
+
+No optional exact-value override applies to this category.
+
+### Profile Inputs
+
+- Annual resource delta by resource > Linked Opportunity
 - Annual resource delta by resource > site.buildingTypes canonical building type
 - Annual resource delta by resource > site.geo.stateCode or site.geo.countyFips
 - Annual resource delta by resource > site.squareFootage.value, approximate unless subsequently verified
 
-### Bill
+### Bill Inputs
 
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r
+- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh for electricity
+- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_therms for gas
 - Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
 - Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
@@ -98,12 +107,21 @@ Annual direct resource dollar savings
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- Annual resource delta by resource > ComStock per-area delta distribution
+#### STD-COMSTOCK-ANNUAL-DELTA
+
+- **Value produced:** Weighted median annual resource delta per square foot for each modeled resource, plus the 25th and 75th percentiles, applicability share, sample count, release ID, and measure ID.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Use the source weighted 25th percentile, median, and 75th percentile for low, base, and high.
+- **Exact versus estimated:** Return the documented matched distribution when the retrofit and archetype crosswalk succeeds; otherwise return no estimate.
+- **Uncertainty:** Low for an exact documented archetype match with strong applicability, moderate for broader bins, and high when applicability is sparse.
+- **Source:** National Laboratory of the Rockies, [ComStock 2025 Release 3 data](https://natlabrockies.github.io/ComStock.github.io/docs/data.html), [upgrade-measure crosswalk and documentation](https://natlabrockies.github.io/ComStock.github.io/docs/upgrade_measures/upgrade_measures.html), and [2025 Release 3 reference documentation](https://natlabrockies.github.io/ComStock.github.io/assets/files/comstock_reference_documentation_2025_3.pdf). The data page identifies the OEDI release, directory layout, data dictionary, enumerations, upgrade lookup, and crosswalk. The measure page identifies the stable measure IDs and the assumptions behind each scenario. The reference PDF supplies the model, sampling, and applicability method.
+- **Source version:** Pinned ComStock release ID, upgrade ID, and source-file checksum.
+- **Selected class or candidate set:** Use only the reviewed retrofit-to-measure allowlist and the matching geography, building type, and floor-area bin.
+- **Assumptions:** The source sample represents the screened site within the displayed applicability and distribution limits.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
@@ -121,27 +139,40 @@ The measure page identifies the stable measure IDs and the assumptions behind ea
 The reference PDF supplies the model, sampling, and applicability method.
 
 **Lookup Inputs:**
-- `canonical_retrofit` - Canonical retrofit ID from the linked opportunity.
+- `canonical_retrofit` - **Required:** Canonical retrofit ID from the linked opportunity.
   - **Resolved by:**
-    - **Profile:** Annual direct resource dollar savings > Annual resource delta by resource > Canonical retrofit and linked opportunity > Canonical retrofit ID from linked-opportunity taxonomy match
-- `site_geography` - Site state or county.
+    - **Profile:** Annual direct resource dollar savings > Annual resource delta by resource > Linked Opportunity
+- `site_geography` - **Required:** Site state or county.
   - **Resolved by:**
     - **Profile:** Annual direct resource dollar savings > Annual resource delta by resource > site.geo.stateCode or site.geo.countyFips
-- `building_type` - Canonical commercial building type.
+- `building_type` - **Required:** Canonical commercial building type.
   - **Resolved by:**
     - **Profile:** Annual direct resource dollar savings > Annual resource delta by resource > site.buildingTypes canonical building type
-- `floor_area` - Profile floor area used to select the floor-area bin and scale the result.
+- `floor_area` - **Required:** Profile floor area used to select the floor-area bin and scale the result.
   - **Resolved by:**
     - **Profile:** Annual direct resource dollar savings > Annual resource delta by resource > site.squareFootage.value, approximate unless subsequently verified
-- `existing_condition` - Existing-condition selector for the documented measure.
+- `existing_condition` - **Required:** Existing-condition selector for the documented measure.
   - **Resolved by:**
     - **User:** Annual direct resource dollar savings > Annual resource delta by resource > Existing-condition selector
-- `proposed_option` - Proposed-option selector for the documented measure.
+- `proposed_option` - **Required:** Proposed-option selector for the documented measure.
   - **Resolved by:**
     - **User:** Annual direct resource dollar savings > Annual resource delta by resource > Proposed-option selector
 
 **Value Needed:**
 Weighted median annual resource delta per square foot for each modeled resource, plus the 25th and 75th percentiles, applicability share, sample count, release ID, and measure ID.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return the documented matched distribution when the retrofit and archetype crosswalk succeeds; otherwise return no estimate.
+- **Low/Base/High Rule:** Use the source weighted 25th percentile, median, and 75th percentile for low, base, and high.
+- **Uncertainty Rule:** Low for an exact documented archetype match with strong applicability, moderate for broader bins, and high when applicability is sparse.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** Pinned ComStock release ID, upgrade ID, and source-file checksum.
+- **Selected Class or Candidate Set:** Use only the reviewed retrofit-to-measure allowlist and the matching geography, building type, and floor-area bin.
+- **Assumptions:** The source sample represents the screened site within the displayed applicability and distribution limits.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate for a retrofit outside the allowlist or when the required source bin is empty.
 
 **How to Use:**
 Download `measure_name_crosswalk.csv`, `upgrades_lookup.json`, `data_dictionary.tsv`, `enumeration_dictionary.tsv`, and the individual-building `metadata_and_annual_results` files for `2025/comstock_amy2018_release_3` from OEDI.
@@ -189,6 +220,8 @@ Only the 13 explicitly crosswalked ComStock measures belong here.
 Return no estimate when the linked opportunity scope does not exactly match a documented ComStock upgrade-measure record.
 Do not add separate measure results together.
 Show the interquartile range and applicability share beside the screening estimate.
+
+Default-estimate behavior: Use the documented minimum-input path and replace estimates with validated Optional Known Details when supplied.
 
 Expected uncertainty: STD-COMSTOCK-ANNUAL-DELTA: Moderate to high uncertainty for an individual building and lower uncertainty for archetype screening.
 

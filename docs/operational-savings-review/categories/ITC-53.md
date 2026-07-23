@@ -10,9 +10,15 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-DOE-CCMS-RATINGS`, `STD-ENERGY-STAR-PRODUCT-DATA`
-- **Expanded User-input count:** 18
+- **Required User-input count:** 5
+- **Optional Known-Detail count:** 10
+- **Profile-input count:** 1
+- **Bill-input count:** 7
+- **Standard-assumption count:** 2
+- **Applicable resources:** electricity, gas, water-sewer
+- **Default estimate:** UNVALIDATED
 - **Automation readiness:** Draft adapter or decision required
-- **Unresolved issue count:** 2
+- **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
 
 ## Retrofits
@@ -38,25 +44,23 @@ Annual dollar savings
 ├─ Annual commercial laundry resource reduction
 │  ├─ In-scope quantity [BR-SCOPE-QUANTITY]
 │  │  └─ Count of identical units in project scope (User)
-│  ├─ Existing certified washer selection
-│  │  ├─ Product group or category (User)
-│  │  ├─ Manufacturer (User)
-│  │  ├─ Basic model or model number (User)
-│  │  ├─ Equipment class or subtype (User)
-│  │  └─ Tub-volume or size class (User)
-│  ├─ Proposed certified washer selection
-│  │  ├─ Product group or category (User)
-│  │  ├─ Manufacturer (User)
-│  │  ├─ Basic model or model number (User)
-│  │  ├─ Equipment class or subtype (User)
-│  │  └─ Tub-volume or size class (User)
-│  ├─ Annual cycles per unit (User)
-│  ├─ Representative load per cycle (User)
-│  ├─ Hot-water fraction (User)
-│  ├─ Hot-water temperature rise (User)
+│  ├─ Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION]
+│  │  ├─ Existing Recognizable Equipment Type or Application (User)
+│  │  ├─ Existing Model, if known (User)
+│  │  ├─ Existing Capacity or Size Class, if known (User)
+│  │  ├─ Linked Opportunity (Profile)
+│  │  ├─ Proposed Product Class or Intended Scope (User)
+│  │  ├─ Selected Proposed Model, if known (User)
+│  │  ├─ Proposed Capacity or Size Class, if known (User)
+│  │  └─ Certified engineering-value resolution (Standard)
+│  ├─ Recognizable Laundry Usage Pattern (User)
+│  ├─ Annual Cycles per Unit, if known (User)
+│  ├─ Representative Load per Cycle, if known (User)
+│  ├─ Hot-Water Fraction, if known (User)
+│  ├─ Hot-water temperature rise, if known (User)
 │  ├─ Water-heating resource (User)
-│  ├─ Water-heater efficiency (User)
-│  ├─ Separately reported or measured machine electricity per cycle (User)
+│  ├─ Water-heater efficiency, if known (User)
+│  ├─ Separately reported or measured machine electricity per cycle, if known (User)
 │  └─ Certified tub volume and water or energy factors (Standard)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
    ├─ Electric variable charge
@@ -67,40 +71,40 @@ Annual dollar savings
    ├─ Gas variable charge
    │  ├─ gas_rate_schedule, verified against the service account (Bill)
    │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   └─ Water and sewer variable charge
+      └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
 - Annual commercial laundry resource reduction > In-scope quantity [BR-SCOPE-QUANTITY] > Count of identical units in project scope
-- Annual commercial laundry resource reduction > Existing certified washer selection > Product group or category
-- Annual commercial laundry resource reduction > Existing certified washer selection > Manufacturer
-- Annual commercial laundry resource reduction > Existing certified washer selection > Basic model or model number
-- Annual commercial laundry resource reduction > Existing certified washer selection > Equipment class or subtype
-- Annual commercial laundry resource reduction > Existing certified washer selection > Tub-volume or size class
-- Annual commercial laundry resource reduction > Proposed certified washer selection > Product group or category
-- Annual commercial laundry resource reduction > Proposed certified washer selection > Manufacturer
-- Annual commercial laundry resource reduction > Proposed certified washer selection > Basic model or model number
-- Annual commercial laundry resource reduction > Proposed certified washer selection > Equipment class or subtype
-- Annual commercial laundry resource reduction > Proposed certified washer selection > Tub-volume or size class
-- Annual commercial laundry resource reduction > Annual cycles per unit
-- Annual commercial laundry resource reduction > Representative load per cycle
-- Annual commercial laundry resource reduction > Hot-water fraction
-- Annual commercial laundry resource reduction > Hot-water temperature rise
+- Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Existing Recognizable Equipment Type or Application
+- Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Proposed Product Class or Intended Scope
+- Annual commercial laundry resource reduction > Recognizable Laundry Usage Pattern
 - Annual commercial laundry resource reduction > Water-heating resource
-- Annual commercial laundry resource reduction > Water-heater efficiency
-- Annual commercial laundry resource reduction > Separately reported or measured machine electricity per cycle
 
-### Profile
+### Optional Known Details
 
-- None.
+- Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Existing Model, if known
+- Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Existing Capacity or Size Class, if known
+- Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Selected Proposed Model, if known
+- Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Proposed Capacity or Size Class, if known
+- Annual commercial laundry resource reduction > Annual Cycles per Unit, if known
+- Annual commercial laundry resource reduction > Representative Load per Cycle, if known
+- Annual commercial laundry resource reduction > Hot-Water Fraction, if known
+- Annual commercial laundry resource reduction > Hot-water temperature rise, if known
+- Annual commercial laundry resource reduction > Water-heater efficiency, if known
+- Annual commercial laundry resource reduction > Separately reported or measured machine electricity per cycle, if known
 
-### Bill
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
+
+- Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Linked Opportunity
+
+### Bill Inputs
 
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
@@ -109,11 +113,34 @@ Annual dollar savings
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- Annual commercial laundry resource reduction > Certified tub volume and water or energy factors
+#### STD-DOE-CCMS-RATINGS
+
+- **Value produced:** The certified efficiency, capacity, annual or daily resource use, test-procedure identifier, units, certification date, and active-record status required by the category.
+- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
+- **Low/base/high behavior:** For exact matches set low, base, and high to the certified value; otherwise use the 25th percentile, median, and 75th percentile of compatible active records.
+- **Exact versus estimated:** Return exact certified values for an unambiguous active model match; return an eligible class distribution for class-based scenarios; return no estimate when compatibility cannot be established.
+- **Uncertainty:** Low for exact active records, moderate for a compatible class distribution, and high for a context-only fallback.
+- **Source:** U.S. Department of Energy, [Compliance Certification Database](https://www.regulations.doe.gov/certification-data/), [CCMS and database description](https://www.energy.gov/cmei/buildings/implementation-certification-and-enforcement), and [product-specific certification and test-result templates](https://www.energy.gov/cmei/buildings/standardized-templates-recording-test-results). The database is the public source of manufacturer certification reports. The templates define product-specific fields and units.
+- **Source version:** Export date, product group, certification record identifiers, test procedure, and export checksum.
+- **Selected class or candidate set:** Filter active records by application, equipment class, capacity or service requirement, opportunity restrictions, and compatibility before calculating the distribution.
+- **Assumptions:** Certified test values are comparable only inside the same product group, test procedure, and compatible service class.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+
+#### STD-ENERGY-STAR-PRODUCT-DATA
+
+- **Value produced:** Category-specific certified energy, water, capacity, efficiency, and low-power-state fields with units and certification dates.
+- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
+- **Low/base/high behavior:** For exact matches use the certified value in all three positions; otherwise use the 25th percentile, median, and 75th percentile after eligibility and compatibility filters.
+- **Exact versus estimated:** Return exact certified values for a selected matching model; otherwise return a distribution from compatible currently certified candidates; return no estimate when the source does not cover the application.
+- **Uncertainty:** Low for an exact certified match, moderate for a matched product class, and high for a context-only class selection.
+- **Source:** U.S. Environmental Protection Agency, [ENERGY STAR Product Finder datasets and API](https://www.energystar.gov/productfinder/advanced), [EV charger product criteria and finder](https://www.energystar.gov/products/ev_chargers), [commercial clothes washer dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Clothes-Washers/9g6r-cpdt), [commercial ice machine dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Ice-Machines/nak5-fsjf), [commercial dishwasher dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Dishwashers/pk8q-dim8), [commercial fryer dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Fryers/edi8-b5vk), [commercial oven dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Ovens/c8av-ccf7), and [commercial steam cooker dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Steam-Cookers/vtsv-aq9u). The advanced page exposes downloadable datasets that are updated daily. The product pages define fields and certified-product scope.
+- **Source version:** Dataset update date, certification identifier, category schema version, and downloaded-file checksum.
+- **Selected class or candidate set:** Filter by application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status.
+- **Assumptions:** Candidate records are technically compatible after the declared filters, but no exact purchase is implied until a model is selected.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
@@ -130,21 +157,41 @@ The database is the public source of manufacturer certification reports.
 The templates define product-specific fields and units.
 
 **Lookup Inputs:**
-- `ccms_product_selection` - Product group, manufacturer, basic model number, equipment class, and capacity for each existing or proposed product record.
+- `ccms_product_context` - **Required:** Recognizable product group or application and proposed scope needed to select a compatible equipment class.
   - **Resolved by:**
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Existing certified washer selection > Product group or category
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Existing certified washer selection > Manufacturer
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Existing certified washer selection > Basic model or model number
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Existing certified washer selection > Equipment class or subtype
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Existing certified washer selection > Tub-volume or size class
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Proposed certified washer selection > Product group or category
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Proposed certified washer selection > Manufacturer
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Proposed certified washer selection > Basic model or model number
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Proposed certified washer selection > Equipment class or subtype
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Proposed certified washer selection > Tub-volume or size class
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Existing Recognizable Equipment Type or Application
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Proposed Product Class or Intended Scope
+- `ccms_exact_product` - **Optional:** Exact manufacturer, basic model number, certified rating, and capacity or size when known.
+  - **Resolved by:**
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Existing Model, if known
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Existing Capacity or Size Class, if known
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Selected Proposed Model, if known
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Proposed Capacity or Size Class, if known
+- `linked_opportunity` - **Conditional:** Product, certification, class, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
+  - **Resolved by:**
+    - **Profile:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Linked Opportunity
+- `product_usage_pattern` - **Conditional:** Recognizable operating pattern and exact activity or idle values when the category formula uses certified active and idle ratings. Applies only in the documented scenario.
+  - **Resolved by:**
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Recognizable Laundry Usage Pattern
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Annual Cycles per Unit, if known
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Representative Load per Cycle, if known
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Hot-Water Fraction, if known
 
 **Value Needed:**
 The certified efficiency, capacity, annual or daily resource use, test-procedure identifier, units, certification date, and active-record status required by the category.
+
+**Resolution Contract:**
+- **Resolver Type:** Equipment resolver.
+- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
+- **Scenario Output Behavior:** Return exact certified values for an unambiguous active model match; return an eligible class distribution for class-based scenarios; return no estimate when compatibility cannot be established.
+- **Low/Base/High Rule:** For exact matches set low, base, and high to the certified value; otherwise use the 25th percentile, median, and 75th percentile of compatible active records.
+- **Uncertainty Rule:** Low for exact active records, moderate for a compatible class distribution, and high for a context-only fallback.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** Export date, product group, certification record identifiers, test procedure, and export checksum.
+- **Selected Class or Candidate Set:** Filter active records by application, equipment class, capacity or service requirement, opportunity restrictions, and compatibility before calculating the distribution.
+- **Assumptions:** Certified test values are comparable only inside the same product group, test procedure, and compatible service class.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate when no compatible active record or defensible equipment class remains after filtering.
 
 **How to Use:**
 An analyst exports the requested product-group report from the public Compliance Certification Database because anonymous automated requests to the direct database returned HTTP 403 during this audit.
@@ -152,6 +199,15 @@ Select an exact normalized manufacturer and basic-model match, then disambiguate
 Read only fields defined in the current product-specific template and preserve the reported units and test-procedure version.
 Store a local slowly changing dimension keyed by product group, manufacturer, basic model, class, and certification effective date.
 Return no model rating on ambiguous or withdrawn matches.
+For an exact existing model, return the source-documented engineering value with low uncertainty.
+When only type or application is known, select compatible records and return the declared class distribution.
+When neither model nor type is known, use relevant Profile or Bill context only when it supports a source-defined class, and otherwise return no estimate.
+When a Linked Opportunity names exact products, restrict the candidate set to those products.
+When it specifies a class, certification, or minimum performance, filter active compatible records to those requirements.
+When it has no product restriction or no Linked Opportunity exists, build the compatible candidate set from application, service need, site context, and source data without claiming an exact model.
+An exact proposed model overrides the candidate distribution after compatibility validation.
+Resolve recognizable product usage patterns to visible low/base/high activity assumptions only when the category and source support that conversion.
+Return no estimate when product compatibility or a required usage basis cannot be established.
 
 **Automation:**
 - **Selected Strategy:** Analyst-exported, versioned local snapshots for only the covered product groups.
@@ -176,21 +232,41 @@ The advanced page exposes downloadable datasets that are updated daily.
 The product pages define fields and certified-product scope.
 
 **Lookup Inputs:**
-- `energy_star_product_selection` - Product category, manufacturer, model, equipment subtype, and capacity or size class for each selected product record.
+- `energy_star_product_context` - **Required:** Recognizable product category or application and proposed scope needed to select a compatible certified class.
   - **Resolved by:**
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Existing certified washer selection > Product group or category
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Existing certified washer selection > Manufacturer
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Existing certified washer selection > Basic model or model number
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Existing certified washer selection > Equipment class or subtype
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Existing certified washer selection > Tub-volume or size class
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Proposed certified washer selection > Product group or category
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Proposed certified washer selection > Manufacturer
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Proposed certified washer selection > Basic model or model number
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Proposed certified washer selection > Equipment class or subtype
-    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Proposed certified washer selection > Tub-volume or size class
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Existing Recognizable Equipment Type or Application
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Proposed Product Class or Intended Scope
+- `energy_star_exact_product` - **Optional:** Exact manufacturer, model, certified rating, and capacity or size when known.
+  - **Resolved by:**
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Existing Model, if known
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Existing Capacity or Size Class, if known
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Selected Proposed Model, if known
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Proposed Capacity or Size Class, if known
+- `linked_opportunity` - **Conditional:** Product, certification, class, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
+  - **Resolved by:**
+    - **Profile:** Annual dollar savings > Annual commercial laundry resource reduction > Certified existing and proposed product resolution [BR-CERTIFIED-PRODUCT-RESOLUTION] > Linked Opportunity
+- `product_usage_pattern` - **Conditional:** Recognizable operating pattern and exact activity or idle values when the category formula uses certified active and idle ratings. Applies only in the documented scenario.
+  - **Resolved by:**
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Recognizable Laundry Usage Pattern
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Annual Cycles per Unit, if known
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Representative Load per Cycle, if known
+    - **User:** Annual dollar savings > Annual commercial laundry resource reduction > Hot-Water Fraction, if known
 
 **Value Needed:**
 Category-specific certified energy, water, capacity, efficiency, and low-power-state fields with units and certification dates.
+
+**Resolution Contract:**
+- **Resolver Type:** Equipment resolver.
+- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
+- **Scenario Output Behavior:** Return exact certified values for a selected matching model; otherwise return a distribution from compatible currently certified candidates; return no estimate when the source does not cover the application.
+- **Low/Base/High Rule:** For exact matches use the certified value in all three positions; otherwise use the 25th percentile, median, and 75th percentile after eligibility and compatibility filters.
+- **Uncertainty Rule:** Low for an exact certified match, moderate for a matched product class, and high for a context-only class selection.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** Dataset update date, certification identifier, category schema version, and downloaded-file checksum.
+- **Selected Class or Candidate Set:** Filter by application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status.
+- **Assumptions:** Candidate records are technically compatible after the declared filters, but no exact purchase is implied until a model is selected.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate when no compatible candidate set exists or the required performance field is absent.
 
 **How to Use:**
 Download the category dataset rather than calling the API at calculation time.
@@ -210,6 +286,15 @@ The adapter contracts use these source-reported field families:
 | `ITC-52` commercial dishwashers | Machine type, sanitation method, water per rack or hour, machine idle rate, and booster-heater idle rate |
 
 Do not infer a missing source-reported field from another product family.
+For an exact existing model, return the certified value with low uncertainty.
+When only type or application is known, select compatible certified records and return the declared class distribution.
+When neither model nor type is known, use relevant Profile or Bill context only when it supports a source-defined class, and otherwise return no estimate.
+When a Linked Opportunity names exact products, restrict the candidate set to those products.
+When it specifies a class, certification, or minimum performance, filter compatible current records to those requirements.
+When it has no product restriction or no Linked Opportunity exists, build the candidate set from application, service need, site context, and current certified data without claiming an exact model.
+An exact proposed model overrides the candidate distribution after compatibility validation.
+Resolve recognizable product usage patterns to visible low/base/high activity assumptions only when the category and source support that conversion.
+Return no estimate when product compatibility or a required usage basis cannot be established.
 
 **Automation:**
 - **Selected Strategy:** Nightly or weekly bulk-dataset ingestion into local category adapters.
@@ -227,11 +312,10 @@ Do not apply the standardized modified-energy-factor total directly to a site bi
 Return no machine-electricity component unless it is separately reported or measured.
 Commercial dryers and combined washer-dryers return no estimate until a distinct source and tree are approved.
 
-Input workflow: This contract exposes 18 independent User values because each is required by the formula or a traced Standard lookup. Collect them in a measure-specific multi-step form or a later detailed-estimate stage instead of recombining them into opaque fields.
+Default-estimate behavior: The logical path is documented but remains unavailable until its adapter or category behavior is validated.
 
 Expected uncertainty: STD-DOE-CCMS-RATINGS: Low uncertainty for a correctly matched certified model; high uncertainty when the current model is unknown. STD-ENERGY-STAR-PRODUCT-DATA: Low for exact model matches and moderate for generic proposed selections.
 
 ## Human Review Decisions
 
-- Resolve before approval: Return no machine-electricity component unless it is separately reported or measured.
-- Resolve before approval: Commercial dryers and combined washer-dryers return no estimate until a distinct source and tree are approved.
+- Fixture-test and approve the documented default path before promotion to ready status.

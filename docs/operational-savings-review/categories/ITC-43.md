@@ -7,11 +7,17 @@
 
 ## Review Status
 
-- **Category status:** RESEARCHED — READY FOR HUMAN REVIEW
+- **Category status:** DRAFT
 - **Retrofit count:** 1
-- **Standards used:** `STD-DOE-MEASUR`
-- **Expanded User-input count:** 6
-- **Automation readiness:** Ready for implementation
+- **Standards used:** `STD-DOE-MEASUR`, `STD-OPERATING-SCHEDULE`
+- **Required User-input count:** 3
+- **Optional Known-Detail count:** 5
+- **Profile-input count:** 1
+- **Bill-input count:** 4
+- **Standard-assumption count:** 2
+- **Applicable resources:** electricity
+- **Default estimate:** UNAVAILABLE
+- **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
 
@@ -35,56 +41,80 @@ Annual dollar savings
 │  ├─ In-scope quantity [BR-SCOPE-QUANTITY]
 │  │  └─ Count of identical units in project scope (User)
 │  ├─ Selected leak-measurement method (User)
-│  ├─ Observations required by that measurement method (User)
-│  ├─ System pressure (User)
-│  ├─ Compressor specific power (User)
+│  ├─ Measurement Observations, if known (User)
+│  ├─ System Pressure, if known (User)
+│  ├─ Compressor specific power, if known (User)
 │  ├─ Annual operating hours [BR-ANNUAL-OPERATING-HOURS]
-│  │  └─ Confirmed annual operating hours for the exact equipment or load (User)
+│  │  ├─ Recognizable Business, Shift, Seasonal, or Usage Pattern (User)
+│  │  ├─ Detailed Operating Days, Shifts, or Active Season, if known (User)
+│  │  ├─ Measured Annual Operating Hours, if known (User)
+│  │  ├─ site.geo coordinates and business schedule context (Profile)
+│  │  └─ Deterministic annual operating-hours resolution (Standard)
 │  └─ MEASUR leak-flow result (Standard)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   ├─ Electric variable charge
-   │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
-   │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-   │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-   │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   ├─ Gas variable charge
-   │  ├─ gas_rate_schedule, verified against the service account (Bill)
-   │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   └─ Electric variable charge
+      ├─ rate_schedule and customer_class, verified against the service account (Bill)
+      ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
+      ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
+      └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
 - Annual compressed-air leak electricity reduction > In-scope quantity [BR-SCOPE-QUANTITY] > Count of identical units in project scope
 - Annual compressed-air leak electricity reduction > Selected leak-measurement method
-- Annual compressed-air leak electricity reduction > Observations required by that measurement method
-- Annual compressed-air leak electricity reduction > System pressure
-- Annual compressed-air leak electricity reduction > Compressor specific power
-- Annual compressed-air leak electricity reduction > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Confirmed annual operating hours for the exact equipment or load
+- Annual compressed-air leak electricity reduction > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Recognizable Business, Shift, Seasonal, or Usage Pattern
 
-### Profile
+### Optional Known Details
 
-- None.
+- Annual compressed-air leak electricity reduction > Measurement Observations, if known
+- Annual compressed-air leak electricity reduction > System Pressure, if known
+- Annual compressed-air leak electricity reduction > Compressor specific power, if known
+- Annual compressed-air leak electricity reduction > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Detailed Operating Days, Shifts, or Active Season, if known
+- Annual compressed-air leak electricity reduction > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Measured Annual Operating Hours, if known
 
-### Bill
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
+
+- Annual compressed-air leak electricity reduction > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > site.geo coordinates and business schedule context
+
+### Bill Inputs
 
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- Annual compressed-air leak electricity reduction > MEASUR leak-flow result
+#### STD-DOE-MEASUR
+
+- **Value produced:** Existing and proposed annual resource use or avoided resource use, with the calculator version, input units, and warnings.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Run the calculator at each documented low, base, and high input set; never create ranges from unsupported generic defaults.
+- **Exact versus estimated:** Return exact calculator output for complete measured inputs; return a low/base/high engineering range only when the calculator and an authoritative class rule support missing values; otherwise return no estimate.
+- **Uncertainty:** Low with complete measured inputs, moderate with source-supported class inputs, and high when the result is sensitive to unresolved operating conditions.
+- **Source:** U.S. Department of Energy, [MEASUR tool and downloads](https://www.energy.gov/cmei/ito/measur), [calculator list and descriptions](https://www.energy.gov/cmei/amo/measur-calculator-list-and-descriptions), and [ORNL MEASUR source repository](https://github.com/ORNL-AMO/AMO-Tools-Desktop). The tool page identifies the open-source assessment modules. The calculator page identifies the supported lighting, motor, pump, fan, compressed-air, process-heating, and steam calculations.
+- **Source version:** Pinned MEASUR release, calculator identifier, source commit, and adapter version.
+- **Selected class or candidate set:** Select the calculator by category contract and select any equipment class only from an authoritative source identified by that contract.
+- **Assumptions:** Units, operating point, schedule, and system boundaries match the selected calculator.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+
+#### STD-OPERATING-SCHEDULE
+
+- **Value produced:** Low, base, and high annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Calculate each value from visible hours-per-day, days-per-week, active-weeks, shift, setback, or daylight assumptions; never apply an unexplained annual-hours constant.
+- **Exact versus estimated:** Return the exact validated schedule total when supplied; otherwise return a deterministic low/base/high range from the recognizable schedule and context.
+- **Uncertainty:** Low for an exact validated schedule, moderate for a complete recognizable schedule, and high for a broad context-derived range.
+- **Source:** U.S. Department of Energy, [Commercial Reference Buildings](https://www.energy.gov/cmei/buildings/commercial-reference-buildings), and U.S. Naval Observatory, [Rise, Set, and Twilight Definitions](https://aa.usno.navy.mil/faq/RST_defs) and [Data Services API](https://aa.usno.navy.mil/data/api.html). DOE reference buildings provide building-type operating-schedule context. USNO defines and computes sunrise, sunset, and civil-twilight times for location-specific exterior schedules.
+- **Source version:** Calculation policy version, DOE schedule source version when used, USNO retrieval or algorithm version when used, analysis year, and timezone rules.
+- **Selected class or candidate set:** Select only a declared business, shift, seasonal, continuous, intermittent, or exterior-control pattern supported by the supplied facts.
+- **Assumptions:** Operating days, active weeks, holidays, setbacks, and daylight or control offsets are visible and editable.
+- **Editable:** Yes. Every schedule component remains visible and can be replaced by a validated exact schedule.
 
 ## Standards and Automation
 
@@ -101,17 +131,30 @@ The tool page identifies the open-source assessment modules.
 The calculator page identifies the supported lighting, motor, pump, fan, compressed-air, process-heating, and steam calculations.
 
 **Lookup Inputs:**
-- `measur_calculator_inputs` - Every calculator-specific equipment, operating-point, schedule, and resource input shown as an atomic leaf in the applicable category tree; the category contract deterministically selects the calculator ID.
+- `measur_calculator_inputs` - **Required:** Every calculator-specific equipment, operating-point, schedule, and resource input shown as an atomic leaf in the applicable category tree; the category contract deterministically selects the calculator ID.
   - **Resolved by:**
     - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > In-scope quantity [BR-SCOPE-QUANTITY] > Count of identical units in project scope
     - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > Selected leak-measurement method
-    - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > Observations required by that measurement method
-    - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > System pressure
-    - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > Compressor specific power
-    - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Confirmed annual operating hours for the exact equipment or load
+    - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > Measurement Observations, if known
+    - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > System Pressure, if known
+    - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > Compressor specific power, if known
+    - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Measured Annual Operating Hours, if known
 
 **Value Needed:**
 Existing and proposed annual resource use or avoided resource use, with the calculator version, input units, and warnings.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return exact calculator output for complete measured inputs; return a low/base/high engineering range only when the calculator and an authoritative class rule support missing values; otherwise return no estimate.
+- **Low/Base/High Rule:** Run the calculator at each documented low, base, and high input set; never create ranges from unsupported generic defaults.
+- **Uncertainty Rule:** Low with complete measured inputs, moderate with source-supported class inputs, and high when the result is sensitive to unresolved operating conditions.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** Pinned MEASUR release, calculator identifier, source commit, and adapter version.
+- **Selected Class or Candidate Set:** Select the calculator by category contract and select any equipment class only from an authoritative source identified by that contract.
+- **Assumptions:** Units, operating point, schedule, and system boundaries match the selected calculator.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate when a high-sensitivity calculator input has neither an exact value nor a documented class-based resolver.
 
 **How to Use:**
 Pin a MEASUR release and invoke its local calculation modules or port a formula only when its source implementation and tests are retained as executable fixtures.
@@ -129,14 +172,75 @@ Never substitute a calculator's typical default for a high-sensitivity project v
 - **Why This Is the Best Value-for-Time Strategy:** One maintained federal tool covers the industrial families and preserves tested formulas without duplicating them in application code.
 - **Access, Refresh, Versioning, and Maintenance Requirements:** Public and open source; pin releases, run golden tests before upgrades, retain input schema versions, and review changes annually.
 
+### ■ STD-OPERATING-SCHEDULE — Recognizable schedule to annual operating hours
+
+**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+
+**Purpose:**
+Resolve annual operating hours from recognizable business, shift, seasonal, or exterior-lighting control patterns, with an exact schedule or measurement as an optional override.
+
+**Source:**
+U.S. Department of Energy, [Commercial Reference Buildings](https://www.energy.gov/cmei/buildings/commercial-reference-buildings), and U.S. Naval Observatory, [Rise, Set, and Twilight Definitions](https://aa.usno.navy.mil/faq/RST_defs) and [Data Services API](https://aa.usno.navy.mil/data/api.html).
+DOE reference buildings provide building-type operating-schedule context.
+USNO defines and computes sunrise, sunset, and civil-twilight times for location-specific exterior schedules.
+
+**Lookup Inputs:**
+- `operating_schedule` - **Required:** Recognizable usage or control pattern and available Profile context.
+  - **Resolved by:**
+    - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Recognizable Business, Shift, Seasonal, or Usage Pattern
+    - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Measured Annual Operating Hours, if known
+    - **Profile:** Annual dollar savings > Annual compressed-air leak electricity reduction > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > site.geo coordinates and business schedule context
+    - **Standard:** Annual dollar savings > Annual compressed-air leak electricity reduction > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Deterministic annual operating-hours resolution
+- `operating_schedule_details` - **Optional:** Detailed operating days, shifts, or active season when known.
+  - **Resolved by:**
+    - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Detailed Operating Days, Shifts, or Active Season, if known
+- `measured_annual_operating_hours` - **Optional:** Exact annual schedule or measured annual operating hours when known.
+  - **Resolved by:**
+    - **User:** Annual dollar savings > Annual compressed-air leak electricity reduction > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Measured Annual Operating Hours, if known
+
+**Value Needed:**
+Low, base, and high annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return the exact validated schedule total when supplied; otherwise return a deterministic low/base/high range from the recognizable schedule and context.
+- **Low/Base/High Rule:** Calculate each value from visible hours-per-day, days-per-week, active-weeks, shift, setback, or daylight assumptions; never apply an unexplained annual-hours constant.
+- **Uncertainty Rule:** Low for an exact validated schedule, moderate for a complete recognizable schedule, and high for a broad context-derived range.
+- **Exact Override:** A validated exact schedule or measured annual operating-hours value overrides the estimated range.
+- **Source Version:** Calculation policy version, DOE schedule source version when used, USNO retrieval or algorithm version when used, analysis year, and timezone rules.
+- **Selected Class or Candidate Set:** Select only a declared business, shift, seasonal, continuous, intermittent, or exterior-control pattern supported by the supplied facts.
+- **Assumptions:** Operating days, active weeks, holidays, setbacks, and daylight or control offsets are visible and editable.
+- **Editable:** Yes. Every schedule component remains visible and can be replaced by a validated exact schedule.
+- **No-Estimate Rule:** Return no estimate when the user-recognizable schedule and available context cannot bound annual operation defensibly.
+
+**How to Use:**
+Use a validated exact schedule or measured annual hours when supplied.
+Otherwise calculate business-hours operation from hours per day, operating days per week, and active weeks per year.
+Calculate shift operation from shift length, shifts per day, operating days, and active weeks.
+For seasonal equipment, apply the user-selected active season rather than a full-year assumption.
+For dusk-to-dawn or photocell exterior lighting, calculate annual darkness or twilight-controlled hours from site coordinates, analysis year, timezone, and the declared control offset.
+Use a visible range for timer, occupancy, or unknown-control behavior.
+Do not infer annual hours solely from an industry label when site operation can vary materially.
+
+**Automation:**
+- **Selected Strategy:** Transparent schedule formulas with a versioned daylight calculation adapter.
+- **Automation Method:** Implement typed schedule patterns, calendar and timezone handling, and a tested USNO-compatible daylight calculation or controlled API cache.
+- **Difficulty:** Easy to Medium.
+- **Efficient Build-Time Estimate:** 1 to 2 developer days.
+- **Expected Accuracy or Uncertainty:** Low with an exact schedule and moderate to high for context-derived schedules.
+- **Basis:** The arithmetic is deterministic, while holidays, overrides, and actual controls can change operation.
+- **Why This Is the Best Value-for-Time Strategy:** It replaces a difficult annual-hours question with recognizable facts and preserves every assumption.
+- **Access, Refresh, Versioning, and Maintenance Requirements:** Version formulas and timezone rules, retain source and analysis-year metadata, and regression-test daylight and calendar edge cases.
+
 ## Category Notes and Missing-Data Behavior
 
 A generic leak percentage is not a substitute for a measured leak method.
 
-Input workflow: This contract exposes 6 independent User values because each is required by the formula or a traced Standard lookup. Collect them in a measure-specific multi-step form or a later detailed-estimate stage instead of recombining them into opaque fields.
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
 
-Expected uncertainty: STD-DOE-MEASUR: Moderate uncertainty with field measurements and high uncertainty with estimated operating points.
+Expected uncertainty: STD-DOE-MEASUR: Moderate uncertainty with field measurements and high uncertainty with estimated operating points. STD-OPERATING-SCHEDULE: Low with an exact schedule and moderate to high for context-derived schedules.
 
 ## Human Review Decisions
 
-- Approve the documented category boundary, inputs, Standard automation, missing-data behavior, uncertainty, and exclusions before implementation.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

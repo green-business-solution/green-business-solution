@@ -7,11 +7,17 @@
 
 ## Review Status
 
-- **Category status:** RESEARCHED — READY FOR HUMAN REVIEW
+- **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-WIND-SAM`
-- **Expanded User-input count:** 4
-- **Automation readiness:** Ready for implementation
+- **Required User-input count:** 1
+- **Optional Known-Detail count:** 4
+- **Profile-input count:** 1
+- **Bill-input count:** 6
+- **Standard-assumption count:** 1
+- **Applicable resources:** electricity
+- **Default estimate:** UNAVAILABLE
+- **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** High
 
@@ -32,10 +38,11 @@
 ```text
 Annual wind bill reduction
 ├─ site.geo.coordinates, verified rather than address-only (Profile)
-├─ Exact turbine model or power curve (User)
-├─ Hub height (User)
-├─ Loss factor (User)
-├─ Analysis year (User)
+├─ Wind Turbine Class or Intended Application (User)
+├─ Exact Turbine Model or Power Curve, if known (User)
+├─ Hub Height, if known (User)
+├─ Loss factor, if known (User)
+├─ Analysis Year, if known (User)
 ├─ WIND Toolkit resource and SAM generation (Standard)
 └─ Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF]
    ├─ Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field (Bill)
@@ -46,20 +53,26 @@ Annual wind bill reduction
    └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
-- Exact turbine model or power curve
-- Hub height
-- Loss factor
-- Analysis year
+- Wind Turbine Class or Intended Application
 
-### Profile
+### Optional Known Details
+
+- Exact Turbine Model or Power Curve, if known
+- Hub Height, if known
+- Loss factor, if known
+- Analysis Year, if known
+
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
 
 - site.geo.coordinates, verified rather than address-only
 
-### Bill
+### Bill Inputs
 
 - Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field
 - Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
@@ -68,9 +81,20 @@ Annual wind bill reduction
 - Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > time_of_use_periods and seasonal calendar from a verified tariff artifact
 - Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
 
-### Standard
+### Standard-Derived Assumptions
 
-- WIND Toolkit resource and SAM generation
+#### STD-WIND-SAM
+
+- **Value produced:** Hourly and annual AC kWh, capacity factor, resource dataset version, and warnings.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Simulate each approved compatible curve and report the minimum, median, and maximum annual output after identical resource and loss treatment.
+- **Exact versus estimated:** Return exact-curve simulation output when a compatible turbine curve is supplied; otherwise return no estimate unless an approved application-class curve set exists.
+- **Uncertainty:** High without onsite resource validation and moderate only with a confirmed curve and representative resource point.
+- **Source:** National Laboratory of the Rockies, [WIND Toolkit](https://www.nlr.gov/grid/wind-toolkit), [WIND Toolkit download API](https://developer.nlr.gov/docs/wind/wind-toolkit/wtk-download/), and [System Advisor Model repository](https://github.com/NatLabRockies/SAM). The Toolkit supplies location and height resource data. SAM supplies the turbine power-curve simulation.
+- **Source version:** WIND Toolkit dataset version, resource point and height, SAM version, and turbine-curve identifier.
+- **Selected class or candidate set:** Use only compatible source-documented turbine curves and opportunity restrictions; never predict an exact turbine model.
+- **Assumptions:** The gridded wind resource represents the microsite within the stated uncertainty.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
@@ -87,20 +111,34 @@ The Toolkit supplies location and height resource data.
 SAM supplies the turbine power-curve simulation.
 
 **Lookup Inputs:**
-- `site_coordinates` - Resolved site latitude and longitude.
+- `site_coordinates` - **Required:** Resolved site latitude and longitude.
   - **Resolved by:**
     - **Profile:** Annual wind bill reduction > site.geo.coordinates, verified rather than address-only
-- `wind_system_configuration` - Hub height, exact turbine model or power curve, and losses.
+- `wind_system_configuration` - **Required:** Hub height, exact turbine model or power curve, and losses.
   - **Resolved by:**
-    - **User:** Annual wind bill reduction > Exact turbine model or power curve
-    - **User:** Annual wind bill reduction > Hub height
-    - **User:** Annual wind bill reduction > Loss factor
-- `analysis_year` - Analysis year used to select the wind-resource series.
+    - **User:** Annual wind bill reduction > Wind Turbine Class or Intended Application
+    - **User:** Annual wind bill reduction > Exact Turbine Model or Power Curve, if known
+    - **User:** Annual wind bill reduction > Hub Height, if known
+    - **User:** Annual wind bill reduction > Loss factor, if known
+- `analysis_year` - **Optional:** Analysis year used to select the wind-resource series.
   - **Resolved by:**
-    - **User:** Annual wind bill reduction > Analysis year
+    - **User:** Annual wind bill reduction > Analysis Year, if known
 
 **Value Needed:**
 Hourly and annual AC kWh, capacity factor, resource dataset version, and warnings.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return exact-curve simulation output when a compatible turbine curve is supplied; otherwise return no estimate unless an approved application-class curve set exists.
+- **Low/Base/High Rule:** Simulate each approved compatible curve and report the minimum, median, and maximum annual output after identical resource and loss treatment.
+- **Uncertainty Rule:** High without onsite resource validation and moderate only with a confirmed curve and representative resource point.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** WIND Toolkit dataset version, resource point and height, SAM version, and turbine-curve identifier.
+- **Selected Class or Candidate Set:** Use only compatible source-documented turbine curves and opportunity restrictions; never predict an exact turbine model.
+- **Assumptions:** The gridded wind resource represents the microsite within the stated uncertainty.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate without a valid height and compatible documented power curve or approved curve set.
 
 **How to Use:**
 Ingest the needed WIND Toolkit points and heights at build time or on a controlled analyst job, cache the weather series, and run the pinned SAM wind module locally against the exact turbine curve.
@@ -121,8 +159,10 @@ Use hourly output for tariff coincidence and cap onsite offset at imported load 
 
 Display High uncertainty until onsite wind-resource validation exists.
 
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
+
 Expected uncertainty: Display High uncertainty until onsite wind-resource validation exists. STD-WIND-SAM: High uncertainty without onsite resource validation.
 
 ## Human Review Decisions
 
-- Approve the documented category boundary, inputs, Standard automation, missing-data behavior, uncertainty, and exclusions before implementation.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

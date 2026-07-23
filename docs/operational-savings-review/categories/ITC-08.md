@@ -7,11 +7,17 @@
 
 ## Review Status
 
-- **Category status:** RESEARCHED — READY FOR HUMAN REVIEW
+- **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-SAM-SOLAR-THERMAL`
-- **Expanded User-input count:** 8
-- **Automation readiness:** Ready for implementation
+- **Required User-input count:** 2
+- **Optional Known-Detail count:** 6
+- **Profile-input count:** 1
+- **Bill-input count:** 7
+- **Standard-assumption count:** 1
+- **Applicable resources:** electricity, gas, liquid-fuel
+- **Default estimate:** UNAVAILABLE
+- **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
 
@@ -35,14 +41,14 @@ Annual dollar savings
 │  ├─ site.geo.coordinates, verified rather than address-only (Profile)
 │  ├─ Collector configuration
 │  │  ├─ Collector type (User)
-│  │  ├─ Collector area (User)
-│  │  ├─ Tilt (User)
-│  │  ├─ Azimuth (User)
-│  │  └─ Storage volume (User)
-│  ├─ Annual delivered hot-water thermal load (User)
+│  │  ├─ Collector area, if known (User)
+│  │  ├─ Tilt, if known (User)
+│  │  ├─ Azimuth, if known (User)
+│  │  └─ Storage volume, if known (User)
+│  ├─ Annual delivered hot-water thermal load, if known (User)
 │  ├─ Backup resource
 │  │  ├─ Backup fuel (User)
-│  │  └─ Backup efficiency (User)
+│  │  └─ Backup efficiency, if known (User)
 │  └─ SAM solar-thermal output (Standard)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
    ├─ Electric variable charge
@@ -53,30 +59,33 @@ Annual dollar savings
    ├─ Gas variable charge
    │  ├─ gas_rate_schedule, verified against the service account (Bill)
    │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
+   └─ Liquid or vehicle-fuel variable charge
       └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
 - Annual backup-resource reduction > Collector configuration > Collector type
-- Annual backup-resource reduction > Collector configuration > Collector area
-- Annual backup-resource reduction > Collector configuration > Tilt
-- Annual backup-resource reduction > Collector configuration > Azimuth
-- Annual backup-resource reduction > Collector configuration > Storage volume
-- Annual backup-resource reduction > Annual delivered hot-water thermal load
 - Annual backup-resource reduction > Backup resource > Backup fuel
-- Annual backup-resource reduction > Backup resource > Backup efficiency
 
-### Profile
+### Optional Known Details
+
+- Annual backup-resource reduction > Collector configuration > Collector area, if known
+- Annual backup-resource reduction > Collector configuration > Tilt, if known
+- Annual backup-resource reduction > Collector configuration > Azimuth, if known
+- Annual backup-resource reduction > Collector configuration > Storage volume, if known
+- Annual backup-resource reduction > Annual delivered hot-water thermal load, if known
+- Annual backup-resource reduction > Backup resource > Backup efficiency, if known
+
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
 
 - Annual backup-resource reduction > site.geo.coordinates, verified rather than address-only
 
-### Bill
+### Bill Inputs
 
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
@@ -84,12 +93,22 @@ Annual dollar savings
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid or vehicle-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- Annual backup-resource reduction > SAM solar-thermal output
+#### STD-SAM-SOLAR-THERMAL
+
+- **Value produced:** Monthly and annual useful solar thermal energy, backup-resource displacement, and unmet-load warnings.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Run low, base, and high configurations independently and report the corresponding useful thermal output.
+- **Exact versus estimated:** Return exact configured simulation output when all configuration inputs are supplied; otherwise return a documented configuration range only where source-supported defaults exist.
+- **Uncertainty:** Moderate with a specified configuration and high when load or system geometry is estimated.
+- **Source:** National Laboratory of the Rockies, [System Advisor Model](https://sam.nlr.gov/) and [SAM open-source repository](https://github.com/NatLabRockies/SAM).
+- **Source version:** Pinned SAM and SSC versions, weather-file identifier, and weather-file checksum.
+- **Selected class or candidate set:** Use compatible collector, storage, backup-resource, and load configurations for the declared application.
+- **Assumptions:** Typical weather and the supplied or estimated load shape are representative for screening.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
@@ -104,26 +123,39 @@ Return annual solar-thermal output and backup-resource displacement for a specif
 National Laboratory of the Rockies, [System Advisor Model](https://sam.nlr.gov/) and [SAM open-source repository](https://github.com/NatLabRockies/SAM).
 
 **Lookup Inputs:**
-- `site_coordinates` - Resolved site latitude and longitude.
+- `site_coordinates` - **Required:** Resolved site latitude and longitude.
   - **Resolved by:**
     - **Profile:** Annual dollar savings > Annual backup-resource reduction > site.geo.coordinates, verified rather than address-only
-- `solar_thermal_configuration` - Collector type, collector area, tilt, azimuth, and storage volume.
+- `solar_thermal_configuration` - **Required:** Collector type, collector area, tilt, azimuth, and storage volume.
   - **Resolved by:**
     - **User:** Annual dollar savings > Annual backup-resource reduction > Collector configuration > Collector type
-    - **User:** Annual dollar savings > Annual backup-resource reduction > Collector configuration > Collector area
-    - **User:** Annual dollar savings > Annual backup-resource reduction > Collector configuration > Tilt
-    - **User:** Annual dollar savings > Annual backup-resource reduction > Collector configuration > Azimuth
-    - **User:** Annual dollar savings > Annual backup-resource reduction > Collector configuration > Storage volume
-- `hot_water_load` - Annual delivered hot-water thermal load.
+    - **User:** Annual dollar savings > Annual backup-resource reduction > Collector configuration > Collector area, if known
+    - **User:** Annual dollar savings > Annual backup-resource reduction > Collector configuration > Tilt, if known
+    - **User:** Annual dollar savings > Annual backup-resource reduction > Collector configuration > Azimuth, if known
+    - **User:** Annual dollar savings > Annual backup-resource reduction > Collector configuration > Storage volume, if known
+- `hot_water_load` - **Required:** Annual delivered hot-water thermal load.
   - **Resolved by:**
-    - **User:** Annual dollar savings > Annual backup-resource reduction > Annual delivered hot-water thermal load
-- `backup_resource` - Backup fuel and backup efficiency.
+    - **User:** Annual dollar savings > Annual backup-resource reduction > Annual delivered hot-water thermal load, if known
+- `backup_resource` - **Required:** Backup fuel and backup efficiency.
   - **Resolved by:**
     - **User:** Annual dollar savings > Annual backup-resource reduction > Backup resource > Backup fuel
-    - **User:** Annual dollar savings > Annual backup-resource reduction > Backup resource > Backup efficiency
+    - **User:** Annual dollar savings > Annual backup-resource reduction > Backup resource > Backup efficiency, if known
 
 **Value Needed:**
 Monthly and annual useful solar thermal energy, backup-resource displacement, and unmet-load warnings.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return exact configured simulation output when all configuration inputs are supplied; otherwise return a documented configuration range only where source-supported defaults exist.
+- **Low/Base/High Rule:** Run low, base, and high configurations independently and report the corresponding useful thermal output.
+- **Uncertainty Rule:** Moderate with a specified configuration and high when load or system geometry is estimated.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** Pinned SAM and SSC versions, weather-file identifier, and weather-file checksum.
+- **Selected Class or Candidate Set:** Use compatible collector, storage, backup-resource, and load configurations for the declared application.
+- **Assumptions:** Typical weather and the supplied or estimated load shape are representative for screening.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate when collector scope, usable area, backup resource, or hot-water load cannot be resolved defensibly.
 
 **How to Use:**
 Run the pinned SAM solar-water-heating compute module locally with a weather file selected by coordinates.
@@ -144,10 +176,10 @@ Store SAM version, weather-file identifier, full inputs, annual output, and warn
 
 Eight atomic project values are retained because load, collector geometry, storage, and backup-system performance are high-sensitivity facts.
 
-Input workflow: This contract exposes 8 independent User values because each is required by the formula or a traced Standard lookup. Collect them in a measure-specific multi-step form or a later detailed-estimate stage instead of recombining them into opaque fields.
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
 
 Expected uncertainty: STD-SAM-SOLAR-THERMAL: Moderate uncertainty.
 
 ## Human Review Decisions
 
-- Approve the documented category boundary, inputs, Standard automation, missing-data behavior, uncertainty, and exclusions before implementation.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

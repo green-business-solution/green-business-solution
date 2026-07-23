@@ -7,11 +7,17 @@
 
 ## Review Status
 
-- **Category status:** RESEARCHED — READY FOR HUMAN REVIEW
+- **Category status:** DRAFT
 - **Retrofit count:** 2
 - **Standards used:** `STD-DOE-MEASUR`
-- **Expanded User-input count:** 6
-- **Automation readiness:** Ready for implementation
+- **Required User-input count:** 2
+- **Optional Known-Detail count:** 5
+- **Profile-input count:** 0
+- **Bill-input count:** 10
+- **Standard-assumption count:** 1
+- **Applicable resources:** electricity, gas
+- **Default estimate:** UNAVAILABLE
+- **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
 
@@ -36,15 +42,17 @@
 Annual dollar savings
 ├─ Annual process resource switch
 │  ├─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-│  │  ├─ annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r (Bill)
+│  │  ├─ annual_kwh for electricity (Bill)
+│  │  ├─ annual_therms for gas (Bill)
 │  │  ├─ billing_period_start (Bill)
 │  │  └─ billing_period_end (Bill)
-│  ├─ Process share of billed fuel (User)
-│  ├─ Required process temperature (User)
-│  ├─ Useful process load (User)
-│  ├─ Existing process efficiency (User)
+│  ├─ Process share of billed fuel, if known (User)
+│  ├─ Existing Process or Fuel Type (User)
+│  ├─ Required Process Temperature, if known (User)
+│  ├─ Useful Process Load, if known (User)
+│  ├─ Existing process efficiency, if known (User)
 │  ├─ Proposed technology (User)
-│  ├─ Proposed COP or efficiency (User)
+│  ├─ Proposed COP or efficiency, if known (User)
 │  └─ MEASUR process-heating balance (Standard)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
    ├─ Electric variable charge
@@ -52,33 +60,36 @@ Annual dollar savings
    │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
    │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
    │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   ├─ Gas variable charge
-   │  ├─ gas_rate_schedule, verified against the service account (Bill)
-   │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   └─ Gas variable charge
+      ├─ gas_rate_schedule, verified against the service account (Bill)
+      └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
-- Annual process resource switch > Process share of billed fuel
-- Annual process resource switch > Required process temperature
-- Annual process resource switch > Useful process load
-- Annual process resource switch > Existing process efficiency
+- Annual process resource switch > Existing Process or Fuel Type
 - Annual process resource switch > Proposed technology
-- Annual process resource switch > Proposed COP or efficiency
 
-### Profile
+### Optional Known Details
+
+- Annual process resource switch > Process share of billed fuel, if known
+- Annual process resource switch > Required Process Temperature, if known
+- Annual process resource switch > Useful Process Load, if known
+- Annual process resource switch > Existing process efficiency, if known
+- Annual process resource switch > Proposed COP or efficiency, if known
+
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
 
 - None.
 
-### Bill
+### Bill Inputs
 
-- Annual process resource switch > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r
+- Annual process resource switch > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh for electricity
+- Annual process resource switch > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_therms for gas
 - Annual process resource switch > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
 - Annual process resource switch > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
@@ -87,12 +98,21 @@ Annual dollar savings
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- Annual process resource switch > MEASUR process-heating balance
+#### STD-DOE-MEASUR
+
+- **Value produced:** Existing and proposed annual resource use or avoided resource use, with the calculator version, input units, and warnings.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Run the calculator at each documented low, base, and high input set; never create ranges from unsupported generic defaults.
+- **Exact versus estimated:** Return exact calculator output for complete measured inputs; return a low/base/high engineering range only when the calculator and an authoritative class rule support missing values; otherwise return no estimate.
+- **Uncertainty:** Low with complete measured inputs, moderate with source-supported class inputs, and high when the result is sensitive to unresolved operating conditions.
+- **Source:** U.S. Department of Energy, [MEASUR tool and downloads](https://www.energy.gov/cmei/ito/measur), [calculator list and descriptions](https://www.energy.gov/cmei/amo/measur-calculator-list-and-descriptions), and [ORNL MEASUR source repository](https://github.com/ORNL-AMO/AMO-Tools-Desktop). The tool page identifies the open-source assessment modules. The calculator page identifies the supported lighting, motor, pump, fan, compressed-air, process-heating, and steam calculations.
+- **Source version:** Pinned MEASUR release, calculator identifier, source commit, and adapter version.
+- **Selected class or candidate set:** Select the calculator by category contract and select any equipment class only from an authoritative source identified by that contract.
+- **Assumptions:** Units, operating point, schedule, and system boundaries match the selected calculator.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
@@ -109,17 +129,31 @@ The tool page identifies the open-source assessment modules.
 The calculator page identifies the supported lighting, motor, pump, fan, compressed-air, process-heating, and steam calculations.
 
 **Lookup Inputs:**
-- `measur_calculator_inputs` - Every calculator-specific equipment, operating-point, schedule, and resource input shown as an atomic leaf in the applicable category tree; the category contract deterministically selects the calculator ID.
+- `measur_calculator_inputs` - **Required:** Every calculator-specific equipment, operating-point, schedule, and resource input shown as an atomic leaf in the applicable category tree; the category contract deterministically selects the calculator ID.
   - **Resolved by:**
-    - **User:** Annual dollar savings > Annual process resource switch > Process share of billed fuel
-    - **User:** Annual dollar savings > Annual process resource switch > Required process temperature
-    - **User:** Annual dollar savings > Annual process resource switch > Useful process load
-    - **User:** Annual dollar savings > Annual process resource switch > Existing process efficiency
+    - **User:** Annual dollar savings > Annual process resource switch > Process share of billed fuel, if known
+    - **User:** Annual dollar savings > Annual process resource switch > Existing Process or Fuel Type
+    - **User:** Annual dollar savings > Annual process resource switch > Required Process Temperature, if known
+    - **User:** Annual dollar savings > Annual process resource switch > Useful Process Load, if known
+    - **User:** Annual dollar savings > Annual process resource switch > Existing process efficiency, if known
     - **User:** Annual dollar savings > Annual process resource switch > Proposed technology
-    - **User:** Annual dollar savings > Annual process resource switch > Proposed COP or efficiency
+    - **User:** Annual dollar savings > Annual process resource switch > Proposed COP or efficiency, if known
 
 **Value Needed:**
 Existing and proposed annual resource use or avoided resource use, with the calculator version, input units, and warnings.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return exact calculator output for complete measured inputs; return a low/base/high engineering range only when the calculator and an authoritative class rule support missing values; otherwise return no estimate.
+- **Low/Base/High Rule:** Run the calculator at each documented low, base, and high input set; never create ranges from unsupported generic defaults.
+- **Uncertainty Rule:** Low with complete measured inputs, moderate with source-supported class inputs, and high when the result is sensitive to unresolved operating conditions.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** Pinned MEASUR release, calculator identifier, source commit, and adapter version.
+- **Selected Class or Candidate Set:** Select the calculator by category contract and select any equipment class only from an authoritative source identified by that contract.
+- **Assumptions:** Units, operating point, schedule, and system boundaries match the selected calculator.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate when a high-sensitivity calculator input has neither an exact value nor a documented class-based resolver.
 
 **How to Use:**
 Pin a MEASUR release and invoke its local calculation modules or port a formula only when its source implementation and tests are retained as executable fixtures.
@@ -142,10 +176,10 @@ Never substitute a calculator's typical default for a high-sensitivity project v
 The two retrofit types share the tree because the proposed technology selects the applicable efficiency or COP record inside the same useful-heat balance.
 Return no estimate when process-electrification scope is not a thermal process that can use this balance.
 
-Input workflow: This contract exposes 6 independent User values because each is required by the formula or a traced Standard lookup. Collect them in a measure-specific multi-step form or a later detailed-estimate stage instead of recombining them into opaque fields.
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
 
 Expected uncertainty: STD-DOE-MEASUR: Moderate uncertainty with field measurements and high uncertainty with estimated operating points.
 
 ## Human Review Decisions
 
-- Approve the documented category boundary, inputs, Standard automation, missing-data behavior, uncertainty, and exclusions before implementation.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

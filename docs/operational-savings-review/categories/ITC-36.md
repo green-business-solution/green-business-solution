@@ -7,11 +7,17 @@
 
 ## Review Status
 
-- **Category status:** RESEARCHED — READY FOR HUMAN REVIEW
+- **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-WATERSENSE-CI-OPERATIONS`, `STD-DOE-MEASUR`
-- **Expanded User-input count:** 5
-- **Automation readiness:** Ready for implementation
+- **Required User-input count:** 2
+- **Optional Known-Detail count:** 3
+- **Profile-input count:** 0
+- **Bill-input count:** 9
+- **Standard-assumption count:** 2
+- **Applicable resources:** electricity, water-sewer
+- **Default estimate:** UNAVAILABLE
+- **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
 
@@ -35,12 +41,13 @@
 Annual dollar savings
 ├─ Annual cooling-tower water and fan-electricity reduction
 │  ├─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-│  │  ├─ annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r (Bill)
+│  │  ├─ annual_kwh for electricity (Bill)
+│  │  ├─ annual_water_use with water_unit for water and sewer (Bill)
 │  │  ├─ billing_period_start (Bill)
 │  │  └─ billing_period_end (Bill)
-│  ├─ Existing cycles of concentration (User)
-│  ├─ Proposed cycles of concentration (User)
-│  ├─ Annual evaporation or equivalent heat rejection (User)
+│  ├─ Existing cycles of concentration, if known (User)
+│  ├─ Proposed cycles of concentration, if known (User)
+│  ├─ Annual evaporation or equivalent heat rejection, if known (User)
 │  ├─ Existing fan control profile (User)
 │  ├─ Proposed fan control profile (User)
 │  ├─ WaterSense water balance (Standard)
@@ -51,47 +58,68 @@ Annual dollar savings
    │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
    │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
    │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   ├─ Gas variable charge
-   │  ├─ gas_rate_schedule, verified against the service account (Bill)
-   │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   └─ Water and sewer variable charge
+      └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
-- Annual cooling-tower water and fan-electricity reduction > Existing cycles of concentration
-- Annual cooling-tower water and fan-electricity reduction > Proposed cycles of concentration
-- Annual cooling-tower water and fan-electricity reduction > Annual evaporation or equivalent heat rejection
 - Annual cooling-tower water and fan-electricity reduction > Existing fan control profile
 - Annual cooling-tower water and fan-electricity reduction > Proposed fan control profile
 
-### Profile
+### Optional Known Details
+
+- Annual cooling-tower water and fan-electricity reduction > Existing cycles of concentration, if known
+- Annual cooling-tower water and fan-electricity reduction > Proposed cycles of concentration, if known
+- Annual cooling-tower water and fan-electricity reduction > Annual evaporation or equivalent heat rejection, if known
+
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
 
 - None.
 
-### Bill
+### Bill Inputs
 
-- Annual cooling-tower water and fan-electricity reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r
+- Annual cooling-tower water and fan-electricity reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh for electricity
+- Annual cooling-tower water and fan-electricity reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_water_use with water_unit for water and sewer
 - Annual cooling-tower water and fan-electricity reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
 - Annual cooling-tower water and fan-electricity reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- Annual cooling-tower water and fan-electricity reduction > WaterSense water balance
-- Annual cooling-tower water and fan-electricity reduction > MEASUR fan-energy result
+#### STD-WATERSENSE-CI-OPERATIONS
+
+- **Value produced:** Annual avoidable gallons and the exact WaterSense equation or worksheet version.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Use identical exact values when measured; where the source supplies bounds, calculate the low, base, and high equation cases explicitly.
+- **Exact versus estimated:** Return the direct equation result for complete measured inputs; otherwise return no estimate unless the WaterSense method supplies a documented range.
+- **Uncertainty:** Moderate with measured inputs and high without them.
+- **Source:** U.S. Environmental Protection Agency, [WaterSense at Work best-management practices](https://www.epa.gov/watersense/best-management-practices) and [tools for commercial and institutional facilities](https://www.epa.gov/watersense/tools-ci-facilities).
+- **Source version:** WaterSense at Work publication version, worksheet or equation identifier, and local adapter version.
+- **Selected class or candidate set:** Select only the leak or cooling-tower equation named by the category contract.
+- **Assumptions:** The measurement period and operating conditions represent the annualized period.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+
+#### STD-DOE-MEASUR
+
+- **Value produced:** Existing and proposed annual resource use or avoided resource use, with the calculator version, input units, and warnings.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Run the calculator at each documented low, base, and high input set; never create ranges from unsupported generic defaults.
+- **Exact versus estimated:** Return exact calculator output for complete measured inputs; return a low/base/high engineering range only when the calculator and an authoritative class rule support missing values; otherwise return no estimate.
+- **Uncertainty:** Low with complete measured inputs, moderate with source-supported class inputs, and high when the result is sensitive to unresolved operating conditions.
+- **Source:** U.S. Department of Energy, [MEASUR tool and downloads](https://www.energy.gov/cmei/ito/measur), [calculator list and descriptions](https://www.energy.gov/cmei/amo/measur-calculator-list-and-descriptions), and [ORNL MEASUR source repository](https://github.com/ORNL-AMO/AMO-Tools-Desktop). The tool page identifies the open-source assessment modules. The calculator page identifies the supported lighting, motor, pump, fan, compressed-air, process-heating, and steam calculations.
+- **Source version:** Pinned MEASUR release, calculator identifier, source commit, and adapter version.
+- **Selected class or candidate set:** Select the calculator by category contract and select any equipment class only from an authoritative source identified by that contract.
+- **Assumptions:** Units, operating point, schedule, and system boundaries match the selected calculator.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
@@ -106,14 +134,27 @@ Resolve cooling-tower makeup and leak-avoidance water with WaterSense commercial
 U.S. Environmental Protection Agency, [WaterSense at Work best-management practices](https://www.epa.gov/watersense/best-management-practices) and [tools for commercial and institutional facilities](https://www.epa.gov/watersense/tools-ci-facilities).
 
 **Lookup Inputs:**
-- `watersense_method_inputs` - Measured leak flow and duration, or cooling-tower evaporation, cycles of concentration, blowdown, and drift inputs required by the method selected by the category contract.
+- `watersense_method_inputs` - **Required:** Measured leak flow and duration, or cooling-tower evaporation, cycles of concentration, blowdown, and drift inputs required by the method selected by the category contract.
   - **Resolved by:**
-    - **User:** Annual dollar savings > Annual cooling-tower water and fan-electricity reduction > Existing cycles of concentration
-    - **User:** Annual dollar savings > Annual cooling-tower water and fan-electricity reduction > Proposed cycles of concentration
-    - **User:** Annual dollar savings > Annual cooling-tower water and fan-electricity reduction > Annual evaporation or equivalent heat rejection
+    - **User:** Annual dollar savings > Annual cooling-tower water and fan-electricity reduction > Existing cycles of concentration, if known
+    - **User:** Annual dollar savings > Annual cooling-tower water and fan-electricity reduction > Proposed cycles of concentration, if known
+    - **User:** Annual dollar savings > Annual cooling-tower water and fan-electricity reduction > Annual evaporation or equivalent heat rejection, if known
 
 **Value Needed:**
 Annual avoidable gallons and the exact WaterSense equation or worksheet version.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return the direct equation result for complete measured inputs; otherwise return no estimate unless the WaterSense method supplies a documented range.
+- **Low/Base/High Rule:** Use identical exact values when measured; where the source supplies bounds, calculate the low, base, and high equation cases explicitly.
+- **Uncertainty Rule:** Moderate with measured inputs and high without them.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** WaterSense at Work publication version, worksheet or equation identifier, and local adapter version.
+- **Selected Class or Candidate Set:** Select only the leak or cooling-tower equation named by the category contract.
+- **Assumptions:** The measurement period and operating conditions represent the annualized period.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate when the selected equation's minimum measured operating inputs are missing.
 
 **How to Use:**
 For a known leak, multiply measured flow by confirmed annual leak duration and stop at zero after the repair date.
@@ -143,14 +184,27 @@ The tool page identifies the open-source assessment modules.
 The calculator page identifies the supported lighting, motor, pump, fan, compressed-air, process-heating, and steam calculations.
 
 **Lookup Inputs:**
-- `measur_calculator_inputs` - Every calculator-specific equipment, operating-point, schedule, and resource input shown as an atomic leaf in the applicable category tree; the category contract deterministically selects the calculator ID.
+- `measur_calculator_inputs` - **Required:** Every calculator-specific equipment, operating-point, schedule, and resource input shown as an atomic leaf in the applicable category tree; the category contract deterministically selects the calculator ID.
   - **Resolved by:**
-    - **User:** Annual dollar savings > Annual cooling-tower water and fan-electricity reduction > Annual evaporation or equivalent heat rejection
+    - **User:** Annual dollar savings > Annual cooling-tower water and fan-electricity reduction > Annual evaporation or equivalent heat rejection, if known
     - **User:** Annual dollar savings > Annual cooling-tower water and fan-electricity reduction > Existing fan control profile
     - **User:** Annual dollar savings > Annual cooling-tower water and fan-electricity reduction > Proposed fan control profile
 
 **Value Needed:**
 Existing and proposed annual resource use or avoided resource use, with the calculator version, input units, and warnings.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return exact calculator output for complete measured inputs; return a low/base/high engineering range only when the calculator and an authoritative class rule support missing values; otherwise return no estimate.
+- **Low/Base/High Rule:** Run the calculator at each documented low, base, and high input set; never create ranges from unsupported generic defaults.
+- **Uncertainty Rule:** Low with complete measured inputs, moderate with source-supported class inputs, and high when the result is sensitive to unresolved operating conditions.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** Pinned MEASUR release, calculator identifier, source commit, and adapter version.
+- **Selected Class or Candidate Set:** Select the calculator by category contract and select any equipment class only from an authoritative source identified by that contract.
+- **Assumptions:** Units, operating point, schedule, and system boundaries match the selected calculator.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate when a high-sensitivity calculator input has neither an exact value nor a documented class-based resolver.
 
 **How to Use:**
 Pin a MEASUR release and invoke its local calculation modules or port a formula only when its source implementation and tests are retained as executable fixtures.
@@ -172,8 +226,10 @@ Never substitute a calculator's typical default for a high-sensitivity project v
 
 Compute water and fan components independently and omit either component when its minimum inputs are absent.
 
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
+
 Expected uncertainty: STD-WATERSENSE-CI-OPERATIONS: Moderate with measured inputs and high without them. STD-DOE-MEASUR: Moderate uncertainty with field measurements and high uncertainty with estimated operating points.
 
 ## Human Review Decisions
 
-- Approve the documented category boundary, inputs, Standard automation, missing-data behavior, uncertainty, and exclusions before implementation.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

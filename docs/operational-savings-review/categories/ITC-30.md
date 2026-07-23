@@ -9,10 +9,16 @@
 
 - **Category status:** BLOCKED
 - **Retrofit count:** 1
-- **Standards used:** None
-- **Expanded User-input count:** 4
+- **Standards used:** `STD-OPERATING-SCHEDULE`
+- **Required User-input count:** 2
+- **Optional Known-Detail count:** 4
+- **Profile-input count:** 1
+- **Bill-input count:** 5
+- **Standard-assumption count:** 1
+- **Applicable resources:** electricity, vehicle-fuel
+- **Default estimate:** UNAVAILABLE
 - **Automation readiness:** Blocked
-- **Unresolved issue count:** 2
+- **Unresolved issue count:** 1
 - **Expected uncertainty:** High
 
 ## Retrofits
@@ -35,64 +41,138 @@ Annual dollar savings
 │  ├─ In-scope quantity [BR-SCOPE-QUANTITY]
 │  │  └─ Count of identical units in project scope (User)
 │  ├─ Annual operating hours [BR-ANNUAL-OPERATING-HOURS]
-│  │  └─ Confirmed annual operating hours for the exact equipment or load (User)
-│  ├─ Existing fuel use per operating hour (User)
-│  └─ Proposed charging kWh per operating hour (User)
+│  │  ├─ Recognizable Business, Shift, Seasonal, or Usage Pattern (User)
+│  │  ├─ Detailed Operating Days, Shifts, or Active Season, if known (User)
+│  │  ├─ Measured Annual Operating Hours, if known (User)
+│  │  ├─ site.geo coordinates and business schedule context (Profile)
+│  │  └─ Deterministic annual operating-hours resolution (Standard)
+│  ├─ Existing fuel use per operating hour, if known (User)
+│  └─ Proposed charging kWh per operating hour, if known (User)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
    ├─ Electric variable charge
    │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
    │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
    │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
    │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   ├─ Gas variable charge
-   │  ├─ gas_rate_schedule, verified against the service account (Bill)
-   │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
+   └─ Liquid or vehicle-fuel variable charge
       └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
 - Annual forklift resource switch > In-scope quantity [BR-SCOPE-QUANTITY] > Count of identical units in project scope
-- Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Confirmed annual operating hours for the exact equipment or load
-- Annual forklift resource switch > Existing fuel use per operating hour
-- Annual forklift resource switch > Proposed charging kWh per operating hour
+- Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Recognizable Business, Shift, Seasonal, or Usage Pattern
 
-### Profile
+### Optional Known Details
 
-- None.
+- Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Detailed Operating Days, Shifts, or Active Season, if known
+- Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Measured Annual Operating Hours, if known
+- Annual forklift resource switch > Existing fuel use per operating hour, if known
+- Annual forklift resource switch > Proposed charging kWh per operating hour, if known
 
-### Bill
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
+
+- Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > site.geo coordinates and business schedule context
+
+### Bill Inputs
 
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid or vehicle-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- None.
+#### STD-OPERATING-SCHEDULE
+
+- **Value produced:** Low, base, and high annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Calculate each value from visible hours-per-day, days-per-week, active-weeks, shift, setback, or daylight assumptions; never apply an unexplained annual-hours constant.
+- **Exact versus estimated:** Return the exact validated schedule total when supplied; otherwise return a deterministic low/base/high range from the recognizable schedule and context.
+- **Uncertainty:** Low for an exact validated schedule, moderate for a complete recognizable schedule, and high for a broad context-derived range.
+- **Source:** U.S. Department of Energy, [Commercial Reference Buildings](https://www.energy.gov/cmei/buildings/commercial-reference-buildings), and U.S. Naval Observatory, [Rise, Set, and Twilight Definitions](https://aa.usno.navy.mil/faq/RST_defs) and [Data Services API](https://aa.usno.navy.mil/data/api.html). DOE reference buildings provide building-type operating-schedule context. USNO defines and computes sunrise, sunset, and civil-twilight times for location-specific exterior schedules.
+- **Source version:** Calculation policy version, DOE schedule source version when used, USNO retrieval or algorithm version when used, analysis year, and timezone rules.
+- **Selected class or candidate set:** Select only a declared business, shift, seasonal, continuous, intermittent, or exterior-control pattern supported by the supplied facts.
+- **Assumptions:** Operating days, active weeks, holidays, setbacks, and daylight or control offsets are visible and editable.
+- **Editable:** Yes. Every schedule component remains visible and can be replaced by a validated exact schedule.
 
 ## Standards and Automation
 
-No external Standard is used by this category.
+### ■ STD-OPERATING-SCHEDULE — Recognizable schedule to annual operating hours
+
+**Status:** RESEARCHED — READY FOR HUMAN REVIEW
+
+**Purpose:**
+Resolve annual operating hours from recognizable business, shift, seasonal, or exterior-lighting control patterns, with an exact schedule or measurement as an optional override.
+
+**Source:**
+U.S. Department of Energy, [Commercial Reference Buildings](https://www.energy.gov/cmei/buildings/commercial-reference-buildings), and U.S. Naval Observatory, [Rise, Set, and Twilight Definitions](https://aa.usno.navy.mil/faq/RST_defs) and [Data Services API](https://aa.usno.navy.mil/data/api.html).
+DOE reference buildings provide building-type operating-schedule context.
+USNO defines and computes sunrise, sunset, and civil-twilight times for location-specific exterior schedules.
+
+**Lookup Inputs:**
+- `operating_schedule` - **Required:** Recognizable usage or control pattern and available Profile context.
+  - **Resolved by:**
+    - **User:** Annual dollar savings > Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Recognizable Business, Shift, Seasonal, or Usage Pattern
+    - **User:** Annual dollar savings > Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Measured Annual Operating Hours, if known
+    - **Profile:** Annual dollar savings > Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > site.geo coordinates and business schedule context
+    - **Standard:** Annual dollar savings > Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Deterministic annual operating-hours resolution
+- `operating_schedule_details` - **Optional:** Detailed operating days, shifts, or active season when known.
+  - **Resolved by:**
+    - **User:** Annual dollar savings > Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Detailed Operating Days, Shifts, or Active Season, if known
+- `measured_annual_operating_hours` - **Optional:** Exact annual schedule or measured annual operating hours when known.
+  - **Resolved by:**
+    - **User:** Annual dollar savings > Annual forklift resource switch > Annual operating hours [BR-ANNUAL-OPERATING-HOURS] > Measured Annual Operating Hours, if known
+
+**Value Needed:**
+Low, base, and high annual operating hours, exact or estimated status, schedule formula, analysis year, uncertainty, and source provenance.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return the exact validated schedule total when supplied; otherwise return a deterministic low/base/high range from the recognizable schedule and context.
+- **Low/Base/High Rule:** Calculate each value from visible hours-per-day, days-per-week, active-weeks, shift, setback, or daylight assumptions; never apply an unexplained annual-hours constant.
+- **Uncertainty Rule:** Low for an exact validated schedule, moderate for a complete recognizable schedule, and high for a broad context-derived range.
+- **Exact Override:** A validated exact schedule or measured annual operating-hours value overrides the estimated range.
+- **Source Version:** Calculation policy version, DOE schedule source version when used, USNO retrieval or algorithm version when used, analysis year, and timezone rules.
+- **Selected Class or Candidate Set:** Select only a declared business, shift, seasonal, continuous, intermittent, or exterior-control pattern supported by the supplied facts.
+- **Assumptions:** Operating days, active weeks, holidays, setbacks, and daylight or control offsets are visible and editable.
+- **Editable:** Yes. Every schedule component remains visible and can be replaced by a validated exact schedule.
+- **No-Estimate Rule:** Return no estimate when the user-recognizable schedule and available context cannot bound annual operation defensibly.
+
+**How to Use:**
+Use a validated exact schedule or measured annual hours when supplied.
+Otherwise calculate business-hours operation from hours per day, operating days per week, and active weeks per year.
+Calculate shift operation from shift length, shifts per day, operating days, and active weeks.
+For seasonal equipment, apply the user-selected active season rather than a full-year assumption.
+For dusk-to-dawn or photocell exterior lighting, calculate annual darkness or twilight-controlled hours from site coordinates, analysis year, timezone, and the declared control offset.
+Use a visible range for timer, occupancy, or unknown-control behavior.
+Do not infer annual hours solely from an industry label when site operation can vary materially.
+
+**Automation:**
+- **Selected Strategy:** Transparent schedule formulas with a versioned daylight calculation adapter.
+- **Automation Method:** Implement typed schedule patterns, calendar and timezone handling, and a tested USNO-compatible daylight calculation or controlled API cache.
+- **Difficulty:** Easy to Medium.
+- **Efficient Build-Time Estimate:** 1 to 2 developer days.
+- **Expected Accuracy or Uncertainty:** Low with an exact schedule and moderate to high for context-derived schedules.
+- **Basis:** The arithmetic is deterministic, while holidays, overrides, and actual controls can change operation.
+- **Why This Is the Best Value-for-Time Strategy:** It replaces a difficult annual-hours question with recognizable facts and preserves every assumption.
+- **Access, Refresh, Versioning, and Maintenance Requirements:** Version formulas and timezone rules, retain source and analysis-year metadata, and regression-test daylight and calendar edge cases.
 
 ## Category Notes and Missing-Data Behavior
 
 BLOCKED because no authoritative public model-level cross-fuel performance dataset was validated.
 The formula is usable only with measured or contractually specified project values.
 
-Expected uncertainty: No external model uncertainty applies; project-input and bill-data quality still control the result.
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
+
+Expected uncertainty: STD-OPERATING-SCHEDULE: Low with an exact schedule and moderate to high for context-derived schedules.
 
 ## Human Review Decisions
 
-- Resolve before approval: BLOCKED because no authoritative public model-level cross-fuel performance dataset was validated.
-- Resolve before approval: The formula is usable only with measured or contractually specified project values.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

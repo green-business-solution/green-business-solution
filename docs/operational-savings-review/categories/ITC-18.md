@@ -10,7 +10,13 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** None
-- **Expanded User-input count:** 2
+- **Required User-input count:** 2
+- **Optional Known-Detail count:** 0
+- **Profile-input count:** 0
+- **Bill-input count:** 6
+- **Standard-assumption count:** 0
+- **Applicable resources:** electricity
+- **Default estimate:** UNVALIDATED
 - **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
@@ -37,34 +43,40 @@ Annual contract bill reduction
 ├─ Contract escalation rule (User)
 ├─ Contract term rule (User)
 └─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-   ├─ annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r (Bill)
+   ├─ annual_kwh for electricity (Bill)
    ├─ billing_period_start (Bill)
    └─ billing_period_end (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
 - Contract escalation rule
 - Contract term rule
 
-### Profile
+### Optional Known Details
 
 - None.
 
-### Bill
+No optional exact-value override applies to this category.
+
+### Profile Inputs
+
+- None.
+
+### Bill Inputs
 
 - Allocated or credited kWh by period from the executed contract and bill; no current canonical bill field
 - Credit rate by period from the executed contract and bill; no current canonical bill field
 - Subscription charge by period from the executed contract and bill; no current canonical bill field
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r
+- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh for electricity
 - Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
 - Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
 
-### Standard
+### Standard-Derived Assumptions
 
-- None.
+No Standard-derived assumption is used by this category.
 
 ## Standards and Automation
 
@@ -75,8 +87,10 @@ No external Standard is used by this category.
 The executed contract and bill are authoritative.
 Renewable attributes, emissions, incentives, and resale value are excluded.
 
+Default-estimate behavior: The logical path is documented but remains unavailable until its adapter or category behavior is validated.
+
 Expected uncertainty: No external model uncertainty applies; project-input and bill-data quality still control the result.
 
 ## Human Review Decisions
 
-- Approve the documented category boundary, inputs, Standard automation, missing-data behavior, uncertainty, and exclusions before implementation.
+- Fixture-test and approve the documented default path before promotion to ready status.

@@ -2,9 +2,11 @@
 
 ## Executive result
 
-The strict identity audit produces 54 information categories for 92 canonical retrofit taxonomy types.
-The mapping is intended to contain every canonical ID exactly once.
-The focused validator is the independent proof and must remain green after every edit.
+All 54 operational-savings categories and all 92 canonical retrofit mappings were audited against the ordinary-user input policy.
+The required result is 54 categories, 92 unique retrofit mappings, zero missing IDs, and zero duplicate IDs.
+Every expanded User leaf now has an explicit Required User Input or Optional Known Detail classification.
+Technical models, ratings, measurements, and annualized engineering values are optional overrides instead of default questions.
+Categories return no estimate when Profile, Bill, Linked Opportunity, and authoritative Standard data cannot supply a defensible path.
 
 Current documentation state:
 
@@ -13,241 +15,192 @@ Current documentation state:
 - Canonical retrofit mappings: 92.
 - Missing mappings: 0.
 - Duplicate mappings: 0.
-- Shared branches: 5.
-- Canonical Standards: 14.
-- Standards with a selected automation strategy: 14.
-- Expanded maximum atomic User inputs per category: 23.
-- Categories above four atomic User inputs: ITC-03, ITC-06, ITC-07, ITC-08, ITC-09, ITC-10, ITC-13, ITC-16, ITC-17, ITC-20, ITC-21, ITC-22, ITC-23, ITC-24, ITC-25, ITC-26, ITC-27, ITC-28, ITC-29, ITC-31, ITC-32, ITC-33, ITC-34, ITC-36, ITC-37, ITC-38, ITC-39, ITC-40, ITC-41, ITC-42, ITC-43, ITC-44, ITC-45, ITC-46, ITC-47, ITC-48, ITC-49, ITC-50, ITC-51, ITC-52, ITC-53, ITC-54.
-- Category statuses: 28 `RESEARCHED — READY FOR HUMAN REVIEW`, 21 `DRAFT`, and 5 `BLOCKED`.
-- Standard statuses: 12 `RESEARCHED — READY FOR HUMAN REVIEW` and 2 `LIMITED`.
+- Shared branches: 6.
+- Canonical Standards: 16.
+- Standards with a selected automation strategy: 16.
+- Expanded maximum atomic User inputs per category: 25.
+- Expanded Required User inputs: 156.
+- Expanded Optional Known Details: 253.
+- Maximum Required User inputs per category: 8.
+- Categories above four Required User inputs: ITC-26, ITC-28, ITC-34, ITC-37, ITC-47, ITC-53.
+- Category statuses: 7 `RESEARCHED — READY FOR HUMAN REVIEW`, 42 `DRAFT`, and 5 `BLOCKED`.
+- Standard statuses: 14 `RESEARCHED — READY FOR HUMAN REVIEW` and 2 `LIMITED`.
+
+The prior expanded architecture treated all 388 User leaf instances as required.
+The corrected architecture has 156 required instances, a net reduction of 232, plus 253 separately visible Optional Known Details.
+The total expanded User-leaf count increased to 409 because the architecture now exposes exact overrides and recognizable fallback facts instead of hiding them inside compound fields.
 
 ## Audit method
 
-The review started from `RETROFIT_TYPES` in `apps/api/server/matching/retrofitTaxonomy.mjs`, not from the inherited documentation count.
-It compared every proposed shared category across formula, supporting formulas, tree structure, source labels, required user facts, profile and bill inputs, Standard lookups, missing-data behavior, bill treatment, automation, and platform behavior.
-It also reviewed `normalizeUserProfile.mjs`, the energy-data parser and bill field dictionary, and the existing savings engine to separate current implementation facts from future documentation requirements.
+The audit started from `RETROFIT_TYPES` and reviewed every category's formula, tree, source labels, input burden, default-estimate path, exact override, uncertainty, missing-data behavior, resource scope, Standard traceability, and automation boundary.
+It also reviewed Stage 1 profile normalization and bill parsing so that Profile and Bill leaves claim only data the product can actually supply.
+The taxonomy count and category identities did not change.
+All 54 category contracts changed because each now declares applicable resources, default-estimate availability, and classified User leaves.
 
-The inherited 41-category draft was rejected as the architectural target.
-It grouped unrelated technologies under a common algebraic shape even when sources and operating data differed.
-Examples included LED lighting with pumps and compressors, fuel cells with CHP and biomass, and generic process electrification with induction cooking.
-
-The replacement architecture uses three deliberate kinds of reuse:
-
-1. A category may contain different records inside one Standard when the complete tree and behavior are identical.
-2. A shared branch may be referenced only when its value, source leaves, fallback, and platform behavior are identical.
-3. Standards are canonical and are never copied into category prose.
+The architecture uses six canonical shared branches.
+`BR-CERTIFIED-PRODUCT-RESOLUTION` now centralizes recognizable existing class, exact existing model override, Linked Opportunity, proposed class, exact proposed model override, and certified engineering-value resolution.
+`BR-ANNUAL-OPERATING-HOURS` now accepts a recognizable schedule and optional detail rather than requiring an exact annual total.
+The reusable annual-bill and avoidable-rate branches carry resource metadata that the generator projects for each category.
 
 ## Generated review workflow
 
 The canonical category contracts, Shared Branch Registry, and Standard Registry remain the only maintained definitions.
-`scripts/generate-operational-savings-review-pages.mjs` parses those documents, recursively expands every shared branch, embeds the complete applicable Standard cards, resolves keyed Standard lookup inputs to tree paths, calculates atomic User-input counts, derives review summaries, and writes one deterministic page for each category.
-The generated index and pages carry a do-not-edit notice, and the validator compares every generated byte with a fresh in-memory render.
-Running the generator twice without canonical changes produces no diff.
-
-The review entrypoint is `docs/operational-savings-review/README.md`.
-The canonical Category Index links directly to the same standalone pages.
-Reviewers therefore see the complete category contract on one GitHub page while canonical shared content is still maintained once.
+The generator recursively expands shared branches, filters resource-specific children, traces Standard lookup keys, separates Required and Optional inputs, and renders Standard-derived assumptions and full Standard cards.
+Each category page contains Review Status, Retrofits, formulas, the expanded tree, Input Workflow, Standards and Automation, missing-data behavior, and Human Review Decisions.
+The Input Workflow contains Required User Inputs, Optional Known Details, Profile Inputs, Bill Inputs, and Standard-Derived Assumptions.
+No Later Detailed Stage section or count remains.
+The generated index reports Required, Optional, Profile, Bill, Standard-assumption, status, automation, and issue counts separately.
+Freshness validation compares every generated byte with a new deterministic render.
 
 ## Formula/tree corrections
 
-The executable root-semantics audit found 37 category trees whose root described only a physical resource reduction or switch even though the Primary Formula returned annual dollar or bill value.
-All 37 were corrected in the canonical category contracts so the root now represents dollar savings, bill savings, dollar impact, or resource cost and the physical resource delta appears below it.
-ITC-07 now explicitly separates annual gas reduction from the avoidable gas rate under an annual dollar-savings root.
-The same correction was applied to every analogous rate-under-resource tree.
-
-The traceability audit defined 114 required category-to-Standard lookup obligations.
-All 114 now resolve to atomic User, Profile, or Bill paths in the recursively expanded category tree, or to a documented conditional input that is not applicable to that category.
-No generated Standard card contains an unresolved opaque lookup reference.
-
-## Source-validation record
-
-Each selected source below was opened and its relevant data, method, access path, and maintenance posture were reviewed.
-
-| Standard | Verified source surface | Access and version finding | Result |
-|---|---|---|---|
-| `STD-COMSTOCK-ANNUAL-DELTA` | ComStock data, upgrade measures, OEDI layout, and 2025 Release 3 reference PDF | Public individual-building annual-result files, data dictionary, crosswalk, and known-issue pages are available | Ready with individual-building uncertainty |
-| `STD-SCOUT-ECM-SCREEN` | DOE Scout description, ECM summaries, and open-source definitions | Public and versionable, but the five category mappings need human semantic approval | Limited |
-| `STD-DOE-CCMS-RATINGS` | DOE certification database, program description, and product templates | Human-accessible interactive records; anonymous automated retrieval returned HTTP 403 | Limited; analyst export required |
-| `STD-ENERGY-STAR-PRODUCT-DATA` | Product Finder datasets and EV charger product pages | Public downloadable datasets updated frequently | Ready |
-| `STD-DOE-MEASUR` | DOE MEASUR modules, downloads, and calculator list | Public open-source local execution | Ready |
-| `STD-SAM-SOLAR-THERMAL` | SAM site and source repository | Public local compute modules | Ready |
-| `STD-PVWATTS-V8` | PVWatts V8 inputs and outputs plus SAM source | API is public with a key, while local SAM avoids runtime dependence | Ready |
-| `STD-WIND-SAM` | WIND Toolkit download documentation and SAM | Download API needs a key and email; local cache is practical | Ready with High uncertainty |
-| `STD-REOPT-LOCAL-DISPATCH` | Stable V3 documentation and REopt.jl source | Public local solver avoids runtime API dependence | Ready |
-| `STD-EPA-CHP-PERFORMANCE` | Current CHP catalog pages, methodology, and workbook | Public; biomass catalog is useful but partly outdated | Ready, with biomass caveat |
-| `STD-FUELECONOMY-VEHICLES` | Web-service schema and current bulk vehicle downloads | Public CSV with documented `comb08` and `combE` fields | Ready |
-| `STD-WATERSENSE-FIXTURES` | WaterSense at Work and fixture specifications | Public guide and criteria | Ready |
-| `STD-WATERSENSE-LANDSCAPE` | Water Budget Tool and commercial outdoor tools | Public workbook and data download | Ready |
-| `STD-WATERSENSE-CI-OPERATIONS` | WaterSense commercial best practices and worksheets | Public direct equations | Ready |
-
-No licensed source is required by the selected architecture.
-ASHRAE and proprietary engineering databases were intentionally not made runtime or build prerequisites.
-Link validation covered 37 unique direct registry URLs.
-Thirty-six returned HTTP 200 on July 22, 2026, and the direct DOE certification database returned the explicitly documented HTTP 403.
-
-## Current implementation constraints
-
-Stage 1 currently provides organization classification, site address and resolved geography, building type, approximate square footage, ownership, electric-utility candidate, project interests, and related intake data.
-The utility value is a provider candidate, not a verified tariff.
-
-The bill pipeline supports electric, gas, water and sewer, and waste fields, including annual or monthly quantities, costs, blended rates, rate schedule, customer class, peak demand, demand charges, and time-of-use fields when present.
-It does not guarantee a complete interval load series or machine-readable tariff.
-
-The existing savings engine mostly consumes user-modeled reductions and blended prices.
-This documentation intentionally requires marginal-rate treatment, fixed-charge exclusions, chronological data for demand and time-of-use value, and local authoritative lookups.
-No production calculation code or reference dataset is implemented in this work.
-
-## Unresolved blockers
-
-### ITC-14 Scout crosswalk
-
-Five taxonomy types use the same proposed Scout tree, but the mapping is blocked until a human reviews exact ECM definitions for air sealing, exterior doors, cool roofs, building automation, and energy management.
-Keyword similarity is insufficient.
-If any exact definition is absent, that taxonomy type must split into a project-engineering category with a different source and missing-data behavior.
-
-### ITC-30 forklift performance
-
-No authoritative public model-level dataset was validated for comparable combustion and electric forklift resource consumption under a defined duty cycle.
-The category therefore requires measured or contractual project values and remains BLOCKED for automated model lookup.
-
-### ITC-48 induction cooking performance
-
-The available ComStock cooking scenario models broad electric cooking equipment and does not validate an induction-specific cross-fuel performance record.
-No authoritative public commercial model-level dataset or standardized cross-fuel duty lookup was validated.
-The category therefore remains BLOCKED unless the project supplies a bill allocation or direct measurement and proposed induction performance tested for the same cooking duty.
-
-### ITC-49 walk-in refrigeration system performance
-
-DOE certification records describe walk-in components, but those ratings do not independently resolve whole-system annual electricity for a specific box, climate, temperature, infiltration, and product load.
-The category therefore remains BLOCKED unless the project supplies a measured or allocated baseline and a proposed whole-system result under the same duty.
-
-### ITC-54 backup-power routine use
-
-The backup-power taxonomy spans generator, battery, and hybrid systems without one validated public model-level routine-use source.
-The category therefore remains BLOCKED for automation, but project-specific test fuel and standby-electricity values can produce a bounded negative resource result.
-
-## Draft categories and what closes them
-
-- `ITC-04`: Golden-test the selected MEASUR boiler-control adapter and approve its minimum control-sequence inputs.
-- `ITC-03`, `ITC-06`, `ITC-07`, `ITC-10`, and `ITC-13`: Approve a repeatable DOE certification-database export process and fixture-test each product adapter.
-- `ITC-05`: Approve an exact Scout duct measure or replace it with a measured leakage path.
-- `ITC-09`: Prove a minimum-input recirculation calculation without hiding pipe geometry behind defaults.
-- `ITC-11`: Approve exact Scout refrigeration-control records or split the three retrofit types.
-- `ITC-16`: Golden-test the explicit shed and rebound load-template adapter because REopt has no generic demand-response object.
-- `ITC-18`: Product-approve the contract and bill field model for community-solar credits and charges.
-- `ITC-22`: Approve the treatment of project-specific biomass or biogas fuel quality and the older EPA catalog.
-- `ITC-26`: Approve the conditional microgrid component schema and cross-category regression fixtures.
-- `ITC-27`: Golden-test the public-charging session-load template and tariff valuation path.
-- `ITC-28`: Add an authoritative path for medium- and heavy-duty fleet efficiency or restrict the category to measured values.
-- `ITC-31`: Approve the fleet availability schema, unmanaged counterfactual, and fixed-load adapter because REopt has no EV managed-charging object.
-- `ITC-35`: Confirm product behavior that reports zero until a measured leak and repair duration exist.
-- `ITC-37`: Source-map and golden-test the weather-sensitive makeup-air thermal adapter.
-- `ITC-50`: Approve the three cooking-product adapters that preserve certified test units, active efficiency, and idle energy separately.
-- `ITC-52`: Fixture-test dishwasher sanitation, booster-heater, water-use, and idle-energy treatment without assuming a racks-per-hour conversion.
-- `ITC-53`: Approve the commercial-washer adapter and require separate site-resource decomposition instead of applying the composite modified energy factor to a utility bill.
-
-## High-uncertainty Standards
-
-- `STD-SCOUT-ECM-SCREEN` has High uncertainty for an individual site because it is a national or market-segment model and the proposed taxonomy crosswalk is not approved.
-- `STD-WIND-SAM` has High uncertainty without onsite resource validation because gridded wind and terrain may not represent turbine micrositing.
-- `STD-EPA-CHP-PERFORMANCE` has High uncertainty for generic biomass or biogas screening because fuel quality, availability, and thermal coincidence dominate the result and part of the catalog is outdated.
-
-The application should display uncertainty as a screening range, not an invented precision percentage.
-
-## Category boundaries requiring the most human attention
-
-1. `ITC-14` is the highest-risk boundary because all five types depend on exact Scout semantic coverage.
-2. `ITC-01` contains 13 ComStock measure records under one identical lookup tree.
-The grouping is valid only if product accepts the same existing-condition selector, proposed-option selector, uncertainty display, bill cap, and no-measure-combination behavior for all records.
-3. `ITC-50` groups fryers, ovens, and steamers only through the same tested cooking-duty plus idle-energy balance.
-The grouping remains valid only if every product adapter preserves its exact test load, fuel, and reported idle unit.
-4. `ITC-39` groups VFDs and pump or fan controls only when both use the same validated load-bin input tree.
-5. `ITC-41` groups efficient fans and efficient ventilation systems only at a fan-system boundary with identical airflow, pressure, schedule, and MEASUR inputs.
-6. `ITC-46` groups industrial heat pumps and other process electrification only through the same useful-process-heat balance, with technology-specific COP or efficiency as a record selection.
-7. `ITC-48` remains separate from both ComStock and industrial process electrification because commercial cooking duty, source coverage, and missing-data behavior differ.
-8. `ITC-26` composes only component models that independently pass their own input gates and remains DRAFT until that conditional contract is executable.
-9. `ITC-27` and `ITC-28` require interval tariff valuation because EV charging can create demand charges that a volumetric average cannot represent.
-10. `ITC-10` covers only self-contained refrigeration products with a certified whole-product energy value, while `ITC-49` isolates walk-in system modeling.
-11. `ITC-13` uses directly reported ice-production intensities, `ITC-50` models cooking efficiency and idle energy, `ITC-52` isolates dishwasher sanitation and water-heating behavior, and `ITC-53` prevents standardized laundry energy assumptions from being treated as site resources.
-12. `ITC-51` is excluded from the zero-value enabling category because filtration can create or change fan electricity use.
-13. `ITC-54` is excluded from the zero-value enabling category because backup systems can consume test fuel and standby electricity even though resilience value is out of scope.
+The formula boundaries and category identities remain intact.
+ITC-02 was rebuilt as the representative correction case with one-for-one exterior replacement scope, recognizable fixture application, optional existing and proposed models, Linked Opportunity handling, source-backed wattage distributions, recognizable controls, optional exact schedule, and an electricity-only rate branch.
+Certified equipment categories now use one reusable product-resolution branch instead of repeated manufacturer, model, class, and capacity questionnaires.
+Vehicle categories now require vehicle class and service need while exact vehicle and charger models remain optional.
+CHP and fuel-cell paths now expose one Linked Opportunity input and an optional selected-unit model while leaving capacity and performance details as optional overrides or documented gates.
+Fixture categories now ask for recognizable use patterns while exact ratings and measured duration remain optional.
+Landscape plant factors are resolved from recognizable plant or landscape types instead of being mandatory technical inputs.
 
 ## Atomic User-input review
 
-The earlier five-input maximum was cosmetic because several leaves combined independent values such as collector configuration and area, product identity and class, or battery power, energy, and efficiency.
-The follow-up audit expanded each such phrase into atomic values or explicit repeatable form fields.
-The corrected maximum is 23 for `ITC-26`, whose value is the worst-case union of conditional PV, wind, fuel-generation, and storage component gates.
-Only the inputs for components actually included in a microgrid are shown to a user, but the standalone review page exposes the full conditional contract.
+Every canonical `(User)` leaf carries exactly one internal `required` or `optional` classification tag.
+Optional leaves include `if known` in their visible wording.
+Generated trees remove the internal tags while the Input Workflow preserves the classification.
+Exact models, wattage, input power, efficiency, flow, pressure, head, capacity, temperature, load fraction, and measured annual hours are Optional Known Details.
+Recognizable equipment or fixture class, application, project scope, quantity, business or usage pattern, and simple control intent remain Required User Inputs when they cannot be resolved elsewhere.
+The validator rejects an unclassified User leaf, an Optional leaf without `if known`, and mandatory technical wattage or comparable engineering values when a Standard path exists.
 
-`ITC-09`, `ITC-16`, `ITC-36`, and `ITC-48` each have exactly five atomic User inputs.
-Categories above five require a multi-step measure-specific form or a later detailed-estimate stage rather than hidden compound phrases.
-High-sensitivity facts remain User leaves when the profile and bills cannot resolve them, including equipment identity, operating schedule, load fraction, interval availability, process temperature, thermal coincidence, or site wind configuration.
+## Standards and resolution behavior
 
-The architecture avoids broad new Stage 1 questions.
-Profile building type, geography, and floor area feed the ComStock screen automatically.
-Product and engineering details belong in measure-specific follow-up flows after a relevant opportunity is linked.
+Fourteen existing Standards were revised and two Standards were added.
+`STD-FEMP-EXTERIOR-LIGHTING` resolves exterior existing and proposed fixture watts from DOE FEMP classes and compatible DLC product candidates.
+`STD-OPERATING-SCHEDULE` resolves annual hours from business, shift, seasonal, or exterior-control patterns and supports exact schedule overrides.
 
-Bill-derived fields are limited to values that can be extracted or deterministically calculated from actual bills and tariff records.
-Provider candidates, annual totals, blended prices, and monthly peaks are not promoted into tariff class, marginal rate, or chronological demand data.
+All 16 Standards now classify Lookup Inputs as Required, Optional, or Conditional.
+All 16 define a Resolution Contract with supported scenarios, scenario output behavior, low/base/high behavior, uncertainty, exact override, source version, class or candidate criteria, assumptions, editability, and a no-estimate rule.
+The six equipment resolvers cover exact existing model, known type or application, supported Profile or Bill fallback, Linked Opportunity exact product, Linked Opportunity product class, no product restriction, no Linked Opportunity, and exact proposed model override.
+Those six resolvers are `STD-DOE-CCMS-RATINGS`, `STD-ENERGY-STAR-PRODUCT-DATA`, `STD-EPA-CHP-PERFORMANCE`, `STD-FUELECONOMY-VEHICLES`, `STD-WATERSENSE-FIXTURES`, and `STD-FEMP-EXTERIOR-LIGHTING`.
+No resolver claims an exact model when only a class distribution is supportable.
+Every estimate remains visible and editable.
+
+The audit added six existing-equipment fallback contracts and six proposed-product no-opportunity contracts.
+Exact values override estimates after compatibility validation.
+Class estimates use an objective source-supported bound, percentile, or candidate-set rule.
+When class selection or a high-sensitivity engineering input is unsupported, the category returns no estimate.
+
+## Operating-hour corrections
+
+Thirteen category paths use the revised operating-hours policy, including ITC-02's exterior-specific presentation and 12 categories that expand the shared schedule branch.
+The default question is a recognizable business, shift, seasonal, usage, or lighting-control pattern.
+Detailed days, shifts, active season, exact schedule, and measured annual operating hours are optional.
+Exterior dusk-to-dawn and photocell schedules use site coordinates and USNO daylight definitions.
+No exact annual-hours total is mandatory.
+Categories still return no estimate when the available schedule facts cannot bound operation defensibly.
+
+## Resource-filtering corrections
+
+Every category declares one or more applicable resources or `none`.
+Forty-two categories use the reusable avoidable-resource-rate branch and now display only relevant rate children.
+Twenty categories use the annual-bill-resource branch and now display only relevant resource quantities while retaining common coverage dates.
+Exterior lighting shows electricity only.
+Gas furnace replacement shows gas only.
+Flow fixtures show water and sewer plus electricity or gas for hot-water energy.
+Light-duty vehicle electrification shows vehicle fuel and electricity only.
+Invalid resource identifiers and a `none` declaration combined with another resource fail validation.
+
+## Default-estimate and status audit
+
+Seven categories retain `RESEARCHED — READY FOR HUMAN REVIEW`: ITC-01, ITC-02, ITC-15, ITC-29, ITC-32, ITC-33, and ITC-34.
+ITC-15 is explicitly `NOT APPLICABLE` because its correct direct operational-resource value is zero.
+The other six have an available default screening path and optional exact overrides.
+
+Six Draft categories have a logically defined but unvalidated default path: ITC-10, ITC-18, ITC-28, ITC-50, ITC-52, and ITC-53.
+They remain Draft until their category adapters or contract behavior are fixture-tested.
+
+Forty-one categories declare `UNAVAILABLE` because a required class, allocation, capacity, interval artifact, operating point, measurement, or authoritative crosswalk cannot yet be resolved defensibly.
+Those categories are ITC-03 through ITC-09, ITC-11 through ITC-14, ITC-16, ITC-17, ITC-19 through ITC-27, ITC-30, ITC-31, ITC-35 through ITC-49, ITC-51, and ITC-54.
+An unavailable category may still calculate from Optional Known Details when the supplied exact values meet its documented gate.
+
+Twenty-one categories changed from Ready to Draft: ITC-08, ITC-12, ITC-17, ITC-19 through ITC-21, ITC-23 through ITC-25, ITC-36, ITC-38 through ITC-47, and ITC-51.
+These changes prevent calculators such as MEASUR, SAM, and REopt from being treated as sources of missing site-specific capacity, pressure, flow, load, or equipment size.
+
+## Unresolved blockers
+
+Five categories remain `BLOCKED`.
+ITC-14 needs an approved exact Scout semantic crosswalk.
+ITC-30 lacks an authoritative cross-fuel forklift performance dataset.
+ITC-48 lacks a validated commercial induction cross-fuel duty source.
+ITC-49 lacks a whole-system walk-in refrigeration annual-energy resolver for a specific box and duty.
+ITC-54 lacks one authoritative routine-use resolver across generator, battery, and hybrid backup technologies.
+
+The remaining 42 Draft categories are listed by the generated review index.
+The highest-priority Draft closures are the certified product adapters, interval load and tariff completeness, vehicle and charging templates, and safe engineering input gates for MEASUR-based categories.
+
+## High-uncertainty Standards
+
+`STD-SCOUT-ECM-SCREEN` remains High uncertainty for an individual site until exact semantic mappings are approved.
+`STD-WIND-SAM` remains High uncertainty without onsite resource validation and a compatible documented curve.
+`STD-EPA-CHP-PERFORMANCE` remains High uncertainty for generic biomass or biogas screening because fuel quality, availability, and thermal coincidence dominate the result.
+All generated pages show uncertainty as a visible rule and range instead of an invented precision percentage.
+
+## Source-validation record
+
+The source review added DOE FEMP exterior-lighting guidance, DLC SSL V6.0 and LUNA V2.0 technical requirements, DOE reference-building schedules, and U.S. Naval Observatory rise, set, and twilight data.
+DOE FEMP supplies exterior application classes and efficacy criteria.
+DLC supplies verified product qualification fields for compatible candidate sets.
+USNO supplies the daylight definitions and data surface needed for location-specific dusk-to-dawn schedules.
+No licensed source is a runtime or build prerequisite.
+Link validation covered 42 unique direct registry URLs.
+The five newly added source URLs returned HTTP 200 during this review.
+
+## Current implementation constraints
+
+Stage 1 currently supplies organization classification, primary activity, site address and geography, building type, approximate square footage, ownership, utility candidates, and project interests.
+It does not collect detailed equipment engineering values.
+The bill pipeline supplies supported electric, gas, water, sewer, and liquid-fuel quantities and costs when present, but it does not guarantee a complete interval load series or machine-readable tariff.
+Provider candidates, blended prices, annual totals, and monthly peaks are not promoted into verified tariff classes, marginal rates, or chronological demand data.
+No production calculation engine, reference dataset, AWS resource, or deployment is changed by this documentation work.
 
 ## Automation review
 
-All 14 Standards select one practical strategy.
-Bulk or periodic local ingestion is used for ComStock, DOE CCMS, ENERGY STAR, FuelEconomy.gov, WaterSense data, and WIND Toolkit resources.
-Local version-pinned execution is used for MEASUR, SAM, PVWatts, and REopt.
-Small stable federal tables are manually reviewed once and stored with provenance where automation would cost more than it saves.
+All 16 Standards select one implementation strategy.
+Bulk or controlled ingestion is used for ComStock, DOE CCMS, ENERGY STAR, DLC, FuelEconomy.gov, WaterSense, and WIND Toolkit sources.
+Version-pinned local execution is used for MEASUR, SAM, PVWatts, and REopt.
+Small federal criteria tables and transparent schedule formulas are stored with source version, retrieval date, schema version, record IDs, and checksums where available.
+No selected design depends on a live runtime API when a practical local artifact or open-source compute module exists.
 
-No selected design depends on a live runtime API when a practical local dataset or open-source compute module exists.
-No Standard proposes speculative columns.
-Each local artifact must retain source version, retrieval date, schema version, checksums where available, and raw provenance fields.
+## A1 - Integration and sync
 
-## Efficient implementation estimate
+The work remains on `docs/operational-savings-information-trees` and continues draft PR #29.
+The branch is based on current `origin/main` for this pass.
+Taxonomy, Profile, Bill, canonical documentation, generated pages, generator, validator, and tests remain synchronized.
+No production runtime, AWS resource, deployment, secret, merge, or main-branch state is changed.
 
-The Standards individually estimate roughly 35 to 47 developer days if built as separate first-time efforts.
-Shared ingestion, provenance, schema-diff, and regression-test infrastructure should reduce the practical program estimate to 29 to 39 focused developer days for one experienced developer using AI assistance.
+## A2 - Adversarial correctness
 
-Recommended order:
+The validator covers exact taxonomy coverage, input classification, optional wording, technical mandatory-input rejection, resource declarations, filtered branch output, Standard lookup traceability, resolver scenarios, low/base/high behavior, uncertainty, editability, exact override, generated structure, and deterministic freshness.
+Mutation tests cover mandatory wattage, missing exact override, missing type fallback, missing no-opportunity behavior, missing scenario output, missing uncertainty, missing editability, incorrect resource, incorrect Required or Optional counts, unclassified User inputs, and stale generated pages.
+Manual review targets ITC-02, ITC-08, ITC-17, ITC-29, ITC-32, ITC-38, one product-rating Draft, one Blocked category, one interval-tariff category, and one zero-direct-savings category.
 
-1. Build the common provenance manifest, versioned local-artifact contract, schema-diff checks, and bill-rate boundary.
-2. Implement ComStock, ENERGY STAR, DOE CCMS, WaterSense, and FuelEconomy bulk ingestions.
-3. Add local MEASUR adapters with DOE golden tests.
-4. Add local PVWatts and SAM solar-thermal wrappers.
-5. Add REopt interval dispatch and the shared EV charging load-template adapters only after interval load and tariff completeness gates exist.
-6. Add WIND Toolkit caching and wind simulation.
-7. Add the small EPA CHP performance table and biomass warnings.
-8. Resolve the Scout, forklift, induction, walk-in refrigeration, and backup-power blockers after human architecture review.
+## A3 - Release readiness
 
-## A1, A2, and A3 review record
+This is documentation and validation architecture for human review.
+Release readiness requires generator output, freshness validation, focused validator, generator tests, validator mutation tests, repository-selected script tests, `git diff --check`, manual adversarial review, a clean commit, a pushed branch, and an updated draft PR #29.
+The generator produced 54 category pages and its independent freshness check passed.
+The focused generator and validator suite passed 29 tests across 2 files.
+The repository-selected script suite passed 95 tests across 18 files.
+The final publication state is recorded in the draft PR and completion report.
 
-### A1 - Integration and sync
+## First ten categories for human review
 
-The branch was based on the current `origin/main` at the start of this pass.
-The taxonomy, profile normalization, bill parser and dictionary, savings engine, product vision, matching model, data model, repository workflow, and review instructions were inspected before the redesign.
-No production code, AWS resource, deployment, secret, or main-branch state is changed.
-
-### A2 - Adversarial correctness
-
-The final validation must prove exact taxonomy coverage, source-label syntax, category field order, unique branch and Standard definitions, and valid references.
-The manual review must also reject false shared categories, whole-bill rates presented as marginal prices, annual energy presented as demand, missing quantity factors, silent high-sensitivity defaults, combined ComStock measures, and duplicate attribution to enabling measures.
-
-### A3 - Release readiness
-
-This is documentation-only and remains human-review material.
-Completion requires a clean focused validator, repository-selected checks, source-link validation, full diff review, committed and pushed changes on `docs/operational-savings-information-trees`, and an updated draft PR #29.
-It does not authorize deployment or merge.
-The repository selector returned `scripts` for the final committed diff.
-The focused local Vitest suites cover deterministic generation, branch and Standard expansion, canonical validation, and 13 required failure mutations.
-The full selected script suite passed with 18 test files and 82 tests.
-The final branch workflow run is linked from draft PR #29 after the pushed commit passes GitHub Actions.
-
-## Final review checklist
-
-- [x] Focused validator passes with 54 categories and 92 unique mappings.
-- [x] All direct source URLs return an acceptable response or an explicitly documented access limitation.
-- [x] Deterministic generation and generated-artifact freshness checks pass.
-- [x] Focused generation and validation tests pass with 16 tests.
-- [x] Repository CI selector is run against `origin/main` after the final commit.
-- [x] Selected script checks pass after the final commit.
-- [x] Full diff contains no runtime calculation or dataset implementation.
-- [x] Branch commits are pushed.
-- [x] Draft PR #29 contains the generated-review totals, checks, corrected risks, and implementation estimate.
+1. ITC-02 exterior lighting, because it is the reference resolver and schedule pattern.
+2. ITC-32 flow fixtures, because it combines product and usage assumptions with multiple resources.
+3. ITC-33 flush fixtures, because it shares the product resolver while preserving a distinct formula.
+4. ITC-34 landscape water, because recognizable plant classes now replace technical plant factors.
+5. ITC-29 light-duty vehicles, because exact models now override class distributions.
+6. ITC-01 ComStock, because it remains the broadest ready category by retrofit count.
+7. ITC-10 refrigeration products, because it is the first unvalidated certified-rating adapter.
+8. ITC-28 fleet charging, because its light-duty default and heavier-vehicle boundary need product approval.
+9. ITC-50 commercial cooking, because test-duty and idle assumptions must remain source-specific.
+10. ITC-52 commercial dishwashers, because sanitation, water heating, and idle energy interact.

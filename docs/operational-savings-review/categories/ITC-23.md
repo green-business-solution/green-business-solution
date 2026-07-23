@@ -7,11 +7,17 @@
 
 ## Review Status
 
-- **Category status:** RESEARCHED — READY FOR HUMAN REVIEW
+- **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-REOPT-LOCAL-DISPATCH`
-- **Expanded User-input count:** 8
-- **Automation readiness:** Ready for implementation
+- **Required User-input count:** 1
+- **Optional Known-Detail count:** 7
+- **Profile-input count:** 0
+- **Bill-input count:** 6
+- **Standard-assumption count:** 1
+- **Applicable resources:** electricity
+- **Default estimate:** UNAVAILABLE
+- **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
 
@@ -38,35 +44,40 @@ Annual battery bill reduction
 │  ├─ demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact (Bill)
 │  ├─ time_of_use_periods and seasonal calendar from a verified tariff artifact (Bill)
 │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-├─ Power capacity (User)
-├─ Usable-energy capacity (User)
-├─ Charge efficiency (User)
-├─ Discharge efficiency (User)
-├─ Initial state of charge (User)
-├─ Terminal state-of-charge constraint (User)
+├─ Power capacity, if known (User)
+├─ Usable-energy capacity, if known (User)
+├─ Charge efficiency, if known (User)
+├─ Discharge efficiency, if known (User)
+├─ Initial state of charge, if known (User)
+├─ Terminal state-of-charge constraint, if known (User)
 ├─ Dispatch-availability schedule (User)
-├─ Reserve constraint (User)
+├─ Reserve constraint, if known (User)
 └─ REopt baseline and proposed bill result (Standard)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
-- Power capacity
-- Usable-energy capacity
-- Charge efficiency
-- Discharge efficiency
-- Initial state of charge
-- Terminal state-of-charge constraint
 - Dispatch-availability schedule
-- Reserve constraint
 
-### Profile
+### Optional Known Details
+
+- Power capacity, if known
+- Usable-energy capacity, if known
+- Charge efficiency, if known
+- Discharge efficiency, if known
+- Initial state of charge, if known
+- Terminal state-of-charge constraint, if known
+- Reserve constraint, if known
+
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
 
 - None.
 
-### Bill
+### Bill Inputs
 
 - Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field
 - Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
@@ -75,9 +86,20 @@ Annual battery bill reduction
 - Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > time_of_use_periods and seasonal calendar from a verified tariff artifact
 - Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
 
-### Standard
+### Standard-Derived Assumptions
 
-- REopt baseline and proposed bill result
+#### STD-REOPT-LOCAL-DISPATCH
+
+- **Value produced:** Baseline and proposed annual bill components, interval dispatch, imported and exported energy, monthly peaks, and solver status.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Run declared low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
+- **Exact versus estimated:** Return baseline and proposed bill components only for an optimal deterministic run with complete chronological load and tariff inputs.
+- **Uncertainty:** Moderate with complete interval and tariff data and high when any allowed category constraint is estimated.
+- **Source:** National Laboratory of the Rockies, [REopt API V3 documentation](https://developer.nlr.gov/docs/energy-optimization/reopt/v3/), [REopt.jl input reference](https://natlabrockies.github.io/REopt.jl/dev/reopt/inputs/), and [REopt.jl open-source package](https://github.com/NatLabRockies/REopt.jl). The API documentation defines stable V3 inputs and outputs. REopt.jl is the local optimization engine used by the API.
+- **Source version:** Pinned REopt.jl release, solver version, tariff version, and category-adapter version.
+- **Selected class or candidate set:** Use only the technology and fixed-load adapter declared by the category and any Linked Opportunity constraints.
+- **Assumptions:** The analysis year, tariff calendar, and interval load are aligned and future operations follow the declared case.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
@@ -94,7 +116,7 @@ The API documentation defines stable V3 inputs and outputs.
 REopt.jl is the local optimization engine used by the API.
 
 **Lookup Inputs:**
-- `chronological_load_and_tariff` - Chronological site load, complete tariff, timezone, and analysis-year calendar.
+- `chronological_load_and_tariff` - **Required:** Chronological site load, complete tariff, timezone, and analysis-year calendar.
   - **Resolved by:**
     - **Bill:** Annual battery bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field
     - **Bill:** Annual battery bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
@@ -102,19 +124,32 @@ REopt.jl is the local optimization engine used by the API.
     - **Bill:** Annual battery bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact
     - **Bill:** Annual battery bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > time_of_use_periods and seasonal calendar from a verified tariff artifact
     - **Bill:** Annual battery bill reduction > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- `reopt_category_constraints` - Applicable technology power, energy, efficiency, state, availability, event, or fixed-load-template constraints shown as atomic leaves in the category tree.
+- `reopt_category_constraints` - **Required:** Applicable technology power, energy, efficiency, state, availability, event, or fixed-load-template constraints shown as atomic leaves in the category tree.
   - **Resolved by:**
-    - **User:** Annual battery bill reduction > Power capacity
-    - **User:** Annual battery bill reduction > Usable-energy capacity
-    - **User:** Annual battery bill reduction > Charge efficiency
-    - **User:** Annual battery bill reduction > Discharge efficiency
-    - **User:** Annual battery bill reduction > Initial state of charge
-    - **User:** Annual battery bill reduction > Terminal state-of-charge constraint
+    - **User:** Annual battery bill reduction > Power capacity, if known
+    - **User:** Annual battery bill reduction > Usable-energy capacity, if known
+    - **User:** Annual battery bill reduction > Charge efficiency, if known
+    - **User:** Annual battery bill reduction > Discharge efficiency, if known
+    - **User:** Annual battery bill reduction > Initial state of charge, if known
+    - **User:** Annual battery bill reduction > Terminal state-of-charge constraint, if known
     - **User:** Annual battery bill reduction > Dispatch-availability schedule
-    - **User:** Annual battery bill reduction > Reserve constraint
+    - **User:** Annual battery bill reduction > Reserve constraint, if known
 
 **Value Needed:**
 Baseline and proposed annual bill components, interval dispatch, imported and exported energy, monthly peaks, and solver status.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return baseline and proposed bill components only for an optimal deterministic run with complete chronological load and tariff inputs.
+- **Low/Base/High Rule:** Run declared low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
+- **Uncertainty Rule:** Moderate with complete interval and tariff data and high when any allowed category constraint is estimated.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** Pinned REopt.jl release, solver version, tariff version, and category-adapter version.
+- **Selected Class or Candidate Set:** Use only the technology and fixed-load adapter declared by the category and any Linked Opportunity constraints.
+- **Assumptions:** The analysis year, tariff calendar, and interval load are aligned and future operations follow the declared case.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate without continuous interval data, a verified complete tariff, required constraints, or optimal solver status.
 
 **How to Use:**
 Run a pinned REopt.jl release locally with an explicit baseline case and a proposed case that differ only by the modeled technology or fixed proposed load series.
@@ -140,10 +175,10 @@ Do not produce demand or time-of-use value from annual or monthly energy totals.
 
 Exclude resilience, outage, incentives, degradation economics, and capital costs.
 
-Input workflow: This contract exposes 8 independent User values because each is required by the formula or a traced Standard lookup. Collect them in a measure-specific multi-step form or a later detailed-estimate stage instead of recombining them into opaque fields.
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
 
 Expected uncertainty: STD-REOPT-LOCAL-DISPATCH: Moderate uncertainty with complete interval data and high uncertainty otherwise.
 
 ## Human Review Decisions
 
-- Approve the documented category boundary, inputs, Standard automation, missing-data behavior, uncertainty, and exclusions before implementation.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

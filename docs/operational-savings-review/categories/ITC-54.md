@@ -10,7 +10,13 @@
 - **Category status:** BLOCKED
 - **Retrofit count:** 1
 - **Standards used:** None
-- **Expanded User-input count:** 7
+- **Required User-input count:** 3
+- **Optional Known-Detail count:** 4
+- **Profile-input count:** 0
+- **Bill-input count:** 7
+- **Standard-assumption count:** 0
+- **Applicable resources:** electricity, gas, liquid-fuel
+- **Default estimate:** UNAVAILABLE
 - **Automation readiness:** Blocked
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** High
@@ -37,10 +43,10 @@ Annual routine backup-power resource cost
 │  └─ Count of identical units in project scope (User)
 ├─ Backup technology (User)
 ├─ Fuel type (User)
-├─ Tested fuel use per operating hour per unit (User)
-├─ Standby electric input kW per unit (User)
-├─ Scheduled annual test operating hours per unit (User)
-├─ Annual standby energized hours per unit (User)
+├─ Tested fuel use per operating hour per unit, if known (User)
+├─ Standby electric input kW per unit, if known (User)
+├─ Scheduled annual test operating hours per unit, if known (User)
+├─ Annual standby energized hours per unit, if known (User)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
    ├─ Electric variable charge
    │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
@@ -50,29 +56,32 @@ Annual routine backup-power resource cost
    ├─ Gas variable charge
    │  ├─ gas_rate_schedule, verified against the service account (Bill)
    │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
+   └─ Liquid or vehicle-fuel variable charge
       └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
 - In-scope quantity [BR-SCOPE-QUANTITY] > Count of identical units in project scope
 - Backup technology
 - Fuel type
-- Tested fuel use per operating hour per unit
-- Standby electric input kW per unit
-- Scheduled annual test operating hours per unit
-- Annual standby energized hours per unit
 
-### Profile
+### Optional Known Details
+
+- Tested fuel use per operating hour per unit, if known
+- Standby electric input kW per unit, if known
+- Scheduled annual test operating hours per unit, if known
+- Annual standby energized hours per unit, if known
+
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
 
 - None.
 
-### Bill
+### Bill Inputs
 
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
@@ -80,12 +89,11 @@ Annual routine backup-power resource cost
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid or vehicle-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- None.
+No Standard-derived assumption is used by this category.
 
 ## Standards and Automation
 
@@ -97,10 +105,10 @@ BLOCKED because the broad taxonomy type has no validated public model-level perf
 The formula is usable with project-specific tested or contractual routine-use values.
 Exclude unpredictable outage operation and all resilience, reliability, and avoided-loss value.
 
-Input workflow: This contract exposes 7 independent User values because each is required by the formula or a traced Standard lookup. Collect them in a measure-specific multi-step form or a later detailed-estimate stage instead of recombining them into opaque fields.
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
 
-Expected uncertainty: No external model uncertainty applies; project-input and bill-data quality still control the result.
+Expected uncertainty: No default estimate is available; validated project inputs govern any bounded result.
 
 ## Human Review Decisions
 
-- Resolve before approval: BLOCKED because the broad taxonomy type has no validated public model-level performance source across generator, battery, and hybrid systems.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

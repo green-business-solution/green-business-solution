@@ -10,7 +10,13 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-FUELECONOMY-VEHICLES`, `STD-ENERGY-STAR-PRODUCT-DATA`, `STD-REOPT-LOCAL-DISPATCH`
-- **Expanded User-input count:** 17
+- **Required User-input count:** 8
+- **Optional Known-Detail count:** 4
+- **Profile-input count:** 1
+- **Bill-input count:** 6
+- **Standard-assumption count:** 2
+- **Applicable resources:** electricity
+- **Default estimate:** UNVALIDATED
 - **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
@@ -42,54 +48,48 @@ Annual fleet charging added cost
 │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
 ├─ Annual fleet miles (User)
 ├─ Depot allocation fraction (User)
-├─ Selected vehicle record
-│  ├─ Model year (User)
-│  ├─ Make (User)
-│  ├─ Model (User)
-│  ├─ Drive or option (User)
-│  └─ Fuel type (User)
-├─ Measured kWh per mile alternative when the vehicle is outside source coverage (User)
+├─ Vehicle Class and Service Need (User)
+├─ Selected Vehicle Model, if known (User)
+├─ Measured kWh per Mile, if known (User)
 ├─ Vehicle-arrival schedule (User)
 ├─ Vehicle-departure schedule (User)
 ├─ Uncontrolled charging rule (User)
-├─ Charger certified product selection
-│  ├─ Product category (User)
-│  ├─ Manufacturer (User)
-│  ├─ Model (User)
-│  ├─ Equipment subtype (User)
-│  └─ Rated power or capacity class (User)
+├─ Linked Opportunity (Profile)
+├─ Charger Class or Intended Application (User)
+├─ Selected Charger Model, if known (User)
+├─ Rated Charger Power or Capacity, if known (User)
 ├─ Installed port count (User)
 ├─ Vehicle and charger efficiency (Standard)
 └─ Audited fleet-load template and REopt bill result (Standard)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
 - Annual fleet miles
 - Depot allocation fraction
-- Selected vehicle record > Model year
-- Selected vehicle record > Make
-- Selected vehicle record > Model
-- Selected vehicle record > Drive or option
-- Selected vehicle record > Fuel type
-- Measured kWh per mile alternative when the vehicle is outside source coverage
+- Vehicle Class and Service Need
 - Vehicle-arrival schedule
 - Vehicle-departure schedule
 - Uncontrolled charging rule
-- Charger certified product selection > Product category
-- Charger certified product selection > Manufacturer
-- Charger certified product selection > Model
-- Charger certified product selection > Equipment subtype
-- Charger certified product selection > Rated power or capacity class
+- Charger Class or Intended Application
 - Installed port count
 
-### Profile
+### Optional Known Details
 
-- None.
+- Selected Vehicle Model, if known
+- Measured kWh per Mile, if known
+- Selected Charger Model, if known
+- Rated Charger Power or Capacity, if known
 
-### Bill
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
+
+- Linked Opportunity
+
+### Bill Inputs
 
 - Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field
 - Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
@@ -98,10 +98,46 @@ Annual fleet charging added cost
 - Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > time_of_use_periods and seasonal calendar from a verified tariff artifact
 - Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
 
-### Standard
+### Standard-Derived Assumptions
 
-- Vehicle and charger efficiency
-- Audited fleet-load template and REopt bill result
+#### STD-FUELECONOMY-VEHICLES
+
+- **Value produced:** Combined gallons per mile or kWh per mile, vehicle record ID, model year, and update date.
+- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
+- **Low/base/high behavior:** For exact matches use one rated value; otherwise use the 25th percentile, median, and 75th percentile of compatible records for the same class, model-year band, drive, and fuel.
+- **Exact versus estimated:** Return exact rated consumption for an unambiguous vehicle record; otherwise return a compatible vehicle-class distribution and never a predicted exact model.
+- **Uncertainty:** Moderate for rated exact models and high for class estimates because duty, payload, weather, and charging losses vary.
+- **Source:** U.S. Department of Energy and U.S. Environmental Protection Agency, [FuelEconomy.gov web services and bulk downloads](https://www.fueleconomy.gov/feg/ws/index.shtml). The page defines the downloadable current vehicle table and the `comb08` and `combE` fields used here.
+- **Source version:** FuelEconomy.gov bulk-file update date, vehicle record identifiers, and file checksum.
+- **Selected class or candidate set:** Filter by vehicle class, service need, fuel or drive, model-year band, opportunity requirements, and any selected exact record.
+- **Assumptions:** Standardized combined ratings are suitable for screening the declared use and do not represent site-specific duty.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+
+#### STD-ENERGY-STAR-PRODUCT-DATA
+
+- **Value produced:** Category-specific certified energy, water, capacity, efficiency, and low-power-state fields with units and certification dates.
+- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
+- **Low/base/high behavior:** For exact matches use the certified value in all three positions; otherwise use the 25th percentile, median, and 75th percentile after eligibility and compatibility filters.
+- **Exact versus estimated:** Return exact certified values for a selected matching model; otherwise return a distribution from compatible currently certified candidates; return no estimate when the source does not cover the application.
+- **Uncertainty:** Low for an exact certified match, moderate for a matched product class, and high for a context-only class selection.
+- **Source:** U.S. Environmental Protection Agency, [ENERGY STAR Product Finder datasets and API](https://www.energystar.gov/productfinder/advanced), [EV charger product criteria and finder](https://www.energystar.gov/products/ev_chargers), [commercial clothes washer dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Clothes-Washers/9g6r-cpdt), [commercial ice machine dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Ice-Machines/nak5-fsjf), [commercial dishwasher dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Dishwashers/pk8q-dim8), [commercial fryer dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Fryers/edi8-b5vk), [commercial oven dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Ovens/c8av-ccf7), and [commercial steam cooker dataset](https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Steam-Cookers/vtsv-aq9u). The advanced page exposes downloadable datasets that are updated daily. The product pages define fields and certified-product scope.
+- **Source version:** Dataset update date, certification identifier, category schema version, and downloaded-file checksum.
+- **Selected class or candidate set:** Filter by application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status.
+- **Assumptions:** Candidate records are technically compatible after the declared filters, but no exact purchase is implied until a model is selected.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+
+#### STD-REOPT-LOCAL-DISPATCH
+
+- **Value produced:** Baseline and proposed annual bill components, interval dispatch, imported and exported energy, monthly peaks, and solver status.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Run declared low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
+- **Exact versus estimated:** Return baseline and proposed bill components only for an optimal deterministic run with complete chronological load and tariff inputs.
+- **Uncertainty:** Moderate with complete interval and tariff data and high when any allowed category constraint is estimated.
+- **Source:** National Laboratory of the Rockies, [REopt API V3 documentation](https://developer.nlr.gov/docs/energy-optimization/reopt/v3/), [REopt.jl input reference](https://natlabrockies.github.io/REopt.jl/dev/reopt/inputs/), and [REopt.jl open-source package](https://github.com/NatLabRockies/REopt.jl). The API documentation defines stable V3 inputs and outputs. REopt.jl is the local optimization engine used by the API.
+- **Source version:** Pinned REopt.jl release, solver version, tariff version, and category-adapter version.
+- **Selected class or candidate set:** Use only the technology and fixed-load adapter declared by the category and any Linked Opportunity constraints.
+- **Assumptions:** The analysis year, tariff calendar, and interval load are aligned and future operations follow the declared case.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
@@ -117,22 +153,44 @@ U.S. Department of Energy and U.S. Environmental Protection Agency, [FuelEconomy
 The page defines the downloadable current vehicle table and the `comb08` and `combE` fields used here.
 
 **Lookup Inputs:**
-- `vehicle_selection` - Model year, make, model, drive or option, and fuel type for each selected vehicle record.
+- `vehicle_context` - **Required:** Recognizable vehicle class, service need, and existing or proposed fuel or drive needed to select compatible records.
   - **Resolved by:**
-    - **User:** Annual fleet charging added cost > Selected vehicle record > Model year
-    - **User:** Annual fleet charging added cost > Selected vehicle record > Make
-    - **User:** Annual fleet charging added cost > Selected vehicle record > Model
-    - **User:** Annual fleet charging added cost > Selected vehicle record > Drive or option
-    - **User:** Annual fleet charging added cost > Selected vehicle record > Fuel type
+    - **User:** Annual fleet charging added cost > Vehicle Class and Service Need
+- `vehicle_exact_model` - **Optional:** Exact model year, make, model, drive, or option when known.
+  - **Resolved by:**
+    - **User:** Annual fleet charging added cost > Selected Vehicle Model, if known
+- `linked_opportunity` - **Conditional:** Vehicle, class, drive, certification, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
+  - **Resolved by:**
+    - **Profile:** Annual fleet charging added cost > Linked Opportunity
 
 **Value Needed:**
 Combined gallons per mile or kWh per mile, vehicle record ID, model year, and update date.
+
+**Resolution Contract:**
+- **Resolver Type:** Equipment resolver.
+- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
+- **Scenario Output Behavior:** Return exact rated consumption for an unambiguous vehicle record; otherwise return a compatible vehicle-class distribution and never a predicted exact model.
+- **Low/Base/High Rule:** For exact matches use one rated value; otherwise use the 25th percentile, median, and 75th percentile of compatible records for the same class, model-year band, drive, and fuel.
+- **Uncertainty Rule:** Moderate for rated exact models and high for class estimates because duty, payload, weather, and charging losses vary.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** FuelEconomy.gov bulk-file update date, vehicle record identifiers, and file checksum.
+- **Selected Class or Candidate Set:** Filter by vehicle class, service need, fuel or drive, model-year band, opportunity requirements, and any selected exact record.
+- **Assumptions:** Standardized combined ratings are suitable for screening the declared use and do not represent site-specific duty.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate when vehicle class or service compatibility cannot be established.
 
 **How to Use:**
 Download the unzipped vehicle CSV periodically and select exact vehicle records through year, make, model, and option.
 For combustion vehicles use `gallons_per_mile = 1 / comb08`.
 For electric vehicles use `kwh_per_mile = combE / 100`.
 Do not use the dataset's annual cost fields because they embed generic mileage and prices.
+For an exact existing vehicle, use the unambiguous source record and assign the rating uncertainty documented in the Resolution Contract.
+When only vehicle class or service need is known, return a compatible record distribution rather than a predicted model.
+Use Profile or Bill context only when it establishes a defensible vehicle class, and otherwise return no estimate.
+When a Linked Opportunity names exact vehicles, restrict the candidate set to those records.
+When it specifies a vehicle class, drive, certification, or minimum performance, filter compatible records to those requirements.
+When no product restriction or no Linked Opportunity exists, build a compatible candidate set from class and service need without claiming an exact vehicle.
+An exact proposed vehicle overrides the distribution after class and service compatibility validation.
 
 **Automation:**
 - **Selected Strategy:** Periodic bulk CSV ingestion.
@@ -157,16 +215,34 @@ The advanced page exposes downloadable datasets that are updated daily.
 The product pages define fields and certified-product scope.
 
 **Lookup Inputs:**
-- `energy_star_product_selection` - Product category, manufacturer, model, equipment subtype, and capacity or size class for each selected product record.
+- `energy_star_product_context` - **Required:** Recognizable product category or application and proposed scope needed to select a compatible certified class.
   - **Resolved by:**
-    - **User:** Annual fleet charging added cost > Charger certified product selection > Product category
-    - **User:** Annual fleet charging added cost > Charger certified product selection > Manufacturer
-    - **User:** Annual fleet charging added cost > Charger certified product selection > Model
-    - **User:** Annual fleet charging added cost > Charger certified product selection > Equipment subtype
-    - **User:** Annual fleet charging added cost > Charger certified product selection > Rated power or capacity class
+    - **User:** Annual fleet charging added cost > Charger Class or Intended Application
+- `energy_star_exact_product` - **Optional:** Exact manufacturer, model, certified rating, and capacity or size when known.
+  - **Resolved by:**
+    - **User:** Annual fleet charging added cost > Selected Charger Model, if known
+    - **User:** Annual fleet charging added cost > Rated Charger Power or Capacity, if known
+- `linked_opportunity` - **Conditional:** Product, certification, class, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
+  - **Resolved by:**
+    - **Profile:** Annual fleet charging added cost > Linked Opportunity
+- `product_usage_pattern` - **Conditional:** Recognizable operating pattern and exact activity or idle values when the category formula uses certified active and idle ratings. Applies only in the documented scenario.
+  - **Resolved by:** Not applicable under this category contract.
 
 **Value Needed:**
 Category-specific certified energy, water, capacity, efficiency, and low-power-state fields with units and certification dates.
+
+**Resolution Contract:**
+- **Resolver Type:** Equipment resolver.
+- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
+- **Scenario Output Behavior:** Return exact certified values for a selected matching model; otherwise return a distribution from compatible currently certified candidates; return no estimate when the source does not cover the application.
+- **Low/Base/High Rule:** For exact matches use the certified value in all three positions; otherwise use the 25th percentile, median, and 75th percentile after eligibility and compatibility filters.
+- **Uncertainty Rule:** Low for an exact certified match, moderate for a matched product class, and high for a context-only class selection.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** Dataset update date, certification identifier, category schema version, and downloaded-file checksum.
+- **Selected Class or Candidate Set:** Filter by application, subtype, capacity or service requirement, opportunity certification or product constraints, and active certification status.
+- **Assumptions:** Candidate records are technically compatible after the declared filters, but no exact purchase is implied until a model is selected.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate when no compatible candidate set exists or the required performance field is absent.
 
 **How to Use:**
 Download the category dataset rather than calling the API at calculation time.
@@ -186,6 +262,15 @@ The adapter contracts use these source-reported field families:
 | `ITC-52` commercial dishwashers | Machine type, sanitation method, water per rack or hour, machine idle rate, and booster-heater idle rate |
 
 Do not infer a missing source-reported field from another product family.
+For an exact existing model, return the certified value with low uncertainty.
+When only type or application is known, select compatible certified records and return the declared class distribution.
+When neither model nor type is known, use relevant Profile or Bill context only when it supports a source-defined class, and otherwise return no estimate.
+When a Linked Opportunity names exact products, restrict the candidate set to those products.
+When it specifies a class, certification, or minimum performance, filter compatible current records to those requirements.
+When it has no product restriction or no Linked Opportunity exists, build the candidate set from application, service need, site context, and current certified data without claiming an exact model.
+An exact proposed model overrides the candidate distribution after compatibility validation.
+Resolve recognizable product usage patterns to visible low/base/high activity assumptions only when the category and source support that conversion.
+Return no estimate when product compatibility or a required usage basis cannot be established.
 
 **Automation:**
 - **Selected Strategy:** Nightly or weekly bulk-dataset ingestion into local category adapters.
@@ -210,7 +295,7 @@ The API documentation defines stable V3 inputs and outputs.
 REopt.jl is the local optimization engine used by the API.
 
 **Lookup Inputs:**
-- `chronological_load_and_tariff` - Chronological site load, complete tariff, timezone, and analysis-year calendar.
+- `chronological_load_and_tariff` - **Required:** Chronological site load, complete tariff, timezone, and analysis-year calendar.
   - **Resolved by:**
     - **Bill:** Annual fleet charging added cost > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Timestamped Green Button interval kW or kWh records; no current canonical bill-dictionary field
     - **Bill:** Annual fleet charging added cost > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Interval timezone and daylight-saving treatment from the uploaded interval artifact
@@ -218,19 +303,32 @@ REopt.jl is the local optimization engine used by the API.
     - **Bill:** Annual fleet charging added cost > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > demand_charge_rate plus billing-demand and ratchet rules from a verified tariff artifact
     - **Bill:** Annual fleet charging added cost > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > time_of_use_periods and seasonal calendar from a verified tariff artifact
     - **Bill:** Annual fleet charging added cost > Chronological load and tariff [BR-INTERVAL-LOAD-AND-TARIFF] > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- `reopt_category_constraints` - Applicable technology power, energy, efficiency, state, availability, event, or fixed-load-template constraints shown as atomic leaves in the category tree.
+- `reopt_category_constraints` - **Required:** Applicable technology power, energy, efficiency, state, availability, event, or fixed-load-template constraints shown as atomic leaves in the category tree.
   - **Resolved by:**
     - **User:** Annual fleet charging added cost > Annual fleet miles
     - **User:** Annual fleet charging added cost > Depot allocation fraction
-    - **User:** Annual fleet charging added cost > Measured kWh per mile alternative when the vehicle is outside source coverage
+    - **User:** Annual fleet charging added cost > Measured kWh per Mile, if known
     - **User:** Annual fleet charging added cost > Vehicle-arrival schedule
     - **User:** Annual fleet charging added cost > Vehicle-departure schedule
     - **User:** Annual fleet charging added cost > Uncontrolled charging rule
-    - **User:** Annual fleet charging added cost > Charger certified product selection > Rated power or capacity class
+    - **User:** Annual fleet charging added cost > Rated Charger Power or Capacity, if known
     - **User:** Annual fleet charging added cost > Installed port count
 
 **Value Needed:**
 Baseline and proposed annual bill components, interval dispatch, imported and exported energy, monthly peaks, and solver status.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return baseline and proposed bill components only for an optimal deterministic run with complete chronological load and tariff inputs.
+- **Low/Base/High Rule:** Run declared low, base, and high technology or availability cases independently; exact fixed inputs use identical values in all cases.
+- **Uncertainty Rule:** Moderate with complete interval and tariff data and high when any allowed category constraint is estimated.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** Pinned REopt.jl release, solver version, tariff version, and category-adapter version.
+- **Selected Class or Candidate Set:** Use only the technology and fixed-load adapter declared by the category and any Linked Opportunity constraints.
+- **Assumptions:** The analysis year, tariff calendar, and interval load are aligned and future operations follow the declared case.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate without continuous interval data, a verified complete tariff, required constraints, or optimal solver status.
 
 **How to Use:**
 Run a pinned REopt.jl release locally with an explicit baseline case and a proposed case that differ only by the modeled technology or fixed proposed load series.
@@ -258,10 +356,10 @@ Medium- and heavy-duty vehicles outside FuelEconomy.gov require a measured or ve
 Do not add this electric bill impact to the electricity term in ITC-29.
 For a combined fleet-electrification view, use this category's bill delta with ITC-29's avoided fuel term only.
 
-Input workflow: This contract exposes 17 independent User values because each is required by the formula or a traced Standard lookup. Collect them in a measure-specific multi-step form or a later detailed-estimate stage instead of recombining them into opaque fields.
+Default-estimate behavior: The logical path is documented but remains unavailable until its adapter or category behavior is validated.
 
 Expected uncertainty: STD-FUELECONOMY-VEHICLES: Moderate uncertainty. STD-ENERGY-STAR-PRODUCT-DATA: Low for exact model matches and moderate for generic proposed selections. STD-REOPT-LOCAL-DISPATCH: Moderate uncertainty with complete interval data and high uncertainty otherwise.
 
 ## Human Review Decisions
 
-- Resolve before approval: gov require a measured or vendor-confirmed efficiency and remain DRAFT.
+- Fixture-test and approve the documented default path before promotion to ready status.

@@ -10,7 +10,13 @@
 - **Category status:** RESEARCHED — READY FOR HUMAN REVIEW
 - **Retrofit count:** 11
 - **Standards used:** None
-- **Expanded User-input count:** 1
+- **Required User-input count:** 0
+- **Optional Known-Detail count:** 0
+- **Profile-input count:** 1
+- **Bill-input count:** 0
+- **Standard-assumption count:** 0
+- **Applicable resources:** none
+- **Default estimate:** NOT APPLICABLE
 - **Automation readiness:** Not applicable
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Low
@@ -41,26 +47,32 @@ No supporting formula is required.
 
 ```text
 Annual direct operational-resource savings equals zero
-└─ No linked physical resource-changing scope (User)
+└─ Linked Opportunity (Profile)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
-
-- No linked physical resource-changing scope
-
-### Profile
+### Required User Inputs
 
 - None.
 
-### Bill
+### Optional Known Details
 
 - None.
 
-### Standard
+No optional exact-value override applies to this category.
+
+### Profile Inputs
+
+- Linked Opportunity
+
+### Bill Inputs
 
 - None.
+
+### Standard-Derived Assumptions
+
+No Standard-derived assumption is used by this category.
 
 ## Standards and Automation
 
@@ -71,7 +83,9 @@ No external Standard is used by this category.
 Monitoring, studies, certification, compliance, enabling infrastructure, and resilience may enable later savings, but attributing another measure's savings here would double count or speculate.
 Calculate a linked physical measure only in its own category.
 
-Expected uncertainty: No external model uncertainty applies; project-input and bill-data quality still control the result.
+Default-estimate behavior: No direct operational-resource estimate applies to this category.
+
+Expected uncertainty: No direct operational-resource estimate applies, so model uncertainty is not applicable.
 
 ## Human Review Decisions
 

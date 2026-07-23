@@ -10,9 +10,15 @@
 - **Category status:** BLOCKED
 - **Retrofit count:** 1
 - **Standards used:** None
-- **Expanded User-input count:** 8
+- **Required User-input count:** 4
+- **Optional Known-Detail count:** 4
+- **Profile-input count:** 0
+- **Bill-input count:** 7
+- **Standard-assumption count:** 0
+- **Applicable resources:** electricity
+- **Default estimate:** UNAVAILABLE
 - **Automation readiness:** Blocked
-- **Unresolved issue count:** 2
+- **Unresolved issue count:** 1
 - **Expected uncertainty:** High
 
 ## Retrofits
@@ -33,66 +39,60 @@
 Annual dollar savings
 ├─ Annual walk-in refrigeration electricity reduction
 │  ├─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-│  │  ├─ annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r (Bill)
+│  │  ├─ annual_kwh for electricity (Bill)
 │  │  ├─ billing_period_start (Bill)
 │  │  └─ billing_period_end (Bill)
-│  ├─ Walk-in share of billed electricity or direct measurement (User)
-│  ├─ Proposed annual system kWh for the same box load and duty (User)
-│  ├─ Box length (User)
-│  ├─ Box width (User)
-│  ├─ Box height (User)
-│  ├─ Indoor design temperature (User)
-│  ├─ Outdoor design temperature (User)
+│  ├─ Walk-in share of billed electricity or direct measurement, if known (User)
+│  ├─ Proposed Annual System kWh for the Same Box Load and Duty, if known (User)
+│  ├─ Approximate Box Length (User)
+│  ├─ Approximate Box Width (User)
+│  ├─ Approximate Box Height (User)
+│  ├─ Indoor Design Temperature, if known (User)
+│  ├─ Outdoor Design Temperature, if known (User)
 │  └─ Existing and proposed duty-equivalence confirmation (User)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
-   ├─ Electric variable charge
-   │  ├─ rate_schedule and customer_class, verified against the service account (Bill)
-   │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
-   │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
-   │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   ├─ Gas variable charge
-   │  ├─ gas_rate_schedule, verified against the service account (Bill)
-   │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   └─ Electric variable charge
+      ├─ rate_schedule and customer_class, verified against the service account (Bill)
+      ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
+      ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
+      └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
-- Annual walk-in refrigeration electricity reduction > Walk-in share of billed electricity or direct measurement
-- Annual walk-in refrigeration electricity reduction > Proposed annual system kWh for the same box load and duty
-- Annual walk-in refrigeration electricity reduction > Box length
-- Annual walk-in refrigeration electricity reduction > Box width
-- Annual walk-in refrigeration electricity reduction > Box height
-- Annual walk-in refrigeration electricity reduction > Indoor design temperature
-- Annual walk-in refrigeration electricity reduction > Outdoor design temperature
+- Annual walk-in refrigeration electricity reduction > Approximate Box Length
+- Annual walk-in refrigeration electricity reduction > Approximate Box Width
+- Annual walk-in refrigeration electricity reduction > Approximate Box Height
 - Annual walk-in refrigeration electricity reduction > Existing and proposed duty-equivalence confirmation
 
-### Profile
+### Optional Known Details
+
+- Annual walk-in refrigeration electricity reduction > Walk-in share of billed electricity or direct measurement, if known
+- Annual walk-in refrigeration electricity reduction > Proposed Annual System kWh for the Same Box Load and Duty, if known
+- Annual walk-in refrigeration electricity reduction > Indoor Design Temperature, if known
+- Annual walk-in refrigeration electricity reduction > Outdoor Design Temperature, if known
+
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
 
 - None.
 
-### Bill
+### Bill Inputs
 
-- Annual walk-in refrigeration electricity reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r
+- Annual walk-in refrigeration electricity reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh for electricity
 - Annual walk-in refrigeration electricity reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
 - Annual walk-in refrigeration electricity reduction > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > time_of_use_periods and demand_charge_rate when those components apply
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- None.
+No Standard-derived assumption is used by this category.
 
 ## Standards and Automation
 
@@ -103,11 +103,10 @@ No external Standard is used by this category.
 BLOCKED because certified walk-in component ratings do not by themselves resolve whole-system annual kWh for a specific box and load.
 The formula is usable only with a project-specific baseline allocation or measurement and a proposed whole-system result for the same duty.
 
-Input workflow: This contract exposes 8 independent User values because each is required by the formula or a traced Standard lookup. Collect them in a measure-specific multi-step form or a later detailed-estimate stage instead of recombining them into opaque fields.
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
 
-Expected uncertainty: No external model uncertainty applies; project-input and bill-data quality still control the result.
+Expected uncertainty: No default estimate is available; validated project inputs govern any bounded result.
 
 ## Human Review Decisions
 
-- Resolve before approval: BLOCKED because certified walk-in component ratings do not by themselves resolve whole-system annual kWh for a specific box and load.
-- Resolve before approval: The formula is usable only with a project-specific baseline allocation or measurement and a proposed whole-system result for the same duty.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

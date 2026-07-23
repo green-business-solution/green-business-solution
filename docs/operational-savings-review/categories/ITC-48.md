@@ -10,9 +10,15 @@
 - **Category status:** BLOCKED
 - **Retrofit count:** 1
 - **Standards used:** None
-- **Expanded User-input count:** 5
+- **Required User-input count:** 2
+- **Optional Known-Detail count:** 3
+- **Profile-input count:** 0
+- **Bill-input count:** 10
+- **Standard-assumption count:** 0
+- **Applicable resources:** electricity, gas
+- **Default estimate:** UNAVAILABLE
 - **Automation readiness:** Blocked
-- **Unresolved issue count:** 2
+- **Unresolved issue count:** 1
 - **Expected uncertainty:** High
 
 ## Retrofits
@@ -35,12 +41,13 @@
 Annual dollar savings
 ├─ Annual cooking resource switch
 │  ├─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-│  │  ├─ annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r (Bill)
+│  │  ├─ annual_kwh for electricity (Bill)
+│  │  ├─ annual_therms for gas (Bill)
 │  │  ├─ billing_period_start (Bill)
 │  │  └─ billing_period_end (Bill)
-│  ├─ Cooking share of billed fuel or direct equipment measurement (User)
-│  ├─ Annual cooking activity in the tested duty unit (User)
-│  ├─ Proposed induction kWh per identical tested duty unit (User)
+│  ├─ Cooking share of billed fuel or direct equipment measurement, if known (User)
+│  ├─ Annual Cooking Activity in the Tested Duty Unit, if known (User)
+│  ├─ Proposed Induction kWh per Identical Tested Duty Unit, if known (User)
 │  ├─ Existing cooking-duty definition (User)
 │  └─ Proposed duty-equivalence confirmation (User)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
@@ -49,32 +56,34 @@ Annual dollar savings
    │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
    │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
    │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   ├─ Gas variable charge
-   │  ├─ gas_rate_schedule, verified against the service account (Bill)
-   │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   └─ Gas variable charge
+      ├─ gas_rate_schedule, verified against the service account (Bill)
+      └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
-- Annual cooking resource switch > Cooking share of billed fuel or direct equipment measurement
-- Annual cooking resource switch > Annual cooking activity in the tested duty unit
-- Annual cooking resource switch > Proposed induction kWh per identical tested duty unit
 - Annual cooking resource switch > Existing cooking-duty definition
 - Annual cooking resource switch > Proposed duty-equivalence confirmation
 
-### Profile
+### Optional Known Details
+
+- Annual cooking resource switch > Cooking share of billed fuel or direct equipment measurement, if known
+- Annual cooking resource switch > Annual Cooking Activity in the Tested Duty Unit, if known
+- Annual cooking resource switch > Proposed Induction kWh per Identical Tested Duty Unit, if known
+
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
+
+### Profile Inputs
 
 - None.
 
-### Bill
+### Bill Inputs
 
-- Annual cooking resource switch > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r
+- Annual cooking resource switch > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh for electricity
+- Annual cooking resource switch > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_therms for gas
 - Annual cooking resource switch > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
 - Annual cooking resource switch > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
@@ -83,12 +92,10 @@ Annual dollar savings
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- None.
+No Standard-derived assumption is used by this category.
 
 ## Standards and Automation
 
@@ -100,9 +107,10 @@ BLOCKED because no authoritative public commercial induction model-level dataset
 The broad ComStock electric-cooking scenario is not an induction-specific record and must not be used as one.
 The formula is usable only with a project-specific bill allocation or measurement and proposed performance tested for an identical cooking duty.
 
-Expected uncertainty: No external model uncertainty applies; project-input and bill-data quality still control the result.
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
+
+Expected uncertainty: No default estimate is available; validated project inputs govern any bounded result.
 
 ## Human Review Decisions
 
-- Resolve before approval: BLOCKED because no authoritative public commercial induction model-level dataset or standardized cross-fuel duty lookup was validated.
-- Resolve before approval: The formula is usable only with a project-specific bill allocation or measurement and proposed performance tested for an identical cooking duty.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

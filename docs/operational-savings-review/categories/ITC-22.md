@@ -10,7 +10,13 @@
 - **Category status:** DRAFT
 - **Retrofit count:** 1
 - **Standards used:** `STD-EPA-CHP-PERFORMANCE`
-- **Expanded User-input count:** 8
+- **Required User-input count:** 3
+- **Optional Known-Detail count:** 6
+- **Profile-input count:** 1
+- **Bill-input count:** 12
+- **Standard-assumption count:** 1
+- **Applicable resources:** electricity, gas, liquid-fuel
+- **Default estimate:** UNAVAILABLE
 - **Automation readiness:** Draft adapter or decision required
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** Moderate
@@ -37,17 +43,21 @@
 
 ```text
 Annual biomass or biogas resource value
-├─ Confirmed annual fuel availability (User)
+├─ Confirmed annual fuel availability, if known (User)
 ├─ Fuel unit (User)
-├─ Fuel lower heating value (User)
+├─ Fuel lower heating value, if known (User)
 ├─ Conversion technology (User)
-├─ Installed capacity (User)
+├─ Selected Unit Model, if known (User)
+├─ Installed capacity, if known (User)
+├─ Linked Opportunity (Profile)
 ├─ Operating schedule (User)
-├─ Coincident onsite electric-load constraint (User)
-├─ Coincident useful thermal-load constraint (User)
+├─ Coincident onsite electric-load constraint, if known (User)
+├─ Coincident useful thermal-load constraint, if known (User)
 ├─ Performance by technology and fuel (Standard)
 ├─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-│  ├─ annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r (Bill)
+│  ├─ annual_kwh for electricity (Bill)
+│  ├─ annual_therms for gas (Bill)
+│  ├─ annual_gallons with the matching fuel type for liquid or vehicle fuel (Bill)
 │  ├─ billing_period_start (Bill)
 │  └─ billing_period_end (Bill)
 └─ Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE]
@@ -59,32 +69,38 @@ Annual biomass or biogas resource value
    ├─ Gas variable charge
    │  ├─ gas_rate_schedule, verified against the service account (Bill)
    │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
+   └─ Liquid or vehicle-fuel variable charge
       └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
-- Confirmed annual fuel availability
 - Fuel unit
-- Fuel lower heating value
 - Conversion technology
-- Installed capacity
 - Operating schedule
-- Coincident onsite electric-load constraint
-- Coincident useful thermal-load constraint
 
-### Profile
+### Optional Known Details
 
-- None.
+- Confirmed annual fuel availability, if known
+- Fuel lower heating value, if known
+- Selected Unit Model, if known
+- Installed capacity, if known
+- Coincident onsite electric-load constraint, if known
+- Coincident useful thermal-load constraint, if known
 
-### Bill
+Optional Known Details replace the corresponding Standard estimate when supplied and validated.
 
-- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r
+### Profile Inputs
+
+- Linked Opportunity
+
+### Bill Inputs
+
+- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh for electricity
+- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_therms for gas
+- Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_gallons with the matching fuel type for liquid or vehicle fuel
 - Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
 - Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
@@ -93,12 +109,22 @@ Annual biomass or biogas resource value
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
+- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid or vehicle-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- Performance by technology and fuel
+#### STD-EPA-CHP-PERFORMANCE
+
+- **Value produced:** Annual electricity generation, annual input fuel, useful recovered heat, displaced boiler fuel, and source table or workbook version.
+- **Resolution scenario:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
+- **Low/base/high behavior:** Use the documented range bounds and representative midpoint for the matched technology and capacity bin; exact specifications use one value in all positions.
+- **Exact versus estimated:** Return exact documented performance for a selected compatible unit; otherwise return a technology-and-capacity-bin distribution without claiming an exact model.
+- **Uncertainty:** Low for exact specifications, moderate for a matched catalog bin, and high for generic biomass or biogas screening.
+- **Source:** U.S. Environmental Protection Agency, [CHP technologies and current catalog links](https://www.epa.gov/chp/chp-technologies), [CHP efficiency method and resources](https://www.epa.gov/chp/chp-resources), and [current CHP calculator download](https://www.epa.gov/chp/download-chp-energy-and-emissions-savings-calculator). The technology page supplies prime-mover and fuel-cell performance characteristics. The methodology supplies the separate heat-and-power energy balance. The calculator provides a reviewable workbook implementation.
+- **Source version:** EPA catalog or workbook publication date, table or worksheet identifier, and local table version.
+- **Selected class or candidate set:** Filter by prime mover, fuel, capacity or service requirement, heat-recovery need, and opportunity constraints.
+- **Assumptions:** Catalog-bin performance represents the proposed class and useful heat remains capped by the coincident load.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
@@ -116,29 +142,55 @@ The methodology supplies the separate heat-and-power energy balance.
 The calculator provides a reviewable workbook implementation.
 
 **Lookup Inputs:**
-- `prime_mover_and_fuel` - Prime-mover technology and input fuel.
+- `prime_mover_and_fuel` - **Required:** Prime-mover technology and input fuel.
   - **Resolved by:**
-    - **User:** Annual biomass or biogas resource value > Confirmed annual fuel availability
+    - **User:** Annual biomass or biogas resource value > Confirmed annual fuel availability, if known
     - **User:** Annual biomass or biogas resource value > Fuel unit
     - **User:** Annual biomass or biogas resource value > Conversion technology
-- `generation_capacity` - Total installed capacity used to select the performance bin.
+- `chp_exact_model` - **Optional:** Exact selected prime-mover, CHP, fuel-cell, biomass, or biogas conversion-unit model when known.
   - **Resolved by:**
-    - **User:** Annual biomass or biogas resource value > Installed capacity
-- `operating_profile` - Annual operating hours, load fraction, or capacity factor.
+    - **User:** Annual biomass or biogas resource value > Selected Unit Model, if known
+- `generation_capacity` - **Optional:** Exact total installed capacity when known; otherwise use only a defensible source-supported service or capacity class.
+  - **Resolved by:**
+    - **User:** Annual biomass or biogas resource value > Installed capacity, if known
+- `operating_profile` - **Conditional:** Recognizable operating pattern or exact capacity factor used when the category formula requires annual operation. Applies only in the documented scenario.
   - **Resolved by:**
     - **User:** Annual biomass or biogas resource value > Operating schedule
-- `thermal_load_coincidence` - Coincident useful thermal-load limit when recovered heat is modeled. Conditional.
+- `thermal_load_coincidence` - **Conditional:** Coincident useful thermal-load limit when recovered heat is modeled. Applies only in the documented scenario.
   - **Resolved by:**
-    - **User:** Annual biomass or biogas resource value > Coincident useful thermal-load constraint
+    - **User:** Annual biomass or biogas resource value > Coincident useful thermal-load constraint, if known
+- `linked_opportunity` - **Conditional:** Product, technology, fuel, capacity, or minimum-performance restriction when a Linked Opportunity supplies one. Applies only in the documented scenario.
+  - **Resolved by:**
+    - **Profile:** Annual biomass or biogas resource value > Linked Opportunity
 
 **Value Needed:**
 Annual electricity generation, annual input fuel, useful recovered heat, displaced boiler fuel, and source table or workbook version.
+
+**Resolution Contract:**
+- **Resolver Type:** Equipment resolver.
+- **Supported Scenarios:** exact-existing-model; existing-type-or-application; profile-or-bill-fallback; linked-opportunity-exact-product; linked-opportunity-product-class; no-product-restriction; no-linked-opportunity; exact-proposed-model.
+- **Scenario Output Behavior:** Return exact documented performance for a selected compatible unit; otherwise return a technology-and-capacity-bin distribution without claiming an exact model.
+- **Low/Base/High Rule:** Use the documented range bounds and representative midpoint for the matched technology and capacity bin; exact specifications use one value in all positions.
+- **Uncertainty Rule:** Low for exact specifications, moderate for a matched catalog bin, and high for generic biomass or biogas screening.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** EPA catalog or workbook publication date, table or worksheet identifier, and local table version.
+- **Selected Class or Candidate Set:** Filter by prime mover, fuel, capacity or service requirement, heat-recovery need, and opportunity constraints.
+- **Assumptions:** Catalog-bin performance represents the proposed class and useful heat remains capped by the coincident load.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate when the technology, fuel, capacity class, or required fuel availability cannot be resolved.
 
 **How to Use:**
 Extract only energy-performance values from the current catalog section or exact project equipment specification.
 Calculate input fuel from electric output and electric efficiency, cap useful recovered heat at the coincident thermal load, and convert that heat to displaced boiler fuel with the existing boiler efficiency.
 For biomass or biogas, require confirmed annual available fuel quantity and heating value and never infer it from organization type.
 Exclude emissions and all cost assumptions in EPA tools.
+For an exact existing unit, use its documented performance and assign low uncertainty.
+When only prime-mover type or application is known, use the compatible technology and capacity-bin distribution.
+Use Profile or Bill context only when it establishes a source-supported service and capacity class, and otherwise return no estimate.
+When a Linked Opportunity names exact products, restrict the candidate set to those products.
+When it specifies a technology class or minimum performance, filter the EPA-compatible candidates to those requirements.
+When no product restriction or no Linked Opportunity exists, build a compatible technology-and-capacity candidate set without claiming an exact model.
+An exact proposed unit overrides the class distribution after fuel, service, capacity, and heat-recovery compatibility validation.
 
 **Automation:**
 - **Selected Strategy:** Versioned local performance table plus a transparent energy-balance function.
@@ -155,10 +207,10 @@ Exclude emissions and all cost assumptions in EPA tools.
 Status is DRAFT and uncertainty is High because the federal biomass catalog is partly outdated and project fuel quality dominates performance.
 Do not monetize avoided disposal, renewable credits, or fuel that is not contractually available.
 
-Input workflow: This contract exposes 8 independent User values because each is required by the formula or a traced Standard lookup. Collect them in a measure-specific multi-step form or a later detailed-estimate stage instead of recombining them into opaque fields.
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
 
 Expected uncertainty: STD-EPA-CHP-PERFORMANCE: Moderate for a specified unit and high for generic biomass or biogas screening.
 
 ## Human Review Decisions
 
-- Resolve before approval: Status is DRAFT and uncertainty is High because the federal biomass catalog is partly outdated and project fuel quality dominates performance.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

@@ -10,7 +10,13 @@
 - **Category status:** BLOCKED
 - **Retrofit count:** 5
 - **Standards used:** `STD-SCOUT-ECM-SCREEN`
-- **Expanded User-input count:** 3
+- **Required User-input count:** 3
+- **Optional Known-Detail count:** 0
+- **Profile-input count:** 3
+- **Bill-input count:** 10
+- **Standard-assumption count:** 1
+- **Applicable resources:** electricity, gas
+- **Default estimate:** UNAVAILABLE
 - **Automation readiness:** Blocked
 - **Unresolved issue count:** 1
 - **Expected uncertainty:** High
@@ -37,7 +43,8 @@ No additional formula is required.
 Annual dollar savings
 ├─ Annual direct resource reduction by end use and fuel
 │  ├─ Annual billed resource r [BR-ANNUAL-BILL-RESOURCE]
-│  │  ├─ annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r (Bill)
+│  │  ├─ annual_kwh for electricity (Bill)
+│  │  ├─ annual_therms for gas (Bill)
 │  │  ├─ billing_period_start (Bill)
 │  │  └─ billing_period_end (Bill)
 │  ├─ Canonical retrofit ID from linked-opportunity taxonomy match (Profile)
@@ -53,32 +60,35 @@ Annual dollar savings
    │  ├─ time_of_use_periods and demand_charge_rate when those components apply (Bill)
    │  ├─ Variable delivery and generation rates derived from delivery_charges, generation_charges, and matched usage (Bill)
    │  └─ Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field (Bill)
-   ├─ Gas variable charge
-   │  ├─ gas_rate_schedule, verified against the service account (Bill)
-   │  └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
-   ├─ Water and sewer variable charge
-   │  └─ Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field (Bill)
-   └─ Liquid-fuel variable charge
-      └─ average_cost_per_gallon with the matching fuel type and coverage period (Bill)
+   └─ Gas variable charge
+      ├─ gas_rate_schedule, verified against the service account (Bill)
+      └─ Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms (Bill)
 ```
 
-## Input Summary
+## Input Workflow
 
-### User
+### Required User Inputs
 
 - Annual direct resource reduction by end use and fuel > Existing-condition selector
 - Annual direct resource reduction by end use and fuel > Proposed-option selector
 - Annual direct resource reduction by end use and fuel > Existing building vintage class
 
-### Profile
+### Optional Known Details
+
+- None.
+
+No optional exact-value override applies to this category.
+
+### Profile Inputs
 
 - Annual direct resource reduction by end use and fuel > Canonical retrofit ID from linked-opportunity taxonomy match
 - Annual direct resource reduction by end use and fuel > site.buildingTypes commercial building type
 - Annual direct resource reduction by end use and fuel > Climate zone resolved from site.geo coordinates or county
 
-### Bill
+### Bill Inputs
 
-- Annual direct resource reduction by end use and fuel > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh, annual_therms, annual_water_use with water_unit, or annual_gallons for resource r
+- Annual direct resource reduction by end use and fuel > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_kwh for electricity
+- Annual direct resource reduction by end use and fuel > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > annual_therms for gas
 - Annual direct resource reduction by end use and fuel > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_start
 - Annual direct resource reduction by end use and fuel > Annual billed resource r [BR-ANNUAL-BILL-RESOURCE] > billing_period_end
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > rate_schedule and customer_class, verified against the service account
@@ -87,12 +97,21 @@ Annual dollar savings
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Electric variable charge > Export-credit and non-bypassable rules from a verified tariff artifact; no current canonical bill field
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > gas_rate_schedule, verified against the service account
 - Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Gas variable charge > Variable gas rate derived from gas_delivery_charges, gas_procurement_charges, and matched therms
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Water and sewer variable charge > Applicable block rates derived from billed usage and water or sewer charges; no current canonical unit-rate field
-- Avoidable marginal resource price [BR-AVOIDABLE-RESOURCE-RATE] > Liquid-fuel variable charge > average_cost_per_gallon with the matching fuel type and coverage period
 
-### Standard
+### Standard-Derived Assumptions
 
-- Annual direct resource reduction by end use and fuel > Exact Scout ECM reduction factor
+#### STD-SCOUT-ECM-SCREEN
+
+- **Value produced:** Applicable annual fractional resource reduction by fuel and end use, the underlying performance assumption, Scout version, and supported market segment.
+- **Resolution scenario:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Low/base/high behavior:** Use documented low, typical, and high performance when present; otherwise use supported scenario bounds and label the base selection rule.
+- **Exact versus estimated:** Return a source-defined ECM performance distribution only after exact semantic and market-segment matching; otherwise return no estimate.
+- **Uncertainty:** High unless the ECM definition and market segment match exactly.
+- **Source:** U.S. Department of Energy, [Scout program description](https://www.energy.gov/cmei/buildings/scout), [Scout ECM summaries](https://scout.energy.gov/), and [Scout source repository](https://github.com/scout-bto/scout). DOE establishes Scout as a building ECM impact model. The ECM summaries expose measure definitions. The repository supplies versioned definitions and processing code.
+- **Source version:** Pinned Scout release, ECM definition identifier, and source checksum.
+- **Selected class or candidate set:** Use an exact ECM definition, fuel, end use, climate, building type, and vintage match.
+- **Assumptions:** The selected Scout segment is applicable to the screened building and retrofit scope.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
 
 ## Standards and Automation
 
@@ -110,30 +129,43 @@ The ECM summaries expose measure definitions.
 The repository supplies versioned definitions and processing code.
 
 **Lookup Inputs:**
-- `canonical_retrofit` - Canonical retrofit ID from the linked opportunity.
+- `canonical_retrofit` - **Required:** Canonical retrofit ID from the linked opportunity.
   - **Resolved by:**
     - **Profile:** Annual dollar savings > Annual direct resource reduction by end use and fuel > Canonical retrofit ID from linked-opportunity taxonomy match
-- `building_type` - Commercial building type.
+- `building_type` - **Required:** Commercial building type.
   - **Resolved by:**
     - **Profile:** Annual dollar savings > Annual direct resource reduction by end use and fuel > site.buildingTypes commercial building type
-- `climate_zone` - Climate zone resolved from the site location.
+- `climate_zone` - **Required:** Climate zone resolved from the site location.
   - **Resolved by:**
     - **Profile:** Annual dollar savings > Annual direct resource reduction by end use and fuel > Climate zone resolved from site.geo coordinates or county
-- `building_vintage` - Existing building vintage class.
+- `building_vintage` - **Required:** Existing building vintage class.
   - **Resolved by:**
     - **User:** Annual dollar savings > Annual direct resource reduction by end use and fuel > Existing building vintage class
-- `end_use_and_fuel` - Affected end use and fuel.
+- `end_use_and_fuel` - **Required:** Affected end use and fuel.
   - **Resolved by:**
     - **Derived:** Annual dollar savings > Annual direct resource reduction by end use and fuel
-- `existing_condition` - Existing-condition selector.
+- `existing_condition` - **Required:** Existing-condition selector.
   - **Resolved by:**
     - **User:** Annual dollar savings > Annual direct resource reduction by end use and fuel > Existing-condition selector
-- `proposed_option` - Proposed-option selector.
+- `proposed_option` - **Required:** Proposed-option selector.
   - **Resolved by:**
     - **User:** Annual dollar savings > Annual direct resource reduction by end use and fuel > Proposed-option selector
 
 **Value Needed:**
 Applicable annual fractional resource reduction by fuel and end use, the underlying performance assumption, Scout version, and supported market segment.
+
+**Resolution Contract:**
+- **Resolver Type:** Method resolver.
+- **Supported Scenarios:** exact-input; class-or-context-estimate; linked-opportunity-constrained-input; insufficient-data.
+- **Scenario Output Behavior:** Return a source-defined ECM performance distribution only after exact semantic and market-segment matching; otherwise return no estimate.
+- **Low/Base/High Rule:** Use documented low, typical, and high performance when present; otherwise use supported scenario bounds and label the base selection rule.
+- **Uncertainty Rule:** High unless the ECM definition and market segment match exactly.
+- **Exact Override:** A validated exact model, measurement, or project specification overrides the corresponding estimated value and records the exact source.
+- **Source Version:** Pinned Scout release, ECM definition identifier, and source checksum.
+- **Selected Class or Candidate Set:** Use an exact ECM definition, fuel, end use, climate, building type, and vintage match.
+- **Assumptions:** The selected Scout segment is applicable to the screened building and retrofit scope.
+- **Editable:** Yes. Every estimated input and result remains visible and can be replaced by a validated exact value.
+- **No-Estimate Rule:** Return no estimate when matching would depend on keywords, interpolation outside source coverage, or an unsupported segment.
 
 **How to Use:**
 Pin a Scout release, inspect `ecm_definitions` for an exact measure definition, and reject semantic keyword matches.
@@ -157,8 +189,10 @@ Do not import Scout costs, emissions, adoption, or national market totals.
 The category is BLOCKED pending human approval that each taxonomy type has an exact Scout definition and identical fallback behavior.
 If any mapping fails, that retrofit must split into a project-engineering category rather than accept a keyword match.
 
+Default-estimate behavior: Return no estimate unless the missing documented gate is satisfied by authoritative data or validated Optional Known Details.
+
 Expected uncertainty: STD-SCOUT-ECM-SCREEN: High uncertainty for individual sites.
 
 ## Human Review Decisions
 
-- Resolve before approval: The category is BLOCKED pending human approval that each taxonomy type has an exact Scout definition and identical fallback behavior.
+- Define and validate a defensible default path before approval; retain no-estimate behavior until the documented evidence gate is satisfied.

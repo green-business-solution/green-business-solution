@@ -32,6 +32,9 @@ const report = {
   standardsWithAutomation: review.standards.filter((standard) => hasCompleteAutomation(standard)).length,
   sourceUrls: sourceUrls.length,
   maxAtomicUserInputs: review.report.maxAtomicUserInputs,
+  requiredUserInputs: review.report.requiredUserInputs,
+  optionalKnownDetails: review.report.optionalKnownDetails,
+  maxRequiredUserInputs: review.report.maxRequiredUserInputs,
   categoriesOverFourUserInputs: review.report.categoriesOverFourUserInputs,
   categoriesWithFiveUserInputs: review.report.categoriesWithFiveUserInputs,
   categoryStatuses: review.report.categoryStatuses,
@@ -55,7 +58,7 @@ async function validateGeneratedPages(result, validationErrors) {
     "## Primary Formula",
     "## Supporting Formula(s)",
     "## Fully Expanded Information Tree",
-    "## Input Summary",
+    "## Input Workflow",
     "## Standards and Automation",
     "## Category Notes and Missing-Data Behavior",
     "## Human Review Decisions"
@@ -86,22 +89,32 @@ async function validateGeneratedPages(result, validationErrors) {
       if (index >= 0) previous = index;
     }
 
-    const tree = between(page, "## Fully Expanded Information Tree", "## Input Summary");
+    const tree = between(page, "## Fully Expanded Information Tree", "## Input Workflow");
     if (/^[│ ]*[├└]─ BR-[A-Z0-9-]+\s*$/m.test(tree)) {
       validationErrors.push(`${category.id} generated tree contains an unresolved bare shared-branch reference`);
     }
-    if (/\{\{(?:lookup|constant|output):/.test(tree)) {
+    if (/\{\{(?:lookup|constant|output|input|resource):/.test(tree)) {
       validationErrors.push(`${category.id} generated tree exposes internal trace annotations`);
     }
     validateGeneratedTreeLabels(category.id, tree, validationErrors);
 
     const reviewStatus = between(page, "## Review Status", "## Retrofits");
-    const userCount = Number(reviewStatus.match(/\*\*Expanded User-input count:\*\* (\d+)/)?.[1]);
-    if (userCount !== category.inputs.User.length) {
-      validationErrors.push(`${category.id} generated atomic User-input count is ${userCount}; expected ${category.inputs.User.length}`);
+    const requiredCount = Number(reviewStatus.match(/\*\*Required User-input count:\*\* (\d+)/)?.[1]);
+    const optionalCount = Number(reviewStatus.match(/\*\*Optional Known-Detail count:\*\* (\d+)/)?.[1]);
+    if (requiredCount !== category.inputs.RequiredUser.length) {
+      validationErrors.push(`${category.id} generated Required User-input count is ${requiredCount}; expected ${category.inputs.RequiredUser.length}`);
     }
-    if (category.inputs.User.length > 5 && !page.includes(`Input workflow: This contract exposes ${category.inputs.User.length} independent User values`)) {
-      validationErrors.push(`${category.id} generated page does not explain its multi-step atomic-input workflow`);
+    if (optionalCount !== category.inputs.OptionalUser.length) {
+      validationErrors.push(`${category.id} generated Optional Known-Detail count is ${optionalCount}; expected ${category.inputs.OptionalUser.length}`);
+    }
+    for (const subsection of [
+      "### Required User Inputs",
+      "### Optional Known Details",
+      "### Profile Inputs",
+      "### Bill Inputs",
+      "### Standard-Derived Assumptions"
+    ]) {
+      if (!page.includes(subsection)) validationErrors.push(`${category.id} generated page is missing ${subsection}`);
     }
 
     const standardBlock = between(page, "## Standards and Automation", "## Category Notes and Missing-Data Behavior");
@@ -118,6 +131,23 @@ async function validateGeneratedPages(result, validationErrors) {
       for (const field of automationFields) {
         if (!card.includes(`**${field}:**`)) {
           validationErrors.push(`${category.id} embedded Standard ${standard.id} is missing Automation field ${field}`);
+        }
+      }
+      for (const field of [
+        "Resolver Type",
+        "Supported Scenarios",
+        "Scenario Output Behavior",
+        "Low/Base/High Rule",
+        "Uncertainty Rule",
+        "Exact Override",
+        "Source Version",
+        "Selected Class or Candidate Set",
+        "Assumptions",
+        "Editable",
+        "No-Estimate Rule"
+      ]) {
+        if (!card.includes(`**${field}:**`)) {
+          validationErrors.push(`${category.id} embedded Standard ${standard.id} is missing Resolution Contract field ${field}`);
         }
       }
       for (const input of standard.tracedInputs) {
@@ -139,8 +169,11 @@ async function validateGeneratedPages(result, validationErrors) {
       continue;
     }
     const cells = row.split("|").slice(1, -1).map((cell) => cell.trim());
-    if (Number(cells[4]) !== category.inputs.User.length) {
-      validationErrors.push(`review index has incorrect atomic User-input count for ${category.id}`);
+    if (Number(cells[2]) !== category.inputs.RequiredUser.length) {
+      validationErrors.push(`review index has incorrect Required User-input count for ${category.id}`);
+    }
+    if (Number(cells[3]) !== category.inputs.OptionalUser.length) {
+      validationErrors.push(`review index has incorrect Optional Known-Detail count for ${category.id}`);
     }
   }
 }
@@ -212,7 +245,10 @@ function validateNarrativeTotals(result, loadedSources, urls, validationErrors) 
     `- Shared branches: ${report.sharedBranchesExpanded}.`,
     `- Canonical Standards: ${report.standardsEmbedded}.`,
     `- Expanded maximum atomic User inputs per category: ${report.maxAtomicUserInputs}.`,
-    `- Categories above four atomic User inputs: ${overFour}.`
+    `- Expanded Required User inputs: ${report.requiredUserInputs}.`,
+    `- Expanded Optional Known Details: ${report.optionalKnownDetails}.`,
+    `- Maximum Required User inputs per category: ${report.maxRequiredUserInputs}.`,
+    `- Categories above four Required User inputs: ${overFour}.`
   ]) {
     if (!loadedSources.auditDocument.includes(line)) validationErrors.push(`audit summary is stale or missing: ${line}`);
   }
