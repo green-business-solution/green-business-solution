@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-OPERATING-SCHEDULE",
+  "source": "Explicit calendar schedules, USNO daylight definitions, and approved reference schedules",
+  "sourceVersion": "USNO definitions current 2026-07-23",
+  "observedArtifact": "USNO rise, set, and twilight definitions HTML",
+  "observedArtifactSha256": "178f7024fdbce65bf3c3ee80f758ec3429e0115dff4d538cf54c59a978f58281",
+  "evidenceBoundary": "Explicit calendar schedule method",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "formula",
+    "sourceEvidence": "Explicit calendar schedule method",
+    "formula": "weeklyScheduleHours",
+    "inputs": {
+      "weekdayHours": 10,
+      "weekdaysPerWeek": 5,
+      "weekendHours": 4,
+      "weekendDaysPerWeek": 1,
+      "weeks": 52
+    },
+    "expected": {
+      "annualHours": 2808
+    },
+    "unit": "hours/year"
+  },
+  "offlineResult": {
+    "kind": "model_result_set",
+    "standardId": "STD-OPERATING-SCHEDULE",
+    "value": {
+      "annualHours": 2808
+    },
+    "unit": "hours/year",
+    "scope": "RESEARCH_PROTOTYPE",
+    "source": "Explicit calendar schedules, USNO daylight definitions, and approved reference schedules",
+    "sourceVersion": "USNO definitions current 2026-07-23",
+    "sourceArtifact": "USNO rise, set, and twilight definitions HTML",
+    "filters": {
+      "weekdayHours": 10,
+      "weekdaysPerWeek": 5,
+      "weekendHours": 4,
+      "weekendDaysPerWeek": 1,
+      "weeks": 52
+    },
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "PINNED_LOCAL_FORMULA:weeklyScheduleHours",
+    "fallbackLevel": "RESEARCH_SAMPLE",
+    "uncertainty": "IMPLEMENTATION_BOUND",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Explicit calendar schedule method",
+      "sha256": "c5d0d0cca43e1e25b0a092127af08cbbcff427aab67e62d35a7c797272b4046a"
+    }
+  }
+}

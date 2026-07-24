@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-FUELECONOMY-VEHICLES",
+  "source": "FuelEconomy.gov vehicle data",
+  "sourceVersion": "1984-current bulk vehicle table downloaded 2026-07-23",
+  "observedArtifact": "vehicles.csv.zip",
+  "observedArtifactSha256": "83ee4bf48e65e8e962e55952e0bfbdc6ab94d4bf63f42e2d38aa39143d6f1ecc",
+  "evidenceBoundary": "Reviewed exact FuelEconomy.gov fields",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "formula",
+    "sourceEvidence": "Reviewed exact FuelEconomy.gov fields",
+    "formula": "vehicleIntensity",
+    "inputs": {
+      "combinedMpg": 30,
+      "combinedElectricKwhPer100Miles": 28
+    },
+    "expected": {
+      "gallonsPerMile": 0.03333333333333333,
+      "wallKwhPerMile": 0.28
+    },
+    "unit": "gallon/mile and kWh/mile"
+  },
+  "offlineResult": {
+    "kind": "model_result_set",
+    "standardId": "STD-FUELECONOMY-VEHICLES",
+    "value": {
+      "gallonsPerMile": 0.03333333333333333,
+      "wallKwhPerMile": 0.28
+    },
+    "unit": "gallon/mile and kWh/mile",
+    "scope": "RESEARCH_PROTOTYPE",
+    "source": "FuelEconomy.gov vehicle data",
+    "sourceVersion": "1984-current bulk vehicle table downloaded 2026-07-23",
+    "sourceArtifact": "vehicles.csv.zip",
+    "filters": {
+      "combinedMpg": 30,
+      "combinedElectricKwhPer100Miles": 28
+    },
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "PINNED_LOCAL_FORMULA:vehicleIntensity",
+    "fallbackLevel": "RESEARCH_SAMPLE",
+    "uncertainty": "SOURCE_BOUND",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Reviewed exact FuelEconomy.gov fields",
+      "sha256": "8f7ddb6a49654c204834a243752d950bb38e48f2442360dd5bbf826df78b4b4f"
+    }
+  }
+}

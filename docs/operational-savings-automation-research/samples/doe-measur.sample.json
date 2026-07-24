@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-DOE-MEASUR",
+  "source": "MEASUR AMO Tools Suite",
+  "sourceVersion": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+  "observedArtifact": "tests/cpp/ElectricityReduction.unit.cpp and CompressedAirLeakSurvey.unit.cpp",
+  "observedArtifactSha256": null,
+  "evidenceBoundary": "Official ElectricityReduction C++ golden test",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "formula",
+    "sourceEvidence": "Official ElectricityReduction C++ golden test",
+    "formula": "threePhasePowerAndEnergy",
+    "inputs": {
+      "phases": 3,
+      "volts": 800,
+      "amps": 40,
+      "powerFactor": 0.85,
+      "operatingHours": 8640
+    },
+    "expected": {
+      "powerKw": 47.111781,
+      "energyKwh": 407045.796185
+    },
+    "unit": "kW and kWh/year"
+  },
+  "offlineResult": {
+    "kind": "model_result_set",
+    "standardId": "STD-DOE-MEASUR",
+    "value": {
+      "powerKw": 47.111781965873,
+      "energyKwh": 407045.7961851467
+    },
+    "unit": "kW and kWh/year",
+    "scope": "RESEARCH_PROTOTYPE",
+    "source": "MEASUR AMO Tools Suite",
+    "sourceVersion": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+    "sourceArtifact": "tests/cpp/ElectricityReduction.unit.cpp and CompressedAirLeakSurvey.unit.cpp",
+    "filters": {
+      "phases": 3,
+      "volts": 800,
+      "amps": 40,
+      "powerFactor": 0.85,
+      "operatingHours": 8640
+    },
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "PINNED_LOCAL_FORMULA:threePhasePowerAndEnergy",
+    "fallbackLevel": "RESEARCH_SAMPLE",
+    "uncertainty": "IMPLEMENTATION_BOUND",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Official ElectricityReduction C++ golden test",
+      "sha256": "cdc84fb6bed2eb26478ebeb535100c1500414447188f276662e461d9b43cdfe5"
+    }
+  }
+}

@@ -1,0 +1,248 @@
+# STD-DISHWASHER-WATER-HEATING - Commercial dishwasher water-heating conversion
+
+## 1. RetroFi role
+
+This Standard is used by 1 category and 1 category-local process instance.
+The categories are ITC-52.
+The process keys are dishwasher-water-heating-conversion.
+The formula terms supplied are dishwasher_water_heating_result, water_heating_R_per_hour_existing, water_heating_R_per_hour_proposed, water_heating_R_per_rack_existing, water_heating_R_per_rack_proposed.
+The current claimed output set contains 5 distinct output descriptions.
+The present automation limitation is: Treating all machine water as hot water without the building and booster boundary or converting flight gallons per hour to racks.
+
+| Evidence ID | Source title | Version | Status | Exact artifact |
+| --- | --- | --- | --- | --- |
+| E-DISHWASHER-WATER-HEATING | ENERGY STAR Commercial Food Service Equipment Calculator - Dishwasher Calculations | Workbook published March 2024 | VERIFIED | Dishwasher Calcs worksheet |
+
+## 2. Official source inventory
+
+The primary organization is U.S. Environmental Protection Agency.
+The selected official source is ENERGY STAR Commercial Food Service Equipment Calculator, Dishwasher Calcs.
+The pinned version is Workbook published March 2024.
+The release date or release state is 2024-03.
+The expected update cadence is Calculator and specification release based.
+The license finding is EPA calculator; retain source attribution and review workbook notices.
+The legal-review requirement is Low.
+
+- https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx
+
+## 3. What can actually be acquired
+
+- Public XLSX calculator
+- Locally inspected formulas and assumptions
+
+| Route | Exact endpoint or source | Authentication, registration, and key | Rate limit and pagination | Observed size, format, compression, and partition | History and URL stability | Automation assessment | Research result |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Public XLSX calculator | https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx | No authentication, registration, or API key observed for this route | Not applicable to a static artifact, repository, local package, or manual export | 403484 bytes observed; XLSX; XLSX ZIP container | Workbook published March 2024; Calculator and specification release based; Monitor URL and checksum drift | Public acquisition appears automatable, subject to artifact-specific license review | The official 403 KB workbook downloaded; all 15 sheets, Dishwasher Calcs inputs, formulas, and water-heating factors were inspected |
+| Locally inspected formulas and assumptions | https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx | No authentication, registration, or API key observed for this route | Not applicable to a static artifact, repository, local package, or manual export | Not separately sized; Route-specific source structure | Workbook published March 2024; Calculator and specification release based; Monitor URL and checksum drift | Public acquisition appears automatable, subject to artifact-specific license review | Not separately probed; retained as a documented alternative |
+
+The tested access result is: The official 403 KB workbook downloaded; all 15 sheets, Dishwasher Calcs inputs, formulas, and water-heating factors were inspected.
+The retained inspected artifact is CFS Equipment Calculator.xlsx, XLSX, 403484 bytes, sha256:3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6.
+The access-cost classification is completely free.
+
+## 4. Real source structure
+
+The observed source-native fields or model inputs are:
+
+- `machine type`
+- `sanitation method`
+- `water gallons per rack or square foot`
+- `temperature rise`
+- `water-heater efficiency`
+- `specific heat`
+- `water density`
+- `resource conversion`
+- `kWh or therm per gallon`
+
+| Field or structure | Shape to validate and pin | Native unit | Key or filter role | Null handling | Enumeration handling |
+| --- | --- | --- | --- | --- | --- |
+| machine type | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Mandatory filter or version dimension | Preserve source nulls; reject null only when the process requires the field | Preserve and pin native enumeration values per release |
+| sanitation method | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Preserve and pin native enumeration values per release |
+| water gallons per rack or square foot | Numeric scalar or numeric series | gallons/rack | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+| temperature rise | Numeric scalar or numeric series | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+| water-heater efficiency | Numeric scalar or numeric series | Fraction, ratio, or source-declared efficiency unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+| specific heat | Numeric scalar or numeric series | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+| water density | Numeric scalar or numeric series | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+| resource conversion | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+| kWh or therm per gallon | Numeric scalar or numeric series | Source-declared energy unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+
+Product and record sources must preserve a natural source identifier plus a release identifier as the composite natural key.
+Model sources must preserve the complete input schema, package version, configuration, warnings, and output schema.
+Dates remain source-native timestamps in raw snapshots and normalize to UTC timestamps or date-only effective intervals in query tables.
+Enumerations remain source-native in raw storage and map through versioned crosswalk rows.
+Null means unknown or not reported and must never be converted to zero.
+Withdrawn, expired, superseded, and inactive records remain historically retained but are excluded from current resolution by default.
+Duplicate manufacturer and model strings are normalized for search only, while the original source text remains immutable.
+
+## 5. RetroFi field coverage
+
+| Required RetroFi field | Process and category | Source artifact or owner | Source-native field | Transformation | Target unit | Support classification | Limitation |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Rack-machine type and sanitation method, when the rack branch is used | dishwasher-water-heating-conversion; ITC-52 | User | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Rack-Machine Type and Sanitation Method | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Flight or conveyor machine type and sanitation method, when the flight branch is used | dishwasher-water-heating-conversion; ITC-52 | User | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Flight or Conveyor Machines Only > Flight or Conveyor Machine Type and Sanitation Method | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Existing native water quantity from the connected existing dishwasher record | dishwasher-water-heating-conversion; ITC-52 | Standard Output | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Standard 1.1 - Exact Existing Dishwasher Native-Field Resolution | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | DERIVABLE_FROM_SOURCE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Proposed native water quantity from the connected exact proposed dishwasher record, when used | dishwasher-water-heating-conversion; ITC-52 | Standard Output | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity names an exact dishwasher > Standard 1.2 - Exact Proposed Dishwasher Native-Field Resolution | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | DERIVABLE_FROM_SOURCE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Proposed native water quantity from the connected requirement-selected dishwasher record, when used | dishwasher-water-heating-conversion; ITC-52 | Standard Output | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity specifies dishwasher requirements but no exact product > Standard 1.3 - Requirement-Based Proposed Dishwasher Native-Field Resolution | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | DERIVABLE_FROM_SOURCE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Incoming water temperature | dishwasher-water-heating-conversion; ITC-52 | Project Document | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Incoming Water Temperature | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Wash, rinse, or booster temperature or certified hot-water quantity | dishwasher-water-heating-conversion; ITC-52 | Project Document | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Wash, Rinse, or Booster Temperature or Certified Hot-Water Quantity | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Water-heating resource type | dishwasher-water-heating-conversion; ITC-52 | User | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Water-Heating Resource Type | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Water-heater efficiency | dishwasher-water-heating-conversion; ITC-52 | Project Document | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Water-Heater Efficiency | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Dishwasher water-heating result set | dishwasher-water-heating-conversion; ITC-52 | CFS Equipment Calculator.xlsx | machine type; sanitation method; water gallons per rack or square foot; temperature rise; water-heater efficiency; specific heat; water density; resource conversion; kWh or therm per gallon | water_heating_input_per_gallon = temperature_rise_F * water_density_lb_per_gallon * specific_heat_Btu_per_lb_F / heater_efficiency / resource_Btu_per_unit | record set | DERIVABLE_FROM_SOURCE | Treating all machine water as hot water without the building and booster boundary or converting flight gallons per hour to racks |
+| Existing rack-machine water-heating resource per rack | dishwasher-water-heating-conversion; ITC-52 | CFS Equipment Calculator.xlsx | machine type; sanitation method; water gallons per rack or square foot; temperature rise; water-heater efficiency; specific heat; water density; resource conversion; kWh or therm per gallon | water_heating_input_per_gallon = temperature_rise_F * water_density_lb_per_gallon * specific_heat_Btu_per_lb_F / heater_efficiency / resource_Btu_per_unit | resource/certified activity | DERIVABLE_FROM_SOURCE | Treating all machine water as hot water without the building and booster boundary or converting flight gallons per hour to racks |
+| Proposed rack-machine water-heating resource per rack | dishwasher-water-heating-conversion; ITC-52 | CFS Equipment Calculator.xlsx | machine type; sanitation method; water gallons per rack or square foot; temperature rise; water-heater efficiency; specific heat; water density; resource conversion; kWh or therm per gallon | water_heating_input_per_gallon = temperature_rise_F * water_density_lb_per_gallon * specific_heat_Btu_per_lb_F / heater_efficiency / resource_Btu_per_unit | resource/certified activity | DERIVABLE_FROM_SOURCE | Treating all machine water as hot water without the building and booster boundary or converting flight gallons per hour to racks |
+| Existing flight or conveyor water-heating resource per operating hour | dishwasher-water-heating-conversion; ITC-52 | CFS Equipment Calculator.xlsx | machine type; sanitation method; water gallons per rack or square foot; temperature rise; water-heater efficiency; specific heat; water density; resource conversion; kWh or therm per gallon | water_heating_input_per_gallon = temperature_rise_F * water_density_lb_per_gallon * specific_heat_Btu_per_lb_F / heater_efficiency / resource_Btu_per_unit | resource/hour | DERIVABLE_FROM_SOURCE | Treating all machine water as hot water without the building and booster boundary or converting flight gallons per hour to racks |
+| Proposed flight or conveyor water-heating resource per operating hour | dishwasher-water-heating-conversion; ITC-52 | CFS Equipment Calculator.xlsx | machine type; sanitation method; water gallons per rack or square foot; temperature rise; water-heater efficiency; specific heat; water density; resource conversion; kWh or therm per gallon | water_heating_input_per_gallon = temperature_rise_F * water_density_lb_per_gallon * specific_heat_Btu_per_lb_F / heater_efficiency / resource_Btu_per_unit | resource/hour | DERIVABLE_FROM_SOURCE | Treating all machine water as hot water without the building and booster boundary or converting flight gallons per hour to racks |
+
+For every `DERIVABLE_FROM_SOURCE` row, the governing derivation is: water_heating_input_per_gallon = temperature_rise_F * water_density_lb_per_gallon * specific_heat_Btu_per_lb_F / heater_efficiency / resource_Btu_per_unit.
+No field owned by Profile, Bill, Linked Opportunity, Project Document, or User is silently replaced with a source default.
+
+## 6. Acquisition workflow
+
+```text
+ENERGY STAR Commercial Food Service Equipment Calculator, Dishwasher Calcs
+-> Public XLSX calculator
+-> immutable raw snapshot
+-> SHA-256 checksum and media-type validation
+-> schema and enumeration validation
+-> source-specific normalization and deduplication
+-> calculation_assumptions + model_versions + calculation_runs
+-> deterministic dishwasher-water-heating adapter
+-> typed formula input
+-> calculation result with provenance
+```
+
+Acquisition runs under a scheduler or operator action and never during a customer estimate.
+A failed checksum, schema drift, or incomplete artifact leaves the prior published release active.
+
+## 7. Internal database schema
+
+The source uses the shared registry tables plus these target tables: calculation_assumptions, model_versions, calculation_runs.
+
+```sql
+CREATE TABLE os_dishwasher_water_heating_records (
+  source_release_id uuid NOT NULL REFERENCES source_releases(id),
+  source_record_key text NOT NULL,
+  effective_from date,
+  effective_to date,
+  active boolean NOT NULL,
+  native_payload jsonb NOT NULL,
+  normalized_payload jsonb NOT NULL,
+  unit_registry_version text NOT NULL,
+  source_artifact_id uuid NOT NULL REFERENCES source_artifacts(id),
+  created_at timestamptz NOT NULL,
+  PRIMARY KEY (source_release_id, source_record_key)
+);
+CREATE INDEX os_dishwasher_water_heating_active_exact_idx
+  ON os_dishwasher_water_heating_records ((normalized_payload->>'normalized_identifier'), effective_from, effective_to)
+  WHERE active;
+CREATE INDEX os_dishwasher_water_heating_requirements_idx
+  ON os_dishwasher_water_heating_records USING gin (normalized_payload jsonb_path_ops)
+  WHERE active;
+```
+
+Source-native payloads remain queryable for audits, while formula adapters consume only validated normalized columns or pinned local-model results.
+
+## 8. Exact resolution
+
+Identifiers are Unicode-normalized, trimmed, case-folded for search, and compared with punctuation-insensitive aliases only after exact original matching fails.
+Manufacturer aliases and model aliases are versioned rows, never destructive edits.
+Equipment class, capacity, geography, effective date, active status, source version, and test procedure are mandatory filters whenever the source exposes them.
+An exact path must return one compatible active record.
+Zero records returns a typed unavailable result.
+Multiple compatible records return an ambiguity error unless the source defines a deterministic edition or submodel key.
+The original identifier, matched alias, filters, and rejected candidates remain in provenance.
+
+## 9. Requirements-based resolution
+
+Mandatory filters are the category's explicit equipment class, performance requirement, capacity boundary, geography, date, active status, test-procedure version, and source release.
+The eligible population contains only records satisfying every mandatory filter.
+Inactive, withdrawn, superseded, incompatible-unit, missing-required-field, and cross-test-procedure records are excluded.
+The source release is never mixed with another release inside one population.
+A single eligible record may be selected directly.
+Multiple eligible records use an official recommended value only when the source defines one, then a weighted median only when a defensible source weight exists, then an ordinary median only for a true scalar benchmark population.
+Structured records and model result sets are never median-selected.
+
+## 10. Benchmark resolution
+
+The benchmark population must be authoritative, category-specific, unit-compatible, and filtered to the same context dimensions used by the formula.
+The minimum sample size is five unless an official source explicitly publishes one typical value or a category-specific report approves a different threshold.
+The weighting field must come from the source and is never inferred from record order.
+The weighted median is the first value whose cumulative positive weight reaches at least half of total eligible weight after sorting by value.
+The ordinary median is permitted only when no defensible weight exists and the population is an exchangeable scalar population.
+The selected value retains filters, population size, sample size, method, fallback level, and uncertainty.
+The unsupported boundary is Treating all machine water as hot water without the building and booster boundary or converting flight gallons per hour to racks.
+
+## 11. Calculation or local-model execution
+
+The exact output contract contains: Dishwasher water-heating result set; Existing rack-machine water-heating resource per rack; Proposed rack-machine water-heating resource per rack; Existing flight or conveyor water-heating resource per operating hour; Proposed flight or conveyor water-heating resource per operating hour.
+The governing source equation or transformation is water_heating_input_per_gallon = temperature_rise_F * water_density_lb_per_gallon * specific_heat_Btu_per_lb_F / heater_efficiency / resource_Btu_per_unit.
+The local execution mode is Small immutable calculator-assumption artifact plus deterministic local equation.
+Inputs are rejected for missing required fields, incompatible units, ambiguous identifiers, invalid effective dates, out-of-range physical values, or a mismatched model version.
+Outputs retain their native unit and a normalized unit from the repository unit registry.
+Warnings are first-class result fields and cannot be dropped by the category adapter.
+Reproducibility requires the raw-artifact checksum, source release, adapter version, input hash, model or formula version, and output hash.
+
+## 12. Refresh and versioning
+
+Refresh follows Calculator and specification release based.
+Release detection compares official release metadata and artifact checksums.
+A changed checksum under an unchanged source version is quarantined for review.
+Schema drift compares columns, types, required fields, enumeration values, workbook sheets, or model input declarations against the prior accepted fingerprint.
+Raw snapshots, normalized releases, crosswalks, and selection outputs are immutable.
+Publication uses an atomic pointer to the accepted release.
+Rollback changes only that pointer and records an operator reason.
+Deprecated releases remain available for historical calculation replay.
+Stale data is labeled and blocked when an effective-date or certification-status guarantee can no longer be made.
+
+## 13. Runtime design
+
+The selected runtime design is Small immutable calculator-assumption artifact plus deterministic local equation.
+The required number of external calls during a customer estimate is zero.
+The adapter reads a published internal release or executes a pinned local model only.
+If the source is offline, existing published releases and reproducible historical calculations continue to work.
+
+## 14. Cost
+
+One-time engineering effort is 40-70 hours.
+Estimated raw storage is 0.01 GB.
+Estimated published storage is 0.001 GB.
+Refresh effort is 4-8 per calculator release.
+Maintenance burden is Low.
+External source cost is $0 per month.
+Estimated internal storage and compute cost is $0.01 at 100 calculations per month, $0.02 at 1,000, and $0.08 at 10,000.
+These figures exclude ordinary shared database and observability overhead and are planning estimates, not vendor quotes.
+
+## 15. Prototype proof
+
+The offline command is:
+
+```bash
+node scripts/research/operational-savings/run-prototypes.mjs --json
+```
+
+The acquired or inspected source evidence is Inspected Dishwasher Calcs formulas and assumptions.
+The retained compact sample is `docs/operational-savings-automation-research/samples/dishwasher-water-heating.sample.json`.
+The source or model interface inspected is CFS Equipment Calculator.xlsx.
+The local output kind is `model_result_set`, the selection rule is `PINNED_LOCAL_FORMULA:waterHeatingPerGallon`, and the output unit is `kWh/gallon`.
+The prototype runs without network access after acquisition.
+The prototype completed without warnings.
+The prototype proves parsing, filtering, or calculation behavior only within the retained sample boundary.
+
+## 16. Feasibility verdict
+
+**FEASIBLE_NOW**
+
+The supported boundary is Matched rack or flight machine, explicit hot-water boundary, temperature rise, heater fuel, and heater efficiency.
+The unsupported boundary is Treating all machine water as hot water without the building and booster boundary or converting flight gallons per hour to racks.
+
+## 17. Final recommended strategy
+
+Retain the workbook checksum and exact formula cells, normalize rack and flight activity separately, and execute the specific-heat conversion locally with explicit building and booster stages.
+This is the single recommended production path for this Standard.
+The rejected alternative is: A universal kWh per gallon is rejected because temperature rise, heater fuel, and efficiency differ by stage.
+
+## 18. Potential later Information Card changes
+
+No Information Card change is made on this research branch.
+Later review may update the visible source version, fallback wording, input ownership, category scope, or status to match the supported boundary documented above.
+Any formula change must be separately researched, reviewed, and approved.
+Any fallback must name its authoritative population and exact numeric selection rule.

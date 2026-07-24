@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-WIND-SAM",
+  "source": "SAM wind power module, SSC, and Wind Toolkit resources",
+  "sourceVersion": "SSC git commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+  "observedArtifact": "ssc/cmod_windpower.cpp",
+  "observedArtifactSha256": null,
+  "evidenceBoundary": "Inspected SSC wind interval and annual output contract",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "formula",
+    "sourceEvidence": "Inspected SSC wind interval and annual output contract",
+    "formula": "intervalEnergy",
+    "inputs": {
+      "generationKw": [
+        0,
+        1.2,
+        2.4,
+        1.4
+      ],
+      "intervalHours": 1
+    },
+    "expected": {
+      "annualizedSampleKwh": 5
+    },
+    "unit": "kWh"
+  },
+  "offlineResult": {
+    "kind": "model_result_set",
+    "standardId": "STD-WIND-SAM",
+    "value": {
+      "annualizedSampleKwh": 5
+    },
+    "unit": "kWh",
+    "scope": "RESEARCH_PROTOTYPE",
+    "source": "SAM wind power module, SSC, and Wind Toolkit resources",
+    "sourceVersion": "SSC git commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+    "sourceArtifact": "ssc/cmod_windpower.cpp",
+    "filters": {
+      "generationKw": [
+        0,
+        1.2,
+        2.4,
+        1.4
+      ],
+      "intervalHours": 1
+    },
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "PINNED_LOCAL_FORMULA:intervalEnergy",
+    "fallbackLevel": "RESEARCH_SAMPLE",
+    "uncertainty": "IMPLEMENTATION_BOUND",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Inspected SSC wind interval and annual output contract",
+      "sha256": "42b014a8172780d423135bc04700e4986c7466aa3492f4612c2dbcc8e836fcc9"
+    }
+  }
+}

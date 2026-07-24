@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-WATERSENSE-CI-OPERATIONS",
+  "source": "WaterSense at Work commercial and institutional best-management practices",
+  "sourceVersion": "WaterSense at Work workbook published 2017-02; current guidance page",
+  "observedArtifact": "ws-commercial-excel-writeable-tables.xlsx",
+  "observedArtifactSha256": "f69facc89beb2073fdaba88206d20e32151b2f30c53a7f21f7981eeab8c0ab52",
+  "evidenceBoundary": "Inspected Water Use Inventory columns in official workbook",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "formula",
+    "sourceEvidence": "Inspected Water Use Inventory columns in official workbook",
+    "formula": "leakWater",
+    "inputs": {
+      "measuredLeakGpm": 0.5,
+      "confirmedMinutesPerYear": 525600
+    },
+    "expected": {
+      "avoidedGallons": 262800
+    },
+    "unit": "gallons/year"
+  },
+  "offlineResult": {
+    "kind": "model_result_set",
+    "standardId": "STD-WATERSENSE-CI-OPERATIONS",
+    "value": {
+      "avoidedGallons": 262800
+    },
+    "unit": "gallons/year",
+    "scope": "RESEARCH_PROTOTYPE",
+    "source": "WaterSense at Work commercial and institutional best-management practices",
+    "sourceVersion": "WaterSense at Work workbook published 2017-02; current guidance page",
+    "sourceArtifact": "ws-commercial-excel-writeable-tables.xlsx",
+    "filters": {
+      "measuredLeakGpm": 0.5,
+      "confirmedMinutesPerYear": 525600
+    },
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "PINNED_LOCAL_FORMULA:leakWater",
+    "fallbackLevel": "RESEARCH_SAMPLE",
+    "uncertainty": "IMPLEMENTATION_BOUND",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Inspected Water Use Inventory columns in official workbook",
+      "sha256": "df1ddd2f20c13e1096b3aee7a25a349f3744a2a7c1236d53d88e1e3cce6a7f5b"
+    }
+  }
+}

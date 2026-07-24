@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-ENERGY-STAR-PRODUCT-DATA",
+  "source": "ENERGY STAR certified product datasets",
+  "sourceVersion": "Active product-family specifications; dishwasher dataset inspected 2026-07-23",
+  "observedArtifact": "pk8q-dim8.json?$limit=5",
+  "observedArtifactSha256": "3a48590aea34a8b63696488c052cb31cb059502356a2dc51a68122528fb28ae5",
+  "evidenceBoundary": "Live official Socrata dishwasher response",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "exactLookup",
+    "sourceEvidence": "Live official Socrata dishwasher response",
+    "query": {
+      "modelNumber": "AF-ES"
+    },
+    "records": [
+      {
+        "pdId": "2383572",
+        "modelNumber": "AF-ES",
+        "machineType": "Stationary Single Tank Door - Dump and Fill",
+        "sanitationMethod": "Chemical Sanitizing (Low Temp) Machine",
+        "waterGallonsPerRack": 0.95,
+        "washingKwhPerRack": 0.02
+      }
+    ],
+    "expected": {
+      "pdId": "2383572",
+      "waterGallonsPerRack": 0.95
+    },
+    "unit": "product record"
+  },
+  "offlineResult": {
+    "kind": "product_record",
+    "standardId": "STD-ENERGY-STAR-PRODUCT-DATA",
+    "value": {
+      "pdId": "2383572",
+      "modelNumber": "AF-ES",
+      "machineType": "Stationary Single Tank Door - Dump and Fill",
+      "sanitationMethod": "Chemical Sanitizing (Low Temp) Machine",
+      "waterGallonsPerRack": 0.95,
+      "washingKwhPerRack": 0.02
+    },
+    "unit": "product record",
+    "scope": "RESEARCH_PROTOTYPE",
+    "source": "ENERGY STAR certified product datasets",
+    "sourceVersion": "Active product-family specifications; dishwasher dataset inspected 2026-07-23",
+    "sourceArtifact": "pk8q-dim8.json?$limit=5",
+    "filters": {
+      "modelNumber": "AF-ES"
+    },
+    "eligiblePopulation": [
+      {
+        "pdId": "2383572",
+        "modelNumber": "AF-ES",
+        "machineType": "Stationary Single Tank Door - Dump and Fill",
+        "sanitationMethod": "Chemical Sanitizing (Low Temp) Machine",
+        "waterGallonsPerRack": 0.95,
+        "washingKwhPerRack": 0.02
+      }
+    ],
+    "sampleSize": 1,
+    "selectionRule": "EXACT_NORMALIZED_IDENTIFIER",
+    "fallbackLevel": "RESEARCH_SAMPLE",
+    "uncertainty": "SOURCE_BOUND",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Live official Socrata dishwasher response",
+      "sha256": "affe8727268daa20b6cd6e666134451913e02a4e06bcb32a6e054f72ebc8ed06"
+    }
+  }
+}

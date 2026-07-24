@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-DISHWASHER-WATER-HEATING",
+  "source": "ENERGY STAR Commercial Food Service Equipment Calculator, Dishwasher Calcs",
+  "sourceVersion": "Workbook published March 2024",
+  "observedArtifact": "CFS Equipment Calculator.xlsx",
+  "observedArtifactSha256": "3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6",
+  "evidenceBoundary": "Inspected Dishwasher Calcs formulas and assumptions",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "formula",
+    "sourceEvidence": "Inspected Dishwasher Calcs formulas and assumptions",
+    "formula": "waterHeatingPerGallon",
+    "inputs": {
+      "temperatureRiseF": 70,
+      "waterDensityLbPerGallon": 8.208556149732619,
+      "specificHeatBtuPerLbF": 1,
+      "heaterEfficiency": 0.98,
+      "resourceBtuPerUnit": 3413
+    },
+    "expected": {
+      "resourcePerGallon": 0.17179180757885015
+    },
+    "unit": "kWh/gallon"
+  },
+  "offlineResult": {
+    "kind": "model_result_set",
+    "standardId": "STD-DISHWASHER-WATER-HEATING",
+    "value": {
+      "resourcePerGallon": 0.17179180757885015
+    },
+    "unit": "kWh/gallon",
+    "scope": "RESEARCH_PROTOTYPE",
+    "source": "ENERGY STAR Commercial Food Service Equipment Calculator, Dishwasher Calcs",
+    "sourceVersion": "Workbook published March 2024",
+    "sourceArtifact": "CFS Equipment Calculator.xlsx",
+    "filters": {
+      "temperatureRiseF": 70,
+      "waterDensityLbPerGallon": 8.208556149732619,
+      "specificHeatBtuPerLbF": 1,
+      "heaterEfficiency": 0.98,
+      "resourceBtuPerUnit": 3413
+    },
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "PINNED_LOCAL_FORMULA:waterHeatingPerGallon",
+    "fallbackLevel": "RESEARCH_SAMPLE",
+    "uncertainty": "SOURCE_BOUND",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Inspected Dishwasher Calcs formulas and assumptions",
+      "sha256": "9a10ffdebc3553352fac41f12e9efed702d012db7a075c607681ea803e94d16a"
+    }
+  }
+}

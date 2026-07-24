@@ -1,0 +1,36 @@
+# ITC-32 - Flow-fixture water and hot-water reduction
+
+This report evaluates automation coverage without changing the approved Information Card.
+The category contains 5 category-local process instances and references 2 canonical Standards.
+Its current formula, tree, bindings, ownership decisions, and status remain unchanged.
+
+## Process coverage
+
+| Process key | Process name | Canonical Standard | Required inputs | Exact outputs | Formula terms | Source feasibility | Runtime external calls | Current blocker |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| flow_fixture_activity | Flow Fixture Activity Resolution | STD-CONTEXT-BENCHMARKS | Supported fixture type; In-scope fixture count; Recognizable occupants, customers, rooms, meals, or another source-compatible activity; Operating days per week; Active weeks per year; Observed fixture-use study when available | Total annual active minutes across the in-scope fixture group | total_annual_active_minutes | PARTIALLY_FEASIBLE | 0 | WaterSense at Work documents commercial fixture inventory and savings methods, but the retained source fixture does not yet prove the flow-fixture activity fields and equations. The group-total contract and no-double-count boundary are explicit while source-field execution remains pending. |
+| existing_flow_rate | Existing Flow Rate Resolution | STD-CONTEXT-BENCHMARKS | Existing fixture type and application; Existing label, specification, audit, or measurement when available | One existing rated flow in gallons per minute | gpm_existing | PARTIALLY_FEASIBLE | 0 | WaterSense proposed-product criteria do not supply an installed existing-flow population. No retained installed-flow fixture currently proves a benchmark, so only exact project evidence is supported and the benchmark path remains implementation-pending. |
+| water_heating_inputs | Water-Heating Input Resolution | STD-CONTEXT-BENCHMARKS | Confirmed hot-water or cold-only fixture service; Water-heating resource; Hot-water fraction; Temperature rise; Water-heater efficiency | One hot-water fraction; One hot-water temperature rise; One water-heater efficiency | hot_fraction; thermal_energy_per_gallon; heater_efficiency | PARTIALLY_FEASIBLE | 0 | The physical conversion is explicit, but no retained commercial flow-fixture and water-heater population currently proves a complete hot-water input set. Exact project inputs and a confirmed cold-only zero boundary are supported; context execution remains pending. |
+| exact-proposed-fixture-rating | Exact Proposed Flow Fixture Rating Lookup | STD-WATERSENSE-FIXTURES | Exact proposed fixture make and model from the linked opportunity; Fixture type and application | Proposed rated flow with units and product provenance | gpm_proposed | FEASIBLE_AFTER_MANUAL_SEED | 0 | The official WaterSense Product Search exposes a downloadable complete model list for currently supported fixture categories, and EPA retains a separate pre-rinse spray valve archive. No retained product export or category adapter currently proves the exact rated flow lookup, so source access is verified while field-level execution remains pending. The product sources do not supply existing installed performance or usage frequency. |
+| requirement-proposed-fixture-rating | Requirement-Based Proposed Flow Fixture Resolution | STD-WATERSENSE-FIXTURES | Fixture requirements from the linked opportunity; Fixture type and application; Required water-use criterion | One selected proposed rated flow, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally | gpm_proposed | FEASIBLE_AFTER_MANUAL_SEED | 0 | The official WaterSense criteria define compatible proposed rated flow requirements. The official product-search or downloadable-product adapter and retained compatible population are not yet implemented, so the source-supported filtering method is verified but execution proof for the selected median is pending. The source does not supply existing ratings or usage frequency. |
+
+## End-to-end graph
+
+- `flow_fixture_activity`: Supported fixture type [User] + In-scope fixture count [User] + Recognizable occupants, customers, rooms, meals, or another source-compatible activity [User] + Operating days per week [User] + Active weeks per year [User] + Observed fixture-use study when available [Project Document] -> STD-CONTEXT-BENCHMARKS -> benchmark_populations + benchmark_values + calculation_assumptions + selected_values + selected_value_provenance -> Total annual active minutes across the in-scope fixture group -> total_annual_active_minutes (minutes/year)
+- `existing_flow_rate`: Existing fixture type and application [User] + Existing label, specification, audit, or measurement when available [Project Document] -> STD-CONTEXT-BENCHMARKS -> benchmark_populations + benchmark_values + calculation_assumptions + selected_values + selected_value_provenance -> One existing rated flow in gallons per minute -> gpm_existing (gallons/minute)
+- `water_heating_inputs`: Confirmed hot-water or cold-only fixture service [User] + Water-heating resource [User] + Hot-water fraction [Project Document] + Temperature rise [Project Document] + Water-heater efficiency [Project Document] -> STD-CONTEXT-BENCHMARKS -> benchmark_populations + benchmark_values + calculation_assumptions + selected_values + selected_value_provenance -> One hot-water fraction -> hot_fraction (fraction) + One hot-water temperature rise -> thermal_energy_per_gallon (energy/gallon) + One water-heater efficiency -> heater_efficiency (fraction)
+- `exact-proposed-fixture-rating`: Exact proposed fixture make and model from the linked opportunity [Linked Opportunity] + Fixture type and application [Linked Opportunity] -> STD-WATERSENSE-FIXTURES -> equipment_products + equipment_certifications + equipment_performance_fields -> Proposed rated flow with units and product provenance -> gpm_proposed (gallons/minute)
+- `requirement-proposed-fixture-rating`: Fixture requirements from the linked opportunity [Linked Opportunity] + Fixture type and application [Linked Opportunity] + Required water-use criterion [Linked Opportunity] -> STD-WATERSENSE-FIXTURES -> equipment_products + equipment_certifications + equipment_performance_fields -> One selected proposed rated flow, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally -> gpm_proposed (gallons/minute)
+
+## Feasibility
+
+The category depends on these source-level verdicts: PARTIALLY_FEASIBLE, FEASIBLE_AFTER_MANUAL_SEED.
+An exact path is feasible only when every bound Profile, Bill, Linked Opportunity, Project Document, and User input is present and every Standard adapter returns an unambiguous compatible result.
+A benchmark path is feasible only where the category has a retained authoritative population and exact selection rule.
+The runtime external-call count remains zero.
+
+## Recommended next action
+
+Implement and accept the shared source-family adapters before connecting this category to any calculation runtime.
+Add one category golden fixture for each supported exact or benchmark path.
+Keep unsupported paths explicit rather than filling them with generic defaults.
