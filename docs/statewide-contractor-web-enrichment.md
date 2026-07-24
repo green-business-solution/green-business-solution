@@ -76,6 +76,8 @@ The two reviewed Pro Star Mechanical and Willbii transitions remain explicit qua
 ## Bounded Crawl And Extraction
 
 The crawler checks HTTPS before HTTP, respects `robots.txt`, permits one active request per domain, uses bounded global concurrency, applies an eight-second request timeout, and retries at most once.
+Candidate DNS checks run in fixed batches of four while preserving candidate priority.
+This bounds resolver pressure and avoids serial negative-domain latency without increasing per-domain HTTP concurrency.
 Fast mode reads the homepage and at most three relevant internal contact, service, about, location, or service-area pages.
 It does not crawl social networks, submit forms, execute downloads, or retain full HTML in the durable artifacts.
 
@@ -210,6 +212,7 @@ The run starts with conservative concurrency and adapts within the configured bo
 It reserves the final hour of the 16-hour ceiling for validation and uploads.
 
 The run continuously persists selected contractor IDs, completed outcomes and proposal state, DNS results, robots rules, parsed page state and content hashes, domain-verification results, deep-pass progress, and immutable numbered checkpoints.
+Final JSONL artifacts are streamed with backpressure so statewide output finalization does not require one giant in-memory string.
 Resume an interrupted run with the same run ID and output directory:
 
 ```sh

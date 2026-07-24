@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import dns from "node:dns/promises";
+import { once } from "node:events";
 import fs from "node:fs";
 import fsPromises from "node:fs/promises";
 import os from "node:os";
@@ -35,7 +36,6 @@ import {
   pilotStrataSummary,
   scoreDomainIdentity,
   selectStratifiedPilot,
-  summarizeOutcomes,
   token,
 } from "./contractor-web-enrichment-core.mjs";
 import {
@@ -61,7 +61,7 @@ import {
 
 const execFileAsync = promisify(execFile);
 
-export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.1.1";
+export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.2.0";
 export const WEB_ENRICHMENT_REPORT_SCHEMA_VERSION =
   "contractor-web-enrichment-report.v1";
 
@@ -78,6 +78,7 @@ const CENSUS_COUNTY_URL =
   "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2025_Gazetteer/2025_gaz_counties_06.txt";
 const USER_AGENT =
   "RetroFi contractor web enrichment pilot/1.0 (public first-party websites; contact: https://retrofi.org)";
+const DNS_RESOLUTION_BATCH_SIZE = 4;
 const REVIEWED_LICENSE_TRANSITIONS = new Map([
   [
     "936846|prostarmechanical.com",
@@ -392,6 +393,7 @@ export async function runContractorWebEnrichment(
       await forEachAdaptiveConcurrent({
         initialConcurrency: Math.min(12, options.concurrency),
         maxConcurrency: options.concurrency,
+        minimumConcurrency: Math.min(8, options.concurrency),
         metrics: runState.requestMetrics,
         onConcurrencyChange: ({ currentConcurrency, snapshot }) => {
           if (!options.quiet) {
@@ -485,6 +487,7 @@ export async function runContractorWebEnrichment(
         await forEachAdaptiveConcurrent({
           initialConcurrency: Math.min(8, options.concurrency),
           maxConcurrency: options.concurrency,
+          minimumConcurrency: Math.min(4, options.concurrency),
           metrics: runState.requestMetrics,
           values: batch,
           worker: async (identity) => {
@@ -878,72 +881,96 @@ async function processContractor({
   let sawUnreachable = false;
   let ambiguousResult = null;
   let licenseTransitionResult = null;
-  for (const candidate of candidates) {
-    const dnsAvailable = await domainResolves(
-      candidate.domain,
-      runState,
+  for (
+    let offset = 0;
+    offset < candidates.length;
+    offset += DNS_RESOLUTION_BATCH_SIZE
+  ) {
+    const batch = candidates.slice(
+      offset,
+      offset + DNS_RESOLUTION_BATCH_SIZE,
     );
-    if (!dnsAvailable) {
+    const dnsResults = await Promise.all(
+      batch.map(async (candidate) => ({
+        candidate,
+        resolved: await domainResolves(
+          candidate.domain,
+          runState,
+        ),
+      })),
+    );
+    for (const { candidate, resolved } of dnsResults) {
+      if (!resolved) {
+        attemptedDomains.push({
+          domain: candidate.domain,
+          disposition: "REJECTED_DOMAIN",
+          reason: "dns_not_resolved",
+        });
+        continue;
+      }
+      const evaluated = await withDomainLock(
+        candidate.domain,
+        async () =>
+          evaluateDomainCandidate({
+            candidate,
+            fetchImpl,
+            identity,
+            pageLimit,
+            placeReference,
+            runState,
+            timeoutMs,
+          }),
+      );
       attemptedDomains.push({
         domain: candidate.domain,
-        disposition: "REJECTED_DOMAIN",
-        reason: "dns_not_resolved",
+        disposition: evaluated.domainDisposition,
+        reason: evaluated.reason,
+        ...(evaluated.domainDisposition ===
+        "LICENSE_TRANSITION_REVIEW"
+          ? {
+              databaseLicenseNumber:
+                evaluated.identityVerification
+                  ?.databaseLicenseNumber || "",
+              websiteLicenseNumbers:
+                evaluated.identityVerification
+                  ?.websiteLicenseNumbers || [],
+            }
+          : {}),
       });
-      continue;
+      if (
+        evaluated.domainDisposition ===
+        "WEBSITE_UNREACHABLE"
+      ) {
+        sawUnreachable = true;
+        continue;
+      }
+      sawReachable = true;
+      if (
+        evaluated.domainDisposition ===
+        "LICENSE_TRANSITION_REVIEW"
+      ) {
+        licenseTransitionResult ||= evaluated;
+        continue;
+      }
+      if (
+        evaluated.domainDisposition === "AMBIGUOUS_DOMAIN"
+      ) {
+        ambiguousResult ||= evaluated;
+        continue;
+      }
+      if (
+        evaluated.domainDisposition !== "VERIFIED_DOMAIN"
+      ) {
+        continue;
+      }
+      return {
+        contractorId: identity.contractorId,
+        contractorIdToken: token(identity.contractorId),
+        attemptedDomainCount: attemptedDomains.length,
+        attemptedDomains,
+        ...evaluated,
+      };
     }
-    const evaluated = await withDomainLock(
-      candidate.domain,
-      async () =>
-        evaluateDomainCandidate({
-          candidate,
-          fetchImpl,
-          identity,
-          pageLimit,
-          placeReference,
-          runState,
-          timeoutMs,
-        }),
-    );
-    attemptedDomains.push({
-      domain: candidate.domain,
-      disposition: evaluated.domainDisposition,
-      reason: evaluated.reason,
-      ...(evaluated.domainDisposition ===
-      "LICENSE_TRANSITION_REVIEW"
-        ? {
-            databaseLicenseNumber:
-              evaluated.identityVerification
-                ?.databaseLicenseNumber || "",
-            websiteLicenseNumbers:
-              evaluated.identityVerification
-                ?.websiteLicenseNumbers || [],
-          }
-        : {}),
-    });
-    if (evaluated.domainDisposition === "WEBSITE_UNREACHABLE") {
-      sawUnreachable = true;
-      continue;
-    }
-    sawReachable = true;
-    if (
-      evaluated.domainDisposition ===
-      "LICENSE_TRANSITION_REVIEW"
-    ) {
-      licenseTransitionResult ||= evaluated;
-      continue;
-    }
-    if (evaluated.domainDisposition === "AMBIGUOUS_DOMAIN") {
-      ambiguousResult ||= evaluated;
-      continue;
-    }
-    if (evaluated.domainDisposition !== "VERIFIED_DOMAIN") continue;
-    return {
-      contractorId: identity.contractorId,
-      contractorIdToken: token(identity.contractorId),
-      attemptedDomainCount: attemptedDomains.length,
-      attemptedDomains,
-      ...evaluated,
-    };
   }
 
   if (licenseTransitionResult) {
@@ -1428,12 +1455,13 @@ async function fetchHtmlPage({
       };
     } catch (error) {
       lastError = error;
-      runState.requestMetrics.record(
+      const timedOut =
         error?.name === "TimeoutError" ||
-          error?.name === "AbortError"
-          ? "timeouts"
-          : "networkErrors",
+        error?.name === "AbortError";
+      runState.requestMetrics.record(
+        timedOut ? "timeouts" : "networkErrors",
       );
+      if (timedOut) return null;
       if (attempt === 1) continue;
     }
   }
@@ -1701,15 +1729,16 @@ async function domainResolves(domain, runState) {
   if (runState.dnsCache.has(domain)) {
     return runState.dnsCache.get(domain);
   }
+  let timeout;
   try {
     const result = await Promise.race([
       dns.resolveAny(domain),
-      new Promise((_, reject) =>
-        setTimeout(
+      new Promise((_, reject) => {
+        timeout = setTimeout(
           () => reject(new Error("DNS timeout")),
           4_000,
-        ),
-      ),
+        );
+      }),
     ]);
     const resolved = Array.isArray(result) && result.length > 0;
     runState.dnsCache.set(domain, resolved);
@@ -1717,6 +1746,8 @@ async function domainResolves(domain, runState) {
   } catch {
     runState.dnsCache.set(domain, false);
     return false;
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
@@ -2226,10 +2257,52 @@ function buildReport({
     results,
     (result) => result.domainDisposition,
   );
-  const attemptedDomainDispositionCounts = countBy(
-    results.flatMap((result) => result.attemptedDomains || []),
-    (attempt) => attempt.disposition,
-  );
+  const attemptedDomainDispositionMap = new Map();
+  const outcomeCountMap = new Map();
+  const rejectedDomainExamples = [];
+  let candidateDomainsAttempted = 0;
+  let candidateDomainsWithoutDns = 0;
+  let officialDirectoryDomainMatches = 0;
+  for (const result of results) {
+    if (
+      result.discoveryMethod === "official_directory" &&
+      result.domainDisposition === "VERIFIED_DOMAIN"
+    ) {
+      officialDirectoryDomainMatches += 1;
+    }
+    for (const outcome of result.outcomes || []) {
+      outcomeCountMap.set(
+        outcome,
+        (outcomeCountMap.get(outcome) || 0) + 1,
+      );
+    }
+    for (const attempt of result.attemptedDomains || []) {
+      candidateDomainsAttempted += 1;
+      attemptedDomainDispositionMap.set(
+        attempt.disposition,
+        (attemptedDomainDispositionMap.get(
+          attempt.disposition,
+        ) || 0) + 1,
+      );
+      if (attempt.reason === "dns_not_resolved") {
+        candidateDomainsWithoutDns += 1;
+      }
+      if (
+        rejectedDomainExamples.length < 10 &&
+        attempt.disposition === "REJECTED_DOMAIN"
+      ) {
+        rejectedDomainExamples.push({
+          contractorIdToken: result.contractorIdToken,
+          domainToken: token(attempt.domain),
+          reason: attempt.reason,
+        });
+      }
+    }
+  }
+  const attemptedDomainDispositionCounts =
+    sortedCountEntries(attemptedDomainDispositionMap);
+  const unresolvedOutcomeCounts =
+    sortedCountEntries(outcomeCountMap);
   const discoveryMethodCounts = countBy(
     acceptedResults,
     (result) => result.discoveryMethod || "<UNKNOWN>",
@@ -2241,20 +2314,23 @@ function buildReport({
       result.identityVerification?.confidenceTier ||
       "<UNKNOWN>",
   );
-  const fieldCounts = countBy(
-    proposals.flatMap((proposal) =>
-      Object.keys(proposal.set).filter(
-        (field) => field !== "enrichmentEvidence",
-      ),
-    ),
-    (field) => field,
-  );
+  const fieldCountMap = new Map();
+  let serviceAreaValuesFound = 0;
+  for (const proposal of proposals) {
+    serviceAreaValuesFound +=
+      proposal.set.serviceAreas?.length || 0;
+    for (const field of Object.keys(proposal.set)) {
+      if (field === "enrichmentEvidence") continue;
+      fieldCountMap.set(
+        field,
+        (fieldCountMap.get(field) || 0) + 1,
+      );
+    }
+  }
+  const fieldCounts = sortedCountEntries(fieldCountMap);
   const websitePagesCrawled = acceptedResults.reduce(
     (total, result) => total + (result.pages?.length || 0),
     0,
-  );
-  const attemptedDomains = results.flatMap(
-    (result) => result.attemptedDomains || [],
   );
   const summary = {
     liveContractorCount: contractors.length,
@@ -2264,11 +2340,7 @@ function buildReport({
     selectedContractorCount: selectedIdentities.length,
     processedContractorCount: results.length,
     processedThisInvocation,
-    officialDirectoryDomainMatches: results.filter(
-      (result) =>
-        result.discoveryMethod === "official_directory" &&
-        result.domainDisposition === "VERIFIED_DOMAIN",
-    ).length,
+    officialDirectoryDomainMatches,
     openStreetMapMatches:
       osmSeeds.counts.selectedContractorMatches,
     verifiedDomains: acceptedResults.length,
@@ -2282,10 +2354,8 @@ function buildReport({
       domainDispositionCounts.NO_VERIFIED_DOMAIN || 0,
     websitesUnreachable:
       domainDispositionCounts.WEBSITE_UNREACHABLE || 0,
-    candidateDomainsAttempted: attemptedDomains.length,
-    candidateDomainsWithoutDns: attemptedDomains.filter(
-      (attempt) => attempt.reason === "dns_not_resolved",
-    ).length,
+    candidateDomainsAttempted,
+    candidateDomainsWithoutDns,
     websitesCrawled: acceptedResults.length,
     websitePagesCrawled,
     emailsFound: fieldCounts.email || 0,
@@ -2294,11 +2364,7 @@ function buildReport({
     residentialIndicatorsFound:
       fieldCounts.servesResidential || 0,
     serviceAreasFound: fieldCounts.serviceAreas || 0,
-    serviceAreaValuesFound: proposals.reduce(
-      (total, proposal) =>
-        total + (proposal.set.serviceAreas?.length || 0),
-      0,
-    ),
+    serviceAreaValuesFound,
     licenseTransitionCases:
       domainDispositionCounts.LICENSE_TRANSITION_REVIEW || 0,
     contractorProposals: proposals.length,
@@ -2352,7 +2418,7 @@ function buildReport({
     verifiedDomainDiscoveryMethodCounts: discoveryMethodCounts,
     verifiedDomainConfidenceTierCounts: confidenceTierCounts,
     proposalFieldCounts: fieldCounts,
-    unresolvedOutcomeCounts: summarizeOutcomes(results),
+    unresolvedOutcomeCounts,
     summary,
     audit: {
       acceptedDomainCount: audit.acceptedDomainCount,
@@ -2370,52 +2436,33 @@ function buildReport({
     },
     sanitizedExamples: {
       verifiedDomains: acceptedResults.slice(0, 10).map(sanitizeResult),
-      ambiguousDomains: results
-        .filter(
-          (result) =>
-            result.domainDisposition === "AMBIGUOUS_DOMAIN",
-        )
-        .slice(0, 10)
-        .map(sanitizeResult),
-      rejectedDomains: results
-        .flatMap((result) =>
-          (result.attemptedDomains || [])
-            .filter(
-              (attempt) =>
-                attempt.disposition === "REJECTED_DOMAIN",
-            )
-            .map((attempt) => ({
-              contractorIdToken: result.contractorIdToken,
-              domainToken: token(attempt.domain),
-              reason: attempt.reason,
-            })),
-        )
-        .slice(0, 10),
-      noDomainCandidate: results
-        .filter(
-          (result) =>
-            result.domainDisposition === "NO_DOMAIN_CANDIDATE",
-        )
-        .slice(0, 10)
-        .map(sanitizeResult),
-      proposals: results
-        .filter((result) => Object.keys(result.proposal || {}).length)
-        .slice(0, 10)
-        .map(sanitizeResult),
-      noVerifiedDomain: results
-        .filter(
-          (result) =>
-            result.domainDisposition === "NO_VERIFIED_DOMAIN",
-        )
-        .slice(0, 10)
-        .map(sanitizeResult),
-      websiteUnreachable: results
-        .filter(
-          (result) =>
-            result.domainDisposition === "WEBSITE_UNREACHABLE",
-        )
-        .slice(0, 10)
-        .map(sanitizeResult),
+      ambiguousDomains: firstSanitizedResults(
+        results,
+        (result) =>
+          result.domainDisposition === "AMBIGUOUS_DOMAIN",
+      ),
+      rejectedDomains: rejectedDomainExamples,
+      noDomainCandidate: firstSanitizedResults(
+        results,
+        (result) =>
+          result.domainDisposition ===
+          "NO_DOMAIN_CANDIDATE",
+      ),
+      proposals: firstSanitizedResults(
+        results,
+        (result) =>
+          Object.keys(result.proposal || {}).length > 0,
+      ),
+      noVerifiedDomain: firstSanitizedResults(
+        results,
+        (result) =>
+          result.domainDisposition === "NO_VERIFIED_DOMAIN",
+      ),
+      websiteUnreachable: firstSanitizedResults(
+        results,
+        (result) =>
+          result.domainDisposition === "WEBSITE_UNREACHABLE",
+      ),
       byOutcome: sanitizedOutcomeExamples(results),
     },
     invariants: {
@@ -2637,22 +2684,35 @@ function sanitizeResult(result) {
 }
 
 function sanitizedOutcomeExamples(results) {
-  const outcomes = [
-    ...new Set(
-      results.flatMap((result) => result.outcomes || []),
-    ),
-  ].sort();
+  const examples = new Map();
+  for (const result of results) {
+    for (const outcome of result.outcomes || []) {
+      const values = examples.get(outcome) || [];
+      if (values.length < 5) {
+        values.push(sanitizeResult(result));
+        examples.set(outcome, values);
+      }
+    }
+  }
   return Object.fromEntries(
-    outcomes.map((outcome) => [
-      outcome,
-      results
-        .filter((result) =>
-          (result.outcomes || []).includes(outcome),
-        )
-        .slice(0, 5)
-        .map(sanitizeResult),
-    ]),
+    [...examples].sort(([left], [right]) =>
+      left.localeCompare(right),
+    ),
   );
+}
+
+function firstSanitizedResults(
+  results,
+  predicate,
+  limit = 10,
+) {
+  const values = [];
+  for (const result of results) {
+    if (!predicate(result)) continue;
+    values.push(sanitizeResult(result));
+    if (values.length >= limit) break;
+  }
+  return values;
 }
 
 function normalizeResultForArtifacts(result) {
@@ -3274,10 +3334,15 @@ function countBy(values, keyFor) {
     const key = keyFor(value);
     counts.set(key, (counts.get(key) || 0) + 1);
   }
+  return sortedCountEntries(counts);
+}
+
+function sortedCountEntries(counts) {
   return Object.fromEntries(
     [...counts].sort(
       (left, right) =>
-        right[1] - left[1] || String(left[0]).localeCompare(String(right[0])),
+        right[1] - left[1] ||
+        String(left[0]).localeCompare(String(right[0])),
     ),
   );
 }
@@ -3468,12 +3533,19 @@ async function writeJsonLines(filePath, values) {
   await fsPromises.mkdir(path.dirname(filePath), {
     recursive: true,
   });
-  await fsPromises.writeFile(
-    filePath,
-    values.length
-      ? `${values.map((value) => JSON.stringify(value)).join("\n")}\n`
-      : "",
-  );
+  const stream = fs.createWriteStream(filePath);
+  try {
+    for (const value of values) {
+      if (!stream.write(`${JSON.stringify(value)}\n`)) {
+        await once(stream, "drain");
+      }
+    }
+    stream.end();
+    await once(stream, "finish");
+  } catch (error) {
+    stream.destroy();
+    throw error;
+  }
 }
 
 async function writeJson(filePath, value) {

@@ -86,4 +86,24 @@ describe("contractor web-enrichment persistent run state", () => {
       stopped: false,
     });
   });
+
+  it("backs off under network pressure without crossing the configured floor", async () => {
+    const metrics = createRequestMetrics();
+    const result = await forEachAdaptiveConcurrent({
+      initialConcurrency: 12,
+      maxConcurrency: 32,
+      minimumConcurrency: 8,
+      metrics,
+      values: Array.from({ length: 200 }, (_, index) => index),
+      worker: async () => {
+        metrics.record("timeouts");
+      },
+    });
+
+    expect(result).toMatchObject({
+      completed: 200,
+      finalConcurrency: 8,
+      stopped: false,
+    });
+  });
 });

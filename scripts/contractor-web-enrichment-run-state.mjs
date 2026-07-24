@@ -117,6 +117,7 @@ export async function createPersistentRunState({
 export async function forEachAdaptiveConcurrent({
   initialConcurrency,
   maxConcurrency,
+  minimumConcurrency = 4,
   metrics,
   onConcurrencyChange = () => {},
   onProgress = () => {},
@@ -126,8 +127,12 @@ export async function forEachAdaptiveConcurrent({
 }) {
   let active = 0;
   let completed = 0;
-  let currentConcurrency = Math.max(
+  const concurrencyFloor = Math.max(
     1,
+    Math.min(minimumConcurrency, maxConcurrency),
+  );
+  let currentConcurrency = Math.max(
+    concurrencyFloor,
     Math.min(initialConcurrency, maxConcurrency),
   );
   let failed = false;
@@ -167,7 +172,7 @@ export async function forEachAdaptiveConcurrent({
         pressureRate >= 0.2
       ) {
         currentConcurrency = Math.max(
-          4,
+          concurrencyFloor,
           Math.floor(currentConcurrency * 0.75),
         );
       } else if (pressureRate <= 0.05) {
