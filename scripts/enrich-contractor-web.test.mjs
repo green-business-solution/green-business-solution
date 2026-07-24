@@ -102,6 +102,41 @@ describe("contractor website HTML email extraction", () => {
       disposition: "LICENSE_TRANSITION_REVIEW",
       websiteLicenseNumbers: ["1044879"],
     });
+
+    const currentLicensePage = parseHtmlPage(
+      htmlPage(`
+        <html>
+          <body>Pro Star Mechanical Services.</body>
+          <script>
+            window.business = {
+              footer: "CSLB License #936846"
+            };
+          </script>
+        </html>
+      `),
+    );
+    expect(
+      scoreDomainIdentity({
+        homepageText: currentLicensePage.identityText,
+        identity: contractorIdentity,
+        seed: {},
+      }),
+    ).toMatchObject({
+      accepted: true,
+      confidenceTier: "TIER_A_EXACT_LICENSE",
+    });
+
+    const genericLicensePage = parseHtmlPage(
+      htmlPage(`
+        <html>
+          <body>Pro Star Mechanical Services.</body>
+          <script>window.library = "software license 1044879";</script>
+        </html>
+      `),
+    );
+    expect(genericLicensePage.identityText).not.toContain(
+      "1044879",
+    );
   });
 
   it("quarantines a reviewed transition when the current page still matches the business", () => {
@@ -130,18 +165,38 @@ describe("contractor website HTML email extraction", () => {
       seed: {},
     });
 
-    expect(
-      applyReviewedLicenseTransition({
-        domain: "www.willbii.net",
-        identity: contractorIdentity,
-        verification,
-      }),
-    ).toMatchObject({
+    const quarantined = applyReviewedLicenseTransition({
+      domain: "www.willbii.net",
+      identity: contractorIdentity,
+      verification,
+    });
+    expect(quarantined).toMatchObject({
       accepted: false,
       disposition: "LICENSE_TRANSITION_REVIEW",
       reviewSource:
         "contractor-web-enrichment-manual-audit-regressions.v1",
       websiteLicenseNumbers: ["1113528"],
+    });
+    expect(
+      applyReviewedLicenseTransition({
+        domain: "another-contractor.net",
+        identity: contractorIdentity,
+        verification,
+      }),
+    ).toBe(verification);
+    expect(
+      applyReviewedLicenseTransition({
+        domain: "willbii.net",
+        identity: contractorIdentity,
+        verification: {
+          accepted: false,
+          ambiguous: false,
+          disposition: "REJECTED_DOMAIN",
+          signals: {},
+        },
+      }),
+    ).toMatchObject({
+      disposition: "REJECTED_DOMAIN",
     });
   });
 });

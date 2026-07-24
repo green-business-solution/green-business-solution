@@ -1162,11 +1162,6 @@ async function evaluateDomainCandidate({
       identity,
       seed: candidate.seed,
     });
-    identityVerification = applyReviewedLicenseTransition({
-      domain: verifiedDomain,
-      identity,
-      verification: identityVerification,
-    });
     if (identityVerification.disposition !== "REJECTED_DOMAIN") {
       await runState.setVerification(
         initialVerificationKey,
@@ -1174,6 +1169,11 @@ async function evaluateDomainCandidate({
       );
     }
   }
+  identityVerification = applyReviewedLicenseTransition({
+    domain: verifiedDomain,
+    identity,
+    verification: identityVerification,
+  });
   if (!identityVerification.accepted) {
     if (
       !crawlStateWasCached &&
@@ -1245,12 +1245,6 @@ async function evaluateDomainCandidate({
       identity,
       seed: candidate.seed,
     });
-    finalIdentityVerification =
-      applyReviewedLicenseTransition({
-        domain: verifiedDomain,
-        identity,
-        verification: finalIdentityVerification,
-      });
     if (
       finalIdentityVerification.disposition !==
       "REJECTED_DOMAIN"
@@ -1261,6 +1255,12 @@ async function evaluateDomainCandidate({
       );
     }
   }
+  finalIdentityVerification =
+    applyReviewedLicenseTransition({
+      domain: verifiedDomain,
+      identity,
+      verification: finalIdentityVerification,
+    });
   if (!finalIdentityVerification.accepted) {
     return {
       domain: candidate.domain,
@@ -1639,10 +1639,10 @@ export function applyReviewedLicenseTransition({
   identity,
   verification,
 }) {
-  const normalizedDomain =
-    domainFromUrl(`https://${domain}`) || clean(domain).toLowerCase();
-  const key = `${identity.licenseNumber}|${normalizedDomain}`;
-  const reviewed = REVIEWED_LICENSE_TRANSITIONS.get(key);
+  const reviewed = reviewedLicenseTransitionFor({
+    domain,
+    licenseNumber: identity.licenseNumber,
+  });
   const signals = verification?.signals || {};
   if (
     !reviewed ||
@@ -1672,6 +1672,18 @@ export function applyReviewedLicenseTransition({
       reviewedLicenseTransition: true,
     },
   };
+}
+
+function reviewedLicenseTransitionFor({
+  domain,
+  licenseNumber,
+}) {
+  const normalizedDomain =
+    domainFromUrl(`https://${domain}`) ||
+    clean(domain).toLowerCase();
+  return REVIEWED_LICENSE_TRANSITIONS.get(
+    `${licenseNumber}|${normalizedDomain}`,
+  );
 }
 
 function sanitizePageMetadata(page) {
@@ -3108,6 +3120,18 @@ function validateFinalArtifacts({
     }
   }
   for (const result of eligibleResults) {
+    const reviewedTransition =
+      reviewedLicenseTransitionFor({
+        domain: result.domain,
+        licenseNumber:
+          result.identityVerification?.databaseLicenseNumber,
+      });
+    recordFailure(
+      !reviewedTransition ||
+        result.domainDisposition ===
+          "LICENSE_TRANSITION_REVIEW",
+      `reviewed license transition escaped quarantine ${result.contractorId}`,
+    );
     if (result.domainDisposition === "VERIFIED_DOMAIN") {
       recordFailure(
         [
