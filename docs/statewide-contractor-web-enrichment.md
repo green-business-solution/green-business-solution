@@ -216,6 +216,7 @@ The fast pass prioritizes the top generated `.com` and `.net` candidates over we
 Exact official-directory and OpenStreetMap seeds retain the full bounded protocol fallback during the fast pass.
 Temporary robots.txt failures fail closed, and only HTTP 5xx responses or transient socket failures receive the single permitted retry.
 Unusable HTTP response bodies are canceled before returning or retrying so remote sockets do not keep a completed run alive.
+Website requests use a run-scoped connection pool that is destroyed after finalization, including when a server advertises an unusually long keep-alive timeout.
 It reserves the final hour of the 16-hour ceiling for validation and uploads.
 
 The run continuously persists selected contractor IDs, completed outcomes and proposal state, DNS results, robots rules, parsed page state and content hashes, domain-verification results, deep-pass progress, and immutable numbered checkpoints.

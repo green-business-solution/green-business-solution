@@ -19,6 +19,7 @@ import {
 import { fromIni } from "@aws-sdk/credential-providers";
 import * as cheerio from "cheerio";
 import { parse } from "csv-parse";
+import { Agent as UndiciAgent } from "undici";
 
 import {
   buildIdentityRecord,
@@ -64,7 +65,7 @@ import {
 
 const execFileAsync = promisify(execFile);
 
-export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.4.0";
+export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.4.1";
 export const WEB_ENRICHMENT_REPORT_SCHEMA_VERSION =
   "contractor-web-enrichment-report.v1";
 
@@ -290,6 +291,23 @@ export async function runContractorWebEnrichment(
   const temporaryDirectory = await fsPromises.mkdtemp(
     path.join(os.tmpdir(), "retrofi-web-enrichment-"),
   );
+  const fetchDispatcher = dependencies.fetchImpl
+    ? null
+    : new UndiciAgent({
+        keepAliveMaxTimeout: 5_000,
+        keepAliveTimeout: 1_000,
+      });
+  const runFetch =
+    dependencies.fetchImpl ||
+    ((input, init = {}) =>
+      fetch(input, {
+        ...init,
+        dispatcher: fetchDispatcher,
+      }));
+  const runtimeDependencies = {
+    ...dependencies,
+    fetchImpl: runFetch,
+  };
   try {
     const [contractors, cslbSource] = await Promise.all([
       aws.scanContractors(),
@@ -331,12 +349,12 @@ export async function runContractorWebEnrichment(
         options.cacheDirectory,
         "california-places",
       ),
-      fetchImpl: dependencies.fetchImpl || fetch,
+      fetchImpl: runFetch,
       now,
     });
     const osm = await prepareOsmRecords({
       cacheDirectory: options.cacheDirectory,
-      fetchImpl: dependencies.fetchImpl || fetch,
+      fetchImpl: runFetch,
       osmPbfPath: options.osmPbfPath,
       quiet: options.quiet,
     });
@@ -539,7 +557,7 @@ export async function runContractorWebEnrichment(
         worker: async (identity) => {
           const result = await processIdentitySafely({
             combinedSeeds,
-            dependencies,
+            dependencies: runtimeDependencies,
             domainLocks,
             identity,
             mode: options.mode,
@@ -632,7 +650,7 @@ export async function runContractorWebEnrichment(
           const prior = resultsById.get(identity.contractorId);
           const candidate = await processIdentitySafely({
             combinedSeeds,
-            dependencies,
+            dependencies: runtimeDependencies,
             domainLocks,
             identity,
             mode: "deep",
@@ -940,10 +958,14 @@ export async function runContractorWebEnrichment(
           persistProgress: !resultCloseError,
         });
       } finally {
-        await fsPromises.rm(temporaryDirectory, {
-          force: true,
-          recursive: true,
-        });
+        try {
+          await fetchDispatcher?.destroy();
+        } finally {
+          await fsPromises.rm(temporaryDirectory, {
+            force: true,
+            recursive: true,
+          });
+        }
       }
     }
     if (resultCloseError) throw resultCloseError;
