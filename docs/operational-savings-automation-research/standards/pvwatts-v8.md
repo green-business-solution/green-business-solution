@@ -2,7 +2,7 @@
 
 ## 1. RetroFi role
 
-This Standard is used by 3 categorys and 3 category-local process instances.
+This Standard is used by 3 categories and 3 category-local process instances.
 The categories are ITC-17, ITC-24, ITC-26.
 The process keys are pvwatts_v8.
 The formula terms supplied are PV_AC_kWh_t.

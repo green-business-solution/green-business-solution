@@ -2,7 +2,7 @@
 
 ## 1. RetroFi role
 
-This Standard is used by 2 categorys and 4 category-local process instances.
+This Standard is used by 2 categories and 4 category-local process instances.
 The categories are ITC-32, ITC-33.
 The process keys are exact-proposed-fixture-rating, requirement-proposed-fixture-rating.
 The formula terms supplied are gpf_proposed, gpm_proposed.

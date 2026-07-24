@@ -2,7 +2,7 @@
 
 ## 1. RetroFi role
 
-This Standard is used by 16 categorys and 17 category-local process instances.
+This Standard is used by 16 categories and 17 category-local process instances.
 The categories are ITC-04, ITC-09, ITC-12, ITC-36, ITC-37, ITC-38, ITC-39, ITC-40, ITC-41, ITC-42, ITC-43, ITC-44, ITC-45, ITC-46, ITC-47, ITC-51.
 The process keys are doe_measur, doe_measur_fan, doe_measur_pump.
 The formula terms supplied are added_auxiliary_kWh, available_waste_heat, avoided_distribution_heat, avoided_fan_kWh, avoided_pump_kWh, avoided_steam_loss, baseline_annual_fuel, compressor_specific_power, current_efficiency, existing_fan_kW_period, existing_input_kW, existing_kW_i, leak_flow, proposed_COP_or_efficiency, proposed_annual_fuel, proposed_fan_kW_period, proposed_input_kW, proposed_kW_i, specific_power_existing, specific_power_proposed, useful_process_heat, useful_recovered_heat, η_existing, η_proposed.

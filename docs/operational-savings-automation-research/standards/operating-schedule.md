@@ -2,7 +2,7 @@
 
 ## 1. RetroFi role
 
-This Standard is used by 13 categorys and 15 category-local process instances.
+This Standard is used by 13 categories and 15 category-local process instances.
 The categories are ITC-02, ITC-09, ITC-12, ITC-20, ITC-30, ITC-37, ITC-38, ITC-40, ITC-41, ITC-42, ITC-43, ITC-47, ITC-51.
 The process keys are daylight-lighting-hours, fixed-lighting-hours, lighting-replacement-calculation, operating_schedule.
 The formula terms supplied are annual_hours, annual_kWh, annual_on_hours, annual_operating_hours, annual_pressurized_hours, avoided_run_hours, hours_period.

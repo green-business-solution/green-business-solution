@@ -2,7 +2,7 @@
 
 ## 1. RetroFi role
 
-This Standard is used by 10 categorys and 10 category-local process instances.
+This Standard is used by 10 categories and 10 category-local process instances.
 The categories are ITC-16, ITC-17, ITC-19, ITC-23, ITC-24, ITC-25, ITC-26, ITC-27, ITC-28, ITC-31.
 The process keys are interval_tariff.
 The formula terms supplied are tariff_input_set.

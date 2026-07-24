@@ -2,7 +2,7 @@
 
 ## 1. RetroFi role
 
-This Standard is used by 2 categorys and 2 category-local process instances.
+This Standard is used by 2 categories and 2 category-local process instances.
 The categories are ITC-35, ITC-36.
 The process keys are watersense_ci_operations.
 The formula terms supplied are avoided_makeup_gallons, confirmed_leak_minutes_per_year, measured_leak_gpm.

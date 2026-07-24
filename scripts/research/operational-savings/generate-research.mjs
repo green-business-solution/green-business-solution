@@ -531,7 +531,7 @@ function renderStandardReport(standard, canonical, instances, evidenceRecords, p
 
 ## 1. RetroFi role
 
-This Standard is used by ${countLabel(categories.length, "category")} and ${countLabel(instances.length, "category-local process instance")}.
+This Standard is used by ${countLabel(categories.length, "category", "categories")} and ${countLabel(instances.length, "category-local process instance")}.
 The categories are ${categories.join(", ")}.
 The process keys are ${processes.join(", ")}.
 The formula terms supplied are ${formulaTerms.join(", ") || "none"}.

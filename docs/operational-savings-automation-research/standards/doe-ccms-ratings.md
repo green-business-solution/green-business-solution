@@ -2,7 +2,7 @@
 
 ## 1. RetroFi role
 
-This Standard is used by 8 categorys and 24 category-local process instances.
+This Standard is used by 8 categories and 24 category-local process instances.
 The categories are ITC-03, ITC-06, ITC-07, ITC-10, ITC-13, ITC-50, ITC-52, ITC-53.
 The process keys are exact-existing-dishwasher-record, exact-proposed-dishwasher-record, exact-proposed-product-rating, existing-product-rating, requirement-proposed-dishwasher-record, requirement-proposed-product-rating.
 The formula terms supplied are UEF_or_COP_proposed, active_intensity_existing,r, active_intensity_proposed,r, active_kWh_per_hour_existing, active_kWh_per_hour_proposed, active_kWh_per_rack_existing, active_kWh_per_rack_proposed, existing_annual_kWh, existing_dishwasher_record, hot_water_per_cycle_existing, hot_water_per_cycle_proposed, idle_kW_existing, idle_kW_proposed, idle_rate_existing,r, idle_rate_proposed,r, kWh_per_100lb_existing, kWh_per_100lb_proposed, machine_kWh_per_cycle_existing, machine_kWh_per_cycle_proposed, proposed_annual_kWh, proposed_dishwasher_record, water_gallons_per_100lb_existing, water_gallons_per_100lb_proposed, water_per_cycle_existing, water_per_cycle_proposed, water_per_hour_existing, water_per_hour_proposed, water_per_rack_existing, water_per_rack_proposed, η_existing, η_proposed.

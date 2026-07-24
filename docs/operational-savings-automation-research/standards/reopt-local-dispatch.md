@@ -2,7 +2,7 @@
 
 ## 1. RetroFi role
 
-This Standard is used by 8 categorys and 8 category-local process instances.
+This Standard is used by 8 categories and 8 category-local process instances.
 The categories are ITC-16, ITC-23, ITC-24, ITC-25, ITC-26, ITC-27, ITC-28, ITC-31.
 The process keys are reopt_local_dispatch.
 The formula terms supplied are baseline_annual_bill, baseline_grid_and_fuel_bill, managed_annual_bill, proposed_annual_bill, proposed_grid_and_fuel_bill, proposed_unmanaged_charging_bill, unmanaged_annual_bill.

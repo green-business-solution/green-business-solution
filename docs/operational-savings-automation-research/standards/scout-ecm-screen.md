@@ -2,7 +2,7 @@
 
 ## 1. RetroFi role
 
-This Standard is used by 3 categorys and 3 category-local process instances.
+This Standard is used by 3 categories and 3 category-local process instances.
 The categories are ITC-05, ITC-11, ITC-14.
 The process keys are scout_ecm_screen.
 The formula terms supplied are Scout_reduction_fraction_r, duct_loss_reduction_fraction, reduction_fraction.

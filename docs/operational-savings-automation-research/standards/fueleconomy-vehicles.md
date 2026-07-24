@@ -2,7 +2,7 @@
 
 ## 1. RetroFi role
 
-This Standard is used by 2 categorys and 2 category-local process instances.
+This Standard is used by 2 categories and 2 category-local process instances.
 The categories are ITC-28, ITC-29.
 The process keys are fueleconomy_vehicles.
 The formula terms supplied are existing_combined_mpg, proposed_combE, vehicle_kWh_per_mile.

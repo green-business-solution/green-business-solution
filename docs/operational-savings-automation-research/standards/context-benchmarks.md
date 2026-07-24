@@ -2,7 +2,7 @@
 
 ## 1. RetroFi role
 
-This Standard is used by 14 categorys and 20 category-local process instances.
+This Standard is used by 14 categories and 20 category-local process instances.
 The categories are ITC-02, ITC-08, ITC-16, ITC-23, ITC-27, ITC-28, ITC-30, ITC-32, ITC-33, ITC-39, ITC-48, ITC-49, ITC-52, ITC-54.
 The process keys are context_benchmarks, evi_charging_shape, exact-backup-routine-inputs, existing_flow_rate, existing_flush_rate, fema-full-load-diesel-test-fuel, flight-dishwasher-activity, flow_fixture_activity, flush_activity, public_charging_site_energy, rack-dishwasher-activity, water_heating_inputs.
 The formula terms supplied are annual_delivered_hot_water_load, annual_operating_hours_per_unit, annual_racks_per_unit, backup_efficiency, benchmark_annual_test_fuel_per_unit, charging_activity_schedule, collector_and_storage_configuration, current_annual_refrigeration_kWh, event_availability_schedule, exact_backup_routine_input_set, existing_fuel_per_hour, existing_kW, existing_resource_per_activity_r, gpf_existing, gpm_existing, heater_efficiency, hot_fraction, hours_i, load_fraction_i, maximum_event_duration, maximum_shed_kW, normalized_shape_t, proposed_annual_refrigeration_kWh, proposed_kWh_per_hour, proposed_resource_per_activity_r, rebound_t, site_daily_delivered_kWh, state_of_charge_t, thermal_energy_per_gallon, total_annual_active_minutes, total_annual_flushes_group, uncontrolled_charging_profile_t, vehicle_kWh_per_mile.

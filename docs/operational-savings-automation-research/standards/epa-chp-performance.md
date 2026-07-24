@@ -2,7 +2,7 @@
 
 ## 1. RetroFi role
 
-This Standard is used by 4 categorys and 4 category-local process instances.
+This Standard is used by 4 categories and 4 category-local process instances.
 The categories are ITC-20, ITC-21, ITC-22, ITC-26.
 The process keys are epa_chp_performance.
 The formula terms supplied are CHP_input_fuel, added_fuel, annual_generation, generation, input_fuel, scheduled_input_fuel, useful_heat.
