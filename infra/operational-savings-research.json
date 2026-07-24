@@ -1,0 +1,659 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Isolated AWS resources for RetroFi operational-savings research.",
+  "Parameters": {
+    "OperatorRoleArn": {
+      "Type": "String",
+      "Description": "Exact current operator IAM role ARN allowed to assume the research role. Supply an IAM role ARN, not an STS assumed-role session ARN.",
+      "AllowedPattern": "^arn:(aws|aws-us-gov|aws-cn):iam::[0-9]{12}:role/[A-Za-z0-9+=,.@_/-]+$",
+      "ConstraintDescription": "Must be one exact IAM role ARN."
+    },
+    "ResearchBucketName": {
+      "Type": "String",
+      "Default": "",
+      "Description": "Optional private research bucket name override. Leave empty to use retrofi-operational-savings-research-${AWS::AccountId}-${AWS::Region}.",
+      "AllowedPattern": "^$|^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$",
+      "ConstraintDescription": "Must be empty or a valid lowercase S3 bucket name."
+    }
+  },
+  "Conditions": {
+    "UseGeneratedResearchBucketName": {
+      "Fn::Equals": [
+        {
+          "Ref": "ResearchBucketName"
+        },
+        ""
+      ]
+    }
+  },
+  "Resources": {
+    "ResearchBucket": {
+      "Type": "AWS::S3::Bucket",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::If": [
+            "UseGeneratedResearchBucketName",
+            {
+              "Fn::Sub": "retrofi-operational-savings-research-${AWS::AccountId}-${AWS::Region}"
+            },
+            {
+              "Ref": "ResearchBucketName"
+            }
+          ]
+        },
+        "OwnershipControls": {
+          "Rules": [
+            {
+              "ObjectOwnership": "BucketOwnerEnforced"
+            }
+          ]
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true
+        },
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        },
+        "VersioningConfiguration": {
+          "Status": "Enabled"
+        },
+        "LifecycleConfiguration": {
+          "Rules": [
+            {
+              "Id": "abort-incomplete-multipart-uploads",
+              "Status": "Enabled",
+              "AbortIncompleteMultipartUpload": {
+                "DaysAfterInitiation": 7
+              }
+            },
+            {
+              "Id": "expire-temporary-objects",
+              "Status": "Enabled",
+              "Prefix": "temporary/",
+              "ExpirationInDays": 14,
+              "NoncurrentVersionExpiration": {
+                "NoncurrentDays": 14
+              }
+            }
+          ]
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "RetroFi"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Research"
+          },
+          {
+            "Key": "System",
+            "Value": "OperationalSavings"
+          },
+          {
+            "Key": "ManagedBy",
+            "Value": "Codex"
+          },
+          {
+            "Key": "DataClassification",
+            "Value": "InternalResearch"
+          }
+        ]
+      }
+    },
+    "ResearchBucketPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "Bucket": {
+          "Ref": "ResearchBucket"
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "DenyInsecureTransport",
+              "Effect": "Deny",
+              "Principal": "*",
+              "Action": "s3:*",
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "ResearchBucket",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::Sub": [
+                    "${BucketArn}/*",
+                    {
+                      "BucketArn": {
+                        "Fn::GetAtt": [
+                          "ResearchBucket",
+                          "Arn"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": "false"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ReoptRepository": {
+      "Type": "AWS::ECR::Repository",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "RepositoryName": "retrofi-research-reopt",
+        "ImageTagMutability": "IMMUTABLE",
+        "ImageScanningConfiguration": {
+          "ScanOnPush": true
+        },
+        "EncryptionConfiguration": {
+          "EncryptionType": "AES256"
+        },
+        "LifecyclePolicy": {
+          "LifecyclePolicyText": "{\"rules\":[{\"rulePriority\":1,\"description\":\"Delete untagged images older than 14 days while preserving tagged images\",\"selection\":{\"tagStatus\":\"untagged\",\"countType\":\"sinceImagePushed\",\"countUnit\":\"days\",\"countNumber\":14},\"action\":{\"type\":\"expire\"}}]}"
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "RetroFi"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Research"
+          },
+          {
+            "Key": "System",
+            "Value": "OperationalSavings"
+          },
+          {
+            "Key": "ManagedBy",
+            "Value": "Codex"
+          },
+          {
+            "Key": "DataClassification",
+            "Value": "InternalResearch"
+          }
+        ]
+      }
+    },
+    "SscRepository": {
+      "Type": "AWS::ECR::Repository",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "RepositoryName": "retrofi-research-ssc",
+        "ImageTagMutability": "IMMUTABLE",
+        "ImageScanningConfiguration": {
+          "ScanOnPush": true
+        },
+        "EncryptionConfiguration": {
+          "EncryptionType": "AES256"
+        },
+        "LifecyclePolicy": {
+          "LifecyclePolicyText": "{\"rules\":[{\"rulePriority\":1,\"description\":\"Delete untagged images older than 14 days while preserving tagged images\",\"selection\":{\"tagStatus\":\"untagged\",\"countType\":\"sinceImagePushed\",\"countUnit\":\"days\",\"countNumber\":14},\"action\":{\"type\":\"expire\"}}]}"
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "RetroFi"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Research"
+          },
+          {
+            "Key": "System",
+            "Value": "OperationalSavings"
+          },
+          {
+            "Key": "ManagedBy",
+            "Value": "Codex"
+          },
+          {
+            "Key": "DataClassification",
+            "Value": "InternalResearch"
+          }
+        ]
+      }
+    },
+    "MeasurRepository": {
+      "Type": "AWS::ECR::Repository",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "RepositoryName": "retrofi-research-measur",
+        "ImageTagMutability": "IMMUTABLE",
+        "ImageScanningConfiguration": {
+          "ScanOnPush": true
+        },
+        "EncryptionConfiguration": {
+          "EncryptionType": "AES256"
+        },
+        "LifecyclePolicy": {
+          "LifecyclePolicyText": "{\"rules\":[{\"rulePriority\":1,\"description\":\"Delete untagged images older than 14 days while preserving tagged images\",\"selection\":{\"tagStatus\":\"untagged\",\"countType\":\"sinceImagePushed\",\"countUnit\":\"days\",\"countNumber\":14},\"action\":{\"type\":\"expire\"}}]}"
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "RetroFi"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Research"
+          },
+          {
+            "Key": "System",
+            "Value": "OperationalSavings"
+          },
+          {
+            "Key": "ManagedBy",
+            "Value": "Codex"
+          },
+          {
+            "Key": "DataClassification",
+            "Value": "InternalResearch"
+          }
+        ]
+      }
+    },
+    "ScoutRepository": {
+      "Type": "AWS::ECR::Repository",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "RepositoryName": "retrofi-research-scout",
+        "ImageTagMutability": "IMMUTABLE",
+        "ImageScanningConfiguration": {
+          "ScanOnPush": true
+        },
+        "EncryptionConfiguration": {
+          "EncryptionType": "AES256"
+        },
+        "LifecyclePolicy": {
+          "LifecyclePolicyText": "{\"rules\":[{\"rulePriority\":1,\"description\":\"Delete untagged images older than 14 days while preserving tagged images\",\"selection\":{\"tagStatus\":\"untagged\",\"countType\":\"sinceImagePushed\",\"countUnit\":\"days\",\"countNumber\":14},\"action\":{\"type\":\"expire\"}}]}"
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "RetroFi"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Research"
+          },
+          {
+            "Key": "System",
+            "Value": "OperationalSavings"
+          },
+          {
+            "Key": "ManagedBy",
+            "Value": "Codex"
+          },
+          {
+            "Key": "DataClassification",
+            "Value": "InternalResearch"
+          }
+        ]
+      }
+    },
+    "ResearchPermissionsBoundary": {
+      "Type": "AWS::IAM::ManagedPolicy",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "ManagedPolicyName": "RetroFiOperationalSavingsResearchBoundary",
+        "Description": "Maximum permissions for the isolated RetroFi operational-savings research role.",
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "ResearchBucketMetadata",
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetBucketLocation",
+                "s3:GetBucketOwnershipControls",
+                "s3:GetBucketPolicy",
+                "s3:GetBucketPublicAccessBlock",
+                "s3:GetBucketTagging",
+                "s3:GetBucketVersioning",
+                "s3:GetEncryptionConfiguration",
+                "s3:GetLifecycleConfiguration",
+                "s3:ListBucket",
+                "s3:ListBucketMultipartUploads",
+                "s3:ListBucketVersions"
+              ],
+              "Resource": {
+                "Fn::GetAtt": [
+                  "ResearchBucket",
+                  "Arn"
+                ]
+              }
+            },
+            {
+              "Sid": "ResearchBucketObjects",
+              "Effect": "Allow",
+              "Action": [
+                "s3:AbortMultipartUpload",
+                "s3:DeleteObject",
+                "s3:DeleteObjectVersion",
+                "s3:GetObject",
+                "s3:GetObjectAttributes",
+                "s3:GetObjectTagging",
+                "s3:GetObjectVersion",
+                "s3:GetObjectVersionAttributes",
+                "s3:GetObjectVersionTagging",
+                "s3:ListMultipartUploadParts",
+                "s3:PutObject",
+                "s3:PutObjectTagging",
+                "s3:RestoreObject"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "${BucketArn}/*",
+                  {
+                    "BucketArn": {
+                      "Fn::GetAtt": [
+                        "ResearchBucket",
+                        "Arn"
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "Sid": "ResearchEcrRepositories",
+              "Effect": "Allow",
+              "Action": [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:BatchDeleteImage",
+                "ecr:BatchGetImage",
+                "ecr:CompleteLayerUpload",
+                "ecr:CreateRepository",
+                "ecr:DeleteLifecyclePolicy",
+                "ecr:DeleteRepository",
+                "ecr:DescribeImageScanFindings",
+                "ecr:DescribeImages",
+                "ecr:DescribeRepositories",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:GetLifecyclePolicy",
+                "ecr:GetLifecyclePolicyPreview",
+                "ecr:GetRepositoryPolicy",
+                "ecr:InitiateLayerUpload",
+                "ecr:ListImages",
+                "ecr:ListTagsForResource",
+                "ecr:PutImage",
+                "ecr:PutImageScanningConfiguration",
+                "ecr:PutImageTagMutability",
+                "ecr:PutLifecyclePolicy",
+                "ecr:StartImageScan",
+                "ecr:StartLifecyclePolicyPreview",
+                "ecr:TagResource",
+                "ecr:UntagResource",
+                "ecr:UploadLayerPart"
+              ],
+              "Resource": {
+                "Fn::Sub": "arn:${AWS::Partition}:ecr:${AWS::Region}:${AWS::AccountId}:repository/retrofi-research-*"
+              }
+            },
+            {
+              "Sid": "EcrAuthorizationToken",
+              "Effect": "Allow",
+              "Action": "ecr:GetAuthorizationToken",
+              "Resource": "*"
+            },
+            {
+              "Sid": "ResearchLogGroups",
+              "Effect": "Allow",
+              "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:DeleteLogGroup",
+                "logs:DeleteLogStream",
+                "logs:DeleteRetentionPolicy",
+                "logs:DescribeLogStreams",
+                "logs:FilterLogEvents",
+                "logs:GetLogEvents",
+                "logs:ListTagsForResource",
+                "logs:PutLogEvents",
+                "logs:PutRetentionPolicy",
+                "logs:TagResource",
+                "logs:UntagResource"
+              ],
+              "Resource": {
+                "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/retrofi/research/operational-savings/*"
+              }
+            },
+            {
+              "Sid": "ReadOwnResearchRole",
+              "Effect": "Allow",
+              "Action": [
+                "iam:GetRole",
+                "iam:GetRolePolicy",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListRolePolicies"
+              ],
+              "Resource": {
+                "Fn::Sub": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/RetroFiOperationalSavingsResearchRole"
+              }
+            },
+            {
+              "Sid": "ManageOwnInlinePolicies",
+              "Effect": "Allow",
+              "Action": [
+                "iam:DeleteRolePolicy",
+                "iam:PutRolePolicy"
+              ],
+              "Resource": {
+                "Fn::Sub": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/RetroFiOperationalSavingsResearchRole"
+              }
+            },
+            {
+              "Sid": "PassOwnResearchRoleToEcsTasks",
+              "Effect": "Allow",
+              "Action": "iam:PassRole",
+              "Resource": {
+                "Fn::Sub": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/RetroFiOperationalSavingsResearchRole"
+              },
+              "Condition": {
+                "StringEquals": {
+                  "iam:PassedToService": "ecs-tasks.amazonaws.com"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ResearchRole": {
+      "Type": "AWS::IAM::Role",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "RoleName": "RetroFiOperationalSavingsResearchRole",
+        "MaxSessionDuration": 3600,
+        "PermissionsBoundary": {
+          "Ref": "ResearchPermissionsBoundary"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Ref": "ResearchPermissionsBoundary"
+          }
+        ],
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "ExactOperatorRoleTrust",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Ref": "OperatorRoleArn"
+                }
+              },
+              "Action": "sts:AssumeRole",
+              "Condition": {
+                "ArnEquals": {
+                  "aws:PrincipalArn": {
+                    "Ref": "OperatorRoleArn"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "RetroFi"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Research"
+          },
+          {
+            "Key": "System",
+            "Value": "OperationalSavings"
+          },
+          {
+            "Key": "ManagedBy",
+            "Value": "Codex"
+          },
+          {
+            "Key": "DataClassification",
+            "Value": "InternalResearch"
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "ResearchRoleArn": {
+      "Description": "ARN of the isolated operational-savings research role.",
+      "Value": {
+        "Fn::GetAtt": [
+          "ResearchRole",
+          "Arn"
+        ]
+      }
+    },
+    "ResearchRoleName": {
+      "Description": "Name of the isolated operational-savings research role.",
+      "Value": {
+        "Ref": "ResearchRole"
+      }
+    },
+    "ResearchPermissionsBoundaryArn": {
+      "Description": "ARN of the permissions boundary that caps the research role.",
+      "Value": {
+        "Ref": "ResearchPermissionsBoundary"
+      }
+    },
+    "ResearchBucketName": {
+      "Description": "Name of the private operational-savings research bucket.",
+      "Value": {
+        "Ref": "ResearchBucket"
+      }
+    },
+    "ResearchBucketArn": {
+      "Description": "ARN of the private operational-savings research bucket.",
+      "Value": {
+        "Fn::GetAtt": [
+          "ResearchBucket",
+          "Arn"
+        ]
+      }
+    },
+    "ResearchLogGroupPrefix": {
+      "Description": "Only CloudWatch Logs prefix allowed to the research role.",
+      "Value": "/retrofi/research/operational-savings/"
+    },
+    "ReoptRepositoryArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ReoptRepository",
+          "Arn"
+        ]
+      }
+    },
+    "ReoptRepositoryUri": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ReoptRepository",
+          "RepositoryUri"
+        ]
+      }
+    },
+    "SscRepositoryArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "SscRepository",
+          "Arn"
+        ]
+      }
+    },
+    "SscRepositoryUri": {
+      "Value": {
+        "Fn::GetAtt": [
+          "SscRepository",
+          "RepositoryUri"
+        ]
+      }
+    },
+    "MeasurRepositoryArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "MeasurRepository",
+          "Arn"
+        ]
+      }
+    },
+    "MeasurRepositoryUri": {
+      "Value": {
+        "Fn::GetAtt": [
+          "MeasurRepository",
+          "RepositoryUri"
+        ]
+      }
+    },
+    "ScoutRepositoryArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ScoutRepository",
+          "Arn"
+        ]
+      }
+    },
+    "ScoutRepositoryUri": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ScoutRepository",
+          "RepositoryUri"
+        ]
+      }
+    }
+  }
+}
