@@ -64,7 +64,7 @@ import {
 
 const execFileAsync = promisify(execFile);
 
-export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.3.1";
+export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.3.2";
 export const WEB_ENRICHMENT_REPORT_SCHEMA_VERSION =
   "contractor-web-enrichment-report.v1";
 
@@ -1834,10 +1834,7 @@ async function domainResolves(domain, runState) {
   let timeout;
   try {
     const result = await Promise.race([
-      dns.lookup(domain, {
-        all: true,
-        verbatim: true,
-      }),
+      resolveWebAddresses(domain),
       new Promise((_, reject) => {
         timeout = setTimeout(
           () => reject(new Error("DNS timeout")),
@@ -1854,6 +1851,12 @@ async function domainResolves(domain, runState) {
   } finally {
     clearTimeout(timeout);
   }
+}
+
+async function resolveWebAddresses(domain) {
+  const ipv4 = await dns.resolve4(domain).catch(() => []);
+  if (ipv4.length) return ipv4;
+  return dns.resolve6(domain).catch(() => []);
 }
 
 async function withDomainLock(locks, domain, task) {
