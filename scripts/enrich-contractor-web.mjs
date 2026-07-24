@@ -44,6 +44,9 @@ import {
 import {
   createPersistentRunState,
   forEachAdaptiveConcurrent,
+  PersistentRunStateError,
+  readJsonLinesToMap,
+  repairJsonLinesTail,
 } from "./contractor-web-enrichment-run-state.mjs";
 import {
   buildExactIndices,
@@ -61,7 +64,7 @@ import {
 
 const execFileAsync = promisify(execFile);
 
-export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.2.0";
+export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.2.1";
 export const WEB_ENRICHMENT_REPORT_SCHEMA_VERSION =
   "contractor-web-enrichment-report.v1";
 
@@ -147,6 +150,7 @@ export async function runContractorWebEnrichment(
   );
   await fsPromises.mkdir(outputDirectory, { recursive: true });
   let runState;
+  let resultAppender;
   if (options.resume) {
     try {
       const previousReport = JSON.parse(
@@ -317,16 +321,13 @@ export async function runContractorWebEnrichment(
     );
 
     const resultPath = path.join(outputDirectory, "results.jsonl");
-    const priorResults = options.resume
-      ? await readJsonLines(resultPath)
-      : [];
-    const resultsById = new Map(
-      priorResults.map((result) => [
-        result.contractorId,
-        result,
-      ]),
-    );
-    const appender = createJsonLinesAppender(resultPath, {
+    if (options.resume) await repairJsonLinesTail(resultPath);
+    const resultsById = options.resume
+      ? await readJsonLinesToMap(resultPath, {
+          keyFor: (result) => result.contractorId,
+        })
+      : new Map();
+    resultAppender = createJsonLinesAppender(resultPath, {
       truncate: !options.resume,
     });
     runState = await createPersistentRunState({
@@ -337,6 +338,8 @@ export async function runContractorWebEnrichment(
     const remaining = selectedIdentities.filter(
       (identity) => !resultsById.has(identity.contractorId),
     );
+    let completedContractorCount =
+      selectedIdentities.length - remaining.length;
     let processedThisInvocation = 0;
 
     if (!options.quiet) {
@@ -361,7 +364,7 @@ export async function runContractorWebEnrichment(
     );
     if (checkpointSequence === 0) {
       await writeCheckpointSnapshot({
-        completedContractorCount: resultsById.size,
+        completedContractorCount,
         outputDirectory,
         phase: "selection",
         runId,
@@ -430,13 +433,15 @@ export async function runContractorWebEnrichment(
             timeoutMs: options.timeoutMs,
           });
           resultsById.set(identity.contractorId, result);
-          await appender.append(result);
+          await resultAppender.append(result);
+          completedContractorCount += 1;
           processedThisInvocation += 1;
         },
       });
+      await resultAppender.flush();
       await runState.flush();
       await writeCheckpointSnapshot({
-        completedContractorCount: resultsById.size,
+        completedContractorCount,
         outputDirectory,
         phase: "fast",
         runId,
@@ -507,7 +512,7 @@ export async function runContractorWebEnrichment(
             const improved = result !== prior;
             if (improved) {
               resultsById.set(identity.contractorId, result);
-              await appender.append(result);
+              await resultAppender.append(result);
               deepPassImproved += 1;
             }
             runState.markDeepPassCompleted(
@@ -517,9 +522,10 @@ export async function runContractorWebEnrichment(
             deepPassProcessed += 1;
           },
         });
+        await resultAppender.flush();
         await runState.flush();
         await writeCheckpointSnapshot({
-          completedContractorCount: resultsById.size,
+          completedContractorCount,
           deepPassProcessed,
           outputDirectory,
           phase: "deep",
@@ -533,11 +539,10 @@ export async function runContractorWebEnrichment(
         checkpointSequence += 1;
       }
     }
+    await resultAppender.flush();
     await runState.flush();
     await writeCheckpointSnapshot({
-      completedContractorCount: selectedIdentities.filter(
-        (identity) => resultsById.has(identity.contractorId),
-      ).length,
+      completedContractorCount,
       deepPassProcessed,
       outputDirectory,
       phase: "finalizing",
@@ -549,7 +554,8 @@ export async function runContractorWebEnrichment(
       upload: options.upload,
     });
     checkpointSequence += 1;
-    await appender.close();
+    await resultAppender.close();
+    resultAppender = null;
     const requestMetrics =
       runState.requestMetrics.snapshot();
     await runState.close();
@@ -804,13 +810,24 @@ export async function runContractorWebEnrichment(
       outputDirectory,
     };
   } finally {
-    if (runState) {
-      await runState.close();
+    let resultCloseError;
+    try {
+      await resultAppender?.close();
+    } catch (error) {
+      resultCloseError = error;
+    } finally {
+      try {
+        await runState?.close({
+          persistProgress: !resultCloseError,
+        });
+      } finally {
+        await fsPromises.rm(temporaryDirectory, {
+          force: true,
+          recursive: true,
+        });
+      }
     }
-    await fsPromises.rm(temporaryDirectory, {
-      force: true,
-      recursive: true,
-    });
+    if (resultCloseError) throw resultCloseError;
   }
 }
 
@@ -1038,6 +1055,7 @@ async function processIdentitySafely({
         withDomainLock(domainLocks, domain, task),
     });
   } catch (error) {
+    if (error instanceof PersistentRunStateError) throw error;
     return {
       contractorId: identity.contractorId,
       contractorIdToken: token(identity.contractorId),
@@ -1493,13 +1511,13 @@ async function fetchRobots({
             : "successes",
       );
       const value = { rules: [] };
-      runState.robotsCache.set(origin, value);
+      await runState.setRobots(origin, value);
       return value;
     }
     const body = await response.text();
     runState.requestMetrics.record("successes");
     const value = parseRobots(body);
-    runState.robotsCache.set(origin, value);
+    await runState.setRobots(origin, value);
     return value;
   } catch (error) {
     runState.requestMetrics.record(
@@ -1509,7 +1527,7 @@ async function fetchRobots({
         : "networkErrors",
     );
     const value = { rules: [] };
-    runState.robotsCache.set(origin, value);
+    await runState.setRobots(origin, value);
     return value;
   }
 }
@@ -1741,10 +1759,10 @@ async function domainResolves(domain, runState) {
       }),
     ]);
     const resolved = Array.isArray(result) && result.length > 0;
-    runState.dnsCache.set(domain, resolved);
+    await runState.setDns(domain, resolved);
     return resolved;
   } catch {
-    runState.dnsCache.set(domain, false);
+    await runState.setDns(domain, false);
     return false;
   } finally {
     clearTimeout(timeout);
@@ -2651,21 +2669,63 @@ async function uploadFileIdempotent({
 }
 
 function createJsonLinesAppender(filePath, { truncate }) {
-  let queue = truncate
-    ? fsPromises.writeFile(filePath, "")
-    : Promise.resolve();
+  const stream = fs.createWriteStream(filePath, {
+    flags: truncate ? "w" : "a",
+  });
+  let queue = Promise.resolve();
+  let closed = false;
+  let closePromise;
+  let streamError;
+  stream.on("error", (error) => {
+    streamError ||= error;
+  });
   return {
     append(value) {
-      queue = queue.then(() =>
-        fsPromises.appendFile(
-          filePath,
-          `${JSON.stringify(value)}\n`,
-        ),
-      );
+      if (closed) {
+        return Promise.reject(
+          new Error(
+            `Cannot append to closed result file ${filePath}.`,
+          ),
+        );
+      }
+      queue = queue.then(async () => {
+        if (streamError) throw streamError;
+        if (!stream.write(`${JSON.stringify(value)}\n`)) {
+          await once(stream, "drain");
+        }
+        if (streamError) throw streamError;
+      });
       return queue;
     },
     close() {
-      return queue;
+      if (closePromise) return closePromise;
+      closed = true;
+      closePromise = (async () => {
+        await queue;
+        if (streamError) throw streamError;
+        const finished = once(stream, "finish");
+        stream.end();
+        await finished;
+        if (streamError) throw streamError;
+      })();
+      return closePromise;
+    },
+    flush() {
+      if (!closed) {
+        queue = queue.then(async () => {
+          if (streamError) throw streamError;
+          await new Promise((resolve, reject) => {
+            stream.write("", (error) => {
+              if (error) reject(error);
+              else resolve();
+            });
+          });
+          if (streamError) throw streamError;
+        });
+      }
+      return queue.then(() => {
+        if (streamError) throw streamError;
+      });
     },
   };
 }

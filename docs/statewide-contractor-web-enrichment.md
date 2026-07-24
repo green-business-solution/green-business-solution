@@ -212,6 +212,7 @@ The run starts with conservative concurrency and adapts within the configured bo
 It reserves the final hour of the 16-hour ceiling for validation and uploads.
 
 The run continuously persists selected contractor IDs, completed outcomes and proposal state, DNS results, robots rules, parsed page state and content hashes, domain-verification results, deep-pass progress, and immutable numbered checkpoints.
+High-volume result and cache state uses append-only JSONL streams with backpressure, and resume repairs an incomplete crash tail before adding new records.
 Final JSONL artifacts are streamed with backpressure so statewide output finalization does not require one giant in-memory string.
 Resume an interrupted run with the same run ID and output directory:
 
