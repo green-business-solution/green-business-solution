@@ -64,7 +64,7 @@ import {
 
 const execFileAsync = promisify(execFile);
 
-export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.3.0";
+export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.3.1";
 export const WEB_ENRICHMENT_REPORT_SCHEMA_VERSION =
   "contractor-web-enrichment-report.v1";
 
@@ -1834,7 +1834,10 @@ async function domainResolves(domain, runState) {
   let timeout;
   try {
     const result = await Promise.race([
-      dns.resolveAny(domain),
+      dns.lookup(domain, {
+        all: true,
+        verbatim: true,
+      }),
       new Promise((_, reject) => {
         timeout = setTimeout(
           () => reject(new Error("DNS timeout")),
