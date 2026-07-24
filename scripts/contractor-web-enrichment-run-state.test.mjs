@@ -241,14 +241,14 @@ describe("contractor web-enrichment persistent run state", () => {
       minimumConcurrency: 8,
       metrics,
       pressureConcurrencyFloor: 16,
-      values: Array.from({ length: 300 }, (_, index) => index),
+      values: Array.from({ length: 500 }, (_, index) => index),
       worker: async () => {
         metrics.record("timeouts");
       },
     });
 
     expect(result).toMatchObject({
-      completed: 300,
+      completed: 500,
       finalConcurrency: 16,
       stopped: false,
     });

@@ -199,6 +199,7 @@ export async function forEachAdaptiveConcurrent({
     concurrencyFloor,
     Math.min(initialConcurrency, maxConcurrency),
   );
+  let serverPressureConstrained = false;
   let failed = false;
   let nextIndex = 0;
   let stopped = false;
@@ -240,15 +241,17 @@ export async function forEachAdaptiveConcurrent({
         snapshot.requests;
       const previous = currentConcurrency;
       if (serverPressureRate >= 0.05) {
+        serverPressureConstrained = true;
         currentConcurrency = Math.max(
           concurrencyFloor,
           Math.floor(currentConcurrency * 0.75),
         );
       } else if (pressureRate >= 0.2) {
         currentConcurrency = Math.max(
-          currentConcurrency > pressureFloor
-            ? pressureFloor
-            : concurrencyFloor,
+          concurrencyFloor,
+          serverPressureConstrained
+            ? concurrencyFloor
+            : pressureFloor,
           Math.floor(currentConcurrency * 0.75),
         );
       } else if (pressureRate <= 0.05) {
@@ -256,6 +259,9 @@ export async function forEachAdaptiveConcurrent({
           maxConcurrency,
           currentConcurrency + 2,
         );
+        if (currentConcurrency >= pressureFloor) {
+          serverPressureConstrained = false;
+        }
       }
       if (previous !== currentConcurrency) {
         onConcurrencyChange({
