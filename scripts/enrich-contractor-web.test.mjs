@@ -3,8 +3,10 @@ import { describe, expect, it } from "vitest";
 import {
   buildIdentityRecord,
   extractWebsiteFields,
+  scoreDomainIdentity,
 } from "./contractor-web-enrichment-core.mjs";
 import {
+  applyReviewedLicenseTransition,
   parseHtmlPage,
   runContractorWebEnrichment,
 } from "./enrich-contractor-web.mjs";
@@ -56,6 +58,91 @@ describe("contractor website HTML email extraction", () => {
       "empirefenixpainting09@gmail.com",
     );
     expect(extracted.proposal.email).not.toContain("submit");
+  });
+
+  it("retains a displayed license from embedded page data for identity checks", () => {
+    const page = parseHtmlPage(
+      htmlPage(`
+        <html>
+          <body>Pro Star Mechanical Services. Call 714-999-1177.</body>
+          <script>
+            window.business = {
+              footer: "CA Contractor License #1044879"
+            };
+          </script>
+        </html>
+      `),
+    );
+    const contractorIdentity = buildIdentityRecord({
+      aliases: [],
+      contractor: {
+        businessAddress: {
+          city: "Anaheim",
+          line1: "2643 W Woodland Drive",
+          postalCode: "92801",
+          state: "CA",
+        },
+        businessName: "Pro Star Mechanical Services",
+        contractorId: "CA_CSLB_936846",
+        licenseClassifications: ["C-20"],
+        licenseNumber: "936846",
+        licenseStatus: "CLEAR",
+        phone: "7149991177",
+        supportedRetrofitIds: ["hvac_controls_retrofit"],
+      },
+    });
+    const verification = scoreDomainIdentity({
+      homepageText: page.identityText,
+      identity: contractorIdentity,
+      seed: {},
+    });
+
+    expect(verification).toMatchObject({
+      accepted: false,
+      disposition: "LICENSE_TRANSITION_REVIEW",
+      websiteLicenseNumbers: ["1044879"],
+    });
+  });
+
+  it("quarantines a reviewed transition when the current page still matches the business", () => {
+    const contractorIdentity = buildIdentityRecord({
+      aliases: [],
+      contractor: {
+        businessAddress: {
+          city: "San Marino",
+          line1: "2158 Huntington Drive",
+          postalCode: "91108",
+          state: "CA",
+        },
+        businessName: "Willbii Inc",
+        contractorId: "CA_CSLB_1108001",
+        licenseClassifications: ["B"],
+        licenseNumber: "1108001",
+        licenseStatus: "CLEAR",
+        phone: "6268088766",
+        supportedRetrofitIds: ["building_envelope_retrofit"],
+      },
+    });
+    const verification = scoreDomainIdentity({
+      homepageText:
+        "Willbii Inc. Call 626-808-8766. Construction services in San Marino.",
+      identity: contractorIdentity,
+      seed: {},
+    });
+
+    expect(
+      applyReviewedLicenseTransition({
+        domain: "www.willbii.net",
+        identity: contractorIdentity,
+        verification,
+      }),
+    ).toMatchObject({
+      accepted: false,
+      disposition: "LICENSE_TRANSITION_REVIEW",
+      reviewSource:
+        "contractor-web-enrichment-manual-audit-regressions.v1",
+      websiteLicenseNumbers: ["1113528"],
+    });
   });
 });
 

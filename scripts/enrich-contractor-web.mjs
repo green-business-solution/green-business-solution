@@ -61,7 +61,7 @@ import {
 
 const execFileAsync = promisify(execFile);
 
-export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.1.0";
+export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.1.1";
 export const WEB_ENRICHMENT_REPORT_SCHEMA_VERSION =
   "contractor-web-enrichment-report.v1";
 
@@ -78,6 +78,24 @@ const CENSUS_COUNTY_URL =
   "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2025_Gazetteer/2025_gaz_counties_06.txt";
 const USER_AGENT =
   "RetroFi contractor web enrichment pilot/1.0 (public first-party websites; contact: https://retrofi.org)";
+const REVIEWED_LICENSE_TRANSITIONS = new Map([
+  [
+    "936846|prostarmechanical.com",
+    {
+      reviewSource:
+        "contractor-web-enrichment-manual-audit-regressions.v1",
+      websiteLicenseNumbers: ["1044879"],
+    },
+  ],
+  [
+    "1108001|willbii.net",
+    {
+      reviewSource:
+        "contractor-web-enrichment-manual-audit-regressions.v1",
+      websiteLicenseNumbers: ["1113528"],
+    },
+  ],
+]);
 
 export async function runContractorWebEnrichment(
   options,
@@ -1139,9 +1157,15 @@ async function evaluateDomainCandidate({
   );
   if (!identityVerification) {
     identityVerification = scoreDomainIdentity({
-      homepageText: homepagePage.text,
+      homepageText:
+        homepagePage.identityText || homepagePage.text,
       identity,
       seed: candidate.seed,
+    });
+    identityVerification = applyReviewedLicenseTransition({
+      domain: verifiedDomain,
+      identity,
+      verification: identityVerification,
     });
     if (identityVerification.disposition !== "REJECTED_DOMAIN") {
       await runState.setVerification(
@@ -1215,10 +1239,18 @@ async function evaluateDomainCandidate({
     runState.verificationCache.get(finalVerificationKey);
   if (!finalIdentityVerification) {
     finalIdentityVerification = scoreDomainIdentity({
-      homepageText: pages.map((page) => page.text).join("\n"),
+      homepageText: pages
+        .map((page) => page.identityText || page.text)
+        .join("\n"),
       identity,
       seed: candidate.seed,
     });
+    finalIdentityVerification =
+      applyReviewedLicenseTransition({
+        domain: verifiedDomain,
+        identity,
+        verification: finalIdentityVerification,
+      });
     if (
       finalIdentityVerification.disposition !==
       "REJECTED_DOMAIN"
@@ -1499,6 +1531,13 @@ function robotsAllows(robots, pathname) {
 
 export function parseHtmlPage(page) {
   const $ = cheerio.load(page.html);
+  const embeddedLicenseText = $("script")
+    .toArray()
+    .flatMap((element) =>
+      clean($(element).text()).match(
+        /\b(?:(?:CA|CALIFORNIA)\s+(?:CONTRACTOR\s+)?(?:LICENSE|LIC\.?)|CSLB\s+(?:LICENSE|LIC\.?)|CONTRACTOR\s+(?:LICENSE|LIC\.?))(?:\s*(?:NO\.?|NUMBER|#))?\s*[:#-]?\s*[0-9]{6,8}\b/gi,
+      ) || [],
+    );
   $("script, style, noscript, svg, template").remove();
   $("br").replaceWith("\n");
   $("p, li, h1, h2, h3, h4, address").each((_, element) => {
@@ -1584,11 +1623,54 @@ export function parseHtmlPage(page) {
         ]),
       ).values(),
     ],
+    identityText: [text, ...embeddedLicenseText]
+      .filter(Boolean)
+      .join("\n"),
     links,
     retrievedAt: page.retrievedAt,
     status: page.status,
     text,
     url: page.finalUrl,
+  };
+}
+
+export function applyReviewedLicenseTransition({
+  domain,
+  identity,
+  verification,
+}) {
+  const normalizedDomain =
+    domainFromUrl(`https://${domain}`) || clean(domain).toLowerCase();
+  const key = `${identity.licenseNumber}|${normalizedDomain}`;
+  const reviewed = REVIEWED_LICENSE_TRANSITIONS.get(key);
+  const signals = verification?.signals || {};
+  if (
+    !reviewed ||
+    !(
+      signals.nameStrong ||
+      signals.exactPhone ||
+      signals.locationMatch
+    )
+  ) {
+    return verification;
+  }
+  return {
+    ...verification,
+    accepted: false,
+    ambiguous: false,
+    confidenceTier: "",
+    databaseLicenseNumber: identity.licenseNumber,
+    disposition: "LICENSE_TRANSITION_REVIEW",
+    reviewSource: reviewed.reviewSource,
+    websiteLicenseNumbers:
+      reviewed.websiteLicenseNumbers,
+    signals: {
+      ...signals,
+      confidenceTier: "",
+      conflictingLicense: true,
+      licenseTransition: true,
+      reviewedLicenseTransition: true,
+    },
   };
 }
 

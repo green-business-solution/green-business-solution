@@ -70,6 +70,8 @@ Name similarity alone is never enough.
 Historical official-directory and OpenStreetMap associations are discovery clues only and never satisfy current identity verification.
 A conflicting phone and address, conflicting geographic market, parked domain, or unrelated identity rejects the candidate.
 When a site strongly matches the business but displays a different CSLB license, it is quarantined as `LICENSE_TRANSITION_REVIEW` and cannot produce a proposal.
+Identity checks retain bounded license labels embedded in page data when the current site renders those labels client-side.
+The two reviewed Pro Star Mechanical and Willbii transitions remain explicit quarantine guards while their database license IDs are unchanged and their current domains still match the business identity.
 
 ## Bounded Crawl And Extraction
 
