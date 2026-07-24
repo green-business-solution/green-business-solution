@@ -36,7 +36,7 @@
       "sum": 6419.802913158461
     },
     "unit": "kWh/year",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "PVWatts V8 and SSC pvwattsv8 module",
     "sourceVersion": "API 8.5.0, SSC 280; source repository commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
     "sourceArtifact": "PVWatts V8 Los Angeles response",
@@ -57,8 +57,8 @@
     ],
     "sampleSize": 12,
     "selectionRule": "SUM_PINNED_INTERVALS",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "IMPLEMENTATION_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Live official PVWatts V8 response for Los Angeles",

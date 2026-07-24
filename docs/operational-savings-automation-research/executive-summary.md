@@ -2,7 +2,8 @@
 
 The zero-runtime-network architecture is feasible for every currently useful path, but no source should be connected directly to a customer estimate.
 The repository contains 19 canonical Standards, 124 category-local process instances, 54 categories, 632 explicit input bindings, 215 explicit output bindings, and 497 formula-term contracts.
-All 19 Standards now have one decisive acquisition and runtime strategy, a compact sample, a deterministic offline prototype, a cost estimate, and a precise supported boundary.
+All 19 Standards have a source inventory, compact synthetic sample, cost estimate, and proposed supported boundary.
+Those planning artifacts are not automation proof.
 
 The strongest immediate sources are the ENERGY STAR product datasets, FuelEconomy bulk vehicle data, FEMP lighting tables, and the ENERGY STAR dishwasher calculator.
 DOE CCMS and WaterSense labeled-product data require operator-seeded exports.

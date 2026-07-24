@@ -30,7 +30,7 @@
       "annualHours": 2808
     },
     "unit": "hours/year",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "Explicit calendar schedules, USNO daylight definitions, and approved reference schedules",
     "sourceVersion": "USNO definitions current 2026-07-23",
     "sourceArtifact": "USNO rise, set, and twilight definitions HTML",
@@ -44,8 +44,8 @@
     "eligiblePopulation": [],
     "sampleSize": 0,
     "selectionRule": "PINNED_LOCAL_FORMULA:weeklyScheduleHours",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "IMPLEMENTATION_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Explicit calendar schedule method",

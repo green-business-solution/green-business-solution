@@ -27,7 +27,7 @@
       "avoidedGallons": 262800
     },
     "unit": "gallons/year",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "WaterSense at Work commercial and institutional best-management practices",
     "sourceVersion": "WaterSense at Work workbook published 2017-02; current guidance page",
     "sourceArtifact": "ws-commercial-excel-writeable-tables.xlsx",
@@ -38,8 +38,8 @@
     "eligiblePopulation": [],
     "sampleSize": 0,
     "selectionRule": "PINNED_LOCAL_FORMULA:leakWater",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "IMPLEMENTATION_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Inspected Water Use Inventory columns in official workbook",

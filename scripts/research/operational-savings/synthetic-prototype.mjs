@@ -215,7 +215,7 @@ function executeOperation(prototype) {
   }
 }
 
-export function runStandardPrototype(standard) {
+export function runSyntheticPrototype(standard) {
   const execution = executeOperation(standard.prototype);
   const provenancePayload = {
     standardId: standard.id,
@@ -231,7 +231,7 @@ export function runStandardPrototype(standard) {
     standardId: standard.id,
     value: execution.value,
     unit: standard.prototype.unit,
-    scope: "RESEARCH_PROTOTYPE",
+    scope: "SYNTHETIC_RESEARCH_PROTOTYPE",
     source: standard.officialSource,
     sourceVersion: standard.version,
     sourceArtifact: standard.observedArtifact,
@@ -239,8 +239,8 @@ export function runStandardPrototype(standard) {
     eligiblePopulation: execution.eligiblePopulation,
     sampleSize: execution.eligiblePopulation.length,
     selectionRule: execution.selectionRule,
-    fallbackLevel: "RESEARCH_SAMPLE",
-    uncertainty: standard.feasibility === "FEASIBLE_NOW" ? "SOURCE_BOUND" : "IMPLEMENTATION_BOUND",
+    fallbackLevel: "SYNTHETIC_SAMPLE",
+    uncertainty: "NOT_SOURCE_BACKED",
     warnings: execution.warnings,
     provenance: {
       sourceEvidence: standard.prototype.sourceEvidence,

@@ -29,7 +29,7 @@
       "wallKwhPerMile": 0.28
     },
     "unit": "gallon/mile and kWh/mile",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "FuelEconomy.gov vehicle data",
     "sourceVersion": "1984-current bulk vehicle table downloaded 2026-07-23",
     "sourceArtifact": "vehicles.csv.zip",
@@ -40,8 +40,8 @@
     "eligiblePopulation": [],
     "sampleSize": 0,
     "selectionRule": "PINNED_LOCAL_FORMULA:vehicleIntensity",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "SOURCE_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Reviewed exact FuelEconomy.gov fields",

@@ -57,16 +57,9 @@ The observed source-native fields or model inputs are:
 - `energy_efficiency_units`
 - `energy_efficiency_source`
 
-| Field or structure | Shape to validate and pin | Native unit | Key or filter role | Null handling | Enumeration handling |
-| --- | --- | --- | --- | --- | --- |
-| name | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Natural-key candidate or key component | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| climate_zone | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Mandatory filter or version dimension | Preserve source nulls; reject null only when the process requires the field | Preserve and pin native enumeration values per release |
-| bldg_type | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Mandatory filter or version dimension | Preserve source nulls; reject null only when the process requires the field | Preserve and pin native enumeration values per release |
-| structure_type | Structured record or array | Not unit-bearing or unit is source-specific | Mandatory filter or version dimension | Preserve source nulls; reject null only when the process requires the field | Preserve and pin native enumeration values per release |
-| end_use | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| energy_efficiency | Numeric scalar or numeric series | Source-declared energy unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| energy_efficiency_units | Numeric scalar or numeric series | Source-declared energy unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| energy_efficiency_source | Numeric scalar or numeric series | Source-declared energy unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+These names are research requirements from the source inventory, not claims about an observed source schema.
+Exact source types, units, enumerations, nullability, keys, workbook coordinates, or model declarations must come from the source-specific proof manifest under `scripts/research/operational-savings/adapters/scout-ecm-screen/`.
+If no proof manifest records direct inspection evidence, this Standard remains incomplete.
 
 Product and record sources must preserve a natural source identifier plus a release identifier as the composite natural key.
 Model sources must preserve the complete input schema, package version, configuration, warnings, and output schema.
@@ -81,15 +74,15 @@ Duplicate manufacturer and model strings are normalized for search only, while t
 | Required RetroFi field | Process and category | Source artifact or owner | Source-native field | Transformation | Target unit | Support classification | Limitation |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | HVAC share of billed resource, if known | scout_ecm_screen; ITC-05 | Project Document | Annual Operational Savings > Annual HVAC resource reduction > Annual HVAC resource by end use and fuel > Documented HVAC share of billed resource, if known from Submeter, Controls Trend, Audit, or Contractor Specification | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Existing building vintage class | scout_ecm_screen; ITC-05, ITC-11, ITC-14 | User | Annual Operational Savings > Annual HVAC resource reduction > Existing building vintage class | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Existing duct location and condition | scout_ecm_screen; ITC-05 | User | Annual Operational Savings > Annual HVAC resource reduction > Existing duct location and condition | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Existing building vintage class | scout_ecm_screen; ITC-05, ITC-11, ITC-14 | User | Annual Operational Savings > Annual HVAC resource reduction > Existing building vintage class | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Existing duct location and condition | scout_ecm_screen; ITC-05 | User | Annual Operational Savings > Annual HVAC resource reduction > Existing duct location and condition | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Proposed sealing and insulation scope | scout_ecm_screen; ITC-05 | Linked Opportunity | Annual Operational Savings > Annual HVAC resource reduction > Proposed sealing and insulation scope | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_LINKED_OPPORTUNITY | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Building Type | scout_ecm_screen; ITC-05, ITC-11, ITC-14 | Profile | Annual Operational Savings > Annual HVAC resource reduction > Building Type | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Site Climate Zone | scout_ecm_screen; ITC-05, ITC-11, ITC-14 | Profile | Annual Operational Savings > Annual HVAC resource reduction > Site Climate Zone | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Affected-load share, if known | scout_ecm_screen; ITC-11 | Project Document | Annual Operational Savings > Annual refrigeration electricity reduction > Affected refrigeration annual kWh > Documented Affected-load share, if known from Submeter, Controls Trend, Audit, or Contractor Specification | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Existing condition or control | scout_ecm_screen; ITC-11 | User | Annual Operational Savings > Annual refrigeration electricity reduction > Existing condition or control | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Existing condition or control | scout_ecm_screen; ITC-11 | User | Annual Operational Savings > Annual refrigeration electricity reduction > Existing condition or control | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Proposed scope or sequence | scout_ecm_screen; ITC-11 | Linked Opportunity | Annual Operational Savings > Annual refrigeration electricity reduction > Proposed scope or sequence | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_LINKED_OPPORTUNITY | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Existing Building Condition | scout_ecm_screen; ITC-14 | User | Annual Operational Savings > Annual direct resource reduction by end use and fuel > Existing Building Condition | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Existing Building Condition | scout_ecm_screen; ITC-14 | User | Annual Operational Savings > Annual direct resource reduction by end use and fuel > Existing Building Condition | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Proposed Upgrade Option | scout_ecm_screen; ITC-14 | Linked Opportunity | Annual Operational Savings > Annual direct resource reduction by end use and fuel > Proposed Upgrade Option | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_LINKED_OPPORTUNITY | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Documented resource-reduction factor for the approved measure and market segment, with source version and units | scout_ecm_screen; ITC-05 | docs/examples/led_troffers.json | name; climate_zone; bldg_type; structure_type; end_use; energy_efficiency; energy_efficiency_units; energy_efficiency_source | When the ECM supplies relative savings, reduction_fraction = energy_efficiency; when it supplies baseline and efficient performance, reduction_fraction = 1 - efficient_performance / baseline_performance | fraction | DERIVABLE_FROM_SOURCE | Keyword-selected measures, prospective assumptions without review, and generic savings factors applied outside the source market |
 | Documented resource-reduction factor for the approved measure and market segment, with source version and units | scout_ecm_screen; ITC-11 | docs/examples/led_troffers.json | name; climate_zone; bldg_type; structure_type; end_use; energy_efficiency; energy_efficiency_units; energy_efficiency_source | When the ECM supplies relative savings, reduction_fraction = energy_efficiency; when it supplies baseline and efficient performance, reduction_fraction = 1 - efficient_performance / baseline_performance | fraction | DERIVABLE_FROM_SOURCE | Keyword-selected measures, prospective assumptions without review, and generic savings factors applied outside the source market |
@@ -118,31 +111,10 @@ A failed checksum, schema drift, or incomplete artifact leaves the prior publish
 
 ## 7. Internal database schema
 
-The source uses the shared registry tables plus these target tables: building_upgrade_measures, retrofit_measure_crosswalks, benchmark_populations, benchmark_values, model_versions.
-
-```sql
-CREATE TABLE os_scout_ecm_screen_records (
-  source_release_id uuid NOT NULL REFERENCES source_releases(id),
-  source_record_key text NOT NULL,
-  effective_from date,
-  effective_to date,
-  active boolean NOT NULL,
-  native_payload jsonb NOT NULL,
-  normalized_payload jsonb NOT NULL,
-  unit_registry_version text NOT NULL,
-  source_artifact_id uuid NOT NULL REFERENCES source_artifacts(id),
-  created_at timestamptz NOT NULL,
-  PRIMARY KEY (source_release_id, source_record_key)
-);
-CREATE INDEX os_scout_ecm_screen_active_exact_idx
-  ON os_scout_ecm_screen_records ((normalized_payload->>'normalized_identifier'), effective_from, effective_to)
-  WHERE active;
-CREATE INDEX os_scout_ecm_screen_requirements_idx
-  ON os_scout_ecm_screen_records USING gin (normalized_payload jsonb_path_ops)
-  WHERE active;
-```
-
-Source-native payloads remain queryable for audits, while formula adapters consume only validated normalized columns or pinned local-model results.
+The intended normalized targets are building_upgrade_measures, retrofit_measure_crosswalks, benchmark_populations, benchmark_values, model_versions.
+Implementation evidence must come from executed migrations and populated table counts in the committed compact proof export.
+No generic per-Standard JSON payload table is claimed as an implemented source schema.
+Each source-specific adapter must publish typed columns derived from its inspected native structure or remain incomplete.
 
 ## 8. Exact resolution
 
@@ -214,21 +186,18 @@ External source cost is $0 per month.
 Estimated internal storage and compute cost is $0.15 at 100 calculations per month, $0.20 at 1,000, and $0.50 at 10,000.
 These figures exclude ordinary shared database and observability overhead and are planning estimates, not vendor quotes.
 
-## 15. Prototype proof
+## 15. Synthetic regression boundary
 
 The offline command is:
 
 ```bash
-node scripts/research/operational-savings/run-prototypes.mjs --json
+node scripts/research/operational-savings/run-synthetic-prototypes.mjs --json
 ```
 
-The acquired or inspected source evidence is Cloned official Scout repository and inspected a shipped ECM example.
 The retained compact sample is `docs/operational-savings-automation-research/samples/scout-ecm-screen.sample.json`.
-The source or model interface inspected is docs/examples/led_troffers.json.
-The local output kind is `product_record`, the selection rule is `EXACT_NORMALIZED_IDENTIFIER`, and the output unit is `lm/W`.
-The prototype runs without network access after acquisition.
-The prototype completed without warnings.
-The prototype proves parsing, filtering, or calculation behavior only within the retained sample boundary.
+Its local output kind is `product_record`, its selection rule is `EXACT_NORMALIZED_IDENTIFIER`, and its output unit is `lm/W`.
+This synthetic regression executes without network access, but it does not prove acquisition, schema inspection, source-specific parsing, a real model run, database publication, or formula-term reachability.
+Only the separate real-proof registry and source-backed tests may satisfy those gates.
 
 ## 16. Feasibility verdict
 

@@ -32,7 +32,7 @@
       "energyKwh": 407045.7961851467
     },
     "unit": "kW and kWh/year",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "MEASUR AMO Tools Suite",
     "sourceVersion": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
     "sourceArtifact": "tests/cpp/ElectricityReduction.unit.cpp and CompressedAirLeakSurvey.unit.cpp",
@@ -46,8 +46,8 @@
     "eligiblePopulation": [],
     "sampleSize": 0,
     "selectionRule": "PINNED_LOCAL_FORMULA:threePhasePowerAndEnergy",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "IMPLEMENTATION_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Official ElectricityReduction C++ golden test",

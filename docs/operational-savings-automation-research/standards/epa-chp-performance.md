@@ -55,16 +55,9 @@ The observed source-native fields or model inputs are:
 - `electric output`
 - `useful thermal output`
 
-| Field or structure | Shape to validate and pin | Native unit | Key or filter role | Null handling | Enumeration handling |
-| --- | --- | --- | --- | --- | --- |
-| prime mover | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| size class | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Mandatory filter or version dimension | Preserve source nulls; reject null only when the process requires the field | Preserve and pin native enumeration values per release |
-| electric efficiency | Numeric scalar or numeric series | Fraction, ratio, or source-declared efficiency unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| total CHP efficiency | Numeric scalar or numeric series | Fraction, ratio, or source-declared efficiency unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| power-to-heat ratio | Numeric scalar or numeric series | Source-declared power unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| fuel input | Numeric scalar or numeric series | Source-declared fuel or thermal unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| electric output | Numeric scalar or numeric series | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| useful thermal output | Numeric scalar or numeric series | Source-declared fuel or thermal unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+These names are research requirements from the source inventory, not claims about an observed source schema.
+Exact source types, units, enumerations, nullability, keys, workbook coordinates, or model declarations must come from the source-specific proof manifest under `scripts/research/operational-savings/adapters/epa-chp-performance/`.
+If no proof manifest records direct inspection evidence, this Standard remains incomplete.
 
 Product and record sources must preserve a natural source identifier plus a release identifier as the composite natural key.
 Model sources must preserve the complete input schema, package version, configuration, warnings, and output schema.
@@ -90,8 +83,8 @@ Duplicate manufacturer and model strings are normalized for search only, while t
 | Coincident onsite electric-load constraint, if known | epa_chp_performance; ITC-21, ITC-22 | Project Document | Annual Operational Savings > Documented Coincident onsite electric-load constraint, if known from Nameplate, Measurement, Audit, or Contractor Specification | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Coincident useful thermal-load constraint | epa_chp_performance; ITC-21, ITC-22 | Project Document | Annual Operational Savings > Documented Coincident useful thermal-load constraint from Nameplate, Measurement, Audit, or Contractor Specification | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Existing Boiler Nameplate or Combustion-Test Information, if known | epa_chp_performance; ITC-21, ITC-22 | Project Document | Annual Operational Savings > Existing Boiler Nameplate or Combustion-Test Information, if known | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Confirmed annual fuel availability, if known | epa_chp_performance; ITC-22 | User | Annual Operational Savings > Confirmed annual fuel availability, if known | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Fuel unit | epa_chp_performance; ITC-22 | User | Annual Operational Savings > Fuel unit | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Confirmed annual fuel availability, if known | epa_chp_performance; ITC-22 | User | Annual Operational Savings > Confirmed annual fuel availability, if known | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Fuel unit | epa_chp_performance; ITC-22 | User | Annual Operational Savings > Fuel unit | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Fuel lower heating value, if known from a nameplate, measurement, audit, or contractor specification | epa_chp_performance; ITC-22 | Project Document | Annual Operational Savings > Documented Fuel lower heating value, if known from Nameplate, Measurement, Audit, or Contractor Specification | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Conversion technology | epa_chp_performance; ITC-22 | Linked Opportunity | Annual Operational Savings > Conversion technology | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_LINKED_OPPORTUNITY | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Installed capacity | epa_chp_performance; ITC-22, ITC-26 | Linked Opportunity | Annual Operational Savings > Installed capacity | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_LINKED_OPPORTUNITY | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
@@ -127,31 +120,10 @@ A failed checksum, schema drift, or incomplete artifact leaves the prior publish
 
 ## 7. Internal database schema
 
-The source uses the shared registry tables plus these target tables: equipment_performance_fields, benchmark_populations, benchmark_values, calculation_assumptions.
-
-```sql
-CREATE TABLE os_epa_chp_performance_records (
-  source_release_id uuid NOT NULL REFERENCES source_releases(id),
-  source_record_key text NOT NULL,
-  effective_from date,
-  effective_to date,
-  active boolean NOT NULL,
-  native_payload jsonb NOT NULL,
-  normalized_payload jsonb NOT NULL,
-  unit_registry_version text NOT NULL,
-  source_artifact_id uuid NOT NULL REFERENCES source_artifacts(id),
-  created_at timestamptz NOT NULL,
-  PRIMARY KEY (source_release_id, source_record_key)
-);
-CREATE INDEX os_epa_chp_performance_active_exact_idx
-  ON os_epa_chp_performance_records ((normalized_payload->>'normalized_identifier'), effective_from, effective_to)
-  WHERE active;
-CREATE INDEX os_epa_chp_performance_requirements_idx
-  ON os_epa_chp_performance_records USING gin (normalized_payload jsonb_path_ops)
-  WHERE active;
-```
-
-Source-native payloads remain queryable for audits, while formula adapters consume only validated normalized columns or pinned local-model results.
+The intended normalized targets are equipment_performance_fields, benchmark_populations, benchmark_values, calculation_assumptions.
+Implementation evidence must come from executed migrations and populated table counts in the committed compact proof export.
+No generic per-Standard JSON payload table is claimed as an implemented source schema.
+Each source-specific adapter must publish typed columns derived from its inspected native structure or remain incomplete.
 
 ## 8. Exact resolution
 
@@ -223,21 +195,18 @@ External source cost is $0 per month.
 Estimated internal storage and compute cost is $0.05 at 100 calculations per month, $0.10 at 1,000, and $0.40 at 10,000.
 These figures exclude ordinary shared database and observability overhead and are planning estimates, not vendor quotes.
 
-## 15. Prototype proof
+## 15. Synthetic regression boundary
 
 The offline command is:
 
 ```bash
-node scripts/research/operational-savings/run-prototypes.mjs --json
+node scripts/research/operational-savings/run-synthetic-prototypes.mjs --json
 ```
 
-The acquired or inspected source evidence is Official EPA CHP method equation.
 The retained compact sample is `docs/operational-savings-automation-research/samples/epa-chp-performance.sample.json`.
-The source or model interface inspected is EPA CHP catalog PDF.
-The local output kind is `model_result_set`, the selection rule is `PINNED_LOCAL_FORMULA:chpFuelAndUsefulHeat`, and the output unit is `MMBtu/year`.
-The prototype runs without network access after acquisition.
-The prototype completed without warnings.
-The prototype proves parsing, filtering, or calculation behavior only within the retained sample boundary.
+Its local output kind is `model_result_set`, its selection rule is `PINNED_LOCAL_FORMULA:chpFuelAndUsefulHeat`, and its output unit is `MMBtu/year`.
+This synthetic regression executes without network access, but it does not prove acquisition, schema inspection, source-specific parsing, a real model run, database publication, or formula-term reachability.
+Only the separate real-proof registry and source-backed tests may satisfy those gates.
 
 ## 16. Feasibility verdict
 

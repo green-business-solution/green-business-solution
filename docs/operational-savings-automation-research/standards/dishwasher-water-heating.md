@@ -53,17 +53,9 @@ The observed source-native fields or model inputs are:
 - `resource conversion`
 - `kWh or therm per gallon`
 
-| Field or structure | Shape to validate and pin | Native unit | Key or filter role | Null handling | Enumeration handling |
-| --- | --- | --- | --- | --- | --- |
-| machine type | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Mandatory filter or version dimension | Preserve source nulls; reject null only when the process requires the field | Preserve and pin native enumeration values per release |
-| sanitation method | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Preserve and pin native enumeration values per release |
-| water gallons per rack or square foot | Numeric scalar or numeric series | gallons/rack | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| temperature rise | Numeric scalar or numeric series | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| water-heater efficiency | Numeric scalar or numeric series | Fraction, ratio, or source-declared efficiency unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| specific heat | Numeric scalar or numeric series | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| water density | Numeric scalar or numeric series | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| resource conversion | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| kWh or therm per gallon | Numeric scalar or numeric series | Source-declared energy unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+These names are research requirements from the source inventory, not claims about an observed source schema.
+Exact source types, units, enumerations, nullability, keys, workbook coordinates, or model declarations must come from the source-specific proof manifest under `scripts/research/operational-savings/adapters/dishwasher-water-heating/`.
+If no proof manifest records direct inspection evidence, this Standard remains incomplete.
 
 Product and record sources must preserve a natural source identifier plus a release identifier as the composite natural key.
 Model sources must preserve the complete input schema, package version, configuration, warnings, and output schema.
@@ -77,14 +69,14 @@ Duplicate manufacturer and model strings are normalized for search only, while t
 
 | Required RetroFi field | Process and category | Source artifact or owner | Source-native field | Transformation | Target unit | Support classification | Limitation |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Rack-machine type and sanitation method, when the rack branch is used | dishwasher-water-heating-conversion; ITC-52 | User | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Rack-Machine Type and Sanitation Method | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Flight or conveyor machine type and sanitation method, when the flight branch is used | dishwasher-water-heating-conversion; ITC-52 | User | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Flight or Conveyor Machines Only > Flight or Conveyor Machine Type and Sanitation Method | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Rack-machine type and sanitation method, when the rack branch is used | dishwasher-water-heating-conversion; ITC-52 | User | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Rack Machines Only > Rack-Machine Type and Sanitation Method | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Flight or conveyor machine type and sanitation method, when the flight branch is used | dishwasher-water-heating-conversion; ITC-52 | User | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Native Activity Basis > Flight or Conveyor Machines Only > Flight or Conveyor Machine Type and Sanitation Method | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Existing native water quantity from the connected existing dishwasher record | dishwasher-water-heating-conversion; ITC-52 | Standard Output | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Existing Dishwasher Native Performance > Standard 1.1 - Exact Existing Dishwasher Native-Field Resolution | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | DERIVABLE_FROM_SOURCE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Proposed native water quantity from the connected exact proposed dishwasher record, when used | dishwasher-water-heating-conversion; ITC-52 | Standard Output | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity names an exact dishwasher > Standard 1.2 - Exact Proposed Dishwasher Native-Field Resolution | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | DERIVABLE_FROM_SOURCE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Proposed native water quantity from the connected requirement-selected dishwasher record, when used | dishwasher-water-heating-conversion; ITC-52 | Standard Output | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Proposed Dishwasher Native Performance > Linked Opportunity specifies dishwasher requirements but no exact product > Standard 1.3 - Requirement-Based Proposed Dishwasher Native-Field Resolution | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | DERIVABLE_FROM_SOURCE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Incoming water temperature | dishwasher-water-heating-conversion; ITC-52 | Project Document | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Incoming Water Temperature | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Wash, rinse, or booster temperature or certified hot-water quantity | dishwasher-water-heating-conversion; ITC-52 | Project Document | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Wash, Rinse, or Booster Temperature or Certified Hot-Water Quantity | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Water-heating resource type | dishwasher-water-heating-conversion; ITC-52 | User | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Water-Heating Resource Type | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Water-heating resource type | dishwasher-water-heating-conversion; ITC-52 | User | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Water-Heating Resource Type | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Water-heater efficiency | dishwasher-water-heating-conversion; ITC-52 | Project Document | Annual Operational Savings > Annual Commercial Dishwasher Resource Reduction > Dishwasher Water-Heating Conversion > Water-Heater Efficiency | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Dishwasher water-heating result set | dishwasher-water-heating-conversion; ITC-52 | CFS Equipment Calculator.xlsx | machine type; sanitation method; water gallons per rack or square foot; temperature rise; water-heater efficiency; specific heat; water density; resource conversion; kWh or therm per gallon | water_heating_input_per_gallon = temperature_rise_F * water_density_lb_per_gallon * specific_heat_Btu_per_lb_F / heater_efficiency / resource_Btu_per_unit | record set | DERIVABLE_FROM_SOURCE | Treating all machine water as hot water without the building and booster boundary or converting flight gallons per hour to racks |
 | Existing rack-machine water-heating resource per rack | dishwasher-water-heating-conversion; ITC-52 | CFS Equipment Calculator.xlsx | machine type; sanitation method; water gallons per rack or square foot; temperature rise; water-heater efficiency; specific heat; water density; resource conversion; kWh or therm per gallon | water_heating_input_per_gallon = temperature_rise_F * water_density_lb_per_gallon * specific_heat_Btu_per_lb_F / heater_efficiency / resource_Btu_per_unit | resource/certified activity | DERIVABLE_FROM_SOURCE | Treating all machine water as hot water without the building and booster boundary or converting flight gallons per hour to racks |
@@ -115,31 +107,10 @@ A failed checksum, schema drift, or incomplete artifact leaves the prior publish
 
 ## 7. Internal database schema
 
-The source uses the shared registry tables plus these target tables: calculation_assumptions, model_versions, calculation_runs.
-
-```sql
-CREATE TABLE os_dishwasher_water_heating_records (
-  source_release_id uuid NOT NULL REFERENCES source_releases(id),
-  source_record_key text NOT NULL,
-  effective_from date,
-  effective_to date,
-  active boolean NOT NULL,
-  native_payload jsonb NOT NULL,
-  normalized_payload jsonb NOT NULL,
-  unit_registry_version text NOT NULL,
-  source_artifact_id uuid NOT NULL REFERENCES source_artifacts(id),
-  created_at timestamptz NOT NULL,
-  PRIMARY KEY (source_release_id, source_record_key)
-);
-CREATE INDEX os_dishwasher_water_heating_active_exact_idx
-  ON os_dishwasher_water_heating_records ((normalized_payload->>'normalized_identifier'), effective_from, effective_to)
-  WHERE active;
-CREATE INDEX os_dishwasher_water_heating_requirements_idx
-  ON os_dishwasher_water_heating_records USING gin (normalized_payload jsonb_path_ops)
-  WHERE active;
-```
-
-Source-native payloads remain queryable for audits, while formula adapters consume only validated normalized columns or pinned local-model results.
+The intended normalized targets are calculation_assumptions, model_versions, calculation_runs.
+Implementation evidence must come from executed migrations and populated table counts in the committed compact proof export.
+No generic per-Standard JSON payload table is claimed as an implemented source schema.
+Each source-specific adapter must publish typed columns derived from its inspected native structure or remain incomplete.
 
 ## 8. Exact resolution
 
@@ -211,21 +182,18 @@ External source cost is $0 per month.
 Estimated internal storage and compute cost is $0.01 at 100 calculations per month, $0.02 at 1,000, and $0.08 at 10,000.
 These figures exclude ordinary shared database and observability overhead and are planning estimates, not vendor quotes.
 
-## 15. Prototype proof
+## 15. Synthetic regression boundary
 
 The offline command is:
 
 ```bash
-node scripts/research/operational-savings/run-prototypes.mjs --json
+node scripts/research/operational-savings/run-synthetic-prototypes.mjs --json
 ```
 
-The acquired or inspected source evidence is Inspected Dishwasher Calcs formulas and assumptions.
 The retained compact sample is `docs/operational-savings-automation-research/samples/dishwasher-water-heating.sample.json`.
-The source or model interface inspected is CFS Equipment Calculator.xlsx.
-The local output kind is `model_result_set`, the selection rule is `PINNED_LOCAL_FORMULA:waterHeatingPerGallon`, and the output unit is `kWh/gallon`.
-The prototype runs without network access after acquisition.
-The prototype completed without warnings.
-The prototype proves parsing, filtering, or calculation behavior only within the retained sample boundary.
+Its local output kind is `model_result_set`, its selection rule is `PINNED_LOCAL_FORMULA:waterHeatingPerGallon`, and its output unit is `kWh/gallon`.
+This synthetic regression executes without network access, but it does not prove acquisition, schema inspection, source-specific parsing, a real model run, database publication, or formula-term reachability.
+Only the separate real-proof registry and source-backed tests may satisfy those gates.
 
 ## 16. Feasibility verdict
 

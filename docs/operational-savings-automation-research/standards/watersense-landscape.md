@@ -56,16 +56,9 @@ The observed source-native fields or model inputs are:
 - `irrigation efficiency`
 - `baseline and proposed allowances`
 
-| Field or structure | Shape to validate and pin | Native unit | Key or filter role | Null handling | Enumeration handling |
-| --- | --- | --- | --- | --- | --- |
-| ZIP code | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| reference evapotranspiration | Numeric scalar or numeric series | Inches | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| rainfall | Numeric scalar or numeric series | Inches | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| peak watering month | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| landscape area by hydrozone | Numeric scalar or numeric series | Source-declared area | Mandatory filter or version dimension | Preserve source nulls; reject null only when the process requires the field | Preserve and pin native enumeration values per release |
-| plant factor | String, identifier, or source enumeration | Fraction, ratio, or source-declared efficiency unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| irrigation efficiency | Numeric scalar or numeric series | Fraction, ratio, or source-declared efficiency unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| baseline and proposed allowances | Numeric scalar or numeric series | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+These names are research requirements from the source inventory, not claims about an observed source schema.
+Exact source types, units, enumerations, nullability, keys, workbook coordinates, or model declarations must come from the source-specific proof manifest under `scripts/research/operational-savings/adapters/watersense-landscape/`.
+If no proof manifest records direct inspection evidence, this Standard remains incomplete.
 
 Product and record sources must preserve a natural source identifier plus a release identifier as the composite natural key.
 Model sources must preserve the complete input schema, package version, configuration, warnings, and output schema.
@@ -79,11 +72,11 @@ Duplicate manufacturer and model strings are normalized for search only, while t
 
 | Required RetroFi field | Process and category | Source artifact or owner | Source-native field | Transformation | Target unit | Support classification | Limitation |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Approximate Landscape Area for Each Hydrozone | watersense_landscape; ITC-34 | User | Annual Operational Savings > Annual irrigation water reduction > Repeatable hydrozone definition > Approximate Landscape Area for Each Hydrozone | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Recognizable Plant or Landscape Type for Each Hydrozone | watersense_landscape; ITC-34 | User | Annual Operational Savings > Annual irrigation water reduction > Repeatable hydrozone definition > Recognizable Plant or Landscape Type for Each Hydrozone | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Irrigation method | watersense_landscape; ITC-34 | User | Annual Operational Savings > Annual irrigation water reduction > Existing irrigation configuration > Irrigation method | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Approximate Landscape Area for Each Hydrozone | watersense_landscape; ITC-34 | User | Annual Operational Savings > Annual irrigation water reduction > Repeatable hydrozone definition > Approximate Landscape Area for Each Hydrozone | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Recognizable Plant or Landscape Type for Each Hydrozone | watersense_landscape; ITC-34 | User | Annual Operational Savings > Annual irrigation water reduction > Repeatable hydrozone definition > Recognizable Plant or Landscape Type for Each Hydrozone | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Irrigation method | watersense_landscape; ITC-34 | User | Annual Operational Savings > Annual irrigation water reduction > Existing irrigation configuration > Irrigation method | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Irrigation efficiency, if known from a nameplate, measurement, audit, or contractor specification | watersense_landscape; ITC-34 | Project Document | Annual Operational Savings > Annual irrigation water reduction > Existing irrigation configuration > Documented Irrigation efficiency, if known from Nameplate, Measurement, Audit, or Contractor Specification | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Controller treatment | watersense_landscape; ITC-34 | User | Annual Operational Savings > Annual irrigation water reduction > Existing irrigation configuration > Controller treatment | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Controller treatment | watersense_landscape; ITC-34 | User | Annual Operational Savings > Annual irrigation water reduction > Existing irrigation configuration > Controller treatment | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Site ZIP Code | watersense_landscape; ITC-34 | Profile | Annual Operational Savings > Annual irrigation water reduction > Site ZIP Code | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Baseline annual design water allowance | watersense_landscape; ITC-34 | ws-data-information-et-rainfall.xlsx | ZIP code; reference evapotranspiration; rainfall; peak watering month; landscape area by hydrozone; plant factor; irrigation efficiency; baseline and proposed allowances | landscape_water_allowance_gallons = eto_inches * landscape_area_ft2 * 0.623 * landscape_coefficient / irrigation_efficiency, with the exact Version 2.0 monthly and effective-rainfall method preserved | gallons/year | DERIVABLE_FROM_SOURCE | Real-time irrigation scheduling, actual measured water use, and missing landscape design inputs |
 | Proposed annual design water allowance | watersense_landscape; ITC-34 | ws-data-information-et-rainfall.xlsx | ZIP code; reference evapotranspiration; rainfall; peak watering month; landscape area by hydrozone; plant factor; irrigation efficiency; baseline and proposed allowances | landscape_water_allowance_gallons = eto_inches * landscape_area_ft2 * 0.623 * landscape_coefficient / irrigation_efficiency, with the exact Version 2.0 monthly and effective-rainfall method preserved | gallons/year | DERIVABLE_FROM_SOURCE | Real-time irrigation scheduling, actual measured water use, and missing landscape design inputs |
@@ -111,31 +104,10 @@ A failed checksum, schema drift, or incomplete artifact leaves the prior publish
 
 ## 7. Internal database schema
 
-The source uses the shared registry tables plus these target tables: climate_crosswalks, geographic_crosswalks, benchmark_values, calculation_assumptions.
-
-```sql
-CREATE TABLE os_watersense_landscape_records (
-  source_release_id uuid NOT NULL REFERENCES source_releases(id),
-  source_record_key text NOT NULL,
-  effective_from date,
-  effective_to date,
-  active boolean NOT NULL,
-  native_payload jsonb NOT NULL,
-  normalized_payload jsonb NOT NULL,
-  unit_registry_version text NOT NULL,
-  source_artifact_id uuid NOT NULL REFERENCES source_artifacts(id),
-  created_at timestamptz NOT NULL,
-  PRIMARY KEY (source_release_id, source_record_key)
-);
-CREATE INDEX os_watersense_landscape_active_exact_idx
-  ON os_watersense_landscape_records ((normalized_payload->>'normalized_identifier'), effective_from, effective_to)
-  WHERE active;
-CREATE INDEX os_watersense_landscape_requirements_idx
-  ON os_watersense_landscape_records USING gin (normalized_payload jsonb_path_ops)
-  WHERE active;
-```
-
-Source-native payloads remain queryable for audits, while formula adapters consume only validated normalized columns or pinned local-model results.
+The intended normalized targets are climate_crosswalks, geographic_crosswalks, benchmark_values, calculation_assumptions.
+Implementation evidence must come from executed migrations and populated table counts in the committed compact proof export.
+No generic per-Standard JSON payload table is claimed as an implemented source schema.
+Each source-specific adapter must publish typed columns derived from its inspected native structure or remain incomplete.
 
 ## 8. Exact resolution
 
@@ -207,21 +179,18 @@ External source cost is $0 per month.
 Estimated internal storage and compute cost is $0.04 at 100 calculations per month, $0.08 at 1,000, and $0.30 at 10,000.
 These figures exclude ordinary shared database and observability overhead and are planning estimates, not vendor quotes.
 
-## 15. Prototype proof
+## 15. Synthetic regression boundary
 
 The offline command is:
 
 ```bash
-node scripts/research/operational-savings/run-prototypes.mjs --json
+node scripts/research/operational-savings/run-synthetic-prototypes.mjs --json
 ```
 
-The acquired or inspected source evidence is Official Version 2.0 method scope and downloaded climate workbook.
 The retained compact sample is `docs/operational-savings-automation-research/samples/watersense-landscape.sample.json`.
-The source or model interface inspected is ws-data-information-et-rainfall.xlsx.
-The local output kind is `model_result_set`, the selection rule is `PINNED_LOCAL_FORMULA:landscapeAllowance`, and the output unit is `gallons`.
-The prototype runs without network access after acquisition.
-The prototype completed without warnings.
-The prototype proves parsing, filtering, or calculation behavior only within the retained sample boundary.
+Its local output kind is `model_result_set`, its selection rule is `PINNED_LOCAL_FORMULA:landscapeAllowance`, and its output unit is `gallons`.
+This synthetic regression executes without network access, but it does not prove acquisition, schema inspection, source-specific parsing, a real model run, database publication, or formula-term reachability.
+Only the separate real-proof registry and source-backed tests may satisfy those gates.
 
 ## 16. Feasibility verdict
 

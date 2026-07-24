@@ -59,18 +59,9 @@ The observed source-native fields or model inputs are:
 - `combE`
 - `modifiedOn`
 
-| Field or structure | Shape to validate and pin | Native unit | Key or filter role | Null handling | Enumeration handling |
-| --- | --- | --- | --- | --- | --- |
-| id | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Natural-key candidate or key component | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| year | Date, timestamp, or source date string | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| make | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| model | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| VClass | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Mandatory filter or version dimension | Preserve source nulls; reject null only when the process requires the field | Preserve and pin native enumeration values per release |
-| drive | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Preserve and pin native enumeration values per release |
-| fuelType | Numeric scalar or numeric series | Source-declared fuel or thermal unit | Mandatory filter or version dimension | Preserve source nulls; reject null only when the process requires the field | Preserve and pin native enumeration values per release |
-| comb08 | Numeric scalar or numeric series | Miles/gallon | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| combE | Numeric scalar or numeric series | kWh/100 miles | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| modifiedOn | Date, timestamp, or source date string | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+These names are research requirements from the source inventory, not claims about an observed source schema.
+Exact source types, units, enumerations, nullability, keys, workbook coordinates, or model declarations must come from the source-specific proof manifest under `scripts/research/operational-savings/adapters/fueleconomy-vehicles/`.
+If no proof manifest records direct inspection evidence, this Standard remains incomplete.
 
 Product and record sources must preserve a natural source identifier plus a release identifier as the composite natural key.
 Model sources must preserve the complete input schema, package version, configuration, warnings, and output schema.
@@ -86,13 +77,13 @@ Duplicate manufacturer and model strings are normalized for search only, while t
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Measured kilowatt-hours per mile from a Project Document, when available | fueleconomy_vehicles; ITC-28 | Project Document | Annual Operational Cost Impact > Vehicle Electricity Intensity > Measured Kilowatt-Hours per Mile from Fleet Study or Contractor Charging Design | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Exact proposed vehicle make, model, year, and drivetrain from the linked opportunity, when named | fueleconomy_vehicles; ITC-28 | Linked Opportunity | Annual Operational Cost Impact > Vehicle Electricity Intensity > Exact Proposed Vehicle Model, Year, and Drivetrain, when Named by the Opportunity | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_LINKED_OPPORTUNITY | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Vehicle class and service need | fueleconomy_vehicles; ITC-28 | User | Annual Operational Cost Impact > Vehicle Class and Service Need | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Vehicle class and service need | fueleconomy_vehicles; ITC-28 | User | Annual Operational Cost Impact > Vehicle Class and Service Need | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Class-matched electricity intensity from the connected Fleet DNA benchmark | fueleconomy_vehicles; ITC-28 | Standard Output | Annual Operational Cost Impact > Fleet Charging Activity > Standard 1.3 - Fleet Charging Activity and Vehicle Benchmark | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | DERIVABLE_FROM_SOURCE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Existing vehicle make and model | fueleconomy_vehicles; ITC-29 | User | Annual Operational Savings > Avoided Gasoline Cost > Existing Vehicle Make and Model | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Existing vehicle make and model | fueleconomy_vehicles; ITC-29 | User | Annual Operational Savings > Avoided Gasoline Cost > Existing Vehicle Make and Model | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Proposed vehicle make and model | fueleconomy_vehicles; ITC-29 | Linked Opportunity | Annual Operational Savings > Added Electricity Cost > Proposed Vehicle Make and Model | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_LINKED_OPPORTUNITY | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Existing approximate model year | fueleconomy_vehicles; ITC-29 | User | Annual Operational Savings > Avoided Gasoline Cost > Approximate Model Year | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Existing approximate model year | fueleconomy_vehicles; ITC-29 | User | Annual Operational Savings > Avoided Gasoline Cost > Approximate Model Year | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Proposed approximate model year | fueleconomy_vehicles; ITC-29 | Linked Opportunity | Annual Operational Savings > Added Electricity Cost > Approximate Model Year | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_LINKED_OPPORTUNITY | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Existing version or drivetrain details only when needed to resolve an ambiguous match | fueleconomy_vehicles; ITC-29 | User | Annual Operational Savings > Avoided Gasoline Cost > Additional Version or Drivetrain Details, only when the match is ambiguous | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Existing version or drivetrain details only when needed to resolve an ambiguous match | fueleconomy_vehicles; ITC-29 | User | Annual Operational Savings > Avoided Gasoline Cost > Additional Version or Drivetrain Details, only when the match is ambiguous | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Proposed version or drivetrain details only when needed to resolve an ambiguous match | fueleconomy_vehicles; ITC-29 | Linked Opportunity | Annual Operational Savings > Added Electricity Cost > Additional Version or Drivetrain Details, only when the match is ambiguous | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_LINKED_OPPORTUNITY | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Vehicle electricity intensity at the wall | fueleconomy_vehicles; ITC-28 | vehicles.csv.zip | id; year; make; model; VClass; drive; fuelType; comb08; combE; modifiedOn | existing_gallons_per_mile = 1 / comb08_mpg; proposed_wall_kwh_per_mile = combE_kwh_per_100_miles / 100 | kWh/mile | DERIVABLE_FROM_SOURCE | Arbitrary class medians without population review and commercial fleet duty not represented by light-duty labels |
 | Existing combined fuel economy | fueleconomy_vehicles; ITC-29 | vehicles.csv.zip | id; year; make; model; VClass; drive; fuelType; comb08; combE; modifiedOn | existing_gallons_per_mile = 1 / comb08_mpg; proposed_wall_kwh_per_mile = combE_kwh_per_100_miles / 100 | miles/gallon | DERIVABLE_FROM_SOURCE | Arbitrary class medians without population review and commercial fleet duty not represented by light-duty labels |
@@ -121,31 +112,10 @@ A failed checksum, schema drift, or incomplete artifact leaves the prior publish
 
 ## 7. Internal database schema
 
-The source uses the shared registry tables plus these target tables: equipment_products, equipment_performance_fields, product_taxonomy_crosswalks.
-
-```sql
-CREATE TABLE os_fueleconomy_vehicles_records (
-  source_release_id uuid NOT NULL REFERENCES source_releases(id),
-  source_record_key text NOT NULL,
-  effective_from date,
-  effective_to date,
-  active boolean NOT NULL,
-  native_payload jsonb NOT NULL,
-  normalized_payload jsonb NOT NULL,
-  unit_registry_version text NOT NULL,
-  source_artifact_id uuid NOT NULL REFERENCES source_artifacts(id),
-  created_at timestamptz NOT NULL,
-  PRIMARY KEY (source_release_id, source_record_key)
-);
-CREATE INDEX os_fueleconomy_vehicles_active_exact_idx
-  ON os_fueleconomy_vehicles_records ((normalized_payload->>'normalized_identifier'), effective_from, effective_to)
-  WHERE active;
-CREATE INDEX os_fueleconomy_vehicles_requirements_idx
-  ON os_fueleconomy_vehicles_records USING gin (normalized_payload jsonb_path_ops)
-  WHERE active;
-```
-
-Source-native payloads remain queryable for audits, while formula adapters consume only validated normalized columns or pinned local-model results.
+The intended normalized targets are equipment_products, equipment_performance_fields, product_taxonomy_crosswalks.
+Implementation evidence must come from executed migrations and populated table counts in the committed compact proof export.
+No generic per-Standard JSON payload table is claimed as an implemented source schema.
+Each source-specific adapter must publish typed columns derived from its inspected native structure or remain incomplete.
 
 ## 8. Exact resolution
 
@@ -217,21 +187,18 @@ External source cost is $0 per month.
 Estimated internal storage and compute cost is $0.03 at 100 calculations per month, $0.05 at 1,000, and $0.20 at 10,000.
 These figures exclude ordinary shared database and observability overhead and are planning estimates, not vendor quotes.
 
-## 15. Prototype proof
+## 15. Synthetic regression boundary
 
 The offline command is:
 
 ```bash
-node scripts/research/operational-savings/run-prototypes.mjs --json
+node scripts/research/operational-savings/run-synthetic-prototypes.mjs --json
 ```
 
-The acquired or inspected source evidence is Reviewed exact FuelEconomy.gov fields.
 The retained compact sample is `docs/operational-savings-automation-research/samples/fueleconomy-vehicles.sample.json`.
-The source or model interface inspected is vehicles.csv.zip.
-The local output kind is `model_result_set`, the selection rule is `PINNED_LOCAL_FORMULA:vehicleIntensity`, and the output unit is `gallon/mile and kWh/mile`.
-The prototype runs without network access after acquisition.
-The prototype completed without warnings.
-The prototype proves parsing, filtering, or calculation behavior only within the retained sample boundary.
+Its local output kind is `model_result_set`, its selection rule is `PINNED_LOCAL_FORMULA:vehicleIntensity`, and its output unit is `gallon/mile and kWh/mile`.
+This synthetic regression executes without network access, but it does not prove acquisition, schema inspection, source-specific parsing, a real model run, database publication, or formula-term reachability.
+Only the separate real-proof registry and source-backed tests may satisfy those gates.
 
 ## 16. Feasibility verdict
 

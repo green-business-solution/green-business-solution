@@ -7,7 +7,7 @@ import {
   buildOperationalSavingsReview,
   loadOperationalSavingsSources
 } from "../../generate-operational-savings-review-pages.mjs";
-import { runStandardPrototype } from "./adapter-prototype.mjs";
+import { runSyntheticPrototype } from "./synthetic-prototype.mjs";
 
 const REPO_ROOT = fileURLToPath(new URL("../../..", import.meta.url));
 const OUTPUT_ROOT = join(REPO_ROOT, "docs/operational-savings-automation-research");
@@ -49,10 +49,6 @@ function formatMoney(value) {
 
 function countLabel(count, singular, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;
-}
-
-function asSentence(value) {
-  return /[.!?]$/.test(value) ? value : `${value}.`;
 }
 
 function aggregateFeasibility(standards) {
@@ -255,146 +251,12 @@ function accessRouteRows(standard) {
   });
 }
 
-function nativeFieldShape(field) {
-  const lower = field.toLowerCase();
-  if (
-    lower.includes("structure") ||
-    lower.includes("schedule") ||
-    lower.includes("profile") ||
-    lower.includes("series") ||
-    lower.includes("interval") ||
-    lower.includes("records") ||
-    lower.includes("inputs")
-  ) {
-    return "Structured record or array";
-  }
-  if (lower.includes("warning")) return "Array of strings";
-  if (lower === "approved" || lower.includes("active")) return "Boolean or source enum";
-  if (
-    lower.includes("date") ||
-    lower === "year" ||
-    lower.includes("modified") ||
-    lower.includes("startdate") ||
-    lower.includes("enddate")
-  ) {
-    return "Date, timestamp, or source date string";
-  }
-  if (
-    lower.includes("energy") ||
-    lower.includes("annual resource") ||
-    lower.includes("power") ||
-    lower.includes("efficiency") ||
-    lower.includes("efficacy") ||
-    lower.includes("flow") ||
-    lower.includes("fuel") ||
-    lower.includes("output") ||
-    lower.includes("capacity") ||
-    lower.includes("loss") ||
-    lower.includes("area") ||
-    lower.includes("weight") ||
-    lower.includes("volume") ||
-    lower.includes("gallon") ||
-    lower.includes("watt") ||
-    lower.includes("lumen") ||
-    lower.includes("temperature") ||
-    lower.includes("specific heat") ||
-    lower.includes("density") ||
-    lower.includes("coefficient") ||
-    lower.includes("allowance") ||
-    lower.includes("ratio") ||
-    lower.includes("sample count") ||
-    lower.includes("typical value") ||
-    lower.includes("rainfall") ||
-    lower.includes("evapotranspiration") ||
-    lower.includes("comb08") ||
-    lower.includes("combe") ||
-    lower.includes("hours")
-  ) {
-    return "Numeric scalar or numeric series";
-  }
-  return "String, identifier, or source enumeration";
-}
-
-function nativeFieldUnit(field) {
-  const lower = field.toLowerCase();
-  if (lower.includes("kwh_rack") || lower.includes("kwh per rack")) return "kWh/rack";
-  if (lower.includes("kwh/100") || lower.includes("combe")) return "kWh/100 miles";
-  if (lower.includes("_kw") || lower.includes("power")) return "Source-declared power unit";
-  if (lower.includes("gallons_per_rack") || lower.includes("gallons per rack")) {
-    return "gallons/rack";
-  }
-  if (lower.includes("gallons per") || lower.includes("gpf")) return "Source-declared gallons per event";
-  if (lower.includes("energy") || lower.includes("kwh")) return "Source-declared energy unit";
-  if (lower.includes("watt")) return "Watts or source-declared power unit";
-  if (lower.includes("efficiency") || lower.includes("loss") || lower.includes("plant factor")) {
-    return "Fraction, ratio, or source-declared efficiency unit";
-  }
-  if (lower.includes("flow")) return "Source-declared volume/time";
-  if (lower.includes("area")) return "Source-declared area";
-  if (lower.includes("weight")) return "Source-declared statistical weight";
-  if (lower.includes("hours") || lower.includes("operating time")) return "Hours or source-declared time";
-  if (lower.includes("rainfall") || lower.includes("evapotranspiration")) return "Inches";
-  if (lower.includes("comb08")) return "Miles/gallon";
-  if (lower.includes("fuel") || lower.includes("thermal")) return "Source-declared fuel or thermal unit";
-  return "Not unit-bearing or unit is source-specific";
-}
-
-function nativeFieldKeyRole(field) {
-  const lower = field.toLowerCase();
-  if (
-    /(^|[._ ])id($|[._ ])/.test(lower) ||
-    lower.includes("model number") ||
-    lower.includes("model_number") ||
-    lower === "label" ||
-    lower === "name"
-  ) {
-    return "Natural-key candidate or key component";
-  }
-  if (
-    lower.includes("date") ||
-    lower.includes("status") ||
-    lower.includes("type") ||
-    lower.includes("class") ||
-    lower.includes("sector") ||
-    lower.includes("procedure") ||
-    lower.includes("zone")
-  ) {
-    return "Mandatory filter or version dimension";
-  }
-  return "Payload, calculation input, or output";
-}
-
-function nativeFieldEnumeration(field) {
-  const lower = field.toLowerCase();
-  return lower.includes("type") ||
-    lower.includes("status") ||
-    lower.includes("class") ||
-    lower.includes("sector") ||
-    lower.includes("method") ||
-    lower.includes("procedure") ||
-    lower.includes("zone") ||
-    lower.includes("application") ||
-    lower.includes("drive")
-    ? "Preserve and pin native enumeration values per release"
-    : "Not treated as an enumeration unless the source schema declares one";
-}
-
-function nativeSchemaRows(standard) {
-  return standard.nativeFields.map((field) => [
-    field,
-    nativeFieldShape(field),
-    nativeFieldUnit(field),
-    nativeFieldKeyRole(field),
-    "Preserve source nulls; reject null only when the process requires the field",
-    nativeFieldEnumeration(field)
-  ]);
-}
-
 function inputClassification(sourceLabel) {
   switch (sourceLabel) {
     case "Profile":
-    case "User":
       return "REQUIRES_PROFILE";
+    case "User":
+      return "REQUIRES_USER";
     case "Bill":
       return "REQUIRES_BILL";
     case "Linked Opportunity":
@@ -526,7 +388,6 @@ function renderStandardReport(standard, canonical, instances, evidenceRecords, p
       row.limitation
     ])
   );
-  const ddlName = standard.slug.replaceAll("-", "_");
   return `# ${standard.id} - ${canonical.title}
 
 ## 1. RetroFi role
@@ -580,17 +441,9 @@ The observed source-native fields or model inputs are:
 
 ${standard.nativeFields.map((field) => `- \`${field}\``).join("\n")}
 
-${table(
-  [
-    "Field or structure",
-    "Shape to validate and pin",
-    "Native unit",
-    "Key or filter role",
-    "Null handling",
-    "Enumeration handling"
-  ],
-  nativeSchemaRows(standard)
-)}
+These names are research requirements from the source inventory, not claims about an observed source schema.
+Exact source types, units, enumerations, nullability, keys, workbook coordinates, or model declarations must come from the source-specific proof manifest under \`scripts/research/operational-savings/adapters/${standard.slug}/\`.
+If no proof manifest records direct inspection evidence, this Standard remains incomplete.
 
 Product and record sources must preserve a natural source identifier plus a release identifier as the composite natural key.
 Model sources must preserve the complete input schema, package version, configuration, warnings, and output schema.
@@ -627,31 +480,10 @@ A failed checksum, schema drift, or incomplete artifact leaves the prior publish
 
 ## 7. Internal database schema
 
-The source uses the shared registry tables plus these target tables: ${standard.internalTargets.join(", ")}.
-
-\`\`\`sql
-CREATE TABLE os_${ddlName}_records (
-  source_release_id uuid NOT NULL REFERENCES source_releases(id),
-  source_record_key text NOT NULL,
-  effective_from date,
-  effective_to date,
-  active boolean NOT NULL,
-  native_payload jsonb NOT NULL,
-  normalized_payload jsonb NOT NULL,
-  unit_registry_version text NOT NULL,
-  source_artifact_id uuid NOT NULL REFERENCES source_artifacts(id),
-  created_at timestamptz NOT NULL,
-  PRIMARY KEY (source_release_id, source_record_key)
-);
-CREATE INDEX os_${ddlName}_active_exact_idx
-  ON os_${ddlName}_records ((normalized_payload->>'normalized_identifier'), effective_from, effective_to)
-  WHERE active;
-CREATE INDEX os_${ddlName}_requirements_idx
-  ON os_${ddlName}_records USING gin (normalized_payload jsonb_path_ops)
-  WHERE active;
-\`\`\`
-
-Source-native payloads remain queryable for audits, while formula adapters consume only validated normalized columns or pinned local-model results.
+The intended normalized targets are ${standard.internalTargets.join(", ")}.
+Implementation evidence must come from executed migrations and populated table counts in the committed compact proof export.
+No generic per-Standard JSON payload table is claimed as an implemented source schema.
+Each source-specific adapter must publish typed columns derived from its inspected native structure or remain incomplete.
 
 ## 8. Exact resolution
 
@@ -723,21 +555,18 @@ External source cost is ${formatMoney(cost.externalMonthlyUsd)} per month.
 Estimated internal storage and compute cost is ${formatMoney(cost.monthly100Usd)} at 100 calculations per month, ${formatMoney(cost.monthly1000Usd)} at 1,000, and ${formatMoney(cost.monthly10000Usd)} at 10,000.
 These figures exclude ordinary shared database and observability overhead and are planning estimates, not vendor quotes.
 
-## 15. Prototype proof
+## 15. Synthetic regression boundary
 
 The offline command is:
 
 \`\`\`bash
-node scripts/research/operational-savings/run-prototypes.mjs --json
+node scripts/research/operational-savings/run-synthetic-prototypes.mjs --json
 \`\`\`
 
-The acquired or inspected source evidence is ${standard.prototype.sourceEvidence}.
 The retained compact sample is \`docs/operational-savings-automation-research/samples/${standard.slug}.sample.json\`.
-The source or model interface inspected is ${standard.observedArtifact}.
-The local output kind is \`${prototypeResult.kind}\`, the selection rule is \`${prototypeResult.selectionRule}\`, and the output unit is \`${prototypeResult.unit}\`.
-The prototype runs without network access after acquisition.
-${prototypeResult.warnings.length ? asSentence(`The prototype warning is ${prototypeResult.warnings.join("; ")}`) : "The prototype completed without warnings."}
-The prototype proves parsing, filtering, or calculation behavior only within the retained sample boundary.
+Its local output kind is \`${prototypeResult.kind}\`, its selection rule is \`${prototypeResult.selectionRule}\`, and its output unit is \`${prototypeResult.unit}\`.
+This synthetic regression executes without network access, but it does not prove acquisition, schema inspection, source-specific parsing, a real model run, database publication, or formula-term reachability.
+Only the separate real-proof registry and source-backed tests may satisfy those gates.
 
 ## 16. Feasibility verdict
 
@@ -1502,7 +1331,8 @@ function renderExecutiveSummary(catalog, review, rows) {
 
 The zero-runtime-network architecture is feasible for every currently useful path, but no source should be connected directly to a customer estimate.
 The repository contains 19 canonical Standards, ${rows.length} category-local process instances, ${review.categoryReviews.length} categories, 632 explicit input bindings, 215 explicit output bindings, and 497 formula-term contracts.
-All 19 Standards now have one decisive acquisition and runtime strategy, a compact sample, a deterministic offline prototype, a cost estimate, and a precise supported boundary.
+All 19 Standards have a source inventory, compact synthetic sample, cost estimate, and proposed supported boundary.
+Those planning artifacts are not automation proof.
 
 The strongest immediate sources are the ENERGY STAR product datasets, FuelEconomy bulk vehicle data, FEMP lighting tables, and the ENERGY STAR dishwasher calculator.
 DOE CCMS and WaterSense labeled-product data require operator-seeded exports.
@@ -1561,11 +1391,11 @@ It covers ${catalog.standards.length} canonical Standards, ${rows.length} catego
 
 \`\`\`bash
 node scripts/research/operational-savings/generate-research.mjs
-node scripts/research/operational-savings/run-prototypes.mjs
+node scripts/research/operational-savings/run-synthetic-prototypes.mjs
 npx vitest run scripts/research/operational-savings/tests
 \`\`\`
 
-The prototype runner performs no network access.
+The synthetic prototype runner performs no network access and cannot satisfy a real-proof gate.
 Large downloaded artifacts and cloned repositories remain under the ignored \`scripts/research/operational-savings/.cache/\` directory.
 The generated reports do not change the approved formulas, trees, bindings, ownership decisions, statuses, or Information Cards.
 `;
@@ -1645,7 +1475,7 @@ async function main() {
   const sampleMetadata = new Map();
   const prototypeResults = new Map();
   for (const standard of catalog.standards) {
-    const result = runStandardPrototype(standard);
+    const result = runSyntheticPrototype(standard);
     prototypeResults.set(standard.id, result);
     const sample = {
       schemaVersion: "operational-savings/research-sample-v1",

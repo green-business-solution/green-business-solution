@@ -30,7 +30,7 @@
       "usefulHeatMmbtu": 389.9428571428572
     },
     "unit": "MMBtu/year",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "CHP technology catalog and screening methods",
     "sourceVersion": "Catalog artifact downloaded 2026-07-23; technology page current February 2026",
     "sourceArtifact": "EPA CHP catalog PDF",
@@ -42,8 +42,8 @@
     "eligiblePopulation": [],
     "sampleSize": 0,
     "selectionRule": "PINNED_LOCAL_FORMULA:chpFuelAndUsefulHeat",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "IMPLEMENTATION_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Official EPA CHP method equation",

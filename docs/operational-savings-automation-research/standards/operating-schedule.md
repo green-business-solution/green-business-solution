@@ -57,15 +57,9 @@ The observed source-native fields or model inputs are:
 - `sunrise and sunset definition`
 - `annual hours`
 
-| Field or structure | Shape to validate and pin | Native unit | Key or filter role | Null handling | Enumeration handling |
-| --- | --- | --- | --- | --- | --- |
-| weekday intervals | Structured record or array | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| weekend intervals | Structured record or array | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| holiday exclusions | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| season | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| latitude and longitude | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| sunrise and sunset definition | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| annual hours | Numeric scalar or numeric series | Hours or source-declared time | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+These names are research requirements from the source inventory, not claims about an observed source schema.
+Exact source types, units, enumerations, nullability, keys, workbook coordinates, or model declarations must come from the source-specific proof manifest under `scripts/research/operational-savings/adapters/operating-schedule/`.
+If no proof manifest records direct inspection evidence, this Standard remains incomplete.
 
 Product and record sources must preserve a natural source identifier plus a release identifier as the composite natural key.
 Model sources must preserve the complete input schema, package version, configuration, warnings, and output schema.
@@ -79,13 +73,13 @@ Duplicate manufacturer and model strings are normalized for search only, while t
 
 | Required RetroFi field | Process and category | Source artifact or owner | Source-native field | Transformation | Target unit | Support classification | Limitation |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Lighting hours per operating day | fixed-lighting-hours; ITC-02 | User | Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting follows a fixed or business schedule > Lighting Hours per Operating Day | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Operating days per week | fixed-lighting-hours; ITC-02 | User | Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting follows a fixed or business schedule > Operating Days per Week | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Active weeks per year | fixed-lighting-hours; ITC-02 | User | Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting follows a fixed or business schedule > Active Weeks per Year | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Control type and timing offset | daylight-lighting-hours; ITC-02 | User | Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Control Type and Timing Offset | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Lighting hours per operating day | fixed-lighting-hours; ITC-02 | User | Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting follows a fixed or business schedule > Lighting Hours per Operating Day | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Operating days per week | fixed-lighting-hours; ITC-02 | User | Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting follows a fixed or business schedule > Operating Days per Week | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Active weeks per year | fixed-lighting-hours; ITC-02 | User | Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting follows a fixed or business schedule > Active Weeks per Year | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Control type and timing offset | daylight-lighting-hours; ITC-02 | User | Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Control Type and Timing Offset | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Site location | daylight-lighting-hours; ITC-02 | Profile | Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Site Location | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Analysis year | daylight-lighting-hours; ITC-02 | User | Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Analysis Year | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Replacement fixture count | lighting-replacement-calculation; ITC-02 | User | Annual Operational Savings > Annual Electricity Reduction > Replacement Fixture Count | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Analysis year | daylight-lighting-hours; ITC-02 | User | Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Analysis Year | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Replacement fixture count | lighting-replacement-calculation; ITC-02 | User | Annual Operational Savings > Annual Electricity Reduction > Replacement Fixture Count | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Existing fixture watts | lighting-replacement-calculation; ITC-02 | Standard Output | Annual Operational Savings > Annual Electricity Reduction > Existing Fixture Watts > Standard 1.1 - Existing Fixture Wattage Benchmark | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | DERIVABLE_FROM_SOURCE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Proposed fixture watts from the exact-product process, when used | lighting-replacement-calculation; ITC-02 | Standard Output | Annual Operational Savings > Annual Electricity Reduction > New Fixture Watts > Linked Opportunity names an exact replacement product > Standard 1.2 - Exact New Fixture Wattage Lookup | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | DERIVABLE_FROM_SOURCE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Proposed fixture watts from the requirement-selected process, when used | lighting-replacement-calculation; ITC-02 | Standard Output | Annual Operational Savings > Annual Electricity Reduction > New Fixture Watts > Linked Opportunity specifies requirements but no exact product > Standard 1.3 - Requirement-Based New Fixture Wattage Resolution | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | DERIVABLE_FROM_SOURCE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
@@ -93,8 +87,8 @@ Duplicate manufacturer and model strings are normalized for search only, while t
 | Annual operating hours from the daylight-based process, when used | lighting-replacement-calculation; ITC-02 | Standard Output | Annual Operational Savings > Annual Electricity Reduction > Annual Operating Hours > Exterior Lighting Operating Pattern > Lighting is dusk-to-dawn or photocell-controlled > Standard 2.2 - Daylight-Based Lighting Hours | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | DERIVABLE_FROM_SOURCE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Existing control schedule | operating_schedule; ITC-09 | Project Document | Annual Operational Savings > Annual thermal-input and pump-electricity reduction > Existing control schedule | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Proposed control schedule | operating_schedule; ITC-09 | Linked Opportunity | Annual Operational Savings > Annual thermal-input and pump-electricity reduction > Proposed control schedule | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_LINKED_OPPORTUNITY | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Recognizable Business, Shift, Seasonal, or Usage Pattern | operating_schedule; ITC-09, ITC-12, ITC-20, ITC-30, ITC-37, ITC-38, ITC-40, ITC-41, ITC-42, ITC-43, ITC-47, ITC-51 | User | Annual Operational Savings > Annual thermal-input and pump-electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Detailed Operating Days, Shifts, or Active Season, if known | operating_schedule; ITC-09, ITC-12, ITC-20, ITC-30, ITC-37, ITC-38, ITC-40, ITC-41, ITC-42, ITC-43, ITC-47, ITC-51 | User | Annual Operational Savings > Annual thermal-input and pump-electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Recognizable Business, Shift, Seasonal, or Usage Pattern | operating_schedule; ITC-09, ITC-12, ITC-20, ITC-30, ITC-37, ITC-38, ITC-40, ITC-41, ITC-42, ITC-43, ITC-47, ITC-51 | User | Annual Operational Savings > Annual thermal-input and pump-electricity reduction > Annual operating hours > Recognizable Business, Shift, Seasonal, or Usage Pattern | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Detailed Operating Days, Shifts, or Active Season, if known | operating_schedule; ITC-09, ITC-12, ITC-20, ITC-30, ITC-37, ITC-38, ITC-40, ITC-41, ITC-42, ITC-43, ITC-47, ITC-51 | User | Annual Operational Savings > Annual thermal-input and pump-electricity reduction > Annual operating hours > Detailed Operating Days, Shifts, or Active Season, if known | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Measured Annual Operating Hours, if known | operating_schedule; ITC-09, ITC-12, ITC-20, ITC-30, ITC-37, ITC-38, ITC-40, ITC-41, ITC-42, ITC-43, ITC-47, ITC-51 | Project Document | Annual Operational Savings > Annual thermal-input and pump-electricity reduction > Annual operating hours > Measured Annual Operating Hours, if known | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Site Location and Business Activity | operating_schedule; ITC-09, ITC-12, ITC-20, ITC-30, ITC-37, ITC-38, ITC-40, ITC-41, ITC-42, ITC-43, ITC-47, ITC-51 | Profile | Annual Operational Savings > Annual thermal-input and pump-electricity reduction > Annual operating hours > Site Location and Business Activity | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Existing airflow schedule from a nameplate, measurement, audit, or contractor specification | operating_schedule; ITC-37 | Project Document | Annual Operational Savings > Annual kitchen ventilation fan and makeup-air resource reduction > Documented Existing airflow schedule from Submeter, Controls Trend, Audit, or Contractor Specification | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
@@ -132,31 +126,10 @@ A failed checksum, schema drift, or incomplete artifact leaves the prior publish
 
 ## 7. Internal database schema
 
-The source uses the shared registry tables plus these target tables: calculation_assumptions, benchmark_values, model_input_schemas.
-
-```sql
-CREATE TABLE os_operating_schedule_records (
-  source_release_id uuid NOT NULL REFERENCES source_releases(id),
-  source_record_key text NOT NULL,
-  effective_from date,
-  effective_to date,
-  active boolean NOT NULL,
-  native_payload jsonb NOT NULL,
-  normalized_payload jsonb NOT NULL,
-  unit_registry_version text NOT NULL,
-  source_artifact_id uuid NOT NULL REFERENCES source_artifacts(id),
-  created_at timestamptz NOT NULL,
-  PRIMARY KEY (source_release_id, source_record_key)
-);
-CREATE INDEX os_operating_schedule_active_exact_idx
-  ON os_operating_schedule_records ((normalized_payload->>'normalized_identifier'), effective_from, effective_to)
-  WHERE active;
-CREATE INDEX os_operating_schedule_requirements_idx
-  ON os_operating_schedule_records USING gin (normalized_payload jsonb_path_ops)
-  WHERE active;
-```
-
-Source-native payloads remain queryable for audits, while formula adapters consume only validated normalized columns or pinned local-model results.
+The intended normalized targets are calculation_assumptions, benchmark_values, model_input_schemas.
+Implementation evidence must come from executed migrations and populated table counts in the committed compact proof export.
+No generic per-Standard JSON payload table is claimed as an implemented source schema.
+Each source-specific adapter must publish typed columns derived from its inspected native structure or remain incomplete.
 
 ## 8. Exact resolution
 
@@ -228,21 +201,18 @@ External source cost is $0 per month.
 Estimated internal storage and compute cost is $0.04 at 100 calculations per month, $0.08 at 1,000, and $0.30 at 10,000.
 These figures exclude ordinary shared database and observability overhead and are planning estimates, not vendor quotes.
 
-## 15. Prototype proof
+## 15. Synthetic regression boundary
 
 The offline command is:
 
 ```bash
-node scripts/research/operational-savings/run-prototypes.mjs --json
+node scripts/research/operational-savings/run-synthetic-prototypes.mjs --json
 ```
 
-The acquired or inspected source evidence is Explicit calendar schedule method.
 The retained compact sample is `docs/operational-savings-automation-research/samples/operating-schedule.sample.json`.
-The source or model interface inspected is USNO rise, set, and twilight definitions HTML.
-The local output kind is `model_result_set`, the selection rule is `PINNED_LOCAL_FORMULA:weeklyScheduleHours`, and the output unit is `hours/year`.
-The prototype runs without network access after acquisition.
-The prototype completed without warnings.
-The prototype proves parsing, filtering, or calculation behavior only within the retained sample boundary.
+Its local output kind is `model_result_set`, its selection rule is `PINNED_LOCAL_FORMULA:weeklyScheduleHours`, and its output unit is `hours/year`.
+This synthetic regression executes without network access, but it does not prove acquisition, schema inspection, source-specific parsing, a real model run, database publication, or formula-term reachability.
+Only the separate real-proof registry and source-backed tests may satisfy those gates.
 
 ## 16. Feasibility verdict
 

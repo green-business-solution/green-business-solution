@@ -58,17 +58,9 @@ The observed source-native fields or model inputs are:
 - `monthly_energy`
 - `warnings`
 
-| Field or structure | Shape to validate and pin | Native unit | Key or filter role | Null handling | Enumeration handling |
-| --- | --- | --- | --- | --- | --- |
-| weather resource | String, identifier, or source enumeration | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| collector area and properties | Numeric scalar or numeric series | Source-declared area | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| tank volume | Numeric scalar or numeric series | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| pump power | Numeric scalar or numeric series | Source-declared power unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| draw profile | Structured record or array | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| mains and set temperatures | Numeric scalar or numeric series | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| annual_energy | Numeric scalar or numeric series | Source-declared energy unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| monthly_energy | Numeric scalar or numeric series | Source-declared energy unit | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
-| warnings | Array of strings | Not unit-bearing or unit is source-specific | Payload, calculation input, or output | Preserve source nulls; reject null only when the process requires the field | Not treated as an enumeration unless the source schema declares one |
+These names are research requirements from the source inventory, not claims about an observed source schema.
+Exact source types, units, enumerations, nullability, keys, workbook coordinates, or model declarations must come from the source-specific proof manifest under `scripts/research/operational-savings/adapters/sam-solar-thermal/`.
+If no proof manifest records direct inspection evidence, this Standard remains incomplete.
 
 Product and record sources must preserve a natural source identifier plus a release identifier as the composite natural key.
 Model sources must preserve the complete input schema, package version, configuration, warnings, and output schema.
@@ -87,7 +79,7 @@ Duplicate manufacturer and model strings are normalized for search only, while t
 | Collector and storage design from a Project Document | sam_solar_thermal; ITC-08 | Project Document | Annual Operational Savings > Annual Backup-Resource Reduction > Collector and Storage Design > Collector and Storage Design from Contractor Specification, Engineering Assessment, or Proposed Construction Document | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Annual hot-water load from a Project Document | sam_solar_thermal; ITC-08 | Project Document | Annual Operational Savings > Annual Backup-Resource Reduction > Annual Hot-Water Load > Hot-Water Load from Audit, Measurement, Engineering Assessment, or Operating Record | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Annual hot-water load from the connected context benchmark | sam_solar_thermal; ITC-08 | Standard Output | Annual Operational Savings > Annual Backup-Resource Reduction > Annual Hot-Water Load > Standard 1.1 - Solar Water-Heating Input Benchmark | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | DERIVABLE_FROM_SOURCE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Backup fuel type | sam_solar_thermal; ITC-08 | User | Annual Operational Savings > Annual Backup-Resource Reduction > Backup Water-Heating System > Backup Fuel Type | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
+| Backup fuel type | sam_solar_thermal; ITC-08 | User | Annual Operational Savings > Annual Backup-Resource Reduction > Backup Water-Heating System > Backup Fuel Type | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_USER | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Backup-system efficiency from a Project Document | sam_solar_thermal; ITC-08 | Project Document | Annual Operational Savings > Annual Backup-Resource Reduction > Backup Water-Heating System > Backup Equipment Nameplate, Commissioning Record, or Engineering Assessment | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Backup-system efficiency from the connected context benchmark | sam_solar_thermal; ITC-08 | Standard Output | Annual Operational Savings > Annual Backup-Resource Reduction > Backup Water-Heating System > Standard 1.1 - Solar Water-Heating Input Benchmark | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | DERIVABLE_FROM_SOURCE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Annual useful solar thermal output and displaced backup resource, with simulation inputs, units, and source version | sam_solar_thermal; ITC-08 | ssc/cmod_swh.cpp and test/input_cases/swh_common.h | weather resource; collector area and properties; tank volume; pump power; draw profile; mains and set temperatures; annual_energy; monthly_energy; warnings | displaced_backup_resource = min(annual_useful_solar_thermal, annual_delivered_hot_water_load) / backup_efficiency | kWh-thermal/year | DERIVABLE_FROM_SOURCE | Automatic system sizing, missing draw profiles, and pool-specific or otherwise incompatible thermal systems |
@@ -115,31 +107,10 @@ A failed checksum, schema drift, or incomplete artifact leaves the prior publish
 
 ## 7. Internal database schema
 
-The source uses the shared registry tables plus these target tables: model_versions, model_input_schemas, climate_crosswalks, calculation_runs, calculation_warnings.
-
-```sql
-CREATE TABLE os_sam_solar_thermal_records (
-  source_release_id uuid NOT NULL REFERENCES source_releases(id),
-  source_record_key text NOT NULL,
-  effective_from date,
-  effective_to date,
-  active boolean NOT NULL,
-  native_payload jsonb NOT NULL,
-  normalized_payload jsonb NOT NULL,
-  unit_registry_version text NOT NULL,
-  source_artifact_id uuid NOT NULL REFERENCES source_artifacts(id),
-  created_at timestamptz NOT NULL,
-  PRIMARY KEY (source_release_id, source_record_key)
-);
-CREATE INDEX os_sam_solar_thermal_active_exact_idx
-  ON os_sam_solar_thermal_records ((normalized_payload->>'normalized_identifier'), effective_from, effective_to)
-  WHERE active;
-CREATE INDEX os_sam_solar_thermal_requirements_idx
-  ON os_sam_solar_thermal_records USING gin (normalized_payload jsonb_path_ops)
-  WHERE active;
-```
-
-Source-native payloads remain queryable for audits, while formula adapters consume only validated normalized columns or pinned local-model results.
+The intended normalized targets are model_versions, model_input_schemas, climate_crosswalks, calculation_runs, calculation_warnings.
+Implementation evidence must come from executed migrations and populated table counts in the committed compact proof export.
+No generic per-Standard JSON payload table is claimed as an implemented source schema.
+Each source-specific adapter must publish typed columns derived from its inspected native structure or remain incomplete.
 
 ## 8. Exact resolution
 
@@ -211,21 +182,18 @@ External source cost is $0 per month.
 Estimated internal storage and compute cost is $0.80 at 100 calculations per month, $1.20 at 1,000, and $4 at 10,000.
 These figures exclude ordinary shared database and observability overhead and are planning estimates, not vendor quotes.
 
-## 15. Prototype proof
+## 15. Synthetic regression boundary
 
 The offline command is:
 
 ```bash
-node scripts/research/operational-savings/run-prototypes.mjs --json
+node scripts/research/operational-savings/run-synthetic-prototypes.mjs --json
 ```
 
-The acquired or inspected source evidence is Inspected SSC SWH output contract.
 The retained compact sample is `docs/operational-savings-automation-research/samples/sam-solar-thermal.sample.json`.
-The source or model interface inspected is ssc/cmod_swh.cpp and test/input_cases/swh_common.h.
-The local output kind is `model_result_set`, the selection rule is `PINNED_LOCAL_FORMULA:capAndConvertSolarThermal`, and the output unit is `kWh/year`.
-The prototype runs without network access after acquisition.
-The prototype completed without warnings.
-The prototype proves parsing, filtering, or calculation behavior only within the retained sample boundary.
+Its local output kind is `model_result_set`, its selection rule is `PINNED_LOCAL_FORMULA:capAndConvertSolarThermal`, and its output unit is `kWh/year`.
+This synthetic regression executes without network access, but it does not prove acquisition, schema inspection, source-specific parsing, a real model run, database publication, or formula-term reachability.
+Only the separate real-proof registry and source-backed tests may satisfy those gates.
 
 ## 16. Feasibility verdict
 

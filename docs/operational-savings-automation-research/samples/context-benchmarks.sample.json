@@ -41,7 +41,7 @@
       "selectedValue": 216
     },
     "unit": "W/fixture",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "Category-specific authoritative context benchmarks",
     "sourceVersion": "Source-specific versions pinned per benchmark",
     "sourceArtifact": "Multiple reviewed source fixtures already retained in the repository",
@@ -56,8 +56,8 @@
     ],
     "sampleSize": 1,
     "selectionRule": "MANDATORY_REQUIREMENTS_FILTER",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "IMPLEMENTATION_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Reviewed DOE outdoor lighting application fixture",

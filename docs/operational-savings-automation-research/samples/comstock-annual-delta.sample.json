@@ -40,7 +40,7 @@
       "name": "Variable Speed HP RTU, Electric Backup"
     },
     "unit": "record",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "ComStock 2025 Release 3",
     "sourceVersion": "2025 Release 3",
     "sourceArtifact": "upgrades_lookup.json",
@@ -55,8 +55,8 @@
     ],
     "sampleSize": 1,
     "selectionRule": "EXACT_NORMALIZED_IDENTIFIER",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "IMPLEMENTATION_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Downloaded official Release 3 upgrades_lookup.json",

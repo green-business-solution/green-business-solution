@@ -3,9 +3,9 @@ import { fileURLToPath } from "node:url";
 import { expect, test } from "vitest";
 
 import {
-  runStandardPrototype,
+  runSyntheticPrototype,
   validateResult
-} from "../adapter-prototype.mjs";
+} from "../synthetic-prototype.mjs";
 
 const catalogPath = fileURLToPath(new URL("../research-catalog.json", import.meta.url));
 const catalog = JSON.parse(await readFile(catalogPath, "utf8"));
@@ -35,14 +35,14 @@ test("catalog contains all 19 unique canonical standards", () => {
 });
 
 for (const standard of catalog.standards) {
-  test(`${standard.id} executes deterministically offline`, () => {
-    const first = runStandardPrototype(standard);
-    const second = runStandardPrototype(standard);
+  test(`${standard.id} synthetic sample executes deterministically offline`, () => {
+    const first = runSyntheticPrototype(standard);
+    const second = runSyntheticPrototype(standard);
     expect(second).toEqual(first);
     validateResult(first);
     assertApproximately(first.value, standard.prototype.expected);
     expect(first.standardId).toBe(standard.id);
-    expect(first.scope).toBe("RESEARCH_PROTOTYPE");
+    expect(first.scope).toBe("SYNTHETIC_RESEARCH_PROTOTYPE");
     expect(first.provenance.sha256).toHaveLength(64);
   });
 }
@@ -55,7 +55,7 @@ test("exact lookup fails closed when an identifier is ambiguous", () => {
     Object.entries(standard.prototype.query).every(([key, expected]) => record[key] === expected)
   );
   standard.prototype.records.push(structuredClone(matchingRecord));
-  const result = runStandardPrototype(standard);
+  const result = runSyntheticPrototype(standard);
   expect(result.kind).toBe("unavailable");
   expect(result.value.reasonCode).toBe("AMBIGUOUS_EXACT_MATCH");
   expect(result.sampleSize).toBe(2);
@@ -69,7 +69,7 @@ test("requirements filtering retains an ambiguous population without selecting a
     ...structuredClone(standard.prototype.records[0]),
     modelNumber: "SECOND-ELIGIBLE-MODEL"
   });
-  const result = runStandardPrototype(standard);
+  const result = runSyntheticPrototype(standard);
   expect(result.kind).toBe("input_set");
   expect(result.sampleSize).toBe(2);
   expect(result.value).toEqual({ eligibleCount: 2 });

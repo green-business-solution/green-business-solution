@@ -7,7 +7,7 @@ import {
   buildOperationalSavingsReview,
   loadOperationalSavingsSources
 } from "../../generate-operational-savings-review-pages.mjs";
-import { runStandardPrototype, validateResult } from "./adapter-prototype.mjs";
+import { runSyntheticPrototype, validateResult } from "./synthetic-prototype.mjs";
 
 const REPO_ROOT = fileURLToPath(new URL("../../..", import.meta.url));
 const OUTPUT_ROOT = join(REPO_ROOT, "docs/operational-savings-automation-research");
@@ -71,6 +71,7 @@ const EXPECTED_CLASSIFICATIONS = new Set([
   "DIRECTLY_AVAILABLE",
   "DERIVABLE_FROM_SOURCE",
   "REQUIRES_PROFILE",
+  "REQUIRES_USER",
   "REQUIRES_BILL",
   "REQUIRES_LINKED_OPPORTUNITY",
   "REQUIRES_PROJECT_DOCUMENT",
@@ -307,13 +308,13 @@ export async function validateResearch({
         errors.push(`${standard.id} has an invalid source URL: ${url}`);
       }
     }
-    const first = runStandardPrototype(standard);
-    const second = runStandardPrototype(standard);
+    const first = runSyntheticPrototype(standard);
+    const second = runSyntheticPrototype(standard);
     if (JSON.stringify(first) !== JSON.stringify(second)) {
-      errors.push(`${standard.id} prototype is nondeterministic`);
+      errors.push(`${standard.id} synthetic prototype is nondeterministic`);
     }
     if (!first.unit || !first.selectionRule || !first.provenance?.sha256) {
-      errors.push(`${standard.id} prototype output contract is incomplete`);
+      errors.push(`${standard.id} synthetic prototype output contract is incomplete`);
     }
   }
 
@@ -374,7 +375,7 @@ export async function validateResearch({
     const standard = catalog.standards.find((candidate) => candidate.id === entry.standardId);
     if (
       standard &&
-      JSON.stringify(parsed.offlineResult) !== JSON.stringify(runStandardPrototype(standard))
+      JSON.stringify(parsed.offlineResult) !== JSON.stringify(runSyntheticPrototype(standard))
     ) {
       errors.push(`${entry.standardId} retained offline result is stale`);
     }
@@ -402,11 +403,11 @@ export async function validateResearch({
   }
 
   const adapterSource = await readFile(
-    join(REPO_ROOT, "scripts/research/operational-savings/adapter-prototype.mjs"),
+    join(REPO_ROOT, "scripts/research/operational-savings/synthetic-prototype.mjs"),
     "utf8"
   );
   const runnerSource = await readFile(
-    join(REPO_ROOT, "scripts/research/operational-savings/run-prototypes.mjs"),
+    join(REPO_ROOT, "scripts/research/operational-savings/run-synthetic-prototypes.mjs"),
     "utf8"
   );
   if (/\bfetch\s*\(|https?:\/\//.test(`${adapterSource}\n${runnerSource}`)) {

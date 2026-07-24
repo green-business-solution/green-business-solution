@@ -30,7 +30,7 @@
       "displacedBackupInputKwh": 12500
     },
     "unit": "kWh/year",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "System Advisor Model solar water heating module and SSC",
     "sourceVersion": "SSC git commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
     "sourceArtifact": "ssc/cmod_swh.cpp and test/input_cases/swh_common.h",
@@ -42,8 +42,8 @@
     "eligiblePopulation": [],
     "sampleSize": 0,
     "selectionRule": "PINNED_LOCAL_FORMULA:capAndConvertSolarThermal",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "IMPLEMENTATION_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Inspected SSC SWH output contract",

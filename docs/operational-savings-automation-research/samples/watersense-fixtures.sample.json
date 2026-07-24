@@ -36,7 +36,7 @@
       "selectedValue": 1.28
     },
     "unit": "product population",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "WaterSense Product Search and product specifications",
     "sourceVersion": "Live labeled-product search",
     "sourceArtifact": "Product Search access probe and public specification pages",
@@ -55,8 +55,8 @@
     ],
     "sampleSize": 1,
     "selectionRule": "MANDATORY_REQUIREMENTS_FILTER",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "IMPLEMENTATION_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Official WaterSense labeled-product rule and product scope",

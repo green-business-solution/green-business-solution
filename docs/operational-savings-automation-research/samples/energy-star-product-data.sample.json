@@ -41,7 +41,7 @@
       "washingKwhPerRack": 0.02
     },
     "unit": "product record",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "ENERGY STAR certified product datasets",
     "sourceVersion": "Active product-family specifications; dishwasher dataset inspected 2026-07-23",
     "sourceArtifact": "pk8q-dim8.json?$limit=5",
@@ -60,8 +60,8 @@
     ],
     "sampleSize": 1,
     "selectionRule": "EXACT_NORMALIZED_IDENTIFIER",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "SOURCE_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Live official Socrata dishwasher response",

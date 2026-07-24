@@ -29,7 +29,7 @@
       "annualKwh": 2808
     },
     "unit": "kWh/year",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "Purchasing Energy-Efficient Exterior Lighting",
     "sourceVersion": "Updated June 2023",
     "sourceArtifact": "FEMP exterior-lighting HTML",
@@ -42,8 +42,8 @@
     "eligiblePopulation": [],
     "sampleSize": 0,
     "selectionRule": "PINNED_LOCAL_FORMULA:lightingAnnualSavings",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "SOURCE_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Official FEMP wall-mounted comparison and 3,600 hour assumption",

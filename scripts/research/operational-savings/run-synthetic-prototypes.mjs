@@ -1,11 +1,11 @@
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
-import { runStandardPrototype } from "./adapter-prototype.mjs";
+import { runSyntheticPrototype } from "./synthetic-prototype.mjs";
 
 const catalogPath = fileURLToPath(new URL("./research-catalog.json", import.meta.url));
 const catalog = JSON.parse(await readFile(catalogPath, "utf8"));
-const results = catalog.standards.map(runStandardPrototype);
+const results = catalog.standards.map(runSyntheticPrototype);
 
 if (process.argv.includes("--json")) {
   process.stdout.write(`${JSON.stringify(results, null, 2)}\n`);

@@ -33,7 +33,7 @@
       "reasonCode": "OUTSIDE_EFFECTIVE_DATE"
     },
     "unit": "tariff record",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "OpenEI Utility Rate Database plus controlling utility tariff sheets",
     "sourceVersion": "URDB bulk snapshot downloaded 2026-07-23; OEDI page last updated 2025-10-07",
     "sourceArtifact": "usurdb.csv.gz",
@@ -43,8 +43,8 @@
     "eligiblePopulation": [],
     "sampleSize": 0,
     "selectionRule": "EFFECTIVE_DATE_AND_STATUS_GATE",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "IMPLEMENTATION_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [
       "Tariff record is outside its effective period."
     ],

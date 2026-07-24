@@ -39,7 +39,7 @@
       "energyEfficiencyUnits": "lm/W"
     },
     "unit": "lm/W",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "Scout",
     "sourceVersion": "Git commit 72bcf419eb1cb37379f163563344b0ec61507fd3",
     "sourceArtifact": "docs/examples/led_troffers.json",
@@ -55,8 +55,8 @@
     ],
     "sampleSize": 1,
     "selectionRule": "EXACT_NORMALIZED_IDENTIFIER",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "IMPLEMENTATION_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Cloned official Scout repository and inspected a shipped ECM example",

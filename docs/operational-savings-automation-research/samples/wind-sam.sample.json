@@ -32,7 +32,7 @@
       "annualizedSampleKwh": 5
     },
     "unit": "kWh",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "SAM wind power module, SSC, and Wind Toolkit resources",
     "sourceVersion": "SSC git commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
     "sourceArtifact": "ssc/cmod_windpower.cpp",
@@ -48,8 +48,8 @@
     "eligiblePopulation": [],
     "sampleSize": 0,
     "selectionRule": "PINNED_LOCAL_FORMULA:intervalEnergy",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "IMPLEMENTATION_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Inspected SSC wind interval and annual output contract",

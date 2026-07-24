@@ -30,7 +30,7 @@
       "resourcePerGallon": 0.17179180757885015
     },
     "unit": "kWh/gallon",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "ENERGY STAR Commercial Food Service Equipment Calculator, Dishwasher Calcs",
     "sourceVersion": "Workbook published March 2024",
     "sourceArtifact": "CFS Equipment Calculator.xlsx",
@@ -44,8 +44,8 @@
     "eligiblePopulation": [],
     "sampleSize": 0,
     "selectionRule": "PINNED_LOCAL_FORMULA:waterHeatingPerGallon",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "SOURCE_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Inspected Dishwasher Calcs formulas and assumptions",

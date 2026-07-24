@@ -27,7 +27,7 @@
       "annualSavingsUsd": 2800
     },
     "unit": "USD/year",
-    "scope": "RESEARCH_PROTOTYPE",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
     "source": "REopt.jl",
     "sourceVersion": "0.59.2, git commit f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
     "sourceArtifact": "test/scenarios and src/core/electric_tariff.jl",
@@ -38,8 +38,8 @@
     "eligiblePopulation": [],
     "sampleSize": 0,
     "selectionRule": "PINNED_LOCAL_FORMULA:annualBillDelta",
-    "fallbackLevel": "RESEARCH_SAMPLE",
-    "uncertainty": "IMPLEMENTATION_BOUND",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Inspected REopt tariff tests and result contract",
