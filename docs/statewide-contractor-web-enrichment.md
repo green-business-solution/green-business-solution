@@ -22,6 +22,8 @@ An exact scalar value of `UNKNOWN` is unresolved and may receive a stronger evid
 An absent or `["UNKNOWN"]` service-area array is unresolved.
 Every other existing nonempty scalar or service-area array is treated as substantively filled.
 Existing emails, customer-type values, service areas, program memberships, certifications, and evidence are never replaced.
+Proposal artifacts place only newly collected website evidence under `append.enrichmentEvidence`.
+They do not copy existing evidence into `set` or `expected`, which preserves the authoritative evidence array and prevents temporary source credentials from being duplicated.
 The workflow cannot propose changes to license fields, classifications, or `supportedRetrofitIds`.
 It never infers program memberships or certifications from a contractor website.
 
@@ -94,6 +96,7 @@ Ambiguous common words such as `Clay`, `Freedom`, `Industry`, and `Woody` requir
 The contractor mailing address is never treated as a service area.
 
 Every proposed field includes the source URL, retrieval time, matching method, bounded supporting text, and source value.
+Credential-bearing signed query parameters are removed from evidence URLs, and final validation rejects any credential-bearing URL that remains.
 Website HTML is reduced to content hashes and bounded evidence metadata in the retained artifacts.
 
 ## Pilot Command
@@ -212,12 +215,16 @@ The run starts with conservative concurrency and adapts within the configured bo
 The fast pass prioritizes the top generated `.com` and `.net` candidates over weak extensions, uses HTTPS apex and `www` variants, and leaves weak extensions and HTTP-only fallbacks for deep mode.
 Exact official-directory and OpenStreetMap seeds retain the full bounded protocol fallback during the fast pass.
 Temporary robots.txt failures fail closed, and only HTTP 5xx responses or transient socket failures receive the single permitted retry.
+Unusable HTTP response bodies are canceled before returning or retrying so remote sockets do not keep a completed run alive.
 It reserves the final hour of the 16-hour ceiling for validation and uploads.
 
 The run continuously persists selected contractor IDs, completed outcomes and proposal state, DNS results, robots rules, parsed page state and content hashes, domain-verification results, deep-pass progress, and immutable numbered checkpoints.
+The original start time and time-budget settings are persisted in run metadata and must match on resume, so a restart cannot reset the 16-hour budget.
 High-volume result and cache state uses append-only JSONL streams with backpressure, and resume repairs an incomplete crash tail before adding new records.
 The adaptive queue continues processing unrelated contractors while serialized checkpoints persist every 500 completed outcomes, preventing one slow website from idling the remaining worker pool.
+The deep pass uses the same continuous deadline-aware scheduler and stops launching work when the finalization reserve begins.
 Final JSONL artifacts are streamed with backpressure so statewide output finalization does not require one giant in-memory string.
+Final JSON and JSONL files use same-directory atomic replacement so an interrupted finalization leaves the append-only recovery log intact.
 Resume an interrupted run with the same run ID and output directory:
 
 ```sh

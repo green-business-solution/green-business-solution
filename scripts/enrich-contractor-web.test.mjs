@@ -1,3 +1,7 @@
+import fsPromises from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -7,11 +11,19 @@ import {
 } from "./contractor-web-enrichment-core.mjs";
 import {
   applyReviewedLicenseTransition,
+  buildProposalArtifact,
+  containsCredentialBearingUrl,
   createConcurrencyLimiter,
+  fetchHtmlPage,
+  fetchRobots,
   isTransientFetchError,
+  normalizeResultForArtifacts,
   parseHtmlPage,
   robotsAllows,
   runContractorWebEnrichment,
+  sanitizeEvidenceSourceUrl,
+  validateFinalArtifacts,
+  WEB_ENRICHMENT_SCRIPT_VERSION,
 } from "./enrich-contractor-web.mjs";
 
 describe("contractor website HTML email extraction", () => {
@@ -216,6 +228,76 @@ describe("contractor web-enrichment write safety", () => {
   });
 });
 
+describe("contractor web-enrichment resume metadata", () => {
+  it("uses valid retained metadata when a legacy report is truncated", async () => {
+    const directory = await fsPromises.mkdtemp(
+      path.join(os.tmpdir(), "retrofi-web-resume-test-"),
+    );
+    const options = resumeOptions(directory);
+    try {
+      await writeRunMetadata(directory, options);
+      await fsPromises.writeFile(
+        path.join(directory, "report.json"),
+        '{"runId":',
+      );
+      await expect(
+        runContractorWebEnrichment(options, {
+          aws: {
+            async getAccountId() {
+              throw new Error("AWS_REACHED");
+            },
+          },
+        }),
+      ).rejects.toThrow("AWS_REACHED");
+    } finally {
+      await fsPromises.rm(directory, {
+        force: true,
+        recursive: true,
+      });
+    }
+  });
+
+  it("fails closed on missing, truncated, or mismatched run metadata", async () => {
+    const directory = await fsPromises.mkdtemp(
+      path.join(os.tmpdir(), "retrofi-web-resume-guard-test-"),
+    );
+    const options = resumeOptions(directory);
+    const metadataPath = path.join(
+      directory,
+      "state",
+      "run-metadata.json",
+    );
+    try {
+      await expect(
+        runContractorWebEnrichment(options),
+      ).rejects.toThrow("without its original run metadata or report");
+
+      await fsPromises.mkdir(path.dirname(metadataPath), {
+        recursive: true,
+      });
+      await fsPromises.writeFile(metadataPath, '{"runId":');
+      await expect(
+        runContractorWebEnrichment(options),
+      ).rejects.toBeInstanceOf(SyntaxError);
+
+      await writeRunMetadata(directory, {
+        ...options,
+        timeoutMs: options.timeoutMs + 1,
+      });
+      await expect(
+        runContractorWebEnrichment(options),
+      ).rejects.toThrow(
+        "Run metadata timeoutMs does not match",
+      );
+    } finally {
+      await fsPromises.rm(directory, {
+        force: true,
+        recursive: true,
+      });
+    }
+  });
+});
+
 describe("contractor web-enrichment network safety", () => {
   it("fails closed when robots policy is temporarily unavailable", () => {
     expect(
@@ -246,6 +328,204 @@ describe("contractor web-enrichment network safety", () => {
         cause: { code: "CERT_HAS_EXPIRED" },
       }),
     ).toBe(false);
+  });
+
+  it("cancels unusable HTTP response bodies", async () => {
+    const cancelled = [];
+    const runState = {
+      requestMetrics: {
+        record() {},
+      },
+      robotsCache: new Map(),
+      async setRobots(origin, value) {
+        this.robotsCache.set(origin, value);
+      },
+    };
+    const response = (status, contentType = "text/plain") => ({
+      body: {
+        async cancel() {
+          cancelled.push(status);
+        },
+      },
+      bodyUsed: false,
+      headers: new Headers({
+        "content-type": contentType,
+      }),
+      ok: status >= 200 && status < 300,
+      status,
+      url: "https://example.test/",
+    });
+
+    await fetchRobots({
+      fetchImpl: async () => response(404),
+      origin: "https://example.test",
+      retryUnavailable: false,
+      runState,
+      timeoutMs: 100,
+    });
+    await fetchHtmlPage({
+      fetchImpl: async () => response(200),
+      robots: { rules: [] },
+      runState,
+      timeoutMs: 100,
+      url: "https://example.test/",
+    });
+
+    expect(cancelled).toEqual([404, 200]);
+  });
+
+  it("cancels a server-error body before its one retry", async () => {
+    const cancelled = [];
+    const statuses = [503, 404];
+    const runState = {
+      requestMetrics: {
+        record() {},
+      },
+    };
+    await fetchHtmlPage({
+      fetchImpl: async () => {
+        const status = statuses.shift();
+        return {
+          body: {
+            async cancel() {
+              cancelled.push(status);
+            },
+          },
+          bodyUsed: false,
+          headers: new Headers({
+            "content-type": "text/plain",
+          }),
+          ok: false,
+          status,
+          url: "https://example.test/",
+        };
+      },
+      robots: { rules: [] },
+      runState,
+      timeoutMs: 100,
+      url: "https://example.test/",
+    });
+
+    expect(statuses).toHaveLength(0);
+    expect(cancelled).toEqual([503, 404]);
+  });
+
+  it("removes credential-bearing query parameters from evidence URLs", () => {
+    const signedUrl =
+      "https://public-source.example/data.xlsx?AWSAccessKeyId=temporary&Signature=secret&x-amz-security-token=session";
+    expect(containsCredentialBearingUrl(signedUrl)).toBe(true);
+    expect(sanitizeEvidenceSourceUrl(signedUrl)).toBe(
+      "https://public-source.example/data.xlsx",
+    );
+    expect(
+      containsCredentialBearingUrl({
+        evidence: [{ sourceUrl: signedUrl }],
+      }),
+    ).toBe(true);
+    expect(
+      sanitizeEvidenceSourceUrl(
+        "https://contractor.example/contact?location=oakland",
+      ),
+    ).toBe(
+      "https://contractor.example/contact?location=oakland",
+    );
+  });
+
+  it("serializes only new sanitized evidence as an append operation", () => {
+    const signedExistingUrl =
+      "https://source.example/data.xlsx?AWSAccessKeyId=temporary&Signature=secret";
+    const signedNewUrl =
+      "https://examplecontractor.com/contact?X-Amz-Credential=temporary&X-Amz-Signature=secret";
+    const existingEvidence = {
+      field: "programMemberships",
+      sourceId: "existing_directory",
+      sourceUrl: signedExistingUrl,
+      sourceValue: "Existing program",
+    };
+    const newEvidence = {
+      field: "email",
+      matchMethod: "verified_first_party_domain",
+      retrievedAt: "2026-07-24T18:00:00.000Z",
+      sourceId: "first_party_contractor_website",
+      sourceName: "First-party contractor website",
+      sourceUrl: signedNewUrl,
+      sourceValue: "info@examplecontractor.com",
+      supportingTextSnippet: "Email info@examplecontractor.com",
+      verificationDate: "2026-07-24",
+    };
+    const normalized = normalizeResultForArtifacts({
+      contractorId: "CA_CSLB_123456",
+      contractorIdToken: "token",
+      domain: "examplecontractor.com",
+      domainDisposition: "VERIFIED_DOMAIN",
+      expected: {
+        email: undefined,
+        enrichmentEvidence: [existingEvidence],
+      },
+      identityVerification: {
+        signals: {
+          confidenceTier: "TIER_A_EXACT_LICENSE",
+        },
+      },
+      outcomes: ["VERIFIED_DOMAIN", "FOUND_EMAIL"],
+      proposal: {
+        email: "info@examplecontractor.com",
+        enrichmentEvidence: [
+          existingEvidence,
+          newEvidence,
+        ],
+      },
+    });
+    const artifact = buildProposalArtifact(normalized);
+
+    expect(artifact).toMatchObject({
+      schemaVersion:
+        "contractor-web-enrichment-proposal.v2",
+      contractorId: "CA_CSLB_123456",
+      expected: {},
+      set: {
+        email: "info@examplecontractor.com",
+      },
+    });
+    expect(artifact.set).not.toHaveProperty(
+      "enrichmentEvidence",
+    );
+    expect(artifact.expected).not.toHaveProperty(
+      "enrichmentEvidence",
+    );
+    expect(artifact.append.enrichmentEvidence).toEqual([
+      {
+        ...newEvidence,
+        sourceUrl: "https://examplecontractor.com/contact",
+      },
+    ]);
+    expect(containsCredentialBearingUrl(artifact)).toBe(false);
+  });
+
+  it("fails final validation on a credential-bearing artifact URL", () => {
+    const result = {
+      contractorId: "CA_CSLB_123456",
+      domainDisposition: "NO_VERIFIED_DOMAIN",
+      expected: {
+        sourceUrl:
+          "https://source.example/data?X-Amz-Credential=temporary",
+      },
+      proposal: {},
+    };
+    expect(() =>
+      validateFinalArtifacts({
+        contractors: [
+          {
+            contractorId: "CA_CSLB_123456",
+          },
+        ],
+        eligibleResults: [result],
+        fullScope: false,
+        licenseTransitionReview: [],
+        proposals: [],
+        results: [result],
+      }),
+    ).toThrow("credential-bearing URL");
   });
 
   it("bounds concurrent domain evaluations", async () => {
@@ -323,4 +603,63 @@ function identity() {
       supportedRetrofitIds: ["led_lighting_retrofit"],
     },
   });
+}
+
+function resumeOptions(outputDirectory) {
+  return {
+    auditSeed: "audit",
+    checkpointEvery: 500,
+    concurrency: 32,
+    deepIfTime: false,
+    excludeContractorsFile: "",
+    maxRuntimeHours: 16,
+    mode: "fast",
+    osmPbfPath: "",
+    outputDirectory,
+    profile: "retrofi-prod",
+    reserveFinalizationMinutes: 60,
+    resume: true,
+    runId: "resume-metadata-test",
+    scope: "pilot",
+    selectionSeed: "selection",
+    targetContractorsFile: "",
+    timeoutMs: 8_000,
+  };
+}
+
+async function writeRunMetadata(directory, options) {
+  const metadataPath = path.join(
+    directory,
+    "state",
+    "run-metadata.json",
+  );
+  await fsPromises.mkdir(path.dirname(metadataPath), {
+    recursive: true,
+  });
+  await fsPromises.writeFile(
+    metadataPath,
+    `${JSON.stringify({
+      schemaVersion:
+        "contractor-web-enrichment-run-metadata.v1",
+      runId: options.runId,
+      scope: options.scope,
+      mode: options.mode,
+      scriptVersion: WEB_ENRICHMENT_SCRIPT_VERSION,
+      startedAt: "2026-07-24T18:00:00.000Z",
+      auditSeed: options.auditSeed,
+      checkpointEvery: options.checkpointEvery,
+      concurrency: options.concurrency,
+      deepIfTime: options.deepIfTime,
+      excludeContractorsFile:
+        options.excludeContractorsFile,
+      maxRuntimeHours: options.maxRuntimeHours,
+      osmPbfPath: options.osmPbfPath,
+      reserveFinalizationMinutes:
+        options.reserveFinalizationMinutes,
+      selectionSeed: options.selectionSeed,
+      targetContractorsFile:
+        options.targetContractorsFile,
+      timeoutMs: options.timeoutMs,
+    })}\n`,
+  );
 }

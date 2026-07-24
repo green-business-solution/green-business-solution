@@ -64,7 +64,7 @@ import {
 
 const execFileAsync = promisify(execFile);
 
-export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.3.2";
+export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.4.0";
 export const WEB_ENRICHMENT_REPORT_SCHEMA_VERSION =
   "contractor-web-enrichment-report.v1";
 
@@ -154,9 +154,29 @@ export async function runContractorWebEnrichment(
       path.join("var", "contractor-web-enrichment", runId),
   );
   await fsPromises.mkdir(outputDirectory, { recursive: true });
+  const runMetadataPath = path.join(
+    outputDirectory,
+    "state",
+    "run-metadata.json",
+  );
   let runState;
   let resultAppender;
+  let retainedRunMetadata = false;
   if (options.resume) {
+    let recoveredStartedAt = "";
+    try {
+      const metadata = JSON.parse(
+        await fsPromises.readFile(runMetadataPath, "utf8"),
+      );
+      assertRunMetadataMatches(metadata, {
+        options,
+        runId,
+      });
+      recoveredStartedAt = metadata.startedAt;
+      retainedRunMetadata = true;
+    } catch (error) {
+      if (error?.code !== "ENOENT") throw error;
+    }
     try {
       const previousReport = JSON.parse(
         await fsPromises.readFile(
@@ -168,12 +188,68 @@ export async function runContractorWebEnrichment(
         previousReport.runId === runId &&
         previousReport.startedAt
       ) {
-        startedAt = previousReport.startedAt;
+        if (
+          recoveredStartedAt &&
+          recoveredStartedAt !== previousReport.startedAt
+        ) {
+          throw new Error(
+            "Run metadata and report disagree on startedAt.",
+          );
+        }
+        if (
+          !retainedRunMetadata &&
+          options.scope === "full"
+        ) {
+          throw new Error(
+            `Cannot resume full run ${runId} without its original run metadata.`,
+          );
+        }
+        recoveredStartedAt = previousReport.startedAt;
         priorCompletedAt = previousReport.completedAt || "";
       }
-    } catch {
-      // A partial run may not have produced its report yet.
+    } catch (error) {
+      if (error?.code === "ENOENT") {
+        // A partial run may not have produced its report yet.
+      } else if (
+        retainedRunMetadata &&
+        error instanceof SyntaxError
+      ) {
+        // Atomic report writes make this a legacy crash case.
+      } else {
+        throw error;
+      }
     }
+    if (!recoveredStartedAt) {
+      throw new Error(
+        `Cannot resume ${runId} without its original run metadata or report.`,
+      );
+    }
+    startedAt = recoveredStartedAt;
+  }
+  const runMetadata = {
+    schemaVersion: "contractor-web-enrichment-run-metadata.v1",
+    runId,
+    scope: options.scope,
+    mode: options.mode,
+    scriptVersion: WEB_ENRICHMENT_SCRIPT_VERSION,
+    startedAt,
+    auditSeed: options.auditSeed,
+    checkpointEvery: options.checkpointEvery,
+    concurrency: options.concurrency,
+    deepIfTime: options.deepIfTime,
+    excludeContractorsFile:
+      options.excludeContractorsFile,
+    maxRuntimeHours: options.maxRuntimeHours,
+    osmPbfPath: options.osmPbfPath,
+    reserveFinalizationMinutes:
+      options.reserveFinalizationMinutes,
+    selectionSeed: options.selectionSeed,
+    targetContractorsFile:
+      options.targetContractorsFile,
+    timeoutMs: options.timeoutMs,
+  };
+  if (!options.resume || !retainedRunMetadata) {
+    await writeJson(runMetadataPath, runMetadata);
   }
 
   const aws =
@@ -240,7 +316,10 @@ export async function runContractorWebEnrichment(
     );
 
     const reviewedDirectory = await loadReviewedDirectoryArtifacts({
-      outputDirectory,
+      cacheDirectory: path.join(
+        temporaryDirectory,
+        "reviewed-directory",
+      ),
       s3,
     });
     const officialSeeds = matchOfficialDirectorySeeds({
@@ -512,65 +591,89 @@ export async function runContractorWebEnrichment(
             identity.contractorId,
           ),
       );
-      for (
-        let offset = 0;
-        offset < deepCandidates.length;
-        offset += options.checkpointEvery
-      ) {
-        if (Date.now() >= processingDeadlineMs) {
-          deepPassStopped = true;
-          break;
-        }
-        const batch = deepCandidates.slice(
-          offset,
-          offset + options.checkpointEvery,
+      const deepCompletedBeforeInvocation =
+        deepPassProcessed;
+      let lastCheckpointCompleted = 0;
+      let nextCheckpointCompleted = options.checkpointEvery;
+      let checkpointQueue = Promise.resolve();
+      const queueCheckpoint = (completed) => {
+        const deepProcessed =
+          deepCompletedBeforeInvocation + completed;
+        checkpointQueue = checkpointQueue.then(() =>
+          persistCheckpoint({
+            completedCount: completedContractorCount,
+            deepProcessed,
+            phase: "deep",
+          }),
         );
-        withRequestPermit.setLimit(
-          Math.min(8, options.concurrency),
-        );
-        await forEachAdaptiveConcurrent({
-          initialConcurrency: Math.min(8, options.concurrency),
-          maxConcurrency: options.concurrency,
-          minimumConcurrency: Math.min(4, options.concurrency),
-          metrics: runState.requestMetrics,
-          onConcurrencyChange: ({ currentConcurrency }) => {
-            withRequestPermit.setLimit(currentConcurrency);
-          },
-          values: batch,
-          worker: async (identity) => {
-            const prior = resultsById.get(identity.contractorId);
-            const candidate = await processIdentitySafely({
-              combinedSeeds,
-              dependencies,
-              domainLocks,
-              identity,
-              mode: "deep",
-              pageLimit: 8,
-              placeReference,
-              runState,
-              timeoutMs: options.timeoutMs,
-              withRequestPermit,
-            });
-            const result = chooseBetterResult(prior, candidate);
-            const improved = result !== prior;
-            if (improved) {
-              resultsById.set(identity.contractorId, result);
-              await resultAppender.append(result);
-              deepPassImproved += 1;
-            }
-            runState.markDeepPassCompleted(
-              identity.contractorId,
-              { improved },
-            );
-            deepPassProcessed += 1;
-          },
-        });
+        return checkpointQueue;
+      };
+      withRequestPermit.setLimit(
+        Math.min(8, options.concurrency),
+      );
+      const execution = await forEachAdaptiveConcurrent({
+        initialConcurrency: Math.min(8, options.concurrency),
+        maxConcurrency: options.concurrency,
+        minimumConcurrency: Math.min(4, options.concurrency),
+        metrics: runState.requestMetrics,
+        onConcurrencyChange: ({ currentConcurrency }) => {
+          withRequestPermit.setLimit(currentConcurrency);
+        },
+        onProgress: async (completed) => {
+          if (completed >= nextCheckpointCompleted) {
+            lastCheckpointCompleted = completed;
+            nextCheckpointCompleted += options.checkpointEvery;
+            await queueCheckpoint(completed);
+          }
+        },
+        shouldStop: () => Date.now() >= processingDeadlineMs,
+        values: deepCandidates,
+        worker: async (identity) => {
+          const prior = resultsById.get(identity.contractorId);
+          const candidate = await processIdentitySafely({
+            combinedSeeds,
+            dependencies,
+            domainLocks,
+            identity,
+            mode: "deep",
+            pageLimit: 8,
+            placeReference,
+            runState,
+            timeoutMs: options.timeoutMs,
+            withRequestPermit,
+          });
+          const result = chooseBetterResult(prior, candidate);
+          const improved = result !== prior;
+          if (improved) {
+            resultsById.set(identity.contractorId, result);
+            await resultAppender.append(result);
+            deepPassImproved += 1;
+          }
+          runState.markDeepPassCompleted(
+            identity.contractorId,
+            { improved },
+          );
+          deepPassProcessed += 1;
+        },
+      });
+      await checkpointQueue;
+      if (execution.completed !== lastCheckpointCompleted) {
         await persistCheckpoint({
           completedCount: completedContractorCount,
           deepProcessed: deepPassProcessed,
           phase: "deep",
         });
       }
+      deepPassStopped =
+        execution.stopped ||
+        execution.scheduled < deepCandidates.length;
+    } else if (
+      options.scope === "full" &&
+      options.deepIfTime &&
+      (!fastPassComplete ||
+        Date.now() >= processingDeadlineMs)
+    ) {
+      deepPassStopped = true;
     }
     await persistCheckpoint({
       completedCount: completedContractorCount,
@@ -622,14 +725,7 @@ export async function runContractorWebEnrichment(
     });
     const proposals = eligibleResults
       .filter((result) => Object.keys(result.proposal || {}).length)
-      .map((result) => ({
-        contractorId: result.contractorId,
-        expected: result.expected,
-        set: result.proposal,
-        verifiedDomain: result.domain,
-        discoveryMethod: result.discoveryMethod,
-        domainEvidence: result.identityVerification,
-      }));
+      .map(buildProposalArtifact);
     assertProposalSafety({ contractors, proposals });
     const reviewQueue = buildStatewideReviewQueue({
       results: eligibleResults,
@@ -706,7 +802,7 @@ export async function runContractorWebEnrichment(
       ),
       stoppedAtDeadline: deepPassStopped,
     };
-    const finalArtifactCount = 10;
+    const finalArtifactCount = 9;
     const expectedS3ObjectCount = options.upload
       ? finalArtifactCount + checkpointSequence
       : 0;
@@ -1378,18 +1474,15 @@ async function evaluateDomainCandidate({
     ...extracted.proposal,
   };
   if (extracted.evidence.length) {
-    proposal.enrichmentEvidence = [
-      ...(identity.existing.enrichmentEvidence || []),
-      ...extracted.evidence,
-    ];
+    proposal.enrichmentEvidence = extracted.evidence;
   }
   const expected = Object.fromEntries(
-    Object.keys(proposal).map((field) => [
-      field,
-      field === "enrichmentEvidence"
-        ? identity.existing.enrichmentEvidence
-        : identity.existing[field],
-    ]),
+    Object.keys(proposal)
+      .filter((field) => field !== "enrichmentEvidence")
+      .map((field) => [
+        field,
+        identity.existing[field],
+      ]),
   );
   const outcomes = ["VERIFIED_DOMAIN"];
   if (Object.hasOwn(proposal, "email")) {
@@ -1471,7 +1564,7 @@ async function fetchCandidateHomepage({
   return null;
 }
 
-async function fetchHtmlPage({
+export async function fetchHtmlPage({
   fetchImpl,
   robots,
   runState,
@@ -1501,6 +1594,7 @@ async function fetchHtmlPage({
         } else {
           runState.requestMetrics.record("successes");
         }
+        await discardResponseBody(response);
         if (response.status >= 500 && attempt === 1) continue;
         return null;
       }
@@ -1513,6 +1607,7 @@ async function fetchHtmlPage({
         !/text\/html|application\/xhtml\+xml/i.test(contentType) ||
         contentLength > 2_000_000
       ) {
+        await discardResponseBody(response);
         return null;
       }
       const html = await response.text();
@@ -1543,7 +1638,7 @@ async function fetchHtmlPage({
   return null;
 }
 
-async function fetchRobots({
+export async function fetchRobots({
   fetchImpl,
   origin,
   retryUnavailable,
@@ -1578,6 +1673,7 @@ async function fetchRobots({
               unavailableReason: `http_${response.status}`,
             }
           : { rules: [] };
+      await discardResponseBody(response);
       await runState.setRobots(origin, value);
       return value;
     }
@@ -1604,6 +1700,15 @@ async function fetchRobots({
     };
     await runState.setRobots(origin, value);
     return value;
+  }
+}
+
+async function discardResponseBody(response) {
+  if (!response?.body || response.bodyUsed) return;
+  try {
+    await response.body.cancel();
+  } catch {
+    // The response is already unusable, so cleanup failures are nonfatal.
   }
 }
 
@@ -1937,12 +2042,11 @@ async function parseCslbAliases(sourcePath) {
 }
 
 async function loadReviewedDirectoryArtifacts({
-  outputDirectory,
+  cacheDirectory,
   s3,
 }) {
   const directory = path.join(
-    outputDirectory,
-    "reviewed-directory",
+    cacheDirectory,
     REVIEWED_DIRECTORY_RUN_ID,
   );
   const reportPath = path.join(directory, "report.json");
@@ -2345,6 +2449,25 @@ function assertProposalSafety({ contractors, proposals }) {
         `Proposal references missing contractor ${proposal.contractorId}.`,
       );
     }
+    recordCredentialBearingArtifactFailure(
+      proposal,
+      `proposal ${proposal.contractorId}`,
+    );
+    const appendFields = Object.keys(proposal.append || {});
+    if (
+      appendFields.some(
+        (field) => field !== "enrichmentEvidence",
+      )
+    ) {
+      throw new Error(
+        `Proposal attempted an unsupported append for ${proposal.contractorId}.`,
+      );
+    }
+    if (Object.hasOwn(proposal.set, "enrichmentEvidence")) {
+      throw new Error(
+        `Proposal attempted to replace enrichmentEvidence for ${proposal.contractorId}.`,
+      );
+    }
     for (const field of Object.keys(proposal.set)) {
       if (!allowedFields.has(field)) {
         throw new Error(
@@ -2671,7 +2794,6 @@ async function writeRunArtifacts({
     };
   }
   const s3Keys = {
-    audit: `imports/web-enrichment/${runId}/audit.json`,
     licenseTransitionReview:
       `raw/web-enrichment/${runId}/license-transition-review.jsonl`,
     manifest: `imports/web-enrichment/${runId}/manifest.json`,
@@ -2706,7 +2828,6 @@ async function uploadRunArtifacts({
     ["manifest", "application/json"],
     ["proposals", "application/x-ndjson"],
     ["report", "application/json"],
-    ["audit", "application/json"],
     ["validation", "application/json"],
     ["rawEvidence", "application/x-ndjson"],
     ["results", "application/x-ndjson"],
@@ -2900,7 +3021,7 @@ function firstSanitizedResults(
   return values;
 }
 
-function normalizeResultForArtifacts(result) {
+export function normalizeResultForArtifacts(result) {
   const attemptedDomain = result.domain;
   const canonicalDomain =
     domainFromUrl(result.pages?.[0]?.url) || attemptedDomain;
@@ -2942,30 +3063,51 @@ function normalizeResultForArtifacts(result) {
     };
   }
   const proposal = result.proposal || {};
+  const expected = { ...(result.expected || {}) };
+  const existingEvidenceKeys = new Set(
+    (expected.enrichmentEvidence || []).map((entry) =>
+      JSON.stringify(entry),
+    ),
+  );
+  delete expected.enrichmentEvidence;
   if (!Array.isArray(proposal.enrichmentEvidence)) {
-    return result;
+    return {
+      ...result,
+      expected,
+    };
   }
-  const normalizedEvidence = proposal.enrichmentEvidence.map(
+  const normalizedEvidence = proposal.enrichmentEvidence
+    .filter(
+      (entry) =>
+        !existingEvidenceKeys.has(JSON.stringify(entry)),
+    )
+    .map(
     (entry) => {
+      const sanitizedEntry = {
+        ...entry,
+        sourceUrl: sanitizeEvidenceSourceUrl(
+          entry.sourceUrl,
+        ),
+      };
       if (
-        entry.matchingMethod !==
+        sanitizedEntry.matchingMethod !==
         "verified_first_party_domain"
       ) {
-        return entry;
+        return sanitizedEntry;
       }
-      const { matchingMethod, ...rest } = entry;
+      const { matchingMethod, ...rest } = sanitizedEntry;
       return {
         ...rest,
         matchMethod: matchingMethod,
         sourceId:
-          entry.sourceId ||
+          sanitizedEntry.sourceId ||
           "first_party_contractor_website",
         verificationDate:
-          entry.verificationDate ||
-          String(entry.retrievedAt || "").slice(0, 10),
+          sanitizedEntry.verificationDate ||
+          String(sanitizedEntry.retrievedAt || "").slice(0, 10),
       };
     },
-  );
+    );
   let finalProposal = {
     ...proposal,
     enrichmentEvidence: [
@@ -3089,9 +3231,76 @@ function normalizeResultForArtifacts(result) {
   }
   return {
     ...result,
+    expected,
     outcomes: normalizedOutcomes,
     proposal: finalProposal,
   };
+}
+
+export function buildProposalArtifact(result) {
+  const {
+    enrichmentEvidence = [],
+    ...set
+  } = result.proposal || {};
+  return {
+    schemaVersion:
+      "contractor-web-enrichment-proposal.v2",
+    contractorId: result.contractorId,
+    expected: result.expected || {},
+    set,
+    ...(enrichmentEvidence.length
+      ? {
+          append: {
+            enrichmentEvidence,
+          },
+        }
+      : {}),
+    verifiedDomain: result.domain,
+    discoveryMethod: result.discoveryMethod,
+    domainEvidence: result.identityVerification,
+  };
+}
+
+export function containsCredentialBearingUrl(value) {
+  if (typeof value === "string") {
+    return /[?&](?:amp;)?(?:AWSAccessKeyId|Signature|X-Amz-(?:Algorithm|Credential|Date|Expires|Security-Token|Signature|SignedHeaders))=/i.test(
+      value,
+    );
+  }
+  if (Array.isArray(value)) {
+    return value.some(containsCredentialBearingUrl);
+  }
+  if (value && typeof value === "object") {
+    return Object.values(value).some(
+      containsCredentialBearingUrl,
+    );
+  }
+  return false;
+}
+
+export function sanitizeEvidenceSourceUrl(value) {
+  const sourceUrl = clean(value);
+  if (!containsCredentialBearingUrl(sourceUrl)) {
+    return sourceUrl;
+  }
+  try {
+    const parsed = new URL(sourceUrl.replaceAll("&amp;", "&"));
+    parsed.search = "";
+    return parsed.toString();
+  } catch {
+    return sourceUrl.replace(/[?#].*$/, "");
+  }
+}
+
+function recordCredentialBearingArtifactFailure(
+  value,
+  label,
+) {
+  if (containsCredentialBearingUrl(value)) {
+    throw new Error(
+      `Credential-bearing URL found in ${label}.`,
+    );
+  }
 }
 
 function buildSkippedResult(contractor) {
@@ -3275,7 +3484,7 @@ function buildUnresolvedRecords({
   return records;
 }
 
-function validateFinalArtifacts({
+export function validateFinalArtifacts({
   contractors,
   eligibleResults,
   fullScope,
@@ -3337,7 +3546,8 @@ function validateFinalArtifacts({
         `duplicate service area for ${proposal.contractorId}`,
       );
     }
-    const evidence = proposal.set.enrichmentEvidence || [];
+    const evidence =
+      proposal.append?.enrichmentEvidence || [];
     const evidenceKeys = evidence.map((entry) =>
       [
         entry.sourceId || "",
@@ -3365,6 +3575,10 @@ function validateFinalArtifacts({
     }
   }
   for (const result of eligibleResults) {
+    recordFailure(
+      !containsCredentialBearingUrl(result),
+      `credential-bearing URL for ${result.contractorId}`,
+    );
     const reviewedTransition =
       reviewedLicenseTransitionFor({
         domain: result.domain,
@@ -3429,6 +3643,7 @@ function validateFinalArtifacts({
       duplicateContractorProposals: 0,
       duplicateEvidenceValues: 0,
       duplicateServiceAreaValues: 0,
+      credentialBearingUrls: 0,
       historicalSeedOnlyAcceptedDomains: 0,
       licenseTransitionProposals: 0,
       malformedEmails: 0,
@@ -3718,7 +3933,9 @@ async function writeJsonLines(filePath, values) {
   await fsPromises.mkdir(path.dirname(filePath), {
     recursive: true,
   });
-  const stream = fs.createWriteStream(filePath);
+  const temporaryPath =
+    `${filePath}.${process.pid}.tmp`;
+  const stream = fs.createWriteStream(temporaryPath);
   try {
     for (const value of values) {
       if (!stream.write(`${JSON.stringify(value)}\n`)) {
@@ -3727,9 +3944,14 @@ async function writeJsonLines(filePath, values) {
     }
     stream.end();
     await once(stream, "finish");
+    await fsPromises.rename(temporaryPath, filePath);
   } catch (error) {
     stream.destroy();
     throw error;
+  } finally {
+    await fsPromises.rm(temporaryPath, {
+      force: true,
+    });
   }
 }
 
@@ -3737,10 +3959,19 @@ async function writeJson(filePath, value) {
   await fsPromises.mkdir(path.dirname(filePath), {
     recursive: true,
   });
-  await fsPromises.writeFile(
-    filePath,
-    `${JSON.stringify(value, null, 2)}\n`,
-  );
+  const temporaryPath =
+    `${filePath}.${process.pid}.tmp`;
+  try {
+    await fsPromises.writeFile(
+      temporaryPath,
+      `${JSON.stringify(value, null, 2)}\n`,
+    );
+    await fsPromises.rename(temporaryPath, filePath);
+  } finally {
+    await fsPromises.rm(temporaryPath, {
+      force: true,
+    });
+  }
 }
 
 async function sha256File(filePath) {
@@ -4013,6 +4244,47 @@ function parseArgs(argv) {
     }
   }
   return options;
+}
+
+function assertRunMetadataMatches(
+  metadata,
+  { options, runId },
+) {
+  const expected = {
+    schemaVersion:
+      "contractor-web-enrichment-run-metadata.v1",
+    runId,
+    scope: options.scope,
+    mode: options.mode,
+    scriptVersion: WEB_ENRICHMENT_SCRIPT_VERSION,
+    auditSeed: options.auditSeed,
+    checkpointEvery: options.checkpointEvery,
+    concurrency: options.concurrency,
+    deepIfTime: options.deepIfTime,
+    excludeContractorsFile:
+      options.excludeContractorsFile,
+    maxRuntimeHours: options.maxRuntimeHours,
+    osmPbfPath: options.osmPbfPath,
+    reserveFinalizationMinutes:
+      options.reserveFinalizationMinutes,
+    selectionSeed: options.selectionSeed,
+    targetContractorsFile:
+      options.targetContractorsFile,
+    timeoutMs: options.timeoutMs,
+  };
+  for (const [field, value] of Object.entries(expected)) {
+    if (metadata?.[field] !== value) {
+      throw new Error(
+        `Run metadata ${field} does not match the requested resume configuration.`,
+      );
+    }
+  }
+  if (
+    !metadata.startedAt ||
+    !Number.isFinite(Date.parse(metadata.startedAt))
+  ) {
+    throw new Error("Run metadata has no valid startedAt value.");
+  }
 }
 
 function setScope(current, next) {
