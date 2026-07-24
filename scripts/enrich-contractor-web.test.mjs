@@ -7,7 +7,10 @@ import {
 } from "./contractor-web-enrichment-core.mjs";
 import {
   applyReviewedLicenseTransition,
+  createConcurrencyLimiter,
+  isTransientFetchError,
   parseHtmlPage,
+  robotsAllows,
   runContractorWebEnrichment,
 } from "./enrich-contractor-web.mjs";
 
@@ -210,6 +213,85 @@ describe("contractor web-enrichment write safety", () => {
         write: true,
       }),
     ).rejects.toThrow("DynamoDB write mode is intentionally unavailable");
+  });
+});
+
+describe("contractor web-enrichment network safety", () => {
+  it("fails closed when robots policy is temporarily unavailable", () => {
+    expect(
+      robotsAllows(
+        {
+          rules: [],
+          unavailable: true,
+        },
+        "/",
+      ),
+    ).toBe(false);
+    expect(robotsAllows({ rules: [] }, "/")).toBe(true);
+  });
+
+  it("retries only transient socket failures", () => {
+    expect(
+      isTransientFetchError({
+        cause: { code: "ECONNRESET" },
+      }),
+    ).toBe(true);
+    expect(
+      isTransientFetchError({
+        cause: { code: "ENOTFOUND" },
+      }),
+    ).toBe(false);
+    expect(
+      isTransientFetchError({
+        cause: { code: "CERT_HAS_EXPIRED" },
+      }),
+    ).toBe(false);
+  });
+
+  it("bounds concurrent domain evaluations", async () => {
+    const withPermit = createConcurrencyLimiter(2);
+    let active = 0;
+    let maximumActive = 0;
+    await Promise.all(
+      Array.from({ length: 6 }, (_, value) =>
+        withPermit(async () => {
+          active += 1;
+          maximumActive = Math.max(maximumActive, active);
+          await new Promise((resolve) => setImmediate(resolve));
+          active -= 1;
+          return value;
+        }),
+      ),
+    );
+    expect(maximumActive).toBe(2);
+  });
+
+  it("applies adaptive reductions to queued domain evaluations", async () => {
+    const withPermit = createConcurrencyLimiter(2);
+    const releases = [];
+    const started = [];
+    const tasks = Array.from({ length: 4 }, (_, value) =>
+      withPermit(async () => {
+        started.push(value);
+        await new Promise((resolve) => {
+          releases[value] = resolve;
+        });
+      }),
+    );
+
+    await new Promise((resolve) => setImmediate(resolve));
+    expect(started).toEqual([0, 1]);
+    withPermit.setLimit(1);
+    releases[0]();
+    await new Promise((resolve) => setImmediate(resolve));
+    expect(started).toEqual([0, 1]);
+    releases[1]();
+    await new Promise((resolve) => setImmediate(resolve));
+    expect(started).toEqual([0, 1, 2]);
+    releases[2]();
+    await new Promise((resolve) => setImmediate(resolve));
+    releases[3]();
+    await Promise.all(tasks);
   });
 });
 

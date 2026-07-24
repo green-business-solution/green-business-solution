@@ -233,6 +233,48 @@ describe("contractor web-enrichment persistent run state", () => {
     });
   });
 
+  it("retains bounded cross-domain capacity under ordinary timeout pressure", async () => {
+    const metrics = createRequestMetrics();
+    const result = await forEachAdaptiveConcurrent({
+      initialConcurrency: 32,
+      maxConcurrency: 32,
+      minimumConcurrency: 8,
+      metrics,
+      pressureConcurrencyFloor: 16,
+      values: Array.from({ length: 300 }, (_, index) => index),
+      worker: async () => {
+        metrics.record("timeouts");
+      },
+    });
+
+    expect(result).toMatchObject({
+      completed: 300,
+      finalConcurrency: 16,
+      stopped: false,
+    });
+  });
+
+  it("does not rebound to the ordinary pressure floor after server pressure", async () => {
+    const metrics = createRequestMetrics();
+    const result = await forEachAdaptiveConcurrent({
+      initialConcurrency: 16,
+      maxConcurrency: 32,
+      minimumConcurrency: 8,
+      metrics,
+      pressureConcurrencyFloor: 16,
+      values: Array.from({ length: 300 }, (_, index) => index),
+      worker: async (index) => {
+        metrics.record(index < 100 ? "http429" : "timeouts");
+      },
+    });
+
+    expect(result).toMatchObject({
+      completed: 300,
+      finalConcurrency: 8,
+      stopped: false,
+    });
+  });
+
   it("waits for active workers before rejecting a failed batch", async () => {
     let releaseWorker;
     const workerGate = new Promise((resolve) => {
@@ -268,5 +310,41 @@ describe("contractor web-enrichment persistent run state", () => {
       "expected worker failure",
     );
     expect(started).not.toContain(3);
+  });
+
+  it("keeps unused slots active while an async progress hook checkpoints", async () => {
+    let releaseCheckpoint;
+    const checkpointGate = new Promise((resolve) => {
+      releaseCheckpoint = resolve;
+    });
+    const started = [];
+    let checkpointStarted = false;
+    const execution = forEachAdaptiveConcurrent({
+      initialConcurrency: 2,
+      maxConcurrency: 2,
+      onProgress: async (completed) => {
+        if (completed === 2) {
+          checkpointStarted = true;
+          await checkpointGate;
+        }
+      },
+      values: [1, 2, 3, 4],
+      worker: async (value) => {
+        started.push(value);
+      },
+    });
+
+    for (let attempt = 0; attempt < 10; attempt += 1) {
+      await new Promise((resolve) => setImmediate(resolve));
+      if (checkpointStarted && started.includes(4)) break;
+    }
+    expect(checkpointStarted).toBe(true);
+    expect(started).toEqual(expect.arrayContaining([1, 2, 3, 4]));
+
+    releaseCheckpoint();
+    await expect(execution).resolves.toMatchObject({
+      completed: 4,
+      stopped: false,
+    });
   });
 });

@@ -56,8 +56,8 @@ No fuzzy-only OSM match is accepted.
 
 Reviewed official-directory domains are tried first.
 OpenStreetMap domains are tried second.
-For unresolved identities, fast mode generates no more than 12 candidates from business names, aliases, useful trade terms, city variants, and the `.com`, `.net`, `.org`, and `.co` endings.
-Deep mode supports up to 40 candidates and eight pages but is not part of the initial pilot.
+For unresolved identities, fast mode generates up to six prioritized `.com` and `.net` candidates from business names, aliases, useful trade terms, and city variants.
+Deep mode supports up to 40 candidates, adds `.org`, `.co`, and other lower-priority variants, and crawls up to eight pages.
 
 A candidate must resolve in DNS and return usable HTML.
 The current first-party page must satisfy one of three confidence tiers.
@@ -209,10 +209,14 @@ The local run directory also retains an automated `audit.json` review aid.
 Use a stable run ID, `--upload`, and `--deep-if-time` for the approved statewide proposal run.
 The fast pass processes every eligible contractor before deep processing begins.
 The run starts with conservative concurrency and adapts within the configured bound based on timeout, HTTP 429, HTTP 5xx, and network-error pressure.
+The fast pass prioritizes the top generated `.com` and `.net` candidates over weak extensions, uses HTTPS apex and `www` variants, and leaves weak extensions and HTTP-only fallbacks for deep mode.
+Exact official-directory and OpenStreetMap seeds retain the full bounded protocol fallback during the fast pass.
+Temporary robots.txt failures fail closed, and only HTTP 5xx responses or transient socket failures receive the single permitted retry.
 It reserves the final hour of the 16-hour ceiling for validation and uploads.
 
 The run continuously persists selected contractor IDs, completed outcomes and proposal state, DNS results, robots rules, parsed page state and content hashes, domain-verification results, deep-pass progress, and immutable numbered checkpoints.
 High-volume result and cache state uses append-only JSONL streams with backpressure, and resume repairs an incomplete crash tail before adding new records.
+The adaptive queue continues processing unrelated contractors while serialized checkpoints persist every 500 completed outcomes, preventing one slow website from idling the remaining worker pool.
 Final JSONL artifacts are streamed with backpressure so statewide output finalization does not require one giant in-memory string.
 Resume an interrupted run with the same run ID and output directory:
 

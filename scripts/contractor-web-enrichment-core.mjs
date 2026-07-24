@@ -338,13 +338,16 @@ export function generateCandidateDomains(
       ...cityRoots,
     ]),
   ].filter((root) => root.length >= 5 && root.length <= 50);
-  for (const root of orderedRoots) {
+  candidateRoots: for (const root of orderedRoots) {
     for (const ending of endings) {
       candidates.push(`${root}${ending}`);
-      if (candidates.length >= limit) return candidates;
+      if (candidates.length >= limit) break candidateRoots;
     }
   }
-  return candidates;
+  if (mode !== "fast") return candidates;
+  return [0, 4, 8, 1, 5, 9]
+    .map((index) => candidates[index])
+    .filter(Boolean);
 }
 
 export function domainFromUrl(value) {

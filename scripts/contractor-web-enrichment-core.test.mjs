@@ -114,8 +114,21 @@ describe("candidate generation and deterministic OpenStreetMap matching", () => 
     expect(candidates.length).toBeLessThanOrEqual(12);
     expect(candidates).toContain("acmehvac.com");
     expect(candidates).toContain("acmecomfortsystems.net");
-    expect(candidates).toContain("acmecomfortsystems.org");
-    expect(candidates).toContain("acmecomfortsystems.co");
+    expect(candidates.every((candidate) =>
+      /\.(?:com|net)$/.test(candidate),
+    )).toBe(true);
+
+    const deepCandidates = generateCandidateDomains(value, {
+      limit: 40,
+      mode: "deep",
+    });
+    expect(candidates).toEqual(
+      [0, 4, 8, 1, 5, 9]
+        .map((index) => deepCandidates[index])
+        .filter(Boolean),
+    );
+    expect(deepCandidates).toContain("acmecomfortsystems.org");
+    expect(deepCandidates).toContain("acmecomfortsystems.co");
   });
 
   it("uses the required exact OpenStreetMap matching order", () => {

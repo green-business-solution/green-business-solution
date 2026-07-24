@@ -180,6 +180,7 @@ export async function forEachAdaptiveConcurrent({
   metrics,
   onConcurrencyChange = () => {},
   onProgress = () => {},
+  pressureConcurrencyFloor = minimumConcurrency,
   shouldStop = () => false,
   values,
   worker,
@@ -189,6 +190,10 @@ export async function forEachAdaptiveConcurrent({
   const concurrencyFloor = Math.max(
     1,
     Math.min(minimumConcurrency, maxConcurrency),
+  );
+  const pressureFloor = Math.max(
+    concurrencyFloor,
+    Math.min(pressureConcurrencyFloor, maxConcurrency),
   );
   let currentConcurrency = Math.max(
     concurrencyFloor,
@@ -230,13 +235,20 @@ export async function forEachAdaptiveConcurrent({
           snapshot.networkErrors +
           snapshot.timeouts) /
         snapshot.requests;
+      const serverPressureRate =
+        (snapshot.http429 + snapshot.http5xx) /
+        snapshot.requests;
       const previous = currentConcurrency;
-      if (
-        snapshot.http429 > 0 ||
-        pressureRate >= 0.2
-      ) {
+      if (serverPressureRate >= 0.05) {
         currentConcurrency = Math.max(
           concurrencyFloor,
+          Math.floor(currentConcurrency * 0.75),
+        );
+      } else if (pressureRate >= 0.2) {
+        currentConcurrency = Math.max(
+          currentConcurrency > pressureFloor
+            ? pressureFloor
+            : concurrencyFloor,
           Math.floor(currentConcurrency * 0.75),
         );
       } else if (pressureRate <= 0.05) {
@@ -267,10 +279,10 @@ export async function forEachAdaptiveConcurrent({
         active += 1;
         Promise.resolve()
           .then(() => worker(value))
-          .then(() => {
+          .then(async () => {
             completed += 1;
             adjustConcurrency();
-            onProgress(completed, values.length);
+            await onProgress(completed, values.length);
           })
           .catch((error) => {
             failed = true;

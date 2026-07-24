@@ -64,7 +64,7 @@ import {
 
 const execFileAsync = promisify(execFile);
 
-export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.2.1";
+export const WEB_ENRICHMENT_SCRIPT_VERSION = "1.3.0";
 export const WEB_ENRICHMENT_REPORT_SCHEMA_VERSION =
   "contractor-web-enrichment-report.v1";
 
@@ -82,6 +82,11 @@ const CENSUS_COUNTY_URL =
 const USER_AGENT =
   "RetroFi contractor web enrichment pilot/1.0 (public first-party websites; contact: https://retrofi.org)";
 const DNS_RESOLUTION_BATCH_SIZE = 4;
+const TRANSIENT_FETCH_ERROR_CODES = new Set([
+  "ECONNRESET",
+  "EPIPE",
+  "UND_ERR_SOCKET",
+]);
 const REVIEWED_LICENSE_TRANSITIONS = new Map([
   [
     "936846|prostarmechanical.com",
@@ -335,6 +340,9 @@ export async function runContractorWebEnrichment(
       resume: options.resume,
     });
     const domainLocks = new Map();
+    const withRequestPermit = createConcurrencyLimiter(
+      Math.min(16, options.concurrency),
+    );
     const remaining = selectedIdentities.filter(
       (identity) => !resultsById.has(identity.contractorId),
     );
@@ -362,64 +370,93 @@ export async function runContractorWebEnrichment(
     let checkpointSequence = await nextCheckpointSequence(
       outputDirectory,
     );
-    if (checkpointSequence === 0) {
+    const persistCheckpoint = async ({
+      completedCount,
+      deepProcessed = 0,
+      phase,
+      selectedContractorIds,
+    }) => {
+      const sequence = checkpointSequence;
+      checkpointSequence += 1;
+      await resultAppender.flush();
+      await runState.flush();
       await writeCheckpointSnapshot({
-        completedContractorCount,
+        completedContractorCount: completedCount,
+        deepPassProcessed: deepProcessed,
         outputDirectory,
-        phase: "selection",
+        phase,
         runId,
         runState,
         s3,
-        selectedContractorIds: selectedIdentities.map(
-          (identity) => identity.contractorId,
-        ),
-        sequence: checkpointSequence,
+        selectedContractorIds,
+        sequence,
         totalContractorCount: selectedIdentities.length,
         upload: options.upload,
       });
-      checkpointSequence += 1;
+    };
+    if (checkpointSequence === 0) {
+      await persistCheckpoint({
+        completedCount: completedContractorCount,
+        phase: "selection",
+        selectedContractorIds: selectedIdentities.map(
+          (identity) => identity.contractorId,
+        ),
+      });
     }
     let fastPassStopped = false;
-    for (
-      let offset = 0;
-      offset < remaining.length;
-      offset += options.checkpointEvery
+    if (
+      remaining.length &&
+      Date.now() < processingDeadlineMs
     ) {
-      if (Date.now() >= processingDeadlineMs) {
-        fastPassStopped = true;
-        break;
-      }
-      const batch = remaining.slice(
-        offset,
-        offset + options.checkpointEvery,
-      );
-      await forEachAdaptiveConcurrent({
-        initialConcurrency: Math.min(12, options.concurrency),
+      const completedBeforeFast = completedContractorCount;
+      let lastCheckpointCompleted = 0;
+      let nextCheckpointCompleted = options.checkpointEvery;
+      let checkpointQueue = Promise.resolve();
+      const queueCheckpoint = (completed) => {
+        const completedCount = completedBeforeFast + completed;
+        checkpointQueue = checkpointQueue.then(() =>
+          persistCheckpoint({
+            completedCount,
+            phase: "fast",
+          }),
+        );
+        return checkpointQueue;
+      };
+      const execution = await forEachAdaptiveConcurrent({
+        initialConcurrency: Math.min(16, options.concurrency),
         maxConcurrency: options.concurrency,
         minimumConcurrency: Math.min(8, options.concurrency),
         metrics: runState.requestMetrics,
         onConcurrencyChange: ({ currentConcurrency, snapshot }) => {
+          withRequestPermit.setLimit(currentConcurrency);
           if (!options.quiet) {
             console.log(
               `Adjusted contractor concurrency to ${currentConcurrency} after ${snapshot.requests} network requests.`,
             );
           }
         },
-        onProgress: (completed) => {
-          const totalCompleted =
-            offset + completed;
+        onProgress: async (completed) => {
           if (
             !options.quiet &&
-            (totalCompleted % 100 === 0 ||
-              totalCompleted === remaining.length)
+            (completed % 100 === 0 ||
+              completed === remaining.length)
           ) {
             console.log(
-              `Processed ${totalCompleted} of ${remaining.length} remaining contractors.`,
+              `Processed ${completed} of ${remaining.length} remaining contractors.`,
             );
           }
+          if (completed >= nextCheckpointCompleted) {
+            lastCheckpointCompleted = completed;
+            nextCheckpointCompleted += options.checkpointEvery;
+            await queueCheckpoint(completed);
+          }
         },
-        shouldStop: () => false,
-        values: batch,
+        pressureConcurrencyFloor: Math.min(
+          16,
+          options.concurrency,
+        ),
+        shouldStop: () => Date.now() >= processingDeadlineMs,
+        values: remaining,
         worker: async (identity) => {
           const result = await processIdentitySafely({
             combinedSeeds,
@@ -431,6 +468,7 @@ export async function runContractorWebEnrichment(
             placeReference,
             runState,
             timeoutMs: options.timeoutMs,
+            withRequestPermit,
           });
           resultsById.set(identity.contractorId, result);
           await resultAppender.append(result);
@@ -438,24 +476,22 @@ export async function runContractorWebEnrichment(
           processedThisInvocation += 1;
         },
       });
-      await resultAppender.flush();
-      await runState.flush();
-      await writeCheckpointSnapshot({
-        completedContractorCount,
-        outputDirectory,
-        phase: "fast",
-        runId,
-        runState,
-        s3,
-        sequence: checkpointSequence,
-        totalContractorCount: selectedIdentities.length,
-        upload: options.upload,
-      });
-      checkpointSequence += 1;
+      await checkpointQueue;
+      if (execution.completed !== lastCheckpointCompleted) {
+        await persistCheckpoint({
+          completedCount:
+            completedBeforeFast + execution.completed,
+          phase: "fast",
+        });
+      }
+      fastPassStopped =
+        execution.stopped ||
+        execution.scheduled < remaining.length;
+    } else if (remaining.length) {
+      fastPassStopped = true;
     }
-    const fastPassComplete = selectedIdentities.every((identity) =>
-      resultsById.has(identity.contractorId),
-    );
+    const fastPassComplete =
+      completedContractorCount === selectedIdentities.length;
     let deepPassProcessed =
       runState.deepPassCompletedIds.size;
     let deepPassImproved =
@@ -489,11 +525,17 @@ export async function runContractorWebEnrichment(
           offset,
           offset + options.checkpointEvery,
         );
+        withRequestPermit.setLimit(
+          Math.min(8, options.concurrency),
+        );
         await forEachAdaptiveConcurrent({
           initialConcurrency: Math.min(8, options.concurrency),
           maxConcurrency: options.concurrency,
           minimumConcurrency: Math.min(4, options.concurrency),
           metrics: runState.requestMetrics,
+          onConcurrencyChange: ({ currentConcurrency }) => {
+            withRequestPermit.setLimit(currentConcurrency);
+          },
           values: batch,
           worker: async (identity) => {
             const prior = resultsById.get(identity.contractorId);
@@ -507,6 +549,7 @@ export async function runContractorWebEnrichment(
               placeReference,
               runState,
               timeoutMs: options.timeoutMs,
+              withRequestPermit,
             });
             const result = chooseBetterResult(prior, candidate);
             const improved = result !== prior;
@@ -522,38 +565,18 @@ export async function runContractorWebEnrichment(
             deepPassProcessed += 1;
           },
         });
-        await resultAppender.flush();
-        await runState.flush();
-        await writeCheckpointSnapshot({
-          completedContractorCount,
-          deepPassProcessed,
-          outputDirectory,
+        await persistCheckpoint({
+          completedCount: completedContractorCount,
+          deepProcessed: deepPassProcessed,
           phase: "deep",
-          runId,
-          runState,
-          s3,
-          sequence: checkpointSequence,
-          totalContractorCount: selectedIdentities.length,
-          upload: options.upload,
         });
-        checkpointSequence += 1;
       }
     }
-    await resultAppender.flush();
-    await runState.flush();
-    await writeCheckpointSnapshot({
-      completedContractorCount,
-      deepPassProcessed,
-      outputDirectory,
+    await persistCheckpoint({
+      completedCount: completedContractorCount,
+      deepProcessed: deepPassProcessed,
       phase: "finalizing",
-      runId,
-      runState,
-      s3,
-      sequence: checkpointSequence,
-      totalContractorCount: selectedIdentities.length,
-      upload: options.upload,
     });
-    checkpointSequence += 1;
     await resultAppender.close();
     resultAppender = null;
     const requestMetrics =
@@ -841,6 +864,7 @@ async function processContractor({
   seeds,
   timeoutMs,
   withDomainLock,
+  withRequestPermit,
 }) {
   if (!identity.fieldsNeeded.length) {
     return {
@@ -916,7 +940,35 @@ async function processContractor({
         ),
       })),
     );
-    for (const { candidate, resolved } of dnsResults) {
+    const evaluatedResults = await Promise.all(
+      dnsResults.map(async ({ candidate, resolved }) => ({
+        candidate,
+        resolved,
+        evaluated: resolved
+          ? await withDomainLock(
+              candidate.domain,
+              () =>
+                withRequestPermit(() =>
+                  evaluateDomainCandidate({
+                    candidate,
+                    fetchImpl,
+                    identity,
+                    mode,
+                    pageLimit,
+                    placeReference,
+                    runState,
+                    timeoutMs,
+                  }),
+                ),
+            )
+          : null,
+      })),
+    );
+    for (const {
+      candidate,
+      evaluated,
+      resolved,
+    } of evaluatedResults) {
       if (!resolved) {
         attemptedDomains.push({
           domain: candidate.domain,
@@ -925,19 +977,6 @@ async function processContractor({
         });
         continue;
       }
-      const evaluated = await withDomainLock(
-        candidate.domain,
-        async () =>
-          evaluateDomainCandidate({
-            candidate,
-            fetchImpl,
-            identity,
-            pageLimit,
-            placeReference,
-            runState,
-            timeoutMs,
-          }),
-      );
       attemptedDomains.push({
         domain: candidate.domain,
         disposition: evaluated.domainDisposition,
@@ -1040,6 +1079,7 @@ async function processIdentitySafely({
   placeReference,
   runState,
   timeoutMs,
+  withRequestPermit,
 }) {
   try {
     return await processContractor({
@@ -1053,6 +1093,7 @@ async function processIdentitySafely({
       timeoutMs,
       withDomainLock: (domain, task) =>
         withDomainLock(domainLocks, domain, task),
+      withRequestPermit,
     });
   } catch (error) {
     if (error instanceof PersistentRunStateError) throw error;
@@ -1158,6 +1199,7 @@ async function evaluateDomainCandidate({
   candidate,
   fetchImpl,
   identity,
+  mode,
   pageLimit,
   placeReference,
   runState,
@@ -1171,6 +1213,10 @@ async function evaluateDomainCandidate({
     const homepage = await fetchCandidateHomepage({
       domain: candidate.domain,
       fetchImpl,
+      includeHttpVariants:
+        mode === "deep" ||
+        candidate.discoveryMethod !== "candidate_generation",
+      retryUnavailableRobots: mode === "deep",
       runState,
       timeoutMs,
     });
@@ -1383,14 +1429,20 @@ async function evaluateDomainCandidate({
 async function fetchCandidateHomepage({
   domain,
   fetchImpl,
+  includeHttpVariants,
+  retryUnavailableRobots,
   runState,
   timeoutMs,
 }) {
   const variants = [
     `https://${domain}/`,
     `https://www.${domain}/`,
-    `http://${domain}/`,
-    `http://www.${domain}/`,
+    ...(includeHttpVariants
+      ? [
+          `http://${domain}/`,
+          `http://www.${domain}/`,
+        ]
+      : []),
   ];
   for (const url of variants) {
     let origin;
@@ -1402,6 +1454,7 @@ async function fetchCandidateHomepage({
     const robots = await fetchRobots({
       fetchImpl,
       origin,
+      retryUnavailable: retryUnavailableRobots,
       runState,
       timeoutMs,
     });
@@ -1480,7 +1533,10 @@ async function fetchHtmlPage({
         timedOut ? "timeouts" : "networkErrors",
       );
       if (timedOut) return null;
-      if (attempt === 1) continue;
+      if (attempt === 1 && isTransientFetchError(error)) {
+        continue;
+      }
+      return null;
     }
   }
   void lastError;
@@ -1490,11 +1546,15 @@ async function fetchHtmlPage({
 async function fetchRobots({
   fetchImpl,
   origin,
+  retryUnavailable,
   runState,
   timeoutMs,
 }) {
   if (runState.robotsCache.has(origin)) {
-    return runState.robotsCache.get(origin);
+    const cached = runState.robotsCache.get(origin);
+    if (!(retryUnavailable && cached.unavailable)) {
+      return cached;
+    }
   }
   try {
     const response = await fetchImpl(`${origin}/robots.txt`, {
@@ -1510,7 +1570,14 @@ async function fetchRobots({
             ? "http5xx"
             : "successes",
       );
-      const value = { rules: [] };
+      const value =
+        response.status === 429 || response.status >= 500
+          ? {
+              rules: [],
+              unavailable: true,
+              unavailableReason: `http_${response.status}`,
+            }
+          : { rules: [] };
       await runState.setRobots(origin, value);
       return value;
     }
@@ -1526,7 +1593,15 @@ async function fetchRobots({
         ? "timeouts"
         : "networkErrors",
     );
-    const value = { rules: [] };
+    const value = {
+      rules: [],
+      unavailable: true,
+      unavailableReason:
+        error?.name === "TimeoutError" ||
+        error?.name === "AbortError"
+          ? "timeout"
+          : "network_error",
+    };
     await runState.setRobots(origin, value);
     return value;
   }
@@ -1567,12 +1642,21 @@ function parseRobots(body) {
   };
 }
 
-function robotsAllows(robots, pathname) {
+export function robotsAllows(robots, pathname) {
+  if (robots?.unavailable) return false;
   const candidates = (robots?.rules || [])
     .filter((rule) => rule.path && pathname.startsWith(rule.path))
     .sort((left, right) => right.path.length - left.path.length);
   if (!candidates.length) return true;
   return candidates[0].type === "allow";
+}
+
+export function isTransientFetchError(error) {
+  const code =
+    error?.cause?.code ||
+    error?.code ||
+    "";
+  return TRANSIENT_FETCH_ERROR_CODES.has(code);
 }
 
 export function parseHtmlPage(page) {
@@ -1780,6 +1864,41 @@ async function withDomainLock(locks, domain, task) {
   } finally {
     if (locks.get(domain) === current) locks.delete(domain);
   }
+}
+
+export function createConcurrencyLimiter(limit) {
+  let currentLimit = Math.max(1, Number(limit) || 1);
+  const waiters = [];
+  let active = 0;
+  const dispatch = () => {
+    while (active < currentLimit && waiters.length) {
+      active += 1;
+      waiters.shift()();
+    }
+  };
+  const acquire = () =>
+    new Promise((resolve) => {
+      if (active < currentLimit) {
+        active += 1;
+        resolve();
+      } else {
+        waiters.push(resolve);
+      }
+    });
+  const withPermit = async (task) => {
+    await acquire();
+    try {
+      return await task();
+    } finally {
+      active -= 1;
+      dispatch();
+    }
+  };
+  withPermit.setLimit = (nextLimit) => {
+    currentLimit = Math.max(1, Number(nextLimit) || 1);
+    dispatch();
+  };
+  return withPermit;
 }
 
 async function parseCslbAliases(sourcePath) {
