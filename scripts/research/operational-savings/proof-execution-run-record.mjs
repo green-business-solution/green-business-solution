@@ -1,6 +1,9 @@
 import { createHash } from "node:crypto";
 import { execFile } from "node:child_process";
-import { createReadStream } from "node:fs";
+import {
+  createReadStream,
+  realpathSync
+} from "node:fs";
 import {
   lstat,
   readFile,
@@ -219,12 +222,48 @@ function toPosixPath(path) {
   return path.split(sep).join("/");
 }
 
-function repoRelativePath(repoRoot, path, label) {
-  const root = resolve(repoRoot);
-  const absolute = isAbsolute(path)
+function canonicalRepositoryCoordinates(repoRoot, path) {
+  const lexicalRoot = resolve(repoRoot);
+  const canonicalRoot = realpathSync(lexicalRoot);
+  const lexicalAbsolute = isAbsolute(path)
     ? resolve(path)
-    : resolve(root, path);
-  const rel = relative(root, absolute);
+    : resolve(lexicalRoot, path);
+  let canonicalAbsolute;
+  try {
+    canonicalAbsolute = realpathSync(lexicalAbsolute);
+  } catch (error) {
+    if (
+      error.code !== "ENOENT" &&
+      error.code !== "ENOTDIR"
+    ) {
+      throw error;
+    }
+    const lexicalRelative = relative(
+      lexicalRoot,
+      lexicalAbsolute
+    );
+    canonicalAbsolute =
+      lexicalRelative &&
+      lexicalRelative !== ".." &&
+      !lexicalRelative.startsWith(`..${sep}`)
+        ? resolve(canonicalRoot, lexicalRelative)
+        : lexicalAbsolute;
+  }
+  return {
+    canonicalRoot,
+    canonicalAbsolute
+  };
+}
+
+export function repoRelativePath(repoRoot, path, label) {
+  const {
+    canonicalRoot,
+    canonicalAbsolute
+  } = canonicalRepositoryCoordinates(repoRoot, path);
+  const rel = relative(
+    canonicalRoot,
+    canonicalAbsolute
+  );
   if (
     !rel ||
     rel === ".." ||
@@ -238,9 +277,14 @@ function repoRelativePath(repoRoot, path, label) {
 }
 
 function displayPath(repoRoot, path) {
-  const root = resolve(repoRoot);
-  const absolute = resolve(path);
-  const rel = relative(root, absolute);
+  const {
+    canonicalRoot,
+    canonicalAbsolute
+  } = canonicalRepositoryCoordinates(repoRoot, path);
+  const rel = relative(
+    canonicalRoot,
+    canonicalAbsolute
+  );
   if (
     rel &&
     rel !== ".." &&
@@ -248,7 +292,7 @@ function displayPath(repoRoot, path) {
   ) {
     return toPosixPath(rel);
   }
-  return toPosixPath(absolute);
+  return toPosixPath(canonicalAbsolute);
 }
 
 function manifestProcessEntries(content) {

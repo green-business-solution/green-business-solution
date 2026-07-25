@@ -5,6 +5,7 @@ import {
   mkdir,
   mkdtemp,
   readFile,
+  realpath,
   rm,
   symlink,
   writeFile
@@ -33,6 +34,7 @@ import {
   assertProofExecutionSnapshotMatches,
   buildProofExecutionToolchainIdentity,
   installedDependencyTreeIdentity,
+  repoRelativePath,
   regularFilesBelow
 } from "../proof-execution-run-record.mjs";
 import {
@@ -164,6 +166,28 @@ test("forces the tracked Vitest config for the complete real suite", () => {
     arguments_.slice(-2)
   ).toEqual(["--config", TRACKED_VITEST_CONFIG]);
   expect(arguments_).not.toContain("vite.config.js");
+});
+
+test("normalizes canonical report paths beneath a symlinked repository ancestor", async () => {
+  const repository = await mkdtemp(
+    join(tmpdir(), "retrofi-proof-report-path-")
+  );
+  try {
+    const reportPath = join(repository, "suite.test.mjs");
+    await writeFile(reportPath, "export default true;\n");
+    expect(
+      repoRelativePath(
+        repository,
+        await realpath(reportPath),
+        "Vitest report path"
+      )
+    ).toBe("suite.test.mjs");
+  } finally {
+    await rm(repository, {
+      recursive: true,
+      force: true
+    });
+  }
 });
 
 test("keeps focused real runs while still forcing the tracked config", () => {

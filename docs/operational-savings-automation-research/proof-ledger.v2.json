@@ -8,7 +8,7 @@
     "sourceEvidenceFingerprint": {
       "schemaVersion": "operational-savings/proof-source-evidence-fingerprint-v2",
       "algorithm": "SHA-256",
-      "digest": "03975a891c15641e6af3de76b25739b90b0cc3749ee85c7d642b88cac735d9ba",
+      "digest": "8d421d32ffe7f8c3ae008453a82b16298e08e53a08627f7258b8f14804ba8ea0",
       "fileCount": 259,
       "testCatalogFingerprint": "275b0efb6d6f8c7b59ae9c9842e92761aeb194534f6e3f2d612e2f916a7e7355"
     },

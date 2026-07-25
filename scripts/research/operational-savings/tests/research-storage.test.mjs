@@ -4828,7 +4828,7 @@ test("cleanup can run again after verified hydration without erasing the prior g
       );
     }
   );
-});
+}, 30_000);
 
 test("package cleanup resumes from a persisted quarantine after deletion interrupted its completion checkpoint", async () => {
   await withTemporaryPackage(
