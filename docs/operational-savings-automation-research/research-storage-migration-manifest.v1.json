@@ -31651,7 +31651,8 @@
           "uploadedAt": "2026-07-25T08:24:33.147Z",
           "verifiedAt": "2026-07-25T08:33:40.867Z",
           "verificationStatus": "VERIFIED",
-          "deletionStatus": "LOCAL_RETAINED"
+          "deletionStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+          "localDeletedAt": "2026-07-25T23:23:11.417Z"
         }
       },
       "cleanupEligibility": {
@@ -31669,7 +31670,7 @@
         "restoredSha256": "29e99ec7223a9559ebf1540a50eab74a653230d88144d1f1b5361e2a89450d4d",
         "repositorySemanticRestoreStatus": "NOT_APPLICABLE",
         "restoredRepositoryIdentity": null,
-        "restoredAt": "2026-07-25T08:33:40.866Z",
+        "restoredAt": "2026-07-25T23:23:11.293Z",
         "blocker": null,
         "restoredSizeBytes": 217908
       }
@@ -41834,24 +41835,8 @@
     },
     "localCleanupJournal": {
       "schemaVersion": "operational-savings/local-cleanup-journal-v1",
-      "status": "IN_PROGRESS",
-      "pendingAction": {
-        "ownerType": "PACKAGE",
-        "ownerId": "inspection-image:epa-chp-page-037.png",
-        "actionType": "PACKAGE_CANONICAL_FILE",
-        "targetPath": "/Users/vikas/Documents/Codex/2026-07-22/do-u/work/operational-savings-automation-research/tmp/pdfs/epa-chp-page-037.png",
-        "materializationGeneration": 0,
-        "expected": {
-          "localPath": "tmp/pdfs/epa-chp-page-037.png",
-          "sizeBytes": 217908,
-          "sha256": "29e99ec7223a9559ebf1540a50eab74a653230d88144d1f1b5361e2a89450d4d"
-        },
-        "actionId": "840d16cb57c9976c9a8a40ecfa6444a70a2c52511aeb6b055d71e484feff72a0",
-        "quarantinePath": "/Users/vikas/Documents/Codex/2026-07-22/do-u/work/operational-savings-automation-research/tmp/pdfs/.epa-chp-page-037.png.retrofi-cleanup-840d16cb57c9976c9a8a",
-        "state": "PENDING",
-        "createdAt": "2026-07-25T09:06:36.671Z",
-        "quarantinedAt": null
-      },
+      "status": "COMPLETE",
+      "pendingAction": null,
       "completedActions": [
         {
           "ownerType": "PACKAGE",
@@ -44255,6 +44240,23 @@
           "quarantinePath": "/Users/vikas/Documents/Codex/2026-07-22/do-u/work/operational-savings-automation-research/scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8/2a6b4d5f884d4d7a1bf04ea7df1944cf12b32e35a79a86d0a075a2d3f40fb9ac/backoff-2.2.1-py3-none-any.whl/backoff-2.2.1.dist-info/.LICENSE.retrofi-cleanup-8372f4cde31571d20649",
           "state": "COMPLETED",
           "completedAt": "2026-07-25T09:06:24.447Z",
+          "reconciledFromAbsence": false
+        },
+        {
+          "ownerType": "PACKAGE",
+          "ownerId": "inspection-image:epa-chp-page-037.png",
+          "actionType": "PACKAGE_CANONICAL_FILE",
+          "targetPath": "/Users/vikas/Documents/Codex/2026-07-22/do-u/work/operational-savings-automation-research/tmp/pdfs/epa-chp-page-037.png",
+          "materializationGeneration": 0,
+          "expected": {
+            "localPath": "tmp/pdfs/epa-chp-page-037.png",
+            "sizeBytes": 217908,
+            "sha256": "29e99ec7223a9559ebf1540a50eab74a653230d88144d1f1b5361e2a89450d4d"
+          },
+          "actionId": "840d16cb57c9976c9a8a40ecfa6444a70a2c52511aeb6b055d71e484feff72a0",
+          "quarantinePath": "/Users/vikas/Documents/Codex/2026-07-22/do-u/work/operational-savings-automation-research/tmp/pdfs/.epa-chp-page-037.png.retrofi-cleanup-840d16cb57c9976c9a8a",
+          "state": "COMPLETED",
+          "completedAt": "2026-07-25T23:23:11.359Z",
           "reconciledFromAbsence": false
         },
         {
@@ -46987,6 +46989,16 @@
           "reconciledFromAbsence": false
         }
       ]
+    },
+    "lastPendingCleanupRecovery": {
+      "packageId": "inspection-image:epa-chp-page-037.png",
+      "actionId": "840d16cb57c9976c9a8a40ecfa6444a70a2c52511aeb6b055d71e484feff72a0",
+      "localPaths": [
+        "tmp/pdfs/epa-chp-page-037.png"
+      ],
+      "remoteVersionId": "tkXUZpabbgmwADEtdWSGqMgzcrYyj.dk",
+      "recoveredAt": "2026-07-25T23:23:11.417Z",
+      "recoveryScope": "EXACT_CHECKPOINTED_QUARANTINE_ONLY"
     }
   },
   "canonicalInventory": {
@@ -46994,5 +47006,5 @@
     "packageCount": 210,
     "contentSha256": "826c63b309ff326c6dc730be2f6bbfbdd5a0ad07527f9de382f5c70010e31d0a"
   },
-  "manifestContentSha256": "1e008080bb5ce04e1ee2b67ce4fc4ba3cea6d9b6ce691329f098aecb87a70c95"
+  "manifestContentSha256": "a1ad9f5ecfa80a17c0d4b28752e4502c3cb65510df26be73592ea9eb907ed7d2"
 }
