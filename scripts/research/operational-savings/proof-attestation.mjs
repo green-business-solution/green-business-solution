@@ -421,6 +421,10 @@ export async function materializeCommittedProofSnapshot({
     await mkdir(dirname(cacheDestination), {
       recursive: true
     });
+    await removeMatchingTrackedCacheScaffold(
+      cacheSource,
+      cacheDestination
+    );
     await cloneDirectory(cacheSource, cacheDestination);
     return {
       snapshotRoot: destination,
@@ -448,6 +452,77 @@ export async function materializeCommittedProofSnapshot({
     }
     throw error;
   }
+}
+
+export async function removeMatchingTrackedCacheScaffold(
+  sourcePath,
+  destinationPath
+) {
+  const source = resolve(sourcePath);
+  const destination = resolve(destinationPath);
+  const destinationDetails = await lstat(destination).catch(
+    (error) => {
+      if (error.code === "ENOENT") return null;
+      throw error;
+    }
+  );
+  if (destinationDetails === null) return false;
+  if (
+    !destinationDetails.isDirectory() ||
+    destinationDetails.isSymbolicLink()
+  ) {
+    throw new Error(
+      `PROOF_EXECUTION_CACHE_SCAFFOLD_UNSAFE: ${destination} must be a regular directory`
+    );
+  }
+  const entries = await readdir(destination, {
+    withFileTypes: true
+  });
+  if (
+    entries.length !== 1 ||
+    entries[0].name !== ".gitignore" ||
+    !entries[0].isFile() ||
+    entries[0].isSymbolicLink()
+  ) {
+    throw new Error(
+      `PROOF_EXECUTION_CACHE_SCAFFOLD_UNSAFE: ${destination} must contain only a regular .gitignore file`
+    );
+  }
+  const sourceIgnorePath = resolve(source, ".gitignore");
+  const destinationIgnorePath = resolve(
+    destination,
+    ".gitignore"
+  );
+  const [sourceIgnoreDetails, destinationIgnoreDetails] =
+    await Promise.all([
+      lstat(sourceIgnorePath),
+      lstat(destinationIgnorePath)
+    ]);
+  if (
+    !sourceIgnoreDetails.isFile() ||
+    sourceIgnoreDetails.isSymbolicLink() ||
+    !destinationIgnoreDetails.isFile() ||
+    destinationIgnoreDetails.isSymbolicLink()
+  ) {
+    throw new Error(
+      "PROOF_EXECUTION_CACHE_SCAFFOLD_UNSAFE: cache .gitignore entries must be regular files"
+    );
+  }
+  const [sourceIgnore, destinationIgnore] =
+    await Promise.all([
+      readFile(sourceIgnorePath),
+      readFile(destinationIgnorePath)
+    ]);
+  if (!sourceIgnore.equals(destinationIgnore)) {
+    throw new Error(
+      `PROOF_EXECUTION_CACHE_SCAFFOLD_MISMATCH: ${destinationIgnorePath} does not match the source cache scaffold`
+    );
+  }
+  await rm(destination, {
+    recursive: true,
+    force: false
+  });
+  return true;
 }
 
 export async function clonePrivateDirectory(

@@ -104,6 +104,10 @@ async function git(args, cwd) {
 }
 
 async function initializeSnapshotFixture(repository) {
+  const cacheRoot = join(
+    repository,
+    "scripts/research/operational-savings/.cache"
+  );
   await git(["init"], repository);
   await git(
     ["config", "user.email", "proof@example.invalid"],
@@ -118,26 +122,29 @@ async function initializeSnapshotFixture(repository) {
       recursive: true
     }),
     mkdir(
-      join(
-        repository,
-        "scripts/research/operational-savings/.cache"
-      ),
+      cacheRoot,
       { recursive: true }
     )
   ]);
   await writeFile(
     join(repository, ".gitignore"),
-    [
-      "node_modules/",
-      "scripts/research/operational-savings/.cache/"
-    ].join("\n") + "\n"
+    "node_modules/\n"
+  );
+  await writeFile(
+    join(cacheRoot, ".gitignore"),
+    "*\n!.gitignore\n"
   );
   await writeFile(
     join(repository, "proof-source.txt"),
     "committed\n"
   );
   await git(
-    ["add", ".gitignore", "proof-source.txt"],
+    [
+      "add",
+      ".gitignore",
+      "proof-source.txt",
+      "scripts/research/operational-savings/.cache/.gitignore"
+    ],
     repository
   );
   await git(["commit", "-m", "proof fixture"], repository);
@@ -371,6 +378,10 @@ test("runs from a detached committed snapshot that ignores a mutation-and-revert
   const snapshotRoot = join(privateRoot, "repository");
   let snapshotCreated = false;
   try {
+    const cacheRoot = join(
+      repository,
+      "scripts/research/operational-savings/.cache"
+    );
     await git(["init"], repository);
     await git(
       ["config", "user.email", "proof@example.invalid"],
@@ -385,10 +396,7 @@ test("runs from a detached committed snapshot that ignores a mutation-and-revert
         recursive: true
       }),
       mkdir(
-        join(
-          repository,
-          "scripts/research/operational-savings/.cache"
-        ),
+        cacheRoot,
         { recursive: true }
       )
     ]);
@@ -406,17 +414,26 @@ test("runs from a detached committed snapshot that ignores a mutation-and-revert
     ]);
     await writeFile(
       join(repository, ".gitignore"),
-      [
-        "node_modules/",
-        "scripts/research/operational-savings/.cache/"
-      ].join("\n") + "\n"
+      "node_modules/\n"
+    );
+    await writeFile(
+      join(cacheRoot, ".gitignore"),
+      "*\n!.gitignore\n"
     );
     const sourcePath = join(
       repository,
       "proof-source.txt"
     );
     await writeFile(sourcePath, "committed\n");
-    await git(["add", ".gitignore", "proof-source.txt"], repository);
+    await git(
+      [
+        "add",
+        ".gitignore",
+        "proof-source.txt",
+        "scripts/research/operational-savings/.cache/.gitignore"
+      ],
+      repository
+    );
     await git(["commit", "-m", "proof fixture"], repository);
     const { stdout } = await git(
       ["rev-parse", "HEAD"],
@@ -498,6 +515,56 @@ test("runs from a detached committed snapshot that ignores a mutation-and-revert
         snapshotRoot
       });
     }
+    await Promise.all([
+      rm(privateRoot, { recursive: true, force: true }),
+      rm(repository, { recursive: true, force: true })
+    ]);
+  }
+});
+
+test("rejects a committed cache scaffold with any entry beyond the matching ignore file", async () => {
+  const repository = await mkdtemp(
+    join(tmpdir(), "retrofi-proof-cache-scaffold-")
+  );
+  const privateRoot = await mkdtemp(
+    join(tmpdir(), "retrofi-proof-cache-private-")
+  );
+  const snapshotRoot = join(privateRoot, "repository");
+  try {
+    await initializeSnapshotFixture(repository);
+    const unexpectedPath = join(
+      repository,
+      "scripts/research/operational-savings/.cache/unexpected.txt"
+    );
+    await writeFile(unexpectedPath, "must not merge\n");
+    await git(["add", "-f", unexpectedPath], repository);
+    await git(
+      ["commit", "-m", "add unsafe cache scaffold"],
+      repository
+    );
+    const { stdout } = await git(
+      ["rev-parse", "HEAD"],
+      repository
+    );
+
+    await expect(
+      materializeCommittedProofSnapshot({
+        repoRoot: repository,
+        snapshotRoot,
+        expectedCommit: stdout.trim()
+      })
+    ).rejects.toThrow(
+      /PROOF_EXECUTION_CACHE_SCAFFOLD_UNSAFE/
+    );
+    expect(
+      await lstat(snapshotRoot)
+        .then(() => true)
+        .catch((error) => {
+          if (error.code === "ENOENT") return false;
+          throw error;
+        })
+    ).toBe(false);
+  } finally {
     await Promise.all([
       rm(privateRoot, { recursive: true, force: true }),
       rm(repository, { recursive: true, force: true })
