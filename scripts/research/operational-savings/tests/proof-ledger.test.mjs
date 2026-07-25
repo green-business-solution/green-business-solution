@@ -118,6 +118,14 @@ async function withTemporaryAdapters(callback) {
   }
 }
 
+async function buildUnverifiedProofLedger(options) {
+  return buildProofLedger({
+    ...options,
+    executionRunRecord: null,
+    executionRunRecordPath: null
+  });
+}
+
 function fuelEconomyManifest({
   formulaTermReached = true,
   proofLevel = formulaTermReached
@@ -631,7 +639,10 @@ test("normalizes legacy proof-manifest gate names without weakening the gate set
 
 test("bootstraps exactly 124 honest documentation-only records without manifests", async () => {
   await withTemporaryAdapters(async (adaptersRoot) => {
-    const ledger = await buildProofLedger({ repoRoot, adaptersRoot });
+    const ledger = await buildUnverifiedProofLedger({
+      repoRoot,
+      adaptersRoot
+    });
     expect(ledger.processes).toHaveLength(124);
     expect(
       new Set(
@@ -725,7 +736,10 @@ test("keeps a declared end-to-end manifest documentation-only without an executi
       `${JSON.stringify(fuelEconomyManifest(), null, 2)}\n`
     );
 
-    const ledger = await buildProofLedger({ repoRoot, adaptersRoot });
+    const ledger = await buildUnverifiedProofLedger({
+      repoRoot,
+      adaptersRoot
+    });
     const process = ledger.processes.find(
       (candidate) =>
         candidate.categoryId === "ITC-29" &&
@@ -781,7 +795,10 @@ test("keeps a declared source-to-Standard manifest documentation-only without ex
       )}\n`
     );
 
-    const ledger = await buildProofLedger({ repoRoot, adaptersRoot });
+    const ledger = await buildUnverifiedProofLedger({
+      repoRoot,
+      adaptersRoot
+    });
     const process = ledger.processes.find(
       (candidate) =>
         candidate.categoryId === "ITC-29" &&
@@ -822,10 +839,11 @@ test(
       const [declaredTest] =
         manifest.processClaims[0].syntheticTests;
 
-      const unverifiedLedger = await buildProofLedger({
-        repoRoot,
-        adaptersRoot
-      });
+      const unverifiedLedger =
+        await buildUnverifiedProofLedger({
+          repoRoot,
+          adaptersRoot
+        });
       const unverifiedProcess =
         unverifiedLedger.processes.find(
           (candidate) =>
@@ -908,10 +926,11 @@ test.each([
         adaptersRoot,
         manifest
       );
-      const unverifiedLedger = await buildProofLedger({
-        repoRoot,
-        adaptersRoot
-      });
+      const unverifiedLedger =
+        await buildUnverifiedProofLedger({
+          repoRoot,
+          adaptersRoot
+        });
       const unverifiedProcess =
         unverifiedLedger.processes.find(
           (candidate) =>
@@ -1139,7 +1158,7 @@ test("continues to require every canonical output for an ordinary process", asyn
     );
 
     await expect(
-      buildProofLedger({ repoRoot, adaptersRoot })
+      buildUnverifiedProofLedger({ repoRoot, adaptersRoot })
     ).rejects.toThrow(/standardOutputProduced, unitScopeMatches/);
   });
 });
@@ -1156,7 +1175,7 @@ test("rejects a true real-source gate when its evidence column is empty", async 
     );
 
     await expect(
-      buildProofLedger({ repoRoot, adaptersRoot })
+      buildUnverifiedProofLedger({ repoRoot, adaptersRoot })
     ).rejects.toThrow(/artifactAcquired/);
   });
 });
@@ -1180,7 +1199,10 @@ test("accepts one explicitly selected AC-output branch and marks DC output inapp
       )}\n`
     );
 
-    const ledger = await buildProofLedger({ repoRoot, adaptersRoot });
+    const ledger = await buildUnverifiedProofLedger({
+      repoRoot,
+      adaptersRoot
+    });
     const process = ledger.processes.find(
       (candidate) =>
         candidate.categoryId === "ITC-27" &&
@@ -1232,7 +1254,7 @@ test("requires all canonical outputs when a conditional branch is not selected",
     );
 
     await expect(
-      buildProofLedger({ repoRoot, adaptersRoot })
+      buildUnverifiedProofLedger({ repoRoot, adaptersRoot })
     ).rejects.toThrow(
       /standardOutputProduced, unitScopeMatches, formulaTermReached/
     );
@@ -1259,7 +1281,7 @@ test("rejects evidence mixed across mutually exclusive output branches", async (
     );
 
     await expect(
-      buildProofLedger({ repoRoot, adaptersRoot })
+      buildUnverifiedProofLedger({ repoRoot, adaptersRoot })
     ).rejects.toThrow(
       /actualOutputs includes outputs outside selected group AC_OUTPUT: dc_efficiency_fraction/
     );
@@ -1286,7 +1308,10 @@ test("keeps multi-Standard coverage as a strict AND after selecting a dishwasher
       )}\n`
     );
 
-    const ledger = await buildProofLedger({ repoRoot, adaptersRoot });
+    const ledger = await buildUnverifiedProofLedger({
+      repoRoot,
+      adaptersRoot
+    });
     const process = ledger.processes.find(
       (candidate) =>
         candidate.categoryId === "ITC-52" &&

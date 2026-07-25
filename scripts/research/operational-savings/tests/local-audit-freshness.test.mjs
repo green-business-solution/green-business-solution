@@ -4,6 +4,7 @@ import {
   mkdir,
   mkdtemp,
   rm,
+  symlink,
   writeFile
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -85,6 +86,29 @@ test("accepts the exact monitored audit snapshot", async () => {
     assertLocalArtifactAuditFresh({
       audit: context.audit,
       roots: [context.root],
+      prefixes: ["proof-ledger-", "retrofi-storage-"]
+    })
+  ).resolves.toMatchObject({
+    status: "CURRENT",
+    roots: [
+      {
+        root: context.root,
+        status: "CURRENT",
+        monitoredEntryCount: 2
+      }
+    ]
+  });
+});
+
+test("deduplicates filesystem aliases before auditing monitored roots", async () => {
+  const context = await fixture();
+  const alias = `${context.root}-alias`;
+  temporaryRoots.push(alias);
+  await symlink(context.root, alias);
+  await expect(
+    assertLocalArtifactAuditFresh({
+      audit: context.audit,
+      roots: [context.root, alias],
       prefixes: ["proof-ledger-", "retrofi-storage-"]
     })
   ).resolves.toMatchObject({

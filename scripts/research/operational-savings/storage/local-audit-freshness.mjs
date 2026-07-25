@@ -92,8 +92,21 @@ function filesystemAuditRecords(audit) {
   );
 }
 
+function canonicalExistingPath(path) {
+  const resolvedPath = resolve(path);
+  try {
+    return realpathSync(resolvedPath);
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      return resolvedPath;
+    }
+    throw error;
+  }
+}
+
 function recordWithinRoot(record, root) {
-  const child = relative(root, resolve(record.path));
+  const canonicalPath = canonicalExistingPath(record.path);
+  const child = relative(root, canonicalPath);
   if (
     child === "" ||
     child === ".." ||
@@ -103,7 +116,7 @@ function recordWithinRoot(record, root) {
   }
   return {
     ...record,
-    path: resolve(record.path),
+    path: canonicalPath,
     topLevelName: child.split(sep)[0]
   };
 }
@@ -352,20 +365,31 @@ export async function assertLocalArtifactAuditFresh({
     OPERATIONAL_SAVINGS_TEMP_ENTRY_EXCLUSIONS,
   allowMissingRecordedPaths = false
 }) {
+  const rootsByCanonicalPath = new Map();
+  for (const root of roots) {
+    if (typeof root !== "string") {
+      continue;
+    }
+    const resolvedRoot = resolve(root);
+    const canonicalRoot =
+      canonicalExistingPath(resolvedRoot);
+    if (!rootsByCanonicalPath.has(canonicalRoot)) {
+      rootsByCanonicalPath.set(canonicalRoot, {
+        root: resolvedRoot,
+        canonicalRoot
+      });
+    }
+  }
   const normalizedRoots = [
-    ...new Set(
-      roots
-        .filter((root) => typeof root === "string")
-        .map((root) => resolve(root))
-    )
+    ...rootsByCanonicalPath.values()
   ];
   const auditRecords = filesystemAuditRecords(audit);
   const results = [];
 
-  for (const root of normalizedRoots) {
+  for (const { root, canonicalRoot } of normalizedRoots) {
     let entries;
     try {
-      entries = await readdir(root, {
+      entries = await readdir(canonicalRoot, {
         withFileTypes: true
       });
     } catch (error) {
@@ -381,7 +405,9 @@ export async function assertLocalArtifactAuditFresh({
     }
 
     const records = auditRecords
-      .map((record) => recordWithinRoot(record, root))
+      .map((record) =>
+        recordWithinRoot(record, canonicalRoot)
+      )
       .filter(Boolean);
     if (!allowMissingRecordedPaths) {
       const missingRecordedPaths = [];
@@ -441,7 +467,9 @@ export async function assertLocalArtifactAuditFresh({
     }
 
     for (const entry of monitoredEntries) {
-      const entryPath = resolve(join(root, entry.name));
+      const entryPath = resolve(
+        join(canonicalRoot, entry.name)
+      );
       const coveringRecords =
         recordsByTopLevelName.get(entry.name) ?? [];
       const exactRecords = coveringRecords.filter(
