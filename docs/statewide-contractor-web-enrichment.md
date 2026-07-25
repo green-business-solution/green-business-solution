@@ -185,6 +185,14 @@ The independently completed manual review inspected 100 contractor/domain pairs 
 It found 99 correct domains and one incorrect domain, for 99.0 percent observed domain precision.
 The statewide proposal run is approved only after the 30 recorded identity, email, customer-type, service-area, and license-transition findings pass the committed regression fixture and the automatic preflight.
 
+## July 24-25, 2026 Statewide Proposal Run
+
+The completed proposal-only run ID is `web-enrichment-statewide-fast-20260724T190000Z`.
+It accounted for all 207,903 live contractors, completed the fast pass for all 192,900 eligible contractors, and recorded the other 15,003 contractors as skipped by exact license status.
+The optional deep pass rechecked 9,500 prioritized contractors and accepted 602 better outcomes based on a higher disposition rank or, at equal rank, more proposal keys before the user directed the run to finalize.
+Final validation passed, all 415 expected immutable S3 objects were verified against their local SHA-256 checksums, and DynamoDB received zero writes.
+See [Statewide Contractor Web Enrichment Completion](./statewide-contractor-web-enrichment-completion.md) for the sanitized execution record, coverage results, review artifacts, hashes, and next-step guard.
+
 ## S3 Artifacts
 
 An approved pilot upload uses:
